@@ -1,0 +1,1164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="3b8e36e6-6064-4bde-a614-f432e390ce43" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <layers>
+    <layer Id="580581a6-3aea-4025-a3f5-bdb47a2bdd7d" name="The Wizards Core">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="2d06bb55-1e2f-4b7d-be59-5e8f0860223d" direction="Forward">
+          <layerMoniker Id="01b03dfe-3e66-4891-a9e8-27f118130c0b" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <childLayers>
+        <layer Id="5c5ace67-3470-4781-858d-29131b069576" name="Editor">
+          <references>
+            <reference Id="9a92a676-9c47-4aea-bb42-9a0e3b58b6ed" name="IWizardsEditorDatabaseExtension.cs">
+              <ArtifactNode Label="IWizardsEditorDatabaseExtension.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Editor/IWizardsEditorDatabaseExtension.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Editor Type=IWizardsEditorDatabaseExtension)" Label="IWizardsEditorDatabaseExtension" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="ad54cc27-a211-4759-8c1b-450b086f35b9" name="WizardsEditor.cs">
+              <ArtifactNode Label="WizardsEditor.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Editor/WizardsEditor.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Editor Type=WizardsEditor)" Label="WizardsEditor" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="3173f374-d957-497d-8422-a5023dff323f" name="IWorldEditorExtension.cs">
+              <ArtifactNode Label="IWorldEditorExtension.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Editor/IWorldEditorExtension.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Editor Type=IWorldEditorExtension)" Label="IWorldEditorExtension" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+      </childLayers>
+    </layer>
+    <layer Id="01b03dfe-3e66-4891-a9e8-27f118130c0b" name="Functionality">
+      <childLayers>
+        <layer Id="0d6a59ba-ed56-4af5-b36f-99efa0d14ed2" name="Physics">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="f1a87d64-2862-4b50-937a-1e11f423425a" direction="Forward">
+              <layerMoniker Id="5871a33d-f03c-4fec-b24d-47db7e2cd8ba" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="198dc8b8-6efb-41f0-bfd6-75f55c3580a3" name="Physics1">
+              <ArtifactNode Label="Physics" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Physics/)">
+                <Category Ref="ProjectFolder" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Physics Type=PhysicsDebugRenderer)" Label="PhysicsDebugRenderer" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Physics Type=PhysicsEngine)" Label="PhysicsEngine" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Physics Type=PhysicsHelper)" Label="PhysicsHelper" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Physics Type=PhysicsService)" Label="PhysicsService" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Physics Type=PhysicsTest)" Label="PhysicsTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=StillDesign Type=Camera)" Label="Camera" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=StillDesign Type=Engine)" Label="Engine" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=StillDesign Type=Mathematics)" Label="Mathematics" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=StillDesign Type=UserOutput)" Label="UserOutput" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=StillDesign Type=VertexGrid)" Label="VertexGrid" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="5871a33d-f03c-4fec-b24d-47db7e2cd8ba" name="Graphics">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="56fdfdac-bfd8-4541-ab61-4ac6bcdce8b7" direction="Bidirectional">
+              <layerMoniker Id="50d7e7e8-23f5-4c74-b83e-0335dd8ff76c" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="cf94a615-6c59-4c01-9d5d-7c041ab4d748" name="Graphics">
+              <ArtifactNode Label="Graphics" Category="CodeSchema_ProjectItem" Id="(Assembly=../Common.Core/Graphics/)">
+                <Category Ref="ProjectFolder" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Graphics Type=AttributeSystem)" Label="AttributeSystem" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics Type=AverageFPSCalculater)" Label="AverageFPSCalculater" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics Type=BoxMesh)" Label="BoxMesh" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics Type=(Name=TechniqueType ParentType=ColladaShader))" Label="ColladaShader.TechniqueType" Category="CodeSchema_Enum">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics Type=ColladaShader)" Label="ColladaShader" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics Type=Curve3D)" Label="Curve3D" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=CustomCamera)" Label="CustomCamera" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=Cursor)" Label="Cursor" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=DrawEventArgs)" Label="DrawEventArgs" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=GuiAlign)" Label="GuiAlign" Category="CodeSchema_Enum">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=GuiButton)" Label="GuiButton" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=GuiControl)" Label="GuiControl" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=GuiControlCollection)" Label="GuiControlCollection" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=GuiGraphics)" Label="GuiGraphics" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=GuiImage)" Label="GuiImage" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=(Name=GuiListBox GenericParameterCount=1))" Label="GuiListBox&lt;T&gt;" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=(Name=ListItem ParentType=(Name=GuiListBox GenericParameterCount=1)))" Label="GuiListBox&lt;T&gt;.ListItem" Category="CodeSchema_Struct">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=GuiListBoxBase)" Label="GuiListBoxBase" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=GuiServiceXNA)" Label="GuiServiceXNA" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=(Name=OnEventDelegate GenericParameterCount=1 ParentType=GuiServiceXNA))" Label="GuiServiceXNA.OnEventDelegate&lt;T&gt;" Category="CodeSchema_Delegate">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=(Name=WindowBorderStyle ParentType=GuiWindow))" Label="GuiWindow.WindowBorderStyle" Category="CodeSchema_Enum">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=(Name=Border ParentType=GuiWindow))" Label="GuiWindow.Border" Category="CodeSchema_Enum">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=GuiWindow)" Label="GuiWindow" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=GuiWindowBorder)" Label="GuiWindowBorder" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=IGuiContainer)" Label="IGuiContainer" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=IGuiService)" Label="IGuiService" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=IHandelable)" Label="IHandelable" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=MouseEventArgs)" Label="MouseEventArgs" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Gui Type=TileSet)" Label="TileSet" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=ICursor)" Label="ICursor" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=GameFile)" Label="GameFile" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=(Name=GameFileState ParentType=GameFile))" Label="GameFile.GameFileState" Category="CodeSchema_Enum">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics Type=GraphicsTest)" Label="GraphicsTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=ICamera)" Label="ICamera" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=IGameFile)" Label="IGameFile" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=IGameObject)" Label="IGameObject" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Entity.Rendering Type=IRenderPrimitives)" Label="IRenderPrimitives" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics Type=IXNAGame)" Label="IXNAGame" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics Type=IXNAObject)" Label="IXNAObject" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=TWKeyboard)" Label="TWKeyboard" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics Type=LineManager3D)" Label="LineManager3D" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics Type=(Name=Line ParentType=LineManager3D))" Label="LineManager3D.Line" Category="CodeSchema_Struct">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics Type=LineManager3DLines)" Label="LineManager3DLines" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=TWMouse)" Label="TWMouse" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.TWXNAEngine Type=OrthographicCamera)" Label="OrthographicCamera" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Common.Core.Graphics Type=Primitives)" Label="Primitives" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=BasicShader)" Label="BasicShader" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=(Name=RenderDelegate ParentType=BasicShader))" Label="BasicShader.RenderDelegate" Category="CodeSchema_Delegate">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics Type=SkinnedBone)" Label="SkinnedBone" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Common.Core.Graphics Type=SkinnedMesh)" Label="SkinnedMesh" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Common.Core.Graphics Type=SkinnedModel)" Label="SkinnedModel" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Common.Core.Collada Type=SkinnedShader)" Label="SkinnedShader" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Common.Core.Collada Type=(Name=TechniqueType ParentType=SkinnedShader))" Label="SkinnedShader.TechniqueType" Category="CodeSchema_Enum">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Engine Type=SkinnedTangentVertex)" Label="SkinnedTangentVertex" Category="CodeSchema_Struct">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=SpectaterCamera)" Label="SpectaterCamera" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics Type=SphereMesh)" Label="SphereMesh" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=TangentVertex)" Label="TangentVertex" Category="CodeSchema_Struct">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics.Test Type=Curve3DTester)" Label="Curve3DTester" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=TestXNAGame)" Label="TestXNAGame" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=(Name=RenderDelegate ParentType=TestXNAGame))" Label="TestXNAGame.RenderDelegate" Category="CodeSchema_Delegate">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=TWTexture)" Label="TWTexture" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Engine Type=ColorHelper)" Label="ColorHelper" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Engine Type=FileHelper)" Label="FileHelper" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Engine Type=Material)" Label="Material" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Engine Type=ShaderEffect)" Label="ShaderEffect" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Engine Type=(Name=RenderDelegate ParentType=ShaderEffect))" Label="ShaderEffect.RenderDelegate" Category="CodeSchema_Delegate">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Engine Type=StringHelper)" Label="StringHelper" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Engine Type=(Name=CutMode ParentType=StringHelper))" Label="StringHelper.CutMode" Category="CodeSchema_Enum">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Engine Type=TangentVertex)" Label="TangentVertex" Category="CodeSchema_Struct">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Engine Type=TextureBookengine)" Label="TextureBookengine" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Engine Type=XmlHelper)" Label="XmlHelper" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Editor Type=Transformation)" Label="Transformation" Category="CodeSchema_Struct">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.Graphics Type=VertexElementAttribute)" Label="VertexElementAttribute" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient.TWXNAEngine Type=VertexMultitextured)" Label="VertexMultitextured" Category="CodeSchema_Struct">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics Type=XNAGame)" Label="XNAGame" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.Graphics Type=(Name=XNAGameLoopEventHandler ParentType=XNAGame))" Label="XNAGame.XNAGameLoopEventHandler" Category="CodeSchema_Delegate">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=XNAGameFiles)" Label="XNAGameFiles" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="50d7e7e8-23f5-4c74-b83e-0335dd8ff76c" name="XML">
+          <references>
+            <reference Id="f7cb6840-d877-4cdf-b5f6-592b8ce7eb7c" name="XML">
+              <ArtifactNode Label="XML" Category="CodeSchema_ProjectItem" Id="(Assembly=../Common.Core/XML/)">
+                <Category Ref="ProjectFolder" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=TWXmlNode)" Label="TWXmlNode" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=Common.Core Namespace=MHGameWork.TheWizards.ServerClient Type=XMLSerializer)" Label="XMLSerializer" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="fffb7e00-bddf-4cc4-bf39-ab1229acb78a" name="Networking">
+          <references>
+            <reference Id="df90ad99-c66a-4042-b23c-9ce3236182a5" name="Networking1">
+              <ArtifactNode Label="Networking" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Networking/)">
+                <Category Ref="ProjectFolder" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=AssemblyBuilder)" Label="AssemblyBuilder" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Client Type=ClientPacketManagerNetworked)" Label="ClientPacketManagerNetworked" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Client Type=(Name=InternalPacketType ParentType=ClientPacketManagerNetworked))" Label="ClientPacketManagerNetworked.InternalPacketType" Category="CodeSchema_Enum">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Client Type=(Name=ClientPacketRequesterNetworked GenericParameterCount=2 ParentType=ClientPacketManagerNetworked))" Label="ClientPacketManagerNetworked.ClientPacketRequesterNetworked&lt;TSend,TReceive&gt;" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Client Type=(Name=ClientPacketTransporterNetworked GenericParameterCount=1 ParentType=ClientPacketManagerNetworked))" Label="ClientPacketManagerNetworked.ClientPacketTransporterNetworked&lt;T&gt;" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Client Type=IClientPacketManager)" Label="IClientPacketManager" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Client Type=(Name=ClientPacketRequestDelegate GenericParameterCount=2))" Label="ClientPacketRequestDelegate&lt;TSend,TReceive&gt;" Category="CodeSchema_Delegate">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Client Type=(Name=IClientPacketRequester GenericParameterCount=2))" Label="IClientPacketRequester&lt;TSend,TReceive&gt;" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Client Type=(Name=IClientPacketTransporter GenericParameterCount=1))" Label="IClientPacketTransporter&lt;T&gt;" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Client Type=(Name=IClientPacketTransporterNetworked ParentType=ClientPacketManagerNetworked))" Label="ClientPacketManagerNetworked.IClientPacketTransporterNetworked" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Client Type=NetworkingClientTest)" Label="NetworkingClientTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=INetworkPacket)" Label="INetworkPacket" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=INetworkPacketCustomSerializable)" Label="INetworkPacketCustomSerializable" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=INetworkPacketFactory)" Label="INetworkPacketFactory" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=INetworkPacketFactory GenericParameterCount=1))" Label="INetworkPacketFactory&lt;T&gt;" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=PacketFieldsTest ParentType=NetworkingTest))" Label="NetworkingTest.PacketFieldsTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=PacketPropertiesTest ParentType=NetworkingTest))" Label="NetworkingTest.PacketPropertiesTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=NetworkingTest)" Label="NetworkingTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=NetworkPacketAttribute)" Label="NetworkPacketAttribute" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=INetworkPacketFactoryFactory)" Label="INetworkPacketFactoryFactory" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=NetworkPacketFactoryCodeGenerater)" Label="NetworkPacketFactoryCodeGenerater" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=HolderFactory GenericParameterCount=1 ParentType=NetworkPacketFactoryCodeGenerater))" Label="NetworkPacketFactoryCodeGenerater.HolderFactory&lt;T&gt;" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=TempFactoryFactory)" Label="TempFactoryFactory" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=NetworkPacketIgnoreAttribute)" Label="NetworkPacketIgnoreAttribute" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=PacketFlags)" Label="PacketFlags" Category="CodeSchema_Enum">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Server Type=IServerPacketManager)" Label="IServerPacketManager" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Server Type=NetworkingServerTest)" Label="NetworkingServerTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Server Type=ServerPacketManagerNetworked)" Label="ServerPacketManagerNetworked" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=TCPConnection)" Label="TCPConnection" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=BytesRecievedEventArgs ParentType=TCPConnection))" Label="TCPConnection.BytesRecievedEventArgs" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=BytesRecievedAsyncEventHandler ParentType=TCPConnection))" Label="TCPConnection.BytesRecievedAsyncEventHandler" Category="CodeSchema_Delegate">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=ConnectedToServerEventArgs ParentType=TCPConnection))" Label="TCPConnection.ConnectedToServerEventArgs" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=ConnectedToServerEventHandler ParentType=TCPConnection))" Label="TCPConnection.ConnectedToServerEventHandler" Category="CodeSchema_Delegate">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=ConnectErrorEventArgs ParentType=TCPConnection))" Label="TCPConnection.ConnectErrorEventArgs" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=ConnectErrorEventHandler ParentType=TCPConnection))" Label="TCPConnection.ConnectErrorEventHandler" Category="CodeSchema_Delegate">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=ListenerErrorEventHandler ParentType=TCPConnectionListener))" Label="TCPConnectionListener.ListenerErrorEventHandler" Category="CodeSchema_Delegate">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=TCPConnectionListener)" Label="TCPConnectionListener" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=ClientConnectedEventArgs ParentType=TCPConnectionListener))" Label="TCPConnectionListener.ClientConnectedEventArgs" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=ListenerErrorEventArgs ParentType=TCPConnectionListener))" Label="TCPConnectionListener.ListenerErrorEventArgs" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=ClientConnectedEventHandler ParentType=TCPConnectionListener))" Label="TCPConnectionListener.ClientConnectedEventHandler" Category="CodeSchema_Delegate">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=TCPPacketBuilder)" Label="TCPPacketBuilder" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=PacketState ParentType=TCPPacketBuilder))" Label="TCPPacketBuilder.PacketState" Category="CodeSchema_Enum">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking Type=(Name=TCPPacketFlags ParentType=TCPPacketBuilder))" Label="TCPPacketBuilder.TCPPacketFlags" Category="CodeSchema_Enum">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Test Type=DataPacket)" Label="DataPacket" Category="CodeSchema_Struct">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Test Type=DataPacketFactory)" Label="DataPacketFactory" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Test Type=ErrorPacket)" Label="ErrorPacket" Category="CodeSchema_Struct">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Networking.Test Type=ErrorPacketFactory)" Label="ErrorPacketFactory" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="e410154b-c1aa-4ad3-bb63-9c86202fc15e" name="WorldDatabase">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="7533815d-9b48-409f-8b97-a641149e0fa8" direction="Forward">
+              <layerMoniker Id="50d7e7e8-23f5-4c74-b83e-0335dd8ff76c" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="3d0f99ce-aea8-49c0-8855-59a0bf8fb3f1" name="WorldDatabase">
+              <ArtifactNode Label="WorldDatabase" Category="CodeSchema_ProjectItem" Id="(Assembly=../newmodules/worlddatabase/)">
+                <Category Ref="ProjectFolder" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=DataElementFactoryIdentifier)" Label="DataElementFactoryIdentifier" Category="CodeSchema_Struct">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=DataElementIdentifier)" Label="DataElementIdentifier" Category="CodeSchema_Struct">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=(Name=DataElementXMLFactory GenericParameterCount=1))" Label="DataElementXMLFactory&lt;T&gt;" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=DataItem)" Label="DataItem" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=(Name=DataElementEntry ParentType=DataItem))" Label="DataItem.DataElementEntry" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=DataItemIdentifier)" Label="DataItemIdentifier" Category="CodeSchema_Struct">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=DataItemType)" Label="DataItemType" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=DataRevision)" Label="DataRevision" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=DataRevisionIdentifier)" Label="DataRevisionIdentifier" Category="CodeSchema_Struct">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=DefaultRevisionFactory)" Label="DefaultRevisionFactory" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=IDataElement)" Label="IDataElement" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=(Name=IDataElementFactory GenericParameterCount=1))" Label="IDataElementFactory&lt;T&gt;" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=IDataElementFactory)" Label="IDataElementFactory" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase.Test Type=TerrainData2Element)" Label="TerrainData2Element" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase.Test Type=TerrainData2ElementFactory)" Label="TerrainData2ElementFactory" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase.Test Type=TerrainData3Element)" Label="TerrainData3Element" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase.Test Type=TerrainDataElement)" Label="TerrainDataElement" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase.Test Type=TerrainDataElementFactory)" Label="TerrainDataElementFactory" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase.Test Type=WorldDatabaseTest)" Label="WorldDatabaseTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=WorkingCopy)" Label="WorkingCopy" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=(Name=DataItemCache ParentType=WorkingCopy))" Label="WorkingCopy.DataItemCache" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.WorldDatabase Type=WorldDatabase)" Label="WorldDatabase" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+      </childLayers>
+    </layer>
+    <layer Id="1bef80f4-f416-4eeb-a280-9ab30b3f1970" name="The Wizards Main&#xD;&#xA;">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="812d3272-8114-4995-ba93-9fa7baa1ac4d" direction="Forward">
+          <layerMoniker Id="580581a6-3aea-4025-a3f5-bdb47a2bdd7d" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="91001f64-4a7b-44c8-9b18-ce18d1d8616b" direction="Forward">
+          <layerMoniker Id="01b03dfe-3e66-4891-a9e8-27f118130c0b" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <childLayers>
+        <layer Id="10870258-6300-46f1-9cbd-ae0b63efcd85" name="Entity&#xD;&#xA;" requiredNamespace="MHGameWork.TheWizards.Entity">
+          <references>
+            <reference Id="0c4aee54-1273-4511-9e39-252de940d077" name="Client">
+              <ArtifactNode Label="Client" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/Client/)">
+                <Category Ref="ProjectFolder" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Client Type=EntityClientPhysics)" Label="EntityClientPhysics" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Client Type=EntityClientTest)" Label="EntityClientTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Client Type=EntityPhysicsActorBuilder)" Label="EntityPhysicsActorBuilder" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="2c44ab47-5474-4b5c-a87a-760b9a936a29" name="Editor">
+              <ArtifactNode Label="Editor" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/Editor/)">
+                <Category Ref="ProjectFolder" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=(Name=ImportSourceVertexCallback ParentType=ColladaMeshImporter))" Label="ColladaMeshImporter.ImportSourceVertexCallback" Category="CodeSchema_Delegate">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=ColladaMeshImporter)" Label="ColladaMeshImporter" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entities.Editor Type=EditorEntity)" Label="EditorEntity" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=EditorMesh)" Label="EditorMesh" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=(Name=Part ParentType=EditorMesh))" Label="EditorMesh.Part" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=EditorMeshPart)" Label="EditorMeshPart" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=EditorMeshPartRenderData)" Label="EditorMeshPartRenderData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=EditorMeshRenderData)" Label="EditorMeshRenderData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=EditorObject)" Label="EditorObject" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=EntityEditorTest)" Label="EntityEditorTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entities.Editor Type=EntityWizardsEditorExtension)" Label="EntityWizardsEditorExtension" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entities.Editor Type=PutObjectsTool)" Label="PutObjectsTool" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="89425f43-90d8-4113-aefc-2b61d12fc853" name="EntityCoreData.cs">
+              <ArtifactNode Label="EntityCoreData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/EntityCoreData.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=EntityCoreData)" Label="EntityCoreData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="5bd58cd1-3c65-491f-a919-dd373562615a" name="TangentSolver.cs">
+              <ArtifactNode Label="TangentSolver.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/TangentSolver.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=TangentSolver)" Label="TangentSolver" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="4ebd3434-19d0-4118-8512-152cd8aa65be" name="EntityRenderData.cs">
+              <ArtifactNode Label="EntityRenderData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/EntityRenderData.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=EntityRenderData)" Label="EntityRenderData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="cd2497b2-5f1b-4c23-b48f-648bc993172a" name="EntityRenderDataFactory.cs">
+              <ArtifactNode Label="EntityRenderDataFactory.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/EntityRenderDataFactory.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=EntityRenderDataFactory)" Label="EntityRenderDataFactory" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="bad7a572-0ac2-45a9-9402-77bfb61cf69a" name="EntityRenderPool.cs">
+              <ArtifactNode Label="EntityRenderPool.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/EntityRenderPool.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=EntityRenderPool)" Label="EntityRenderPool" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="6ce70ba0-be04-4b72-a9f8-652b2442257d" name="EntityTest.cs">
+              <ArtifactNode Label="EntityTest.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/EntityTest.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=EntityTest)" Label="EntityTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="d1f13dde-9f65-4198-b5ef-259650a599a5" name="IEntity.cs">
+              <ArtifactNode Label="IEntity.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/IEntity.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=IEntity)" Label="IEntity" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="e4a1c1f9-87da-4481-81c5-e387354aab40" name="IMesh.cs">
+              <ArtifactNode Label="IMesh.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/IMesh.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=IMesh)" Label="IMesh" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="a39d7055-9c63-491c-a2a5-1ab317a23a7c" name="IMeshPart.cs">
+              <ArtifactNode Label="IMeshPart.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/IMeshPart.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=IMeshPart)" Label="IMeshPart" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="32fd8dbc-4a10-4960-8498-b2519658e134" name="IObject.cs">
+              <ArtifactNode Label="IObject.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/IObject.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=IObject)" Label="IObject" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="a94c3bb6-9354-40ec-a55b-9cc3c95515e4" name="MeshAdditionalData.cs">
+              <ArtifactNode Label="MeshAdditionalData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/MeshAdditionalData.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshAdditionalData)" Label="MeshAdditionalData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="465d9604-9e3b-400c-be12-5b6697639492" name="MeshCoreData.cs">
+              <ArtifactNode Label="MeshCoreData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/MeshCoreData.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshCoreData)" Label="MeshCoreData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=(Name=Part ParentType=MeshCoreData))" Label="MeshCoreData.Part" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshCoreDataFactory)" Label="MeshCoreDataFactory" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="cbce69de-f5e1-4d07-8165-989987f9f9a4" name="MeshPartAdditionalData.cs">
+              <ArtifactNode Label="MeshPartAdditionalData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/MeshPartAdditionalData.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshPartAdditionalData)" Label="MeshPartAdditionalData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="3ddf73de-5600-44b8-95df-70014bde70c9" name="MeshPartGeometryData.cs">
+              <ArtifactNode Label="MeshPartGeometryData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/MeshPartGeometryData.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=(Name=Source ParentType=MeshPartGeometryData))" Label="MeshPartGeometryData.Source" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshPartGeometryData)" Label="MeshPartGeometryData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=(Name=Semantic ParentType=MeshPartGeometryData))" Label="MeshPartGeometryData.Semantic" Category="CodeSchema_Enum">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="94ea0d8a-eab2-4cef-8233-ae2d6158bd94" name="MeshRenderData.cs">
+              <ArtifactNode Label="MeshRenderData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/MeshRenderData.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshRenderData)" Label="MeshRenderData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="a2f5a4ff-a84b-44c8-a1e5-0321243b82a8" name="ModelGeometryData.cs">
+              <ArtifactNode Label="ModelGeometryData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/ModelGeometryData.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=ModelGeometryData)" Label="ModelGeometryData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="06ca941d-5e63-4467-88f9-09193473f28d" name="ObjectCoreData.cs">
+              <ArtifactNode Label="ObjectCoreData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/ObjectCoreData.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=ObjectCoreData)" Label="ObjectCoreData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="9768c25a-1e5a-421e-9b51-0b37aa73f242" name="ObjectFullData.cs">
+              <ArtifactNode Label="ObjectFullData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/ObjectFullData.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=ObjectFullData)" Label="ObjectFullData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="cbd44a7b-dc12-416a-a0f0-4d7209c69690" name="ObjectFullDataFactory.cs">
+              <ArtifactNode Label="ObjectFullDataFactory.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/ObjectFullDataFactory.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=ObjectFullDataFactory)" Label="ObjectFullDataFactory" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="8c78e8d7-d967-4513-be2f-620ac9ab1cbe" name="ObjectRenderData.cs">
+              <ArtifactNode Label="ObjectRenderData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/ObjectRenderData.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=ObjectRenderData)" Label="ObjectRenderData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="0c815338-7a53-4038-9435-b3bb18024222" name="Entity">
+              <ArtifactNode Label="Entity" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/)">
+                <Category Ref="ProjectFolder" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Client Type=EntityClientPhysics)" Label="EntityClientPhysics" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Client Type=EntityClientTest)" Label="EntityClientTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Client Type=EntityPhysicsActorBuilder)" Label="EntityPhysicsActorBuilder" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=(Name=ImportSourceVertexCallback ParentType=ColladaMeshImporter))" Label="ColladaMeshImporter.ImportSourceVertexCallback" Category="CodeSchema_Delegate">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=ColladaMeshImporter)" Label="ColladaMeshImporter" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entities.Editor Type=EditorEntity)" Label="EditorEntity" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=EditorMesh)" Label="EditorMesh" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=(Name=Part ParentType=EditorMesh))" Label="EditorMesh.Part" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=EditorMeshPart)" Label="EditorMeshPart" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=EditorMeshPartRenderData)" Label="EditorMeshPartRenderData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=EditorMeshRenderData)" Label="EditorMeshRenderData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=EditorObject)" Label="EditorObject" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=EntityEditorTest)" Label="EntityEditorTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entities.Editor Type=EntityWizardsEditorExtension)" Label="EntityWizardsEditorExtension" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entities.Editor Type=PutObjectsTool)" Label="PutObjectsTool" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=EntityCoreData)" Label="EntityCoreData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=EntityRenderData)" Label="EntityRenderData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=EntityRenderDataFactory)" Label="EntityRenderDataFactory" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=EntityRenderPool)" Label="EntityRenderPool" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=EntityTest)" Label="EntityTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=IEntity)" Label="IEntity" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=IMesh)" Label="IMesh" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=IMeshPart)" Label="IMeshPart" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=IObject)" Label="IObject" Category="CodeSchema_Interface">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshAdditionalData)" Label="MeshAdditionalData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshCoreData)" Label="MeshCoreData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=(Name=Part ParentType=MeshCoreData))" Label="MeshCoreData.Part" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshCoreDataFactory)" Label="MeshCoreDataFactory" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshPartAdditionalData)" Label="MeshPartAdditionalData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=(Name=Source ParentType=MeshPartGeometryData))" Label="MeshPartGeometryData.Source" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshPartGeometryData)" Label="MeshPartGeometryData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=(Name=Semantic ParentType=MeshPartGeometryData))" Label="MeshPartGeometryData.Semantic" Category="CodeSchema_Enum">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshRenderData)" Label="MeshRenderData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=ModelGeometryData)" Label="ModelGeometryData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=ObjectCoreData)" Label="ObjectCoreData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=ObjectFullData)" Label="ObjectFullData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=ObjectFullDataFactory)" Label="ObjectFullDataFactory" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=ObjectRenderData)" Label="ObjectRenderData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=TangentSolver)" Label="TangentSolver" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entities Type=EntityFullData)" Label="EntityFullData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entities Type=EntityManagerService)" Label="EntityManagerService" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.ServerClient.Entity Type=EntityPlugin)" Label="EntityPlugin" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entities Type=ModelFullData)" Label="ModelFullData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.ServerClient.Entity.Rendering Type=ColladaShader)" Label="ColladaShader" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.ServerClient.Entity.Rendering Type=(Name=TechniqueType ParentType=ColladaShader))" Label="ColladaShader.TechniqueType" Category="CodeSchema_Enum">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.ServerClient.Entity.Rendering Type=EntityCSMRenderer)" Label="EntityCSMRenderer" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.ServerClient.Entity.Rendering Type=EntityRenderData)" Label="EntityRenderData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.ServerClient.Entity.Rendering Type=EntityRenderer)" Label="EntityRenderer" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.ServerClient.Entity.Rendering Type=Material)" Label="Material" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.ServerClient.Entity.Rendering Type=MaterialCollada)" Label="MaterialCollada" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.ServerClient.Entity.Rendering Type=ModelRenderData)" Label="ModelRenderData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.ServerClient.Entity.Rendering Type=ObjectRenderData)" Label="ObjectRenderData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entities Type=TaggedEntity)" Label="TaggedEntity" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entities Type=TaggedObject)" Label="TaggedObject" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="4458411f-e962-470f-a691-dcaebcd809a7" name="Character">
+          <references>
+            <reference Id="48a93e30-69a1-4cd6-9d2a-634f5eef683c" name="Editor">
+              <ArtifactNode Label="Editor" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Character/Editor/)">
+                <Category Ref="ProjectFolder" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=Character)" Label="Character" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=CharacterBone)" Label="CharacterBone" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=CharacterBuilder)" Label="CharacterBuilder" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=CharacterEditor)" Label="CharacterEditor" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=CharacterEditorForm)" Label="CharacterEditorForm" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=CharacterEditorService)" Label="CharacterEditorService" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=CharacterMesh)" Label="CharacterMesh" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=CharacterWizardsEditorForm)" Label="CharacterWizardsEditorForm" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="fe0897ee-8d72-46c8-be64-ae5345a9aedb" name="Character1">
+              <ArtifactNode Label="Character" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Character/)">
+                <Category Ref="ProjectFolder" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=Character)" Label="Character" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=CharacterBone)" Label="CharacterBone" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=CharacterBuilder)" Label="CharacterBuilder" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=CharacterEditor)" Label="CharacterEditor" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=CharacterEditorForm)" Label="CharacterEditorForm" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=CharacterEditorService)" Label="CharacterEditorService" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=CharacterMesh)" Label="CharacterMesh" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Character.Editor Type=CharacterWizardsEditorForm)" Label="CharacterWizardsEditorForm" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="ee5ae4ba-9b0d-4c62-9e2f-e59fc88ce42c" name="Terrain">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="f7074b6d-224c-4ac5-b6f3-bf661b7c35ab" direction="Forward">
+              <layerMoniker Id="1b7890a3-d780-4715-b5b8-2d2e34e978c2" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="fd0df8c5-687a-4bd3-a5f4-4510e9c6a70e" name="Terrain">
+              <ArtifactNode Label="Terrain" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Terrain/)">
+                <Category Ref="ProjectFolder" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Terrain.Client Type=TerrainBlockClientPhysics)" Label="TerrainBlockClientPhysics" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Terrain.Client Type=TerrainBlockHeightfieldBuilder)" Label="TerrainBlockHeightfieldBuilder" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Terrain.Client Type=TerrainClientPhysics)" Label="TerrainClientPhysics" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Terrain.Client Type=TerrainClientTest)" Label="TerrainClientTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Terrain.Editor Type=TerainEditorPlugin)" Label="TerainEditorPlugin" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Terrain.Editor Type=TerrainCreateTool)" Label="TerrainCreateTool" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Terrain.Editor Type=TerrainEditorForm)" Label="TerrainEditorForm" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Terrain.Editor Type=TerrainEditorModule)" Label="TerrainEditorModule" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Terrain Type=TerrainEditorTest)" Label="TerrainEditorTest" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.ServerClient.Editor.Terrain Type=TerrainPaintTool)" Label="TerrainPaintTool" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Terrain.Editor Type=TerrainRaiseTool)" Label="TerrainRaiseTool" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Terrain.Editor Type=TerrainWorldEditorExtension)" Label="TerrainWorldEditorExtension" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Terrain.Editor Type=TerrainWorldEditorGUI)" Label="TerrainWorldEditorGUI" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="1b7890a3-d780-4715-b5b8-2d2e34e978c2" name="Scene">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="5e60d9a9-86a7-475c-ac0a-7b386c0dcd7a" direction="Backward">
+              <layerMoniker Id="10870258-6300-46f1-9cbd-ae0b63efcd85" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="ffac3272-2f62-4004-b2c9-e6cfa731f289" name="Scene">
+              <ArtifactNode Label="Scene" Category="CodeSchema_ProjectItem" Id="(Assembly=../newmodules/scene/)">
+                <Category Ref="ProjectFolder" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Editor.Scene Type=EditorScene)" Label="EditorScene" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.ServerClient.Editor Type=(Name=PickType ParentType=WorldEditor))" Label="WorldEditor.PickType" Category="CodeSchema_Enum">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.ServerClient.Editor Type=(Name=PickResult ParentType=WorldEditor))" Label="WorldEditor.PickResult" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Editor.Scene Type=SceneEditor)" Label="SceneEditor" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.ServerClient.Editor Type=WorldEditor)" Label="WorldEditor" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Editor.Scene Type=SceneCoreData)" Label="SceneCoreData" Category="CodeSchema_Class">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+      </childLayers>
+    </layer>
+  </layers>
+</layerModel>

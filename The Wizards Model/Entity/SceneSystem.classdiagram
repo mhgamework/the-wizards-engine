@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="98499bca-544a-4d5e-b8b3-5fba9753f2e8" name="SceneSystem" linkedPackageId="e941aff2-b27b-4680-9b68-d6d380b997c5" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="a36d3dfc-5423-4e15-be0c-c4cfa085bd49">
+      <profileInstance Id="704fcac6-547f-49b0-8ae2-8046bee281ef" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="d016791d-6167-4f23-82bf-c48668d51a5f">
+      <profileInstance Id="1ef38800-ee6d-45ea-b77c-470eb2b65bfc" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="01f16a6d-a291-4955-b2e3-bf361632e3d9" name="IScene" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="078fb05e-f0ac-4822-9941-513475f19822" />
+        <targetEnds>
+          <association Id="a4091e05-e886-43d8-9f8c-8a2627f4f1d9" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <interfaceMoniker Id="cda0cbdc-28a6-476e-98c0-8f20b6928319" LastKnownName="ISceneData" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="5241550d-0315-4a30-a041-e14576153498" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="09d021d9-e64f-4329-b6f2-9b1d9a1c85c8" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="dc9d4c6d-0d9f-4f57-946c-d16aab3ce6ba" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="9288d958-dbea-4bd8-99f4-40ab35bfca54" name="Lower" value="*">
+                      <elementDefinition Id="0dee6d02-5e36-4d8d-bf71-15805883bb7a" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="b29e7997-6f21-4982-98f1-c3527799076e" name="Upper" value="*">
+                      <elementDefinition Id="ea69621c-972d-44f0-9f05-dcb2ec9c6c01" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="a7515f8e-0275-44c3-8ccf-5e13c5281525" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="18e4f396-69e3-4e92-b701-a38d206aebc0" />
+          </association>
+        </targetEnds>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="2e1758ac-30a3-4bf3-a93e-9175d3a86be9" name="SceneCoreData" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="c596c831-33cf-4ca2-8d0b-519fd3c20260" />
+        <suppliersInternal>
+          <interfaceRealization Id="038d3b7c-34a4-41c7-a618-a3b6cd3ceef2">
+            <interfaceMoniker Id="cda0cbdc-28a6-476e-98c0-8f20b6928319" LastKnownName="ISceneData" />
+            <elementDefinition Id="4aaefdf4-236b-44d7-82f2-52b115b165ae" />
+          </interfaceRealization>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="cda0cbdc-28a6-476e-98c0-8f20b6928319" name="ISceneData" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="c52065ed-6733-4871-a96a-3f703316bdea" />
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="172a8453-3ffa-4ae0-ab32-02bb7cd9f3e6" name="SceneEntityData" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="e652f572-b6ad-4ea9-972f-114e6a08a2ea" />
+        <suppliersInternal>
+          <interfaceRealization Id="82d21a23-d79b-42e4-8863-21f2c4d912ec">
+            <interfaceMoniker Id="cda0cbdc-28a6-476e-98c0-8f20b6928319" LastKnownName="ISceneData" />
+            <elementDefinition Id="a2c8b896-c236-4158-a524-07f985d84631" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <targetEnds>
+          <association Id="236447df-540e-45f9-ba72-ac6f0e5e6d7e" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <interfaceMoniker Id="85dca8e6-4173-4f1d-a49f-d16373bfd4d9" LastKnownName="IEntity" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f32d6a85-dc59-4d27-a124-46b6b8e449e0" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="fb9a2829-dc3f-456c-ad9a-ba8f799fc57a" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="edcbd18a-93fd-4c5a-9239-ccc2b69d3d15" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="d483cbbb-730f-4ba9-be36-04916f1a16cc" name="Lower" value="*">
+                      <elementDefinition Id="8ac51e5c-4a14-4ed9-be90-bc758b2e63d9" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="5df465a3-6be6-4a81-9190-b174fcddd9f1" name="Upper" value="*">
+                      <elementDefinition Id="83bfb0e3-0241-4871-8e23-20e3bdb8ebd3" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="b99fe473-4681-4fa4-9ab3-cf9b40537ae6" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="95baa3d8-699e-4b07-9615-a20f3b909399" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="85dca8e6-4173-4f1d-a49f-d16373bfd4d9" name="IEntity" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="8e0ee653-7a30-4a4f-bd1b-2266fda7481c" />
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="64f03943-3c89-40bd-ad97-f35519ccef3a" name="SceneTerrainData" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="f3ce522c-9c3e-4d62-8020-9ba9fb7b7f0a" />
+        <suppliersInternal>
+          <interfaceRealization Id="16405ace-a5ba-47f9-8afa-7aa92d8fcfcc">
+            <interfaceMoniker Id="cda0cbdc-28a6-476e-98c0-8f20b6928319" LastKnownName="ISceneData" />
+            <elementDefinition Id="4ee1ce55-4b12-49bf-a903-a0972ded96c5" />
+          </interfaceRealization>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="2bf9f339-35e0-4297-aaad-f3cf02b505c6" name="SceneVegetationData" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="75d02ec3-77ba-4b06-8a68-e72051f07fe4" />
+        <suppliersInternal>
+          <interfaceRealization Id="a07de244-b4ce-4638-940d-cf7c4382c8a3">
+            <interfaceMoniker Id="cda0cbdc-28a6-476e-98c0-8f20b6928319" LastKnownName="ISceneData" />
+            <elementDefinition Id="9ccf9d56-41aa-4dc2-af07-b0f93a499ac8" />
+          </interfaceRealization>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="e941aff2-b27b-4680-9b68-d6d380b997c5" name="TheWizardsModel">
+    <elementDefinition Id="d86ba86f-41e5-4d08-904e-2a497f12b6ad" />
+  </package>
+</logicalClassDesignerModel>

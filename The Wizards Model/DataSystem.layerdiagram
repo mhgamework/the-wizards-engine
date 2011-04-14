@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="dd939bb0-ded9-4eb9-8925-6ebe6ad1520d" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <layers>
+    <layer Id="b8f7a670-f828-4475-b2fa-0779479d37cb" name="Data System&#xD;&#xA;">
+      <childLayers>
+        <layer Id="b3f4b314-37b1-4de3-b8d8-0eee74e39e57" name="Client" />
+        <layer Id="db8e4a49-9421-4264-92aa-f5675bb36e5e" name="Editor">
+          <references>
+            <reference Id="9097d20b-f637-4c70-a9df-a7646e7b7a6c" name="EditorScene.cs">
+              <ArtifactNode Label="EditorScene.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../newmodules/editor/scene/editorscene.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Editor.Scene Type=EditorScene)" Label="EditorScene" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="fc409401-24fc-4ad2-b81d-019499e4c910" name="EditorMesh.cs">
+              <ArtifactNode Label="EditorMesh.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/Editor/EditorMesh.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=(Name=Part ParentType=EditorMesh))" Label="EditorMesh.Part" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=EditorMesh)" Label="EditorMesh" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="a9e1ca29-ddb3-4741-a52f-3b3caf2c084f" name="EditorObject.cs">
+              <ArtifactNode Label="EditorObject.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/Editor/EditorObject.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity.Editor Type=EditorObject)" Label="EditorObject" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+            <reference Id="e9195ceb-b4d3-4be9-b150-86408dae55b2" name="EditorEntity.cs">
+              <ArtifactNode Label="EditorEntity.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../NewModules/Entity/Editor/EditorEntity.cs)">
+                <Category Ref="CodeSchema_SourceFile" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entities.Editor Type=EditorEntity)" Label="EditorEntity" Category="CodeSchema_Class">
+                <LinkCategory Ref="Contains" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="8496a92b-820f-4e5a-ad7c-91790be2a5d2" name="Server" />
+      </childLayers>
+      <references>
+        <reference Id="bbb496b9-96f8-47fc-ae9a-b94857ca5819" name="SceneCoreData.cs">
+          <ArtifactNode Label="SceneCoreData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../newmodules/editor/scene/scenecoredata.cs)">
+            <Category Ref="CodeSchema_SourceFile" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Editor.Scene Type=SceneCoreData)" Label="SceneCoreData" Category="CodeSchema_Class">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="ab663577-442b-4b01-b834-9a516bd11d0d" name="EntityCoreData.cs">
+          <ArtifactNode Label="EntityCoreData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../newmodules/entity/entitycoredata.cs)">
+            <Category Ref="CodeSchema_SourceFile" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=EntityCoreData)" Label="EntityCoreData" Category="CodeSchema_Class">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="58c22e31-54fa-411d-b106-d0c96c1b28d9" name="IEntity.cs">
+          <ArtifactNode Label="IEntity.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../newmodules/entity/ientity.cs)">
+            <Category Ref="CodeSchema_SourceFile" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=IEntity)" Label="IEntity" Category="CodeSchema_Interface">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="40eb5d7a-b847-4def-97f7-6f4cb2a9d384" name="IMesh.cs">
+          <ArtifactNode Label="IMesh.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../newmodules/entity/imesh.cs)">
+            <Category Ref="CodeSchema_SourceFile" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=IMesh)" Label="IMesh" Category="CodeSchema_Interface">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="26181732-bf3c-470d-8dc2-25adc268269b" name="IMeshPart.cs">
+          <ArtifactNode Label="IMeshPart.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../newmodules/entity/imeshpart.cs)">
+            <Category Ref="CodeSchema_SourceFile" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=IMeshPart)" Label="IMeshPart" Category="CodeSchema_Interface">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="c6705901-e518-414b-ab86-1cd1bd770543" name="IObject.cs">
+          <ArtifactNode Label="IObject.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../newmodules/entity/iobject.cs)">
+            <Category Ref="CodeSchema_SourceFile" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=IObject)" Label="IObject" Category="CodeSchema_Interface">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="fcb4c4df-3e6d-4d1c-9b27-38ae3773f255" name="MeshCoreData.cs">
+          <ArtifactNode Label="MeshCoreData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../newmodules/entity/meshcoredata.cs)">
+            <Category Ref="CodeSchema_SourceFile" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshCoreData)" Label="MeshCoreData" Category="CodeSchema_Class">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+          <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=(Name=Part ParentType=MeshCoreData))" Label="MeshCoreData.Part" Category="CodeSchema_Class">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+          <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshCoreDataFactory)" Label="MeshCoreDataFactory" Category="CodeSchema_Class">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="bd85a1b5-c1cd-4b7a-90eb-9ebc94562455" name="MeshPartAdditionalData.cs">
+          <ArtifactNode Label="MeshPartAdditionalData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../newmodules/entity/meshpartadditionaldata.cs)">
+            <Category Ref="CodeSchema_SourceFile" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshPartAdditionalData)" Label="MeshPartAdditionalData" Category="CodeSchema_Class">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="4a8b0ea1-64a1-4306-ba2f-fc8fc53e7ad0" name="MeshPartGeometryData.cs">
+          <ArtifactNode Label="MeshPartGeometryData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../newmodules/entity/meshpartgeometrydata.cs)">
+            <Category Ref="CodeSchema_SourceFile" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=MeshPartGeometryData)" Label="MeshPartGeometryData" Category="CodeSchema_Class">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+          <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=(Name=Semantic ParentType=MeshPartGeometryData))" Label="MeshPartGeometryData.Semantic" Category="CodeSchema_Enum">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+          <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=(Name=Source ParentType=MeshPartGeometryData))" Label="MeshPartGeometryData.Source" Category="CodeSchema_Class">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="07a890e1-583d-4d46-8f57-58454cca936e" name="ObjectCoreData.cs">
+          <ArtifactNode Label="ObjectCoreData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../newmodules/entity/objectcoredata.cs)">
+            <Category Ref="CodeSchema_SourceFile" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=ObjectCoreData)" Label="ObjectCoreData" Category="CodeSchema_Class">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="12e54e97-1dd2-45b6-be1c-ca1f9f7a43bf" name="ModelGeometryData.cs">
+          <ArtifactNode Label="ModelGeometryData.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../newmodules/entity/modelgeometrydata.cs)">
+            <Category Ref="CodeSchema_SourceFile" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=NewModules Namespace=MHGameWork.TheWizards.Entity Type=ModelGeometryData)" Label="ModelGeometryData" Category="CodeSchema_Class">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+  </layers>
+</layerModel>

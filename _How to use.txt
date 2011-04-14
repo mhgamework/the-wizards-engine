@@ -1,0 +1,30 @@
+When using the wizards dlls, this must done:
+
+
+add to the app.config file:
+
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <startup useLegacyV2RuntimeActivationPolicy="true">
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/>
+  </startup>
+</configuration>
+
+
+----Must install:
+
+Nvidia PhysX
+
+Visual C++ 2008 redistributable package (NOT SP1)
+
+
+----DEBUG:
+Currently The Wizards is using Debug StillDesign.PhysX libaries. They use the Debug Visual C++ 2008 libraries, which are only installed by VS 2008.
+
+With some renaming and file collection from windows/winsxs , these dlls have been located along with their manifest. 
+
+Solution: Add these files to the executables folder:
+
+_Libraries\VC++ 2008 DEBUG(NO SP1)
+
+WARNING: when using retail StillDesign.PhysX, these files should probably be removed!

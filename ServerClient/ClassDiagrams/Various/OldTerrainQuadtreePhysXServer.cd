@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="MHGameWork.TheWizards.ServerClient.GameClient" Collapsed="true">
+    <Position X="13.75" Y="16" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="GameClientData" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.GameServerClientMain" Collapsed="true">
+    <Position X="10.75" Y="12.25" Width="1.75" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="serverClientGame" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.ProgramOud" Collapsed="true">
+    <Position X="7.75" Y="11" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="SvClMain" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.ServerClientGame" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="14.75" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="engine" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.ServerClientMainOud" Collapsed="true">
+    <Position X="10.75" Y="10.75" Width="1.75" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="instance" />
+      <Property Name="ServerMain" />
+      <Property Name="Wereld" />
+      <Property Name="GameClient" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.Editor.TerrainBlock" Collapsed="true">
+    <Position X="8.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="neighbors" />
+      <Property Name="TerrainOud" />
+      <Property Name="BaseBlock" />
+      <Property Name="West" />
+      <Property Name="East" />
+      <Property Name="North" />
+      <Property Name="South" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.Editor.TerrainOud" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="5.75" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="blocks" />
+      <Property Name="BaseTerrain" />
+      <Property Name="HeightMap" />
+      <Property Name="Engine" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.Engine.TerrainManager" Collapsed="true">
+    <Position X="4.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.Wereld.Body" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="14.25" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.Wereld.QuadTree" Collapsed="true">
+    <Position X="10.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.Wereld.QuadTreeNode" Collapsed="true">
+    <Position X="10.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="UpperLeft" />
+      <Property Name="UpperRight" />
+      <Property Name="LowerLeft" />
+      <Property Name="LowerRight" />
+      <Property Name="Parent" />
+      <Property Name="TerrainBlock" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.Wereld.ServerClientBody" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="12.25" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="clientBody" />
+      <Field Name="serverBody" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.Wereld.WereldOud" Collapsed="true">
+    <Position X="7.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="TerrainManager" />
+      <Property Name="Tree" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.XNAGeoMipMap.Terrain" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="engine" />
+      <Property Name="TerrainInfo" />
+      <Property Name="QuadTreeNode" />
+      <Property Name="Engine" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.XNAGeoMipMap.TerrainBlock" Collapsed="true" HideInheritanceLine="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Terrain" />
+      <Property Name="West" />
+      <Property Name="East" />
+      <Property Name="North" />
+      <Property Name="South" />
+      <Property Name="QuadTreeNode" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Common.GameClientData" Collapsed="true">
+    <Position X="18.75" Y="19" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Server.Wereld.ServerEntityHolder" Collapsed="true">
+    <Position X="16.75" Y="11" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="ContainingNode" />
+      <Property Name="Body" />
+      <Property Name="Wereld" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Server.ServerMainNew" Collapsed="true">
+    <Position X="13.5" Y="14" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="Instance" />
+      <Property Name="Wereld" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Common.GeoMipMap.HeightMapOud" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="2.75" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Common.GeoMipMap.Terrain" Collapsed="true">
+    <Position X="14" Y="4.25" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="blocks" />
+      <Field Name="heightMap" />
+      <Property Name="HeightMap" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Common.GeoMipMap.TerrainBlock" Collapsed="true">
+    <Position X="13" Y="6.25" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="terrain" />
+      <Field Name="neighbors" />
+      <Property Name="West" />
+      <Property Name="East" />
+      <Property Name="North" />
+      <Property Name="South" />
+      <Property Name="Terrain" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Common.GeoMipMap.TerrainInfoOld" Collapsed="true">
+    <Position X="7.75" Y="4" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.Terrain.Rendering.TerrainBlock" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="6" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="neighbors" />
+      <Field Name="quadTreeNode" />
+      <Property Name="West" />
+      <Property Name="East" />
+      <Property Name="North" />
+      <Property Name="South" />
+      <Property Name="QuadTreeNode" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.Terrain.Rendering.TerrainQuadTreeNodeData" Collapsed="true">
+    <Position X="10.5" Y="4" Width="2" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="TerrainBlock" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Server.Engine.TerrainManager" Collapsed="true">
+    <Position X="16.25" Y="15.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Server.Entities.Player" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.75" Y="15" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="body" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Server.GameClient" Collapsed="true">
+    <Position X="18.75" Y="17" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="GameClientData" />
+      <Property Name="PlayerEntity" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Server.GeoMipMap.Terrain" Collapsed="true" HideInheritanceLine="true">
+    <Position X="18.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="TerrainInfo" />
+      <Property Name="QuadTreeNode" />
+      <Property Name="Engine" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Server.GeoMipMap.TerrainBlock" Collapsed="true" HideInheritanceLine="true">
+    <Position X="15.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Terrain" />
+      <Property Name="West" />
+      <Property Name="East" />
+      <Property Name="North" />
+      <Property Name="South" />
+      <Property Name="QuadTreeNode" />
+      <Property Name="ContainingNode" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Server.Wereld.Body" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.75" Y="13" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="entHolder" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Server.Wereld.QuadTree" Collapsed="true">
+    <Position X="13.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Server.Wereld.QuadTreeNode" Collapsed="true">
+    <Position X="13.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="UpperLeft" />
+      <Property Name="UpperRight" />
+      <Property Name="LowerLeft" />
+      <Property Name="LowerRight" />
+      <Property Name="Parent" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MHGameWork.TheWizards.Server.Wereld.Wereld" Collapsed="true">
+    <Position X="16.25" Y="13.25" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="TerrainManager" />
+      <Property Name="Tree" />
+    </ShowAsAssociation>
+  </Class>
+  <Interface Name="MHGameWork.TheWizards.ServerClient.Wereld.IBody" Collapsed="true">
+    <Position X="16.75" Y="9" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="MHGameWork.TheWizards.ServerClient.Wereld.IHolderElement" Collapsed="true">
+    <Position X="16.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="MHGameWork.TheWizards.Server.Wereld.IBody" Collapsed="true">
+    <Position X="13.75" Y="12" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="MHGameWork.TheWizards.Server.Wereld.IHolderElement" Collapsed="true">
+    <Position X="13.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+</ClassDiagram>

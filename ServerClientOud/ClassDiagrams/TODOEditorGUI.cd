@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="MHGameWork.TheWizards.ServerClient.Editor.GuiImage" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>TODO\Editor\GuiImage.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAgAAAAIAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.Editor.GuiKnop" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>TODO\Editor\GuiKnop.cs</FileName>
+      <HashCode>AAIAAAAAAAAAAgAAAAAAAAAAAAAABgAIAAYACAACAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.Editor.GuiOutputBox" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>TODO\Editor\GuiOutputBox.cs</FileName>
+      <HashCode>AAoAAAAAAAAAAgAIAQAACAAAAAIAAAAAAAQAAAAGAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MHGameWork.TheWizards.ServerClient.Editor.GuiPanel" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>TODO\Editor\GuiPanel.cs</FileName>
+      <HashCode>AAAAQAAABIAEEoQIAACUCEAQCAAIEggACACAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+</ClassDiagram>

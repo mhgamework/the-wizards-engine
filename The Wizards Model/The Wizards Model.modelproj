@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1d4c9a82-f2f2-4072-86c5-30cf7863e042}</ProjectGuid>
+    <ArchitectureToolsVersion>1.0.0.0</ArchitectureToolsVersion>
+    <Name>The Wizards Model</Name>
+    <RootNamespace>ModelingProject1</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" />
+  <ItemGroup>
+    <Content Include="DataSystem.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="DataSystem.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>DataSystem.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Entity\EntitySystem.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Entity\EntitySystem.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Entity\EntitySystem.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Entity\MeshSystem.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Entity\MeshSystem.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Entity\MeshSystem.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Entity\SceneSystem.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Entity\SceneSystem.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Entity\SceneSystem.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Entity\SceneXmlSerializer.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Entity\SceneXmlSerializer.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Entity\SceneXmlSerializer.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="ModelDefinition\Package1_1742.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package1_2017.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package2_1742.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package2_2017.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package_0025.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package_0026.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package_0028.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package_0029.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package_1742.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package_2017.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="OBJParser\ImporterOverview.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="OBJParser\ImporterOverview.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>OBJParser\ImporterOverview.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="ParticleDataSystem.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ParticleDataSystem.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>ParticleDataSystem.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="ParticleEffectEditor.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ParticleEffectEditor.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>ParticleEffectEditor.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Rendering\DefaultRenderer.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Rendering\DefaultRenderer.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Rendering\DefaultRenderer.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="SceneEditorEntity.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SceneEditorEntity.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>SceneEditorEntity.classdiagram</DependentUpon>
+    </Content>
+    <Folder Include="ModelDefinition\" />
+    <Content Include="ModelDefinition\ModelingProject1.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Folder Include="Entity" />
+    <Folder Include="Rendering" />
+    <Folder Include="OBJParser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Validate Include="DataSystem.layerdiagram">
+      <SubType>Content</SubType>
+    </Validate>
+    <Validate Include="DataSystem.layerdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>DataSystem.layerdiagram</DependentUpon>
+    </Validate>
+    <Validate Include="DataSystem.layerdiagram.suppressions">
+      <SubType>Content</SubType>
+      <DependentUpon>DataSystem.layerdiagram</DependentUpon>
+    </Validate>
+    <Validate Include="GeneralDesign.layerdiagram">
+      <SubType>Content</SubType>
+    </Validate>
+    <Validate Include="GeneralDesign.layerdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>GeneralDesign.layerdiagram</DependentUpon>
+    </Validate>
+    <Validate Include="GeneralDesign.layerdiagram.suppressions">
+      <SubType>Content</SubType>
+      <DependentUpon>GeneralDesign.layerdiagram</DependentUpon>
+    </Validate>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClientVB\ClientVB.vbproj">
+      <Name>ClientVB</Name>
+      <Project>{8218d77f-2fb6-48e5-867c-85eea4a4b75e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Client\Client.csproj">
+      <Name>Client</Name>
+      <Project>{64749fe6-e3af-4666-bb9f-8ccff4d30e2d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.Core\Common.Core.csproj">
+      <Name>Common.Core</Name>
+      <Project>{372ff145-4b2d-40a4-b171-cfff159e4c91}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerClient\ServerClient.csproj">
+      <Name>ServerClient</Name>
+      <Project>{0fb8e59c-0e9b-4ad9-a4d4-f145d45351ad}</Project>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

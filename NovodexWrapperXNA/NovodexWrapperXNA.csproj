@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectGuid>{14B12B1E-4101-4542-BA07-891EB99C4916}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NovodexWrapperXNA</RootNamespace>
+    <AssemblyName>NovodexWrapperXNA</AssemblyName>
+    <XnaFrameworkVersion>v2.0</XnaFrameworkVersion>
+    <XnaPlatform>Windows</XnaPlatform>
+    <XnaCrossPlatformGroupID>d4bca0fe-b66b-4b05-a041-d2cc64c4bf7b</XnaCrossPlatformGroupID>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x86\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugEditor|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\DebugEditor\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ColladaDebug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\ColladaDebug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86">
+      <Private>False</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
+      <Private>False</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="mscorlib">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controller.cs" />
+    <Compile Include="ControllerManager.cs" />
+    <Compile Include="NovodexDebugOut.cs" />
+    <Compile Include="NovodexDebugRenderer.cs" />
+    <Compile Include="NovodexEnums.cs" />
+    <Compile Include="NovodexMemoryStream.cs" />
+    <Compile Include="NovodexUtil.cs" />
+    <Compile Include="NxActor.cs" />
+    <Compile Include="NxActorDesc.cs" />
+    <Compile Include="NxBodyDesc.cs" />
+    <Compile Include="NxBounds3.cs" />
+    <Compile Include="NxBox.cs" />
+    <Compile Include="NxBoxController.cs" />
+    <Compile Include="NxBoxControllerDesc.cs" />
+    <Compile Include="NxBoxShape.cs" />
+    <Compile Include="NxBoxShapeDesc.cs" />
+    <Compile Include="NxCapsule.cs" />
+    <Compile Include="NxCapsuleController.cs" />
+    <Compile Include="NxCapsuleControllerDesc.cs" />
+    <Compile Include="NxCapsuleShape.cs" />
+    <Compile Include="NxCapsuleShapeDesc.cs" />
+    <Compile Include="NxCCDSkeleton.cs" />
+    <Compile Include="NxCloth.cs" />
+    <Compile Include="NxClothDesc.cs" />
+    <Compile Include="NxClothMesh.cs" />
+    <Compile Include="NxClothMeshDesc.cs" />
+    <Compile Include="NxContactPair.cs" />
+    <Compile Include="NxContactStreamIterator.cs" />
+    <Compile Include="NxController.cs" />
+    <Compile Include="NxControllerDesc.cs" />
+    <Compile Include="NxConvexMesh.cs" />
+    <Compile Include="NxConvexMeshDesc.cs" />
+    <Compile Include="NxConvexShape.cs" />
+    <Compile Include="NxConvexShapeDesc.cs" />
+    <Compile Include="NxCooking.cs" />
+    <Compile Include="NxCylindricalJoint.cs" />
+    <Compile Include="NxCylindricalJointDesc.cs" />
+    <Compile Include="NxD6Joint.cs" />
+    <Compile Include="NxD6JointDesc.cs" />
+    <Compile Include="NxDebugRenderable.cs" />
+    <Compile Include="NxDistanceJoint.cs" />
+    <Compile Include="NxDistanceJointDesc.cs" />
+    <Compile Include="NxEffector.cs" />
+    <Compile Include="NxExportedUtils.cs" />
+    <Compile Include="NxFixedJoint.cs" />
+    <Compile Include="NxFixedJointDesc.cs" />
+    <Compile Include="NxFluid.cs" />
+    <Compile Include="NxFluidDesc.cs" />
+    <Compile Include="NxFluidEmitter.cs" />
+    <Compile Include="NxFluidEmitterDesc.cs" />
+    <Compile Include="NxFoundationSDK.cs" />
+    <Compile Include="NxGroupsMask.cs" />
+    <Compile Include="NxHeightField.cs" />
+    <Compile Include="NxHeightFieldDesc.cs" />
+    <Compile Include="NxHeightFieldSample.cs" />
+    <Compile Include="NxHeightFieldShape.cs" />
+    <Compile Include="NxHeightFieldShapeDesc.cs" />
+    <Compile Include="NxInterface.cs" />
+    <Compile Include="NxJoint.cs" />
+    <Compile Include="NxJointDesc.cs" />
+    <Compile Include="NxJointDriveDesc.cs" />
+    <Compile Include="NxJointLimitDesc.cs" />
+    <Compile Include="NxJointLimitPairDesc.cs" />
+    <Compile Include="NxJointLimitSoftDesc.cs" />
+    <Compile Include="NxJointLimitSoftPairDesc.cs" />
+    <Compile Include="NxMat33.cs" />
+    <Compile Include="NxMat34.cs" />
+    <Compile Include="NxMaterial.cs" />
+    <Compile Include="NxMaterialDesc.cs" />
+    <Compile Include="NxMeshData.cs" />
+    <Compile Include="NxMotorDesc.cs" />
+    <Compile Include="NxPairFlag.cs" />
+    <Compile Include="NxParticleData.cs" />
+    <Compile Include="NxPhysicsSDK.cs" />
+    <Compile Include="NxPhysicsSDKDesc.cs" />
+    <Compile Include="NxPlane.cs" />
+    <Compile Include="NxPlaneShape.cs" />
+    <Compile Include="NxPlaneShapeDesc.cs" />
+    <Compile Include="NxPMap.cs" />
+    <Compile Include="NxPointInPlaneJoint.cs" />
+    <Compile Include="NxPointInPlaneJointDesc.cs" />
+    <Compile Include="NxPointOnLineJoint.cs" />
+    <Compile Include="NxPointOnLineJointDesc.cs" />
+    <Compile Include="NxPrismaticJoint.cs" />
+    <Compile Include="NxPrismaticJointDesc.cs" />
+    <Compile Include="NxProfileData.cs" />
+    <Compile Include="NxPulleyJoint.cs" />
+    <Compile Include="NxPulleyJointDesc.cs" />
+    <Compile Include="NxQuat.cs" />
+    <Compile Include="NxRay.cs" />
+    <Compile Include="NxRaycastHit.cs" />
+    <Compile Include="NxRemoteDebugger.cs" />
+    <Compile Include="NxRevoluteJoint.cs" />
+    <Compile Include="NxRevoluteJointDesc.cs" />
+    <Compile Include="NxScene.cs" />
+    <Compile Include="NxSceneDesc.cs" />
+    <Compile Include="NxSceneLimits.cs" />
+    <Compile Include="NxSceneStats.cs" />
+    <Compile Include="NxSegment.cs" />
+    <Compile Include="NxShape.cs" />
+    <Compile Include="NxShapeDesc.cs" />
+    <Compile Include="NxSimpleTriangleMesh.cs" />
+    <Compile Include="NxSphere.cs" />
+    <Compile Include="NxSphereShape.cs" />
+    <Compile Include="NxSphereShapeDesc.cs" />
+    <Compile Include="NxSphericalJoint.cs" />
+    <Compile Include="NxSphericalJointDesc.cs" />
+    <Compile Include="NxSpringAndDamperEffector.cs" />
+    <Compile Include="NxSpringAndDamperEffectorDesc.cs" />
+    <Compile Include="NxSpringDesc.cs" />
+    <Compile Include="NxStream.cs" />
+    <Compile Include="NxTireFunctionDesc.cs" />
+    <Compile Include="NxTriangle.cs" />
+    <Compile Include="NxTriangleMesh.cs" />
+    <Compile Include="NxTriangleMeshDesc.cs" />
+    <Compile Include="NxTriangleMeshShape.cs" />
+    <Compile Include="NxTriangleMeshShapeDesc.cs" />
+    <Compile Include="NxUserContactReport.cs" />
+    <Compile Include="NxUserControllerHitReport.cs" />
+    <Compile Include="NxUserEntityReport.cs" />
+    <Compile Include="NxUserNotify.cs" />
+    <Compile Include="NxUserOutputStream.cs" />
+    <Compile Include="NxUserRaycastReport.cs" />
+    <Compile Include="NxUserScheduler.cs" />
+    <Compile Include="NxUserTriggerReport.cs" />
+    <Compile Include="NxVec3.cs" />
+    <Compile Include="NxWheelContactData.cs" />
+    <Compile Include="NxWheelShape.cs" />
+    <Compile Include="NxWheelShapeDesc.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <NestedContentProject Include="Content\Content.contentproj">
+      <Project>e9e09997-491d-47fa-bf13-3a413acfd6aa</Project>
+      <Visible>False</Visible>
+    </NestedContentProject>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Novodex_C_Wrapper.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PhysX Binaries\NxCharacter.dll">
+    </Content>
+    <Content Include="PhysX Binaries\NxCooking.dll">
+    </Content>
+    <Content Include="PhysX Binaries\PhysXCore.dll">
+    </Content>
+    <Content Include="PhysX Binaries\PhysXLoader.dll">
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

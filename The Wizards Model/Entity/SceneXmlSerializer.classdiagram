@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="e9e045d0-2a9a-4850-a18c-114a8a491642" name="SceneXmlSerializer" linkedPackageId="ff5fd171-26cf-4797-a950-989fe950bb99" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <ownedCommentsInternal>
+    <comment Id="99d8ca6d-305b-43ca-8887-3ada26cdfc85">
+      <elementDefinition Id="a181efc5-7622-4271-ab84-d172ab8044d9" />
+      <body>The SceneXMLSerializer can serialize any IScene object.
+When it deserializes, it uses RAM implementations for storing the data.</body>
+      <annotatedElements>
+        <classMoniker Id="c02f32e9-d674-45dc-80fe-111fceff6bd6" LastKnownName="SceneXMLSerializer" />
+      </annotatedElements>
+    </comment>
+  </ownedCommentsInternal>
+  <profileInstances>
+    <packageHasProfileInstances Id="7bee026c-b01c-41ee-bfe9-010617fcd55a">
+      <profileInstance Id="f0a2ea80-d6d0-45b6-b7e6-bd6b9445d644" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="755310d1-3ebe-48fe-ad22-b476fcdc2049">
+      <profileInstance Id="2667bf99-7d2a-471a-80c5-584e526e536c" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="c02f32e9-d674-45dc-80fe-111fceff6bd6" name="SceneXMLSerializer" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="68acb9c0-d6fc-4905-beb9-5460b0e80c52" />
+        <suppliersInternal>
+          <dependency Id="db0802d0-2c65-4adb-a8b1-d8a0f2341790">
+            <interfaceMoniker Id="8fd9e150-3c1e-460d-b979-abeba35b38fe" LastKnownName="IScene" />
+            <elementDefinition Id="d415512a-0249-4162-8f4f-405bb20dbf31" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="8fd9e150-3c1e-460d-b979-abeba35b38fe" name="IScene" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="66bdd0de-9b3f-4a0d-993d-29fd5a644178" />
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="ff5fd171-26cf-4797-a950-989fe950bb99" name="TheWizardsModel">
+    <elementDefinition Id="d86ba86f-41e5-4d08-904e-2a497f12b6ad" />
+  </package>
+</logicalClassDesignerModel>

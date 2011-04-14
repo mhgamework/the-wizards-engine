@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="E:\MHGameWork\Projecten\The Wizards CVS\ServerClient\ServerClient.csproj" total="0" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2009-09-04" time="15:17:54">
+  <environment nunit-version="2.5.2.9222" clr-version="2.0.50727.1433" os-version="Microsoft Windows NT 5.1.2600 Service Pack 2" platform="Win32NT" cwd="E:\MHGameWork\Projecten\The Wizards CVS\ServerClient" machine-name="MHGAMEWORKBASE2" user="Michiel" user-domain="MHGAMEWORKBASE2" />
+  <culture-info current-culture="nl-BE" current-uiculture="nl-NL" />
+  <test-suite name="E:\MHGameWork\Projecten\The Wizards CVS\ServerClient\ServerClient.csproj" executed="True" success="False" time="0.000" asserts="0">
+    <results>
+      <test-suite name="E:\MHGameWork\Projecten\The Wizards CVS\ServerClient\bin\x86\Debug\ServerClient.exe" executed="False">
+        <reason>
+          <message><![CDATA[Has no TestFixtures]]></message>
+        </reason>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

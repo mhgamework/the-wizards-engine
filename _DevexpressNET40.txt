@@ -1,0 +1,35 @@
+
+EDIT:
+
+DO NOT USE THIS
+
+
+
+
+
+IT IS HELL
+
+
+
+
+
+
+
+
+
+
+
+
+(use new devexpress 2010)
+
+
+
+Add to
+
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\Config\machine.config
+
+
+
+	<runtime>
+		 <legacyCasPolicy enabled="true" />
+	</runtime>
