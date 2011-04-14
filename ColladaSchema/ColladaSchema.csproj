@@ -119,12 +119,6 @@
     <EmbeddedResource Include="Files\Teapot001.DAE" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.Core\Common.Core.csproj">
-      <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
-      <Name>Common.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
