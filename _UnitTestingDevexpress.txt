@@ -1,0 +1,15 @@
+Something similar must probably be done to make Resharper work, allthough it might be set by default.
+
+
+To make Devexpress unit testing work create following file:
+
+C:\Program Files (x86)\DevExpress 2010.1\IDETools\System\CodeRush\BIN\PLUGINS\CR_ExtUnitTestRunnerNet4.exe.config
+
+with contents:
+
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <startup useLegacyV2RuntimeActivationPolicy="true">
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/>
+  </startup>
+</configuration>
