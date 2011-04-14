@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MHGameWork.TheWizards</RootNamespace>
+    <AssemblyName>Common.Core</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugEditor|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DebugEditor\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ColladaDebug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ColladaDebug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugEditor|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\DebugEditor\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ColladaDebug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\ColladaDebug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
+    <Reference Include="nunit.framework, Version=2.5.2.9222, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collada\ColladaAsset.cs" />
+    <Compile Include="Collada\ColladaBone.cs" />
+    <Compile Include="Collada\ColladaMaterial.cs" />
+    <Compile Include="Collada\ColladaMesh.cs" />
+    <Compile Include="Collada\ColladaModel.cs" />
+    <Compile Include="Collada\ColladaScene.cs" />
+    <Compile Include="Collada\ColladaSource.cs" />
+    <Compile Include="Collada\ColladaTexture.cs" />
+    <Compile Include="Collada\SkinnedModelBuilder.cs" />
+    <Compile Include="Collada\TODO\ColladaMaterialOud.cs" />
+    <Compile Include="Collada\TODO\ColladaMeshOud.cs" />
+    <Compile Include="Collada\TODO\ColladaModelOud.cs" />
+    <Compile Include="Collada\TODO\ColladaTextureOud.cs" />
+    <Compile Include="Database\Database.cs" />
+    <Compile Include="Database\IGameObject.cs" />
+    <Compile Include="Database\IGameService.cs" />
+    <Compile Include="Database\ISimpleTag.cs" />
+    <Compile Include="Database\ITag.cs" />
+    <Compile Include="Database\ITagged.cs" />
+    <Compile Include="Database\ITagGenerater.cs" />
+    <Compile Include="Database\SettingsService.cs" />
+    <Compile Include="Database\SimpleTagGenerater.cs" />
+    <Compile Include="Database\TagManager.cs" />
+    <Compile Include="Database\TagManagerObject.cs" />
+    <Compile Include="Database\UniqueIDService.cs" />
+    <Compile Include="EmbeddedFile.cs" />
+    <Compile Include="Graphics\AttributeSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\PlaneMesh.cs" />
+    <Compile Include="Graphics\SphereMesh.cs" />
+    <Compile Include="Graphics\ColladaShader.cs" />
+    <Compile Include="Graphics\Curve3D.cs" />
+    <Compile Include="Graphics\CustomCamera.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Cursor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\DrawEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiAlign.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiButton.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiControl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiControlCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiGraphics.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiImage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiListBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiListBoxBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiServiceXNA.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiWindow.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiWindowBorder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\IGuiContainer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\IGuiService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\IHandelable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\MouseEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\Gui\TileSet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DEPRECATED\ICursor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\GameFile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\ICamera.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\IGameFile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\IGameObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\IRenderPrimitives.cs" />
+    <Compile Include="Graphics\IXNAGame.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\IXNAObject.cs" />
+    <Compile Include="Graphics\Keyboard.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\LineManager3D.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\LineManager3DLines.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\Mouse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\OrthographicCamera.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\Primitives.cs" />
+    <Compile Include="Graphics\BasicShader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\SkinnedBone.cs" />
+    <Compile Include="Graphics\SkinnedMesh.cs" />
+    <Compile Include="Graphics\SkinnedModel.cs" />
+    <Compile Include="Graphics\SkinnedShader.cs" />
+    <Compile Include="Graphics\SkinnedTangentVertex.cs" />
+    <Compile Include="Graphics\SpectaterCamera.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\TangentVertex.cs" />
+    <Compile Include="Graphics\TestXNAGame.cs" />
+    <Compile Include="Graphics\Texture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\TODO\ColorHelper.cs" />
+    <Compile Include="Graphics\TODO\FileHelper.cs" />
+    <Compile Include="Graphics\TODO\Material.cs" />
+    <Compile Include="Graphics\TODO\ShaderEffect.cs" />
+    <Compile Include="Graphics\TODO\StringHelper.cs" />
+    <Compile Include="Graphics\TODO\TangentVertex.cs" />
+    <Compile Include="Graphics\TODO\TextureBookengine.cs" />
+    <Compile Include="Graphics\TODO\XmlHelper.cs" />
+    <Compile Include="Graphics\Transformation.cs" />
+    <Compile Include="Graphics\VertexElementAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\VertexMultitextured.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\XNAGame.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\XNAGameFiles.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InputBox.Designer.cs">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IntervalCaller.cs" />
+    <Compile Include="IO\ByteReader.cs" />
+    <Compile Include="IO\ByteWriter.cs" />
+    <Compile Include="IQuadTreeNode.cs" />
+    <Compile Include="MathExtra\Function.cs" />
+    <Compile Include="MathExtra\Functions.cs" />
+    <Compile Include="MathExtra\Polynomial.cs" />
+    <Compile Include="MathExtra\Polynomial4.cs" />
+    <Compile Include="MathExtra\SolvePolynomial.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuadTree.cs" />
+    <Compile Include="QuadTreeNodeData.cs" />
+    <Compile Include="QuadTreeVisualizer.cs" />
+    <Compile Include="Raycast\GeometryRaycastResult.cs" />
+    <Compile Include="Raycast\IRaycastable.cs" />
+    <Compile Include="Raycast\IRaycastResult.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Raycast\Raycaster.cs" />
+    <Compile Include="Raycast\RaycastHelper.cs" />
+    <Compile Include="Raycast\RaycastResult.cs" />
+    <Compile Include="Seeder.cs" />
+    <Compile Include="TWDir.cs" />
+    <Compile Include="Water\Camera.cs" />
+    <Compile Include="Water\Mesh.cs" />
+    <Compile Include="Water\SubGrid.cs" />
+    <Compile Include="Water\Utils.cs" />
+    <Compile Include="Water\Vertex.cs" />
+    <Compile Include="Water\Water.cs" />
+    <Compile Include="Water\WaterTest.cs" />
+    <Compile Include="XML\XmlNode.cs" />
+    <Compile Include="XML\XMLSerializer.cs" />
+    <Compile Include="XnaMathExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Game3DPlay\Game3DPlay.csproj">
+      <Project>{3ADBAB57-A020-46BA-8422-250995E5228E}</Project>
+      <Name>Game3DPlay</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\Files\LineRendering.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\Files\ColladaModel.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Collada\Files\SimpleBones001.DAE" />
+    <EmbeddedResource Include="Collada\Files\SimpleCharacterAnim001.DAE" />
+    <EmbeddedResource Include="Collada\Files\test_man_baked.DAE" />
+    <EmbeddedResource Include="Collada\Files\TriangleBones001.DAE" />
+    <EmbeddedResource Include="Collada\Files\Wall001.DAE" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\Files\SkinnedNormalMapping.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\Files\ColladaModelNew.fx" />
+    <EmbeddedResource Include="InputBox.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Core.cd" />
+    <EmbeddedResource Include="Graphics\Files\Calibri.xnb" />
+    <Compile Include="Graphics\AverageFPSCalculater.cs" />
+    <Compile Include="Graphics\BoxMesh.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

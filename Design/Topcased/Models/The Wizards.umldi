@@ -1,0 +1,1166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagrams:Diagrams xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.topcased.org/DI/1.0" xmlns:diagrams="http://www.topcased.org/Diagrams/1.0" xmi:id="_8pWOIPqsEd6_dofkypB2Ww" activeDiagram="_XgkMkRM1Ed-Eo_DVE1__Jw">
+  <model href="The%20Wizards.uml#_qb8akM37EdqwVrslYOdUDA"/>
+  <subdiagrams xmi:id="_8pWOIfqsEd6_dofkypB2Ww">
+    <model href="The%20Wizards.uml#_w8IxIM37EdqwVrslYOdUDA"/>
+    <diagrams xmi:id="_8pWOIvqsEd6_dofkypB2Ww" position="0,0" size="100,100" name="Main" viewport="0,0">
+      <property xmi:id="_8pWOI_qsEd6_dofkypB2Ww" key="pageFormatName" value="A2"/>
+      <property xmi:id="_8pWOJPqsEd6_dofkypB2Ww" key="diagramWidth" value="1680"/>
+      <property xmi:id="_8pWOJfqsEd6_dofkypB2Ww" key="diagramHeight" value="2376"/>
+      <property xmi:id="_8pWOJvqsEd6_dofkypB2Ww" key="pageMarginName" value="Small Margin"/>
+      <property xmi:id="_8pWOJ_qsEd6_dofkypB2Ww" key="diagramTopMargin" value="20"/>
+      <property xmi:id="_8pWOKPqsEd6_dofkypB2Ww" key="diagramBottomMargin" value="20"/>
+      <property xmi:id="_8pWOKfqsEd6_dofkypB2Ww" key="diagramLeftMargin" value="20"/>
+      <property xmi:id="_8pWOKvqsEd6_dofkypB2Ww" key="diagramRightMargin" value="20"/>
+      <property xmi:id="_8pWOK_qsEd6_dofkypB2Ww" key="orientation" value="portrait"/>
+      <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_8pWOLPqsEd6_dofkypB2Ww" presentation="org.topcased.modeler.uml.usecasediagram">
+        <element href="The%20Wizards.uml#_w8IxIM37EdqwVrslYOdUDA"/>
+      </semanticModel>
+    </diagrams>
+  </subdiagrams>
+  <subdiagrams xmi:id="_8pWOLfqsEd6_dofkypB2Ww">
+    <model href="The%20Wizards.uml#_wSRJAHFzEduxYLkhQoh7Ag"/>
+    <diagrams xmi:id="_8pWOLvqsEd6_dofkypB2Ww" position="0,0" size="100,100" name="Main" viewport="0,0">
+      <property xmi:id="_8pWOL_qsEd6_dofkypB2Ww" key="pageFormatName" value=""/>
+      <property xmi:id="_8pWOMPqsEd6_dofkypB2Ww" key="diagramWidth" value="1045"/>
+      <property xmi:id="_8pWOMfqsEd6_dofkypB2Ww" key="diagramHeight" value="736"/>
+      <property xmi:id="_8pWOMvqsEd6_dofkypB2Ww" key="pageMarginName" value="A2"/>
+      <property xmi:id="_8pWOM_qsEd6_dofkypB2Ww" key="diagramTopMargin" value="20"/>
+      <property xmi:id="_8pWONPqsEd6_dofkypB2Ww" key="diagramBottomMargin" value="20"/>
+      <property xmi:id="_8pWONfqsEd6_dofkypB2Ww" key="diagramLeftMargin" value="20"/>
+      <property xmi:id="_8pWONvqsEd6_dofkypB2Ww" key="diagramRightMargin" value="20"/>
+      <property xmi:id="_8pWON_qsEd6_dofkypB2Ww" key="orientation" value="portrait"/>
+      <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_8pWOOPqsEd6_dofkypB2Ww" presentation="org.topcased.modeler.uml.classdiagram">
+        <element href="The%20Wizards.uml#_wSRJAHFzEduxYLkhQoh7Ag"/>
+      </semanticModel>
+      <contained xsi:type="di:GraphNode" xmi:id="_DDSLsPqtEd6_dofkypB2Ww" position="221,291" size="150,120">
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_DDSLsfqtEd6_dofkypB2Ww" presentation="default">
+          <element href="The%20Wizards.uml#_DDSLsvqtEd6_dofkypB2Ww"/>
+        </semanticModel>
+      </contained>
+      <contained xsi:type="di:GraphNode" xmi:id="_DSoPQPqtEd6_dofkypB2Ww" position="151,487" size="150,120">
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_DSoPQfqtEd6_dofkypB2Ww" presentation="default">
+          <element href="The%20Wizards.uml#_DSoPQvqtEd6_dofkypB2Ww"/>
+        </semanticModel>
+      </contained>
+      <contained xsi:type="di:GraphNode" xmi:id="_Dg7xAPqtEd6_dofkypB2Ww" position="579,296" size="150,120">
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Dg7xAfqtEd6_dofkypB2Ww" presentation="default">
+          <element href="The%20Wizards.uml#_Dg7xAvqtEd6_dofkypB2Ww"/>
+        </semanticModel>
+      </contained>
+      <contained xsi:type="di:GraphNode" xmi:id="_DwblkPqtEd6_dofkypB2Ww" position="39,282" size="150,120">
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_DwblkfqtEd6_dofkypB2Ww" presentation="default">
+          <element href="The%20Wizards.uml#_DwlWkPqtEd6_dofkypB2Ww"/>
+        </semanticModel>
+      </contained>
+      <contained xsi:type="di:GraphNode" xmi:id="_ELslQPqtEd6_dofkypB2Ww" position="349,3" size="150,120">
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_ELslQfqtEd6_dofkypB2Ww" presentation="default">
+          <element href="The%20Wizards.uml#_ELslQvqtEd6_dofkypB2Ww"/>
+        </semanticModel>
+      </contained>
+      <contained xsi:type="di:GraphNode" xmi:id="_qEt_4PqtEd6_dofkypB2Ww" position="420,292" size="150,120">
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_qEt_4fqtEd6_dofkypB2Ww" presentation="default">
+          <element href="The%20Wizards.uml#_qEt_4vqtEd6_dofkypB2Ww"/>
+        </semanticModel>
+      </contained>
+      <contained xsi:type="di:GraphNode" xmi:id="_QoWdwPquEd6_dofkypB2Ww" position="351,482" size="151,126">
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_QoWdwfquEd6_dofkypB2Ww" presentation="default">
+          <element href="The%20Wizards.uml#_QoWdwvquEd6_dofkypB2Ww"/>
+        </semanticModel>
+      </contained>
+      <contained xsi:type="di:GraphNode" xmi:id="_D-SbYPqtEd6_dofkypB2Ww" position="346,132" size="150,120">
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_D-SbYfqtEd6_dofkypB2Ww" presentation="default">
+          <element href="The%20Wizards.uml#_D-SbYvqtEd6_dofkypB2Ww"/>
+        </semanticModel>
+      </contained>
+      <contained xsi:type="di:GraphNode" xmi:id="_kUDmgAhbEd-Pyvd6d_OcXA" position="582,491" size="150,120">
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_kUDmgQhbEd-Pyvd6d_OcXA" presentation="default">
+          <element href="The%20Wizards.uml#_kUDmgghbEd-Pyvd6d_OcXA"/>
+        </semanticModel>
+      </contained>
+      <contained xsi:type="di:GraphNode" xmi:id="_Wo1TURM1Ed-Eo_DVE1__Jw" position="798,311" size="150,120">
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Wo1TUhM1Ed-Eo_DVE1__Jw" presentation="default">
+          <element href="The%20Wizards.uml#_Wo1TUxM1Ed-Eo_DVE1__Jw"/>
+        </semanticModel>
+      </contained>
+    </diagrams>
+    <subdiagrams xmi:id="_DCAHYPqvEd6_dofkypB2Ww"/>
+    <subdiagrams xmi:id="_xTv3cQhYEd-Pyvd6d_OcXA">
+      <model href="The%20Wizards.uml#_DSoPQvqtEd6_dofkypB2Ww"/>
+      <diagrams xmi:id="_xTv3cghYEd-Pyvd6d_OcXA" position="0,0" size="100,100" name="unnamed" viewport="0,0">
+        <property xmi:id="_xUVtUAhYEd-Pyvd6d_OcXA" key="pageFormatName" value="A4"/>
+        <property xmi:id="_xUVtUQhYEd-Pyvd6d_OcXA" key="diagramWidth" value="840"/>
+        <property xmi:id="_xUVtUghYEd-Pyvd6d_OcXA" key="diagramHeight" value="1188"/>
+        <property xmi:id="_xUVtUwhYEd-Pyvd6d_OcXA" key="pageMarginName" value="Small Margin"/>
+        <property xmi:id="_xUVtVAhYEd-Pyvd6d_OcXA" key="diagramTopMargin" value="20"/>
+        <property xmi:id="_xUVtVQhYEd-Pyvd6d_OcXA" key="diagramBottomMargin" value="20"/>
+        <property xmi:id="_xUVtVghYEd-Pyvd6d_OcXA" key="diagramLeftMargin" value="20"/>
+        <property xmi:id="_xUVtVwhYEd-Pyvd6d_OcXA" key="diagramRightMargin" value="20"/>
+        <property xmi:id="_xUVtWAhYEd-Pyvd6d_OcXA" key="orientation" value="portrait"/>
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_xTv3cwhYEd-Pyvd6d_OcXA" presentation="org.topcased.modeler.uml.classdiagram">
+          <element href="The%20Wizards.uml#_DSoPQvqtEd6_dofkypB2Ww"/>
+        </semanticModel>
+        <contained xsi:type="di:GraphNode" xmi:id="_x2eKAAhYEd-Pyvd6d_OcXA" position="57,92" size="150,120">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_x2eKAQhYEd-Pyvd6d_OcXA" presentation="default">
+            <element href="The%20Wizards.uml#_x2eKAghYEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+        </contained>
+        <contained xsi:type="di:GraphNode" xmi:id="_yDui4AhYEd-Pyvd6d_OcXA" position="509,131" size="150,120">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_yDui4QhYEd-Pyvd6d_OcXA" presentation="default">
+            <element href="The%20Wizards.uml#_yDui4ghYEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+        </contained>
+      </diagrams>
+      <subdiagrams xmi:id="_95TpwAhYEd-Pyvd6d_OcXA">
+        <model href="The%20Wizards.uml#_x2eKAghYEd-Pyvd6d_OcXA"/>
+        <diagrams xmi:id="_95czsAhYEd-Pyvd6d_OcXA" position="0,0" size="100,100" name="unnamed" viewport="0,0">
+          <property xmi:id="_955foAhYEd-Pyvd6d_OcXA" key="pageFormatName" value="A4"/>
+          <property xmi:id="_955foQhYEd-Pyvd6d_OcXA" key="diagramWidth" value="840"/>
+          <property xmi:id="_955foghYEd-Pyvd6d_OcXA" key="diagramHeight" value="1188"/>
+          <property xmi:id="_955fowhYEd-Pyvd6d_OcXA" key="pageMarginName" value="Small Margin"/>
+          <property xmi:id="_955fpAhYEd-Pyvd6d_OcXA" key="diagramTopMargin" value="20"/>
+          <property xmi:id="_955fpQhYEd-Pyvd6d_OcXA" key="diagramBottomMargin" value="20"/>
+          <property xmi:id="_955fpghYEd-Pyvd6d_OcXA" key="diagramLeftMargin" value="20"/>
+          <property xmi:id="_955fpwhYEd-Pyvd6d_OcXA" key="diagramRightMargin" value="20"/>
+          <property xmi:id="_955fqAhYEd-Pyvd6d_OcXA" key="orientation" value="portrait"/>
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_95czsQhYEd-Pyvd6d_OcXA" presentation="org.topcased.modeler.uml.classdiagram">
+            <element href="The%20Wizards.uml#_x2eKAghYEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="__bWrUAhYEd-Pyvd6d_OcXA" position="120,113" size="247,-1">
+            <anchorage xmi:id="_0YeXQAhZEd-Pyvd6d_OcXA" graphEdge="_0YoIQAhZEd-Pyvd6d_OcXA"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="__bWrUQhYEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#__bWrWAhYEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="__bWrUghYEd-Pyvd6d_OcXA">
+              <property xmi:id="__bWrUwhYEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="__bWrVAhYEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#__bWrWAhYEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="__bWrVQhYEd-Pyvd6d_OcXA">
+              <property xmi:id="__bWrVghYEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="__bWrVwhYEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#__bWrWAhYEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_CuDyMAhZEd-Pyvd6d_OcXA" position="96,336" size="204,-1">
+            <anchorage xmi:id="_y0yW8AhZEd-Pyvd6d_OcXA" graphEdge="_y0yW8ghZEd-Pyvd6d_OcXA _0YoIQAhZEd-Pyvd6d_OcXA _3s9m0QhZEd-Pyvd6d_OcXA"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_CuDyMQhZEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_CuDyOAhZEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="_CuDyMghZEd-Pyvd6d_OcXA">
+              <property xmi:id="_CuDyMwhZEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_CuDyNAhZEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_CuDyOAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="_CuDyNQhZEd-Pyvd6d_OcXA">
+              <property xmi:id="_CuDyNghZEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_CuDyNwhZEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_CuDyOAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_EQQkwAhZEd-Pyvd6d_OcXA" position="466,342" size="238,-1">
+            <anchorage xmi:id="_3s9m0AhZEd-Pyvd6d_OcXA" graphEdge="_3s9m0QhZEd-Pyvd6d_OcXA"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_EQQkwQhZEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_EQQkyAhZEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="_EQQkwghZEd-Pyvd6d_OcXA">
+              <property xmi:id="_EQQkwwhZEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_EQQkxAhZEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_EQQkyAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="_EQQkxQhZEd-Pyvd6d_OcXA">
+              <property xmi:id="_EQQkxghZEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_EQQkxwhZEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_EQQkyAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_w0fTIAhZEd-Pyvd6d_OcXA" position="180,538" size="143,-1">
+            <anchorage xmi:id="_y0yW8QhZEd-Pyvd6d_OcXA" graphEdge="_y0yW8ghZEd-Pyvd6d_OcXA _Ghz3YQ2NEd-1cNBGZR7gaw _Gh9BUA2NEd-1cNBGZR7gaw"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_w0fTIQhZEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_KasGsAhZEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="_w0fTIghZEd-Pyvd6d_OcXA">
+              <property xmi:id="_w0fTIwhZEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_w0fTJAhZEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_KasGsAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="_w0fTJQhZEd-Pyvd6d_OcXA">
+              <property xmi:id="_w0fTJghZEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_w0fTJwhZEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_KasGsAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphEdge" xmi:id="_y0yW8ghZEd-Pyvd6d_OcXA" anchor="_y0yW8AhZEd-Pyvd6d_OcXA _y0yW8QhZEd-Pyvd6d_OcXA">
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_y0yW8whZEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_y0yW9QhZEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_y0yW9AhZEd-Pyvd6d_OcXA" id="stereotypeEdgeObject"/>
+          </contained>
+          <contained xsi:type="di:GraphEdge" xmi:id="_0YoIQAhZEd-Pyvd6d_OcXA" anchor="_y0yW8AhZEd-Pyvd6d_OcXA _0YeXQAhZEd-Pyvd6d_OcXA">
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_0YoIQQhZEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_0YoIRAhZEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_0YoIQghZEd-Pyvd6d_OcXA" id="stereotypeEdgeObject"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_0YoIQwhZEd-Pyvd6d_OcXA" id="middleNameEdgeObject" offset="0,20"/>
+          </contained>
+          <contained xsi:type="di:GraphEdge" xmi:id="_3s9m0QhZEd-Pyvd6d_OcXA" anchor="_3s9m0AhZEd-Pyvd6d_OcXA _y0yW8AhZEd-Pyvd6d_OcXA">
+            <property xmi:id="_D8KuoAhaEd-Pyvd6d_OcXA" key="router" value="Oblique"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_3s9m0ghZEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_3s9m2whZEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_3s9m0whZEd-Pyvd6d_OcXA" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_3s9m1AhZEd-Pyvd6d_OcXA" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_3s9m1QhZEd-Pyvd6d_OcXA" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_3s9m1ghZEd-Pyvd6d_OcXA" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_3s9m1whZEd-Pyvd6d_OcXA" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_3s9m2AhZEd-Pyvd6d_OcXA" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_3s9m2QhZEd-Pyvd6d_OcXA" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_3s9m2ghZEd-Pyvd6d_OcXA" visible="false" id="stereotypeEdgeObject" offset="0,-10"/>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_Ghg8cA2NEd-1cNBGZR7gaw" position="517,599" size="194,-1">
+            <anchorage xmi:id="_Ghz3YA2NEd-1cNBGZR7gaw" graphEdge="_Ghz3YQ2NEd-1cNBGZR7gaw _Gh9BUA2NEd-1cNBGZR7gaw"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Ghg8cQ2NEd-1cNBGZR7gaw" presentation="default">
+              <element href="The%20Wizards.uml#_OpcmKAhZEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="_Ghg8cg2NEd-1cNBGZR7gaw">
+              <property xmi:id="_Ghg8cw2NEd-1cNBGZR7gaw" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Ghg8dA2NEd-1cNBGZR7gaw" presentation="default">
+                <element href="The%20Wizards.uml#_OpcmKAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="_Ghg8dQ2NEd-1cNBGZR7gaw">
+              <property xmi:id="_Ghg8dg2NEd-1cNBGZR7gaw" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Ghg8dw2NEd-1cNBGZR7gaw" presentation="default">
+                <element href="The%20Wizards.uml#_OpcmKAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphEdge" xmi:id="_Ghz3YQ2NEd-1cNBGZR7gaw" anchor="_y0yW8QhZEd-Pyvd6d_OcXA _Ghz3YA2NEd-1cNBGZR7gaw">
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Ghz3Yg2NEd-1cNBGZR7gaw" presentation="default"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_Ghz3Yw2NEd-1cNBGZR7gaw" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_Ghz3ZA2NEd-1cNBGZR7gaw" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_Ghz3ZQ2NEd-1cNBGZR7gaw" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_Ghz3Zg2NEd-1cNBGZR7gaw" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_Ghz3Zw2NEd-1cNBGZR7gaw" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_Ghz3aA2NEd-1cNBGZR7gaw" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_Ghz3aQ2NEd-1cNBGZR7gaw" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_Ghz3ag2NEd-1cNBGZR7gaw" id="stereotypeEdgeObject" offset="0,-10"/>
+          </contained>
+          <contained xsi:type="di:GraphEdge" xmi:id="_Gh9BUA2NEd-1cNBGZR7gaw" anchor="_Ghz3YA2NEd-1cNBGZR7gaw _y0yW8QhZEd-Pyvd6d_OcXA">
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Gh9BUQ2NEd-1cNBGZR7gaw" presentation="default">
+              <element href="The%20Wizards.uml#_DbxTig2NEd-1cNBGZR7gaw"/>
+            </semanticModel>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_Gh9BUg2NEd-1cNBGZR7gaw" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_Gh9BUw2NEd-1cNBGZR7gaw" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_Gh9BVA2NEd-1cNBGZR7gaw" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_Gh9BVQ2NEd-1cNBGZR7gaw" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_Gh9BVg2NEd-1cNBGZR7gaw" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_Gh9BVw2NEd-1cNBGZR7gaw" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_Gh9BWA2NEd-1cNBGZR7gaw" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_Gh9BWQ2NEd-1cNBGZR7gaw" id="stereotypeEdgeObject" offset="0,-10"/>
+          </contained>
+        </diagrams>
+      </subdiagrams>
+    </subdiagrams>
+    <subdiagrams xmi:id="_I0ngwAhZEd-Pyvd6d_OcXA">
+      <model href="The%20Wizards.uml#_DDSLsvqtEd6_dofkypB2Ww"/>
+      <diagrams xmi:id="_I0wqsAhZEd-Pyvd6d_OcXA" position="0,0" size="100,100" name="Client" viewport="0,0">
+        <property xmi:id="_I1XHoAhZEd-Pyvd6d_OcXA" key="pageFormatName" value="A4"/>
+        <property xmi:id="_I1XHoQhZEd-Pyvd6d_OcXA" key="diagramWidth" value="840"/>
+        <property xmi:id="_I1XHoghZEd-Pyvd6d_OcXA" key="diagramHeight" value="1188"/>
+        <property xmi:id="_I1XHowhZEd-Pyvd6d_OcXA" key="pageMarginName" value="Small Margin"/>
+        <property xmi:id="_I1XHpAhZEd-Pyvd6d_OcXA" key="diagramTopMargin" value="20"/>
+        <property xmi:id="_I1XHpQhZEd-Pyvd6d_OcXA" key="diagramBottomMargin" value="20"/>
+        <property xmi:id="_I1XHpghZEd-Pyvd6d_OcXA" key="diagramLeftMargin" value="20"/>
+        <property xmi:id="_I1XHpwhZEd-Pyvd6d_OcXA" key="diagramRightMargin" value="20"/>
+        <property xmi:id="_I1XHqAhZEd-Pyvd6d_OcXA" key="orientation" value="portrait"/>
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_I0wqsQhZEd-Pyvd6d_OcXA" presentation="org.topcased.modeler.uml.classdiagram">
+          <element href="The%20Wizards.uml#_DDSLsvqtEd6_dofkypB2Ww"/>
+        </semanticModel>
+        <contained xsi:type="di:GraphNode" xmi:id="_JkmMMAhZEd-Pyvd6d_OcXA" position="117,183" size="150,120">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_JkmMMQhZEd-Pyvd6d_OcXA" presentation="default">
+            <element href="The%20Wizards.uml#_JkmMMghZEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+        </contained>
+      </diagrams>
+      <subdiagrams xmi:id="_KPXAcAhZEd-Pyvd6d_OcXA">
+        <model href="The%20Wizards.uml#_JkmMMghZEd-Pyvd6d_OcXA"/>
+        <diagrams xmi:id="_KPXAcQhZEd-Pyvd6d_OcXA" position="0,0" size="100,100" name="Client.Physics" viewport="0,0">
+          <property xmi:id="_KPzsYAhZEd-Pyvd6d_OcXA" key="pageFormatName" value="A4"/>
+          <property xmi:id="_KP9dYAhZEd-Pyvd6d_OcXA" key="diagramWidth" value="840"/>
+          <property xmi:id="_KP9dYQhZEd-Pyvd6d_OcXA" key="diagramHeight" value="1188"/>
+          <property xmi:id="_KP9dYghZEd-Pyvd6d_OcXA" key="pageMarginName" value="Small Margin"/>
+          <property xmi:id="_KP9dYwhZEd-Pyvd6d_OcXA" key="diagramTopMargin" value="20"/>
+          <property xmi:id="_KP9dZAhZEd-Pyvd6d_OcXA" key="diagramBottomMargin" value="20"/>
+          <property xmi:id="_KP9dZQhZEd-Pyvd6d_OcXA" key="diagramLeftMargin" value="20"/>
+          <property xmi:id="_KP9dZghZEd-Pyvd6d_OcXA" key="diagramRightMargin" value="20"/>
+          <property xmi:id="_KP9dZwhZEd-Pyvd6d_OcXA" key="orientation" value="portrait"/>
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_KPXAcghZEd-Pyvd6d_OcXA" presentation="org.topcased.modeler.uml.classdiagram">
+            <element href="The%20Wizards.uml#_JkmMMghZEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="_KaiVsAhZEd-Pyvd6d_OcXA" position="275,280" size="169,-1">
+            <anchorage xmi:id="_hLbTkAhZEd-Pyvd6d_OcXA" graphEdge="_8X3goQhiEd-Pyvd6d_OcXA _DbxTgA2NEd-1cNBGZR7gaw"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_KaiVsQhZEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_KasGsAhZEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="_KaiVsghZEd-Pyvd6d_OcXA">
+              <property xmi:id="_KaiVswhZEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_KaiVtAhZEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_KasGsAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="_KaiVtQhZEd-Pyvd6d_OcXA">
+              <property xmi:id="_KaiVtghZEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_KaiVtwhZEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_KasGsAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_OpcmIAhZEd-Pyvd6d_OcXA" position="171,470" size="223,-1">
+            <anchorage xmi:id="_DboJkQ2NEd-1cNBGZR7gaw" graphEdge="_DbxTgA2NEd-1cNBGZR7gaw"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_OpcmIQhZEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_OpcmKAhZEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="_OpcmIghZEd-Pyvd6d_OcXA">
+              <property xmi:id="_OpcmIwhZEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_OpcmJAhZEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_OpcmKAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="_OpcmJQhZEd-Pyvd6d_OcXA">
+              <property xmi:id="_OpcmJghZEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_OpcmJwhZEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_OpcmKAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_6Js_8AhiEd-Pyvd6d_OcXA" position="155,48" size="192,-1">
+            <anchorage xmi:id="_8X3goAhiEd-Pyvd6d_OcXA" graphEdge="_8X3goQhiEd-Pyvd6d_OcXA"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_6Js_8QhiEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_6Js_-AhiEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="_6Js_8ghiEd-Pyvd6d_OcXA">
+              <property xmi:id="_6Js_8whiEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_6Js_9AhiEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_6Js_-AhiEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="_6Js_9QhiEd-Pyvd6d_OcXA">
+              <property xmi:id="_6Js_9ghiEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_6Js_9whiEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_6Js_-AhiEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphEdge" xmi:id="_8X3goQhiEd-Pyvd6d_OcXA" anchor="_8X3goAhiEd-Pyvd6d_OcXA _hLbTkAhZEd-Pyvd6d_OcXA">
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_8X3goghiEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_8X3gpAhiEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_8X3gowhiEd-Pyvd6d_OcXA" id="stereotypeEdgeObject"/>
+          </contained>
+          <contained xsi:type="di:GraphEdge" xmi:id="_DbxTgA2NEd-1cNBGZR7gaw" anchor="_DboJkQ2NEd-1cNBGZR7gaw _hLbTkAhZEd-Pyvd6d_OcXA">
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_DbxTgQ2NEd-1cNBGZR7gaw" presentation="default">
+              <element href="The%20Wizards.uml#_DbxTig2NEd-1cNBGZR7gaw"/>
+            </semanticModel>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_DbxTgg2NEd-1cNBGZR7gaw" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_DbxTgw2NEd-1cNBGZR7gaw" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_DbxThA2NEd-1cNBGZR7gaw" visible="false" id="srcCountEdgeObject" uDistance="12" vDistance="-9"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_DbxThQ2NEd-1cNBGZR7gaw" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_DbxThg2NEd-1cNBGZR7gaw" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_DbxThw2NEd-1cNBGZR7gaw" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_DbxTiA2NEd-1cNBGZR7gaw" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_DbxTiQ2NEd-1cNBGZR7gaw" visible="false" id="stereotypeEdgeObject" offset="0,-10"/>
+          </contained>
+        </diagrams>
+      </subdiagrams>
+    </subdiagrams>
+    <subdiagrams xmi:id="_lGkokAhbEd-Pyvd6d_OcXA">
+      <model href="The%20Wizards.uml#_kUDmgghbEd-Pyvd6d_OcXA"/>
+      <diagrams xmi:id="_lGuZkAhbEd-Pyvd6d_OcXA" position="0,0" size="100,100" name="unnamed" viewport="0,0">
+        <property xmi:id="_lHLFgAhbEd-Pyvd6d_OcXA" key="pageFormatName" value="A4"/>
+        <property xmi:id="_lHLFgQhbEd-Pyvd6d_OcXA" key="diagramWidth" value="840"/>
+        <property xmi:id="_lHLFgghbEd-Pyvd6d_OcXA" key="diagramHeight" value="1188"/>
+        <property xmi:id="_lHLFgwhbEd-Pyvd6d_OcXA" key="pageMarginName" value="Small Margin"/>
+        <property xmi:id="_lHLFhAhbEd-Pyvd6d_OcXA" key="diagramTopMargin" value="20"/>
+        <property xmi:id="_lHLFhQhbEd-Pyvd6d_OcXA" key="diagramBottomMargin" value="20"/>
+        <property xmi:id="_lHLFhghbEd-Pyvd6d_OcXA" key="diagramLeftMargin" value="20"/>
+        <property xmi:id="_lHLFhwhbEd-Pyvd6d_OcXA" key="diagramRightMargin" value="20"/>
+        <property xmi:id="_lHLFiAhbEd-Pyvd6d_OcXA" key="orientation" value="portrait"/>
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_lGuZkQhbEd-Pyvd6d_OcXA" presentation="org.topcased.modeler.uml.classdiagram">
+          <element href="The%20Wizards.uml#_kUDmgghbEd-Pyvd6d_OcXA"/>
+        </semanticModel>
+        <contained xsi:type="di:GraphNode" xmi:id="_lpvnEAhbEd-Pyvd6d_OcXA" position="139,140" size="150,120">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_lpvnEQhbEd-Pyvd6d_OcXA" presentation="default">
+            <element href="The%20Wizards.uml#_lpvnEghbEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+        </contained>
+      </diagrams>
+      <subdiagrams xmi:id="_mOi9QAhbEd-Pyvd6d_OcXA">
+        <model href="The%20Wizards.uml#_lpvnEghbEd-Pyvd6d_OcXA"/>
+        <diagrams xmi:id="_mOsuQAhbEd-Pyvd6d_OcXA" position="0,0" size="100,100" name="unnamed" viewport="0,0">
+          <property xmi:id="_mPIzIAhbEd-Pyvd6d_OcXA" key="pageFormatName" value="A4"/>
+          <property xmi:id="_mPIzIQhbEd-Pyvd6d_OcXA" key="diagramWidth" value="840"/>
+          <property xmi:id="_mPIzIghbEd-Pyvd6d_OcXA" key="diagramHeight" value="1188"/>
+          <property xmi:id="_mPIzIwhbEd-Pyvd6d_OcXA" key="pageMarginName" value="Small Margin"/>
+          <property xmi:id="_mPIzJAhbEd-Pyvd6d_OcXA" key="diagramTopMargin" value="20"/>
+          <property xmi:id="_mPIzJQhbEd-Pyvd6d_OcXA" key="diagramBottomMargin" value="20"/>
+          <property xmi:id="_mPIzJghbEd-Pyvd6d_OcXA" key="diagramLeftMargin" value="20"/>
+          <property xmi:id="_mPIzJwhbEd-Pyvd6d_OcXA" key="diagramRightMargin" value="20"/>
+          <property xmi:id="_mPIzKAhbEd-Pyvd6d_OcXA" key="orientation" value="portrait"/>
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_mOsuQQhbEd-Pyvd6d_OcXA" presentation="org.topcased.modeler.uml.classdiagram">
+            <element href="The%20Wizards.uml#_lpvnEghbEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="_meCx0AhbEd-Pyvd6d_OcXA" position="172,182" size="129,-1">
+            <anchorage xmi:id="_p3v4kQhbEd-Pyvd6d_OcXA" graphEdge="_p3v4kghbEd-Pyvd6d_OcXA"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_meCx0QhbEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_meCx2AhbEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="_meCx0ghbEd-Pyvd6d_OcXA">
+              <property xmi:id="_meCx0whbEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_meCx1AhbEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_meCx2AhbEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="_meCx1QhbEd-Pyvd6d_OcXA">
+              <property xmi:id="_meCx1ghbEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_meCx1whbEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_meCx2AhbEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_nPqcAAhbEd-Pyvd6d_OcXA" position="523,191" size="100,-1">
+            <anchorage xmi:id="_p3v4kAhbEd-Pyvd6d_OcXA" graphEdge="_p3v4kghbEd-Pyvd6d_OcXA"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_nPqcAQhbEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_nPqcCAhbEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="_nPqcAghbEd-Pyvd6d_OcXA">
+              <property xmi:id="_nPqcAwhbEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_nPqcBAhbEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_nPqcCAhbEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="_nPqcBQhbEd-Pyvd6d_OcXA">
+              <property xmi:id="_nPqcBghbEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_nPqcBwhbEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_nPqcCAhbEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_nwAI8AhbEd-Pyvd6d_OcXA" position="103,458" size="158,-1">
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_nwAI8QhbEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_nwAI-AhbEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="_nwAI8ghbEd-Pyvd6d_OcXA">
+              <property xmi:id="_nwAI8whbEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_nwAI9AhbEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_nwAI-AhbEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="_nwAI9QhbEd-Pyvd6d_OcXA">
+              <property xmi:id="_nwAI9ghbEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_nwAI9whbEd-Pyvd6d_OcXA" presentation="default">
+                <element href="The%20Wizards.uml#_nwAI-AhbEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphEdge" xmi:id="_p3v4kghbEd-Pyvd6d_OcXA" anchor="_p3v4kAhbEd-Pyvd6d_OcXA _p3v4kQhbEd-Pyvd6d_OcXA">
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_p3v4kwhbEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_p3v4lghbEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_p3v4lAhbEd-Pyvd6d_OcXA" id="stereotypeEdgeObject"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_p3v4lQhbEd-Pyvd6d_OcXA" visible="false" id="middleNameEdgeObject"/>
+          </contained>
+        </diagrams>
+      </subdiagrams>
+    </subdiagrams>
+    <subdiagrams xmi:id="_xrqCUAhyEd-Pyvd6d_OcXA">
+      <model href="The%20Wizards.uml#_qEt_4vqtEd6_dofkypB2Ww"/>
+      <diagrams xmi:id="_xrzMQAhyEd-Pyvd6d_OcXA" position="0,0" size="100,100" name="unnamed" viewport="0,0">
+        <property xmi:id="_xsP4MAhyEd-Pyvd6d_OcXA" key="pageFormatName" value="A4"/>
+        <property xmi:id="_xsP4MQhyEd-Pyvd6d_OcXA" key="diagramWidth" value="840"/>
+        <property xmi:id="_xsP4MghyEd-Pyvd6d_OcXA" key="diagramHeight" value="1188"/>
+        <property xmi:id="_xsP4MwhyEd-Pyvd6d_OcXA" key="pageMarginName" value="Small Margin"/>
+        <property xmi:id="_xsP4NAhyEd-Pyvd6d_OcXA" key="diagramTopMargin" value="20"/>
+        <property xmi:id="_xsP4NQhyEd-Pyvd6d_OcXA" key="diagramBottomMargin" value="20"/>
+        <property xmi:id="_xsP4NghyEd-Pyvd6d_OcXA" key="diagramLeftMargin" value="20"/>
+        <property xmi:id="_xsP4NwhyEd-Pyvd6d_OcXA" key="diagramRightMargin" value="20"/>
+        <property xmi:id="_xsP4OAhyEd-Pyvd6d_OcXA" key="orientation" value="portrait"/>
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_xrzMQQhyEd-Pyvd6d_OcXA" presentation="org.topcased.modeler.uml.classdiagram">
+          <element href="The%20Wizards.uml#_qEt_4vqtEd6_dofkypB2Ww"/>
+        </semanticModel>
+        <contained xsi:type="di:GraphNode" xmi:id="_yNCREAhyEd-Pyvd6d_OcXA" position="557,367" size="100,-1">
+          <anchorage xmi:id="_IGfQoAhzEd-Pyvd6d_OcXA" graphEdge="_IGfQoQhzEd-Pyvd6d_OcXA"/>
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_yNCREQhyEd-Pyvd6d_OcXA" presentation="default">
+            <element href="The%20Wizards.uml#_yNLbAAhyEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="_yNCREghyEd-Pyvd6d_OcXA">
+            <property xmi:id="_yNCREwhyEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="37"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_yNCRFAhyEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_yNLbAAhyEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_yNCRFQhyEd-Pyvd6d_OcXA">
+            <property xmi:id="_yNCRFghyEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="47 50 "/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_yNCRFwhyEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_yNLbAAhyEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+          </contained>
+        </contained>
+        <contained xsi:type="di:GraphNode" xmi:id="_y3zFUAhyEd-Pyvd6d_OcXA" position="154,229" size="100,-1">
+          <anchorage xmi:id="_34n64QhyEd-Pyvd6d_OcXA" graphEdge="_34n64ghyEd-Pyvd6d_OcXA _FTYP0AhzEd-Pyvd6d_OcXA _GQxFIAhzEd-Pyvd6d_OcXA"/>
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_y3zFUQhyEd-Pyvd6d_OcXA" presentation="default">
+            <element href="The%20Wizards.uml#_y382UAhyEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="_y3zFUghyEd-Pyvd6d_OcXA">
+            <property xmi:id="_y3zFUwhyEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="37"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_y3zFVAhyEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_y382UAhyEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_y3zFVQhyEd-Pyvd6d_OcXA">
+            <property xmi:id="_y3zFVghyEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="47 50 "/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_y3zFVwhyEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_y382UAhyEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+          </contained>
+        </contained>
+        <contained xsi:type="di:GraphNode" xmi:id="_zkM4UAhyEd-Pyvd6d_OcXA" position="379,9" size="202,-1">
+          <anchorage xmi:id="_34n64AhyEd-Pyvd6d_OcXA" graphEdge="_34n64ghyEd-Pyvd6d_OcXA"/>
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_zkM4UQhyEd-Pyvd6d_OcXA" presentation="default">
+            <element href="The%20Wizards.uml#_zkM4WAhyEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="_zkM4UghyEd-Pyvd6d_OcXA">
+            <property xmi:id="_zkM4UwhyEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="37"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_zkM4VAhyEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_zkM4WAhyEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_zkM4VQhyEd-Pyvd6d_OcXA">
+            <property xmi:id="_zkM4VghyEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="47 50 "/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_zkM4VwhyEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_zkM4WAhyEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+          </contained>
+        </contained>
+        <contained xsi:type="di:GraphEdge" xmi:id="_34n64ghyEd-Pyvd6d_OcXA" anchor="_34n64AhyEd-Pyvd6d_OcXA _34n64QhyEd-Pyvd6d_OcXA">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_34n64whyEd-Pyvd6d_OcXA" presentation="default">
+            <element href="The%20Wizards.uml#_34n67AhyEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_34n65AhyEd-Pyvd6d_OcXA" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_34n65QhyEd-Pyvd6d_OcXA" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_34n65ghyEd-Pyvd6d_OcXA" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_34n65whyEd-Pyvd6d_OcXA" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_34n66AhyEd-Pyvd6d_OcXA" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_34n66QhyEd-Pyvd6d_OcXA" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_34n66ghyEd-Pyvd6d_OcXA" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_34n66whyEd-Pyvd6d_OcXA" id="stereotypeEdgeObject" offset="0,-10"/>
+        </contained>
+        <contained xsi:type="di:GraphNode" xmi:id="_Azx4AAhzEd-Pyvd6d_OcXA" position="324,521" size="100,-1">
+          <anchorage xmi:id="_D629sQhzEd-Pyvd6d_OcXA" graphEdge="_D629sghzEd-Pyvd6d_OcXA _GQxFIAhzEd-Pyvd6d_OcXA _IGfQoQhzEd-Pyvd6d_OcXA"/>
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Azx4AQhzEd-Pyvd6d_OcXA" presentation="default">
+            <element href="The%20Wizards.uml#_Azx4CAhzEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="_Azx4AghzEd-Pyvd6d_OcXA">
+            <property xmi:id="_Azx4AwhzEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="37"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Azx4BAhzEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_Azx4CAhzEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_Azx4BQhzEd-Pyvd6d_OcXA">
+            <property xmi:id="_Azx4BghzEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="47 50 "/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Azx4BwhzEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_Azx4CAhzEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+          </contained>
+        </contained>
+        <contained xsi:type="di:GraphNode" xmi:id="_BuDH4AhzEd-Pyvd6d_OcXA" position="137,520" size="100,-1">
+          <anchorage xmi:id="_D629sAhzEd-Pyvd6d_OcXA" graphEdge="_D629sghzEd-Pyvd6d_OcXA _FTYP0AhzEd-Pyvd6d_OcXA"/>
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_BuDH4QhzEd-Pyvd6d_OcXA" presentation="default">
+            <element href="The%20Wizards.uml#_BuDH6AhzEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="_BuDH4ghzEd-Pyvd6d_OcXA">
+            <property xmi:id="_BuDH4whzEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="37"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_BuDH5AhzEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_BuDH6AhzEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_BuDH5QhzEd-Pyvd6d_OcXA">
+            <property xmi:id="_BuDH5ghzEd-Pyvd6d_OcXA" key="eStructuralFeatureID" value="47 50 "/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_BuDH5whzEd-Pyvd6d_OcXA" presentation="default">
+              <element href="The%20Wizards.uml#_BuDH6AhzEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+          </contained>
+        </contained>
+        <contained xsi:type="di:GraphEdge" xmi:id="_D629sghzEd-Pyvd6d_OcXA" anchor="_D629sAhzEd-Pyvd6d_OcXA _D629sQhzEd-Pyvd6d_OcXA">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_D629swhzEd-Pyvd6d_OcXA" presentation="default">
+            <element href="The%20Wizards.uml#_D629vAhzEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_D629tAhzEd-Pyvd6d_OcXA" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_D629tQhzEd-Pyvd6d_OcXA" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_D629tghzEd-Pyvd6d_OcXA" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_D629twhzEd-Pyvd6d_OcXA" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_D629uAhzEd-Pyvd6d_OcXA" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_D629uQhzEd-Pyvd6d_OcXA" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_D629ughzEd-Pyvd6d_OcXA" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_D629uwhzEd-Pyvd6d_OcXA" id="stereotypeEdgeObject" offset="0,-10"/>
+        </contained>
+        <contained xsi:type="di:GraphEdge" xmi:id="_FTYP0AhzEd-Pyvd6d_OcXA" anchor="_34n64QhyEd-Pyvd6d_OcXA _D629sAhzEd-Pyvd6d_OcXA">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_FTYP0QhzEd-Pyvd6d_OcXA" presentation="default">
+            <element href="The%20Wizards.uml#_FTYP2ghzEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_FTYP0ghzEd-Pyvd6d_OcXA" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_FTYP0whzEd-Pyvd6d_OcXA" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_FTYP1AhzEd-Pyvd6d_OcXA" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_FTYP1QhzEd-Pyvd6d_OcXA" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_FTYP1ghzEd-Pyvd6d_OcXA" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_FTYP1whzEd-Pyvd6d_OcXA" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_FTYP2AhzEd-Pyvd6d_OcXA" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_FTYP2QhzEd-Pyvd6d_OcXA" id="stereotypeEdgeObject" offset="0,-10"/>
+        </contained>
+        <contained xsi:type="di:GraphEdge" xmi:id="_GQxFIAhzEd-Pyvd6d_OcXA" anchor="_34n64QhyEd-Pyvd6d_OcXA _D629sQhzEd-Pyvd6d_OcXA">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_GQxFIQhzEd-Pyvd6d_OcXA" presentation="default">
+            <element href="The%20Wizards.uml#_GQxFKghzEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_GQxFIghzEd-Pyvd6d_OcXA" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_GQxFIwhzEd-Pyvd6d_OcXA" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_GQxFJAhzEd-Pyvd6d_OcXA" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_GQxFJQhzEd-Pyvd6d_OcXA" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_GQxFJghzEd-Pyvd6d_OcXA" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_GQxFJwhzEd-Pyvd6d_OcXA" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_GQxFKAhzEd-Pyvd6d_OcXA" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_GQxFKQhzEd-Pyvd6d_OcXA" id="stereotypeEdgeObject" offset="0,-10"/>
+        </contained>
+        <contained xsi:type="di:GraphEdge" xmi:id="_IGfQoQhzEd-Pyvd6d_OcXA" anchor="_IGfQoAhzEd-Pyvd6d_OcXA _D629sQhzEd-Pyvd6d_OcXA">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_IGfQoghzEd-Pyvd6d_OcXA" presentation="default">
+            <element href="The%20Wizards.uml#_IGfQpQhzEd-Pyvd6d_OcXA"/>
+          </semanticModel>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_IGfQowhzEd-Pyvd6d_OcXA" id="stereotypeEdgeObject"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_IGfQpAhzEd-Pyvd6d_OcXA" visible="false" id="middleNameEdgeObject"/>
+        </contained>
+      </diagrams>
+    </subdiagrams>
+    <subdiagrams xmi:id="_C2SXsAk2Ed-KVumwlGb2hg">
+      <model href="The%20Wizards.uml#_QoWdwvquEd6_dofkypB2Ww"/>
+      <diagrams xmi:id="_C2SXsQk2Ed-KVumwlGb2hg" position="0,0" size="100,100" name="unnamed" viewport="0,0">
+        <property xmi:id="_C2vDoAk2Ed-KVumwlGb2hg" key="pageFormatName" value="A4"/>
+        <property xmi:id="_C2vDoQk2Ed-KVumwlGb2hg" key="diagramWidth" value="840"/>
+        <property xmi:id="_C2vDogk2Ed-KVumwlGb2hg" key="diagramHeight" value="1188"/>
+        <property xmi:id="_C2vDowk2Ed-KVumwlGb2hg" key="pageMarginName" value="Small Margin"/>
+        <property xmi:id="_C2vDpAk2Ed-KVumwlGb2hg" key="diagramTopMargin" value="20"/>
+        <property xmi:id="_C2vDpQk2Ed-KVumwlGb2hg" key="diagramBottomMargin" value="20"/>
+        <property xmi:id="_C2vDpgk2Ed-KVumwlGb2hg" key="diagramLeftMargin" value="20"/>
+        <property xmi:id="_C2vDpwk2Ed-KVumwlGb2hg" key="diagramRightMargin" value="20"/>
+        <property xmi:id="_C2vDqAk2Ed-KVumwlGb2hg" key="orientation" value="portrait"/>
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_C2SXsgk2Ed-KVumwlGb2hg" presentation="org.topcased.modeler.uml.classdiagram">
+          <element href="The%20Wizards.uml#_QoWdwvquEd6_dofkypB2Ww"/>
+        </semanticModel>
+        <contained xsi:type="di:GraphNode" xmi:id="_DSmgQAk2Ed-KVumwlGb2hg" position="166,185" size="150,120">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_DSmgQQk2Ed-KVumwlGb2hg" presentation="default">
+            <element href="The%20Wizards.uml#_DSwRQAk2Ed-KVumwlGb2hg"/>
+          </semanticModel>
+        </contained>
+        <contained xsi:type="di:GraphNode" xmi:id="_Eo4WsAk2Ed-KVumwlGb2hg" position="315,496" size="137,-1">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Eo4WsQk2Ed-KVumwlGb2hg" presentation="default">
+            <element href="The%20Wizards.uml#_EpCHsAk2Ed-KVumwlGb2hg"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="_Eo4Wsgk2Ed-KVumwlGb2hg">
+            <property xmi:id="_Eo4Wswk2Ed-KVumwlGb2hg" key="eStructuralFeatureID" value="37"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Eo4WtAk2Ed-KVumwlGb2hg" presentation="default">
+              <element href="The%20Wizards.uml#_EpCHsAk2Ed-KVumwlGb2hg"/>
+            </semanticModel>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_Eo4WtQk2Ed-KVumwlGb2hg">
+            <property xmi:id="_Eo4Wtgk2Ed-KVumwlGb2hg" key="eStructuralFeatureID" value="47 50 "/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Eo4Wtwk2Ed-KVumwlGb2hg" presentation="default">
+              <element href="The%20Wizards.uml#_EpCHsAk2Ed-KVumwlGb2hg"/>
+            </semanticModel>
+          </contained>
+        </contained>
+      </diagrams>
+      <subdiagrams xmi:id="_D6F-EAk2Ed-KVumwlGb2hg">
+        <model href="The%20Wizards.uml#_DSwRQAk2Ed-KVumwlGb2hg"/>
+        <diagrams xmi:id="_D6F-EQk2Ed-KVumwlGb2hg" position="0,0" size="100,100" name="unnamed" viewport="0,0">
+          <property xmi:id="_D6Y5AAk2Ed-KVumwlGb2hg" key="pageFormatName" value="A4"/>
+          <property xmi:id="_D6Y5AQk2Ed-KVumwlGb2hg" key="diagramWidth" value="840"/>
+          <property xmi:id="_D6Y5Agk2Ed-KVumwlGb2hg" key="diagramHeight" value="1188"/>
+          <property xmi:id="_D6Y5Awk2Ed-KVumwlGb2hg" key="pageMarginName" value="Small Margin"/>
+          <property xmi:id="_D6Y5BAk2Ed-KVumwlGb2hg" key="diagramTopMargin" value="20"/>
+          <property xmi:id="_D6Y5BQk2Ed-KVumwlGb2hg" key="diagramBottomMargin" value="20"/>
+          <property xmi:id="_D6Y5Bgk2Ed-KVumwlGb2hg" key="diagramLeftMargin" value="20"/>
+          <property xmi:id="_D6Y5Bwk2Ed-KVumwlGb2hg" key="diagramRightMargin" value="20"/>
+          <property xmi:id="_D6Y5CAk2Ed-KVumwlGb2hg" key="orientation" value="portrait"/>
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_D6F-Egk2Ed-KVumwlGb2hg" presentation="org.topcased.modeler.uml.classdiagram">
+            <element href="The%20Wizards.uml#_DSwRQAk2Ed-KVumwlGb2hg"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="_Qo4k4Ak2Ed-KVumwlGb2hg" position="107,372" size="216,-1">
+            <anchorage xmi:id="_Dz29wAk3Ed-KVumwlGb2hg" graphEdge="_Dz29wQk3Ed-KVumwlGb2hg _PmmzEAk3Ed-KVumwlGb2hg"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Qo4k4Qk2Ed-KVumwlGb2hg" presentation="default">
+              <element href="The%20Wizards.uml#_Qo4k6Ak2Ed-KVumwlGb2hg"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="_Qo4k4gk2Ed-KVumwlGb2hg">
+              <property xmi:id="_Qo4k4wk2Ed-KVumwlGb2hg" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Qo4k5Ak2Ed-KVumwlGb2hg" presentation="default">
+                <element href="The%20Wizards.uml#_Qo4k6Ak2Ed-KVumwlGb2hg"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="_Qo4k5Qk2Ed-KVumwlGb2hg">
+              <property xmi:id="_Qo4k5gk2Ed-KVumwlGb2hg" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Qo4k5wk2Ed-KVumwlGb2hg" presentation="default">
+                <element href="The%20Wizards.uml#_Qo4k6Ak2Ed-KVumwlGb2hg"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="__YvdUAk2Ed-KVumwlGb2hg" position="253,236" size="162,-1">
+            <anchorage xmi:id="_CFcUIAk3Ed-KVumwlGb2hg" graphEdge="_CFcUIgk3Ed-KVumwlGb2hg _Dz29wQk3Ed-KVumwlGb2hg _M--CcAk3Ed-KVumwlGb2hg"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="__YvdUQk2Ed-KVumwlGb2hg" presentation="default">
+              <element href="The%20Wizards.uml#__YvdWAk2Ed-KVumwlGb2hg"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="__YvdUgk2Ed-KVumwlGb2hg">
+              <property xmi:id="__YvdUwk2Ed-KVumwlGb2hg" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="__YvdVAk2Ed-KVumwlGb2hg" presentation="default">
+                <element href="The%20Wizards.uml#__YvdWAk2Ed-KVumwlGb2hg"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="__YvdVQk2Ed-KVumwlGb2hg">
+              <property xmi:id="__YvdVgk2Ed-KVumwlGb2hg" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="__YvdVwk2Ed-KVumwlGb2hg" presentation="default">
+                <element href="The%20Wizards.uml#__YvdWAk2Ed-KVumwlGb2hg"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_Ase9IAk3Ed-KVumwlGb2hg" position="259,96" size="143,-1">
+            <anchorage xmi:id="_CFcUIQk3Ed-KVumwlGb2hg" graphEdge="_CFcUIgk3Ed-KVumwlGb2hg _KxKMuQ2NEd-1cNBGZR7gaw _KxKMww2NEd-1cNBGZR7gaw"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Ase9IQk3Ed-KVumwlGb2hg" presentation="default">
+              <element href="The%20Wizards.uml#_KasGsAhZEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="_Ase9Igk3Ed-KVumwlGb2hg">
+              <property xmi:id="_Ase9Iwk3Ed-KVumwlGb2hg" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Ase9JAk3Ed-KVumwlGb2hg" presentation="default">
+                <element href="The%20Wizards.uml#_KasGsAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="_Ase9JQk3Ed-KVumwlGb2hg">
+              <property xmi:id="_Ase9Jgk3Ed-KVumwlGb2hg" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Ase9Jwk3Ed-KVumwlGb2hg" presentation="default">
+                <element href="The%20Wizards.uml#_KasGsAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphEdge" xmi:id="_CFcUIgk3Ed-KVumwlGb2hg" anchor="_CFcUIAk3Ed-KVumwlGb2hg _CFcUIQk3Ed-KVumwlGb2hg">
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_CFcUIwk3Ed-KVumwlGb2hg" presentation="default">
+              <element href="The%20Wizards.uml#_CFcUJQk3Ed-KVumwlGb2hg"/>
+            </semanticModel>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_CFcUJAk3Ed-KVumwlGb2hg" id="stereotypeEdgeObject"/>
+          </contained>
+          <contained xsi:type="di:GraphEdge" xmi:id="_Dz29wQk3Ed-KVumwlGb2hg" anchor="_CFcUIAk3Ed-KVumwlGb2hg _Dz29wAk3Ed-KVumwlGb2hg">
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Dz29wgk3Ed-KVumwlGb2hg" presentation="default">
+              <element href="The%20Wizards.uml#_Dz29xQk3Ed-KVumwlGb2hg"/>
+            </semanticModel>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_Dz29wwk3Ed-KVumwlGb2hg" id="stereotypeEdgeObject"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_Dz29xAk3Ed-KVumwlGb2hg" visible="false" id="middleNameEdgeObject"/>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_MAr1QAk3Ed-KVumwlGb2hg" position="520,373" size="102,-1">
+            <anchorage xmi:id="_M-0RcAk3Ed-KVumwlGb2hg" graphEdge="_M--CcAk3Ed-KVumwlGb2hg _PmmzEAk3Ed-KVumwlGb2hg"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_MAr1QQk3Ed-KVumwlGb2hg" presentation="default">
+              <element href="The%20Wizards.uml#_EpCHsAk2Ed-KVumwlGb2hg"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="_MAr1Qgk3Ed-KVumwlGb2hg">
+              <property xmi:id="_MAr1Qwk3Ed-KVumwlGb2hg" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_MAr1RAk3Ed-KVumwlGb2hg" presentation="default">
+                <element href="The%20Wizards.uml#_EpCHsAk2Ed-KVumwlGb2hg"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="_MAr1RQk3Ed-KVumwlGb2hg">
+              <property xmi:id="_MAr1Rgk3Ed-KVumwlGb2hg" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_MAr1Rwk3Ed-KVumwlGb2hg" presentation="default">
+                <element href="The%20Wizards.uml#_EpCHsAk2Ed-KVumwlGb2hg"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphEdge" xmi:id="_M--CcAk3Ed-KVumwlGb2hg" anchor="_CFcUIAk3Ed-KVumwlGb2hg _M-0RcAk3Ed-KVumwlGb2hg">
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_M--CcQk3Ed-KVumwlGb2hg" presentation="default">
+              <element href="The%20Wizards.uml#_M--Cegk3Ed-KVumwlGb2hg"/>
+            </semanticModel>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_M--Ccgk3Ed-KVumwlGb2hg" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_M--Ccwk3Ed-KVumwlGb2hg" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_M--CdAk3Ed-KVumwlGb2hg" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_M--CdQk3Ed-KVumwlGb2hg" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_M--Cdgk3Ed-KVumwlGb2hg" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_M--Cdwk3Ed-KVumwlGb2hg" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_M--CeAk3Ed-KVumwlGb2hg" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_M--CeQk3Ed-KVumwlGb2hg" id="stereotypeEdgeObject" offset="0,-10"/>
+          </contained>
+          <contained xsi:type="di:GraphEdge" xmi:id="_PmmzEAk3Ed-KVumwlGb2hg" anchor="_Dz29wAk3Ed-KVumwlGb2hg _M-0RcAk3Ed-KVumwlGb2hg">
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_PmmzEQk3Ed-KVumwlGb2hg" presentation="default">
+              <element href="The%20Wizards.uml#_PmmzFAk3Ed-KVumwlGb2hg"/>
+            </semanticModel>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_PmmzEgk3Ed-KVumwlGb2hg" id="stereotypeEdgeObject"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_PmmzEwk3Ed-KVumwlGb2hg" visible="false" id="middleNameEdgeObject"/>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_KxKMsA2NEd-1cNBGZR7gaw" position="531,99" size="194,-1">
+            <anchorage xmi:id="_KxKMuA2NEd-1cNBGZR7gaw" graphEdge="_KxKMuQ2NEd-1cNBGZR7gaw _KxKMww2NEd-1cNBGZR7gaw"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_KxKMsQ2NEd-1cNBGZR7gaw" presentation="default">
+              <element href="The%20Wizards.uml#_OpcmKAhZEd-Pyvd6d_OcXA"/>
+            </semanticModel>
+            <contained xsi:type="di:GraphNode" xmi:id="_KxKMsg2NEd-1cNBGZR7gaw">
+              <property xmi:id="_KxKMsw2NEd-1cNBGZR7gaw" key="eStructuralFeatureID" value="37"/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_KxKMtA2NEd-1cNBGZR7gaw" presentation="default">
+                <element href="The%20Wizards.uml#_OpcmKAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+            <contained xsi:type="di:GraphNode" xmi:id="_KxKMtQ2NEd-1cNBGZR7gaw">
+              <property xmi:id="_KxKMtg2NEd-1cNBGZR7gaw" key="eStructuralFeatureID" value="47 50 "/>
+              <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_KxKMtw2NEd-1cNBGZR7gaw" presentation="default">
+                <element href="The%20Wizards.uml#_OpcmKAhZEd-Pyvd6d_OcXA"/>
+              </semanticModel>
+            </contained>
+          </contained>
+          <contained xsi:type="di:GraphEdge" xmi:id="_KxKMuQ2NEd-1cNBGZR7gaw" anchor="_CFcUIQk3Ed-KVumwlGb2hg _KxKMuA2NEd-1cNBGZR7gaw">
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_KxKMug2NEd-1cNBGZR7gaw" presentation="default"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_KxKMuw2NEd-1cNBGZR7gaw" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_KxKMvA2NEd-1cNBGZR7gaw" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_KxKMvQ2NEd-1cNBGZR7gaw" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_KxKMvg2NEd-1cNBGZR7gaw" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_KxKMvw2NEd-1cNBGZR7gaw" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_KxKMwA2NEd-1cNBGZR7gaw" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_KxKMwQ2NEd-1cNBGZR7gaw" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_KxKMwg2NEd-1cNBGZR7gaw" id="stereotypeEdgeObject" offset="0,-10"/>
+          </contained>
+          <contained xsi:type="di:GraphEdge" xmi:id="_KxKMww2NEd-1cNBGZR7gaw" anchor="_KxKMuA2NEd-1cNBGZR7gaw _CFcUIQk3Ed-KVumwlGb2hg">
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_KxKMxA2NEd-1cNBGZR7gaw" presentation="default">
+              <element href="The%20Wizards.uml#_DbxTig2NEd-1cNBGZR7gaw"/>
+            </semanticModel>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_KxKMxQ2NEd-1cNBGZR7gaw" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_KxKMxg2NEd-1cNBGZR7gaw" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_KxKMxw2NEd-1cNBGZR7gaw" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_KxKMyA2NEd-1cNBGZR7gaw" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_KxKMyQ2NEd-1cNBGZR7gaw" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+            <contained xsi:type="di:EdgeObjectUV" xmi:id="_KxKMyg2NEd-1cNBGZR7gaw" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_KxKMyw2NEd-1cNBGZR7gaw" visible="false" id="middleNameEdgeObject" offset="9,18"/>
+            <contained xsi:type="di:EdgeObjectOffset" xmi:id="_KxKMzA2NEd-1cNBGZR7gaw" id="stereotypeEdgeObject" offset="0,-10"/>
+          </contained>
+        </diagrams>
+      </subdiagrams>
+    </subdiagrams>
+    <subdiagrams xmi:id="_XgkMkBM1Ed-Eo_DVE1__Jw">
+      <model href="The%20Wizards.uml#_Wo1TUxM1Ed-Eo_DVE1__Jw"/>
+      <diagrams xmi:id="_XgkMkRM1Ed-Eo_DVE1__Jw" position="0,0" size="100,100" name="unnamed" viewport="0,0">
+        <property xmi:id="_XhARcBM1Ed-Eo_DVE1__Jw" key="pageFormatName" value="A4"/>
+        <property xmi:id="_XhARcRM1Ed-Eo_DVE1__Jw" key="diagramWidth" value="840"/>
+        <property xmi:id="_XhARchM1Ed-Eo_DVE1__Jw" key="diagramHeight" value="1188"/>
+        <property xmi:id="_XhARcxM1Ed-Eo_DVE1__Jw" key="pageMarginName" value="Small Margin"/>
+        <property xmi:id="_XhARdBM1Ed-Eo_DVE1__Jw" key="diagramTopMargin" value="20"/>
+        <property xmi:id="_XhARdRM1Ed-Eo_DVE1__Jw" key="diagramBottomMargin" value="20"/>
+        <property xmi:id="_XhARdhM1Ed-Eo_DVE1__Jw" key="diagramLeftMargin" value="20"/>
+        <property xmi:id="_XhARdxM1Ed-Eo_DVE1__Jw" key="diagramRightMargin" value="20"/>
+        <property xmi:id="_XhAReBM1Ed-Eo_DVE1__Jw" key="orientation" value="portrait"/>
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_XgkMkhM1Ed-Eo_DVE1__Jw" presentation="org.topcased.modeler.uml.classdiagram">
+          <element href="The%20Wizards.uml#_Wo1TUxM1Ed-Eo_DVE1__Jw"/>
+        </semanticModel>
+        <contained xsi:type="di:GraphNode" xmi:id="_Xru6wBM1Ed-Eo_DVE1__Jw" position="308,24" size="111,-1">
+          <anchorage xmi:id="_jPlYcRM1Ed-Eo_DVE1__Jw" graphEdge="_j5Tq4RM1Ed-Eo_DVE1__Jw _mEZlQBM8Ed-Eo_DVE1__Jw _Pas-QRNtEd-Eo_DVE1__Jw _RNV68BP5Ed-XTZYiMtrR7A _Pz2L4BQOEd-XTZYiMtrR7A"/>
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Xru6wRM1Ed-Eo_DVE1__Jw" presentation="default">
+            <element href="The%20Wizards.uml#_Xr4rwBM1Ed-Eo_DVE1__Jw"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="_Xru6whM1Ed-Eo_DVE1__Jw">
+            <property xmi:id="_Xru6wxM1Ed-Eo_DVE1__Jw" key="eStructuralFeatureID" value="37"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Xru6xBM1Ed-Eo_DVE1__Jw" presentation="default">
+              <element href="The%20Wizards.uml#_Xr4rwBM1Ed-Eo_DVE1__Jw"/>
+            </semanticModel>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_Xru6xRM1Ed-Eo_DVE1__Jw">
+            <property xmi:id="_Xru6xhM1Ed-Eo_DVE1__Jw" key="eStructuralFeatureID" value="47 50 "/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Xru6xxM1Ed-Eo_DVE1__Jw" presentation="default">
+              <element href="The%20Wizards.uml#_Xr4rwBM1Ed-Eo_DVE1__Jw"/>
+            </semanticModel>
+          </contained>
+        </contained>
+        <contained xsi:type="di:GraphNode" xmi:id="_a05rIBM1Ed-Eo_DVE1__Jw" position="244,240" size="71,-1">
+          <anchorage xmi:id="_jPlYcBM1Ed-Eo_DVE1__Jw" graphEdge="_Oml7IRP5Ed-XTZYiMtrR7A _Ow79YBQOEd-XTZYiMtrR7A _Pz2L4BQOEd-XTZYiMtrR7A"/>
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_a05rIRM1Ed-Eo_DVE1__Jw" presentation="default">
+            <element href="The%20Wizards.uml#_a05rKBM1Ed-Eo_DVE1__Jw"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="_a05rIhM1Ed-Eo_DVE1__Jw">
+            <property xmi:id="_a05rIxM1Ed-Eo_DVE1__Jw" key="eStructuralFeatureID" value="37"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_a05rJBM1Ed-Eo_DVE1__Jw" presentation="default">
+              <element href="The%20Wizards.uml#_a05rKBM1Ed-Eo_DVE1__Jw"/>
+            </semanticModel>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_a05rJRM1Ed-Eo_DVE1__Jw">
+            <property xmi:id="_a05rJhM1Ed-Eo_DVE1__Jw" key="eStructuralFeatureID" value="47 50 "/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_a05rJxM1Ed-Eo_DVE1__Jw" presentation="default">
+              <element href="The%20Wizards.uml#_a05rKBM1Ed-Eo_DVE1__Jw"/>
+            </semanticModel>
+          </contained>
+        </contained>
+        <contained xsi:type="di:GraphNode" xmi:id="_huuCoBM1Ed-Eo_DVE1__Jw" position="572,189" size="135,-1">
+          <anchorage xmi:id="_j5Tq4BM1Ed-Eo_DVE1__Jw" graphEdge="_j5Tq4RM1Ed-Eo_DVE1__Jw"/>
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_huuCoRM1Ed-Eo_DVE1__Jw" presentation="default">
+            <element href="The%20Wizards.uml#_huuCqBM1Ed-Eo_DVE1__Jw"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="_huuCohM1Ed-Eo_DVE1__Jw">
+            <property xmi:id="_huuCoxM1Ed-Eo_DVE1__Jw" key="eStructuralFeatureID" value="37"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_huuCpBM1Ed-Eo_DVE1__Jw" presentation="default">
+              <element href="The%20Wizards.uml#_huuCqBM1Ed-Eo_DVE1__Jw"/>
+            </semanticModel>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_huuCpRM1Ed-Eo_DVE1__Jw">
+            <property xmi:id="_huuCphM1Ed-Eo_DVE1__Jw" key="eStructuralFeatureID" value="38 41 "/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_huuCpxM1Ed-Eo_DVE1__Jw" presentation="default">
+              <element href="The%20Wizards.uml#_huuCqBM1Ed-Eo_DVE1__Jw"/>
+            </semanticModel>
+          </contained>
+        </contained>
+        <contained xsi:type="di:GraphEdge" xmi:id="_j5Tq4RM1Ed-Eo_DVE1__Jw" anchor="_jPlYcRM1Ed-Eo_DVE1__Jw _j5Tq4BM1Ed-Eo_DVE1__Jw">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_j5Tq4hM1Ed-Eo_DVE1__Jw" presentation="default">
+            <element href="The%20Wizards.uml#_j5Tq6xM1Ed-Eo_DVE1__Jw"/>
+          </semanticModel>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_j5Tq4xM1Ed-Eo_DVE1__Jw" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_j5Tq5BM1Ed-Eo_DVE1__Jw" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_j5Tq5RM1Ed-Eo_DVE1__Jw" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_j5Tq5hM1Ed-Eo_DVE1__Jw" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_j5Tq5xM1Ed-Eo_DVE1__Jw" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_j5Tq6BM1Ed-Eo_DVE1__Jw" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_j5Tq6RM1Ed-Eo_DVE1__Jw" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_j5Tq6hM1Ed-Eo_DVE1__Jw" id="stereotypeEdgeObject" offset="0,-10"/>
+        </contained>
+        <contained xsi:type="di:GraphNode" xmi:id="_iadDEBM8Ed-Eo_DVE1__Jw" position="73,242" size="97,-1">
+          <anchorage xmi:id="_kbV8wBM8Ed-Eo_DVE1__Jw" graphEdge="_mEZlQBM8Ed-Eo_DVE1__Jw _Oml7IRP5Ed-XTZYiMtrR7A"/>
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_iadDERM8Ed-Eo_DVE1__Jw" presentation="default">
+            <element href="The%20Wizards.uml#_iamNABM8Ed-Eo_DVE1__Jw"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="_iadDEhM8Ed-Eo_DVE1__Jw">
+            <property xmi:id="_iadDExM8Ed-Eo_DVE1__Jw" key="eStructuralFeatureID" value="37"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_iadDFBM8Ed-Eo_DVE1__Jw" presentation="default">
+              <element href="The%20Wizards.uml#_iamNABM8Ed-Eo_DVE1__Jw"/>
+            </semanticModel>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_iadDFRM8Ed-Eo_DVE1__Jw">
+            <property xmi:id="_iadDFhM8Ed-Eo_DVE1__Jw" key="eStructuralFeatureID" value="47 50 "/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_iadDFxM8Ed-Eo_DVE1__Jw" presentation="default">
+              <element href="The%20Wizards.uml#_iamNABM8Ed-Eo_DVE1__Jw"/>
+            </semanticModel>
+          </contained>
+        </contained>
+        <contained xsi:type="di:GraphEdge" xmi:id="_mEZlQBM8Ed-Eo_DVE1__Jw" anchor="_jPlYcRM1Ed-Eo_DVE1__Jw _kbV8wBM8Ed-Eo_DVE1__Jw">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_mEZlQRM8Ed-Eo_DVE1__Jw" presentation="default">
+            <element href="The%20Wizards.uml#_mEZlShM8Ed-Eo_DVE1__Jw"/>
+          </semanticModel>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_mEZlQhM8Ed-Eo_DVE1__Jw" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_mEZlQxM8Ed-Eo_DVE1__Jw" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_mEZlRBM8Ed-Eo_DVE1__Jw" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_mEZlRRM8Ed-Eo_DVE1__Jw" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_mEZlRhM8Ed-Eo_DVE1__Jw" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_mEZlRxM8Ed-Eo_DVE1__Jw" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_mEZlSBM8Ed-Eo_DVE1__Jw" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_mEZlSRM8Ed-Eo_DVE1__Jw" id="stereotypeEdgeObject" offset="0,-10"/>
+        </contained>
+        <contained xsi:type="di:GraphNode" xmi:id="_MwroABNtEd-Eo_DVE1__Jw" position="46,88" size="137,-1">
+          <anchorage xmi:id="_Pas-QBNtEd-Eo_DVE1__Jw" graphEdge="_Pas-QRNtEd-Eo_DVE1__Jw"/>
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_MwroARNtEd-Eo_DVE1__Jw" presentation="default">
+            <element href="The%20Wizards.uml#_Mw1ZABNtEd-Eo_DVE1__Jw"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="_MwroAhNtEd-Eo_DVE1__Jw">
+            <property xmi:id="_MwroAxNtEd-Eo_DVE1__Jw" key="eStructuralFeatureID" value="37"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_MwroBBNtEd-Eo_DVE1__Jw" presentation="default">
+              <element href="The%20Wizards.uml#_Mw1ZABNtEd-Eo_DVE1__Jw"/>
+            </semanticModel>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_MwroBRNtEd-Eo_DVE1__Jw">
+            <property xmi:id="_MwroBhNtEd-Eo_DVE1__Jw" key="eStructuralFeatureID" value="38 41 "/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_MwroBxNtEd-Eo_DVE1__Jw" presentation="default">
+              <element href="The%20Wizards.uml#_Mw1ZABNtEd-Eo_DVE1__Jw"/>
+            </semanticModel>
+          </contained>
+        </contained>
+        <contained xsi:type="di:GraphEdge" xmi:id="_Pas-QRNtEd-Eo_DVE1__Jw" anchor="_jPlYcRM1Ed-Eo_DVE1__Jw _Pas-QBNtEd-Eo_DVE1__Jw">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Pas-QhNtEd-Eo_DVE1__Jw" presentation="default">
+            <element href="The%20Wizards.uml#_Pas-SxNtEd-Eo_DVE1__Jw"/>
+          </semanticModel>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Pas-QxNtEd-Eo_DVE1__Jw" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Pas-RBNtEd-Eo_DVE1__Jw" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Pas-RRNtEd-Eo_DVE1__Jw" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Pas-RhNtEd-Eo_DVE1__Jw" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Pas-RxNtEd-Eo_DVE1__Jw" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Pas-SBNtEd-Eo_DVE1__Jw" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_Pas-SRNtEd-Eo_DVE1__Jw" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_Pas-ShNtEd-Eo_DVE1__Jw" id="stereotypeEdgeObject" offset="0,-10"/>
+        </contained>
+        <contained xsi:type="di:GraphEdge" xmi:id="_Oml7IRP5Ed-XTZYiMtrR7A" anchor="_kbV8wBM8Ed-Eo_DVE1__Jw _jPlYcBM1Ed-Eo_DVE1__Jw">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Oml7IhP5Ed-XTZYiMtrR7A" presentation="default">
+            <element href="The%20Wizards.uml#_Oml7KxP5Ed-XTZYiMtrR7A"/>
+          </semanticModel>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Oml7IxP5Ed-XTZYiMtrR7A" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Oml7JBP5Ed-XTZYiMtrR7A" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Oml7JRP5Ed-XTZYiMtrR7A" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Oml7JhP5Ed-XTZYiMtrR7A" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Oml7JxP5Ed-XTZYiMtrR7A" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Oml7KBP5Ed-XTZYiMtrR7A" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_Oml7KRP5Ed-XTZYiMtrR7A" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_Oml7KhP5Ed-XTZYiMtrR7A" id="stereotypeEdgeObject" offset="0,-10"/>
+        </contained>
+        <contained xsi:type="di:GraphNode" xmi:id="_bbysABM1Ed-Eo_DVE1__Jw" position="424,244" size="102,-1">
+          <anchorage xmi:id="_RNMJ8BP5Ed-XTZYiMtrR7A" graphEdge="_RNV68BP5Ed-XTZYiMtrR7A _Ow79YBQOEd-XTZYiMtrR7A"/>
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_bbysARM1Ed-Eo_DVE1__Jw" presentation="default">
+            <element href="The%20Wizards.uml#_bb8dABM1Ed-Eo_DVE1__Jw"/>
+          </semanticModel>
+          <contained xsi:type="di:GraphNode" xmi:id="_bbysAhM1Ed-Eo_DVE1__Jw">
+            <property xmi:id="_bbysAxM1Ed-Eo_DVE1__Jw" key="eStructuralFeatureID" value="37"/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_bbysBBM1Ed-Eo_DVE1__Jw" presentation="default">
+              <element href="The%20Wizards.uml#_bb8dABM1Ed-Eo_DVE1__Jw"/>
+            </semanticModel>
+          </contained>
+          <contained xsi:type="di:GraphNode" xmi:id="_bbysBRM1Ed-Eo_DVE1__Jw">
+            <property xmi:id="_bbysBhM1Ed-Eo_DVE1__Jw" key="eStructuralFeatureID" value="47 50 "/>
+            <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_bbysBxM1Ed-Eo_DVE1__Jw" presentation="default">
+              <element href="The%20Wizards.uml#_bb8dABM1Ed-Eo_DVE1__Jw"/>
+            </semanticModel>
+          </contained>
+        </contained>
+        <contained xsi:type="di:GraphEdge" xmi:id="_RNV68BP5Ed-XTZYiMtrR7A" anchor="_jPlYcRM1Ed-Eo_DVE1__Jw _RNMJ8BP5Ed-XTZYiMtrR7A">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_RNV68RP5Ed-XTZYiMtrR7A" presentation="default">
+            <element href="The%20Wizards.uml#_RNV6-hP5Ed-XTZYiMtrR7A"/>
+          </semanticModel>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_RNV68hP5Ed-XTZYiMtrR7A" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_RNV68xP5Ed-XTZYiMtrR7A" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_RNV69BP5Ed-XTZYiMtrR7A" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_RNV69RP5Ed-XTZYiMtrR7A" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_RNV69hP5Ed-XTZYiMtrR7A" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_RNV69xP5Ed-XTZYiMtrR7A" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_RNV6-BP5Ed-XTZYiMtrR7A" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_RNV6-RP5Ed-XTZYiMtrR7A" id="stereotypeEdgeObject" offset="0,-10"/>
+        </contained>
+        <contained xsi:type="di:GraphEdge" xmi:id="_Ow79YBQOEd-XTZYiMtrR7A" anchor="_jPlYcBM1Ed-Eo_DVE1__Jw _RNMJ8BP5Ed-XTZYiMtrR7A">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Ow79YRQOEd-XTZYiMtrR7A" presentation="default">
+            <element href="The%20Wizards.uml#_Ow79ahQOEd-XTZYiMtrR7A"/>
+          </semanticModel>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Ow79YhQOEd-XTZYiMtrR7A" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Ow79YxQOEd-XTZYiMtrR7A" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Ow79ZBQOEd-XTZYiMtrR7A" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Ow79ZRQOEd-XTZYiMtrR7A" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Ow79ZhQOEd-XTZYiMtrR7A" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Ow79ZxQOEd-XTZYiMtrR7A" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_Ow79aBQOEd-XTZYiMtrR7A" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_Ow79aRQOEd-XTZYiMtrR7A" id="stereotypeEdgeObject" offset="0,-10"/>
+        </contained>
+        <contained xsi:type="di:GraphEdge" xmi:id="_Pz2L4BQOEd-XTZYiMtrR7A" anchor="_jPlYcRM1Ed-Eo_DVE1__Jw _jPlYcBM1Ed-Eo_DVE1__Jw">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_Pz2L4RQOEd-XTZYiMtrR7A" presentation="default">
+            <element href="The%20Wizards.uml#_Pz2L6hQOEd-XTZYiMtrR7A"/>
+          </semanticModel>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Pz2L4hQOEd-XTZYiMtrR7A" visible="false" id="srcNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Pz2L4xQOEd-XTZYiMtrR7A" visible="false" id="srcPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Pz2L5BQOEd-XTZYiMtrR7A" visible="false" id="srcCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Pz2L5RQOEd-XTZYiMtrR7A" visible="false" id="targetNameEdgeObject" uDistance="10" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Pz2L5hQOEd-XTZYiMtrR7A" visible="false" id="targetPropertiesEdgeObject" uDistance="25" vDistance="10"/>
+          <contained xsi:type="di:EdgeObjectUV" xmi:id="_Pz2L5xQOEd-XTZYiMtrR7A" visible="false" id="targetCountEdgeObject" uDistance="10" vDistance="-10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_Pz2L6BQOEd-XTZYiMtrR7A" visible="false" id="middleNameEdgeObject" offset="0,10"/>
+          <contained xsi:type="di:EdgeObjectOffset" xmi:id="_Pz2L6RQOEd-XTZYiMtrR7A" id="stereotypeEdgeObject" offset="0,-10"/>
+        </contained>
+      </diagrams>
+    </subdiagrams>
+  </subdiagrams>
+  <subdiagrams xmi:id="_8pWOOfqsEd6_dofkypB2Ww">
+    <model href="The%20Wizards.uml#_zwUu0HF0EduxYLkhQoh7Ag"/>
+    <diagrams xmi:id="_8pWOOvqsEd6_dofkypB2Ww" position="0,0" size="100,100" name="Main" viewport="0,0">
+      <property xmi:id="_8pWOO_qsEd6_dofkypB2Ww" key="pageFormatName" value="A2"/>
+      <property xmi:id="_8pWOPPqsEd6_dofkypB2Ww" key="diagramWidth" value="1680"/>
+      <property xmi:id="_8pWOPfqsEd6_dofkypB2Ww" key="diagramHeight" value="2376"/>
+      <property xmi:id="_8pWOPvqsEd6_dofkypB2Ww" key="pageMarginName" value="Small Margin"/>
+      <property xmi:id="_8pWOP_qsEd6_dofkypB2Ww" key="diagramTopMargin" value="20"/>
+      <property xmi:id="_8pWOQPqsEd6_dofkypB2Ww" key="diagramBottomMargin" value="20"/>
+      <property xmi:id="_8pWOQfqsEd6_dofkypB2Ww" key="diagramLeftMargin" value="20"/>
+      <property xmi:id="_8pWOQvqsEd6_dofkypB2Ww" key="diagramRightMargin" value="20"/>
+      <property xmi:id="_8pWOQ_qsEd6_dofkypB2Ww" key="orientation" value="portrait"/>
+      <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_8pWORPqsEd6_dofkypB2Ww" presentation="org.topcased.modeler.uml.componentdiagram">
+        <element href="The%20Wizards.uml#_zwUu0HF0EduxYLkhQoh7Ag"/>
+      </semanticModel>
+      <contained xsi:type="di:GraphNode" xmi:id="_xiTLwPqtEd6_dofkypB2Ww" position="377,57" size="200,90">
+        <anchorage xmi:id="_pJvI4fquEd6_dofkypB2Ww" graphEdge="_pJvI4vquEd6_dofkypB2Ww"/>
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_xiTLwfqtEd6_dofkypB2Ww" presentation="default">
+          <element href="The%20Wizards.uml#_xi5BoPqtEd6_dofkypB2Ww"/>
+        </semanticModel>
+      </contained>
+      <contained xsi:type="di:GraphNode" xmi:id="_zLy5IPqtEd6_dofkypB2Ww" position="390,533" size="200,90">
+        <anchorage xmi:id="_qKtdsPquEd6_dofkypB2Ww" graphEdge="_qKtdsfquEd6_dofkypB2Ww"/>
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_zLy5IfqtEd6_dofkypB2Ww" presentation="default">
+          <element href="The%20Wizards.uml#_zLy5IvqtEd6_dofkypB2Ww"/>
+        </semanticModel>
+      </contained>
+      <contained xsi:type="di:GraphNode" xmi:id="_2ooMYPqtEd6_dofkypB2Ww" position="385,284" size="200,90">
+        <anchorage xmi:id="_pJvI4PquEd6_dofkypB2Ww" graphEdge="_pJvI4vquEd6_dofkypB2Ww _qKtdsfquEd6_dofkypB2Ww"/>
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_2ooMYfqtEd6_dofkypB2Ww" presentation="default">
+          <element href="The%20Wizards.uml#_2ooMYvqtEd6_dofkypB2Ww"/>
+        </semanticModel>
+      </contained>
+      <contained xsi:type="di:GraphEdge" xmi:id="_pJvI4vquEd6_dofkypB2Ww" anchor="_pJvI4PquEd6_dofkypB2Ww _pJvI4fquEd6_dofkypB2Ww">
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_pJvI4_quEd6_dofkypB2Ww" presentation="default">
+          <element href="The%20Wizards.uml#_pJvI5fquEd6_dofkypB2Ww"/>
+        </semanticModel>
+        <contained xsi:type="di:EdgeObjectOffset" xmi:id="_pJvI5PquEd6_dofkypB2Ww" id="stereotypeEdgeObject"/>
+      </contained>
+      <contained xsi:type="di:GraphEdge" xmi:id="_qKtdsfquEd6_dofkypB2Ww" anchor="_qKtdsPquEd6_dofkypB2Ww _pJvI4PquEd6_dofkypB2Ww">
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_qKtdsvquEd6_dofkypB2Ww" presentation="default">
+          <element href="The%20Wizards.uml#_qKtdtPquEd6_dofkypB2Ww"/>
+        </semanticModel>
+        <contained xsi:type="di:EdgeObjectOffset" xmi:id="_qKtds_quEd6_dofkypB2Ww" id="stereotypeEdgeObject"/>
+      </contained>
+    </diagrams>
+    <subdiagrams xmi:id="_i-tKAPquEd6_dofkypB2Ww">
+      <model href="The%20Wizards.uml#_zLy5IvqtEd6_dofkypB2Ww"/>
+      <diagrams xmi:id="_i-tKAfquEd6_dofkypB2Ww" position="0,0" size="100,100" name="unnamed" viewport="0,0">
+        <property xmi:id="_i_AE8PquEd6_dofkypB2Ww" key="pageFormatName" value="A4"/>
+        <property xmi:id="_i_AE8fquEd6_dofkypB2Ww" key="diagramWidth" value="840"/>
+        <property xmi:id="_i_AE8vquEd6_dofkypB2Ww" key="diagramHeight" value="1188"/>
+        <property xmi:id="_i_AE8_quEd6_dofkypB2Ww" key="pageMarginName" value="Small Margin"/>
+        <property xmi:id="_i_AE9PquEd6_dofkypB2Ww" key="diagramTopMargin" value="20"/>
+        <property xmi:id="_i_AE9fquEd6_dofkypB2Ww" key="diagramBottomMargin" value="20"/>
+        <property xmi:id="_i_AE9vquEd6_dofkypB2Ww" key="diagramLeftMargin" value="20"/>
+        <property xmi:id="_i_AE9_quEd6_dofkypB2Ww" key="diagramRightMargin" value="20"/>
+        <property xmi:id="_i_AE-PquEd6_dofkypB2Ww" key="orientation" value="portrait"/>
+        <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_i-tKAvquEd6_dofkypB2Ww" presentation="org.topcased.modeler.uml.componentdiagram">
+          <element href="The%20Wizards.uml#_zLy5IvqtEd6_dofkypB2Ww"/>
+        </semanticModel>
+        <contained xsi:type="di:GraphNode" xmi:id="_jWQHUPquEd6_dofkypB2Ww" position="75,100" size="100,80">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_jWQHUfquEd6_dofkypB2Ww" presentation="default">
+            <element href="The%20Wizards.uml#_jWQHUvquEd6_dofkypB2Ww"/>
+          </semanticModel>
+        </contained>
+        <contained xsi:type="di:GraphNode" xmi:id="_jhIhoPquEd6_dofkypB2Ww" position="384,110" size="100,80">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_jhIhofquEd6_dofkypB2Ww" presentation="default">
+            <element href="The%20Wizards.uml#_jhIhovquEd6_dofkypB2Ww"/>
+          </semanticModel>
+        </contained>
+        <contained xsi:type="di:GraphNode" xmi:id="_jrtZ8PquEd6_dofkypB2Ww" position="213,387" size="100,80">
+          <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_jrtZ8fquEd6_dofkypB2Ww" presentation="default">
+            <element href="The%20Wizards.uml#_jrtZ8vquEd6_dofkypB2Ww"/>
+          </semanticModel>
+        </contained>
+      </diagrams>
+    </subdiagrams>
+  </subdiagrams>
+  <subdiagrams xmi:id="_8pWORfqsEd6_dofkypB2Ww">
+    <model href="The%20Wizards.uml#_1coVEHFzEduxYLkhQoh7Ag"/>
+    <diagrams xmi:id="_8pWORvqsEd6_dofkypB2Ww" position="0,0" size="100,100" name="Main" viewport="0,0">
+      <property xmi:id="_8pWOR_qsEd6_dofkypB2Ww" key="pageFormatName" value="A2"/>
+      <property xmi:id="_8pWOSPqsEd6_dofkypB2Ww" key="diagramWidth" value="1680"/>
+      <property xmi:id="_8pWOSfqsEd6_dofkypB2Ww" key="diagramHeight" value="2376"/>
+      <property xmi:id="_8pWOSvqsEd6_dofkypB2Ww" key="pageMarginName" value="Small Margin"/>
+      <property xmi:id="_8pWOS_qsEd6_dofkypB2Ww" key="diagramTopMargin" value="20"/>
+      <property xmi:id="_8pWOTPqsEd6_dofkypB2Ww" key="diagramBottomMargin" value="20"/>
+      <property xmi:id="_8pWOTfqsEd6_dofkypB2Ww" key="diagramLeftMargin" value="20"/>
+      <property xmi:id="_8pWOTvqsEd6_dofkypB2Ww" key="diagramRightMargin" value="20"/>
+      <property xmi:id="_8pWOT_qsEd6_dofkypB2Ww" key="orientation" value="portrait"/>
+      <semanticModel xsi:type="di:EMFSemanticModelBridge" xmi:id="_8pWOUPqsEd6_dofkypB2Ww" presentation="org.topcased.modeler.uml.deploymentdiagram">
+        <element href="The%20Wizards.uml#_1coVEHFzEduxYLkhQoh7Ag"/>
+      </semanticModel>
+    </diagrams>
+  </subdiagrams>
+</diagrams:Diagrams>
