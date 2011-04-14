@@ -1,0 +1,648 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{409E248D-79B7-4644-886A-A01C1211D6DD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MHGameWork.TheWizards.ServerClient</RootNamespace>
+    <AssemblyName>ServerClientOud</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ColladaDebug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ColladaDebug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\ServerClientOud.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\ServerClientOud.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ColladaDebug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\ColladaDebug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\ColladaDebug\ServerClientOud.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevComponents.DotNetBar2, Version=7.7.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ServerClient\bin\x86\Debug\DevComponents.DotNetBar2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Data.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraBars.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CascadedShadowMaps\CSMRenderer.cs" />
+    <Compile Include="CascadedShadowMaps\CSMRendererService.cs" />
+    <Compile Include="CascadedShadowMaps\CSMTest.cs" />
+    <Compile Include="CascadedShadowMaps\FullScreenQuad.cs" />
+    <Compile Include="CascadedShadowMaps\ICSMRenderer.cs" />
+    <Compile Include="CascadedShadowMaps\Light.cs" />
+    <Compile Include="DatabaseEntity.cs" />
+    <Compile Include="DatabaseMesh.cs" />
+    <Compile Include="DatabaseModel.cs" />
+    <Compile Include="DatabaseOud.cs" />
+    <Compile Include="Database\DiskLoaderService.cs" />
+    <Compile Include="Database\DiskSerializerService.cs" />
+    <Compile Include="Editor.cs" />
+    <Compile Include="EditorCamera.cs" />
+    <Compile Include="EditorGizmo.cs" />
+    <Compile Include="EditorGrid.cs" />
+    <Compile Include="EditorMoveEntityTool.cs" />
+    <Compile Include="EditorPlaceEntityTool.cs" />
+    <Compile Include="EditorRaycastResult.cs" />
+    <Compile Include="EditorXNA.cs" />
+    <Compile Include="Editor\AddInGame.cs" />
+    <Compile Include="Editor\GameControlPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editor\IDiskSerializer.cs" />
+    <Compile Include="Editor\IRenderPrimitives.cs" />
+    <Compile Include="Editor\IUndoAction.cs" />
+    <Compile Include="Editor\Mesh.cs" />
+    <Compile Include="Editor\ModelData.cs" />
+    <Compile Include="Editor\PluginLoader.cs" />
+    <Compile Include="Editor\Terrain.cs" />
+    <Compile Include="Editor\TerrainDiskSerializer.cs" />
+    <Compile Include="Editor\TerrainQuadtreeNode.cs" />
+    <Compile Include="Editor\XNAGDIImageLoader.cs" />
+    <Compile Include="EntityOud.cs" />
+    <Compile Include="IDList.cs" />
+    <Compile Include="IEditorTool.cs" />
+    <Compile Include="IEntityElement.cs" />
+    <Compile Include="IID.cs" />
+    <Compile Include="IModelPart.cs" />
+    <Compile Include="IQuadtreeNode.cs" />
+    <Compile Include="IUnique.cs" />
+    <Compile Include="IXmlSerializable.cs" />
+    <Compile Include="Material.cs" />
+    <Compile Include="MathFunctions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MeshID.cs" />
+    <Compile Include="Model.cs" />
+    <Compile Include="ModelPartStatic.cs" />
+    <Compile Include="Nuclex\ControlInputPublisher.cs" />
+    <Compile Include="Nuclex\DrawOrderComparer.cs" />
+    <Compile Include="Nuclex\GameClock.cs" />
+    <Compile Include="Nuclex\GameComponentCollection.cs" />
+    <Compile Include="Nuclex\GameControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Nuclex\GameControl.Designer.cs">
+      <DependentUpon>GameControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Nuclex\GameHost.cs" />
+    <Compile Include="Nuclex\GraphicsDeviceInformationComparer.cs" />
+    <Compile Include="Nuclex\GraphicsDeviceManager.cs" />
+    <Compile Include="Nuclex\NativeMethods.cs" />
+    <Compile Include="Nuclex\UpdateOrderComparer.cs" />
+    <Compile Include="Nuclex\WindowsGameHost.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Quadtree.cs" />
+    <Compile Include="Section.cs" />
+    <Compile Include="ShaderEffectCode.cs" />
+    <Compile Include="Sky\Camera.cs" />
+    <Compile Include="Sky\Scattering\Hoffman-Preethem.cs" />
+    <Compile Include="Sky\Scattering\IScatter.cs" />
+    <Compile Include="Sky\SkyCSMRenderer.cs" />
+    <Compile Include="Sky\SkyDome.cs" />
+    <Compile Include="Sky\SkyModel.cs" />
+    <Compile Include="Sky\SkyRenderer.cs" />
+    <Compile Include="Sky\SkyTest.cs" />
+    <Compile Include="Sky\Vertex.cs" />
+    <Compile Include="TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForm2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForm2.Designer.cs">
+      <DependentUpon>TestForm2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Test\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Test\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Test\Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Test\Form2.Designer.cs">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Test\Test001.cs" />
+    <Compile Include="Test\Testbar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Test\Testbar.Designer.cs">
+      <DependentUpon>Testbar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TODO\Editor\Brush.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Editor\Cursor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Editor\EditorIniFile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Editor\GuiImage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Editor\GuiKnop.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Editor\GuiOutputBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Editor\GuiPanel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Editor\TerrainBlock.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Editor\TerrainMaterial.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Editor\TerrainOud.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Editor\TerrainTexture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Editor\WorldEditorOud.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\AdvancedQueue.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\CoreFile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\CoreFileManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\Cursor002.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\GameFile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\GameFileManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\LineManager3D.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\LoadingManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\LoadTaskRef.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\MeshData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\Model.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\ModelData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\ModelManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\ShaderManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\TerrainManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\Texture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\TextureData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Engine\TextureManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Entities\Player.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Entities\PlayerCamera.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Entities\PrimitiveHouse001.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Entities\Shuriken001.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Entities\Shuriken002.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Entities\Shuriken003.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Entities\TestPlayer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Entities\TestPlayerHitReport.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TODO\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TODO\Game1.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\GameClient.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\GameServerClientMain.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\GameSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\IGameMode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\IGameObject2.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\IGameObjectOud.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\ModeConnectToServer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\ModelLoading.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\ModeLogin.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Network\ProxyServer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Network\ProxyServerWereld.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Network\ServerClientCommunication.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Program.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\ServerClientGame.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\ServerClientMain.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\SimpleTutorial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TODO\TestServerClientMain.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Wereld\Body.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Wereld\ClientEntityHolder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Wereld\IBody.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Wereld\IClientEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Wereld\IHolderElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Wereld\IServerClientEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Wereld\QuadTree.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Wereld\QuadTreeNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Wereld\ServerClientBody.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Wereld\ServerClientEntityHolder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\Wereld\Wereld.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\XNAGeoMipMap\ITerrainBlockRenderable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\XNAGeoMipMap\MipMapLevels.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\XNAGeoMipMap\QuadTreeNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\XNAGeoMipMap\SkyBox001.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\XNAGeoMipMap\Skydome.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\XNAGeoMipMap\Terrain.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\XNAGeoMipMap\TerrainBlock.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\XNAGeoMipMap\TerrainMaterial.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\XNAGeoMipMap\TerrainStatistics.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\XNAGeoMipMap\TerrainTexture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\XNAGeoMipMap\TreeNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\XNAGeoMipMap\VertexMultitextured.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\XNAGeoMipMap\Water001.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TODO\XNAGeoMipMap\Water002.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Torus.cs" />
+    <Compile Include="TWClient\AdvancedQueue.cs" />
+    <Compile Include="TWClient\FixedLengthQueue.cs" />
+    <Compile Include="TWClient\IPlugin002.cs" />
+    <Compile Include="TWClient\IRenderer.cs" />
+    <Compile Include="TWClient\LoadingManager.cs" />
+    <Compile Include="TWClient\LoadingQueue.cs" />
+    <Compile Include="TWClient\LoadingTask.cs" />
+    <Compile Include="TWClient\LoadingTaskState.cs" />
+    <Compile Include="TWClient\LoadingTaskType.cs" />
+    <Compile Include="TWClient\QuadTree.cs" />
+    <Compile Include="TWClient\QuadTreeNode.cs" />
+    <Compile Include="TWClient\RendererService.cs" />
+    <Compile Include="TWClient\TreeNode.cs" />
+    <Compile Include="Utilities\TypeSearcher.cs" />
+    <Compile Include="Wereld.cs" />
+    <Compile Include="WereldClientRenderer.cs" />
+    <Compile Include="WereldEntity.cs" />
+    <Compile Include="WereldMaterial.cs" />
+    <Compile Include="WereldMesh.cs" />
+    <Compile Include="WereldMeshPool.cs" />
+    <Compile Include="WereldModel.cs" />
+    <Compile Include="WereldModelID.cs" />
+    <Compile Include="WereldQuadtreeNode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Editor\GameControlPanel.resx">
+      <DependentUpon>GameControlPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForm2.resx">
+      <DependentUpon>TestForm2.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Test\Form1.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Test\Form2.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TODO\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TranslationGizmoLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagrams\ServerClientOudOverview.cd" />
+    <None Include="ClassDiagrams\TODOEditorGUI.cd" />
+    <None Include="ClassDiagrams\VariousTestItems.cd" />
+    <None Include="Resources\TranslationGizmoLogo64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AdminClientVB\AdminClientVB.vbproj">
+      <Project>{807ED3B3-6313-46CE-9CA3-B6DB9735AAFA}</Project>
+      <Name>AdminClientVB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ClientVB\ClientVB.vbproj">
+      <Project>{8218D77F-2FB6-48E5-867C-85EEA4A4B75E}</Project>
+      <Name>ClientVB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Client\Client.csproj">
+      <Project>{64749FE6-E3AF-4666-BB9F-8CCFF4D30E2D}</Project>
+      <Name>Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common.Core\Common.Core.csproj">
+      <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
+      <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.NetworkingVB\Common.NetworkingVB.vbproj">
+      <Project>{80D950C7-F9F6-4569-93D9-20833B52ACD9}</Project>
+      <Name>Common.NetworkingVB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonVB\CommonVB.vbproj">
+      <Project>{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}</Project>
+      <Name>CommonVB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{8162E3FE-A9B6-4F93-94F0-89C74CB7D53D}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CoreFileUpdater\CoreFileUpdater.csproj">
+      <Project>{8D5E18C1-46C1-4A8F-8B82-72BDC047ADDC}</Project>
+      <Name>CoreFileUpdater</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Game3DPlay\Game3DPlay.csproj">
+      <Project>{3ADBAB57-A020-46BA-8422-250995E5228E}</Project>
+      <Name>Game3DPlay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NovodexWrapperXNA\NovodexWrapperXNA.csproj">
+      <Project>{14B12B1E-4101-4542-BA07-891EB99C4916}</Project>
+      <Name>NovodexWrapperXNA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Server\Server.csproj">
+      <Project>{53269219-3E5B-4F70-83A9-3C6C9C714FEC}</Project>
+      <Name>Server</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TODO\Game.ico" />
+    <Content Include="TODO\GameThumbnail.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

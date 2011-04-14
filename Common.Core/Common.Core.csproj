@@ -156,13 +156,6 @@
     <Compile Include="Graphics\AttributeSystem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\PlaneMesh.cs" />
-    <Compile Include="Graphics\SphereMesh.cs" />
-    <Compile Include="Graphics\ColladaShader.cs" />
-    <Compile Include="Graphics\Curve3D.cs" />
-    <Compile Include="Graphics\CustomCamera.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Graphics\DEPRECATED\Cursor.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -218,6 +211,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Graphics\DEPRECATED\ICursor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\PlaneMesh.cs" />
+    <Compile Include="Graphics\SphereMesh.cs" />
+    <Compile Include="Graphics\ColladaShader.cs" />
+    <Compile Include="Graphics\Curve3D.cs" />
+    <Compile Include="Graphics\CustomCamera.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Graphics\GameFile.cs">
@@ -318,6 +318,7 @@
     <Compile Include="Raycast\RaycastHelper.cs" />
     <Compile Include="Raycast\RaycastResult.cs" />
     <Compile Include="Seeder.cs" />
+    <Compile Include="SeederBtrix.cs" />
     <Compile Include="TWDir.cs" />
     <Compile Include="Water\Camera.cs" />
     <Compile Include="Water\Mesh.cs" />
@@ -329,12 +330,6 @@
     <Compile Include="XML\XmlNode.cs" />
     <Compile Include="XML\XMLSerializer.cs" />
     <Compile Include="XnaMathExtensions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Game3DPlay\Game3DPlay.csproj">
-      <Project>{3ADBAB57-A020-46BA-8422-250995E5228E}</Project>
-      <Name>Game3DPlay</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Graphics\Files\LineRendering.fx" />
@@ -381,6 +376,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Deprecated\Game3DPlay\Game3DPlay.csproj">
+      <Project>{3ADBAB57-A020-46BA-8422-250995E5228E}</Project>
+      <Name>Game3DPlay</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -78,7 +78,7 @@
     <Compile Include="UDPConnection.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.NetworkingVB\Common.NetworkingVB.vbproj">
+    <ProjectReference Include="..\Deprecated\Common.NetworkingVB\Common.NetworkingVB.vbproj">
       <Project>{80D950C7-F9F6-4569-93D9-20833B52ACD9}</Project>
       <Name>Common.NetworkingVB</Name>
     </ProjectReference>

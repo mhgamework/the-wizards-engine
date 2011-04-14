@@ -177,13 +177,13 @@
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common.NetworkingVB\Common.NetworkingVB.vbproj">
+    <ProjectReference Include="..\Deprecated\Common.NetworkingVB\Common.NetworkingVB.vbproj">
       <Project>{80D950C7-F9F6-4569-93D9-20833B52ACD9}</Project>
       <Name>Common.NetworkingVB</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommonVB\CommonVB.vbproj">
-      <Project>{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}</Project>
-      <Name>CommonVB</Name>
+    <ProjectReference Include="..\Deprecated\ServerClientOud\ServerClientOud.csproj">
+      <Project>{409E248D-79B7-4644-886A-A01C1211D6DD}</Project>
+      <Name>ServerClientOud</Name>
     </ProjectReference>
     <ProjectReference Include="..\DirectX10\DirectX10.csproj">
       <Project>{10DF4E9C-85C6-438F-BE1D-DC4DCF3C0B49}</Project>
@@ -204,10 +204,6 @@
     <ProjectReference Include="..\NewModules\NewModules.csproj">
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
       <Name>NewModules</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ServerClientOud\ServerClientOud.csproj">
-      <Project>{409E248D-79B7-4644-886A-A01C1211D6DD}</Project>
-      <Name>ServerClientOud</Name>
     </ProjectReference>
     <ProjectReference Include="..\Server\Server.csproj">
       <Project>{53269219-3E5B-4F70-83A9-3C6C9C714FEC}</Project>

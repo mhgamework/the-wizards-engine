@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectGuid>{E7F313DB-EDA4-4894-AE46-B220B53A6A48}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TreeGenerator</RootNamespace>
+    <AssemblyName>TreeGenerator</AssemblyName>
+    <ApplicationIcon>Game.ico</ApplicationIcon>
+    <Thumbnail>GameThumbnail.png</Thumbnail>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x86\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Deprecated\Common\bin\x86\Debug\Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Common.Core\bin\x86\Debug\Common.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.NetworkingVB, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Deprecated\Common.NetworkingVB\bin\Debug\Common.NetworkingVB.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Data.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraBars.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="Editor, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Editor\bin\x86\Debug\Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86">
+      <Private>False</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
+      <Private>False</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="mscorlib">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Networking, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Networking\bin\Debug\Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="NewModules, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\NewModules\bin\x86\Debug\NewModules.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.7.10213, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\The Wizards Binaries\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ServerClientOud, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Deprecated\ServerClientOud\bin\x86\Debug\ServerClientOud.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Unit Tests">
+      <HintPath>..\Unit Tests\bin\Debug\Unit Tests.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AtlasTool\TextureAtlasCreater.cs" />
+    <Compile Include="AtlasTool\TextureForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AtlasTool\TextureForm.Designer.cs">
+      <DependentUpon>TextureForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AtlasTool\TextureUnit.cs" />
+    <Compile Include="Clouds\BaseCloudElement.cs" />
+    <Compile Include="Clouds\BillBoards.cs" />
+    <Compile Include="EngineSynchronisation\ClientAssetTreeTypeFactory.cs" />
+    <Compile Include="EngineSynchronisation\ClientTreeSyncer.cs" />
+    <Compile Include="EngineSynchronisation\RAMTreeType.cs" />
+    <Compile Include="EngineSynchronisation\ServerTreeSyncer.cs" />
+    <Compile Include="EngineSynchronisation\TreePacket.cs" />
+    <Compile Include="EngineSynchronisation\TreeSynchronisationTest.cs" />
+    <Compile Include="EngineSynchronisation\ClientTreeTypeAsset.cs" />
+    <Compile Include="ImposterRing\IDelayedRenderProvider.cs" />
+    <Compile Include="ImposterRing\ImposterRing.cs" />
+    <Compile Include="ITextureFactory.cs" />
+    <Compile Include="ITreeTypeFactory.cs" />
+    <Compile Include="LodEngine\ImposterLodLayer.cs" />
+    <Compile Include="LodEngine\ImposterRingLayer.cs" />
+    <Compile Include="LodEngine\IRenderable.cs" />
+    <Compile Include="LodEngine\ISimpleRendrable.cs" />
+    <Compile Include="LodEngine\ITreeLodLayer.cs" />
+    <Compile Include="LodEngine\LodEngineTest.cs" />
+    <Compile Include="LodEngine\ModelLodLayer.cs" />
+    <Compile Include="LodEngine\TreeLodEngine.cs" />
+    <Compile Include="LodEngine\TreeLodEntity.cs" />
+    <Compile Include="LodEngine\TWRenderElement.cs" />
+    <Compile Include="LodEngine\TWRenderer.cs" />
+    <Compile Include="Morph\Butterfly.cs" />
+    <Compile Include="Morph\MorphModel.cs" />
+    <Compile Include="Imposter\Imposter.cs" />
+    <Compile Include="Imposter\ImposterCamera.cs" />
+    <Compile Include="Imposter\ImposterEngine.cs" />
+    <Compile Include="ObjExporter.cs" />
+    <Compile Include="ObjImporter.cs" />
+    <Compile Include="Editor\TreeTypeEditor.cs" />
+    <Compile Include="Editor\TreeTypeEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\TreeTypeEditorForm.Designer.cs">
+      <DependentUpon>TreeTypeEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Range.cs" />
+    <Compile Include="RangeSpreading.cs" />
+    <Compile Include="SideProjectTests.cs" />
+    <Compile Include="SimpleTextureFactory.cs" />
+    <Compile Include="SimpleTreeTypeFactory.cs" />
+    <Compile Include="Tests.cs" />
+    <Compile Include="TODO\help\Branch.cs" />
+    <Compile Include="Directions.cs" />
+    <Compile Include="TODO\help\leaves.cs" />
+    <Compile Include="TODO\help\MeshCreator.cs" />
+    <Compile Include="Seeder.cs" />
+    <Compile Include="TODO\help\Segment.cs" />
+    <Compile Include="TODO\help\structs.cs" />
+    <Compile Include="TODO\help\Tree.cs" />
+    <Compile Include="TODO\help\TreestructureGenerator.cs" />
+    <Compile Include="TODO\help\TreeStructureLevel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="TODO\Game1.cs" />
+    <Compile Include="TreeEngine\EngineRenderDataPart.cs" />
+    <Compile Include="TreeEngine\EngineTree.cs" />
+    <Compile Include="TreeEngine\EngineTreeType.cs" />
+    <Compile Include="TreeEngine\EngineTreeRenderData.cs" />
+    <Compile Include="TreeEngine\EngineTreeRenderDataImp.cs" />
+    <Compile Include="TreeEngine\EngineTreeRenderDataGenerater.cs" />
+    <Compile Include="TreeEngine\TestVolumetricLeafShader.cs" />
+    <Compile Include="TreeEngine\TreeEngine.cs" />
+    <Compile Include="TreeEngine\TreeImposterEngine.cs" />
+    <Compile Include="TreeFlowerType.cs" />
+    <Compile Include="TreeLeafType.cs" />
+    <Compile Include="TreeLineRenderer.cs" />
+    <Compile Include="TreeRenderManager.cs" />
+    <Compile Include="TreeStructure.cs" />
+    <Compile Include="TreeStructureBranch.cs" />
+    <Compile Include="TreeStructureBranchSegment.cs" />
+    <Compile Include="TreeStructureFlower.cs" />
+    <Compile Include="TreeStructureGenerater.cs" />
+    <Compile Include="TreeStructureLeaf.cs" />
+    <Compile Include="TreeStructureLeafGenerater.cs" />
+    <Compile Include="TreeStructureSegment.cs" />
+    <Compile Include="ITreeType.cs" />
+    <Compile Include="TreeTypeData.cs" />
+    <Compile Include="TreeTypeLevel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Clouds\CloudsTileset.jpg" />
+    <Content Include="Clouds\Design.txt" />
+    <Content Include="Clouds\SingleCloud001-5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Design tree generater.txt" />
+    <Content Include="Engine\Depth.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Files\PalmTestTree.XML" />
+    <Content Include="Game.ico" />
+    <Content Include="GameThumbnail.png" />
+    <Content Include="Imposter\imposter design.txt" />
+    <Content Include="Imposter\imposter gamesutra.txt" />
+    <Content Include="Imposter\RenderTargetBart.txt" />
+    <Content Include="Morph\butterflyTexture\butterfly4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Morph\butterflyTexture\transparentButterfly.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Files\TestTree.XML" />
+    <Content Include="todo.txt" />
+    <Content Include="TODO\help\TreeEngineDesign.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <NestedContentProject Include="Content\Content.contentproj">
+      <Project>a1474a40-03f9-48a7-aefe-a240193f096f</Project>
+      <Visible>False</Visible>
+    </NestedContentProject>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Clouds\shader\BillBoardShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Clouds\shader\CloudShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Clouds\fizimayer-2007-art-thesis cloud.pdf" />
+    <None Include="Clouds\shader\BasicTestShaderAll.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Clouds\shader\BasicTestShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Clouds\SingleCloud001-2.dds" />
+    <None Include="Clouds\SingleCloud001-3.dds" />
+    <None Include="Clouds\SingleCloud001-4.tga">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Clouds\SingleCloud001.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Clouds\SingleCloud001.psd" />
+    <None Include="Engine\ColladaModel.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\LineRendering.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\GrassShader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Engine\Model.fx" />
+    <None Include="ImposterRing\ImposterRingShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Morph\butterfly.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Morph\MorphShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\DataSources\TreeTypeLevel.datasource" />
+    <None Include="Engine\Habel_2007_IAG-grass_shader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Shaders\ShadowMap.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TODO\help\ClassDiagram1.cd" />
+    <EmbeddedResource Include="TreeEngine\BillBoardShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Include="TreeEngine\LeafMotionShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeEngine\PointSpritePerspectiveDepthShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeEngine\PointSpritePerspectiveShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AtlasTool\TextureForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TextureForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\TreeTypeEditorForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TreeTypeEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Clouds\Textures\" />
+    <Folder Include="Copy\" />
+    <Folder Include="Editor\Preprocesser\" />
+    <Folder Include="Rendering\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

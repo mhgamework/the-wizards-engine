@@ -108,13 +108,9 @@
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common.NetworkingVB\Common.NetworkingVB.vbproj">
+    <ProjectReference Include="..\Deprecated\Common.NetworkingVB\Common.NetworkingVB.vbproj">
       <Project>{80D950C7-F9F6-4569-93D9-20833B52ACD9}</Project>
       <Name>Common.NetworkingVB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{8162E3FE-A9B6-4F93-94F0-89C74CB7D53D}</Project>
-      <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Editor\Editor.csproj">
       <Project>{A356B2CF-4BBA-4DB4-9FB3-5646F9887048}</Project>
@@ -131,10 +127,6 @@
     <ProjectReference Include="..\NewModules\NewModules.csproj">
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
       <Name>NewModules</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ServerClientOud\ServerClientOud.csproj">
-      <Project>{409E248D-79B7-4644-886A-A01C1211D6DD}</Project>
-      <Name>ServerClientOud</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

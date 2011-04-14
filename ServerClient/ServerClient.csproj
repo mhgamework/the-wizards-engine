@@ -209,17 +209,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AdminClientVB\AdminClientVB.vbproj">
-      <Project>{807ED3B3-6313-46CE-9CA3-B6DB9735AAFA}</Project>
-      <Name>AdminClientVB</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ApplicationLogic\ApplicationLogic.csproj">
       <Project>{5B6ADB0D-6DEB-4922-8F2F-72B3468699F6}</Project>
       <Name>ApplicationLogic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ClientVB\ClientVB.vbproj">
-      <Project>{8218D77F-2FB6-48E5-867C-85EEA4A4B75E}</Project>
-      <Name>ClientVB</Name>
     </ProjectReference>
     <ProjectReference Include="..\Client\Client.csproj">
       <Project>{64749FE6-E3AF-4666-BB9F-8CCFF4D30E2D}</Project>
@@ -229,21 +221,9 @@
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common.NetworkingVB\Common.NetworkingVB.vbproj">
-      <Project>{80D950C7-F9F6-4569-93D9-20833B52ACD9}</Project>
-      <Name>Common.NetworkingVB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CommonVB\CommonVB.vbproj">
-      <Project>{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}</Project>
-      <Name>CommonVB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{8162E3FE-A9B6-4F93-94F0-89C74CB7D53D}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CoreFileUpdater\CoreFileUpdater.csproj">
-      <Project>{8D5E18C1-46C1-4A8F-8B82-72BDC047ADDC}</Project>
-      <Name>CoreFileUpdater</Name>
+    <ProjectReference Include="..\Deprecated\ServerClientOud\ServerClientOud.csproj">
+      <Project>{409E248D-79B7-4644-886A-A01C1211D6DD}</Project>
+      <Name>ServerClientOud</Name>
     </ProjectReference>
     <ProjectReference Include="..\DirectX10\DirectX10.csproj">
       <Project>{10DF4E9C-85C6-438F-BE1D-DC4DCF3C0B49}</Project>
@@ -252,10 +232,6 @@
     <ProjectReference Include="..\Editor\Editor.csproj">
       <Project>{A356B2CF-4BBA-4DB4-9FB3-5646F9887048}</Project>
       <Name>Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Game3DPlay\Game3DPlay.csproj">
-      <Project>{3ADBAB57-A020-46BA-8422-250995E5228E}</Project>
-      <Name>Game3DPlay</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gameplay\Gameplay.csproj">
       <Project>{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}</Project>
@@ -276,10 +252,6 @@
     <ProjectReference Include="..\NovodexWrapperXNA\NovodexWrapperXNA.csproj">
       <Project>{14B12B1E-4101-4542-BA07-891EB99C4916}</Project>
       <Name>NovodexWrapperXNA</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ServerClientOud\ServerClientOud.csproj">
-      <Project>{409E248D-79B7-4644-886A-A01C1211D6DD}</Project>
-      <Name>ServerClientOud</Name>
     </ProjectReference>
     <ProjectReference Include="..\Server\Server.csproj">
       <Project>{53269219-3E5B-4F70-83A9-3C6C9C714FEC}</Project>
