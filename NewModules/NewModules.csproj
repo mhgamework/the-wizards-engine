@@ -1,0 +1,616 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MHGameWork.TheWizards</RootNamespace>
+    <AssemblyName>NewModules</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>..\bin\Debug\NewModules.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\NewModules.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevComponents.DotNetBar2">
+      <HintPath>..\ServerClient\bin\x86\Debug\DevComponents.DotNetBar2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v10.1.Core, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraBars.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPivotGrid.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPivotGrid.v10.1.Core, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraScheduler.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraScheduler.v10.1.Core, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraScheduler.v10.1.Reporting, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraTreeList.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
+    <Reference Include="nunit.framework, Version=2.5.5.10112, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Libraries\NUnit-2.5.7.10213\bin\net-2.0\framework\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="StillDesign.PhysX.Net">
+      <HintPath>..\_Libraries\PhysX.Net\References\Debug\XNA 2.0\StillDesign.PhysX.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Animation\AMCParser.cs" />
+    <Compile Include="Animation\AMCSample.cs" />
+    <Compile Include="Animation\AMCSegment.cs" />
+    <Compile Include="Animation\Animation.cs" />
+    <Compile Include="Animation\AnimationController.cs" />
+    <Compile Include="Animation\ASFJoint.cs" />
+    <Compile Include="Animation\ASFParser.cs" />
+    <Compile Include="Animation\Joint.cs" />
+    <Compile Include="Animation\Skeleton.cs" />
+    <Compile Include="Animation\SkeletonVisualizer.cs" />
+    <Compile Include="Assets\AssetFileMode.cs" />
+    <Compile Include="Assets\AssetSynchronizationPriority.cs" />
+    <Compile Include="Assets\ClientAssetSyncer.cs" />
+    <Compile Include="Assets\ClientAssetFile.cs" />
+    <Compile Include="Assets\ClientAsset.cs" />
+    <Compile Include="Assets\ClientMeshAsset.cs" />
+    <Compile Include="Assets\ClientMeshPartAsset.cs" />
+    <Compile Include="Assets\ClientRenderingAssetFactory.cs" />
+    <Compile Include="Assets\ServerRenderingAssetFactory.cs" />
+    <Compile Include="Assets\IAssetFactory.cs" />
+    <Compile Include="Assets\AssetSerializer.cs" />
+    <Compile Include="Assets\ServerTextureAsset.cs" />
+    <Compile Include="Assets\ServerMeshPartAsset.cs" />
+    <Compile Include="Assets\IAsset.cs" />
+    <Compile Include="Assets\ServerAssetFile.cs" />
+    <Compile Include="Assets\ServerAsset.cs" />
+    <Compile Include="Assets\ServerAssetSyncer.cs" />
+    <Compile Include="Assets\ClientTextureAsset.cs" />
+    <Compile Include="Assets\ServerMeshAsset.cs" />
+    <Compile Include="Character\Editor\Character.cs" />
+    <Compile Include="Character\Editor\CharacterBone.cs" />
+    <Compile Include="Character\Editor\CharacterBuilder.cs" />
+    <Compile Include="Character\Editor\CharacterEditor.cs" />
+    <Compile Include="Character\Editor\CharacterEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Character\Editor\CharacterEditorForm.Designer.cs">
+      <DependentUpon>CharacterEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Character\Editor\CharacterEditorService.cs" />
+    <Compile Include="Character\Editor\CharacterMesh.cs" />
+    <Compile Include="Character\Editor\CharacterWizardsEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Character\Editor\CharacterWizardsEditorForm.Designer.cs">
+      <DependentUpon>CharacterWizardsEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\ClientPhysicsQuadTreeNode.cs" />
+    <Compile Include="Client\ClientPhysicsTestSphere.cs" />
+    <Compile Include="Client\ClientXNAGameService.cs" />
+    <Compile Include="Client\IClientPhysicsObject.cs" />
+    <Compile Include="Cogs\BarCog.cs" />
+    <Compile Include="Cogs\Cog.cs" />
+    <Compile Include="Cogs\CogEngine.cs" />
+    <Compile Include="Cogs\CogRaycastReport.cs" />
+    <Compile Include="Cogs\ICogComponent.cs" />
+    <Compile Include="Cogs\StaticBox.cs" />
+    <Compile Include="Editor\FromEditorProject\DEPRECATED\IPlugin001.cs" />
+    <Compile Include="Editor\FromEditorProject\DevExpressRibbonMerger.cs" />
+    <Compile Include="Editor\FromEditorProject\IDevexpressHasDockmanager.cs" />
+    <Compile Include="Editor\FromEditorProject\OudDevcomponents\WizardsEditorFormDevcomponents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\FromEditorProject\OudDevcomponents\WizardsEditorFormDevcomponents.Designer.cs">
+      <DependentUpon>WizardsEditorFormDevcomponents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\FromEditorProject\Temp\ServerClientFiles.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\ServerClientMain.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Preprocesser\PreprocessedNode.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Preprocesser\PreprocessedTerrainBlock.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\ITerrainBlockRenderable.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainBlock.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainCSMRendererService.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainGeomipmapRenderData.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainMaterial.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainPreprocesser.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainQuadTreeNodeData.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainRendererService.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainShader.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainShaderNew.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainStatistics.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainTexture.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainWeightMap.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\TaggedTerrain.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\TerrainFullData.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\TerrainHeightMap.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\TerrainManagerService.cs" />
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\TerrainPlugin.cs" />
+    <Compile Include="Editor\FromEditorProject\TODO\DockTab.cs" />
+    <Compile Include="Editor\FromEditorProject\TODO\EditorFiles.cs" />
+    <Compile Include="Editor\FromEditorProject\TODO\EditorTerrain.cs" />
+    <Compile Include="Editor\FromEditorProject\TODO\EditorTerrainAlphaMap.cs" />
+    <Compile Include="Editor\FromEditorProject\TODO\EditorTerrainHeightMapShader.cs" />
+    <Compile Include="Editor\FromEditorProject\TODO\EditorTerrainRenderHeightmap.cs" />
+    <Compile Include="Editor\FromEditorProject\TODO\EditorTerrainRenderTextured.cs" />
+    <Compile Include="Editor\FromEditorProject\TODO\EditorUndoManager.cs" />
+    <Compile Include="Editor\FromEditorProject\TODO\EditorWindowTerrainTextures.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editor\FromEditorProject\TODO\EditorWindowTerrainTextures.Designer.cs">
+      <DependentUpon>EditorWindowTerrainTextures.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\FromEditorProject\TODO\EditorXMLSerializer.cs" />
+    <Compile Include="Editor\FromEditorProject\TODO\TextureChooser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editor\FromEditorProject\TODO\TextureChooser.Designer.cs">
+      <DependentUpon>TextureChooser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\FromEditorProject\TODO\XNAGameControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editor\FromEditorProject\Transform\EditorGizmoRotation.cs" />
+    <Compile Include="Editor\FromEditorProject\Transform\EditorGizmoScaling.cs" />
+    <Compile Include="Editor\FromEditorProject\Transform\EditorGizmoTranslation.cs" />
+    <Compile Include="Editor\FromEditorProject\Transform\TransformControl.cs" />
+    <Compile Include="Editor\FromEditorProject\Transform\TransformForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\FromEditorProject\Transform\TransformForm.Designer.cs">
+      <DependentUpon>TransformForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\FromEditorProject\WizardsEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\FromEditorProject\WizardsEditorForm.Designer.cs">
+      <DependentUpon>WizardsEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\FromEditorProject\WorldEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\FromEditorProject\WorldEditorForm.Designer.cs">
+      <DependentUpon>WorldEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\FromEditorProject\World\IEditorTool.cs" />
+    <Compile Include="Editor\FromEditorProject\World\IWorldEditorRenderMode.cs" />
+    <Compile Include="Editor\FromEditorProject\World\IWorldEditorSelectable.cs" />
+    <Compile Include="Editor\FromEditorProject\World\TransformTool.cs" />
+    <Compile Include="Editor\IWizardsEditorDatabaseExtension.cs" />
+    <Compile Include="Editor\IWorldEditorExtension.cs" />
+    <Compile Include="Editor\WizardsEditor.cs" />
+    <Compile Include="Entities\Editor\EditorModel.cs" />
+    <Compile Include="Entities\Editor\EntityEditorPlugin.cs" />
+    <Compile Include="Entities\Editor\EntityEditorService.cs" />
+    <Compile Include="Entities\Editor\ObjectEditor\ObjectEditor.cs" />
+    <Compile Include="Entities\Editor\ObjectEditor\ObjectEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entities\Editor\ObjectEditor\ObjectEditorForm.Designer.cs">
+      <DependentUpon>ObjectEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Editor\Rendering\EditorEntityRenderData.cs" />
+    <Compile Include="Entities\Editor\Rendering\EditorMaterial.cs" />
+    <Compile Include="Entities\Editor\Rendering\EditorMaterialCollada.cs" />
+    <Compile Include="Entities\Editor\Rendering\EditorModelRenderData.cs" />
+    <Compile Include="Entities\Editor\Rendering\EditorObjectRenderData.cs" />
+    <Compile Include="Entities\Editor\RenderModes\EditorEntityRenderMode.cs" />
+    <Compile Include="Entities\Editor\Tools\EntitySelectionTool.cs" />
+    <Compile Include="Entities\Editor\UndoActionEntityTransformation.cs" />
+    <Compile Include="Entities\Editor\WizardsEditor\EditorObjectsList.cs" />
+    <Compile Include="Entities\Editor\WizardsEditor\EditorWindowObjects.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Entities\Editor\WizardsEditor\EditorWindowObjects.Designer.cs">
+      <DependentUpon>EditorWindowObjects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Editor\WizardsEditor\EntityWizardsEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entities\Editor\WizardsEditor\EntityWizardsEditorForm.Designer.cs">
+      <DependentUpon>EntityWizardsEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Editor\WorldEditor\EntitiesSelectable.cs" />
+    <Compile Include="Entities\Editor\WorldEditor\EntityWorldEditorExtension.cs" />
+    <Compile Include="Entities\Editor\WorldEditor\EntityWorldEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Entities\Editor\WorldEditor\EntityWorldEditorForm.Designer.cs">
+      <DependentUpon>EntityWorldEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Client\EntityClientPhysics.cs" />
+    <Compile Include="Entity\Client\EntityPhysicsActorBuilder.cs" />
+    <Compile Include="Entity\Editor\ColladaMeshImporter.cs" />
+    <Compile Include="Entity\Editor\EditorEntity.cs" />
+    <Compile Include="Entity\Editor\EditorMesh.cs" />
+    <Compile Include="Entity\Editor\EditorMeshPart.cs" />
+    <Compile Include="Entity\Editor\EditorMeshPartRenderData.cs" />
+    <Compile Include="Entity\Editor\EditorMeshRenderData.cs" />
+    <Compile Include="Entity\Editor\EditorObject.cs" />
+    <Compile Include="Entity\Editor\EntityWizardsEditorExtension.cs" />
+    <Compile Include="Entity\Editor\Tools\PutObjectsTool.cs" />
+    <Compile Include="Entity\EntityCoreData.cs" />
+    <Compile Include="Entity\EntityRenderData.cs" />
+    <Compile Include="Entity\EntityRenderDataFactory.cs" />
+    <Compile Include="Entity\EntityRenderElement.cs" />
+    <Compile Include="Entity\IEntity.cs" />
+    <Compile Include="Entity\IObject.cs" />
+    <Compile Include="Entity\IObjectData.cs" />
+    <Compile Include="Entity\IObjectDataRenderDataFactory.cs" />
+    <Compile Include="Entity\IScene.cs" />
+    <Compile Include="Entity\ISceneData.cs" />
+    <Compile Include="OBJParser\OBJToRAMMeshConverter.cs" />
+    <Compile Include="Physics\CustomContactReport.cs" />
+    <Compile Include="Physics\MeshDynamicPhysicsElement.cs" />
+    <Compile Include="Physics\MeshPhysicsPool.cs" />
+    <Compile Include="Physics\MeshStaticPhysicsElement.cs" />
+    <Compile Include="Physics\MeshPhysicsActorBuilder.cs" />
+    <Compile Include="Physics\MeshCollisionData.cs" />
+    <Compile Include="Physics\MeshPhysicsElementFactory.cs" />
+    <Compile Include="Player\PlayerController.cs" />
+    <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
+    <Compile Include="Rendering\IMeshFactory.cs" />
+    <Compile Include="World\Static\ClientStaticWorldObjectSyncer.cs" />
+    <Compile Include="World\ClientSyncedActor.cs" />
+    <Compile Include="World\ClientSyncer.cs" />
+    <Compile Include="World\Static\IStaticWorldObjectFactory.cs" />
+    <Compile Include="World\IWorldEntity.cs" />
+    <Compile Include="World\Static\ServerStaticWorldObject.cs" />
+    <Compile Include="World\Static\StaticWorldObjectDeletePacket.cs" />
+    <Compile Include="World\Static\StaticWorldObjectUpdatePacket.cs" />
+    <Compile Include="World\Static\ServerStaticWorldObjectSyncer.cs" />
+    <Compile Include="World\Static\IStaticWorldObject.cs" />
+    <Compile Include="World\WorldPhysxSyncActor.cs" />
+    <Compile Include="World\IWorldSyncActor.cs" />
+    <Compile Include="World\Packets\DeltaSnapshotPacket.cs" />
+    <Compile Include="World\Packets\TimeUpdatePacket.cs" />
+    <Compile Include="World\Packets\UpdateEntityPacket.cs" />
+    <Compile Include="World\ServerSyncedActor.cs" />
+    <Compile Include="World\ServerSyncer.cs" />
+    <Compile Include="World\World.cs" />
+    <Compile Include="Xml\ICustomElementSerializer.cs" />
+    <Compile Include="Xml\ICustomSerializer.cs" />
+    <Compile Include="Xml\IInternalSerializer.cs" />
+    <Compile Include="Xml\TWXmlSerializer.cs" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\DeferredShader.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\Blur.fx" />
+    <Compile Include="Rendering\IMesh.cs" />
+    <Compile Include="Rendering\IMeshPart.cs" />
+    <Compile Include="Rendering\ITexture.cs" />
+    <Compile Include="Entity\ModelGeometryData.cs" />
+    <Compile Include="Entity\ObjectCoreData.cs" />
+    <Compile Include="Entity\ObjectFullData.cs" />
+    <Compile Include="Entity\ObjectFullDataFactory.cs" />
+    <Compile Include="Entity\ObjectMeshData.cs" />
+    <Compile Include="Entity\ObjectRenderDataFactory.cs" />
+    <Compile Include="Entity\ObjectRenderElement.cs" />
+    <Compile Include="Entity\RAMEntity.cs" />
+    <Compile Include="Entity\RAMMesh.cs" />
+    <Compile Include="Entity\RAMMeshPart.cs" />
+    <Compile Include="Entity\RAMObject.cs" />
+    <Compile Include="Entity\SceneEntityData.cs" />
+    <Compile Include="Entity\SceneXMLSerializer.cs" />
+    <Compile Include="Entity\TangentSolver.cs" />
+    <Compile Include="Entity\TODO\EntityFullData.cs" />
+    <Compile Include="Entity\TODO\EntityManagerService.cs" />
+    <Compile Include="Entity\TODO\EntityPlugin.cs" />
+    <Compile Include="Entity\TODO\ModelFullData.cs" />
+    <Compile Include="Entity\TODO\Rendering\ColladaShader.cs" />
+    <Compile Include="Entity\TODO\Rendering\EntityCSMRenderer.cs" />
+    <Compile Include="Entity\TODO\Rendering\EntityRenderData.cs" />
+    <Compile Include="Entity\TODO\Rendering\EntityRenderer.cs" />
+    <Compile Include="Entity\TODO\Rendering\Material.cs" />
+    <Compile Include="Entity\TODO\Rendering\MaterialCollada.cs" />
+    <Compile Include="Entity\TODO\Rendering\ModelRenderData.cs" />
+    <Compile Include="Entity\TODO\Rendering\ObjectRenderData.cs" />
+    <Compile Include="Entity\TODO\TaggedEntity.cs" />
+    <Compile Include="Entity\TODO\TaggedObject.cs" />
+    <Compile Include="OBJParser\Face.cs" />
+    <Compile Include="OBJParser\FaceVertex.cs" />
+    <Compile Include="OBJParser\OBJGroup.cs" />
+    <Compile Include="OBJParser\OBJImporter.cs" />
+    <Compile Include="OBJParser\OBJMaterial.cs" />
+    <Compile Include="Physics\PhysicsDebugRenderer.cs" />
+    <Compile Include="Physics\PhysicsEngine.cs" />
+    <Compile Include="Physics\PhysicsHelper.cs" />
+    <Compile Include="Physics\PhysicsService.cs" />
+    <Compile Include="Physics\Temp\Camera.cs" />
+    <Compile Include="Physics\Temp\Engine.cs" />
+    <Compile Include="Physics\Temp\Math.cs" />
+    <Compile Include="Physics\User Output.cs" />
+    <Compile Include="Physics\Temp\Vertex Grid.cs" />
+    <Compile Include="Player\Client\PlayerClientPhysics.cs" />
+    <Compile Include="Player\PlayerData.cs" />
+    <Compile Include="Player\PlayerInput.cs" />
+    <Compile Include="Player\PlayerRenderer.cs" />
+    <Compile Include="Player\PlayerService.cs" />
+    <Compile Include="Player\XNATaskQueue.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Rendering\DefaultModelMaterialTextured.cs" />
+    <Compile Include="Rendering\DefaultModelRenderable.cs" />
+    <Compile Include="Rendering\DefaultModelRenderableShared.cs" />
+    <Compile Include="Rendering\DefaultModelShader.cs" />
+    <Compile Include="Rendering\DefaultRenderElement.cs" />
+    <Compile Include="Rendering\DefaultRenderer.cs" />
+    <Compile Include="Rendering\IDefaultModelMaterial.cs" />
+    <Compile Include="Rendering\FrustumCuller.cs" />
+    <Compile Include="Rendering\ICullable.cs" />
+    <Compile Include="Rendering\IDefaultRenderable.cs" />
+    <Compile Include="Rendering\ISimpleRenderable.cs" />
+    <Compile Include="Rendering\MeshAdditionalData.cs" />
+    <Compile Include="Rendering\MeshCoreData.cs" />
+    <Compile Include="Rendering\MeshPartAdditionalData.cs" />
+    <Compile Include="Rendering\MeshPartGeometryData.cs" />
+    <Compile Include="Rendering\MeshPartPool.cs" />
+    <Compile Include="Rendering\MeshRenderDataFactory.cs" />
+    <Compile Include="Rendering\MeshRenderElement.cs" />
+    <Compile Include="Rendering\MeshRenderer.cs" />
+    <Compile Include="Rendering\RAMTexture.cs" />
+    <Compile Include="Rendering\SimpleRenderer.cs" />
+    <Compile Include="Rendering\TextureCoreData.cs" />
+    <Compile Include="Rendering\TextureFactory.cs" />
+    <Compile Include="Rendering\TexturePool.cs" />
+    <Compile Include="Rendering\VertexDeclarationPool.cs" />
+    <Compile Include="Scene\Editor\EditorScene.cs" />
+    <Compile Include="Scene\Editor\SceneEditor.cs" />
+    <Compile Include="Scene\SceneCoreData.cs" />
+    <Compile Include="Scripting\IStateScript.cs" />
+    <Compile Include="Scripting\ScriptLayer.cs" />
+    <Compile Include="Scripting\ScriptRunner.cs" />
+    <Compile Include="Terrain\Client\TerrainBlockClientPhysics.cs" />
+    <Compile Include="Terrain\Client\TerrainBlockHeightfieldBuilder.cs" />
+    <Compile Include="Terrain\Client\TerrainClientPhysics.cs" />
+    <Compile Include="Terrain\Editor\Oud\TerainEditorPlugin.cs" />
+    <Compile Include="Terrain\Editor\TerrainCreateTool.cs" />
+    <Compile Include="Terrain\Editor\TerrainEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Terrain\Editor\TerrainEditorForm.Designer.cs">
+      <DependentUpon>TerrainEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Terrain\Editor\TerrainEditorModule.cs" />
+    <Compile Include="Terrain\Editor\TerrainPaintTool.cs" />
+    <Compile Include="Terrain\Editor\TerrainRaiseTool.cs" />
+    <Compile Include="Terrain\Editor\TerrainWorldEditorExtension.cs" />
+    <Compile Include="Terrain\Editor\TerrainWorldEditorGUI.cs" />
+    <Compile Include="Utilities\TestRunner.cs" />
+    <Compile Include="Utilities\TestRunnerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utilities\TestRunnerForm.Designer.cs">
+      <DependentUpon>TestRunnerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WorldDatabase\DataElementFactoryIdentifier.cs" />
+    <Compile Include="WorldDatabase\DataElementIdentifier.cs" />
+    <Compile Include="WorldDatabase\DataElementXMLFactory.cs" />
+    <Compile Include="WorldDatabase\DataItem.cs" />
+    <Compile Include="WorldDatabase\DataItemIdentifier.cs" />
+    <Compile Include="WorldDatabase\DataItemType.cs" />
+    <Compile Include="WorldDatabase\DataRevision.cs" />
+    <Compile Include="WorldDatabase\DataRevisionIdentifier.cs" />
+    <Compile Include="WorldDatabase\DefaultRevisionFactory.cs" />
+    <Compile Include="WorldDatabase\IDataElement.cs" />
+    <Compile Include="WorldDatabase\IDataElementFactory.cs" />
+    <Compile Include="WorldDatabase\WorkingCopy.cs" />
+    <Compile Include="WorldDatabase\WorldDatabase.cs" />
+    <EmbeddedResource Include="Utilities\TestRunnerForm.resx">
+      <DependentUpon>TestRunnerForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Character\Editor\CharacterEditorForm.resx">
+      <DependentUpon>CharacterEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Character\Editor\CharacterWizardsEditorForm.resx">
+      <DependentUpon>CharacterWizardsEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\FromEditorProject\OudDevcomponents\WizardsEditorFormDevcomponents.resx">
+      <DependentUpon>WizardsEditorFormDevcomponents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\FromEditorProject\TODO\EditorWindowTerrainTextures.resx">
+      <DependentUpon>EditorWindowTerrainTextures.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\FromEditorProject\TODO\TextureChooser.resx">
+      <DependentUpon>TextureChooser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\FromEditorProject\Transform\TransformForm.resx">
+      <DependentUpon>TransformForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\FromEditorProject\WizardsEditorForm.resx">
+      <DependentUpon>WizardsEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\FromEditorProject\WorldEditorForm.resx">
+      <DependentUpon>WorldEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entities\Editor\ObjectEditor\ObjectEditorForm.resx">
+      <DependentUpon>ObjectEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entities\Editor\WizardsEditor\EditorWindowObjects.resx">
+      <DependentUpon>EditorWindowObjects.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entities\Editor\WizardsEditor\EntityWizardsEditorForm.resx">
+      <DependentUpon>EntityWizardsEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entities\Editor\WorldEditor\EntityWorldEditorForm.resx">
+      <DependentUpon>EntityWorldEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Terrain\Editor\TerrainEditorForm.resx">
+      <DependentUpon>TerrainEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Client\Client.cd" />
+    <None Include="Editor\FromEditorProject\TODO\Files\TerrainGeomipmap.fx" />
+    <EmbeddedResource Include="Editor\FromEditorProject\Transform\Files\GizmoRotation001.DAE" />
+    <EmbeddedResource Include="Editor\FromEditorProject\Transform\Files\GizmoTranslation001.DAE" />
+    <EmbeddedResource Include="Rendering\Files\DefaultModelShader.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\ClearGBuffer.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\RenderGBuffer.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\DirectionalLight.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\CombineFinal.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\PointLight.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\SpotLight.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\ShadowMap.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\AmbientOcclusion.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\Downsample.fx" />
+    <None Include="Terrain\Client\TerrainClient.cd" />
+    <None Include="Terrain\Editor\TerrainEditor.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Editor\Resources\RedoBig.png" />
+    <Content Include="Editor\Resources\RedoMedium.png" />
+    <Content Include="Editor\Resources\SaveBig.png" />
+    <Content Include="Editor\Resources\SaveMedium.png" />
+    <Content Include="Editor\Resources\UndoBig.png" />
+    <Content Include="Editor\Resources\UndoMedium.png" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\RandomNormals.png" />
+    <EmbeddedResource Include="Rendering\Files\Checker.png" />
+    <None Include="Resources\UndoBig.png" />
+    <None Include="Resources\SaveMedium.png" />
+    <None Include="Resources\SaveBig.png" />
+    <None Include="Resources\RedoMedium.png" />
+    <None Include="Resources\UndoMedium.png" />
+    <None Include="Resources\RedoBig.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Editor\FromEditorProject\Temp\Entity\" />
+    <Folder Include="Editor\FromEditorProject\Temp\Terrain\EditorTemp\" />
+    <Folder Include="Server\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AdminClientVB\AdminClientVB.vbproj">
+      <Project>{807ED3B3-6313-46CE-9CA3-B6DB9735AAFA}</Project>
+      <Name>AdminClientVB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Client\Client.csproj">
+      <Project>{64749FE6-E3AF-4666-BB9F-8CCFF4D30E2D}</Project>
+      <Name>Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ColladaSchema\ColladaSchema.csproj">
+      <Project>{1EBCA61D-7015-426C-83DB-4602CE0F4194}</Project>
+      <Name>ColladaSchema</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.Core\Common.Core.csproj">
+      <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
+      <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.NetworkingVB\Common.NetworkingVB.vbproj">
+      <Project>{80D950C7-F9F6-4569-93D9-20833B52ACD9}</Project>
+      <Name>Common.NetworkingVB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonVB\CommonVB.vbproj">
+      <Project>{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}</Project>
+      <Name>CommonVB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{8162E3FE-A9B6-4F93-94F0-89C74CB7D53D}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Game3DPlay\Game3DPlay.csproj">
+      <Project>{3ADBAB57-A020-46BA-8422-250995E5228E}</Project>
+      <Name>Game3DPlay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Networking\Networking.csproj">
+      <Project>{5552CBE1-F647-4B3A-A353-A252E4CB0008}</Project>
+      <Name>Networking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NovodexWrapperXNA\NovodexWrapperXNA.csproj">
+      <Project>{14B12B1E-4101-4542-BA07-891EB99C4916}</Project>
+      <Name>NovodexWrapperXNA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerClientOud\ServerClientOud.csproj">
+      <Project>{409E248D-79B7-4644-886A-A01C1211D6DD}</Project>
+      <Name>ServerClientOud</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
