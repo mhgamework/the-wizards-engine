@@ -1,0 +1,152 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 27.09.2010 13:12:10
+
+newmtl 01___Walls
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka maps\LoamWalls0012_2_S_modified2.jpg
+	map_Kd maps\LoamWalls0012_2_S_modified2.jpg
+	map_bump maps\LoamWalls0012_2_S_modified.jpg
+	bump maps\LoamWalls0012_2_S_modified.jpg
+
+newmtl 24___RoofingCeramic
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka maps\RooftilesCeramicOld0091_2_S_Modified2.jpg
+	map_Kd maps\RooftilesCeramicOld0091_2_S_Modified2.jpg
+	map_bump maps\RooftilesCeramicOld0091_2_S.jpg
+	bump maps\RooftilesCeramicOld0091_2_S.jpg
+
+newmtl 06___WoodPlanks
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka maps\WoodPlanksBare0054_1_S.jpg
+	map_Kd maps\WoodPlanksBare0054_1_S.jpg
+	map_bump maps\WoodPlanksBare0054_1_S.jpg
+	bump maps\WoodPlanksBare0054_1_S.jpg
+
+newmtl 18___WoodPlanks
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka maps\WoodPlanksFloors0011_19_S.jpg
+	map_Kd maps\WoodPlanksFloors0011_19_S.jpg
+
+newmtl 13___Stone
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka maps\MarbleGranite0002_S.jpg
+	map_Kd maps\MarbleGranite0002_S.jpg
+	map_bump maps\MarbleGranite0002_S.jpg
+	bump maps\MarbleGranite0002_S.jpg
+
+newmtl 07___Wood1
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka maps\WoodRough0084_1_S.jpg
+	map_Kd maps\WoodRough0084_1_S.jpg
+	map_bump maps\WoodRough0084_1_S.jpg
+	bump maps\WoodRough0084_1_S.jpg
+
+newmtl Material__0
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka maps\FlowerBeds0009_2_S.jpg
+	map_Kd maps\FlowerBeds0009_2_S.jpg
+
+newmtl 08___Door01
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka maps\DoorsMedieval0010_S.jpg
+	map_Kd maps\DoorsMedieval0010_S.jpg
+	map_bump maps\DoorsMedieval0010_S.jpg
+	bump maps\DoorsMedieval0010_S.jpg
+
+newmtl 19___Stone1
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka maps\BrickRound0030_7_S.jpg
+	map_Kd maps\BrickRound0030_7_S.jpg
+	map_bump maps\BrickRound0030_7_S.jpg
+	bump maps\BrickRound0030_7_S.jpg
+
+newmtl wire_255255255
+	Ns 32
+	d 1
+	Tr 0
+	Tf 1 1 1
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.3500 0.3500 0.3500

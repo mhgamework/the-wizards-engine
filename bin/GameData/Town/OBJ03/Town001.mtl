@@ -1,0 +1,742 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 07.12.2010 22:56:55
+
+newmtl 20___Stone2
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\BrickRound0044_5_S.jpg
+	map_Kd maps\BrickRound0044_5_S.jpg
+	map_bump maps\BrickRound0044_5_S.jpg
+	bump maps\BrickRound0044_5_S.jpg
+
+newmtl 22___Stone3
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\MarbleWhite0035_2_S.jpg
+	map_Kd maps\MarbleWhite0035_2_S.jpg
+	map_bump maps\MarbleWhite0035_2_S.jpg
+	bump maps\MarbleWhite0035_2_S.jpg
+
+newmtl 19___Stone1
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\BrickRound0030_7_S.jpg
+	map_Kd maps\BrickRound0030_7_S.jpg
+	map_bump maps\BrickRound0030_7_S.jpg
+	bump maps\BrickRound0030_7_S.jpg
+
+newmtl 18___WoodPlanks
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\WoodPlanksFloors0011_19_S.jpg
+	map_Kd maps\WoodPlanksFloors0011_19_S.jpg
+
+newmtl 10___RoundBricks
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\BrickOldRounded0061_5_S.jpg
+	map_Kd maps\BrickOldRounded0061_5_S.jpg
+	map_bump maps\BrickOldRounded0061_5_S.jpg
+	bump maps\BrickOldRounded0061_5_S.jpg
+
+newmtl StoneMixed
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\BrickOldMixedSize0093_7_S.jpg
+	map_Kd maps\BrickOldMixedSize0093_7_S.jpg
+	map_bump maps\BrickOldMixedSize0093_7_S.jpg
+	bump maps\BrickOldMixedSize0093_7_S.jpg
+
+newmtl 04__Ground
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\SoilMud0043_2_S.jpg
+	map_Kd maps\SoilMud0043_2_S.jpg
+	map_bump maps\SoilMud0043_2_S.jpg
+	bump maps\SoilMud0043_2_S.jpg
+
+newmtl Water01
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\WaterPlain0015_7_S.jpg
+	map_Kd maps\WaterPlain0015_7_S.jpg
+
+newmtl 02___IronOrnaments
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\MetalBase0105_1_S.jpg
+	map_Kd maps\MetalBase0105_1_S.jpg
+	map_bump maps\MetalBase0105_1_S.jpg
+	bump maps\MetalBase0105_1_S.jpg
+
+newmtl 01___Walls
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\LoamWalls0012_2_S_modified2.jpg
+	map_Kd maps\LoamWalls0012_2_S_modified2.jpg
+	map_bump maps\LoamWalls0012_2_S_modified.jpg
+	bump maps\LoamWalls0012_2_S_modified.jpg
+
+newmtl 02___Roofing
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\RooftilesWood0005_2_S.jpg
+	map_Kd maps\RooftilesWood0005_2_S.jpg
+	map_bump maps\RooftilesWood0005_2_S.jpg
+	bump maps\RooftilesWood0005_2_S.jpg
+
+newmtl 24___RoofingCeramic
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\RooftilesCeramicOld0091_2_S_Modified2.jpg
+	map_Kd maps\RooftilesCeramicOld0091_2_S_Modified2.jpg
+	map_bump maps\RooftilesCeramicOld0091_2_S.jpg
+	bump maps\RooftilesCeramicOld0091_2_S.jpg
+
+newmtl 07___Wood1
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\WoodRough0084_1_S.jpg
+	map_Kd maps\WoodRough0084_1_S.jpg
+	map_bump maps\WoodRough0084_1_S.jpg
+	bump maps\WoodRough0084_1_S.jpg
+
+newmtl 08___Door01
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\DoorsMedieval0010_S.jpg
+	map_Kd maps\DoorsMedieval0010_S.jpg
+	map_bump maps\DoorsMedieval0010_S.jpg
+	bump maps\DoorsMedieval0010_S.jpg
+
+newmtl 13___Stone
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\MarbleGranite0002_S.jpg
+	map_Kd maps\MarbleGranite0002_S.jpg
+	map_bump maps\MarbleGranite0002_S.jpg
+	bump maps\MarbleGranite0002_S.jpg
+
+newmtl 14___Shutters
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\WindowsShutters0012_S.jpg
+	map_Kd maps\WindowsShutters0012_S.jpg
+
+newmtl 15___Wizards
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\TheWizardsText02.png
+	map_Kd maps\TheWizardsText02.png
+
+newmtl 04___Rubbish
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\GrassDead0073_5_S.jpg
+	map_Kd maps\GrassDead0073_5_S.jpg
+	map_bump maps\GrassDead0073_5_S.jpg
+	bump maps\GrassDead0073_5_S.jpg
+
+newmtl 10___Wood3
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\WoodRough0036_3_S.jpg
+	map_Kd maps\WoodRough0036_3_S.jpg
+	map_bump maps\WoodRough0036_3_S.jpg
+	bump maps\WoodRough0036_3_S.jpg
+
+newmtl 05___Fire
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\Fire.jpg
+	map_Kd maps\Fire.jpg
+
+newmtl 06___WoodPlanks
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\WoodPlanksBare0054_1_S.jpg
+	map_Kd maps\WoodPlanksBare0054_1_S.jpg
+	map_bump maps\WoodPlanksBare0054_1_S.jpg
+	bump maps\WoodPlanksBare0054_1_S.jpg
+
+newmtl 12___Wood5
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\WoodFine0032_19_S.jpg
+	map_Kd maps\WoodFine0032_19_S.jpg
+	map_bump maps\WoodFine0032_19_S.jpg
+	bump maps\WoodFine0032_19_S.jpg
+
+newmtl 21___Wood2
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\WoodRough0029_1_S.jpg
+	map_Kd maps\WoodRough0029_1_S.jpg
+	map_bump maps\WoodRough0029_1_S.jpg
+	bump maps\WoodRough0029_1_S.jpg
+
+newmtl 09___Glass
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\WindowsOther0065_S.jpg
+	map_Kd maps\WindowsOther0065_S.jpg
+	map_refl maps\Map__12_RGB Tint.png
+
+newmtl 23___Stone4
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\BrickOldSharp0150_5_S.jpg
+	map_Kd maps\BrickOldSharp0150_5_S.jpg
+	map_bump maps\BrickOldSharp0150_5_S.jpg
+	bump maps\BrickOldSharp0150_5_S.jpg
+
+newmtl 11___Metal
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\MetalBase0105_1_S.jpg
+	map_Kd maps\MetalBase0105_1_S.jpg
+	map_bump maps\MetalBase0105_1_S.jpg
+	bump maps\MetalBase0105_1_S.jpg
+
+newmtl 16___Water
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\WaterPlain0017_9_S.jpg
+	map_Kd maps\WaterPlain0017_9_S.jpg
+
+newmtl Material__0
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\FlowerBeds0009_2_S.jpg
+	map_Kd maps\FlowerBeds0009_2_S.jpg
+
+newmtl Material__3
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\RooftilesSlate0042_7_S_Modified.jpg
+	map_Kd maps\RooftilesSlate0042_7_S_Modified.jpg
+	map_bump maps\RooftilesSlate0042_7_S_Modified.jpg
+	bump maps\RooftilesSlate0042_7_S_Modified.jpg
+
+newmtl Material__4
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\SoilMud0043_2_S.jpg
+	map_Kd maps\SoilMud0043_2_S.jpg
+
+newmtl 01___WallStones
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\BrickMessy0060_1_S.jpg
+	map_Kd maps\BrickMessy0060_1_S.jpg
+	map_bump maps\BrickMessy0060_1_S.jpg
+	bump maps\BrickMessy0060_1_S.jpg
+
+newmtl 07___DoorStone
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\BrickOldSharp0119_1_S.jpg
+	map_Kd maps\BrickOldSharp0119_1_S.jpg
+	map_bump maps\BrickOldSharp0119_1_S.jpg
+	bump maps\BrickOldSharp0119_1_S.jpg
+
+newmtl 08___Wood
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\WoodPlanksBare0051_1_S.jpg
+	map_Kd maps\WoodPlanksBare0051_1_S.jpg
+	map_bump maps\WoodPlanksBare0051_1_S.jpg
+	bump maps\WoodPlanksBare0051_1_S.jpg
+
+newmtl 22___Default
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\RooftilesCeramicOld0091_2_S_Modified1.jpg
+	map_Kd maps\RooftilesCeramicOld0091_2_S_Modified1.jpg
+
+newmtl MetalBeam
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\MetalBeam.jpg
+	map_Kd maps\MetalBeam.jpg
+	map_bump maps\MetalBeam.jpg
+	bump maps\MetalBeam.jpg
+
+newmtl BrickRounded
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\BrickOldRounded0061_5_S.jpg
+	map_Kd maps\BrickOldRounded0061_5_S.jpg
+
+newmtl Fabric
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\FabricPlain0045_4_S.jpg
+	map_Kd maps\FabricPlain0045_4_S.jpg
+
+newmtl DoorsBig
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\DoorsMedieval0109_S.jpg
+	map_Kd maps\DoorsMedieval0109_S.jpg
+
+newmtl WoodRough
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\WoodRough0088_2_S.jpg
+	map_Kd maps\WoodRough0088_2_S.jpg
+
+newmtl Wood01
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\WoodRough0029_1_S.jpg
+	map_Kd maps\WoodRough0029_1_S.jpg
+
+newmtl Wood_withCircle
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\WoodRough0029_1_S_edited.jpg
+	map_Kd maps\WoodRough0029_1_S_edited.jpg
+
+newmtl 03___Default
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\MarbleGranite0002_S.jpg
+	map_Kd maps\MarbleGranite0002_S.jpg
+
+newmtl 13___Door
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\DoorsMedieval0026_2_L.jpg
+	map_Kd maps\DoorsMedieval0026_2_L.jpg
+	map_bump maps\DoorsMedieval0026_2_L.jpg
+	bump maps\DoorsMedieval0026_2_L.jpg
+
+newmtl 11___Default
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\BrickMessy0060_1_S.jpg
+	map_Kd maps\BrickMessy0060_1_S.jpg
+
+newmtl wire_026177088
+	Ns 32
+	d 1
+	Tr 0
+	Tf 1 1 1
+	illum 2
+	Ka 0.101961 0.694118 0.345098
+	Kd 0.101961 0.694118 0.345098
+	Ks 0.350000 0.350000 0.350000
+
+newmtl Trunk
+	Ns 25.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.100000 0.100000 0.100000
+	Kd 0.462745 0.356863 0.184314
+	Ks 0.045000 0.045000 0.045000
+	Ke 0.000000 0.000000 0.000000
+
+newmtl Leaves
+	Ns 25.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.100000 0.100000 0.100000
+	Kd 0.984314 0.933333 0.380392
+	Ks 0.045000 0.045000 0.045000
+	Ke 0.000000 0.000000 0.000000
+	map_d maps\jagleaf.tga
+
+newmtl Branch0
+	Ns 25.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.100000 0.100000 0.100000
+	Kd 0.274510 0.149020 0.011765
+	Ks 0.045000 0.045000 0.045000
+	Ke 0.000000 0.000000 0.000000
+
+newmtl wire_108008136
+	Ns 32
+	d 1
+	Tr 0
+	Tf 1 1 1
+	illum 2
+	Ka 0.423529 0.031373 0.533333
+	Kd 0.423529 0.031373 0.533333
+	Ks 0.350000 0.350000 0.350000
+
+newmtl 06___Default
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka maps\RooftilesCeramicOld0091_2_S_Modified1.jpg
+	map_Kd maps\RooftilesCeramicOld0091_2_S_Modified1.jpg
