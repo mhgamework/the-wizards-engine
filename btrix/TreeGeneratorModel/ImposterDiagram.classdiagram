@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="ba162dd5-8f64-4719-b6bf-71fece9e353a" name="ImposterDiagram" linkedPackageId="f2b2f4f0-c41c-4285-876d-56acb5882d55" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="338aa12b-cb34-46f7-997f-56f0b004ad38" name="TreeRenderData" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="cacaf9ef-f1e0-43b5-8efb-82e228adea10" />
+        <suppliersInternal>
+          <interfaceRealization Id="8461531e-b864-4a33-9726-8a3e9d6dc6e0">
+            <interfaceMoniker Id="b9999e52-8ef2-4fc2-add3-f710dc472b8d" LastKnownName="IRenderable" />
+            <elementDefinition Id="4faf42ae-5efe-43d4-a33c-e78f3a359888" />
+          </interfaceRealization>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="dd81a18b-002c-47c0-8ccd-7dfb971ce552" name="TWRenderer" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="1cbbb153-5572-4409-b8d0-1c1e42c5bbe8" />
+        <suppliersInternal>
+          <dependency Id="308dea06-3eed-407b-b0d8-5940b9645f10">
+            <classMoniker Id="7eddfce5-6570-4fc6-878e-08230e7cb6f1" LastKnownName="TWRenderElement" />
+            <elementDefinition Id="a55614db-dd50-4ca8-93df-1cffae4c09e6" />
+          </dependency>
+          <dependency Id="b66be949-d013-47f2-b193-8ab00c89a111">
+            <interfaceMoniker Id="b9999e52-8ef2-4fc2-add3-f710dc472b8d" LastKnownName="IRenderable" />
+            <elementDefinition Id="6cfbec37-57c3-4b5f-9381-bff745591c5c" />
+          </dependency>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation Id="581aebd8-001c-45bd-ab76-0b8f5151f4e2" name="CreateElement" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b68af934-6e67-4291-b07a-6dc2432df26a" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="c0f686a1-ada0-468a-9cdb-f81a3a3f5804" name="RenderData" direction="In" isUnique="false">
+                  <elementDefinition Id="c2bb1bd8-74bd-4ff5-8b98-ee22901e5696" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="15aba74c-1f82-41a3-8699-5833431866af" name="Render" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="66ffb3ea-5507-49a8-9d2f-326e69e86a31" />
+          </operation>
+          <operation Id="b0f24126-83ab-401a-a41f-c3528915566c" name="ReleaseElement" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="d508872e-538f-44ef-9f20-9a89a362e43f" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="31470564-eca2-459c-8580-c16e3ee26678" name="RenderData" direction="In" isUnique="false">
+                  <elementDefinition Id="7f24ca71-25a3-48d9-9664-a5ffae09a5e6" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="7eddfce5-6570-4fc6-878e-08230e7cb6f1" name="TWRenderElement" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="71c7c8ba-7bd0-40ef-8da0-8db464a781c0" />
+        <targetEnds>
+          <association Id="f7730bea-a4c2-4fbc-a815-ae6b34a5548b" isDerived="false" sourceEndRoleName="TreeRenderEntity" targetEndRoleName="TreeRenderData" isLeaf="false" isAbstract="false">
+            <interfaceMoniker Id="b9999e52-8ef2-4fc2-add3-f710dc472b8d" LastKnownName="IRenderable" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="2544f742-6e4b-4da6-93b2-74e16b390589" name="TreeRenderEntity" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString Id="a205d908-b210-4971-a5b8-1010de02d2cc" name="Lower" value="*">
+                      <elementDefinition Id="9aaf954d-828a-430c-aea6-e41fa514c2ae" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="783a5bce-dd11-4fcb-ab86-ebaee71120e5" name="Upper" value="*">
+                      <elementDefinition Id="504d5334-84db-4681-ba0c-102f328dd169" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="73fca48b-724c-4ecd-8ac9-37de35967e6b" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="aa6bf0af-fa28-4929-ba2c-a865c87c845b" name="TreeRenderData" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="7b6d41e5-4f42-41f1-b9eb-3b33d67d4566" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="45e7a68f-1493-4984-b967-dd69aa7358b1" />
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property Id="a817c347-c1a5-46fd-9139-dad19fe0ffac" name="WorldMatrix" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="7ed51930-c3a5-428f-b246-69e070f32473" />
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="4794d196-082e-4a7a-8d53-f5bf09f82ad7" name="TreeRenderDataGenerator" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="dba3101a-8c68-4765-9854-c6ddf318be42" />
+        <suppliersInternal>
+          <dependency Id="9e877b07-60f1-4192-970c-bf67e681f653">
+            <classMoniker Id="338aa12b-cb34-46f7-997f-56f0b004ad38" LastKnownName="TreeRenderData" />
+            <elementDefinition Id="b19e4683-c5d4-42f2-9b1f-cb35bd7fd8cd" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="16d4cd56-e8a7-41b3-b0b7-73d14ebfcd73" name="ModelLodLayer" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="17f5c112-7c92-4f53-a352-02d7f27d2426" />
+        <suppliersInternal>
+          <interfaceRealization Id="731a6320-cf2a-49d3-a57e-206ad9b42fa1">
+            <interfaceMoniker Id="c0af8312-2f87-4b86-b4f5-3aceec3458b9" LastKnownName="ITreeLodLayer" />
+            <elementDefinition Id="1107c199-ed7d-4fbb-ae81-d729aeba6180" />
+          </interfaceRealization>
+          <dependency Id="bcdc43b6-8981-4b0a-96d8-6b76314af36c">
+            <classMoniker Id="4794d196-082e-4a7a-8d53-f5bf09f82ad7" LastKnownName="TreeRenderDataGenerator" />
+            <elementDefinition Id="134dd79b-3c28-44fa-873e-8ff4a9f61ee4" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="107b245c-bffa-4f99-96b2-779f8d6b8e7d" name="TreeLodEntity" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="38d6e96c-af9f-44d7-8f7e-e64a7240d079" />
+        <targetEnds>
+          <association Id="fd522ccd-02be-444e-9381-fbf8d63ee3af" isDerived="false" sourceEndRoleName="TreeEntity" targetEndRoleName="TreeStructure" isLeaf="false" isAbstract="false">
+            <classMoniker Id="87d88bbd-1eed-448f-817f-534f0b66851e" LastKnownName="TreeStructure" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="e65e273f-074c-4bd0-8521-6a44bb2e2ca6" name="TreeEntity" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="c0e129dd-a8e5-4af0-a77c-d338c7089717" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="4053764d-b9a8-481b-af4d-fd68129c2cad" name="TreeStructure" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="71281644-f3e3-4a27-8d0c-a78cc321fb82" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="d0e365eb-568e-42ed-b470-b48b71d282bf" />
+          </association>
+          <association Id="21db82c0-a9e1-4275-be2a-7cce4d10bed0" isDerived="false" sourceEndRoleName="TreeEntity" targetEndRoleName="ITreeLodLayer" isLeaf="false" isAbstract="false">
+            <interfaceMoniker Id="c0af8312-2f87-4b86-b4f5-3aceec3458b9" LastKnownName="ITreeLodLayer" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="2e04bad2-2f00-4f8f-b8bf-631bdc0e61c8" name="TreeEntity" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="38673fbe-fdaf-462d-ab48-8a0356cb7d6b" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="7d32de3e-c95d-416a-bba1-7525d0f1de04" name="ITreeLodLayer" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="282c3c16-b8d8-49bd-862e-6c60c7a4af45" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="a4ebc69f-5647-4304-b95d-0ad9bcd447e8" />
+          </association>
+        </targetEnds>
+        <ownedOperationsInternal>
+          <operation Id="512190f1-5ab1-4950-83cf-ee67afdc561e" name="WorldMatrix" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c4740b4a-76ec-4066-a378-ed538b74faf2" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="87d88bbd-1eed-448f-817f-534f0b66851e" name="TreeStructure" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="f370993a-35a2-4864-974c-cb8b1c5c2fd9" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="b9999e52-8ef2-4fc2-add3-f710dc472b8d" name="IRenderable" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="e061310c-9a64-412e-af3e-d50bbf4968bb" />
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="a4d00939-d4a1-4490-bf72-3b058a0577a1" name="TreeLodEngine" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="77974470-a872-473f-9e3b-305f58be18a5" />
+        <targetEnds>
+          <association Id="8b8e94e1-ad0b-409d-b9c3-89fa2d56e785" isDerived="false" sourceEndRoleName="TreeLodEngine" targetEndRoleName="TreeLodEntity" isLeaf="false" isAbstract="false">
+            <classMoniker Id="107b245c-bffa-4f99-96b2-779f8d6b8e7d" LastKnownName="TreeLodEntity" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="e8f64130-e121-4f46-80b3-a93f8394e529" name="TreeLodEngine" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="20c091b3-156a-440b-bbf8-1c54ba795d23" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="e6c72b5c-1457-4e52-8fe3-0491bee1df8c" name="TreeLodEntity" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="16cdf22b-b8e1-4159-8d20-57961ebe933f" name="Lower" value="*">
+                      <elementDefinition Id="fa9223af-223f-486c-b646-4fee7f0cafa8" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="4e196945-99bc-437b-91a6-8d87d3eae1cb" name="Upper" value="*">
+                      <elementDefinition Id="bd521ba4-185a-4dc1-93d4-f6a77eca0a2a" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="a6f856a3-5f51-4988-97dc-68fb890dbade" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="6e1a0586-a0ce-4ddb-882a-55bd1a544d1b" />
+          </association>
+          <association Id="66d06369-604e-45f0-b20b-bf694df81f12" isDerived="false" sourceEndRoleName="TreeLodEngine" targetEndRoleName="ITreeLodLayer" isLeaf="false" isAbstract="false">
+            <interfaceMoniker Id="c0af8312-2f87-4b86-b4f5-3aceec3458b9" LastKnownName="ITreeLodLayer" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="c8d1c5ad-89ad-4019-a391-bf092b665617" name="TreeLodEngine" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="14d28abe-f1aa-4c1b-be61-07c00af7b20b" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="ce46c4c8-eb57-4250-bc2d-74884c247373" name="ITreeLodLayer" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="b1d29468-016d-4467-87a1-bb4720333942" name="Lower" value="*">
+                      <elementDefinition Id="19726787-6499-4b18-80da-bb7fddebd530" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="92ca1ec1-63d2-4885-8329-ed84295d835d" name="Upper" value="*">
+                      <elementDefinition Id="5a36698d-290c-4ca8-bdba-c03a81fd1b6e" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="e4b72209-628a-4919-8fd0-781ad74e7eab" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="ac457618-cbaa-4e2c-ae5b-715580421c11" />
+          </association>
+        </targetEnds>
+        <ownedOperationsInternal>
+          <operation Id="89c1fc3f-76c1-4084-b55c-29cd44888a51" name="CreateTreeLodEntity" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="d369d705-9628-476b-af9a-dc3eaf8e48d6" />
+          </operation>
+          <operation Id="78721c84-7730-4c93-a056-355f8426213d" name="AddITreeLodLayer" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="6fbd7594-25d5-487e-bbe8-aac5d3c8393c" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="9cd322a5-8073-4043-ace1-46516a03587e" name="ImposterLodLayer" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="5e500d8d-2480-4c2f-a1fd-63f122cd16dd" />
+        <suppliersInternal>
+          <interfaceRealization Id="16aee417-e838-4851-a697-b4148d42bcdf">
+            <interfaceMoniker Id="c0af8312-2f87-4b86-b4f5-3aceec3458b9" LastKnownName="ITreeLodLayer" />
+            <elementDefinition Id="d2346777-a3ba-4315-abaa-b6ed1b78d627" />
+          </interfaceRealization>
+          <dependency Id="ea8e53d5-4c24-479a-8b77-be67cadfa417">
+            <classMoniker Id="dd81a18b-002c-47c0-8ccd-7dfb971ce552" LastKnownName="TWRenderer" />
+            <elementDefinition Id="04c140fa-01d8-4b1c-bc2f-fb67eec2110d" />
+          </dependency>
+          <dependency Id="7a988c03-0978-4d20-83dc-e8a12906545b">
+            <classMoniker Id="4794d196-082e-4a7a-8d53-f5bf09f82ad7" LastKnownName="TreeRenderDataGenerator" />
+            <elementDefinition Id="e0c3a9ea-d894-4357-b5fc-08345b04d11d" />
+          </dependency>
+        </suppliersInternal>
+        <targetEnds>
+          <association Id="18b7f9ef-0e6a-4acd-a4f9-1a7c3745eadd" isDerived="false" sourceEndRoleName="ImposterLodLayer" targetEndRoleName="ImposterRenderData" isLeaf="false" isAbstract="false">
+            <classMoniker Id="4aebd650-f9aa-4a9a-a4b3-d6d572ba6732" LastKnownName="(ImposterRenderData)" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="650c7365-1d44-4824-b28f-a018f7be14b6" name="ImposterLodLayer" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="03d6395f-a0e9-4dea-af5c-2b0e5010cf79" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="ab5a7741-963c-42a8-a1b8-5a8490bab1cb" name="ImposterRenderData" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="32937f9c-0834-4be8-8b61-75d006e7a13e" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="0092199b-7c31-4b73-ab62-593ddc0b3aa1" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="c0af8312-2f87-4b86-b4f5-3aceec3458b9" name="ITreeLodLayer" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="313b3ef7-c49b-40e2-863b-5f9d4ecf845c" />
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="4aebd650-f9aa-4a9a-a4b3-d6d572ba6732" name="(ImposterRenderData)" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="be25ebc3-f202-48e4-976b-97ad8396e1cc" />
+        <suppliersInternal>
+          <interfaceRealization Id="da568361-e7a2-4240-8f0b-447f1b69c3d5">
+            <interfaceMoniker Id="b9999e52-8ef2-4fc2-add3-f710dc472b8d" LastKnownName="IRenderable" />
+            <elementDefinition Id="110fc4bd-4cab-43b6-8cc5-fc9607c7587e" />
+          </interfaceRealization>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="f2b2f4f0-c41c-4285-876d-56acb5882d55" name="TreeGeneratorModel">
+    <elementDefinition Id="8af259d8-6149-4210-a56f-ccad5be47b58" />
+    <profileInstances>
+      <packageHasProfileInstances Id="b7e61a90-9b54-4ed4-81cd-954d8b0e129d">
+        <profileInstance Id="eda48949-226a-44f5-8f32-bcf579aacd49" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="a44ef02d-155c-464f-95b4-611ff90b94ca">
+        <profileInstance Id="11bc9326-857a-4db1-a9f7-b72e74c3b5be" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</logicalClassDesignerModel>

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="TreeGenerator.help.Branch">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>help\Branch.cs</FileName>
+      <HashCode>ABkAAhgAEACIQAABAEAEgIEAgCAAgARAAAABAEAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ParentSegment" />
+    </ShowAsAssociation>
+    <AssociationLine Name="ParentSegment" Type="TreeGenerator.help.Segment" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.5" Y="2.674" />
+        <Point X="4.74" Y="2.674" />
+        <Point X="4.74" Y="1.51" />
+        <Point X="6.74" Y="1.51" />
+        <Point X="6.74" Y="3.75" />
+        <Point X="6.5" Y="3.75" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-2.9" Y="2.508" />
+      </MemberNameLabel>
+    </AssociationLine>
+  </Class>
+  <Class Name="TreeGenerator.help.Segment">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>help\Segment.cs</FileName>
+      <HashCode>ABEAAAABEAAAAAAgAEIAAAgQAAAUAAQAEAABAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TreeGenerator.help.Tree">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>help\Tree.cs</FileName>
+      <HashCode>ABAQEAACAAAACAAgQwgAhAEQAAAAAAgAABIBAEEAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="trunk" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TreeGenerator.help.Leaf">
+    <Position X="7.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>help\leaves.cs</FileName>
+      <HashCode>AAkREggBAAAAgAAgAUACBAAQAEERAAwAABAAEEEAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="ParentBranch" />
+    </ShowAsAssociation>
+  </Class>
+</ClassDiagram>
