@@ -14,6 +14,13 @@ namespace MHGameWork.TheWizards.ServerClient
     /// </summary>
     public static class XMLSerializer
     {
+        private static StringBuilder _builder;
+
+        static XMLSerializer()
+        {
+            _builder = new StringBuilder();
+
+        }
 
         public static void WriteVertexDeclaration(TWXmlNode node, VertexDeclaration decl)
         {
@@ -164,17 +171,19 @@ namespace MHGameWork.TheWizards.ServerClient
         public static void WriteFloatArray(TWXmlNode node, float[] data)
         {
             if (data == null) { node.Value = "NULL"; return; }
-            string val = "";
+            _builder.Clear();
             if (data.Length != 0)
             {
-                val = data[0].ToString();
+                _builder.Append(data[0]);
                 for (int i = 1; i < data.Length; i++)
                 {
-                    val += " " + data[i].ToString();
+                    _builder.Append(" ");
+
+                    _builder.Append(data[i].ToString());
                 }
             }
 
-            node.Value = val;
+            node.Value = _builder.ToString();
 
         }
         public static float[] ReadFloatArray(TWXmlNode node)

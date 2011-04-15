@@ -1,6 +1,8 @@
 /Ankh.Load
 .svn/
 obj/
+/bin/GameData/*
+!/bin/GameData/Core/
 /bin/Binaries/*
 /*/bin/*
 /*/*/bin/*
@@ -42,3 +44,6 @@ Thumbs.db
 /The Wizards.sdf
 /ColladaWrapper/collada-dom-2.2/*
 /bin/Binaries/TestRunnerConfig.xml
+
+
+

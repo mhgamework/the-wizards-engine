@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Assets;
+﻿using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.World.Static;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Assets
+namespace MHGameWork.TheWizards.Entity
 {
     public class SimpleAssetStaticWorldObject : IStaticWorldObject
     {

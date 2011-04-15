@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Assets;
+using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Tests.Networking;
@@ -103,9 +104,51 @@ namespace MHGameWork.TheWizards.Tests.Assets
 
             // Create a mesh asset from a RAMMesh (no collision data atm)
 
+            ServerMeshAsset serverMesh = CreateTestServerMesh(serverSyncer);
+
+
+            var game = new XNAGame();
+
+
+
+            game.AddXNAObject(renderer);
+            game.AddXNAObject(vertexDeclarationPool);
+            game.AddXNAObject(texturePool);
+            game.AddXNAObject(meshPartPool);
+
+
+            game.InitializeEvent += delegate
+            {
+
+            };
+
+            game.UpdateEvent += delegate
+            {
+                if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.F))
+                {
+                    var o = server.CreateNew();
+                    var obj = o;
+                    obj.Mesh = serverMesh;
+                    obj.WorldMatrix = Matrix.CreateTranslation(game.SpectaterCamera.CameraPosition);
+                }
+
+                server.Update(game.Elapsed);
+
+                client.Update(game.Elapsed);
+
+                builder.Update();
+
+
+            };
+
+            game.Run();
+        }
+
+        private static ServerMeshAsset CreateTestServerMesh(ServerAssetSyncer serverSyncer)
+        {
             var mesh =
-              RenderingTest.CreateGuildHouseMesh(
-                  new TheWizards.OBJParser.OBJToRAMMeshConverter(new TextureFactory()));
+                RenderingTest.CreateGuildHouseMesh(
+                    new TheWizards.OBJParser.OBJToRAMMeshConverter(new TextureFactory()));
 
             var serverMesh = new ServerMeshAsset(serverSyncer.CreateAsset());
 
@@ -145,47 +188,7 @@ namespace MHGameWork.TheWizards.Tests.Assets
                 s.AddCustomSerializer(AssetSerializer.CreateSerializer());
                 s.Serialize(serverMesh.GetCoreData(), fs);
             }
-
-
-
-
-
-
-            var game = new XNAGame();
-
-
-
-            game.AddXNAObject(renderer);
-            game.AddXNAObject(vertexDeclarationPool);
-            game.AddXNAObject(texturePool);
-            game.AddXNAObject(meshPartPool);
-
-
-            game.InitializeEvent += delegate
-            {
-
-            };
-
-            game.UpdateEvent += delegate
-            {
-                if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.F))
-                {
-                    var o = server.CreateNew();
-                    var obj = o;
-                    obj.Mesh = serverMesh;
-                    obj.WorldMatrix = Matrix.CreateTranslation(game.SpectaterCamera.CameraPosition);
-                }
-
-                server.Update(game.Elapsed);
-
-                client.Update(game.Elapsed);
-
-                builder.Update();
-
-
-            };
-
-            game.Run();
+            return serverMesh;
         }
 
         [Test]

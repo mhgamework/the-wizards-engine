@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Packets;
 using MHGameWork.TheWizards.Networking.Server;
+using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
@@ -51,17 +52,6 @@ namespace MHGameWork.TheWizards.Main
 
         public TheWizardsServer()
         {
-
-            physicsEngine = new Physics.PhysicsEngine();
-
-            xnaGame = new XNAGame();
-            xnaGame.IsFixedTimeStep = true;
-            xnaGame.Mouse.CursorEnabled = true;
-            xnaGame.IsMouseVisible = true;
-            //xnaGame.DrawFps = true; BUG: this breaks the physics debug renderer?
-            xnaGame.Window.Title = "The Wizards Server - MHGameWork All Rights Reserved";
-
-            treeServer = new TreeServer();
         }
 
         private bool startInExisting;
@@ -79,6 +69,7 @@ namespace MHGameWork.TheWizards.Main
         private ServerStaticWorldObjectSyncer serverStaticWorldObjectSyncer;
         private ServerAssetSyncer assetSyncer;
         private ServerRenderingAssetFactory renderingAssetFactory;
+        private StaticEntityContainer staticEntityContainer;
 
 
         public void Start()
@@ -93,6 +84,7 @@ namespace MHGameWork.TheWizards.Main
 
             physicsEngine = new Physics.PhysicsEngine();
             physicsEngine.Initialize();
+            treeServer = new TreeServer();
 
 
             packetManager = new ServerPacketManagerNetworked(10045, 10046);
@@ -102,26 +94,21 @@ namespace MHGameWork.TheWizards.Main
 
             DirectoryInfo assetsDirectory = getAssetsDirectory();
             assetSyncer = new ServerAssetSyncer(packetManager, assetsDirectory);
+            assetSyncer.LoadAssetInformation();
             assetSyncer.Start();
+            renderingAssetFactory = new ServerRenderingAssetFactory(assetSyncer);
 
             serverStaticWorldObjectSyncer = new ServerStaticWorldObjectSyncer(packetManager);
 
-            var staticEntityContainer = new StaticEntityContainer();
-            renderingAssetFactory = new ServerRenderingAssetFactory(assetSyncer);
-            if (File.Exists(getStaticEntityContainerFilePath()))
-                using (var fs = File.Open(getStaticEntityContainerFilePath(), FileMode.Open, FileAccess.Read, FileShare.Delete))
-                {
-                    var s = new TWXmlSerializer<StaticEntityContainer>();
-                    s.AddCustomSerializer(AssetSerializer.CreateDeserializer(renderingAssetFactory));
-                    s.Deserialize(staticEntityContainer, fs);
-                }
+            staticEntityContainer = loadStaticEntityContainerFromDisk();
 
             staticEntityContainer.InitAll(serverStaticWorldObjectSyncer);
 
 
-
             packetManager.Start();
 
+
+            createInitialData();
 
             if (!startInExisting)
             {
@@ -131,6 +118,31 @@ namespace MHGameWork.TheWizards.Main
                 xnaGame.Dispose();
                 physicsEngine.Dispose();
 
+            }
+
+        }
+
+        private StaticEntityContainer loadStaticEntityContainerFromDisk()
+        {
+            var container = new StaticEntityContainer();
+            if (File.Exists(getStaticEntityContainerFilePath()))
+                using (var fs = File.Open(getStaticEntityContainerFilePath(), FileMode.Open, FileAccess.Read, FileShare.Delete))
+                {
+                    var s = new TWXmlSerializer<StaticEntityContainer>();
+                    s.AddCustomSerializer(AssetSerializer.CreateDeserializer(renderingAssetFactory));
+                    s.Deserialize(container, fs);
+                }
+
+            return container;
+        }
+
+        private void saveStaticEntityContainerFromDisk(StaticEntityContainer container)
+        {
+            using (var fs = File.Open(getStaticEntityContainerFilePath(), FileMode.Create, FileAccess.Write, FileShare.Delete))
+            {
+                var s = new TWXmlSerializer<StaticEntityContainer>();
+                s.AddCustomSerializer(AssetSerializer.CreateSerializer());
+                s.Serialize(container, fs);
             }
 
         }
@@ -166,7 +178,13 @@ namespace MHGameWork.TheWizards.Main
 
         void xnaGame_Exiting(object sender, EventArgs e)
         {
+            saveAll();
+        }
 
+        private void saveAll()
+        {
+            assetSyncer.SaveAssetInformation();
+            saveStaticEntityContainerFromDisk(staticEntityContainer);
         }
 
         void xnaGame_InitializeEvent(object sender, EventArgs e)
@@ -207,6 +225,8 @@ namespace MHGameWork.TheWizards.Main
                 firstUpdate = false;
             }
 
+
+
             physicsEngine.Update(xnaGame.Elapsed);
 
 
@@ -224,12 +244,13 @@ namespace MHGameWork.TheWizards.Main
         {
             var game = xnaGame;
 
-            if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.F))
+            if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.O))
             {
-                /* var o = serverStaticWorldObjectSyncer.CreateNew();
-                var obj = (SimpleStaticWorldObject)o;
-                obj.Mesh = mesh;
-                obj.WorldMatrix = Matrix.CreateTranslation(game.SpectaterCamera.CameraPosition*/
+                var o = new StaticEntity();
+                o.Mesh = testMesh;
+                o.WorldMatrix = Matrix.CreateTranslation(game.SpectaterCamera.CameraPosition);
+                staticEntityContainer.Entities.Add(o);
+                o.Init(serverStaticWorldObjectSyncer);
             }
 
             serverStaticWorldObjectSyncer.Update(game.Elapsed);
@@ -283,5 +304,81 @@ namespace MHGameWork.TheWizards.Main
         }
 
 
+        private void createInitialData()
+        {
+            if (assetSyncer.GetAsset(TestMeshGuid) != null)
+            {
+                testMesh = renderingAssetFactory.GetMesh(TestMeshGuid);
+            }
+            else
+            {
+                testMesh = CreateTestServerMesh(assetSyncer);
+            }
+        }
+
+
+
+        public static RAMMesh CreateMerchantsHouseMesh(OBJToRAMMeshConverter c)
+        {
+            var pathMtl = TWDir.GameData.CreateSubdirectory("Core") + "\\MerchantsHouse.mtl";
+            var pathObj = TWDir.GameData.CreateSubdirectory("Core") + "\\MerchantsHouse.obj";
+            ObjImporter importer;
+            importer = new ObjImporter();
+            importer.AddMaterialFileStream("MerchantsHouse.mtl", File.OpenRead(pathMtl));
+            importer.ImportObjFile(pathObj);
+
+            return c.CreateMesh(importer);
+        }
+
+        private static readonly Guid TestMeshGuid = new Guid("569875FF-BCE3-434C-9725-FDBF090A6CC9");
+
+        private IMesh testMesh;
+
+        private static ServerMeshAsset CreateTestServerMesh(ServerAssetSyncer serverSyncer)
+        {
+            var mesh =
+                CreateMerchantsHouseMesh(
+                    new TheWizards.OBJParser.OBJToRAMMeshConverter(new TextureFactory()));
+
+            var serverMesh = new ServerMeshAsset(serverSyncer.CreateAsset(TestMeshGuid));
+
+
+            serverMesh.GetCoreData().Parts = mesh.GetCoreData().Parts;
+            for (int i = 0; i < serverMesh.GetCoreData().Parts.Count; i++)
+            {
+                var part = serverMesh.GetCoreData().Parts[i];
+
+                var meshPart = new ServerMeshPartAsset(serverSyncer.CreateAsset());
+                meshPart.GetGeometryData().Sources = part.MeshPart.GetGeometryData().Sources;
+                part.MeshPart = meshPart;
+
+                var comp = meshPart.Asset.AddFileComponent("MeshPartGeom" + i + ".xml");
+                using (var fs = comp.OpenWrite())
+                {
+                    var s = new TWXmlSerializer<MeshPartGeometryData>();
+                    s.Serialize(meshPart.GetGeometryData(), fs);
+                }
+
+                if (part.MeshMaterial.DiffuseMap == null) continue;
+                if (part.MeshMaterial.DiffuseMap is ServerTextureAsset) continue;
+
+                var tex = new ServerTextureAsset(serverSyncer.CreateAsset());
+                comp = tex.Asset.AddFileComponent("Texture" + i + ".jpg");
+
+                File.Copy(part.MeshMaterial.DiffuseMap.GetCoreData().DiskFilePath, comp.GetFullPath(), true);
+
+                part.MeshMaterial.DiffuseMap = tex;
+            }
+
+
+            var c = serverMesh.Asset.AddFileComponent("MeshCoreData.xml");
+            using (var fs = c.OpenWrite())
+            {
+                var s = new TWXmlSerializer<MeshCoreData>();
+                s.AddCustomSerializer(AssetSerializer.CreateSerializer());
+                s.Serialize(serverMesh.GetCoreData(), fs);
+            }
+            return serverMesh;
+        }
     }
 }

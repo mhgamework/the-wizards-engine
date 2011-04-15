@@ -230,6 +230,7 @@ namespace MHGameWork.TheWizards.Assets
                     var c = new FileComponent();
                     c.Path = reader.ReadString();
                     c.Hash = reader.ReadBytes(reader.ReadInt32());
+                    c.Mode = (AssetFileMode)reader.ReadByte();
                     p.Files[i] = c;
 
                 }
@@ -246,6 +247,7 @@ namespace MHGameWork.TheWizards.Assets
                     writer.Write(f.Path);
                     writer.Write(f.Hash.Length);
                     writer.Write(f.Hash);
+                    writer.Write((byte)f.Mode);
                 }
             }
         }

@@ -82,6 +82,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\SimpleAssetStaticWorldObject.cs" />
+    <Compile Include="Entity\SimpleAssetStaticWorldObjectFactory.cs" />
     <Compile Include="Entity\StaticEntity.cs" />
     <Compile Include="Entity\StaticEntityContainer.cs" />
     <Compile Include="Main\TheWizardsClient.cs" />

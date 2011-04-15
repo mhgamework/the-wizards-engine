@@ -60,6 +60,7 @@ namespace MHGameWork.TheWizards.World
 
             var packet = new DataPacket();
             packet.Data = deltaParser.EndWrite();
+            if (packet.Data == null) throw new InvalidOperationException("Cant be null??");
             deltaSnapshotTransporter.SendAll(packet);
 
             // Currently send time update every tick

@@ -128,6 +128,7 @@ namespace MHGameWork.TheWizards.World
             for (; ; )
             {
                 var p = deltaTransport.Receive();
+                if (p.Data == null) throw new InvalidOperationException("Can't be null!!");
                 lock (deltaPackets)
                     deltaPackets.Enqueue(p.Data);
             }

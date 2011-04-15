@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using MHGameWork.TheWizards.Assets;
+using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Networking;
@@ -44,6 +46,10 @@ namespace MHGameWork.TheWizards.Main
         private List<PlayerController> controllerClients;
         private TreeClient treeClient;
         private ClientStaticWorldObjectSyncer clientStaticWorldObjectSyncer;
+        private ClientStaticWorldObjectSyncer staticWorldObjectSyncer;
+        private MeshRenderer renderer;
+
+        private object updateLock = new object();
 
         public TheWizardsClient()
         {
@@ -101,13 +107,58 @@ namespace MHGameWork.TheWizards.Main
 
             if (clientStaticWorldObjectSyncer != null)
                 clientStaticWorldObjectSyncer.Update(game.Elapsed);
+            if (worldObjectFactory != null)
+                worldObjectFactory.Update();
 
+            lock (updateLock)
+            {
+                updateWaiting = true;
+
+                while (blockUpdateWaitingCount > 0)
+                {
+
+                    Monitor.Pulse(updateLock);
+                    Monitor.Wait(updateLock);
+
+                }
+
+                updateWaiting = false;
+            }
+
+        }
+
+
+        private AutoResetEvent test = new AutoResetEvent(false);
+        private ManualResetEvent blockEvent = new ManualResetEvent(false);
+
+        private int blockUpdateWaitingCount;
+        private bool updateWaiting;
+        private SimpleAssetStaticWorldObjectFactory worldObjectFactory;
+
+        private void blockUpdate()
+        {
+            lock (updateLock)
+            {
+                blockUpdateWaitingCount++;
+                while (!updateWaiting)
+                    Monitor.Wait(updateLock);
+            }
+        }
+        private void unblockUpdate()
+        {
+            lock (updateLock)
+            {
+                if (blockUpdateWaitingCount < 0) throw new InvalidOperationException();
+                blockUpdateWaitingCount--;
+                Monitor.Pulse(updateLock);
+            }
 
         }
 
         private void updatePlayers(XNAGame game)
         {
             if (playerControllerTransporter == null) return;
+            if (clientSyncer == null) return;
 
             while (playerControllerTransporter.PacketAvailable)
             {
@@ -134,11 +185,19 @@ namespace MHGameWork.TheWizards.Main
             {
                 controllerClients[i].Update(game);
             }
-            clientSyncer.Update(game.Elapsed);
+            if (clientSyncer != null)
+                clientSyncer.Update(game.Elapsed);
+            if (staticWorldObjectSyncer != null)
+                staticWorldObjectSyncer.Update(xnaGame.Elapsed);
 
-            if (cam != null)
-                inputClient.HorizontalLookAngle = cam.LookAngleHorizontal;
-            inputClient.Update(game);
+
+
+            if (inputClient != null)
+            {
+                inputClient.Update(game);
+                if (cam != null)
+                    inputClient.HorizontalLookAngle = cam.LookAngleHorizontal;
+            }
         }
 
         void xnaGame_InitializeEvent(object sender, EventArgs e)
@@ -160,10 +219,7 @@ namespace MHGameWork.TheWizards.Main
             var texturePool = new TexturePool();
             var meshPartPool = new MeshPartPool();
 
-            var renderer = new MeshRenderer(texturePool, meshPartPool, vertexDeclarationPool);
-
-
-            IMeshFactory meshFactory = null;// new SimpleMeshFactory();
+            renderer = new MeshRenderer(texturePool, meshPartPool, vertexDeclarationPool);
 
 
 
@@ -222,39 +278,31 @@ namespace MHGameWork.TheWizards.Main
             var conn = ConnectTCP(10045, "5.23.165.201");
             conn.Receiving = true;
             packetManager = new ClientPacketManagerNetworked(conn);
-            packetManager.WaitForUDPConnected();
-            packetManager.SyncronizeRemotePacketIDs();
 
 
-            // Connection ready
 
-            startJobPlayerPhysics();
 
 
             treeClient.StartJob(packetManager);
 
 
+            while (renderer == null)
+                Thread.Sleep(100);
 
 
-            lock (this)
-            {
-                //Monitor.Wait(this); // wait for lock on main thread
-
-                // Do stuff
-
-                //Monitor.Pulse(this); // Pulse release lock
-            }
+            var syncer = new ClientAssetSyncer(packetManager, TWDir.GameData.CreateSubdirectory("ClientAssets"));
+            syncer.Start();
+            worldObjectFactory = new SimpleAssetStaticWorldObjectFactory(renderer, syncer);
+            staticWorldObjectSyncer = new ClientStaticWorldObjectSyncer(packetManager, worldObjectFactory);
 
 
-
-            IStaticWorldObjectFactory builder = null;// new SimpleStaticWorldObjectFactory(renderer, meshFactory);
-
-            clientStaticWorldObjectSyncer = new ClientStaticWorldObjectSyncer(packetManager, builder);
+            packetManager.WaitForUDPConnected();
+            packetManager.SyncronizeRemotePacketIDs();
 
 
 
-
-
+            treeClient.RequestInitialState();
+            startJobPlayerPhysics();
 
 
 

@@ -103,8 +103,6 @@
     <Compile Include="Assets\AssetsSynchronizationTest.cs" />
     <Compile Include="Assets\SimpleAsset.cs" />
     <Compile Include="Assets\SimpleAssetFactory.cs" />
-    <Compile Include="Assets\SimpleAssetStaticWorldObject.cs" />
-    <Compile Include="Assets\SimpleAssetStaticWorldObjectFactory.cs" />
     <Compile Include="Client\ClientTest.cs" />
     <Compile Include="Collada\ColladaTest.cs" />
     <Compile Include="CoreTest.cs" />

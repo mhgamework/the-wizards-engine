@@ -111,6 +111,15 @@ namespace MHGameWork.TheWizards.Assets
         }
 
 
+        public ServerAsset CreateAsset(Guid guid)
+        {
+            if (GetAsset(guid) != null) throw new InvalidOperationException();
+
+            var a = new ServerAsset(this, guid);
+            assets.Add(a);
+
+            return a; 
+        }
         public ServerAsset CreateAsset()
         {
             var a = new ServerAsset(this, Guid.NewGuid());
@@ -151,6 +160,7 @@ namespace MHGameWork.TheWizards.Assets
         }
         public void LoadAssetInformation()
         {
+            if (!File.Exists(getAssetInformationFilePath())) return;
             assets.Clear();
             var node = TWXmlNode.GetRootNodeFromFile(getAssetInformationFilePath());
             var nodeChildren = node.GetChildNodes();
