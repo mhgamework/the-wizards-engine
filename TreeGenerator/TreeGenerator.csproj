@@ -64,7 +64,7 @@
     </Reference>
     <Reference Include="Common.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Common.Core\bin\x86\Debug\Common.Core.dll</HintPath>
+      <HintPath>..\Common.Core\bin\Debug\Common.Core.dll</HintPath>
     </Reference>
     <Reference Include="Common.NetworkingVB, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -95,11 +95,11 @@
     </Reference>
     <Reference Include="NewModules, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\NewModules\bin\x86\Debug\NewModules.dll</HintPath>
+      <HintPath>..\bin\Debug\NewModules.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.5.7.10213, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\The Wizards Binaries\nunit.framework.dll</HintPath>
+      <HintPath>..\_Libraries\NUnit-2.5.7.10213\bin\net-2.0\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="ServerClientOud, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>

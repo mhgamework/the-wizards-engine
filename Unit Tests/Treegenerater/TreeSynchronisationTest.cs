@@ -15,7 +15,7 @@ using NUnit.Framework;
 using TreeGenerator.help;
 using TreeGenerator.LodEngine;
 using TreeGenerator.TreeEngine;
-using Seeder = TreeGenerator.help.Seeder;
+using Seeder = MHGameWork.TheWizards.Seeder;
 
 namespace TreeGenerator.EngineSynchronisation
 {

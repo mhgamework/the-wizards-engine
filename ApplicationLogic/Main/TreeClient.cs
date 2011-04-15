@@ -20,7 +20,8 @@ namespace MHGameWork.TheWizards.Main
 
         public void StartJob(IClientPacketManager packetManager)
         {
-            clientTreeSyncer = new ClientTreeSyncer(packetManager, treeLodEngine);
+            throw new NotImplementedException();
+            //clientTreeSyncer = new ClientTreeSyncer(packetManager, treeLodEngine);
         }
 
         public void RequestInitialState()

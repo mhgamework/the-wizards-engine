@@ -318,7 +318,6 @@
     <Compile Include="Raycast\RaycastHelper.cs" />
     <Compile Include="Raycast\RaycastResult.cs" />
     <Compile Include="Seeder.cs" />
-    <Compile Include="SeederBtrix.cs" />
     <Compile Include="TWDir.cs" />
     <Compile Include="Water\Camera.cs" />
     <Compile Include="Water\Mesh.cs" />

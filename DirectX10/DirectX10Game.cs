@@ -3,20 +3,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using SlimDX;
-using SlimDX.Direct3D10;
-using SlimDX.DXGI;
-using SlimDX.Windows;
-using Buffer = SlimDX.Direct3D10.Buffer;
-using Device = SlimDX.Direct3D10.Device;
-using Resource = SlimDX.Direct3D10.Resource;
 
 
 namespace MHGameWork.TheWizards.DirectX10
 {
     public class DirectX10Game
     {
-        private SwapChain swapChain;
+        /*private SwapChain swapChain;
         private RenderForm form;
         private Device device;
         private Texture2D backBuffer;
@@ -149,7 +142,7 @@ namespace MHGameWork.TheWizards.DirectX10
 
             Result res = swapChain.ResizeBuffers(1, 0, 0,
                   Format.Unknown, SwapChainFlags.None);
-            /*if (fullscreen)
+           if (fullscreen)
             {
                 Result res = swapChain.ResizeBuffers(1, 1440, 900,
                    Format.R8G8B8A8_UNorm, SwapChainFlags.AllowModeSwitch);
@@ -158,7 +151,7 @@ namespace MHGameWork.TheWizards.DirectX10
             {
                 Result res = swapChain.ResizeBuffers(1, 0, 0,
                     Format.R8G8B8A8_UNorm, SwapChainFlags.None);
-            }*/
+            }
 
             createRenderTargetView();
         }
@@ -173,6 +166,6 @@ namespace MHGameWork.TheWizards.DirectX10
         public void Exit()
         {
 
-        }
+        }*/
     }
 }
