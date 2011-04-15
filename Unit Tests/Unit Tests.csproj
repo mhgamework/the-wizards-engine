@@ -145,6 +145,7 @@
     <Compile Include="Terrain\TerrainClientTest.cs" />
     <Compile Include="Terrain\TerrainEditorTest.cs" />
     <Compile Include="TestFiles.cs" />
+    <Compile Include="Treegenerater\TreeSynchronisationTest.cs" />
     <Compile Include="Utilities\UtilitiesTest.cs" />
     <Compile Include="WorldDatabase\WorldDatabaseTest.cs" />
     <Compile Include="WorldDatabase\TerrainData2Element.cs" />
