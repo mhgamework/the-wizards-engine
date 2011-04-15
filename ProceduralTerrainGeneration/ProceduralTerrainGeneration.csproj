@@ -35,9 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Core">
-      <HintPath>..\Common.Core\bin\x86\Debug\Common.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Editor">
       <HintPath>..\Editor\bin\x86\Debug\Editor.dll</HintPath>
     </Reference>
@@ -50,10 +47,10 @@
       <HintPath>..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Xna.Framework.Game\2.0.0.0__6d5c3888ef60e27d\Microsoft.Xna.Framework.Game.dll</HintPath>
     </Reference>
     <Reference Include="NewModules">
-      <HintPath>..\NewModules\bin\x86\Debug\NewModules.dll</HintPath>
+      <HintPath>..\bin\Debug\NewModules.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\The Wizards Binaries\nunit.framework.dll</HintPath>
+      <HintPath>..\_Libraries\NUnit-2.5.7.10213\bin\net-2.0\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="ServerClientOud">
       <HintPath>..\Deprecated\ServerClientOud\bin\x86\Debug\ServerClientOud.dll</HintPath>
@@ -149,6 +146,12 @@
     <Content Include="Grass\Textures\GrassTextures\textureAtlas01.XML">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Core\Common.Core.csproj">
+      <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
+      <Name>Common.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

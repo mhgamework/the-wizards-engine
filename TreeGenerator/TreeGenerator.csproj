@@ -62,10 +62,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Deprecated\Common\bin\x86\Debug\Common.dll</HintPath>
     </Reference>
-    <Reference Include="Common.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Common.Core\bin\x86\Debug\Common.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Common.NetworkingVB, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Deprecated\Common.NetworkingVB\bin\Debug\Common.NetworkingVB.dll</HintPath>
@@ -93,13 +89,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Networking\bin\Debug\Networking.dll</HintPath>
     </Reference>
-    <Reference Include="NewModules, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\NewModules\bin\x86\Debug\NewModules.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework, Version=2.5.7.10213, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\The Wizards Binaries\nunit.framework.dll</HintPath>
+      <HintPath>..\_Libraries\NUnit-2.5.7.10213\bin\net-2.0\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="ServerClientOud, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -112,9 +104,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Unit Tests">
-      <HintPath>..\Unit Tests\bin\Debug\Unit Tests.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AtlasTool\TextureAtlasCreater.cs" />
@@ -334,6 +323,19 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Core\Common.Core.csproj">
+      <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
+      <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NewModules\NewModules.csproj">
+      <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
+      <Name>NewModules</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

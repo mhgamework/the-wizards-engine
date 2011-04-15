@@ -28,15 +28,17 @@ namespace MHGameWork.TheWizards.Main
         {
             if (game.Keyboard.IsKeyPressed(Keys.A))
             {
-                serverTreeSyncer.AddTree(new EngineTree(seeder.NextVector3(new Vector3(0, 0, 0), new Vector3(10, 0, 10)),
-                                                        0, 123, 456));
+                throw new NotImplementedException();
+                /*serverTreeSyncer.AddTree(new EngineTree(seeder.NextVector3(new Vector3(0, 0, 0), new Vector3(10, 0, 10)),
+                                                        0, 123, 456));*/
             }
             if (game.Keyboard.IsKeyPressed(Keys.F))
             {
+                throw new NotImplementedException();
                 Vector3 pos = game.SpectaterCamera.CameraPosition -
                               game.SpectaterCamera.CameraPosition.Y * Vector3.UnitY;
-                serverTreeSyncer.AddTree(new EngineTree(pos,
-                                                        0, 123, 456));
+                /*serverTreeSyncer.AddTree(new EngineTree(pos,
+                                                        0, 123, 456));*/
             }
             serverTreeSyncer.Update();
         }
