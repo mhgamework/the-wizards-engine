@@ -20,23 +20,27 @@ namespace MHGameWork.TheWizards.Main
 
         public void StartJob(IClientPacketManager packetManager)
         {
+            return;
             throw new NotImplementedException();
             //clientTreeSyncer = new ClientTreeSyncer(packetManager, treeLodEngine);
         }
 
         public void RequestInitialState()
         {
+            return;
             clientTreeSyncer.RequestAllTrees();
         }
 
         public void Render()
         {
+            return;
             renderer.Render();
 
         }
 
         public void Update()
         {
+            return;
             if (clientTreeSyncer != null)
                 clientTreeSyncer.Update();
             treeLodEngine.Update(renderer.Game);
@@ -44,6 +48,7 @@ namespace MHGameWork.TheWizards.Main
 
         public void Initialize(IXNAGame xnaGame)
         {
+            return;
             treeLodEngine = new TreeLodEngine();
             renderer = new TWRenderer(xnaGame);
             treeRenderGenerater = new EngineTreeRenderDataGenerater(10);

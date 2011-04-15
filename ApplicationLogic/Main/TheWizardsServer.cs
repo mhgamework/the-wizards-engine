@@ -77,6 +77,7 @@ namespace MHGameWork.TheWizards.Main
             xnaGame = new XNAGame();
             xnaGame.InputDisabled = true;
             xnaGame.Window.Title = "The Wizards Server - MHGameWork All Rights Reserved";
+
             xnaGame.InitializeEvent += new EventHandler(xnaGame_InitializeEvent);
             xnaGame.UpdateEvent += new XNAGame.XNAGameLoopEventHandler(xnaGame_UpdateEvent);
             xnaGame.DrawEvent += new XNAGame.XNAGameLoopEventHandler(xnaGame_DrawEvent);
@@ -189,6 +190,8 @@ namespace MHGameWork.TheWizards.Main
 
         void xnaGame_InitializeEvent(object sender, EventArgs e)
         {
+            xnaGame.GetWindowForm().Location = new System.Drawing.Point(0, 0);
+
             physicsDebugRenderer = new MHGameWork.TheWizards.Physics.PhysicsDebugRenderer(xnaGame, physicsEngine.Scene);
             physicsDebugRenderer.Initialize(xnaGame);
 
@@ -320,11 +323,11 @@ namespace MHGameWork.TheWizards.Main
 
         public static RAMMesh CreateMerchantsHouseMesh(OBJToRAMMeshConverter c)
         {
-            var pathMtl = TWDir.GameData.CreateSubdirectory("Core") + "\\MerchantsHouse.mtl";
-            var pathObj = TWDir.GameData.CreateSubdirectory("Core") + "\\MerchantsHouse.obj";
+            var pathMtl = TWDir.GameData.CreateSubdirectory("Core") + "\\001-House01_BoxTest-OBJ\\HouseTest.mtl";
+            var pathObj = TWDir.GameData.CreateSubdirectory("Core") + "\\001-House01_BoxTest-OBJ\\HouseTest.obj";
             ObjImporter importer;
             importer = new ObjImporter();
-            importer.AddMaterialFileStream("MerchantsHouse.mtl", File.OpenRead(pathMtl));
+            importer.AddMaterialFileStream("HouseTest.mtl", File.OpenRead(pathMtl));
             importer.ImportObjFile(pathObj);
 
             return c.CreateMesh(importer);

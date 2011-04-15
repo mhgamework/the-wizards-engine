@@ -62,7 +62,6 @@ namespace MHGameWork.TheWizards.Main
             xnaGame.Graphics1.ToggleFullScreen();*/
 
             xnaGame.Window.Title = "The Wizards Client - MHGameWork All Rights Reserved";
-
             treeClient = new TreeClient();
 
 
@@ -202,6 +201,7 @@ namespace MHGameWork.TheWizards.Main
 
         void xnaGame_InitializeEvent(object sender, EventArgs e)
         {
+            xnaGame.GetWindowForm().Location = new System.Drawing.Point(800, 0);
             physicsEngine = new PhysicsEngine();
 
             physicsEngine.Initialize(xnaGame);
