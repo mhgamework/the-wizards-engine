@@ -49,3 +49,6 @@ Thumbs.db
 
 
 /NsightRunner/Debug/
+/Debug/NsightRunner.exe
+/Debug/NsightRunner.ilk
+/Debug/NsightRunner.pdb
