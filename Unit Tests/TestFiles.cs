@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Win32.SafeHandles;
 
 namespace MHGameWork.TheWizards.Tests
 {
@@ -23,5 +24,7 @@ namespace MHGameWork.TheWizards.Tests
         public static string WoodPlanksBareJPG { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\maps\WoodPlanksBare0054_1_S.jpg"; } }
         public static string BrickRoundJPG { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\maps\BrickRound0030_7_S.jpg"; } }
 
+        public static string TownObj { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\Town\OBJ03\Town001.obj"; } }
+        public static string TownMtl { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\Town\OBJ03\Town001.mtl"; } }
     }
 }

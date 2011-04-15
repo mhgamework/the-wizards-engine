@@ -1,3 +1,4 @@
+using System;
 using MHGameWork.TheWizards.DirectX10;
 using NUnit.Framework;
 
@@ -9,8 +10,9 @@ namespace MHGameWork.TheWizards.Tests.DirectX10
         [Test]
         public void TestRenderTriangle()
         {
-            DirectX10Game game = new DirectX10Game();
-            game.Run();
+            throw new NotImplementedException();
+            /*DirectX10Game game = new DirectX10Game();
+            game.Run();*/
         }
     }
 }
