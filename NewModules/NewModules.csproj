@@ -589,6 +589,10 @@
       <Project>{3ADBAB57-A020-46BA-8422-250995E5228E}</Project>
       <Name>Game3DPlay</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Deprecated\NovodexWrapperXNA\NovodexWrapperXNA.csproj">
+      <Project>{82AFF428-C42B-4C92-AA2A-D5C1A8662BB3}</Project>
+      <Name>NovodexWrapperXNA</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Deprecated\ServerClientOud\ServerClientOud.csproj">
       <Project>{409E248D-79B7-4644-886A-A01C1211D6DD}</Project>
       <Name>ServerClientOud</Name>
@@ -596,10 +600,6 @@
     <ProjectReference Include="..\Networking\Networking.csproj">
       <Project>{5552CBE1-F647-4B3A-A353-A252E4CB0008}</Project>
       <Name>Networking</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NovodexWrapperXNA\NovodexWrapperXNA.csproj">
-      <Project>{14B12B1E-4101-4542-BA07-891EB99C4916}</Project>
-      <Name>NovodexWrapperXNA</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

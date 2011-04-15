@@ -127,10 +127,6 @@
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NovodexWrapperXNA\NovodexWrapperXNA.csproj">
-      <Project>{14B12B1E-4101-4542-BA07-891EB99C4916}</Project>
-      <Name>NovodexWrapperXNA</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Server\Server.csproj">
       <Project>{53269219-3E5B-4F70-83A9-3C6C9C714FEC}</Project>
       <Name>Server</Name>

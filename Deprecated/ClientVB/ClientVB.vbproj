@@ -187,8 +187,8 @@
       <Project>{3ADBAB57-A020-46BA-8422-250995E5228E}</Project>
       <Name>Game3DPlay</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\NovodexWrapperXNA\NovodexWrapperXNA.csproj">
-      <Project>{14B12B1E-4101-4542-BA07-891EB99C4916}</Project>
+    <ProjectReference Include="..\NovodexWrapperXNA\NovodexWrapperXNA.csproj">
+      <Project>{82AFF428-C42B-4C92-AA2A-D5C1A8662BB3}</Project>
       <Name>NovodexWrapperXNA</Name>
     </ProjectReference>
   </ItemGroup>
