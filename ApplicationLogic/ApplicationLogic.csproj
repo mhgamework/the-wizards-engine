@@ -77,11 +77,10 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TreeGenerator">
-      <HintPath>..\_TreeGeneraterBinaries\Debug\TreeGenerator.exe</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\SimpleAssetStaticWorldObject.cs" />
+    <Compile Include="Entity\SimpleAssetStaticWorldObjectFactory.cs" />
     <Compile Include="Entity\StaticEntity.cs" />
     <Compile Include="Entity\StaticEntityContainer.cs" />
     <Compile Include="Main\TheWizardsClient.cs" />
@@ -127,6 +126,10 @@
     <ProjectReference Include="..\NewModules\NewModules.csproj">
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
       <Name>NewModules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TreeGenerator\TreeGenerator.csproj">
+      <Project>{E7F313DB-EDA4-4894-AE46-B220B53A6A48}</Project>
+      <Name>TreeGenerator</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

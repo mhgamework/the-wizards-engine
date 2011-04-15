@@ -170,26 +170,6 @@ namespace MHGameWork.TheWizards.Tests.Server
         }
 
 
-        [Test]
-        public void TestLauncherServer()
-        {
-            var list = new HashedFileList();
-            list.LocalRoot = new System.IO.DirectoryInfo(System.Windows.Forms.Application.StartupPath);
-            list.LocalRoot = list.LocalRoot.Parent;
-
-            list.AddFolder(new System.IO.DirectoryInfo(list.LocalRoot.FullName + "\\Binaries"));
-            list.AddFolder(new System.IO.DirectoryInfo(list.LocalRoot.FullName + "\\GameData"), true);
-
-
-            var server = new LauncherServer(15014, list);
-            server.BytesPerSec = 300 * 1024;
-            server.Start();
-
-            var app = new Application();
-            app.Run();
-
-            server.Stop();
-        }
 
     }
 }

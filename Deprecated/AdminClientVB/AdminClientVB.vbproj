@@ -168,10 +168,6 @@
       <Project>{3ADBAB57-A020-46BA-8422-250995E5228E}</Project>
       <Name>Game3DPlay</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\NovodexWrapperXNA\NovodexWrapperXNA.csproj">
-      <Project>{14B12B1E-4101-4542-BA07-891EB99C4916}</Project>
-      <Name>NovodexWrapperXNA</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

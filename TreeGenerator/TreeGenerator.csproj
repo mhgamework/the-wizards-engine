@@ -132,7 +132,6 @@
     <Compile Include="EngineSynchronisation\RAMTreeType.cs" />
     <Compile Include="EngineSynchronisation\ServerTreeSyncer.cs" />
     <Compile Include="EngineSynchronisation\TreePacket.cs" />
-    <Compile Include="EngineSynchronisation\TreeSynchronisationTest.cs" />
     <Compile Include="EngineSynchronisation\ClientTreeTypeAsset.cs" />
     <Compile Include="ImposterRing\IDelayedRenderProvider.cs" />
     <Compile Include="ImposterRing\ImposterRing.cs" />
