@@ -187,10 +187,14 @@ namespace TreeGenerator
             TreeTypeData treeTypeData;
             var texFact = new SimpleTextureFactory();
             var tex = new RAMTexture();
-            tex.GetCoreData().DiskFilePath = TWDir.GameData + "\\TreeGenerator\\DefaultBark.tga";
+            tex.GetCoreData().DiskFilePath = TWDir.GameData + "\\Core\\TreeGenerator\\DefaultBark.tga";
             texFact.AddTexture(new Guid("1B1B473E-1B26-4879-8BE7-0485048D75C3"), tex);
-            tex.GetCoreData().DiskFilePath = TWDir.GameData + "\\TreeGenerator\\DefaultLeaves.tga";
+            tex = new RAMTexture();
+            tex.GetCoreData().DiskFilePath = TWDir.GameData + "\\Core\\TreeGenerator\\DefaultLeaves.tga";
             texFact.AddTexture(new Guid("A50338ED-2156-4A5F-B579-6B06A7394CAF"), tex);
+            tex = new RAMTexture();
+            tex.GetCoreData().DiskFilePath = null;
+            texFact.AddTexture(new Guid("2EC1AEDD-4870-4ADC-B322-218FD6A832DB"), tex);
             treeTypeData = LoadFromXML(st, texFact);
             return treeTypeData;
         }

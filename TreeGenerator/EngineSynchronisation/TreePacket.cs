@@ -8,14 +8,14 @@ using TreeGenerator.TreeEngine;
 
 namespace TreeGenerator.EngineSynchronisation
 {
-    public struct TreePacket:INetworkPacket
+    public struct TreePacket : INetworkPacket
     {
-       public float PosX;
-       public float PosY;
-       public float PosZ;
-       public float Rotation;
-       public int Seed;
-       public Guid Guid;
+        public float PosX;
+        public float PosY;
+        public float PosZ;
+        public float Rotation;
+        public int Seed;
+        public Guid Guid;
         //public TreePacket(Vector3 position,float rotation,int seed, TreeType treeType)
         //{
         //    //posX = position.X;

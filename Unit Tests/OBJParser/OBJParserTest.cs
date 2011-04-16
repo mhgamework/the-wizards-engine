@@ -242,8 +242,8 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
 
 
             var importer = new ObjImporter();
-            importer.AddMaterialFileStream("Town001.mtl", new FileStream("../GameData/Town/OBJ03/Town001.mtl", FileMode.Open));
-            importer.ImportObjFile("../GameData/Town/OBJ03/Town001.obj");
+            importer.AddMaterialFileStream("Town001.mtl", new FileStream(TestFiles.TownMtl , FileMode.Open));
+            importer.ImportObjFile(TestFiles.TownObj);
 
             var meshes = c.CreateMeshesFromObjects(importer);
 

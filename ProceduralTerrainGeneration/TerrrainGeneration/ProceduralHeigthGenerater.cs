@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards;
 using Microsoft.Xna.Framework;
-using TreeGenerator.help;
 using TreeGenerator.NoiseGenerater;
 
 namespace TreeGenerator.TerrrainGeneration

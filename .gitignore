@@ -1,26 +1,26 @@
-/Ankh.Load
-.svn/
+
+# Ignore binary and obj folders (Except the /bin folder)
+
+/*/bin/*
+/*/*/bin/*
 obj/
+
+
+# Ignore all .svn folders just for safety
+
+.svn/
+
+
+# The /bin folder
+
 /bin/GameData/*
 !/bin/GameData/Core/
 /bin/Binaries/*
-/*/bin/*
-/*/*/bin/*
-_ReSharper.The Wizards/
-*.user
-/The Wizards.4.0.resharper
-*.suo
-/~$e Wizards Design.docx
-/The Wizards.ncb
-/testimpactdata.sdf
-Thumbs.db
-/NewModules/NewModules.csproj.ReSharper.user
-/bin/Launcher.pdb
-/bin/Launcher.exe
-
 /bin/Test/*
 /bin/Cache/*
-/The Wizards.opensdf
+
+/bin/Launcher.pdb
+/bin/Launcher.exe
 /bin/Networking.pdb
 /bin/Common.NetworkingVB.dll
 /bin/Common.NetworkingVB.pdb
@@ -28,6 +28,21 @@ Thumbs.db
 /bin/Launcher.exe
 /bin/Launcher.pdb
 /bin/Networking.dll
+
+
+# Visual studio user data
+*.user
+*.suo
+
+# Various application junk
+/Ankh.Load
+_ReSharper.The Wizards/
+/The Wizards.4.0.resharper
+/~$e Wizards Design.docx
+/The Wizards.ncb
+/testimpactdata.sdf
+Thumbs.db
+/The Wizards.opensdf
 *.tmp.config
 /bin/Debug
 *.ipch
@@ -46,9 +61,5 @@ Thumbs.db
 /bin/Binaries/TestRunnerConfig.xml
 
 
-
-
+/NsightRunner/Interm/
 /NsightRunner/Debug/
-/Debug/NsightRunner.exe
-/Debug/NsightRunner.ilk
-/Debug/NsightRunner.pdb
