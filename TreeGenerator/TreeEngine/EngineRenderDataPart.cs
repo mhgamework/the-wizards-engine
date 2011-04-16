@@ -179,7 +179,7 @@ namespace TreeGenerator.TreeEngine
         private void InitializeAsBillBoardedLeafs(IXNAGame _game, string texture)
         {
             game = _game;
-            TWTexture TextureImage = TWTexture.FromImageFile(game,new MHGameWork.TheWizards.ServerClient.GameFile(TWDir.GameData.FullName+"\\TreeGenerator\\" + texture));
+            TWTexture TextureImage = TWTexture.FromImageFile(game,new MHGameWork.TheWizards.ServerClient.GameFile(texture));
 
             BillBoardShader = BasicShader.LoadFromEmbeddedFile(game, Assembly.GetExecutingAssembly(), "TreeGenerator.TreeEngine.BillBoardShader.fx", "..\\..\\..\\TreeEngine\\BillBoardShader.fx", new EffectPool());
             BillBoardShader.SetTechnique("Billboard");
