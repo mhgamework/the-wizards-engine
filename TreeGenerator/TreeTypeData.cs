@@ -22,11 +22,14 @@ namespace TreeGenerator
 
         public float TextureHeight = 1;
         public float TextureWidth = 1;
-        public TreeTypeData()
-        {
-        }
-
         public void WriteToXML(string filename)
+        {
+            using (var fs =  File.Open(filename + ".XML", FileMode.Create, FileAccess.Write, FileShare.Delete))
+            {
+                WriteToXML(fs);
+            }
+        }
+        public void WriteToXML(Stream st)
         {
             TWXmlNode node = new TWXmlNode(TWXmlNode.CreateXmlDocument(), "TreeType");
 
@@ -89,7 +92,7 @@ namespace TreeGenerator
                 //leaves and wind animation parameters must be added later
                 //levelNode.
             }
-            node.Document.Save(filename + ".XML");
+            node.Document.Save(st);
 
         }
 
@@ -149,7 +152,7 @@ namespace TreeGenerator
                 {
                     if (leafNode.Name != "leaftype") continue;
                     TreeLeafType leaf = new TreeLeafType();
-                    leaf.BumpTexture = textureFactory.GetTexture(new Guid(leafNode.ReadChildNodeValue("Bump")));
+                    leaf.BumpTexture = null;// textureFactory.GetTexture(new Guid(leafNode.ReadChildNodeValue("Bump")));
                     leaf.Texture = textureFactory.GetTexture(new Guid(leafNode.ReadChildNodeValue("Texture")));
                     leaf.AxialSplitPosition = RangeSpreading.LoadFromXML(leafNode.FindChildNode("AxialSplit"));
                     leaf.DistanceFromTrunk = Range.LoadFromXML(leafNode.FindChildNode("DistanceFromTrunk"));
@@ -181,21 +184,12 @@ namespace TreeGenerator
         {
             return GetTestTreeType();
         }
-        public static TreeTypeData GetTestTreeType()
+        public static TreeTypeData GetTestTreeType(ITextureFactory textureFactory)
         {
             Stream st = MHGameWork.TheWizards.Common.Core.EmbeddedFile.GetStream("TreeGenerator.Files.TestTree.XML", "TestTree.XML");
-            TreeTypeData treeTypeData;
-            var texFact = new SimpleTextureFactory();
-            var tex = new RAMTexture();
-            tex.GetCoreData().DiskFilePath = TWDir.GameData + "\\Core\\TreeGenerator\\DefaultBark.tga";
-            texFact.AddTexture(new Guid("1B1B473E-1B26-4879-8BE7-0485048D75C3"), tex);
-            tex = new RAMTexture();
-            tex.GetCoreData().DiskFilePath = TWDir.GameData + "\\Core\\TreeGenerator\\DefaultLeaves.tga";
-            texFact.AddTexture(new Guid("A50338ED-2156-4A5F-B579-6B06A7394CAF"), tex);
-            tex = new RAMTexture();
-            tex.GetCoreData().DiskFilePath = null;
-            texFact.AddTexture(new Guid("2EC1AEDD-4870-4ADC-B322-218FD6A832DB"), tex);
-            treeTypeData = LoadFromXML(st, texFact);
+
+
+            TreeTypeData treeTypeData = LoadFromXML(st, textureFactory);
             return treeTypeData;
         }
 

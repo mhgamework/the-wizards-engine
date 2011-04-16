@@ -8,7 +8,7 @@ using MHGameWork.TheWizards.XML;
 
 namespace MHGameWork.TheWizards.Assets
 {
-    public class ClientRenderingAssetFactory : IAssetFactory
+    public class ClientRenderingAssetFactory : IAssetFactory, ITextureFactory
     {
         private ClientAssetSyncer syncer;
         private TWXmlSerializer<MeshCoreData> coreSerializer;
@@ -89,6 +89,11 @@ namespace MHGameWork.TheWizards.Assets
             }
 
             throw new InvalidOperationException();
+        }
+
+        ITexture ITextureFactory.GetTexture(Guid guid)
+        {
+            return GetTexture(guid);
         }
     }
 }

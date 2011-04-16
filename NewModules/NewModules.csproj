@@ -320,6 +320,7 @@
     <Compile Include="Player\PlayerController.cs" />
     <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
     <Compile Include="Rendering\IMeshFactory.cs" />
+    <Compile Include="Rendering\ITextureFactory.cs" />
     <Compile Include="World\Static\ClientStaticWorldObjectSyncer.cs" />
     <Compile Include="World\ClientSyncedActor.cs" />
     <Compile Include="World\ClientSyncer.cs" />
