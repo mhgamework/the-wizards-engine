@@ -1,12 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-namespace MHGameWork.TheWizards.ServerClient
+
+namespace MHGameWork.TheWizards.Editor
 {
-    public class EditorCamera : ICamera
+    public class EditorCamera : ICamera, IXNAObject
     {
         public enum MoveMode
         {
@@ -157,15 +156,8 @@ namespace MHGameWork.TheWizards.ServerClient
         }
 
 
-        public EditorCamera(TWEditor nEditor)
-            : this(nEditor.Game)
+        public EditorCamera()
         {
-
-        }
-
-        public EditorCamera(IXNAGame nGame)
-        {
-            game = nGame;
             nearClip = 0.1f;
             farClip = 5000f;
             aspectRatio = (float)4 / 3;
@@ -395,35 +387,6 @@ namespace MHGameWork.TheWizards.ServerClient
             return newDir;
         }
 
-        public void Update()
-        {
-            switch (activeMoveMode)
-            {
-                case MoveMode.MoveXZ:
-                    MoveXZ();
-                    break;
-                case MoveMode.MoveY:
-                    MoveY();
-                    break;
-                case MoveMode.RotateYawRoll:
-                    RotateYawRoll();
-                    break;
-                case MoveMode.Orbit:
-                    Orbit();
-                    break;
-            }
-
-#if (DEBUG)
-            if (float.IsNaN(orientation.X)) throw new Exception("Error in camera code!");
-#endif
-
-
-            //Update the matrices
-            CalculateMatrices();
-
-            moveSpeed = Math.Abs(position.Y) * 0.05f;
-            moveSpeed = MathHelper.Clamp(moveSpeed, 0.01f, 1000f);
-        }
 
         public bool UpdateCameraMoveModeDefaultControls()
         {
@@ -480,5 +443,43 @@ namespace MHGameWork.TheWizards.ServerClient
 
         public IXNAGame Game { get { return game; } }
 
+        public void Initialize(IXNAGame _game)
+        {
+            game = _game;
+        }
+
+        public void Render(IXNAGame _game)
+        {
+        }
+
+        public void Update(IXNAGame _game)
+        {
+            switch (activeMoveMode)
+            {
+                case MoveMode.MoveXZ:
+                    MoveXZ();
+                    break;
+                case MoveMode.MoveY:
+                    MoveY();
+                    break;
+                case MoveMode.RotateYawRoll:
+                    RotateYawRoll();
+                    break;
+                case MoveMode.Orbit:
+                    Orbit();
+                    break;
+            }
+
+#if (DEBUG)
+            if (float.IsNaN(orientation.X)) throw new Exception("Error in camera code!");
+#endif
+
+
+            //Update the matrices
+            CalculateMatrices();
+
+            moveSpeed = Math.Abs(position.Y) * 0.05f;
+            moveSpeed = MathHelper.Clamp(moveSpeed, 0.01f, 1000f);
+        }
     }
 }

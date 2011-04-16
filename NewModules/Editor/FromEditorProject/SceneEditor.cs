@@ -68,7 +68,7 @@ namespace MHGameWork.TheWizards.ServerClient.Editor
 
         private EditorUndoManager undoManager;
 
-        private EditorGrid editorGrid;
+        private EditorGridOld editorGrid;
 
 
         private List<IEditorTool> tools = new List<IEditorTool>();
@@ -150,7 +150,7 @@ namespace MHGameWork.TheWizards.ServerClient.Editor
         }
 
 
-        private EditorCamera editorCamera;
+        private EditorCameraOld editorCamera;
 
 
         // The dockcontaineritem representing the tab for the model viewer (on barMain)
@@ -309,12 +309,12 @@ namespace MHGameWork.TheWizards.ServerClient.Editor
 
             if (editorCamera == null)
             {
-                editorCamera = new EditorCamera(_game);
+                editorCamera = new EditorCameraOld(_game);
                 editorCamera.Tag = "SceneEditorCamera";
             }
 
 
-            editorGrid = new EditorGrid(game);
+            editorGrid = new EditorGridOld(game);
 
 
         }
@@ -376,7 +376,7 @@ namespace MHGameWork.TheWizards.ServerClient.Editor
 
 
             //TODO: maybe create classes for the different modes?
-            if (editorCamera.ActiveMoveMode != EditorCamera.MoveMode.None)
+            if (editorCamera.ActiveMoveMode != EditorCameraOld.MoveMode.None)
             {
                 // Camera active!
             }

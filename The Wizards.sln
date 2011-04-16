@@ -64,6 +64,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deprecated", "Deprecated", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovodexWrapperXNA", "Deprecated\NovodexWrapperXNA\NovodexWrapperXNA.csproj", "{82AFF428-C42B-4C92-AA2A-D5C1A8662BB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = The Wizards.vsmdi
@@ -763,6 +765,30 @@ Global
 		{82AFF428-C42B-4C92-AA2A-D5C1A8662BB3}.Release|Win32.ActiveCfg = Release|x86
 		{82AFF428-C42B-4C92-AA2A-D5C1A8662BB3}.Release|x86.ActiveCfg = Release|x86
 		{82AFF428-C42B-4C92-AA2A-D5C1A8662BB3}.Release|x86.Build.0 = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.ColladaDebug|Any CPU.ActiveCfg = Debug|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.ColladaDebug|Mixed Platforms.ActiveCfg = Debug|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.ColladaDebug|Mixed Platforms.Build.0 = Debug|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.ColladaDebug|Win32.ActiveCfg = Debug|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.ColladaDebug|x86.ActiveCfg = Debug|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.ColladaDebug|x86.Build.0 = Debug|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Current|Any CPU.ActiveCfg = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Current|Mixed Platforms.ActiveCfg = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Current|Mixed Platforms.Build.0 = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Current|Win32.ActiveCfg = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Current|x86.ActiveCfg = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Current|x86.Build.0 = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Debug|Win32.ActiveCfg = Debug|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Debug|x86.ActiveCfg = Debug|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Debug|x86.Build.0 = Debug|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Release|Any CPU.ActiveCfg = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Release|Mixed Platforms.Build.0 = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Release|Win32.ActiveCfg = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Release|x86.ActiveCfg = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

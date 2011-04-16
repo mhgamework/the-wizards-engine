@@ -11,7 +11,8 @@ namespace MHGameWork.TheWizards.ServerClient
     /// TODO: make this so it can increase in size: idea to make different grids with each a greater interval, and than moving the grids so the center of them
     /// is beneath the camera.
     /// </summary>
-    public class EditorGrid
+    [Obsolete]
+    public class EditorGridOld
     {
         private IXNAGame game;
 
@@ -81,7 +82,7 @@ namespace MHGameWork.TheWizards.ServerClient
         }
 
 
-        public EditorGrid( IXNAGame nGame )
+        public EditorGridOld( IXNAGame nGame )
         {
             game = nGame;
 
@@ -154,12 +155,12 @@ namespace MHGameWork.TheWizards.ServerClient
         {
             TestXNAGame game = new TestXNAGame( "EditorGrid.TestRender" );
 
-            EditorGrid grid = null;
+            EditorGridOld grid = null;
 
             game.initCode =
                 delegate
                 {
-                    grid = new EditorGrid( game );
+                    grid = new EditorGridOld( game );
                 };
 
             game.renderCode =

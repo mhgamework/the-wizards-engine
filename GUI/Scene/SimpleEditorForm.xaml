@@ -1,0 +1,24 @@
+﻿<Window x:Class="MHGameWork.TheWizards.Scene.SimpleEditorForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SimpleEditorForm" FontFamily="Calibri" FontSize="14" mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:Scene="clr-namespace:MHGameWork.TheWizards.Scene" 
+        Height="331" Width="195">
+    <Window.DataContext>
+        <Scene:SimpleEditorViewModel/>
+    </Window.DataContext>
+    <StackPanel UseLayoutRounding="False" Margin="0" HorizontalAlignment="Stretch">
+        <Button Content="Jump Into" Height="23" Command="{Binding Path=JumpInto}" />
+        <Button Content="Place Entity" Height="23" Command="{Binding Path=PlaceEntity}" />
+        <ListBox Height="100" Name="listBox1"/>
+        <StackPanel>
+            <CheckBox Content="Visible" />
+            <CheckBox Content="Solid"/>
+            <Label Content="Mesh: (Set)" Height="28"/>
+            <Button Content="Change Mesh"/>
+        </StackPanel>
+
+    </StackPanel>
+</Window>
