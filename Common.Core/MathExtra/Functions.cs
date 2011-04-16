@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.ServerClient.MathExtra
+namespace MHGameWork.TheWizards.MathExtra
 {
     /// <summary>
     /// Doubtfull whether this namespace should exist, it is not clearly a module.

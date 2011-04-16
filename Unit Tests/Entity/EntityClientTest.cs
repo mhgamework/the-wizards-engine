@@ -141,7 +141,7 @@ namespace MHGameWork.TheWizards.Tests.Entity
                     entityData.ObjectFullData.Models[0].ObjectMatrix *= Matrix.CreateTranslation(new Vector3(-3, 0, 3));
                     entityData.ObjectFullData.Models[1].ObjectMatrix *= Matrix.CreateTranslation(new Vector3(3, 1, 2));
 
-                    entityData.Transform = new ServerClient.Editor.Transformation(
+                    entityData.Transform = new Transformation(
                         Vector3.One * 2,
                         Quaternion.Identity,
                         new Vector3(10, 10, 10));
@@ -242,7 +242,7 @@ namespace MHGameWork.TheWizards.Tests.Entity
 
 
                     entityData = CreatePyramidEntity(ems, 5);
-                    entityData.Transform = new MHGameWork.TheWizards.ServerClient.Editor.Transformation(
+                    entityData.Transform = new Transformation(
                         Vector3.One, Quaternion.Identity,
                         new Vector3(10, 2, 20));
 
@@ -251,7 +251,7 @@ namespace MHGameWork.TheWizards.Tests.Entity
                     entities.Add(entPhysics);
 
                     entityData = CreatePyramidEntity(ems, 20);
-                    entityData.Transform = new MHGameWork.TheWizards.ServerClient.Editor.Transformation(
+                    entityData.Transform = new Transformation(
                        Vector3.One, Quaternion.Identity,
                        new Vector3(-32, 0, -40));
 
@@ -263,7 +263,7 @@ namespace MHGameWork.TheWizards.Tests.Entity
                     entityData = CreateTwoPyramidEntity(ems, 5, 3);
                     entityData.ObjectFullData.Models[0].ObjectMatrix *= Matrix.CreateTranslation(new Vector3(-3, 0, 3));
                     entityData.ObjectFullData.Models[1].ObjectMatrix *= Matrix.CreateTranslation(new Vector3(3, 1, 2));
-                    entityData.Transform = new MHGameWork.TheWizards.ServerClient.Editor.Transformation(
+                    entityData.Transform = new Transformation(
                        Vector3.One * 2, Quaternion.Identity,
                        new Vector3(80, 0, -45));
 

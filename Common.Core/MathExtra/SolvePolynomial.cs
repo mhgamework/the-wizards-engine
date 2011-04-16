@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace MHGameWork.TheWizards.ServerClient.MathExtra
+namespace MHGameWork.TheWizards.MathExtra
 {
     public class Solve
     {

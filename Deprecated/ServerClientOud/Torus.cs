@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards.MathExtra;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -66,7 +67,7 @@ namespace MHGameWork.TheWizards.ServerClient
 
             /* Now get the 4 roots */
 
-            MathExtra.Polynomial4 p = new MHGameWork.TheWizards.ServerClient.MathExtra.Polynomial4( a0, a1, a2, a3, a4 );
+            MathExtra.Polynomial4 p = new Polynomial4( a0, a1, a2, a3, a4 );
 
             //TODO: the distances
             double minDistance = -4000;

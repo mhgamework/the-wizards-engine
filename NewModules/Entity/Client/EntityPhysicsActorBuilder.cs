@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards.Entities;
+using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework;
 using StillDesign.PhysX;
 
@@ -29,7 +30,7 @@ namespace MHGameWork.TheWizards.Entity.Client
         /// <param name="scene"></param>
         /// <param name="fullData"></param>
         /// <returns></returns>
-        public Actor CreateActorForEntity( Scene scene, EntityFullData fullData )
+        public Actor CreateActorForEntity(StillDesign.PhysX.Scene scene, EntityFullData fullData)
         {
             // From PhysX SDK:
             //There are some performance implications of compound shapes that the user should be aware of: 
@@ -53,7 +54,7 @@ namespace MHGameWork.TheWizards.Entity.Client
                 actorDesc.Shapes.Add( shapeDesc );
             }
 
-            MHGameWork.TheWizards.ServerClient.Editor.Transformation transformNoScale = fullData.Transform;
+            Transformation transformNoScale = fullData.Transform;
             transformNoScale.Scaling = Vector3.One;
 
             actorDesc.GlobalPose = transformNoScale.CreateMatrix();
@@ -63,8 +64,8 @@ namespace MHGameWork.TheWizards.Entity.Client
 
         }
 
-        
-        private static TriangleMesh CreateTriangleMesh( ModelFullData model, EntityFullData ent, Scene scene )
+
+        private static TriangleMesh CreateTriangleMesh(ModelFullData model, EntityFullData ent, StillDesign.PhysX.Scene scene)
         {
             TriangleMeshDescription triangleMeshDesc = new TriangleMeshDescription();
 

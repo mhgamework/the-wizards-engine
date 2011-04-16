@@ -97,7 +97,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
 
 
-            Scene serverScene = null;
+            StillDesign.PhysX.Scene serverScene = null;
 
             PhysicsDebugRenderer debugRendererServer;
             var game = new XNAGame();
@@ -191,7 +191,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             var dataPacketTransporter = server.CreatePacketTransporter("PlayerControllerID",
                                                                          new DataPacket.Factory(), PacketFlags.TCP);
 
-            Scene serverScene = null;
+            StillDesign.PhysX.Scene serverScene = null;
 
             PhysicsDebugRenderer debugRendererServer;
             var game = new XNAGame();
@@ -378,7 +378,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             PlayerThirdPersonCamera cam = null;
 
-            Scene serverScene = null;
+            StillDesign.PhysX.Scene serverScene = null;
 
             PhysicsDebugRenderer debugRendererServer;
             var game = new XNAGame();

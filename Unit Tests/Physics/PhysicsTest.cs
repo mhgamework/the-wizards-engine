@@ -68,7 +68,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
 
         }
 
-        private void InitTestScene(Scene scene)
+        private void InitTestScene(StillDesign.PhysX.Scene scene)
         {
 
             ActorDescription actorDesc;
@@ -419,7 +419,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
 
         }
 
-        public static TriangleMesh CreateTriangleMesh(Vector3[] positions, int[] indices, Scene scene)
+        public static TriangleMesh CreateTriangleMesh(Vector3[] positions, int[] indices, StillDesign.PhysX.Scene scene)
         {
 
             TriangleMeshDescription triangleMeshDesc = new TriangleMeshDescription();

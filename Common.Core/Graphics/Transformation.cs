@@ -1,8 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
+using MHGameWork.TheWizards.MathExtra;
 using Microsoft.Xna.Framework;
-namespace MHGameWork.TheWizards.ServerClient.Editor
+
+namespace MHGameWork.TheWizards.Graphics
 {
     public struct Transformation
     {
@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.ServerClient.Editor
 
         public Vector3 GetEulerAngles()
         {
-            return MathExtra.Functions.QuatToEuler( Rotation );
+            return Functions.QuatToEuler( Rotation );
         }
 
         public void AddRotation( Vector3 eulerAngles )

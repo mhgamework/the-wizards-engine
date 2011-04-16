@@ -90,7 +90,8 @@ namespace MHGameWork.TheWizards.Entities.Editor
         public void PutObject(Vector3 position, EditorObject eObj)
         {
             EditorEntity ent = editor.EditorScene.CreateEntity(eObj);
-            ent.CoreData.Transformation = new Transformation(Vector3.One, Quaternion.Identity, position);
+            throw new InvalidOperationException();
+            //ent.CoreData.Transformation = new Transformation(Vector3.One, Quaternion.Identity, position);
 
             //TODO: This is one fishy call!
             editorEntityRenderMode.InitializeEntityRenderData(ent);

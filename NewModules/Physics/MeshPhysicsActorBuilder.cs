@@ -17,7 +17,7 @@ namespace MHGameWork.TheWizards.Entity.Client
             MeshPhysicsPool = meshPhysicsPool;
         }
 
-        public Actor CreateActorStatic(Scene scene, MeshCollisionData data, Matrix globalPose)
+        public Actor CreateActorStatic(StillDesign.PhysX.Scene scene, MeshCollisionData data, Matrix globalPose)
         {
 
 
@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.Entity.Client
 
 
         }
-        public Actor CreateActorDynamic(Scene scene, MeshCollisionData data, Matrix globalPose)
+        public Actor CreateActorDynamic(StillDesign.PhysX.Scene scene, MeshCollisionData data, Matrix globalPose)
         {
             ActorDescription actorDesc = createActorDesc(data, scene, globalPose);
             actorDesc.BodyDescription = new BodyDescription(10f); //TODO mass
@@ -39,7 +39,7 @@ namespace MHGameWork.TheWizards.Entity.Client
 
         }
 
-        private ActorDescription createActorDesc(MeshCollisionData data, Scene scene, Matrix globalPose)
+        private ActorDescription createActorDesc(MeshCollisionData data, StillDesign.PhysX.Scene scene, Matrix globalPose)
         {
             // From PhysX SDK:
             //There are some performance implications of compound shapes that the user should be aware of: 

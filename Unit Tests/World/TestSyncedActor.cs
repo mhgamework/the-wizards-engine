@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.Tests.World
             var server = new ServerSyncedActor();
 
             var physicsEngine = new PhysicsEngine();
-            Scene serverScene = null;
+            StillDesign.PhysX.Scene serverScene = null;
 
             PhysicsDebugRenderer debugRenderer;
             PhysicsDebugRenderer debugRendererServer;
@@ -115,7 +115,7 @@ namespace MHGameWork.TheWizards.Tests.World
             var serverSyncer = new ServerSyncer(serverpm);
 
             var physicsEngine = new PhysicsEngine();
-            Scene serverScene = null;
+            StillDesign.PhysX.Scene serverScene = null;
 
             PhysicsDebugRenderer debugRenderer;
             PhysicsDebugRenderer debugRendererServer;
@@ -201,7 +201,7 @@ namespace MHGameWork.TheWizards.Tests.World
 
 
             var physicsEngine = new PhysicsEngine();
-            Scene serverScene = null;
+            StillDesign.PhysX.Scene serverScene = null;
 
             PhysicsDebugRenderer debugRenderer;
             PhysicsDebugRenderer debugRendererServer;
@@ -270,7 +270,7 @@ namespace MHGameWork.TheWizards.Tests.World
 
 
             var physicsEngine = new PhysicsEngine();
-            Scene serverScene = null;
+            StillDesign.PhysX.Scene serverScene = null;
 
             PhysicsDebugRenderer debugRenderer;
             PhysicsDebugRenderer debugRendererServer;
@@ -339,7 +339,7 @@ namespace MHGameWork.TheWizards.Tests.World
 
 
             var physicsEngine = new PhysicsEngine();
-            Scene serverScene = null;
+            StillDesign.PhysX.Scene serverScene = null;
 
             PhysicsDebugRenderer debugRenderer;
             PhysicsDebugRenderer debugRendererServer;

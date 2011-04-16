@@ -299,16 +299,9 @@
     <Compile Include="Entity\Editor\EditorObject.cs" />
     <Compile Include="Entity\Editor\EntityWizardsEditorExtension.cs" />
     <Compile Include="Entity\Editor\Tools\PutObjectsTool.cs" />
-    <Compile Include="Entity\EntityCoreData.cs" />
-    <Compile Include="Entity\EntityRenderData.cs" />
-    <Compile Include="Entity\EntityRenderDataFactory.cs" />
-    <Compile Include="Entity\EntityRenderElement.cs" />
-    <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Entity\IObject.cs" />
     <Compile Include="Entity\IObjectData.cs" />
     <Compile Include="Entity\IObjectDataRenderDataFactory.cs" />
-    <Compile Include="Entity\IScene.cs" />
-    <Compile Include="Entity\ISceneData.cs" />
     <Compile Include="OBJParser\OBJToRAMMeshConverter.cs" />
     <Compile Include="Physics\CustomContactReport.cs" />
     <Compile Include="Physics\MeshDynamicPhysicsElement.cs" />
@@ -320,6 +313,8 @@
     <Compile Include="Player\PlayerController.cs" />
     <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
     <Compile Include="Rendering\IMeshFactory.cs" />
+    <Compile Include="Scene\Entity.cs" />
+    <Compile Include="Scene\Scene.cs" />
     <Compile Include="World\Static\ClientStaticWorldObjectSyncer.cs" />
     <Compile Include="World\ClientSyncedActor.cs" />
     <Compile Include="World\ClientSyncer.cs" />
@@ -354,12 +349,9 @@
     <Compile Include="Entity\ObjectMeshData.cs" />
     <Compile Include="Entity\ObjectRenderDataFactory.cs" />
     <Compile Include="Entity\ObjectRenderElement.cs" />
-    <Compile Include="Entity\RAMEntity.cs" />
     <Compile Include="Entity\RAMMesh.cs" />
     <Compile Include="Entity\RAMMeshPart.cs" />
     <Compile Include="Entity\RAMObject.cs" />
-    <Compile Include="Entity\SceneEntityData.cs" />
-    <Compile Include="Entity\SceneXMLSerializer.cs" />
     <Compile Include="Entity\TangentSolver.cs" />
     <Compile Include="Entity\TODO\EntityFullData.cs" />
     <Compile Include="Entity\TODO\EntityManagerService.cs" />
@@ -426,9 +418,8 @@
     <Compile Include="Rendering\TextureFactory.cs" />
     <Compile Include="Rendering\TexturePool.cs" />
     <Compile Include="Rendering\VertexDeclarationPool.cs" />
-    <Compile Include="Scene\Editor\EditorScene.cs" />
-    <Compile Include="Scene\Editor\SceneEditor.cs" />
-    <Compile Include="Scene\SceneCoreData.cs" />
+    <Compile Include="Editor\EditorScene.cs" />
+    <Compile Include="Editor\SceneEditor.cs" />
     <Compile Include="Scripting\IStateScript.cs" />
     <Compile Include="Scripting\ScriptLayer.cs" />
     <Compile Include="Scripting\ScriptRunner.cs" />
@@ -554,6 +545,7 @@
   <ItemGroup>
     <Folder Include="Editor\FromEditorProject\Temp\Entity\" />
     <Folder Include="Editor\FromEditorProject\Temp\Terrain\EditorTemp\" />
+    <Folder Include="Scene\Editor\" />
     <Folder Include="Server\" />
   </ItemGroup>
   <ItemGroup>

@@ -321,7 +321,7 @@ namespace MHGameWork.TheWizards.ServerClient
         {
 
             Core core = new Core();
-            Scene scene = core.CreateScene();
+            StillDesign.PhysX.Scene scene = core.CreateScene();
 
             ControllerManager manager = scene.CreateControllerManager();
 

@@ -13,9 +13,9 @@ namespace MHGameWork.TheWizards.Entities.Editor
     /// An EditorObject acts as a type. An Entity is an instance of an Object that resides in the world.
     /// Therefore it has a transform, whereas the EditorObject has not.
     /// </summary>
-    public class EditorEntity : MHGameWork.TheWizards.ServerClient.Database.ISimpleTag<TaggedEntity>, Raycast.IRaycastable<EditorEntity, Raycast.GeometryRaycastResult<EditorEntity>>, IEntity
+    public class EditorEntity : MHGameWork.TheWizards.ServerClient.Database.ISimpleTag<TaggedEntity>, Raycast.IRaycastable<EditorEntity, Raycast.GeometryRaycastResult<EditorEntity>>//, IEntity
     {
-        public EntityCoreData CoreData = new EntityCoreData();
+        //public EntityCoreData CoreData = new EntityCoreData();
 
         private EntityFullData fullData;
 
