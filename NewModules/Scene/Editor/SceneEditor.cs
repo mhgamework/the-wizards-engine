@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Threading;
 using MHGameWork.TheWizards.Editor;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
@@ -19,6 +20,9 @@ namespace MHGameWork.TheWizards.Scene.Editor
 
         public void EnablePlaceEntityMode()
         {
+            if (PlaceModeMesh == null)
+                throw new InvalidOperationException("PlaceModeMesh must be set!");
+
             activeMode = Mode.Place;
         }
 
@@ -48,6 +52,9 @@ namespace MHGameWork.TheWizards.Scene.Editor
             game.AddXNAObject(editorCamera);
             game.SetCamera(editorCamera);
 
+            var grid = new EditorGrid();
+            game.AddXNAObject(grid);
+
         }
 
         public void Render(IXNAGame _game)
@@ -55,6 +62,16 @@ namespace MHGameWork.TheWizards.Scene.Editor
         }
 
         public void Update(IXNAGame _game)
+        {
+
+
+            editorCamera.UpdateCameraMoveModeDefaultControls();
+
+            if (editorCamera.ActiveMoveMode == EditorCamera.MoveMode.None)
+                updateModes();
+        }
+
+        private void updateModes()
         {
             if (activeMode == Mode.Place)
             {
@@ -64,6 +81,7 @@ namespace MHGameWork.TheWizards.Scene.Editor
                 }
             }
         }
+
 
         private void TryPlaceEntity()
         {
@@ -89,6 +107,7 @@ namespace MHGameWork.TheWizards.Scene.Editor
             ent.Transformation = new Transformation(Vector3.One, Quaternion.Identity, position);
 
             scene.AddEntity(ent);
+
         }
 
 

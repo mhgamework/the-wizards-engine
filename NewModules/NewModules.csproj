@@ -422,7 +422,7 @@
     <Compile Include="Rendering\RAMTexture.cs" />
     <Compile Include="Rendering\SimpleRenderer.cs" />
     <Compile Include="Rendering\TextureCoreData.cs" />
-    <Compile Include="Rendering\TextureFactory.cs" />
+    <Compile Include="Rendering\RAMTextureFactory.cs" />
     <Compile Include="Rendering\TexturePool.cs" />
     <Compile Include="Rendering\VertexDeclarationPool.cs" />
     <Compile Include="Editor\FromEditorProject\EditorScene.cs" />

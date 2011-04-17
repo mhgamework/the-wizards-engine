@@ -23,6 +23,7 @@ namespace MHGameWork.TheWizards.Scene
         public void AddEntity(Entity ent)
         {
             entities.Add(ent);
+            ent.UpdateRenderElement(renderer);
         }
     }
 }

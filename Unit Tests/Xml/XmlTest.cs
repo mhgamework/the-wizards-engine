@@ -90,7 +90,7 @@ namespace MHGameWork.TheWizards.Tests.Xml
         [Test]
         public void TestSerializeDeserializeAdvanced()
         {
-            var converter = new OBJToRAMMeshConverter(new TextureFactory());
+            var converter = new OBJToRAMMeshConverter(new RAMTextureFactory());
 
             var mesh = RenderingTest.CreateMerchantsHouseMesh(converter);
 

@@ -332,6 +332,11 @@ namespace MHGameWork.TheWizards.ServerClient.Editor
             shaders.Add(basicShader);
         }
 
+        public void InvokeUpdate(Action action)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

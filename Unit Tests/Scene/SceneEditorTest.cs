@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.Editor.Scene;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Scene;
 using NUnit.Framework;
+using SceneEditor = MHGameWork.TheWizards.Scene.Editor.SceneEditor;
 
 namespace MHGameWork.TheWizards.Tests.Editor.Scene
 {
@@ -21,11 +22,35 @@ namespace MHGameWork.TheWizards.Tests.Editor.Scene
             game.IsMouseVisible = true;
             game.DrawFps = true;
             game.SpectaterCamera.Enabled = false;
+
+            var renderer = Rendering.RenderingTest.InitDefaultMeshRenderer(game);
+            var scene = new TheWizards.Scene.Scene(renderer);
+            var editor = new SceneEditor();
+
+            var mesh =
+                Rendering.RenderingTest.CreateGuildHouseMesh(
+                    new TheWizards.OBJParser.OBJToRAMMeshConverter(new TheWizards.Rendering.RAMTextureFactory()));
+
+            editor.PlaceModeMesh = mesh;
+            editor.SetEditingScene(scene);
+            game.AddXNAObject(editor);
+
+
+
+
+
+
+
             var ev = new AutoResetEvent(false);
             var t = new Thread(delegate()
                                    {
                                        form = new SimpleEditorForm();
                                        var app = new Application();
+
+                                       var vm = new SimpleEditorViewModel(game, editor);
+                                       form.DataContext = vm;
+
+
                                        ev.Set();
                                        app.Run(form);
                                    });
@@ -50,7 +75,6 @@ namespace MHGameWork.TheWizards.Tests.Editor.Scene
                 };
             game.Run();
 
-            //            t.Join();
 
         }
 

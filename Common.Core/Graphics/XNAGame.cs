@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -330,38 +331,53 @@ namespace MHGameWork.TheWizards.Graphics
                 Exit();
 
             UpdateInput();
+            updateCursor();
+
+            doInvokeUpdates();
 
 
 
+            updateGameObjects();
+            updateShaders();
 
-            for (int i = 0; i < gameObjects.Count; i++)
-            {
-                gameObjects[i].Update(this);
-            }
-            //guiService.Process();
-
-            if (mouse.CursorEnabled && cursor != null && !InputDisabled)
-            {
-                cursor.Position = new Vector2(mouse.CursorPosition.X, mouse.CursorPosition.Y);
-                cursor.Update();
-            }
-            Update();
-
+            doUpdateEvent();
 
 
             base.Update(gameTime);
         }
 
-        protected virtual void Update()
+        private void doUpdateEvent()
+        {
+            if (UpdateEvent != null) UpdateEvent();
+        }
+
+        private void updateCursor()
+        {
+            if (mouse.CursorEnabled && cursor != null && !InputDisabled)
+            {
+                cursor.Position = new Vector2(mouse.CursorPosition.X, mouse.CursorPosition.Y);
+                cursor.Update();
+            }
+        }
+
+        private void updateGameObjects()
+        {
+            for (int i = 0; i < gameObjects.Count; i++)
+            {
+                gameObjects[i].Update(this);
+            }
+        }
+
+
+        private void updateShaders()
         {
             for (int i = 0; i < shaders.Count; i++)
             {
                 var shader = shaders[i];
                 shader.Update();
             }
-            if (UpdateEvent != null) UpdateEvent();
-
         }
+
         bool inputJustToggled = false;
         protected virtual void UpdateInput()
         {
@@ -429,9 +445,9 @@ namespace MHGameWork.TheWizards.Graphics
         protected override void OnExiting(object sender, EventArgs args)
         {
             base.OnExiting(sender, args);
-            
+
             lastInstance = null;
-            
+
             if (flagFirstDraw)
             {
                 //Game terminated before calling Draw once
@@ -615,9 +631,6 @@ namespace MHGameWork.TheWizards.Graphics
             }
         }
 
-        #region IXNAGame Members
-
-
         public bool IsCursorInWindow()
         {
             if (mouse.CursorEnabled == false) throw new InvalidOperationException("Cursor is not enabled!");
@@ -636,6 +649,24 @@ namespace MHGameWork.TheWizards.Graphics
             shaders.Add(basicShader);
         }
 
-        #endregion
+
+        private ConcurrentQueue<Action> invokeUpdateQueue = new ConcurrentQueue<Action>();
+        /// <summary>
+        /// Invokes a delegate in the next Update of this game
+        /// </summary>
+        /// <param name="action"></param>
+        public void InvokeUpdate(Action action)
+        {
+            invokeUpdateQueue.Enqueue(action);
+        }
+
+        private void doInvokeUpdates()
+        {
+            Action a;
+            while (invokeUpdateQueue.TryDequeue(out a))
+            {
+                a();
+            }
+        }
     }
 }

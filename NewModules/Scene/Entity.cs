@@ -33,10 +33,17 @@ namespace MHGameWork.TheWizards.Scene
 
         internal void UpdateRenderElement(MeshRenderer renderer)
         {
-            if (renderElement != null)
-                renderElement.Delete();
 
-            renderElement = renderer.AddMesh(Mesh);
+            if (renderElement != null && renderElement.Mesh != Mesh)
+            {
+                renderElement.Delete();
+                renderElement = null;
+            }
+            if (renderElement == null)
+                renderElement = renderer.AddMesh(Mesh);
+
+
+            renderElement.WorldMatrix = Transformation.CreateMatrix();
         }
 
     }

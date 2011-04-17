@@ -148,7 +148,7 @@ namespace MHGameWork.TheWizards.Tests.Assets
         {
             var mesh =
                 RenderingTest.CreateGuildHouseMesh(
-                    new TheWizards.OBJParser.OBJToRAMMeshConverter(new TextureFactory()));
+                    new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
 
             var serverMesh = new ServerMeshAsset(serverSyncer.CreateAsset());
 

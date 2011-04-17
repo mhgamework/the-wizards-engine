@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             importer.AddMaterialFileStream("MerchantsHouse.mtl", new FileStream(TestFiles.MerchantsHouseMtl, FileMode.Open));
             importer.ImportObjFile(TestFiles.MerchantsHouseObj);
 
-            var textureFactory = new TextureFactory();
+            var textureFactory = new RAMTextureFactory();
             /*textureFactory.AddAssemblyResolvePath(typeof(ObjImporter).Assembly,
                                                   "MHGameWork.TheWizards.OBJParser.Files.maps");*/
             var conv = new OBJToRAMMeshConverter(textureFactory);
@@ -327,12 +327,15 @@ namespace MHGameWork.TheWizards.Tests.Rendering
         [RequiresThread(ApartmentState.STA)]
         public void TestMeshRendererAdvanced()
         {
-            var texFactory = new TextureFactory();
+            var texFactory = new RAMTextureFactory();
             var c = new OBJToRAMMeshConverter(texFactory);
+
+            var game = new XNAGame();
+            game.IsFixedTimeStep = false;
+            game.DrawFps = true;
 
 
             var importer = new ObjImporter();
-            importer = new ObjImporter();
             importer.AddMaterialFileStream("Crate01.mtl", File.OpenRead(TestFiles.CrateMtl));
             importer.ImportObjFile(TestFiles.CrateObj);
 
@@ -343,13 +346,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
             RAMMesh mesh3 = CreateGuildHouseMesh(c);
 
-            var texturePool = new TexturePool();
-            var meshpartPool = new MeshPartPool();
-            var vertexDeclarationPool = new VertexDeclarationPool();
-
-            var renderer = new MeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
-
-            vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
+            MeshRenderer renderer = InitDefaultMeshRenderer(game);
 
 
             var el = renderer.AddMesh(mesh);
@@ -368,27 +365,34 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             }
 
 
-
-            var game = new XNAGame();
-            game.IsFixedTimeStep = false;
-            game.DrawFps = true;
-
-            game.AddXNAObject(texturePool);
-            game.AddXNAObject(meshpartPool);
-            game.AddXNAObject(vertexDeclarationPool);
-            game.AddXNAObject(renderer);
+        
 
             game.Run();
 
         }
 
-     
+        public static MeshRenderer InitDefaultMeshRenderer(XNAGame game)
+        {
+            var texturePool = new TexturePool();
+            var meshpartPool = new MeshPartPool();
+            var vertexDeclarationPool = new VertexDeclarationPool();
+
+            var renderer = new MeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
+            game.AddXNAObject(texturePool);
+            game.AddXNAObject(meshpartPool);
+            game.AddXNAObject(vertexDeclarationPool);
+            game.AddXNAObject(renderer);
+
+            vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
+            return renderer;
+        }
+
 
         [Test]
         [RequiresThread(ApartmentState.STA)]
         public void TestMeshRendererRenderCity()
         {
-            var c = new OBJToRAMMeshConverter(new TextureFactory());
+            var c = new OBJToRAMMeshConverter(new RAMTextureFactory());
 
 
             var importer = new ObjImporter();

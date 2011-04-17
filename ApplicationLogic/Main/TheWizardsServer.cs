@@ -341,7 +341,7 @@ namespace MHGameWork.TheWizards.Main
         {
             var mesh =
                 CreateMerchantsHouseMesh(
-                    new TheWizards.OBJParser.OBJToRAMMeshConverter(new TextureFactory()));
+                    new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
 
             var serverMesh = new ServerMeshAsset(serverSyncer.CreateAsset(TestMeshGuid));
 

@@ -11,8 +11,9 @@ namespace MHGameWork.TheWizards.Rendering
     /// This is a to-be abstract factory that creates ITexture's. It might just be a helper that allows easy texture sharing.
     /// Currently RAM implementation.
     /// TODO: write test
+    /// TODO: Implement ITextureFactory
     /// </summary>
-    public class TextureFactory
+    public class RAMTextureFactory
     {
         private List<ITexture> textures = new List<ITexture>();
         private List<ResolvePath> resolvePaths = new List<ResolvePath>();
