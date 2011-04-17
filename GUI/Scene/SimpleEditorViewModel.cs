@@ -15,8 +15,23 @@ namespace MHGameWork.TheWizards.Scene
         private SceneEditor editor;
         public ICommand JumpInto { get; private set; }
         public ICommand PlaceEntity { get; private set; }
-        public Dictionary<string, IMesh> PlaceMeshes { get; private set; }
-
+        public List<MeshItem> PlaceMeshes { get; private set; }
+        private MeshItem selectedPlaceMesh;
+        public MeshItem SelectedPlaceMesh
+        {
+            get { return selectedPlaceMesh; }
+            set
+            {
+                selectedPlaceMesh = value; 
+                if (editor != null)
+                {
+                    if (value == null)
+                        editor.PlaceModeMesh = null;
+                    else
+                        editor.PlaceModeMesh = selectedPlaceMesh.Mesh;
+                }
+            }
+        }
 
         public string SelectedEntityMesh { get; private set; }
 
@@ -24,9 +39,11 @@ namespace MHGameWork.TheWizards.Scene
         public SimpleEditorViewModel()
         {
             SelectedEntityMesh = "Hello!";
-            PlaceMeshes = new Dictionary<string, IMesh>();
-            PlaceMeshes.Add("Mesh1", new RAMMesh());
-            PlaceMeshes.Add("Mesh2", new RAMMesh());
+            PlaceMeshes = new List<MeshItem>();
+            PlaceMeshes.Add(new MeshItem { Name = "Mesh1", Mesh = null });
+            PlaceMeshes.Add(new MeshItem { Name = "Mesh2", Mesh = null });
+
+            SelectedPlaceMesh = PlaceMeshes[1];
 
         }
 
@@ -39,6 +56,17 @@ namespace MHGameWork.TheWizards.Scene
 
             return vm;
 
+        }
+
+        public class MeshItem
+        {
+            public string Name;
+            public IMesh Mesh;
+
+            public override string ToString()
+            {
+                return Name;
+            }
         }
     }
 }

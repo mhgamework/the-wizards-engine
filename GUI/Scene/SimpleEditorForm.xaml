@@ -12,7 +12,8 @@
     <StackPanel UseLayoutRounding="False" Margin="0" HorizontalAlignment="Stretch">
         <Button Content="Jump Into" Height="23" Command="{Binding Path=JumpInto}" />
         <Button Content="Place Entity" Height="23" Command="{Binding Path=PlaceEntity}" />
-        <ListBox Height="100" Name="listBox1" ItemsSource="{Binding Path=PlaceMeshes}" />
+        <ListBox Height="100" ItemsSource="{Binding Path=PlaceMeshes}" SelectedItem="{Binding Path=SelectedPlaceMesh}">
+        </ListBox>
         <StackPanel>
             <CheckBox Content="Visible" />
             <CheckBox Content="Solid"/>
