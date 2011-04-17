@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.ServerClient;
@@ -8,15 +9,38 @@ using MHGameWork.TheWizards.ServerClient.CascadedShadowMaps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SampleCommon;
-using TreeGenerator.help;
 using TreeGenerator.TreeEngine;
 using NUnit.Framework;
+using Seeder = TreeGenerator.help.Seeder;
 
 namespace TreeGenerator.LodEngine
 {
     [TestFixture]
     public class LodEngineTest
     {
+         public static readonly Guid DefaultBarkGuid;
+        public static readonly Guid DefaultLeaves;
+        //public static readonly Guid DefaultBump;
+        static LodEngineTest()
+        {
+            DefaultBarkGuid = new Guid("1B1B473E-1B26-4879-8BE7-0485048D75C3");
+            DefaultLeaves = new Guid("A50338ED-2156-4A5F-B579-6B06A7394CAF");
+            //DefaultBump = new Guid("2EC1AEDD-4870-4ADC-B322-218FD6A832DB");
+        }
+       
+        
+        public static void AddTestRAMTextures(SimpleTextureFactory texFact)
+        {
+            var tex = new RAMTexture();
+            tex.GetCoreData().DiskFilePath = TWDir.GameData + "\\Core\\TreeGenerator\\DefaultBark.tga";
+            texFact.AddTexture(DefaultBarkGuid, tex);
+            tex = new RAMTexture();
+            tex.GetCoreData().DiskFilePath = TWDir.GameData + "\\Core\\TreeGenerator\\DefaultLeaves.tga";
+            texFact.AddTexture(DefaultLeaves, tex);
+            tex = new RAMTexture();
+           // tex.GetCoreData().DiskFilePath = null;
+            //texFact.AddTexture(DefaultLeaves, tex);
+        }
         [Test]
         public void TestTWRendererTreeRender()
         {
@@ -28,8 +52,10 @@ namespace TreeGenerator.LodEngine
             EngineTreeRenderData renderData;
             EngineTreeRenderDataGenerater gen = new EngineTreeRenderDataGenerater(5);
             TreeStructure structure = TreeStructure.GetTestTreeStructure(game);
-            
-            TreeTypeData treeTypeData = TreeTypeData.GetTestTreeType(game);
+
+            SimpleTextureFactory fac = new SimpleTextureFactory();
+            AddTestRAMTextures(fac);
+            TreeTypeData treeTypeData = TreeTypeData.GetTestTreeType(fac);
             TreeStructureGenerater structGen = new TreeStructureGenerater();
             structure = structGen.GenerateTree(treeTypeData, 984);
             renderData = gen.GetRenderData(structure, game, 0);

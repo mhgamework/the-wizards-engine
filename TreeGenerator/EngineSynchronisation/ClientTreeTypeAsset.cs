@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Assets;
+using MHGameWork.TheWizards.Rendering;
 
 namespace TreeGenerator.EngineSynchronisation
 {
-    class ClientTreeTypeAsset:ITreeType
+    public class ClientTreeTypeAsset:ITreeType
     {
         private readonly ITextureFactory fac;
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Assets;
+using MHGameWork.TheWizards.Rendering;
 
 namespace TreeGenerator.EngineSynchronisation
 {
@@ -18,7 +19,7 @@ namespace TreeGenerator.EngineSynchronisation
             this.factory = factory;
         }
 
-        public ITreeType GetTreeType(Guid guid)
+        public ClientTreeTypeAsset GetTreeType(Guid guid)
         {
             ClientTreeTypeAsset asset;
             if (!assets.TryGetValue(guid, out asset))
@@ -28,6 +29,11 @@ namespace TreeGenerator.EngineSynchronisation
             }
 
             return asset;
+        }
+
+        ITreeType ITreeTypeFactory.GetTreeType(Guid guid)
+        {
+            return GetTreeType(guid);
         }
     }
 }

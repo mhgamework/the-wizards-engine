@@ -290,7 +290,7 @@ namespace TreeGenerator.TreeEngine
             game.InitializeEvent +=
                delegate
                    {
-                       treeTypeData = TreeTypeData.GetTestTreeType(game);
+                       treeTypeData = TreeTypeData.GetTestTreeType();
                        treeStruct=genStruct.GenerateTree(treeTypeData, 123);
                        genData.GetRenderData(treeStruct, game, 0);
 

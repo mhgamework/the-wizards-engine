@@ -74,6 +74,8 @@ namespace MHGameWork.TheWizards.Assets
                 tempCount--;
                 var asset = GetAsset(info.Packet.GUID);
                 var fileComponent = asset.GetFileComponent(info.Packet.FileIndex);
+                var fi = new FileInfo(fileComponent.GetFullPath());
+                fi.Directory.Create();
                 File.Copy(info.CachedFilePath, fileComponent.GetFullPath(), true);
                 File.Delete(info.CachedFilePath);
 

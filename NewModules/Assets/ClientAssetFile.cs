@@ -65,6 +65,7 @@ namespace MHGameWork.TheWizards.Assets
                 case AssetFileMode.Zipped:
                     {
                         var fi = new FileInfo(path.Substring(0, path.Length - 4));
+                        fi.Directory.Create();
                         var fs = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.Delete);
 
                         var zip = new ZipOutputStream(fs);

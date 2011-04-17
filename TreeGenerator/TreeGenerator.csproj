@@ -118,13 +118,13 @@
     <Compile Include="Clouds\BillBoards.cs" />
     <Compile Include="EngineSynchronisation\ClientAssetTreeTypeFactory.cs" />
     <Compile Include="EngineSynchronisation\ClientTreeSyncer.cs" />
+    <Compile Include="EngineSynchronisation\ServerTreeTypeAsset.cs" />
     <Compile Include="EngineSynchronisation\RAMTreeType.cs" />
     <Compile Include="EngineSynchronisation\ServerTreeSyncer.cs" />
     <Compile Include="EngineSynchronisation\TreePacket.cs" />
     <Compile Include="EngineSynchronisation\ClientTreeTypeAsset.cs" />
     <Compile Include="ImposterRing\IDelayedRenderProvider.cs" />
     <Compile Include="ImposterRing\ImposterRing.cs" />
-    <Compile Include="ITextureFactory.cs" />
     <Compile Include="ITreeTypeFactory.cs" />
     <Compile Include="LodEngine\ImposterLodLayer.cs" />
     <Compile Include="LodEngine\ImposterRingLayer.cs" />

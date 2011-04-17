@@ -322,6 +322,7 @@
     <Compile Include="Scene\Editor\SceneEditor.cs" />
     <Compile Include="Scene\Entity.cs" />
     <Compile Include="Scene\Scene.cs" />
+    <Compile Include="Rendering\ITextureFactory.cs" />
     <Compile Include="World\Static\ClientStaticWorldObjectSyncer.cs" />
     <Compile Include="World\ClientSyncedActor.cs" />
     <Compile Include="World\ClientSyncer.cs" />

@@ -20,7 +20,7 @@ namespace TreeGenerator
         public void Intialize(IXNAGame game,string textureName)
         {
             Shader = new ColladaShader(game, new Microsoft.Xna.Framework.Graphics.EffectPool());
-            Texture = TWTexture.FromImageFile(game, new GameFile(TWDir.GameData.FullName+"\\TreeGenerator\\" + textureName));
+            Texture = TWTexture.FromImageFile(game, new GameFile(textureName));
 
             Shader.Technique = ColladaShader.TechniqueType.Textured;
             
@@ -32,8 +32,8 @@ namespace TreeGenerator
         public void IntializeBumpMapping(IXNAGame game,string textureName, string textureNameBumpMapName)
         {
             Shader = new ColladaShader(game, new Microsoft.Xna.Framework.Graphics.EffectPool());
-            Texture = TWTexture.FromImageFile(game, new GameFile(TWDir.GameData.FullName+"\\TreeGenerator\\" + textureName));
-            BumpMap = TWTexture.FromImageFile(game, new GameFile(TWDir.GameData.FullName + "\\TreeGenerator\\" + textureNameBumpMapName));
+            Texture = TWTexture.FromImageFile(game, new GameFile(textureName));
+            BumpMap = TWTexture.FromImageFile(game, new GameFile(textureNameBumpMapName));
             //Texture = TWTexture.FromTexture2D(null);
             //BumpMap = TWTexture.FromTexture2D(null);
 

@@ -31,10 +31,11 @@ namespace TreeGenerator.TreeEngine
 
         private Vector3 windDirection;
         private float windStrength;
+
         public void initialize(XNAGame _game)
         {
             game = _game;
-            leafType = TreeTypeData.GetTestTreeType(game).Levels[0].LeafType[0];
+            leafType = TreeTypeData.GetTestTreeType().Levels[0].LeafType[0];
             leaf=genStruct.CreateLeave(leafType, new help.Directions(Vector3.UnitZ, Vector3.UnitX), 0, 0, 0, 0, 0, 0);
             tangentVertices= gen.CreateVerticesForVolumetricLeaf(leaf, Vector3.Zero);
             convertVertices();
