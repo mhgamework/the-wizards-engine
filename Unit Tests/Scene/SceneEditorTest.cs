@@ -1,14 +1,12 @@
 using System;
 using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using MHGameWork.TheWizards.Editor.Scene;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Scene;
 using NUnit.Framework;
 using SceneEditor = MHGameWork.TheWizards.Scene.Editor.SceneEditor;
 
-namespace MHGameWork.TheWizards.Tests.Editor.Scene
+namespace MHGameWork.TheWizards.Tests.Scene
 {
     [TestFixture]
     public class SceneEditorTest
@@ -47,7 +45,7 @@ namespace MHGameWork.TheWizards.Tests.Editor.Scene
                                        form = new SimpleEditorForm();
                                        var app = new Application();
 
-                                       var vm = new SimpleEditorViewModel(game, editor);
+                                       var vm = SimpleEditorViewModel.Create(game, editor);
                                        form.DataContext = vm;
 
 
