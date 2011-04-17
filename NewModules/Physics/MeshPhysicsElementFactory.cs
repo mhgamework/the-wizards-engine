@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Collada.COLLADA140;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Entity.Client;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Rendering;
 using Microsoft.Xna.Framework;
 using StillDesign.PhysX;
 
@@ -36,7 +37,7 @@ namespace MHGameWork.TheWizards.Physics
             actorBuilder = new MeshPhysicsActorBuilder(MeshPhysicsPool);
         }
 
-        public MeshStaticPhysicsElement CreateStaticElement(RAMMesh mesh, Matrix world)
+        public MeshStaticPhysicsElement CreateStaticElement(IMesh mesh, Matrix world)
         {
             var el = new MeshStaticPhysicsElement(mesh, world, actorBuilder);
             if (game == null)
@@ -50,7 +51,7 @@ namespace MHGameWork.TheWizards.Physics
             return el;
         }
 
-        public MeshDynamicPhysicsElement CreateDynamicElement(RAMMesh mesh, Matrix world)
+        public MeshDynamicPhysicsElement CreateDynamicElement(IMesh mesh, Matrix world)
         {
             var el = new MeshDynamicPhysicsElement(mesh, world, actorBuilder);
             if (game == null)

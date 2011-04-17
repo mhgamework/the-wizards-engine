@@ -453,8 +453,8 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
             };
             game.Graphics1.ToggleFullScreen();
 
-            var barrelMesh = GetBarrelMesh(textureFactory, c);
-            var crateMesh = GetCrateMesh(textureFactory, c);
+            var barrelMesh = GetBarrelMesh(c);
+            var crateMesh = GetCrateMesh(c);
 
             var sphereMesh = new SphereMesh(0.3f, 20, Color.Green);
             var visualizer = new QuadTreeVisualizer();
@@ -573,7 +573,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
             var c = new OBJToRAMMeshConverter(texFactory);
 
 
-            RAMMesh mesh = GetCrateMesh(texFactory, c);
+            RAMMesh mesh = GetCrateMesh(c);
 
             var texturePool = new TexturePool();
             var meshpartPool = new MeshPartPool();
@@ -679,7 +679,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
             var c = new OBJToRAMMeshConverter(texFactory);
 
 
-            RAMMesh mesh = GetBarrelMesh(texFactory, c);
+            RAMMesh mesh = GetBarrelMesh(c);
 
             var texturePool = new TexturePool();
             var meshpartPool = new MeshPartPool();
@@ -778,14 +778,14 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
 
         }
 
-        private RAMMesh GetBarrelMesh(RAMTextureFactory texFactory, OBJToRAMMeshConverter c)
+        public static RAMMesh GetBarrelMesh(OBJToRAMMeshConverter c)
         {
-            var fsMat = new FileStream("../GameData/Barrel01.mtl", FileMode.Open);
+            var fsMat = new FileStream(TestFiles.BarrelMtl, FileMode.Open);
 
             var importer = new ObjImporter();
             importer.AddMaterialFileStream("Barrel01.mtl", fsMat);
 
-            importer.ImportObjFile("../GameData/Barrel01.obj");
+            importer.ImportObjFile(TestFiles.BarrelObj);
 
             var meshes = c.CreateMeshesFromObjects(importer);
 
@@ -793,15 +793,15 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
 
             return meshes[0];
         }
-        private static RAMMesh GetCrateMesh(RAMTextureFactory texFactory, OBJToRAMMeshConverter c)
+        public static RAMMesh GetCrateMesh(OBJToRAMMeshConverter c)
         {
-            var fsMat = new FileStream("../GameData/Crate01.mtl", FileMode.Open);
+            var fsMat = new FileStream(TestFiles.CrateMtl, FileMode.Open);
 
             var importer = new ObjImporter();
             importer.AddMaterialFileStream("Crate01.mtl",fsMat);
 
 
-            importer.ImportObjFile("../GameData/Crate01.obj");
+            importer.ImportObjFile(TestFiles.CrateObj);
 
             var meshes = c.CreateMeshesFromObjects(importer);
             fsMat.Close();

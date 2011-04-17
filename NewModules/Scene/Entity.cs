@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.ServerClient.Editor;
 using Microsoft.Xna.Framework;
@@ -19,6 +20,7 @@ namespace MHGameWork.TheWizards.Scene
         public Transformation Transformation { get; set; }
         public bool Visible { get; set; }
         public bool Solid { get; set; }
+        public bool Static { get; set; }
         public IMesh Mesh { get; set; }
         public BoundingBox BoundingBox { get; set; }
 
@@ -27,6 +29,10 @@ namespace MHGameWork.TheWizards.Scene
             throw new NotImplementedException();
         }
 
+        public Entity()
+        {
+            Static = true;
+        }
 
 
         private MeshRenderElement renderElement;
@@ -44,6 +50,10 @@ namespace MHGameWork.TheWizards.Scene
 
 
             renderElement.WorldMatrix = Transformation.CreateMatrix();
+        }
+        internal void UpdatePhysicsElement(MeshPhysicsElementFactory factory)
+        {
+            factory.CreateStaticElement(Mesh, Transformation.CreateMatrix());
         }
 
     }

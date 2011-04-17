@@ -26,5 +26,7 @@ namespace MHGameWork.TheWizards.Tests
 
         public static string TownObj { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\Town\OBJ03\Town001.obj"; } }
         public static string TownMtl { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\Town\OBJ03\Town001.mtl"; } }
+
+
     }
 }
