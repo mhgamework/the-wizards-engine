@@ -9,7 +9,6 @@ using MHGameWork.TheWizards.Entity.Editor;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.Tests.Editor.Scene;
 using MHGameWork.TheWizards.WorldDatabase;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

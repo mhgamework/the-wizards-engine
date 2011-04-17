@@ -12,11 +12,11 @@
     <StackPanel UseLayoutRounding="False" Margin="0" HorizontalAlignment="Stretch">
         <Button Content="Jump Into" Height="23" Command="{Binding Path=JumpInto}" />
         <Button Content="Place Entity" Height="23" Command="{Binding Path=PlaceEntity}" />
-        <ListBox Height="100" Name="listBox1"/>
+        <ListBox Height="100" Name="listBox1" ItemsSource="{Binding Path=PlaceMeshes}" />
         <StackPanel>
             <CheckBox Content="Visible" />
             <CheckBox Content="Solid"/>
-            <Label Content="Mesh: (Set)" Height="28"/>
+            <Label Height="28" Content="{Binding Path=SelectedEntityMesh}" />
             <Button Content="Change Mesh"/>
         </StackPanel>
 
