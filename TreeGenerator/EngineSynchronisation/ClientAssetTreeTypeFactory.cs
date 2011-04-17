@@ -19,7 +19,7 @@ namespace TreeGenerator.EngineSynchronisation
             this.factory = factory;
         }
 
-        public ITreeType GetTreeType(Guid guid)
+        public ClientTreeTypeAsset GetTreeType(Guid guid)
         {
             ClientTreeTypeAsset asset;
             if (!assets.TryGetValue(guid, out asset))
@@ -29,6 +29,11 @@ namespace TreeGenerator.EngineSynchronisation
             }
 
             return asset;
+        }
+
+        ITreeType ITreeTypeFactory.GetTreeType(Guid guid)
+        {
+            return GetTreeType(guid);
         }
     }
 }

@@ -52,7 +52,7 @@ namespace TreeGenerator
 
         public static TreeStructure GetTestTreeStructure(XNAGame game)
         {
-            TreeTypeData treeTypeData = TreeTypeData.GetTestTreeType(game);
+            TreeTypeData treeTypeData = TreeTypeData.GetTestTreeType();
             TreeStructureGenerater gen = new TreeStructureGenerater();
             return gen.GenerateTree(treeTypeData, 468);
         }
@@ -61,7 +61,7 @@ namespace TreeGenerator
             XNAGame game = new XNAGame();
 
             TreeStructure treeStruct = new TreeStructure();
-            TreeTypeData treeTypeData = TreeTypeData.GetTestTreeType(game);
+            TreeTypeData treeTypeData = TreeTypeData.GetTestTreeType();
             TreeStructureGenerater gen = new TreeStructureGenerater();
             game.InitializeEvent +=
                 delegate

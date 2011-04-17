@@ -15,7 +15,7 @@ namespace MHGameWork.TheWizards.Assets
     /// <summary>
     /// Make this abstract and create a non-networked implementation
     /// </summary>
-    public class ServerAssetSyncer 
+    public class ServerAssetSyncer
     {
         public DirectoryInfo AssetsDirectory { get; private set; }
         private IServerPacketTransporter<AssetRequestPacket> assetContentsRequester;
@@ -71,6 +71,7 @@ namespace MHGameWork.TheWizards.Assets
                 var p = assetContentsRequester.Receive(out client);
 
                 var asset = GetAsset(p.GUID);
+                if (asset == null) throw new InvalidOperationException("Client has requested an unexisting asset!");
                 var retP = new AssetContentPacket();
                 retP.GUID = p.GUID;
                 retP.Files = new AssetContentPacket.FileComponent[asset.FileComponents.Count];
@@ -118,7 +119,7 @@ namespace MHGameWork.TheWizards.Assets
             var a = new ServerAsset(this, guid);
             assets.Add(a);
 
-            return a; 
+            return a;
         }
         public ServerAsset CreateAsset()
         {

@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.Assets;
-using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.ServerClient;
 
@@ -77,7 +76,7 @@ namespace TreeGenerator
                     Range.WriteToXML(leafNode.CreateChildNode("Length"), ileafLevel.Length);
                     Range.WriteToXML(leafNode.CreateChildNode("width"), ileafLevel.width);
                     leafNode.AddChildNode("Texture", ileafLevel.Texture.Guid.ToString());
-                    leafNode.AddChildNode("Bump", ileafLevel.BumpTexture.Guid.ToString());
+                    leafNode.AddChildNode("Bump", null);
                     leafNode.AddChildNode("BillBoardLeaf", ileafLevel.BillBoardLeaf.ToString());
                     leafNode.AddChildNode("VolumetricLeaves", ileafLevel.VolumetricLeaves.ToString());
                     Range.WriteToXML(leafNode.CreateChildNode("BendingLength"), ileafLevel.BendingLength);
@@ -178,11 +177,12 @@ namespace TreeGenerator
 
             return tree;
         }
-
-        [Obsolete("Use other overload")]
-        public static TreeTypeData GetTestTreeType(XNAGame game)
+      
+        public static TreeTypeData GetTestTreeType()
         {
-            return GetTestTreeType();
+            var fac = new SimpleTextureFactory();
+            AddTestRAMTextures(fac);
+            return GetTestTreeType(fac);
         }
         public static TreeTypeData GetTestTreeType(ITextureFactory textureFactory)
         {
@@ -192,7 +192,33 @@ namespace TreeGenerator
             TreeTypeData treeTypeData = LoadFromXML(st, textureFactory);
             return treeTypeData;
         }
-
+        /// <summary>
+        /// TODO: move to tests, THIS IS A TEST METHOD
+        /// </summary>
+        /// <param name="texFact"></param>
+        public static void AddTestRAMTextures(SimpleTextureFactory texFact)
+        {
+          
+            //DefaultBump = new Guid("2EC1AEDD-4870-4ADC-B322-218FD6A832DB");
         
+            var tex = new RAMTexture();
+            tex.GetCoreData().DiskFilePath = TWDir.GameData + "\\Core\\TreeGenerator\\DefaultBark.tga";
+            texFact.AddTexture(DefaultBarkGuid, tex);
+            tex = new RAMTexture();
+            tex.GetCoreData().DiskFilePath = TWDir.GameData + "\\Core\\TreeGenerator\\DefaultLeaves.tga";
+            texFact.AddTexture(DefaultLeaves, tex);
+            tex = new RAMTexture();
+            // tex.GetCoreData().DiskFilePath = null;
+            //texFact.AddTexture(DefaultLeaves, tex);
+        }
+        public static readonly Guid DefaultBarkGuid;
+        public static readonly Guid DefaultLeaves;
+        //public static readonly Guid DefaultBump;
+        static TreeTypeData()
+        {
+            DefaultBarkGuid = new Guid("1B1B473E-1B26-4879-8BE7-0485048D75C3");
+            DefaultLeaves = new Guid("A50338ED-2156-4A5F-B579-6B06A7394CAF");
+            //DefaultBump = new Guid("2EC1AEDD-4870-4ADC-B322-218FD6A832DB");
+        }
     }
 }

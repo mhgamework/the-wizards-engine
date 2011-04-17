@@ -7,7 +7,7 @@ using MHGameWork.TheWizards.Rendering;
 
 namespace TreeGenerator.EngineSynchronisation
 {
-    class ClientTreeTypeAsset:ITreeType
+    public class ClientTreeTypeAsset:ITreeType
     {
         private readonly ITextureFactory fac;
 
