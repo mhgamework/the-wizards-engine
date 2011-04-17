@@ -27,7 +27,7 @@ namespace MHGameWork.TheWizards.Tests.World.Static
 
             var mesh =
                 RenderingTest.CreateGuildHouseMesh(
-                    new TheWizards.OBJParser.OBJToRAMMeshConverter(new TextureFactory()));
+                    new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
 
             var meshFactory = new SimpleMeshFactory();
             meshFactory.AddMesh(mesh);

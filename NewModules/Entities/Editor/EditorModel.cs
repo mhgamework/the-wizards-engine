@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards.Entity.Editor;
+using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.ServerClient;
 using MHGameWork.TheWizards.ServerClient.Collada;
 using MHGameWork.TheWizards.ServerClient.Editor;
@@ -185,7 +186,7 @@ namespace MHGameWork.TheWizards.Entities.Editor
                 // Perform a ray to triangle intersection test.
                 float? intersection;
 
-                ServerClient.MathExtra.Functions.RayIntersectsTriangle( ref ray,
+                Functions.RayIntersectsTriangle( ref ray,
                                                                         ref vertices[ i ],
                                                                         ref vertices[ i + 1 ],
                                                                         ref vertices[ i + 2 ],

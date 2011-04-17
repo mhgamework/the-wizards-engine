@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.Physics
 
         private bool sleeping;
 
-        private Scene scene;
+        private StillDesign.PhysX.Scene scene;
 
         /*/// <summary>
         /// This constructor disables physics
@@ -104,7 +104,7 @@ namespace MHGameWork.TheWizards.Physics
 
         }
 
-        public void InitDynamic(Scene _scene)
+        public void InitDynamic(StillDesign.PhysX.Scene _scene)
         {
             if (actor != null) throw new InvalidOperationException();
 

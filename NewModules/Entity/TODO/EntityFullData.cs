@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards.Entities;
 using MHGameWork.TheWizards.Entity;
+using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.ServerClient;
 using MHGameWork.TheWizards.ServerClient.Editor;
 

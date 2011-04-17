@@ -16,13 +16,13 @@ namespace MHGameWork.TheWizards.OBJParser
     /// </summary>
     public class OBJToRAMMeshConverter
     {
-        private readonly TextureFactory textureFactory;
+        private readonly RAMTextureFactory textureFactory;
 
         private string materialNamePhysicsBox = "TW_Physics_Box";
         private string materialNameTriangleMesh = "TW_Physics_TriangleMesh";
         private string materialNameConvex = "TW_Physics_Convex";
 
-        public OBJToRAMMeshConverter(TextureFactory _textureFactory)
+        public OBJToRAMMeshConverter(RAMTextureFactory _textureFactory)
         {
             textureFactory = _textureFactory;
         }

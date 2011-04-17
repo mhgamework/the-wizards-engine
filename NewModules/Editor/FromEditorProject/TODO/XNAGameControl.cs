@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards.Editor;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.ComponentModel;
@@ -67,12 +68,12 @@ namespace MHGameWork.TheWizards.ServerClient.Editor
             get { return lineManager3D; }
         }
 
-        EditorGrid grid;
+        EditorGridOld grid;
 
-        private EditorCamera editorCamera;
+        private EditorCameraOld editorCamera;
 
         [System.ComponentModel.DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
-        public EditorCamera EditorCamera
+        public EditorCameraOld EditorCamera
         {
             get { return editorCamera; }
             //set { editorCamera = value; }
@@ -104,11 +105,11 @@ namespace MHGameWork.TheWizards.ServerClient.Editor
         {
             engineFiles = new XNAGameFiles();
             engineFiles.LoadDefaults( System.Windows.Forms.Application.StartupPath + "\\" );
-            editorCamera = new EditorCamera( this );
+            editorCamera = new EditorCameraOld( this );
             camera = editorCamera;
             mouse = new TWMouse( this );
             keyboard = new TWKeyboard();
-            grid = new EditorGrid( this );
+            grid = new EditorGridOld( this );
             Mouse.CursorEnabled = true;
 
             this.Activated += new EventHandler( ModelViewerXNA_Activated );
@@ -329,6 +330,11 @@ namespace MHGameWork.TheWizards.ServerClient.Editor
         public void AddBasicShader(BasicShader basicShader)
         {
             shaders.Add(basicShader);
+        }
+
+        public void InvokeUpdate(Action action)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

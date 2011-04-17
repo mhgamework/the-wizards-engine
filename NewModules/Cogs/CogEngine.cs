@@ -235,7 +235,7 @@ namespace MHGameWork.TheWizards.Cogs
 
         }
 
-        public static Actor CreateCog(Scene scene)
+        public static Actor CreateCog(StillDesign.PhysX.Scene scene)
         {
             var actorDesc = new ActorDescription();
 

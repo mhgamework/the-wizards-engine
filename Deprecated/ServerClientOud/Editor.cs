@@ -35,16 +35,16 @@ namespace MHGameWork.TheWizards.ServerClient
         //public event EventHandler<object> ToolActivated;
         private RenderTarget2D wereldViewRenderTarget;
         private Viewport wereldViewViewport;
-        private EditorCamera wereldViewCamera;
+        private EditorCameraOld wereldViewCamera;
 
-        public EditorCamera WereldViewCamera
+        public EditorCameraOld WereldViewCamera
         {
             get { return wereldViewCamera; }
             set { wereldViewCamera = value; }
         }
 	
 
-        private EditorGrid grid;
+        private EditorGridOld grid;
 
         private IEditorTool activeTool;
 
@@ -82,9 +82,9 @@ namespace MHGameWork.TheWizards.ServerClient
 
             CreateWereldViewRenderTarget();
 
-            wereldViewCamera = new EditorCamera( this );
+            wereldViewCamera = new EditorCameraOld( this );
 
-            grid = new EditorGrid( Game );
+            grid = new EditorGridOld( Game );
 
         }
 
@@ -163,38 +163,38 @@ namespace MHGameWork.TheWizards.ServerClient
                 if ( Game.Mouse.LeftMousePressed && Game.Mouse.RightMousePressed )
                 {
 
-                    wereldViewCamera.ActiveMoveMode = EditorCamera.MoveMode.MoveY;
+                    wereldViewCamera.ActiveMoveMode = EditorCameraOld.MoveMode.MoveY;
                 }
                 else if ( Game.Mouse.LeftMousePressed )
                 {
-                    wereldViewCamera.ActiveMoveMode = EditorCamera.MoveMode.MoveXZ;
+                    wereldViewCamera.ActiveMoveMode = EditorCameraOld.MoveMode.MoveXZ;
                 }
                 else if ( Game.Mouse.RightMousePressed )
                 {
                     if ( !Game.Keyboard.IsKeyDown( Microsoft.Xna.Framework.Input.Keys.LeftControl ) )
                     {
-                        wereldViewCamera.ActiveMoveMode = EditorCamera.MoveMode.Orbit;
+                        wereldViewCamera.ActiveMoveMode = EditorCameraOld.MoveMode.Orbit;
                         if ( Game.Mouse.CursorEnabled ) wereldViewCamera.OrbitPoint =
                               RaycastWereld( ImgWereldView.Size * 0.5f );
 
                     }
                     else
                     {
-                        wereldViewCamera.ActiveMoveMode = EditorCamera.MoveMode.RotateYawRoll;
+                        wereldViewCamera.ActiveMoveMode = EditorCameraOld.MoveMode.RotateYawRoll;
                     }
                 }
                 else
                 {
-                    wereldViewCamera.ActiveMoveMode = EditorCamera.MoveMode.None;
+                    wereldViewCamera.ActiveMoveMode = EditorCameraOld.MoveMode.None;
                 }
             }
             else
             {
-                wereldViewCamera.ActiveMoveMode = EditorCamera.MoveMode.None;
+                wereldViewCamera.ActiveMoveMode = EditorCameraOld.MoveMode.None;
 
             }
 
-            if ( wereldViewCamera.ActiveMoveMode == EditorCamera.MoveMode.None )
+            if ( wereldViewCamera.ActiveMoveMode == EditorCameraOld.MoveMode.None )
             {
                 Game.Mouse.CursorEnabled = true;
             }
@@ -226,7 +226,7 @@ namespace MHGameWork.TheWizards.ServerClient
             }
 
 
-            if ( wereldViewCamera.ActiveMoveMode != EditorCamera.MoveMode.None )
+            if ( wereldViewCamera.ActiveMoveMode != EditorCameraOld.MoveMode.None )
             {
                 UpdateWereldViewCameraMoveMode();
 

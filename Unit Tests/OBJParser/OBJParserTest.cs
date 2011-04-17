@@ -95,7 +95,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
         [RequiresThread(System.Threading.ApartmentState.STA)]
         public void TestOBJToRAMMeshConverter()
         {
-            var c = new OBJToRAMMeshConverter(new TextureFactory());
+            var c = new OBJToRAMMeshConverter(new RAMTextureFactory());
 
 
             var fsMat = new FileStream(@"..\GameData\Crate01.mtl", FileMode.Open);
@@ -135,7 +135,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
 
 
 
-            var texFactory = new TextureFactory();
+            var texFactory = new RAMTextureFactory();
             var c = new OBJToRAMMeshConverter(texFactory);
 
 
@@ -238,7 +238,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
         [RequiresThread(ApartmentState.STA)]
         public void TestOBJToRAMMeshConverterPerObjectVisual()
         {
-            var c = new OBJToRAMMeshConverter(new TextureFactory());
+            var c = new OBJToRAMMeshConverter(new RAMTextureFactory());
 
 
             var importer = new ObjImporter();
@@ -395,7 +395,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
         [RequiresThread(ApartmentState.STA)]
         public void TestOBJToRAMMeshConverterPerObjectVisualCool()
         {
-            var textureFactory = new TextureFactory();
+            var textureFactory = new RAMTextureFactory();
             var c = new OBJToRAMMeshConverter(textureFactory);
 
 
@@ -569,7 +569,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
         [RequiresThread(ApartmentState.STA)]
         public void TestThrowCrates()
         {
-            var texFactory = new TextureFactory();
+            var texFactory = new RAMTextureFactory();
             var c = new OBJToRAMMeshConverter(texFactory);
 
 
@@ -675,7 +675,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
         [RequiresThread(ApartmentState.STA)]
         public void TestThrowBarrels()
         {
-            var texFactory = new TextureFactory();
+            var texFactory = new RAMTextureFactory();
             var c = new OBJToRAMMeshConverter(texFactory);
 
 
@@ -778,7 +778,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
 
         }
 
-        private RAMMesh GetBarrelMesh(TextureFactory texFactory, OBJToRAMMeshConverter c)
+        private RAMMesh GetBarrelMesh(RAMTextureFactory texFactory, OBJToRAMMeshConverter c)
         {
             var fsMat = new FileStream("../GameData/Barrel01.mtl", FileMode.Open);
 
@@ -793,7 +793,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
 
             return meshes[0];
         }
-        private static RAMMesh GetCrateMesh(TextureFactory texFactory, OBJToRAMMeshConverter c)
+        private static RAMMesh GetCrateMesh(RAMTextureFactory texFactory, OBJToRAMMeshConverter c)
         {
             var fsMat = new FileStream("../GameData/Crate01.mtl", FileMode.Open);
 

@@ -49,6 +49,13 @@ namespace MHGameWork.TheWizards.ServerClient
             //#endif
             initCode = setInitCode;
             renderCode = setRenderCode;
+            UpdateEvent += new XNAGameLoopEventHandler(TestXNAGame_UpdateEvent);
+        }
+
+        void TestXNAGame_UpdateEvent()
+        {
+            if (updateCode != null)
+                updateCode();
         }
 
         /// <summary>
@@ -71,13 +78,6 @@ namespace MHGameWork.TheWizards.ServerClient
             base.Draw();
             if ( renderCode != null )
                 renderCode();
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            if ( updateCode != null )
-                updateCode();
         }
 
 

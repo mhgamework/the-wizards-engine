@@ -1,3 +1,4 @@
+using System;
 using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -28,5 +29,11 @@ namespace MHGameWork.TheWizards.Graphics
         bool IsCursorInWindow();
 
         void AddBasicShader(BasicShader basicShader);
+
+        /// <summary>
+        /// Invokes a delegate in the next Update of this game
+        /// </summary>
+        /// <param name="action"></param>
+        void InvokeUpdate(Action action);
     }
 }

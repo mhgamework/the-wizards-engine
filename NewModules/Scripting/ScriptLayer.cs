@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.Scripting
     {
         //Scope settings (these should be write only)
         public static IXNAGame Game;
-        public static Scene Scene;
+        public static StillDesign.PhysX.Scene Scene;
         public static Physics.PhysicsEngine Physics;
         public static ScriptRunner ScriptRunner;
 

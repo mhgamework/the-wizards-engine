@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using Microsoft.Xna.Framework;
 using StillDesign.PhysX;
+using Scene = StillDesign.PhysX.Scene;
 
 namespace MHGameWork.TheWizards.Physics
 {
@@ -22,7 +23,7 @@ namespace MHGameWork.TheWizards.Physics
 
         private Queue<MeshCollisionData.TriangleMeshData> preloadQueue = new Queue<MeshCollisionData.TriangleMeshData>();
 
-        private Scene usingScene;
+        private StillDesign.PhysX.Scene usingScene;
         private MeshCollisionData.TriangleMeshData currentPreloadingMesh;
 
         private Stream cookedStream;
@@ -40,7 +41,7 @@ namespace MHGameWork.TheWizards.Physics
         /// <param name="scene"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        public TriangleMesh CreateTriangleMesh(Scene scene, MeshCollisionData.TriangleMeshData model)
+        public TriangleMesh CreateTriangleMesh(StillDesign.PhysX.Scene scene, MeshCollisionData.TriangleMeshData model)
         {
             TriangleMesh ret;
             lock (this)
@@ -69,7 +70,7 @@ namespace MHGameWork.TheWizards.Physics
         }
 
 
-        private TriangleMesh loadTriangleMesh(MeshCollisionData.TriangleMeshData model, Scene scene)
+        private TriangleMesh loadTriangleMesh(MeshCollisionData.TriangleMeshData model, StillDesign.PhysX.Scene scene)
         {
             MemoryStream stream = cookTriangleMeshStream(model);
 
@@ -104,7 +105,7 @@ namespace MHGameWork.TheWizards.Physics
             return stream;
         }
 
-        public void PreloadTriangleMesh(Scene scene, MeshCollisionData.TriangleMeshData model)
+        public void PreloadTriangleMesh(StillDesign.PhysX.Scene scene, MeshCollisionData.TriangleMeshData model)
         {
             usingScene = scene; // This is cheat
             lock (preloadQueue)
@@ -143,7 +144,7 @@ namespace MHGameWork.TheWizards.Physics
             }
         }
 
-        public ConvexMesh CreateConvexMesh(Scene scene, MeshCollisionData.Convex convex)
+        public ConvexMesh CreateConvexMesh(StillDesign.PhysX.Scene scene, MeshCollisionData.Convex convex)
         {
             ConvexMesh ret;
             if (convexMeshEntries.TryGetValue(convex, out ret)) return ret;
@@ -154,7 +155,7 @@ namespace MHGameWork.TheWizards.Physics
             return ret;
         }
 
-        private ConvexMesh loadConvexMesh(MeshCollisionData.Convex convexData, Scene scene)
+        private ConvexMesh loadConvexMesh(MeshCollisionData.Convex convexData, StillDesign.PhysX.Scene scene)
         {
 
             // Allocate memory for the points and triangles
@@ -188,7 +189,7 @@ namespace MHGameWork.TheWizards.Physics
 
         }
 
-        public void Update(Scene scene)
+        public void Update(StillDesign.PhysX.Scene scene)
         {
             lock (this)
             {

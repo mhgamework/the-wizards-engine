@@ -41,28 +41,46 @@ namespace MHGameWork.TheWizards.ServerClient
 
         public bool RightMouseJustPressed
         {
-            get { return (prevMouseState.RightButton == ButtonState.Released && mouseState.RightButton == ButtonState.Pressed); }
+            get
+            {
+                return (prevMouseState.RightButton == ButtonState.Released && mouseState.RightButton == ButtonState.Pressed);
+            }
         }
         public bool RightMouseJustReleased
         {
-            get { return (prevMouseState.RightButton == ButtonState.Pressed && mouseState.RightButton == ButtonState.Released); }
+            get
+            {
+                return (prevMouseState.RightButton == ButtonState.Pressed && mouseState.RightButton == ButtonState.Released);
+            }
         }
         public bool RightMousePressed
         {
-            get { return mouseState.RightButton == ButtonState.Pressed; }
+            get
+            {
+                return mouseState.RightButton == ButtonState.Pressed;
+            }
         }
 
         public bool LeftMouseJustPressed
         {
-            get { return (prevMouseState.LeftButton == ButtonState.Released && mouseState.LeftButton == ButtonState.Pressed); }
+            get
+            {
+                return (prevMouseState.LeftButton == ButtonState.Released && mouseState.LeftButton == ButtonState.Pressed);
+            }
         }
         public bool LeftMouseJustReleased
         {
-            get { return (prevMouseState.LeftButton == ButtonState.Pressed && mouseState.LeftButton == ButtonState.Released); }
+            get
+            {
+                return (prevMouseState.LeftButton == ButtonState.Pressed && mouseState.LeftButton == ButtonState.Released);
+            }
         }
         public bool LeftMousePressed
         {
-            get { return mouseState.LeftButton == ButtonState.Pressed; }
+            get
+            {
+                return mouseState.LeftButton == ButtonState.Pressed;
+            }
         }
 
         public void UpdateMouseState()//MouseState nMouseState, MouseState nPrevState )
@@ -72,9 +90,28 @@ namespace MHGameWork.TheWizards.ServerClient
 
             prevScrollWheel = prevMouseState.ScrollWheelValue;
 
-            if (CursorEnabled == true)
+            if (CursorEnabled)
             {
                 //prevMouseState = nPrevState;
+                if (!game.IsCursorInWindow() || !game.IsActive)
+                {
+                    // The cursor is not on the window, or the window does not have focus
+
+                    // Disable all NEW mouse presses
+
+                    var left = mouseState.LeftButton;
+                    var right = mouseState.RightButton;
+
+                    if (prevMouseState.LeftButton == ButtonState.Released)
+                        left = ButtonState.Released;
+                    if (prevMouseState.RightButton == ButtonState.Released)
+                        right = ButtonState.Released;
+
+
+                    mouseState = new MouseState(mouseState.X, mouseState.Y, mouseState.ScrollWheelValue,
+                        left, mouseState.MiddleButton, right,
+                        mouseState.XButton1, mouseState.XButton2);
+                }
             }
             else
             {
@@ -107,7 +144,6 @@ namespace MHGameWork.TheWizards.ServerClient
                     gameInActive = false;
                 }
             }
-
 
 
 

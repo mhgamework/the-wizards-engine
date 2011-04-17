@@ -14,7 +14,7 @@ namespace MHGameWork.TheWizards.Physics
     public class PhysicsDebugRenderer : IXNAObject
     {
         private IXNAGame game;
-        private Scene physXScene;
+        private StillDesign.PhysX.Scene physXScene;
 
         private BasicEffect _visualizationEffect;
 
@@ -30,7 +30,7 @@ namespace MHGameWork.TheWizards.Physics
         }
 
 
-        public PhysicsDebugRenderer(IXNAGame _game, Scene _physXScene)
+        public PhysicsDebugRenderer(IXNAGame _game, StillDesign.PhysX.Scene _physXScene)
         {
             game = _game;
             physXScene = _physXScene;

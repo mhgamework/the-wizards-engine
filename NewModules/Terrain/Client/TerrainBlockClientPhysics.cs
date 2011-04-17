@@ -5,14 +5,14 @@ using MHGameWork.TheWizards.Client;
 using StillDesign.PhysX;
 using MHGameWork.TheWizards.ServerClient.Terrain;
 using Microsoft.Xna.Framework;
-
+using Scene = StillDesign.PhysX.Scene;
 
 namespace MHGameWork.TheWizards.Terrain.Client
 {
     public class TerrainBlockClientPhysics : IClientPhysicsObject
     {
         private TerrainBlockHeightfieldBuilder builder;
-        private Scene scene;
+        private StillDesign.PhysX.Scene scene;
         private TerrainFullData terrainData;
         private int blockX;
         private int blockZ;
@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.Terrain.Client
 
         private Actor actor;
 
-        public TerrainBlockClientPhysics( Scene scene, TerrainFullData terrainData, int blockX, int blockZ, float blockHeight, TerrainBlockHeightfieldBuilder builder )
+        public TerrainBlockClientPhysics(StillDesign.PhysX.Scene scene, TerrainFullData terrainData, int blockX, int blockZ, float blockHeight, TerrainBlockHeightfieldBuilder builder)
         {
             MHGameWork.TheWizards.WorldDatabase.DataRevision rev;
 

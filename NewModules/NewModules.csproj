@@ -92,6 +92,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_Libraries\NUnit-2.5.7.10213\bin\net-2.0\framework\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="StillDesign.PhysX.Net">
       <HintPath>..\_Libraries\PhysX.Net\References\Debug\XNA 2.0\StillDesign.PhysX.Net.dll</HintPath>
     </Reference>
@@ -101,11 +103,13 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\AMCParser.cs" />
@@ -165,6 +169,8 @@
     <Compile Include="Cogs\CogRaycastReport.cs" />
     <Compile Include="Cogs\ICogComponent.cs" />
     <Compile Include="Cogs\StaticBox.cs" />
+    <Compile Include="Editor\EditorCamera.cs" />
+    <Compile Include="Editor\EditorGrid.cs" />
     <Compile Include="Editor\FromEditorProject\DEPRECATED\IPlugin001.cs" />
     <Compile Include="Editor\FromEditorProject\DevExpressRibbonMerger.cs" />
     <Compile Include="Editor\FromEditorProject\IDevexpressHasDockmanager.cs" />
@@ -246,9 +252,9 @@
     <Compile Include="Editor\FromEditorProject\World\IWorldEditorRenderMode.cs" />
     <Compile Include="Editor\FromEditorProject\World\IWorldEditorSelectable.cs" />
     <Compile Include="Editor\FromEditorProject\World\TransformTool.cs" />
-    <Compile Include="Editor\IWizardsEditorDatabaseExtension.cs" />
-    <Compile Include="Editor\IWorldEditorExtension.cs" />
-    <Compile Include="Editor\WizardsEditor.cs" />
+    <Compile Include="Editor\FromEditorProject\IWizardsEditorDatabaseExtension.cs" />
+    <Compile Include="Editor\FromEditorProject\IWorldEditorExtension.cs" />
+    <Compile Include="Editor\FromEditorProject\WizardsEditor.cs" />
     <Compile Include="Entities\Editor\EditorModel.cs" />
     <Compile Include="Entities\Editor\EntityEditorPlugin.cs" />
     <Compile Include="Entities\Editor\EntityEditorService.cs" />
@@ -299,16 +305,9 @@
     <Compile Include="Entity\Editor\EditorObject.cs" />
     <Compile Include="Entity\Editor\EntityWizardsEditorExtension.cs" />
     <Compile Include="Entity\Editor\Tools\PutObjectsTool.cs" />
-    <Compile Include="Entity\EntityCoreData.cs" />
-    <Compile Include="Entity\EntityRenderData.cs" />
-    <Compile Include="Entity\EntityRenderDataFactory.cs" />
-    <Compile Include="Entity\EntityRenderElement.cs" />
-    <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Entity\IObject.cs" />
     <Compile Include="Entity\IObjectData.cs" />
     <Compile Include="Entity\IObjectDataRenderDataFactory.cs" />
-    <Compile Include="Entity\IScene.cs" />
-    <Compile Include="Entity\ISceneData.cs" />
     <Compile Include="OBJParser\OBJToRAMMeshConverter.cs" />
     <Compile Include="Physics\CustomContactReport.cs" />
     <Compile Include="Physics\MeshDynamicPhysicsElement.cs" />
@@ -320,6 +319,9 @@
     <Compile Include="Player\PlayerController.cs" />
     <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
     <Compile Include="Rendering\IMeshFactory.cs" />
+    <Compile Include="Scene\Editor\SceneEditor.cs" />
+    <Compile Include="Scene\Entity.cs" />
+    <Compile Include="Scene\Scene.cs" />
     <Compile Include="World\Static\ClientStaticWorldObjectSyncer.cs" />
     <Compile Include="World\ClientSyncedActor.cs" />
     <Compile Include="World\ClientSyncer.cs" />
@@ -354,12 +356,9 @@
     <Compile Include="Entity\ObjectMeshData.cs" />
     <Compile Include="Entity\ObjectRenderDataFactory.cs" />
     <Compile Include="Entity\ObjectRenderElement.cs" />
-    <Compile Include="Entity\RAMEntity.cs" />
     <Compile Include="Entity\RAMMesh.cs" />
     <Compile Include="Entity\RAMMeshPart.cs" />
     <Compile Include="Entity\RAMObject.cs" />
-    <Compile Include="Entity\SceneEntityData.cs" />
-    <Compile Include="Entity\SceneXMLSerializer.cs" />
     <Compile Include="Entity\TangentSolver.cs" />
     <Compile Include="Entity\TODO\EntityFullData.cs" />
     <Compile Include="Entity\TODO\EntityManagerService.cs" />
@@ -423,12 +422,11 @@
     <Compile Include="Rendering\RAMTexture.cs" />
     <Compile Include="Rendering\SimpleRenderer.cs" />
     <Compile Include="Rendering\TextureCoreData.cs" />
-    <Compile Include="Rendering\TextureFactory.cs" />
+    <Compile Include="Rendering\RAMTextureFactory.cs" />
     <Compile Include="Rendering\TexturePool.cs" />
     <Compile Include="Rendering\VertexDeclarationPool.cs" />
-    <Compile Include="Scene\Editor\EditorScene.cs" />
-    <Compile Include="Scene\Editor\SceneEditor.cs" />
-    <Compile Include="Scene\SceneCoreData.cs" />
+    <Compile Include="Editor\FromEditorProject\EditorScene.cs" />
+    <Compile Include="Editor\FromEditorProject\SceneEditor.cs" />
     <Compile Include="Scripting\IStateScript.cs" />
     <Compile Include="Scripting\ScriptLayer.cs" />
     <Compile Include="Scripting\ScriptRunner.cs" />
@@ -518,6 +516,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Client\Client.cd" />
     <None Include="Editor\FromEditorProject\TODO\Files\TerrainGeomipmap.fx" />
     <EmbeddedResource Include="Editor\FromEditorProject\Transform\Files\GizmoRotation001.DAE" />

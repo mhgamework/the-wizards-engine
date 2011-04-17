@@ -17,7 +17,7 @@ namespace MHGameWork.TheWizards.Physics
     public class PhysicsEngine : IDisposable, IXNAObject
     {
         private Core _core;
-        private Scene _scene;
+        private StillDesign.PhysX.Scene _scene;
 
         public Core Core
         {
@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.Physics
             set { _core = value; }
         }
 
-        public Scene Scene
+        public StillDesign.PhysX.Scene Scene
         {
             get { return _scene; }
             set { _scene = value; }
@@ -133,7 +133,7 @@ namespace MHGameWork.TheWizards.Physics
             UpdateScene(elapsed, this.Scene);
         }
 
-        public void UpdateScene(float elapsed, Scene scene)
+        public void UpdateScene(float elapsed, StillDesign.PhysX.Scene scene)
         {
             scene.Simulate(elapsed);
             //_scene.Simulate( 1.0f / 60.0f );

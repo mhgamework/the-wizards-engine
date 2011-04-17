@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.Client
 
         private bool sleeping;
 
-        private Scene scene;
+        private StillDesign.PhysX.Scene scene;
 
         /// <summary>
         /// This constructor disables physics
@@ -47,7 +47,7 @@ namespace MHGameWork.TheWizards.Client
         /// <param name="scene"></param>
         /// <param name="center"></param>
         /// <param name="radius"></param>
-        public ClientPhysicsTestSphere( Scene scene, Vector3 center, float radius )
+        public ClientPhysicsTestSphere(StillDesign.PhysX.Scene scene, Vector3 center, float radius)
         {
             this.scene = scene;
             Center = center;

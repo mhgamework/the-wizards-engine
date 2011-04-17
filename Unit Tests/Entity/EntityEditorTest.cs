@@ -270,7 +270,7 @@ namespace MHGameWork.TheWizards.Tests.Entity
 
             editor.ActivateTool(tool);
 
-            SceneEditorTest.RunSceneEditorTestEnvironment(editor);
+           // SceneEditorTest.RunSceneEditorTestEnvironment(editor);
 
         }
     }

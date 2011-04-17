@@ -108,7 +108,7 @@
     <Compile Include="CoreTest.cs" />
     <Compile Include="DirectX10\DirectX10Test.cs" />
     <Compile Include="Editor\EditorTest.cs" />
-    <Compile Include="Editor\Scene\SceneEditorTest.cs" />
+    <Compile Include="Scene\SceneEditorTest.cs" />
     <Compile Include="Entity\EntityClientTest.cs" />
     <Compile Include="Entity\EntityTest.cs" />
     <Compile Include="Gameplay\GameplayTest.cs" />
@@ -191,6 +191,10 @@
     <ProjectReference Include="..\Gameplay\Gameplay.csproj">
       <Project>{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}</Project>
       <Name>Gameplay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GUI\GUI.csproj">
+      <Project>{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}</Project>
+      <Name>GUI</Name>
     </ProjectReference>
     <ProjectReference Include="..\Launcher\Launcher.csproj">
       <Project>{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}</Project>

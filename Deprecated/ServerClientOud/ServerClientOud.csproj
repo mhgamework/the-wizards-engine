@@ -152,9 +152,9 @@
     <Compile Include="Database\DiskLoaderService.cs" />
     <Compile Include="Database\DiskSerializerService.cs" />
     <Compile Include="Editor.cs" />
-    <Compile Include="EditorCamera.cs" />
+    <Compile Include="EditorCameraOld.cs" />
     <Compile Include="EditorGizmo.cs" />
-    <Compile Include="EditorGrid.cs" />
+    <Compile Include="EditorGridOld.cs" />
     <Compile Include="EditorMoveEntityTool.cs" />
     <Compile Include="EditorPlaceEntityTool.cs" />
     <Compile Include="EditorRaycastResult.cs" />
