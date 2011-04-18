@@ -1,11 +1,14 @@
 using System;
 using System.Threading;
 using System.Windows;
+using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.OBJParser;
+using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scene;
 using MHGameWork.TheWizards.Tests.OBJParser;
+using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using SceneEditor = MHGameWork.TheWizards.Scene.Editor.SceneEditor;
 
@@ -24,8 +27,21 @@ namespace MHGameWork.TheWizards.Tests.Scene
             game.DrawFps = true;
             game.SpectaterCamera.Enabled = false;
 
+            var physicsEngine = new PhysicsEngine();
+            physicsEngine.Initialize();
+            var physicsDebugRenderer = new PhysicsDebugRenderer(game, physicsEngine.Scene);
+            game.AddXNAObject(physicsEngine);
+            game.AddXNAObject(physicsDebugRenderer);
+            var root =
+                new ClientPhysicsQuadTreeNode(new Microsoft.Xna.Framework.BoundingBox(new Vector3(-2048, -4000, -2048),
+                                                                                      new Vector3(2048, 4000, 2048)));
+            QuadTree.Split(root, 5);
+
+            var physicsFactory = new MeshPhysicsElementFactory(physicsEngine, root);
+            game.AddXNAObject(physicsFactory);
+
             var renderer = Rendering.RenderingTest.InitDefaultMeshRenderer(game);
-            var scene = new TheWizards.Scene.Scene(renderer);
+            var scene = new TheWizards.Scene.Scene(renderer, physicsFactory);
             var editor = new SceneEditor();
 
             var mesh =
@@ -86,6 +102,12 @@ namespace MHGameWork.TheWizards.Tests.Scene
                                                }), null);
 
                 };
+
+            game.UpdateEvent += delegate
+            {
+
+            };
+
             game.Run();
 
 

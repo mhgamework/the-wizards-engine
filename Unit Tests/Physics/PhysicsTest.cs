@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Common.Core;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.OBJParser;
@@ -13,26 +14,6 @@ namespace MHGameWork.TheWizards.Tests.Physics
     [TestFixture()]
     public class PhysicsTest
     {
-        public PhysicsTest()
-        {
-
-        }
-
-        /*[Test]
-        public void TestPhysics()
-        {
-            Game game = new Game();
-
-            Engine engine = new Engine(game);
-
-            game.Components.Add(engine);
-
-
-
-
-            game.Run();
-        }*/
-
         [Test]
         [RequiresThread(System.Threading.ApartmentState.STA)]
         public void TestPhysicsDebugRenderer()
@@ -43,24 +24,25 @@ namespace MHGameWork.TheWizards.Tests.Physics
 
             //game.AddXNAObject(engine);
 
+            engine.Initialize();
+
+            PhysicsDebugRenderer debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+            game.AddXNAObject(debugRenderer);
+            game.AddXNAObject(engine);
+            InitTestScene(engine.Scene);
 
 
-
-            game.InitializeEvent += delegate
+            /*game.InitializeEvent += delegate
                 {
-                    engine.Initialize();
 
-                    PhysicsDebugRenderer debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
 
-                    InitTestScene(engine.Scene);
-                    game.AddXNAObject(debugRenderer);
 
                 };
 
             game.UpdateEvent += delegate
                 {
                     engine.Update(game.Elapsed);
-                };
+                };*/
 
             game.Run();
 
@@ -378,7 +360,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
             engine.AddContactNotification(delegate(ContactPair contactInformation, ContactPairFlag events)
                                               {
                                                   var pos = contactInformation.ActorA.GlobalPosition;
-                                                  game.LineManager3D.AddLine(pos, pos + Vector3.Up*5, Color.Yellow);
+                                                  game.LineManager3D.AddLine(pos, pos + Vector3.Up * 5, Color.Yellow);
                                                   pos = contactInformation.ActorB.GlobalPosition;
                                                   game.LineManager3D.AddLine(pos, pos + Vector3.Up * 5, Color.Orange);
                                               });
@@ -416,6 +398,59 @@ namespace MHGameWork.TheWizards.Tests.Physics
 
             engine.Dispose();
 
+
+        }
+
+        [Test]
+        public void TestTestSphereShooter()
+        {
+            var game = new XNAGame();
+            game.IsFixedTimeStep = false;
+            //game.DrawFps = true;
+
+            PhysicsEngine engine = new PhysicsEngine();
+            engine.Initialize();
+            var debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+            game.AddXNAObject(debugRenderer);
+            game.AddXNAObject(engine);
+
+
+            ClientPhysicsQuadTreeNode root;
+
+            int numNodes = 20;
+
+            root = new ClientPhysicsQuadTreeNode(
+                new BoundingBox(
+                    new Vector3(-numNodes * numNodes / 2f, -100, -numNodes * numNodes / 2f),
+                    new Vector3(numNodes * numNodes / 2f, 100, numNodes * numNodes / 2f)));
+
+            QuadTree.Split(root, 5);
+
+
+            var shooter = new TestSphereShooter(game, engine, root);
+            game.AddXNAObject(shooter);
+
+            var visualizer = new QuadTreeVisualizer();
+            game.DrawEvent += delegate
+                                  {
+                                      visualizer.RenderNodeGroundBoundig(game, root,
+                                                     delegate(ClientPhysicsQuadTreeNode node, out Color col)
+                                                     {
+                                                         col = Color.Green;
+
+                                                         return node.PhysicsObjects.Count == 0;
+                                                     });
+
+                                      visualizer.RenderNodeGroundBoundig(game, root,
+                                         delegate(ClientPhysicsQuadTreeNode node, out Color col)
+                                         {
+                                             col = Color.Orange;
+
+                                             return node.PhysicsObjects.Count > 0;
+                                         });
+                                  };
+
+            game.Run();
 
         }
 

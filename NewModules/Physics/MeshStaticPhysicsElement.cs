@@ -124,5 +124,17 @@ namespace MHGameWork.TheWizards.Physics
         }
 
         #endregion
+
+
+        internal void disposeInternal()
+        {
+            if (node != null)
+                node.RemoveStaticObject(this);
+            builder = null;
+            scene = null;
+            if (actor != null)
+                actor.Dispose();
+            actor = null;
+        }
     }
 }

@@ -27,6 +27,7 @@ namespace MHGameWork.TheWizards.Scene
         {
             entities.Add(ent);
             ent.UpdateRenderElement(renderer);
+            ent.UpdatePhysicsElement(physicsElementFactory);
         }
 
         public void EnableSimulation()

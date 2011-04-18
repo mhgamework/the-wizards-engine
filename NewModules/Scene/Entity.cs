@@ -32,10 +32,13 @@ namespace MHGameWork.TheWizards.Scene
         public Entity()
         {
             Static = true;
+            Solid = true;
         }
 
 
         private MeshRenderElement renderElement;
+        private MeshStaticPhysicsElement staticPhysicsElement;
+        private MeshDynamicPhysicsElement dynamicPhysicsElement;
 
         internal void UpdateRenderElement(MeshRenderer renderer)
         {
@@ -53,7 +56,41 @@ namespace MHGameWork.TheWizards.Scene
         }
         internal void UpdatePhysicsElement(MeshPhysicsElementFactory factory)
         {
-            factory.CreateStaticElement(Mesh, Transformation.CreateMatrix());
+            if (!Solid)
+            {
+                deletePhysicsElement(factory);
+                return;
+            }
+            if (Static)
+            {
+                if (staticPhysicsElement != null && staticPhysicsElement.Mesh == Mesh)
+                    return;
+                deletePhysicsElement(factory);
+                staticPhysicsElement = factory.CreateStaticElement(Mesh, Transformation.CreateMatrix());
+            }
+            else
+            {
+                if (dynamicPhysicsElement != null && dynamicPhysicsElement.Mesh == Mesh)
+                    return;
+                dynamicPhysicsElement = factory.CreateDynamicElement(Mesh, Transformation.CreateMatrix());
+
+            }
+
+
+        }
+
+        private void deletePhysicsElement(MeshPhysicsElementFactory factory)
+        {
+            if (staticPhysicsElement != null)
+            {
+                factory.DeleteStaticElement(staticPhysicsElement);
+                staticPhysicsElement = null;
+            }
+            if (dynamicPhysicsElement != null)
+            {
+                factory.DeleteDynamicElement(dynamicPhysicsElement);
+                dynamicPhysicsElement = null;
+            }
         }
 
     }

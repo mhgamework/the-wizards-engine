@@ -31,17 +31,7 @@ namespace MHGameWork.TheWizards.Physics
 
         private StillDesign.PhysX.Scene scene;
 
-        /*/// <summary>
-        /// This constructor disables physics
-        /// </summary>
-        /// <param name="center"></param>
-        /// <param name="radius"></param>
-        public MeshDynamicPhysicsElement(Vector3 center, float radius)
-        {
-            Center = center;
-            Radius = radius;
-        }*/
-
+   
         /// <summary>
         /// This constructor enables physics
         /// </summary>
@@ -54,6 +44,7 @@ namespace MHGameWork.TheWizards.Physics
 
         public void Move(ClientPhysicsQuadTreeNode root, Matrix newPose)
         {
+            if (actor == null) throw new InvalidOperationException();
             // NOTE: IMPORTANT: this is actually a partial implementation of the algorithm itself
 
             Matrix oldPose = World;
@@ -154,5 +145,15 @@ namespace MHGameWork.TheWizards.Physics
         }
 
         #endregion
+
+        internal void disposeInternal()
+        {
+            if (actor != null)
+            {
+                actor.Dispose();
+                node.RemoveDynamicObjectFromIntersectingNodes(this);
+                
+            }
+        }
     }
 }

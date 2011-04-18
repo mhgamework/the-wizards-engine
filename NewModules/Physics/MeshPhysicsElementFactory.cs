@@ -66,6 +66,21 @@ namespace MHGameWork.TheWizards.Physics
             return el;
         }
 
+        public void DeleteStaticElement(MeshStaticPhysicsElement el)
+        {
+            unitializedElementsStatic.Remove(el);
+            el.disposeInternal();
+
+        }
+        public void DeleteDynamicElement(MeshDynamicPhysicsElement el)
+        {
+            unitializedElementsDynamic.Remove(el);
+            dynamicElements.Remove(el);
+            el.disposeInternal();
+
+        }
+
+
         public void Initialize(IXNAGame _game)
         {
             game = _game;
