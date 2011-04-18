@@ -119,7 +119,8 @@ namespace MHGameWork.TheWizards.Client
                 node.addPhysicsObject(obj);
 
                 //TODO: need to enable physics right away?
-                //if (node.dynamicObjectsCount > 0) node.enablePhysics(); else node.disablePhysics();
+                // This was said to be yes?
+                if (node.dynamicObjectsCount > 0) obj.EnablePhysics();
 
 
             }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Threading;
 using MHGameWork.TheWizards.Editor;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
@@ -17,6 +16,12 @@ namespace MHGameWork.TheWizards.Scene.Editor
 
         public IMesh PlaceModeMesh;
         private EditorCamera editorCamera;
+
+        public EditorCamera EditorCamera
+        {
+            get { return editorCamera; }
+            private set { editorCamera = value; }
+        }
 
         public void EnablePlaceEntityMode()
         {
@@ -35,6 +40,8 @@ namespace MHGameWork.TheWizards.Scene.Editor
 
         public SceneEditor()
         {
+            EditorCamera = new EditorCamera();
+
         }
 
 
@@ -47,10 +54,9 @@ namespace MHGameWork.TheWizards.Scene.Editor
         public void Initialize(IXNAGame _game)
         {
             game = _game;
-            editorCamera = new EditorCamera();
-            editorCamera.Enabled = true;
-            game.AddXNAObject(editorCamera);
-            game.SetCamera(editorCamera);
+            EditorCamera.Enabled = true;
+            game.AddXNAObject(EditorCamera);
+            game.SetCamera(EditorCamera);
 
             var grid = new EditorGrid();
             game.AddXNAObject(grid);
@@ -65,9 +71,9 @@ namespace MHGameWork.TheWizards.Scene.Editor
         {
 
 
-            editorCamera.UpdateCameraMoveModeDefaultControls();
+            EditorCamera.UpdateCameraMoveModeDefaultControls();
 
-            if (editorCamera.ActiveMoveMode == EditorCamera.MoveMode.None)
+            if (EditorCamera.ActiveMoveMode == EditorCamera.MoveMode.None)
                 updateModes();
         }
 

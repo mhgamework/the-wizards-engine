@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scene;
 using MHGameWork.TheWizards.Tests.OBJParser;
+using MHGameWork.TheWizards.Tests.Physics;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using SceneEditor = MHGameWork.TheWizards.Scene.Editor.SceneEditor;
@@ -35,7 +36,7 @@ namespace MHGameWork.TheWizards.Tests.Scene
             var root =
                 new ClientPhysicsQuadTreeNode(new Microsoft.Xna.Framework.BoundingBox(new Vector3(-2048, -4000, -2048),
                                                                                       new Vector3(2048, 4000, 2048)));
-            QuadTree.Split(root, 5);
+            QuadTree.Split(root, 7);
 
             var physicsFactory = new MeshPhysicsElementFactory(physicsEngine, root);
             game.AddXNAObject(physicsFactory);
@@ -63,7 +64,8 @@ namespace MHGameWork.TheWizards.Tests.Scene
 
 
 
-
+            var shooter = new TestSphereShooter(game, physicsEngine, root, editor.EditorCamera);
+            game.AddXNAObject(shooter);
 
 
             var ev = new AutoResetEvent(false);

@@ -5,6 +5,7 @@ using System.Text;
 using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Physics;
+using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -14,16 +15,18 @@ namespace MHGameWork.TheWizards.Tests.Physics
     {
         private readonly PhysicsEngine engine;
         private readonly ClientPhysicsQuadTreeNode root;
+        private readonly ICamera shooterCamera;
         List<ClientPhysicsTestSphere> spheres = new List<ClientPhysicsTestSphere>();
         private SphereMesh sphereMesh;
 
-        private XNAGame game;
+        private IXNAGame game;
 
-        public TestSphereShooter(XNAGame game, PhysicsEngine engine, ClientPhysicsQuadTreeNode root)
+        public TestSphereShooter(IXNAGame game, PhysicsEngine engine, ClientPhysicsQuadTreeNode root, ICamera shooterCamera)
         {
             this.game = game;
             this.engine = engine;
             this.root = root;
+            this.shooterCamera = shooterCamera;
             sphereMesh = new SphereMesh(0.3f, 20, Color.Green);
 
         }
@@ -49,12 +52,15 @@ namespace MHGameWork.TheWizards.Tests.Physics
             sphereMesh.Update(game);
             if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.F))
             {
+                var pos = shooterCamera.ViewInverse.Translation;
+                var dir = Vector3.Transform(Vector3.Forward, shooterCamera.ViewInverse) - pos;
+
                 var iSphere = new ClientPhysicsTestSphere(engine.Scene,
-                    game.SpectaterCamera.CameraPosition + game.SpectaterCamera.CameraDirection
+                    pos + dir
                     , 0.3f);
 
                 iSphere.InitDynamic();
-                iSphere.Actor.LinearVelocity = game.SpectaterCamera.CameraDirection * 10;
+                iSphere.Actor.LinearVelocity = dir * 10;
 
                 spheres.Add(iSphere);
             }

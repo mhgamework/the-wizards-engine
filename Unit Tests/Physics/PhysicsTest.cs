@@ -427,7 +427,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
             QuadTree.Split(root, 5);
 
 
-            var shooter = new TestSphereShooter(game, engine, root);
+            var shooter = new TestSphereShooter(game, engine, root, game.SpectaterCamera);
             game.AddXNAObject(shooter);
 
             var visualizer = new QuadTreeVisualizer();
