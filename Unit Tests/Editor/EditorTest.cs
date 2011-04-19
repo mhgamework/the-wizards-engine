@@ -1,3 +1,4 @@
+using System;
 using MHGameWork.TheWizards.Editor;
 using MHGameWork.TheWizards.Graphics;
 using NUnit.Framework;
@@ -39,6 +40,11 @@ namespace MHGameWork.TheWizards.Tests.Editor
 
 
             game.Run();
+        }
+        [Test]
+        public void TestTransformControl()
+        {
+            throw new NotImplementedException();
         }
 
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Editor;
+using MHGameWork.TheWizards.Editor.Transform;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.ServerClient;
@@ -22,6 +23,8 @@ namespace MHGameWork.TheWizards.Scene.Editor
             get { return editorCamera; }
             private set { editorCamera = value; }
         }
+
+        private TransformControl transformControl;
 
         private Entity selectedEntity;
         public Entity SelectedEntity
@@ -52,6 +55,7 @@ namespace MHGameWork.TheWizards.Scene.Editor
         public SceneEditor()
         {
             EditorCamera = new EditorCamera();
+            transformControl = new TransformControl();
 
         }
 
@@ -65,6 +69,9 @@ namespace MHGameWork.TheWizards.Scene.Editor
         public void Initialize(IXNAGame _game)
         {
             game = _game;
+
+            game.AddXNAObject(transformControl);
+
             EditorCamera.Enabled = true;
             game.AddXNAObject(EditorCamera);
             game.SetCamera(EditorCamera);
@@ -73,7 +80,6 @@ namespace MHGameWork.TheWizards.Scene.Editor
             game.AddXNAObject(grid);
 
         }
-
         public void Render(IXNAGame _game)
         {
             if (SelectedEntity != null)
@@ -81,7 +87,6 @@ namespace MHGameWork.TheWizards.Scene.Editor
                 game.LineManager3D.AddBox(SelectedEntity.BoundingBox, Color.Black);
             }
         }
-
         public void Update(IXNAGame _game)
         {
             EditorCamera.UpdateCameraMoveModeDefaultControls();
@@ -89,6 +94,7 @@ namespace MHGameWork.TheWizards.Scene.Editor
             if (EditorCamera.ActiveMoveMode == EditorCamera.MoveMode.None)
                 updateModes();
         }
+
 
         private void updateModes()
         {
@@ -105,6 +111,16 @@ namespace MHGameWork.TheWizards.Scene.Editor
                 {
                     trySelectEntity();
                 }
+
+                if (SelectedEntity == null)
+                {
+                    transformControl.Enabled = false;
+                }
+                else
+                {
+                    transformControl.Enabled = true;
+                    transformControl.Mode = TransformControl.GizmoMode.Translation;
+                }
             }
         }
 
@@ -114,8 +130,6 @@ namespace MHGameWork.TheWizards.Scene.Editor
 
             SelectedEntity = ent;
         }
-
-
         private void tryPlaceEntity()
         {
             var ray = game.GetWereldViewRay(game.Mouse.CursorPositionVector);
@@ -130,7 +144,6 @@ namespace MHGameWork.TheWizards.Scene.Editor
 
 
         }
-
         private void placeEntityAt(Vector3 position)
         {
             var ent = new Entity(scene);
