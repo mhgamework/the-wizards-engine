@@ -71,7 +71,7 @@ namespace MHGameWork.TheWizards.Character.Editor
 
             specCam = new SpectaterCamera( XNAGameControl, 0.1f, 1000 );
 
-            transformControl = new TransformControl( XNAGameControl, form, form.pageGeneral );
+            transformControl = new TransformControl();// new TransformControl( XNAGameControl, form, form.pageGeneral );
             transformControl.Initialize();
             transformControl.Enabled = true;
 

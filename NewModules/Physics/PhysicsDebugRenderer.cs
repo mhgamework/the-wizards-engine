@@ -73,7 +73,7 @@ namespace MHGameWork.TheWizards.Physics
             //game.GraphicsDevice.Clear(Color.LightBlue);
 
             game.GraphicsDevice.VertexDeclaration = vertexDecl;
-
+            game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
             _visualizationEffect.World = Matrix.Identity;
             _visualizationEffect.View = game.Camera.View;
             _visualizationEffect.Projection = game.Camera.Projection;

@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Editor;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.ServerClient;
 using MHGameWork.TheWizards.ServerClient.Collada;
+using MHGameWork.TheWizards.ServerClient.Editor;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MHGameWork.TheWizards.Common.Core;
 
-namespace MHGameWork.TheWizards.ServerClient.Editor
+namespace MHGameWork.TheWizards.Editor.Transform
 {
     public class EditorGizmoTranslation
     {
@@ -133,7 +133,7 @@ namespace MHGameWork.TheWizards.ServerClient.Editor
             gizmoCamera = new CustomCamera( game );
             ColladaModel model;
             using ( System.IO.Stream strm = EmbeddedFile.GetStream(
-                "MHGameWork.TheWizards.Editor.FromEditorProject.Transform.Files.GizmoTranslation001.DAE",
+                "MHGameWork.TheWizards.Editor.Transform.Files.GizmoTranslation001.DAE",
                 "GizmoTranslation001.DAE" ) )
             {
                 model = ColladaModel.FromStream( strm );

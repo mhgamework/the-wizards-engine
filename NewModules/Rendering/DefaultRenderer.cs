@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 namespace MHGameWork.TheWizards.Rendering
 {
     /// <summary>
+    /// WARNING: This is obsolete!!??
+    /// 
     /// The DefaultRenderer currently represents the main renderer in The Wizards
     /// DefaultRenderer should be generalized to an abstract IRenderer and then a ForwardRenderer, Deferredrenderer, etc.
     /// This class currently contains a VERY default implementation. It is a Very AL class

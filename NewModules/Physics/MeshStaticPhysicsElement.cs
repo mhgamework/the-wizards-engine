@@ -106,14 +106,20 @@ namespace MHGameWork.TheWizards.Physics
         public Matrix WorldMatrix
         {
             get { return worldMatrix; }
-            /*set // THIS IS A STATIC OBJECT: NO SETTER
+            set
             {
-                if (actor != null)
-                    throw new InvalidOperationException(
-                        "This is a Static Physics object and its location can't be changed after the actor has been made!");
+                var n = node;
+
+                node.RemoveStaticObject(this);
                 worldMatrix = value;
                 updateBoundingSphere();
-            }*/
+                n = n.FindContainingNodeUpwards(this);
+                if (n == null)
+                    n = QuadTree.GetRootNode(node);
+
+                n.AddStaticObject(this);
+
+            }
         }
 
 
@@ -124,5 +130,17 @@ namespace MHGameWork.TheWizards.Physics
         }
 
         #endregion
+
+
+        internal void disposeInternal()
+        {
+            if (node != null)
+                node.RemoveStaticObject(this);
+            builder = null;
+            scene = null;
+            if (actor != null)
+                actor.Dispose();
+            actor = null;
+        }
     }
 }

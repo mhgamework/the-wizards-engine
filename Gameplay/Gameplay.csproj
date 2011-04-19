@@ -88,6 +88,9 @@
     <Compile Include="PlayerInputServer.cs" />
     <Compile Include="PlayerThirdPersonCamera.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scene\Editor\SceneEditor.cs" />
+    <Compile Include="Scene\Entity.cs" />
+    <Compile Include="Scene\Scene.cs" />
     <Compile Include="ThrowMove.cs" />
   </ItemGroup>
   <ItemGroup>

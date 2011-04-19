@@ -167,7 +167,6 @@
     <Compile Include="Editor\IRenderPrimitives.cs" />
     <Compile Include="Editor\IUndoAction.cs" />
     <Compile Include="Editor\Mesh.cs" />
-    <Compile Include="Editor\ModelData.cs" />
     <Compile Include="Editor\PluginLoader.cs" />
     <Compile Include="Editor\Terrain.cs" />
     <Compile Include="Editor\TerrainDiskSerializer.cs" />

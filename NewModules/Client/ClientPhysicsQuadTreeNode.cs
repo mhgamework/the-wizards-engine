@@ -60,7 +60,7 @@ namespace MHGameWork.TheWizards.Client
             //return OrdenEntity( this, obj );
         }
 
-      private static void ordenObject(ClientPhysicsQuadTreeNode node, IClientPhysicsObject obj)
+        private static void ordenObject(ClientPhysicsQuadTreeNode node, IClientPhysicsObject obj)
         {
             ClientPhysicsQuadTreeNode containingNode = findContainingNode(node, obj);
             if (containingNode == null) containingNode = node;
@@ -113,15 +113,14 @@ namespace MHGameWork.TheWizards.Client
         }
         private static void addStaticObjectRecurs(ClientPhysicsQuadTreeNode node, IClientPhysicsObject obj)
         {
-
-
             if (obj.ContainedInNode(node) == ContainmentType.Disjoint) return;
             if (QuadTree.IsLeafNode(node))
             {
                 node.addPhysicsObject(obj);
-                
+
                 //TODO: need to enable physics right away?
-                //if (node.dynamicObjectsCount > 0) node.enablePhysics(); else node.disablePhysics();
+                // This was said to be yes?
+                if (node.dynamicObjectsCount > 0) obj.EnablePhysics();
 
 
             }
@@ -133,13 +132,47 @@ namespace MHGameWork.TheWizards.Client
                 addStaticObjectRecurs(node.nodeData.LowerRight, obj);
             }
 
-       
-            
+        }
+        public void RemoveStaticObject(IClientPhysicsObject obj)
+        {
+            removeStaticObjectRecurs(obj.Node, obj);
+            obj.Node = null;
+        }
+        private static void removeStaticObjectRecurs(ClientPhysicsQuadTreeNode node, IClientPhysicsObject obj)
+        {
+            if (obj.ContainedInNode(node) == ContainmentType.Disjoint) return;
+            if (QuadTree.IsLeafNode(node))
+            {
+                node.removePhysicsObject(obj);
+
+                //TODO: need to enable physics right away?
+                //if (node.dynamicObjectsCount > 0) node.enablePhysics(); else node.disablePhysics();
 
 
+            }
+            else
+            {
+                removeStaticObjectRecurs(node.nodeData.UpperLeft, obj);
+                removeStaticObjectRecurs(node.nodeData.UpperRight, obj);
+                removeStaticObjectRecurs(node.nodeData.LowerLeft, obj);
+                removeStaticObjectRecurs(node.nodeData.LowerRight, obj);
+            }
 
         }
 
+        public ClientPhysicsQuadTreeNode FindContainingNodeUpwards(IClientPhysicsObject obj)
+        {
+
+            if (obj.ContainedInNode(this) == Microsoft.Xna.Framework.ContainmentType.Contains)
+            {
+                return this;
+                //entity zit niet in deze node
+                return null;
+            }
+            if (nodeData.Parent == null) return null;
+
+            return nodeData.Parent.FindContainingNodeUpwards(obj);
+        }
         private static ClientPhysicsQuadTreeNode findContainingNode(ClientPhysicsQuadTreeNode node, IClientPhysicsObject obj)
         {
             if (node == null) return null;
@@ -199,10 +232,10 @@ namespace MHGameWork.TheWizards.Client
 
                 if (node.dynamicObjectsCount < 0)
                     throw new InvalidOperationException("Invalid dynamicobjectscount. Cannot go below zero!");
-                
+
                 // update the physicsenabled flags
                 if (node.dynamicObjectsCount > 0) node.enablePhysics(); else node.disablePhysics();
-                
+
 
             }
             else

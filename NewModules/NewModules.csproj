@@ -226,10 +226,6 @@
     <Compile Include="Editor\FromEditorProject\TODO\XNAGameControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Editor\FromEditorProject\Transform\EditorGizmoRotation.cs" />
-    <Compile Include="Editor\FromEditorProject\Transform\EditorGizmoScaling.cs" />
-    <Compile Include="Editor\FromEditorProject\Transform\EditorGizmoTranslation.cs" />
-    <Compile Include="Editor\FromEditorProject\Transform\TransformControl.cs" />
     <Compile Include="Editor\FromEditorProject\Transform\TransformForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -255,6 +251,10 @@
     <Compile Include="Editor\FromEditorProject\IWizardsEditorDatabaseExtension.cs" />
     <Compile Include="Editor\FromEditorProject\IWorldEditorExtension.cs" />
     <Compile Include="Editor\FromEditorProject\WizardsEditor.cs" />
+    <Compile Include="Editor\Transform\EditorGizmoRotation.cs" />
+    <Compile Include="Editor\Transform\EditorGizmoScaling.cs" />
+    <Compile Include="Editor\Transform\EditorGizmoTranslation.cs" />
+    <Compile Include="Editor\Transform\TransformControl.cs" />
     <Compile Include="Entities\Editor\EditorModel.cs" />
     <Compile Include="Entities\Editor\EntityEditorPlugin.cs" />
     <Compile Include="Entities\Editor\EntityEditorService.cs" />
@@ -319,9 +319,6 @@
     <Compile Include="Player\PlayerController.cs" />
     <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
     <Compile Include="Rendering\IMeshFactory.cs" />
-    <Compile Include="Scene\Editor\SceneEditor.cs" />
-    <Compile Include="Scene\Entity.cs" />
-    <Compile Include="Scene\Scene.cs" />
     <Compile Include="Rendering\ITextureFactory.cs" />
     <Compile Include="World\Static\ClientStaticWorldObjectSyncer.cs" />
     <Compile Include="World\ClientSyncedActor.cs" />
@@ -345,6 +342,7 @@
     <Compile Include="Xml\ICustomSerializer.cs" />
     <Compile Include="Xml\IInternalSerializer.cs" />
     <Compile Include="Xml\TWXmlSerializer.cs" />
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\DeferredShader.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\Blur.fx" />
     <Compile Include="Rendering\IMesh.cs" />
@@ -520,8 +518,6 @@
     <None Include="app.config" />
     <None Include="Client\Client.cd" />
     <None Include="Editor\FromEditorProject\TODO\Files\TerrainGeomipmap.fx" />
-    <EmbeddedResource Include="Editor\FromEditorProject\Transform\Files\GizmoRotation001.DAE" />
-    <EmbeddedResource Include="Editor\FromEditorProject\Transform\Files\GizmoTranslation001.DAE" />
     <EmbeddedResource Include="Rendering\Files\DefaultModelShader.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\ClearGBuffer.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\RenderGBuffer.fx" />
@@ -532,6 +528,8 @@
     <EmbeddedResource Include="Rendering\Deferred\Files\ShadowMap.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\AmbientOcclusion.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\Downsample.fx" />
+    <EmbeddedResource Include="Editor\Transform\Files\GizmoRotation001.DAE" />
+    <EmbeddedResource Include="Editor\Transform\Files\GizmoTranslation001.DAE" />
     <None Include="Terrain\Client\TerrainClient.cd" />
     <None Include="Terrain\Editor\TerrainEditor.cd" />
   </ItemGroup>

@@ -74,7 +74,7 @@ namespace MHGameWork.TheWizards.Entities.Editor
             form = new ObjectEditorForm();
             nEditor.AddMDIForm(form);
 
-            transformControl = new TransformControl(XNAGameControl, form, form.pageGeneral);
+            transformControl = new TransformControl();// new TransformControl(XNAGameControl, form, form.pageGeneral);
 
 
             ofdAddModel = new OpenFileDialog();

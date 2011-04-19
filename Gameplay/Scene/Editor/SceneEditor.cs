@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Threading;
 using MHGameWork.TheWizards.Editor;
+using MHGameWork.TheWizards.Editor.Transform;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace MHGameWork.TheWizards.Scene.Editor
@@ -17,7 +18,25 @@ namespace MHGameWork.TheWizards.Scene.Editor
 
         public IMesh PlaceModeMesh;
         private EditorCamera editorCamera;
+        public EditorCamera EditorCamera
+        {
+            get { return editorCamera; }
+            private set { editorCamera = value; }
+        }
 
+        private TransformControl transformControl;
+
+        private Entity selectedEntity;
+        public Entity SelectedEntity
+        {
+            get { return selectedEntity; }
+            set { selectedEntity = value; }
+        }
+
+        public void EnableSelectMod()
+        {
+            activeMode = Mode.Select;
+        }
         public void EnablePlaceEntityMode()
         {
             if (PlaceModeMesh == null)
@@ -35,6 +54,9 @@ namespace MHGameWork.TheWizards.Scene.Editor
 
         public SceneEditor()
         {
+            EditorCamera = new EditorCamera();
+            transformControl = new TransformControl();
+
         }
 
 
@@ -47,29 +69,32 @@ namespace MHGameWork.TheWizards.Scene.Editor
         public void Initialize(IXNAGame _game)
         {
             game = _game;
-            editorCamera = new EditorCamera();
-            editorCamera.Enabled = true;
-            game.AddXNAObject(editorCamera);
-            game.SetCamera(editorCamera);
+
+            game.AddXNAObject(transformControl);
+
+            EditorCamera.Enabled = true;
+            game.AddXNAObject(EditorCamera);
+            game.SetCamera(EditorCamera);
 
             var grid = new EditorGrid();
             game.AddXNAObject(grid);
 
         }
-
         public void Render(IXNAGame _game)
         {
+            if (SelectedEntity != null)
+            {
+                game.LineManager3D.AddBox(SelectedEntity.BoundingBox, Color.Black);
+            }
         }
-
         public void Update(IXNAGame _game)
         {
+            EditorCamera.UpdateCameraMoveModeDefaultControls();
 
-
-            editorCamera.UpdateCameraMoveModeDefaultControls();
-
-            if (editorCamera.ActiveMoveMode == EditorCamera.MoveMode.None)
+            if (EditorCamera.ActiveMoveMode == EditorCamera.MoveMode.None)
                 updateModes();
         }
+
 
         private void updateModes()
         {
@@ -77,13 +102,35 @@ namespace MHGameWork.TheWizards.Scene.Editor
             {
                 if (game.Mouse.LeftMouseJustPressed)
                 {
-                    TryPlaceEntity();
+                    tryPlaceEntity();
+                }
+            }
+            else if (activeMode == Mode.Select)
+            {
+                if (game.Mouse.LeftMouseJustPressed)
+                {
+                    trySelectEntity();
+                }
+
+                if (SelectedEntity == null)
+                {
+                    transformControl.Enabled = false;
+                }
+                else
+                {
+                    transformControl.Enabled = true;
+                    transformControl.Mode = TransformControl.GizmoMode.Translation;
                 }
             }
         }
 
+        private void trySelectEntity()
+        {
+            var ent = scene.RaycastScene(game.GetWereldViewRay(game.Mouse.CursorPositionVector));
 
-        private void TryPlaceEntity()
+            SelectedEntity = ent;
+        }
+        private void tryPlaceEntity()
         {
             var ray = game.GetWereldViewRay(game.Mouse.CursorPositionVector);
 
@@ -97,10 +144,9 @@ namespace MHGameWork.TheWizards.Scene.Editor
 
 
         }
-
         private void placeEntityAt(Vector3 position)
         {
-            var ent = new Entity();
+            var ent = new Entity(scene);
             ent.Visible = true;
             ent.Solid = true;
             ent.Mesh = PlaceModeMesh;
@@ -111,9 +157,19 @@ namespace MHGameWork.TheWizards.Scene.Editor
         }
 
 
+        public void ChangeMode(Mode newMode)
+        {
+            if (this.activeMode == newMode) return;
+
+
+
+            this.activeMode = newMode;
+        }
+
         public enum Mode
         {
             None = 0,
+            Select,
             Place
         }
     }

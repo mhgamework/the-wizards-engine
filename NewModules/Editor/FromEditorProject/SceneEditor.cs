@@ -217,7 +217,7 @@ namespace MHGameWork.TheWizards.ServerClient.Editor
             CreateControls();
 
 
-            transformControl = new TransformControl(XNAGameControl, form, form.pageGeneral);
+            transformControl = new TransformControl();//new TransformControl(XNAGameControl, form, form.pageGeneral);
             transformControl.Initialize();
 
 
@@ -304,7 +304,7 @@ namespace MHGameWork.TheWizards.ServerClient.Editor
         {
             game = _game;
 
-            transformControl = new TransformControl(_game);
+            transformControl = new TransformControl();
             transformControl.Initialize();
 
             if (editorCamera == null)
