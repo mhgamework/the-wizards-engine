@@ -107,10 +107,11 @@ namespace MHGameWork.TheWizards.Scene.Editor
             }
             else if (activeMode == Mode.Select)
             {
-                if (game.Mouse.LeftMouseJustPressed)
-                {
-                    trySelectEntity();
-                }
+                if (!transformControl.IsGizmoTargeted())
+                    if (game.Mouse.LeftMouseJustPressed)
+                    {
+                        trySelectEntity();
+                    }
 
                 if (SelectedEntity == null)
                 {
@@ -120,6 +121,15 @@ namespace MHGameWork.TheWizards.Scene.Editor
                 {
                     transformControl.Enabled = true;
                     transformControl.Mode = TransformControl.GizmoMode.Translation;
+
+                    if (transformControl.IsDragging())
+                    {
+                        selectedEntity.Transformation = transformControl.GetTransformation();
+                    }
+                    else
+                    {
+                        transformControl.SetTransformation(selectedEntity.Transformation);
+                    }
                 }
             }
         }

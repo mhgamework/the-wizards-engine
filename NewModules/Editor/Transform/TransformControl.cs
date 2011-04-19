@@ -100,6 +100,13 @@ namespace MHGameWork.TheWizards.Editor.Transform
                 gizmoScaling.ActiveHoverPart == EditorGizmoScaling.GizmoPart.None);
         }
 
+        public bool IsDragging()
+        {
+            return gizmoTranslation.ActiveMoveMode != EditorGizmoTranslation.GizmoPart.None
+                   || gizmoRotation.ActiveMoveMode != EditorGizmoRotation.GizmoPart.None
+                   || gizmoScaling.ActiveMoveMode != EditorGizmoScaling.GizmoPart.None;
+        }
+
         void gizmoTranslation_PositionChanged(object sender, EventArgs e)
         {
             gizmoRotation.Position = gizmoTranslation.Position;
