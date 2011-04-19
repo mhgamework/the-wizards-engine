@@ -410,5 +410,57 @@ namespace MHGameWork.TheWizards.Tests
 
         }
 
+
+        [Test]
+        [RequiresThread(ApartmentState.STA)]
+        public void TestMeshRendererRenderCity()
+        {
+            var c = new OBJToRAMMeshConverter(new RAMTextureFactory());
+
+
+            var importer = new ObjImporter();
+            importer.AddMaterialFileStream("Town001.mtl", new FileStream("../../GameData/Town/OBJ03/Town001.mtl", FileMode.Open));
+            importer.ImportObjFile("../../GameData/Town/OBJ03/Town001.obj");
+
+            var mesh = c.CreateMesh(importer);
+
+            var texturePool = new TexturePool();
+            var meshpartPool = new MeshPartPool();
+            var vertexDeclarationPool = new VertexDeclarationPool();
+
+            var renderer = new MeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
+
+            vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
+
+
+            var el = renderer.AddMesh(mesh);
+            el.WorldMatrix = Matrix.CreateTranslation(Vector3.Right * 0 * 2 + Vector3.UnitZ * 0 * 2);
+
+
+            var game = new XNAGame();
+            game.IsFixedTimeStep = false;
+            game.DrawFps = true;
+            game.Graphics1.PreparingDeviceSettings += delegate(object sender, PreparingDeviceSettingsEventArgs e)
+            {
+                DisplayMode displayMode = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode;
+                e.GraphicsDeviceInformation.PresentationParameters.BackBufferFormat = displayMode.Format;
+                e.GraphicsDeviceInformation.PresentationParameters.BackBufferWidth = displayMode.Width;
+                e.GraphicsDeviceInformation.PresentationParameters.BackBufferHeight = displayMode.Height;
+                game.SpectaterCamera.AspectRatio = displayMode.Width / (float)displayMode.Height;
+
+            };
+            game.Graphics1.ToggleFullScreen();
+
+
+
+            game.AddXNAObject(texturePool);
+            game.AddXNAObject(meshpartPool);
+            game.AddXNAObject(vertexDeclarationPool);
+            game.AddXNAObject(renderer);
+
+            game.Run();
+
+        }
+
     }
 }
