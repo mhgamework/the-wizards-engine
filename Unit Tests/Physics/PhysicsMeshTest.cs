@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Entity;
@@ -798,6 +799,24 @@ namespace MHGameWork.TheWizards.Tests.Physics
 
 
             game.Run();
+        }
+
+        [Test]
+        public void TestMoveStaticMeshPhysicsElement()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void TestRemoveMeshStaticPhysicsElement()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void TestRemoveMeshDynamicPhysicsElement()
+        {
+            throw new NotImplementedException();
         }
 
 

@@ -182,6 +182,13 @@ namespace MHGameWork.TheWizards
 
         }
 
+        public static T GetRootNode<T>(T node) where T : class, IQuadTreeNode<T>
+        {
+            while (node.NodeData.Parent != null)
+                node = node.NodeData.Parent;
+
+            return node;
+        }
 
 
 

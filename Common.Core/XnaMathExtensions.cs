@@ -17,6 +17,12 @@ namespace MHGameWork.TheWizards
                 return box1;
             return BoundingBox.CreateMerged(box1, box2);
         }
+        public static BoundingBox Transform(this BoundingBox box, Matrix mat)
+        {
+            Vector3 min = Vector3.Transform(box.Min, mat);
+            Vector3 max = Vector3.Transform(box.Max, mat);
+            return new BoundingBox(min, max);
+        }
 
         public static Matrix CreateRotationMatrixFromDirectionVector(Vector3 direction)
         {

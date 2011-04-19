@@ -39,6 +39,8 @@ namespace MHGameWork.TheWizards.Physics
 
         public MeshStaticPhysicsElement CreateStaticElement(IMesh mesh, Matrix world)
         {
+            if (mesh == null) throw new ArgumentNullException("mesh");
+
             var el = new MeshStaticPhysicsElement(mesh, world, actorBuilder);
             if (game == null)
             {

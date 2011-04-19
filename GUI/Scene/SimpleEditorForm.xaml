@@ -4,19 +4,17 @@
         Title="SimpleEditorForm" FontFamily="Calibri" FontSize="14" mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:Scene="clr-namespace:MHGameWork.TheWizards.Scene" 
         Height="331" Width="195">
-    <Window.DataContext>
-        <Scene:SimpleEditorViewModel/>
-    </Window.DataContext>
     <StackPanel UseLayoutRounding="False" Margin="0" HorizontalAlignment="Stretch">
         <Button Content="Jump Into" Height="23" Command="{Binding Path=JumpInto}" />
+        <Button Content="Select" Height="23" Command="{Binding Path=Select}" />
         <Button Content="Place Entity" Height="23" Command="{Binding Path=PlaceEntity}" />
         <ListBox Height="100" ItemsSource="{Binding Path=PlaceMeshes}" SelectedItem="{Binding Path=SelectedPlaceMesh}">
         </ListBox>
-        <StackPanel>
-            <CheckBox Content="Visible" />
-            <CheckBox Content="Solid"/>
+        <StackPanel Name="cEntityProperties">
+            <CheckBox Content="Visible" IsChecked="{Binding Path=Visible}" />
+            <CheckBox Content="Solid" IsChecked="{Binding Path=Solid}" />
+            <CheckBox Content="Static" IsChecked="{Binding Path=Static}" />
             <Label Height="28" Content="{Binding Path=SelectedEntityMesh}" />
             <Button Content="Change Mesh"/>
         </StackPanel>

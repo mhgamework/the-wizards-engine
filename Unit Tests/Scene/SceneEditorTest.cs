@@ -66,7 +66,7 @@ namespace MHGameWork.TheWizards.Tests.Scene
 
             var shooter = new TestSphereShooter(game, physicsEngine, root, editor.EditorCamera);
             game.AddXNAObject(shooter);
-
+            game.AddXNAObject(scene);
 
             var ev = new AutoResetEvent(false);
             var t = new Thread(delegate()
@@ -74,7 +74,7 @@ namespace MHGameWork.TheWizards.Tests.Scene
                                        form = new SimpleEditorForm();
                                        var app = new Application();
 
-                                       var vm = SimpleEditorViewModel.Create(game, editor);
+                                       var vm = SimpleEditorViewModel.Create(game, editor, form);
                                        vm.PlaceMeshes.Clear();
                                        vm.PlaceMeshes.Add(new SimpleEditorViewModel.MeshItem { Name = "GuildHouse", Mesh = mesh });
                                        vm.PlaceMeshes.Add(new SimpleEditorViewModel.MeshItem { Name = "MerchantsHouse", Mesh = mesh2 });

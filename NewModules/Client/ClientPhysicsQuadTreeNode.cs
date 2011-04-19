@@ -160,7 +160,19 @@ namespace MHGameWork.TheWizards.Client
 
         }
 
+        public ClientPhysicsQuadTreeNode FindContainingNodeUpwards(IClientPhysicsObject obj)
+        {
 
+            if (obj.ContainedInNode(this) == Microsoft.Xna.Framework.ContainmentType.Contains)
+            {
+                return this;
+                //entity zit niet in deze node
+                return null;
+            }
+            if (nodeData.Parent == null) return null;
+
+            return nodeData.Parent.FindContainingNodeUpwards(obj);
+        }
         private static ClientPhysicsQuadTreeNode findContainingNode(ClientPhysicsQuadTreeNode node, IClientPhysicsObject obj)
         {
             if (node == null) return null;

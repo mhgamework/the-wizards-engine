@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace MHGameWork.TheWizards.Scene.Editor
@@ -16,13 +17,23 @@ namespace MHGameWork.TheWizards.Scene.Editor
 
         public IMesh PlaceModeMesh;
         private EditorCamera editorCamera;
-
         public EditorCamera EditorCamera
         {
             get { return editorCamera; }
             private set { editorCamera = value; }
         }
 
+        private Entity selectedEntity;
+        public Entity SelectedEntity
+        {
+            get { return selectedEntity; }
+            set { selectedEntity = value; }
+        }
+
+        public void EnableSelectMod()
+        {
+            activeMode = Mode.Select;
+        }
         public void EnablePlaceEntityMode()
         {
             if (PlaceModeMesh == null)
@@ -65,12 +76,14 @@ namespace MHGameWork.TheWizards.Scene.Editor
 
         public void Render(IXNAGame _game)
         {
+            if (SelectedEntity != null)
+            {
+                game.LineManager3D.AddBox(SelectedEntity.BoundingBox, Color.Black);
+            }
         }
 
         public void Update(IXNAGame _game)
         {
-
-
             EditorCamera.UpdateCameraMoveModeDefaultControls();
 
             if (EditorCamera.ActiveMoveMode == EditorCamera.MoveMode.None)
@@ -83,13 +96,27 @@ namespace MHGameWork.TheWizards.Scene.Editor
             {
                 if (game.Mouse.LeftMouseJustPressed)
                 {
-                    TryPlaceEntity();
+                    tryPlaceEntity();
+                }
+            }
+            else if (activeMode == Mode.Select)
+            {
+                if (game.Mouse.LeftMouseJustPressed)
+                {
+                    trySelectEntity();
                 }
             }
         }
 
+        private void trySelectEntity()
+        {
+            var ent = scene.RaycastScene(game.GetWereldViewRay(game.Mouse.CursorPositionVector));
 
-        private void TryPlaceEntity()
+            SelectedEntity = ent;
+        }
+
+
+        private void tryPlaceEntity()
         {
             var ray = game.GetWereldViewRay(game.Mouse.CursorPositionVector);
 
@@ -106,7 +133,7 @@ namespace MHGameWork.TheWizards.Scene.Editor
 
         private void placeEntityAt(Vector3 position)
         {
-            var ent = new Entity();
+            var ent = new Entity(scene);
             ent.Visible = true;
             ent.Solid = true;
             ent.Mesh = PlaceModeMesh;
@@ -117,9 +144,19 @@ namespace MHGameWork.TheWizards.Scene.Editor
         }
 
 
+        public void ChangeMode(Mode newMode)
+        {
+            if (this.activeMode == newMode) return;
+
+
+
+            this.activeMode = newMode;
+        }
+
         public enum Mode
         {
             None = 0,
+            Select,
             Place
         }
     }
