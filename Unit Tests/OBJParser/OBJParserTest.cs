@@ -168,7 +168,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
             var meshpartPool = new MeshPartPool();
             var vertexDeclarationPool = new VertexDeclarationPool();
 
-            var renderer = new MeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
+            var renderer = new SimpleMeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
 
             vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
 
@@ -251,7 +251,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
             var meshpartPool = new MeshPartPool();
             var vertexDeclarationPool = new VertexDeclarationPool();
 
-            var renderer = new MeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
+            var renderer = new SimpleMeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
 
             vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
 
@@ -425,10 +425,10 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
 
         public class TestGameMesh
         {
-            public MeshRenderElement RenderElement;
+            public SimpleMeshRenderElement RenderElement;
             public MeshDynamicPhysicsElement PhysicsElement;
 
-            public TestGameMesh(MeshRenderElement renderElement, MeshDynamicPhysicsElement physicsElement)
+            public TestGameMesh(SimpleMeshRenderElement renderElement, MeshDynamicPhysicsElement physicsElement)
             {
                 RenderElement = renderElement;
                 PhysicsElement = physicsElement;

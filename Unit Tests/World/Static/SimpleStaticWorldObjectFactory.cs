@@ -8,10 +8,10 @@ namespace MHGameWork.TheWizards.Tests.World.Static
 {
     public class SimpleStaticWorldObjectFactory : IStaticWorldObjectFactory
     {
-        private readonly MeshRenderer renderer;
+        private readonly SimpleMeshRenderer renderer;
         private readonly IMeshFactory meshFactory;
 
-        public SimpleStaticWorldObjectFactory(MeshRenderer renderer, IMeshFactory meshFactory)
+        public SimpleStaticWorldObjectFactory(SimpleMeshRenderer renderer, IMeshFactory meshFactory)
         {
             this.renderer = renderer;
             this.meshFactory = meshFactory;

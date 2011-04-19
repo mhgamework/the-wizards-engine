@@ -88,7 +88,7 @@ namespace MHGameWork.TheWizards.Tests.Assets
             vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
             var texturePool = new TexturePool();
             var meshPartPool = new MeshPartPool();
-            var renderer = new MeshRenderer(texturePool, meshPartPool, vertexDeclarationPool);
+            var renderer = new SimpleMeshRenderer(texturePool, meshPartPool, vertexDeclarationPool);
 
 
 

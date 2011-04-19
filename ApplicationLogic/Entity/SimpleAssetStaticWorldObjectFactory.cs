@@ -7,12 +7,12 @@ namespace MHGameWork.TheWizards.Entity
 {
     public class SimpleAssetStaticWorldObjectFactory : IStaticWorldObjectFactory
     {
-        private readonly MeshRenderer renderer;
+        private readonly SimpleMeshRenderer renderer;
         private ClientRenderingAssetFactory renderingFactory;
 
         private List<SimpleAssetStaticWorldObject> assets = new List<SimpleAssetStaticWorldObject>();
 
-        public SimpleAssetStaticWorldObjectFactory(MeshRenderer renderer, ClientAssetSyncer syncer)
+        public SimpleAssetStaticWorldObjectFactory(SimpleMeshRenderer renderer, ClientAssetSyncer syncer)
         {
             this.renderer = renderer;
             renderingFactory = new ClientRenderingAssetFactory(syncer);

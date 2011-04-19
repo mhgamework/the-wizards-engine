@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.Tests.Entity
 
             MeshRenderDataFactory factory = new MeshRenderDataFactory(renderer);
 
-            MeshRenderElement meshElement = factory.CreateRenderElement(mesh);
+            SimpleMeshRenderElement meshElement = factory.CreateRenderElement(mesh);
 
             meshElement.WorldMatrix = Matrix.Identity;
 

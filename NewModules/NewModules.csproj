@@ -319,6 +319,8 @@
     <Compile Include="Player\PlayerController.cs" />
     <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
     <Compile Include="Rendering\IMeshFactory.cs" />
+    <Compile Include="Rendering\IMeshRenderElement.cs" />
+    <Compile Include="Rendering\ISimpleMeshRenderer.cs" />
     <Compile Include="Rendering\ITextureFactory.cs" />
     <Compile Include="World\Static\ClientStaticWorldObjectSyncer.cs" />
     <Compile Include="World\ClientSyncedActor.cs" />
@@ -416,8 +418,8 @@
     <Compile Include="Rendering\MeshPartGeometryData.cs" />
     <Compile Include="Rendering\MeshPartPool.cs" />
     <Compile Include="Rendering\MeshRenderDataFactory.cs" />
-    <Compile Include="Rendering\MeshRenderElement.cs" />
-    <Compile Include="Rendering\MeshRenderer.cs" />
+    <Compile Include="Rendering\SimpleMeshRenderElement.cs" />
+    <Compile Include="Rendering\SimpleMeshRenderer.cs" />
     <Compile Include="Rendering\RAMTexture.cs" />
     <Compile Include="Rendering\SimpleRenderer.cs" />
     <Compile Include="Rendering\TextureCoreData.cs" />

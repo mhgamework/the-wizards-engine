@@ -7,10 +7,10 @@ namespace MHGameWork.TheWizards.Entity
 {
     public class SimpleAssetStaticWorldObject : IStaticWorldObject
     {
-        private readonly MeshRenderer renderer;
-        private MeshRenderElement renderElement;
+        private readonly SimpleMeshRenderer renderer;
+        private SimpleMeshRenderElement renderElement;
 
-        public SimpleAssetStaticWorldObject(MeshRenderer renderer)
+        public SimpleAssetStaticWorldObject(SimpleMeshRenderer renderer)
         {
             this.renderer = renderer;
         }

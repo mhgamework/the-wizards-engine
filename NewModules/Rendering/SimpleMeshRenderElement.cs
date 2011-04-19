@@ -3,9 +3,9 @@ using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Rendering
 {
-    public class MeshRenderElement
+    public class SimpleMeshRenderElement : IMeshRenderElement
     {
-        public MeshRenderer Renderer { get; private set; }
+        public SimpleMeshRenderer Renderer { get; private set; }
         public IMesh Mesh { get; private set; }
         private Matrix worldMatrix;
         public Microsoft.Xna.Framework.Matrix WorldMatrix
@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.Rendering
         internal int ElementNumber { get; set; }
 
 
-        public MeshRenderElement(MeshRenderer renderer, IMesh mesh)
+        public SimpleMeshRenderElement(SimpleMeshRenderer renderer, IMesh mesh)
         {
             Renderer = renderer;
             Mesh = mesh;
