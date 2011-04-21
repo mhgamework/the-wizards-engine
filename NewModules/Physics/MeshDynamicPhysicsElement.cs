@@ -31,11 +31,11 @@ namespace MHGameWork.TheWizards.Physics
 
         private StillDesign.PhysX.Scene scene;
 
-   
+
         /// <summary>
         /// This constructor enables physics
         /// </summary>
-        public MeshDynamicPhysicsElement( IMesh mesh, Matrix world, MeshPhysicsActorBuilder builder)
+        public MeshDynamicPhysicsElement(IMesh mesh, Matrix world, MeshPhysicsActorBuilder builder)
         {
             Mesh = mesh;
             World = world;
@@ -52,7 +52,7 @@ namespace MHGameWork.TheWizards.Physics
 
 
             // Update location in quadtree
-            World  = newPose;
+            World = newPose;
             root.OrdenObject(this);
 
             // Update dynamic object count
@@ -61,10 +61,10 @@ namespace MHGameWork.TheWizards.Physics
 
             if (oldNode != null)
             {
-                World = oldPose;; // set old state
+                World = oldPose; ; // set old state
                 oldNode.RemoveDynamicObjectFromIntersectingNodes(this);
 
-                World = newPose;; // set new state
+                World = newPose; ; // set new state
             }
         }
 
@@ -151,8 +151,9 @@ namespace MHGameWork.TheWizards.Physics
             if (actor != null)
             {
                 actor.Dispose();
-                node.RemoveDynamicObjectFromIntersectingNodes(this);
-                
+                if (!sleeping)
+                    node.RemoveDynamicObjectFromIntersectingNodes(this);
+
             }
         }
     }
