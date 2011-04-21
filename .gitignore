@@ -29,6 +29,11 @@ obj/
 /bin/Launcher.pdb
 /bin/Networking.dll
 
+!/bin/Binaries/msvcm90d.dll
+!/bin/Binaries/msvcp90d.dll
+!/bin/Binaries/msvcr90d.dll
+!/bin/Binaries/Microsoft.VC90.DebugCRT.manifest
+
 
 # Visual studio user data
 *.user
