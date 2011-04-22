@@ -1,9 +1,21 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Networking;
+using MHGameWork.TheWizards.OBJParser;
+using MHGameWork.TheWizards.Physics;
+using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Scene;
 using MHGameWork.TheWizards.Scripting;
+using MHGameWork.TheWizards.Scripting.API;
+using MHGameWork.TheWizards.Tests.OBJParser;
+using Microsoft.Xna.Framework;
 using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.Tests.Scripting
@@ -27,6 +39,29 @@ namespace MHGameWork.TheWizards.Tests.Scripting
             game.Run();
         }
 
+        [Test]
+        public void TestSceneScriptLoader()
+        {
+            var twGame = new TestTWGame();
 
+            var scene = new TheWizards.Scene.Scene(twGame.Renderer, twGame.PhysicsFactory);
+            twGame.Game.AddXNAObject(scene);
+
+            var loader = new SceneScriptLoader(scene);
+            twGame.Game.AddXNAObject(loader);
+            var fi = new FileInfo(TWDir.Binaries + "/../../Scripts/TestScript.cs");
+
+
+            var ent = new TheWizards.Scene.Entity(scene);
+            ent.Mesh = twGame.BarrelMesh;
+
+            loader.LoadScript(ent, fi);
+
+
+            twGame.Game.Run();
+
+        }
+
+       
     }
 }

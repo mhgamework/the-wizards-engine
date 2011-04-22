@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MHGameWork.TheWizards.World
+namespace MHGameWork.TheWizards.Scripting.API
 {
-    public interface IWorldEntity 
+    public interface IUpdateHandler
     {
+        void Update();
     }
 }

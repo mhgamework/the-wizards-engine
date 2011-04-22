@@ -38,12 +38,13 @@ namespace MHGameWork.TheWizards.Scene
             get { return physicsElementFactory; }
         }
 
-        public void AddEntity(Entity ent)
+        public Entity CreateEntity( )
         {
+            var ent = new Entity(this);
             entities.Add(ent);
-            ent.UpdateRenderElement();
-            ent.UpdatePhysicsElement();
-        }
+
+            return ent;
+          }
 
         public void EnableSimulation()
         {

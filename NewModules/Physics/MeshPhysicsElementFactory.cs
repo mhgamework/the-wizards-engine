@@ -55,6 +55,7 @@ namespace MHGameWork.TheWizards.Physics
 
         public MeshDynamicPhysicsElement CreateDynamicElement(IMesh mesh, Matrix world)
         {
+            if (mesh == null) throw new ArgumentNullException("mesh");
             var el = new MeshDynamicPhysicsElement(mesh, world, actorBuilder);
             if (game == null)
             {

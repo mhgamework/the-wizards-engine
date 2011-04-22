@@ -108,16 +108,21 @@ namespace MHGameWork.TheWizards.Physics
             get { return worldMatrix; }
             set
             {
-                var n = node;
+                if (node == null)
+                {
+                    worldMatrix = value;
+                    return;
+                }
+                var oldNode = node;
 
                 node.RemoveStaticObject(this);
                 worldMatrix = value;
                 updateBoundingSphere();
-                n = n.FindContainingNodeUpwards(this);
-                if (n == null)
-                    n = QuadTree.GetRootNode(node);
+                var newNode = oldNode.FindContainingNodeUpwards(this);
+                if (newNode == null)
+                    newNode = QuadTree.GetRootNode(oldNode);
 
-                n.AddStaticObject(this);
+                newNode.AddStaticObject(this);
 
             }
         }
