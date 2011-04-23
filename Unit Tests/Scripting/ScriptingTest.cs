@@ -61,7 +61,34 @@ namespace MHGameWork.TheWizards.Tests.Scripting
             twGame.Game.Run();
 
         }
+        [Test]
+        public void TestPlayerUseListener()
+        {
+            var twGame = new TestTWGame();
+
+            initializePlayer(twGame);
+
+
+            twGame.Game.UpdateEvent += delegate
+                                           {
+                                               
+                                           };
+
+
+
+            twGame.Game.Run();
+        }
 
        
+        private void initializePlayer(TestTWGame twGame)
+        {
+            ScriptLayer.Game = twGame.Game;
+            ScriptLayer.Physics = twGame.PhysicsEngine;
+            ScriptLayer.Scene = twGame.PhysicsEngine.Scene;
+            ScriptLayer.ScriptRunner = new ScriptRunner(twGame.Game);
+
+            Gameplay.GameplayTest.InitializePlayer();
+
+        }
     }
 }

@@ -155,11 +155,13 @@ namespace MHGameWork.TheWizards.Scene
             {
                 if (staticPhysicsElement == null)
                     staticPhysicsElement = factory.CreateStaticElement(Mesh, Transformation.CreateMatrix());
+                staticPhysicsElement.ActorUserData = this;
             }
             else
             {
                 if (dynamicPhysicsElement == null)
                     dynamicPhysicsElement = factory.CreateDynamicElement(Mesh, Transformation.CreateMatrix());
+                dynamicPhysicsElement.ActorUserData = this;
 
             }
 
@@ -301,6 +303,11 @@ namespace MHGameWork.TheWizards.Scene
             onChange();
         }
 
+
+        public void RaisePlayerUse()
+        {
+            
+        }
 
     }
 }

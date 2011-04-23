@@ -18,6 +18,12 @@ namespace MHGameWork.TheWizards.Physics
         public Matrix World { get; private set; }
         public MeshPhysicsActorBuilder Builder { get; private set; }
 
+        private object actorUserData;
+        public object ActorUserData
+        {
+            get { return actorUserData; }
+            set { actorUserData = value; if (actor != null) actor.UserData = actorUserData; }
+        }
 
         private Actor actor;
 
@@ -30,6 +36,7 @@ namespace MHGameWork.TheWizards.Physics
         private bool sleeping;
 
         private StillDesign.PhysX.Scene scene;
+
 
 
         /// <summary>
@@ -120,6 +127,7 @@ namespace MHGameWork.TheWizards.Physics
         {
             if (!sleeping) return;
             actor.BodyFlags.Kinematic = false;
+            actor.UserData = actorUserData;
         }
 
         public void DisablePhysics()

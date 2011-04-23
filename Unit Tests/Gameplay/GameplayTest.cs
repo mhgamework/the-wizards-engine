@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             GC.WaitForPendingFinalizers();
         }
 
-        private void processPlayerInputDirect(PlayerController controller, IXNAGame game)
+        public static void processPlayerInputDirect(PlayerController controller, IXNAGame game)
         {
 
             if (game.Keyboard.IsKeyDown(Keys.Z))
@@ -581,7 +581,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             EstablishDefaultScope(game);
 
 
-            initializePlayer();
+            InitializePlayer();
 
             var seeder = new Seeder(84354);
 
@@ -616,13 +616,13 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             var game = new XNAGame();
             EstablishDefaultScope(game);
 
-            initializePlayer();
+            InitializePlayer();
 
             game.Run();
         }
 
 
-        private void initializePlayer()
+        public static void InitializePlayer()
         {
 
             var player = createPlayerData();
@@ -673,7 +673,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
         }
 
-        private PlayerData createPlayerData()
+        public static PlayerData createPlayerData()
         {
             PlayerData player = new PlayerData();
             player.Name = "MHGameWork";
