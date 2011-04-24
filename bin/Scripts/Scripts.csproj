@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gameplay">
+      <HintPath>..\Binaries\Gameplay.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -40,12 +43,7 @@
   <ItemGroup>
     <Compile Include="TestScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Gameplay\Gameplay.csproj">
-      <Project>{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}</Project>
-      <Name>Gameplay</Name>
-    </ProjectReference>
+    <Compile Include="TestUseScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

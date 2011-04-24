@@ -281,7 +281,14 @@ namespace MHGameWork.TheWizards.Graphics
         }
 
 
+        public void AddRay(Ray ray, Color col)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                AddLine(ray.Position + ray.Direction * (i) * 10, ray.Position + ray.Direction * (i + 1) * 10, col);
 
+            }
+        }
 
         /// <summary>
         /// Add line (only 1 color for start and end version)

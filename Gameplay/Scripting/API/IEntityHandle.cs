@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using MHGameWork.TheWizards.Gameplay;
+using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Scripting.API
 {
@@ -7,5 +9,6 @@ namespace MHGameWork.TheWizards.Scripting.API
         Vector3 Position { get; set; }
 
         void RegisterUpdateHandler();
+        void RegisterUseHandler(Action<IPlayer> handler);
     }
 }

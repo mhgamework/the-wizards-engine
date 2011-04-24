@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using MHGameWork.TheWizards.Client;
+using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.OBJParser;
@@ -18,6 +19,7 @@ using MHGameWork.TheWizards.Scripting.API;
 using MHGameWork.TheWizards.Tests.Gameplay;
 using MHGameWork.TheWizards.Tests.OBJParser;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
 
@@ -71,17 +73,43 @@ namespace MHGameWork.TheWizards.Tests.Scripting
 
             twGame.SetScriptLayerScope();
 
-            var controller = new HelperPlayerController(twGame.Game, new PlayerData());
+            var player = new SimplePlayer();
+            player.Data.Name = "MHGameWork";
+            var controller = new HelperPlayerController(twGame.Game, player.Data);
             twGame.Game.AddXNAObject(controller);
-            var scene = new TheWizards.Scene.Scene(twGame.Renderer, twGame.PhysicsFactory);
+            twGame.Game.SetCamera(controller.ThirdPersonCamera);
 
+            var scene = new TheWizards.Scene.Scene(twGame.Renderer, twGame.PhysicsFactory);
+            var ent = scene.CreateEntity();
+            ent.Mesh = twGame.BarrelMesh;
+            ent.Transformation = new Transformation(Vector3.Up * 0.5f + Vector3.Forward * 3);
+
+            var loader = new SceneScriptLoader(scene);
+            loader.LoadScript(ent, new FileInfo(TWDir.Scripts + "\\TestUseScript.cs"));
+            twGame.Game.AddXNAObject(loader);
+            twGame.PhysicsTreeRoot.AddDynamicObjectToIntersectingNodes(new ClientPhysicsTestSphere(Vector3.Zero, 100));
 
             twGame.Game.UpdateEvent += delegate
                                            {
+                                               var pos = controller.Controller.GlobalPosition;
+                                               var dir = Vector3.Transform(Vector3.Forward,
+                                                                           controller.ThirdPersonCamera.ViewInverse)-
+                                                                           Vector3.Transform(Vector3.Zero,
+                                                                           controller.ThirdPersonCamera.ViewInverse);
+                                               dir.Normalize();
+                                               var ray = new Ray(pos, dir);
+                                               //NOTE: this ray shouldnt be visible :-)
+                                               twGame.Game.LineManager3D.AddRay(ray, Color.Green);
+
+                                               GameplayTest.ProcessPlayerInputDirect(controller.Controller, twGame.Game);
                                                if (twGame.Game.Keyboard.IsKeyPressed(Keys.E))
                                                {
-                                                   var ray = new Ray();
-                                                   var ent = scene.RaycastEntityPhysX(ray, o => true);
+
+                                                   var result = scene.RaycastEntityPhysX(ray, o => true);
+                                                   if (result != null)
+                                                   {
+                                                       result.Entity.RaisePlayerUse(player);
+                                                   }
                                                }
                                            };
 

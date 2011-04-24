@@ -622,7 +622,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         }
 
 
-        public PlayerController InitializePlayer()
+        public void InitializePlayer()
         {
 
             var player = createPlayerData();

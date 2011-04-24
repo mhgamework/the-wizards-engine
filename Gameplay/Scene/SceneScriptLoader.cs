@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Networking;
+using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Scripting.API;
 using Microsoft.Xna.Framework;
 
@@ -154,8 +155,9 @@ namespace MHGameWork.TheWizards.Scene
 
             cp.ReferencedAssemblies.Add("System.Core.dll");
             cp.ReferencedAssemblies.Add("System.Data.dll");
-            cp.ReferencedAssemblies.Add(typeof(IScript).Assembly.Location);
-            cp.ReferencedAssemblies.Add(typeof(Vector3).Assembly.Location);
+            cp.ReferencedAssemblies.Add(typeof(IScript).Assembly.Location); // Gameplay
+            cp.ReferencedAssemblies.Add(typeof(Vector3).Assembly.Location); // Microsoft.Xna.Framework
+            cp.ReferencedAssemblies.Add(typeof(PlayerData).Assembly.Location); //NewModules
 
             try
             {
