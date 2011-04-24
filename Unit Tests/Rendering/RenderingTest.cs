@@ -54,6 +54,19 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             return c.CreateMesh(importer);
         }
 
+        public static RAMMesh CreateMeshFromObj(OBJToRAMMeshConverter c, string obj, string mtl)
+        {
+            var fi = new FileInfo(mtl);
+            ObjImporter importer;
+            importer = new ObjImporter();
+            importer.AddMaterialFileStream(fi.Name, File.OpenRead(mtl));
+            importer.ImportObjFile(obj);
+
+            return c.CreateMesh(importer);
+        }
+
+
+
 
         [Test]
         [RequiresThread(ApartmentState.STA)]
@@ -298,7 +311,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             {
                 for (int j = 0; j < 50; j++)
                 {
-                   
+
                     var el = renderer.AddMesh(mesh);
                     el.WorldMatrix = Matrix.CreateTranslation(Vector3.Right * i * 2 + Vector3.UnitZ * j * 2);
 
@@ -365,7 +378,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             }
 
 
-        
+
 
             game.Run();
 

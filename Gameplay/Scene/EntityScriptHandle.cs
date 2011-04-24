@@ -22,6 +22,11 @@ namespace MHGameWork.TheWizards.Scene
             get { return Entity.Transformation.Translation; }
             set { Entity.Transformation = new Graphics.Transformation(Entity.Transformation.Scaling, Entity.Transformation.Rotation, value); }
         }
+        public Quaternion Rotation
+        {
+            get { return Entity.Transformation.Rotation; }
+            set { Entity.Transformation = new Graphics.Transformation(Entity.Transformation.Scaling, value, Entity.Transformation.Translation); }
+        }
 
         public bool UpdateRegistered { get; private set; }
 

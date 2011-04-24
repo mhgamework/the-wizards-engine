@@ -130,8 +130,10 @@ namespace MHGameWork.TheWizards.Physics
                 if (newNode == null)
                     newNode = QuadTree.GetRootNode(oldNode);
 
+             
                 newNode.AddStaticObject(this);
 
+                actor.GlobalPose = worldMatrix;
             }
         }
 
