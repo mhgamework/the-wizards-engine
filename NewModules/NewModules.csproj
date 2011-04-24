@@ -171,7 +171,6 @@
     <Compile Include="Cogs\StaticBox.cs" />
     <Compile Include="Editor\EditorCamera.cs" />
     <Compile Include="Editor\EditorGrid.cs" />
-    <Compile Include="Editor\FromEditorProject\DEPRECATED\IPlugin001.cs" />
     <Compile Include="Editor\FromEditorProject\DevExpressRibbonMerger.cs" />
     <Compile Include="Editor\FromEditorProject\IDevexpressHasDockmanager.cs" />
     <Compile Include="Editor\FromEditorProject\OudDevcomponents\WizardsEditorFormDevcomponents.cs">
@@ -182,24 +181,25 @@
     </Compile>
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientFiles.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientMain.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Preprocesser\PreprocessedNode.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Preprocesser\PreprocessedTerrainBlock.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\ITerrainBlockRenderable.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainBlock.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainCSMRendererService.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainGeomipmapRenderData.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainMaterial.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainPreprocesser.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainQuadTreeNodeData.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainRendererService.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainShader.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainShaderNew.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainStatistics.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainTexture.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\Rendering\TerrainWeightMap.cs" />
+    <Compile Include="Terrain\Preprocesser\PreprocessedNode.cs" />
+    <Compile Include="Terrain\Preprocesser\PreprocessedTerrainBlock.cs" />
+    <Compile Include="Terrain\Rendering\TODO\ITerrainBlockRenderable.cs" />
+    <Compile Include="Terrain\Rendering\TODO\TerrainBlock.cs" />
+    <Compile Include="Terrain\Rendering\TODO\TerrainCSMRendererService.cs" />
+    <Compile Include="Terrain\Rendering\TODO\TerrainGeomipmapRenderData.cs" />
+    <Compile Include="Terrain\Rendering\TODO\TerrainMaterial.cs" />
+    <Compile Include="Terrain\Rendering\TODO\TerrainPreprocesser.cs" />
+    <Compile Include="Terrain\Rendering\TODO\TerrainQuadTreeNodeData.cs" />
+    <Compile Include="Terrain\Rendering\TODO\TerrainRendererService.cs" />
+    <Compile Include="Terrain\Rendering\TODO\TerrainShader.cs" />
+    <Compile Include="Terrain\Rendering\TerrainShaderNew.cs" />
+    <Compile Include="Terrain\Rendering\TODO\TerrainStatistics.cs" />
+    <Compile Include="Terrain\Rendering\TODO\TerrainTexture.cs" />
+    <Compile Include="Terrain\Rendering\TODO\TerrainWeightMap.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\Terrain\TaggedTerrain.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\TerrainFullData.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\TerrainHeightMap.cs" />
+    <Compile Include="Terrain\TerrainFullData.cs" />
+    <Compile Include="Terrain\TerrainGeomipmapRenderer.cs" />
+    <Compile Include="Terrain\TerrainHeightMap.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\Terrain\TerrainManagerService.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\Terrain\TerrainPlugin.cs" />
     <Compile Include="Editor\FromEditorProject\TODO\DockTab.cs" />
@@ -529,6 +529,7 @@
     <EmbeddedResource Include="Editor\Transform\Files\GizmoTranslation001.DAE" />
     <None Include="Terrain\Client\TerrainClient.cd" />
     <None Include="Terrain\Editor\TerrainEditor.cd" />
+    <EmbeddedResource Include="Terrain\Rendering\Files\TerrainGeomipmap.fx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Editor\Resources\RedoBig.png" />
@@ -546,10 +547,7 @@
     <None Include="Resources\UndoMedium.png" />
     <None Include="Resources\RedoBig.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Editor\FromEditorProject\Temp\Entity\" />
-    <Folder Include="Editor\FromEditorProject\Temp\Terrain\EditorTemp\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Client\Client.csproj">
       <Project>{64749FE6-E3AF-4666-BB9F-8CCFF4D30E2D}</Project>

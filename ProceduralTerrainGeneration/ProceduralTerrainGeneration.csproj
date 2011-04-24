@@ -68,14 +68,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Grass\GrassMesh.cs" />
-    <Compile Include="NoiseGenerater\NoiseTests.cs" />
     <Compile Include="NoiseGenerater\PerlinNoiseGenerater.cs" />
     <Compile Include="NoiseGenerater\SimpleTerrain.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TerrrainGeneration\HeigthMapGenerater.cs" />
     <Compile Include="TerrrainGeneration\ProceduralHeigthGenerater.cs" />
-    <Compile Include="TerrrainGeneration\TerrainGenerationTests.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
