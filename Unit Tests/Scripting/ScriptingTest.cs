@@ -70,6 +70,7 @@ namespace MHGameWork.TheWizards.Tests.Scripting
         [Test]
         public void TestPlayerUseListener()
         {
+
             var twGame = new TestTWGame();
 
             twGame.SetScriptLayerScope();
