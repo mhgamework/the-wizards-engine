@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Scripting;
 using MHGameWork.TheWizards.Tests.OBJParser;
 using Microsoft.Xna.Framework;
 
@@ -26,6 +27,10 @@ namespace MHGameWork.TheWizards.Tests
         public PhysicsEngine PhysicsEngine;
         public PhysicsDebugRenderer PhysicsDebugRenderer;
         public MeshPhysicsElementFactory PhysicsFactory;
+
+
+
+        public ScriptRunner ScriptRunner;
 
         public TestTWGame()
         {
@@ -49,6 +54,17 @@ namespace MHGameWork.TheWizards.Tests
             TextureFactory = new RAMTextureFactory();
             var converter = new OBJToRAMMeshConverter(TextureFactory);
             BarrelMesh = OBJParserTest.GetBarrelMesh(converter);
+
+            ScriptRunner = new ScriptRunner(Game);
+        }
+
+
+        public void SetScriptLayerScope()
+        {
+            ScriptLayer.Game = Game;
+            ScriptLayer.Physics = PhysicsEngine;
+            ScriptLayer.Scene = PhysicsEngine.Scene;
+            ScriptLayer.ScriptRunner = ScriptRunner;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Scripting.API;
 using Microsoft.Xna.Framework;
 
@@ -32,5 +33,25 @@ namespace MHGameWork.TheWizards.Scene
             UpdateRegistered = true;
             Entity.OnEntityHandlerStateChanged();
         }
+
+        private bool useHandlerSet;
+
+        public void RegisterUseHandler(Action<IPlayer> handler)
+        {
+            if (Entity.PlayerUseHandler != null)
+                throw new InvalidOperationException("Multiple use handlers are currently not supportd!");
+
+            Entity.PlayerUseHandler = handler;
+            useHandlerSet = true;
+        }
+
+
+
+        public void Destroy()
+        {
+            if (useHandlerSet)
+                Entity.PlayerUseHandler = null;
+        }
+
     }
 }

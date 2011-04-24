@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             GC.WaitForPendingFinalizers();
         }
 
-        public static void processPlayerInputDirect(PlayerController controller, IXNAGame game)
+        public static void ProcessPlayerInputDirect(PlayerController controller, IXNAGame game)
         {
 
             if (game.Keyboard.IsKeyDown(Keys.Z))
@@ -72,7 +72,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             var controller = new HelperPlayerController(game, player);
 
             game.AddXNAObject(controller);
-            game.UpdateEvent += delegate { processPlayerInputDirect(controller.Controller, game); };
+            game.UpdateEvent += delegate { ProcessPlayerInputDirect(controller.Controller, game); };
             game.DrawEvent += delegate { game.LineManager3D.DrawGroundShadows = true; };
 
             game.Run();
@@ -163,7 +163,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 {
                     controller.HorizontalAngle = cam.LookAngleHorizontal;
 
-                    processPlayerInputDirect(controller, game);
+                    ProcessPlayerInputDirect(controller, game);
                     controller.Update(game);
                     serverSyncer.Update(game.Elapsed);
                     ScriptLayer.Physics.UpdateScene(game.Elapsed, serverScene);
@@ -524,7 +524,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             game.UpdateEvent += delegate
                                     {
-                                        processPlayerInputDirect(controller.Controller, game);
+                                        ProcessPlayerInputDirect(controller.Controller, game);
                                         move.FireDirection = CalculateFireDirection(controller.ThirdPersonCamera);
 
                                         if (game.Mouse.LeftMouseJustPressed)
@@ -555,7 +555,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             game.UpdateEvent += delegate
             {
-                processPlayerInputDirect(controller.Controller, game);
+                ProcessPlayerInputDirect(controller.Controller, game);
                 move.FireDirection = CalculateFireDirection(controller.ThirdPersonCamera);
 
                 if (game.Mouse.LeftMouseJustPressed)
@@ -622,7 +622,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         }
 
 
-        public static void InitializePlayer()
+        public PlayerController InitializePlayer()
         {
 
             var player = createPlayerData();
@@ -651,7 +651,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             game.UpdateEvent += delegate
                                     {
-                                        processPlayerInputDirect(controller.Controller, game);
+                                        ProcessPlayerInputDirect(controller.Controller, game);
                                         fireMove.FireDirection = CalculateFireDirection(controller.ThirdPersonCamera);
                                         throwMove.FireDirection = CalculateFireDirection(controller.ThirdPersonCamera);
 

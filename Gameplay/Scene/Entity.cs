@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
@@ -293,6 +294,8 @@ namespace MHGameWork.TheWizards.Scene
 
         public void DestroyEntityHandle(EntityScriptHandle handle)
         {
+            handle.Destroy();
+
             entityHandles.Remove(handle);
             onChange();
 
@@ -304,9 +307,12 @@ namespace MHGameWork.TheWizards.Scene
         }
 
 
-        public void RaisePlayerUse()
+        public Action<IPlayer> PlayerUseHandler;
+
+        public void RaisePlayerUse(IPlayer player)
         {
-            
+            if (PlayerUseHandler != null)
+                PlayerUseHandler(player);
         }
 
     }

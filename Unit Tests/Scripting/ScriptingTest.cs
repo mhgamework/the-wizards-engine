@@ -10,12 +10,15 @@ using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;
+using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scene;
 using MHGameWork.TheWizards.Scripting;
 using MHGameWork.TheWizards.Scripting.API;
+using MHGameWork.TheWizards.Tests.Gameplay;
 using MHGameWork.TheWizards.Tests.OBJParser;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.Tests.Scripting
@@ -66,12 +69,20 @@ namespace MHGameWork.TheWizards.Tests.Scripting
         {
             var twGame = new TestTWGame();
 
-            initializePlayer(twGame);
+            twGame.SetScriptLayerScope();
+
+            var controller = new HelperPlayerController(twGame.Game, new PlayerData());
+            twGame.Game.AddXNAObject(controller);
+            var scene = new TheWizards.Scene.Scene(twGame.Renderer, twGame.PhysicsFactory);
 
 
             twGame.Game.UpdateEvent += delegate
                                            {
-                                               
+                                               if (twGame.Game.Keyboard.IsKeyPressed(Keys.E))
+                                               {
+                                                   var ray = new Ray();
+                                                   var ent = scene.RaycastEntityPhysX(ray, o => true);
+                                               }
                                            };
 
 
@@ -79,16 +90,6 @@ namespace MHGameWork.TheWizards.Tests.Scripting
             twGame.Game.Run();
         }
 
-       
-        private void initializePlayer(TestTWGame twGame)
-        {
-            ScriptLayer.Game = twGame.Game;
-            ScriptLayer.Physics = twGame.PhysicsEngine;
-            ScriptLayer.Scene = twGame.PhysicsEngine.Scene;
-            ScriptLayer.ScriptRunner = new ScriptRunner(twGame.Game);
 
-            Gameplay.GameplayTest.InitializePlayer();
-
-        }
     }
 }
