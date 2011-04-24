@@ -147,6 +147,7 @@
     <Compile Include="Scripting\SimpleStateScript.cs" />
     <Compile Include="Server\LauncherServerTest.cs" />
     <Compile Include="Showcase.cs" />
+    <Compile Include="Terrain\SimpleTerrainBlock.cs" />
     <Compile Include="Terrain\TerrainClientTest.cs" />
     <Compile Include="Terrain\TerrainEditorTest.cs" />
     <Compile Include="Terrain\TerrainRenderingTest.cs" />

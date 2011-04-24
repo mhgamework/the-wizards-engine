@@ -276,7 +276,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
             //TODO: make TotalTriangles?
-            game.GraphicsDevice.DrawIndexedPrimitives( PrimitiveType.TriangleList, 0, 0, block.TotalVertices, 0, block.TotalBaseTriangles + block.TotalEdgeTriangles );
+            //TODO:  game.GraphicsDevice.DrawIndexedPrimitives( PrimitiveType.TriangleList, 0, 0, block.TotalVertices, 0, block.TotalBaseTriangles + block.TotalEdgeTriangles );
 
             //Terrain.Statistics.DrawCalls += 1;
         }

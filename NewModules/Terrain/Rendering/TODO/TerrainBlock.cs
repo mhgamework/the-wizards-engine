@@ -14,328 +14,17 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 {
     public class TerrainBlock : ITerrainBlockRenderable
     {
-        public int BlockSize { get; set; }
 
-        public ushort IndexFromCoords(int x, int z)
-        {
-            return (ushort)(z * (BlockSize + 1) + x);
-        }
+
 
         public IndexBuffer IndexBuffer;
+
+
 
         public int DetailLevel
         {
             get { return detailLevel; }
         }
-
-
-        protected void BuildBaseIndexes(List<ushort> indexes)
-        {
-            totalBaseTriangles = 0;
-
-            int stepping = 1 << DetailLevel;
-            int total = BlockSize;
-
-            // build indexes for inner polygons
-            for (int ix = stepping; ix < total - stepping; ix += stepping)
-            {
-                for (int iz = stepping; iz < total - stepping; iz += stepping)
-                {
-                    // triangle 1
-                    indexes.Add(IndexFromCoords(ix, iz));
-                    indexes.Add(IndexFromCoords(ix + stepping, iz));
-                    indexes.Add(IndexFromCoords(ix, iz + stepping));
-                    totalBaseTriangles++;
-
-                    // triangle 2
-                    indexes.Add(IndexFromCoords(ix + stepping, iz));
-                    indexes.Add(IndexFromCoords(ix + stepping, iz + stepping));
-                    indexes.Add(IndexFromCoords(ix, iz + stepping));
-                    totalBaseTriangles++;
-                }
-            }
-
-            totalEdgeOffset = indexes.Count;
-        }
-        protected void BuildEdgeIndexes(List<ushort> indexes)
-        {
-            int startCount = indexes.Count;
-
-            totalEdgeTriangles = 0;
-            totalEdgeTriangles += BuildEdgeIndexes(indexes, TerrainBlockEdge.West);
-            totalEdgeTriangles += BuildEdgeIndexes(indexes, TerrainBlockEdge.East);
-            totalEdgeTriangles += BuildEdgeIndexes(indexes, TerrainBlockEdge.North);
-            totalEdgeTriangles += BuildEdgeIndexes(indexes, TerrainBlockEdge.South);
-        }
-        protected int BuildEdgeIndexes(List<ushort> indexes, TerrainBlockEdge edge)
-        {
-            TerrainBlock neighbor = neighbors[(int)edge];
-
-            if (neighbor == null || neighbor.DetailLevel <= DetailLevel)
-                return BuildBasicEdgeIndexes(indexes, edge);
-            else
-                return BuildStitchedEdgeIndexes(indexes, edge);
-        }
-        protected int BuildBasicEdgeIndexes(List<ushort> indexes, TerrainBlockEdge edge)
-        {
-            int triangles = 0;
-            int stepping = 1 << DetailLevel;
-            int total = BlockSize;
-
-            int startX = 0;
-            int endX = 0;
-            int startZ = 0;
-            int endZ = 0;
-
-            switch (edge)
-            {
-                case TerrainBlockEdge.West:
-                    startX = 0;
-                    endX = startX;
-                    startZ = 0;
-                    endZ = total - stepping;
-                    break;
-
-                case TerrainBlockEdge.East:
-                    startX = total - stepping;
-                    endX = startX;
-                    startZ = 0;
-                    endZ = total - stepping;
-                    break;
-
-                case TerrainBlockEdge.North:
-                    startX = 0;
-                    endX = total - stepping;
-                    startZ = 0;
-                    endZ = startZ;
-                    break;
-
-                case TerrainBlockEdge.South:
-                    startX = 0;
-                    endX = total - stepping;
-                    startZ = total - stepping;
-                    endZ = startZ;
-                    break;
-            }
-
-            for (int ix = startX; ix <= endX; ix += stepping)
-            {
-                for (int iz = startZ; iz <= endZ; iz += stepping)
-                {
-                    if (edge == TerrainBlockEdge.West)
-                    {
-                        if (iz == startZ)
-                        {
-                            indexes.Add(IndexFromCoords(ix, iz));
-                            indexes.Add(IndexFromCoords(ix + stepping, iz + stepping));
-                            indexes.Add(IndexFromCoords(ix, iz + stepping));
-                            triangles++;
-
-                            continue;
-                        }
-
-                        if (iz == endZ)
-                        {
-                            indexes.Add(IndexFromCoords(ix, iz));
-                            indexes.Add(IndexFromCoords(ix + stepping, iz));
-                            indexes.Add(IndexFromCoords(ix, iz + stepping));
-                            triangles++;
-
-                            continue;
-                        }
-                    }
-                    else if (edge == TerrainBlockEdge.East)
-                    {
-                        if (iz == startZ)
-                        {
-                            indexes.Add(IndexFromCoords(ix + stepping, iz));
-                            indexes.Add(IndexFromCoords(ix + stepping, iz + stepping));
-                            indexes.Add(IndexFromCoords(ix, iz + stepping));
-                            triangles++;
-
-                            continue;
-                        }
-
-                        if (iz == endZ)
-                        {
-                            indexes.Add(IndexFromCoords(ix, iz));
-                            indexes.Add(IndexFromCoords(ix + stepping, iz));
-                            indexes.Add(IndexFromCoords(ix + stepping, iz + stepping));
-                            triangles++;
-
-                            continue;
-                        }
-                    }
-                    else if (edge == TerrainBlockEdge.North)
-                    {
-                        if (ix == startX)
-                        {
-                            indexes.Add(IndexFromCoords(ix, iz));
-                            indexes.Add(IndexFromCoords(ix + stepping, iz));
-                            indexes.Add(IndexFromCoords(ix + stepping, iz + stepping));
-                            triangles++;
-
-                            continue;
-                        }
-
-                        if (ix == endX)
-                        {
-                            indexes.Add(IndexFromCoords(ix, iz));
-                            indexes.Add(IndexFromCoords(ix + stepping, iz));
-                            indexes.Add(IndexFromCoords(ix, iz + stepping));
-                            triangles++;
-
-                            continue;
-                        }
-                    }
-
-                    else if (edge == TerrainBlockEdge.South)
-                    {
-                        if (ix == startX)
-                        {
-                            indexes.Add(IndexFromCoords(ix + stepping, iz));
-                            indexes.Add(IndexFromCoords(ix + stepping, iz + stepping));
-                            indexes.Add(IndexFromCoords(ix, iz + stepping));
-                            triangles++;
-
-                            continue;
-                        }
-
-                        if (ix == endX)
-                        {
-                            indexes.Add(IndexFromCoords(ix, iz));
-                            indexes.Add(IndexFromCoords(ix + stepping, iz + stepping));
-                            indexes.Add(IndexFromCoords(ix, iz + stepping));
-                            triangles++;
-
-                            continue;
-                        }
-                    }
-
-                    indexes.Add(IndexFromCoords(ix, iz));
-                    indexes.Add(IndexFromCoords(ix + stepping, iz));
-                    indexes.Add(IndexFromCoords(ix, iz + stepping));
-                    triangles++;
-
-                    indexes.Add(IndexFromCoords(ix + stepping, iz));
-                    indexes.Add(IndexFromCoords(ix + stepping, iz + stepping));
-                    indexes.Add(IndexFromCoords(ix, iz + stepping));
-                    triangles++;
-                }
-            }
-
-            return triangles;
-        }
-        protected int BuildStitchedEdgeIndexes(List<ushort> indexes, TerrainBlockEdge edge)
-        {
-            TerrainBlock neighbor = neighbors[(int)edge];
-            int sourceStep = 1 << DetailLevel;
-            int destStep = 1 << neighbor.DetailLevel;
-            //if (destStep > sourceStep) throw new Exception();
-            int destHalfStep = destStep >> 1;
-            int triangles = 0;
-            int startPos = 0;
-            int endPos = 0;
-            int insidePos = 0;
-            int insideStep = 0;
-            bool horizontal = false;
-
-            switch (edge)
-            {
-                case TerrainBlockEdge.West:
-                    startPos = terrainGeomipmapRenderData.BlockSize;
-                    insideStep = sourceStep;
-                    sourceStep = -sourceStep;
-                    destStep = -destStep;
-                    destHalfStep = -destHalfStep;
-                    break;
-
-                case TerrainBlockEdge.East:
-                    endPos = terrainGeomipmapRenderData.BlockSize;
-                    insidePos = terrainGeomipmapRenderData.BlockSize;
-                    insideStep = -sourceStep;
-                    break;
-
-                case TerrainBlockEdge.North:
-                    endPos = terrainGeomipmapRenderData.BlockSize;
-                    insideStep = sourceStep;
-                    horizontal = true;
-                    break;
-
-                case TerrainBlockEdge.South:
-                    startPos = terrainGeomipmapRenderData.BlockSize;
-                    insidePos = terrainGeomipmapRenderData.BlockSize;
-                    insideStep = -sourceStep;
-                    sourceStep = -sourceStep;
-                    destStep = -destStep;
-                    destHalfStep = -destHalfStep;
-                    horizontal = true;
-                    break;
-            };
-
-            for (int pos1 = startPos; pos1 != endPos; pos1 += destStep)
-            {
-                for (int pos2 = 0; pos2 != destHalfStep; pos2 += sourceStep)
-                {
-                    if (pos1 != startPos || pos2 != 0)
-                    {
-                        if (horizontal)
-                        {
-                            indexes.Add(IndexFromCoords(pos1, insidePos));
-                            indexes.Add(IndexFromCoords(pos1 + pos2 + sourceStep, insidePos + insideStep));
-                            indexes.Add(IndexFromCoords(pos1 + pos2, insidePos + insideStep));
-                            triangles++;
-                        }
-                        else
-                        {
-                            indexes.Add(IndexFromCoords(insidePos, pos1));
-                            indexes.Add(IndexFromCoords(insidePos + insideStep, pos1 + pos2 + sourceStep));
-                            indexes.Add(IndexFromCoords(insidePos + insideStep, pos1 + pos2));
-                            triangles++;
-                        }
-                    }
-                }
-
-                if (horizontal)
-                {
-                    indexes.Add(IndexFromCoords(pos1, insidePos));
-                    indexes.Add(IndexFromCoords(pos1 + destStep, insidePos));
-                    indexes.Add(IndexFromCoords(pos1 + destHalfStep, insidePos + insideStep));
-                    triangles++;
-                }
-                else
-                {
-                    indexes.Add(IndexFromCoords(insidePos, pos1));
-                    indexes.Add(IndexFromCoords(insidePos, pos1 + destStep));
-                    indexes.Add(IndexFromCoords(insidePos + insideStep, pos1 + destHalfStep));
-                    triangles++;
-                }
-
-                for (int pos2 = destHalfStep; pos2 != destStep; pos2 += sourceStep)
-                {
-                    if (pos1 != endPos - destStep || pos2 != destStep - sourceStep)
-                    {
-                        if (horizontal)
-                        {
-                            indexes.Add(IndexFromCoords(pos1 + destStep, insidePos));
-                            indexes.Add(IndexFromCoords(pos1 + pos2 + sourceStep, insidePos + insideStep));
-                            indexes.Add(IndexFromCoords(pos1 + pos2, insidePos + insideStep));
-                            triangles++;
-                        }
-                        else
-                        {
-                            indexes.Add(IndexFromCoords(insidePos, pos1 + destStep));
-                            indexes.Add(IndexFromCoords(insidePos + insideStep, pos1 + pos2 + sourceStep));
-                            indexes.Add(IndexFromCoords(insidePos + insideStep, pos1 + pos2));
-                            triangles++;
-                        }
-                    }
-                }
-            }
-
-            return triangles;
-        }
-
 
         public TerrainBlock West
         {
@@ -363,82 +52,11 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
 
-        public void BuildIndexBuffer(GraphicsDevice device)
-        {
-            if (IndexBuffer != null)
-                IndexBuffer.Dispose();
-
-            // allocate index buffer for maximum amount of room needed
-            IndexBuffer = new IndexBuffer(device, typeof(ushort),
-                                           (BlockSize + 1) * (BlockSize + 1) * 6, BufferUsage.None);
-
-            List<ushort> indexes = new List<ushort>();
-
-            BuildBaseIndexes(indexes);
-            BuildEdgeIndexes(indexes);
-
-            if (indexes.Count > 0)
-                IndexBuffer.SetData<ushort>(indexes.ToArray());
-        }
 
 
-        public void BuildBaseIndexes()
-        {
-            List<ushort> indexes = new List<ushort>();
-
-            BuildBaseIndexes(indexes);
-
-            if (indexes.Count > 0)
-                IndexBuffer.SetData<ushort>(indexes.ToArray());
-        }
-        public void BuildEdgeIndexes()
-        {
-            if (IndexBuffer == null) return;
-            List<ushort> indexes = new List<ushort>();
-
-            BuildEdgeIndexes(indexes);
-
-            if (indexes.Count > 0)
-            {
-                IndexBuffer.SetData<ushort>(totalEdgeOffset * sizeof(ushort),
-                                             indexes.ToArray(), 0, indexes.Count);
-
-            }
-        }
+        protected int BlockSize { get; set; }
 
 
-
-
-        public void ChangeDetailLevel(int mipLevel, bool force)
-        {
-            if (mipLevel > MaxDetailLevel)
-                mipLevel = MaxDetailLevel;
-
-            if (mipLevel == detailLevel && force != true)
-                return;
-
-            detailLevel = mipLevel;
-
-            BuildBaseIndexes();
-            BuildEdgeIndexes();
-
-            if (West != null)
-                West.BuildEdgeIndexes();
-
-            if (East != null)
-                East.BuildEdgeIndexes();
-
-            if (North != null)
-                North.BuildEdgeIndexes();
-
-            if (South != null)
-                South.BuildEdgeIndexes();
-        }
-
-        public int MaxDetailLevel
-        {
-            get { return (BlockSize >> 2) - 1; }
-        }
 
 
         public VertexBuffer VertexBuffer;
@@ -455,20 +73,6 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         }
 
 
-        private int totalBaseTriangles = 0;
-
-        public int TotalBaseTriangles
-        {
-            get { return totalBaseTriangles; }
-            set { totalBaseTriangles = value; }
-        }
-        private int totalEdgeTriangles = 0;
-
-        public int TotalEdgeTriangles
-        {
-            get { return totalEdgeTriangles; }
-            set { totalEdgeTriangles = value; }
-        }
 
         private float[] minDistancesSquared;
 
@@ -719,7 +323,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
                     min = Vector3.Min(min, vert.Position);
                     max = Vector3.Max(max, vert.Position);
 
-                    vertexes[IndexFromCoords(ix, iz)] = vert;
+                    //TODO: vertexes[IndexFromCoords(ix, iz)] = vert;
                 }
 
             }
@@ -937,7 +541,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
                     min = Vector3.Min(min, vert.Position);
                     max = Vector3.Max(max, vert.Position);
 
-                    vertexes[IndexFromCoords(ix, iz)] = vert;
+                    //TODO: vertexes[IndexFromCoords(ix, iz)] = vert;
                 }
             }
 
@@ -1100,7 +704,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
                     if (totalWeight == 0) { R = G = B = 0; A = 255; }
 
-                    data[IndexFromCoords(tx, tz)] = new Color((byte)R, (byte)G, (byte)B, (byte)A);
+                    //TODO: data[IndexFromCoords(tx, tz)] = new Color((byte)R, (byte)G, (byte)B, (byte)A);
                 }
             }
 
@@ -1540,7 +1144,6 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
         protected TerrainGeomipmapRenderData terrainGeomipmapRenderData;
 
-        protected int totalEdgeOffset = 0;
         protected int detailLevel = 0;
         protected int x = -1;
         protected int z = -1;
@@ -1736,7 +1339,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
 
-     
+
 
 
 
