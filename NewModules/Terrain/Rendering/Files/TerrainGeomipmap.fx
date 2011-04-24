@@ -204,9 +204,9 @@ texture displacementMap;       // this texture will point to the heightmap
 sampler displacementSampler = sampler_state      //this sampler will be used to read (sample) the heightmap
 {
         Texture = <displacementMap>;
-        MipFilter = Point;
-        MinFilter = Point;
-        MagFilter = Point;
+        MipFilter = Linear;
+        MinFilter = Linear;
+        MagFilter = Linear;
         AddressU = Clamp;
         AddressV = Clamp;
 };
@@ -313,6 +313,8 @@ struct VS_OUTPUT_HEIGHTMAP
 	
 };
 
+float heightMapSize;
+
 VS_OUTPUT_HEIGHTMAP TransformHeightmap(VS_INPUT_HEIGHTMAP In)
 {
     VS_OUTPUT_HEIGHTMAP Out = (VS_OUTPUT_HEIGHTMAP)0;                                  //initialize the output structure
@@ -320,7 +322,11 @@ VS_OUTPUT_HEIGHTMAP TransformHeightmap(VS_INPUT_HEIGHTMAP In)
     float4x4 worldViewProj= mul(world, viewProjection);                      //finally, compute the World * View * Projection matrix
     // this instruction reads from the heightmap, the value at the corresponding texture coordinate
     // Note: we selected level 0 for the mipmap parameter of tex2Dlod, since we want to read data exactly as it appears in the heightmap
-    In.position.y = tex2Dlod(displacementSampler, float4(In.uv.xy , 0 , 0 ));
+	float halfTexel = (1.0/heightMapSize*0.5);
+	float2 mapUV = In.uv.xy/heightMapSize +halfTexel;
+	mapUV.x = mapUV.x;
+	mapUV.y = mapUV.y;
+    In.position.y = tex2Dlod(displacementSampler, float4(mapUV , 0 , 0 ));
     //Pass the world position the the Pixel Shader
     Out.worldPos = mul(In.position, world);
     //Compute the final projected position by multiplying with the world, view and projection matrices                                                      
@@ -361,7 +367,7 @@ VS_OUTPUT_NORMAL TransformNormal( VS_INPUT_NORMAL Input )
 
 
 
-float4 PixelShaderHeightColored(in float4 worldPos : TEXCOORD1) : COLOR
+float4 PixelShaderHeightColored(in float4 worldPos : TEXCOORD1, in float4 uv : TEXCOORD0) : COLOR
 {       
     return worldPos.y / maxHeight;
 }
