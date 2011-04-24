@@ -140,6 +140,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\RenderingTest.cs" />
     <Compile Include="Rendering\SimpleMeshFactory.cs" />
+    <Compile Include="Scene\SceneTest.cs" />
     <Compile Include="Scripting\ScriptingTest.cs" />
     <Compile Include="Scripting\SimpleStateScript.cs" />
     <Compile Include="Server\LauncherServerTest.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Terrain\TerrainClientTest.cs" />
     <Compile Include="Terrain\TerrainEditorTest.cs" />
     <Compile Include="TestFiles.cs" />
+    <Compile Include="TestTWGame.cs" />
     <Compile Include="Treegenerater\TreeSynchronisationTest.cs" />
     <Compile Include="Utilities\UtilitiesTest.cs" />
     <Compile Include="WorldDatabase\WorldDatabaseTest.cs" />

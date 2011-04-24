@@ -426,9 +426,6 @@
     <Compile Include="Rendering\VertexDeclarationPool.cs" />
     <Compile Include="Editor\FromEditorProject\EditorScene.cs" />
     <Compile Include="Editor\FromEditorProject\SceneEditor.cs" />
-    <Compile Include="Scripting\IStateScript.cs" />
-    <Compile Include="Scripting\ScriptLayer.cs" />
-    <Compile Include="Scripting\ScriptRunner.cs" />
     <Compile Include="Terrain\Client\TerrainBlockClientPhysics.cs" />
     <Compile Include="Terrain\Client\TerrainBlockHeightfieldBuilder.cs" />
     <Compile Include="Terrain\Client\TerrainClientPhysics.cs" />
@@ -552,7 +549,6 @@
   <ItemGroup>
     <Folder Include="Editor\FromEditorProject\Temp\Entity\" />
     <Folder Include="Editor\FromEditorProject\Temp\Terrain\EditorTemp\" />
-    <Folder Include="Server\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Client\Client.csproj">

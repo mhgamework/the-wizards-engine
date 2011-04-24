@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Scripting.API;
 using MHGameWork.TheWizards.ServerClient.Editor;
 using Microsoft.Xna.Framework;
 
@@ -154,11 +156,13 @@ namespace MHGameWork.TheWizards.Scene
             {
                 if (staticPhysicsElement == null)
                     staticPhysicsElement = factory.CreateStaticElement(Mesh, Transformation.CreateMatrix());
+                staticPhysicsElement.ActorUserData = this;
             }
             else
             {
                 if (dynamicPhysicsElement == null)
                     dynamicPhysicsElement = factory.CreateDynamicElement(Mesh, Transformation.CreateMatrix());
+                dynamicPhysicsElement.ActorUserData = this;
 
             }
 
@@ -225,6 +229,11 @@ namespace MHGameWork.TheWizards.Scene
                 if (renderElement != null)
                     renderElement.WorldMatrix = t.CreateMatrix();
             }
+            for (int i = 0; i < entityHandles.Count; i++)
+            {
+                (entityHandles[i].Script as IUpdateHandler).Update();
+            }
+
         }
 
         /// <summary>
@@ -245,7 +254,15 @@ namespace MHGameWork.TheWizards.Scene
                 //dynamicPhysicsElement.World = transformation;
             }
 
-            if (!Static)
+            var enableUpdate = false;
+            enableUpdate |= !Static;
+            for (int i = 0; i < entityHandles.Count; i++)
+            {
+                if (entityHandles[i].UpdateRegistered)
+                    enableUpdate = true;
+            }
+
+            if (enableUpdate)
             {
                 if (!Scene.UpdateList.Contains(this))
                     Scene.UpdateList.Add(this);
@@ -255,5 +272,48 @@ namespace MHGameWork.TheWizards.Scene
                 Scene.UpdateList.Remove(this);
             }
         }
+
+
+
+
+        // Scripting functions
+
+
+        private List<EntityScriptHandle> entityHandles = new List<EntityScriptHandle>();
+
+
+        public EntityScriptHandle CreateEntityHandle(IScript script)
+        {
+            var ret = new EntityScriptHandle(this, script);
+
+            entityHandles.Add(ret);
+            onChange();
+
+            return ret;
+        }
+
+        public void DestroyEntityHandle(EntityScriptHandle handle)
+        {
+            handle.Destroy();
+
+            entityHandles.Remove(handle);
+            onChange();
+
+        }
+
+        internal void OnEntityHandlerStateChanged()
+        {
+            onChange();
+        }
+
+
+        public Action<IPlayer> PlayerUseHandler;
+
+        public void RaisePlayerUse(IPlayer player)
+        {
+            if (PlayerUseHandler != null)
+                PlayerUseHandler(player);
+        }
+
     }
 }

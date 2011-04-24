@@ -925,6 +925,10 @@ Global
 		{82AFF428-C42B-4C92-AA2A-D5C1A8662BB3}.Release|Win32.ActiveCfg = Release|x86
 		{82AFF428-C42B-4C92-AA2A-D5C1A8662BB3}.Release|x86.ActiveCfg = Release|x86
 		{82AFF428-C42B-4C92-AA2A-D5C1A8662BB3}.Release|x86.Build.0 = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Btrix|Any CPU.ActiveCfg = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Btrix|Mixed Platforms.ActiveCfg = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Btrix|Win32.ActiveCfg = Release|x86
+		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Btrix|x86.ActiveCfg = Release|x86
 		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.ColladaDebug|Any CPU.ActiveCfg = Debug|x86
 		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.ColladaDebug|Mixed Platforms.ActiveCfg = Debug|x86
 		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.ColladaDebug|Mixed Platforms.Build.0 = Debug|x86

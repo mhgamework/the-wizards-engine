@@ -8,7 +8,7 @@
     <ProjectGuid>{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MHGameWork.TheWizards.Gameplay</RootNamespace>
+    <RootNamespace>MHGameWork.TheWizards</RootNamespace>
     <AssemblyName>Gameplay</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -78,20 +78,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FireMove.cs" />
-    <Compile Include="EnergyOrb.cs" />
-    <Compile Include="Horse.cs" />
-    <Compile Include="IPlayerMove.cs" />
-    <Compile Include="PlayerController.cs" />
-    <Compile Include="PlayerInputClient.cs" />
-    <Compile Include="PlayerInputPacket.cs" />
-    <Compile Include="PlayerInputServer.cs" />
-    <Compile Include="PlayerThirdPersonCamera.cs" />
+    <Compile Include="Gameplay\FireMove.cs" />
+    <Compile Include="Gameplay\EnergyOrb.cs" />
+    <Compile Include="Gameplay\Horse.cs" />
+    <Compile Include="Gameplay\IPlayer.cs" />
+    <Compile Include="Gameplay\IPlayerMove.cs" />
+    <Compile Include="Gameplay\PlayerController.cs" />
+    <Compile Include="Gameplay\PlayerInputClient.cs" />
+    <Compile Include="Gameplay\PlayerInputPacket.cs" />
+    <Compile Include="Gameplay\PlayerInputServer.cs" />
+    <Compile Include="Gameplay\PlayerThirdPersonCamera.cs" />
+    <Compile Include="Gameplay\SimplePlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene\Editor\SceneEditor.cs" />
     <Compile Include="Scene\Entity.cs" />
+    <Compile Include="Scene\EntityScriptHandle.cs" />
     <Compile Include="Scene\Scene.cs" />
-    <Compile Include="ThrowMove.cs" />
+    <Compile Include="Scene\SceneScriptLoader.cs" />
+    <Compile Include="Scripting\API\IEntityHandle.cs" />
+    <Compile Include="Scripting\API\IScript.cs" />
+    <Compile Include="Scripting\API\IUpdateHandler.cs" />
+    <Compile Include="Scripting\IStateScript.cs" />
+    <Compile Include="Scripting\ScriptLayer.cs" />
+    <Compile Include="Scripting\ScriptRunner.cs" />
+    <Compile Include="Gameplay\ThrowMove.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">

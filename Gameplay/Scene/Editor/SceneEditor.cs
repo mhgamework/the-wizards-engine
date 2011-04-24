@@ -156,14 +156,11 @@ namespace MHGameWork.TheWizards.Scene.Editor
         }
         private void placeEntityAt(Vector3 position)
         {
-            var ent = new Entity(scene);
+            var ent = scene.CreateEntity();
             ent.Visible = true;
             ent.Solid = true;
             ent.Mesh = PlaceModeMesh;
             ent.Transformation = new Transformation(Vector3.One, Quaternion.Identity, position);
-
-            scene.AddEntity(ent);
-
         }
 
 

@@ -1,17 +1,15 @@
 using System;
 using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Reflection;
-using System.Text;
-using Microsoft.CSharp;
 
 namespace MHGameWork.TheWizards.Networking
 {
+    /// <summary>
+    /// TODO: move to a generic Core project
+    /// </summary>
     public class AssemblyBuilder
     {
-        public static Assembly CompileExecutable( String code )
+        public static Assembly CompileExecutable(String code)
         {
 
             CompilerParameters cp = new CompilerParameters();
@@ -29,58 +27,58 @@ namespace MHGameWork.TheWizards.Networking
             // Set whether to treat all warnings as errors.
             cp.TreatWarningsAsErrors = false;
 
-            return CompileExecutable( cp, code );
+            return CompileExecutable(cp, code);
 
         }
 
 
-        public static Assembly CompileExecutable( CompilerParameters cp, String code )
+        public static Assembly CompileExecutable(CompilerParameters cp, String code)
         {
-            return CompileExecutable( cp, new string[] { code } );
+            return CompileExecutable(cp, new string[] { code });
         }
-        public static Assembly CompileExecutable( CompilerParameters cp, String[] code )
+        public static Assembly CompileExecutable(CompilerParameters cp, String[] code)
         {
-            CodeDomProvider provider = null;
-            bool compileOk = false;
+            CodeDomProvider provider = new Microsoft.CSharp.CSharpCodeProvider();
 
-            // Select the code provider based on the input file extension.
-            provider = new Microsoft.CSharp.CSharpCodeProvider();
+            CompilerResults cr = provider.CompileAssemblyFromSource(cp, code);
 
+            return processCompilationResult(cr);
+        }
+        public static Assembly CompileExecutableFile(CompilerParameters cp, String[] filepaths)
+        {
+            CodeDomProvider provider = new Microsoft.CSharp.CSharpCodeProvider();
+            CompilerResults cr = provider.CompileAssemblyFromFile(cp, filepaths);
 
+            return processCompilationResult(cr);
+        }
 
-            // Invoke compilation of the source file.
-            CompilerResults cr = provider.CompileAssemblyFromSource( cp, code );
-
-            if ( cr.Errors.Count > 0 )
+        private static Assembly processCompilationResult(CompilerResults cr)
+        {
+            if (cr.Errors.Count > 0)
             {
                 // Display compilation errors.
                 //Console.WriteLine( "Errors building {0} into {1}", sourceName, cr.PathToAssembly );
-                Console.WriteLine( "Errors building code:" );
-                foreach ( CompilerError ce in cr.Errors )
+                Console.WriteLine("Errors building code:");
+                foreach (CompilerError ce in cr.Errors)
                 {
-                    Console.WriteLine( "  {0}", ce.ToString() );
+                    Console.WriteLine("  {0}", ce.ToString());
                     Console.WriteLine();
                 }
             }
             else
             {
                 // Display a successful compilation message.
-                Console.WriteLine( "Source built successfully." );
+                Console.WriteLine("Source built successfully.");
             }
 
 
             // Return the results of the compilation.
-            if ( cr.Errors.Count == 0 )
+            if (cr.Errors.Count == 0)
             {
                 return cr.CompiledAssembly;
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
-
-
     }
 
 }

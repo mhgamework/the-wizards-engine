@@ -32,6 +32,7 @@ namespace MHGameWork.TheWizards
         public static DirectoryInfo Test { get; private set; }
         public static DirectoryInfo Cache { get; private set; }
         public static DirectoryInfo GameData { get; private set; }
+        public static DirectoryInfo Scripts { get; private set; }
 
         static TWDir()
         {
@@ -48,6 +49,7 @@ namespace MHGameWork.TheWizards
             Test = RootDirectory.CreateSubdirectory("Test");
             Cache = RootDirectory.CreateSubdirectory("Cache");
             GameData = RootDirectory.CreateSubdirectory("GameData");
+            Scripts = RootDirectory.CreateSubdirectory("Scripts");
         }
 
         public static string generateRandomCacheFile(string path, string extension)
