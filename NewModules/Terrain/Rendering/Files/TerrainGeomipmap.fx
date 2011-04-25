@@ -314,6 +314,7 @@ struct VS_OUTPUT_HEIGHTMAP
 };
 
 float heightMapSize;
+float2 heightMapOffset;
 
 VS_OUTPUT_HEIGHTMAP TransformHeightmap(VS_INPUT_HEIGHTMAP In)
 {
@@ -323,7 +324,7 @@ VS_OUTPUT_HEIGHTMAP TransformHeightmap(VS_INPUT_HEIGHTMAP In)
     // this instruction reads from the heightmap, the value at the corresponding texture coordinate
     // Note: we selected level 0 for the mipmap parameter of tex2Dlod, since we want to read data exactly as it appears in the heightmap
 	float halfTexel = (1.0/heightMapSize*0.5);
-	float2 mapUV = In.uv.xy/heightMapSize +halfTexel;
+	float2 mapUV = (In.uv.xy+heightMapOffset) /heightMapSize +halfTexel;
 	mapUV.x = mapUV.x;
 	mapUV.y = mapUV.y;
     In.position.y = tex2Dlod(displacementSampler, float4(mapUV , 0 , 0 ));

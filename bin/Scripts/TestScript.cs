@@ -39,7 +39,7 @@ namespace Scripts
 			
 			angle += elapsed;
 
-			handle.Rotation = Quaternion.CreateFromAxisAngle(Vector3.Forward,angle);
+			handle.Rotation = Quaternion.CreateFromAxisAngle(Vector3.Forward,angle);e
 
         }
     }

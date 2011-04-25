@@ -183,11 +183,11 @@ namespace MHGameWork.TheWizards.Tests.Terrain
                 game.GraphicsDevice.Vertices[0].SetSource(vb, 0, VertexMultitextured.SizeInBytes);
                 game.GraphicsDevice.VertexDeclaration = decl;
 
+                shader.Shader.SetParameter("heightMapOffset", new Vector2(0, 0));
 
                 shader.Shader.SetTechnique("DrawTexturedPreprocessed");
                 shader.Shader.RenderMultipass(delegate
                 {
-
                     game.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0,
                                                               vertices.Length, 0,
                                                               block.TriangleCount);
@@ -198,7 +198,16 @@ namespace MHGameWork.TheWizards.Tests.Terrain
                 shader.Shader.SetTechnique("DrawHeightColored");
                 shader.Shader.RenderMultipass(delegate
                 {
+                    game.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0,
+                                                              vertices.Length, 0,
+                                                              block.TriangleCount);
+                });
 
+                shader.Shader.SetParameter("heightMapOffset", new Vector2(1, 1));
+                shader.Shader.SetParameter("world", Matrix.CreateTranslation(Vector3.Right * 34));
+
+                shader.Shader.RenderMultipass(delegate
+                {
                     game.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0,
                                                               vertices.Length, 0,
                                                               block.TriangleCount);
