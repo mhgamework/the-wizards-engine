@@ -54,6 +54,19 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             return c.CreateMesh(importer);
         }
 
+        public static RAMMesh CreateMeshFromObj(OBJToRAMMeshConverter c, string obj, string mtl)
+        {
+            var fi = new FileInfo(mtl);
+            ObjImporter importer;
+            importer = new ObjImporter();
+            importer.AddMaterialFileStream(fi.Name, File.OpenRead(mtl));
+            importer.ImportObjFile(obj);
+
+            return c.CreateMesh(importer);
+        }
+
+
+
 
         [Test]
         [RequiresThread(ApartmentState.STA)]
@@ -288,17 +301,17 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             var meshpartPool = new MeshPartPool();
             var vertexDeclarationPool = new VertexDeclarationPool();
 
-            var renderer = new MeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
+            var renderer = new SimpleMeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
 
             vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
 
-            MeshRenderElement middle = null;
+            SimpleMeshRenderElement middle = null;
 
             for (int i = 0; i < 50; i++)
             {
                 for (int j = 0; j < 50; j++)
                 {
-                   
+
                     var el = renderer.AddMesh(mesh);
                     el.WorldMatrix = Matrix.CreateTranslation(Vector3.Right * i * 2 + Vector3.UnitZ * j * 2);
 
@@ -346,7 +359,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
             RAMMesh mesh3 = CreateGuildHouseMesh(c);
 
-            MeshRenderer renderer = InitDefaultMeshRenderer(game);
+            SimpleMeshRenderer renderer = InitDefaultMeshRenderer(game);
 
 
             var el = renderer.AddMesh(mesh);
@@ -365,19 +378,19 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             }
 
 
-        
+
 
             game.Run();
 
         }
 
-        public static MeshRenderer InitDefaultMeshRenderer(XNAGame game)
+        public static SimpleMeshRenderer InitDefaultMeshRenderer(XNAGame game)
         {
             var texturePool = new TexturePool();
             var meshpartPool = new MeshPartPool();
             var vertexDeclarationPool = new VertexDeclarationPool();
 
-            var renderer = new MeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
+            var renderer = new SimpleMeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
             game.AddXNAObject(texturePool);
             game.AddXNAObject(meshpartPool);
             game.AddXNAObject(vertexDeclarationPool);

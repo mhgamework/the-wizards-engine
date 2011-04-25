@@ -27,6 +27,15 @@ namespace MHGameWork.TheWizards.Tests
         public static string TownObj { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\Town\OBJ03\Town001.obj"; } }
         public static string TownMtl { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\Town\OBJ03\Town001.mtl"; } }
 
+        public static string StorageHouseDoorLeftObj { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\StorageHouseDoorLeft.obj"; } }
+        public static string StorageHouseDoorLeftMtl { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\StorageHouseDoorLeft.mtl"; } }
+        public static string StorageHouseDoorRightObj { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\StorageHouseDoorRight.obj"; } }
+        public static string StorageHouseDoorRightMtl { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\StorageHouseDoorRight.mtl"; } }
+
+        public static string StorageHouseDoorlessObj { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\StorageHouseDoorless.obj"; } }
+        public static string StorageHouseDoorlessMtl { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\StorageHouseDoorless.mtl"; } }
+
+
 
     }
 }

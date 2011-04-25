@@ -15,11 +15,11 @@ namespace MHGameWork.TheWizards.Rendering
             Renderer = renderer;
         }
 
-        public MeshRenderElement CreateRenderElement(IMesh mesh)
+        public SimpleMeshRenderElement CreateRenderElement(IMesh mesh)
         {
             //DOESNT WORK
 
-            MeshRenderElement mEl = null;// = new MeshRenderElement();
+            SimpleMeshRenderElement mEl = null;// = new SimpleMeshRenderElement();
             //TODO: Noob implementation. (No shared resources)
 
             var coreData = mesh.GetCoreData();

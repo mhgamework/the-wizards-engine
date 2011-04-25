@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.Tests
             var meshpartPool = new MeshPartPool();
             var vertexDeclarationPool = new VertexDeclarationPool();
 
-            var renderer = new MeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
+            var renderer = new SimpleMeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
 
             vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
 
@@ -211,7 +211,7 @@ namespace MHGameWork.TheWizards.Tests
             var meshpartPool = new MeshPartPool();
             var vertexDeclarationPool = new VertexDeclarationPool();
 
-            var renderer = new MeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
+            var renderer = new SimpleMeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
             vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
 
 
@@ -317,7 +317,7 @@ namespace MHGameWork.TheWizards.Tests
             var meshpartPool = new MeshPartPool();
             var vertexDeclarationPool = new VertexDeclarationPool();
 
-            var renderer = new MeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
+            var renderer = new SimpleMeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
             vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
 
 
@@ -428,7 +428,7 @@ namespace MHGameWork.TheWizards.Tests
             var meshpartPool = new MeshPartPool();
             var vertexDeclarationPool = new VertexDeclarationPool();
 
-            var renderer = new MeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
+            var renderer = new SimpleMeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
 
             vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
 

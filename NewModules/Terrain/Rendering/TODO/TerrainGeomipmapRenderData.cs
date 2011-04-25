@@ -625,7 +625,8 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
                 file.Seek( blockPointer, SeekOrigin.Begin );
 
                 block.ReadPreProcessedData( file.Reader, Materials );
-                block.BuildIndexBuffer( XNAGame.GraphicsDevice );
+                throw new NotImplementedException();
+                //TODO: block.BuildIndexBuffer( XNAGame.GraphicsDevice );
 
             }
 
@@ -696,7 +697,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
             }
 
-            block.ChangeDetailLevel( level, false );
+            //TODO: block.ChangeDetailLevel( level, false );
             //}
         }
 

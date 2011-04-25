@@ -30,10 +30,10 @@ namespace MHGameWork.TheWizards.Tests.World.Static
             private set { mesh = value; }
         }
 
-        private readonly MeshRenderer renderer;
-        private MeshRenderElement renderElement;
+        private readonly SimpleMeshRenderer renderer;
+        private SimpleMeshRenderElement renderElement;
 
-        public SimpleStaticWorldObject(MeshRenderer renderer)
+        public SimpleStaticWorldObject(SimpleMeshRenderer renderer)
         {
             this.renderer = renderer;
             WorldMatrix = Matrix.Identity;

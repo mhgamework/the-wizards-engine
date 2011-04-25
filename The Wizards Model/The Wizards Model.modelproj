@@ -150,10 +150,6 @@
     </Validate>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClientVB\ClientVB.vbproj">
-      <Name>ClientVB</Name>
-      <Project>{8218d77f-2fb6-48e5-867c-85eea4a4b75e}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Client\Client.csproj">
       <Name>Client</Name>
       <Project>{64749fe6-e3af-4666-bb9f-8ccff4d30e2d}</Project>

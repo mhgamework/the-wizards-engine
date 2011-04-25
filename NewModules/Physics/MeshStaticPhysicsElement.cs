@@ -18,11 +18,18 @@ namespace MHGameWork.TheWizards.Physics
         private StillDesign.PhysX.Scene scene;
         private StillDesign.PhysX.Actor actor;
         private BoundingSphere boundingSphere;
-
         public BoundingSphere BoundingSphere
         {
             get { return boundingSphere; }
         }
+
+        private object actorUserData;
+        public object ActorUserData
+        {
+            get { return actorUserData; }
+            set { actorUserData = value; if (actor != null) actor.UserData = actorUserData; }
+        }
+
 
         /// <summary>
         /// World is in the constructor because this is a static physx object
@@ -78,6 +85,7 @@ namespace MHGameWork.TheWizards.Physics
             if (actor != null) return;
             actor = builder.CreateActorStatic(scene, Mesh.GetCollisionData(), worldMatrix);
             actor.GlobalPose = worldMatrix;
+            actor.UserData = actorUserData;
         }
 
         public void DisablePhysics()
@@ -108,17 +116,24 @@ namespace MHGameWork.TheWizards.Physics
             get { return worldMatrix; }
             set
             {
-                var n = node;
+                if (node == null)
+                {
+                    worldMatrix = value;
+                    return;
+                }
+                var oldNode = node;
 
                 node.RemoveStaticObject(this);
                 worldMatrix = value;
                 updateBoundingSphere();
-                n = n.FindContainingNodeUpwards(this);
-                if (n == null)
-                    n = QuadTree.GetRootNode(node);
+                var newNode = oldNode.FindContainingNodeUpwards(this);
+                if (newNode == null)
+                    newNode = QuadTree.GetRootNode(oldNode);
 
-                n.AddStaticObject(this);
-
+             
+                newNode.AddStaticObject(this);
+                if (actor != null)
+                    actor.GlobalPose = worldMatrix;
             }
         }
 

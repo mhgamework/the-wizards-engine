@@ -1,0 +1,92 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 23.04.2011 16:24:51
+
+newmtl 24___RoofingCeramic
+	Ns 10.00000
+	Ni 1.50000
+	d 1.00000
+	Tr 0.00000
+	Tf 1.00000 1.00000 1.00000 
+	illum 2
+	Ka 0.58824 0.58824 0.58824
+	Kd 0.58824 0.58824 0.58824
+	Ks 0.00000 0.00000 0.00000
+	Ke 0.00000 0.00000 0.00000
+	map_Ka maps\RooftilesCeramicOld0091_2_S_Modified2.jpg
+	map_Kd maps\RooftilesCeramicOld0091_2_S_Modified2.jpg
+	map_bump maps\RooftilesCeramicOld0091_2_S.jpg
+	bump maps\RooftilesCeramicOld0091_2_S.jpg
+
+newmtl 01___Walls
+	Ns 10.00000
+	Ni 1.50000
+	d 1.00000
+	Tr 0.00000
+	Tf 1.00000 1.00000 1.00000 
+	illum 2
+	Ka 0.58824 0.58824 0.58824
+	Kd 0.58824 0.58824 0.58824
+	Ks 0.00000 0.00000 0.00000
+	Ke 0.00000 0.00000 0.00000
+	map_Ka maps\LoamWalls0012_2_S_modified2.jpg
+	map_Kd maps\LoamWalls0012_2_S_modified2.jpg
+	map_bump maps\LoamWalls0012_2_S_modified.jpg
+	bump maps\LoamWalls0012_2_S_modified.jpg
+
+newmtl DoorsBig
+	Ns 10.00000
+	Ni 1.50000
+	d 1.00000
+	Tr 0.00000
+	Tf 1.00000 1.00000 1.00000 
+	illum 2
+	Ka 0.58800 0.58800 0.58800
+	Kd 0.58800 0.58800 0.58800
+	Ks 0.00000 0.00000 0.00000
+	Ke 0.00000 0.00000 0.00000
+	map_Ka maps\DoorsMedieval0109_S.jpg
+	map_Kd maps\DoorsMedieval0109_S.jpg
+
+newmtl 18___WoodPlanks
+	Ns 10.00000
+	Ni 1.50000
+	d 1.00000
+	Tr 0.00000
+	Tf 1.00000 1.00000 1.00000 
+	illum 2
+	Ka 0.58824 0.58824 0.58824
+	Kd 0.58824 0.58824 0.58824
+	Ks 0.00000 0.00000 0.00000
+	Ke 0.00000 0.00000 0.00000
+	map_Ka maps\WoodPlanksFloors0011_19_S.jpg
+	map_Kd maps\WoodPlanksFloors0011_19_S.jpg
+
+newmtl 06___WoodPlanks
+	Ns 10.00000
+	Ni 1.50000
+	d 1.00000
+	Tr 0.00000
+	Tf 1.00000 1.00000 1.00000 
+	illum 2
+	Ka 0.58824 0.58824 0.58824
+	Kd 0.58824 0.58824 0.58824
+	Ks 0.00000 0.00000 0.00000
+	Ke 0.00000 0.00000 0.00000
+	map_Ka maps\WoodPlanksBare0054_1_S.jpg
+	map_Kd maps\WoodPlanksBare0054_1_S.jpg
+	map_bump maps\WoodPlanksBare0054_1_S.jpg
+	bump maps\WoodPlanksBare0054_1_S.jpg
+
+newmtl Material__4
+	Ns 10.00000
+	Ni 1.50000
+	d 1.00000
+	Tr 0.00000
+	Tf 1.00000 1.00000 1.00000 
+	illum 2
+	Ka 0.58800 0.58800 0.58800
+	Kd 0.58800 0.58800 0.58800
+	Ks 0.00000 0.00000 0.00000
+	Ke 0.00000 0.00000 0.00000
+	map_Ka maps\SoilMud0043_2_S.jpg
+	map_Kd maps\SoilMud0043_2_S.jpg

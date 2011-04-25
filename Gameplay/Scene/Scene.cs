@@ -6,6 +6,8 @@ using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using Microsoft.Xna.Framework;
+using StillDesign.PhysX;
+using Ray = Microsoft.Xna.Framework.Ray;
 
 namespace MHGameWork.TheWizards.Scene
 {
@@ -15,20 +17,21 @@ namespace MHGameWork.TheWizards.Scene
     /// </summary>
     public class Scene : IXNAObject
     {
-        private readonly MeshRenderer renderer;
+        private readonly SimpleMeshRenderer renderer;
         private readonly MeshPhysicsElementFactory physicsElementFactory;
         private List<Entity> entities = new List<Entity>();
         internal List<Entity> UpdateList = new List<Entity>();
 
         public IXNAGame Game { get; private set; }
 
-        public Scene(MeshRenderer renderer, MeshPhysicsElementFactory physicsElementFactory)
+        public Scene(SimpleMeshRenderer renderer, MeshPhysicsElementFactory physicsElementFactory)
         {
             this.renderer = renderer;
             this.physicsElementFactory = physicsElementFactory;
+            customRaycastReport = new CustomRaycastReport(this);
         }
 
-        internal MeshRenderer Renderer
+        internal SimpleMeshRenderer Renderer
         {
             get { return renderer; }
         }
@@ -38,11 +41,12 @@ namespace MHGameWork.TheWizards.Scene
             get { return physicsElementFactory; }
         }
 
-        public void AddEntity(Entity ent)
+        public Entity CreateEntity()
         {
+            var ent = new Entity(this);
             entities.Add(ent);
-            ent.UpdateRenderElement();
-            ent.UpdatePhysicsElement();
+
+            return ent;
         }
 
         public void EnableSimulation()
@@ -92,5 +96,79 @@ namespace MHGameWork.TheWizards.Scene
             }
         }
 
+
+        private Entity resolveEntityFromPhysx(Actor actor)
+        {
+            if (actor.UserData is Entity) return (Entity)actor.UserData;
+            return null;
+        }
+
+        private CustomRaycastReport customRaycastReport;
+
+        public EntityRaycastHit RaycastEntityPhysX(Ray ray, RaycastFilterDelegate filter)
+        {
+            StillDesign.PhysX.Ray pRay = new StillDesign.PhysX.Ray(ray.Position, ray.Direction);
+
+            customRaycastReport.LastHit = null;
+            customRaycastReport.CurrentFilter = filter;
+
+            var count = physicsElementFactory.Engine.Scene.RaycastAllShapes(pRay, customRaycastReport, ShapesType.All);
+
+            customRaycastReport.CurrentFilter = null;
+
+            return customRaycastReport.LastHit;
+
+        }
+
+
+        public delegate bool RaycastFilterDelegate(EntityRaycastHit hit);
+
+        private class CustomRaycastReport : UserRaycastReport
+        {
+            private readonly Scene scene;
+            public RaycastFilterDelegate CurrentFilter;
+            public EntityRaycastHit LastHit;
+
+
+            public CustomRaycastReport(Scene scene)
+            {
+                this.scene = scene;
+            }
+
+            public override bool OnHit(RaycastHit hits)
+            {
+                //WARNING: MAY CAUSE OVERHEAD (class constructor)
+                var entityFromPhysx = scene.resolveEntityFromPhysx(hits.Shape.Actor);
+                if (entityFromPhysx == null) return false;
+                var h = new EntityRaycastHit(hits, entityFromPhysx);
+                var ret = CurrentFilter(h);
+
+                if (ret == false) return false;
+
+                LastHit = h;
+
+                return true;
+
+            }
+        }
+
+        public class EntityRaycastHit
+        {
+            public float Distance;
+            public Vector3 WorldImpact;
+            public Vector3 WorldNormal;
+
+            public Entity Entity;
+
+            public EntityRaycastHit(RaycastHit hit, Entity entity)
+            {
+                Entity = entity;
+                Distance = hit.Distance;
+                WorldImpact = hit.WorldImpact;
+                WorldNormal = hit.WorldNormal;
+
+
+            }
+        }
     }
 }

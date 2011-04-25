@@ -47,7 +47,7 @@ namespace MHGameWork.TheWizards.Main
         private TreeClient treeClient;
         private ClientStaticWorldObjectSyncer clientStaticWorldObjectSyncer;
         private ClientStaticWorldObjectSyncer staticWorldObjectSyncer;
-        private MeshRenderer renderer;
+        private SimpleMeshRenderer renderer;
 
         private object updateLock = new object();
 
@@ -219,7 +219,7 @@ namespace MHGameWork.TheWizards.Main
             var texturePool = new TexturePool();
             var meshPartPool = new MeshPartPool();
 
-            renderer = new MeshRenderer(texturePool, meshPartPool, vertexDeclarationPool);
+            renderer = new SimpleMeshRenderer(texturePool, meshPartPool, vertexDeclarationPool);
 
 
 
