@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.Tests
     /// </summary>
     public class TestTWGame
     {
-        public MeshRenderer Renderer;
+        public SimpleMeshRenderer Renderer;
         public RAMTextureFactory TextureFactory;
         public RAMMesh BarrelMesh;
         public ClientPhysicsQuadTreeNode PhysicsTreeRoot;
