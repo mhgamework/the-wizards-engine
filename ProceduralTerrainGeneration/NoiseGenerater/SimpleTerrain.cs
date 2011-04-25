@@ -20,25 +20,26 @@ namespace TreeGenerator.NoiseGenerater
         private BasicEffect effect;
         public int vertexCountWidth;
         private Matrix World = Matrix.Identity;
-        public SimpleTerrain(MHGameWork.TheWizards.Graphics.XNAGame game, List<Microsoft.Xna.Framework.Vector3> positions,List<Color> colors, int vertexCountWidth,int vertexCountHeigth)
+
+        public SimpleTerrain(MHGameWork.TheWizards.Graphics.XNAGame game, List<Microsoft.Xna.Framework.Vector3> positions, List<Color> colors, int vertexCountWidth, int vertexCountHeigth)
         {
             vertices = new List<VertexPositionNormalColor>();
             this.game = game;
             int positionCount = positions.Count;
             this.vertexCountWidth = vertexCountWidth;
-            for (int count = 0; count < vertexCountWidth-1; count++)
+            for (int count = 0; count < vertexCountWidth - 1; count++)
             {
-                for (int i = 0; i < vertexCountWidth-1; i++)
+                for (int i = 0; i < vertexCountWidth - 1; i++)
                 {
 
 
-                    vertices.Add(new VertexPositionNormalColor(positions[i + count * vertexCountWidth], GetAveragedNormal(i,count,positions),colors[i + count * vertexCountWidth]));
-                    vertices.Add(new VertexPositionNormalColor(positions[i + (count+1) * vertexCountWidth], GetAveragedNormal(i, count+1, positions), colors[i + (count+1) * vertexCountWidth]));
-                    vertices.Add(new VertexPositionNormalColor(positions[i + count * vertexCountWidth+1], GetAveragedNormal(i+1, count, positions), colors[i + count * vertexCountWidth+1]));
+                    vertices.Add(new VertexPositionNormalColor(positions[i + count * vertexCountWidth], GetAveragedNormal(i, count, positions), colors[i + count * vertexCountWidth]));
+                    vertices.Add(new VertexPositionNormalColor(positions[i + (count + 1) * vertexCountWidth], GetAveragedNormal(i, count + 1, positions), colors[i + (count + 1) * vertexCountWidth]));
+                    vertices.Add(new VertexPositionNormalColor(positions[i + count * vertexCountWidth + 1], GetAveragedNormal(i + 1, count, positions), colors[i + count * vertexCountWidth + 1]));
 
-                    vertices.Add(new VertexPositionNormalColor(positions[i + count * vertexCountWidth+1], GetAveragedNormal(i+1, count, positions), colors[i + count * vertexCountWidth+1]));
-                    vertices.Add(new VertexPositionNormalColor(positions[i + (count+1) * vertexCountWidth], GetAveragedNormal(i, count+1, positions), colors[i + (count+1) * vertexCountWidth]));
-                    vertices.Add(new VertexPositionNormalColor(positions[i + (count+1) * vertexCountWidth+1], GetAveragedNormal(i+1, count, positions), colors[i + (count+1) * vertexCountWidth+1]));
+                    vertices.Add(new VertexPositionNormalColor(positions[i + count * vertexCountWidth + 1], GetAveragedNormal(i + 1, count, positions), colors[i + count * vertexCountWidth + 1]));
+                    vertices.Add(new VertexPositionNormalColor(positions[i + (count + 1) * vertexCountWidth], GetAveragedNormal(i, count + 1, positions), colors[i + (count + 1) * vertexCountWidth]));
+                    vertices.Add(new VertexPositionNormalColor(positions[i + (count + 1) * vertexCountWidth + 1], GetAveragedNormal(i + 1, count, positions), colors[i + (count + 1) * vertexCountWidth + 1]));
 
                     //vertices.Add(new VertexPositionNormalColor(positions[i + (count + 1) * vertexCountWidth], colors[i + (count + 1) * vertexCountWidth]));
                     //vertices.Add(new VertexPositionNormalColor(positions[i + count * vertexCountWidth + 1], colors[i + count * vertexCountWidth + 1]));
@@ -46,11 +47,11 @@ namespace TreeGenerator.NoiseGenerater
                     //vertices.Add(new VertexPositionNormalColor(positions[i + count * vertexCountWidth + 1], colors[i + count * vertexCountWidth + 1]));
                     //vertices.Add(new VertexPositionNormalColor(positions[i + (count + 1) * vertexCountWidth], colors[i + (count + 1) * vertexCountWidth]));
                     //vertices.Add(new VertexPositionNormalColor(positions[i + (count + 1) * vertexCountWidth + 1], colors[i + (count + 1) * vertexCountWidth + 1]));
-                    
+
                 }
             }
-             vertexCount = vertices.Count;
-            triangleCount = vertexCount/3;
+            vertexCount = vertices.Count;
+            triangleCount = vertexCount / 3;
             vertexStride = VertexPositionNormalColor.SizeInBytes;
         }
         public SimpleTerrain(MHGameWork.TheWizards.Graphics.XNAGame game, List<Microsoft.Xna.Framework.Vector3> positions, List<Color> colors, int vertexCountWidth, int vertexCountHeigth, Matrix world)
@@ -87,7 +88,7 @@ namespace TreeGenerator.NoiseGenerater
             triangleCount = vertexCount / 3;
             vertexStride = VertexPositionNormalColor.SizeInBytes;
         }
-       
+
         public void CreateRenderData()
         {
             effect = new BasicEffect(game.GraphicsDevice, new EffectPool());
@@ -128,7 +129,7 @@ namespace TreeGenerator.NoiseGenerater
             effect.EnableDefaultLighting();
 
             effect.DirectionalLight0.Direction = Vector3.Normalize(new Vector3(0.5f, -1, 0.5f));
-            
+
             dVertexBuffer = new DynamicVertexBuffer(game.GraphicsDevice, typeof(VertexPositionNormalColor), vertexCount, BufferUsage.None);
             decl = new VertexDeclaration(game.GraphicsDevice, VertexPositionNormalColor.VertexElements);
             dVertexBuffer.SetData(vertices.ToArray());
@@ -177,13 +178,13 @@ namespace TreeGenerator.NoiseGenerater
 
         //    return Vector3.Normalize(normal);
         //}
-        public Vector3 GetAveragedNormal(int x, int z,List<Vector3> positions)
+        public Vector3 GetAveragedNormal(int x, int z, List<Vector3> positions)
         {
             Vector3 normal = new Vector3();
 
             // top left
             if (x > 0 && z > 0)
-                normal += GetNormal(x - 1, z - 1,positions);
+                normal += GetNormal(x - 1, z - 1, positions);
 
             // top center
             if (z > 0)
@@ -219,12 +220,12 @@ namespace TreeGenerator.NoiseGenerater
             return Vector3.Normalize(normal);
         }
 
-        public Vector3 GetNormal(int x, int y,List<Vector3> positions)
+        public Vector3 GetNormal(int x, int y, List<Vector3> positions)
         {
-            Vector3 v1 = getSafePosition(positions, x, y+1);//x,z+
+            Vector3 v1 = getSafePosition(positions, x, y + 1);//x,z+
             Vector3 v2 = getSafePosition(positions, x, y - 1); //x z--
-            Vector3 v3 = getSafePosition(positions, x+1, y + 1); //x+1,z
-            Vector3 v4 = getSafePosition(positions, x-1, y + 1); //x-1, z
+            Vector3 v3 = getSafePosition(positions, x + 1, y + 1); //x+1,z
+            Vector3 v4 = getSafePosition(positions, x - 1, y + 1); //x-1, z
 
             return Vector3.Normalize(Vector3.Cross(v1 - v2, v3 - v4));
         }
@@ -233,15 +234,15 @@ namespace TreeGenerator.NoiseGenerater
         {
             if (x < 0 || y < 0 || x > vertexCountWidth - 1 || y > vertexCountWidth - 1)
                 return new Vector3(x, 0, y);
-            return positions[x + y *vertexCountWidth];
+            return positions[x + y * vertexCountWidth];
         }
 
         public struct VertexPositionNormalColor
-{
-    public Vector3 Position;
-    public Vector3 Normal;
-    public Color Color;
-            public VertexPositionNormalColor(Vector3 position,Vector3 normal, Color color)
+        {
+            public Vector3 Position;
+            public Vector3 Normal;
+            public Color Color;
+            public VertexPositionNormalColor(Vector3 position, Vector3 normal, Color color)
             {
                 Position = position;
                 Normal = normal;
@@ -255,12 +256,12 @@ namespace TreeGenerator.NoiseGenerater
 
                                                                         };
 
-    public static int SizeInBytes
-    {
-        get { return 28; }
-    }
+            public static int SizeInBytes
+            {
+                get { return 28; }
+            }
 
-}
+        }
         private void renderPrimitives()
         {
             game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
@@ -274,7 +275,7 @@ namespace TreeGenerator.NoiseGenerater
             effect.World = World;
             effect.View = game.Camera.View;
             effect.Projection = game.Camera.Projection;
-            
+
 
             effect.Begin(SaveStateMode.None);
 
