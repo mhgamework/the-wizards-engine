@@ -20,6 +20,7 @@ namespace TreeGenerator.NoiseGenerater
         private BasicEffect effect;
         public int vertexCountWidth;
         private Matrix World = Matrix.Identity;
+
         public SimpleTerrain(MHGameWork.TheWizards.Graphics.XNAGame game, List<Microsoft.Xna.Framework.Vector3> positions, List<Color> colors, int vertexCountWidth, int vertexCountHeigth)
         {
             vertices = new List<VertexPositionNormalColor>();
