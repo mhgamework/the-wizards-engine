@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace MHGameWork.TheWizards.Rendering
 {
     /// <summary>
-    /// TODO: move contents of this class to the MeshRenderer or something else specific to Meshes instead of the deprecated IMeshPart
+    /// TODO: move contents of this class to the SimpleMeshRenderer or something else specific to Meshes instead of the deprecated IMeshPart
     /// </summary>
     [Obsolete("This class is to become obsolete, IMeshPart is to be removed!")]
     public class MeshPartPool : IXNAObject
