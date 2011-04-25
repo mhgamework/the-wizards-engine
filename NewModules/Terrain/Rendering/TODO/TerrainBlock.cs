@@ -14,8 +14,52 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 {
     public class TerrainBlock : ITerrainBlockRenderable
     {
-        public VertexBuffer VertexBuffer;
+
+
+
         public IndexBuffer IndexBuffer;
+
+
+
+        public int DetailLevel
+        {
+            get { return detailLevel; }
+        }
+
+        public TerrainBlock West
+        {
+            get { return neighbors[(int)TerrainBlockEdge.West]; }
+            set { neighbors[(int)TerrainBlockEdge.West] = value; }
+        }
+        public TerrainBlock East
+        {
+            get { return neighbors[(int)TerrainBlockEdge.East]; }
+            set { neighbors[(int)TerrainBlockEdge.East] = value; }
+        }
+
+        public TerrainBlock North
+        {
+            get { return neighbors[(int)TerrainBlockEdge.North]; }
+            set { neighbors[(int)TerrainBlockEdge.North] = value; }
+        }
+        public TerrainBlock South
+        {
+            get { return neighbors[(int)TerrainBlockEdge.South]; }
+            set { neighbors[(int)TerrainBlockEdge.South] = value; }
+        }
+
+        protected TerrainBlock[] neighbors = new TerrainBlock[4];
+
+
+
+
+
+        protected int BlockSize { get; set; }
+
+
+
+
+        public VertexBuffer VertexBuffer;
         public TerrainMaterial Material;
         public int TotalVertices;
 
@@ -23,20 +67,12 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
 
-        private int totalBaseTriangles = 0;
-
-        public int TotalBaseTriangles
+        public TerrainBlock()
         {
-            get { return totalBaseTriangles; }
-            set { totalBaseTriangles = value; }
-        }
-        private int totalEdgeTriangles = 0;
 
-        public int TotalEdgeTriangles
-        {
-            get { return totalEdgeTriangles; }
-            set { totalEdgeTriangles = value; }
         }
+
+
 
         private float[] minDistancesSquared;
 
@@ -57,46 +93,6 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         protected Vector3 center;
 
 
-        public void BuildIndexBuffer( GraphicsDevice device )
-        {
-            if ( IndexBuffer != null )
-                IndexBuffer.Dispose();
-
-            // allocate index buffer for maximum amount of room needed
-            IndexBuffer = new IndexBuffer( device, typeof( ushort ),
-                                           ( terrainGeomipmapRenderData.BlockSize + 1 ) * ( terrainGeomipmapRenderData.BlockSize + 1 ) * 6, BufferUsage.None );
-
-            List<ushort> indexes = new List<ushort>();
-
-            BuildBaseIndexes( indexes );
-            BuildEdgeIndexes( indexes );
-
-            if ( indexes.Count > 0 )
-                IndexBuffer.SetData<ushort>( indexes.ToArray() );
-        }
-        public void BuildBaseIndexes()
-        {
-            List<ushort> indexes = new List<ushort>();
-
-            BuildBaseIndexes( indexes );
-
-            if ( indexes.Count > 0 )
-                IndexBuffer.SetData<ushort>( indexes.ToArray() );
-        }
-        public void BuildEdgeIndexes()
-        {
-            if ( IndexBuffer == null ) return;
-            List<ushort> indexes = new List<ushort>();
-
-            BuildEdgeIndexes( indexes );
-
-            if ( indexes.Count > 0 )
-            {
-                IndexBuffer.SetData<ushort>( totalEdgeOffset * sizeof( ushort ),
-                                             indexes.ToArray(), 0, indexes.Count );
-
-            }
-        }
 
 
 
@@ -107,12 +103,12 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         /// <param name="terrainGeomipmapRenderData"></param>
         /// <param name="_x"></param>
         /// <param name="_z"></param>
-        public TerrainBlock( TerrainGeomipmapRenderData terrainGeomipmapRenderData, int _x, int _z )
+        public TerrainBlock(TerrainGeomipmapRenderData terrainGeomipmapRenderData, int _x, int _z)
         {
             this.terrainGeomipmapRenderData = terrainGeomipmapRenderData;
             x = _x;
             z = _z;
-            minDistancesSquared = new float[ this.terrainGeomipmapRenderData.MaxDetailLevel + 1 ];
+            minDistancesSquared = new float[this.terrainGeomipmapRenderData.MaxDetailLevel + 1];
             blockNumX = x / this.terrainGeomipmapRenderData.BlockSize;
             blockNumZ = z / this.terrainGeomipmapRenderData.BlockSize;
         }
@@ -139,39 +135,39 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         /// <param name="BW"></param>
         /// <param name="map"></param>
         /// <param name="projectionMatrix"></param>
-        public void WritePreProcessedData( ByteWriter BW, TerrainHeightMap map, Matrix projectionMatrix, int materialIndex )
+        public void WritePreProcessedData(ByteWriter BW, TerrainHeightMap map, Matrix projectionMatrix, int materialIndex)
         {
             VertexMultitextured[] vertexes;
 
             Vector3 min;
             Vector3 max;
 
-            vertexes = GenerateVerticesFromHeightmapSpecialWeightmap( map, out min, out max );
+            vertexes = GenerateVerticesFromHeightmapSpecialWeightmap(map, out min, out max);
 
 
             TotalVertices = vertexes.Length;
 
 
-            BW.Write( TotalVertices );
-            BW.Write( min );
-            BW.Write( max );
-            for ( int i = 0; i < vertexes.Length; i++ )
+            BW.Write(TotalVertices);
+            BW.Write(min);
+            BW.Write(max);
+            for (int i = 0; i < vertexes.Length; i++)
             {
-                BW.Write( vertexes[ i ].Position );
-                BW.Write( vertexes[ i ].Normal );
-                BW.Write( vertexes[ i ].TextureCoordinate );
+                BW.Write(vertexes[i].Position);
+                BW.Write(vertexes[i].Normal);
+                BW.Write(vertexes[i].TextureCoordinate);
             }
 
-            float[] localMinDistancesSquared = CalculateMinDistances( projectionMatrix, map );
+            float[] localMinDistancesSquared = CalculateMinDistances(projectionMatrix, map);
 
-            BW.Write( localMinDistancesSquared.Length );
+            BW.Write(localMinDistancesSquared.Length);
 
-            for ( int i = 0; i < localMinDistancesSquared.Length; i++ )
+            for (int i = 0; i < localMinDistancesSquared.Length; i++)
             {
-                BW.Write( localMinDistancesSquared[ i ] );
+                BW.Write(localMinDistancesSquared[i]);
             }
 
-            BW.Write( materialIndex );
+            BW.Write(materialIndex);
 
         }
 
@@ -179,7 +175,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         /// Reads the preprocessed Data and loads the vertex buffer
         /// </summary>
         /// <param name="br"></param>
-        public void ReadPreProcessedData( ByteReader br, List<TerrainMaterial> materials )
+        public void ReadPreProcessedData(ByteReader br, List<TerrainMaterial> materials)
         {
             VertexMultitextured[] vertexes;
 
@@ -188,52 +184,52 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
             TotalVertices = br.ReadInt32();
-            vertexes = new VertexMultitextured[ TotalVertices ];
+            vertexes = new VertexMultitextured[TotalVertices];
             tempVertices = vertexes;
             min = br.ReadVector3();
             max = br.ReadVector3();
 
-            for ( int i = 0; i < vertexes.Length; i++ )
+            for (int i = 0; i < vertexes.Length; i++)
             {
-                vertexes[ i ] = new VertexMultitextured();
-                vertexes[ i ].Position = br.ReadVector3();
-                vertexes[ i ].Normal = br.ReadVector3();
-                vertexes[ i ].TextureCoordinate = br.ReadVector2();
+                vertexes[i] = new VertexMultitextured();
+                vertexes[i].Position = br.ReadVector3();
+                vertexes[i].Normal = br.ReadVector3();
+                vertexes[i].TextureCoordinate = br.ReadVector2();
             }
 
             //Debug verification
             //if ( vertexes[ 0 ].Position.X != x || vertexes[ 0 ].Position.Z != z ) throw new Exception();
 
 
-            SetMinMax( min, max );
+            SetMinMax(min, max);
 
 
 
-            if ( VertexBuffer != null )
+            if (VertexBuffer != null)
                 VertexBuffer.Dispose();
 
-            VertexBuffer = new VertexBuffer( TerrainGeomipmapRenderData.XNAGame.GraphicsDevice, typeof( VertexPositionNormalTexture ),
-                                             vertexes.Length, BufferUsage.None );
-            VertexBuffer.SetData<VertexMultitextured>( vertexes );
+            VertexBuffer = new VertexBuffer(TerrainGeomipmapRenderData.XNAGame.GraphicsDevice, typeof(VertexPositionNormalTexture),
+                                             vertexes.Length, BufferUsage.None);
+            VertexBuffer.SetData<VertexMultitextured>(vertexes);
 
             vertexes = null;
 
             //vertexBufferDirty = false;
 
 
-            float[] localMinDistancesSquared = new float[ br.ReadInt32() ];
+            float[] localMinDistancesSquared = new float[br.ReadInt32()];
 
-            for ( int i = 0; i < localMinDistancesSquared.Length; i++ )
+            for (int i = 0; i < localMinDistancesSquared.Length; i++)
             {
-                localMinDistancesSquared[ i ] = br.ReadSingle();
+                localMinDistancesSquared[i] = br.ReadSingle();
             }
 
             MinDistancesSquared = localMinDistancesSquared;
 
             int materialIndex = br.ReadInt32();
-            Material = materials[ materialIndex ];
+            Material = materials[materialIndex];
 
-            Center = min + ( max - min ) * 0.5f;
+            Center = min + (max - min) * 0.5f;
 
         }
 
@@ -244,10 +240,10 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         /// </summary>
         public void Unload()
         {
-            if ( VertexBuffer != null )
+            if (VertexBuffer != null)
                 VertexBuffer.Dispose();
 
-            if ( IndexBuffer != null )
+            if (IndexBuffer != null)
                 IndexBuffer.Dispose();
 
 
@@ -276,20 +272,20 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         /// <param name="min"></param>
         /// <param name="max"></param>
         /// <returns></returns>
-        public VertexMultitextured[] GenerateVerticesFromHeightmapSpecialWeightmap( TerrainHeightMap map, out Vector3 min, out Vector3 max )
+        public VertexMultitextured[] GenerateVerticesFromHeightmapSpecialWeightmap(TerrainHeightMap map, out Vector3 min, out Vector3 max)
         {
-            VertexMultitextured[] vertexes = new VertexMultitextured[ ( terrainGeomipmapRenderData.BlockSize + 1 ) * ( terrainGeomipmapRenderData.BlockSize + 1 ) ];
+            VertexMultitextured[] vertexes = new VertexMultitextured[(terrainGeomipmapRenderData.BlockSize + 1) * (terrainGeomipmapRenderData.BlockSize + 1)];
 
-            min = new Vector3( float.MaxValue, float.MaxValue, float.MaxValue );
-            max = new Vector3( float.MinValue, float.MinValue, float.MinValue );
+            min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+            max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
             //if ( blockNumX == 15 ) throw new Exception();
 
             // build vectors and normals
-            for ( int ix = 0; ix <= terrainGeomipmapRenderData.BlockSize; ix++ )
+            for (int ix = 0; ix <= terrainGeomipmapRenderData.BlockSize; ix++)
             {
                 //if ( ix == terrain.BlockSize ) throw new Exception();
-                for ( int iz = 0; iz <= terrainGeomipmapRenderData.BlockSize; iz++ )
+                for (int iz = 0; iz <= terrainGeomipmapRenderData.BlockSize; iz++)
                 {
                     int cx = this.x + ix;
                     int cz = this.z + iz;
@@ -299,7 +295,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
                     VertexMultitextured vert = new VertexMultitextured();
 
                     //vert.Position = terrain.GetLocalPosition( new Vector3( cx, map[ cx, cz ], cz ) );
-                    vert.Position = new Vector3( cx, map[ cx, cz ], cz );
+                    vert.Position = new Vector3(cx, map[cx, cz], cz);
 
                     //if ( (BlockNumX * ( terrain.BlockSize + 1 ) + ix)  == 17 && (BlockNumZ * ( terrain.BlockSize + 1 ) + iz ) == 51) System.Diagnostics.Debugger.Break();
 
@@ -311,8 +307,8 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
                     // Weightmap texcoord: every vertex is positioned in the center of a texel containing the weights for that texture
                     vert.TextureCoordinate = new Vector2(
-                        (float)( BlockNumX * ( terrainGeomipmapRenderData.BlockSize + 1 ) + ix + 0.5f ) / ( (float)terrainGeomipmapRenderData.NumBlocksX * ( terrainGeomipmapRenderData.BlockSize + 1 ) ),
-                        (float)( BlockNumZ * ( terrainGeomipmapRenderData.BlockSize + 1 ) + iz + 0.5f ) / ( (float)terrainGeomipmapRenderData.NumBlocksZ * ( terrainGeomipmapRenderData.BlockSize + 1 ) ) );
+                        (float)(BlockNumX * (terrainGeomipmapRenderData.BlockSize + 1) + ix + 0.5f) / ((float)terrainGeomipmapRenderData.NumBlocksX * (terrainGeomipmapRenderData.BlockSize + 1)),
+                        (float)(BlockNumZ * (terrainGeomipmapRenderData.BlockSize + 1) + iz + 0.5f) / ((float)terrainGeomipmapRenderData.NumBlocksZ * (terrainGeomipmapRenderData.BlockSize + 1)));
 
                     /*vert.TextureCoordinate = new Vector2(
                        (float)( ix ) / ( (float)terrain.BlockSize ),
@@ -322,12 +318,12 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
                         (float)( ix+0.5f ) / ( (float)terrain.NumBlocksX * ( terrain.BlockSize + 1 ) ),
                         (float)( iz +0.5f) / ( (float)terrain.NumBlocksZ * ( terrain.BlockSize + 1 ) ) );*/
 
-                    vert.Normal = CalculateAveragedNormal( map, cx, cz );// terrain.GetAveragedNormal( cx, cz );
+                    vert.Normal = CalculateAveragedNormal(map, cx, cz);// terrain.GetAveragedNormal( cx, cz );
 
-                    min = Vector3.Min( min, vert.Position );
-                    max = Vector3.Max( max, vert.Position );
+                    min = Vector3.Min(min, vert.Position);
+                    max = Vector3.Max(max, vert.Position);
 
-                    vertexes[ IndexFromCoords( ix, iz ) ] = vert;
+                    //TODO: vertexes[IndexFromCoords(ix, iz)] = vert;
                 }
 
             }
@@ -343,33 +339,6 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
 
-
-
-        public void ChangeDetailLevel( int mipLevel, bool force )
-        {
-            if ( mipLevel > terrainGeomipmapRenderData.MaxDetailLevel )
-                mipLevel = terrainGeomipmapRenderData.MaxDetailLevel;
-
-            if ( mipLevel == detailLevel && force != true )
-                return;
-
-            detailLevel = mipLevel;
-
-            BuildBaseIndexes();
-            BuildEdgeIndexes();
-
-            if ( West != null )
-                West.BuildEdgeIndexes();
-
-            if ( East != null )
-                East.BuildEdgeIndexes();
-
-            if ( North != null )
-                North.BuildEdgeIndexes();
-
-            if ( South != null )
-                South.BuildEdgeIndexes();
-        }
 
 
 
@@ -541,19 +510,19 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
 
-        protected VertexMultitextured[] GenerateVerticesFromHeightmap( TerrainHeightMap map, out Vector3 min, out Vector3 max )
+        protected VertexMultitextured[] GenerateVerticesFromHeightmap(TerrainHeightMap map, out Vector3 min, out Vector3 max)
         {
-            VertexMultitextured[] vertexes = new VertexMultitextured[ ( terrainGeomipmapRenderData.BlockSize + 1 ) * ( terrainGeomipmapRenderData.BlockSize + 1 ) ];
+            VertexMultitextured[] vertexes = new VertexMultitextured[(terrainGeomipmapRenderData.BlockSize + 1) * (terrainGeomipmapRenderData.BlockSize + 1)];
 
-            min = new Vector3( float.MaxValue, float.MaxValue, float.MaxValue );
-            max = new Vector3( float.MinValue, float.MinValue, float.MinValue );
+            min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+            max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
 
 
             // build vectors and normals
-            for ( int ix = 0; ix <= terrainGeomipmapRenderData.BlockSize; ix++ )
+            for (int ix = 0; ix <= terrainGeomipmapRenderData.BlockSize; ix++)
             {
-                for ( int iz = 0; iz <= terrainGeomipmapRenderData.BlockSize; iz++ )
+                for (int iz = 0; iz <= terrainGeomipmapRenderData.BlockSize; iz++)
                 {
                     int cx = this.x + ix;
                     int cz = this.z + iz;
@@ -561,18 +530,18 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
                     VertexMultitextured vert = new VertexMultitextured();
 
                     //vert.Position = terrain.GetLocalPosition( new Vector3( cx, map[ cx, cz ], cz ) );
-                    vert.Position = new Vector3( cx, map[ cx, cz ], cz );
+                    vert.Position = new Vector3(cx, map[cx, cz], cz);
 
 
                     //TODO: klopt deze texcoord wel?
-                    vert.TextureCoordinate = new Vector2( (float)cx / (float)terrainGeomipmapRenderData.SizeX, (float)cz / (float)terrainGeomipmapRenderData.SizeY );
+                    vert.TextureCoordinate = new Vector2((float)cx / (float)terrainGeomipmapRenderData.SizeX, (float)cz / (float)terrainGeomipmapRenderData.SizeY);
 
-                    vert.Normal = CalculateAveragedNormal( map, cx, cz );// terrain.GetAveragedNormal( cx, cz );
+                    vert.Normal = CalculateAveragedNormal(map, cx, cz);// terrain.GetAveragedNormal( cx, cz );
 
-                    min = Vector3.Min( min, vert.Position );
-                    max = Vector3.Max( max, vert.Position );
+                    min = Vector3.Min(min, vert.Position);
+                    max = Vector3.Max(max, vert.Position);
 
-                    vertexes[ IndexFromCoords( ix, iz ) ] = vert;
+                    //TODO: vertexes[IndexFromCoords(ix, iz)] = vert;
                 }
             }
 
@@ -593,65 +562,65 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         //}
 
 
-        public static Vector3 CalculateAveragedNormal( TerrainHeightMap map, int x, int z )
+        public static Vector3 CalculateAveragedNormal(TerrainHeightMap map, int x, int z)
         {
             Vector3 normal = new Vector3();
 
             // top left
-            if ( x > 0 && z > 0 )
-                normal += CalculateNormal( map, x - 1, z - 1 );
+            if (x > 0 && z > 0)
+                normal += CalculateNormal(map, x - 1, z - 1);
 
             // top center
-            if ( z > 0 )
-                normal += CalculateNormal( map, x, z - 1 );
+            if (z > 0)
+                normal += CalculateNormal(map, x, z - 1);
 
             // top right
-            if ( x < map.Width && z > 0 )
-                normal += CalculateNormal( map, x + 1, z - 1 );
+            if (x < map.Width && z > 0)
+                normal += CalculateNormal(map, x + 1, z - 1);
 
             // middle left
-            if ( x > 0 )
-                normal += CalculateNormal( map, x - 1, z );
+            if (x > 0)
+                normal += CalculateNormal(map, x - 1, z);
 
             // middle center
-            normal += CalculateNormal( map, x, z );
+            normal += CalculateNormal(map, x, z);
 
             // middle right
-            if ( x < map.Width )
-                normal += CalculateNormal( map, x + 1, z );
+            if (x < map.Width)
+                normal += CalculateNormal(map, x + 1, z);
 
             // lower left
-            if ( x > 0 && z < map.Length )
-                normal += CalculateNormal( map, x - 1, z + 1 );
+            if (x > 0 && z < map.Length)
+                normal += CalculateNormal(map, x - 1, z + 1);
 
             // lower center
-            if ( z < map.Length )
-                normal += CalculateNormal( map, x, z + 1 );
+            if (z < map.Length)
+                normal += CalculateNormal(map, x, z + 1);
 
             // lower right
-            if ( x < map.Width && z < map.Length )
-                normal += CalculateNormal( map, x + 1, z + 1 );
+            if (x < map.Width && z < map.Length)
+                normal += CalculateNormal(map, x + 1, z + 1);
 
-            return Vector3.Normalize( normal );
+            return Vector3.Normalize(normal);
         }
 
-        public static Vector3 CalculateNormal( TerrainHeightMap map, int x, int z )
+        public static Vector3 CalculateNormal(TerrainHeightMap map, int x, int z)
         {
             float scale = 1;
             float heightScale = 1;
-            Vector3 v1 = new Vector3( x * scale, map[ x, z + 1 ] * heightScale, ( z + 1 ) * scale );
-            Vector3 v2 = new Vector3( x * scale, map[ x, z - 1 ] * heightScale, ( z - 1 ) * scale );
-            Vector3 v3 = new Vector3( ( x + 1 ) * scale, map[ x + 1, z ] * heightScale, z * scale );
-            Vector3 v4 = new Vector3( ( x - 1 ) * scale, map[ x - 1, z ] * heightScale, z * scale );
+            Vector3 v1 = new Vector3(x * scale, map[x, z + 1] * heightScale, (z + 1) * scale);
+            Vector3 v2 = new Vector3(x * scale, map[x, z - 1] * heightScale, (z - 1) * scale);
+            Vector3 v3 = new Vector3((x + 1) * scale, map[x + 1, z] * heightScale, z * scale);
+            Vector3 v4 = new Vector3((x - 1) * scale, map[x - 1, z] * heightScale, z * scale);
 
-            return Vector3.Normalize( Vector3.Cross( v1 - v2, v3 - v4 ) );
+            return Vector3.Normalize(Vector3.Cross(v1 - v2, v3 - v4));
         }
 
 
 
-        protected void Dispose( bool disposing )
+        protected void Dispose(bool disposing)
         {
-            lock ( this )
+            lock (this)
             {
 
                 West = null;
@@ -683,10 +652,10 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
         }
 
-        public void GenerateLightmap( TerrainLightmapGenerator gen )
+        public void GenerateLightmap(TerrainLightmapGenerator gen)
         {
-            byte[] data = gen.Generate( x, z );
-            TerrainGeomipmapRenderData.LightMap.SetData<byte>( 0, new Rectangle( x, z, terrainGeomipmapRenderData.BlockSize + 1, terrainGeomipmapRenderData.BlockSize + 1 ), data, 0, data.Length, SetDataOptions.None );
+            byte[] data = gen.Generate(x, z);
+            TerrainGeomipmapRenderData.LightMap.SetData<byte>(0, new Rectangle(x, z, terrainGeomipmapRenderData.BlockSize + 1, terrainGeomipmapRenderData.BlockSize + 1), data, 0, data.Length, SetDataOptions.None);
 
         }
 
@@ -694,7 +663,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         {
 
 
-            Color[] data = new Color[ 17 * 17 ];
+            Color[] data = new Color[17 * 17];
             float A;
             float R;
             float G;
@@ -705,17 +674,17 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
             float oz = terrainGeomipmapRenderData.HeightMap.Length * 0.5f;
 
 
-            for ( int tx = 0; tx < terrainGeomipmapRenderData.BlockSize + 1; tx++ )
+            for (int tx = 0; tx < terrainGeomipmapRenderData.BlockSize + 1; tx++)
             {
-                for ( int tz = 0; tz < terrainGeomipmapRenderData.BlockSize + 1; tz++ )
+                for (int tz = 0; tz < terrainGeomipmapRenderData.BlockSize + 1; tz++)
                 {
                     int cx = tx + x;
                     int cz = tz + z;
 
-                    G = CalculateWeight( terrainGeomipmapRenderData.HeightMap.GetHeight( cx, cz ) * terrainGeomipmapRenderData.HeightScale, 0, 75 );
-                    R = CalculateWeight( terrainGeomipmapRenderData.HeightMap.GetHeight( cx, cz ) * terrainGeomipmapRenderData.HeightScale, 50, 250 );
-                    B = CalculateWeight( terrainGeomipmapRenderData.HeightMap.GetHeight( cx, cz ) * terrainGeomipmapRenderData.HeightScale, 175, 400 );
-                    A = CalculateWeight( terrainGeomipmapRenderData.HeightMap.GetHeight( cx, cz ) * terrainGeomipmapRenderData.HeightScale, 300, 1000 );
+                    G = CalculateWeight(terrainGeomipmapRenderData.HeightMap.GetHeight(cx, cz) * terrainGeomipmapRenderData.HeightScale, 0, 75);
+                    R = CalculateWeight(terrainGeomipmapRenderData.HeightMap.GetHeight(cx, cz) * terrainGeomipmapRenderData.HeightScale, 50, 250);
+                    B = CalculateWeight(terrainGeomipmapRenderData.HeightMap.GetHeight(cx, cz) * terrainGeomipmapRenderData.HeightScale, 175, 400);
+                    A = CalculateWeight(terrainGeomipmapRenderData.HeightMap.GetHeight(cx, cz) * terrainGeomipmapRenderData.HeightScale, 300, 1000);
 
                     float totalWeight = R;
                     totalWeight += G;
@@ -726,16 +695,16 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
                     B = B / totalWeight * 255;
                     A = A / totalWeight * 255;
 
-                    R = (float)Math.Floor( R );
-                    G = (float)Math.Floor( G );
-                    B = (float)Math.Floor( B );
-                    A = (float)Math.Floor( A );
+                    R = (float)Math.Floor(R);
+                    G = (float)Math.Floor(G);
+                    B = (float)Math.Floor(B);
+                    A = (float)Math.Floor(A);
 
                     A = 255 - R - G - B;
 
-                    if ( totalWeight == 0 ) { R = G = B = 0; A = 255; }
+                    if (totalWeight == 0) { R = G = B = 0; A = 255; }
 
-                    data[ IndexFromCoords( tx, tz ) ] = new Color( (byte)R, (byte)G, (byte)B, (byte)A );
+                    //TODO: data[IndexFromCoords(tx, tz)] = new Color((byte)R, (byte)G, (byte)B, (byte)A);
                 }
             }
 
@@ -744,7 +713,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
 
-            TerrainGeomipmapRenderData.WeightMap.SetData<Color>( 0, new Rectangle( x, z, terrainGeomipmapRenderData.BlockSize + 1, terrainGeomipmapRenderData.BlockSize + 1 ), data, 0, data.Length, SetDataOptions.None );
+            TerrainGeomipmapRenderData.WeightMap.SetData<Color>(0, new Rectangle(x, z, terrainGeomipmapRenderData.BlockSize + 1, terrainGeomipmapRenderData.BlockSize + 1), data, 0, data.Length, SetDataOptions.None);
 
         }
 
@@ -821,17 +790,17 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
         //}
 
-        public float CalculateWeight( float height, float min, float max )
+        public float CalculateWeight(float height, float min, float max)
         {
             //oorspronkelijke formule
             // 1 - Math.Abs( ( height - min - ( ( max - min ) / 2 ) ) / ( ( max - min ) / 2 ) )
-            float test = MathHelper.Clamp( 1 - Math.Abs( ( height - min - ( ( max - min ) / 2 ) ) / ( ( max - min ) / 2 ) ), 0, 1 );
+            float test = MathHelper.Clamp(1 - Math.Abs((height - min - ((max - min) / 2)) / ((max - min) / 2)), 0, 1);
 
             //uitgerekende formule
 
-            float result = MathHelper.Clamp( 1 - Math.Abs( ( 2 * height - min - max ) / ( max - min ) ), 0, 1 );
+            float result = MathHelper.Clamp(1 - Math.Abs((2 * height - min - max) / (max - min)), 0, 1);
 
-            if ( test != result ) throw new Exception();
+            if (test != result) throw new Exception();
             return result;
         }
 
@@ -1008,10 +977,10 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
 
-        public void SetMinMax( Vector3 min, Vector3 max )
+        public void SetMinMax(Vector3 min, Vector3 max)
         {
-            center = ( min + max ) * 0.5f;
-            LocalBoundingBox = new BoundingBox( min, max );
+            center = (min + max) * 0.5f;
+            LocalBoundingBox = new BoundingBox(min, max);
         }
 
         VertexMultitextured[] tempVertices;
@@ -1032,7 +1001,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
         public void UnloadHeightField()
         {
-            if ( actor != null ) actor.destroy();
+            if (actor != null) actor.destroy();
             actor = null;
 
         }
@@ -1045,21 +1014,21 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
             heightFieldDesc.verticalExtent = -1000;
             heightFieldDesc.convexEdgeThreshold = 0;
             heightFieldDesc.sampleStride = 3 * 4;
-            heightFieldDesc.setSampleDimensions( terrainGeomipmapRenderData.BlockSize + 1, terrainGeomipmapRenderData.BlockSize + 1 );
+            heightFieldDesc.setSampleDimensions(terrainGeomipmapRenderData.BlockSize + 1, terrainGeomipmapRenderData.BlockSize + 1);
 
             float ox = terrainGeomipmapRenderData.HeightMap.Width * 0.5f;
             float oz = terrainGeomipmapRenderData.HeightMap.Length * 0.5f;
 
-            for ( int ix = 0; ix < terrainGeomipmapRenderData.BlockSize + 1; ix++ )
+            for (int ix = 0; ix < terrainGeomipmapRenderData.BlockSize + 1; ix++)
             {
-                for ( int iz = 0; iz < terrainGeomipmapRenderData.BlockSize + 1; iz++ )
+                for (int iz = 0; iz < terrainGeomipmapRenderData.BlockSize + 1; iz++)
                 {
                     int cx = this.x + ix;
                     int cz = this.z + iz;
-                    bool flag = ( ix % 2 ) == 0;
-                    if ( iz % 2 != 0 ) flag = !flag;
+                    bool flag = (ix % 2) == 0;
+                    if (iz % 2 != 0) flag = !flag;
                     flag = false;
-                    heightFieldDesc.setSample( ix, iz, new NxHeightFieldSample( (short)( terrainGeomipmapRenderData.HeightMap[ cx, cz ] * 5000 ), 0, flag, 0 ) );
+                    heightFieldDesc.setSample(ix, iz, new NxHeightFieldSample((short)(terrainGeomipmapRenderData.HeightMap[cx, cz] * 5000), 0, flag, 0));
                 }
             }
             NxHeightField heightField = null;//ServerClientMainOud.instance.ServerMain.PhysicsSDK.createHeightField( heightFieldDesc );
@@ -1076,8 +1045,8 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
             shapeDesc.holeMaterial = 2;
 
             NxActorDesc actorDesc = new NxActorDesc();
-            actorDesc.addShapeDesc( shapeDesc );
-            actorDesc.globalPose = Matrix.CreateTranslation( new Vector3( ( this.x - ox ) * terrainGeomipmapRenderData.Scale, 0, ( this.z - oz ) * terrainGeomipmapRenderData.Scale ) );
+            actorDesc.addShapeDesc(shapeDesc);
+            actorDesc.globalPose = Matrix.CreateTranslation(new Vector3((this.x - ox) * terrainGeomipmapRenderData.Scale, 0, (this.z - oz) * terrainGeomipmapRenderData.Scale));
             return null;//ServerClientMainOud.instance.ServerMain.PhysicsScene.createActor( actorDesc );
 
         }
@@ -1122,16 +1091,16 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
         private Wereld.QuadTreeNode quadtreeNode;
 
-        public void AssignToQuadtreeNode( MHGameWork.TheWizards.Common.Wereld.IQuadtreeNode node )
+        public void AssignToQuadtreeNode(MHGameWork.TheWizards.Common.Wereld.IQuadtreeNode node)
         {
-            if ( node is Wereld.QuadTreeNode )
+            if (node is Wereld.QuadTreeNode)
             {
-                throw new ArgumentException( "Only nodes that are ServerClient.Wereld.QuadTreeNode can be added to this blocks" );
+                throw new ArgumentException("Only nodes that are ServerClient.Wereld.QuadTreeNode can be added to this blocks");
             }
 
             quadtreeNode = (Wereld.QuadTreeNode)node;
 
-            throw new Exception( "The method or operation is not implemented." );
+            throw new Exception("The method or operation is not implemented.");
         }
 
         public MHGameWork.TheWizards.Common.Wereld.IQuadtreeNode GetIQuadtreeNode()
@@ -1145,14 +1114,14 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         #region ITerrainBlock Members
 
 
-        public ITerrainBlock GetNeighbour( TerrainBlockEdge edge )
+        public ITerrainBlock GetNeighbour(TerrainBlockEdge edge)
         {
-            throw new Exception( "The method or operation is not implemented." );
+            throw new Exception("The method or operation is not implemented.");
         }
 
-        public void SetNeighbour( TerrainBlockEdge edge, ITerrainBlock neighbour )
+        public void SetNeighbour(TerrainBlockEdge edge, ITerrainBlock neighbour)
         {
-            throw new Exception( "The method or operation is not implemented." );
+            throw new Exception("The method or operation is not implemented.");
         }
 
         #endregion
@@ -1161,12 +1130,12 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
         public int DrawPrimitives()
         {
-            throw new Exception( "The method or operation is not implemented." );
+            throw new Exception("The method or operation is not implemented.");
         }
 
         public void RenderBatched()
         {
-            throw new Exception( "The method or operation is not implemented." );
+            throw new Exception("The method or operation is not implemented.");
         }
 
         #endregion
@@ -1174,9 +1143,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
         protected TerrainGeomipmapRenderData terrainGeomipmapRenderData;
-        protected TerrainBlock[] neighbors = new TerrainBlock[ 4 ];
 
-        protected int totalEdgeOffset = 0;
         protected int detailLevel = 0;
         protected int x = -1;
         protected int z = -1;
@@ -1209,23 +1176,23 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         //    //}
         //}
 
-        public float[] CalculateMinDistances( Matrix projection, TerrainHeightMap map )
+        public float[] CalculateMinDistances(Matrix projection, TerrainHeightMap map)
         {
-            float[] localMinDistancesSquared = new float[ terrainGeomipmapRenderData.MaxDetailLevel + 1 ];
+            float[] localMinDistancesSquared = new float[terrainGeomipmapRenderData.MaxDetailLevel + 1];
 
-            for ( int i = 0; i < terrainGeomipmapRenderData.MaxDetailLevel + 1; i++ )
+            for (int i = 0; i < terrainGeomipmapRenderData.MaxDetailLevel + 1; i++)
             {
-                float minDist = CalculateLevelMinDistance( i, projection, map );
-                localMinDistancesSquared[ i ] = minDist * minDist;
+                float minDist = CalculateLevelMinDistance(i, projection, map);
+                localMinDistancesSquared[i] = minDist * minDist;
             }
 
             return localMinDistancesSquared;
 
         }
 
-        public float CalculateLevelMinDistance( int level, Matrix projection, TerrainHeightMap map )
+        public float CalculateLevelMinDistance(int level, Matrix projection, TerrainHeightMap map)
         {
-            float error = CalculateLevelError( level, map );
+            float error = CalculateLevelError(level, map);
 
             //Willem de Boer:
             // Dn = error * C
@@ -1261,9 +1228,9 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
             //lijkt hetzelfde te zijn als m11
-            float A = n / Math.Abs( t );
+            float A = n / Math.Abs(t);
 
-            float T = ( 2 * threshold ) / verticalResolution;
+            float T = (2 * threshold) / verticalResolution;
 
             float C = A / T;
 
@@ -1296,7 +1263,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
         }
 
-        public float CalculateLevelError( int level, TerrainHeightMap map )
+        public float CalculateLevelError(int level, TerrainHeightMap map)
         {
             int stepping = 1 << level;
 
@@ -1314,30 +1281,30 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
             float e; //error
 
 
-            for ( int quadZ = 0; quadZ < terrainGeomipmapRenderData.BlockSize; quadZ += stepping )
+            for (int quadZ = 0; quadZ < terrainGeomipmapRenderData.BlockSize; quadZ += stepping)
             {
-                for ( int quadX = 0; quadX < terrainGeomipmapRenderData.BlockSize; quadX += stepping )
+                for (int quadX = 0; quadX < terrainGeomipmapRenderData.BlockSize; quadX += stepping)
                 {
 
                     cx = x + quadX;
                     cz = z + quadZ;
-                    tl = map.GetHeight( cx, cz );
-                    tr = map.GetHeight( cx + stepping, cz );
-                    bl = map.GetHeight( cx, cz + stepping );
-                    br = map.GetHeight( cx + stepping, cz + stepping );
+                    tl = map.GetHeight(cx, cz);
+                    tr = map.GetHeight(cx + stepping, cz);
+                    bl = map.GetHeight(cx, cz + stepping);
+                    br = map.GetHeight(cx + stepping, cz + stepping);
 
 
-                    for ( int iz = 0; iz <= stepping; iz++ )
+                    for (int iz = 0; iz <= stepping; iz++)
                     {
-                        for ( int ix = 0; ix <= stepping; ix++ )
+                        for (int ix = 0; ix <= stepping; ix++)
                         {
                             //We could skip the corners but the error is 0 on those points anyway
-                            float lerpX = MathHelper.Lerp( tl, tr, (float)ix / (float)stepping );
-                            float lerpZ = MathHelper.Lerp( bl, br, (float)iz / (float)stepping );
-                            float lerp = ( lerpX + lerpZ ) * 0.5f;
+                            float lerpX = MathHelper.Lerp(tl, tr, (float)ix / (float)stepping);
+                            float lerpZ = MathHelper.Lerp(bl, br, (float)iz / (float)stepping);
+                            float lerp = (lerpX + lerpZ) * 0.5f;
 
-                            e = Math.Abs( map.GetHeight( cx + ix, cz + iz ) - lerp );
-                            maxError = MathHelper.Max( maxError, e );
+                            e = Math.Abs(map.GetHeight(cx + ix, cz + iz) - lerp);
+                            maxError = MathHelper.Max(maxError, e);
 
 
                         }
@@ -1362,8 +1329,8 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
         public void Dispose()
         {
-            Dispose( true );
-            GC.SuppressFinalize( this );
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
 
@@ -1372,325 +1339,11 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
 
-        public ushort IndexFromCoords( int x, int z )
-        {
-            return (ushort)( z * ( terrainGeomipmapRenderData.BlockSize + 1 ) + x );
-        }
 
 
 
 
 
-        protected void BuildBaseIndexes( List<ushort> indexes )
-        {
-            totalBaseTriangles = 0;
-
-            int stepping = 1 << DetailLevel;
-            int total = terrainGeomipmapRenderData.BlockSize;
-
-            // build indexes for inner polygons
-            for ( int ix = stepping; ix < total - stepping; ix += stepping )
-            {
-                for ( int iz = stepping; iz < total - stepping; iz += stepping )
-                {
-                    // triangle 1
-                    indexes.Add( IndexFromCoords( ix, iz ) );
-                    indexes.Add( IndexFromCoords( ix + stepping, iz ) );
-                    indexes.Add( IndexFromCoords( ix, iz + stepping ) );
-                    totalBaseTriangles++;
-
-                    // triangle 2
-                    indexes.Add( IndexFromCoords( ix + stepping, iz ) );
-                    indexes.Add( IndexFromCoords( ix + stepping, iz + stepping ) );
-                    indexes.Add( IndexFromCoords( ix, iz + stepping ) );
-                    totalBaseTriangles++;
-                }
-            }
-
-            totalEdgeOffset = indexes.Count;
-        }
-
-        protected void BuildEdgeIndexes( List<ushort> indexes )
-        {
-            int startCount = indexes.Count;
-
-            totalEdgeTriangles = 0;
-            totalEdgeTriangles += BuildEdgeIndexes( indexes, TerrainBlockEdge.West );
-            totalEdgeTriangles += BuildEdgeIndexes( indexes, TerrainBlockEdge.East );
-            totalEdgeTriangles += BuildEdgeIndexes( indexes, TerrainBlockEdge.North );
-            totalEdgeTriangles += BuildEdgeIndexes( indexes, TerrainBlockEdge.South );
-        }
-
-        protected int BuildEdgeIndexes( List<ushort> indexes, TerrainBlockEdge edge )
-        {
-            TerrainBlock neighbor = neighbors[ (int)edge ];
-
-            if ( neighbor == null || neighbor.DetailLevel <= DetailLevel )
-                return BuildBasicEdgeIndexes( indexes, edge );
-            else
-                return BuildStitchedEdgeIndexes( indexes, edge );
-        }
-
-        protected int BuildBasicEdgeIndexes( List<ushort> indexes, TerrainBlockEdge edge )
-        {
-            int triangles = 0;
-            int stepping = 1 << DetailLevel;
-            int total = terrainGeomipmapRenderData.BlockSize;
-
-            int startX = 0;
-            int endX = 0;
-            int startZ = 0;
-            int endZ = 0;
-
-            switch ( edge )
-            {
-                case TerrainBlockEdge.West:
-                    startX = 0;
-                    endX = startX;
-                    startZ = 0;
-                    endZ = total - stepping;
-                    break;
-
-                case TerrainBlockEdge.East:
-                    startX = total - stepping;
-                    endX = startX;
-                    startZ = 0;
-                    endZ = total - stepping;
-                    break;
-
-                case TerrainBlockEdge.North:
-                    startX = 0;
-                    endX = total - stepping;
-                    startZ = 0;
-                    endZ = startZ;
-                    break;
-
-                case TerrainBlockEdge.South:
-                    startX = 0;
-                    endX = total - stepping;
-                    startZ = total - stepping;
-                    endZ = startZ;
-                    break;
-            }
-
-            for ( int ix = startX; ix <= endX; ix += stepping )
-            {
-                for ( int iz = startZ; iz <= endZ; iz += stepping )
-                {
-                    if ( edge == TerrainBlockEdge.West )
-                    {
-                        if ( iz == startZ )
-                        {
-                            indexes.Add( IndexFromCoords( ix, iz ) );
-                            indexes.Add( IndexFromCoords( ix + stepping, iz + stepping ) );
-                            indexes.Add( IndexFromCoords( ix, iz + stepping ) );
-                            triangles++;
-
-                            continue;
-                        }
-
-                        if ( iz == endZ )
-                        {
-                            indexes.Add( IndexFromCoords( ix, iz ) );
-                            indexes.Add( IndexFromCoords( ix + stepping, iz ) );
-                            indexes.Add( IndexFromCoords( ix, iz + stepping ) );
-                            triangles++;
-
-                            continue;
-                        }
-                    }
-                    else if ( edge == TerrainBlockEdge.East )
-                    {
-                        if ( iz == startZ )
-                        {
-                            indexes.Add( IndexFromCoords( ix + stepping, iz ) );
-                            indexes.Add( IndexFromCoords( ix + stepping, iz + stepping ) );
-                            indexes.Add( IndexFromCoords( ix, iz + stepping ) );
-                            triangles++;
-
-                            continue;
-                        }
-
-                        if ( iz == endZ )
-                        {
-                            indexes.Add( IndexFromCoords( ix, iz ) );
-                            indexes.Add( IndexFromCoords( ix + stepping, iz ) );
-                            indexes.Add( IndexFromCoords( ix + stepping, iz + stepping ) );
-                            triangles++;
-
-                            continue;
-                        }
-                    }
-                    else if ( edge == TerrainBlockEdge.North )
-                    {
-                        if ( ix == startX )
-                        {
-                            indexes.Add( IndexFromCoords( ix, iz ) );
-                            indexes.Add( IndexFromCoords( ix + stepping, iz ) );
-                            indexes.Add( IndexFromCoords( ix + stepping, iz + stepping ) );
-                            triangles++;
-
-                            continue;
-                        }
-
-                        if ( ix == endX )
-                        {
-                            indexes.Add( IndexFromCoords( ix, iz ) );
-                            indexes.Add( IndexFromCoords( ix + stepping, iz ) );
-                            indexes.Add( IndexFromCoords( ix, iz + stepping ) );
-                            triangles++;
-
-                            continue;
-                        }
-                    }
-
-                    else if ( edge == TerrainBlockEdge.South )
-                    {
-                        if ( ix == startX )
-                        {
-                            indexes.Add( IndexFromCoords( ix + stepping, iz ) );
-                            indexes.Add( IndexFromCoords( ix + stepping, iz + stepping ) );
-                            indexes.Add( IndexFromCoords( ix, iz + stepping ) );
-                            triangles++;
-
-                            continue;
-                        }
-
-                        if ( ix == endX )
-                        {
-                            indexes.Add( IndexFromCoords( ix, iz ) );
-                            indexes.Add( IndexFromCoords( ix + stepping, iz + stepping ) );
-                            indexes.Add( IndexFromCoords( ix, iz + stepping ) );
-                            triangles++;
-
-                            continue;
-                        }
-                    }
-
-                    indexes.Add( IndexFromCoords( ix, iz ) );
-                    indexes.Add( IndexFromCoords( ix + stepping, iz ) );
-                    indexes.Add( IndexFromCoords( ix, iz + stepping ) );
-                    triangles++;
-
-                    indexes.Add( IndexFromCoords( ix + stepping, iz ) );
-                    indexes.Add( IndexFromCoords( ix + stepping, iz + stepping ) );
-                    indexes.Add( IndexFromCoords( ix, iz + stepping ) );
-                    triangles++;
-                }
-            }
-
-            return triangles;
-        }
-
-        protected int BuildStitchedEdgeIndexes( List<ushort> indexes, TerrainBlockEdge edge )
-        {
-            TerrainBlock neighbor = neighbors[ (int)edge ];
-            int sourceStep = 1 << DetailLevel;
-            int destStep = 1 << neighbor.DetailLevel;
-            //if (destStep > sourceStep) throw new Exception();
-            int destHalfStep = destStep >> 1;
-            int triangles = 0;
-            int startPos = 0;
-            int endPos = 0;
-            int insidePos = 0;
-            int insideStep = 0;
-            bool horizontal = false;
-
-            switch ( edge )
-            {
-                case TerrainBlockEdge.West:
-                    startPos = terrainGeomipmapRenderData.BlockSize;
-                    insideStep = sourceStep;
-                    sourceStep = -sourceStep;
-                    destStep = -destStep;
-                    destHalfStep = -destHalfStep;
-                    break;
-
-                case TerrainBlockEdge.East:
-                    endPos = terrainGeomipmapRenderData.BlockSize;
-                    insidePos = terrainGeomipmapRenderData.BlockSize;
-                    insideStep = -sourceStep;
-                    break;
-
-                case TerrainBlockEdge.North:
-                    endPos = terrainGeomipmapRenderData.BlockSize;
-                    insideStep = sourceStep;
-                    horizontal = true;
-                    break;
-
-                case TerrainBlockEdge.South:
-                    startPos = terrainGeomipmapRenderData.BlockSize;
-                    insidePos = terrainGeomipmapRenderData.BlockSize;
-                    insideStep = -sourceStep;
-                    sourceStep = -sourceStep;
-                    destStep = -destStep;
-                    destHalfStep = -destHalfStep;
-                    horizontal = true;
-                    break;
-            };
-
-            for ( int pos1 = startPos; pos1 != endPos; pos1 += destStep )
-            {
-                for ( int pos2 = 0; pos2 != destHalfStep; pos2 += sourceStep )
-                {
-                    if ( pos1 != startPos || pos2 != 0 )
-                    {
-                        if ( horizontal )
-                        {
-                            indexes.Add( IndexFromCoords( pos1, insidePos ) );
-                            indexes.Add( IndexFromCoords( pos1 + pos2 + sourceStep, insidePos + insideStep ) );
-                            indexes.Add( IndexFromCoords( pos1 + pos2, insidePos + insideStep ) );
-                            triangles++;
-                        }
-                        else
-                        {
-                            indexes.Add( IndexFromCoords( insidePos, pos1 ) );
-                            indexes.Add( IndexFromCoords( insidePos + insideStep, pos1 + pos2 + sourceStep ) );
-                            indexes.Add( IndexFromCoords( insidePos + insideStep, pos1 + pos2 ) );
-                            triangles++;
-                        }
-                    }
-                }
-
-                if ( horizontal )
-                {
-                    indexes.Add( IndexFromCoords( pos1, insidePos ) );
-                    indexes.Add( IndexFromCoords( pos1 + destStep, insidePos ) );
-                    indexes.Add( IndexFromCoords( pos1 + destHalfStep, insidePos + insideStep ) );
-                    triangles++;
-                }
-                else
-                {
-                    indexes.Add( IndexFromCoords( insidePos, pos1 ) );
-                    indexes.Add( IndexFromCoords( insidePos, pos1 + destStep ) );
-                    indexes.Add( IndexFromCoords( insidePos + insideStep, pos1 + destHalfStep ) );
-                    triangles++;
-                }
-
-                for ( int pos2 = destHalfStep; pos2 != destStep; pos2 += sourceStep )
-                {
-                    if ( pos1 != endPos - destStep || pos2 != destStep - sourceStep )
-                    {
-                        if ( horizontal )
-                        {
-                            indexes.Add( IndexFromCoords( pos1 + destStep, insidePos ) );
-                            indexes.Add( IndexFromCoords( pos1 + pos2 + sourceStep, insidePos + insideStep ) );
-                            indexes.Add( IndexFromCoords( pos1 + pos2, insidePos + insideStep ) );
-                            triangles++;
-                        }
-                        else
-                        {
-                            indexes.Add( IndexFromCoords( insidePos, pos1 + destStep ) );
-                            indexes.Add( IndexFromCoords( insidePos + insideStep, pos1 + pos2 + sourceStep ) );
-                            indexes.Add( IndexFromCoords( insidePos + insideStep, pos1 + pos2 ) );
-                            triangles++;
-                        }
-                    }
-                }
-            }
-
-            return triangles;
-        }
 
 
 
@@ -1706,34 +1359,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
             get { return z; }
         }
 
-        public int DetailLevel
-        {
-            get { return detailLevel; }
-        }
 
-        public TerrainBlock West
-        {
-            get { return neighbors[ (int)TerrainBlockEdge.West ]; }
-            set { neighbors[ (int)TerrainBlockEdge.West ] = value; }
-        }
-
-        public TerrainBlock East
-        {
-            get { return neighbors[ (int)TerrainBlockEdge.East ]; }
-            set { neighbors[ (int)TerrainBlockEdge.East ] = value; }
-        }
-
-        public TerrainBlock North
-        {
-            get { return neighbors[ (int)TerrainBlockEdge.North ]; }
-            set { neighbors[ (int)TerrainBlockEdge.North ] = value; }
-        }
-
-        public TerrainBlock South
-        {
-            get { return neighbors[ (int)TerrainBlockEdge.South ]; }
-            set { neighbors[ (int)TerrainBlockEdge.South ] = value; }
-        }
 
         public FilePointer FilePointer
         { get { return filePointer; } set { filePointer = value; } }
@@ -1754,10 +1380,10 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
             set
             {
                 localBoundingBox = value;
-                if ( localBoundingBox.Min.Y == localBoundingBox.Max.Y )
+                if (localBoundingBox.Min.Y == localBoundingBox.Max.Y)
                 {
                     //To mimic the very thin but existing terrain
-                    localBoundingBox.Max += new Vector3( 0, 0.0001f, 0 );
+                    localBoundingBox.Max += new Vector3(0, 0.0001f, 0);
                 }
                 OnBoundingChanged();
             }
@@ -1769,8 +1395,8 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
             {
                 BoundingBox bb;
 
-                bb = new BoundingBox( terrainGeomipmapRenderData.GetWorldPosition( localBoundingBox.Min ),
-                                      terrainGeomipmapRenderData.GetWorldPosition( localBoundingBox.Max ) );
+                bb = new BoundingBox(terrainGeomipmapRenderData.GetWorldPosition(localBoundingBox.Min),
+                                      terrainGeomipmapRenderData.GetWorldPosition(localBoundingBox.Max));
 
                 return bb;
             }

@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.Tests.World.Static
             var texturePool = new TexturePool();
             var meshPartPool = new MeshPartPool();
 
-            var renderer = new MeshRenderer(texturePool, meshPartPool, vertexDeclarationPool);
+            var renderer = new SimpleMeshRenderer(texturePool, meshPartPool, vertexDeclarationPool);
 
             var mesh =
                 RenderingTest.CreateGuildHouseMesh(

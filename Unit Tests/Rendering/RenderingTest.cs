@@ -301,11 +301,11 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             var meshpartPool = new MeshPartPool();
             var vertexDeclarationPool = new VertexDeclarationPool();
 
-            var renderer = new MeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
+            var renderer = new SimpleMeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
 
             vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
 
-            MeshRenderElement middle = null;
+            SimpleMeshRenderElement middle = null;
 
             for (int i = 0; i < 50; i++)
             {
@@ -359,7 +359,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
             RAMMesh mesh3 = CreateGuildHouseMesh(c);
 
-            MeshRenderer renderer = InitDefaultMeshRenderer(game);
+            SimpleMeshRenderer renderer = InitDefaultMeshRenderer(game);
 
 
             var el = renderer.AddMesh(mesh);
@@ -384,13 +384,13 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
         }
 
-        public static MeshRenderer InitDefaultMeshRenderer(XNAGame game)
+        public static SimpleMeshRenderer InitDefaultMeshRenderer(XNAGame game)
         {
             var texturePool = new TexturePool();
             var meshpartPool = new MeshPartPool();
             var vertexDeclarationPool = new VertexDeclarationPool();
 
-            var renderer = new MeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
+            var renderer = new SimpleMeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
             game.AddXNAObject(texturePool);
             game.AddXNAObject(meshpartPool);
             game.AddXNAObject(vertexDeclarationPool);

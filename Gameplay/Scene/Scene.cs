@@ -17,21 +17,21 @@ namespace MHGameWork.TheWizards.Scene
     /// </summary>
     public class Scene : IXNAObject
     {
-        private readonly MeshRenderer renderer;
+        private readonly SimpleMeshRenderer renderer;
         private readonly MeshPhysicsElementFactory physicsElementFactory;
         private List<Entity> entities = new List<Entity>();
         internal List<Entity> UpdateList = new List<Entity>();
 
         public IXNAGame Game { get; private set; }
 
-        public Scene(MeshRenderer renderer, MeshPhysicsElementFactory physicsElementFactory)
+        public Scene(SimpleMeshRenderer renderer, MeshPhysicsElementFactory physicsElementFactory)
         {
             this.renderer = renderer;
             this.physicsElementFactory = physicsElementFactory;
             customRaycastReport = new CustomRaycastReport(this);
         }
 
-        internal MeshRenderer Renderer
+        internal SimpleMeshRenderer Renderer
         {
             get { return renderer; }
         }

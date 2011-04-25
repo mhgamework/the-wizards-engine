@@ -55,7 +55,7 @@ namespace MHGameWork.TheWizards.Tests.Scripting
 
             var loader = new SceneScriptLoader(scene);
             twGame.Game.AddXNAObject(loader);
-            var fi = new FileInfo(TWDir.Binaries + "/../../Scripts/TestScript.cs");
+            var fi = new FileInfo(TWDir.Scripts + "/TestScript.cs");
 
 
             var ent = new TheWizards.Scene.Entity(scene);

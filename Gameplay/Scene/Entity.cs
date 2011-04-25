@@ -100,7 +100,7 @@ namespace MHGameWork.TheWizards.Scene
         }
 
 
-        private MeshRenderElement renderElement;
+        private SimpleMeshRenderElement renderElement;
         private MeshStaticPhysicsElement staticPhysicsElement;
         private MeshDynamicPhysicsElement dynamicPhysicsElement;
 

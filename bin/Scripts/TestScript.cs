@@ -13,6 +13,8 @@ namespace Scripts
 
         private float velocity;
 
+		private float angle;
+		
         public void Init(IEntityHandle handle)
         {
             this.handle = handle;
@@ -29,12 +31,15 @@ namespace Scripts
         public void Update()
         {
             var elapsed = 0.01f;
-            var acceleration = handle.Position.Z * 2;
+            var acceleration = handle.Position.Z * 10;
             velocity += acceleration * elapsed;
-            handle.Position += Vector3.Forward * velocity * elapsed;
+            handle.Position += (Vector3.Forward+Vector3.Up) * velocity * elapsed;
             if (Math.Abs(velocity) < 0.5 && Math.Abs(handle.Position.Z) < 1) velocity = 5;
 
+			
+			angle += elapsed;
 
+			handle.Rotation = Quaternion.CreateFromAxisAngle(Vector3.Forward,angle);e
 
         }
     }

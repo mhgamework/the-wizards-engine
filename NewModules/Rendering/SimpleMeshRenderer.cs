@@ -14,14 +14,14 @@ namespace MHGameWork.TheWizards.Rendering
     /// This is the location to do instancing, or other hardware speedups for multiple mesh rendering (make this an abstract factory)
     /// Currently this is a simple implementation
     /// </summary>
-    public class MeshRenderer : IXNAObject
+    public class SimpleMeshRenderer : IXNAObject, ISimpleMeshRenderer
     {
         private TexturePool texturePool;
         private MeshPartPool meshPartPool;
         private VertexDeclarationPool vertexDeclarationPool;
         private IXNAGame game;
 
-        private List<MeshRenderElement> elements = new List<MeshRenderElement>();
+        private List<SimpleMeshRenderElement> elements = new List<SimpleMeshRenderElement>();
         private List<MeshRenderData> renderDatas = new List<MeshRenderData>();
         private Dictionary<IMesh, MeshRenderData> renderDataDict = new Dictionary<IMesh, MeshRenderData>();
 
@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.Rendering
 
         private Texture2D checkerTexture;
 
-        public MeshRenderer(TexturePool texturePool, MeshPartPool meshPartPool, VertexDeclarationPool vertexDeclarationPool)
+        public SimpleMeshRenderer(TexturePool texturePool, MeshPartPool meshPartPool, VertexDeclarationPool vertexDeclarationPool)
         {
             this.texturePool = texturePool;
             this.meshPartPool = meshPartPool;
@@ -37,10 +37,10 @@ namespace MHGameWork.TheWizards.Rendering
         }
 
 
-        public MeshRenderElement AddMesh(IMesh mesh)
+        public SimpleMeshRenderElement AddMesh(IMesh mesh)
         {
 
-            var el = new MeshRenderElement(this, mesh);
+            var el = new SimpleMeshRenderElement(this, mesh);
 
 
             var data = getRenderData(mesh);
@@ -56,7 +56,7 @@ namespace MHGameWork.TheWizards.Rendering
             return el;
         }
 
-        internal void DeleteMesh(MeshRenderElement el)
+        public void DeleteMesh(SimpleMeshRenderElement el)
         {
             if (el.IsDeleted) throw new InvalidOperationException();
 
@@ -156,7 +156,7 @@ namespace MHGameWork.TheWizards.Rendering
 
         }
 
-        public void UpdateWorldMatrix(MeshRenderElement el)
+        public void UpdateWorldMatrix(SimpleMeshRenderElement el)
         {
             renderDataDict[el.Mesh].WorldMatrices[el.ElementNumber] = el.WorldMatrix;
         }
