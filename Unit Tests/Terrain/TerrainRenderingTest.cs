@@ -193,7 +193,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
                                                               block.TriangleCount);
                 });
 
-                shader.Shader.SetParameter("world", Matrix.CreateTranslation(Vector3.Right * 18));
+                shader.Shader.SetParameter("world", Matrix.CreateTranslation(Vector3.Right * 18 * 1));
 
                 shader.Shader.SetTechnique("DrawHeightColored");
                 shader.Shader.RenderMultipass(delegate
@@ -204,7 +204,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
                 });
 
                 shader.Shader.SetParameter("heightMapOffset", new Vector2(1, 1));
-                shader.Shader.SetParameter("world", Matrix.CreateTranslation(Vector3.Right * 34));
+                shader.Shader.SetParameter("world", Matrix.CreateTranslation(Vector3.Right * 18 * 2));
 
                 shader.Shader.RenderMultipass(delegate
                 {
@@ -214,6 +214,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
                 });
 
                 game.GraphicsDevice.Indices = null;
+
             };
 
 
