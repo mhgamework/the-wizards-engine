@@ -132,8 +132,8 @@ namespace MHGameWork.TheWizards.Physics
 
              
                 newNode.AddStaticObject(this);
-
-                actor.GlobalPose = worldMatrix;
+                if (actor != null)
+                    actor.GlobalPose = worldMatrix;
             }
         }
 
