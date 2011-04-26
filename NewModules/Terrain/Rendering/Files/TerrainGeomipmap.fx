@@ -352,14 +352,7 @@ VS_OUTPUT_HEIGHTMAP TransformHeightmap(VS_INPUT_HEIGHTMAP In)
 	return Out;
 }
 
-float3 GetHeightmapNormal(float2 coord)
-{
-float halfTexel = (1.0/heightMapSize*0.5);
-	// Assume heightmap is size of normalmap
-	float2 mapUV = (coord+heightMapOffset) /heightMapSize +halfTexel;
-    return tex2Dlod(displacementSampler, float4(mapUV , 0 , 0 )).xyz;
 
-}
 
 struct VS_INPUT_NORMAL
 {
@@ -392,8 +385,10 @@ VS_OUTPUT_NORMAL TransformNormal( VS_INPUT_NORMAL Input )
 
 
 
-float4 PixelShaderHeightColored(in float4 worldPos : TEXCOORD1, in float4 uv : TEXCOORD0) : COLOR
-{       
+float4 PixelShaderHeightColored(in float4 worldPos : TEXCOORD1, in float4 uv : TEXCOORD0,in float2 normalMapCoord: TEXCOORD3) : COLOR
+{    
+return tex2D(displacementSampler, normalMapCoord);   
+return float4(normalMapCoord,0,1);
     return worldPos.y / maxHeight;
 }
 float4 PixelShaderHeightColoredLit(in float4 worldPos : TEXCOORD1, in float4 uv : TEXCOORD0, in float2 normalMapCoord: TEXCOORD3) : COLOR

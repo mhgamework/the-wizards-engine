@@ -360,7 +360,6 @@ namespace MHGameWork.TheWizards.Tests.Terrain
             game.Run();
         }
 
-
         [Test]
         public void TestMinDistances()
         {
@@ -434,7 +433,9 @@ namespace MHGameWork.TheWizards.Tests.Terrain
 
             game.UpdateEvent += delegate
                                 {
-                                    temp(game, minDistancesSq, block, builder);
+                                    var distSq = game.Camera.ViewInverse.Translation.LengthSquared();
+                                    var newLevel = MinDistanceCalculator.DetermineLowestAllowedDetailLevel(minDistancesSq, distSq, block.DetailLevel, builder.MaxDetailLevel);
+                                    if (newLevel != block.DetailLevel) builder.ChangeDetailLevel(block, newLevel);
                                 };
             game.DrawEvent += delegate
             {
@@ -482,30 +483,53 @@ namespace MHGameWork.TheWizards.Tests.Terrain
             game.Run();
         }
 
-        private void temp(XNAGame game, float[] minDistancesSq, SimpleTerrainBlock block, IndexBufferBuilder builder)
+        [Test]
+        public void TestSimpleGeomipmap()
         {
-            var dist = game.Camera.ViewInverse.Translation.LengthSquared();
-            if (minDistancesSq[block.DetailLevel] < dist)
+            var game = new XNAGame();
+            game.DrawFps = true;
+            game.IsFixedTimeStep = false;
+            var map = createTestHeightmap(16, 32);
+            var terrain = new SimpleTerrain(map, 16, 32);
+            game.SpectaterCamera.FarClip = 5000;
+
+            game.InitializeEvent += delegate { terrain.Initialize(game); };
+            game.UpdateEvent += delegate
             {
-                if (block.DetailLevel < builder.MaxDetailLevel)
-                    builder.ChangeDetailLevel(block, block.DetailLevel + 1);
-            }
-            else if (block.DetailLevel > 0 && minDistancesSq[block.DetailLevel - 1] > dist)
-                builder.ChangeDetailLevel(block, block.DetailLevel - 1);
+                terrain.Update();
+                if (game.Keyboard.IsKeyPressed(Keys.W))
+                {
+                    if (game.GraphicsDevice.RenderState.FillMode == FillMode.WireFrame)
+                        game.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
+                    else
+                        game.GraphicsDevice.RenderState.FillMode = FillMode.WireFrame;
+                }
+            };
+            game.DrawEvent += delegate
+                              {
+                                  terrain.Draw();
+                              };
+
+            game.Run();
+
         }
 
-        private HeightMap createTestHeightmap(int blockSize)
+        private HeightMap createTestHeightmap(int blockSize, int size)
         {
-            var heightmap = new HeightMap(17, 17);
+            var heightmap = new HeightMap(blockSize * size + 1, blockSize * size + 1);
 
             var noise = new PerlinNoiseGenerater();
 
-            for (int i = 0; i < blockSize + 1; i++)
-                for (int j = 0; j < blockSize + 1; j++)
+            for (int i = 0; i < heightmap.Width; i++)
+                for (int j = 0; j < heightmap.Length; j++)
                 {
-                    var height = noise.interpolatedNoise(i, j) * 2 + 5;
-                    if (j == 3 && i == 3) height = 10;
-                    if (j == 0 || i == 0) height = 0;
+                    var height = 0f;
+                    float freq, ampl;
+                    freq = 0.01f; ampl = 100; height += noise.interpolatedNoise(i * freq, j * freq) * ampl;
+                    freq = 0.1f; ampl = 6; height += noise.interpolatedNoise(i * freq, j * freq) * ampl;
+                    freq = 1f; ampl = 0.1f; height += noise.interpolatedNoise(i * freq, j * freq) * ampl;
+                    freq = 2f; ampl = 0.2f; height += noise.interpolatedNoise(i * freq, j * freq) * ampl;
+                    
                     heightmap.SetHeight(i, j, height);
 
 

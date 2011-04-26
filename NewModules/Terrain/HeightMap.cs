@@ -267,11 +267,17 @@ namespace MHGameWork.TheWizards.Terrain
             get { return GetHeight( x, z ); }
         }
 
+        /// <summary>
+        /// X-coordinate size
+        /// </summary>
         public int Width
         {
             get { return width; }
         }
 
+        /// <summary>
+        /// Y-coordinate size
+        /// </summary>
         public int Length
         {
             get { return length; }

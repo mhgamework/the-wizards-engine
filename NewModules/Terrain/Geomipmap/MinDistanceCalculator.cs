@@ -148,6 +148,23 @@ namespace MHGameWork.TheWizards.Terrain.Geomipmap
 
         }
 
+        public static int DetermineLowestAllowedDetailLevel(float[] minDistancesSq, float dist, int currentLevel, int maxLevel)
+        {
+            for (; ; )
+            {
+                if (currentLevel < maxLevel && minDistancesSq[currentLevel] < dist)
+                {
+                    if (currentLevel < maxLevel)
+                        currentLevel++;
+                }
+                else if (currentLevel > 0 && minDistancesSq[currentLevel - 1] > dist)
+                    currentLevel--;
+                else
+                    break;
+            }
+            return currentLevel;
+
+        }
 
 
     }
