@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Common.GeoMipMap;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.ServerClient.Terrain.Rendering;
 using MHGameWork.TheWizards.ServerClient.TWXNAEngine;
+using MHGameWork.TheWizards.Terrain;
 using MHGameWork.TheWizards.Terrain.Geomipmap;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -219,6 +221,297 @@ namespace MHGameWork.TheWizards.Tests.Terrain
 
 
             game.Run();
+        }
+
+        [Test]
+        public void TestNormals()
+        {
+            var game = new XNAGame();
+            var block = new SimpleTerrainBlock();
+            var builder = new IndexBufferBuilder(game);
+            builder.BlockSize = 16;
+            VertexBuffer vb = null;
+            VertexDeclaration decl = null;
+
+            var noise = new PerlinNoiseGenerater();
+
+            var heightmap = new HeightMap(17, 17);
+
+
+            var vertices = new VertexMultitextured[(builder.BlockSize + 1) * (builder.BlockSize + 1)];
+            var texels = new float[vertices.Length];
+            var normals = new Color[vertices.Length];
+            for (int i = 0; i < builder.BlockSize + 1; i++)
+                for (int j = 0; j < builder.BlockSize + 1; j++)
+                {
+                    var height = noise.interpolatedNoise(i, j) * 2 + 5;
+                    if (j == 3 && i == 3) height = 10;
+                    if (j == 0 || i == 0) height = 0;
+                    heightmap.SetHeight(i, j, height);
+
+
+
+                }
+
+            for (int i = 0; i < builder.BlockSize + 1; i++)
+                for (int j = 0; j < builder.BlockSize + 1; j++)
+                {
+                    var height = heightmap.GetHeight(i, j);
+                    var vIndex = builder.IndexFromCoords(i, j);
+                    vertices[vIndex].Position = new Vector3(i, height, j);
+                    vertices[vIndex].TextureCoordinate = new Vector2(i, j);
+
+
+
+                    texels[i * (builder.BlockSize + 1) + j] = height;
+                    normals[i * (builder.BlockSize + 1) + j] = new Color(new Vector4(
+                        HeightmapNormalCalculator.CalculateAveragedNormal(heightmap, i, j), 1));
+
+                }
+
+
+
+
+            TerrainShaderNew shader = null;
+            Texture2D heightmapTexture = null;
+            Texture2D normalTexture = null;
+
+            game.InitializeEvent += delegate
+            {
+                shader = new TerrainShaderNew(game, new EffectPool());
+                builder.ChangeDetailLevel(block, 0);
+
+                vb = new VertexBuffer(game.GraphicsDevice, typeof(VertexMultitextured),
+                                          vertices.Length, BufferUsage.None);
+                vb.SetData(vertices);
+
+                decl = new VertexDeclaration(game.GraphicsDevice,
+                                                 VertexMultitextured.VertexElements);
+
+                heightmapTexture = new Texture2D(game.GraphicsDevice, builder.BlockSize + 1, builder.BlockSize + 1, 1,
+                                          TextureUsage.None, SurfaceFormat.Single);
+                heightmapTexture.SetData(texels);
+
+                normalTexture = new Texture2D(game.GraphicsDevice, builder.BlockSize + 1, builder.BlockSize + 1, 1,
+                                       TextureUsage.None, SurfaceFormat.Color);
+                normalTexture.SetData(normals);
+
+
+            };
+
+            game.UpdateEvent += delegate
+            {
+                if (game.Keyboard.IsKeyPressed(Keys.Add))
+                {
+                    if (block.DetailLevel < builder.MaxDetailLevel)
+                        builder.ChangeDetailLevel(block, block.DetailLevel + 1);
+                }
+                else if (game.Keyboard.IsKeyPressed(Keys.Subtract))
+                {
+                    if (block.DetailLevel > 0)
+                        builder.ChangeDetailLevel(block, block.DetailLevel - 1);
+
+                }
+            };
+            game.DrawEvent += delegate
+            {
+
+
+                shader.Shader.SetParameter("world", Matrix.Identity);
+                shader.Shader.SetParameter("viewProjection", game.Camera.ViewProjection);
+                shader.Shader.SetParameter("maxHeight", 10);
+                shader.Shader.SetParameter("displacementMap", heightmapTexture);
+                shader.Shader.SetParameter("normalMap", normalTexture);
+                shader.Shader.SetParameter("heightMapSize", heightmapTexture.Width);
+                shader.Shader.SetParameter("lightDir", Vector3.Normalize(new Vector3(1, -1, 1)));
+
+                game.GraphicsDevice.Indices = block.IndexBuffer;
+                game.GraphicsDevice.Vertices[0].SetSource(vb, 0, VertexMultitextured.SizeInBytes);
+                game.GraphicsDevice.VertexDeclaration = decl;
+
+                shader.Shader.SetParameter("heightMapOffset", new Vector2(0, 0));
+
+
+                shader.Shader.SetParameter("world", Matrix.CreateTranslation(Vector3.Right * 18 * 0));
+
+                shader.Shader.SetTechnique("DrawHeightColoredLit");
+                shader.Shader.RenderMultipass(delegate
+                {
+                    game.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0,
+                                                              vertices.Length, 0,
+                                                              block.TriangleCount);
+                });
+
+                shader.Shader.SetParameter("heightMapOffset", new Vector2(1, 1));
+                shader.Shader.SetParameter("world", Matrix.CreateTranslation(Vector3.Right * 18 * 1));
+
+                shader.Shader.RenderMultipass(delegate
+                {
+                    game.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0,
+                                                              vertices.Length, 0,
+                                                              block.TriangleCount);
+                });
+
+                game.GraphicsDevice.Indices = null;
+
+            };
+
+
+            game.Run();
+        }
+
+
+        [Test]
+        public void TestMinDistances()
+        {
+            var game = new XNAGame();
+            var block = new SimpleTerrainBlock();
+            var builder = new IndexBufferBuilder(game);
+            builder.BlockSize = 16;
+            VertexBuffer vb = null;
+            VertexDeclaration decl = null;
+
+            var blockSize = builder.BlockSize;
+
+
+            var vertices = new VertexMultitextured[(builder.BlockSize + 1) * (builder.BlockSize + 1)];
+            var texels = new float[vertices.Length];
+
+            var heightmap = new HeightMap(17, 17);
+
+            var noise = new PerlinNoiseGenerater();
+
+            for (int i = 0; i < blockSize + 1; i++)
+                for (int j = 0; j < blockSize + 1; j++)
+                {
+                    var height = noise.interpolatedNoise(i, j) * 2;
+                    heightmap.SetHeight(i, j, height);
+
+
+
+                }
+
+            for (int i = 0; i < builder.BlockSize + 1; i++)
+                for (int j = 0; j < builder.BlockSize + 1; j++)
+                {
+                    var height = heightmap.GetHeight(i, j);
+                    var vIndex = builder.IndexFromCoords(i, j);
+                    vertices[vIndex].Position = new Vector3(i, height, j);
+                    vertices[vIndex].TextureCoordinate = new Vector2(i, j);
+
+
+
+                    texels[i * (builder.BlockSize + 1) + j] = height;
+
+                }
+
+            var minDistancesSq = MinDistanceCalculator.CalculateMinDistancesSquared(game.Camera.Projection, heightmap,
+                                                                           builder.BlockSize, 0, 0);
+            game.SpectaterCamera.FarClip = 5000;
+
+            TerrainShaderNew shader = null;
+            Texture2D heightmapTexture = null;
+
+            game.InitializeEvent += delegate
+            {
+                shader = new TerrainShaderNew(game, new EffectPool());
+                builder.ChangeDetailLevel(block, 0);
+
+                vb = new VertexBuffer(game.GraphicsDevice, typeof(VertexMultitextured),
+                                          vertices.Length, BufferUsage.None);
+                vb.SetData(vertices);
+
+                decl = new VertexDeclaration(game.GraphicsDevice,
+                                                 VertexMultitextured.VertexElements);
+
+                heightmapTexture = new Texture2D(game.GraphicsDevice, builder.BlockSize + 1, builder.BlockSize + 1, 1,
+                                          TextureUsage.None, SurfaceFormat.Single);
+                heightmapTexture.SetData(texels);
+
+
+
+            };
+
+            game.UpdateEvent += delegate
+                                {
+                                    temp(game, minDistancesSq, block, builder);
+                                };
+            game.DrawEvent += delegate
+            {
+
+
+                shader.Shader.SetParameter("world", Matrix.Identity);
+                shader.Shader.SetParameter("viewProjection", game.Camera.ViewProjection);
+                shader.Shader.SetParameter("maxHeight", 1);
+                shader.Shader.SetParameter("displacementMap", heightmapTexture);
+                shader.Shader.SetParameter("heightMapSize", heightmapTexture.Width);
+                shader.Shader.SetParameter("lightDir", Vector3.Normalize(new Vector3(1, -1, 1)));
+
+                game.GraphicsDevice.Indices = block.IndexBuffer;
+                game.GraphicsDevice.Vertices[0].SetSource(vb, 0, VertexMultitextured.SizeInBytes);
+                game.GraphicsDevice.VertexDeclaration = decl;
+
+                shader.Shader.SetParameter("heightMapOffset", new Vector2(0, 0));
+
+                game.GraphicsDevice.RenderState.FillMode = FillMode.WireFrame;
+                shader.Shader.SetParameter("world", Matrix.CreateTranslation(Vector3.Right * 18 * 0));
+
+                shader.Shader.SetTechnique("DrawHeightColored");
+                shader.Shader.RenderMultipass(delegate
+                {
+                    game.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0,
+                                                              vertices.Length, 0,
+                                                              block.TriangleCount);
+                });
+
+                game.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
+                shader.Shader.SetParameter("world", Matrix.CreateTranslation(Vector3.Right * 18 * 1));
+
+                shader.Shader.RenderMultipass(delegate
+                {
+                    game.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0,
+                                                              vertices.Length, 0,
+                                                              block.TriangleCount);
+                });
+
+                game.GraphicsDevice.Indices = null;
+
+            };
+
+
+            game.Run();
+        }
+
+        private void temp(XNAGame game, float[] minDistancesSq, SimpleTerrainBlock block, IndexBufferBuilder builder)
+        {
+            var dist = game.Camera.ViewInverse.Translation.LengthSquared();
+            if (minDistancesSq[block.DetailLevel] < dist)
+            {
+                if (block.DetailLevel < builder.MaxDetailLevel)
+                    builder.ChangeDetailLevel(block, block.DetailLevel + 1);
+            }
+            else if (block.DetailLevel > 0 && minDistancesSq[block.DetailLevel - 1] > dist)
+                builder.ChangeDetailLevel(block, block.DetailLevel - 1);
+        }
+
+        private HeightMap createTestHeightmap(int blockSize)
+        {
+            var heightmap = new HeightMap(17, 17);
+
+            var noise = new PerlinNoiseGenerater();
+
+            for (int i = 0; i < blockSize + 1; i++)
+                for (int j = 0; j < blockSize + 1; j++)
+                {
+                    var height = noise.interpolatedNoise(i, j) * 2 + 5;
+                    if (j == 3 && i == 3) height = 10;
+                    if (j == 0 || i == 0) height = 0;
+                    heightmap.SetHeight(i, j, height);
+
+
+
+                }
+            return heightmap;
         }
     }
 }

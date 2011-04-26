@@ -1,12 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
+using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.ServerClient.Terrain
+namespace MHGameWork.TheWizards.Terrain
 {
-    public class TerrainHeightMap : IDisposable
+    /// <summary>
+    /// TODO: should implement an interface IHeightMap, 
+    /// which has an implementation that supports infinite heightmaps
+    /// </summary>
+    public class HeightMap : IDisposable
     {
         /*private float minimumHeight = 0f;
 		private float maximumHeight = 1f;
@@ -16,17 +19,17 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain
         protected int length = 0;
         protected float[] data;
 
-        public TerrainHeightMap( int nWidth, int nLength )
+        public HeightMap( int nWidth, int nLength )
         {
             Create( nWidth, nLength );
         }
 
-        public TerrainHeightMap( int width, int length, string filename )
+        public HeightMap( int width, int length, string filename )
         {
             Load( width, length, filename );
         }
 
-        ~TerrainHeightMap()
+        ~HeightMap()
         {
             Dispose( false );
         }
@@ -49,27 +52,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain
             }
         }
 
-        /*public bool Load(int width, int length, string filename)
-		{
-			if ( File.Exists( filename ) != true )
-				return false;
-
-			lock ( this )
-			{
-				this.width = width;
-				this.length = length;
-
-				using ( FileStream stream = File.OpenRead( filename ) )
-				{
-					BinaryReader reader = new BinaryReader( stream );
-					data = reader.ReadBytes( (int)stream.Length );
-					reader.Close();
-				}
-			}
-
-			return true;
-		}*/
-
+     
         public bool Create( int width, int length )
         {
 
@@ -159,7 +142,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain
             node.AddCData( Convert.ToBase64String( bytes ) );
         }
 
-        public static TerrainHeightMap LoadFromXml( TWXmlNode node )
+        public static HeightMap LoadFromXml( TWXmlNode node )
         {
             int width = node.GetAttributeInt( "Width" );
             int length = node.GetAttributeInt( "Length" );
@@ -170,7 +153,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain
 
             byte[] bytes = Convert.FromBase64String( node.ReadCData() );
 
-            TerrainHeightMap map = new TerrainHeightMap( width, length );
+            HeightMap map = new HeightMap( width, length );
 
             float[] d = new float[ width * length ];
 

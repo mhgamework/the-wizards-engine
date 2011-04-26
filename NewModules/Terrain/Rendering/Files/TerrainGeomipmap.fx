@@ -210,9 +210,19 @@ sampler displacementSampler = sampler_state      //this sampler will be used to 
         AddressU = Clamp;
         AddressV = Clamp;
 };
+texture normalMap;       // this texture will point to the heightmap
+sampler normalSampler = sampler_state      //this sampler will be used to read (sample) the heightmap
+{
+        Texture = <normalMap>;
+        MipFilter = Linear;
+        MinFilter = Linear;
+        MagFilter = Linear;
+        AddressU = Clamp;
+        AddressV = Clamp;
+};
 
-texture gridTileTexture;       // this texture will point to the heightmap
-sampler gridTileSampler = sampler_state      //this sampler will be used to read (sample) the heightmap
+texture gridTileTexture;       
+sampler gridTileSampler = sampler_state   
 {
         Texture = <gridTileTexture>;
         MipFilter = Linear;
@@ -310,6 +320,7 @@ struct VS_OUTPUT_HEIGHTMAP
     float4 uv : TEXCOORD0;
     float4 worldPos : TEXCOORD1;
     float2 texCoordDetail : TEXCOORD2;
+	float2 normalMapCoord : TEXCOORD3;
 	
 };
 
@@ -318,23 +329,36 @@ float2 heightMapOffset;
 
 VS_OUTPUT_HEIGHTMAP TransformHeightmap(VS_INPUT_HEIGHTMAP In)
 {
-    VS_OUTPUT_HEIGHTMAP Out = (VS_OUTPUT_HEIGHTMAP)0;                                  //initialize the output structure
-    //float4x4 viewProj = mul(view, proj);                                        //compute View * Projection matrix
-    float4x4 worldViewProj= mul(world, viewProjection);                      //finally, compute the World * View * Projection matrix
-    // this instruction reads from the heightmap, the value at the corresponding texture coordinate
+    VS_OUTPUT_HEIGHTMAP Out = (VS_OUTPUT_HEIGHTMAP)0;                      
+    
+    float4x4 worldViewProj= mul(world, viewProjection);                    
+    float halfTexel = (1.0/heightMapSize*0.5);
+
+	// this instruction reads from the heightmap, the value at the corresponding texture coordinate
     // Note: we selected level 0 for the mipmap parameter of tex2Dlod, since we want to read data exactly as it appears in the heightmap
-	float halfTexel = (1.0/heightMapSize*0.5);
+	
 	float2 mapUV = (In.uv.xy+heightMapOffset) /heightMapSize +halfTexel;
-	mapUV.x = mapUV.x;
-	mapUV.y = mapUV.y;
     In.position.y = tex2Dlod(displacementSampler, float4(mapUV , 0 , 0 ));
-    //Pass the world position the the Pixel Shader
-    Out.worldPos = mul(In.position, world);
-    //Compute the final projected position by multiplying with the world, view and projection matrices                                                      
+
+	float3 normal = tex2Dlod(normalSampler, float4(mapUV , 0 , 0 ));
+
+
+
+    Out.worldPos = mul(In.position, world);   
     Out.position = mul( In.position , worldViewProj);
     Out.uv = In.uv;
     Out.texCoordDetail = In.uv * float2(128/2,128/2);
-    return Out;
+    Out.normalMapCoord = mapUV;
+	return Out;
+}
+
+float3 GetHeightmapNormal(float2 coord)
+{
+float halfTexel = (1.0/heightMapSize*0.5);
+	// Assume heightmap is size of normalmap
+	float2 mapUV = (coord+heightMapOffset) /heightMapSize +halfTexel;
+    return tex2Dlod(displacementSampler, float4(mapUV , 0 , 0 )).xyz;
+
 }
 
 struct VS_INPUT_NORMAL
@@ -371,6 +395,15 @@ VS_OUTPUT_NORMAL TransformNormal( VS_INPUT_NORMAL Input )
 float4 PixelShaderHeightColored(in float4 worldPos : TEXCOORD1, in float4 uv : TEXCOORD0) : COLOR
 {       
     return worldPos.y / maxHeight;
+}
+float4 PixelShaderHeightColoredLit(in float4 worldPos : TEXCOORD1, in float4 uv : TEXCOORD0, in float2 normalMapCoord: TEXCOORD3) : COLOR
+{       
+	float3 normal = tex2D(normalSampler, normalMapCoord).xyz;
+	float brightness = dot(normalize(normal),-lightDir);
+	float4 colorA = float4(0,0,1,1);
+	float4 colorB = float4(0.8,00.8,0.8,1);
+	return float4(brightness,0,0,1);
+    return lerp(colorA,colorB,worldPos.y / maxHeight)*brightness;
 }
 
 float4 PixelShader_GridTile(in float4 worldPos : TEXCOORD1) : COLOR
@@ -555,6 +588,13 @@ technique DrawHeightColored{
     {       
         vertexShader = compile vs_3_0 TransformHeightmap(); 
         pixelShader  = compile ps_3_0 PixelShaderHeightColored(); 
+    }
+}
+technique DrawHeightColoredLit{ 
+    pass P0   
+    {       
+        vertexShader = compile vs_3_0 TransformHeightmap(); 
+        pixelShader  = compile ps_3_0 PixelShaderHeightColoredLit(); 
     }
 }
 // Uses heightmap, should be DrawGridHeightmap

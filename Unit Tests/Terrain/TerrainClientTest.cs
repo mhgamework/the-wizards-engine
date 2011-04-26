@@ -5,6 +5,7 @@ using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.ServerClient.Terrain;
 using MHGameWork.TheWizards.ServerClient.TWClient;
+using MHGameWork.TheWizards.Terrain;
 using MHGameWork.TheWizards.Terrain.Client;
 using MHGameWork.TheWizards.Terrain.Editor;
 using MHGameWork.TheWizards.Tests.Client;
@@ -71,7 +72,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
                     data.BlockSize = 16;
                     data.SizeX = data.NumBlocksX * data.BlockSize;
                     data.SizeZ = data.NumBlocksZ * data.BlockSize;
-                    data.HeightMap = new TerrainHeightMap(data.NumBlocksX * data.BlockSize, data.NumBlocksZ * data.BlockSize);
+                    data.HeightMap = new HeightMap(data.NumBlocksX * data.BlockSize, data.NumBlocksZ * data.BlockSize);
 
                     float height = 3;
 
@@ -156,7 +157,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
                     data.NumBlocksZ = 16;
                     data.BlockSize = 16;
                     data.Position = new Vector3(data.BlockSize * -4, 0, data.BlockSize * -4);
-                    data.HeightMap = new TerrainHeightMap(data.NumBlocksX * data.BlockSize, data.NumBlocksZ * data.BlockSize);
+                    data.HeightMap = new HeightMap(data.NumBlocksX * data.BlockSize, data.NumBlocksZ * data.BlockSize);
 
                     renderData.CreateBlocksAndQuadtree(new LoadingTask());
 
@@ -263,7 +264,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
                     data.SizeX = data.NumBlocksX * data.BlockSize;
                     data.SizeZ = data.NumBlocksZ * data.BlockSize;
                     data.Position = new Vector3(-data.BlockSize * (data.NumBlocksX / 2), 4, -data.BlockSize * (data.NumBlocksZ / 2));
-                    data.HeightMap = new TerrainHeightMap(data.NumBlocksX * data.BlockSize, data.NumBlocksZ * data.BlockSize);
+                    data.HeightMap = new HeightMap(data.NumBlocksX * data.BlockSize, data.NumBlocksZ * data.BlockSize);
 
                     TerrainRaiseTool.RaiseTerrain(data, 0, 0, 100, 20);
                     TerrainRaiseTool.RaiseTerrain(data, 12, -5, 30, -15);

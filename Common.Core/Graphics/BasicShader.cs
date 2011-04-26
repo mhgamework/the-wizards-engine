@@ -145,20 +145,20 @@ namespace MHGameWork.TheWizards.Graphics
             {
                 string source = reader.ReadToEnd();
                 compiledEffect = Effect.CompileEffectFromSource(source, null, null, CompilerOptions.Debug, TargetPlatform.Windows);
-                if (compiledEffect.Success == false)
-                {
-                    Console.WriteLine("Shader compile error in BasicShader. Error message is as follows:\n" +
-                                      compiledEffect.ErrorsAndWarnings);
-                    if (effect == null)
-                        throw new Exception("Failed to compile shader. Error message is as follows:\n" +
-                                            compiledEffect.ErrorsAndWarnings);
 
-                    return;
-                }
 
 
             }
+            if (compiledEffect.Success == false)
+            {
+                Console.WriteLine("Shader compile error in BasicShader. Error message is as follows:\n" +
+                                  compiledEffect.ErrorsAndWarnings);
+                if (effect == null)
+                    throw new Exception("Failed to compile shader. Error message is as follows:\n" +
+                                        compiledEffect.ErrorsAndWarnings);
 
+                return;
+            }
 
             // Dispose old shader
             if (effect != null)
@@ -218,6 +218,13 @@ namespace MHGameWork.TheWizards.Graphics
             {
                 LoadFromFXFile(fs, reloadPool);
             }
+            if (currentTechnique != null)
+            {
+                var tech = GetTechnique(currentTechnique);
+                if (tech != null)
+                    effect.CurrentTechnique = tech;
+            }
+
         }
 
         public delegate void RenderDelegate();

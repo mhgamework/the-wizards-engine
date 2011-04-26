@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards.ServerClient.TWClient;
+using MHGameWork.TheWizards.Terrain;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MHGameWork.TheWizards.Common.GeoMipMap;
@@ -115,7 +116,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Preprocesser
         }
 
 
-        public static Vector3 CalculateAveragedNormal( TerrainHeightMap map, int x, int z )
+        public static Vector3 CalculateAveragedNormal( HeightMap map, int x, int z )
         {
             Vector3 normal = new Vector3();
 
@@ -157,7 +158,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Preprocesser
             return Vector3.Normalize( normal );
         }
 
-        public static Vector3 CalculateNormal( TerrainHeightMap map, int x, int z )
+        public static Vector3 CalculateNormal( HeightMap map, int x, int z )
         {
             float scale = 1;
             float heightScale = 1;
@@ -178,7 +179,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Preprocesser
             return ( TerrainFullData.BlockSize >> 2 ) - 1;
         }
 
-        public float[] CalculateMinDistances( Matrix projection, TerrainHeightMap map )
+        public float[] CalculateMinDistances( Matrix projection, HeightMap map )
         {
             int maxlevel = CalculateMaxDetailLevel();
             float[] localMinDistancesSquared = new float[ maxlevel + 1 ];
@@ -193,7 +194,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Preprocesser
 
         }
 
-        public float CalculateLevelMinDistance( int level, Matrix projection, TerrainHeightMap map )
+        public float CalculateLevelMinDistance( int level, Matrix projection, HeightMap map )
         {
             float error = CalculateLevelError( level, map );
 
@@ -266,7 +267,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Preprocesser
 
         }
 
-        public float CalculateLevelError( int level, TerrainHeightMap map )
+        public float CalculateLevelError( int level, HeightMap map )
         {
             int stepping = 1 << level;
 

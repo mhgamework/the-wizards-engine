@@ -181,8 +181,10 @@
     </Compile>
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientFiles.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientMain.cs" />
+    <Compile Include="Terrain\Geomipmap\HeightmapNormalCalculator.cs" />
     <Compile Include="Terrain\Geomipmap\IndexBufferBuilder.cs" />
     <Compile Include="Terrain\Geomipmap\ITerrainBlock.cs" />
+    <Compile Include="Terrain\Geomipmap\MinDistanceCalculator.cs" />
     <Compile Include="Terrain\Preprocesser\PreprocessedNode.cs" />
     <Compile Include="Terrain\Preprocesser\PreprocessedTerrainBlock.cs" />
     <Compile Include="Terrain\Rendering\TODO\ITerrainBlockRenderable.cs" />
@@ -200,7 +202,7 @@
     <Compile Include="Terrain\Rendering\TODO\TerrainWeightMap.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\Terrain\TaggedTerrain.cs" />
     <Compile Include="Terrain\TerrainFullData.cs" />
-    <Compile Include="Terrain\TerrainHeightMap.cs" />
+    <Compile Include="Terrain\HeightMap.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\Terrain\TerrainManagerService.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\Terrain\TerrainPlugin.cs" />
     <Compile Include="Editor\FromEditorProject\TODO\DockTab.cs" />

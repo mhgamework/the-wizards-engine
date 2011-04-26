@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards;
+using MHGameWork.TheWizards.Terrain;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using MHGameWork.TheWizards.ServerClient;
@@ -694,7 +695,7 @@ namespace TreeGenerator.Grass
             data.SizeX = data.NumBlocksX * data.BlockSize;
             data.SizeZ = data.NumBlocksZ * data.BlockSize;
             data.Position = TerrainPosition;//new Vector3(-data.BlockSize * (data.NumBlocksX / 2), 4, -data.BlockSize * (data.NumBlocksZ / 2));
-            data.HeightMap = new TerrainHeightMap(data.NumBlocksX * data.BlockSize, data.NumBlocksZ * data.BlockSize);
+            data.HeightMap = new HeightMap(data.NumBlocksX * data.BlockSize, data.NumBlocksZ * data.BlockSize);
 
             TerrainRaiseTool.RaiseTerrain(data, 300, 300, 60, 100);
             TerrainRaiseTool.RaiseTerrain(data, 0, 600, 120, 30);

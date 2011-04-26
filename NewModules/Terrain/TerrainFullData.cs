@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards.ServerClient.Database;
 using MHGameWork.TheWizards.ServerClient.Editor;
+using MHGameWork.TheWizards.Terrain;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TerrainManagerService = MHGameWork.TheWizards.ServerClient.Terrain.TerrainManagerService;
@@ -13,7 +14,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain
     {
         private TaggedTerrain taggedTerrain;
 
-        public TerrainHeightMap HeightMap;
+        public HeightMap HeightMap;
         /// <summary>
         /// Position of the HeightMap's 0,0 in world space
         /// </summary>
@@ -97,7 +98,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain
             data.NumBlocksZ = node.ReadChildNodeValueInt( "NumBlocksZ", 0 );
 
             if ( node.FindChildNode( "Heightmap" ) != null )
-                data.HeightMap = TerrainHeightMap.LoadFromXml( node.FindChildNode( "Heightmap" ) );
+                data.HeightMap = HeightMap.LoadFromXml( node.FindChildNode( "Heightmap" ) );
 
             TWXmlNode texturesNode = node.FindChildNode( "Textures" );
             //int count = texturesNode.GetAttributeInt( "Count" );
