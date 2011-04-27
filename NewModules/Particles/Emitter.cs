@@ -24,6 +24,9 @@ namespace MHGameWork.TheWizards.Particles
         private float particleWidth, particleHeight;
         private int particleCount=0;
         private int maxParticles;
+
+        private float MaxLifeTime = 2.0f;
+        private ParticleSimulater simulater;
         public Emitter(TexturePool texturePool, VertexDeclarationPool declarationPool,IXNAGame game, ITexture texture, float particleWidth, float particleHeight)
         {
             this.texturePool = texturePool;
@@ -33,12 +36,16 @@ namespace MHGameWork.TheWizards.Particles
             this.declarationPool = declarationPool;
             this.game = game;
         }
-        public void Initialize(int maxParticleCount)
-        {
-            particles = new Vector3[maxParticleCount];
-            renderData = new VertexPositionTexture[maxParticleCount*6];
-            maxParticles = maxParticleCount;
+        public void Initialize(int size)
+        {   
+            maxParticles = size*size;
+            particles = new Vector3[maxParticles];
+            renderData = new VertexPositionTexture[maxParticles * 6];
+            simulater = new ParticleSimulater(game, size);
+            simulater.Initialize();
+
         }
+
         public void Update()
         {
             
@@ -91,6 +98,8 @@ namespace MHGameWork.TheWizards.Particles
         }
         public void Render(Matrix viewProjection, Matrix viewInverse)
         {
+            simulater.RenderUpdate(game.Elapsed);
+            shader.SetParameter("")
             shader.SetParameter("viewProjection",viewProjection);
             shader.SetParameter("viewInverse", viewInverse);
             shader.SetParameter("world", Matrix.Identity);
@@ -102,6 +111,7 @@ namespace MHGameWork.TheWizards.Particles
             game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
             game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, particleCount*2);
         }
+
         
     }
 }

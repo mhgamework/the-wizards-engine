@@ -181,6 +181,7 @@
     </Compile>
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientFiles.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientMain.cs" />
+    <Compile Include="Particles\ParticleSimulater.cs" />
     <Compile Include="Terrain\Geomipmap\IndexBufferBuilder.cs" />
     <Compile Include="Terrain\Geomipmap\ITerrainBlock.cs" />
     <Compile Include="Terrain\Preprocesser\PreprocessedNode.cs" />
@@ -532,6 +533,9 @@
     <EmbeddedResource Include="Editor\Transform\Files\GizmoRotation001.DAE" />
     <EmbeddedResource Include="Editor\Transform\Files\GizmoTranslation001.DAE" />
     <EmbeddedResource Include="Particles\Files\BillBoardShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Particles\Files\BasicParticleAnimation.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="Terrain\Client\TerrainClient.cd" />

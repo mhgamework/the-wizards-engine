@@ -21,7 +21,14 @@ sampler DiffuseTextureSampler = sampler_state
 	MagFilter=Linear;
 	MipFilter=Linear;
 };
-
+texture displacementTexture:Diffuse
+sampler displacementSampler = sampler_state
+{
+	Texture = <displacementTexture>;
+	MinFilter=Linear;
+	MagFilter=Linear;
+	MipFilter=Linear;
+};
 // Vertex Output Declaration
 struct VSOut
 {
@@ -42,7 +49,10 @@ struct VertexInput
 VSOut vs_main(VertexInput In)
 {
 	VSOut output;
-	float4 pos=mul(float4(In.Position,1),world);
+	halfTexel = (1.0/heightMapSize*0.5)
+	float2 mapUV = In.uv.xy / heightMapSize + halfTexel;
+	float4 position= tex2Dlod(displacementSampler, float4(mapUV,0,0));
+	float4 pos=mul(float4(Position,1),world);
    
    float4 translationUp=viewInverse[1]*In.TexCoord.y*height;
    float4 translationRight=viewInverse[0]*In.TexCoord.x*width;
@@ -57,6 +67,8 @@ VSOut vs_main(VertexInput In)
 	output.TexCoord=float2(0.5,0.5)+In.TexCoord;
     return output;
 }
+
+
 
 // Pixel Shader
 float4 ps_main(VSOut In) : COLOR0
