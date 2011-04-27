@@ -34,27 +34,32 @@ namespace MHGameWork.TheWizards.Tests.Particles
             game.DrawFps = true;
 
             var pool = new VertexDeclarationPool();
-            pool.SetVertexElements<VertexPositionTexture>(VertexPositionTexture.VertexElements);
+            pool.SetVertexElements<Emitter.ParticleVertex>(Emitter.ParticleVertex.VertexElements);
             var texPool = new TexturePool();
             var testTexture = GetTestTexture(); 
 
             emit = new Emitter(texPool, pool, game, testTexture,5,5);
-
+            Seeder seed = new Seeder(54);
             game.InitializeEvent += delegate
                                         {
                                             texPool.Initialize(game);
                                             pool.Initialize(game);
 
 
-                                            emit.Initialize(5000);
-                                          
+                                            emit.Initialize();
                                             emit.InitializeRender();
-                                            emit.AddParticle(new Vector3(0, 0, 0));
+                                            
                                             
                                             emit.CreateRenderData();
                                             emit.SetRenderData();
+                                            emit.AddParticles(1, Vector3.Zero, Vector3.Zero);
                                         };
-
+            game.UpdateEvent += delegate
+                                    {
+                                       // emit.setShader();
+                                        emit.SetPosition(seed.NextVector3(new Vector3(-50,70,-50),new Vector3(50,70,50)));
+                                        emit.Update();
+                                    };
             game.DrawEvent += delegate
                                   {
                                       game.GraphicsDevice.RenderState.CullMode = CullMode.None;  

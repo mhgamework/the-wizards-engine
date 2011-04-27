@@ -17,17 +17,22 @@ namespace MHGameWork.TheWizards.Particles
         private readonly VertexDeclarationPool declarationPool;
         private readonly IXNAGame game;
         // postions are the upper right corner of the particle
-        public  Vector3[] particles;
+        public float[] particles;
         private ITexture texture;
         private Vector3 position;
-        private VertexPositionTexture[] renderData;
+        private ParticleVertex[] renderData;
         private float particleWidth, particleHeight;
-        private int particleCount=0;
         private int maxParticles;
 
-        private float MaxLifeTime = 2.0f;
+        private float MaxLifeTime = 10.0f;
+        private int particlesPerSecond = 2;
+        private float ParticleFrequency = 1 / 2f;
+        private int emptyIndex = 0;
+        private int releasedIndex = 0;
+        private float time = 0;
+        private int size = 128;
         private ParticleSimulater simulater;
-        public Emitter(TexturePool texturePool, VertexDeclarationPool declarationPool,IXNAGame game, ITexture texture, float particleWidth, float particleHeight)
+        public Emitter(TexturePool texturePool, VertexDeclarationPool declarationPool, IXNAGame game, ITexture texture, float particleWidth, float particleHeight)
         {
             this.texturePool = texturePool;
             this.particleHeight = particleHeight;
@@ -36,35 +41,79 @@ namespace MHGameWork.TheWizards.Particles
             this.declarationPool = declarationPool;
             this.game = game;
         }
-        public void Initialize(int size)
-        {   
-            maxParticles = size*size;
-            particles = new Vector3[maxParticles];
-            renderData = new VertexPositionTexture[maxParticles * 6];
+
+
+
+        public void Initialize()
+        {
+            maxParticles = size * size;
+            particles = new float[maxParticles];
+            renderData = new ParticleVertex[maxParticles * 6];
             simulater = new ParticleSimulater(game, size);
             simulater.Initialize();
 
         }
 
+        //depends on what kind of effect you want so I'm not sure if this is the right spot
+        private void incrementEmptyIndex()
+        {
+            emptyIndex++;
+            if (emptyIndex == maxParticles)
+            { emptyIndex = 0; }
+        }
         public void Update()
         {
-            
+            for (int i = 0; i < particles.Length; i++)
+            {
+                particles[i] -= game.Elapsed;
+                if (i < particles.Length - 1)
+                {
+                    if (particles[i] <= 0 && particles[i + 1] > 0)
+                        releasedIndex = i;
+                }
+            }
+            if (time + game.Elapsed > ParticleFrequency)
+            {
+                AddParticles((int)(particlesPerSecond * (time + game.Elapsed)), position, Vector3.Zero);
+                time = 0;
+            }
+            else
+            {
+                time += game.Elapsed;
+            }
+        }
+        public void SetPosition(Vector3 pos)
+        {
+            position = pos;
+        }
+        public void AddParticles(int amount, Vector3 position, Vector3 velocity)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                particles[emptyIndex] = MaxLifeTime;
+                simulater.AddNewParticle(position, velocity, emptyIndex);
+                incrementEmptyIndex();
+            }
+
         }
         public void CreateRenderData()
         {
-            for (int i = 0; i < particleCount; i+=6)
+            for (int i = 0; i < particles.Length; i += 6)
             {
-               
-                    renderData[i] = new VertexPositionTexture(particles[i], new Vector2(-0.5f, -0.5f));
-                    renderData[i + 1] = new VertexPositionTexture(particles[i], new Vector2(0.5f, -0.5f));
-                    renderData[i + 2] = new VertexPositionTexture(particles[i], new Vector2(0.5f, 0.5f));
-                    renderData[i + 3] = new VertexPositionTexture(particles[i], new Vector2(-0.5f, -0.5f));
-                    renderData[i + 4] = new VertexPositionTexture(particles[i], new Vector2(0.5f, 0.5f));
-                    renderData[i + 5] = new VertexPositionTexture(particles[i], new Vector2(-0.5f, 0.5f));
+                Vector2 uv = getUVFromIndex(i/6);
+                renderData[i] = new ParticleVertex(uv, new Vector2(-0.5f, -0.5f));
+                renderData[i + 1] = new ParticleVertex(uv, new Vector2(0.5f, -0.5f));
+                renderData[i + 2] = new ParticleVertex(uv, new Vector2(0.5f, 0.5f));
+                renderData[i + 3] = new ParticleVertex(uv, new Vector2(-0.5f, -0.5f));
+                renderData[i + 4] = new ParticleVertex(uv, new Vector2(0.5f, 0.5f));
+                renderData[i + 5] = new ParticleVertex(uv, new Vector2(-0.5f, 0.5f));
 
             }
         }
-
+        private Vector2 getUVFromIndex(int index)
+        {
+            return new Vector2(index % size, (int)(index / size));
+        }
         private BasicShader shader;
         private VertexBuffer vertexBuffer;
         private VertexDeclaration decl;
@@ -74,33 +123,34 @@ namespace MHGameWork.TheWizards.Particles
         public void InitializeRender()
         {
             shader = BasicShader.LoadFromEmbeddedFile(game, Assembly.GetExecutingAssembly(), "MHGameWork.TheWizards.Particles.Files.BillBoardShader.fx", "..\\..\\NewModules\\Particles\\Files\\BillBoardShader.fx", new EffectPool());
+            setShader();
+            vertexStride = ParticleVertex.SizeInBytes;
+            vertexBuffer = new VertexBuffer(game.GraphicsDevice, typeof(ParticleVertex), maxParticles * 6, BufferUsage.WriteOnly);
+            decl = declarationPool.GetVertexDeclaration<ParticleVertex>();
+        }
+
+        public void setShader()
+        {
             shader.SetTechnique("Billboard");
             shader.SetParameter("world", Matrix.Identity);
             shader.SetParameter("viewProjection", Matrix.Identity);
             shader.SetParameter("viewInverse", Matrix.Identity);
-            shader.SetParameter("diffuseTexture",texturePool.LoadTexture(texture));
+            shader.SetParameter("diffuseTexture", texturePool.LoadTexture(texture));
             shader.SetParameter("width", particleWidth);
             shader.SetParameter("height", particleHeight);
+            shader.SetParameter("size", size);
+        }
 
-            vertexStride = VertexPositionTexture.SizeInBytes;
-            vertexBuffer = new VertexBuffer(game.GraphicsDevice,typeof(VertexPositionTexture), maxParticles*6,BufferUsage.WriteOnly);
-            decl = declarationPool.GetVertexDeclaration<VertexPositionTexture>();
-        }
-        public void AddParticle(Vector3 pos)
-        {
-            particles[particleCount] = pos;
-            particleCount++;
-        }
         public void SetRenderData()
         {
             vertexBuffer.SetData(renderData);
-            vertexCount = particleCount*4;
+            vertexCount = emptyIndex * 4;
         }
         public void Render(Matrix viewProjection, Matrix viewInverse)
         {
             simulater.RenderUpdate(game.Elapsed);
-            shader.SetParameter("")
-            shader.SetParameter("viewProjection",viewProjection);
+            shader.SetParameter("displacementTexture", simulater.getOldPosition());
+            shader.SetParameter("viewProjection", viewProjection);
             shader.SetParameter("viewInverse", viewInverse);
             shader.SetParameter("world", Matrix.Identity);
             shader.RenderMultipass(renderPrimitivesAsBillBoards);
@@ -109,9 +159,29 @@ namespace MHGameWork.TheWizards.Particles
         {
             game.GraphicsDevice.VertexDeclaration = decl;
             game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
-            game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, particleCount*2);
+            game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, releasedIndex*6, emptyIndex * 2);
         }
 
+        public struct ParticleVertex
+        {
+            public Vector2 UV;
+            public Vector2 texCoord;
+
+            public ParticleVertex(Vector2 UV, Vector2 texCoord)
+            {
+                this.UV = UV;
+                this.texCoord = texCoord;
+            }
+
+            public static readonly VertexElement[] VertexElements =
+     {
         
+         new VertexElement(0, 0, VertexElementFormat.Vector2, VertexElementMethod.Default, VertexElementUsage.TextureCoordinate, 0),
+         new VertexElement(0, sizeof(float)*2, VertexElementFormat.Vector2, VertexElementMethod.Default, VertexElementUsage.TextureCoordinate, 1),
+        
+
+     };
+            public static int SizeInBytes = sizeof(float) * (2 + 2);
+        }
     }
 }

@@ -21,7 +21,7 @@ sampler DiffuseTextureSampler = sampler_state
 	MagFilter=Linear;
 	MipFilter=Linear;
 };
-texture displacementTexture:Diffuse
+texture displacementTexture;
 sampler displacementSampler = sampler_state
 {
 	Texture = <displacementTexture>;
@@ -39,21 +39,22 @@ struct VSOut
 
 struct VertexInput
 {
-	float3 Position : POSITION;
-	float2 TexCoord : TEXCOORD0;
+	float2 uv : TEXCOORD0;
+	float2 TexCoord : TEXCOORD1;
 	
 };
  float width;
  float height;
-
+ float size;
 VSOut vs_main(VertexInput In)
 {
 	VSOut output;
-	halfTexel = (1.0/heightMapSize*0.5)
-	float2 mapUV = In.uv.xy / heightMapSize + halfTexel;
+	float halfTexel = 1.0/size*0.5;
+	float2 mapUV = In.uv.xy / size + halfTexel;
 	float4 position= tex2Dlod(displacementSampler, float4(mapUV,0,0));
-	float4 pos=mul(float4(Position,1),world);
-   
+	//position= float4(0,0,0,1);
+	float4 pos=mul(position,world);
+ 
    float4 translationUp=viewInverse[1]*In.TexCoord.y*height;
    float4 translationRight=viewInverse[0]*In.TexCoord.x*width;
    //float4 translationUp = float4(In.TexCoord,0,1);
@@ -62,8 +63,9 @@ VSOut vs_main(VertexInput In)
    //pos=pos/pos.w;
    pos=pos+translationUp+ translationRight;
 
+   
   
-   output.Position=mul(pos,viewProjection);
+	output.Position=mul(pos,viewProjection);
 	output.TexCoord=float2(0.5,0.5)+In.TexCoord;
     return output;
 }
@@ -85,8 +87,8 @@ technique Billboard
     pass p0 
     {	
 		// Shaders
-		VertexShader = compile vs_2_0 vs_main();
-		PixelShader  = compile ps_2_0 ps_main();
+		VertexShader = compile vs_3_0 vs_main();
+		PixelShader  = compile ps_3_0 ps_main();
 		
     }
 }

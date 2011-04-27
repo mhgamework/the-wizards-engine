@@ -1,15 +1,5 @@
 
-
-/*** Camera Info ***/
-
-float4x4 world : World;
-shared float4x4 viewProjection : ViewProjection;
-shared float4x4 view : View;
-shared float4x4 projection : Projection;
-
-shared float4x4 viewInverse : ViewInverse;
-
-texture oldPosition : Diffuse
+texture oldPosition;
 sampler OldPositionSampler = sampler_state
 {
 	Texture = <oldPosition>;
@@ -17,7 +7,7 @@ sampler OldPositionSampler = sampler_state
 	MagFilter=Linear;
 	MipFilter=Linear;
 };
-texture oldVelocity : Diffuse
+texture oldVelocity ;
 sampler OldVelocitySampler = sampler_state
 {
 	Texture = <oldVelocity>;
@@ -64,28 +54,33 @@ struct PixelShaderOutput
     half4 NewVelocity : COLOR1;
     
 };
+float size;
 // Pixel Shader
-PixelShaderOutput ps_main(VSOut In) : COLOR0
+PixelShaderOutput ps_main(VSOut In)
 {
-	
-	float4 oldPosition =tex2D(OldPositionSampler, In.TexCoord);
-	float4 oldVelocity =tex2D(OldVelocitySampler, In.TexCoord);
+	float halfTexel = 1.0/size*0.5;
+	float4 oldPosition =tex2D(OldPositionSampler, In.TexCoord+halfTexel);
+	float4 oldVelocity =tex2D(OldVelocitySampler, In.TexCoord+halfTexel);
 
-	float4 velocity=oldVelocity+float4(0,-5*elapsed,0,1);//simple gravity calculation
+	float3 velocity=oldVelocity.xyz+float3(0,-5*elapsed,0);//simple gravity calculation
+	//velocity = float3(0,0,0);
+
 	PixelShaderOutput output;
-	output.NewPosition = oldPosition + float4(velocity * elapsed,1)
-	output.NewVelocity=velocity;
+	output.NewPosition = float4(oldPosition.xyz + velocity * elapsed,1);
+	//output.NewVelocity=float4(velocity,1);
+	output.NewVelocity=float4(velocity,1);
+	//output.NewPosition = float4(In.TexCoord,0,1);
 	return output;
 }
 
 // Technique
-technique Billboard
+technique particleSimulation
 {
     pass p0 
     {	
 		// Shaders
-		VertexShader = compile vs_2_0 vs_main();
-		PixelShader  = compile ps_2_0 ps_main();
+		VertexShader = compile vs_3_0 VertexShaderFunction();
+		PixelShader  = compile ps_3_0 ps_main();
 		
     }
 }
