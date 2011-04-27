@@ -20,8 +20,14 @@ namespace MHGameWork.TheWizards.Terrain.Geomipmap
 
         public static int CalculateMaxDetailLevel(int blockSize)
         {
-            // The -1 can be removed, that detail lvl seems to be supported?
-            return (blockSize >> 2) - 1;
+            int max = 0;
+            while (blockSize > 0)
+            {
+                blockSize = blockSize >> 1;
+                max++;
+            }
+            // One more detail lvl seems to be supported?
+            return max-2;
         }
 
         public IndexBufferBuilder(IXNAGame game)
@@ -182,7 +188,7 @@ namespace MHGameWork.TheWizards.Terrain.Geomipmap
         /// <returns></returns>
         private int getNeightbourDetailLevel(TerrainBlockEdge edge)
         {
-            var b =currentBlock.GetNeighbour(edge);
+            var b = currentBlock.GetNeighbour(edge);
             if (b == null) return MaxDetailLevel;
             return b.DetailLevel;
         }

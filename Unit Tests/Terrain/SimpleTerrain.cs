@@ -35,7 +35,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
             this.blockSize = blockSize;
             this.numBlocks = numBlocks;
 
-
+            LightDirection = Vector3.Normalize(new Vector3(1, -1, 1));
 
             blocks = new SimpleTerrainBlock[numBlocks * numBlocks];
             for (int i = 0; i < blocks.Length; i++)
@@ -46,15 +46,17 @@ namespace MHGameWork.TheWizards.Tests.Terrain
 
         }
 
+        public Vector3 LightDirection{get; set; }
+
         public void Draw()
         {
 
             shader.Shader.SetParameter("viewProjection", game.Camera.ViewProjection);
-            shader.Shader.SetParameter("maxHeight", 200);
+            shader.Shader.SetParameter("maxHeight", 500);
             shader.Shader.SetParameter("displacementMap", heightmapTexture);
             shader.Shader.SetParameter("normalMap", normalTexture);
             shader.Shader.SetParameter("heightMapSize", heightmapTexture.Width);
-            shader.Shader.SetParameter("lightDir", Vector3.Normalize(new Vector3(1, -1, 1)));
+            shader.Shader.SetParameter("lightDir",LightDirection);
 
             game.GraphicsDevice.Vertices[0].SetSource(vb, 0, VertexMultitextured.SizeInBytes);
             game.GraphicsDevice.VertexDeclaration = decl;
@@ -105,7 +107,6 @@ namespace MHGameWork.TheWizards.Tests.Terrain
                     toBlock.Y = 0;
                     var distSq = (toBlock).LengthSquared();
                     var newLevel = MinDistanceCalculator.DetermineLowestAllowedDetailLevel(block.MinDistancesSquared, distSq, block.DetailLevel, builder.MaxDetailLevel);
-                    newLevel = 0;
                     if (newLevel != block.DetailLevel) builder.ChangeDetailLevel(block, newLevel);
 
                 }
@@ -124,7 +125,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
                 {
                     var block = GetBlock(x, z);
                     block.MinDistancesSquared = MinDistanceCalculator.CalculateMinDistancesSquared(game.Camera.Projection, map,
-                                                                      builder.BlockSize, 0, 0);
+                                                                      builder.BlockSize, x, z);
 
                     builder.ChangeDetailLevel(block, builder.MaxDetailLevel);
 

@@ -395,10 +395,16 @@ float4 PixelShaderHeightColoredLit(in float4 worldPos : TEXCOORD1, in float4 uv 
 {       
 	float3 normal = tex2D(normalSampler, normalMapCoord).xyz;
 	float brightness = dot(normalize(normal),-lightDir);
-	float4 colorA = float4(0,0,1,1);
-	float4 colorB = float4(0.8,00.8,0.8,1);
-	return float4(brightness,0,0,1);
-    return lerp(colorA,colorB,worldPos.y / maxHeight)*brightness;
+	float ambient = 0.2;
+	brightness = clamp(brightness,0,1);
+	brightness = (brightness + ambient)/(1-ambient);
+	float4 colorA = float4(0.1,0.5,0,1);
+	float4 colorB = float4(1,1,1.1,1);
+	float factor = (worldPos.y / maxHeight-0.2)/0.8;
+	factor = clamp(factor,0,1);
+	//factor  = 1;
+	//return float4(brightness,0,0,1);
+    return float4(lerp(colorA,colorB,factor).rgb*brightness,1);
 }
 
 float4 PixelShader_GridTile(in float4 worldPos : TEXCOORD1) : COLOR

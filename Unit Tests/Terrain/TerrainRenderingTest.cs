@@ -489,8 +489,9 @@ namespace MHGameWork.TheWizards.Tests.Terrain
             var game = new XNAGame();
             game.DrawFps = true;
             game.IsFixedTimeStep = false;
-            var map = createTestHeightmap(16, 32);
-            var terrain = new SimpleTerrain(map, 16, 32);
+            var map = createTestHeightmap(128, 32);
+            var terrain = new SimpleTerrain(map, 128, 32);
+            Vector3 lightDir = Vector3.Normalize(new Vector3(1, -1, 1));
             game.SpectaterCamera.FarClip = 5000;
 
             game.InitializeEvent += delegate { terrain.Initialize(game); };
@@ -503,7 +504,10 @@ namespace MHGameWork.TheWizards.Tests.Terrain
                         game.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
                     else
                         game.GraphicsDevice.RenderState.FillMode = FillMode.WireFrame;
+
                 }
+                lightDir = temp(terrain, game, lightDir);
+
             };
             game.DrawEvent += delegate
                               {
@@ -512,6 +516,23 @@ namespace MHGameWork.TheWizards.Tests.Terrain
 
             game.Run();
 
+        }
+
+        private Vector3 temp(SimpleTerrain terrain, XNAGame game, Vector3 lightDir)
+        {
+            if (game.Keyboard.IsKeyDown(Keys.L))
+            {
+                var mat = Matrix.CreateRotationX(game.Mouse.RelativeY*0.1f)*
+                          Matrix.CreateRotationY(game.Mouse.RelativeX*0.1f);
+                lightDir = Vector3.Transform(lightDir, mat);
+                terrain.LightDirection = lightDir;
+                game.SpectaterCamera.Enabled = false;
+            }
+            else
+            {
+                game.SpectaterCamera.Enabled = true;
+            }
+            return lightDir;
         }
 
         private HeightMap createTestHeightmap(int blockSize, int size)
@@ -525,10 +546,11 @@ namespace MHGameWork.TheWizards.Tests.Terrain
                 {
                     var height = 0f;
                     float freq, ampl;
-                    freq = 0.01f; ampl = 100; height += noise.interpolatedNoise(i * freq, j * freq) * ampl;
-                    freq = 0.1f; ampl = 6; height += noise.interpolatedNoise(i * freq, j * freq) * ampl;
-                    freq = 1f; ampl = 0.1f; height += noise.interpolatedNoise(i * freq, j * freq) * ampl;
-                    freq = 2f; ampl = 0.2f; height += noise.interpolatedNoise(i * freq, j * freq) * ampl;
+                    freq = 0.002f*3; ampl = 900; height += noise.interpolatedNoise(i * freq, j * freq) * ampl; noise.CreateRandomOffset();
+                    freq = 0.01f*3; ampl = 100; height += noise.interpolatedNoise(i * freq, j * freq) * ampl; noise.CreateRandomOffset();
+                    freq = 0.1f*3; ampl = 15; height += noise.interpolatedNoise(i * freq, j * freq) * ampl; noise.CreateRandomOffset();
+                    freq = 1f*3; ampl = 0.3f; height += noise.interpolatedNoise(i * freq, j * freq) * ampl; noise.CreateRandomOffset();
+                    //freq = 2f; ampl = 0.2f; height += noise.interpolatedNoise(i * freq, j * freq) * ampl;
                     
                     heightmap.SetHeight(i, j, height);
 
