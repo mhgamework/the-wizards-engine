@@ -54,6 +54,7 @@ VSOut vs_main(VertexInput In)
 	float4 position= tex2Dlod(displacementSampler, float4(mapUV,0,0));
 	//position= float4(0,0,0,1);
 	float4 pos=mul(position,world);
+	//pos = float4(In.uv,0,1);
  
    float4 translationUp=viewInverse[1]*In.TexCoord.y*height;
    float4 translationRight=viewInverse[0]*In.TexCoord.x*width;

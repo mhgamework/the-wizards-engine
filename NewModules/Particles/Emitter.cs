@@ -25,8 +25,8 @@ namespace MHGameWork.TheWizards.Particles
         private int maxParticles;
 
         private float MaxLifeTime = 10.0f;
-        private int particlesPerSecond = 2;
-        private float ParticleFrequency = 1 / 2f;
+        private int particlesPerSecond = 500;
+        private float ParticleFrequency = 1f / 500;
         private int emptyIndex = 0;
         private int releasedIndex = 0;
         private float time = 0;
@@ -98,9 +98,10 @@ namespace MHGameWork.TheWizards.Particles
         }
         public void CreateRenderData()
         {
-            for (int i = 0; i < particles.Length; i += 6)
+            //Bart,bart,bart toch *6!!
+            for (int i = 0; i < particles.Length * 6; i += 6)
             {
-                Vector2 uv = getUVFromIndex(i/6);
+                Vector2 uv = getUVFromIndex(i / 6);
                 renderData[i] = new ParticleVertex(uv, new Vector2(-0.5f, -0.5f));
                 renderData[i + 1] = new ParticleVertex(uv, new Vector2(0.5f, -0.5f));
                 renderData[i + 2] = new ParticleVertex(uv, new Vector2(0.5f, 0.5f));
@@ -109,6 +110,7 @@ namespace MHGameWork.TheWizards.Particles
                 renderData[i + 5] = new ParticleVertex(uv, new Vector2(-0.5f, 0.5f));
 
             }
+
         }
         private Vector2 getUVFromIndex(int index)
         {
@@ -157,9 +159,23 @@ namespace MHGameWork.TheWizards.Particles
         }
         private void renderPrimitivesAsBillBoards()
         {
-            game.GraphicsDevice.VertexDeclaration = decl;
-            game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
-            game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, releasedIndex*6, emptyIndex * 2);
+            if (emptyIndex > releasedIndex)
+            {
+
+                game.GraphicsDevice.VertexDeclaration = decl;
+                game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
+                game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, releasedIndex * 6, emptyIndex * 2);
+            }
+            else
+            {
+                game.GraphicsDevice.VertexDeclaration = decl;
+                game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
+                game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, emptyIndex * 2);
+                game.GraphicsDevice.VertexDeclaration = decl;
+                game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
+                game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, releasedIndex * 6, (particles.Length - releasedIndex) * 2);
+            }
+            //game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, particles.Length * 2);
         }
 
         public struct ParticleVertex
