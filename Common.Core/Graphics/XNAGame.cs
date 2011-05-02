@@ -479,6 +479,7 @@ namespace MHGameWork.TheWizards.Graphics
             {
                 var old = lineManager3D.DrawGroundShadows;
                 lineManager3D.DrawGroundShadows = false;
+                lineManager3D.WorldMatrix = Matrix.Identity;
                 lineManager3D.AddLine(new Vector3(0, 0, 0), new Vector3(10, 0, 0), Color.Red);
                 lineManager3D.AddLine(new Vector3(0, 0, 0), new Vector3(0, 10, 0), Color.Green);
                 lineManager3D.AddLine(new Vector3(0, 0, 0), new Vector3(0, 0, 10), Color.Blue);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Editor;
+using MHGameWork.TheWizards.TileEngine.SnapEngine;
 using NUnit.Framework;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.OBJParser;
@@ -45,7 +46,7 @@ namespace MHGameWork.TheWizards.TileEngine
             XNAGame game = new XNAGame();
 
             OBJParser.ObjImporter importer = new OBJParser.ObjImporter();
-            var c = new OBJToRAMMeshConverter( new RAMTextureFactory());
+            var c = new OBJToRAMMeshConverter(new RAMTextureFactory());
 
             importer.AddMaterialFileStream("Goblin02.mtl", new FileStream("../../../Assets/Goblin/Goblin02.mtl", FileMode.Open));
             importer.ImportObjFile("../../../Assets/Goblin/Goblin02.obj");
@@ -164,6 +165,48 @@ namespace MHGameWork.TheWizards.TileEngine
         }
 
         [Test]
+        public void TestSnapPointToPoint2()
+        {
+            XNAGame game = new XNAGame();
+
+
+            SnapPoint p1 = new SnapPoint();
+            p1.Position = new Vector3(0, 0, 0);
+            var w2 = (float)(1/Math.Sqrt(2));
+            p1.Normal = Vector3.Normalize(new Vector3(w2*w2, w2, w2*w2));
+            p1.Up = Vector3.Normalize(new Vector3(-w2 * w2, w2, -w2 * w2));
+            p1.ClockwiseWinding = true;
+
+            SnapPoint p2 = new SnapPoint();
+            p2.Position = new Vector3(0, 0, 0);
+            p2.Normal = Vector3.Normalize(new Vector3(1, 0, 0));
+            p2.Up = Vector3.Normalize(new Vector3(0, 1, 0));
+            p2.ClockwiseWinding = false;
+
+            var snapper = new SnapperPointPoint();
+
+            List<Transformation> transformations = new List<Transformation>();
+
+
+            game.DrawEvent += delegate
+                                  {
+                                      transformations.Clear();
+                                      snapper.SnapAToB(p2, p1, Transformation.Identity, transformations);
+                                      game.LineManager3D.DrawGroundShadows = true;
+
+                                      game.LineManager3D.AddLine(p1.Position, p1.Position + 3f * p1.Normal, Color.Red);
+                                      game.LineManager3D.AddLine(p1.Position, p1.Position + 3f * p1.Up, Color.Blue);
+
+                                      game.LineManager3D.WorldMatrix = transformations[0].CreateMatrix();
+
+                                      game.LineManager3D.AddLine(p2.Position, p2.Position + 3f * p2.Normal + Vector3.One * 0.01f, Color.Yellow);
+                                      game.LineManager3D.AddLine(p2.Position, p2.Position + 3f * p2.Up + Vector3.One * 0.01f, Color.Purple);
+                                  };
+
+            game.Run();
+        }
+
+
         public void TestGizmo()
         {
             XNAGame game = new XNAGame();
@@ -187,6 +230,7 @@ namespace MHGameWork.TheWizards.TileEngine
            };
             game.DrawEvent += delegate
             {
+
                 game.GraphicsDevice.RenderState.CullMode = CullMode.CullClockwiseFace;
 
                 translationGizmo.Render(game);
@@ -282,7 +326,7 @@ namespace MHGameWork.TheWizards.TileEngine
             OBJParser.ObjImporter importer = new OBJParser.ObjImporter();
             var c = new OBJToRAMMeshConverter(new RAMTextureFactory());
 
-            importer.AddMaterialFileStream("WallCorner.mtl", new FileStream( TWDir.GameData.CreateSubdirectory("Core\\TileEngine") +  "/WallCorner/WallCorner.mtl", FileMode.Open));
+            importer.AddMaterialFileStream("WallCorner.mtl", new FileStream(TWDir.GameData.CreateSubdirectory("Core\\TileEngine") + "/WallCorner/WallCorner.mtl", FileMode.Open));
             importer.ImportObjFile(TWDir.GameData.CreateSubdirectory("Core\\TileEngine") + "/WallCorner/WallCorner.obj");
             var meshWallCorner = c.CreateMesh(importer);
             importer.AddMaterialFileStream("WallStraight.mtl", new FileStream(TWDir.GameData.CreateSubdirectory("Core\\TileEngine") + "/WallStraight/WallStraight.mtl", FileMode.Open));
