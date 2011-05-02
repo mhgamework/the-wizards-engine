@@ -10,6 +10,8 @@ obj/
 
 .svn/
 
+# Dont ignore bin folder in libraries
+!/_Libraries/*/bin
 
 # The /bin folder
 
