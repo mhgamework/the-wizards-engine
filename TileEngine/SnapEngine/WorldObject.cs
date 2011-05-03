@@ -64,7 +64,7 @@ namespace MHGameWork.TheWizards.TileEngine
             else
                 WorldMatrix = Matrix.CreateFromQuaternion(rotation) * Matrix.CreateTranslation(position);
 
-            renderElement.WorldMatrix = WorldMatrix;
+            renderElement.WorldMatrix = ObjectType.TileData.MeshOffset * WorldMatrix;
         }
 
         public void Reset()
@@ -72,6 +72,8 @@ namespace MHGameWork.TheWizards.TileEngine
             Position = new Vector3(0, 0, 0);
             Rotation = Quaternion.Identity;
         }
+
+       
 
         #region ICloneable Members
 

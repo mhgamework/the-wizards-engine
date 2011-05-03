@@ -12,21 +12,7 @@ namespace MHGameWork.TheWizards.TileEngine
 
         public SnapInformation CreateFromTile(TileData data)
         {
-            Vector3[] faceDirections = new Vector3[6];
-            faceDirections[(int)TileFace.Back - 1] = Vector3.Backward;
-            faceDirections[(int)TileFace.Front - 1] = Vector3.Forward;
-            faceDirections[(int)TileFace.Top - 1] = Vector3.Up;
-            faceDirections[(int)TileFace.Bottom - 1] = Vector3.Down;
-            faceDirections[(int)TileFace.Left - 1] = Vector3.Left;
-            faceDirections[(int)TileFace.Right - 1] = Vector3.Right;
-
-            Vector3[] upDirections = new Vector3[6];
-            upDirections[(int)TileFace.Back - 1] = Vector3.Up;
-            upDirections[(int)TileFace.Front - 1] = Vector3.Up;
-            upDirections[(int)TileFace.Top - 1] = Vector3.Forward;
-            upDirections[(int)TileFace.Bottom - 1] = Vector3.Forward;
-            upDirections[(int)TileFace.Left - 1] = Vector3.Up;
-            upDirections[(int)TileFace.Right - 1] = Vector3.Up;
+           
 
             SnapInformation information = new SnapInformation();
 
@@ -54,6 +40,37 @@ namespace MHGameWork.TheWizards.TileEngine
             }
 
             return information;
+        }
+
+        private static Vector3[] faceDirections;
+        private static Vector3[] upDirections;
+
+        static TileSnapInformationBuilder ()
+        {
+            faceDirections = new Vector3[7];
+            faceDirections[5] = Vector3.Backward;
+            faceDirections[6] = Vector3.Forward;
+            faceDirections[1] = Vector3.Up;
+            faceDirections[2] = Vector3.Down;
+            faceDirections[3] = Vector3.Left;
+            faceDirections[4] = Vector3.Right;
+
+            upDirections = new Vector3[7];
+            upDirections[5] = Vector3.Up;
+            upDirections[6] = Vector3.Up;
+            upDirections[1] = Vector3.Forward;
+            upDirections[2] = Vector3.Forward;
+            upDirections[3] = Vector3.Up;
+            upDirections[4] = Vector3.Up;
+        }
+
+        public static Vector3 getFaceNormal(TileFace face)
+        {
+            return faceDirections[(int)face];
+        }
+        public static Vector3 getFaceUp(TileFace face)
+        {
+            return upDirections[(int)face];
         }
 
     }

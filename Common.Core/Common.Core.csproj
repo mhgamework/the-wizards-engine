@@ -316,6 +316,7 @@
     <Compile Include="Raycast\Raycaster.cs" />
     <Compile Include="Raycast\RaycastHelper.cs" />
     <Compile Include="Raycast\RaycastResult.cs" />
+    <Compile Include="Raycast\SimpleRaycaster.cs" />
     <Compile Include="Seeder.cs" />
     <Compile Include="TWDir.cs" />
     <Compile Include="Water\Camera.cs" />
