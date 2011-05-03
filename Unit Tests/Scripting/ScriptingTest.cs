@@ -67,6 +67,21 @@ namespace MHGameWork.TheWizards.Tests.Scripting
             twGame.Game.Run();
 
         }
+
+        [Test]
+        public void TestScriptDataBinder()
+        {
+            var s = new SimpleScriptDatabinding();
+            var d = new EntityData();
+            d.GetDataElement<string>("Name").Set("TestScript");
+            var b = new ScriptDataBinder();
+            b.LoadData(s, d);
+
+            s.Data = 8;
+
+            b.SaveData(s, d);
+
+        }
         [Test]
         public void TestPlayerUseListener()
         {

@@ -70,6 +70,12 @@ namespace MHGameWork.TheWizards.Scene
             }
         }
 
+        public bool Kinematic
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
         private IMesh mesh;
         public IMesh Mesh
         {
@@ -82,6 +88,8 @@ namespace MHGameWork.TheWizards.Scene
                 onChange();
             }
         }
+
+        public EntityData Data { get; private set; }
 
         public BoundingBox BoundingBox { get; private set; }
         public BoundingBox LocalBoundingBox { get; private set; }
@@ -97,6 +105,9 @@ namespace MHGameWork.TheWizards.Scene
             _static = true;
             solid = true;
             transformation = Transformation.Identity;
+
+            Data = new EntityData();
+
         }
 
 

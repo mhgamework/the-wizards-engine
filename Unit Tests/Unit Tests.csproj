@@ -144,6 +144,7 @@
     <Compile Include="Rendering\SimpleMeshFactory.cs" />
     <Compile Include="Scene\SceneTest.cs" />
     <Compile Include="Scripting\ScriptingTest.cs" />
+    <Compile Include="Scripting\SimpleScriptDatabinding.cs" />
     <Compile Include="Scripting\SimpleStateScript.cs" />
     <Compile Include="Server\LauncherServerTest.cs" />
     <Compile Include="Showcase.cs" />
