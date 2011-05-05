@@ -12,13 +12,13 @@ namespace MHGameWork.TheWizards.TileEngine
 
         public SnapInformation CreateFromTile(TileData data)
         {
-           
+
 
             SnapInformation information = new SnapInformation();
 
-            for (int i = 0 ; i < 6 ; i++)
+            for (int i = 0; i < 6; i++)
             {
-                var tileFace = (TileFace)(i+1);
+                var tileFace = (TileFace)(i + 1);
                 var faceType = data.GetFaceType(tileFace);
 
                 if (data.GetFaceType(tileFace) == null) continue;
@@ -27,14 +27,8 @@ namespace MHGameWork.TheWizards.TileEngine
                     typesMap.Add(faceType, new SnapType("TileFaceType: " + faceType.Name));
                 }
 
-                var point = new SnapPoint();
+                SnapPoint point = GetPoint(data, tileFace, faceType, data.GetWinding(tileFace));
 
-                point.Position = Math.Abs(Vector3.Dot((data.Dimensions * 0.5f), faceDirections[i])) * faceDirections[i];
-                point.SnapType = typesMap[faceType];
-                point.Normal = faceDirections[i];
-                point.Up = upDirections[i];
-                point.ClockwiseWinding = data.GetWinding(tileFace);
-                
 
                 information.addSnapObject(point);
             }
@@ -42,10 +36,23 @@ namespace MHGameWork.TheWizards.TileEngine
             return information;
         }
 
+        public SnapPoint GetPoint(TileData data, TileFace tileFace, TileFaceType faceType, bool winding)
+        {
+            var point = new SnapPoint();
+
+            point.Position = Math.Abs(Vector3.Dot((data.Dimensions * 0.5f), getFaceNormal(tileFace))) * getFaceNormal(tileFace);
+            if (faceType != null)
+                point.SnapType = typesMap[faceType];
+            point.Normal = getFaceNormal(tileFace);
+            point.Up = getFaceUp(tileFace);
+            point.ClockwiseWinding = winding;
+            return point;
+        }
+
         private static Vector3[] faceDirections;
         private static Vector3[] upDirections;
 
-        static TileSnapInformationBuilder ()
+        static TileSnapInformationBuilder()
         {
             faceDirections = new Vector3[7];
             faceDirections[5] = Vector3.Backward;

@@ -534,7 +534,7 @@ namespace MHGameWork.TheWizards.TileEngine
             grid.Interval = 1;
             grid.MajorInterval = 10;
 
-            var snapLearnTool = new SnapLearnTool(world);
+            var snapLearnTool = new SnapLearnTool(world, renderer);
             game.AddXNAObject(snapLearnTool);
 
             bool mouseEnabled = false;
@@ -566,10 +566,12 @@ namespace MHGameWork.TheWizards.TileEngine
                                   {
                                       grid.Render(game);
                                       game.LineManager3D.WorldMatrix = TileInnerCorner.WorldMatrix;
-                                      game.LineManager3D.AddBox(WallCornerBB, Color.White);
+                                      //game.LineManager3D.AddBox(WallCornerBB, Color.White);
                                   };
 
             game.Run();
         }
+    
+
     }
 }

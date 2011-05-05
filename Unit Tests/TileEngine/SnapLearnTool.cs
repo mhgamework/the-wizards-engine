@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Collada.COLLADA140;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.Raycast;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.TileEngine;
 using MHGameWork.TheWizards;
+using MHGameWork.TheWizards.TileEngine.SnapEngine;
 using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Tests.TileEngine
@@ -18,12 +21,32 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
         private SimpleRaycaster<TileFace> raycasterFace;
         private BoxMesh ghostMesh;
 
+        private bool PickOperandAState = true;
+        private bool PickOperandBState;
+        private bool SnapLearnState;
 
-        public SnapLearnTool(TheWizards.TileEngine.World world)
+
+        private TileFaceType tileFaceTypeA;
+        private TileFaceType tileFaceTypeB;
+        private WorldObject tileA;
+        private WorldObject tileB;
+
+        private SnapperPointPoint snapper = new SnapperPointPoint();
+        private TileSnapInformationBuilder builder = new TileSnapInformationBuilder();
+        private SnapPoint PointB;
+        private SnapPoint PointA;
+
+        private SimpleMeshRenderElement ghost;
+        private SimpleMeshRenderer renderer;
+        private bool winding;
+
+
+        public SnapLearnTool(TheWizards.TileEngine.World world, SimpleMeshRenderer renderer)
         {
             this.world = world;
             raycaster = new SimpleRaycaster<WorldObject>();
             raycasterFace = new SimpleRaycaster<TileFace>();
+            this.renderer = renderer;
 
         }
 
@@ -49,8 +72,85 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
                 return;
 
             TileFace resultFace = RaycastTileFace(_game, target);
-
             SetGhostAtFace(target, resultFace);
+
+            if(PickOperandAState)
+            {
+                if (_game.Mouse.LeftMouseJustPressed)
+                {
+                    tileA = target;
+                    tileFaceTypeA = target.ObjectType.TileData.GetFaceType(resultFace);
+
+                    ghost = renderer.AddMesh(tileA.ObjectType.Mesh);
+
+                    PointA = builder.GetPoint(tileA.ObjectType.TileData, resultFace, tileFaceTypeA, false);
+                    PickOperandAState = false;
+                    PickOperandBState = true;
+                }
+            }
+
+            if(PickOperandBState)
+            {
+                if (tileA.Equals(target))
+                    return;
+
+                tileB = target;
+                tileFaceTypeB = target.ObjectType.TileData.GetFaceType(resultFace);
+                PointB = builder.GetPoint(tileB.ObjectType.TileData, resultFace, tileFaceTypeB, winding);
+
+                List<Transformation> transformations = new List<Transformation>();
+                snapper.SnapAToB(PointA, PointB, tileB.Transformation, transformations);
+                
+                if(transformations.Count != 0)
+                    ghost.WorldMatrix = tileB.ObjectType.TileData.MeshOffset * transformations[0].CreateMatrix();
+                
+                if(_game.Mouse.RightMouseJustPressed)
+                {
+                    winding = !winding;
+                }
+                if (_game.Mouse.LeftMouseJustPressed)
+                {
+                    PickOperandBState = false;
+                    SnapLearnState = true;
+                }
+            }
+
+            if(SnapLearnState)
+            {
+                if(tileFaceTypeA == null && tileFaceTypeB != null)
+                {
+                    tileFaceTypeA = tileFaceTypeB;
+                }
+                if(tileFaceTypeB == null && tileFaceTypeA != null)
+                {
+                    tileFaceTypeB = tileFaceTypeA;
+                }
+                if(tileFaceTypeA == null && tileFaceTypeB == null)
+                {
+                    TileFaceType newFaceType = new TileFaceType();
+                    tileFaceTypeA = newFaceType;
+                    tileFaceTypeB = newFaceType;
+                }
+                if (tileFaceTypeA != null && tileFaceTypeB != null)
+                {
+                    TileFaceType newRoot = new TileFaceType();
+                    tileFaceTypeA.SetRoot(newRoot);
+                    tileFaceTypeB.SetRoot(newRoot);
+                }
+
+                SnapLearnState = false;
+                PickOperandAState = true;
+
+                ghost.WorldMatrix = Matrix.Invert(tileA.ObjectType.TileData.MeshOffset)*ghost.WorldMatrix;
+                Quaternion rotation;
+                Vector3 translation;
+                Vector3 scale;
+                ghost.WorldMatrix.Decompose(out scale, out rotation, out translation);
+                tileA.Rotation = rotation;
+                tileA.Position= translation;
+                ghost.WorldMatrix = new Matrix();
+
+            }
         }
 
         private void SetGhostAtFace(WorldObject target, TileFace resultFace)
