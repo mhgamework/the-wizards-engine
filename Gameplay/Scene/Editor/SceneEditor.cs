@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Editor;
@@ -44,7 +45,11 @@ namespace MHGameWork.TheWizards.Scene.Editor
 
             activeMode = Mode.Place;
         }
-
+        public void AssignScriptToSelected(FileInfo scriptFile)
+        {
+            if (selectedEntity == null) throw new InvalidOperationException();
+            scene.AssignScriptToEntity(selectedEntity, scriptFile);
+        }
 
         public void SetEditingScene(Scene scene)
         {

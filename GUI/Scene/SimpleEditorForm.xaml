@@ -4,7 +4,7 @@
         Title="SimpleEditorForm" FontFamily="Calibri" FontSize="14" mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        Height="331" Width="195">
+        Height="442" Width="207">
     <StackPanel UseLayoutRounding="False" Margin="0" HorizontalAlignment="Stretch">
         <Button Content="Jump Into" Height="23" Command="{Binding Path=JumpInto}" />
         <Button Content="Select" Height="23" Command="{Binding Path=Select}" />
@@ -18,6 +18,7 @@
             <Label Height="28" Content="{Binding Path=SelectedEntityMesh}" />
             <Button Content="Change Mesh"/>
         </StackPanel>
-
+        <ListBox Height="100" Name="cScripts" SelectedItem="{Binding Path=SelectedScript}" ItemsSource="{Binding Path=Scripts}" />
+        <Button Content="Assign Script" Height="23" Name="cAssignScript" />
     </StackPanel>
 </Window>

@@ -157,6 +157,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
             testMeshPhysicsActorBuilder(mesh);
         }
 
+
         [Test]
         [RequiresThread(System.Threading.ApartmentState.STA)]
         public void TestMeshPhysicsActorBuilderConvex()
@@ -188,7 +189,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
             PhysicsEngine engine = new PhysicsEngine();
             PhysicsDebugRenderer debugRenderer = null;
 
-
+            Matrix mirrorMatrix = Matrix.CreateScale(-1, 1, 1);
 
 
             game.InitializeEvent += delegate
@@ -201,7 +202,11 @@ namespace MHGameWork.TheWizards.Tests.Physics
                                         var builder = new MeshPhysicsActorBuilder(new MeshPhysicsPool());
                                         builder.CreateActorStatic(engine.Scene, mesh.GetCollisionData(), Matrix.Identity);
 
+
                                         boundingBox = builder.CalculateBoundingBox(mesh.GetCollisionData());
+
+                                        builder.CreateActorStatic(engine.Scene, mesh.GetCollisionData(), mirrorMatrix);
+
 
 
                                     };
@@ -210,8 +215,11 @@ namespace MHGameWork.TheWizards.Tests.Physics
                               {
                                   debugRenderer.Render(game);
 
-
+                                  game.LineManager3D.WorldMatrix = Matrix.Identity;
                                   game.LineManager3D.AddBox(boundingBox, Color.Orange);
+                                  game.LineManager3D.WorldMatrix = mirrorMatrix;
+                                  game.LineManager3D.AddBox(boundingBox, Color.Yellow);
+                                  game.LineManager3D.WorldMatrix = Matrix.Identity;
 
                               };
             game.UpdateEvent += delegate
@@ -318,7 +326,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
                 pool.PreloadTriangleMesh(engine.Scene, mesh.GetCollisionData().TriangleMesh);
 
 
-               
+
 
 
             };

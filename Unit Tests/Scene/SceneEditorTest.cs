@@ -79,6 +79,8 @@ namespace MHGameWork.TheWizards.Tests.Scene
                                        vm.PlaceMeshes.Add(new SimpleEditorViewModel.MeshItem { Name = "GuildHouse", Mesh = mesh });
                                        vm.PlaceMeshes.Add(new SimpleEditorViewModel.MeshItem { Name = "MerchantsHouse", Mesh = mesh2 });
                                        vm.PlaceMeshes.Add(new SimpleEditorViewModel.MeshItem { Name = "Barrel", Mesh = mesh3 });
+                                       vm.Scripts.Add(new SimpleEditorViewModel.ScriptItem { Name = "TestScript", FileInfo = new System.IO.FileInfo(TWDir.Scripts + "\\TestScript.cs") });
+                                       vm.Scripts.Add(new SimpleEditorViewModel.ScriptItem { Name = "TestOpenDoor", FileInfo = new System.IO.FileInfo(TWDir.Scripts + "\\TestOpenDoor.cs") });
                                        form.DataContext = vm;
 
 
@@ -115,7 +117,6 @@ namespace MHGameWork.TheWizards.Tests.Scene
 
         }
 
-  
 
     }
 }

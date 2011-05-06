@@ -70,10 +70,16 @@ namespace MHGameWork.TheWizards.Scene
             }
         }
 
+        private bool kinematic;
         public bool Kinematic
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return kinematic; }
+            set
+            {
+                if (kinematic == value) return;
+                kinematic = value;
+                onChange();
+            }
         }
 
         private IMesh mesh;
@@ -261,8 +267,8 @@ namespace MHGameWork.TheWizards.Scene
             }
             if (dynamicPhysicsElement != null)
             {
-                // TODO:
-                //dynamicPhysicsElement.World = transformation;
+                dynamicPhysicsElement.Kinematic = Kinematic;
+                    dynamicPhysicsElement.World = Transformation.CreateMatrix();
             }
 
             var enableUpdate = false;

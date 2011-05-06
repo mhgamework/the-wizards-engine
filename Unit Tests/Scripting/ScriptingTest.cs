@@ -155,6 +155,8 @@ namespace MHGameWork.TheWizards.Tests.Scripting
                                                        TestFiles.StorageHouseDoorLeftMtl);
 
             ent.Transformation = new Transformation(Vector3.Up * 0.5f + Vector3.Forward * 3);
+            ent.Static = false;
+            ent.Kinematic = true;
 
             var loader = new SceneScriptLoader(scene);
             loader.LoadScript(ent, new FileInfo(TWDir.Scripts + "\\TestOpenDoor.cs"));
@@ -164,10 +166,7 @@ namespace MHGameWork.TheWizards.Tests.Scripting
             twGame.Game.UpdateEvent += delegate
             {
                 var pos = controller.Controller.GlobalPosition;
-                var dir = Vector3.Transform(Vector3.Forward,
-                                            controller.ThirdPersonCamera.ViewInverse) -
-                                            Vector3.Transform(Vector3.Zero,
-                                            controller.ThirdPersonCamera.ViewInverse);
+                var dir = Vector3.TransformNormal(controller.Controller.GetForwardVector(),twGame.Game.Camera.ViewInverse);
                 dir.Normalize();
                 var ray = new Ray(pos, dir);
                 //NOTE: this ray shouldnt be visible :-)

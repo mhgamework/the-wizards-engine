@@ -24,7 +24,7 @@ namespace Scripts
             open = !open;
             if (open)
             {
-                handle.Rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.PiOver2);
+                handle.Rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, -MathHelper.PiOver2);
 
             }
             else

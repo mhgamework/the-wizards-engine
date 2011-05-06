@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Graphics;
@@ -22,6 +23,8 @@ namespace MHGameWork.TheWizards.Scene
         private List<Entity> entities = new List<Entity>();
         internal List<Entity> UpdateList = new List<Entity>();
 
+        private SceneScriptLoader scriptLoader;
+
         public IXNAGame Game { get; private set; }
 
         public Scene(SimpleMeshRenderer renderer, MeshPhysicsElementFactory physicsElementFactory)
@@ -29,6 +32,8 @@ namespace MHGameWork.TheWizards.Scene
             this.renderer = renderer;
             this.physicsElementFactory = physicsElementFactory;
             customRaycastReport = new CustomRaycastReport(this);
+            scriptLoader = new SceneScriptLoader(this);
+            
         }
 
         internal SimpleMeshRenderer Renderer
@@ -80,6 +85,7 @@ namespace MHGameWork.TheWizards.Scene
 
         public void Initialize(IXNAGame _game)
         {
+            _game.AddXNAObject(scriptLoader);
             Game = _game;
         }
 
@@ -96,6 +102,10 @@ namespace MHGameWork.TheWizards.Scene
             }
         }
 
+        public void AssignScriptToEntity(Entity entity, FileInfo scriptFile)
+        {
+            scriptLoader.LoadScript(entity, scriptFile);
+        }
 
         private Entity resolveEntityFromPhysx(Actor actor)
         {
