@@ -58,6 +58,7 @@
     <Compile Include="SnapEngine\SnapEngineClass.cs" />
     <Compile Include="SnapEngine\SnapInformation.cs" />
     <Compile Include="SnapEngine\ISnapObject.cs" />
+    <Compile Include="SnapEngine\SnapLearnTool.cs" />
     <Compile Include="SnapEngine\Snapper.cs" />
     <Compile Include="SnapEngine\SnapperPointPoint.cs" />
     <Compile Include="SnapEngine\SnapPoint.cs" />

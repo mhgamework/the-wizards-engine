@@ -24,14 +24,16 @@ namespace MHGameWork.TheWizards.TileEngine.SnapEngine
                         var objSnapObjectType = obj.SnapList[k];
                         var targetSnapObjectType = target.SnapInformation.SnapList[l];
 
-                        if (objSnapObjectType.SnapType == targetSnapObjectType.SnapType)
-                        {
+                        //Removed this because there is only one snaptype atm.
+                        //if (objSnapObjectType.SnapType == targetSnapObjectType.SnapType)
+                        //{
 
                             for (int index = 0; index < snappers.Count; index++)
                             {
                                 ISnapObjectSnapper t = snappers[index];
 
                                 var snapper = t;
+
 
                                 if (snapper.SnapObjectTypeA == objSnapObjectType.GetType() &&
                                     snapper.SnapObjectTypeB == targetSnapObjectType.GetType())
@@ -44,7 +46,7 @@ namespace MHGameWork.TheWizards.TileEngine.SnapEngine
                                     snapper.SnapBToA(targetSnapObjectType, objSnapObjectType, target.Transformation, transformations);
                                 }
                             }
-                        }
+                        //}
                     }
                 }
 

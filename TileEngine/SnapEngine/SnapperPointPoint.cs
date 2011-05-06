@@ -44,10 +44,7 @@ namespace MHGameWork.TheWizards.TileEngine.SnapEngine
 
             PointB = newPoint;
 
-            if (PointA.ClockwiseWinding == PointB.ClockwiseWinding)
-            {
-                return;
-            }
+            if (PointA.ClockwiseWinding == PointB.ClockwiseWinding) return;
 
             Vector3 sNormal = PointA.Normal;
             Vector3 tNormal = PointB.Normal;

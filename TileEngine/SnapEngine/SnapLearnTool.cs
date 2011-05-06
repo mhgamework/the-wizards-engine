@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.Collada.COLLADA140;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.Raycast;
@@ -114,7 +113,6 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
                 }
                 if (_game.Mouse.LeftMouseJustPressed)
                 {
-                    
                     PickOperandBState = false;
                     SnapLearnState = true;
                 }
@@ -123,15 +121,23 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
             if (SnapLearnState)
             {
                 if (tileA.ObjectType.TileData.GetFaceType(tileFaceA) == null)
+                {
                     tileA.ObjectType.TileData.SetFaceType(tileFaceA, new TileFaceType());
+                    tileA.ObjectType.TileData.SetWinding(tileFaceA, !tileB.ObjectType.TileData.GetWinding(tileFaceB));
+                }
                 if (tileB.ObjectType.TileData.GetFaceType(tileFaceB) == null)
+                {
                     tileB.ObjectType.TileData.SetFaceType(tileFaceB, new TileFaceType());
+                    tileB.ObjectType.TileData.SetWinding(tileFaceB, !tileA.ObjectType.TileData.GetWinding(tileFaceA));
+                }
 
                 TileFaceType newRoot = new TileFaceType();
                 getTypeA().SetParent(newRoot);
                 getTypeB().SetParent(newRoot);
-                getTypeB().flipWinding = getTypeB().flipWinding ^ winding;
+                //getTypeB().flipWinding = getTypeB().flipWinding ^ winding;
 
+                tileA.ObjectType.SnapInformation = builder.CreateFromTile(tileA.ObjectType.TileData);
+                tileB.ObjectType.SnapInformation = builder.CreateFromTile(tileB.ObjectType.TileData);
                 //TODO: Update snap information
 
                

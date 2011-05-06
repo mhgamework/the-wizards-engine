@@ -156,7 +156,6 @@
     <Compile Include="TileEngine\SampleTest.cs" />
     <Compile Include="TileEngine\SimpleSnappableWorldTarget.cs" />
     <Compile Include="TileEngine\SnapEngineTest.cs" />
-    <Compile Include="TileEngine\SnapLearnTool.cs" />
     <Compile Include="TileEngine\TestClass.cs" />
     <Compile Include="TileEngine\TileEngineTest.cs" />
     <Compile Include="Treegenerater\TreeSynchronisationTest.cs" />

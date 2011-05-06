@@ -10,36 +10,26 @@ namespace MHGameWork.TheWizards.TileEngine
 {
     public class WorldObject : ICloneable, ISnappableWorldTarget
     {
-        private IXNAGame game;
+        public WorldObjectType ObjectType;
 
+        private IXNAGame game;
         private SimpleMeshRenderElement renderElement;
         public SimpleMeshRenderer Renderer;
 
         
-        private Vector3 position; //Position of the center of gravity (defined by the gizmo in 3dsmax)
-
+        private Vector3 position;
         public Vector3 Position
         {
             get { return position; }
             set { position = value; updateWorldMatrix(); }
         }
-        private Quaternion rotation = Quaternion.Identity;
 
+        private Quaternion rotation = Quaternion.Identity;
         public Quaternion Rotation
         {
             get { return rotation; }
             set { rotation = value; updateWorldMatrix(); }
         }
-        public WorldObjectType ObjectType;
-
-        private bool isDeleted;
-
-        public bool IsDeleted
-        {
-            get { return isDeleted; }
-            set { isDeleted = value; updateWorldMatrix(); }
-        }
-        
 
         private Matrix worldMatrix = Matrix.Identity;
         public Matrix WorldMatrix
@@ -47,7 +37,16 @@ namespace MHGameWork.TheWizards.TileEngine
             get { return worldMatrix; }
             private set { worldMatrix = value; }
         }
+        
+        private bool isDeleted;
+        public bool IsDeleted
+        {
+            get { return isDeleted; }
+            set { isDeleted = value; updateWorldMatrix(); }
+        }
+        
 
+       
         public WorldObject(IXNAGame game, WorldObjectType objectType, SimpleMeshRenderer renderer)
         {
             this.game = game;

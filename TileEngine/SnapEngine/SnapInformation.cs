@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.TileEngine
         }
 
         
-        //Doesn't belong here
+        //Doesn't belong here, only used in first tests
         public void Snap(SnapPoint source, SnapPoint target)
         {
             Vector3 snapPointPos = source.Position;
