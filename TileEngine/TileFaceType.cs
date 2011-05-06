@@ -7,20 +7,23 @@ namespace MHGameWork.TheWizards.TileEngine
 {
     public class TileFaceType
     {
-        public string Name;
-        private TileFaceType root;
+        public string Name { get; set; }
+        private TileFaceType parent;
+
+        public bool flipWinding { get; set;}
 
         public TileFaceType GetRoot()
         {
-            if (root == null)
+            
+            if (parent == null)
                 return this;
 
-            return root.GetRoot();
+            return parent.GetRoot();
         }
 
-        public void SetRoot(TileFaceType newRoot)
+        public void SetParent(TileFaceType value)
         {
-            root = newRoot;
+            parent = value;
         }
     }
 }

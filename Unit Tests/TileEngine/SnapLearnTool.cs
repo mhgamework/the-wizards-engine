@@ -19,15 +19,13 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
         private readonly TheWizards.TileEngine.World world;
         private SimpleRaycaster<WorldObject> raycaster;
         private SimpleRaycaster<TileFace> raycasterFace;
-        private BoxMesh ghostMesh;
+        private BoxMesh ghostFace;
 
         private bool PickOperandAState = true;
         private bool PickOperandBState;
         private bool SnapLearnState;
 
 
-        private TileFaceType tileFaceTypeA;
-        private TileFaceType tileFaceTypeB;
         private WorldObject tileA;
         private WorldObject tileB;
 
@@ -39,6 +37,10 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
         private SimpleMeshRenderElement ghost;
         private SimpleMeshRenderer renderer;
         private bool winding;
+        private TileFace tileFaceA;
+        private TileFace tileFaceB;
+
+        public bool Enabled { get; set; }
 
 
         public SnapLearnTool(TheWizards.TileEngine.World world, SimpleMeshRenderer renderer)
@@ -52,17 +54,19 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
 
         public void Initialize(IXNAGame _game)
         {
-            ghostMesh = new BoxMesh();
-            _game.AddXNAObject(ghostMesh);
+            ghostFace = new BoxMesh();
+            _game.AddXNAObject(ghostFace);
         }
 
         public void Render(IXNAGame _game)
         {
-
+            if (!Enabled) return;
         }
 
         public void Update(IXNAGame _game)
         {
+            if (!Enabled) return;
+
             if (!_game.Mouse.CursorEnabled)
                 return;
 
@@ -72,88 +76,95 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
                 return;
 
             TileFace resultFace = RaycastTileFace(_game, target);
-            SetGhostAtFace(target, resultFace);
+            SetGhostFaceAtFace(target, resultFace);
 
-            if(PickOperandAState)
+            if (PickOperandAState)
             {
                 if (_game.Mouse.LeftMouseJustPressed)
                 {
                     tileA = target;
-                    tileFaceTypeA = target.ObjectType.TileData.GetFaceType(resultFace);
+                    tileFaceA = resultFace;
 
                     ghost = renderer.AddMesh(tileA.ObjectType.Mesh);
 
-                    PointA = builder.GetPoint(tileA.ObjectType.TileData, resultFace, tileFaceTypeA, false);
+                    PointA = builder.GetPoint(tileA.ObjectType.TileData, resultFace, getTypeA(), tileA.ObjectType.TileData.GetWinding(resultFace));
                     PickOperandAState = false;
                     PickOperandBState = true;
                 }
             }
 
-            if(PickOperandBState)
+            if (PickOperandBState)
             {
                 if (tileA.Equals(target))
                     return;
 
                 tileB = target;
-                tileFaceTypeB = target.ObjectType.TileData.GetFaceType(resultFace);
-                PointB = builder.GetPoint(tileB.ObjectType.TileData, resultFace, tileFaceTypeB, winding);
+                tileFaceB = resultFace;
+                PointB = builder.GetPoint(tileB.ObjectType.TileData, resultFace, getTypeB(),tileA.ObjectType.TileData.GetWinding(resultFace) ^ winding);
 
                 List<Transformation> transformations = new List<Transformation>();
                 snapper.SnapAToB(PointA, PointB, tileB.Transformation, transformations);
-                
-                if(transformations.Count != 0)
-                    ghost.WorldMatrix = tileB.ObjectType.TileData.MeshOffset * transformations[0].CreateMatrix();
-                
-                if(_game.Mouse.RightMouseJustPressed)
+
+                if (transformations.Count != 0)
+                    ghost.WorldMatrix = transformations[0].CreateMatrix();
+
+                if (_game.Mouse.RightMouseJustPressed)
                 {
                     winding = !winding;
                 }
                 if (_game.Mouse.LeftMouseJustPressed)
                 {
+                    
                     PickOperandBState = false;
                     SnapLearnState = true;
                 }
             }
 
-            if(SnapLearnState)
+            if (SnapLearnState)
             {
-                if(tileFaceTypeA == null && tileFaceTypeB != null)
-                {
-                    tileFaceTypeA = tileFaceTypeB;
-                }
-                if(tileFaceTypeB == null && tileFaceTypeA != null)
-                {
-                    tileFaceTypeB = tileFaceTypeA;
-                }
-                if(tileFaceTypeA == null && tileFaceTypeB == null)
-                {
-                    TileFaceType newFaceType = new TileFaceType();
-                    tileFaceTypeA = newFaceType;
-                    tileFaceTypeB = newFaceType;
-                }
-                if (tileFaceTypeA != null && tileFaceTypeB != null)
-                {
-                    TileFaceType newRoot = new TileFaceType();
-                    tileFaceTypeA.SetRoot(newRoot);
-                    tileFaceTypeB.SetRoot(newRoot);
-                }
+                if (tileA.ObjectType.TileData.GetFaceType(tileFaceA) == null)
+                    tileA.ObjectType.TileData.SetFaceType(tileFaceA, new TileFaceType());
+                if (tileB.ObjectType.TileData.GetFaceType(tileFaceB) == null)
+                    tileB.ObjectType.TileData.SetFaceType(tileFaceB, new TileFaceType());
+
+                TileFaceType newRoot = new TileFaceType();
+                getTypeA().SetParent(newRoot);
+                getTypeB().SetParent(newRoot);
+                getTypeB().flipWinding = getTypeB().flipWinding ^ winding;
+
+                //TODO: Update snap information
+
+               
 
                 SnapLearnState = false;
                 PickOperandAState = true;
 
-                ghost.WorldMatrix = Matrix.Invert(tileA.ObjectType.TileData.MeshOffset)*ghost.WorldMatrix;
+                ghost.WorldMatrix = ghost.WorldMatrix;
                 Quaternion rotation;
                 Vector3 translation;
                 Vector3 scale;
                 ghost.WorldMatrix.Decompose(out scale, out rotation, out translation);
                 tileA.Rotation = rotation;
-                tileA.Position= translation;
-                ghost.WorldMatrix = new Matrix();
+                tileA.Position = translation;
 
+                ghost.WorldMatrix = new Matrix();
+                ghostFace.WorldMatrix = new Matrix();
+
+                Enabled = false;
             }
         }
 
-        private void SetGhostAtFace(WorldObject target, TileFace resultFace)
+        private TileFaceType getTypeB()
+        {
+            return tileB.ObjectType.TileData.GetFaceType(tileFaceB);
+        }
+
+        private TileFaceType getTypeA()
+        {
+            return tileA.ObjectType.TileData.GetFaceType(tileFaceA);
+        }
+
+        private void SetGhostFaceAtFace(WorldObject target, TileFace resultFace)
         {
             var bb = target.ObjectType.TileData.GetBoundingBox();
             var range = (bb.Max - bb.Min) * 0.5f;
@@ -179,9 +190,9 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
             dim.Z = Math.Abs(dim.Z);
 
 
-            ghostMesh.Dimensions = dim;
-            ghostMesh.PivotPoint = Vector3.One * 0.5f;
-            ghostMesh.WorldMatrix = Matrix.CreateTranslation(normal * (Math.Abs(Vector3.Dot(normal, range * 0.5f)) + 0.01f)) * target.WorldMatrix;
+            ghostFace.Dimensions = dim;
+            ghostFace.PivotPoint = Vector3.One * 0.5f;
+            ghostFace.WorldMatrix = Matrix.CreateTranslation(normal * (Math.Abs(Vector3.Dot(normal, range * 0.5f)) + 0.01f)) * target.WorldMatrix;
         }
 
         private TileFace RaycastTileFace(IXNAGame _game, WorldObject target)

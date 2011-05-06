@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Editor;
+using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Tests.TileEngine;
 using MHGameWork.TheWizards.TileEngine.SnapEngine;
 using NUnit.Framework;
@@ -24,6 +25,12 @@ namespace MHGameWork.TheWizards.TileEngine
     [TestFixture]
     public class TestClass
     {
+        private RAMMesh meshWallInnerCorner;
+        private RAMMesh meshWallStraight;
+        private WorldObjectType wallInnerCornerType;
+        private WorldObjectType wallStraightType;
+        private List<WorldObjectType> typeList = new List<WorldObjectType>();
+
         [Test]
         public void TestStart()
         {
@@ -498,7 +505,7 @@ namespace MHGameWork.TheWizards.TileEngine
             vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
 
             World world = new World();
-            
+
             WorldObjectType type1 = new WorldObjectType(meshWallInnerCorner);
             WorldObjectType type2 = new WorldObjectType(meshWallStraight);
 
@@ -571,7 +578,156 @@ namespace MHGameWork.TheWizards.TileEngine
 
             game.Run();
         }
-    
 
+        [Test]
+        public void RunEditor()
+        {
+            XNAGame game = new XNAGame();
+
+            var texturePool = new TexturePool();
+            var meshpartPool = new MeshPartPool();
+            var vertexDeclarationPool = new VertexDeclarationPool();
+            vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
+            var renderer = new SimpleMeshRenderer(texturePool, meshpartPool, vertexDeclarationPool);
+
+            game.IsFixedTimeStep = false;
+            game.DrawFps = true;
+            game.AddXNAObject(texturePool);
+            game.AddXNAObject(meshpartPool);
+            game.AddXNAObject(vertexDeclarationPool);
+            game.AddXNAObject(renderer);
+
+            EditorGrid grid;
+            grid = new EditorGrid();
+            grid.Size = new Vector2(100, 100);
+            grid.Interval = 1;
+            grid.MajorInterval = 10;
+
+            World world = new World();
+            var factory = new WorldObjectFactory(world);
+            var builder = new TileSnapInformationBuilder();
+
+            //var TileInnerCorner = factory.CreateNewWorldObject(game, wallInnerCornerType, renderer);
+            //TileInnerCorner.Position = new Vector3(-7, 0, 0);
+            //var TileStraight = factory.CreateNewWorldObject(game, wallStraightType, renderer);
+            //TileStraight.Position = new Vector3(7, 0, 0);
+
+            var placeTool = new WorldObjectPlaceTool(game, world, renderer, builder);
+            var moveTool = new WorldObjectMoveTool(game, world, factory, builder, renderer);
+            var snapLearnTool = new SnapLearnTool(world, renderer);
+
+            game.AddXNAObject(placeTool);
+            game.AddXNAObject(moveTool);
+            game.AddXNAObject(snapLearnTool);
+
+
+            setupWorldObjectTypes(game, renderer);
+
+
+
+
+
+
+            bool mouseEnabled = false;
+
+            game.UpdateEvent += delegate
+            {
+                if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.M))
+                {
+                    placeTool.Enabled = false;
+                    moveTool.Enabled = true;
+                    snapLearnTool.Enabled = false;
+                }
+                if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.L))
+                {
+                    placeTool.Enabled = false;
+                    moveTool.Enabled = false;
+                    snapLearnTool.Enabled = true;
+                }
+
+
+                if (placeTool.Enabled)
+                {
+                    
+                    moveTool.Enabled = false;
+                    snapLearnTool.Enabled = false;
+
+                    if (placeTool.ObjectsPlacedSinceEnabled() == 1)
+                        placeTool.Enabled = false;
+                }
+
+
+                if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.NumPad1))
+                {
+                    placeTool.PlaceType = typeList[0];
+                    placeTool.Enabled = true;
+                }
+                if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.NumPad2))
+                {
+                    placeTool.PlaceType = typeList[1];
+                    placeTool.Enabled = true;
+                }
+
+                if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.LeftAlt))
+                {
+                    mouseEnabled = !mouseEnabled;
+                }
+                if (mouseEnabled)
+                {
+                    game.Mouse.CursorEnabled = true;
+                    game.IsMouseVisible = true;
+                    game.SpectaterCamera.Enabled = false;
+                }
+                else
+                {
+                    game.Mouse.CursorEnabled = false;
+                    game.IsMouseVisible = false;
+                    game.SpectaterCamera.Enabled = true;
+                    //activeWorldObject = null;
+                }
+
+            };
+
+            game.DrawEvent += delegate
+            {
+                grid.Render(game);
+
+            };
+
+            game.Run();
+        }
+
+        private void setupWorldObjectTypes(XNAGame game, SimpleMeshRenderer renderer)
+        {
+            OBJParser.ObjImporter importer = new OBJParser.ObjImporter();
+            var c = new OBJToRAMMeshConverter(new RAMTextureFactory());
+
+            importer.AddMaterialFileStream("WallInnerCorner.mtl", new FileStream(TWDir.GameData.CreateSubdirectory("Core\\TileEngine") + "/TileSet001/WallInnerCorner.mtl", FileMode.Open));
+            importer.ImportObjFile(TWDir.GameData.CreateSubdirectory("Core\\TileEngine") + "/TileSet001/WallInnerCorner.obj");
+            meshWallInnerCorner = c.CreateMesh(importer);
+            importer.AddMaterialFileStream("WallStraight.mtl", new FileStream(TWDir.GameData.CreateSubdirectory("Core\\TileEngine") + "/TileSet001/WallStraight.mtl", FileMode.Open));
+            importer.ImportObjFile(TWDir.GameData.CreateSubdirectory("Core\\TileEngine") + "/TileSet001/WallStraight.obj");
+            meshWallStraight = c.CreateMesh(importer);
+
+            wallInnerCornerType = new WorldObjectType(meshWallInnerCorner);
+            wallStraightType = new WorldObjectType(meshWallStraight);
+
+            var tileDataInnerCorner = new TileData();
+            var tileDataStraight = new TileData();
+
+            tileDataInnerCorner.Dimensions = wallInnerCornerType.BoundingBox.Max - wallInnerCornerType.BoundingBox.Min;
+            tileDataInnerCorner.MeshOffset = Matrix.CreateTranslation(new Vector3(0, 0, 0));
+            tileDataStraight.Dimensions = wallStraightType.BoundingBox.Max - wallStraightType.BoundingBox.Min;
+            tileDataStraight.MeshOffset = Matrix.CreateTranslation(new Vector3(0, 0, 0));
+
+            wallInnerCornerType.TileData = tileDataInnerCorner;
+            wallStraightType.TileData = tileDataStraight;
+
+            typeList.Add(wallInnerCornerType);
+            typeList.Add(wallStraightType);
+
+        }
     }
+
+
 }

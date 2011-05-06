@@ -13,6 +13,8 @@ namespace MHGameWork.TheWizards.TileEngine
         public Vector3 Dimensions;
         public TileFaceType[] FaceTypes = new TileFaceType[6];
         public bool[] FaceWinding = new bool[6];
+
+        [Obsolete]
         public Matrix MeshOffset = Matrix.Identity;
 
         public TileFaceType GetFaceType(TileFace face)

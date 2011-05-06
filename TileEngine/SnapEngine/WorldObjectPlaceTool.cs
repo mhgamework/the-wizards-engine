@@ -19,11 +19,13 @@ namespace MHGameWork.TheWizards.TileEngine
             set
             {
                 enabled = value;
-                if (!enabled)
+                if (!enabled && ghost != null)
                 {
-                    ghost.WorldMatrix = new Matrix();
+                    ghost.Delete();
+                    ghost = null;
                     return;
                 }
+                if (!enabled) return;
 
                 objectsPlacedSinceEnabled = 0;
                 if (PlaceType == null)
@@ -105,7 +107,7 @@ namespace MHGameWork.TheWizards.TileEngine
             var obj = factory.CreateNewWorldObject(game, PlaceType, renderer);
             Vector3 scale, translation;
             Quaternion rotation;
-            ghost.WorldMatrix.Decompose(out scale, out rotation, out translation);
+            (Matrix.Invert(PlaceType.TileData.MeshOffset) * ghost.WorldMatrix).Decompose(out scale, out rotation, out translation);
             obj.Position = translation;
             obj.Rotation = rotation;
             objectsPlacedSinceEnabled++;
@@ -116,17 +118,17 @@ namespace MHGameWork.TheWizards.TileEngine
             Transformation transformation;
             if (canSnapGhost(out transformation))
             {
-                ghost.WorldMatrix = transformation.CreateMatrix();
+                ghost.WorldMatrix = PlaceType.TileData.MeshOffset * transformation.CreateMatrix();
             }
             else
             {
                 // Place ghost at groundplane
                 var raycastPosition = raycastGroundPlaneCursor();
-                ghost.WorldMatrix = Matrix.CreateTranslation(raycastPosition);
+                ghost.WorldMatrix = PlaceType.TileData.MeshOffset * Matrix.CreateTranslation(raycastPosition);
             }
         }
 
-       
+
         private bool canSnapGhost(out Transformation transformation)
         {
             transformations = snapper.SnapTo(builder.CreateFromTile(PlaceType.TileData), snapTargetList);

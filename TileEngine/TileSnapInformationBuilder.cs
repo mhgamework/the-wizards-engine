@@ -22,10 +22,7 @@ namespace MHGameWork.TheWizards.TileEngine
                 var faceType = data.GetFaceType(tileFace);
 
                 if (data.GetFaceType(tileFace) == null) continue;
-                if (!typesMap.ContainsKey(faceType))
-                {
-                    typesMap.Add(faceType, new SnapType("TileFaceType: " + faceType.Name));
-                }
+               
 
                 SnapPoint point = GetPoint(data, tileFace, faceType, data.GetWinding(tileFace));
 
@@ -42,11 +39,20 @@ namespace MHGameWork.TheWizards.TileEngine
 
             point.Position = Math.Abs(Vector3.Dot((data.Dimensions * 0.5f), getFaceNormal(tileFace))) * getFaceNormal(tileFace);
             if (faceType != null)
-                point.SnapType = typesMap[faceType];
+                point.SnapType = getSnapType(faceType);
             point.Normal = getFaceNormal(tileFace);
             point.Up = getFaceUp(tileFace);
             point.ClockwiseWinding = winding;
             return point;
+        }
+
+        private SnapType getSnapType(TileFaceType faceType)
+        {
+            if (!typesMap.ContainsKey(faceType))
+            {
+                typesMap.Add(faceType, new SnapType("TileFaceType: " + faceType.Name));
+            }
+            return typesMap[faceType];
         }
 
         private static Vector3[] faceDirections;
