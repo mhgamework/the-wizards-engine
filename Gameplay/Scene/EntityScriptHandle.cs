@@ -5,68 +5,16 @@ using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Scene
 {
-    public class EntityScriptHandle : IEntityHandle
+    public class EntityScriptHandle : APIEntity, IEntityHandle
     {
-        public Entity Entity { get; private set; }
         public IScript Script { get; private set; }
 
         public EntityScriptHandle(Entity ent, IScript script)
+            : base(ent)
         {
-            Entity = ent;
             Script = script;
         }
 
-
-        public Vector3 Position
-        {
-            get { return Entity.Transformation.Translation; }
-            set
-            {
-                if (Static) throw new InvalidOperationException();
-                Entity.Transformation = new Graphics.Transformation(Entity.Transformation.Scaling, Entity.Transformation.Rotation, value);
-            }
-        }
-        public Quaternion Rotation
-        {
-            get { return Entity.Transformation.Rotation; }
-            set
-            {
-                if (Static) throw new InvalidOperationException();
-                Entity.Transformation = new Graphics.Transformation(Entity.Transformation.Scaling, value, Entity.Transformation.Translation);
-            }
-        }
-
-        public bool Visible
-        {
-            get { return Entity.Visible; }
-            set { Entity.Visible = value; }
-        }
-
-        public bool Solid
-        {
-            get { return Entity.Solid; }
-            set { Entity.Solid = value; }
-        }
-
-        public bool Static
-        {
-            get { return Entity.Static; }
-            set { Entity.Static = value; }
-        }
-
-        public bool Kinematic
-        {
-            get
-            {
-                if (Static) throw new InvalidOperationException();
-                return Entity.Kinematic;
-            }
-            set
-            {
-                if (Static) throw new InvalidOperationException();
-                Entity.Kinematic = value;
-            }
-        }
 
         public bool UpdateRegistered { get; private set; }
 
@@ -90,6 +38,21 @@ namespace MHGameWork.TheWizards.Scene
             useHandlerSet = true;
         }
 
+        public EntityRaycastHit RaycastScene(Ray ray, Predicate<EntityRaycastHit> predicate)
+        {
+            //TODO: THIS might slow up raycasting!!
+
+            var result = Entity.Scene.RaycastEntityPhysX(ray, obj => predicate(obj.ToAPIRaycastHit()));
+
+            if (result == null) return EntityRaycastHit.NoHit;
+            return result.ToAPIRaycastHit();
+
+        }
+
+        public T GetSceneComponent<T>() where T : class
+        {
+            return Entity.Scene.GetSceneComponent<T>();
+        }
 
 
         public void Destroy()
@@ -97,6 +60,12 @@ namespace MHGameWork.TheWizards.Scene
             if (useHandlerSet)
                 Entity.PlayerUseHandler = null;
         }
+
+
+        // Scene
+
+
+
 
     }
 }

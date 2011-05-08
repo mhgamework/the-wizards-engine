@@ -100,6 +100,8 @@ namespace MHGameWork.TheWizards.Scene
         public BoundingBox BoundingBox { get; private set; }
         public BoundingBox LocalBoundingBox { get; private set; }
 
+        public APIEntity APIEntity { get; private set; }
+
         public float? Raycast(Ray ray)
         {
             throw new NotImplementedException();
@@ -113,6 +115,8 @@ namespace MHGameWork.TheWizards.Scene
             transformation = Transformation.Identity;
 
             Data = new EntityData();
+
+            APIEntity = new APIEntity(this);
 
         }
 
@@ -268,7 +272,7 @@ namespace MHGameWork.TheWizards.Scene
             if (dynamicPhysicsElement != null)
             {
                 dynamicPhysicsElement.Kinematic = Kinematic;
-                    dynamicPhysicsElement.World = Transformation.CreateMatrix();
+                dynamicPhysicsElement.World = Transformation.CreateMatrix();
             }
 
             var enableUpdate = false;

@@ -15,6 +15,9 @@ using IDisposable = StillDesign.PhysX.IDisposable;
 
 namespace MHGameWork.TheWizards.GamePlay
 {
+    /// <summary>
+    /// WARNING: requires ScriptLayer!
+    /// </summary>
     public class PlayerController : IXNAObject, IWorldSyncActor
     {
 

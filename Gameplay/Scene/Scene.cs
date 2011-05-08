@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.Scene
             this.physicsElementFactory = physicsElementFactory;
             customRaycastReport = new CustomRaycastReport(this);
             scriptLoader = new SceneScriptLoader(this);
-            
+
         }
 
         internal SimpleMeshRenderer Renderer
@@ -115,7 +115,7 @@ namespace MHGameWork.TheWizards.Scene
 
         private CustomRaycastReport customRaycastReport;
 
-        public EntityRaycastHit RaycastEntityPhysX(Ray ray, RaycastFilterDelegate filter)
+        public EntityRaycastHit RaycastEntityPhysX(Ray ray, Predicate<EntityRaycastHit> filter)
         {
             StillDesign.PhysX.Ray pRay = new StillDesign.PhysX.Ray(ray.Position, ray.Direction);
 
@@ -130,13 +130,32 @@ namespace MHGameWork.TheWizards.Scene
 
         }
 
+        private List<object> sceneComponents;
 
-        public delegate bool RaycastFilterDelegate(EntityRaycastHit hit);
+        /// <summary>
+        /// Scene components are objects that share more advanced engine functionality to scripts.
+        /// These are to be used cautiously
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetSceneComponent<T>() where T : class
+        {
+            foreach (var o in sceneComponents)
+            {
+                if (o is T) return (T)o;
+            }
+            return null;
+        }
+        public void AddSceneComponent<T>(T component) where T : class
+        {
+            if (GetSceneComponent<T>() != null) throw new InvalidOperationException("Component already added!");
+            sceneComponents.Add(component);
+        }
 
         private class CustomRaycastReport : UserRaycastReport
         {
             private readonly Scene scene;
-            public RaycastFilterDelegate CurrentFilter;
+            public Predicate<EntityRaycastHit> CurrentFilter;
             public EntityRaycastHit LastHit;
 
 
@@ -178,6 +197,17 @@ namespace MHGameWork.TheWizards.Scene
                 WorldNormal = hit.WorldNormal;
 
 
+            }
+
+            public Scripting.API.EntityRaycastHit ToAPIRaycastHit()
+            {
+                return new Scripting.API.EntityRaycastHit
+                {
+                    Distance = Distance,
+                    Entity = Entity.APIEntity,
+                    WorldImpact = WorldImpact,
+                    WorldNormal = WorldNormal
+                };
             }
         }
     }
