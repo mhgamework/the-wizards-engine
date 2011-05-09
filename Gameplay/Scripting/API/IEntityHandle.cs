@@ -1,6 +1,7 @@
 ﻿using System;
 using MHGameWork.TheWizards.Gameplay;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace MHGameWork.TheWizards.Scripting.API
 {
@@ -28,6 +29,14 @@ namespace MHGameWork.TheWizards.Scripting.API
         // Scene functions
 
         EntityRaycastHit RaycastScene(Ray ray, Predicate<EntityRaycastHit> predicate);
+
+        // General functions
+        bool IsKeyDown(Keys key);
+        bool IsKeyPressed(Keys key);
+        /// <summary>
+        /// Time elapsed last frame
+        /// </summary>
+        float Elapsed { get; }
 
         // This might be a cheat
         T GetSceneComponent<T>() where T : class;

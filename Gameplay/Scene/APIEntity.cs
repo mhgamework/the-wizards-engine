@@ -11,7 +11,7 @@ namespace MHGameWork.TheWizards.Scene
     {
         public Entity Entity { get; private set; }
 
-        public APIEntity (Entity entity)
+        public APIEntity(Entity entity)
         {
             Entity = entity;
         }
@@ -67,5 +67,12 @@ namespace MHGameWork.TheWizards.Scene
             }
         }
 
+        public T GetAttachedScript<T>() where T : class, IScript
+        {
+            var ret = Entity.GetAttachedScriptHandle<T>();
+            if (ret == null) return null;
+
+            return (T)ret.Script;
+        }
     }
 }

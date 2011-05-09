@@ -152,7 +152,7 @@ namespace MHGameWork.TheWizards.GamePlay
                     }
                 }
             }
-            controllerHitReport.HitQueue.Clear();
+             controllerHitReport.HitQueue.Clear();
             // This is bad practice ( 2-way dependancy ) (no clue what this means)
             player.Position = controller.Position;
 

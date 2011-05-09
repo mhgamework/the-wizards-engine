@@ -65,7 +65,7 @@ namespace MHGameWork.TheWizards.Scene
                 var handle = s.Handles[i];
 
                 // Destory old script
-                handle.Script.Destroy();
+                scene.ExecuteInScriptScope(handle, handle.Script.Destroy);
                 handle.Entity.DestroyEntityHandle(handle);
 
 
@@ -74,7 +74,7 @@ namespace MHGameWork.TheWizards.Scene
 
 
                 var newhandle = handle.Entity.CreateEntityHandle(instance);
-                instance.Init(newhandle);
+                scene.ExecuteInScriptScope(newhandle, () => instance.Init(newhandle));
                 s.Handles[i] = newhandle;
 
             }

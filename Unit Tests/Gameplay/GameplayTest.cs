@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Gameplay.Fortress;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
@@ -621,7 +622,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             game.Run();
         }
 
-
+      
         public void InitializePlayer()
         {
 

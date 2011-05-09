@@ -219,6 +219,14 @@ namespace MHGameWork.TheWizards.Graphics
             if (gameObjects.Contains(obj))
                 throw new InvalidOperationException("This object was already added!");
             gameObjects.Add(obj);
+
+
+            if (FrameNumber != 0)
+            {
+                // Initialize has already been called! call it now!
+                obj.Initialize(this);
+
+            }
         }
 
         public void SetCamera(ICamera cam)

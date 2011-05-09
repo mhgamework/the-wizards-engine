@@ -1,23 +1,39 @@
 ﻿using System;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Scripting.API;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using PlayerController = MHGameWork.TheWizards.GamePlay.PlayerController;
 
 namespace MHGameWork.TheWizards.Gameplay.Fortress
 {
+    /// <summary>
+    /// This represents the Current Player, not any player in the fortress map
+    /// </summary>
     public class PlayerEntity : IScript, IUpdateHandler
     {
         private PlayerSceneComponent psc;
         private PlayerController controller;
+        private IEntityHandle handle;
+
+        private SimplePlayer player;
+        private PlayerThirdPersonCamera cam;
 
 
-        public void Init(IEntityHandle handle)
+        private IEntity holdingCrystal;
+
+        public void Init(IEntityHandle _handle)
         {
+            handle = _handle;
             handle.RegisterUpdateHandler();
 
             psc = handle.GetSceneComponent<PlayerSceneComponent>();
 
-            controller = psc.CreateController(new PlayerData());
+            player = new SimplePlayer();
+
+            controller = psc.CreateController(player.GetData());
+            cam = psc.EnablePlayerCamera(player, controller);
+
         }
 
         public void Destroy()
@@ -26,25 +42,55 @@ namespace MHGameWork.TheWizards.Gameplay.Fortress
 
         public void Update()
         {
-            if (game.Keyboard.IsKeyDown(Keys.Z))
+            if (holdingCrystal != null)
             {
-                controller.DoMoveForward(game.Elapsed);
+                var normal = Vector3.TransformNormal(Vector3.Forward, cam.ViewInverse);
+                holdingCrystal.Position = player.GetData().Position + normal*2;
             }
-            if (game.Keyboard.IsKeyDown(Keys.S))
+            if (handle.IsKeyDown(Keys.Z))
             {
-                controller.DoMoveBackwards(game.Elapsed);
+                controller.DoMoveForward(handle.Elapsed);
             }
-            if (game.Keyboard.IsKeyDown(Keys.Q))
+            if (handle.IsKeyDown(Keys.S))
             {
-                controller.DoStrafeLeft(game.Elapsed);
+                controller.DoMoveBackwards(handle.Elapsed);
             }
-            if (game.Keyboard.IsKeyDown(Keys.D))
+            if (handle.IsKeyDown(Keys.Q))
             {
-                controller.DoStrafeRight(game.Elapsed);
+                controller.DoStrafeLeft(handle.Elapsed);
             }
-            if (game.Keyboard.IsKeyPressed(Keys.Space))
+            if (handle.IsKeyDown(Keys.D))
+            {
+                controller.DoStrafeRight(handle.Elapsed);
+            }
+            if (handle.IsKeyPressed(Keys.Space))
             {
                 controller.DoJump();
+            }
+
+            if (handle.IsKeyPressed(Keys.E))
+            {
+                if (holdingCrystal != null)
+                {
+                    holdingCrystal.Kinematic = false;
+                    holdingCrystal = null;
+                    return;
+
+                }
+               
+
+                var normal = Vector3.TransformNormal(Vector3.Forward, cam.ViewInverse);
+                var ray = new Ray(player.GetData().Position, normal);
+                var ent = handle.RaycastScene(ray, o => o.Entity.GetAttachedScript<SpawnCrystal>() != null);
+
+                if (ent.IsHit)
+                {
+                    holdingCrystal = ent.Entity;
+                    holdingCrystal.Kinematic = true;
+                    //psc.RaiseUseEvent(ent.Entity, player);
+
+
+                }
             }
         }
     }

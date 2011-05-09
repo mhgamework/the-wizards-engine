@@ -27,5 +27,8 @@ namespace MHGameWork.TheWizards.Scripting.API
         /// But a kinematic entity can be moved
         /// </summary>
         bool Kinematic { get; set; }
+
+
+        T GetAttachedScript<T>() where T : class, IScript;
     }
 }

@@ -2,6 +2,7 @@
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Scripting.API;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace MHGameWork.TheWizards.Scene
 {
@@ -45,8 +46,24 @@ namespace MHGameWork.TheWizards.Scene
             var result = Entity.Scene.RaycastEntityPhysX(ray, obj => predicate(obj.ToAPIRaycastHit()));
 
             if (result == null) return EntityRaycastHit.NoHit;
+
             return result.ToAPIRaycastHit();
 
+        }
+
+        public bool IsKeyDown(Keys key)
+        {
+            return Entity.Scene.Game.Keyboard.IsKeyDown(key);
+        }
+
+        public bool IsKeyPressed(Keys key)
+        {
+            return Entity.Scene.Game.Keyboard.IsKeyPressed(key);
+        }
+
+        public float Elapsed
+        {
+            get { return Entity.Scene.Game.Elapsed; }
         }
 
         public T GetSceneComponent<T>() where T : class

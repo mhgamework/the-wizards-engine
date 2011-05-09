@@ -252,7 +252,9 @@ namespace MHGameWork.TheWizards.Scene
             }
             for (int i = 0; i < entityHandles.Count; i++)
             {
-                (entityHandles[i].Script as IUpdateHandler).Update();
+                var h = entityHandles[i];
+                if (!h.UpdateRegistered) continue;
+                Scene.ExecuteInScriptScope(h, ((IUpdateHandler)h.Script).Update);
             }
 
         }
@@ -327,6 +329,17 @@ namespace MHGameWork.TheWizards.Scene
             onChange();
         }
 
+
+        public EntityScriptHandle GetAttachedScriptHandle<T>() where T : IScript
+        {
+            for (int i = 0; i < entityHandles.Count; i++)
+            {
+                var h = entityHandles[i];
+                if (h.Script is T)
+                    return h;
+            }
+            return null;
+        }
 
         public Action<IPlayer> PlayerUseHandler;
 

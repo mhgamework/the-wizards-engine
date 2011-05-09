@@ -88,7 +88,7 @@ namespace MHGameWork.TheWizards.Assets
                 return GetTexture(guid);
             }
 
-            throw new InvalidOperationException();
+            return null;
         }
 
         ITexture ITextureFactory.GetTexture(Guid guid)
