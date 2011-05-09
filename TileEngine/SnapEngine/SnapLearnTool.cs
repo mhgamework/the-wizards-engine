@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
         private WorldObject tileB;
 
         private SnapperPointPoint snapper = new SnapperPointPoint();
-        private TileSnapInformationBuilder builder = new TileSnapInformationBuilder();
+        private TileSnapInformationBuilder builder;
         private SnapPoint PointB;
         private SnapPoint PointA;
 
@@ -39,15 +39,18 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
         private TileFace tileFaceA;
         private TileFace tileFaceB;
 
+        private Random randomNbGenerator = new Random();
+
         public bool Enabled { get; set; }
 
 
-        public SnapLearnTool(TheWizards.TileEngine.World world, SimpleMeshRenderer renderer)
+        public SnapLearnTool(TheWizards.TileEngine.World world, SimpleMeshRenderer renderer, TileSnapInformationBuilder builder)
         {
             this.world = world;
             raycaster = new SimpleRaycaster<WorldObject>();
             raycasterFace = new SimpleRaycaster<TileFace>();
             this.renderer = renderer;
+            this.builder = builder;
 
         }
 
@@ -75,7 +78,6 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
                 return;
 
             TileFace resultFace = RaycastTileFace(_game, target);
-            SetGhostFaceAtFace(target, resultFace);
 
             if (PickOperandAState)
             {
@@ -83,10 +85,11 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
                 {
                     tileA = target;
                     tileFaceA = resultFace;
+                  
 
                     ghost = renderer.AddMesh(tileA.ObjectType.Mesh);
 
-                    PointA = builder.GetPoint(tileA.ObjectType.TileData, resultFace, getTypeA(), tileA.ObjectType.TileData.GetWinding(resultFace));
+                    
                     PickOperandAState = false;
                     PickOperandBState = true;
                 }
@@ -99,9 +102,15 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
 
                 tileB = target;
                 tileFaceB = resultFace;
-                PointB = builder.GetPoint(tileB.ObjectType.TileData, resultFace, getTypeB(),tileA.ObjectType.TileData.GetWinding(resultFace) ^ winding);
+
+                PointA = builder.GetPoint(tileA.ObjectType.TileData,tileFaceA,null
+                    , tileA.ObjectType.TileData.GetTotalWinding(tileFaceA ) ^ winding);
+                PointB = builder.GetPoint(tileB.ObjectType.TileData, tileFaceB, null
+                    , tileB.ObjectType.TileData.GetTotalWinding(tileFaceB));
+
 
                 List<Transformation> transformations = new List<Transformation>();
+
                 snapper.SnapAToB(PointA, PointB, tileB.Transformation, transformations);
 
                 if (transformations.Count != 0)
@@ -120,25 +129,30 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
 
             if (SnapLearnState)
             {
+
                 if (tileA.ObjectType.TileData.GetFaceType(tileFaceA) == null)
                 {
                     tileA.ObjectType.TileData.SetFaceType(tileFaceA, new TileFaceType());
-                    tileA.ObjectType.TileData.SetWinding(tileFaceA, !tileB.ObjectType.TileData.GetWinding(tileFaceB));
+                    //tileA.ObjectType.TileData.SetLocalWinding(tileFaceA, !tileB.ObjectType.TileData.GetLocalWinding(tileFaceB));
                 }
                 if (tileB.ObjectType.TileData.GetFaceType(tileFaceB) == null)
                 {
                     tileB.ObjectType.TileData.SetFaceType(tileFaceB, new TileFaceType());
-                    tileB.ObjectType.TileData.SetWinding(tileFaceB, !tileA.ObjectType.TileData.GetWinding(tileFaceA));
+                    //tileB.ObjectType.TileData.SetLocalWinding(tileFaceB, !tileA.ObjectType.TileData.GetLocalWinding(tileFaceA));
                 }
+                if (getTypeA().GetRoot() == getTypeB().GetRoot()) return;
 
                 TileFaceType newRoot = new TileFaceType();
-                getTypeA().SetParent(newRoot);
-                getTypeB().SetParent(newRoot);
-                //getTypeB().flipWinding = getTypeB().flipWinding ^ winding;
+                newRoot.Name = "AutoGen";
+
+                getTypeA().GetRoot().FlipWinding ^= winding;
+
+                getTypeA().GetRoot().SetParent(newRoot);
+                getTypeB().GetRoot().SetParent(newRoot);
+                
 
                 tileA.ObjectType.SnapInformation = builder.CreateFromTile(tileA.ObjectType.TileData);
                 tileB.ObjectType.SnapInformation = builder.CreateFromTile(tileB.ObjectType.TileData);
-                //TODO: Update snap information
 
                
 
@@ -157,7 +171,10 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
                 ghostFace.WorldMatrix = new Matrix();
 
                 Enabled = false;
+                return;
             }
+
+            SetGhostFaceAtFace(target, resultFace);
         }
 
         private TileFaceType getTypeB()

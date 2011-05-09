@@ -69,6 +69,7 @@
     <Compile Include="SnapEngine\WorldObjectMoveTool.cs" />
     <Compile Include="SnapEngine\WorldObjectPlaceTool.cs" />
     <Compile Include="SnapEngine\WorldObjectType.cs" />
+    <Compile Include="SnapEngine\WorldTileSnapper.cs" />
     <Compile Include="TileData.cs" />
     <Compile Include="TileFace.cs" />
     <Compile Include="TileFaceType.cs" />

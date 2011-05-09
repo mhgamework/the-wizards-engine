@@ -12,36 +12,42 @@ namespace MHGameWork.TheWizards.TileEngine
         public IMesh Mesh;
         public Vector3 Dimensions;
         public TileFaceType[] FaceTypes = new TileFaceType[6];
-        public bool[] FaceWinding = new bool[6];
+        public bool[] FaceLocalWinding = new bool[6];
 
         [Obsolete]
         public Matrix MeshOffset = Matrix.Identity;
 
         public TileFaceType GetFaceType(TileFace face)
         {
-            return FaceTypes[(int)face-1];
+            return FaceTypes[(int)face - 1];
         }
 
         public void SetFaceType(TileFace face, TileFaceType value)
         {
-            FaceTypes[(int)face-1] = value;
+            FaceTypes[(int)face - 1] = value;
         }
 
-        public bool GetWinding(TileFace face)
+        public bool GetLocalWinding(TileFace face)
         {
-            return FaceWinding[(int)face - 1];
+            return FaceLocalWinding[(int)face - 1];
         }
 
-        public void SetWinding(TileFace face, bool value)
+        public void SetLocalWinding(TileFace face, bool value)
         {
-            FaceWinding[(int)face - 1] = value;
+            FaceLocalWinding[(int)face - 1] = value;
         }
 
+        public bool GetTotalWinding(TileFace face)
+        {
+            if (GetFaceType(face) == null) return false;
+            var ret = GetLocalWinding(face) ^ GetFaceType(face).GetTotalWinding();
+            return ret;
+        }
 
 
         public BoundingBox GetBoundingBox()
         {
-            var bb = new BoundingBox(-Dimensions*0.5f, Dimensions*0.5f);
+            var bb = new BoundingBox(-Dimensions * 0.5f, Dimensions * 0.5f);
             return bb;
         }
     }

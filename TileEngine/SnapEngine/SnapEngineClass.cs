@@ -5,6 +5,7 @@ using System.Text;
 
 namespace MHGameWork.TheWizards.TileEngine
 {
+    [Obsolete]
     public class SnapEngineClass
     {
         public List<SnapInformation> ActiveSnapList = new List<SnapInformation>();

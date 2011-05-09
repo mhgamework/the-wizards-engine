@@ -16,7 +16,8 @@ namespace MHGameWork.TheWizards.TileEngine
         public Vector3 Up { get; set; }
         public Boolean ClockwiseWinding { get; set; }
 
-
+        //some foefeling
+        public TileFaceType TileFaceType { get; set;}
 
     }
 }

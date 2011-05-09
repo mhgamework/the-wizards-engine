@@ -8,6 +8,7 @@ namespace MHGameWork.TheWizards.TileEngine
 {
     public class World
     {
+        //TODO: remove one of them
         public List<WorldObject> WorldObjectList = new List<WorldObject>();
         public List<ISnappableWorldTarget> SnapTargetList = new List<ISnappableWorldTarget>();
 

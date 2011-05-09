@@ -354,14 +354,37 @@ namespace MHGameWork.TheWizards.TileEngine
 
             transformations.Sort(compareTransformations);
 
+            var meBB = new BoundingBox(-selectedWorldObject.ObjectType.TileData.Dimensions * 0.95f * 0.5f, selectedWorldObject.ObjectType.TileData.Dimensions * 0.95f * 0.5f);
+
+            for (int i = 0; i < transformations.Count; i++)
+            {
+                transformation = transformations[i];
+                var intersects = false;
+                for (int j = 0; j < World.WorldObjectList.Count; j++)
+                {
+                    var obj = World.WorldObjectList[j];
+                    if (obj == selectedWorldObject) continue;
+
+                    var objBB = new BoundingBox(-obj.ObjectType.TileData.Dimensions * 0.5f, obj.ObjectType.TileData.Dimensions * 0.5f);
+
+                    if (objBB.Transform(obj.WorldMatrix)
+                        .Contains(
+                        meBB.Transform(transformation.CreateMatrix())) == ContainmentType.Disjoint)
+                        continue;
+
+                    intersects = true;
+                    break;
+                }
+
+                if (intersects)
+                    continue;
+
+                return true;
+
+            }
+
             transformation = new Transformation();
-            if (transformations.Count == 0)
-                return false;
-
-            transformation = transformations[0];
-
-
-            return transformations.Count > 0;
+            return false;
         }
 
         private int compareTransformations(Transformation a, Transformation b)
@@ -373,12 +396,12 @@ namespace MHGameWork.TheWizards.TileEngine
 
         private float calculateTransformationQuality(Transformation a)
         {
-            float ret =  (a.Translation - selectedWorldObject.Position).LengthSquared() * 100;
+            float ret = (a.Translation - selectedWorldObject.Position).LengthSquared() * 100;
 
             var vectorA = Vector3.Transform(Vector3.UnitX, selectedWorldObject.Rotation);
             var vectorB = Vector3.Transform(Vector3.UnitX, a.Rotation);
 
-            ret += Vector3.Dot(vectorA, vectorB)*10;
+            ret += Vector3.Dot(vectorA, vectorB) * 10;
 
             return ret;
         }

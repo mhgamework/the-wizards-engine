@@ -371,22 +371,22 @@ namespace MHGameWork.TheWizards.TileEngine
             //var faceSnapType2 = new TileFaceType() { Name = "type2" };
 
             tileDataInnerCorner.SetFaceType(TileFace.Front, faceSnapType1);
-            tileDataInnerCorner.SetWinding(TileFace.Front, true);
+            tileDataInnerCorner.SetLocalWinding(TileFace.Front, true);
 
             tileDataInnerCorner.SetFaceType(TileFace.Left, faceSnapType1);
-            tileDataInnerCorner.SetWinding(TileFace.Left, true);
+            tileDataInnerCorner.SetLocalWinding(TileFace.Left, true);
 
             tileDataStraight.SetFaceType(TileFace.Back, faceSnapType1);
-            tileDataStraight.SetWinding(TileFace.Back, false);
+            tileDataStraight.SetLocalWinding(TileFace.Back, false);
 
             tileDataStraight.SetFaceType(TileFace.Front, faceSnapType1);
-            tileDataStraight.SetWinding(TileFace.Front, true);
+            tileDataStraight.SetLocalWinding(TileFace.Front, true);
 
             tileDataOuterCorner.SetFaceType(TileFace.Front, faceSnapType1);
-            tileDataOuterCorner.SetWinding(TileFace.Front, true);
+            tileDataOuterCorner.SetLocalWinding(TileFace.Front, true);
 
             tileDataOuterCorner.SetFaceType(TileFace.Right, faceSnapType1);
-            tileDataOuterCorner.SetWinding(TileFace.Right, true);
+            tileDataOuterCorner.SetLocalWinding(TileFace.Right, true);
 
 
             type1.TileData = tileDataInnerCorner;
@@ -541,7 +541,7 @@ namespace MHGameWork.TheWizards.TileEngine
             grid.Interval = 1;
             grid.MajorInterval = 10;
 
-            var snapLearnTool = new SnapLearnTool(world, renderer);
+            var snapLearnTool = new SnapLearnTool(world, renderer, new TileSnapInformationBuilder());
             game.AddXNAObject(snapLearnTool);
 
             bool mouseEnabled = false;
@@ -579,6 +579,17 @@ namespace MHGameWork.TheWizards.TileEngine
             game.Run();
         }
 
+        /// <summary>
+        /// Controls:
+        /// 
+        /// LeftAlt: Toggle mouse on/off
+        /// M: Activate move-tool
+        /// L: Activate snaplearn-tool
+        /// Numpad 1: Activate place-tool, place wallInnerCorner
+        /// Numpad 2: Activate place-tool, place wallStraight
+        /// R: Toggle gizmo type (rotation/translation) in move-tool
+        /// Standard camera movement controls
+        /// </summary>
         [Test]
         public void RunEditor()
         {
@@ -614,7 +625,7 @@ namespace MHGameWork.TheWizards.TileEngine
 
             var placeTool = new WorldObjectPlaceTool(game, world, renderer, builder);
             var moveTool = new WorldObjectMoveTool(game, world, factory, builder, renderer);
-            var snapLearnTool = new SnapLearnTool(world, renderer);
+            var snapLearnTool = new SnapLearnTool(world, renderer, builder);
 
             game.AddXNAObject(placeTool);
             game.AddXNAObject(moveTool);

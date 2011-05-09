@@ -8,7 +8,7 @@ using MHGameWork.TheWizards.Graphics;
 
 namespace MHGameWork.TheWizards.TileEngine
 {
-    public class WorldObject : ICloneable, ISnappableWorldTarget
+    public class WorldObject :  ISnappableWorldTarget
     {
         public WorldObjectType ObjectType;
 
@@ -74,20 +74,6 @@ namespace MHGameWork.TheWizards.TileEngine
 
        
 
-        #region ICloneable Members
-
-        object ICloneable.Clone()
-        {
-            return Clone();
-        }
-
-        public WorldObject Clone()
-        {
-            return new WorldObject(game, ObjectType, Renderer);
-        }
-
-
-        #endregion
 
 
 

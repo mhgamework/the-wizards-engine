@@ -31,9 +31,10 @@ namespace MHGameWork.TheWizards.TileEngine
 
         public WorldObject CloneWorldObject(WorldObject worldObject)
         {
-            WorldObject clone = worldObject.Clone();
-            addWorldObject(clone);
-            return clone;
+            throw new NotImplementedException();
+            //WorldObject clone = worldObject.Clone();
+            //addWorldObject(clone);
+            //return clone;
         }
 
 

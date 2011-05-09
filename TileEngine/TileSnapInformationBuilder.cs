@@ -9,6 +9,8 @@ namespace MHGameWork.TheWizards.TileEngine
     public class TileSnapInformationBuilder
     {
         private Dictionary<TileFaceType, SnapType> typesMap = new Dictionary<TileFaceType, SnapType>();
+        Random randomNbGenerator = new Random();
+
 
         public SnapInformation CreateFromTile(TileData data)
         {
@@ -19,13 +21,11 @@ namespace MHGameWork.TheWizards.TileEngine
             for (int i = 0; i < 6; i++)
             {
                 var tileFace = (TileFace)(i + 1);
+                if (data.GetFaceType(tileFace) == null) continue;
                 var faceType = data.GetFaceType(tileFace);
 
-                if (data.GetFaceType(tileFace) == null) continue;
-               
-
-                SnapPoint point = GetPoint(data, tileFace, faceType, data.GetWinding(tileFace));
-
+                SnapPoint point = GetPoint(data, tileFace, faceType, data.GetLocalWinding(tileFace) ^ faceType.GetTotalWinding());
+                point.TileFaceType = faceType;
 
                 information.addSnapObject(point);
             }
@@ -48,11 +48,11 @@ namespace MHGameWork.TheWizards.TileEngine
 
         private SnapType getSnapType(TileFaceType faceType)
         {
-            if (!typesMap.ContainsKey(faceType))
+            if (!typesMap.ContainsKey(faceType.GetRoot()))
             {
-                typesMap.Add(faceType, new SnapType("TileFaceType: " + faceType.Name));
+                typesMap.Add(faceType.GetRoot(), new SnapType("TileFaceType: " + randomNbGenerator.Next(10) + faceType.Name));
             }
-            return typesMap[faceType];
+            return typesMap[faceType.GetRoot()];
         }
 
         private static Vector3[] faceDirections;
