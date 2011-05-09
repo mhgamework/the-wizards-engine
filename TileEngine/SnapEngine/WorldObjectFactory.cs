@@ -26,7 +26,6 @@ namespace MHGameWork.TheWizards.TileEngine
         private void addWorldObject(WorldObject worldObject)
         {
             world.WorldObjectList.Add(worldObject);
-            world.SnapTargetList.Add(worldObject);
         }
 
         public WorldObject CloneWorldObject(WorldObject worldObject)

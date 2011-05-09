@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards.TileEngine.SnapEngine
             return transformations;
         }
 
-        public void addSnapper(ISnapObjectSnapper snapper)
+        public void AddSnapper(ISnapObjectSnapper snapper)
         {
             snappers.Add(snapper);
         }

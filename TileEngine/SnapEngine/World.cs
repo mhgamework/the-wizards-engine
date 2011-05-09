@@ -10,7 +10,6 @@ namespace MHGameWork.TheWizards.TileEngine
     {
         //TODO: remove one of them
         public List<WorldObject> WorldObjectList = new List<WorldObject>();
-        public List<ISnappableWorldTarget> SnapTargetList = new List<ISnappableWorldTarget>();
 
         public WorldObject Raycast(Ray ray, List<WorldObject> list)
         {

@@ -267,16 +267,16 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
 
             Ray ray;
 
-            for (int i = 0; i < world.SnapTargetList.Count(); i++)
+            for (int i = 0; i < world.WorldObjectList.Count(); i++)
             {
-                var obj = (WorldObject)world.SnapTargetList[i];
+                var obj = (WorldObject)world.WorldObjectList[i];
                 var objectMatrix = Matrix.Invert(obj.WorldMatrix);
                 var objBB = obj.ObjectType.TileData.GetBoundingBox();
                 ray = _game.GetWereldViewRay(_game.Mouse.CursorPositionVector);
                 ray.Position = Vector3.Transform(ray.Position, objectMatrix);
                 ray.Direction = Vector3.TransformNormal(ray.Direction, objectMatrix);
 
-                raycaster.AddResult(ray.Intersects(objBB), (WorldObject)world.SnapTargetList[i]);
+                raycaster.AddResult(ray.Intersects(objBB), (WorldObject)world.WorldObjectList[i]);
             }
 
             return raycaster.ClosestObject;

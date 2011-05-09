@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.TileEngine
         {
             XNAGame game = new XNAGame();
             var snapper = new Snapper();
-            snapper.addSnapper(new SnapperPointPoint());
+            snapper.AddSnapper(new SnapperPointPoint());
             var builder = new TileSnapInformationBuilder();
 
             var tileData1 = new TileData();

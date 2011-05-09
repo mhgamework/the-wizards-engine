@@ -46,7 +46,7 @@ namespace MHGameWork.TheWizards.TileEngine
         private TileSnapInformationBuilder builder;
         private SimpleMeshRenderer renderer;
 
-        private List<ISnappableWorldTarget> snapTargetList;
+        private List<WorldObject> worldObjectList;
         private List<Transformation> transformations = new List<Transformation>();
 
         public WorldObjectMoveTool(XNAGame _game, World world, WorldObjectFactory factory, TileSnapInformationBuilder _builder, SimpleMeshRenderer _renderer)
@@ -62,15 +62,16 @@ namespace MHGameWork.TheWizards.TileEngine
 
 
 
-            snapTargetList = world.SnapTargetList;
-            snapper.addSnapper(new SnapperPointPoint());
+            worldObjectList = world.WorldObjectList;
+            snapper.AddSnapper(new SnapperPointPoint());
             builder = _builder;
+            worldTileSnapper = new WorldTileSnapper(builder);
             renderer = _renderer;
         }
 
         WorldObject selectedWorldObject = null;
 
-
+        private WorldTileSnapper worldTileSnapper;
 
 
 
@@ -330,81 +331,15 @@ namespace MHGameWork.TheWizards.TileEngine
 
         private void updateGhostPosition()
         {
-            Transformation transformation;
-            if (canSnapGhost(out transformation))
-            {
-                var distSq = (transformation.Translation - selectedWorldObject.Position).LengthSquared();
-                var maxDist = 10;
-                if (distSq < maxDist * maxDist)
-                {
-                    ghost.WorldMatrix = transformation.CreateMatrix();
-                    return;
-                }
-            }
+            worldObjectList.Remove(selectedWorldObject);
+            var transformation = worldTileSnapper.CalculateSnap(selectedWorldObject.ObjectType.TileData, selectedWorldObject.Transformation, worldObjectList);
+            worldObjectList.Add(selectedWorldObject);
 
-            ghost.WorldMatrix = selectedWorldObject.WorldMatrix;
+            ghost.WorldMatrix = transformation.CreateMatrix();
 
         }
 
-        private bool canSnapGhost(out Transformation transformation)
-        {
-            snapTargetList.Remove(selectedWorldObject);
-            transformations = snapper.SnapTo(builder.CreateFromTile(selectedWorldObject.ObjectType.TileData), snapTargetList);
-            snapTargetList.Add(selectedWorldObject);
-
-            transformations.Sort(compareTransformations);
-
-            var meBB = new BoundingBox(-selectedWorldObject.ObjectType.TileData.Dimensions * 0.95f * 0.5f, selectedWorldObject.ObjectType.TileData.Dimensions * 0.95f * 0.5f);
-
-            for (int i = 0; i < transformations.Count; i++)
-            {
-                transformation = transformations[i];
-                var intersects = false;
-                for (int j = 0; j < World.WorldObjectList.Count; j++)
-                {
-                    var obj = World.WorldObjectList[j];
-                    if (obj == selectedWorldObject) continue;
-
-                    var objBB = new BoundingBox(-obj.ObjectType.TileData.Dimensions * 0.5f, obj.ObjectType.TileData.Dimensions * 0.5f);
-
-                    if (objBB.Transform(obj.WorldMatrix)
-                        .Contains(
-                        meBB.Transform(transformation.CreateMatrix())) == ContainmentType.Disjoint)
-                        continue;
-
-                    intersects = true;
-                    break;
-                }
-
-                if (intersects)
-                    continue;
-
-                return true;
-
-            }
-
-            transformation = new Transformation();
-            return false;
-        }
-
-        private int compareTransformations(Transformation a, Transformation b)
-        {
-            var valueA = calculateTransformationQuality(a);
-            var valueB = calculateTransformationQuality(b);
-            return (int)(valueA - valueB);
-        }
-
-        private float calculateTransformationQuality(Transformation a)
-        {
-            float ret = (a.Translation - selectedWorldObject.Position).LengthSquared() * 100;
-
-            var vectorA = Vector3.Transform(Vector3.UnitX, selectedWorldObject.Rotation);
-            var vectorB = Vector3.Transform(Vector3.UnitX, a.Rotation);
-
-            ret += Vector3.Dot(vectorA, vectorB) * 10;
-
-            return ret;
-        }
+       
     }
 
 }

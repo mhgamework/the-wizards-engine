@@ -45,16 +45,14 @@ namespace MHGameWork.TheWizards.TileEngine
         private WorldObjectFactory factory;
 
 
-
+        private WorldTileSnapper worldTileSnapper;
 
         private SimpleMeshRenderElement ghost;
         private bool isGhostActive;
 
 
-        private Snapper snapper = new Snapper();
         private TileSnapInformationBuilder builder;
 
-        private List<ISnappableWorldTarget> snapTargetList;
         private List<Transformation> transformations = new List<Transformation>();
         private int objectsPlacedSinceEnabled;
 
@@ -64,9 +62,8 @@ namespace MHGameWork.TheWizards.TileEngine
             world = _world;
             renderer = _renderer;
             factory = new WorldObjectFactory(world);
-            snapTargetList = world.SnapTargetList;
-            snapper.addSnapper(new SnapperPointPoint());
             builder = _builder;
+            worldTileSnapper = new WorldTileSnapper(builder);
         }
 
 
@@ -115,31 +112,17 @@ namespace MHGameWork.TheWizards.TileEngine
 
         private void updateGhostPosition()
         {
-            Transformation transformation;
-            if (canSnapGhost(out transformation))
-            {
-                ghost.WorldMatrix = PlaceType.TileData.MeshOffset * transformation.CreateMatrix();
-            }
-            else
-            {
-                // Place ghost at groundplane
-                var raycastPosition = raycastGroundPlaneCursor();
-                ghost.WorldMatrix = PlaceType.TileData.MeshOffset * Matrix.CreateTranslation(raycastPosition);
-            }
+            var raycastPosition = raycastGroundPlaneCursor();
+
+            Transformation transformation = worldTileSnapper.CalculateSnap(PlaceType.TileData,
+                                                                           new Transformation(raycastPosition),
+                                                                           world.WorldObjectList);
+
+            ghost.WorldMatrix = transformation.CreateMatrix();
         }
 
 
-        private bool canSnapGhost(out Transformation transformation)
-        {
-            transformations = snapper.SnapTo(builder.CreateFromTile(PlaceType.TileData), snapTargetList);
 
-            if (transformations.Count > 0)
-                transformation = transformations[0];
-            else
-                transformation = new Transformation();
-
-            return transformations.Count > 0;
-        }
 
         private Vector3 raycastGroundPlaneCursor()
         {
