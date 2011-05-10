@@ -189,12 +189,19 @@ namespace MHGameWork.TheWizards.Particles
         }
         public void Render(Matrix viewProjection, Matrix viewInverse)
         {
+            
             simulater.RenderUpdate(game.Elapsed,position);
+            game.GraphicsDevice.RenderState.AlphaBlendEnable = true;
+            game.GraphicsDevice.RenderState.SourceBlend = Blend.One;
+            game.GraphicsDevice.RenderState.DestinationBlend = Blend.One;
+            game.GraphicsDevice.RenderState.DepthBufferEnable = false;
             shader.SetParameter("displacementTexture", simulater.getOldPosition());
             shader.SetParameter("viewProjection", viewProjection);
             shader.SetParameter("viewInverse", viewInverse);
             shader.SetParameter("world", Matrix.Identity);
             shader.RenderMultipass(renderPrimitivesAsBillBoards);
+            game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
+            game.GraphicsDevice.RenderState.DepthBufferEnable = true;
         }
         private void renderPrimitivesAsBillBoards()
         {

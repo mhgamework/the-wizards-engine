@@ -170,6 +170,7 @@ namespace MHGameWork.TheWizards.Particles
 
         public void RenderUpdate(float elapsed,Vector3 position)
         {
+            game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
             shader.SetParameter("elapsed", elapsed);
             shader.SetParameter("center", position);
             shader.SetParameter("oldPosition", getOldPosition());

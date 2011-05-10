@@ -12,7 +12,7 @@ namespace MHGameWork.TheWizards.Particles
     {
         private readonly Emitter emmiter;
         private Seeder seed = new Seeder(123);
-        public float Radius=1;
+        public float Radius=1;// needs to be put in the shader!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
        public void GetNewParticleData(out Vector3 position, out Vector3 velocity)
        {
