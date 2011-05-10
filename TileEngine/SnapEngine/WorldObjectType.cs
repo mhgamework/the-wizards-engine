@@ -10,9 +10,20 @@ namespace MHGameWork.TheWizards.TileEngine
 {
     public class WorldObjectType
     {
+        public Guid guid;
+
+        public WorldObjectType(IMesh _mesh, Guid guid)
+        {
+            mesh = _mesh;
+            BoundingBox = CalculateBoundingBoxFromMesh(mesh);
+            this.guid = guid;
+        }
+
+        
+
         public SnapInformation SnapInformation;
-        private RAMMesh mesh;
-        public RAMMesh Mesh
+        private IMesh mesh;
+        public IMesh Mesh
         {
             get { return mesh; }
             set { mesh = value; BoundingBox = CalculateBoundingBoxFromMesh(mesh); }
@@ -22,12 +33,7 @@ namespace MHGameWork.TheWizards.TileEngine
                
         public BoundingBox BoundingBox;
 
-        public WorldObjectType(RAMMesh _mesh)
-        {
-            mesh = _mesh;
-            BoundingBox = CalculateBoundingBoxFromMesh(mesh);
-        }
-
+        
         public static BoundingBox CalculateBoundingBoxFromMesh(IMesh mesh)
         {
             BoundingBox box = new BoundingBox();

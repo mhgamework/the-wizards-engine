@@ -49,6 +49,8 @@ namespace MHGameWork.TheWizards.Assets
             Guid g = XMLSerializer.ReadGuid(node);
             value = factory.GetAsset(type, g);
 
+            if (value == null) return false;
+
             return true;
 
         }

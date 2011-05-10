@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.ServerClient;
 
 namespace MHGameWork.TheWizards.TileEngine
 {
     public class WorldObjectFactory
     {
         private World world;
+        private readonly IMeshFactory meshFactory;
+        private readonly ITileFaceTypeFactory tileFaceTypeFactory;
 
-        public WorldObjectFactory(World _world)
+        public WorldObjectFactory(World _world, IMeshFactory meshFactory, ITileFaceTypeFactory tileFaceTypeFactory)
         {
             world = _world;
+            this.meshFactory = meshFactory;
+            this.tileFaceTypeFactory = tileFaceTypeFactory;
         }
 
         public WorldObject CreateNewWorldObject(IXNAGame game, WorldObjectType objectType, SimpleMeshRenderer renderer)
@@ -35,6 +41,8 @@ namespace MHGameWork.TheWizards.TileEngine
             //addWorldObject(clone);
             //return clone;
         }
+
+        
 
 
 

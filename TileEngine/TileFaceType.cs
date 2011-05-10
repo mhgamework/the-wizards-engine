@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Assets;
 
 namespace MHGameWork.TheWizards.TileEngine
 {
-    public class TileFaceType
+    public class TileFaceType : IAsset
     {
         private static int nextID = 1;
         public int ID { get; private set; }
 
-        public TileFaceType()
+        public Guid Guid { get; private set; }
+
+        public TileFaceType(Guid guid)
         {
             ID = nextID;
             ID++;
+            this.Guid = guid;
         }
 
 

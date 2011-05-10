@@ -52,17 +52,21 @@ namespace MHGameWork.TheWizards.TileEngine
 
 
         private TileSnapInformationBuilder builder;
+        private readonly IMeshFactory meshFactory;
+        private readonly ITileFaceTypeFactory tileFaceTypeFactory;
 
         private List<Transformation> transformations = new List<Transformation>();
         private int objectsPlacedSinceEnabled;
 
-        public WorldObjectPlaceTool(IXNAGame _game, World _world, SimpleMeshRenderer _renderer, TileSnapInformationBuilder _builder)
+        public WorldObjectPlaceTool(IXNAGame _game, World _world, SimpleMeshRenderer _renderer, TileSnapInformationBuilder _builder, IMeshFactory meshFactory, ITileFaceTypeFactory tileFaceTypeFactory)
         {
             game = _game;
             world = _world;
             renderer = _renderer;
-            factory = new WorldObjectFactory(world);
+            factory = new WorldObjectFactory(world,meshFactory, tileFaceTypeFactory);
             builder = _builder;
+            this.meshFactory = meshFactory;
+            this.tileFaceTypeFactory = tileFaceTypeFactory;
             worldTileSnapper = new WorldTileSnapper(builder);
         }
 

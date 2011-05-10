@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Editor;
 using MHGameWork.TheWizards.Entity;
+using MHGameWork.TheWizards.Tests.Rendering;
 using MHGameWork.TheWizards.Tests.TileEngine;
 using MHGameWork.TheWizards.TileEngine.SnapEngine;
 using NUnit.Framework;
@@ -299,8 +300,8 @@ namespace MHGameWork.TheWizards.TileEngine
 
 
             //Create WorldObjectTypes
-            WorldObjectType wallStraightType = new WorldObjectType(meshWallStraight);
-            WorldObjectType wallCornerType = new WorldObjectType(meshWallCorner);
+            WorldObjectType wallStraightType = new WorldObjectType(meshWallStraight, Guid.NewGuid());
+            WorldObjectType wallCornerType = new WorldObjectType(meshWallCorner, Guid.NewGuid());
 
 
 
@@ -317,7 +318,7 @@ namespace MHGameWork.TheWizards.TileEngine
 
             WorldObjectList[1].Position = new Vector3(30, 0, 0);
 
-            WorldObjectFactory factory = new WorldObjectFactory(world);
+            WorldObjectFactory factory = new WorldObjectFactory(world, new SimpleMeshFactory(), new TileFaceTypeFactory());
 
             TileSnapInformationBuilder builder = new TileSnapInformationBuilder();
             WorldObjectMoveTool moveTool = new WorldObjectMoveTool(game, world, factory, builder, renderer);
@@ -355,19 +356,19 @@ namespace MHGameWork.TheWizards.TileEngine
             World world = new World();
             TileSnapInformationBuilder builder = new TileSnapInformationBuilder();
 
-            WorldObjectPlaceTool placeTool = new WorldObjectPlaceTool(game, world, renderer, builder);
-            WorldObjectType type1 = new WorldObjectType(meshWallInnerCorner);
-            WorldObjectType type2 = new WorldObjectType(meshWallStraight);
-            WorldObjectType type3 = new WorldObjectType(meshWallOuterCorner);
+            WorldObjectPlaceTool placeTool = new WorldObjectPlaceTool(game, world, renderer, builder, new SimpleMeshFactory(), new TileFaceTypeFactory());
+            WorldObjectType type1 = new WorldObjectType(meshWallInnerCorner, Guid.NewGuid());
+            WorldObjectType type2 = new WorldObjectType(meshWallStraight, Guid.NewGuid());
+            WorldObjectType type3 = new WorldObjectType(meshWallOuterCorner, Guid.NewGuid());
 
-            var tileDataInnerCorner = new TileData();
-            var tileDataStraight = new TileData();
-            var tileDataOuterCorner = new TileData();
+            var tileDataInnerCorner = new TileData(Guid.NewGuid());
+            var tileDataStraight = new TileData(Guid.NewGuid());
+            var tileDataOuterCorner = new TileData(Guid.NewGuid());
             tileDataInnerCorner.Dimensions = type1.BoundingBox.Max - type1.BoundingBox.Min;
             tileDataStraight.Dimensions = type2.BoundingBox.Max - type2.BoundingBox.Min;
             tileDataOuterCorner.Dimensions = type1.BoundingBox.Max - type1.BoundingBox.Min;
 
-            var faceSnapType1 = new TileFaceType() { Name = "type1" };
+            var faceSnapType1 = new TileFaceType(Guid.NewGuid()) { Name = "type1" };
             //var faceSnapType2 = new TileFaceType() { Name = "type2" };
 
             tileDataInnerCorner.SetFaceType(TileFace.Front, faceSnapType1);
@@ -403,7 +404,7 @@ namespace MHGameWork.TheWizards.TileEngine
             typeList.Add(type2);
             typeList.Add(type3);
 
-            WorldObjectFactory factory = new WorldObjectFactory(world);
+            WorldObjectFactory factory = new WorldObjectFactory(world, new SimpleMeshFactory(), new TileFaceTypeFactory());
             WorldObjectMoveTool moveTool = new WorldObjectMoveTool(game, world, factory, builder, renderer);
 
             game.AddXNAObject(moveTool);
@@ -506,11 +507,11 @@ namespace MHGameWork.TheWizards.TileEngine
 
             World world = new World();
 
-            WorldObjectType type1 = new WorldObjectType(meshWallInnerCorner);
-            WorldObjectType type2 = new WorldObjectType(meshWallStraight);
+            WorldObjectType type1 = new WorldObjectType(meshWallInnerCorner, Guid.NewGuid());
+            WorldObjectType type2 = new WorldObjectType(meshWallStraight, Guid.NewGuid());
 
-            var tileDataInnerCorner = new TileData();
-            var tileDataStraight = new TileData();
+            var tileDataInnerCorner = new TileData(Guid.NewGuid());
+            var tileDataStraight = new TileData(Guid.NewGuid());
 
             tileDataInnerCorner.Dimensions = type1.BoundingBox.Max - type1.BoundingBox.Min;
             tileDataInnerCorner.MeshOffset = Matrix.CreateTranslation(new Vector3(0, -2, 0));
@@ -522,7 +523,7 @@ namespace MHGameWork.TheWizards.TileEngine
             type2.TileData = tileDataStraight;
 
 
-            WorldObjectFactory factory = new WorldObjectFactory(world);
+            WorldObjectFactory factory = new WorldObjectFactory(world, new SimpleMeshFactory(), new TileFaceTypeFactory());
             var TileInnerCorner = factory.CreateNewWorldObject(game, type1, renderer);
             TileInnerCorner.Position = new Vector3(-7, 0, 0);
             var TileStraight = factory.CreateNewWorldObject(game, type2, renderer);
@@ -615,7 +616,7 @@ namespace MHGameWork.TheWizards.TileEngine
             grid.MajorInterval = 10;
 
             World world = new World();
-            var factory = new WorldObjectFactory(world);
+            var factory = new WorldObjectFactory(world, new SimpleMeshFactory(), new TileFaceTypeFactory());
             var builder = new TileSnapInformationBuilder();
 
             //var TileInnerCorner = factory.CreateNewWorldObject(game, wallInnerCornerType, renderer);
@@ -623,7 +624,7 @@ namespace MHGameWork.TheWizards.TileEngine
             //var TileStraight = factory.CreateNewWorldObject(game, wallStraightType, renderer);
             //TileStraight.Position = new Vector3(7, 0, 0);
 
-            var placeTool = new WorldObjectPlaceTool(game, world, renderer, builder);
+            var placeTool = new WorldObjectPlaceTool(game, world, renderer, builder, new SimpleMeshFactory(), new TileFaceTypeFactory());
             var moveTool = new WorldObjectMoveTool(game, world, factory, builder, renderer);
             var snapLearnTool = new SnapLearnTool(world, renderer, builder);
 
@@ -659,7 +660,7 @@ namespace MHGameWork.TheWizards.TileEngine
 
                 if (placeTool.Enabled)
                 {
-                    
+
                     moveTool.Enabled = false;
                     snapLearnTool.Enabled = false;
 
@@ -720,11 +721,11 @@ namespace MHGameWork.TheWizards.TileEngine
             importer.ImportObjFile(TWDir.GameData.CreateSubdirectory("Core\\TileEngine") + "/TileSet001/WallStraight.obj");
             meshWallStraight = c.CreateMesh(importer);
 
-            wallInnerCornerType = new WorldObjectType(meshWallInnerCorner);
-            wallStraightType = new WorldObjectType(meshWallStraight);
+            wallInnerCornerType = new WorldObjectType(meshWallInnerCorner, Guid.NewGuid());
+            wallStraightType = new WorldObjectType(meshWallStraight, Guid.NewGuid());
 
-            var tileDataInnerCorner = new TileData();
-            var tileDataStraight = new TileData();
+            var tileDataInnerCorner = new TileData(Guid.NewGuid());
+            var tileDataStraight = new TileData(Guid.NewGuid());
 
             tileDataInnerCorner.Dimensions = wallInnerCornerType.BoundingBox.Max - wallInnerCornerType.BoundingBox.Min;
             tileDataInnerCorner.MeshOffset = Matrix.CreateTranslation(new Vector3(0, 0, 0));
@@ -736,6 +737,51 @@ namespace MHGameWork.TheWizards.TileEngine
 
             typeList.Add(wallInnerCornerType);
             typeList.Add(wallStraightType);
+
+        }
+
+        [Test]
+        public void TestSerializeTileData()
+        {
+            TileData data = new TileData(Guid.NewGuid());
+            TileFaceType type = new TileFaceType(Guid.NewGuid());
+            type.FlipWinding = true;
+            TileFaceType root = new TileFaceType(Guid.NewGuid());
+            type.SetParent(root);
+
+            data.Dimensions = new Vector3(1, 2, 3);
+            data.SetFaceType(TileFace.Front, type);
+
+            OBJParser.ObjImporter importer = new OBJParser.ObjImporter();
+            var c = new OBJToRAMMeshConverter(new RAMTextureFactory());
+            importer.AddMaterialFileStream("WallInnerCorner.mtl", new FileStream(TWDir.GameData.CreateSubdirectory("Core\\TileEngine") + "/TileSet001/WallInnerCorner.mtl", FileMode.Open));
+            importer.ImportObjFile(TWDir.GameData.CreateSubdirectory("Core\\TileEngine") + "/TileSet001/WallInnerCorner.obj");
+            meshWallInnerCorner = c.CreateMesh(importer);
+
+            data.Mesh = meshWallInnerCorner;
+
+            var simpleMeshFactory = new SimpleMeshFactory();
+            simpleMeshFactory.AddMesh(meshWallInnerCorner);
+
+            TileDataFactory tileDataFactory = new TileDataFactory(simpleMeshFactory,
+                                                                  new SimpleTileFaceTypeFactory());
+
+            FileStream stream = File.OpenWrite(TWDir.Test.CreateSubdirectory("TileEngine").FullName + "\\TestTileData.xml");
+            tileDataFactory.SerializeTileData(data, stream);
+
+            stream.Close();
+
+            FileStream readStream =
+                File.OpenRead(TWDir.Test.CreateSubdirectory("TileEngine").FullName + "\\TestTileData.xml");
+
+            TileData readData = tileDataFactory.DeserializeTileData(readStream);
+
+            readStream.Close();
+        }
+
+        [Test]
+        public void TestSerializeWorldObject()
+        {
 
         }
     }

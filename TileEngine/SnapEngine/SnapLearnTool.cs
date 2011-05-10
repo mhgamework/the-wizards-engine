@@ -132,17 +132,17 @@ namespace MHGameWork.TheWizards.Tests.TileEngine
 
                 if (tileA.ObjectType.TileData.GetFaceType(tileFaceA) == null)
                 {
-                    tileA.ObjectType.TileData.SetFaceType(tileFaceA, new TileFaceType());
+                    tileA.ObjectType.TileData.SetFaceType(tileFaceA, new TileFaceType(Guid.NewGuid()));
                     //tileA.ObjectType.TileData.SetLocalWinding(tileFaceA, !tileB.ObjectType.TileData.GetLocalWinding(tileFaceB));
                 }
                 if (tileB.ObjectType.TileData.GetFaceType(tileFaceB) == null)
                 {
-                    tileB.ObjectType.TileData.SetFaceType(tileFaceB, new TileFaceType());
+                    tileB.ObjectType.TileData.SetFaceType(tileFaceB, new TileFaceType(Guid.NewGuid()));
                     //tileB.ObjectType.TileData.SetLocalWinding(tileFaceB, !tileA.ObjectType.TileData.GetLocalWinding(tileFaceA));
                 }
                 if (getTypeA().GetRoot() == getTypeB().GetRoot()) return;
 
-                TileFaceType newRoot = new TileFaceType();
+                TileFaceType newRoot = new TileFaceType(Guid.NewGuid());
                 newRoot.Name = "AutoGen";
 
                 getTypeA().GetRoot().FlipWinding ^= winding;

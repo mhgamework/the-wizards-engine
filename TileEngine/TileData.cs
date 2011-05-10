@@ -2,17 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Rendering;
 using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.TileEngine
 {
-    public class TileData
+    public class TileData : IAsset
     {
         public IMesh Mesh;
         public Vector3 Dimensions;
         public TileFaceType[] FaceTypes = new TileFaceType[6];
         public bool[] FaceLocalWinding = new bool[6];
+
+        public Guid Guid { get; private set; }
+
+        public TileData(Guid guid)
+        {
+            this.Guid = guid;
+        }
 
         [Obsolete]
         public Matrix MeshOffset = Matrix.Identity;

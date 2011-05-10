@@ -21,13 +21,13 @@ namespace MHGameWork.TheWizards.TileEngine
             snapper.AddSnapper(new SnapperPointPoint());
             var builder = new TileSnapInformationBuilder();
 
-            var tileData1 = new TileData();
+            var tileData1 = new TileData(Guid.NewGuid());
             tileData1.Dimensions = new Vector3(1, 2, 3);
-            var tileData2 = new TileData();
+            var tileData2 = new TileData(Guid.NewGuid());
             tileData2.Dimensions = new Vector3(2, 2, 5);
 
-            var faceSnapType1 = new TileFaceType() { Name = "type1" };
-            var faceSnapType2 = new TileFaceType() { Name = "type2" };
+            var faceSnapType1 = new TileFaceType(Guid.NewGuid()) { Name = "type1" };
+            var faceSnapType2 = new TileFaceType(Guid.NewGuid()) { Name = "type2" };
 
             tileData1.SetFaceType(TileFace.Front, faceSnapType1);
             tileData1.SetFaceType(TileFace.Right, faceSnapType2);

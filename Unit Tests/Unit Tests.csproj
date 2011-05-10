@@ -155,9 +155,11 @@
     <Compile Include="TestTWGame.cs" />
     <Compile Include="TileEngine\SampleTest.cs" />
     <Compile Include="TileEngine\SimpleSnappableWorldTarget.cs" />
+    <Compile Include="TileEngine\SimpleTileFaceTypeFactory.cs" />
     <Compile Include="TileEngine\SnapEngineTest.cs" />
     <Compile Include="TileEngine\TestClass.cs" />
     <Compile Include="TileEngine\TileEngineTest.cs" />
+    <Compile Include="TileEngine\TileFaceTypeFactory.cs" />
     <Compile Include="Treegenerater\TreeSynchronisationTest.cs" />
     <Compile Include="Utilities\UtilitiesTest.cs" />
     <Compile Include="WorldDatabase\WorldDatabaseTest.cs" />

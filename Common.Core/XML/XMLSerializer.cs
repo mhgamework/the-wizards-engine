@@ -399,5 +399,14 @@ namespace MHGameWork.TheWizards.ServerClient
             return new Guid(gNode.GetAttribute("Value"));
         }
 
+        public static void WriteBoolean(TWXmlNode node, bool boolean)
+        {
+            node.Value = boolean.ToString();
+        }
+        public static bool ReadBoolean(TWXmlNode node)
+        {
+            return bool.Parse(node.Value);
+        }
+
     }
 }
