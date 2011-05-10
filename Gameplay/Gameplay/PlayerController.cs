@@ -164,7 +164,7 @@ namespace MHGameWork.TheWizards.GamePlay
             frameMovement += velocity * game.Elapsed;
 
             var oldPos = controller.Position;
-
+            
             // Apply fake gravity. Downward speed is constant. 
             controller.Move(frameMovement);
             frameMovement = Vector3.Zero;

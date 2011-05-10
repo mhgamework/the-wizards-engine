@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MHGameWork.TheWizards.Rendering;
+using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Scripting.API
 {
@@ -27,6 +28,8 @@ namespace MHGameWork.TheWizards.Scripting.API
         /// But a kinematic entity can be moved
         /// </summary>
         bool Kinematic { get; set; }
+
+        IMesh Mesh { get; set; }
 
 
         T GetAttachedScript<T>() where T : class, IScript;

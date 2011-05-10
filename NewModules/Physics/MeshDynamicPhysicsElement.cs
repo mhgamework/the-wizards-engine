@@ -140,6 +140,8 @@ namespace MHGameWork.TheWizards.Physics
 
 
             Move(root, actor.GlobalPose);
+            
+            
 
         }
 
@@ -168,6 +170,8 @@ namespace MHGameWork.TheWizards.Physics
         /// </summary>
         public void EnablePhysics()
         {
+            if (kinematic) return; // This object is forced to kinematic
+
             if (!sleeping) return;
             actor.BodyFlags.Kinematic = false;
             actor.UserData = actorUserData;

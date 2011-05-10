@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scripting.API;
 using Microsoft.Xna.Framework;
 
@@ -40,19 +41,16 @@ namespace MHGameWork.TheWizards.Scene
             get { return Entity.Visible; }
             set { Entity.Visible = value; }
         }
-
         public bool Solid
         {
             get { return Entity.Solid; }
             set { Entity.Solid = value; }
         }
-
         public bool Static
         {
             get { return Entity.Static; }
             set { Entity.Static = value; }
         }
-
         public bool Kinematic
         {
             get
@@ -64,6 +62,18 @@ namespace MHGameWork.TheWizards.Scene
             {
                 if (Static) throw new InvalidOperationException();
                 Entity.Kinematic = value;
+            }
+        }
+
+        public IMesh Mesh
+        {
+            get
+            {
+                return Entity.Mesh;
+            }
+            set
+            {
+                Entity.Mesh = value;
             }
         }
 

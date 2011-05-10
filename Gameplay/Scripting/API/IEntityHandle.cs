@@ -30,6 +30,8 @@ namespace MHGameWork.TheWizards.Scripting.API
 
         EntityRaycastHit RaycastScene(Ray ray, Predicate<EntityRaycastHit> predicate);
 
+        IEntity CreateEntity();
+
         // General functions
         bool IsKeyDown(Keys key);
         bool IsKeyPressed(Keys key);
@@ -40,6 +42,7 @@ namespace MHGameWork.TheWizards.Scripting.API
 
         // This might be a cheat
         T GetSceneComponent<T>() where T : class;
+
 
 
     }

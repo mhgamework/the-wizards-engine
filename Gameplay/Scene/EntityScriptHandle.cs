@@ -51,6 +51,13 @@ namespace MHGameWork.TheWizards.Scene
 
         }
 
+        public IEntity CreateEntity()
+        {
+            var ent = Entity.Scene.CreateEntity();
+
+            return ent.APIEntity;
+        }
+
         public bool IsKeyDown(Keys key)
         {
             return Entity.Scene.Game.Keyboard.IsKeyDown(key);

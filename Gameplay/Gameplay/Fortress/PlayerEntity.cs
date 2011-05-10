@@ -70,9 +70,11 @@ namespace MHGameWork.TheWizards.Gameplay.Fortress
 
             if (handle.IsKeyPressed(Keys.E))
             {
+                Console.WriteLine("Pressed!");
                 if (holdingCrystal != null)
                 {
                     holdingCrystal.Kinematic = false;
+                    //holdingCrystal.Static = true;
                     holdingCrystal = null;
                     return;
 
@@ -87,6 +89,7 @@ namespace MHGameWork.TheWizards.Gameplay.Fortress
                 {
                     holdingCrystal = ent.Entity;
                     holdingCrystal.Kinematic = true;
+                    //holdingCrystal.Static = false;
                     //psc.RaiseUseEvent(ent.Entity, player);
 
 
