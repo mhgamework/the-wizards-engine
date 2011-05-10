@@ -55,6 +55,7 @@ struct PixelShaderOutput
     
 };
 float size;
+float3 center;
 // Pixel Shader
 PixelShaderOutput ps_main(VSOut In)
 {
@@ -62,7 +63,7 @@ PixelShaderOutput ps_main(VSOut In)
 	float4 oldPosition =tex2D(OldPositionSampler, In.TexCoord+halfTexel);
 	float4 oldVelocity =tex2D(OldVelocitySampler, In.TexCoord+halfTexel);
 
-	float3 velocity=oldVelocity.xyz+float3(0,-5*elapsed,0);//simple gravity calculation
+	float3 velocity=oldVelocity.xyz+cross(oldVelocity,oldPosition-center)*elapsed;
 	//velocity = float3(0,0,0);
 
 	PixelShaderOutput output;

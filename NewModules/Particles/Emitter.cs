@@ -22,6 +22,7 @@ namespace MHGameWork.TheWizards.Particles
         private Vector3 position;
         private ParticleVertex[] renderData;
         private float particleWidth, particleHeight;
+        private readonly IParticleCreater particleCreater;
         private int maxParticles;
 
         private float MaxLifeTime = 10.0f;
@@ -32,10 +33,12 @@ namespace MHGameWork.TheWizards.Particles
         private float time = 0;
         private int size = 128;
         private ParticleSimulater simulater;
-        public Emitter(TexturePool texturePool, VertexDeclarationPool declarationPool, IXNAGame game, ITexture texture, float particleWidth, float particleHeight)
+        
+        public Emitter(TexturePool texturePool, VertexDeclarationPool declarationPool, IXNAGame game, ITexture texture, float particleWidth, float particleHeight,IParticleCreater particleCreater)
         {
             this.texturePool = texturePool;
             this.particleHeight = particleHeight;
+            this.particleCreater = particleCreater;
             this.particleWidth = particleWidth;
             this.texture = texture;
             this.declarationPool = declarationPool;
@@ -61,7 +64,7 @@ namespace MHGameWork.TheWizards.Particles
             if (emptyIndex == maxParticles)
             { emptyIndex = 0; }
         }
-        public void Update()
+        public void TestUpdate()
         {
             for (int i = 0; i < particles.Length; i++)
             {
@@ -82,16 +85,52 @@ namespace MHGameWork.TheWizards.Particles
                 time += game.Elapsed;
             }
         }
+        public void Update()
+        {
+            for (int i = 0; i < particles.Length; i++)
+            {
+                particles[i] -= game.Elapsed;
+                if (i < particles.Length - 1)
+                {
+                    if (particles[i] <= 0 && particles[i + 1] > 0)
+                        releasedIndex = i;
+                }
+            }
+            if (time + game.Elapsed > ParticleFrequency)
+            {
+                AddParticles(particleCreater,(int)(particlesPerSecond * (time + game.Elapsed)));
+                time = 0;
+            }
+            else
+            {
+                time += game.Elapsed;
+            }
+        }
         public void SetPosition(Vector3 pos)
         {
             position = pos;
         }
+        [Obsolete]
         public void AddParticles(int amount, Vector3 position, Vector3 velocity)
         {
             for (int i = 0; i < amount; i++)
             {
                 particles[emptyIndex] = MaxLifeTime;
                 simulater.AddNewParticle(position, velocity, emptyIndex);
+                incrementEmptyIndex();
+            }
+
+        }
+
+        public void AddParticles(IParticleCreater creater,int amount)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                particles[emptyIndex] = MaxLifeTime;
+                Vector3 pos;
+                Vector3 velo;
+                creater.GetNewParticleData(out pos, out velo);
+                simulater.AddNewParticle(pos+position, velo, emptyIndex);
                 incrementEmptyIndex();
             }
 
@@ -150,7 +189,7 @@ namespace MHGameWork.TheWizards.Particles
         }
         public void Render(Matrix viewProjection, Matrix viewInverse)
         {
-            simulater.RenderUpdate(game.Elapsed);
+            simulater.RenderUpdate(game.Elapsed,position);
             shader.SetParameter("displacementTexture", simulater.getOldPosition());
             shader.SetParameter("viewProjection", viewProjection);
             shader.SetParameter("viewInverse", viewInverse);

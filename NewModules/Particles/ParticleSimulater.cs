@@ -168,9 +168,10 @@ namespace MHGameWork.TheWizards.Particles
             getOldPosition().SetData<Vector4>(velocities, start, velocities.Length, SetDataOptions.None);
         }
 
-        public void RenderUpdate(float elapsed)
+        public void RenderUpdate(float elapsed,Vector3 position)
         {
             shader.SetParameter("elapsed", elapsed);
+            shader.SetParameter("center", position);
             shader.SetParameter("oldPosition", getOldPosition());
             shader.SetParameter("oldVelocity", getOldVelocity());
            
@@ -201,5 +202,6 @@ namespace MHGameWork.TheWizards.Particles
         }
 
 
+      
     }
 }

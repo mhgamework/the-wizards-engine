@@ -31,14 +31,15 @@ namespace MHGameWork.TheWizards.Tests.Particles
         {
             Emitter emit;
             XNAGame game = new XNAGame();
+
             game.DrawFps = true;
 
             var pool = new VertexDeclarationPool();
             pool.SetVertexElements<Emitter.ParticleVertex>(Emitter.ParticleVertex.VertexElements);
             var texPool = new TexturePool();
-            var testTexture = GetTestTexture(); 
-
-            emit = new Emitter(texPool, pool, game, testTexture,5,5);
+            var testTexture = GetTestTexture();
+            SimpleParticleCreater creater=new SimpleParticleCreater();
+            emit = new Emitter(texPool, pool, game, testTexture,5,5,creater);
             Seeder seed = new Seeder(54);
             game.InitializeEvent += delegate
                                         {
@@ -52,19 +53,60 @@ namespace MHGameWork.TheWizards.Tests.Particles
                                             
                                             emit.CreateRenderData();
                                             emit.SetRenderData();
-                                            emit.AddParticles(1, Vector3.Zero, Vector3.Zero);
+                                            emit.AddParticles(creater,1);
                                         };
             game.UpdateEvent += delegate
                                     {
                                        // emit.setShader();
-                                        emit.SetPosition(seed.NextVector3(new Vector3(-50,70,-50),new Vector3(50,70,50)));
-                                        emit.Update();
+                                        //emit.SetPosition(seed.NextVector3(new Vector3(-50,70,-50),new Vector3(50,70,50)));
+                                        emit.TestUpdate();
                                     };
             game.DrawEvent += delegate
                                   {
                                       game.GraphicsDevice.RenderState.CullMode = CullMode.None;  
                                       emit.Render(game.SpectaterCamera.ViewProjection, game.SpectaterCamera.ViewInverse);
                                   };
+
+            game.Run();
+        }
+        [Test]
+        public void BasicBalTest()
+        {
+            Emitter emit;
+            XNAGame game = new XNAGame();
+            BallParticleCreater creater;
+            game.DrawFps = true;
+
+            var pool = new VertexDeclarationPool();
+            pool.SetVertexElements<Emitter.ParticleVertex>(Emitter.ParticleVertex.VertexElements);
+            var texPool = new TexturePool();
+            var testTexture = GetTestTexture();
+            creater = new BallParticleCreater();
+            emit = new Emitter(texPool, pool, game, testTexture, 5, 5,creater);
+            Seeder seed = new Seeder(54);
+            game.InitializeEvent += delegate
+            {
+                texPool.Initialize(game);
+                pool.Initialize(game);
+
+                emit.Initialize();
+                emit.InitializeRender();
+
+
+                emit.CreateRenderData();
+                emit.SetRenderData();
+                emit.AddParticles(creater,1);
+            };
+            game.UpdateEvent += delegate
+            {
+                // emit.setShader();  
+                emit.TestUpdate();
+            };
+            game.DrawEvent += delegate
+            {
+                game.GraphicsDevice.RenderState.CullMode = CullMode.None;
+                emit.Render(game.SpectaterCamera.ViewProjection, game.SpectaterCamera.ViewInverse);
+            };
 
             game.Run();
         }

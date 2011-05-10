@@ -181,7 +181,10 @@
     </Compile>
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientFiles.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientMain.cs" />
+    <Compile Include="Particles\BallParticalCreater.cs" />
+    <Compile Include="Particles\IParticleCreater.cs" />
     <Compile Include="Particles\ParticleSimulater.cs" />
+    <Compile Include="Particles\SimpleParticleCreater.cs" />
     <Compile Include="Terrain\Geomipmap\IndexBufferBuilder.cs" />
     <Compile Include="Terrain\Geomipmap\ITerrainBlock.cs" />
     <Compile Include="Terrain\Preprocesser\PreprocessedNode.cs" />
