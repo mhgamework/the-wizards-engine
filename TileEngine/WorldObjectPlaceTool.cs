@@ -42,7 +42,6 @@ namespace MHGameWork.TheWizards.TileEngine
         private IXNAGame game;
         World world;
         private SimpleMeshRenderer renderer;
-        private WorldObjectFactory factory;
 
 
         private WorldTileSnapper worldTileSnapper;
@@ -63,7 +62,6 @@ namespace MHGameWork.TheWizards.TileEngine
             game = _game;
             world = _world;
             renderer = _renderer;
-            factory = new WorldObjectFactory(world,meshFactory, tileFaceTypeFactory);
             builder = _builder;
             this.meshFactory = meshFactory;
             this.tileFaceTypeFactory = tileFaceTypeFactory;
@@ -73,7 +71,7 @@ namespace MHGameWork.TheWizards.TileEngine
 
         public void PlaceWorldObjectAtPosition(WorldObjectType type, Vector3 position)
         {
-            WorldObject worldObject = factory.CreateNewWorldObject(game, type, renderer);
+            WorldObject worldObject = world.CreateNewWorldObject(game, type, renderer);
             worldObject.Position = position;
         }
 
@@ -105,7 +103,7 @@ namespace MHGameWork.TheWizards.TileEngine
 
         private void placeNewObjectAtGhost()
         {
-            var obj = factory.CreateNewWorldObject(game, PlaceType, renderer);
+            var obj = world.CreateNewWorldObject(game, PlaceType, renderer);
             Vector3 scale, translation;
             Quaternion rotation;
             (Matrix.Invert(PlaceType.TileData.MeshOffset) * ghost.WorldMatrix).Decompose(out scale, out rotation, out translation);

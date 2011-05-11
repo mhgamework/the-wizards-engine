@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Entity;
+using MHGameWork.TheWizards.TileEngine.SnapEngine;
 using Microsoft.Xna.Framework;
 using MHGameWork.TheWizards.Rendering;
 
@@ -10,13 +11,13 @@ namespace MHGameWork.TheWizards.TileEngine
 {
     public class WorldObjectType
     {
-        public Guid guid;
+        public Guid Guid;
 
         public WorldObjectType(IMesh _mesh, Guid guid)
         {
             mesh = _mesh;
             BoundingBox = CalculateBoundingBoxFromMesh(mesh);
-            this.guid = guid;
+            this.Guid = guid;
         }
 
         

@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
-using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Rendering;
-using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.TileEngine
+namespace MHGameWork.TheWizards.TileEngine.SnapEngine
 {
     public class SnapInformation
     {

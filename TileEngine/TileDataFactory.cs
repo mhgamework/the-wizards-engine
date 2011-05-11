@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.TileEngine;
 
-namespace MHGameWork.TheWizards
+namespace MHGameWork.TheWizards.TileEngine
 {
     public class TileDataFactory
     {

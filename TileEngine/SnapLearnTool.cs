@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.Raycast;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.TileEngine;
-using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.TileEngine.SnapEngine;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.Tests.TileEngine
+namespace MHGameWork.TheWizards.TileEngine
 {
     public class SnapLearnTool : IXNAObject
     {

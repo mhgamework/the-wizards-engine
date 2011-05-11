@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace MHGameWork.TheWizards.TileEngine
+namespace MHGameWork.TheWizards.TileEngine.SnapEngine
 {
     [Obsolete]
     public class SnapEngineClass

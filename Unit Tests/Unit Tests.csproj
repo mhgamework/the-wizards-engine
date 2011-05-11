@@ -153,7 +153,6 @@
     <Compile Include="Terrain\TerrainRenderingTest.cs" />
     <Compile Include="TestFiles.cs" />
     <Compile Include="TestTWGame.cs" />
-    <Compile Include="TileEngine\SampleTest.cs" />
     <Compile Include="TileEngine\SimpleSnappableWorldTarget.cs" />
     <Compile Include="TileEngine\SimpleTileFaceTypeFactory.cs" />
     <Compile Include="TileEngine\SnapEngineTest.cs" />

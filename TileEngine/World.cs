@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Rendering;
 using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.TileEngine
 {
     public class World
     {
-        //TODO: remove one of them
+        
         public List<WorldObject> WorldObjectList = new List<WorldObject>();
 
         public WorldObject Raycast(Ray ray, List<WorldObject> list)
@@ -53,5 +55,18 @@ namespace MHGameWork.TheWizards.TileEngine
             activeWorldObject.IsDeleted = true;
             WorldObjectList.Remove(activeWorldObject);
         }
+
+        public void AddWorldObject(WorldObject worldObject)
+        {
+            WorldObjectList.Add(worldObject);
+        }
+
+        public WorldObject CreateNewWorldObject(IXNAGame game, WorldObjectType objectType, SimpleMeshRenderer renderer)
+        {
+            var worldObject = new WorldObject(game, objectType, renderer);
+            AddWorldObject(worldObject);
+            return worldObject;
+        }
+
     }
 }

@@ -29,7 +29,6 @@ namespace MHGameWork.TheWizards.TileEngine
         }
 
         public World World;
-        public WorldObjectFactory WorldObjectFactory;
 
 
         public EditorGizmoTranslation translationGizmo = new EditorGizmoTranslation();
@@ -49,11 +48,10 @@ namespace MHGameWork.TheWizards.TileEngine
         private List<WorldObject> worldObjectList;
         private List<Transformation> transformations = new List<Transformation>();
 
-        public WorldObjectMoveTool(XNAGame _game, World world, WorldObjectFactory factory, TileSnapInformationBuilder _builder, SimpleMeshRenderer _renderer)
+        public WorldObjectMoveTool(XNAGame _game, World world, TileSnapInformationBuilder _builder, SimpleMeshRenderer _renderer)
         {
             game = _game;
             World = world;
-            WorldObjectFactory = factory;
             translationGizmo.Position = new Vector3(0, 0, 0);
             translationGizmo.Enabled = true;
 

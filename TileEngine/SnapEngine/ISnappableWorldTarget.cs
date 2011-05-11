@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
+﻿using MHGameWork.TheWizards.Graphics;
 
-namespace MHGameWork.TheWizards.TileEngine
+namespace MHGameWork.TheWizards.TileEngine.SnapEngine
 {
     public interface ISnappableWorldTarget
     {

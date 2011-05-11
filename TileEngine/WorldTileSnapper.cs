@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.TileEngine.SnapEngine;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.TileEngine.SnapEngine
+namespace MHGameWork.TheWizards.TileEngine
 {
     public class WorldTileSnapper
     {

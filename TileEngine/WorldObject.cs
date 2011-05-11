@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.TileEngine.SnapEngine;
 using Microsoft.Xna.Framework;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Graphics;
 
 namespace MHGameWork.TheWizards.TileEngine
 {
-    public class WorldObject :  ISnappableWorldTarget
+    public class WorldObject : ISnappableWorldTarget
     {
         public WorldObjectType ObjectType;
 
@@ -16,7 +17,7 @@ namespace MHGameWork.TheWizards.TileEngine
         private SimpleMeshRenderElement renderElement;
         public SimpleMeshRenderer Renderer;
 
-        
+
         private Vector3 position;
         public Vector3 Position
         {
@@ -37,16 +38,16 @@ namespace MHGameWork.TheWizards.TileEngine
             get { return worldMatrix; }
             private set { worldMatrix = value; }
         }
-        
+
         private bool isDeleted;
         public bool IsDeleted
         {
             get { return isDeleted; }
             set { isDeleted = value; updateWorldMatrix(); }
         }
-        
 
-       
+
+
         public WorldObject(IXNAGame game, WorldObjectType objectType, SimpleMeshRenderer renderer)
         {
             this.game = game;
@@ -72,7 +73,7 @@ namespace MHGameWork.TheWizards.TileEngine
             Rotation = Quaternion.Identity;
         }
 
-       
+
 
 
 
@@ -86,7 +87,7 @@ namespace MHGameWork.TheWizards.TileEngine
 
         public Transformation Transformation
         {
-            get { return new Transformation(Vector3.One,rotation, position); }
+            get { return new Transformation(Vector3.One, rotation, position); }
         }
 
         #endregion
