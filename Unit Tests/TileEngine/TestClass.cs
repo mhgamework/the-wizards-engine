@@ -298,10 +298,13 @@ namespace MHGameWork.TheWizards.TileEngine
             game.AddXNAObject(vertexDeclarationPool);
             game.AddXNAObject(renderer);
 
+            TileSnapInformationBuilder builder = new TileSnapInformationBuilder();
+
+            
 
             //Create WorldObjectTypes
-            WorldObjectType wallStraightType = new WorldObjectType(meshWallStraight, Guid.NewGuid());
-            WorldObjectType wallCornerType = new WorldObjectType(meshWallCorner, Guid.NewGuid());
+            WorldObjectType wallStraightType = new WorldObjectType(meshWallStraight, Guid.NewGuid(), builder);
+            WorldObjectType wallCornerType = new WorldObjectType(meshWallCorner, Guid.NewGuid(),builder);
 
 
 
@@ -319,7 +322,6 @@ namespace MHGameWork.TheWizards.TileEngine
             WorldObjectList[1].Position = new Vector3(30, 0, 0);
 
 
-            TileSnapInformationBuilder builder = new TileSnapInformationBuilder();
             WorldObjectMoveTool moveTool = new WorldObjectMoveTool(game, world, builder, renderer);
             game.AddXNAObject(moveTool);
 
@@ -356,9 +358,9 @@ namespace MHGameWork.TheWizards.TileEngine
             TileSnapInformationBuilder builder = new TileSnapInformationBuilder();
 
             WorldObjectPlaceTool placeTool = new WorldObjectPlaceTool(game, world, renderer, builder, new SimpleMeshFactory(), new TileFaceTypeFactory());
-            WorldObjectType type1 = new WorldObjectType(meshWallInnerCorner, Guid.NewGuid());
-            WorldObjectType type2 = new WorldObjectType(meshWallStraight, Guid.NewGuid());
-            WorldObjectType type3 = new WorldObjectType(meshWallOuterCorner, Guid.NewGuid());
+            WorldObjectType type1 = new WorldObjectType(meshWallInnerCorner, Guid.NewGuid(), builder);
+            WorldObjectType type2 = new WorldObjectType(meshWallStraight, Guid.NewGuid(), builder);
+            WorldObjectType type3 = new WorldObjectType(meshWallOuterCorner, Guid.NewGuid(), builder);
 
             var tileDataInnerCorner = new TileData(Guid.NewGuid());
             var tileDataStraight = new TileData(Guid.NewGuid());
@@ -504,9 +506,10 @@ namespace MHGameWork.TheWizards.TileEngine
             vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
 
             World world = new World();
+            TileSnapInformationBuilder builder = new TileSnapInformationBuilder();
 
-            WorldObjectType type1 = new WorldObjectType(meshWallInnerCorner, Guid.NewGuid());
-            WorldObjectType type2 = new WorldObjectType(meshWallStraight, Guid.NewGuid());
+            WorldObjectType type1 = new WorldObjectType(meshWallInnerCorner, Guid.NewGuid(), builder);
+            WorldObjectType type2 = new WorldObjectType(meshWallStraight, Guid.NewGuid(), builder);
 
             var tileDataInnerCorner = new TileData(Guid.NewGuid());
             var tileDataStraight = new TileData(Guid.NewGuid());
@@ -539,7 +542,7 @@ namespace MHGameWork.TheWizards.TileEngine
             grid.Interval = 1;
             grid.MajorInterval = 10;
 
-            var snapLearnTool = new SnapLearnTool(world, renderer, new TileSnapInformationBuilder());
+            var snapLearnTool = new SnapLearnTool(world, renderer, builder);
             game.AddXNAObject(snapLearnTool);
 
             bool mouseEnabled = false;
@@ -629,7 +632,7 @@ namespace MHGameWork.TheWizards.TileEngine
             game.AddXNAObject(snapLearnTool);
 
 
-            setupWorldObjectTypes(game, renderer);
+            setupWorldObjectTypes(game, renderer, builder);
 
 
 
@@ -705,7 +708,7 @@ namespace MHGameWork.TheWizards.TileEngine
             game.Run();
         }
 
-        private void setupWorldObjectTypes(XNAGame game, SimpleMeshRenderer renderer)
+        private void setupWorldObjectTypes(XNAGame game, SimpleMeshRenderer renderer, TileSnapInformationBuilder builder)
         {
             OBJParser.ObjImporter importer = new OBJParser.ObjImporter();
             var c = new OBJToRAMMeshConverter(new RAMTextureFactory());
@@ -717,8 +720,8 @@ namespace MHGameWork.TheWizards.TileEngine
             importer.ImportObjFile(TWDir.GameData.CreateSubdirectory("Core\\TileEngine") + "/TileSet001/WallStraight.obj");
             meshWallStraight = c.CreateMesh(importer);
 
-            wallInnerCornerType = new WorldObjectType(meshWallInnerCorner, Guid.NewGuid());
-            wallStraightType = new WorldObjectType(meshWallStraight, Guid.NewGuid());
+            wallInnerCornerType = new WorldObjectType(meshWallInnerCorner, Guid.NewGuid(), builder);
+            wallStraightType = new WorldObjectType(meshWallStraight, Guid.NewGuid(), builder);
 
             var tileDataInnerCorner = new TileData(Guid.NewGuid());
             var tileDataStraight = new TileData(Guid.NewGuid());
@@ -803,8 +806,10 @@ namespace MHGameWork.TheWizards.TileEngine
 
             data.Mesh = meshWallInnerCorner;
 
+            var builder = new TileSnapInformationBuilder();
+
             var world = new World();
-            var objType = new WorldObjectType(data.Mesh, Guid.NewGuid());
+            var objType = new WorldObjectType(data.Mesh, Guid.NewGuid(),builder);
             objType.TileData = data;
 
             var obj = world.CreateNewWorldObject(game, objType, renderer);
@@ -829,7 +834,7 @@ namespace MHGameWork.TheWizards.TileEngine
 
 
 
-            var serializer = new WorldSerializer(simpleMeshFactory, tileDataFactory, game, renderer, typeFactory);
+            var serializer = new WorldSerializer(simpleMeshFactory, tileDataFactory, game, renderer, typeFactory, builder);
 
 
             FileStream stream = File.OpenWrite(TWDir.Test.CreateSubdirectory("TileEngine").FullName + "\\TestWorld.xml");

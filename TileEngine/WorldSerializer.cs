@@ -14,14 +14,16 @@ namespace MHGameWork.TheWizards.TileEngine
         private readonly IXNAGame game;
         private readonly SimpleMeshRenderer renderer;
         private readonly SimpleWorldObjectTypeFactory worldObjectTypeFactory;
+        private readonly TileSnapInformationBuilder builder;
 
-        public WorldSerializer(IMeshFactory meshFactory, TileDataFactory tileDataFactory, IXNAGame game, SimpleMeshRenderer renderer, SimpleWorldObjectTypeFactory worldObjectTypeFactory)
+        public WorldSerializer(IMeshFactory meshFactory, TileDataFactory tileDataFactory, IXNAGame game, SimpleMeshRenderer renderer, SimpleWorldObjectTypeFactory worldObjectTypeFactory,TileSnapInformationBuilder builder)
         {
             this.meshFactory = meshFactory;
             this.tileDataFactory = tileDataFactory;
             this.game = game;
             this.renderer = renderer;
             this.worldObjectTypeFactory = worldObjectTypeFactory;
+            this.builder = builder;
         }
 
         public void SerializeWorld(World world, Stream stream)
@@ -120,7 +122,7 @@ namespace MHGameWork.TheWizards.TileEngine
         public WorldObjectType DeserializeWorldObjectType(TWXmlNode node)
         {
             var type = new WorldObjectType(meshFactory.GetMesh(XMLSerializer.ReadGuid(node.FindChildNode("Mesh"))),
-                                          XMLSerializer.ReadGuid(node.FindChildNode("Guid")));
+                                          XMLSerializer.ReadGuid(node.FindChildNode("Guid")), builder);
 
             type.TileData = tileDataFactory.GetTileData(XMLSerializer.ReadGuid(node.FindChildNode("TileData")));
             if (type.TileData == null) throw new InvalidOperationException("TileData For WorldObjectType not found!!");

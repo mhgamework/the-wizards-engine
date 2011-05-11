@@ -12,17 +12,19 @@ namespace MHGameWork.TheWizards.TileEngine
     public class WorldObjectType
     {
         public Guid Guid;
+        private readonly TileSnapInformationBuilder builder;
 
-        public WorldObjectType(IMesh _mesh, Guid guid)
+        public WorldObjectType(IMesh _mesh, Guid guid, TileSnapInformationBuilder builder)
         {
             mesh = _mesh;
             BoundingBox = CalculateBoundingBoxFromMesh(mesh);
             this.Guid = guid;
+            this.builder = builder;
         }
 
-        
 
-        public SnapInformation SnapInformation;
+
+        public SnapInformation SnapInformation { get { return builder.CreateFromTile(TileData); } set { } }
         private IMesh mesh;
         public IMesh Mesh
         {
