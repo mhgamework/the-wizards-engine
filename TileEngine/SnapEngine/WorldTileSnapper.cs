@@ -29,9 +29,10 @@ namespace MHGameWork.TheWizards.TileEngine.SnapEngine
 
             var temp = new List<ISnappableWorldTarget>();
             temp.AddRange(snaptargetList.Select(o => (ISnappableWorldTarget) o));
-            
 
-            var transformations = snapper.SnapTo(builder.CreateFromTile(data), temp);
+
+            var snapInformation = builder.CreateFromTile(data);
+            var transformations = snapper.SnapTo(snapInformation, temp);
             transformations.Sort(compareTransformations);
 
             var meBB = new BoundingBox(data.Dimensions * 0.95f * 0.5f, data.Dimensions * 0.95f * 0.5f);

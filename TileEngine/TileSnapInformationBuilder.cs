@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.TileEngine
                 if (data.GetFaceType(tileFace) == null) continue;
                 var faceType = data.GetFaceType(tileFace);
 
-                SnapPoint point = GetPoint(data, tileFace, faceType, data.GetLocalWinding(tileFace) ^ faceType.GetTotalWinding());
+                SnapPoint point = GetPoint(data, tileFace, faceType, data.GetTotalWinding(tileFace));
                 point.TileFaceType = faceType;
 
                 information.addSnapObject(point);

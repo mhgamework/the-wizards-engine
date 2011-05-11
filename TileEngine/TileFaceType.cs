@@ -16,7 +16,8 @@ namespace MHGameWork.TheWizards.TileEngine
         public TileFaceType(Guid guid)
         {
             ID = nextID;
-            ID++;
+            nextID++;
+            
             this.Guid = guid;
         }
 

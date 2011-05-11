@@ -16,14 +16,16 @@ namespace MHGameWork.TheWizards.TileEngine.SnapEngine
         private readonly IXNAGame game;
         private readonly SimpleMeshRenderer renderer;
         private readonly IWorldObjectTypeFactory worldObjectTypeFactory;
+        private readonly TileSnapInformationBuilder builder;
 
-        public WorldSerializer(IMeshFactory meshFactory, TileDataFactory tileDataFactory, IXNAGame game, SimpleMeshRenderer renderer, IWorldObjectTypeFactory worldObjectTypeFactory)
+        public WorldSerializer(IMeshFactory meshFactory, TileDataFactory tileDataFactory, IXNAGame game, SimpleMeshRenderer renderer, IWorldObjectTypeFactory worldObjectTypeFactory, TileSnapInformationBuilder builder)
         {
             this.meshFactory = meshFactory;
             this.tileDataFactory = tileDataFactory;
             this.game = game;
             this.renderer = renderer;
             this.worldObjectTypeFactory = worldObjectTypeFactory;
+            this.builder = builder;
         }
 
         public void SerializeWorldObject(WorldObject obj, Stream stream)
@@ -73,7 +75,7 @@ namespace MHGameWork.TheWizards.TileEngine.SnapEngine
         {
             var node = TWXmlNode.GetRootNodeFromStream(stream);
             var type = new WorldObjectType(meshFactory.GetMesh(XMLSerializer.ReadGuid(node.FindChildNode("Mesh"))),
-                                          XMLSerializer.ReadGuid(node.FindChildNode("Guide")));
+                                          XMLSerializer.ReadGuid(node.FindChildNode("Guide")),builder);
 
             type.TileData = tileDataFactory.GetTileData(XMLSerializer.ReadGuid(node.FindChildNode("TileData")));
            
