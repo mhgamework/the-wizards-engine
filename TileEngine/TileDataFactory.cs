@@ -81,5 +81,14 @@ namespace MHGameWork.TheWizards.TileEngine
 
             return data;
         }
+
+
+        public List<TileData> getCopyOfTileDataList()
+        {
+            List<TileData> ret = new List<TileData>();
+            ret.AddRange(tileDataList);
+
+            return ret; 
+        }
     }
 }

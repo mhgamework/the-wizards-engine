@@ -18,26 +18,41 @@ namespace MHGameWork.TheWizards.TileEngine
             get { return enabled; }
             set
             {
+                if (enabled == value) return;
+
+
                 enabled = value;
-                if (!enabled && ghost != null)
-                {
-                    ghost.Delete();
-                    ghost = null;
-                    return;
-                }
+
+                updateGhost();
                 if (!enabled) return;
 
                 objectsPlacedSinceEnabled = 0;
-                if (PlaceType == null)
-                    throw new InvalidOperationException("No PlaceType has been set");
-                if (ghost != null)
-                    ghost.WorldMatrix = new Matrix();
 
-                ghost = renderer.AddMesh(PlaceType.Mesh);
+
             }
         }
 
-        public WorldObjectType PlaceType { get; set; }
+        private void updateGhost()
+        {
+            if (ghost != null)
+                ghost.Delete();
+            ghost = null;
+            if (enabled == false) return;
+            if (PlaceType != null)
+                ghost = renderer.AddMesh(PlaceType.Mesh);
+        }
+
+        private WorldObjectType placeType;
+        public WorldObjectType PlaceType
+        {
+            get { return placeType; }
+            set
+            {
+                if (placeType == value) return;
+                placeType = value;
+                updateGhost();
+            }
+        }
 
         private IXNAGame game;
         World world;
@@ -92,6 +107,7 @@ namespace MHGameWork.TheWizards.TileEngine
         public void Update(IXNAGame game)
         {
             if (!Enabled) return;
+            if (PlaceType == null) return;
             if (!game.Mouse.CursorEnabled) return;
 
             updateGhostPosition();

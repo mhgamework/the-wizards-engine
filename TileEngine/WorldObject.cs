@@ -29,7 +29,27 @@ namespace MHGameWork.TheWizards.TileEngine
         public Quaternion Rotation
         {
             get { return rotation; }
-            set { rotation = value; updateWorldMatrix(); }
+            set
+            {
+                Vector3 t = Vector3.Transform(Vector3.Forward, value);
+
+                if (Vector3.Dot(t, Vector3.Forward) > 0.99f)
+                    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, 0);
+                else if (Vector3.Dot(t, Vector3.Backward) > 0.99f)
+                    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.Pi);
+                else if (Vector3.Dot(t, Vector3.Left) > 0.99f)
+                    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.PiOver2);
+                else if (Vector3.Dot(t, Vector3.Right) > 0.99f)
+                    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, -MathHelper.PiOver2);
+                else
+
+                {
+                    throw new Exception();
+                }
+
+                //rotation = value; 
+                updateWorldMatrix();
+            }
         }
 
         private Matrix worldMatrix = Matrix.Identity;

@@ -141,7 +141,6 @@
     <Compile Include="Player\PlayerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\RenderingTest.cs" />
-    <Compile Include="Rendering\SimpleMeshFactory.cs" />
     <Compile Include="Scene\SceneTest.cs" />
     <Compile Include="Scripting\ScriptingTest.cs" />
     <Compile Include="Scripting\SimpleStateScript.cs" />
@@ -153,12 +152,9 @@
     <Compile Include="Terrain\TerrainRenderingTest.cs" />
     <Compile Include="TestFiles.cs" />
     <Compile Include="TestTWGame.cs" />
-    <Compile Include="TileEngine\SimpleSnappableWorldTarget.cs" />
-    <Compile Include="TileEngine\SimpleTileFaceTypeFactory.cs" />
     <Compile Include="TileEngine\SnapEngineTest.cs" />
     <Compile Include="TileEngine\TestClass.cs" />
     <Compile Include="TileEngine\TileEngineTest.cs" />
-    <Compile Include="TileEngine\TileFaceTypeFactory.cs" />
     <Compile Include="Treegenerater\TreeSynchronisationTest.cs" />
     <Compile Include="Utilities\UtilitiesTest.cs" />
     <Compile Include="WorldDatabase\WorldDatabaseTest.cs" />

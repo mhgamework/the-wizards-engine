@@ -22,5 +22,13 @@ namespace MHGameWork.TheWizards.TileEngine
             types.Add(type);
 
         }
+
+        public List<WorldObjectType> getCopyOfWorldObjectList()
+        {
+            List<WorldObjectType> ret = new List<WorldObjectType>();
+            ret.AddRange(types);
+
+            return ret;
+        }
     }
 }

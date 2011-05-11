@@ -40,6 +40,7 @@ namespace MHGameWork.TheWizards.TileEngine
         public static BoundingBox CalculateBoundingBoxFromMesh(IMesh mesh)
         {
             BoundingBox box = new BoundingBox();
+            
             for (int i = 0; i < mesh.GetCoreData().Parts.Count; i++)
             {
                 var points = mesh.GetCoreData().Parts[i].MeshPart.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position);

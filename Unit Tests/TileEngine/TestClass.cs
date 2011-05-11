@@ -357,7 +357,7 @@ namespace MHGameWork.TheWizards.TileEngine
             World world = new World();
             TileSnapInformationBuilder builder = new TileSnapInformationBuilder();
 
-            WorldObjectPlaceTool placeTool = new WorldObjectPlaceTool(game, world, renderer, builder, new SimpleMeshFactory(), new TileFaceTypeFactory());
+            WorldObjectPlaceTool placeTool = new WorldObjectPlaceTool(game, world, renderer, builder, new SimpleMeshFactory(), new SimpleTileFaceTypeFactory());
             WorldObjectType type1 = new WorldObjectType(meshWallInnerCorner, Guid.NewGuid(), builder);
             WorldObjectType type2 = new WorldObjectType(meshWallStraight, Guid.NewGuid(), builder);
             WorldObjectType type3 = new WorldObjectType(meshWallOuterCorner, Guid.NewGuid(), builder);
@@ -515,9 +515,7 @@ namespace MHGameWork.TheWizards.TileEngine
             var tileDataStraight = new TileData(Guid.NewGuid());
 
             tileDataInnerCorner.Dimensions = type1.BoundingBox.Max - type1.BoundingBox.Min;
-            tileDataInnerCorner.MeshOffset = Matrix.CreateTranslation(new Vector3(0, -2, 0));
             tileDataStraight.Dimensions = type2.BoundingBox.Max - type2.BoundingBox.Min;
-            tileDataStraight.MeshOffset = Matrix.CreateTranslation(new Vector3(0, -2, 0));
 
 
             type1.TileData = tileDataInnerCorner;
@@ -592,7 +590,7 @@ namespace MHGameWork.TheWizards.TileEngine
         /// Standard camera movement controls
         /// </summary>
         [Test]
-        public void RunEditor()
+        public void TestLearnPlace()
         {
             XNAGame game = new XNAGame();
 
@@ -623,7 +621,7 @@ namespace MHGameWork.TheWizards.TileEngine
             //var TileStraight = factory.CreateNewWorldObject(game, wallStraightType, renderer);
             //TileStraight.Position = new Vector3(7, 0, 0);
 
-            var placeTool = new WorldObjectPlaceTool(game, world, renderer, builder, new SimpleMeshFactory(), new TileFaceTypeFactory());
+            var placeTool = new WorldObjectPlaceTool(game, world, renderer, builder, new SimpleMeshFactory(), new SimpleTileFaceTypeFactory());
             var moveTool = new WorldObjectMoveTool(game, world, builder, renderer);
             var snapLearnTool = new SnapLearnTool(world, renderer, builder);
 
@@ -852,7 +850,24 @@ namespace MHGameWork.TheWizards.TileEngine
             readStream.Close();
         }
 
-
+        /// <summary>
+        /// Controls:
+        /// 
+        /// LeftAlt: Toggle mouse on/off
+        /// M: Activate move-tool
+        /// L: Activate snaplearn-tool
+        /// P: Activate place-tool
+        /// R: Toggle gizmo type (rotation/translation) in move-tool
+        /// Ctrl+s: Save scene
+        /// Ctrl+l: Load scene
+        /// Standard camera movement controls
+        /// </summary>
+        [Test]
+        public void RunEditor()
+        {
+            MainSceneEditor editor = new MainSceneEditor();
+            editor.Run();
+        }
 
     }
 
