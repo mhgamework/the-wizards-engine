@@ -19,5 +19,10 @@ namespace TreeGenerator
         {
             textures.Add(guid, texture);
         }
+
+        public object GetAsset(Type type, Guid guid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -112,7 +112,15 @@ namespace MHGameWork.TheWizards.TileEngine
             rotationGizmo.Update(game);
             processStates();
 
+            //Cloning
+            if (selectedWorldObject != null && game.Keyboard.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) && game.Mouse.LeftMouseJustPressed)
+            {
+                WorldObject clone = World.CreateNewWorldObject(game, selectedWorldObject.ObjectType, renderer);
+                clone.Rotation = selectedWorldObject.Rotation;
+                clone.Position = selectedWorldObject.Position;
 
+                selectedWorldObject = clone;
+            }
 
 
             /*
@@ -138,88 +146,17 @@ namespace MHGameWork.TheWizards.TileEngine
                 rotationGizmo.RotationQuat = selectedWorldObject.Rotation;
             }
 
-            //Raycasting
-            if (game.Mouse.LeftMouseJustPressed && (translationGizmo.ActiveMoveMode == EditorGizmoTranslation.GizmoPart.None && rotationGizmo.ActiveMoveMode == EditorGizmoRotation.GizmoPart.None))
-            {
-                Ray ray = game.GetWereldViewRay(new Vector2(game.Mouse.CursorPosition.X, game.Mouse.CursorPosition.Y));
-                WorldObject result = World.Raycast(ray, World.WorldObjectList);
+            
 
-                if (result != null)
-                {
-                    selectedWorldObject = result;
-                    ghost = result.Renderer.AddMesh(result.ObjectType.Mesh);
-                    isGhostActive = true;
-
-                    translationGizmo.Position = selectedWorldObject.Position;
-                    rotationGizmo.RotationQuat = selectedWorldObject.Rotation;
-                }
-                else
-                {
-                    selectedWorldObject = null;
-                }
-            }
-
-            //Cloning
-            if (selectedWorldObject != null && game.Keyboard.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) && game.Mouse.LeftMouseJustPressed)
-            {
-                WorldObject clone = WorldObjectFactory.CloneWorldObject(selectedWorldObject);
-                selectedWorldObject = clone;
-            }
+            
 
             //Deleting
             if (selectedWorldObject != null && game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Delete))
             {
                 World.DeleteWorldObject(selectedWorldObject);
                 selectedWorldObject = null;
-            }
-
-            //Toggling from here
-
-            if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.R))
-            {
-                TranslationEnabled = !TranslationEnabled;
-            }
-
-            rotationGizmo.Position = translationGizmo.Position;
-            if (selectedWorldObject != null)
-            {
-                selectedWorldObject.Position = translationGizmo.Position;
-                selectedWorldObject.Rotation = rotationGizmo.RotationQuat;
-            }
-
-            if (isObjectSelected())
-            {
-                if (isGhostActive)
-                {
-                    snapTargetList.Remove(selectedWorldObject);
-                    transformations = snapper.SnapTo(builder.CreateFromTile(selectedWorldObject.ObjectType.TileData),
-                                                     snapTargetList);
-                    snapTargetList.Add(selectedWorldObject);
-
-
-                    if (transformations.Count > 0)
-                    {
-                        ghost.WorldMatrix = transformations[0].CreateMatrix();
-                    }
-                    else
-                    {
-                        ghost.WorldMatrix = new Matrix();
-                    }
-
-                    if (game.Mouse.LeftMouseJustReleased)
-                    {
-                        Vector3 scale;
-                        Quaternion rotation;
-                        Vector3 translation;
-                        ghost.WorldMatrix.Decompose(out scale, out rotation, out translation);
-
-                        selectedWorldObject.Position = translation;
-                        selectedWorldObject.Rotation = rotation;
-                        ghost.WorldMatrix = new Matrix();
-                        isGhostActive = false;
-                    }
-                }
-            }*/
+            }            
+           */
         }
 
         private void processStates()

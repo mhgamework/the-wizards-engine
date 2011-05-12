@@ -31,6 +31,10 @@ namespace MHGameWork.TheWizards.TileEngine
             get { return rotation; }
             set
             {
+                float yaw, roll, pitch;
+                convertQuaternionToEuler(value, out yaw, out roll, out pitch);
+
+
                 Vector3 t = Vector3.Transform(Vector3.Forward, value);
 
                 if (Vector3.Dot(t, Vector3.Forward) > 0.99f)
@@ -42,7 +46,6 @@ namespace MHGameWork.TheWizards.TileEngine
                 else if (Vector3.Dot(t, Vector3.Right) > 0.99f)
                     rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, -MathHelper.PiOver2);
                 else
-
                 {
                     throw new Exception();
                 }
@@ -93,6 +96,24 @@ namespace MHGameWork.TheWizards.TileEngine
             Rotation = Quaternion.Identity;
         }
 
+        private void convertQuaternionToEuler(Quaternion quat, out float yaw, out float roll, out float pitch)
+        {
+            yaw = (float)Math.Atan2(2 * (quat.W * quat.X + quat.Y * quat.Z), 1 - 2 * (quat.X * quat.X + quat.Y * quat.Y));
+            pitch = (float)Math.Asin(2 * (quat.W * quat.Y - quat.Z * quat.X));
+            roll = (float)Math.Atan2(2 * (quat.W * quat.Z + quat.X * quat.Y), 1 - 2 * (quat.Y * quat.Y + quat.Z * quat.Z));
+
+#if DEBUG
+
+            Quaternion verify = Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll);
+            Vector3 up1 = Vector3.Transform(Vector3.Up, quat);
+            Vector3 up2 = Vector3.Transform(Vector3.Up, verify);
+            Vector3 right1 = Vector3.Transform(Vector3.Right, quat);
+            Vector3 right2 = Vector3.Transform(Vector3.Right, verify);
+
+            //TODO: Testen
+#endif
+
+        }
 
 
 

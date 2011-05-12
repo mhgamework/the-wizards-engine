@@ -255,7 +255,7 @@ namespace MHGameWork.TheWizards.TileEngine
         private void loadMeshes(String path)
         {
             var coreSerializer = new TWXmlSerializer<MeshCoreData>();
-            coreSerializer.AddCustomSerializer(AssetSerializer.CreateDeserializer(this));
+            //coreSerializer.AddCustomSerializer(AssetSerializer.CreateDeserializer(this));
             using (var fs = File.OpenRead(path))
             {
                 var coreData = new MeshCoreData();
