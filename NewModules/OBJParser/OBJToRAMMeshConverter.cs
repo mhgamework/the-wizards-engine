@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Physics;
@@ -16,15 +17,36 @@ namespace MHGameWork.TheWizards.OBJParser
     /// </summary>
     public class OBJToRAMMeshConverter
     {
-        private readonly RAMTextureFactory textureFactory;
+        private readonly ITextureFactory textureFactory;
 
         private string materialNamePhysicsBox = "TW_Physics_Box";
         private string materialNameTriangleMesh = "TW_Physics_TriangleMesh";
         private string materialNameConvex = "TW_Physics_Convex";
 
-        public OBJToRAMMeshConverter(RAMTextureFactory _textureFactory)
+        public OBJToRAMMeshConverter(ITextureFactory _textureFactory)
         {
             textureFactory = _textureFactory;
+        }
+
+        private List<ResolvePath> resolvePaths = new List<ResolvePath>();
+
+        /// <summary>
+        /// Textures in given path will be used if a texture is not found
+        /// </summary>
+        public void AddAssemblyResolvePath(Assembly assembly, string path)
+        {
+            var r = new ResolvePath { Assembly = assembly, Path = path };
+
+            resolvePaths.Add(r);
+        }
+
+
+
+        private class ResolvePath
+        {
+            public Assembly Assembly;
+            public string Path;
+
         }
 
         public RAMMesh CreateMesh(ObjImporter importer)
@@ -288,11 +310,95 @@ namespace MHGameWork.TheWizards.OBJParser
                 var mat = importer.Materials[i];
                 var meshMat = new MeshCoreData.Material();
                 if (mat.DiffuseMap != null)
-                    meshMat.DiffuseMap = textureFactory.CreateOrFindIdenticalTexture(mat.DiffuseMap);
+                {
+                    meshMat.DiffuseMap = CreateOrFindIdenticalTexture(mat.DiffuseMap);
+
+                }
                 meshMat.DiffuseColor = mat.DiffuseColor;
                 materials[mat] = meshMat;
             }
             return materials;
+        }
+
+        public ITexture CreateOrFindIdenticalTexture(string filePath)
+        {
+            if (filePath == null) throw new ArgumentNullException();
+
+            ITexture ret;
+            ret = findDiskTexture(filePath);
+            if (ret != null) return ret;
+
+            return findAssemblyTexture(filePath);
+
+
+        }
+
+        private ITexture findAssemblyTexture(string filePath)
+        {
+            var fi = new FileInfo(filePath);
+
+            for (int i = 0; i < resolvePaths.Count; i++)
+            {
+                var rp = resolvePaths[i];
+                var names = rp.Assembly.GetManifestResourceNames();
+                for (int j = 0; j < names.Length; j++)
+                {
+                    var name = names[j];
+                    if (!name.StartsWith(rp.Path)) continue;
+                    if (name.Substring(rp.Path.Length + 1) != fi.Name)
+                        continue;
+
+
+                    var searchTex = textureFactory.FindTexture(delegate(ITexture tex)
+                                               {
+                                                   var data = tex.GetCoreData();
+                                                   return data.StorageType ==
+                                                          TextureCoreData.TextureStorageType.Assembly &&
+                                                          data.Assembly == rp.Assembly &&
+                                                          data.AssemblyResourceName == name;
+                                               });
+                    if (searchTex != null) return searchTex;
+
+
+                    var ret = new RAMTexture();
+                    ret.GetCoreData().StorageType = TextureCoreData.TextureStorageType.Assembly;
+                    ret.GetCoreData().Assembly = rp.Assembly;
+                    ret.GetCoreData().AssemblyResourceName = name;
+                    textureFactory.AddTexture(ret);
+                    return ret;
+
+
+                }
+
+            }
+
+            return null;
+
+        }
+
+        private ITexture findDiskTexture(string filePath)
+        {
+            if (!System.IO.File.Exists(filePath))
+            {
+                Console.WriteLine("Texture not found on disk: (" + filePath + ")");
+                return null;
+            }
+
+            var searchTex = textureFactory.FindTexture(delegate(ITexture tex)
+            {
+                var data = tex.GetCoreData();
+                return data.StorageType == TextureCoreData.TextureStorageType.Disk && data.DiskFilePath == filePath;
+            });
+            if (searchTex != null) return searchTex;
+
+
+
+
+            var ret = new RAMTexture();
+            ret.GetCoreData().StorageType = TextureCoreData.TextureStorageType.Disk;
+            ret.GetCoreData().DiskFilePath = filePath;
+            textureFactory.AddTexture(ret);
+            return ret;
         }
 
         public List<RAMMesh> CreateMeshesFromObjects(ObjImporter importer)

@@ -15,7 +15,7 @@ namespace MHGameWork.TheWizards.Assets
         {
 
         }
-        private AssetSerializer(IAssetFactory factory)
+        public AssetSerializer(IAssetFactory factory)
         {
             this.factory = factory;
         }
