@@ -137,7 +137,7 @@ namespace MHGameWork.TheWizards.Gameplay
             if (explodeTime > 0)
             {
                 //mesh.WorldMatrix = Matrix.CreateScale((1 - explodeTime * oneOverExplodeDuration) * 10 + 1) * Matrix.CreateTranslation(position);
-                handle.Position = position;
+                //handle.Position = position;
                 explodeTime -= ScriptLayer.Elapsed;
 
                 if (explodeTime <= 0)
