@@ -10,6 +10,7 @@ using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.ServerClient.Water;
 using MHGameWork.TheWizards.Tests.Rendering;
 using MHGameWork.TheWizards.Tests.TileEngine;
 using MHGameWork.TheWizards.XML;
@@ -228,18 +229,47 @@ namespace MHGameWork.TheWizards.TileEngine
 
         private void load()
         {
-            throw new NotImplementedException("Not finished yet");
             //TODO: implement deserialization of tileData and meshes
-
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "XML Files|*.xml";
             if (dialog.ShowDialog() != DialogResult.OK) return;
             dialog.CheckPathExists = true;
-
             String path = dialog.FileName;
             FileInfo fileInfo = new FileInfo(path);
-            var namePart = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
+            String mapPath = fileInfo.DirectoryName;
 
+            loadMeshes(mapPath);
+            loadTileData(mapPath);
+            loadWorld(path);
+            
+
+            
+           
+            //var namePart = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
+
+
+
+            
+        }
+
+        private void loadMeshes(String path)
+        {
+            var coreSerializer = new TWXmlSerializer<MeshCoreData>();
+            coreSerializer.AddCustomSerializer(AssetSerializer.CreateDeserializer(this));
+            using (var fs = File.OpenRead(path))
+            {
+                var coreData = new MeshCoreData();
+                coreSerializer.Deserialize(coreData, fs);
+            }
+        }
+        private void loadTileData(String path)
+        {
+            FileStream readStream = File.OpenRead(path);
+            TileData readData = tileDataFactory.DeserializeTileData(readStream);
+            readStream.Close();
+        }
+        private void loadWorld(String path)
+        {
             FileStream readStream = File.OpenRead(path);
             var readWorld = new World();
 
@@ -247,15 +277,6 @@ namespace MHGameWork.TheWizards.TileEngine
             readStream.Close();
 
             world = readWorld;
-
-            //coreSerializer = new TWXmlSerializer<MeshCoreData>();
-            //       coreSerializer.AddCustomSerializer(AssetSerializer.CreateDeserializer(this));
-            //using (var fs = Asset.GetFileComponent(CoreDataFileIndex).OpenRead())
-            //       {
-            //           var coreData = new MeshCoreData();
-            //           coreSerializer.Deserialize(Mesh.GetCoreData(), fs);
-            //           return coreData;
-            //       }
         }
 
         private void createNewWorldObjectType(TileSnapInformationBuilder builder)
