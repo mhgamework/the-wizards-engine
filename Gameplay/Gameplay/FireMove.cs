@@ -10,6 +10,9 @@ namespace MHGameWork.TheWizards.Gameplay
 {
     public class FireMove : IPlayerMove, IStateScript
     {
+
+
+
         private PlayerController controller;
 
         private float strength = 40f;
@@ -23,6 +26,8 @@ namespace MHGameWork.TheWizards.Gameplay
 
         public void StartPrimaryAttack()
         {
+            
+
             var orb = new EnergyOrb();
             orb.Position = calculateLeftOrbPosition();
             orb.Charge = 0.2f;

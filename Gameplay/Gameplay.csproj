@@ -101,6 +101,7 @@
     <Compile Include="Scene\Entity.cs" />
     <Compile Include="Scene\EntityData.cs" />
     <Compile Include="Scene\EntityScriptHandle.cs" />
+    <Compile Include="Scripting\API\ContactInformation.cs" />
     <Compile Include="Scripting\API\EntityRaycastHit.cs" />
     <Compile Include="Scripting\API\IEntity.cs" />
     <Compile Include="Scripting\API\IDataElement.cs" />

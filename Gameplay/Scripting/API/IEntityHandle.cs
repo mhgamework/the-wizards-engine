@@ -22,13 +22,14 @@ namespace MHGameWork.TheWizards.Scripting.API
         /// <param name="handler"></param>
         void RegisterUseHandler(Action<IPlayer> handler);
 
-
+        void RegisterContactHandler(Action<ContactInformation> handler);
 
 
 
         // Scene functions
 
         EntityRaycastHit RaycastScene(Ray ray, Predicate<EntityRaycastHit> predicate);
+
 
         IEntity CreateEntity();
 

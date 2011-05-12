@@ -32,6 +32,9 @@ namespace MHGameWork.TheWizards.Scripting.API
         IMesh Mesh { get; set; }
 
 
+        void Destroy();
+
+
         T GetAttachedScript<T>() where T : class, IScript;
     }
 }
