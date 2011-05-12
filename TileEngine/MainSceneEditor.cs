@@ -31,7 +31,6 @@ namespace MHGameWork.TheWizards.TileEngine
         private WorldObjectMoveTool moveTool;
         private SnapLearnTool snapLearnTool;
 
-        private SimpleMeshFactory meshFactory = new SimpleMeshFactory();
         private SimpleTileFaceTypeFactory tileFaceFactory = new SimpleTileFaceTypeFactory();
         private TileDataFactory tileDataFactory;
         private SimpleTileFaceTypeFactory tileFaceTypeFactory = new SimpleTileFaceTypeFactory();
@@ -40,6 +39,7 @@ namespace MHGameWork.TheWizards.TileEngine
         private List<WorldObjectType> typeList = new List<WorldObjectType>();
 
         private int scrollIndex;
+        private DiskRenderingAssetFactory renderingFactory;
 
 
         public MainSceneEditor()
@@ -57,7 +57,10 @@ namespace MHGameWork.TheWizards.TileEngine
             game.AddXNAObject(vertexDeclarationPool);
             game.AddXNAObject(renderer);
 
-            placeTool = new WorldObjectPlaceTool(game, world, renderer, builder, meshFactory, tileFaceFactory);
+            renderingFactory = new DiskRenderingAssetFactory();
+
+
+            placeTool = new WorldObjectPlaceTool(game, world, renderer, builder, renderingFactory, tileFaceFactory);
             moveTool = new WorldObjectMoveTool(game, world, builder, renderer);
             snapLearnTool = new SnapLearnTool(world, renderer, builder);
 
@@ -65,8 +68,8 @@ namespace MHGameWork.TheWizards.TileEngine
             game.AddXNAObject(moveTool);
             game.AddXNAObject(snapLearnTool);
 
-            tileDataFactory = new TileDataFactory(meshFactory, tileFaceTypeFactory);
-            worldSerializer = new WorldSerializer(meshFactory, tileDataFactory, game, renderer, worldObjectTypeFactory,
+            tileDataFactory = new TileDataFactory(renderingFactory, tileFaceTypeFactory);
+            worldSerializer = new WorldSerializer(renderingFactory, tileDataFactory, game, renderer, worldObjectTypeFactory,
                                              builder);
         }
 
@@ -179,15 +182,13 @@ namespace MHGameWork.TheWizards.TileEngine
 
         private void writeWorld(FileInfo fileInfo)
         {
-            var namePart = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
-            FileStream stream = File.OpenWrite(fileInfo.Directory.CreateSubdirectory(namePart).FullName + "\\" + namePart + ".xml");
+            FileStream stream = File.OpenWrite(fileInfo.FullName);
             worldSerializer.SerializeWorld(world, stream);
             stream.Close();
         }
 
         private void writeTileData(FileInfo fileInfo)
         {
-            var namePart = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
 
             List<TileData> tileDataList = new List<TileData>();
             for (int i = 0; i < typeList.Count; i++)
@@ -199,32 +200,30 @@ namespace MHGameWork.TheWizards.TileEngine
             {
                 TileData cData = tileDataList[i];
 
-                FileStream stream = File.OpenWrite(fileInfo.Directory.CreateSubdirectory(namePart).FullName + "\\TileData " + cData.Guid.ToString() + ".xml");
+                FileStream stream = File.OpenWrite(getTileDataFilePath(fileInfo, cData));
                 tileDataFactory.SerializeTileData(cData, stream);
                 stream.Close();
             }
         }
 
+        private string getTileDataFilePath(FileInfo worldFi, TileData tileData)
+        {
+            return getDirectoryForWorldFile(worldFi).FullName + "\\TileData " + tileData.Guid.ToString() + ".xml";
+        }
+
         private void writeMeshes(FileInfo fileInfo)
         {
-            var namePart = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
 
-            List<IMesh> meshes = new List<IMesh>();
-            for (int i = 0; i < typeList.Count; i++)
-            {
-                meshes.Add(typeList[i].Mesh);
-            }
+            renderingFactory.SaveDir = getDirectoryForWorldFile(fileInfo);
+            renderingFactory.SaveAllAssets();
 
-            for (int i = 0; i < meshes.Count; i++)
-            {
-                IMesh cMesh = meshes[i];
+        }
 
-                FileStream stream = File.OpenWrite(fileInfo.Directory.CreateSubdirectory(namePart).FullName + "\\Mesh " + cMesh.Guid.ToString() + ".xml");
-                var s = new TWXmlSerializer<MeshCoreData>();
-                s.AddCustomSerializer(AssetSerializer.CreateSerializer());
-                s.Serialize(cMesh.GetCoreData(), stream);
-                stream.Close();
-            }
+        private DirectoryInfo getDirectoryForWorldFile(FileInfo worldFile)
+        {
+            var namePart = worldFile.Name.Substring(0, worldFile.Name.Length - worldFile.Extension.Length);
+
+            return worldFile.Directory.CreateSubdirectory(namePart);
         }
 
         private void load()
@@ -236,35 +235,41 @@ namespace MHGameWork.TheWizards.TileEngine
             dialog.CheckPathExists = true;
             String path = dialog.FileName;
             FileInfo fileInfo = new FileInfo(path);
-            String mapPath = fileInfo.DirectoryName;
 
-            loadMeshes(mapPath);
-            loadTileData(mapPath);
-            loadWorld(path);
-            
-
-            
-           
-            //var namePart = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
+            loadMeshes(fileInfo);
+            loadTileData(fileInfo);
+            loadWorld(fileInfo);
 
 
 
-            
+
+
+
+
+
         }
 
-        private void loadMeshes(String path)
+        private void loadMeshes(FileInfo worldFile)
         {
-            throw new NotImplementedException();
+            renderingFactory.SaveDir = getDirectoryForWorldFile(worldFile);
         }
-        private void loadTileData(String path)
+        private void loadTileData(FileInfo worldFile)
         {
-            FileStream readStream = File.OpenRead(path);
-            TileData readData = tileDataFactory.DeserializeTileData(readStream);
-            readStream.Close();
+            var di = getDirectoryForWorldFile(worldFile);
+            var files = di.GetFiles();
+            foreach (var fi in files)
+            {
+                if (!fi.Name.StartsWith("TileData")) continue;
+                FileStream readStream = File.OpenRead(fi.FullName);
+                var readData = tileDataFactory.DeserializeTileData(readStream);
+                tileDataFactory.AddTileData(readData);
+                readStream.Close();
+            }
+
         }
-        private void loadWorld(String path)
+        private void loadWorld(FileInfo worldFile)
         {
-            FileStream readStream = File.OpenRead(path);
+            FileStream readStream = File.OpenRead(worldFile.FullName);
             var readWorld = new World();
 
             worldSerializer.DeserializeWorld(readWorld, readStream);
@@ -302,12 +307,12 @@ namespace MHGameWork.TheWizards.TileEngine
             var namePart = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
 
             OBJParser.ObjImporter importer = new OBJParser.ObjImporter();
-            var c = new OBJToRAMMeshConverter(new RAMTextureFactory());
+            var c = new OBJToRAMMeshConverter(renderingFactory);
 
             importer.AddMaterialFileStream(namePart + ".mtl", new FileStream(fileInfo.Directory.FullName + "/" + namePart + ".mtl", FileMode.Open));
             importer.ImportObjFile(path);
             var mesh = c.CreateMesh(importer);
-
+            renderingFactory.AddAsset(mesh);
             return mesh;
         }
 

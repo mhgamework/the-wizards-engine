@@ -445,14 +445,15 @@ namespace MHGameWork.TheWizards.Tests.Rendering
         [Test]
         public void TestDiskRenderingAssetFactory()
         {
-            var factory = new DiskRenderingAssetFactory(TWDir.Test.CreateSubdirectory("Rendering\\DiskFactory"));
-
+            var factory = new DiskRenderingAssetFactory();
+            factory.SaveDir = TWDir.Test.CreateSubdirectory("Rendering\\DiskFactory");
             var mesh = CreateGuildHouseMesh(new OBJToRAMMeshConverter(factory));
             factory.AddAsset(mesh);
 
             factory.SaveAllAssets();
 
-            factory = new DiskRenderingAssetFactory(TWDir.Test.CreateSubdirectory("Rendering\\DiskFactory"));
+            factory = new DiskRenderingAssetFactory();
+            factory.SaveDir = TWDir.Test.CreateSubdirectory("Rendering\\DiskFactory");
 
             var loadMesh = factory.GetMesh(mesh.Guid);
 

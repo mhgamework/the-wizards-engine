@@ -13,11 +13,11 @@ namespace MHGameWork.TheWizards.ServerClient
     /// </summary>
     public static class XMLSerializer
     {
-        private static StringBuilder _builder;
+        private static StringBuilder builder;
 
         static XMLSerializer()
         {
-            _builder = new StringBuilder();
+            builder = new StringBuilder();
 
         }
 
@@ -170,19 +170,19 @@ namespace MHGameWork.TheWizards.ServerClient
         public static void WriteFloatArray(TWXmlNode node, float[] data)
         {
             if (data == null) { node.Value = "NULL"; return; }
-            _builder.Clear();
+            builder.Clear();
             if (data.Length != 0)
             {
-                _builder.Append(data[0]);
+                builder.Append(data[0]);
                 for (int i = 1; i < data.Length; i++)
                 {
-                    _builder.Append(" ");
+                    builder.Append(" ");
 
-                    _builder.Append(data[i].ToString());
+                    builder.Append(data[i].ToString());
                 }
             }
 
-            node.Value = _builder.ToString();
+            node.Value = builder.ToString();
 
         }
         public static float[] ReadFloatArray(TWXmlNode node)
@@ -243,17 +243,18 @@ namespace MHGameWork.TheWizards.ServerClient
         public static void WriteIntArray(TWXmlNode node, int[] data)
         {
             if (data == null) { node.Value = "NULL"; return; }
-            string val = "";
+            builder.Clear();
             if (data.Length != 0)
             {
-                val = data[0].ToString();
+                builder.Append(data[0]);
                 for (int i = 1; i < data.Length; i++)
                 {
-                    val += " " + data[i].ToString();
+                    builder.Append(" ");
+                    builder.Append(data[i]);
                 }
             }
 
-            node.Value = val;
+            node.Value = builder.ToString();
 
         }
         public static int[] ReadIntArray(TWXmlNode node)

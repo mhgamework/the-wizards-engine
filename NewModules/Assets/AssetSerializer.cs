@@ -22,8 +22,8 @@ namespace MHGameWork.TheWizards.Assets
 
         public bool SerializeElement(TWXmlNode node, Type type, object value, IInternalSerializer s)
         {
-            if (factory != null)
-                throw new InvalidOperationException("This is a deserializer");
+            /*if (factory != null)
+                throw new InvalidOperationException("This is a deserializer");*/
             if (!(value is IAsset))
                 return false;
 

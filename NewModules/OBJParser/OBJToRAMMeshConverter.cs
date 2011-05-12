@@ -131,8 +131,8 @@ namespace MHGameWork.TheWizards.OBJParser
             }
 
             var tm = new MeshCollisionData.TriangleMeshData();
-            tm.Positions = positions;
-            tm.Indices.AddRange(indices);
+            tm.Positions = positions.ToArray();
+            tm.Indices = indices;
             return tm;
         }
 
@@ -152,8 +152,8 @@ namespace MHGameWork.TheWizards.OBJParser
             int[] indices = createIndices(positions.Count * 3);
 
             var tm = new MeshCollisionData.TriangleMeshData();
-            tm.Positions = positions;
-            tm.Indices.AddRange(indices);
+            tm.Positions = positions.ToArray();
+            tm.Indices = indices;
             return tm;
         }
 
@@ -209,8 +209,8 @@ namespace MHGameWork.TheWizards.OBJParser
             var indices = createIndices(positions.Count * 3);
 
             var tm = new MeshCollisionData.TriangleMeshData();
-            tm.Positions = positions;
-            tm.Indices.AddRange(indices);
+            tm.Positions = positions.ToArray();
+            tm.Indices = indices;
 
             mesh.GetCollisionData().TriangleMesh = tm;
 
@@ -269,6 +269,7 @@ namespace MHGameWork.TheWizards.OBJParser
             part.MeshMaterial = materials[sub.Material];
 
             var meshPart = new RAMMeshPart();
+
             meshPart.GetGeometryData().Sources.Add(positionsSource);
             meshPart.GetGeometryData().Sources.Add(normalsSource);
             meshPart.GetGeometryData().Sources.Add(texcoordsSource);

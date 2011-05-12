@@ -10,11 +10,12 @@ using MHGameWork.TheWizards.XML;
 namespace MHGameWork.TheWizards.Rendering
 {
     /// <summary>
-    /// Used zipped storage!!
+    /// TODO: Used zipped storage!!
+    /// TODO: MeshParts are not shared.
     /// </summary>
-    public class DiskRenderingAssetFactory : IAssetFactory, ITextureFactory
+    public class DiskRenderingAssetFactory : IAssetFactory, ITextureFactory,IMeshFactory
     {
-        private readonly DirectoryInfo saveDir;
+        private DirectoryInfo saveDir;
         private TWXmlSerializer<MeshCoreData> coreSerializer;
         private TWXmlSerializer<MeshCollisionData> collisionSerializer;
         private TWXmlSerializer<MeshPartGeometryData> geomSerializer;
@@ -23,15 +24,21 @@ namespace MHGameWork.TheWizards.Rendering
         private Dictionary<Guid, RAMMeshPart> parts = new Dictionary<Guid, RAMMeshPart>();
         private Dictionary<Guid, RAMTexture> textures = new Dictionary<Guid, RAMTexture>();
 
-        public DiskRenderingAssetFactory(DirectoryInfo saveDir)
+        public DiskRenderingAssetFactory()
         {
-            this.saveDir = saveDir;
+            this.saveDir = SaveDir;
 
             coreSerializer = new TWXmlSerializer<MeshCoreData>();
             coreSerializer.AddCustomSerializer(new AssetSerializer(this));
             collisionSerializer = new TWXmlSerializer<MeshCollisionData>();
             geomSerializer = new TWXmlSerializer<MeshPartGeometryData>();
 
+        }
+
+        public DirectoryInfo SaveDir
+        {
+            get { return saveDir; }
+            set { saveDir = value; }
         }
 
         public RAMMesh GetMesh(Guid guid)
@@ -95,8 +102,18 @@ namespace MHGameWork.TheWizards.Rendering
         public void AddAsset(IAsset asset)
         {
             if (asset is RAMTexture)
-                tex
-            && !(asset is RAMMesh) && !(asset is RAMMeshPart))
+            {
+                textures.Add(asset.Guid, (RAMTexture)asset);
+            }
+            else if (asset is RAMMeshPart)
+            {
+                parts.Add(asset.Guid, (RAMMeshPart)asset);
+            }
+            else if (asset is RAMMesh)
+            {
+                meshes.Add(asset.Guid, (RAMMesh)asset);
+            }
+            else
                 throw new InvalidOperationException();
 
 
@@ -104,6 +121,7 @@ namespace MHGameWork.TheWizards.Rendering
 
         public void SaveAllAssets()
         {
+            if (saveDir == null) throw new InvalidOperationException("No save directory set");
             foreach (var p in meshes)
             {
                 var mesh = p.Value;
@@ -118,16 +136,17 @@ namespace MHGameWork.TheWizards.Rendering
                 {
                     collisionSerializer.Serialize(mesh.GetCollisionData(), fs);
                 }
-            }
-            foreach (var p in parts)
-            {
-                var part = p.Value;
-                var fi = getMeshPartGeomFile(part.Guid);
-                using (var fs = fi.OpenWrite())
-                {
-                    geomSerializer.Serialize(part.GetGeometryData(), fs);
-                }
 
+                foreach (var entry in mesh.GetCoreData().Parts)
+                {
+
+                    var part = entry.MeshPart;
+                    var pFi = getMeshPartGeomFile(part.Guid);
+                    using (var fs = pFi.OpenWrite())
+                    {
+                        geomSerializer.Serialize(part.GetGeometryData(), fs);
+                    }
+                }
             }
             foreach (var p in textures)
             {
@@ -144,6 +163,7 @@ namespace MHGameWork.TheWizards.Rendering
 
         private RAMMesh loadMeshFromFile(Guid guid)
         {
+            if (saveDir == null) throw new InvalidOperationException("No save directory set");
             var fi = getMeshCoreFile(guid);
             if (!fi.Exists) return null;
 
@@ -165,12 +185,13 @@ namespace MHGameWork.TheWizards.Rendering
         }
         private RAMMeshPart loadMeshPartFromFile(Guid guid)
         {
+            if (saveDir == null) throw new InvalidOperationException("No save directory set");
             var fi = getMeshPartGeomFile(guid);
             if (!fi.Exists) return null;
 
             var ret = new RAMMeshPart();
 
-            using (var fs = fi.OpenWrite())
+            using (var fs = fi.OpenRead())
             {
                 geomSerializer.Deserialize(ret.GetGeometryData(), fs);
             }
@@ -179,6 +200,7 @@ namespace MHGameWork.TheWizards.Rendering
         }
         private RAMTexture loadTextureFromFile(Guid guid)
         {
+            if (saveDir == null) throw new InvalidOperationException("No save directory set");
             var fi = getTextureFile(guid);
             if (!fi.Exists) return null;
 
@@ -192,19 +214,19 @@ namespace MHGameWork.TheWizards.Rendering
 
         private FileInfo getMeshCoreFile(Guid guid)
         {
-            return new FileInfo(saveDir.FullName + "\\Mesh_Core_" + guid);
+            return new FileInfo(SaveDir.FullName + "\\Mesh_Core_" + guid + ".xml");
         }
         private FileInfo getMeshCollisionFile(Guid guid)
         {
-            return new FileInfo(saveDir.FullName + "\\Mesh_Collsion_" + guid);
+            return new FileInfo(SaveDir.FullName + "\\Mesh_Coll_" + guid + ".xml");
         }
         private FileInfo getMeshPartGeomFile(Guid guid)
         {
-            return new FileInfo(saveDir.FullName + "\\MeshPart_Geom_" + guid);
+            return new FileInfo(SaveDir.FullName + "\\MeshPart_Geom_" + guid + ".xml");
         }
         private FileInfo getTextureFile(Guid guid)
         {
-            return new FileInfo(saveDir.FullName + "\\Texture_" + guid);
+            return new FileInfo(SaveDir.FullName + "\\Texture_" + guid + ".twt");
         }
 
 
@@ -230,5 +252,14 @@ namespace MHGameWork.TheWizards.Rendering
         {
             return GetTexture(guid);
         }
+
+        #region IMeshFactory Members
+
+        IMesh IMeshFactory.GetMesh(Guid guid)
+        {
+            return GetMesh(guid);
+        }
+
+        #endregion
     }
 }
