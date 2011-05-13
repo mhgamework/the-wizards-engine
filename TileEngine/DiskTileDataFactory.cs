@@ -6,26 +6,38 @@ using MHGameWork.TheWizards.ServerClient;
 
 namespace MHGameWork.TheWizards.TileEngine
 {
-    public class TileDataFactory
+    public class DiskTileDataFactory
     {
         private List<TileData> tileDataList = new List<TileData>();
 
         private readonly IMeshFactory meshFactory;
         private readonly ITileFaceTypeFactory tileFaceTypeFactory;
 
-        public TileDataFactory(IMeshFactory meshFactory, ITileFaceTypeFactory tileFaceTypeFactory)
+        public DiskTileDataFactory(IMeshFactory meshFactory, ITileFaceTypeFactory tileFaceTypeFactory)
         {
             this.meshFactory = meshFactory;
             this.tileFaceTypeFactory = tileFaceTypeFactory;
         }
 
+        public DirectoryInfo SaveDir
+        { get; set; }
+
         public TileData GetTileData(Guid guid)
         {
-            for (int i = 0; i < tileDataList.Count; i++)
+            var ret = tileDataList.Find(o => o.Guid.Equals(guid));
+            if (ret == null)
             {
-                if (tileDataList[i].Guid.Equals(guid)) return tileDataList[i];
+                if (SaveDir == null) return null;
+                var fi = new FileInfo(getTileDataFilePath(guid));
+                if (!fi.Exists) return null;
+
+                using (var fs = fi.Open(FileMode.Open))
+                {
+                    ret = DeserializeTileData(fs);
+
+                }
             }
-            return null;
+            return ret;
         }
 
         public void AddTileData(TileData data)
@@ -72,7 +84,7 @@ namespace MHGameWork.TheWizards.TileEngine
             var faces = node.FindChildNode("Faces").GetChildNodes();
             for (int i = 0; i < faces.Length; i++)
             {
-                
+
                 var cFace = faces[i];
                 var face = (TileFace)Enum.Parse(typeof(TileFace), cFace.GetAttribute("Face"));
                 data.SetFaceType(face, tileFaceTypeFactory.GetTileFaceType(XMLSerializer.ReadGuid(cFace.FindChildNode("Type"))));
@@ -88,7 +100,26 @@ namespace MHGameWork.TheWizards.TileEngine
             List<TileData> ret = new List<TileData>();
             ret.AddRange(tileDataList);
 
-            return ret; 
+            return ret;
         }
+
+        public void SaveAllAssets()
+        {
+
+            for (int i = 0; i < tileDataList.Count; i++)
+            {
+                TileData cData = tileDataList[i];
+
+                FileStream stream = File.Open(getTileDataFilePath(cData.Guid), FileMode.Create);
+                SerializeTileData(cData, stream);
+                stream.Close();
+            }
+        }
+
+        private string getTileDataFilePath(Guid guid)
+        {
+            return SaveDir.FullName + "\\TileData " + guid + ".xml";
+        }
+
     }
 }

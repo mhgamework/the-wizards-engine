@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -69,6 +69,7 @@
     <Compile Include="SnapEngine\SnapperPointPoint.cs" />
     <Compile Include="SnapEngine\SnapPoint.cs" />
     <Compile Include="SnapEngine\SnapType.cs" />
+    <Compile Include="WorldSceneLoader.cs" />
     <Compile Include="World.cs" />
     <Compile Include="WorldObject.cs" />
     <Compile Include="WorldObjectMoveTool.cs" />
@@ -77,7 +78,7 @@
     <Compile Include="WorldSerializer.cs" />
     <Compile Include="WorldTileSnapper.cs" />
     <Compile Include="TileData.cs" />
-    <Compile Include="TileDataFactory.cs" />
+    <Compile Include="DiskTileDataFactory.cs" />
     <Compile Include="TileFace.cs" />
     <Compile Include="TileFaceType.cs" />
     <Compile Include="TileSnapInformationBuilder.cs" />
@@ -106,6 +107,10 @@
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gameplay\Gameplay.csproj">
+      <Project>{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}</Project>
+      <Name>Gameplay</Name>
     </ProjectReference>
     <ProjectReference Include="..\NewModules\NewModules.csproj">
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>

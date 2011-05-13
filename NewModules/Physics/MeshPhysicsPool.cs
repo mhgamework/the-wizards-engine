@@ -84,7 +84,7 @@ namespace MHGameWork.TheWizards.Physics
             triangleMeshDesc.AllocateVertices<Vector3>(model.Positions.Length);
             triangleMeshDesc.AllocateTriangles<int>(model.Indices.Length); // int indices, should be short but whatever
 
-            Vector3[] transformedPositions = new Vector3[model.Positions.Count];
+            Vector3[] transformedPositions = new Vector3[model.Positions.Length];
             Vector3.Transform(model.Positions.ToArray(), ref transform, transformedPositions);
 
             triangleMeshDesc.VerticesStream.SetData(model.Positions.ToArray());

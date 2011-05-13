@@ -39,6 +39,11 @@ namespace MHGameWork.TheWizards.Scene
             useHandlerSet = true;
         }
 
+        public void RegisterContactHandler(Action<ContactInformation> handler)
+        {
+            throw new NotImplementedException();
+        }
+
         public EntityRaycastHit RaycastScene(Ray ray, Predicate<EntityRaycastHit> predicate)
         {
             //TODO: THIS might slow up raycasting!!

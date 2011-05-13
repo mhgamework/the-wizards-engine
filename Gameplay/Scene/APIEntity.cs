@@ -77,6 +77,11 @@ namespace MHGameWork.TheWizards.Scene
             }
         }
 
+        public void Destroy()
+        {
+            throw new NotImplementedException();
+        }
+
         public T GetAttachedScript<T>() where T : class, IScript
         {
             var ret = Entity.GetAttachedScriptHandle<T>();

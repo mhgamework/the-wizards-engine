@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.GamePlay;
+using MHGameWork.TheWizards.Gameplay.Fortress;
 using MHGameWork.TheWizards.Scripting;
 using Microsoft.Xna.Framework;
 
@@ -10,15 +11,14 @@ namespace MHGameWork.TheWizards.Gameplay
 {
     public class FireMove : IPlayerMove, IStateScript
     {
-
-
-
+        private readonly PlayerEntity playerEntity;
         private PlayerController controller;
 
         private float strength = 40f;
 
-        public FireMove(PlayerController controller)
+        public FireMove(PlayerEntity playerEntity, PlayerController controller)
         {
+            this.playerEntity = playerEntity;
             this.controller = controller;
         }
 
@@ -27,13 +27,13 @@ namespace MHGameWork.TheWizards.Gameplay
         public void StartPrimaryAttack()
         {
             
-
+            /*
             var orb = new EnergyOrb();
             orb.Position = calculateLeftOrbPosition();
             orb.Charge = 0.2f;
             ScriptLayer.ScriptRunner.RunScript(orb);
             orb.Fire(calculateFireDirection() * strength);
-            controller.ApplyFeedbackVelocity(-calculateFireDirection() * 5);
+            controller.ApplyFeedbackVelocity(-calculateFireDirection() * 5);*/
 
         }
 
@@ -44,11 +44,11 @@ namespace MHGameWork.TheWizards.Gameplay
 
         public void StartSecondaryAttack()
         {
-            var orb = new EnergyOrb();
+           /* var orb = new EnergyOrb();
             orb.Position = calculateRightOrbPosition();
             orb.Charge = 0.2f;
             ScriptLayer.ScriptRunner.RunScript(orb);
-            orb.Fire(calculateFireDirection() * strength);
+            orb.Fire(calculateFireDirection() * strength);*/
         }
 
         public void EndSecondaryAttack()

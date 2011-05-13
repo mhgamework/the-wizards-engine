@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Editor;
 using MHGameWork.TheWizards.Entity;
+using MHGameWork.TheWizards.Tests;
+using MHGameWork.TheWizards.Tests.Physics;
 using MHGameWork.TheWizards.Tests.Rendering;
 using MHGameWork.TheWizards.Tests.TileEngine;
 using MHGameWork.TheWizards.TileEngine.SnapEngine;
@@ -300,11 +302,11 @@ namespace MHGameWork.TheWizards.TileEngine
 
             TileSnapInformationBuilder builder = new TileSnapInformationBuilder();
 
-            
+
 
             //Create WorldObjectTypes
             WorldObjectType wallStraightType = new WorldObjectType(meshWallStraight, Guid.NewGuid(), builder);
-            WorldObjectType wallCornerType = new WorldObjectType(meshWallCorner, Guid.NewGuid(),builder);
+            WorldObjectType wallCornerType = new WorldObjectType(meshWallCorner, Guid.NewGuid(), builder);
 
 
 
@@ -760,18 +762,18 @@ namespace MHGameWork.TheWizards.TileEngine
             var simpleMeshFactory = new SimpleMeshFactory();
             simpleMeshFactory.AddMesh(meshWallInnerCorner);
 
-            TileDataFactory tileDataFactory = new TileDataFactory(simpleMeshFactory,
+            DiskTileDataFactory diskTileDataFactory = new DiskTileDataFactory(simpleMeshFactory,
                                                                   new SimpleTileFaceTypeFactory());
 
             FileStream stream = File.OpenWrite(TWDir.Test.CreateSubdirectory("TileEngine").FullName + "\\TestTileData.xml");
-            tileDataFactory.SerializeTileData(data, stream);
+            diskTileDataFactory.SerializeTileData(data, stream);
 
             stream.Close();
 
             FileStream readStream =
                 File.OpenRead(TWDir.Test.CreateSubdirectory("TileEngine").FullName + "\\TestTileData.xml");
 
-            TileData readData = tileDataFactory.DeserializeTileData(readStream);
+            TileData readData = diskTileDataFactory.DeserializeTileData(readStream);
 
             readStream.Close();
         }
@@ -807,7 +809,7 @@ namespace MHGameWork.TheWizards.TileEngine
             var builder = new TileSnapInformationBuilder();
 
             var world = new World();
-            var objType = new WorldObjectType(data.Mesh, Guid.NewGuid(),builder);
+            var objType = new WorldObjectType(data.Mesh, Guid.NewGuid(), builder);
             objType.TileData = data;
 
             var obj = world.CreateNewWorldObject(game, objType, renderer);
@@ -823,16 +825,16 @@ namespace MHGameWork.TheWizards.TileEngine
             var simpleMeshFactory = new SimpleMeshFactory();
             simpleMeshFactory.AddMesh(meshWallInnerCorner);
 
-            TileDataFactory tileDataFactory = new TileDataFactory(simpleMeshFactory,
+            DiskTileDataFactory diskTileDataFactory = new DiskTileDataFactory(simpleMeshFactory,
                                                                   new SimpleTileFaceTypeFactory());
-            tileDataFactory.AddTileData(data);
+            diskTileDataFactory.AddTileData(data);
 
 
             var typeFactory = new SimpleWorldObjectTypeFactory();
 
 
 
-            var serializer = new WorldSerializer(simpleMeshFactory, tileDataFactory, game, renderer, typeFactory, builder);
+            var serializer = new WorldSerializer(simpleMeshFactory, diskTileDataFactory, game, renderer, typeFactory, builder);
 
 
             FileStream stream = File.OpenWrite(TWDir.Test.CreateSubdirectory("TileEngine").FullName + "\\TestWorld.xml");
@@ -848,6 +850,42 @@ namespace MHGameWork.TheWizards.TileEngine
             serializer.DeserializeWorld(readWorld, readStream);
 
             readStream.Close();
+        }
+
+        [Test]
+        public void TestLoadWorldInScene()
+        {
+            var game = new TestTWGame();
+            var factory = new DiskRenderingAssetFactory();
+            var tileDataFactory = new DiskTileDataFactory(factory, new SimpleTileFaceTypeFactory());
+            var serializer = new WorldSerializer(factory, tileDataFactory,
+                                                 game.Game, game.Renderer, new SimpleWorldObjectTypeFactory(),
+                                                 new TileSnapInformationBuilder());
+
+
+
+            var world = new World();
+            var worldXmlFile = TWDir.Test.CreateSubdirectory("TileEngine").FullName + "\\WorldBig001Up.xml";
+            var worldDirectory = TWDir.Test.CreateSubdirectory("TileEngine\\WorldBig001Up");
+            factory.SaveDir = worldDirectory;
+            tileDataFactory.SaveDir = worldDirectory;
+            using (var fs = File.Open(worldXmlFile, FileMode.Open))
+                serializer.DeserializeWorld(world, fs);
+
+
+            var scene = new Scene.Scene(game.Renderer, game.PhysicsFactory);
+            game.Game.AddXNAObject(scene);
+
+            var loader = new WorldSceneLoader(world, scene);
+            loader.LoadIntoScene();
+
+            var shooter = new TestSphereShooter(game.Game, game.PhysicsEngine, game.PhysicsTreeRoot,
+                                                game.Game.SpectaterCamera);
+            game.Game.AddXNAObject(shooter);
+
+            game.Game.Run();
+
+
         }
 
         /// <summary>
