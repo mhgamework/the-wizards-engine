@@ -15,15 +15,15 @@ namespace MHGameWork.TheWizards.Assets
         {
 
         }
-        private AssetSerializer(IAssetFactory factory)
+        public AssetSerializer(IAssetFactory factory)
         {
             this.factory = factory;
         }
 
         public bool SerializeElement(TWXmlNode node, Type type, object value, IInternalSerializer s)
         {
-            if (factory != null)
-                throw new InvalidOperationException("This is a deserializer");
+            /*if (factory != null)
+                throw new InvalidOperationException("This is a deserializer");*/
             if (!(value is IAsset))
                 return false;
 

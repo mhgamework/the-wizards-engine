@@ -181,6 +181,8 @@
     </Compile>
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientFiles.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientMain.cs" />
+    <Compile Include="Rendering\DiskRenderingAssetFactory.cs" />
+    <Compile Include="Rendering\SimpleMeshFactory.cs" />
     <Compile Include="Terrain\Geomipmap\IndexBufferBuilder.cs" />
     <Compile Include="Terrain\Geomipmap\ITerrainBlock.cs" />
     <Compile Include="Terrain\Preprocesser\PreprocessedNode.cs" />
@@ -341,6 +343,7 @@
     <Compile Include="World\ServerSyncedActor.cs" />
     <Compile Include="World\ServerSyncer.cs" />
     <Compile Include="World\World.cs" />
+    <Compile Include="Xml\FastArraySerializer.cs" />
     <Compile Include="Xml\ICustomElementSerializer.cs" />
     <Compile Include="Xml\ICustomSerializer.cs" />
     <Compile Include="Xml\IInternalSerializer.cs" />

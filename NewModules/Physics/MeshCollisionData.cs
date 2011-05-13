@@ -18,8 +18,8 @@ namespace MHGameWork.TheWizards.Physics
 
         public class TriangleMeshData
         {
-            public List<Vector3> Positions = new List<Vector3>();
-            public List<int> Indices = new List<int>();
+            public Vector3[] Positions;
+            public int[] Indices;
 
         }
         public class Box

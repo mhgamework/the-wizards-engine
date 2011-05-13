@@ -136,17 +136,17 @@ namespace MHGameWork.TheWizards.Tests.Physics
             var data = mesh.GetCollisionData();
 
             var triangleMesh = new MeshCollisionData.TriangleMeshData();
-            triangleMesh.Positions = new List<Vector3>();
             Vector3[] pos = CreatePyramidPositions();
             Vector3[] transpos = new Vector3[pos.Length];
             var mat = Matrix.CreateTranslation(20, 5, 20);
 
             Vector3.Transform(pos, ref mat, transpos);
-            triangleMesh.Positions.AddRange(transpos);
-            triangleMesh.Indices = new List<int>();
-            for (int i = 0; i < triangleMesh.Positions.Count; i++)
+            triangleMesh.Positions = transpos;
+
+            triangleMesh.Indices = new int[triangleMesh.Positions.Length];
+            for (int i = 0; i < triangleMesh.Positions.Length; i++)
             {
-                triangleMesh.Indices.Add(i);
+                triangleMesh.Indices[i] = i;
             }
 
             data.TriangleMesh = triangleMesh;
@@ -248,18 +248,18 @@ namespace MHGameWork.TheWizards.Tests.Physics
             var data = mesh.GetCollisionData();
 
             var triangleMesh = new MeshCollisionData.TriangleMeshData();
-            triangleMesh.Positions = new List<Vector3>();
             Vector3[] pos = CreatePyramidPositions();
             Vector3[] transpos = new Vector3[pos.Length];
             var mat = Matrix.CreateTranslation(20, 5, 20);
 
             Vector3.Transform(pos, ref mat, transpos);
-            triangleMesh.Positions.AddRange(transpos);
-            triangleMesh.Indices = new List<int>();
-            for (int i = 0; i < triangleMesh.Positions.Count; i++)
+            triangleMesh.Positions = transpos;
+            triangleMesh.Indices = new int[triangleMesh.Positions.Length];
+            for (int i = 0; i < triangleMesh.Positions.Length; i++)
             {
-                triangleMesh.Indices.Add(i);
+                triangleMesh.Indices[i] = i;
             }
+
 
             data.TriangleMesh = triangleMesh;
 
@@ -360,18 +360,18 @@ namespace MHGameWork.TheWizards.Tests.Physics
             var data = mesh.GetCollisionData();
 
             var triangleMesh = new MeshCollisionData.TriangleMeshData();
-            triangleMesh.Positions = new List<Vector3>();
             Vector3[] pos = CreatePyramidPositions();
             Vector3[] transpos = new Vector3[pos.Length];
             var mat = Matrix.CreateTranslation(20, 5, 20);
 
             Vector3.Transform(pos, ref mat, transpos);
-            triangleMesh.Positions.AddRange(transpos);
-            triangleMesh.Indices = new List<int>();
-            for (int i = 0; i < triangleMesh.Positions.Count; i++)
+            triangleMesh.Positions = transpos;
+            triangleMesh.Indices = new int[triangleMesh.Positions.Length];
+            for (int i = 0; i < triangleMesh.Positions.Length; i++)
             {
-                triangleMesh.Indices.Add(i);
+                triangleMesh.Indices[i] = i;
             }
+
 
             data.TriangleMesh = triangleMesh;
             return mesh;
