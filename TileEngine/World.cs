@@ -56,7 +56,7 @@ namespace MHGameWork.TheWizards.TileEngine
             WorldObjectList.Remove(activeWorldObject);
         }
 
-        public void AddWorldObject(WorldObject worldObject)
+        private void addWorldObject(WorldObject worldObject)
         {
             WorldObjectList.Add(worldObject);
         }
@@ -64,7 +64,7 @@ namespace MHGameWork.TheWizards.TileEngine
         public WorldObject CreateNewWorldObject(IXNAGame game, WorldObjectType objectType, SimpleMeshRenderer renderer)
         {
             var worldObject = new WorldObject(game, objectType, renderer);
-            AddWorldObject(worldObject);
+            addWorldObject(worldObject);
             return worldObject;
         }
 

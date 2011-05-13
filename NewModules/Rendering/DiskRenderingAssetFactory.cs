@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.Rendering
     /// TODO: Used zipped storage!!
     /// TODO: MeshParts are not shared.
     /// </summary>
-    public class DiskRenderingAssetFactory : IAssetFactory, ITextureFactory,IMeshFactory
+    public class DiskRenderingAssetFactory : IAssetFactory, ITextureFactory, IMeshFactory
     {
         private DirectoryInfo saveDir;
         private TWXmlSerializer<MeshCoreData> coreSerializer;
@@ -155,7 +155,7 @@ namespace MHGameWork.TheWizards.Rendering
                 if (data.StorageType != TextureCoreData.TextureStorageType.Disk)
                     throw new InvalidOperationException("This class can only serialize disk textures!(for now)");
 
-                File.Copy(data.DiskFilePath, fi.FullName);
+                File.Copy(data.DiskFilePath, fi.FullName, true);
 
 
             }

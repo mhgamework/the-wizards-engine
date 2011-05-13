@@ -36,8 +36,7 @@ namespace MHGameWork.TheWizards.TileEngine
         private SimpleTileFaceTypeFactory tileFaceTypeFactory = new SimpleTileFaceTypeFactory();
         private SimpleWorldObjectTypeFactory worldObjectTypeFactory = new SimpleWorldObjectTypeFactory();
 
-        private List<WorldObjectType> typeList = new List<WorldObjectType>();
-
+        public List<WorldObjectType> typeList = new List<WorldObjectType>();
         private int scrollIndex;
         private DiskRenderingAssetFactory renderingFactory;
 
@@ -182,7 +181,7 @@ namespace MHGameWork.TheWizards.TileEngine
 
         private void writeWorld(FileInfo fileInfo)
         {
-            FileStream stream = File.OpenWrite(fileInfo.FullName);
+            FileStream stream = File.Open(fileInfo.FullName, FileMode.Create);
             worldSerializer.SerializeWorld(world, stream);
             stream.Close();
         }
@@ -200,7 +199,7 @@ namespace MHGameWork.TheWizards.TileEngine
             {
                 TileData cData = tileDataList[i];
 
-                FileStream stream = File.OpenWrite(getTileDataFilePath(fileInfo, cData));
+                FileStream stream = File.Open(getTileDataFilePath(fileInfo, cData), FileMode.Create);
                 tileDataFactory.SerializeTileData(cData, stream);
                 stream.Close();
             }
@@ -241,6 +240,9 @@ namespace MHGameWork.TheWizards.TileEngine
             loadWorld(fileInfo);
 
 
+            moveTool.World = world;
+            placeTool.World = world;
+            snapLearnTool.World = world;
 
 
 
@@ -275,13 +277,19 @@ namespace MHGameWork.TheWizards.TileEngine
             worldSerializer.DeserializeWorld(readWorld, readStream);
             readStream.Close();
 
+            typeList.Clear();
+            foreach (var obj in readWorld.WorldObjectList)
+            {
+                if (!typeList.Contains(obj.ObjectType))
+                    typeList.Add(obj.ObjectType);
+            }
             world = readWorld;
         }
 
         private void createNewWorldObjectType(TileSnapInformationBuilder builder)
         {
             RAMMesh mesh = getMeshFromUser();
-
+            if (mesh == null) return;
             var worldObjectType = new WorldObjectType(mesh, Guid.NewGuid(), builder);
             var tileData = new TileData(Guid.NewGuid());
             tileData.Mesh = mesh;
@@ -289,6 +297,11 @@ namespace MHGameWork.TheWizards.TileEngine
             tileData.Dimensions = new Vector3(1.5f, 2, 1.5f) - new Vector3(-1.5f, -2, -1.5f);
             worldObjectType.TileData = tileData;
 
+            addType(worldObjectType);
+        }
+
+        private void addType(WorldObjectType worldObjectType)
+        {
             typeList.Add(worldObjectType);
         }
 

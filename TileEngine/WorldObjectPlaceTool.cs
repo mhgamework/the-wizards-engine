@@ -54,8 +54,14 @@ namespace MHGameWork.TheWizards.TileEngine
             }
         }
 
+        public World World
+        {
+            get { return world; }
+            set { world = value; }
+        }
+
         private IXNAGame game;
-        World world;
+        private World world;
         private SimpleMeshRenderer renderer;
 
 
@@ -75,7 +81,7 @@ namespace MHGameWork.TheWizards.TileEngine
         public WorldObjectPlaceTool(IXNAGame _game, World _world, SimpleMeshRenderer _renderer, TileSnapInformationBuilder _builder, IMeshFactory meshFactory, ITileFaceTypeFactory tileFaceTypeFactory)
         {
             game = _game;
-            world = _world;
+            World = _world;
             renderer = _renderer;
             builder = _builder;
             this.meshFactory = meshFactory;
@@ -86,7 +92,7 @@ namespace MHGameWork.TheWizards.TileEngine
 
         public void PlaceWorldObjectAtPosition(WorldObjectType type, Vector3 position)
         {
-            WorldObject worldObject = world.CreateNewWorldObject(game, type, renderer);
+            WorldObject worldObject = World.CreateNewWorldObject(game, type, renderer);
             worldObject.Position = position;
         }
 
@@ -119,7 +125,7 @@ namespace MHGameWork.TheWizards.TileEngine
 
         private void placeNewObjectAtGhost()
         {
-            var obj = world.CreateNewWorldObject(game, PlaceType, renderer);
+            var obj = World.CreateNewWorldObject(game, PlaceType, renderer);
             Vector3 scale, translation;
             Quaternion rotation;
             (Matrix.Invert(PlaceType.TileData.MeshOffset) * ghost.WorldMatrix).Decompose(out scale, out rotation, out translation);
@@ -134,7 +140,7 @@ namespace MHGameWork.TheWizards.TileEngine
 
             Transformation transformation = worldTileSnapper.CalculateSnap(PlaceType.TileData,
                                                                            new Transformation(raycastPosition),
-                                                                           world.WorldObjectList);
+                                                                           World.WorldObjectList);
 
             ghost.WorldMatrix = transformation.CreateMatrix();
         }
@@ -145,7 +151,7 @@ namespace MHGameWork.TheWizards.TileEngine
         private Vector3 raycastGroundPlaneCursor()
         {
             Ray ray = game.GetWereldViewRay(new Vector2(game.Mouse.CursorPosition.X, game.Mouse.CursorPosition.Y));
-            Vector3 pos = world.Raycast(ray);
+            Vector3 pos = World.Raycast(ray);
             return pos;
         }
 

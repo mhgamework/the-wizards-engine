@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.TileEngine
             set { translationEnabled = value; }
         }
 
-        public World World;
+        public World World { get; set; }
 
 
         public EditorGizmoTranslation translationGizmo = new EditorGizmoTranslation();
@@ -45,7 +45,6 @@ namespace MHGameWork.TheWizards.TileEngine
         private TileSnapInformationBuilder builder;
         private SimpleMeshRenderer renderer;
 
-        private List<WorldObject> worldObjectList;
         private List<Transformation> transformations = new List<Transformation>();
 
         public WorldObjectMoveTool(XNAGame _game, World world, TileSnapInformationBuilder _builder, SimpleMeshRenderer _renderer)
@@ -60,7 +59,7 @@ namespace MHGameWork.TheWizards.TileEngine
 
 
 
-            worldObjectList = world.WorldObjectList;
+            //worldObjectList = world.WorldObjectList; DERIVED DATA!!!!!!!!
             snapper.AddSnapper(new SnapperPointPoint());
             builder = _builder;
             worldTileSnapper = new WorldTileSnapper(builder);
@@ -329,15 +328,17 @@ namespace MHGameWork.TheWizards.TileEngine
 
         private void updateGhostPosition()
         {
-            worldObjectList.Remove(selectedWorldObject);
-            var transformation = worldTileSnapper.CalculateSnap(selectedWorldObject.ObjectType.TileData, selectedWorldObject.Transformation, worldObjectList);
-            worldObjectList.Add(selectedWorldObject);
+            var list = new List<WorldObject>();
+
+            list.AddRange(World.WorldObjectList.Where(o => o != selectedWorldObject));
+
+            var transformation = worldTileSnapper.CalculateSnap(selectedWorldObject.ObjectType.TileData, selectedWorldObject.Transformation, list);
 
             ghost.WorldMatrix = transformation.CreateMatrix();
 
         }
 
-       
+
     }
 
 }

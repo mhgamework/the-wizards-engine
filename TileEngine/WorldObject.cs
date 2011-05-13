@@ -11,7 +11,7 @@ namespace MHGameWork.TheWizards.TileEngine
 {
     public class WorldObject : ISnappableWorldTarget
     {
-        public WorldObjectType ObjectType;
+        public WorldObjectType ObjectType { get; set; }
 
         private IXNAGame game;
         private SimpleMeshRenderElement renderElement;
@@ -46,7 +46,7 @@ namespace MHGameWork.TheWizards.TileEngine
                 else
 
                 {
-                    throw new Exception();
+                    //throw new Exception();
                 }
 
                 //rotation = value; 

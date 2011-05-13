@@ -12,7 +12,7 @@ namespace MHGameWork.TheWizards.TileEngine
 {
     public class SnapLearnTool : IXNAObject
     {
-        private readonly TheWizards.TileEngine.World world;
+        private TheWizards.TileEngine.World world;
         private SimpleRaycaster<WorldObject> raycaster;
         private SimpleRaycaster<TileFace> raycasterFace;
         private BoxMesh ghostFace;
@@ -38,7 +38,26 @@ namespace MHGameWork.TheWizards.TileEngine
 
         private Random randomNbGenerator = new Random();
 
-        public bool Enabled { get; set; }
+        private bool enabled;
+        public bool Enabled
+        {
+            get { return enabled; }
+            set
+            {
+                enabled = value;
+                if (enabled == false)
+                {
+                    if (ghost != null) ghost.WorldMatrix = new Matrix();
+                    if (ghostFace != null) ghostFace.WorldMatrix = new Matrix();
+                }
+            }
+        }
+
+        public World World
+        {
+            get { return world; }
+            set { world = value; }
+        }
 
 
         public SnapLearnTool(TheWizards.TileEngine.World world, SimpleMeshRenderer renderer, TileSnapInformationBuilder builder)
@@ -82,11 +101,11 @@ namespace MHGameWork.TheWizards.TileEngine
                 {
                     tileA = target;
                     tileFaceA = resultFace;
-                  
+
 
                     ghost = renderer.AddMesh(tileA.ObjectType.Mesh);
 
-                    
+
                     PickOperandAState = false;
                     PickOperandBState = true;
                 }
@@ -100,8 +119,8 @@ namespace MHGameWork.TheWizards.TileEngine
                 tileB = target;
                 tileFaceB = resultFace;
 
-                PointA = builder.GetPoint(tileA.ObjectType.TileData,tileFaceA,null
-                    , tileA.ObjectType.TileData.GetTotalWinding(tileFaceA ) ^ winding);
+                PointA = builder.GetPoint(tileA.ObjectType.TileData, tileFaceA, null
+                    , tileA.ObjectType.TileData.GetTotalWinding(tileFaceA) ^ winding);
                 PointB = builder.GetPoint(tileB.ObjectType.TileData, tileFaceB, null
                     , tileB.ObjectType.TileData.GetTotalWinding(tileFaceB));
 
@@ -127,51 +146,48 @@ namespace MHGameWork.TheWizards.TileEngine
             if (SnapLearnState)
             {
 
-                if (tileA.ObjectType.TileData.GetFaceType(tileFaceA) == null)
-                {
-                    tileA.ObjectType.TileData.SetFaceType(tileFaceA, new TileFaceType(Guid.NewGuid()));
-                    //tileA.ObjectType.TileData.SetLocalWinding(tileFaceA, !tileB.ObjectType.TileData.GetLocalWinding(tileFaceB));
-                }
-                if (tileB.ObjectType.TileData.GetFaceType(tileFaceB) == null)
-                {
-                    tileB.ObjectType.TileData.SetFaceType(tileFaceB, new TileFaceType(Guid.NewGuid()));
-                    //tileB.ObjectType.TileData.SetLocalWinding(tileFaceB, !tileA.ObjectType.TileData.GetLocalWinding(tileFaceA));
-                }
-                if (getTypeA().GetRoot() == getTypeB().GetRoot()) return;
+                learnSnap();
 
-                TileFaceType newRoot = new TileFaceType(Guid.NewGuid());
-                newRoot.Name = "AutoGen";
-
-                getTypeA().GetRoot().FlipWinding ^= winding;
-
-                getTypeA().GetRoot().SetParent(newRoot);
-                getTypeB().GetRoot().SetParent(newRoot);
-                
-
-                tileA.ObjectType.SnapInformation = builder.CreateFromTile(tileA.ObjectType.TileData);
-                tileB.ObjectType.SnapInformation = builder.CreateFromTile(tileB.ObjectType.TileData);
-
-               
 
                 SnapLearnState = false;
                 PickOperandAState = true;
 
-                ghost.WorldMatrix = ghost.WorldMatrix;
-                Quaternion rotation;
-                Vector3 translation;
-                Vector3 scale;
-                ghost.WorldMatrix.Decompose(out scale, out rotation, out translation);
-                tileA.Rotation = rotation;
-                tileA.Position = translation;
-
                 ghost.WorldMatrix = new Matrix();
                 ghostFace.WorldMatrix = new Matrix();
 
-                Enabled = false;
+                Enabled = false; // TODO: If you are going to decide how to use this class in this class, 
+                                 //      then you should put your entire program here too.
                 return;
             }
 
             SetGhostFaceAtFace(target, resultFace);
+        }
+
+        private void learnSnap()
+        {
+            if (tileA.ObjectType.TileData.GetFaceType(tileFaceA) == null)
+                tileA.ObjectType.TileData.SetFaceType(tileFaceA, new TileFaceType(Guid.NewGuid()));
+
+            if (tileB.ObjectType.TileData.GetFaceType(tileFaceB) == null)
+                tileB.ObjectType.TileData.SetFaceType(tileFaceB, new TileFaceType(Guid.NewGuid()));
+
+            if (getTypeA().GetRoot() == getTypeB().GetRoot())
+                return;
+
+            TileFaceType newRoot = new TileFaceType(Guid.NewGuid());
+            newRoot.Name = "AutoGen";
+
+            getTypeA().GetRoot().FlipWinding ^= winding;
+
+            getTypeA().GetRoot().SetParent(newRoot);
+            getTypeB().GetRoot().SetParent(newRoot);
+
+            Quaternion rotation;
+            Vector3 translation;
+            Vector3 scale;
+            ghost.WorldMatrix.Decompose(out scale, out rotation, out translation);
+            tileA.Rotation = rotation;
+            tileA.Position = translation;
         }
 
         private TileFaceType getTypeB()
@@ -264,16 +280,16 @@ namespace MHGameWork.TheWizards.TileEngine
 
             Ray ray;
 
-            for (int i = 0; i < world.WorldObjectList.Count(); i++)
+            for (int i = 0; i < World.WorldObjectList.Count(); i++)
             {
-                var obj = (WorldObject)world.WorldObjectList[i];
+                var obj = (WorldObject)World.WorldObjectList[i];
                 var objectMatrix = Matrix.Invert(obj.WorldMatrix);
                 var objBB = obj.ObjectType.TileData.GetBoundingBox();
                 ray = _game.GetWereldViewRay(_game.Mouse.CursorPositionVector);
                 ray.Position = Vector3.Transform(ray.Position, objectMatrix);
                 ray.Direction = Vector3.TransformNormal(ray.Direction, objectMatrix);
 
-                raycaster.AddResult(ray.Intersects(objBB), (WorldObject)world.WorldObjectList[i]);
+                raycaster.AddResult(ray.Intersects(objBB), (WorldObject)World.WorldObjectList[i]);
             }
 
             return raycaster.ClosestObject;
