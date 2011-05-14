@@ -36,5 +36,6 @@ namespace MHGameWork.TheWizards.Scripting.API
 
 
         T GetAttachedScript<T>() where T : class, IScript;
+        T AttachScript<T>() where T : class, IScript, new();
     }
 }

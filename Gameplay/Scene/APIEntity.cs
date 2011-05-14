@@ -77,9 +77,11 @@ namespace MHGameWork.TheWizards.Scene
             }
         }
 
+
         public void Destroy()
         {
-            throw new NotImplementedException();
+            if (Entity.PlayerUseHandler != null)
+                Entity.PlayerUseHandler = null;
         }
 
         public T GetAttachedScript<T>() where T : class, IScript
@@ -88,6 +90,17 @@ namespace MHGameWork.TheWizards.Scene
             if (ret == null) return null;
 
             return (T)ret.Script;
+        }
+
+        public T AttachScript<T>() where T : class, IScript, new()
+        {
+            //TODO: Currently CHEAAAAATTTTT!!!!
+
+            T s = new T();
+            var handle = Entity.CreateEntityHandle(s);
+            Entity.Scene.ExecuteInScriptScope(handle, () => s.Init(handle));
+
+            return s;
         }
     }
 }

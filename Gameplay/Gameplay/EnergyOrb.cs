@@ -88,6 +88,9 @@ namespace MHGameWork.TheWizards.Gameplay
         public void Init(IEntityHandle handle)
         {
             this.handle = handle;
+            //TODO: cheat!!!
+            handle.Mesh = handle.GetMesh("Barrel");
+
             /*mesh = ScriptLayer.CreateSphereModel();
             mesh.Radius = 0.1f;
             actor = ScriptLayer.CreateSphereActor(0.1f, 20);

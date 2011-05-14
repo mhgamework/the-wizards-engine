@@ -19,20 +19,29 @@ namespace MHGameWork.TheWizards.Gameplay.Fortress
         private SimplePlayer player;
         private PlayerThirdPersonCamera cam;
 
+        private FireMove move;
 
         private IEntity holdingCrystal;
 
+        public IEntityHandle Handle
+        {
+            get { return handle; }
+            private set { handle = value; }
+        }
+
         public void Init(IEntityHandle _handle)
         {
-            handle = _handle;
-            handle.RegisterUpdateHandler();
+            Handle = _handle;
+            Handle.RegisterUpdateHandler();
 
-            psc = handle.GetSceneComponent<PlayerSceneComponent>();
+            psc = Handle.GetSceneComponent<PlayerSceneComponent>();
 
             player = new SimplePlayer();
 
             controller = psc.CreateController(player.GetData());
             cam = psc.EnablePlayerCamera(player, controller);
+
+            move = new FireMove(this, controller);
 
         }
 
@@ -42,33 +51,51 @@ namespace MHGameWork.TheWizards.Gameplay.Fortress
 
         public void Update()
         {
+            move.FireDirection = CalculateFireDirection(cam);
+            if (handle.Input.IsLeftButtonPressed())
+            {
+                move.StartPrimaryAttack();
+            }
+            if (handle.Input.IsRightButtonPressed())
+            {
+                move.StartSecondaryAttack();
+            }
+            if (handle.Input.IsRightButtonPressed())
+            {
+                move.EndPrimaryAttack();
+            }
+            if (handle.Input.IsRightButtonReleased())
+            {
+                move.EndSecondaryAttack();
+            }
+
             if (holdingCrystal != null)
             {
                 var normal = Vector3.TransformNormal(Vector3.Forward, cam.ViewInverse);
                 holdingCrystal.Position = player.GetData().Position + normal*2;
             }
-            if (handle.IsKeyDown(Keys.Z))
+            if (Handle.Input.IsKeyDown(Keys.Z))
             {
-                controller.DoMoveForward(handle.Elapsed);
+                controller.DoMoveForward(Handle.Elapsed);
             }
-            if (handle.IsKeyDown(Keys.S))
+            if (Handle.Input.IsKeyDown(Keys.S))
             {
-                controller.DoMoveBackwards(handle.Elapsed);
+                controller.DoMoveBackwards(Handle.Elapsed);
             }
-            if (handle.IsKeyDown(Keys.Q))
+            if (Handle.Input.IsKeyDown(Keys.Q))
             {
-                controller.DoStrafeLeft(handle.Elapsed);
+                controller.DoStrafeLeft(Handle.Elapsed);
             }
-            if (handle.IsKeyDown(Keys.D))
+            if (Handle.Input.IsKeyDown(Keys.D))
             {
-                controller.DoStrafeRight(handle.Elapsed);
+                controller.DoStrafeRight(Handle.Elapsed);
             }
-            if (handle.IsKeyPressed(Keys.Space))
+            if (Handle.Input.IsKeyPressed(Keys.Space))
             {
                 controller.DoJump();
             }
 
-            if (handle.IsKeyPressed(Keys.E))
+            if (Handle.Input.IsKeyPressed(Keys.E))
             {
                 Console.WriteLine("Pressed!");
                 if (holdingCrystal != null)
@@ -83,7 +110,7 @@ namespace MHGameWork.TheWizards.Gameplay.Fortress
 
                 var normal = Vector3.TransformNormal(Vector3.Forward, cam.ViewInverse);
                 var ray = new Ray(player.GetData().Position, normal);
-                var ent = handle.RaycastScene(ray, o => o.Entity.GetAttachedScript<SpawnCrystal>() != null);
+                var ent = Handle.RaycastScene(ray, o => o.Entity.GetAttachedScript<SpawnCrystal>() != null);
 
                 if (ent.IsHit)
                 {
@@ -96,5 +123,15 @@ namespace MHGameWork.TheWizards.Gameplay.Fortress
                 }
             }
         }
+
+
+
+        public static Vector3 CalculateFireDirection(PlayerThirdPersonCamera cam)
+        {
+            var pos = Vector3.Transform(Vector3.Zero, cam.ViewInverse);
+            Vector3 dir = Vector3.Transform(Vector3.Forward, cam.ViewInverse);
+            return Vector3.Normalize(dir - pos);
+        }
+
     }
 }

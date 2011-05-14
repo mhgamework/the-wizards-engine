@@ -19,6 +19,7 @@ using MHGameWork.TheWizards.Scripting.API;
 using MHGameWork.TheWizards.Tests.Gameplay;
 using MHGameWork.TheWizards.Tests.OBJParser;
 using MHGameWork.TheWizards.Tests.Rendering;
+using Microsoft.CSharp;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -110,7 +111,7 @@ namespace MHGameWork.TheWizards.Tests.Scripting
                                            {
                                                var pos = controller.Controller.GlobalPosition;
                                                var dir = Vector3.Transform(Vector3.Forward,
-                                                                           controller.ThirdPersonCamera.ViewInverse)-
+                                                                           controller.ThirdPersonCamera.ViewInverse) -
                                                                            Vector3.Transform(Vector3.Zero,
                                                                            controller.ThirdPersonCamera.ViewInverse);
                                                dir.Normalize();
@@ -166,7 +167,7 @@ namespace MHGameWork.TheWizards.Tests.Scripting
             twGame.Game.UpdateEvent += delegate
             {
                 var pos = controller.Controller.GlobalPosition;
-                var dir = Vector3.TransformNormal(controller.Controller.GetForwardVector(),twGame.Game.Camera.ViewInverse);
+                var dir = Vector3.TransformNormal(controller.Controller.GetForwardVector(), twGame.Game.Camera.ViewInverse);
                 dir.Normalize();
                 var ray = new Ray(pos, dir);
                 //NOTE: this ray shouldnt be visible :-)
@@ -188,5 +189,7 @@ namespace MHGameWork.TheWizards.Tests.Scripting
 
             twGame.Game.Run();
         }
+
+        
     }
 }

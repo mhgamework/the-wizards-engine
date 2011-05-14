@@ -25,6 +25,8 @@ namespace MHGameWork.TheWizards.Scene
         private List<Entity> entities = new List<Entity>();
         internal List<Entity> UpdateList = new List<Entity>();
 
+        public Input Input { get; private set; }
+
         private SceneScriptLoader scriptLoader;
 
         public IXNAGame Game { get; private set; }
@@ -37,7 +39,12 @@ namespace MHGameWork.TheWizards.Scene
             scriptLoader = new SceneScriptLoader(this);
             sceneComponents = new List<object>();
 
+            registerPhysXContactNotification(physicsElementFactory);
+
+
         }
+
+
 
         internal SimpleMeshRenderer Renderer
         {
@@ -90,19 +97,20 @@ namespace MHGameWork.TheWizards.Scene
         {
             _game.AddXNAObject(scriptLoader);
             Game = _game;
+            Input = new Input(Game);
         }
-
         public void Render(IXNAGame _game)
         {
         }
-
         public void Update(IXNAGame _game)
         {
+
             for (int i = 0; i < UpdateList.Count; i++)
             {
                 var ent = UpdateList[i];
                 ent.Update();
             }
+            processPhysXContacts();
         }
 
         public void AssignScriptToEntity(Entity entity, FileInfo scriptFile)
@@ -134,6 +142,66 @@ namespace MHGameWork.TheWizards.Scene
 
         }
 
+        private List<PhysXContact> contacts = new List<PhysXContact>();
+
+        private void registerPhysXContactNotification(MeshPhysicsElementFactory physicsElementFactory)
+        {
+            physicsElementFactory.Engine.AddContactNotification(onPhysXContact);
+        }
+
+        private void onPhysXContact(ContactPair contactinformation, ContactPairFlag events)
+        {
+            contacts.Add(new PhysXContact(contactinformation, events));
+
+        }
+
+        private void processPhysXContacts()
+        {
+            for (int i = 0; i < contacts.Count; i++)
+            {
+                var contact = contacts[i];
+
+                var entA = resolveEntityFromPhysx(contact.Contactinformation.ActorA);
+                var entB = resolveEntityFromPhysx(contact.Contactinformation.ActorB);
+                if (entA == null || entB == null) continue;
+                if (entA.ContactHandler != null)
+                    ExecuteInScriptScope(entA.ContactEntityHandle,
+                                         () => entA.ContactHandler(contact.ToContactInformationHelper(entB.APIEntity)));
+
+                if (entB.ContactHandler != null)
+                    ExecuteInScriptScope(entB.ContactEntityHandle,
+                                         () => entB.ContactHandler(contact.ToContactInformationHelper(entA.APIEntity)));
+
+            }
+            contacts.Clear();
+        }
+
+        private struct PhysXContact
+        {
+            public ContactPair Contactinformation { get; set; }
+            public ContactPairFlag Events { get; set; }
+
+            public PhysXContact(ContactPair contactinformation, ContactPairFlag events)
+                : this()
+            {
+                Contactinformation = contactinformation;
+                Events = events;
+            }
+
+            public ContactInformation ToContactInformationHelper(IEntity otherEntity)
+            {
+                var info = new ContactInformation
+                               {
+                                   Flags = Events,
+                                   FrictionForce = Contactinformation.FrictionForce,
+                                   NormalForce = Contactinformation.NormalForce,
+                                   OtherEntity = otherEntity
+                               };
+
+                return info;
+            }
+
+        }
         private List<object> sceneComponents;
 
 
@@ -183,7 +251,7 @@ namespace MHGameWork.TheWizards.Scene
             for (int index = 0; index < sceneComponents.Count; index++)
             {
                 var o = sceneComponents[index];
-                if (o is T) return (T) o;
+                if (o is T) return (T)o;
             }
             return null;
         }
@@ -252,6 +320,14 @@ namespace MHGameWork.TheWizards.Scene
                     IsHit = true
                 };
             }
+        }
+
+        public ISceneMeshProvider MeshProvider { get; set; }
+
+        public IMesh GetMesh(string path)
+        {
+            if (MeshProvider == null) throw new InvalidOperationException("No MeshProvider set on the scene!");
+            return MeshProvider.GetMesh(path);
         }
     }
 }

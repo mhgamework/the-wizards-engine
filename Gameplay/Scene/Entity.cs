@@ -9,6 +9,8 @@ using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scripting.API;
 using MHGameWork.TheWizards.ServerClient.Editor;
 using Microsoft.Xna.Framework;
+using StillDesign.PhysX;
+using Ray = Microsoft.Xna.Framework.Ray;
 
 namespace MHGameWork.TheWizards.Scene
 {
@@ -178,16 +180,42 @@ namespace MHGameWork.TheWizards.Scene
                 if (staticPhysicsElement == null)
                     staticPhysicsElement = factory.CreateStaticElement(Mesh, Transformation.CreateMatrix());
                 staticPhysicsElement.ActorUserData = this;
+
+                staticPhysicsElement.ActorCreated += physicsElement_ActorCreated;
             }
             else
             {
                 if (dynamicPhysicsElement == null)
                     dynamicPhysicsElement = factory.CreateDynamicElement(Mesh, Transformation.CreateMatrix());
                 dynamicPhysicsElement.ActorUserData = this;
-
+                dynamicPhysicsElement.ActorCreated += physicsElement_ActorCreated;
             }
 
 
+        }
+
+        private Actor getCurrentActor()
+        {
+            if (staticPhysicsElement != null && staticPhysicsElement.Actor != null)
+                return staticPhysicsElement.Actor;
+            if (dynamicPhysicsElement != null && dynamicPhysicsElement.Actor != null)
+                return dynamicPhysicsElement.Actor;
+            return null;
+
+        }
+
+        void physicsElement_ActorCreated(Actor actor)
+        {
+            updateActorContactFlags(actor);
+        }
+
+        private void updateActorContactFlags(Actor actor)
+        {
+            if (actor == null) return;
+            if (ContactHandler != null)
+                actor.ContactReportFlags = ContactPairFlag.All;
+            else
+                actor.ContactReportFlags = ContactPairFlag.IgnorePair;
         }
 
         private void deletePhysicsElement()
@@ -240,16 +268,20 @@ namespace MHGameWork.TheWizards.Scene
 
         public void Update()
         {
-            if (!Static)
+            if (mesh != null)
             {
-                var t = Transformation;
-                t.Translation = dynamicPhysicsElement.Actor.GlobalPosition;
-                t.Rotation = dynamicPhysicsElement.Actor.GlobalOrientationQuat;
-                transformation = t;
-                updateBoundingBox();
-                if (renderElement != null)
-                    renderElement.WorldMatrix = t.CreateMatrix();
+                if (!Static)
+                {
+                    var t = Transformation;
+                    t.Translation = dynamicPhysicsElement.Actor.GlobalPosition;
+                    t.Rotation = dynamicPhysicsElement.Actor.GlobalOrientationQuat;
+                    transformation = t;
+                    updateBoundingBox();
+                    if (renderElement != null)
+                        renderElement.WorldMatrix = t.CreateMatrix();
+                }  
             }
+           
             for (int i = 0; i < entityHandles.Count; i++)
             {
                 var h = entityHandles[i];
@@ -270,13 +302,14 @@ namespace MHGameWork.TheWizards.Scene
             if (staticPhysicsElement != null)
             {
                 staticPhysicsElement.WorldMatrix = transformation.CreateMatrix();
+                
             }
             if (dynamicPhysicsElement != null)
             {
                 dynamicPhysicsElement.Kinematic = Kinematic;
                 dynamicPhysicsElement.World = Transformation.CreateMatrix();
             }
-
+            initContactHandler();
             var enableUpdate = false;
             enableUpdate |= !Static;
             for (int i = 0; i < entityHandles.Count; i++)
@@ -294,6 +327,13 @@ namespace MHGameWork.TheWizards.Scene
             {
                 Scene.UpdateList.Remove(this);
             }
+        }
+
+        private void initContactHandler()
+        {
+            if (ContactHandler == null) return;
+            updateActorContactFlags(getCurrentActor());
+
         }
 
 
@@ -342,9 +382,19 @@ namespace MHGameWork.TheWizards.Scene
         }
 
         public Action<IPlayer> PlayerUseHandler;
+        public Action<ContactInformation> ContactHandler { get; private set; }
+        public EntityScriptHandle ContactEntityHandle { get; private set; }
+        public void SetContactHandler(EntityScriptHandle handle, Action<ContactInformation> handler)
+        {
+            ContactHandler = handler;
+            ContactEntityHandle = handle;
+            initContactHandler();
+        }
+
 
         public void RaisePlayerUse(IPlayer player)
         {
+            //TODO: execute in script scope
             if (PlayerUseHandler != null)
                 PlayerUseHandler(player);
         }

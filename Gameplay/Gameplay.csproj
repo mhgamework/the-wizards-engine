@@ -101,6 +101,7 @@
     <Compile Include="Scene\Entity.cs" />
     <Compile Include="Scene\EntityData.cs" />
     <Compile Include="Scene\EntityScriptHandle.cs" />
+    <Compile Include="Scene\ISceneMeshProvider.cs" />
     <Compile Include="Scripting\API\ContactInformation.cs" />
     <Compile Include="Scripting\API\EntityRaycastHit.cs" />
     <Compile Include="Scripting\API\IEntity.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Scene\ScriptDataBinder.cs" />
     <Compile Include="Scene\SimpleDataElement.cs" />
     <Compile Include="Scripting\API\IEntityHandle.cs" />
+    <Compile Include="Scripting\API\Input.cs" />
     <Compile Include="Scripting\API\IScript.cs" />
     <Compile Include="Scripting\API\IUpdateHandler.cs" />
     <Compile Include="Scripting\IStateScript.cs" />

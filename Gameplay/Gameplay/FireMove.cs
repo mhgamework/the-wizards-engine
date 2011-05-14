@@ -26,15 +26,19 @@ namespace MHGameWork.TheWizards.Gameplay
 
         public void StartPrimaryAttack()
         {
-            
-            /*
-            var orb = new EnergyOrb();
-            orb.Position = calculateLeftOrbPosition();
-            orb.Charge = 0.2f;
-            ScriptLayer.ScriptRunner.RunScript(orb);
-            orb.Fire(calculateFireDirection() * strength);
-            controller.ApplyFeedbackVelocity(-calculateFireDirection() * 5);*/
+            createOrb(calculateLeftOrbPosition());
+        }
 
+        private void createOrb(Vector3 position)
+        {
+            var ent = playerEntity.Handle.CreateEntity();
+            var orb = ent.AttachScript<EnergyOrb>();
+           
+
+            ent.Position = position;
+            orb.Charge = 0.2f;
+            orb.Fire(calculateFireDirection() * strength);
+            controller.ApplyFeedbackVelocity(-calculateFireDirection() * 5);
         }
 
         public void EndPrimaryAttack()
@@ -44,11 +48,7 @@ namespace MHGameWork.TheWizards.Gameplay
 
         public void StartSecondaryAttack()
         {
-           /* var orb = new EnergyOrb();
-            orb.Position = calculateRightOrbPosition();
-            orb.Charge = 0.2f;
-            ScriptLayer.ScriptRunner.RunScript(orb);
-            orb.Fire(calculateFireDirection() * strength);*/
+            createOrb(calculateRightOrbPosition());
         }
 
         public void EndSecondaryAttack()

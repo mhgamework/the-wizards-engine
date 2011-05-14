@@ -1,5 +1,6 @@
 ﻿using System;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scripting.API;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -41,7 +42,8 @@ namespace MHGameWork.TheWizards.Scene
 
         public void RegisterContactHandler(Action<ContactInformation> handler)
         {
-            throw new NotImplementedException();
+            if (Entity.ContactHandler != null) throw new InvalidOperationException("Contact Handler already registered!");
+            Entity.SetContactHandler(this, handler);
         }
 
         public EntityRaycastHit RaycastScene(Ray ray, Predicate<EntityRaycastHit> predicate)
@@ -63,15 +65,6 @@ namespace MHGameWork.TheWizards.Scene
             return ent.APIEntity;
         }
 
-        public bool IsKeyDown(Keys key)
-        {
-            return Entity.Scene.Game.Keyboard.IsKeyDown(key);
-        }
-
-        public bool IsKeyPressed(Keys key)
-        {
-            return Entity.Scene.Game.Keyboard.IsKeyPressed(key);
-        }
 
         public float Elapsed
         {
@@ -83,11 +76,15 @@ namespace MHGameWork.TheWizards.Scene
             return Entity.Scene.GetSceneComponent<T>();
         }
 
-
-        public void Destroy()
+        public Input Input
         {
-            if (useHandlerSet)
-                Entity.PlayerUseHandler = null;
+            get { return Entity.Scene.Input; }
+        }
+
+        public IMesh GetMesh(string path)
+        {
+            return Entity.Scene.GetMesh(path);
+
         }
 
 

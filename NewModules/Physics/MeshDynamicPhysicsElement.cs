@@ -26,7 +26,7 @@ namespace MHGameWork.TheWizards.Physics
                 if (Kinematic)
                 {
                     actor.MoveGlobalPoseTo(world);
-                    
+
                 }
                 else
                 {
@@ -140,8 +140,8 @@ namespace MHGameWork.TheWizards.Physics
 
 
             Move(root, actor.GlobalPose);
-            
-            
+
+
 
         }
 
@@ -155,6 +155,8 @@ namespace MHGameWork.TheWizards.Physics
             updateActorFlags();
             var bs = Microsoft.Xna.Framework.BoundingSphere.CreateFromBoundingBox(Builder.CalculateBoundingBox(Mesh.GetCollisionData()));
             boundingRadius = bs.Radius;
+
+            if (ActorCreated != null) ActorCreated(actor);
         }
 
         private float boundingRadius;
@@ -211,5 +213,8 @@ namespace MHGameWork.TheWizards.Physics
 
             }
         }
+
+        public event Action<Actor> ActorCreated;
+
     }
 }

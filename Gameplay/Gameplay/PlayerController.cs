@@ -17,6 +17,7 @@ namespace MHGameWork.TheWizards.GamePlay
 {
     /// <summary>
     /// WARNING: requires ScriptLayer!
+    /// TODO: Fix the controllerhitreport stuff
     /// </summary>
     public class PlayerController : IXNAObject, IWorldSyncActor
     {

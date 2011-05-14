@@ -1,5 +1,6 @@
 ﻿using System;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -34,8 +35,6 @@ namespace MHGameWork.TheWizards.Scripting.API
         IEntity CreateEntity();
 
         // General functions
-        bool IsKeyDown(Keys key);
-        bool IsKeyPressed(Keys key);
         /// <summary>
         /// Time elapsed last frame
         /// </summary>
@@ -44,7 +43,9 @@ namespace MHGameWork.TheWizards.Scripting.API
         // This might be a cheat
         T GetSceneComponent<T>() where T : class;
 
+        Input Input { get; }
 
+        IMesh GetMesh(string path);
 
     }
 }

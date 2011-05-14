@@ -801,6 +801,11 @@ namespace MHGameWork.TheWizards.Utilities
                         }
 
                     }
+                    catch
+                    {
+                        Console.WriteLine("An Unmanaged exception has been thrown!!");
+                        ThrowedException = new Exception("An Unmanaged exception has been thrown!!");
+                    }
 
                 });
 
