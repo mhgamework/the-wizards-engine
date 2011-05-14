@@ -31,29 +31,29 @@ namespace MHGameWork.TheWizards.TileEngine
             get { return rotation; }
             set
             {
-                float yaw, roll, pitch;
-                convertQuaternionToEuler(value, out yaw, out roll, out pitch);
+                
 
+                //Vector3 t = Vector3.Transform(Vector3.Forward, value);
 
-                Vector3 t = Vector3.Transform(Vector3.Forward, value);
+                //if (Vector3.Dot(t, Vector3.Forward) > 0.99f)
+                //    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, 0);
+                //else if (Vector3.Dot(t, Vector3.Backward) > 0.99f)
+                //    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.Pi);
+                //else if (Vector3.Dot(t, Vector3.Left) > 0.99f)
+                //    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.PiOver2);
+                //else if (Vector3.Dot(t, Vector3.Right) > 0.99f)
+                //    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, -MathHelper.PiOver2);
+                //else
+                //{
+                //    throw new Exception();
+                //}
 
-                if (Vector3.Dot(t, Vector3.Forward) > 0.99f)
-                    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, 0);
-                else if (Vector3.Dot(t, Vector3.Backward) > 0.99f)
-                    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.Pi);
-                else if (Vector3.Dot(t, Vector3.Left) > 0.99f)
-                    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.PiOver2);
-                else if (Vector3.Dot(t, Vector3.Right) > 0.99f)
-                    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, -MathHelper.PiOver2);
-                else
-                {
-                    throw new Exception();
-                }
-
-                //rotation = value; 
+                rotation = value; 
                 updateWorldMatrix();
             }
         }
+
+        
 
         private Matrix worldMatrix = Matrix.Identity;
         public Matrix WorldMatrix
@@ -96,28 +96,7 @@ namespace MHGameWork.TheWizards.TileEngine
             Rotation = Quaternion.Identity;
         }
 
-        private void convertQuaternionToEuler(Quaternion quat, out float yaw, out float roll, out float pitch)
-        {
-            yaw = (float)Math.Atan2(2 * (quat.X * quat.Y + quat.Z * quat.W), 1 - 2 * (quat.Y * quat.Y + quat.Z * quat.Z));
-            pitch = (float)Math.Asin(2 * (quat.X * quat.Z - quat.W * quat.Y));
-            roll = (float)Math.Atan2(2 * (quat.X * quat.W + quat.Y * quat.Z), 1 - 2 * (quat.Z * quat.Z + quat.W * quat.W));
-
-#if DEBUG
-
-            Quaternion verify = Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll);
-            Vector3 up1 = Vector3.Transform(Vector3.Up, quat);
-            Vector3 up2 = Vector3.Transform(Vector3.Up, verify);
-            Vector3 right1 = Vector3.Transform(Vector3.Right, quat);
-            Vector3 right2 = Vector3.Transform(Vector3.Right, verify);
-
-            //TODO: Testen
-#endif
-
-        }
-
-
-
-
+        
 
         #region ISnappableWorldTarget Members
 

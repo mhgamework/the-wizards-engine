@@ -30,11 +30,8 @@ namespace MHGameWork.TheWizards.TileEngine
 
         public World World;
 
-
         public EditorGizmoTranslation translationGizmo = new EditorGizmoTranslation();
         public EditorGizmoRotation rotationGizmo = new EditorGizmoRotation();
-
-
 
         private bool translationEnabled = false;
 
@@ -68,6 +65,8 @@ namespace MHGameWork.TheWizards.TileEngine
         }
 
         WorldObject selectedWorldObject = null;
+        float oldYaw, oldPitch, oldRoll;
+        float newYaw, newPitch, newRoll;
 
         private WorldTileSnapper worldTileSnapper;
 
@@ -84,19 +83,14 @@ namespace MHGameWork.TheWizards.TileEngine
             if (!Enabled) return;
             game.GraphicsDevice.RenderState.CullMode = CullMode.CullClockwiseFace;
 
-            if (selectedWorldObject != null)
-            {
-                game.LineManager3D.AddAABB(selectedWorldObject.ObjectType.BoundingBox, selectedWorldObject.WorldMatrix, Color.White);
-            }
-
-
-
+            
             if (isObjectSelected())
             {
-
+                translationGizmo.Render(game);
+                rotationGizmo.Render(game);
+                game.LineManager3D.AddAABB(selectedWorldObject.ObjectType.BoundingBox, selectedWorldObject.WorldMatrix, Color.White);
             }
-            translationGizmo.Render(game);
-            rotationGizmo.Render(game);
+            
 
         }
 
@@ -113,7 +107,7 @@ namespace MHGameWork.TheWizards.TileEngine
             processStates();
 
             //Cloning
-            if (selectedWorldObject != null && game.Keyboard.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) && game.Mouse.LeftMouseJustPressed)
+            if (isObjectSelected() && game.Keyboard.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) && game.Mouse.LeftMouseJustPressed)
             {
                 WorldObject clone = World.CreateNewWorldObject(game, selectedWorldObject.ObjectType, renderer);
                 clone.Rotation = selectedWorldObject.Rotation;
@@ -123,7 +117,7 @@ namespace MHGameWork.TheWizards.TileEngine
             }
 
             //Deleting
-            if (selectedWorldObject != null && game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Delete))
+            if (isObjectSelected() && game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Delete))
             {
                 World.DeleteWorldObject(selectedWorldObject);
                 selectedWorldObject = null;
@@ -230,14 +224,43 @@ namespace MHGameWork.TheWizards.TileEngine
         private void updateSelectedObjectPosition()
         {
             selectedWorldObject.Position = translationGizmo.Position;
-            selectedWorldObject.Rotation = rotationGizmo.RotationQuat;
+
+            Quaternion rotation = rotationGizmo.RotationQuat;
+            
+
+            const int roundingValue = 20;
+            float yaw, pitch, roll;
+            convertQuaternionToEuler(rotation, out yaw, out pitch, out roll);
+
+
+            if (Math.Abs(oldYaw - newYaw) > roundingValue || Math.Abs(oldPitch - newPitch) > roundingValue || Math.Abs(oldRoll - newRoll) > roundingValue)
+            {
+                newYaw = roundEulerAngleToXDegrees(newYaw, roundingValue);
+                newPitch = roundEulerAngleToXDegrees(newPitch, roundingValue);
+                newRoll = roundEulerAngleToXDegrees(newRoll, roundingValue);
+                Quaternion roundedQuat = Quaternion.CreateFromYawPitchRoll(newYaw, newPitch, newRoll);
+                oldYaw = newYaw;
+                oldPitch = newPitch;
+                oldRoll = newRoll;
+
+                selectedWorldObject.Rotation = roundedQuat;
+            }
+            else
+            {
+                newYaw += yaw;
+                newPitch += pitch;
+                newRoll += roll;
+            }
+            
+
+
+            //selectedWorldObject.Rotation = rotationGizmo.RotationQuat;
         }
 
         private void updateGizmoPosition()
         {
             translationGizmo.Position = selectedWorldObject.Position;
             rotationGizmo.Position = selectedWorldObject.Position;
-            rotationGizmo.RotationQuat = selectedWorldObject.Rotation;
         }
 
         private bool trySelect()
@@ -270,7 +293,60 @@ namespace MHGameWork.TheWizards.TileEngine
 
         }
 
-       
+        private void convertQuaternionToEuler(Quaternion quat, out float yaw, out float pitch , out float roll)
+        {
+            yaw = (float)Math.Atan2
+            (
+                2 * quat.Y * quat.W - 2 * quat.X * quat.Z,
+                1 - 2 * Math.Pow(quat.Y, 2) - 2 * Math.Pow(quat.Z, 2)
+            );
+
+            pitch = (float)Math.Asin
+            (
+                2 * quat.X * quat.Y + 2 * quat.Z * quat.W
+            );
+
+            roll = (float)Math.Atan2
+            (2 * quat.X * quat.W - 2 * quat.Y * quat.Z,
+                1 - 2 * Math.Pow(quat.X, 2) - 2 * Math.Pow(quat.Z, 2)
+            );
+
+            if (quat.X * quat.Y + quat.Z * quat.W == 0.5)
+            {
+                yaw = (float)(2 * Math.Atan2(quat.X, quat.W));
+                roll = 0;
+            }
+
+            else if (quat.X * quat.Y + quat.Z * quat.W == -0.5)
+            {
+                yaw = (float)(-2 * Math.Atan2(quat.X, quat.W));
+                roll = 0;
+            }
+#if DEBUG
+
+            Quaternion verify = Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll);
+            Vector3 up1 = Vector3.Transform(Vector3.Up, quat);
+            Vector3 up2 = Vector3.Transform(Vector3.Up, verify);
+            Vector3 right1 = Vector3.Transform(Vector3.Right, quat);
+            Vector3 right2 = Vector3.Transform(Vector3.Right, verify);
+#endif
+
+        }
+
+        private float roundEulerAngleToXDegrees(float angle, int roundingValue)
+        {
+            float ret1 = angle - angle % roundingValue;
+            float ret2 = (angle + roundingValue) - (angle + roundingValue) % roundingValue;
+            float diff1 = Math.Abs(angle - ret1);
+            float diff2 = Math.Abs(angle - ret2);
+
+            if (diff1 <= diff2)
+                return ret1;
+            else
+                return ret2;
+        }
+
+
     }
 
 }
