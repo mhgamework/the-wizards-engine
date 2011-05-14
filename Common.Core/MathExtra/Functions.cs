@@ -229,6 +229,7 @@ namespace MHGameWork.TheWizards.MathExtra
             }
 
             Euler = new Vector3((float)attitude, (float)heading, (float)bank);
+            throw new InvalidOperationException("A debug check should be finished here first!");
             /*#if DEBUG
                         Quaternion qResult = Quaternion.CreateFromYawPitchRoll( Euler.Y, Euler.X, Euler.Z );
                         if ( !QuaternionsEqual( q1, qResult ) ) throw new Exception( "Error in the algoritm" );
