@@ -83,14 +83,14 @@ namespace MHGameWork.TheWizards.TileEngine
             if (!Enabled) return;
             game.GraphicsDevice.RenderState.CullMode = CullMode.CullClockwiseFace;
 
-            
+
             if (isObjectSelected())
             {
                 translationGizmo.Render(game);
                 rotationGizmo.Render(game);
                 game.LineManager3D.AddAABB(selectedWorldObject.ObjectType.BoundingBox, selectedWorldObject.WorldMatrix, Color.White);
             }
-            
+
 
         }
 
@@ -121,7 +121,7 @@ namespace MHGameWork.TheWizards.TileEngine
             {
                 World.DeleteWorldObject(selectedWorldObject);
                 selectedWorldObject = null;
-            }   
+            }
 
             /*
             //Full Reset
@@ -226,35 +226,17 @@ namespace MHGameWork.TheWizards.TileEngine
             selectedWorldObject.Position = translationGizmo.Position;
 
             Quaternion rotation = rotationGizmo.RotationQuat;
-            
 
-            const int roundingValue = 20;
+            float roundingValue = MathHelper.ToRadians(15);
             float yaw, pitch, roll;
             convertQuaternionToEuler(rotation, out yaw, out pitch, out roll);
 
+            yaw = roundEulerAngleToXDegrees(yaw, roundingValue);
+            pitch = roundEulerAngleToXDegrees(pitch, roundingValue);
+            roll = roundEulerAngleToXDegrees(roll, roundingValue);
+            Quaternion roundedQuat = Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll);
 
-            if (Math.Abs(oldYaw - newYaw) > roundingValue || Math.Abs(oldPitch - newPitch) > roundingValue || Math.Abs(oldRoll - newRoll) > roundingValue)
-            {
-                newYaw = roundEulerAngleToXDegrees(newYaw, roundingValue);
-                newPitch = roundEulerAngleToXDegrees(newPitch, roundingValue);
-                newRoll = roundEulerAngleToXDegrees(newRoll, roundingValue);
-                Quaternion roundedQuat = Quaternion.CreateFromYawPitchRoll(newYaw, newPitch, newRoll);
-                oldYaw = newYaw;
-                oldPitch = newPitch;
-                oldRoll = newRoll;
-
-                selectedWorldObject.Rotation = roundedQuat;
-            }
-            else
-            {
-                newYaw += yaw;
-                newPitch += pitch;
-                newRoll += roll;
-            }
-            
-
-
-            //selectedWorldObject.Rotation = rotationGizmo.RotationQuat;
+            selectedWorldObject.Rotation = roundedQuat;
         }
 
         private void updateGizmoPosition()
@@ -293,35 +275,36 @@ namespace MHGameWork.TheWizards.TileEngine
 
         }
 
-        private void convertQuaternionToEuler(Quaternion quat, out float yaw, out float pitch , out float roll)
+        private void convertQuaternionToEuler(Quaternion quat, out float yaw, out float pitch, out float roll)
         {
-            yaw = (float)Math.Atan2
-            (
-                2 * quat.Y * quat.W - 2 * quat.X * quat.Z,
-                1 - 2 * Math.Pow(quat.Y, 2) - 2 * Math.Pow(quat.Z, 2)
-            );
-
-            pitch = (float)Math.Asin
-            (
-                2 * quat.X * quat.Y + 2 * quat.Z * quat.W
-            );
-
-            roll = (float)Math.Atan2
-            (2 * quat.X * quat.W - 2 * quat.Y * quat.Z,
-                1 - 2 * Math.Pow(quat.X, 2) - 2 * Math.Pow(quat.Z, 2)
-            );
-
-            if (quat.X * quat.Y + quat.Z * quat.W == 0.5)
-            {
-                yaw = (float)(2 * Math.Atan2(quat.X, quat.W));
+            Quaternion q1 = quat;
+            double sqw = q1.W * q1.W;
+            double sqx = q1.X * q1.X;
+            double sqy = q1.Y * q1.Y;
+            double sqz = q1.Z * q1.Z;
+            double unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
+            double test = q1.X * q1.Y + q1.Z * q1.W;
+            if (test > 0.499 * unit)
+            { // singularity at north pole
+                yaw = (float)(2 * Math.Atan2(q1.X, q1.W));
+                pitch = (float)Math.PI / 2;
                 roll = 0;
+                return;
             }
-
-            else if (quat.X * quat.Y + quat.Z * quat.W == -0.5)
-            {
-                yaw = (float)(-2 * Math.Atan2(quat.X, quat.W));
+            if (test < -0.499 * unit)
+            { // singularity at south pole
+                yaw = (float)(-2 * Math.Atan2(q1.X, q1.W));
+                pitch = (float)-Math.PI / 2;
                 roll = 0;
+                return;
             }
+            yaw = (float)Math.Atan2(2 * q1.Y * q1.W - 2 * q1.X * q1.Z, sqx - sqy - sqz + sqw);
+            pitch = (float)Math.Asin(2 * test / unit);
+            roll = (float)Math.Atan2(2 * q1.X * q1.W - 2 * q1.Y * q1.Z, -sqx + sqy - sqz + sqw);
+
+            float swap = pitch;
+            pitch = roll;
+            roll = swap;
 #if DEBUG
 
             Quaternion verify = Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll);
@@ -329,21 +312,25 @@ namespace MHGameWork.TheWizards.TileEngine
             Vector3 up2 = Vector3.Transform(Vector3.Up, verify);
             Vector3 right1 = Vector3.Transform(Vector3.Right, quat);
             Vector3 right2 = Vector3.Transform(Vector3.Right, verify);
+
+            //Very  large rounding errors seem to occur
+            /*if (Vector3.Dot(up1, up2) < 0.99f)
+            {
+                throw new InvalidOperationException();
+            }
+            if (Vector3.Dot(right1, right2) < 0.99f)
+            {
+                throw new InvalidOperationException();
+            }*/
 #endif
 
         }
 
-        private float roundEulerAngleToXDegrees(float angle, int roundingValue)
+        private float roundEulerAngleToXDegrees(float angle, float roundingValue)
         {
-            float ret1 = angle - angle % roundingValue;
-            float ret2 = (angle + roundingValue) - (angle + roundingValue) % roundingValue;
-            float diff1 = Math.Abs(angle - ret1);
-            float diff2 = Math.Abs(angle - ret2);
-
-            if (diff1 <= diff2)
-                return ret1;
-            else
-                return ret2;
+            angle += roundingValue * 0.5f;
+            var rounded = (int)(angle / roundingValue) * roundingValue;
+            return rounded;
         }
 
 
