@@ -889,16 +889,19 @@ namespace MHGameWork.TheWizards.TileEngine
         }
 
         /// <summary>
-        /// Controls:
-        /// 
+        /// Controls (General): 
         /// LeftAlt: Toggle mouse on/off
         /// M: Activate move-tool
         /// L: Activate snaplearn-tool
-        /// P: Activate place-tool
-        /// R: Toggle gizmo type (rotation/translation) in move-tool
+        /// P: Activate place-tool 
         /// Ctrl+s: Save scene
         /// Ctrl+l: Load scene
         /// Standard camera movement controls
+        /// 
+        /// Controls (Move-Tool): 
+        /// R: Toggle gizmo type (rotation/translation)
+        /// Del: Delete selected worldObject
+        /// Ctrl+leftMouse: Duplicate selected worldObject
         /// </summary>
         [Test]
         public void RunEditor()

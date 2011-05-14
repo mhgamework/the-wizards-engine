@@ -30,11 +30,8 @@ namespace MHGameWork.TheWizards.TileEngine
 
         public World World { get; set; }
 
-
         public EditorGizmoTranslation translationGizmo = new EditorGizmoTranslation();
         public EditorGizmoRotation rotationGizmo = new EditorGizmoRotation();
-
-
 
         private bool translationEnabled = false;
 
@@ -67,6 +64,8 @@ namespace MHGameWork.TheWizards.TileEngine
         }
 
         WorldObject selectedWorldObject = null;
+        float oldYaw, oldPitch, oldRoll;
+        float newYaw, newPitch, newRoll;
 
         private WorldTileSnapper worldTileSnapper;
 
@@ -83,19 +82,14 @@ namespace MHGameWork.TheWizards.TileEngine
             if (!Enabled) return;
             game.GraphicsDevice.RenderState.CullMode = CullMode.CullClockwiseFace;
 
-            if (selectedWorldObject != null)
-            {
-                game.LineManager3D.AddAABB(selectedWorldObject.ObjectType.BoundingBox, selectedWorldObject.WorldMatrix, Color.White);
-            }
-
-
 
             if (isObjectSelected())
             {
-
+                translationGizmo.Render(game);
+                rotationGizmo.Render(game);
+                game.LineManager3D.AddAABB(selectedWorldObject.ObjectType.BoundingBox, selectedWorldObject.WorldMatrix, Color.White);
             }
-            translationGizmo.Render(game);
-            rotationGizmo.Render(game);
+
 
         }
 
@@ -111,8 +105,22 @@ namespace MHGameWork.TheWizards.TileEngine
             rotationGizmo.Update(game);
             processStates();
 
+            //Cloning
+            if (isObjectSelected() && game.Keyboard.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) && game.Mouse.LeftMouseJustPressed)
+            {
+                WorldObject clone = World.CreateNewWorldObject(game, selectedWorldObject.ObjectType, renderer);
+                clone.Rotation = selectedWorldObject.Rotation;
+                clone.Position = selectedWorldObject.Position;
 
+                selectedWorldObject = clone;
+            }
 
+            //Deleting
+            if (isObjectSelected() && game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Delete))
+            {
+                World.DeleteWorldObject(selectedWorldObject);
+                selectedWorldObject = null;
+            }
 
             /*
             //Full Reset
@@ -136,89 +144,8 @@ namespace MHGameWork.TheWizards.TileEngine
                 translationGizmo.Position = selectedWorldObject.Position;
                 rotationGizmo.RotationQuat = selectedWorldObject.Rotation;
             }
-
-            //Raycasting
-            if (game.Mouse.LeftMouseJustPressed && (translationGizmo.ActiveMoveMode == EditorGizmoTranslation.GizmoPart.None && rotationGizmo.ActiveMoveMode == EditorGizmoRotation.GizmoPart.None))
-            {
-                Ray ray = game.GetWereldViewRay(new Vector2(game.Mouse.CursorPosition.X, game.Mouse.CursorPosition.Y));
-                WorldObject result = World.Raycast(ray, World.WorldObjectList);
-
-                if (result != null)
-                {
-                    selectedWorldObject = result;
-                    ghost = result.Renderer.AddMesh(result.ObjectType.Mesh);
-                    isGhostActive = true;
-
-                    translationGizmo.Position = selectedWorldObject.Position;
-                    rotationGizmo.RotationQuat = selectedWorldObject.Rotation;
-                }
-                else
-                {
-                    selectedWorldObject = null;
-                }
-            }
-
-            //Cloning
-            if (selectedWorldObject != null && game.Keyboard.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) && game.Mouse.LeftMouseJustPressed)
-            {
-                WorldObject clone = WorldObjectFactory.CloneWorldObject(selectedWorldObject);
-                selectedWorldObject = clone;
-            }
-
-            //Deleting
-            if (selectedWorldObject != null && game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Delete))
-            {
-                World.DeleteWorldObject(selectedWorldObject);
-                selectedWorldObject = null;
-            }
-
-            //Toggling from here
-
-            if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.R))
-            {
-                TranslationEnabled = !TranslationEnabled;
-            }
-
-            rotationGizmo.Position = translationGizmo.Position;
-            if (selectedWorldObject != null)
-            {
-                selectedWorldObject.Position = translationGizmo.Position;
-                selectedWorldObject.Rotation = rotationGizmo.RotationQuat;
-            }
-
-            if (isObjectSelected())
-            {
-                if (isGhostActive)
-                {
-                    snapTargetList.Remove(selectedWorldObject);
-                    transformations = snapper.SnapTo(builder.CreateFromTile(selectedWorldObject.ObjectType.TileData),
-                                                     snapTargetList);
-                    snapTargetList.Add(selectedWorldObject);
-
-
-                    if (transformations.Count > 0)
-                    {
-                        ghost.WorldMatrix = transformations[0].CreateMatrix();
-                    }
-                    else
-                    {
-                        ghost.WorldMatrix = new Matrix();
-                    }
-
-                    if (game.Mouse.LeftMouseJustReleased)
-                    {
-                        Vector3 scale;
-                        Quaternion rotation;
-                        Vector3 translation;
-                        ghost.WorldMatrix.Decompose(out scale, out rotation, out translation);
-
-                        selectedWorldObject.Position = translation;
-                        selectedWorldObject.Rotation = rotation;
-                        ghost.WorldMatrix = new Matrix();
-                        isGhostActive = false;
-                    }
-                }
-            }*/
+                    
+           */
         }
 
         private void processStates()
@@ -296,14 +223,25 @@ namespace MHGameWork.TheWizards.TileEngine
         private void updateSelectedObjectPosition()
         {
             selectedWorldObject.Position = translationGizmo.Position;
-            selectedWorldObject.Rotation = rotationGizmo.RotationQuat;
+
+            Quaternion rotation = rotationGizmo.RotationQuat;
+
+            float roundingValue = MathHelper.ToRadians(15);
+            float yaw, pitch, roll;
+            convertQuaternionToEuler(rotation, out yaw, out pitch, out roll);
+
+            yaw = roundEulerAngleToXDegrees(yaw, roundingValue);
+            pitch = roundEulerAngleToXDegrees(pitch, roundingValue);
+            roll = roundEulerAngleToXDegrees(roll, roundingValue);
+            Quaternion roundedQuat = Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll);
+
+            selectedWorldObject.Rotation = roundedQuat;
         }
 
         private void updateGizmoPosition()
         {
             translationGizmo.Position = selectedWorldObject.Position;
             rotationGizmo.Position = selectedWorldObject.Position;
-            rotationGizmo.RotationQuat = selectedWorldObject.Rotation;
         }
 
         private bool trySelect()
@@ -336,6 +274,64 @@ namespace MHGameWork.TheWizards.TileEngine
 
             ghost.WorldMatrix = transformation.CreateMatrix();
 
+        }
+
+        private void convertQuaternionToEuler(Quaternion quat, out float yaw, out float pitch, out float roll)
+        {
+            Quaternion q1 = quat;
+            double sqw = q1.W * q1.W;
+            double sqx = q1.X * q1.X;
+            double sqy = q1.Y * q1.Y;
+            double sqz = q1.Z * q1.Z;
+            double unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
+            double test = q1.X * q1.Y + q1.Z * q1.W;
+            if (test > 0.499 * unit)
+            { // singularity at north pole
+                yaw = (float)(2 * Math.Atan2(q1.X, q1.W));
+                pitch = (float)Math.PI / 2;
+                roll = 0;
+                return;
+            }
+            if (test < -0.499 * unit)
+            { // singularity at south pole
+                yaw = (float)(-2 * Math.Atan2(q1.X, q1.W));
+                pitch = (float)-Math.PI / 2;
+                roll = 0;
+                return;
+            }
+            yaw = (float)Math.Atan2(2 * q1.Y * q1.W - 2 * q1.X * q1.Z, sqx - sqy - sqz + sqw);
+            pitch = (float)Math.Asin(2 * test / unit);
+            roll = (float)Math.Atan2(2 * q1.X * q1.W - 2 * q1.Y * q1.Z, -sqx + sqy - sqz + sqw);
+
+            float swap = pitch;
+            pitch = roll;
+            roll = swap;
+#if DEBUG
+
+            Quaternion verify = Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll);
+            Vector3 up1 = Vector3.Transform(Vector3.Up, quat);
+            Vector3 up2 = Vector3.Transform(Vector3.Up, verify);
+            Vector3 right1 = Vector3.Transform(Vector3.Right, quat);
+            Vector3 right2 = Vector3.Transform(Vector3.Right, verify);
+
+            //Very  large rounding errors seem to occur
+            /*if (Vector3.Dot(up1, up2) < 0.99f)
+            {
+                throw new InvalidOperationException();
+            }
+            if (Vector3.Dot(right1, right2) < 0.99f)
+            {
+                throw new InvalidOperationException();
+            }*/
+#endif
+
+        }
+
+        private float roundEulerAngleToXDegrees(float angle, float roundingValue)
+        {
+            angle += roundingValue * 0.5f;
+            var rounded = (int)(angle / roundingValue) * roundingValue;
+            return rounded;
         }
 
 
