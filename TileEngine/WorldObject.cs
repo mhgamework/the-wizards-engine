@@ -31,28 +31,29 @@ namespace MHGameWork.TheWizards.TileEngine
             get { return rotation; }
             set
             {
-                //TODO: use this to discretize the angles
-                // http://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
-                Vector3 t = Vector3.Transform(Vector3.Forward, value);
+                
 
-                if (Vector3.Dot(t, Vector3.Forward) > 0.99f)
-                    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, 0);
-                else if (Vector3.Dot(t, Vector3.Backward) > 0.99f)
-                    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.Pi);
-                else if (Vector3.Dot(t, Vector3.Left) > 0.99f)
-                    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.PiOver2);
-                else if (Vector3.Dot(t, Vector3.Right) > 0.99f)
-                    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, -MathHelper.PiOver2);
-                else
+                //Vector3 t = Vector3.Transform(Vector3.Forward, value);
 
-                {
-                    //throw new Exception();
-                }
+                //if (Vector3.Dot(t, Vector3.Forward) > 0.99f)
+                //    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, 0);
+                //else if (Vector3.Dot(t, Vector3.Backward) > 0.99f)
+                //    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.Pi);
+                //else if (Vector3.Dot(t, Vector3.Left) > 0.99f)
+                //    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.PiOver2);
+                //else if (Vector3.Dot(t, Vector3.Right) > 0.99f)
+                //    rotation = Quaternion.CreateFromAxisAngle(Vector3.Up, -MathHelper.PiOver2);
+                //else
+                //{
+                //    throw new Exception();
+                //}
 
-                //rotation = value; 
+                rotation = value; 
                 updateWorldMatrix();
             }
         }
+
+        
 
         private Matrix worldMatrix = Matrix.Identity;
         public Matrix WorldMatrix
@@ -95,10 +96,7 @@ namespace MHGameWork.TheWizards.TileEngine
             Rotation = Quaternion.Identity;
         }
 
-
-
-
-
+        
 
         #region ISnappableWorldTarget Members
 
