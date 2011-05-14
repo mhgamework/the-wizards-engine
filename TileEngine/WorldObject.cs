@@ -98,9 +98,9 @@ namespace MHGameWork.TheWizards.TileEngine
 
         private void convertQuaternionToEuler(Quaternion quat, out float yaw, out float roll, out float pitch)
         {
-            yaw = (float)Math.Atan2(2 * (quat.W * quat.X + quat.Y * quat.Z), 1 - 2 * (quat.X * quat.X + quat.Y * quat.Y));
-            pitch = (float)Math.Asin(2 * (quat.W * quat.Y - quat.Z * quat.X));
-            roll = (float)Math.Atan2(2 * (quat.W * quat.Z + quat.X * quat.Y), 1 - 2 * (quat.Y * quat.Y + quat.Z * quat.Z));
+            yaw = (float)Math.Atan2(2 * (quat.X * quat.Y + quat.Z * quat.W), 1 - 2 * (quat.Y * quat.Y + quat.Z * quat.Z));
+            pitch = (float)Math.Asin(2 * (quat.X * quat.Z - quat.W * quat.Y));
+            roll = (float)Math.Atan2(2 * (quat.X * quat.W + quat.Y * quat.Z), 1 - 2 * (quat.Z * quat.Z + quat.W * quat.W));
 
 #if DEBUG
 

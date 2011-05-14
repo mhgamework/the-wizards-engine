@@ -122,6 +122,12 @@ namespace MHGameWork.TheWizards.TileEngine
                 selectedWorldObject = clone;
             }
 
+            //Deleting
+            if (selectedWorldObject != null && game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Delete))
+            {
+                World.DeleteWorldObject(selectedWorldObject);
+                selectedWorldObject = null;
+            }   
 
             /*
             //Full Reset
@@ -145,17 +151,7 @@ namespace MHGameWork.TheWizards.TileEngine
                 translationGizmo.Position = selectedWorldObject.Position;
                 rotationGizmo.RotationQuat = selectedWorldObject.Rotation;
             }
-
-            
-
-            
-
-            //Deleting
-            if (selectedWorldObject != null && game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Delete))
-            {
-                World.DeleteWorldObject(selectedWorldObject);
-                selectedWorldObject = null;
-            }            
+                    
            */
         }
 

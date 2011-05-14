@@ -241,15 +241,15 @@ namespace MHGameWork.TheWizards.TileEngine
             loadMeshes(mapPath);
             loadTileData(mapPath);
             loadWorld(path);
-            
 
-            
            
+
+
             //var namePart = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
 
 
 
-            
+
         }
 
         private void loadMeshes(String path)
