@@ -25,15 +25,16 @@ namespace MHGameWork.TheWizards.Particles
         private readonly IParticleCreater particleCreater;
         private int maxParticles;
 
-        private float MaxLifeTime = 10.0f;
+        private float MaxLifeTime = 0.5f;
         private int particlesPerSecond = 500;
         private float ParticleFrequency = 1f / 500;
         private int emptyIndex = 0;
         private int releasedIndex = 0;
         private float time = 0;
-        private int size = 128;
+        private int size = 32;
         private ParticleSimulater simulater;
-        
+        private RenderTarget2D target;
+        private Texture2D allParticles;
         public Emitter(TexturePool texturePool, VertexDeclarationPool declarationPool, IXNAGame game, ITexture texture, float particleWidth, float particleHeight,IParticleCreater particleCreater)
         {
             this.texturePool = texturePool;
@@ -43,6 +44,7 @@ namespace MHGameWork.TheWizards.Particles
             this.texture = texture;
             this.declarationPool = declarationPool;
             this.game = game;
+          
         }
 
 
@@ -54,7 +56,12 @@ namespace MHGameWork.TheWizards.Particles
             renderData = new ParticleVertex[maxParticles * 6];
             simulater = new ParticleSimulater(game, size);
             simulater.Initialize();
-
+            target = new RenderTarget2D(game.GraphicsDevice, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height, 1, SurfaceFormat.Color);
+            game.GraphicsDevice.SetRenderTarget(0, target);
+            game.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
+            game.GraphicsDevice.SetRenderTarget(0, null);
+            allParticles = target.GetTexture();
+            
         }
 
         //depends on what kind of effect you want so I'm not sure if this is the right spot
@@ -191,10 +198,32 @@ namespace MHGameWork.TheWizards.Particles
         {
             
             simulater.RenderUpdate(game.Elapsed,position);
+
+            game.GraphicsDevice.SetRenderTarget(0, target);
+            game.GraphicsDevice.Clear(Color.Black);
             game.GraphicsDevice.RenderState.AlphaBlendEnable = true;
-            game.GraphicsDevice.RenderState.SourceBlend = Blend.One;
+            game.GraphicsDevice.RenderState.SourceBlend = Blend.SourceAlpha;
             game.GraphicsDevice.RenderState.DestinationBlend = Blend.One;
             game.GraphicsDevice.RenderState.DepthBufferEnable = false;
+            //xna alpha style
+            // Set the alpha blend mode.
+            game.GraphicsDevice.RenderState.AlphaBlendEnable = true;
+            game.GraphicsDevice.RenderState.AlphaBlendOperation = BlendFunction.Add;
+            game.GraphicsDevice.RenderState.SourceBlend = Blend.SourceAlpha;
+            game.GraphicsDevice.RenderState.DestinationBlend = Blend.InverseSourceAlpha;
+
+            // Set the alpha test mode.
+            game.GraphicsDevice.RenderState.AlphaTestEnable = true;
+            game.GraphicsDevice.RenderState.AlphaFunction = CompareFunction.Greater;
+            game.GraphicsDevice.RenderState.ReferenceAlpha = 0;
+
+            // Enable the depth buffer (so particles will not be visible through
+            // solid objects like the ground plane), but disable depth writes
+            // (so particles will not obscure other particles).
+            game.GraphicsDevice.RenderState.DepthBufferEnable = true;
+            game.GraphicsDevice.RenderState.DepthBufferWriteEnable = false;
+
+            //end xna alpha style
             shader.SetParameter("displacementTexture", simulater.getOldPosition());
             shader.SetParameter("viewProjection", viewProjection);
             shader.SetParameter("viewInverse", viewInverse);
@@ -202,6 +231,15 @@ namespace MHGameWork.TheWizards.Particles
             shader.RenderMultipass(renderPrimitivesAsBillBoards);
             game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
             game.GraphicsDevice.RenderState.DepthBufferEnable = true;
+            game.GraphicsDevice.SetRenderTarget(0, null);
+
+             var g = (XNAGame)game; 
+            g.SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.SaveState);
+            g.SpriteBatch.Draw(allParticles, Vector2.Zero, Color.White);
+            g.SpriteBatch.End();
+
+
+
         }
         private void renderPrimitivesAsBillBoards()
         {
@@ -214,9 +252,12 @@ namespace MHGameWork.TheWizards.Particles
             }
             else
             {
-                game.GraphicsDevice.VertexDeclaration = decl;
-                game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
-                game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, emptyIndex * 2);
+                if (emptyIndex > 0)
+                {
+                    game.GraphicsDevice.VertexDeclaration = decl;
+                    game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
+                    game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, emptyIndex * 2);
+                }
                 game.GraphicsDevice.VertexDeclaration = decl;
                 game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
                 game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, releasedIndex * 6, (particles.Length - releasedIndex) * 2);

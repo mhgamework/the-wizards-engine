@@ -192,7 +192,7 @@ namespace MHGameWork.TheWizards.Particles
              SwitchTextures();
             var g = (XNAGame)game;
             
-            g.SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.SaveState);
+            g.SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Texture, SaveStateMode.SaveState);
             g.SpriteBatch.Draw(getOldPosition(), Vector2.Zero, Color.White);
             g.SpriteBatch.Draw(getOldVelocity(), new Vector2(150, 0), Color.White);
             g.SpriteBatch.End();
