@@ -489,8 +489,8 @@ namespace MHGameWork.TheWizards.Tests.Terrain
             var game = new XNAGame();
             game.DrawFps = true;
             game.IsFixedTimeStep = false;
-            var map = createTestHeightmap(128, 32);
-            var terrain = new SimpleTerrain(map, 128, 32);
+            var map = createTestHeightmap(128, 16);
+            var terrain = new SimpleTerrain(map, 128, 16);
             Vector3 lightDir = Vector3.Normalize(new Vector3(1, -1, 1));
             game.SpectaterCamera.FarClip = 5000;
 
