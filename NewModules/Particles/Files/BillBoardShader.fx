@@ -79,7 +79,7 @@ float4 ps_main(VSOut In) : COLOR0
 	//return float4(1,0,0,1);
 	float4 Out;
 	Out =tex2D(DiffuseTextureSampler, In.TexCoord);
-	return Out;//float4(Out.a,0,0,1);
+	return float4(Out.rgb*0.2f,Out.a);//float4(Out.a,0,0,1);
 }
 
 // Technique

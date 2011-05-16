@@ -26,16 +26,16 @@ namespace MHGameWork.TheWizards.Particles
         private int maxParticles;
 
         private float MaxLifeTime = 0.5f;
-        private int particlesPerSecond = 500;
-        private float ParticleFrequency = 1f / 500;
+        private int particlesPerSecond;
+        private float particleFrequency;
         private int emptyIndex = 0;
         private int releasedIndex = 0;
         private float time = 0;
-        private int size = 32;
+        private int size = 128;
         private ParticleSimulater simulater;
         private RenderTarget2D target;
         private Texture2D allParticles;
-        public Emitter(TexturePool texturePool, VertexDeclarationPool declarationPool, IXNAGame game, ITexture texture, float particleWidth, float particleHeight,IParticleCreater particleCreater)
+        public Emitter(TexturePool texturePool, VertexDeclarationPool declarationPool, IXNAGame game, ITexture texture, float particleWidth, float particleHeight, IParticleCreater particleCreater)
         {
             this.texturePool = texturePool;
             this.particleHeight = particleHeight;
@@ -44,7 +44,11 @@ namespace MHGameWork.TheWizards.Particles
             this.texture = texture;
             this.declarationPool = declarationPool;
             this.game = game;
-          
+
+            particlesPerSecond = 500;
+            particleFrequency = 1f / particlesPerSecond;
+
+
         }
 
 
@@ -61,7 +65,7 @@ namespace MHGameWork.TheWizards.Particles
             game.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
             game.GraphicsDevice.SetRenderTarget(0, null);
             allParticles = target.GetTexture();
-            
+
         }
 
         //depends on what kind of effect you want so I'm not sure if this is the right spot
@@ -82,7 +86,7 @@ namespace MHGameWork.TheWizards.Particles
                         releasedIndex = i;
                 }
             }
-            if (time + game.Elapsed > ParticleFrequency)
+            if (time + game.Elapsed > particleFrequency)
             {
                 AddParticles((int)(particlesPerSecond * (time + game.Elapsed)), position, Vector3.Zero);
                 time = 0;
@@ -103,9 +107,9 @@ namespace MHGameWork.TheWizards.Particles
                         releasedIndex = i;
                 }
             }
-            if (time + game.Elapsed > ParticleFrequency)
+            if (time + game.Elapsed > particleFrequency)
             {
-                AddParticles(particleCreater,(int)(particlesPerSecond * (time + game.Elapsed)));
+                AddParticles(particleCreater, (int)(particlesPerSecond * (time + game.Elapsed)));
                 time = 0;
             }
             else
@@ -129,15 +133,16 @@ namespace MHGameWork.TheWizards.Particles
 
         }
 
-        public void AddParticles(IParticleCreater creater,int amount)
+        public void AddParticles(IParticleCreater creater, int amount)
         {
+
             for (int i = 0; i < amount; i++)
             {
                 particles[emptyIndex] = MaxLifeTime;
                 Vector3 pos;
                 Vector3 velo;
                 creater.GetNewParticleData(out pos, out velo);
-                simulater.AddNewParticle(pos+position, velo, emptyIndex);
+                simulater.AddNewParticle(pos + position, velo, emptyIndex);
                 incrementEmptyIndex();
             }
 
@@ -196,10 +201,10 @@ namespace MHGameWork.TheWizards.Particles
         }
         public void Render(Matrix viewProjection, Matrix viewInverse)
         {
-            
-            simulater.RenderUpdate(game.Elapsed,position);
+            setShader();
+            simulater.RenderUpdate(game.Elapsed, position);
 
-           //game.GraphicsDevice.SetRenderTarget(0, target);
+            game.GraphicsDevice.SetRenderTarget(0, target);
             game.GraphicsDevice.Clear(Color.Black);
             game.GraphicsDevice.RenderState.AlphaBlendEnable = true;
             game.GraphicsDevice.RenderState.SourceBlend = Blend.SourceAlpha;
@@ -210,7 +215,8 @@ namespace MHGameWork.TheWizards.Particles
             game.GraphicsDevice.RenderState.AlphaBlendEnable = true;
             game.GraphicsDevice.RenderState.AlphaBlendOperation = BlendFunction.Add;
             game.GraphicsDevice.RenderState.SourceBlend = Blend.SourceAlpha;
-            game.GraphicsDevice.RenderState.DestinationBlend = Blend.InverseSourceAlpha;
+            //game.GraphicsDevice.RenderState.DestinationBlend = Blend.InverseSourceAlpha;
+            game.GraphicsDevice.RenderState.DestinationBlend = Blend.One;
 
             // Set the alpha test mode.
             game.GraphicsDevice.RenderState.AlphaTestEnable = true;
@@ -231,12 +237,12 @@ namespace MHGameWork.TheWizards.Particles
             shader.RenderMultipass(renderPrimitivesAsBillBoards);
             game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
             game.GraphicsDevice.RenderState.DepthBufferEnable = true;
-            //game.GraphicsDevice.SetRenderTarget(0, null);
+            game.GraphicsDevice.SetRenderTarget(0, null);
 
-            /* var g = (XNAGame)game; 
+            var g = (XNAGame)game;
             g.SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.SaveState);
             g.SpriteBatch.Draw(allParticles, Vector2.Zero, Color.White);
-            g.SpriteBatch.End();*/
+            g.SpriteBatch.End();
 
 
 
@@ -248,7 +254,7 @@ namespace MHGameWork.TheWizards.Particles
 
                 game.GraphicsDevice.VertexDeclaration = decl;
                 game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
-                game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, releasedIndex * 6, emptyIndex * 2);
+                game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, releasedIndex * 6, (emptyIndex - releasedIndex) * 2);
             }
             else
             {

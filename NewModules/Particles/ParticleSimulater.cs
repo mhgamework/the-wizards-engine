@@ -59,8 +59,7 @@ namespace MHGameWork.TheWizards.Particles
         {
             quad = new FullScreenQuad(game.GraphicsDevice);
             shader = BasicShader.LoadFromEmbeddedFile(game, Assembly.GetExecutingAssembly(), "MHGameWork.TheWizards.Particles.Files.BasicParticleAnimation.fx", "..\\..\\NewModules\\Particles\\Files\\BasicParticleAnimation.fx", new EffectPool());
-            shader.SetTechnique("particleSimulation");
-            shader.SetParameter("size", size);
+
 
             clearRenderTarget(positionTarget);
             clearRenderTarget(positionTarget2);
@@ -155,7 +154,7 @@ namespace MHGameWork.TheWizards.Particles
         {
             HalfVector4[] vec = new HalfVector4[1];
             vec[0] = new HalfVector4(position.X, position.Y, position.Z, 1);
-           getOldPosition().SetData<HalfVector4>(0, new Rectangle(index % size, (int)(index / size), 1, 1), vec, 0, 1, SetDataOptions.None);
+            getOldPosition().SetData<HalfVector4>(0, new Rectangle(index % size, (int)(index / size), 1, 1), vec, 0, 1, SetDataOptions.None);
 
             vec[0] = new HalfVector4(velocity.X, velocity.Y, velocity.Z, 0);
             getOldVelocity().SetData<HalfVector4>(0, new Rectangle(index % size, (int)(index / size), 1, 1), vec, 0, 1, SetDataOptions.None);
@@ -168,14 +167,16 @@ namespace MHGameWork.TheWizards.Particles
             getOldPosition().SetData<Vector4>(velocities, start, velocities.Length, SetDataOptions.None);
         }
 
-        public void RenderUpdate(float elapsed,Vector3 position)
+        public void RenderUpdate(float elapsed, Vector3 position)
         {
             game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
+            shader.SetTechnique("particleSimulation");
+            shader.SetParameter("size", size);
             shader.SetParameter("elapsed", elapsed);
             shader.SetParameter("center", position);
             shader.SetParameter("oldPosition", getOldPosition());
             shader.SetParameter("oldVelocity", getOldVelocity());
-           
+
             Viewport oldPort = game.GraphicsDevice.Viewport;
             game.GraphicsDevice.Viewport = newPort;
 
@@ -189,20 +190,20 @@ namespace MHGameWork.TheWizards.Particles
             shader.SetParameter("oldVelocity", (Texture2D)null);
             game.GraphicsDevice.Viewport = oldPort;
 
-             SwitchTextures();
+            SwitchTextures();
             var g = (XNAGame)game;
-            
+
             g.SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Texture, SaveStateMode.SaveState);
             g.SpriteBatch.Draw(getOldPosition(), Vector2.Zero, Color.White);
             g.SpriteBatch.Draw(getOldVelocity(), new Vector2(150, 0), Color.White);
             g.SpriteBatch.End();
 
-           
+
 
 
         }
 
 
-      
+
     }
 }
