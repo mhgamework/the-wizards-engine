@@ -15,6 +15,8 @@ namespace MHGameWork.TheWizards.Tests.Terrain
 
         public int TriangleCount { get; set; }
 
+        public float[] MinDistancesSquared { get; set; }
+
         private ITerrainBlock[] neighbours = new ITerrainBlock[4];
 
         public ITerrainBlock GetNeighbour(TerrainBlockEdge edge)
@@ -24,6 +26,11 @@ namespace MHGameWork.TheWizards.Tests.Terrain
         public void SetNeightbour(TerrainBlockEdge edge, ITerrainBlock value)
         {
             neighbours[(int)edge] = value;
+        }
+
+        public SimpleTerrainBlock()
+        {
+            DetailLevel = -1;
         }
 
     }

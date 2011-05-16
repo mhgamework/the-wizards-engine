@@ -35,19 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Editor">
-      <HintPath>..\Editor\bin\x86\Debug\Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
-    <Reference Include="NewModules">
-      <HintPath>..\bin\Debug\NewModules.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\_Libraries\NUnit-2.5.7.10213\bin\net-2.0\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="ServerClientOud">
-      <HintPath>..\Deprecated\ServerClientOud\bin\x86\Debug\ServerClientOud.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -143,6 +134,18 @@
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Deprecated\ServerClientOud\ServerClientOud.csproj">
+      <Project>{409E248D-79B7-4644-886A-A01C1211D6DD}</Project>
+      <Name>ServerClientOud</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Editor\Editor.csproj">
+      <Project>{A356B2CF-4BBA-4DB4-9FB3-5646F9887048}</Project>
+      <Name>Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NewModules\NewModules.csproj">
+      <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
+      <Name>NewModules</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
