@@ -199,7 +199,7 @@ namespace MHGameWork.TheWizards.Particles
             
             simulater.RenderUpdate(game.Elapsed,position);
 
-            game.GraphicsDevice.SetRenderTarget(0, target);
+           //game.GraphicsDevice.SetRenderTarget(0, target);
             game.GraphicsDevice.Clear(Color.Black);
             game.GraphicsDevice.RenderState.AlphaBlendEnable = true;
             game.GraphicsDevice.RenderState.SourceBlend = Blend.SourceAlpha;
@@ -231,12 +231,12 @@ namespace MHGameWork.TheWizards.Particles
             shader.RenderMultipass(renderPrimitivesAsBillBoards);
             game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
             game.GraphicsDevice.RenderState.DepthBufferEnable = true;
-            game.GraphicsDevice.SetRenderTarget(0, null);
+            //game.GraphicsDevice.SetRenderTarget(0, null);
 
-             var g = (XNAGame)game; 
+            /* var g = (XNAGame)game; 
             g.SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.SaveState);
             g.SpriteBatch.Draw(allParticles, Vector2.Zero, Color.White);
-            g.SpriteBatch.End();
+            g.SpriteBatch.End();*/
 
 
 
