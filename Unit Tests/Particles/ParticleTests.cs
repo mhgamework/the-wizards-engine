@@ -82,7 +82,7 @@ namespace MHGameWork.TheWizards.Tests.Particles
             var texPool = new TexturePool();
             var testTexture = GetTestTexture();
             creater = new BallParticleCreater();
-            emit = new Emitter(texPool, pool, game, testTexture, 2f, 2f,creater);
+            emit = new Emitter(texPool, pool, game, testTexture, 5f, 5f,creater);
             Seeder seed = new Seeder(54);
             game.InitializeEvent += delegate
             {
@@ -108,9 +108,9 @@ namespace MHGameWork.TheWizards.Tests.Particles
                 }
                 else
                 {
-                    dist +=game.Elapsed*5;
+                    dist +=game.Elapsed*25;
                 }
-                //emit.SetPosition(new Vector3(dist,0,0));
+                emit.SetPosition(new Vector3(dist,0,0));
             };
             game.DrawEvent += delegate
             {
