@@ -25,16 +25,19 @@ namespace MHGameWork.TheWizards.Particles
         private readonly IParticleCreater particleCreater;
         private int maxParticles;
 
-        private float MaxLifeTime = 0.5f;
+        private float MaxLifeTime = 1f;
         private int particlesPerSecond;
         private float particleFrequency;
         private int emptyIndex = 0;
-        private int releasedIndex = 0;
+        private int startIndex = 0;
         private float time = 0;
         private int size = 128;
         private ParticleSimulater simulater;
         private RenderTarget2D target;
         private Texture2D allParticles;
+        // apperently to change it on the grapicscard I need an rendertarget
+        private RenderTarget2D timeTarget;
+        private Texture2D timeTexture;
         public Emitter(TexturePool texturePool, VertexDeclarationPool declarationPool, IXNAGame game, ITexture texture, float particleWidth, float particleHeight, IParticleCreater particleCreater)
         {
             this.texturePool = texturePool;
@@ -45,7 +48,7 @@ namespace MHGameWork.TheWizards.Particles
             this.declarationPool = declarationPool;
             this.game = game;
 
-            particlesPerSecond = 500;
+            particlesPerSecond = 250;
             particleFrequency = 1f / particlesPerSecond;
 
 
@@ -66,6 +69,13 @@ namespace MHGameWork.TheWizards.Particles
             game.GraphicsDevice.SetRenderTarget(0, null);
             allParticles = target.GetTexture();
 
+
+           /* timeTarget = new RenderTarget2D(game.GraphicsDevice, size, size, 1, SurfaceFormat.Single);
+            game.GraphicsDevice.SetRenderTarget(0, timeTarget);
+            game.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
+            game.GraphicsDevice.SetRenderTarget(0, null);*/
+            timeTexture = new Texture2D(game.GraphicsDevice,size,size,1,TextureUsage.None,SurfaceFormat.Single);
+
         }
 
         //depends on what kind of effect you want so I'm not sure if this is the right spot
@@ -83,7 +93,7 @@ namespace MHGameWork.TheWizards.Particles
                 if (i < particles.Length - 1)
                 {
                     if (particles[i] <= 0 && particles[i + 1] > 0)
-                        releasedIndex = i;
+                        startIndex = i;
                 }
             }
             if (time + game.Elapsed > particleFrequency)
@@ -101,12 +111,21 @@ namespace MHGameWork.TheWizards.Particles
             for (int i = 0; i < particles.Length; i++)
             {
                 particles[i] -= game.Elapsed;
+                int old = startIndex;
                 if (i < particles.Length - 1)
                 {
                     if (particles[i] <= 0 && particles[i + 1] > 0)
-                        releasedIndex = i;
+                        startIndex = i+1;
+                
                 }
+                else
+                {
+                    if (particles[i] <= 0 && particles[0] > 0)
+                        startIndex = 0;
+                }
+                
             }
+
             if (time + game.Elapsed > particleFrequency)
             {
                 AddParticles(particleCreater, (int)(particlesPerSecond * (time + game.Elapsed)));
@@ -135,9 +154,16 @@ namespace MHGameWork.TheWizards.Particles
 
         public void AddParticles(IParticleCreater creater, int amount)
         {
+            game.GraphicsDevice.Textures[0] = null;
+            game.GraphicsDevice.Textures[1] = null;
+            game.GraphicsDevice.Textures[2] = null;
+            game.GraphicsDevice.Textures[3] = null;
 
             for (int i = 0; i < amount; i++)
             {
+                Single[] singleTime = new Single[1];
+                singleTime[0] = (float)(((XNAGame)game).GameTime.TotalGameTime.TotalMilliseconds);
+                timeTexture.SetData<Single>(0, new Rectangle(emptyIndex % size, (int)(emptyIndex / size), 1, 1),singleTime, 0, 1, SetDataOptions.None);
                 particles[emptyIndex] = MaxLifeTime;
                 Vector3 pos;
                 Vector3 velo;
@@ -189,6 +215,7 @@ namespace MHGameWork.TheWizards.Particles
             shader.SetParameter("viewProjection", Matrix.Identity);
             shader.SetParameter("viewInverse", Matrix.Identity);
             shader.SetParameter("diffuseTexture", texturePool.LoadTexture(texture));
+            shader.SetParameter("timeTexture", timeTexture);
             shader.SetParameter("width", particleWidth);
             shader.SetParameter("height", particleHeight);
             shader.SetParameter("size", size);
@@ -201,9 +228,9 @@ namespace MHGameWork.TheWizards.Particles
         }
         public void Render(Matrix viewProjection, Matrix viewInverse)
         {
-            setShader();
+            
             simulater.RenderUpdate(game.Elapsed, position);
-
+            setShader();
             game.GraphicsDevice.SetRenderTarget(0, target);
             game.GraphicsDevice.Clear(Color.Black);
             game.GraphicsDevice.RenderState.AlphaBlendEnable = true;
@@ -230,6 +257,7 @@ namespace MHGameWork.TheWizards.Particles
             game.GraphicsDevice.RenderState.DepthBufferWriteEnable = false;
 
             //end xna alpha style
+            shader.SetParameter("currentTime", (float)(((XNAGame)game).GameTime.TotalGameTime.TotalMilliseconds));
             shader.SetParameter("displacementTexture", simulater.getOldPosition());
             shader.SetParameter("viewProjection", viewProjection);
             shader.SetParameter("viewInverse", viewInverse);
@@ -242,19 +270,21 @@ namespace MHGameWork.TheWizards.Particles
             var g = (XNAGame)game;
             g.SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.SaveState);
             g.SpriteBatch.Draw(allParticles, Vector2.Zero, Color.White);
+
             g.SpriteBatch.End();
 
 
-
+            shader.SetParameter("timeTexture", (Texture2D)null);
+            shader.effect.CommitChanges();
         }
         private void renderPrimitivesAsBillBoards()
         {
-            if (emptyIndex > releasedIndex)
+            if (emptyIndex > startIndex)
             {
 
                 game.GraphicsDevice.VertexDeclaration = decl;
                 game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
-                game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, releasedIndex * 6, (emptyIndex - releasedIndex) * 2);
+                game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, startIndex * 6, (emptyIndex - startIndex) * 2);
             }
             else
             {
@@ -266,7 +296,7 @@ namespace MHGameWork.TheWizards.Particles
                 }
                 game.GraphicsDevice.VertexDeclaration = decl;
                 game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
-                game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, releasedIndex * 6, (particles.Length - releasedIndex) * 2);
+                game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, startIndex * 6, (particles.Length - startIndex) * 2);
             }
             //game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, particles.Length * 2);
         }

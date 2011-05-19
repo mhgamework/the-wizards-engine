@@ -8,7 +8,9 @@ shared float4x4 view : View;
 shared float4x4 projection : Projection;
 
 shared float4x4 viewInverse : ViewInverse;
-
+float3 startColor=float3(1,0.8f,0.8f);
+	float3 endColor=float3(1,0.2f,0.2f);
+	float oneOverTotalLifeTime=1/1000.0f;
 texture diffuseTexture : Diffuse
 <
 	string UIName = "Diffuse Texture";
@@ -29,11 +31,20 @@ sampler displacementSampler = sampler_state
 	MagFilter=Linear;
 	MipFilter=Linear;
 };
+texture timeTexture;
+sampler timeSampler = sampler_state
+{
+	Texture = <timeTexture>;
+	MinFilter=Linear;
+	MagFilter=Linear;
+	MipFilter=Linear;
+};
 // Vertex Output Declaration
 struct VSOut
 {
 	float4 Position	: POSITION;
 	float2 TexCoord	: TEXCOORD0;
+	float lifeTime	: TEXCOORD1;
 	
 };
 
@@ -43,6 +54,8 @@ struct VertexInput
 	float2 TexCoord : TEXCOORD1;
 	
 };
+
+ float currentTime;
  float width;
  float height;
  float size;
@@ -55,9 +68,11 @@ VSOut vs_main(VertexInput In)
 	//position= float4(0,0,0,1);
 	float4 pos=mul(position,world);
 	//pos = float4(In.uv,0,1);
- 
-   float4 translationUp=viewInverse[1]*In.TexCoord.y*height;
-   float4 translationRight=viewInverse[0]*In.TexCoord.x*width;
+	float createTime= tex2Dlod(timeSampler, float4(mapUV,0,0)).x;
+	float lifetime= currentTime-createTime;
+
+   float4 translationUp=viewInverse[1]*In.TexCoord.y*(height+lifetime*oneOverTotalLifeTime*10);
+   float4 translationRight=viewInverse[0]*In.TexCoord.x*(width+lifetime*oneOverTotalLifeTime*10);
    //float4 translationUp = float4(In.TexCoord,0,1);
    //translationUp=float3(0,1,0)*In.TexCoord.y*In.size.y;
    //translationRight=float3(1,0,0)*In.TexCoord.x*In.size.x;
@@ -68,18 +83,26 @@ VSOut vs_main(VertexInput In)
   
 	output.Position=mul(pos,viewProjection);
 	output.TexCoord=float2(0.5,0.5)+In.TexCoord;
+	output.lifeTime=lifetime;
     return output;
 }
+
 
 
 
 // Pixel Shader
 float4 ps_main(VSOut In) : COLOR0
 {
-	//return float4(1,0,0,1);
+	
+	
+
+	//return float4(lifetime*oneOverTotalLifeTime,0,0,1);
 	float4 Out;
+	
 	Out =tex2D(DiffuseTextureSampler, In.TexCoord);
-	return float4(Out.rgb*0.2f,Out.a);//float4(Out.a,0,0,1);
+	
+	float3 color=lerp(startColor,endColor,In.lifeTime*oneOverTotalLifeTime);
+	return float4(Out.rgb*color*0.5f,Out.a);//float4(Out.a,0,0,1);
 }
 
 // Technique
