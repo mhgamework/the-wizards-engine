@@ -8,7 +8,7 @@ shared float4x4 view : View;
 shared float4x4 projection : Projection;
 
 shared float4x4 viewInverse : ViewInverse;
-float3 startColor=float3(1,0.8f,0.8f);
+float3 startColor=float3(1,0.4f,0.4f);
 	float3 endColor=float3(1,0.2f,0.2f);
 	float oneOverTotalLifeTime=1/1000.0f;
 texture diffuseTexture : Diffuse
@@ -71,8 +71,8 @@ VSOut vs_main(VertexInput In)
 	float createTime= tex2Dlod(timeSampler, float4(mapUV,0,0)).x;
 	float lifetime= currentTime-createTime;
 
-   float4 translationUp=viewInverse[1]*In.TexCoord.y*(height+lifetime*oneOverTotalLifeTime*10);
-   float4 translationRight=viewInverse[0]*In.TexCoord.x*(width+lifetime*oneOverTotalLifeTime*10);
+   float4 translationUp=viewInverse[1]*In.TexCoord.y*(height+lifetime*oneOverTotalLifeTime*(-height));
+   float4 translationRight=viewInverse[0]*In.TexCoord.x*(width+lifetime*oneOverTotalLifeTime*(-height));
    //float4 translationUp = float4(In.TexCoord,0,1);
    //translationUp=float3(0,1,0)*In.TexCoord.y*In.size.y;
    //translationRight=float3(1,0,0)*In.TexCoord.x*In.size.x;
