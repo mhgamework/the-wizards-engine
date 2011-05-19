@@ -99,7 +99,7 @@ namespace MHGameWork.TheWizards.Networking.Files
                 ret.partTransporter = filePartTransporter.GetTransporterForClient(client);
                 ret.endTransporter = fileCompleteTransporter.GetTransporterForClient(client);
 
-                //ret.startReceiving(); //TODO: only suppport sending ATM
+                //ret.StartReceiving(); //TODO: only suppport sending ATM
             }
             return ret;
         }

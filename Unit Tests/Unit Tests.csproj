@@ -160,6 +160,7 @@
     <Compile Include="TileEngine\TileEngineTest.cs" />
     <Compile Include="Treegenerater\TreeSynchronisationTest.cs" />
     <Compile Include="Utilities\UtilitiesTest.cs" />
+    <Compile Include="Versioning\VersioningTest.cs" />
     <Compile Include="WorldDatabase\WorldDatabaseTest.cs" />
     <Compile Include="WorldDatabase\TerrainData2Element.cs" />
     <Compile Include="WorldDatabase\TerrainData2ElementFactory.cs" />

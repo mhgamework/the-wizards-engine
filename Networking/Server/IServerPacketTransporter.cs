@@ -21,5 +21,11 @@ namespace MHGameWork.TheWizards.Networking.Server
         /// by this object.
         /// </summary>
         void EnableReceiveMode();
+        /// <summary>
+        /// Given callback will be called when packet is received
+        /// This will cause this serverPT to collect all packets from the clienttransporters. Clienttransporters can not be used directly this way, they are managed
+        /// by this object.
+        /// </summary>
+        void EnableReceiveCallbackMode(ServerPacketReceivedCallback<T> callback);
     }
 }

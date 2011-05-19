@@ -327,6 +327,11 @@
     <Compile Include="Rendering\IMeshRenderElement.cs" />
     <Compile Include="Rendering\ISimpleMeshRenderer.cs" />
     <Compile Include="Rendering\ITextureFactory.cs" />
+    <Compile Include="Versioning\ClientVersioningSyncer.cs" />
+    <Compile Include="Versioning\ServerVersioningSyncer.cs" />
+    <Compile Include="Versioning\IStreamProvider.cs" />
+    <Compile Include="Versioning\Revision.cs" />
+    <Compile Include="Versioning\VersioningSystem.cs" />
     <Compile Include="World\Static\ClientStaticWorldObjectSyncer.cs" />
     <Compile Include="World\ClientSyncedActor.cs" />
     <Compile Include="World\ClientSyncer.cs" />
