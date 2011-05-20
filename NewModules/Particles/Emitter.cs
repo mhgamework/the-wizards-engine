@@ -65,6 +65,17 @@ namespace MHGameWork.TheWizards.Particles
 
         }
 
+        public Color StartColor
+        {
+            get { return startColor; }
+            set { startColor = value; }
+        }
+
+        public Color EndColor
+        {
+            get { return endColor; }
+            set { endColor = value; }
+        }
 
 
         public void Initialize()
@@ -227,8 +238,8 @@ namespace MHGameWork.TheWizards.Particles
             shader.SetParameter("height", particleHeight);
             shader.SetParameter("widthEnd", particleWidthEnd);
             shader.SetParameter("heightEnd", particleHeightEnd);
-            shader.SetParameter("startColor", startColor);
-            shader.SetParameter("endColor", endColor);
+            shader.SetParameter("startColor", StartColor);
+            shader.SetParameter("endColor", EndColor);
             shader.SetParameter("oneOverTotalLifeTime", 1/(MaxLifeTime*1000));
             
         }

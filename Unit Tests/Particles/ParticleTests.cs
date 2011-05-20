@@ -135,7 +135,7 @@ namespace MHGameWork.TheWizards.Tests.Particles
             var texPool = new TexturePool();
             var testTexture = GetTestTexture();
             creater = new FlameParticelCreater();
-            emit = new Emitter(texPool, pool, game, testTexture, 2f, 2f, creater,"flame");
+            emit = new Emitter(texPool, pool, game, testTexture, 2f, 2f, creater, "calculateFlame");
             Seeder seed = new Seeder(54);
 
             var curve = Curve3DTester.CreateTestCurve();
@@ -158,7 +158,8 @@ namespace MHGameWork.TheWizards.Tests.Particles
             {
                 dist += game.Elapsed;
                 // emit.setShader();  
-               // emit.SetPosition(curve.Evaluate(dist*3)*2);
+                Temp(dist, emit, curve);
+                setColors(emit);
                 emit.Update();
 
             };
@@ -172,5 +173,15 @@ namespace MHGameWork.TheWizards.Tests.Particles
             game.Run();
         }
 
+        private void setColors(Emitter emit)
+        {
+            //emit.StartColor = new Color(20,20,200);
+            //emit.EndColor = new Color(0, 200,0);
+        }
+
+        private void Temp(float dist, Emitter emit, Curve3D curve)
+        {
+            //emit.SetPosition(curve.Evaluate(dist*3)*2);
+        }
     }
 }

@@ -1,10 +1,16 @@
 
-#include "emmiterGenerated.fx"
-
-float3 calculateAcceleration(float3 oldVelocity, float3 oldPosition)
+float3 calculateBall(float3 oldVelocity, float3 oldPosition)
 {
-	// functie
+	return float4(0,0,0,1);
 }
+float3 calculateFlame(float3 oldVelocity, float3 oldPosition)
+{
+		return float4(0,25,0,1);
+}
+
+#include "generated.fx"
+
+
 
 texture oldPosition;
 sampler OldPositionSampler = sampler_state
@@ -71,7 +77,7 @@ PixelShaderOutput ps_main(VSOut In)
     float4 oldPosition =tex2D(OldPositionSampler, In.TexCoord+halfTexel);
     float4 oldVelocity =tex2D(OldVelocitySampler, In.TexCoord+halfTexel);
     float3 velocity;
-    velocity=oldVelocity.xyz+float4(0,15,0,1)*elapsed;//float4(normalize((center.xyz-oldPosition.xyz))*dot(oldVelocity,oldVelocity)*elapsed,1);
+    velocity=oldVelocity.xyz+calculateAcceleration(oldVelocity,oldPosition)*elapsed;//float4(normalize((center.xyz-oldPosition.xyz))*dot(oldVelocity,oldVelocity)*elapsed,1);
 	 
 	 
 
@@ -92,14 +98,7 @@ PixelShaderOutput ps_main(VSOut In)
 	return output;
 }
 
-float3 calculateBall(float3 oldVelocity, float3 oldPosition)
-{
-	return float4(0,0,0,1);
-}
-float3 calculateFlame(float3 oldVelocity, float3 oldPosition)
-{
-		return float4(0,25,0,1);
-}
+
 
 
 // Technique
