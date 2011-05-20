@@ -16,9 +16,11 @@ namespace MHGameWork.TheWizards.Particles
 
             float rad = seed.NextFloat(0, 1);
             position = randomDirection() * seed.NextFloat(0, 1f);
+            position.Y = 0;
             //position = new Vector3((float)(Math.Cos(a) * Math.Cos(t)), (float)Math.Sin(t), (float)(Math.Sin(a) * Math.Cos(t)));
 
             velocity = randomDirection() * 1f;
+            velocity.Y = (float) Math.Abs(velocity.Y);
         }
 
         private Vector3 randomDirection()

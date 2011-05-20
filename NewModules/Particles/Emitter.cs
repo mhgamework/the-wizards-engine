@@ -38,7 +38,18 @@ namespace MHGameWork.TheWizards.Particles
         // apperently to change it on the grapicscard I need an rendertarget
         private RenderTarget2D timeTarget;
         private Texture2D timeTexture;
-        public Emitter(TexturePool texturePool, VertexDeclarationPool declarationPool, IXNAGame game, ITexture texture, float particleWidth, float particleHeight, IParticleCreater particleCreater)
+        private BasicShader shader;
+        private VertexBuffer vertexBuffer;
+        private VertexDeclaration decl;
+        private int vertexCount;
+        private int triangleCount;
+        private int vertexStride;
+        private float particleWidthEnd=0.5f;
+        private float particleHeightEnd=0.5f;
+        private Color startColor = new Color(new Vector3(1, 0.4f, 0.4f));
+        private Color endColor=new Color(new Vector3(0.4f,0.2f,0.2f));
+
+        public Emitter(TexturePool texturePool, VertexDeclarationPool declarationPool, IXNAGame game, ITexture texture, float particleWidth, float particleHeight, IParticleCreater particleCreater,String effectName)
         {
             this.texturePool = texturePool;
             this.particleHeight = particleHeight;
@@ -47,7 +58,7 @@ namespace MHGameWork.TheWizards.Particles
             this.texture = texture;
             this.declarationPool = declarationPool;
             this.game = game;
-
+              simulater = new ParticleSimulater(game, size,effectName);
             particlesPerSecond = 250;
             particleFrequency = 1f / particlesPerSecond;
 
@@ -61,7 +72,6 @@ namespace MHGameWork.TheWizards.Particles
             maxParticles = size * size;
             particles = new float[maxParticles];
             renderData = new ParticleVertex[maxParticles * 6];
-            simulater = new ParticleSimulater(game, size);
             simulater.Initialize();
             target = new RenderTarget2D(game.GraphicsDevice, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height, 1, SurfaceFormat.Color);
             game.GraphicsDevice.SetRenderTarget(0, target);
@@ -76,8 +86,7 @@ namespace MHGameWork.TheWizards.Particles
             game.GraphicsDevice.SetRenderTarget(0, null);*/
             timeTexture = new Texture2D(game.GraphicsDevice,size,size,1,TextureUsage.None,SurfaceFormat.Single);
 
-        }
-
+        }     
         //depends on what kind of effect you want so I'm not sure if this is the right spot
         private void incrementEmptyIndex()
         {
@@ -193,12 +202,8 @@ namespace MHGameWork.TheWizards.Particles
         {
             return new Vector2(index % size, (int)(index / size));
         }
-        private BasicShader shader;
-        private VertexBuffer vertexBuffer;
-        private VertexDeclaration decl;
-        private int vertexCount;
-        private int triangleCount;
-        private int vertexStride;
+       
+
         public void InitializeRender()
         {
             shader = BasicShader.LoadFromEmbeddedFile(game, Assembly.GetExecutingAssembly(), "MHGameWork.TheWizards.Particles.Files.BillBoardShader.fx", "..\\..\\NewModules\\Particles\\Files\\BillBoardShader.fx", new EffectPool());
@@ -215,10 +220,17 @@ namespace MHGameWork.TheWizards.Particles
             shader.SetParameter("viewProjection", Matrix.Identity);
             shader.SetParameter("viewInverse", Matrix.Identity);
             shader.SetParameter("diffuseTexture", texturePool.LoadTexture(texture));
+            shader.SetParameter("size", size);
+            //effect parameter
             shader.SetParameter("timeTexture", timeTexture);
             shader.SetParameter("width", particleWidth);
             shader.SetParameter("height", particleHeight);
-            shader.SetParameter("size", size);
+            shader.SetParameter("widthEnd", particleWidthEnd);
+            shader.SetParameter("heightEnd", particleHeightEnd);
+            shader.SetParameter("startColor", startColor);
+            shader.SetParameter("endColor", endColor);
+            shader.SetParameter("oneOverTotalLifeTime", 1/(MaxLifeTime*1000));
+            
         }
 
         public void SetRenderData()

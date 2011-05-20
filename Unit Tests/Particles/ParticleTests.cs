@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.Tests.Particles
             var texPool = new TexturePool();
             var testTexture = GetTestTexture();
             SimpleParticleCreater creater = new SimpleParticleCreater();
-            emit = new Emitter(texPool, pool, game, testTexture, 5, 5, creater);
+            emit = new Emitter(texPool, pool, game, testTexture, 5, 5, creater,"basic");
             Seeder seed = new Seeder(54);
             game.InitializeEvent += delegate
                                         {
@@ -83,7 +83,7 @@ namespace MHGameWork.TheWizards.Tests.Particles
             var texPool = new TexturePool();
             var testTexture = GetTestTexture();
             creater = new BallParticleCreater();
-            emit = new Emitter(texPool, pool, game, testTexture, 5f, 5f, creater);
+            emit = new Emitter(texPool, pool, game, testTexture, 5f, 5f, creater,"fireBall");
             Seeder seed = new Seeder(54);
             game.InitializeEvent += delegate
             {
@@ -135,7 +135,7 @@ namespace MHGameWork.TheWizards.Tests.Particles
             var texPool = new TexturePool();
             var testTexture = GetTestTexture();
             creater = new FlameParticelCreater();
-            emit = new Emitter(texPool, pool, game, testTexture, 2f, 2f, creater);
+            emit = new Emitter(texPool, pool, game, testTexture, 2f, 2f, creater,"flame");
             Seeder seed = new Seeder(54);
 
             var curve = Curve3DTester.CreateTestCurve();
@@ -158,7 +158,7 @@ namespace MHGameWork.TheWizards.Tests.Particles
             {
                 dist += game.Elapsed;
                 // emit.setShader();  
-                emit.SetPosition(curve.Evaluate(dist*3)*2);
+               // emit.SetPosition(curve.Evaluate(dist*3)*2);
                 emit.Update();
 
             };

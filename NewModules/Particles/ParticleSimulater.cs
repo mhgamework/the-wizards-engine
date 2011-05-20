@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.Particles
         private readonly int size;
         private int vertexStride = TangentVertex.SizeInBytes;
         private bool fase = true;
-        public ParticleSimulater(IXNAGame game, int size)
+        public ParticleSimulater(IXNAGame game, int size, string simulation)
         {
             this.game = game;
             this.size = size;
@@ -54,7 +54,10 @@ namespace MHGameWork.TheWizards.Particles
             newPort.Width = size;
 
         }
-
+       private void personalizeShader()
+       {
+           
+       }
         public void Initialize()
         {
             quad = new FullScreenQuad(game.GraphicsDevice);
