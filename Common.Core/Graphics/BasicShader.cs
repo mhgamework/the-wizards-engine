@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using MHGameWork.TheWizards.ServerClient;
@@ -41,7 +42,10 @@ namespace MHGameWork.TheWizards.Graphics
 
         private bool reloadScheduled;
 
-        protected BasicShader(IXNAGame nGame)
+        private IncludeHandler includeHandler = new IncludeHandler();
+
+
+        public BasicShader(IXNAGame nGame)
         {
             game = nGame;
             game.AddBasicShader(this);
@@ -58,6 +62,13 @@ namespace MHGameWork.TheWizards.Graphics
             //TODO: maybe also set the world, viewprojection, etc params to be identical, but probably not necessary
         }
 
+
+        public void AddCustomIncludeHandler(string filename, CustomIncludeCallback handler)
+        {
+            if (includeHandler.CustomIncludes.ContainsKey(filename))
+                throw new InvalidOperationException("A custom handler has already been set for that filename!!");
+            includeHandler.CustomIncludes.Add(filename, handler);
+        }
 
         public static BasicShader LoadFromFXFile(IXNAGame game, System.IO.Stream strm, EffectPool pool)
         {
@@ -90,6 +101,7 @@ namespace MHGameWork.TheWizards.Graphics
         /// <summary>
         /// Load an effect from an hlsl .fx file
         /// </summary>
+        [Obsolete]
         protected void LoadFromFXFile(IGameFile file, EffectPool pool)
         {
             //BasicShader shader = new BasicShader( game );
@@ -104,6 +116,7 @@ namespace MHGameWork.TheWizards.Graphics
             CompiledEffect compiledEffect;
             try
             {
+
                 compiledEffect = Effect.CompileEffectFromFile(file.GetFullFilename(), null, null, CompilerOptions.None, TargetPlatform.Windows);
 
 
@@ -144,7 +157,7 @@ namespace MHGameWork.TheWizards.Graphics
             using (var reader = new System.IO.StreamReader(strm))
             {
                 string source = reader.ReadToEnd();
-                compiledEffect = Effect.CompileEffectFromSource(source, null, null, CompilerOptions.Debug, TargetPlatform.Windows);
+                compiledEffect = Effect.CompileEffectFromSource(source, null, includeHandler, CompilerOptions.Debug, TargetPlatform.Windows);
                 if (compiledEffect.Success == false)
                 {
                     Console.WriteLine("Shader compile error in BasicShader. Error message is as follows:\n" +
@@ -176,20 +189,33 @@ namespace MHGameWork.TheWizards.Graphics
 
         public static BasicShader LoadFromEmbeddedFile(IXNAGame game, Assembly assembly, string manifestResource, string sourceFileRelativePath, EffectPool pool)
         {
+            var shader = new BasicShader(game);
+            shader.InitFromEmbeddedFile(game, assembly, manifestResource, sourceFileRelativePath, pool);
+            return shader;
+        }
+        /// <summary>
+        /// This method can be called after the normal constructor is used.
+        /// TODO: support late initialization, when game is created
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="assembly"></param>
+        /// <param name="manifestResource"></param>
+        /// <param name="sourceFileRelativePath"></param>
+        /// <param name="pool"></param>
+        public void InitFromEmbeddedFile(IXNAGame game, Assembly assembly, string manifestResource, string sourceFileRelativePath, EffectPool pool)
+        {
             var afi = new FileInfo(assembly.Location);
             FileInfo fi = new FileInfo(afi.DirectoryName + "\\" + sourceFileRelativePath);
             if (fi.Exists)
             {
                 Console.WriteLine("Loading debug shader: " + sourceFileRelativePath);
-                var shader = new BasicShader(game);
-                shader.loadFromFXFileAutoReload(fi.FullName, pool);
-                return shader;
+                loadFromFXFileAutoReload(fi.FullName, pool);
             }
             using (var strm = assembly.GetManifestResourceStream(manifestResource))
             {
                 if (strm == null)
                     throw new InvalidOperationException("Embedded resource not found!");
-                return LoadFromFXFile(game, strm, pool);
+                LoadFromFXFile(strm, pool);
 
             }
         }
@@ -198,7 +224,7 @@ namespace MHGameWork.TheWizards.Graphics
         {
             reloadFilePath = path;
             reloadPool = pool;
-            autoReload();
+            AutoReload();
             var fi = new FileInfo(path);
             var watcher = new FileSystemWatcher(fi.DirectoryName, fi.Name);
             watcher.NotifyFilter = NotifyFilters.LastWrite;
@@ -212,7 +238,7 @@ namespace MHGameWork.TheWizards.Graphics
             watcher.EnableRaisingEvents = true;
         }
 
-        private void autoReload()
+        public void AutoReload()
         {
             using (var fs = new FileStream(reloadFilePath, FileMode.Open))
             {
@@ -470,7 +496,7 @@ namespace MHGameWork.TheWizards.Graphics
             {
                 if (!reloadScheduled) return;
                 Console.WriteLine("Auto reload shader: " + reloadFilePath);
-                autoReload();
+                AutoReload();
                 reloadScheduled = false;
             }
         }
@@ -518,6 +544,22 @@ namespace MHGameWork.TheWizards.Graphics
         }
 
         #endregion
+
+
+        public delegate Stream CustomIncludeCallback();
+        private class IncludeHandler : CompilerIncludeHandler
+        {
+            public Dictionary<string, CustomIncludeCallback> CustomIncludes =
+                new Dictionary<string, CustomIncludeCallback>();
+
+            public override Stream Open(CompilerIncludeHandlerType includeType, string filename)
+            {
+                if (CustomIncludes.ContainsKey(filename))
+                    return CustomIncludes[filename]();
+                throw new InvalidOperationException("Cannot resolve shader include!! (" + filename + ")");
+            }
+        }
+
     }
 }
 

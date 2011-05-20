@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
@@ -286,7 +288,7 @@ namespace MHGameWork.TheWizards.Tests.Graphics
                                    TestXNAGame.Instance.LineManager3D.AddCenteredBox(new Vector3(4, 4, 4), 2, Color.Red);
 
                                    TestXNAGame.Instance.LineManager3D.WorldMatrix =
-                                       Matrix.CreateTranslation(Vector3.Up*30);
+                                       Matrix.CreateTranslation(Vector3.Up * 30);
 
                                    for (int num = 0; num < 200; num++)
                                    {
@@ -313,7 +315,7 @@ namespace MHGameWork.TheWizards.Tests.Graphics
             game.InitializeEvent += delegate
                                         {
                                             shader = BasicShader.LoadFromEmbeddedFile(game,
-                                                typeof(GraphicsTest).Assembly,"MHGameWork.TheWizards.Tests.Graphics.Files.TestShader.fx",
+                                                typeof(GraphicsTest).Assembly, "MHGameWork.TheWizards.Tests.Graphics.Files.TestShader.fx",
                                                 "..\\..\\Unit Tests\\Graphics\\Files\\TestShader.fx",
                                                 new EffectPool());
                                             shader.SetTechnique("Technique1");
@@ -327,6 +329,33 @@ namespace MHGameWork.TheWizards.Tests.Graphics
                                                                      quad.DrawOld(game.GraphicsDevice);
                                                                  });
                                   };
+            game.Run();
+        }
+        [Test]
+        [RequiresThread(System.Threading.ApartmentState.STA)]
+        public void TestBasicShaderCustomInclude()
+        {
+            BasicShader shader = null;
+            FullScreenQuad quad = null;
+            XNAGame game = new XNAGame();
+            game.InitializeEvent += delegate
+                                        {
+                                            shader = new BasicShader(game);
+                                            shader.AddCustomIncludeHandler("testInclude.fx",
+                                                                           delegate
+                                                                           {
+                                                                               var byteArray = Encoding.ASCII.GetBytes("float getColor(){return 1;}");
+                                                                               return new MemoryStream(byteArray);
+                                                                           });
+                                            shader.InitFromEmbeddedFile(game,
+                                                typeof(GraphicsTest).Assembly, "MHGameWork.TheWizards.Tests.Graphics.Files.TestShaderInclude.fx",
+                                                "..\\..\\Unit Tests\\Graphics\\Files\\TestShaderInclude.fx",
+                                                new EffectPool());
+                                            shader.SetTechnique("Technique1");
+                                            quad = new FullScreenQuad(game.GraphicsDevice);
+                                        };
+
+            game.DrawEvent += () => shader.RenderMultipass(() => quad.Draw());
             game.Run();
         }
     }
