@@ -256,7 +256,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Animation\Files\TestAnimation01.amc" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\Files\TestShaderInclude.fx" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

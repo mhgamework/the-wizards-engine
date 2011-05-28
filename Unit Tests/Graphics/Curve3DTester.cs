@@ -16,18 +16,7 @@ namespace MHGameWork.TheWizards.Tests.Graphics
         {
             XNAGame game = new XNAGame();
 
-            Curve3D curve = new Curve3D();
-
-            curve.PreLoop = CurveLoopType.Constant;
-            curve.PostLoop = CurveLoopType.Cycle;
-
-            curve.AddKey( 0, new Vector3( 2, 2, 2 ) );
-            curve.AddKey( 1, new Vector3( 4, 0, 2 ) );
-            curve.AddKey( 5, new Vector3( 8, 0, 7 ) );
-            curve.AddKey( 7, new Vector3( 2, 1, 5 ) );
-            curve.AddKey( 9, new Vector3( 2, 2, 2 ) );
-
-            curve.SetTangents();
+            Curve3D curve = CreateTestCurve();
 
             game.SpectaterCamera.CameraDirection = Vector3.Normalize( new Vector3( -0.2f, -1f, -0.4f ) );
             BoundingSphere sphere = curve.CalculateBoundingSphere();
@@ -51,6 +40,23 @@ namespace MHGameWork.TheWizards.Tests.Graphics
 
 
             game.Run();
+        }
+
+        public static Curve3D CreateTestCurve()
+        {
+            Curve3D curve = new Curve3D();
+
+            curve.PreLoop = CurveLoopType.Constant;
+            curve.PostLoop = CurveLoopType.Cycle;
+
+            curve.AddKey( 0, new Vector3( 2, 2, 2 ) );
+            curve.AddKey( 1, new Vector3( 4, 0, 2 ) );
+            curve.AddKey( 5, new Vector3( 8, 0, 7 ) );
+            curve.AddKey( 7, new Vector3( 2, 1, 5 ) );
+            curve.AddKey( 9, new Vector3( 2, 2, 2 ) );
+
+            curve.SetTangents();
+            return curve;
         }
     }
 }

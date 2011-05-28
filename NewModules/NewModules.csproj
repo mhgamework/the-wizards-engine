@@ -182,6 +182,7 @@
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientFiles.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientMain.cs" />
     <Compile Include="Particles\BallParticalCreater.cs" />
+    <Compile Include="Particles\FlameParticalCreater.cs" />
     <Compile Include="Particles\IParticleCreater.cs" />
     <Compile Include="Particles\ParticleSimulater.cs" />
     <Compile Include="Particles\SimpleParticleCreater.cs" />
