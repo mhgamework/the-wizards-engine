@@ -152,7 +152,7 @@ namespace MHGameWork.TheWizards.Terrain.Editor
                 t.FullData.BlockSize = 16;
                 t.FullData.NumBlocksX = t.FullData.SizeX / t.FullData.BlockSize;
                 t.FullData.NumBlocksZ = t.FullData.SizeZ / t.FullData.BlockSize;
-                t.FullData.HeightMap = new TerrainHeightMap(t.FullData.SizeX + 1, t.FullData.SizeZ + 1);
+                t.FullData.HeightMap = new HeightMap(t.FullData.SizeX + 1, t.FullData.SizeZ + 1);
                 /*t.FullData.Textures.Add( new EditorTerrainFullData.TerrainTexture( t.FullData
                     , editor.Editor.Files.RootDirectory + @"\Content\CrackedEarth001.dds" ) );*/
 

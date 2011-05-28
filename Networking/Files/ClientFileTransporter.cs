@@ -41,11 +41,11 @@ namespace MHGameWork.TheWizards.Networking.Files
                                                              PacketFlags.TCP);
             gen.BuildFactoriesAssembly();
 
-            startReceiving();
+            StartReceiving();
 
         }
 
-        public void startReceiving()
+        public void StartReceiving()
         {
             var t = new Thread(receiveJob);
             t.Name = UniqueName + "_ReceiveJob";

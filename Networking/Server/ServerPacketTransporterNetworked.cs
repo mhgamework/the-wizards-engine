@@ -53,6 +53,15 @@ namespace MHGameWork.TheWizards.Networking.Server
             }
 
         }
+
+        private ServerPacketReceivedCallback<T> receiveCallback;
+
+        public void EnableReceiveCallbackMode(ServerPacketReceivedCallback<T> callback)
+        {
+            receiveCallback = callback;
+            EnableReceiveMode();
+        }
+
         /*public void DisableReceiveMode()
         {
             throw new InvalidOperationException();
@@ -62,6 +71,8 @@ namespace MHGameWork.TheWizards.Networking.Server
         {
             if (!receiveMode)
                 throw new InvalidOperationException("To use this method, receivemode must be enabled on this object!");
+            if (receiveCallback != null)
+                throw new InvalidOperationException("This transporter is in Callback mode, this method cant be used!");
             lock (receiveQueue)
             {
                 while (receiveQueue.Count == 0)
@@ -80,6 +91,8 @@ namespace MHGameWork.TheWizards.Networking.Server
             {
                 if (!receiveMode)
                     throw new InvalidOperationException("To use this method, receivemode must be enabled on this object!");
+                if (receiveCallback != null)
+                    throw new InvalidOperationException("This transporter is in Callback mode, this method cant be used!");
                 lock (receiveQueue)
                 {
                     return receiveQueue.Count > 0;
@@ -131,12 +144,19 @@ namespace MHGameWork.TheWizards.Networking.Server
             {
                 var p = transporter.Receive();
                 var info = new PacketInfo { Client = client, Packet = p };
-
-                lock (receiveQueue)
+                if (receiveCallback != null)
                 {
-                    receiveQueue.Enqueue(info);
-                    Monitor.Pulse(receiveQueue);
+                    receiveCallback(client, p);
                 }
+                else
+                {
+                    lock (receiveQueue)
+                    {
+                        receiveQueue.Enqueue(info);
+                        Monitor.Pulse(receiveQueue);
+                    }
+                }
+              
             }
         }
 

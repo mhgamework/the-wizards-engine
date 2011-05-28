@@ -15,8 +15,49 @@ namespace MHGameWork.TheWizards.Physics
     public class MeshDynamicPhysicsElement : IClientPhysicsObject
     {
         public IMesh Mesh { get; private set; }
-        public Matrix World { get; private set; }
+        private Matrix world;
+        public Matrix World
+        {
+            get { return world; }
+            set
+            {
+                world = value;
+                if (actor == null) return;
+                if (Kinematic)
+                {
+                    actor.MoveGlobalPoseTo(world);
+
+                }
+                else
+                {
+                    actor.GlobalPose = world;
+                }
+                Move(QuadTree.GetRootNode(Node), world);
+
+            }
+        }
         public MeshPhysicsActorBuilder Builder { get; private set; }
+
+        private bool kinematic;
+        public bool Kinematic
+        {
+            get { return kinematic; }
+            set
+            {
+                kinematic = value;
+                if (actor == null) return;
+                updateActorFlags();
+            }
+        }
+
+
+        private void updateActorFlags()
+        {
+            if (kinematic)
+                actor.RaiseBodyFlag(BodyFlag.Kinematic);
+            else
+                actor.ClearBodyFlag(BodyFlag.Kinematic);
+        }
 
         private object actorUserData;
         public object ActorUserData
@@ -45,7 +86,7 @@ namespace MHGameWork.TheWizards.Physics
         public MeshDynamicPhysicsElement(IMesh mesh, Matrix world, MeshPhysicsActorBuilder builder)
         {
             Mesh = mesh;
-            World = world;
+            this.world = world;
             Builder = builder;
         }
 
@@ -59,7 +100,7 @@ namespace MHGameWork.TheWizards.Physics
 
 
             // Update location in quadtree
-            World = newPose;
+            world = newPose;
             root.OrdenObject(this);
 
             // Update dynamic object count
@@ -68,10 +109,10 @@ namespace MHGameWork.TheWizards.Physics
 
             if (oldNode != null)
             {
-                World = oldPose; ; // set old state
+                world = oldPose; // set old state
                 oldNode.RemoveDynamicObjectFromIntersectingNodes(this);
 
-                World = newPose; ; // set new state
+                world = newPose;  // set new state
             }
         }
 
@@ -100,6 +141,8 @@ namespace MHGameWork.TheWizards.Physics
 
             Move(root, actor.GlobalPose);
 
+
+
         }
 
         public void InitDynamic(StillDesign.PhysX.Scene _scene)
@@ -108,8 +151,12 @@ namespace MHGameWork.TheWizards.Physics
 
             scene = _scene;
             actor = Builder.CreateActorDynamic(scene, Mesh.GetCollisionData(), World);
+            actor.UserData = actorUserData;
+            updateActorFlags();
             var bs = Microsoft.Xna.Framework.BoundingSphere.CreateFromBoundingBox(Builder.CalculateBoundingBox(Mesh.GetCollisionData()));
             boundingRadius = bs.Radius;
+
+            if (ActorCreated != null) ActorCreated(actor);
         }
 
         private float boundingRadius;
@@ -125,6 +172,8 @@ namespace MHGameWork.TheWizards.Physics
         /// </summary>
         public void EnablePhysics()
         {
+            if (kinematic) return; // This object is forced to kinematic
+
             if (!sleeping) return;
             actor.BodyFlags.Kinematic = false;
             actor.UserData = actorUserData;
@@ -164,5 +213,8 @@ namespace MHGameWork.TheWizards.Physics
 
             }
         }
+
+        public event Action<Actor> ActorCreated;
+
     }
 }

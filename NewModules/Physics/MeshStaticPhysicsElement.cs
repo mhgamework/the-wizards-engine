@@ -4,6 +4,7 @@ using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Entity.Client;
 using MHGameWork.TheWizards.Rendering;
 using Microsoft.Xna.Framework;
+using StillDesign.PhysX;
 
 namespace MHGameWork.TheWizards.Physics
 {
@@ -27,7 +28,7 @@ namespace MHGameWork.TheWizards.Physics
         public object ActorUserData
         {
             get { return actorUserData; }
-            set { actorUserData = value; if (actor != null) actor.UserData = actorUserData; }
+            set { actorUserData = value; if (Actor != null) Actor.UserData = actorUserData; }
         }
 
 
@@ -82,10 +83,11 @@ namespace MHGameWork.TheWizards.Physics
         public void EnablePhysics()
         {
             enabledReferenceCount++;
-            if (actor != null) return;
-            actor = builder.CreateActorStatic(scene, Mesh.GetCollisionData(), worldMatrix);
-            actor.GlobalPose = worldMatrix;
-            actor.UserData = actorUserData;
+            if (Actor != null) return;
+            Actor = builder.CreateActorStatic(scene, Mesh.GetCollisionData(), worldMatrix);
+            Actor.GlobalPose = worldMatrix;
+            Actor.UserData = actorUserData;
+            if (ActorCreated != null) ActorCreated(Actor);
         }
 
         public void DisablePhysics()
@@ -93,9 +95,9 @@ namespace MHGameWork.TheWizards.Physics
             enabledReferenceCount--;
             if (enabledReferenceCount > 0) return;
             if (enabledReferenceCount < 0) throw new InvalidOperationException("Reference count below zero!!");
-            if (actor == null) return;
-            actor.Dispose();
-            actor = null;
+            if (Actor == null) return;
+            Actor.Dispose();
+            Actor = null;
         }
 
         private ClientPhysicsQuadTreeNode node;
@@ -132,9 +134,15 @@ namespace MHGameWork.TheWizards.Physics
 
              
                 newNode.AddStaticObject(this);
-                if (actor != null)
-                    actor.GlobalPose = worldMatrix;
+                if (Actor != null)
+                    Actor.GlobalPose = worldMatrix;
             }
+        }
+
+        public Actor Actor
+        {
+            get { return actor; }
+            private set { actor = value; }
         }
 
 
@@ -153,9 +161,13 @@ namespace MHGameWork.TheWizards.Physics
                 node.RemoveStaticObject(this);
             builder = null;
             scene = null;
-            if (actor != null)
-                actor.Dispose();
-            actor = null;
+            if (Actor != null)
+                Actor.Dispose();
+            Actor = null;
         }
+
+
+        public event Action<Actor> ActorCreated;
+
     }
 }

@@ -15,7 +15,19 @@ namespace MHGameWork.TheWizards.Terrain.Geomipmap
         public int BlockSize { get; set; }
         public int MaxDetailLevel
         {
-            get { return (BlockSize >> 2) - 1; }
+            get { return CalculateMaxDetailLevel(BlockSize); }
+        }
+
+        public static int CalculateMaxDetailLevel(int blockSize)
+        {
+            int max = 0;
+            while (blockSize > 0)
+            {
+                blockSize = blockSize >> 1;
+                max++;
+            }
+            // One more detail lvl seems to be supported?
+            return max-2;
         }
 
         public IndexBufferBuilder(IXNAGame game)
@@ -118,7 +130,7 @@ namespace MHGameWork.TheWizards.Terrain.Geomipmap
         private int getTotalBaseTriangles()
         {
             var x = (BlockSize >> DetailLevel) - 2;
-
+            if (x < 0) return 0; // This is in the case of the lowest detail lvl, note that this lvl was disabled at some point (or still is)
             return x * x * 2;
         }
 
@@ -176,7 +188,7 @@ namespace MHGameWork.TheWizards.Terrain.Geomipmap
         /// <returns></returns>
         private int getNeightbourDetailLevel(TerrainBlockEdge edge)
         {
-            var b =currentBlock.GetNeighbour(edge);
+            var b = currentBlock.GetNeighbour(edge);
             if (b == null) return MaxDetailLevel;
             return b.DetailLevel;
         }

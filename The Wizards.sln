@@ -66,7 +66,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovodexWrapperXNA", "Deprec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TileEngine", "TileEngine\TileEngine.csproj", "{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}"
+EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = The Wizards.vsmdi
 	EndGlobalSection
@@ -951,6 +957,36 @@ Global
 		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Release|Win32.ActiveCfg = Release|x86
 		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Release|x86.ActiveCfg = Release|x86
 		{4ABC23C3-A48F-4FC2-9CB3-7C5C6786B035}.Release|x86.Build.0 = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Btrix|Any CPU.ActiveCfg = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Btrix|Mixed Platforms.ActiveCfg = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Btrix|Mixed Platforms.Build.0 = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Btrix|Win32.ActiveCfg = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Btrix|x86.ActiveCfg = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Btrix|x86.Build.0 = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.ColladaDebug|Any CPU.ActiveCfg = Debug|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.ColladaDebug|Mixed Platforms.ActiveCfg = Debug|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.ColladaDebug|Mixed Platforms.Build.0 = Debug|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.ColladaDebug|Win32.ActiveCfg = Debug|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.ColladaDebug|x86.ActiveCfg = Debug|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.ColladaDebug|x86.Build.0 = Debug|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Current|Any CPU.ActiveCfg = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Current|Mixed Platforms.ActiveCfg = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Current|Mixed Platforms.Build.0 = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Current|Win32.ActiveCfg = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Current|x86.ActiveCfg = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Current|x86.Build.0 = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Debug|Win32.ActiveCfg = Debug|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Debug|x86.ActiveCfg = Debug|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Debug|x86.Build.0 = Debug|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Release|Any CPU.ActiveCfg = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Release|Mixed Platforms.Build.0 = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Release|Win32.ActiveCfg = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Release|x86.ActiveCfg = Release|x86
+		{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -965,9 +1001,5 @@ Global
 		{80D950C7-F9F6-4569-93D9-20833B52ACD9} = {9D7264F6-202E-4B86-BC73-088F18A7099F}
 		{807ED3B3-6313-46CE-9CA3-B6DB9735AAFA} = {9D7264F6-202E-4B86-BC73-088F18A7099F}
 		{82AFF428-C42B-4C92-AA2A-D5C1A8662BB3} = {9D7264F6-202E-4B86-BC73-088F18A7099F}
-	EndGlobalSection
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

@@ -19,9 +19,14 @@ namespace MHGameWork.TheWizards
         }
         public static BoundingBox Transform(this BoundingBox box, Matrix mat)
         {
-            Vector3 min = Vector3.Transform(box.Min, mat);
+            Vector3[] corners = box.GetCorners();
+            Vector3[] ret = new Vector3[8];
+            Vector3.Transform(corners, ref mat, ret);
+            return BoundingBox.CreateFromPoints(ret);
+
+            /*Vector3 min = Vector3.Transform(box.Min, mat);
             Vector3 max = Vector3.Transform(box.Max, mat);
-            return new BoundingBox(min, max);
+            return new BoundingBox(min, max);*/
         }
 
         public static Matrix CreateRotationMatrixFromDirectionVector(Vector3 direction)

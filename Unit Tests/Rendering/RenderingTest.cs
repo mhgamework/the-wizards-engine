@@ -443,6 +443,24 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
 
         [Test]
+        public void TestDiskRenderingAssetFactory()
+        {
+            var factory = new DiskRenderingAssetFactory();
+            factory.SaveDir = TWDir.Test.CreateSubdirectory("Rendering\\DiskFactory");
+            var mesh = CreateGuildHouseMesh(new OBJToRAMMeshConverter(factory));
+            factory.AddAsset(mesh);
+
+            factory.SaveAllAssets();
+
+            factory = new DiskRenderingAssetFactory();
+            factory.SaveDir = TWDir.Test.CreateSubdirectory("Rendering\\DiskFactory");
+
+            var loadMesh = factory.GetMesh(mesh.Guid);
+
+        }
+
+
+        [Test]
         [RequiresThread(ApartmentState.STA)]
         public void TestSimpleRenderer()
         {

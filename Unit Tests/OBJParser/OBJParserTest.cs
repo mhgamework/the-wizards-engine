@@ -28,10 +28,10 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
             ObjImporter importer = new ObjImporter();
 
 
-            var fsMat = new FileStream(@"..\GameData\Crate01.mtl", FileMode.Open);
+            var fsMat = new FileStream(TestFiles.CrateMtl, FileMode.Open);
 
             importer.AddMaterialFileStream("Crate01.mtl", fsMat);
-            importer.ImportObjFile(@"..\GameData\Crate01.obj");
+            importer.ImportObjFile(TestFiles.CrateObj);
 
             var materials = importer.Materials;
 
@@ -56,8 +56,8 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
             LineManager3DLines lines = null;
 
 
-            var fsCrate = new FileStream(@"..\GameData\Crate01.obj", FileMode.Open);
-            var fsMHouse = new FileStream(@"..\GameData\MerchantsHouse.obj", FileMode.Open);
+            var fsCrate = new FileStream(TestFiles.CrateObj, FileMode.Open);
+            var fsMHouse = new FileStream(TestFiles.MerchantsHouseObj, FileMode.Open);
 
             game.UpdateEvent += delegate
                                 {
@@ -98,12 +98,12 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
             var c = new OBJToRAMMeshConverter(new RAMTextureFactory());
 
 
-            var fsMat = new FileStream(@"..\GameData\Crate01.mtl", FileMode.Open);
+            var fsMat = new FileStream(TestFiles.CrateMtl, FileMode.Open);
 
 
             var importer = new ObjImporter();
             importer.AddMaterialFileStream("Crate01.mtl", fsMat);
-            importer.ImportObjFile(@"..\GameData\Crate01.obj");
+            importer.ImportObjFile(TestFiles.CrateObj);
 
 
             fsMat.Close();
@@ -149,16 +149,16 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
             var mesh = c.CreateMesh(importer);
 
             importer = new ObjImporter();
-            importer.AddMaterialFileStream("HouseTest.mtl", new FileStream("../GameData/001-House01_BoxTest-OBJ/HouseTest.mtl", FileMode.Open));
-            importer.ImportObjFile("../GameData/001-House01_BoxTest-OBJ/HouseTest.obj");
+            importer.AddMaterialFileStream("HouseTest.mtl", new FileStream("../GameData/Core/001-House01_BoxTest-OBJ/HouseTest.mtl", FileMode.Open));
+            importer.ImportObjFile("../GameData/Core/001-House01_BoxTest-OBJ/HouseTest.obj");
 
             var mesh2 = c.CreateMesh(importer);
 
             importer = new ObjImporter();
-            var fsMHouseMat = new FileStream(@"..\GameData\MerchantsHouse.mtl", FileMode.Open);
+            var fsMHouseMat = new FileStream(TestFiles.MerchantsHouseMtl, FileMode.Open);
 
             importer.AddMaterialFileStream("MerchantsHouse.mtl", fsMHouseMat);
-            importer.ImportObjFile(@"..\GameData\MerchantsHouse.obj");
+            importer.ImportObjFile(TestFiles.MerchantsHouseObj);
 
             fsMHouseMat.Close();
 

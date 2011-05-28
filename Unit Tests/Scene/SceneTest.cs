@@ -18,6 +18,7 @@ namespace MHGameWork.TheWizards.Tests.Scene
             var game = new TestTWGame();
 
             var scene = new TheWizards.Scene.Scene(game.Renderer, game.PhysicsFactory);
+            game.Game.AddXNAObject(scene);
             var ent = scene.CreateEntity();
             ent.Mesh = game.BarrelMesh;
             ent.Static = true;
@@ -36,6 +37,14 @@ namespace MHGameWork.TheWizards.Tests.Scene
                                          };
 
             game.Game.Run();
+        }
+
+        [Test]
+        public void TestContactHandler()
+        {
+            //TODO:
+
+            throw new NotImplementedException();
         }
     }
 }

@@ -69,22 +69,6 @@ namespace MHGameWork.TheWizards.Editor.Transform
             set { position = value; }
         }
 
-        /*private Vector3 rotationEuler;*/
-
-        /*/// <summary>
-        /// Rotation in Euler angles
-        /// </summary>
-        public Vector3 RotationEuler
-        {
-            get { return rotationEuler; }
-            set
-            {
-                bool changed = rotationEuler != value;
-                rotationEuler = value;
-                if ( changed ) OnRotationChanged(); 
-            }
-        }*/
-
         private Quaternion rotationQuat = Quaternion.Identity;
 
         public Quaternion RotationQuat
@@ -130,18 +114,11 @@ namespace MHGameWork.TheWizards.Editor.Transform
         private List<SelectionPart> selectionParts = new List<SelectionPart>();
         private Dictionary<GizmoPart, SelectionPart> selectionPartsDictionary = new Dictionary<GizmoPart, SelectionPart>();
 
-        private WizardsEditor editor;
-
-        private CustomCamera gizmoCamera;
-
-        private float maxDistFromCameraFactor = 20f;
 
 
-        [Obsolete( "Editor not needed anymore" )]
-        public EditorGizmoRotation( WizardsEditor nEditor )
-        {
-            position = Vector3.Zero;
-        }
+
+
+      
         public EditorGizmoRotation()
         {
             position = Vector3.Zero;
@@ -149,7 +126,6 @@ namespace MHGameWork.TheWizards.Editor.Transform
 
         public void Load( IXNAGame game )
         {
-            gizmoCamera = new CustomCamera( game );
             ColladaModel model;
             using ( System.IO.Stream strm = EmbeddedFile.GetStream(
                 "MHGameWork.TheWizards.Editor.Transform.Files.GizmoRotation001.DAE",
@@ -289,23 +265,17 @@ namespace MHGameWork.TheWizards.Editor.Transform
                         }
                         else
                         {
-                            OnPartHover( game, closest.Item.Part );
+                            OnPartHover(closest.Item.Part );
                         }
                     }
                     else
                     {
-                        OnPartHover( game, GizmoPart.None );
+                        OnPartHover(GizmoPart.None );
                     }
                 }
             }
         }
 
-        private float CalculateMaxDistFromCamera( IXNAGame game )
-        {
-            // make dependent on the camera height
-            Vector3 camPos = game.Camera.ViewInverse.Translation;
-            return maxDistFromCameraFactor * camPos.Y;
-        }
 
         private float CalculateDistFromCamera( IXNAGame game )
         {
@@ -434,27 +404,8 @@ namespace MHGameWork.TheWizards.Editor.Transform
         }
 
 
-        private Plane GetXNAPlane( GizmoPart part )
-        {
-            Plane p = new Plane();
-
-            switch ( part )
-            {
-                case GizmoPart.PlaneXY:
-                    p = new Plane( position, position + Vector3.UnitX, position + Vector3.UnitY );
-                    break;
-                case GizmoPart.PlaneXZ:
-                    p = new Plane( position, position + Vector3.UnitX, position + Vector3.UnitZ );
-                    break;
-                case GizmoPart.PlaneYZ:
-                    p = new Plane( position, position + Vector3.UnitY, position + Vector3.UnitZ );
-                    break;
-            }
-
-            return p;
-        }
-
-        private void OnPartHover( IXNAGame game, GizmoPart type )
+      
+        private void OnPartHover(GizmoPart type )
         {
             if ( type != activeHoverPart )
             {
@@ -469,28 +420,6 @@ namespace MHGameWork.TheWizards.Editor.Transform
                     case GizmoPart.TorusZ:
                         meshesDictionary[ GizmoPart.TorusZ ].Shader.SetParameter( "diffuseColor", Color.Blue );
                         break;
-                    /*case GizmoPart.AxisX:
-                        meshesDictionary[ GizmoPart.AxisX ].Shader.SetParameter( "diffuseColor", Color.Red );
-                        meshesDictionary[ GizmoPart.TipX ].Shader.SetParameter( "diffuseColor", Color.Red );
-                        break;
-                    case GizmoPart.AxisY:
-                        meshesDictionary[ GizmoPart.AxisY ].Shader.SetParameter( "diffuseColor", Color.Green );
-                        meshesDictionary[ GizmoPart.TipY ].Shader.SetParameter( "diffuseColor", Color.Green );
-                        break;
-                    case GizmoPart.AxisZ:
-                        meshesDictionary[ GizmoPart.AxisZ ].Shader.SetParameter( "diffuseColor", Color.Blue );
-                        meshesDictionary[ GizmoPart.TipZ ].Shader.SetParameter( "diffuseColor", Color.Blue );
-                        break;
-
-                    case GizmoPart.PlaneXY:
-                        meshesDictionary[ GizmoPart.PlaneXY ].Shader.SetParameter( "diffuseColor", Color.Gold );
-                        break;
-                    case GizmoPart.PlaneXZ:
-                        meshesDictionary[ GizmoPart.PlaneXZ ].Shader.SetParameter( "diffuseColor", Color.Gold );
-                        break;
-                    case GizmoPart.PlaneYZ:
-                        meshesDictionary[ GizmoPart.PlaneYZ ].Shader.SetParameter( "diffuseColor", Color.Gold );
-                        break;*/
                 }
                 activeHoverPart = GizmoPart.None;
             }
@@ -506,15 +435,7 @@ namespace MHGameWork.TheWizards.Editor.Transform
                     meshesDictionary[ GizmoPart.TorusZ ].Shader.SetParameter( "diffuseColor", Color.Yellow );
                     break;
 
-                /*case GizmoPart.PlaneXY:
-                    meshesDictionary[ GizmoPart.PlaneXY ].Shader.SetParameter( "diffuseColor", Color.Yellow );
-                    break;
-                case GizmoPart.PlaneXZ:
-                    meshesDictionary[ GizmoPart.PlaneXZ ].Shader.SetParameter( "diffuseColor", Color.Yellow );
-                    break;
-                case GizmoPart.PlaneYZ:
-                    meshesDictionary[ GizmoPart.PlaneYZ ].Shader.SetParameter( "diffuseColor", Color.Yellow );
-                    break;*/
+            
             }
 
             activeHoverPart = type;
@@ -524,7 +445,6 @@ namespace MHGameWork.TheWizards.Editor.Transform
         private void OnRotationChanged()
         {
             if ( RotationChanged != null ) RotationChanged( this, null );
-            //editor.Form.Text = MathExtra.Functions.QuatToEuler( rotationQuat ).ToString();
         }
 
 
