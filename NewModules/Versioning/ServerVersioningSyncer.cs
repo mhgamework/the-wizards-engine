@@ -101,15 +101,18 @@ namespace MHGameWork.TheWizards.Versioning
 
         private Revision retrieveServerMaster()
         {
-            commandTransporter.Send(new BytePacket((byte)SyncerCommands.RequestMaster));
+            throw new NotImplementedException();
+            /*commandTransporter.Send(new BytePacket((byte)SyncerCommands.RequestMaster));
             var p = revisionTransporter.Receive();
 
-            return retrieveRevision(p.Guid);
+            return retrieveRevision(p.Guid);*/
         }
 
         private Revision retrieveRevision(Guid guid)
         {
-            var rev = sys.FindRevision(guid);
+            throw new NotImplementedException();
+
+            /*var rev = sys.FindRevision(guid);
             if (rev != null) return rev;
 
             requestRevisionTransporter.Send(new RevisionRequestPacket { Guid = guid });
@@ -134,7 +137,7 @@ namespace MHGameWork.TheWizards.Versioning
 
 
 
-            return rev;
+            return rev;*/
         }
 
 
