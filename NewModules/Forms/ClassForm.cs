@@ -13,7 +13,6 @@ namespace MHGameWork.TheWizards.Forms
     {
         private Window form;
 
-        private List<IFormElement> elements = new List<IFormElement>();
 
 
 
@@ -25,37 +24,52 @@ namespace MHGameWork.TheWizards.Forms
         private void createForm()
         {
             form = new Window();
-            mainPanel = new Grid();
+
+            rootGridElement = createTypeGrid(new DataContextAttribute(this));
+            form.Content = rootGridElement.Grid;
+
+
+
+
+        }
+
+        private GridElement createTypeGrid(IAttribute attribute)
+        {
+
+            var mainPanel = new Grid();
             mainPanel.ColumnDefinitions.Add(new ColumnDefinition());
             mainPanel.ColumnDefinitions.Add(new ColumnDefinition());
-            form.Content = mainPanel;
+            var attributes = getAllAttributes(attribute.Type);
 
-            var attributes = getAllAttributes();
 
-            rowCount = 0;
+            var gridElement = new GridElement(mainPanel, attribute);
+
+            var rowCount = 0;
+
             foreach (var att in attributes)
             {
-                var el = createFormElement(att);
+                var el = createFormElement(att, mainPanel, rowCount);
                 if (el == null) continue;
-                elements.Add(el);
+
+                gridElement.AddElement(el);
 
                 mainPanel.RowDefinitions.Add(new RowDefinition());
                 rowCount++;
             }
 
-
+            return gridElement;
         }
 
-        private List<IAttribute> getAllAttributes()
+        private List<IAttribute> getAllAttributes(Type type)
         {
             var ret = new List<IAttribute>();
-            foreach (var fi in typeof(T).GetFields())
+            foreach (var fi in type.GetFields())
             {
                 if (!fi.IsPublic) continue;
 
                 ret.Add(new FieldAttribute(fi));
             }
-            foreach (var fi in typeof(T).GetProperties())
+            foreach (var fi in type.GetProperties())
             {
                 if (!fi.CanRead || !fi.CanWrite || !fi.GetGetMethod().IsPublic || !fi.GetSetMethod().IsPublic) continue;
 
@@ -64,34 +78,55 @@ namespace MHGameWork.TheWizards.Forms
             return ret;
         }
 
-        private IFormElement createFormElement(IAttribute att)
+        private IFormElement createFormElement(IAttribute att, Grid grid, int rowCount)
         {
             var fieldType = att.Type;
 
-
             if (fieldType == typeof(string))
-                return createTextBoxElement(att, s => s, o => o.ToString());
+                return createTextBoxElement(att, s => s, o => o.ToString(), grid, rowCount);
 
             if (fieldType == typeof(int))
-                return createTextBoxElement(att, s => int.Parse(s), i => i.ToString());
+                return createTextBoxElement(att, s => int.Parse(s), i => i.ToString(), grid, rowCount);
 
             if (fieldType == typeof(float))
-                return createTextBoxElement(att, s => float.Parse(s), f => f.ToString());
+                return createTextBoxElement(att, s => float.Parse(s), f => f.ToString(), grid, rowCount);
+
+            if (fieldType == typeof(byte))
+                return createTextBoxElement(att, s => byte.Parse(s), f => f.ToString(), grid, rowCount);
+
+            if (fieldType.IsPrimitive)
+                return null;
+
+            if (fieldType.IsValueType)
+            {
+                var label = new Label();
+                label.Content = att.Name;
+                grid.Children.Add(label);
+                Grid.SetColumn(label, 0);
+                Grid.SetRow(label, rowCount);
+
+                var typeGridElement = createTypeGrid(att);
+                grid.Children.Add(typeGridElement.Grid);
+                Grid.SetColumn(typeGridElement.Grid, 1);
+                Grid.SetRow(typeGridElement.Grid, rowCount);
+                return typeGridElement;
+
+            }
 
             return null;
         }
 
-        private IFormElement createTextBoxElement<TU>(IAttribute att, Func<string, TU> fromString, Func<TU, string> toString)
+        private IFormElement createTextBoxElement<TU>(IAttribute att, Func<string, TU> fromString, Func<TU, string> toString, Grid grid, int rowCount)
         {
             IFormElement el;
             var label = new Label();
             label.Content = att.Name;
-            mainPanel.Children.Add(label);
+            grid.Children.Add(label);
             Grid.SetColumn(label, 0);
             Grid.SetRow(label, rowCount);
 
             var box = new TextBox();
-            mainPanel.Children.Add(box);
+            grid.Children.Add(box);
             Grid.SetColumn(box, 1);
             Grid.SetRow(box, rowCount);
 
@@ -102,8 +137,7 @@ namespace MHGameWork.TheWizards.Forms
 
 
         private T dataContext;
-        private int rowCount;
-        private Grid mainPanel;
+        private GridElement rootGridElement;
 
         public T DataContext
         {
@@ -134,28 +168,15 @@ namespace MHGameWork.TheWizards.Forms
 
         private void writeDataContextInternal()
         {
-            for (int i = 0; i < elements.Count; i++)
-            {
-                try
-                {
-                    elements[i].WriteDataContext(DataContext);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Write Context problem!");
-                }
-            }
+            rootGridElement.WriteDataContext(DataContext);
         }
 
-      
+
 
         private void readDataContextInternal()
         {
-            for (int i = 0; i < elements.Count; i++)
-            {
-                elements[i].ReadDataContext(DataContext);
+            rootGridElement.ReadDataContext(DataContext);
 
-            }
         }
 
 
@@ -163,8 +184,8 @@ namespace MHGameWork.TheWizards.Forms
         {
             string Name { get; }
             Type Type { get; }
-            object GetData(T obj);
-            void SetData(T obj, object value);
+            object GetData(object obj);
+            void SetData(object obj, object value);
         }
 
         private class FieldAttribute : IAttribute
@@ -179,12 +200,12 @@ namespace MHGameWork.TheWizards.Forms
             }
 
 
-            public object GetData(T obj)
+            public object GetData(object obj)
             {
                 return fi.GetValue(obj);
             }
 
-            public void SetData(T obj, object value)
+            public void SetData(object obj, object value)
             {
                 fi.SetValue(obj, value);
             }
@@ -201,22 +222,55 @@ namespace MHGameWork.TheWizards.Forms
             }
 
 
-            public object GetData(T obj)
+            public object GetData(object obj)
             {
                 return fi.GetGetMethod().Invoke(obj, null);
             }
 
-            public void SetData(T obj, object value)
+            public void SetData(object obj, object value)
             {
                 fi.GetSetMethod().Invoke(obj, new[] { value });
             }
 
         }
+        /// <summary>
+        /// This simply forms a way to access the DataContext
+        /// </summary>
+        private class DataContextAttribute : IAttribute
+        {
+            private readonly ClassForm<T> form;
+
+            public DataContextAttribute(ClassForm<T> form)
+            {
+                this.form = form;
+            }
+
+            public string Name
+            {
+                get { return "_DataContext"; }
+            }
+
+            public Type Type
+            {
+                get { return typeof(T); }
+            }
+
+            public object GetData(object obj)
+            {
+                return form.DataContext;
+            }
+
+            public void SetData(object obj, object value)
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
 
         private interface IFormElement
         {
-            void WriteDataContext(T context);
-            void ReadDataContext(T context);
+            void WriteDataContext(object context);
+            void ReadDataContext(object context);
 
 
         }
@@ -240,7 +294,7 @@ namespace MHGameWork.TheWizards.Forms
 
             }
 
-            public void WriteDataContext(T context)
+            public void WriteDataContext(object context)
             {
                 if (!Changed) return;
                 Changed = false;
@@ -248,14 +302,67 @@ namespace MHGameWork.TheWizards.Forms
                 attribute.SetData(context, fromString(box.Text));
             }
 
-            public void ReadDataContext(T context)
+            public void ReadDataContext(object context)
             {
                 if (box.IsFocused) return;
                 box.Text = toString((TU)attribute.GetData(context));
             }
         }
 
+        private class GridElement : IFormElement
+        {
+            private readonly Grid grid;
+            private readonly IAttribute attribute;
+            private List<IFormElement> elements = new List<IFormElement>();
 
 
+            public GridElement(Grid grid, IAttribute attribute)
+            {
+                this.grid = grid;
+                this.attribute = attribute;
+            }
+
+            public Grid Grid
+            {
+                get { return grid; }
+            }
+
+            public void AddElement(IFormElement el)
+            {
+                elements.Add(el);
+            }
+
+            public void WriteDataContext(object context)
+            {
+                object value = attribute.GetData(context);
+
+                for (int i = 0; i < elements.Count; i++)
+                {
+                    try
+                    {
+                        elements[i].WriteDataContext(value);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Write Context problem!");
+                    }
+                }
+
+                if (attribute.Type.IsValueType)
+                    attribute.SetData(context, value);
+
+            }
+
+            public void ReadDataContext(object context)
+            {
+                object value = attribute.GetData(context);
+
+                for (int i = 0; i < elements.Count; i++)
+                {
+                    elements[i].ReadDataContext(value);
+
+                }
+            }
+        }
     }
 }

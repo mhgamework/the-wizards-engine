@@ -78,6 +78,49 @@ namespace MHGameWork.TheWizards.Tests.Forms
             game.Run();
         }
 
+        [Test]
+        public void TestEditBoxMesh()
+        {
+            ClassForm<BoxMesh> form = null;
+
+
+
+
+            var game = new XNAGame();
+            var mesh = new BoxMesh();
+            game.AddXNAObject(mesh);
+
+
+
+
+
+            var ev = new AutoResetEvent(false);
+            Application app = null;
+            var t = new Thread(delegate()
+            {
+                app = new Application();
+                form = new ClassForm<BoxMesh>();
+
+                form.DataContext = mesh;
+
+                form.Show();
+                ev.Set();
+                app.Run();
+
+            });
+            t.SetApartmentState(ApartmentState.STA);
+            t.Start();
+
+            ev.WaitOne();
+            game.UpdateEvent += delegate
+            {
+
+                form.WriteDataContext();
+                form.ReadDataContext();
+            };
+
+            game.Run();
+        }
 
 
 
