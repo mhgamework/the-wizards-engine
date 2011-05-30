@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 using MHGameWork.TheWizards.Forms;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Scene;
 using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.Tests.Forms
@@ -34,23 +37,43 @@ namespace MHGameWork.TheWizards.Tests.Forms
         [Test]
         public void TestEditSphereMesh()
         {
-            var form = new ClassForm<SphereMesh>();
-        
+            ClassForm<SphereMesh> form = null;
+
+
+
 
             var game = new XNAGame();
             var mesh = new SphereMesh();
             game.AddXNAObject(mesh);
 
+
+
+
+
+            var ev = new AutoResetEvent(false);
+            Application app = null;
+            var t = new Thread(delegate()
+            {
+                app = new Application();
+                form = new ClassForm<SphereMesh>();
+
+                form.DataContext = mesh;
+
+                form.Show();
+                ev.Set();
+                app.Run();
+                
+            });
+            t.SetApartmentState(ApartmentState.STA);
+            t.Start();
+
+            ev.WaitOne();
             game.UpdateEvent += delegate
                                     {
+                                        
                                         form.WriteDataContext();
                                         form.ReadDataContext();
                                     };
-
-            form.DataContext = mesh;
-
-
-            form.Show();
 
             game.Run();
         }
