@@ -85,7 +85,13 @@
     <Reference Include="DevExpress.XtraScheduler.v10.1.Core, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraScheduler.v10.1.Reporting, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraTreeList.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL" />
+    <Reference Include="Dotway.WPF.Controls">
+      <HintPath>..\_Libraries\Dotway.WPFLibraries\Dotway.WPF\Dotway.WPF.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Libraries\SharpZipLib_0860_Bin\net-20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
     <Reference Include="nunit.framework, Version=2.5.5.10112, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
@@ -183,6 +189,12 @@
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientFiles.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientMain.cs" />
     <Compile Include="Forms\ClassForm.cs" />
+    <Compile Include="Forms\ColorElement.cs" />
+    <Compile Include="Forms\GridElement.cs" />
+    <Compile Include="Forms\IAttribute.cs" />
+    <Compile Include="Forms\IFormElement.cs" />
+    <Compile Include="Forms\ReadonlyElement.cs" />
+    <Compile Include="Forms\TextBoxElement.cs" />
     <Compile Include="Particles\BallParticalCreater.cs" />
     <Compile Include="Particles\FlameParticalCreater.cs" />
     <Compile Include="Particles\IParticleCreater.cs" />

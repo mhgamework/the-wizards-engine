@@ -3,6 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <ScrollViewer>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Content="Button" Grid.Column="2" Height="162" HorizontalAlignment="Left" Margin="41,62,0,0" Name="button1" VerticalAlignment="Top" Width="89" Grid.RowSpan="2" />
+                <Label Content="Label" Height="25" HorizontalAlignment="Left" Margin="41,54,0,0" Name="label1" VerticalAlignment="Top" Width="40" />
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Window>
