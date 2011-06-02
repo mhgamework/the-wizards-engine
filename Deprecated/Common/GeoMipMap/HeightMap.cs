@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Common.GeoMipMap
 {
+    [Obsolete]
 	public class HeightMapOud : IDisposable
 	{
 		/*private float minimumHeight = 0f;

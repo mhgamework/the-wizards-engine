@@ -85,7 +85,13 @@
     <Reference Include="DevExpress.XtraScheduler.v10.1.Core, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraScheduler.v10.1.Reporting, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraTreeList.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL" />
+    <Reference Include="Dotway.WPF.Controls">
+      <HintPath>..\_Libraries\Dotway.WPFLibraries\Dotway.WPF\Dotway.WPF.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Libraries\SharpZipLib_0860_Bin\net-20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
     <Reference Include="nunit.framework, Version=2.5.5.10112, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
@@ -103,6 +109,7 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -186,8 +193,12 @@
     <Compile Include="Particles\IParticleCreater.cs" />
     <Compile Include="Particles\ParticleSimulater.cs" />
     <Compile Include="Particles\SimpleParticleCreater.cs" />
+    <Compile Include="Rendering\DiskRenderingAssetFactory.cs" />
+    <Compile Include="Terrain\Geomipmap\HeightmapNormalCalculator.cs" />
+    <Compile Include="Rendering\SimpleMeshFactory.cs" />
     <Compile Include="Terrain\Geomipmap\IndexBufferBuilder.cs" />
     <Compile Include="Terrain\Geomipmap\ITerrainBlock.cs" />
+    <Compile Include="Terrain\Geomipmap\MinDistanceCalculator.cs" />
     <Compile Include="Terrain\Preprocesser\PreprocessedNode.cs" />
     <Compile Include="Terrain\Preprocesser\PreprocessedTerrainBlock.cs" />
     <Compile Include="Terrain\Rendering\TODO\ITerrainBlockRenderable.cs" />
@@ -205,7 +216,7 @@
     <Compile Include="Terrain\Rendering\TODO\TerrainWeightMap.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\Terrain\TaggedTerrain.cs" />
     <Compile Include="Terrain\TerrainFullData.cs" />
-    <Compile Include="Terrain\TerrainHeightMap.cs" />
+    <Compile Include="Terrain\HeightMap.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\Terrain\TerrainManagerService.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\Terrain\TerrainPlugin.cs" />
     <Compile Include="Editor\FromEditorProject\TODO\DockTab.cs" />
@@ -329,6 +340,11 @@
     <Compile Include="Rendering\IMeshRenderElement.cs" />
     <Compile Include="Rendering\ISimpleMeshRenderer.cs" />
     <Compile Include="Rendering\ITextureFactory.cs" />
+    <Compile Include="Versioning\ClientVersioningSyncer.cs" />
+    <Compile Include="Versioning\ServerVersioningSyncer.cs" />
+    <Compile Include="Versioning\IStreamProvider.cs" />
+    <Compile Include="Versioning\Revision.cs" />
+    <Compile Include="Versioning\VersioningSystem.cs" />
     <Compile Include="World\Static\ClientStaticWorldObjectSyncer.cs" />
     <Compile Include="World\ClientSyncedActor.cs" />
     <Compile Include="World\ClientSyncer.cs" />
@@ -347,6 +363,7 @@
     <Compile Include="World\ServerSyncedActor.cs" />
     <Compile Include="World\ServerSyncer.cs" />
     <Compile Include="World\World.cs" />
+    <Compile Include="Xml\FastArraySerializer.cs" />
     <Compile Include="Xml\ICustomElementSerializer.cs" />
     <Compile Include="Xml\ICustomSerializer.cs" />
     <Compile Include="Xml\IInternalSerializer.cs" />
@@ -451,13 +468,6 @@
     <Compile Include="Terrain\Editor\TerrainRaiseTool.cs" />
     <Compile Include="Terrain\Editor\TerrainWorldEditorExtension.cs" />
     <Compile Include="Terrain\Editor\TerrainWorldEditorGUI.cs" />
-    <Compile Include="Utilities\TestRunner.cs" />
-    <Compile Include="Utilities\TestRunnerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Utilities\TestRunnerForm.Designer.cs">
-      <DependentUpon>TestRunnerForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="WorldDatabase\DataElementFactoryIdentifier.cs" />
     <Compile Include="WorldDatabase\DataElementIdentifier.cs" />
     <Compile Include="WorldDatabase\DataElementXMLFactory.cs" />
@@ -471,9 +481,6 @@
     <Compile Include="WorldDatabase\IDataElementFactory.cs" />
     <Compile Include="WorldDatabase\WorkingCopy.cs" />
     <Compile Include="WorldDatabase\WorldDatabase.cs" />
-    <EmbeddedResource Include="Utilities\TestRunnerForm.resx">
-      <DependentUpon>TestRunnerForm.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Character\Editor\CharacterEditorForm.resx">

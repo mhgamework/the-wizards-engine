@@ -189,6 +189,7 @@ namespace MHGameWork.TheWizards.Rendering
 
         public void Render(IXNAGame _game)
         {
+            game.GraphicsDevice.RenderState.CullMode = CullMode.CullClockwiseFace;
             game.GraphicsDevice.VertexDeclaration = vertexDeclarationPool.GetVertexDeclaration<TangentVertex>();
             baseShader.ViewProjection = game.Camera.ViewProjection;
 
@@ -213,7 +214,6 @@ namespace MHGameWork.TheWizards.Rendering
                 for (int j = 0; j < mat.Parts.Length; j++)
                 {
                     var part = mat.Parts[j];
-                    game.GraphicsDevice.RenderState.CullMode = CullMode.None;
 
                     var shader = mat.Shader;
 

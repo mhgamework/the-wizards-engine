@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
 using MHGameWork.TheWizards.ServerClient;
+using MHGameWork.TheWizards.Wpf;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -190,6 +191,9 @@ namespace MHGameWork.TheWizards.Graphics
             AllowF3InputToggle = true;
 
             InputDisabled = DefaultInputDisabled;
+
+            Wpf = new XNAGameWpf();
+            AddXNAObject(Wpf);
         }
 
         void graphics_PreparingDeviceSettings(object sender, PreparingDeviceSettingsEventArgs e)
@@ -219,6 +223,14 @@ namespace MHGameWork.TheWizards.Graphics
             if (gameObjects.Contains(obj))
                 throw new InvalidOperationException("This object was already added!");
             gameObjects.Add(obj);
+
+
+            if (FrameNumber != 0)
+            {
+                // Initialize has already been called! call it now!
+                obj.Initialize(this);
+
+            }
         }
 
         public void SetCamera(ICamera cam)
@@ -479,6 +491,7 @@ namespace MHGameWork.TheWizards.Graphics
             {
                 var old = lineManager3D.DrawGroundShadows;
                 lineManager3D.DrawGroundShadows = false;
+                lineManager3D.WorldMatrix = Matrix.Identity;
                 lineManager3D.AddLine(new Vector3(0, 0, 0), new Vector3(10, 0, 0), Color.Red);
                 lineManager3D.AddLine(new Vector3(0, 0, 0), new Vector3(0, 10, 0), Color.Green);
                 lineManager3D.AddLine(new Vector3(0, 0, 0), new Vector3(0, 0, 10), Color.Blue);
@@ -668,5 +681,9 @@ namespace MHGameWork.TheWizards.Graphics
                 a();
             }
         }
+
+
+        public XNAGameWpf Wpf { get; private set; }
+
     }
 }

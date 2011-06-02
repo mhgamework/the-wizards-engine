@@ -48,7 +48,8 @@ namespace MHGameWork.TheWizards.Graphics
             [DebuggerStepThrough]
             get { return radius; }
             [DebuggerStepThrough]
-            set { radius = value; calculateBoundingBox(); }
+            set { radius = value;
+                UpdateWorldMatrix(); calculateBoundingBox(); }
         }
 
         private Matrix worldMatrix;

@@ -1,32 +1,22 @@
 ﻿using System;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scripting.API;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace MHGameWork.TheWizards.Scene
 {
-    public class EntityScriptHandle : IEntityHandle
+    public class EntityScriptHandle : APIEntity, IEntityHandle
     {
-        public Entity Entity { get; private set; }
         public IScript Script { get; private set; }
 
         public EntityScriptHandle(Entity ent, IScript script)
+            : base(ent)
         {
-            Entity = ent;
             Script = script;
         }
 
-
-        public Vector3 Position
-        {
-            get { return Entity.Transformation.Translation; }
-            set { Entity.Transformation = new Graphics.Transformation(Entity.Transformation.Scaling, Entity.Transformation.Rotation, value); }
-        }
-        public Quaternion Rotation
-        {
-            get { return Entity.Transformation.Rotation; }
-            set { Entity.Transformation = new Graphics.Transformation(Entity.Transformation.Scaling, value, Entity.Transformation.Translation); }
-        }
 
         public bool UpdateRegistered { get; private set; }
 
@@ -50,13 +40,58 @@ namespace MHGameWork.TheWizards.Scene
             useHandlerSet = true;
         }
 
-
-
-        public void Destroy()
+        public void RegisterContactHandler(Action<ContactInformation> handler)
         {
-            if (useHandlerSet)
-                Entity.PlayerUseHandler = null;
+            if (Entity.ContactHandler != null) throw new InvalidOperationException("Contact Handler already registered!");
+            Entity.SetContactHandler(this, handler);
         }
+
+        public EntityRaycastHit RaycastScene(Ray ray, Predicate<EntityRaycastHit> predicate)
+        {
+            //TODO: THIS might slow up raycasting!!
+
+            var result = Entity.Scene.RaycastEntityPhysX(ray, obj => predicate(obj.ToAPIRaycastHit()));
+
+            if (result == null) return EntityRaycastHit.NoHit;
+
+            return result.ToAPIRaycastHit();
+
+        }
+
+        public IEntity CreateEntity()
+        {
+            var ent = Entity.Scene.CreateEntity();
+
+            return ent.APIEntity;
+        }
+
+
+        public float Elapsed
+        {
+            get { return Entity.Scene.Game.Elapsed; }
+        }
+
+        public T GetSceneComponent<T>() where T : class
+        {
+            return Entity.Scene.GetSceneComponent<T>();
+        }
+
+        public Input Input
+        {
+            get { return Entity.Scene.Input; }
+        }
+
+        public IMesh GetMesh(string path)
+        {
+            return Entity.Scene.GetMesh(path);
+
+        }
+
+
+        // Scene
+
+
+
 
     }
 }

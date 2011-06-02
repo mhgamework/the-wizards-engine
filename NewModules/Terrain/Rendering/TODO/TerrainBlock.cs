@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards.ServerClient.TWClient;
+using MHGameWork.TheWizards.Terrain;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MHGameWork.TheWizards.Common.GeoMipMap;
@@ -15,11 +16,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
     public class TerrainBlock : ITerrainBlockRenderable
     {
 
-
-
         public IndexBuffer IndexBuffer;
-
-
 
         public int DetailLevel
         {
@@ -52,13 +49,6 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
 
-
-
-        protected int BlockSize { get; set; }
-
-
-
-
         public VertexBuffer VertexBuffer;
         public TerrainMaterial Material;
         public int TotalVertices;
@@ -66,13 +56,10 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         public bool IsLoaded { get { return VertexBuffer != null && IndexBuffer != null; } }
 
 
-
         public TerrainBlock()
         {
 
         }
-
-
 
         private float[] minDistancesSquared;
 
@@ -135,7 +122,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         /// <param name="BW"></param>
         /// <param name="map"></param>
         /// <param name="projectionMatrix"></param>
-        public void WritePreProcessedData(ByteWriter BW, TerrainHeightMap map, Matrix projectionMatrix, int materialIndex)
+        public void WritePreProcessedData(ByteWriter BW, HeightMap map, Matrix projectionMatrix, int materialIndex)
         {
             VertexMultitextured[] vertexes;
 
@@ -158,7 +145,8 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
                 BW.Write(vertexes[i].TextureCoordinate);
             }
 
-            float[] localMinDistancesSquared = CalculateMinDistances(projectionMatrix, map);
+            throw new NotImplementedException();
+            float[] localMinDistancesSquared = null;//TODO: CalculateMinDistances(projectionMatrix, map);
 
             BW.Write(localMinDistancesSquared.Length);
 
@@ -272,7 +260,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         /// <param name="min"></param>
         /// <param name="max"></param>
         /// <returns></returns>
-        public VertexMultitextured[] GenerateVerticesFromHeightmapSpecialWeightmap(TerrainHeightMap map, out Vector3 min, out Vector3 max)
+        public VertexMultitextured[] GenerateVerticesFromHeightmapSpecialWeightmap(HeightMap map, out Vector3 min, out Vector3 max)
         {
             VertexMultitextured[] vertexes = new VertexMultitextured[(terrainGeomipmapRenderData.BlockSize + 1) * (terrainGeomipmapRenderData.BlockSize + 1)];
 
@@ -318,7 +306,8 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
                         (float)( ix+0.5f ) / ( (float)terrain.NumBlocksX * ( terrain.BlockSize + 1 ) ),
                         (float)( iz +0.5f) / ( (float)terrain.NumBlocksZ * ( terrain.BlockSize + 1 ) ) );*/
 
-                    vert.Normal = CalculateAveragedNormal(map, cx, cz);// terrain.GetAveragedNormal( cx, cz );
+                    throw new NotImplementedException();
+                    //TODO: vert.Normal = CalculateAveragedNormal(map, cx, cz);// terrain.GetAveragedNormal( cx, cz );
 
                     min = Vector3.Min(min, vert.Position);
                     max = Vector3.Max(max, vert.Position);
@@ -510,7 +499,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
 
-        protected VertexMultitextured[] GenerateVerticesFromHeightmap(TerrainHeightMap map, out Vector3 min, out Vector3 max)
+        protected VertexMultitextured[] GenerateVerticesFromHeightmap(HeightMap map, out Vector3 min, out Vector3 max)
         {
             VertexMultitextured[] vertexes = new VertexMultitextured[(terrainGeomipmapRenderData.BlockSize + 1) * (terrainGeomipmapRenderData.BlockSize + 1)];
 
@@ -536,7 +525,8 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
                     //TODO: klopt deze texcoord wel?
                     vert.TextureCoordinate = new Vector2((float)cx / (float)terrainGeomipmapRenderData.SizeX, (float)cz / (float)terrainGeomipmapRenderData.SizeY);
 
-                    vert.Normal = CalculateAveragedNormal(map, cx, cz);// terrain.GetAveragedNormal( cx, cz );
+                    throw new NotImplementedException();
+                    //TODO: vert.Normal = CalculateAveragedNormal(map, cx, cz);// terrain.GetAveragedNormal( cx, cz );
 
                     min = Vector3.Min(min, vert.Position);
                     max = Vector3.Max(max, vert.Position);
@@ -562,59 +552,6 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         //}
 
 
-        public static Vector3 CalculateAveragedNormal(TerrainHeightMap map, int x, int z)
-        {
-            Vector3 normal = new Vector3();
-
-            // top left
-            if (x > 0 && z > 0)
-                normal += CalculateNormal(map, x - 1, z - 1);
-
-            // top center
-            if (z > 0)
-                normal += CalculateNormal(map, x, z - 1);
-
-            // top right
-            if (x < map.Width && z > 0)
-                normal += CalculateNormal(map, x + 1, z - 1);
-
-            // middle left
-            if (x > 0)
-                normal += CalculateNormal(map, x - 1, z);
-
-            // middle center
-            normal += CalculateNormal(map, x, z);
-
-            // middle right
-            if (x < map.Width)
-                normal += CalculateNormal(map, x + 1, z);
-
-            // lower left
-            if (x > 0 && z < map.Length)
-                normal += CalculateNormal(map, x - 1, z + 1);
-
-            // lower center
-            if (z < map.Length)
-                normal += CalculateNormal(map, x, z + 1);
-
-            // lower right
-            if (x < map.Width && z < map.Length)
-                normal += CalculateNormal(map, x + 1, z + 1);
-
-            return Vector3.Normalize(normal);
-        }
-
-        public static Vector3 CalculateNormal(TerrainHeightMap map, int x, int z)
-        {
-            float scale = 1;
-            float heightScale = 1;
-            Vector3 v1 = new Vector3(x * scale, map[x, z + 1] * heightScale, (z + 1) * scale);
-            Vector3 v2 = new Vector3(x * scale, map[x, z - 1] * heightScale, (z - 1) * scale);
-            Vector3 v3 = new Vector3((x + 1) * scale, map[x + 1, z] * heightScale, z * scale);
-            Vector3 v4 = new Vector3((x - 1) * scale, map[x - 1, z] * heightScale, z * scale);
-
-            return Vector3.Normalize(Vector3.Cross(v1 - v2, v3 - v4));
-        }
 
 
 
@@ -644,20 +581,6 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         }
 
 
-        public void GenerateLightmap()
-        {
-            //TerrainLightmapGenerator gen = new TerrainLightmapGenerator( terrain );
-
-            //GenerateLightmap( gen );
-
-        }
-
-        public void GenerateLightmap(TerrainLightmapGenerator gen)
-        {
-            byte[] data = gen.Generate(x, z);
-            TerrainGeomipmapRenderData.LightMap.SetData<byte>(0, new Rectangle(x, z, terrainGeomipmapRenderData.BlockSize + 1, terrainGeomipmapRenderData.BlockSize + 1), data, 0, data.Length, SetDataOptions.None);
-
-        }
 
         public void GenerateAutoWeights()
         {
@@ -993,99 +916,8 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
 
-        public void LoadHeightField()
-        {
-            UnloadHeightField();
-            actor = CreateHeightField();
-        }
-
-        public void UnloadHeightField()
-        {
-            if (actor != null) actor.destroy();
-            actor = null;
-
-        }
-
-        public NxActor CreateHeightField()
-        {
-            NxHeightFieldDesc heightFieldDesc = NxHeightFieldDesc.Default;
-            heightFieldDesc.nbColumns = (uint)terrainGeomipmapRenderData.BlockSize + 1;
-            heightFieldDesc.nbRows = (uint)terrainGeomipmapRenderData.BlockSize + 1;
-            heightFieldDesc.verticalExtent = -1000;
-            heightFieldDesc.convexEdgeThreshold = 0;
-            heightFieldDesc.sampleStride = 3 * 4;
-            heightFieldDesc.setSampleDimensions(terrainGeomipmapRenderData.BlockSize + 1, terrainGeomipmapRenderData.BlockSize + 1);
-
-            float ox = terrainGeomipmapRenderData.HeightMap.Width * 0.5f;
-            float oz = terrainGeomipmapRenderData.HeightMap.Length * 0.5f;
-
-            for (int ix = 0; ix < terrainGeomipmapRenderData.BlockSize + 1; ix++)
-            {
-                for (int iz = 0; iz < terrainGeomipmapRenderData.BlockSize + 1; iz++)
-                {
-                    int cx = this.x + ix;
-                    int cz = this.z + iz;
-                    bool flag = (ix % 2) == 0;
-                    if (iz % 2 != 0) flag = !flag;
-                    flag = false;
-                    heightFieldDesc.setSample(ix, iz, new NxHeightFieldSample((short)(terrainGeomipmapRenderData.HeightMap[cx, cz] * 5000), 0, flag, 0));
-                }
-            }
-            NxHeightField heightField = null;//ServerClientMainOud.instance.ServerMain.PhysicsSDK.createHeightField( heightFieldDesc );
-
-            heightFieldDesc = null;
-
-            NxHeightFieldShapeDesc shapeDesc = new NxHeightFieldShapeDesc();
-
-            shapeDesc.HeightField = heightField;
-            shapeDesc.heightScale = terrainGeomipmapRenderData.HeightScale / 5000;
-            shapeDesc.rowScale = terrainGeomipmapRenderData.Scale;
-            shapeDesc.columnScale = terrainGeomipmapRenderData.Scale;
-            shapeDesc.materialIndexHighBits = 0;
-            shapeDesc.holeMaterial = 2;
-
-            NxActorDesc actorDesc = new NxActorDesc();
-            actorDesc.addShapeDesc(shapeDesc);
-            actorDesc.globalPose = Matrix.CreateTranslation(new Vector3((this.x - ox) * terrainGeomipmapRenderData.Scale, 0, (this.z - oz) * terrainGeomipmapRenderData.Scale));
-            return null;//ServerClientMainOud.instance.ServerMain.PhysicsScene.createActor( actorDesc );
-
-        }
 
 
-        //public new Terrain Terrain
-        //{
-        //    get { return (Terrain)terrain; }
-
-        //}
-        //public new TerrainBlock West
-        //{
-        //    get { return (TerrainBlock)base.West; }
-        //    set { base.West = value; }
-        //}
-
-        //public new TerrainBlock East
-        //{
-        //    get { return (TerrainBlock)base.East; }
-        //    set { base.East = value; }
-        //}
-
-        //public new TerrainBlock North
-        //{
-        //    get { return (TerrainBlock)base.North; }
-        //    set { base.North = value; }
-        //}
-
-        //public new TerrainBlock South
-        //{
-        //    get { return (TerrainBlock)base.South; }
-        //    set { base.South = value; }
-        //}
-
-        //public new Wereld.QuadTreeNode QuadTreeNode
-        //{
-        //    get { return (Wereld.QuadTreeNode)base.QuadTreeNode; }
-        //    set { base.QuadTreeNode = value; }
-        //}
 
         #region ITerrainBlock Members
 
@@ -1176,149 +1008,6 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         //    //}
         //}
 
-        public float[] CalculateMinDistances(Matrix projection, TerrainHeightMap map)
-        {
-            float[] localMinDistancesSquared = new float[terrainGeomipmapRenderData.MaxDetailLevel + 1];
-
-            for (int i = 0; i < terrainGeomipmapRenderData.MaxDetailLevel + 1; i++)
-            {
-                float minDist = CalculateLevelMinDistance(i, projection, map);
-                localMinDistancesSquared[i] = minDist * minDist;
-            }
-
-            return localMinDistancesSquared;
-
-        }
-
-        public float CalculateLevelMinDistance(int level, Matrix projection, TerrainHeightMap map)
-        {
-            float error = CalculateLevelError(level, map);
-
-            //Willem de Boer:
-            // Dn = error * C
-            // C = A / T
-            // A = n / |t|
-            // T = ( 2 * threshold ) / verticalResolution
-
-
-
-            //Relfection on class Matrix:
-            // matrix.M33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
-            // matrix.M43 = (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance);
-            // ==>    M43 / M33 = nearPlaneDistance
-            //
-            // matrix.M22 = 1f / ((float) Math.Tan((double) (fieldOfView * 0.5f)));
-            // matrix.M22 = (2f * nearPlaneDistance) / height;
-            // (http://www.avl.iu.edu/~ewernert/b581/lectures/12.2/index.html):
-            // top = near * tan(PI/180 * viewAngle/2) 
-            // top = near * 1f / matrix.M22
-            // top = near / M22
-
-
-
-
-
-
-
-
-            float threshold = 10;
-            float n = projection.M43 / projection.M33;
-            float t = n / projection.M22;  // 768f / 2f;
-            float verticalResolution = 768f;
-
-
-            //lijkt hetzelfde te zijn als m11
-            float A = n / Math.Abs(t);
-
-            float T = (2 * threshold) / verticalResolution;
-
-            float C = A / T;
-
-            float Dn = error * C;
-
-
-
-            /*float threshold = 6;
-
-
-            float Dn = 0;
-
-            Vector3 vProj1 = Vector3.Zero;
-            Vector3 vProj2 = new Vector3( 0, threshold, 0 );
-            Matrix inverseProj = Matrix.Invert( projection );
-
-            Vector3 v1 = Vector3.Transform( vProj1, inverseProj );
-            Vector3 v2 = Vector3.Transform( vProj2, inverseProj );
-
-            float dist = Vector3.Distance( v1, v2 );*/
-
-
-
-
-
-
-
-            return Dn;
-
-
-        }
-
-        public float CalculateLevelError(int level, TerrainHeightMap map)
-        {
-            int stepping = 1 << level;
-
-            float maxError = 0;
-
-            //We go through all the quads in the selected level en interpolate a height value for every vertex that is left out
-
-
-            int cx;
-            int cz;
-            float tl; //top left
-            float tr; //top right
-            float bl; //bottom left
-            float br; //bottom right
-            float e; //error
-
-
-            for (int quadZ = 0; quadZ < terrainGeomipmapRenderData.BlockSize; quadZ += stepping)
-            {
-                for (int quadX = 0; quadX < terrainGeomipmapRenderData.BlockSize; quadX += stepping)
-                {
-
-                    cx = x + quadX;
-                    cz = z + quadZ;
-                    tl = map.GetHeight(cx, cz);
-                    tr = map.GetHeight(cx + stepping, cz);
-                    bl = map.GetHeight(cx, cz + stepping);
-                    br = map.GetHeight(cx + stepping, cz + stepping);
-
-
-                    for (int iz = 0; iz <= stepping; iz++)
-                    {
-                        for (int ix = 0; ix <= stepping; ix++)
-                        {
-                            //We could skip the corners but the error is 0 on those points anyway
-                            float lerpX = MathHelper.Lerp(tl, tr, (float)ix / (float)stepping);
-                            float lerpZ = MathHelper.Lerp(bl, br, (float)iz / (float)stepping);
-                            float lerp = (lerpX + lerpZ) * 0.5f;
-
-                            e = Math.Abs(map.GetHeight(cx + ix, cz + iz) - lerp);
-                            maxError = MathHelper.Max(maxError, e);
-
-
-                        }
-                    }
-
-                }
-            }
-
-            return maxError;
-
-        }
-
-
-
 
 
 
@@ -1344,20 +1033,6 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
 
-
-
-
-
-
-        public int X
-        {
-            get { return x; }
-        }
-
-        public int Z
-        {
-            get { return z; }
-        }
 
 
 

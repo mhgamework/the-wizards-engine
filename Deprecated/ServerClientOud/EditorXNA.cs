@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.ServerClient
         private bool escapeExits = true;
         private XNAGameFiles engineFiles;
         private string rootDirectory;
-        private List<IGameObject> gameObjects = new List<IGameObject>();
+        //private List<IGameObject> gameObjects = new List<IGameObject>();
         private float elapsed;
         private LineManager3D lineManager3D;
         private bool renderAxis = true;
@@ -84,10 +84,10 @@ namespace MHGameWork.TheWizards.ServerClient
 
         }
 
-        public void AddGameObject( IGameObject obj )
+        /*public void AddGameObject( IGameObject obj )
         {
             gameObjects.Add( obj );
-        }
+        }*/
 
         public void SetCamera( ICamera cam )
         {
@@ -151,10 +151,10 @@ namespace MHGameWork.TheWizards.ServerClient
             if ( escapeExits && keyboard.IsKeyDown( Keys.Escape ) )
                 this.Exit();
 
-            for ( int i = 0; i < gameObjects.Count; i++ )
+           /* for ( int i = 0; i < gameObjects.Count; i++ )
             {
                 gameObjects[ i ].Process();
-            }
+            }*/
             guiService.Process();
 
             if ( mouse.CursorEnabled )
@@ -197,10 +197,10 @@ namespace MHGameWork.TheWizards.ServerClient
 
             Draw();
 
-            for ( int i = 0; i < gameObjects.Count; i++ )
+           /* for ( int i = 0; i < gameObjects.Count; i++ )
             {
                 gameObjects[ i ].Render();
-            }
+            }*/
 
             lineManager3D.Render();
 

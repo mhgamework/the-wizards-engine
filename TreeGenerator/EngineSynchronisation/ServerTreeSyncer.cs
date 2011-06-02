@@ -21,7 +21,7 @@ namespace TreeGenerator.EngineSynchronisation
 
         public ServerTreeSyncer(IServerPacketManager packetManager)
         {
-            var gen = new MHGameWork.TheWizards.Networking.NetworkPacketFactoryCodeGenerater(TWDir.generateRandomCacheFile("", "dll"));
+            var gen = new MHGameWork.TheWizards.Networking.NetworkPacketFactoryCodeGenerater(TWDir.GenerateRandomCacheFile("", "dll"));
             var factory = gen.GetFactory<TreePacket>();
             transporter = packetManager.CreatePacketTransporter("ServerTreeSyncer", factory, MHGameWork.TheWizards.Networking.PacketFlags.TCP);
             requestAllTransporter = packetManager.CreatePacketTransporter("ServerTreeSyncerRequestAll",

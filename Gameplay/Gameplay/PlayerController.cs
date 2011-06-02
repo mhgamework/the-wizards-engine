@@ -15,6 +15,10 @@ using IDisposable = StillDesign.PhysX.IDisposable;
 
 namespace MHGameWork.TheWizards.GamePlay
 {
+    /// <summary>
+    /// WARNING: requires ScriptLayer!
+    /// TODO: Fix the controllerhitreport stuff
+    /// </summary>
     public class PlayerController : IXNAObject, IWorldSyncActor
     {
 
@@ -149,7 +153,7 @@ namespace MHGameWork.TheWizards.GamePlay
                     }
                 }
             }
-            controllerHitReport.HitQueue.Clear();
+             controllerHitReport.HitQueue.Clear();
             // This is bad practice ( 2-way dependancy ) (no clue what this means)
             player.Position = controller.Position;
 
@@ -161,7 +165,7 @@ namespace MHGameWork.TheWizards.GamePlay
             frameMovement += velocity * game.Elapsed;
 
             var oldPos = controller.Position;
-
+            
             // Apply fake gravity. Downward speed is constant. 
             controller.Move(frameMovement);
             frameMovement = Vector3.Zero;

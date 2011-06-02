@@ -51,7 +51,7 @@ namespace MHGameWork.TheWizards.Physics
                 if (currentPreloadingMesh != model)
                 {
                     //Insta-load the model!!!
-                    ret = loadTriangleMesh(model, scene);
+                    ret = LoadTriangleMesh(model, scene, Matrix.Identity);
                     triangleMeshEntries[model] = ret;
                 }
 
@@ -70,30 +70,29 @@ namespace MHGameWork.TheWizards.Physics
         }
 
 
-        private TriangleMesh loadTriangleMesh(MeshCollisionData.TriangleMeshData model, StillDesign.PhysX.Scene scene)
+        public TriangleMesh LoadTriangleMesh(MeshCollisionData.TriangleMeshData model, StillDesign.PhysX.Scene scene, Matrix transform)
         {
-            MemoryStream stream = cookTriangleMeshStream(model);
+            MemoryStream stream = cookTriangleMeshStream(model, transform);
 
             return scene.Core.CreateTriangleMesh(stream);
         }
 
-        private MemoryStream cookTriangleMeshStream(MeshCollisionData.TriangleMeshData model)
+        private MemoryStream cookTriangleMeshStream(MeshCollisionData.TriangleMeshData model, Matrix transform)
         {
             TriangleMeshDescription triangleMeshDesc = new TriangleMeshDescription();
 
-            triangleMeshDesc.AllocateVertices<Vector3>(model.Positions.Count);
-            triangleMeshDesc.AllocateTriangles<int>(model.Indices.Count); // int indices, should be short but whatever
+            triangleMeshDesc.AllocateVertices<Vector3>(model.Positions.Length);
+            triangleMeshDesc.AllocateTriangles<int>(model.Indices.Length); // int indices, should be short but whatever
 
-            /*Vector3[] transformedPositions = new Vector3[model.Positions.Count];
-            Matrix transform = model.ObjectMatrix * Matrix.CreateScale(ent.Transform.Scaling);
-            Vector3.Transform(model.Positions, ref transform, transformedPositions);*/
+            Vector3[] transformedPositions = new Vector3[model.Positions.Length];
+            Vector3.Transform(model.Positions.ToArray(), ref transform, transformedPositions);
 
             triangleMeshDesc.VerticesStream.SetData(model.Positions.ToArray());
 
             triangleMeshDesc.TriangleStream.SetData(model.Indices.ToArray());
 
-            triangleMeshDesc.VertexCount = model.Positions.Count;
-            triangleMeshDesc.TriangleCount = model.Positions.Count / 3;
+            triangleMeshDesc.VertexCount = model.Positions.Length;
+            triangleMeshDesc.TriangleCount = model.Positions.Length / 3;
 
             System.IO.MemoryStream stream = new System.IO.MemoryStream();
 
@@ -132,7 +131,7 @@ namespace MHGameWork.TheWizards.Physics
                     currentPreloadingMesh = tMesh;
 
                 }
-                var strm = cookTriangleMeshStream(tMesh);
+                var strm = cookTriangleMeshStream(tMesh, Matrix.Identity);
                 lock (this)
                 {
                     cookedStream = strm;
