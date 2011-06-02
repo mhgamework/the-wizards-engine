@@ -69,3 +69,10 @@ Thumbs.db
 
 /NsightRunner/Interm/
 /NsightRunner/Debug/
+
+/NsightRunner/Release/
+/Release/NsightRunner.exe
+/Release/NsightRunner.pdb
+/bin/Dotway.WPF.Controls.dll
+/bin/nunit.framework.dll
+/bin/nunit.framework.xml

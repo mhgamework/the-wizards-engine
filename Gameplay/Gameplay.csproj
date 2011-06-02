@@ -66,6 +66,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
     <Reference Include="StillDesign.PhysX.Net">
       <HintPath>..\_Libraries\PhysX.Net\References\Debug\XNA 2.0\StillDesign.PhysX.Net.dll</HintPath>
     </Reference>
@@ -80,22 +81,37 @@
   <ItemGroup>
     <Compile Include="Gameplay\FireMove.cs" />
     <Compile Include="Gameplay\EnergyOrb.cs" />
+    <Compile Include="Gameplay\Fortress\Minion.cs" />
+    <Compile Include="Gameplay\Fortress\Tower.cs" />
     <Compile Include="Gameplay\Horse.cs" />
     <Compile Include="Gameplay\IPlayer.cs" />
     <Compile Include="Gameplay\IPlayerMove.cs" />
     <Compile Include="Gameplay\PlayerController.cs" />
+    <Compile Include="Gameplay\Fortress\PlayerEntity.cs" />
     <Compile Include="Gameplay\PlayerInputClient.cs" />
     <Compile Include="Gameplay\PlayerInputPacket.cs" />
     <Compile Include="Gameplay\PlayerInputServer.cs" />
+    <Compile Include="Gameplay\PlayerSceneComponent.cs" />
     <Compile Include="Gameplay\PlayerThirdPersonCamera.cs" />
     <Compile Include="Gameplay\SimplePlayer.cs" />
+    <Compile Include="Gameplay\Fortress\SpawnCrystal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scene\APIEntity.cs" />
     <Compile Include="Scene\Editor\SceneEditor.cs" />
     <Compile Include="Scene\Entity.cs" />
+    <Compile Include="Scene\EntityData.cs" />
     <Compile Include="Scene\EntityScriptHandle.cs" />
+    <Compile Include="Scene\ISceneMeshProvider.cs" />
+    <Compile Include="Scripting\API\ContactInformation.cs" />
+    <Compile Include="Scripting\API\EntityRaycastHit.cs" />
+    <Compile Include="Scripting\API\IEntity.cs" />
+    <Compile Include="Scripting\API\IDataElement.cs" />
     <Compile Include="Scene\Scene.cs" />
     <Compile Include="Scene\SceneScriptLoader.cs" />
+    <Compile Include="Scene\ScriptDataBinder.cs" />
+    <Compile Include="Scene\SimpleDataElement.cs" />
     <Compile Include="Scripting\API\IEntityHandle.cs" />
+    <Compile Include="Scripting\API\Input.cs" />
     <Compile Include="Scripting\API\IScript.cs" />
     <Compile Include="Scripting\API\IUpdateHandler.cs" />
     <Compile Include="Scripting\IStateScript.cs" />

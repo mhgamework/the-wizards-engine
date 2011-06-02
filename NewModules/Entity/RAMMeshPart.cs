@@ -16,6 +16,10 @@ namespace MHGameWork.TheWizards.Entity
         {
             Guid = Guid.NewGuid();
         }
+        public RAMMeshPart(Guid guid)
+        {
+            this.Guid = guid;
+        }
 
         public MeshPartGeometryData GetGeometryData()
         {

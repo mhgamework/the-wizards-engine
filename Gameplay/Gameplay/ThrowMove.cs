@@ -30,11 +30,11 @@ namespace MHGameWork.TheWizards.Gameplay
 
         public void StartPrimaryAttack()
         {
-            chargeTime = startCharge;
+           /* chargeTime = startCharge;
             chargeOrb = new EnergyOrb();
             chargeOrb.Position = calculateOrbPosition();
             chargeOrb.ChargeModeEnabled = true;
-            ScriptLayer.ScriptRunner.RunScript(chargeOrb);
+            ScriptLayer.ScriptRunner.RunScript(chargeOrb);*/
 
             controller.DisableMovement();
 
@@ -69,11 +69,11 @@ namespace MHGameWork.TheWizards.Gameplay
         {
             if (chargeOrb == null) return;
 
-            chargeOrb.Position = calculateOrbPosition();
+          /*  chargeOrb.Position = calculateOrbPosition();
             chargeTime += ScriptLayer.Elapsed;
             chargeOrb.Charge = chargeTime*chargeSpeed;
             if (chargeTime > maxCharge) chargeTime = maxCharge;
-
+            */
 
 
         }

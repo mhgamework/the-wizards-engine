@@ -183,6 +183,10 @@ namespace MHGameWork.TheWizards.Physics
 
         private event ContactNotifyDelegate contactNofityEvent;
 
+        /// <summary>
+        /// WARNING: I am quite sure this runs during simulation!!!!!! dont execute code in this delegate
+        /// </summary>
+        /// <param name="delg"></param>
         public void AddContactNotification(ContactNotifyDelegate delg)
         {
             contactNofityEvent += delg;

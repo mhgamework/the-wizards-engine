@@ -72,6 +72,22 @@ namespace MHGameWork.TheWizards.Assets
             return mesh;
         }
 
+        public ITexture FindTexture(Predicate<ITexture> predicate)
+        {
+            foreach (var tex in textures)
+            {
+                if (predicate(tex.Value))
+                    return tex.Value;
+            }
+
+            return null;
+        }
+
+        public void AddTexture(ITexture texture)
+        {
+            throw new InvalidOperationException("This factory does not support adding (client side)");
+        }
+
 
         public object GetAsset(Type type, Guid guid)
         {
@@ -88,7 +104,7 @@ namespace MHGameWork.TheWizards.Assets
                 return GetTexture(guid);
             }
 
-            throw new InvalidOperationException();
+            return null;
         }
 
         ITexture ITextureFactory.GetTexture(Guid guid)

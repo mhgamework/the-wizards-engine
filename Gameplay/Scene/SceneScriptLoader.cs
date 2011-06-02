@@ -65,7 +65,7 @@ namespace MHGameWork.TheWizards.Scene
                 var handle = s.Handles[i];
 
                 // Destory old script
-                handle.Script.Destroy();
+                scene.ExecuteInScriptScope(handle, handle.Script.Destroy);
                 handle.Entity.DestroyEntityHandle(handle);
 
 
@@ -74,7 +74,7 @@ namespace MHGameWork.TheWizards.Scene
 
 
                 var newhandle = handle.Entity.CreateEntityHandle(instance);
-                instance.Init(newhandle);
+                scene.ExecuteInScriptScope(newhandle, () => instance.Init(newhandle));
                 s.Handles[i] = newhandle;
 
             }
@@ -158,6 +158,7 @@ namespace MHGameWork.TheWizards.Scene
             cp.ReferencedAssemblies.Add(typeof(IScript).Assembly.Location); // Gameplay
             cp.ReferencedAssemblies.Add(typeof(Vector3).Assembly.Location); // Microsoft.Xna.Framework
             cp.ReferencedAssemblies.Add(typeof(PlayerData).Assembly.Location); //NewModules
+            cp.ReferencedAssemblies.Add(typeof(XNAGame).Assembly.Location); //Common.core
 
             try
             {
@@ -203,7 +204,7 @@ namespace MHGameWork.TheWizards.Scene
                     while (recompileQueue.Count == 0)
                         Monitor.Wait(recompileQueue);
 
-                    var s = findOrCreateScript(new FileInfo(recompileQueue.Dequeue()));
+                    var s = findScript(new FileInfo(recompileQueue.Dequeue()));
                     if (s == null) continue;
 
                     var assembly = CompileAssemblyForScript(s.File);

@@ -286,7 +286,7 @@ VertexOutput VS_SpecularPerPixel(VertexInput In)
 	float4 pos = float4(In.pos, 1); 
     
 	Out.texCoord = In.texCoord * diffuseTextureRepeat;
-	Out.normal = mul(In.normal, world);
+	Out.normal = normalize(mul(In.normal, (float3x3)world));
 	// Eye pos
 	float3 eyePos = viewInverse[3];
 	// World pos

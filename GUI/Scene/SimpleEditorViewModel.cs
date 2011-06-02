@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -19,6 +20,7 @@ namespace MHGameWork.TheWizards.Scene
         public ICommand Select { get; private set; }
         public ICommand PlaceEntity { get; private set; }
         public List<MeshItem> PlaceMeshes { get; private set; }
+        public List<ScriptItem> Scripts { get; private set; }
         private MeshItem selectedPlaceMesh;
         public MeshItem SelectedPlaceMesh
         {
@@ -35,6 +37,7 @@ namespace MHGameWork.TheWizards.Scene
                 }
             }
         }
+        public ScriptItem SelectedScript { get; set; }
 
         public string SelectedEntityMesh { get; private set; }
         public bool SelectedEntitySolid { get; set; }
@@ -47,10 +50,7 @@ namespace MHGameWork.TheWizards.Scene
         {
             SelectedEntityMesh = "Hello!";
             PlaceMeshes = new List<MeshItem>();
-            PlaceMeshes.Add(new MeshItem { Name = "Mesh1", Mesh = null });
-            PlaceMeshes.Add(new MeshItem { Name = "Mesh2", Mesh = null });
-
-            SelectedPlaceMesh = PlaceMeshes[1];
+            Scripts = new List<ScriptItem>();
 
         }
 
@@ -61,6 +61,7 @@ namespace MHGameWork.TheWizards.Scene
             vm.form = form;
             vm.Select = new DelegateCommand(o => game.InvokeUpdate(editor.EnableSelectMod));
             vm.PlaceEntity = new DelegateCommand(o => game.InvokeUpdate(editor.EnablePlaceEntityMode));
+            vm.form.cAssignScript.Click += delegate { game.InvokeUpdate(() => editor.AssignScriptToSelected(vm.SelectedScript.FileInfo)); };
 
             var t = new Thread(vm.pollJob);
             t.IsBackground = true;
@@ -81,7 +82,7 @@ namespace MHGameWork.TheWizards.Scene
 
         private void pollJob()
         {
-            // This is actually a timer put im lazy
+            // This is actually a timer but im lazy
             for (; ; )
             {
                 form.Dispatcher.Invoke(new Action(pollChanges));
@@ -100,6 +101,16 @@ namespace MHGameWork.TheWizards.Scene
         {
             public string Name;
             public IMesh Mesh;
+
+            public override string ToString()
+            {
+                return Name;
+            }
+        }
+        public class ScriptItem
+        {
+            public string Name;
+            public FileInfo FileInfo;
 
             public override string ToString()
             {

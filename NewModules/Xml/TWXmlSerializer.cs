@@ -32,6 +32,11 @@ namespace MHGameWork.TheWizards.XML
             serializers.Add(serializer);
         }
 
+        public TWXmlSerializer()
+        {
+            AddCustomSerializer(new FastArraySerializer());
+        }
+
 
         public void Serialize(T obj, Stream strm)
         {
@@ -153,29 +158,7 @@ namespace MHGameWork.TheWizards.XML
                 node.Value = value.ToString();
 
             }
-            else if (type == typeof(Vector3[]))
-            {
-                var array = (Vector3[])value;
-                var floats = new float[array.Length * 3];
-                for (int i = 0; i < array.Length; i++)
-                {
-                    floats[i * 3 + 0] = array[i].X;
-                    floats[i * 3 + 1] = array[i].Y;
-                    floats[i * 3 + 2] = array[i].Z;
-                }
-                XMLSerializer.WriteFloatArray(node, floats);
-            }
-            else if (type == typeof(Vector2[]))
-            {
-                var array = (Vector2[])value;
-                var floats = new float[array.Length * 2];
-                for (int i = 0; i < array.Length; i++)
-                {
-                    floats[i * 2 + 0] = array[i].X;
-                    floats[i * 2 + 1] = array[i].Y;
-                }
-                XMLSerializer.WriteFloatArray(node, floats);
-            }
+        
             else if (type.IsArray)
             {
                 int count;
@@ -261,28 +244,7 @@ namespace MHGameWork.TheWizards.XML
 
             if (type.IsEnum)
                 return Enum.Parse(type, node.Value);
-            if (type == typeof(Vector3[]))
-            {
-                var floats = XMLSerializer.ReadFloatArray(node);
-                var array = new Vector3[floats.Length / 3];
-
-                for (int i = 0; i < array.Length; i++)
-                {
-                    array[i] = new Vector3(floats[i * 3 + 0], floats[i * 3 + 1], floats[i * 3 + 2]);
-                }
-                return array;
-            }
-            if (type == typeof(Vector2[]))
-            {
-                var floats = XMLSerializer.ReadFloatArray(node);
-                var array = new Vector2[floats.Length / 2];
-
-                for (int i = 0; i < array.Length; i++)
-                {
-                    array[i] = new Vector2(floats[i * 2 + 0], floats[i * 2 + 1]);
-                }
-                return array;
-            }
+           
             if (type.IsArray)
             {
                 var childNodes = node.GetChildNodes();

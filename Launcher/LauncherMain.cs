@@ -176,7 +176,6 @@ namespace MHGameWork.TheWizards.Launcher
 
                 if (packetParser.ParseServerPacketType(e.Dgram) == LauncherServerPacketTypes.FileComplete)
                 {
-                    Console.WriteLine("Complete");
                     fileCompleteEvent.Set();
                     return;
                 }
@@ -218,7 +217,6 @@ namespace MHGameWork.TheWizards.Launcher
 
                     fs = new FileStream(fi.FullName, FileMode.Create);
 
-                    Console.WriteLine("Start");
                     conn.SendPacket(packetParser.CreateCRequestFile(file.RelativePath), TCPPacketBuilder.TCPPacketFlags.None);
 
                     fileCompleteEvent.WaitOne();

@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards;
 using Microsoft.Xna.Framework;
 
 namespace TreeGenerator.NoiseGenerater
 {
     public class PerlinNoiseGenerater
     {
+        public Vector2 Offset { get; set; }
+        private Seeder seeder = new Seeder(79465);
+        public void CreateRandomOffset()
+        {
+            Offset = seeder.NextVector2(-Vector2.One*1000, Vector2.One*1000);
+        }
+
         public float persistance;
         public int NumberOfOctaves;
         float  randomNumberGenerater(int x,int y)

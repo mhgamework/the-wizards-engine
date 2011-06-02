@@ -30,7 +30,7 @@ namespace MHGameWork.TheWizards.Assets
         public ServerAssetSyncer(IServerPacketManager pm, DirectoryInfo assetsDirectory)
         {
             AssetsDirectory = assetsDirectory;
-            var gen = new NetworkPacketFactoryCodeGenerater(TWDir.generateRandomCacheFile("", "dll"));
+            var gen = new NetworkPacketFactoryCodeGenerater(TWDir.GenerateRandomCacheFile("", "dll"));
 
             assetContentsRequester = pm.CreatePacketTransporter("AssetContentRequest", gen.GetFactory<AssetRequestPacket>(),
                                                                 PacketFlags.TCP);

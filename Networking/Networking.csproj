@@ -63,6 +63,7 @@
     <Compile Include="NetworkPacketFactoryCodeGenerater.cs" />
     <Compile Include="NetworkPacketIgnoreAttribute.cs" />
     <Compile Include="PacketFlags.cs" />
+    <Compile Include="Packets\BytePacket.cs" />
     <Compile Include="Packets\DataPacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\ClientNetworked.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Server\IServerPacketTransporter.cs" />
     <Compile Include="Server\IServerPacketTransporterNetworked.cs" />
     <Compile Include="Server\ServerPacketManagerNetworked.cs" />
+    <Compile Include="Server\ServerPacketReceivedCallback.cs" />
     <Compile Include="Server\ServerPacketTransporterNetworked.cs" />
     <Compile Include="TCPConnection.cs" />
     <Compile Include="TCPConnectionListener.cs" />

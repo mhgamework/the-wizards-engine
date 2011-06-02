@@ -52,7 +52,7 @@ namespace MHGameWork.TheWizards
             Scripts = RootDirectory.CreateSubdirectory("Scripts");
         }
 
-        public static string generateRandomCacheFile(string path, string extension)
+        public static string GenerateRandomCacheFile(string path, string extension)
         {
             return Cache + "\\path\\CacheFile" + (new Random()).Next(0, 10000000) + "." + extension;
         }

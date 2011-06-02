@@ -15,22 +15,21 @@ namespace MHGameWork.TheWizards.Assets
         {
 
         }
-        private AssetSerializer(IAssetFactory factory)
+        public AssetSerializer(IAssetFactory factory)
         {
             this.factory = factory;
         }
 
         public bool SerializeElement(TWXmlNode node, Type type, object value, IInternalSerializer s)
         {
-            if (factory != null)
-                throw new InvalidOperationException("This is a deserializer");
+            /*if (factory != null)
+                throw new InvalidOperationException("This is a deserializer");*/
             if (!(value is IAsset))
                 return false;
 
             var asset = value as IAsset;
 
             XMLSerializer.WriteGuid(node, asset.Guid);
-
 
             return true;
         }
@@ -48,6 +47,8 @@ namespace MHGameWork.TheWizards.Assets
 
             Guid g = XMLSerializer.ReadGuid(node);
             value = factory.GetAsset(type, g);
+
+            if (value == null) return false;
 
             return true;
 

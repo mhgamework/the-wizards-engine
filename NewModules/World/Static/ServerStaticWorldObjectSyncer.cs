@@ -14,7 +14,7 @@ namespace MHGameWork.TheWizards.World.Static
         public ServerStaticWorldObjectSyncer(IServerPacketManager pm)
         {
             var gen =
-                new Networking.NetworkPacketFactoryCodeGenerater(TWDir.generateRandomCacheFile("", ".dll"));
+                new Networking.NetworkPacketFactoryCodeGenerater(TWDir.GenerateRandomCacheFile("", ".dll"));
 
             updateTransporter = pm.CreatePacketTransporter("StaticWorldObjectSyncer_UpdatePacket", gen.GetFactory<StaticWorldObjectUpdatePacket>(), Networking.PacketFlags.TCP);
             deleteTransporter = pm.CreatePacketTransporter("StaticWorldObjectSyncer_DeletePacket", gen.GetFactory<StaticWorldObjectDeletePacket>(), Networking.PacketFlags.TCP);

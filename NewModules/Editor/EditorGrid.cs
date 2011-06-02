@@ -101,6 +101,7 @@ namespace MHGameWork.TheWizards.Editor
 
         public void Render(IXNAGame _game)
         {
+            game = _game;
             //TODO: optimize this using its own vertexbuffer and indexbuffer instead of the linemanager
 
             Vector2 halfSize = size * 0.5f;
