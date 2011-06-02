@@ -6,12 +6,13 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using MHGameWork.TheWizards.Wpf;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MHGameWork.TheWizards.Forms
 {
-    public class ClassForm<T>
+    public class ClassForm<T> : IClassForm
     {
         private Window form;
 
@@ -20,12 +21,13 @@ namespace MHGameWork.TheWizards.Forms
 
         public ClassForm()
         {
-            createForm();
+            createForm(new SimpleWindowFactory());
         }
 
-        private void createForm()
+        private void createForm(IWindowFactory factory)
         {
-            form = new Window();
+            
+            form = factory.CreateWindow();
 
             rootGridElement = createTypeGrid(new DataContextAttribute(this));
 
@@ -48,6 +50,9 @@ namespace MHGameWork.TheWizards.Forms
             mainPanel.ColumnDefinitions.Add(new ColumnDefinition());
             var attributes = getAllAttributes(attribute.Type);
 
+            mainPanel.VerticalAlignment = VerticalAlignment.Top;
+
+            
 
             var gridElement = new GridElement(mainPanel, attribute);
 
@@ -269,5 +274,11 @@ namespace MHGameWork.TheWizards.Forms
                 throw new InvalidOperationException();
             }
         }
+    }
+
+    public interface IClassForm
+    {
+        void WriteDataContext();
+        void ReadDataContext();
     }
 }

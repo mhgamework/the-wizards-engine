@@ -8,6 +8,7 @@ using System.Windows.Threading;
 using MHGameWork.TheWizards.Forms;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Scene;
+using MHGameWork.TheWizards.Wpf;
 using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.Tests.Forms
@@ -15,6 +16,57 @@ namespace MHGameWork.TheWizards.Tests.Forms
     [TestFixture]
     public class ClassFormTest
     {
+        [Test]
+        public void TestWpfWindow()
+        {
+
+
+            var ev = new AutoResetEvent(false);
+            Application app = null;
+            var t = new Thread(delegate()
+            {
+                app = new Application();
+                var w = new Window();
+                w.Show();
+
+                app.Run();
+
+            });
+            t.SetApartmentState(ApartmentState.STA);
+            t.Start();
+
+            t.Join();
+
+        }
+
+        [Test]
+        public void TestXNAGameWpfWindow()
+        {
+            var w = new XNAGameWpf();
+            var win = w.CreateWindow();
+            Application.Current.Dispatcher.Invoke(win.Show);
+
+            while (true)
+            {
+                
+            }
+        }
+
+
+        [Test]
+        public void TestXNAGameWpfEditBoxMesh()
+        {
+
+            var game = new XNAGame();
+            var mesh = new BoxMesh();
+            game.AddXNAObject(mesh);
+
+            game.Wpf.CreateClassForm(mesh);
+
+            game.Run();
+        }
+
+
         [Test]
         public void TestSimpleFormRead()
         {

@@ -11,8 +11,9 @@ namespace MHGameWork.TheWizards.Forms
     {
         private readonly IAttribute attribute;
         private ColorPicker picker;
+        private Expander expander;
         private bool Changed { get; set; }
-        public UIElement UIElement { get { return picker; } }
+        public UIElement UIElement { get { return expander; } }
 
 
         public ColorElement(IAttribute attribute)
@@ -20,6 +21,8 @@ namespace MHGameWork.TheWizards.Forms
             this.attribute = attribute;
 
             picker = new ColorPicker();
+            expander = new Expander();
+            expander.Content = picker;
         }
 
         public void WriteDataContext(object context)
@@ -38,6 +41,7 @@ namespace MHGameWork.TheWizards.Forms
         {
             var c = (Color)attribute.GetData(context);
 
+            expander.Header = c;
             picker.InitialColor = toMediaColor(c);
 
             if (c.Equals(toColor(picker.SelectedColor))) return;

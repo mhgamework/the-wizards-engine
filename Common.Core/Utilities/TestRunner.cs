@@ -42,9 +42,9 @@ namespace MHGameWork.TheWizards.Utilities
             {
                 //var pi = new ProcessStartInfo(complete);
                 // Cheating the crap out of me
-                var pi = new ProcessStartInfo(complete.Substring(0, complete.IndexOf("\"",3)+1), complete.Substring(complete.IndexOf("\"",3) + 2));
+                var pi = new ProcessStartInfo(complete.Substring(0, complete.IndexOf("\"", 3) + 1), complete.Substring(complete.IndexOf("\"", 3) + 2));
                 pi.UseShellExecute = false;
-                
+
                 var process = new Process();
                 process.StartInfo = pi;
                 process.Start();
@@ -71,6 +71,7 @@ namespace MHGameWork.TheWizards.Utilities
 
         public Assembly TestsAssembly
         { get; set; }
+
 
         public void Run()
         {

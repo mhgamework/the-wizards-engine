@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
 using MHGameWork.TheWizards.ServerClient;
+using MHGameWork.TheWizards.Wpf;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -190,6 +191,9 @@ namespace MHGameWork.TheWizards.Graphics
             AllowF3InputToggle = true;
 
             InputDisabled = DefaultInputDisabled;
+
+            Wpf = new XNAGameWpf();
+            AddXNAObject(Wpf);
         }
 
         void graphics_PreparingDeviceSettings(object sender, PreparingDeviceSettingsEventArgs e)
@@ -677,5 +681,9 @@ namespace MHGameWork.TheWizards.Graphics
                 a();
             }
         }
+
+
+        public XNAGameWpf Wpf { get; private set; }
+
     }
 }
