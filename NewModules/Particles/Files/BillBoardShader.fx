@@ -8,8 +8,8 @@ shared float4x4 view : View;
 shared float4x4 projection : Projection;
 
 shared float4x4 viewInverse : ViewInverse;
-float4 startColor=float4(0.2f,0.4f,1,1);
-float4 endColor=float4(0.2f,0.2f,0.5f,1);
+float4 startColor=float4(1,0.4f,0.4f,1);
+float4 endColor=float4(1,0.2f,0.2f,1);
 float oneOverTotalLifeTime=1/1000.0f;
 float width;
  float height;
@@ -106,7 +106,7 @@ float4 ps_main(VSOut In) : COLOR0
 	Out =tex2D(DiffuseTextureSampler, In.TexCoord);
 	
 	float3 color=lerp(startColor,endColor,In.lifeTime*oneOverTotalLifeTime);
-	return float4(color,Out.a);//float4(Out.a,0,0,1);
+	return float4(Out.rgb*color,Out.a);//float4(Out.a,0,0,1);
 }
 
 // Technique

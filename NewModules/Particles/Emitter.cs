@@ -46,6 +46,7 @@ namespace MHGameWork.TheWizards.Particles
         private int vertexStride;
         private float particleWidthEnd=0.5f;
         private float particleHeightEnd=0.5f;
+        private float darkScale = 0.6f;
         private Color startColor = new Color(new Vector3(1, 0.4f, 0.4f));
         private Color endColor=new Color(new Vector3(0.4f,0.2f,0.2f));
 
@@ -238,8 +239,8 @@ namespace MHGameWork.TheWizards.Particles
             shader.SetParameter("height", particleHeight);
             shader.SetParameter("widthEnd", particleWidthEnd);
             shader.SetParameter("heightEnd", particleHeightEnd);
-            shader.SetParameter("startColor", StartColor);
-            shader.SetParameter("endColor", EndColor);
+            shader.SetParameter("startColor", new Color(StartColor.ToVector3()*darkScale));
+            shader.SetParameter("endColor", new Color(EndColor.ToVector3()*darkScale));
             shader.SetParameter("oneOverTotalLifeTime", 1/(MaxLifeTime*1000));
             
         }

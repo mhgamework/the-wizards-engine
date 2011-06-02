@@ -12,20 +12,32 @@ namespace MHGameWork.TheWizards.Particles
     {
         private readonly Emitter emmiter;
         private Seeder seed = new Seeder(123);
-        public float Radius = 6;// needs to be put in the shader!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         public void GetNewParticleData(out Vector3 position, out Vector3 velocity)
         {
-            double a = seed.NextFloat(0, MathHelper.TwoPi);
-            double t = seed.NextFloat(0, MathHelper.TwoPi);
 
-            position = new Vector3((float)(Radius * Math.Sin(a) * Math.Sin(t)), (float)(Radius * Math.Sin(a) * Math.Cos(t)), (float)(Radius * Math.Cos(a)));
+            float rad = seed.NextFloat(0, 1);
+            position = randomDirection() * seed.NextFloat(0, 1f);
+            //position.Y = 0;
+            
 
-            velocity = Vector3.Cross(Vector3.Normalize(position), Vector3.Normalize(seed.NextVector3(-Vector3.One, Vector3.One))) * 30;
+            velocity = randomDirection() * 1f;
+            velocity.Y = (float)Math.Abs(velocity.Y);
+        }
 
-            //velocity = new Vector3((float)(-Radius * Math.Sin(t) * Math.Cos(a)), (float)(-Radius * Math.Sin(a) * Math.Cos(t)), (float)(Radius * Math.Cos(t)));
-            //position = Vector3.Zero;
-            //velocity = Vector3.Up;
+        private Vector3 randomDirection()
+        {
+            //FROM: http://mathworld.wolfram.com/SpherePointPicking.html
+
+            float u = seed.NextFloat(-1, 1);
+            float theta = seed.NextFloat(0, MathHelper.TwoPi);
+
+            float x = (float)(Math.Sqrt(1 - u * u) * Math.Cos(theta));
+            float y = (float)(Math.Sqrt(1 - u * u) * Math.Sin(theta));
+            float z = u;
+
+
+            return new Vector3(x, y, z);
         }
     }
 }

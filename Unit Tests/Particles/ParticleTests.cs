@@ -83,8 +83,9 @@ namespace MHGameWork.TheWizards.Tests.Particles
             var texPool = new TexturePool();
             var testTexture = GetTestTexture();
             creater = new BallParticleCreater();
-            emit = new Emitter(texPool, pool, game, testTexture, 5f, 5f, creater,"fireBall");
+            emit = new Emitter(texPool, pool, game, testTexture, 5f, 5f, creater, "calculateBall");
             Seeder seed = new Seeder(54);
+            var curve = Curve3DTester.CreateTestCurve();
             game.InitializeEvent += delegate
             {
                 texPool.Initialize(game);
@@ -103,15 +104,16 @@ namespace MHGameWork.TheWizards.Tests.Particles
             {
                 // emit.setShader();  
                 emit.Update();
-                if (dist > 500)
+                if (dist > 100)
                 {
                     dist = 0;
                 }
                 else
                 {
-                    dist += game.Elapsed * 25;
-                }
-                emit.SetPosition(new Vector3(dist, 0, 0));
+                    dist += game.Elapsed * 1;
+                }//emit.SetPosition(new Vector3(dist, 0, 0));
+                Temp(dist, emit, curve);
+                
             };
             game.DrawEvent += delegate
             {
@@ -139,7 +141,7 @@ namespace MHGameWork.TheWizards.Tests.Particles
             Seeder seed = new Seeder(54);
 
             var curve = Curve3DTester.CreateTestCurve();
-
+            
             game.InitializeEvent += delegate
             {
                 texPool.Initialize(game);
@@ -158,7 +160,7 @@ namespace MHGameWork.TheWizards.Tests.Particles
             {
                 dist += game.Elapsed;
                 // emit.setShader();  
-                Temp(dist, emit, curve);
+                //Temp(dist, emit, curve);
                 setColors(emit);
                 emit.Update();
 
@@ -176,12 +178,12 @@ namespace MHGameWork.TheWizards.Tests.Particles
         private void setColors(Emitter emit)
         {
             //emit.StartColor = new Color(20,20,200);
-            //emit.EndColor = new Color(0, 200,0);
+            emit.EndColor = new Color(0,0,0);
         }
 
         private void Temp(float dist, Emitter emit, Curve3D curve)
         {
-            //emit.SetPosition(curve.Evaluate(dist*3)*2);
+            emit.SetPosition(curve.Evaluate(dist*3)*2);
         }
     }
 }

@@ -5,7 +5,7 @@ float3 calculateBall(float3 oldVelocity, float3 oldPosition)
 }
 float3 calculateFlame(float3 oldVelocity, float3 oldPosition)
 {
-		return float4(0,25,0,1);
+	return float4(0,-5,0,1);
 }
 
 #include "generated.fx"

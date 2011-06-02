@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.Particles
             //position = new Vector3((float)(Math.Cos(a) * Math.Cos(t)), (float)Math.Sin(t), (float)(Math.Sin(a) * Math.Cos(t)));
 
             velocity = randomDirection() * 1f;
-            velocity.Y = (float) Math.Abs(velocity.Y);
+            velocity.Y = (float) Math.Abs(velocity.Y)*15f;
         }
 
         private Vector3 randomDirection()
