@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.Tests.Particles
 
             var data = tex.GetCoreData();
             data.StorageType = TextureCoreData.TextureStorageType.Disk;
-            data.DiskFilePath = TWDir.GameData.CreateSubdirectory("Core").FullName + "\\nova.png";
+            data.DiskFilePath = TWDir.GameData.CreateSubdirectory("Core").FullName + "\\Explosion.png";
             /*data.StorageType = TextureCoreData.TextureStorageType.Assembly;
             data.Assembly = Assembly.GetExecutingAssembly();
             data.AssemblyResourceName = "MHGameWork.TheWizards.Tests.OBJParser.Files.maps.BrickRound0030_7_S.jpg";*/
@@ -191,10 +191,13 @@ namespace MHGameWork.TheWizards.Tests.Particles
             var testTexture = GetTestTexture();
             creater = new SparkelParticleCreater();
             emit = new Emitter(texPool, pool, game, testTexture, 5f, 1f, creater, "CalculateSpark");
-            game.Wpf.CreateClassForm(emit);
+            //game.Wpf.CreateClassForm(emit);
             emit.Directional = true;
             Seeder seed = new Seeder(54);
-
+            emit.uvStart = new Vector2(0, 0.5f);
+            emit.uvSize = new Vector2(0.5f, 0.1f);
+            emit.StartColor = Color.LightYellow;
+            emit.EndColor = Color.OrangeRed;
             game.InitializeEvent += delegate
             {
                 texPool.Initialize(game);
@@ -220,17 +223,7 @@ namespace MHGameWork.TheWizards.Tests.Particles
                 //game.GraphicsDevice.Clear(Color.Black);
                 game.GraphicsDevice.RenderState.CullMode = CullMode.None;
                 emit.Render(game.SpectaterCamera.ViewProjection, game.SpectaterCamera.ViewInverse);
-                /*Vector3 dir = new Vector3(1, 1, 1);
-                dir.Normalize();
-                game.LineManager3D.AddLine(Vector3.Zero, dir*5, Color.Red);
-                Vector3 crossview = Vector3.Cross(game.SpectaterCamera.ViewInverse.Right, game.SpectaterCamera.ViewInverse.Up);
-                crossview.Normalize();
-                game.LineManager3D.AddLine(Vector3.Zero, game.SpectaterCamera.ViewInverse.Right, Color.Pink);
-                game.LineManager3D.AddLine(Vector3.Zero, game.SpectaterCamera.ViewInverse.Up, Color.White);
-                game.LineManager3D.AddLine(Vector3.Zero, crossview, Color.Green);
-                Vector3 up = Vector3.Cross(dir, crossview);
-                up.Normalize();
-                game.LineManager3D.AddLine(Vector3.Zero, up*5, Color.Yellow);*/
+              
             };
 
             game.Run();

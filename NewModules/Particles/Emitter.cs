@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.Particles
         private readonly IParticleCreater particleCreater;
         private int maxParticles;
 
-        private float MaxLifeTime = 1f;
+        private float MaxLifeTime = 2.5f;
         private int particlesPerSecond;
         public float ParticleFrequency { get { return 1f / ParticlesPerSecond; } }
         private int emptyIndex = 0;
@@ -50,7 +50,8 @@ namespace MHGameWork.TheWizards.Particles
         private Color startColor = new Color(new Vector3(1, 0.4f, 0.4f));
         private Color endColor=new Color(new Vector3(0.4f,0.2f,0.2f));
         public Boolean Directional = false;
-        
+        public Vector2 uvStart = Vector2.Zero;
+        public Vector2 uvSize = new Vector2(1, 1);
         public Emitter(TexturePool texturePool, VertexDeclarationPool declarationPool, IXNAGame game, ITexture texture, float particleWidth, float particleHeight, IParticleCreater particleCreater,String effectName)
         {
             this.texturePool = texturePool;
@@ -256,7 +257,8 @@ namespace MHGameWork.TheWizards.Particles
             shader.SetParameter("startColor", new Color(StartColor.ToVector3()*darkScale));
             shader.SetParameter("endColor", new Color(EndColor.ToVector3()*darkScale));
             shader.SetParameter("oneOverTotalLifeTime", 1/(MaxLifeTime*1000));
-            
+            shader.SetParameter("uvStart", uvStart);
+            shader.SetParameter("uvSize", uvSize);
         }
 
         public void SetRenderData()

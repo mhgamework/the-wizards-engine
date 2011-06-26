@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.Particles
         public void GetNewParticleData(out Vector3 position, out Vector3 velocity)
         {
             position = Vector3.Zero;
-            velocity =seed.NextVector3(new Vector3(-1, -1, 0), new Vector3(1, 1, 1));
+            velocity = seed.NextVector3(new Vector3(-1, 0, -1), new Vector3(1, 1, 1));
             velocity.Normalize();
             velocity*= speed*50;
         }

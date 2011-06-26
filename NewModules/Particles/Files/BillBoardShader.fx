@@ -16,7 +16,8 @@ float width;
  float heightEnd;
  float widthEnd;
  float size;
-
+ float2 uvStart=float2(0,0);
+ float2 uvSize=float2(1,1);
 texture diffuseTexture : Diffuse
 <
 	string UIName = "Diffuse Texture";
@@ -86,7 +87,8 @@ VSOut vs_main(VertexInput In)
    
   
 	output.Position=mul(pos,viewProjection);
-	output.TexCoord=float2(0.5,0.5)+In.TexCoord;
+	output.TexCoord.x=(0.5+In.TexCoord.x)*uvSize.x+uvStart.x;
+	output.TexCoord.y=(0.5+In.TexCoord.y)*uvSize.y+uvStart.y;
 	output.lifeTime=lifetime;
     return output;
 }
@@ -122,7 +124,8 @@ VSOut vs_DirectionalBillboard(VertexInput In)
    
   
 	output.Position=mul(pos,viewProjection);
-	output.TexCoord=float2(0.5,0.5)+In.TexCoord;
+	output.TexCoord.x=(0.5+In.TexCoord.x)*uvSize.x+uvStart.x;
+	output.TexCoord.y=(0.5+In.TexCoord.y)*uvSize.y+uvStart.y;//(float2(0.5,0.5)+In.TexCoord)*uvEnd+ uvStart;//float2(0.5,0.5)+In.TexCoord;
 	output.lifeTime=lifetime;
     return output;
 }
