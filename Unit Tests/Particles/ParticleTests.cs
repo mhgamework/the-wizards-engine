@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.Tests.Particles
 
             var data = tex.GetCoreData();
             data.StorageType = TextureCoreData.TextureStorageType.Disk;
-            data.DiskFilePath = TWDir.GameData.CreateSubdirectory("Core").FullName + "\\fire.png";
+            data.DiskFilePath = TWDir.GameData.CreateSubdirectory("Core").FullName + "\\nova.png";
             /*data.StorageType = TextureCoreData.TextureStorageType.Assembly;
             data.Assembly = Assembly.GetExecutingAssembly();
             data.AssemblyResourceName = "MHGameWork.TheWizards.Tests.OBJParser.Files.maps.BrickRound0030_7_S.jpg";*/
@@ -84,6 +84,7 @@ namespace MHGameWork.TheWizards.Tests.Particles
             var testTexture = GetTestTexture();
             creater = new BallParticleCreater();
             emit = new Emitter(texPool, pool, game, testTexture, 5f, 5f, creater, "calculateBall");
+            game.Wpf.CreateClassForm(emit);
             Seeder seed = new Seeder(54);
             var curve = Curve3DTester.CreateTestCurve();
             game.InitializeEvent += delegate
@@ -161,7 +162,8 @@ namespace MHGameWork.TheWizards.Tests.Particles
                 dist += game.Elapsed;
                 // emit.setShader();  
                 //Temp(dist, emit, curve);
-                setColors(emit);
+                
+                //setColors(emit);
                 emit.Update();
 
             };
@@ -175,11 +177,69 @@ namespace MHGameWork.TheWizards.Tests.Particles
             game.Run();
         }
 
-        private void setColors(Emitter emit)
+        [Test]
+        public void SparkleTest()
         {
-            //emit.StartColor = new Color(20,20,200);
-            emit.EndColor = new Color(0,0,0);
+            Emitter emit;
+            XNAGame game = new XNAGame();
+            SparkelParticleCreater creater;
+            game.DrawFps = true;
+
+            var pool = new VertexDeclarationPool();
+            pool.SetVertexElements<Emitter.ParticleVertex>(Emitter.ParticleVertex.VertexElements);
+            var texPool = new TexturePool();
+            var testTexture = GetTestTexture();
+            creater = new SparkelParticleCreater();
+            emit = new Emitter(texPool, pool, game, testTexture, 5f, 1f, creater, "CalculateSpark");
+            game.Wpf.CreateClassForm(emit);
+            emit.Directional = true;
+            Seeder seed = new Seeder(54);
+
+            game.InitializeEvent += delegate
+            {
+                texPool.Initialize(game);
+                pool.Initialize(game);
+
+                emit.Initialize();
+                emit.InitializeRender();
+
+
+                emit.CreateRenderData();
+                emit.SetRenderData();
+               
+            };
+            float dist = 0;
+            game.UpdateEvent += delegate
+            {
+                
+                emit.Update();
+
+            };
+            game.DrawEvent += delegate
+            {
+                //game.GraphicsDevice.Clear(Color.Black);
+                game.GraphicsDevice.RenderState.CullMode = CullMode.None;
+                emit.Render(game.SpectaterCamera.ViewProjection, game.SpectaterCamera.ViewInverse);
+                /*Vector3 dir = new Vector3(1, 1, 1);
+                dir.Normalize();
+                game.LineManager3D.AddLine(Vector3.Zero, dir*5, Color.Red);
+                Vector3 crossview = Vector3.Cross(game.SpectaterCamera.ViewInverse.Right, game.SpectaterCamera.ViewInverse.Up);
+                crossview.Normalize();
+                game.LineManager3D.AddLine(Vector3.Zero, game.SpectaterCamera.ViewInverse.Right, Color.Pink);
+                game.LineManager3D.AddLine(Vector3.Zero, game.SpectaterCamera.ViewInverse.Up, Color.White);
+                game.LineManager3D.AddLine(Vector3.Zero, crossview, Color.Green);
+                Vector3 up = Vector3.Cross(dir, crossview);
+                up.Normalize();
+                game.LineManager3D.AddLine(Vector3.Zero, up*5, Color.Yellow);*/
+            };
+
+            game.Run();
         }
+        //private void setColors(Emitter emit)
+        //{
+        //    //emit.StartColor = new Color(20,20,200);
+        //    emit.EndColor = new Color(0,0,0);
+        //}
 
         private void Temp(float dist, Emitter emit, Curve3D curve)
         {

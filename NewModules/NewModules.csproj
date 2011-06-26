@@ -193,6 +193,7 @@
     <Compile Include="Particles\IParticleCreater.cs" />
     <Compile Include="Particles\ParticleSimulater.cs" />
     <Compile Include="Particles\SimpleParticleCreater.cs" />
+    <Compile Include="Particles\SparkelParticleCreater.cs" />
     <Compile Include="Rendering\DiskRenderingAssetFactory.cs" />
     <Compile Include="Terrain\Geomipmap\HeightmapNormalCalculator.cs" />
     <Compile Include="Rendering\SimpleMeshFactory.cs" />

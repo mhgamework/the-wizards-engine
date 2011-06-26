@@ -7,6 +7,10 @@ float3 calculateFlame(float3 oldVelocity, float3 oldPosition)
 {
 	return float4(0,-5,0,1);
 }
+float3 CalculateSpark(float3 oldVelocity, float3 oldPosition)
+{
+	return float4(0,0,0,1);
+}
 
 #include "generated.fx"
 

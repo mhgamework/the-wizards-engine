@@ -90,7 +90,42 @@ VSOut vs_main(VertexInput In)
 	output.lifeTime=lifetime;
     return output;
 }
+float3 startPosition=float3(0,0,0);
+VSOut vs_DirectionalBillboard(VertexInput In)
+{
+	VSOut output;
+	float halfTexel = 1.0/size*0.5;
+	float2 mapUV = In.uv.xy / size + halfTexel;
+	float4 position= tex2Dlod(displacementSampler, float4(mapUV,0,0));
+	//position= float4(0,0,0,1);
+	float4 pos=mul(position,world);
+	//pos = float4(In.uv,0,1);
+	float createTime= tex2Dlod(timeSampler, float4(mapUV,0,0)).x;
+	float lifetime= currentTime-createTime;
 
+	
+   float4 Up=viewInverse[1];
+   float4 Right=viewInverse[0];
+   //WARNING: startPosition should in WorldSpace
+   float3 dir=normalize(startPosition-pos.xyz);  
+   float3 cameraDirection = viewInverse[2];
+   //cameraDirection = float3(0,0,1); 
+   float3 translationUp=normalize(cross(dir,cameraDirection));
+	
+   //float4 translationUp = float4(In.TexCoord,0,1);
+   //translationUp=float3(0,1,0)*In.TexCoord.y*In.size.y;
+   //translationRight=float3(1,0,0)*In.TexCoord.x*In.size.x;
+   //pos=pos/pos.w;
+   //pos=pos+ translationUp*In.TexCoord.y*lerp(height,heightEnd,lifetime*oneOverTotalLifeTime)+ dir*(In.TexCoord.x*lerp(width,widthEnd,lifetime*oneOverTotalLifeTime)+0.5);
+   pos=pos+ float4(translationUp*In.TexCoord.y*lerp(height,heightEnd,lifetime*oneOverTotalLifeTime),1)
+		+ float4(dir*(In.TexCoord.x-0.5)*lerp(width,widthEnd,lifetime*oneOverTotalLifeTime),1);
+   
+  
+	output.Position=mul(pos,viewProjection);
+	output.TexCoord=float2(0.5,0.5)+In.TexCoord;
+	output.lifeTime=lifetime;
+    return output;
+}
 
 
 
@@ -106,7 +141,7 @@ float4 ps_main(VSOut In) : COLOR0
 	Out =tex2D(DiffuseTextureSampler, In.TexCoord);
 	
 	float3 color=lerp(startColor,endColor,In.lifeTime*oneOverTotalLifeTime);
-	return float4(Out.rgb*color,Out.a);//float4(Out.a,0,0,1);
+	return float4(color,Out.r);//float4(Out.a,0,0,1);
 }
 
 // Technique
@@ -117,6 +152,15 @@ technique Billboard
 		// Shaders
 		VertexShader = compile vs_3_0 vs_main();
 		PixelShader  = compile ps_3_0 ps_main();
+		
+    }
+}
+technique DirectionalBillboard
+{
+	pass p1
+	{
+	VertexShader = compile vs_3_0 vs_DirectionalBillboard();
+	PixelShader  = compile ps_3_0 ps_main();
 		
     }
 }
