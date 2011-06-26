@@ -14,6 +14,8 @@ add to the app.config file:
 ----Must install:
 
 Nvidia PhysX
+XNA 2.0 Redist 
+DevExpress 10.1.5.0 (research patched version by Danny Su)
 
 Visual C++ 2008 redistributable package (NOT SP1)
 
