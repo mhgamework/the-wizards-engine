@@ -106,6 +106,7 @@
     <Reference Include="SharpDX.XAudio2">
       <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.XAudio2.dll</HintPath>
     </Reference>
+    <Reference Include="SlimDX, Version=4.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
     <Reference Include="StillDesign.PhysX.Net">
       <HintPath>..\_Libraries\PhysX.Net\References\Debug\XNA 2.0\StillDesign.PhysX.Net.dll</HintPath>
     </Reference>
@@ -133,6 +134,7 @@
     <Compile Include="Client\ClientTest.cs" />
     <Compile Include="Collada\ColladaTest.cs" />
     <Compile Include="CoreTest.cs" />
+    <Compile Include="DirectX11\SharpDXTest.cs" />
     <Compile Include="DirectX11\DirectX11Test.cs" />
     <Compile Include="Editor\EditorTest.cs" />
     <Compile Include="Physics\TestSphereShooter.cs" />

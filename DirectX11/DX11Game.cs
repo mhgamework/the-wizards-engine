@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using SharpDX;
-using SharpDX.D3DCompiler;
-using SharpDX.Direct3D;
-using SharpDX.Direct3D11;
-using SharpDX.DXGI;
-using SharpDX.Windows;
-using Buffer = SharpDX.Direct3D11.Buffer;
-using Device = SharpDX.Direct3D11.Device;
-using Resource = SharpDX.Direct3D11.Resource;
+using System.Drawing;
+using SlimDX;
+using SlimDX.Direct3D11;
+using SlimDX.DXGI;
+using SlimDX.Windows;
+using SlimDX.D3DCompiler;
+using Buffer = SlimDX.Direct3D11.Buffer;
+using Device = SlimDX.Direct3D11.Device;
+
 
 namespace DirectX11
 {
@@ -21,6 +17,11 @@ namespace DirectX11
         private RenderForm form;
         private Texture2D backBuffer;
         private RenderTargetView renderView;
+        private Device device;
+        private InputLayout layout;
+        private EffectTechnique technique;
+        private EffectPass pass;
+        private Buffer vertices;
         public event Action GameLoopEvent;
 
         public int FrameCount { get; private set; }
@@ -50,10 +51,17 @@ namespace DirectX11
 
         private void GameLoop()
         {
-            Context.ClearRenderTargetView(RenderView, new Color4(1.0f, 0.0f, 0.0f, 0.0f));
+            device.ImmediateContext.ClearRenderTargetView(renderView, Color.Black);
 
-            if (GameLoopEvent != null)
-                GameLoopEvent();
+            device.ImmediateContext.InputAssembler.InputLayout = layout;
+            device.ImmediateContext.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleList;
+            device.ImmediateContext.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(vertices, 32, 0));
+
+            for (int i = 0; i < technique.Description.PassCount; ++i)
+            {
+                pass.Apply(device.ImmediateContext);
+                device.ImmediateContext.Draw(3, 0);
+            }
 
             swapChain.Present(0, PresentFlags.None);
             FrameCount++;
@@ -61,55 +69,82 @@ namespace DirectX11
 
         public void Run()
         {
-            Form = new RenderForm("SharpDX - MiniTri Direct3D 11 Sample");
 
-            // SwapChain description
+            form = new RenderForm("SlimDX - MiniTri Direct3D 11 Sample");
             var desc = new SwapChainDescription()
             {
                 BufferCount = 1,
-                ModeDescription =
-                    new ModeDescription(Form.ClientSize.Width, Form.ClientSize.Height,
-                                        new Rational(60, 1), Format.R8G8B8A8_UNorm),
+                ModeDescription = new ModeDescription(form.ClientSize.Width, form.ClientSize.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm),
                 IsWindowed = true,
-                OutputHandle = Form.Handle,
-                SampleDescription = new SampleDescription(8, 16),
+                OutputHandle = form.Handle,
+                SampleDescription = new SampleDescription(4, 0),
                 SwapEffect = SwapEffect.Discard,
                 Usage = Usage.RenderTargetOutput,
+
             };
 
-            SharpDX.Direct3D11.Device dev;
-            // Create Device and SwapChain
-            Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.Debug, desc, out dev, out swapChain);
-            Device = dev;
-            Context = Device.ImmediateContext;
-
-            Form.Resize += new System.EventHandler(form_Resize);
-
-            // Ignore all windows events
-            Factory factory = swapChain.GetParent<Factory>();
-            //factory.MakeWindowAssociation(form.Handle, WindowAssociationFlags.None);
-
-            // New RenderTargetView from the backbuffer
-            backBuffer = Resource.FromSwapChain<Texture2D>(swapChain, 0);
-            RenderView = new RenderTargetView(Device, backBuffer);
-
-        
 
 
+            //Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
+            Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.None, desc, out device, out swapChain);
+
+            var result = device.CheckMultisampleQualityLevels(Format.R8G8B8A8_UNorm, 2);
 
 
-            // Main loop
-            RenderLoop.Run(Form, GameLoop);
+            var factory = swapChain.GetParent<Factory>();
+            factory.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
 
-            // Release all resources
-            RenderView.Release();
-            backBuffer.Release();
-            Context.ClearState();
-            Context.Flush();
-            Device.Release();
-            Context.Release();
-            swapChain.Release();
-            factory.Release();
+            backBuffer = Texture2D.FromSwapChain<Texture2D>(swapChain, 0);
+            renderView = new RenderTargetView(device, backBuffer);
+            var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/MiniTri.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
+            var effect = new Effect(device, bytecode);
+            technique = effect.GetTechniqueByIndex(0);
+            pass = technique.GetPassByIndex(0);
+            layout = new InputLayout(device, pass.Description.Signature, new[] {
+                                                                                   new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),
+                                                                                   new InputElement("COLOR", 0, Format.R32G32B32A32_Float, 16, 0) 
+                                                                               });
+
+            var stream = new DataStream(3 * 32, true, true);
+            stream.WriteRange(new[] {
+                new Vector4(0.0f, 0.5f, 0.5f, 1.0f), new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector4(0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
+                new Vector4(-0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f)
+            });
+            stream.Position = 0;
+
+            vertices = new SlimDX.Direct3D11.Buffer(device, stream, new BufferDescription()
+                                                                        {
+                                                                            BindFlags = BindFlags.VertexBuffer,
+                                                                            CpuAccessFlags = CpuAccessFlags.None,
+                                                                            OptionFlags = ResourceOptionFlags.None,
+                                                                            SizeInBytes = 3 * 32,
+                                                                            Usage = ResourceUsage.Default
+                                                                        });
+            stream.Dispose();
+
+            device.ImmediateContext.OutputMerger.SetTargets(renderView);
+            device.ImmediateContext.Rasterizer.SetViewports(new Viewport(0, 0, form.ClientSize.Width, form.ClientSize.Height, 0.0f, 1.0f));
+
+            MessagePump.Run(form, GameLoop);
+
+            bytecode.Dispose();
+            vertices.Dispose();
+            layout.Dispose();
+            effect.Dispose();
+            renderView.Dispose();
+            backBuffer.Dispose();
+            device.Dispose();
+            swapChain.Dispose();
+
+
+
+
+
+
+
+
+
 
         }
 
@@ -119,7 +154,7 @@ namespace DirectX11
             // Disabled, this causes random crashes atm
 
             return;
-            backBuffer.Release();
+            /*backBuffer.Release();
             RenderView.Release();
             try
             {
@@ -135,7 +170,7 @@ namespace DirectX11
             backBuffer = Resource.FromSwapChain<Texture2D>(swapChain, 0);
             RenderView = new RenderTargetView(Device, backBuffer);
             Context.OutputMerger.SetTargets(RenderView);
-            Context.Rasterizer.SetViewports(new Viewport(0, 0, Form.ClientSize.Width, Form.ClientSize.Height, 0.0f, 1.0f));
+            Context.Rasterizer.SetViewports(new Viewport(0, 0, Form.ClientSize.Width, Form.ClientSize.Height, 0.0f, 1.0f));*/
         }
     }
 }

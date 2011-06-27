@@ -26,312 +26,103 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
     [TestFixture]
     public class DirectX11Test
     {
-        [Test]
-        public void TestRenderTriangle()
-        {
-            var form = new RenderForm("SharpDX - MiniTri Direct3D 11 Sample");
+     
+        //[Test]
+        //public void TestDX11Game()
+        //{
+        //    var game = new DX11Game();
+           
+        //    VertexShader vertexShader = null;
+        //    ShaderBytecode pixelShaderByteCode = null;
+        //    InputLayout layout = null;
+        //    Buffer vertices = null;
+        //    PixelShader pixelShader = null;
 
-            // SwapChain description
-            var desc = new SwapChainDescription()
-            {
-                BufferCount = 1,
-                ModeDescription =
-                    new ModeDescription(form.ClientSize.Width, form.ClientSize.Height,
-                                        new Rational(60, 1), Format.R8G8B8A8_UNorm),
-                IsWindowed = true,
-                OutputHandle = form.Handle,
-                SampleDescription = new SampleDescription(1, 0),
-                SwapEffect = SwapEffect.Discard,
-                Usage = Usage.RenderTargetOutput
-            };
+        //    RasterizerState rasterizerState = null;
+        //    game.GameLoopEvent += delegate
+        //                          {
+        //                              var device = game.Device;
+        //                              var Context = device.ImmediateContext;
+        //                              if (game.FrameCount == 0)
+        //                              {
+        //                                  byte[] shaderCode = null;
+        //                                  using (var strm = Assembly.GetExecutingAssembly().GetManifestResourceStream("MHGameWork.TheWizards.Tests.DirectX11.MiniTri.fx"))
+        //                                  {
+        //                                      shaderCode = new byte[(int)strm.Length];
+        //                                      strm.Read(shaderCode, 0, (int)strm.Length);
+        //                                  }
 
-            // Create Device and SwapChain
-            Device device;
-            SwapChain swapChain;
-            Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
-            var context = device.ImmediateContext;
+        //                                  var vertexShaderByteCode = ShaderBytecode.Compile(shaderCode, "VS", "vs_4_0", ShaderFlags.None,
+        //                                                    EffectFlags.None);
+        //                                  vertexShader = new VertexShader(device, vertexShaderByteCode);
 
-            // Ignore all windows events
-            Factory factory = swapChain.GetParent<Factory>();
-            factory.MakeWindowAssociation(form.Handle, WindowAssociationFlags.None);
+        //                                  pixelShaderByteCode = ShaderBytecode.Compile(shaderCode, "PS", "ps_4_0", ShaderFlags.None,
+        //                                                                               EffectFlags.None);
+        //                                  pixelShader = new PixelShader(device, pixelShaderByteCode);
 
-            // New RenderTargetView from the backbuffer
-            Texture2D backBuffer = Texture2D.FromSwapChain<Texture2D>(swapChain, 0);
-            var renderView = new RenderTargetView(device, backBuffer);
+        //                                  // Layout from VertexShader input signature
+        //                                  layout = new InputLayout(device, ShaderSignature.GetInputSignature(vertexShaderByteCode), new[] { 
+        //                                                                                                                                      new InputElement("POSITION",0,Format.R32G32B32A32_Float,0,0),
+        //                                                                                                                                      new InputElement("COLOR",0,Format.R32G32B32A32_Float,16,0)
+        //                                                                                                                                  });
 
-            byte[] shaderCode = null;
-            using (var strm = Assembly.GetExecutingAssembly().GetManifestResourceStream("MHGameWork.TheWizards.Tests.DirectX11.MiniTri.fx"))
-            {
-                shaderCode = new byte[(int)strm.Length];
-                strm.Read(shaderCode, 0, (int)strm.Length);
-            }
+        //                                  // Write vertex data to a datastream
+        //                                  var stream = new DataStream(32 * 3, true, true);
+        //                                  stream.WriteRange(new[]
+        //                                        {
+        //                                            new Vector4(0.0f, 0.5f, 0.5f, 1.0f), new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+        //                                            new Vector4(0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
+        //                                            new Vector4(-0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f)
+        //                                        });
+        //                                  stream.Position = 0;
 
 
-            // Compile Vertex and Pixel shaders
-            var vertexShaderByteCode = ShaderBytecode.Compile(shaderCode, "VS", "vs_4_0", ShaderFlags.None,
-                                                                      EffectFlags.None);
-            var vertexShader = new VertexShader(device, vertexShaderByteCode);
 
-            var pixelShaderByteCode = ShaderBytecode.Compile(shaderCode, "PS", "ps_4_0", ShaderFlags.None,
-                                                                     EffectFlags.None);
-            var pixelShader = new PixelShader(device, pixelShaderByteCode);
+        //                                  // Instantiate Vertex buiffer from vertex data
+        //                                  vertices = new Buffer(device, stream, new BufferDescription()
+        //                                                                            {
+        //                                                                                BindFlags = BindFlags.VertexBuffer,
+        //                                                                                CpuAccessFlags = CpuAccessFlags.None,
+        //                                                                                OptionFlags = ResourceOptionFlags.None,
+        //                                                                                SizeInBytes = 32 * 3,
+        //                                                                                Usage = ResourceUsage.Default,
+        //                                                                                StructureByteStride = 0
+        //                                                                            });
 
-            // Layout from VertexShader input signature
-            var layout = new InputLayout(device, ShaderSignature.GetInputSignature(vertexShaderByteCode), new[] { 
-                new InputElement("POSITION",0,Format.R32G32B32A32_Float,0,0),
-                new InputElement("COLOR",0,Format.R32G32B32A32_Float,16,0)
-            });
+        //                                  stream.Release();
 
-            // Write vertex data to a datastream
-            var stream = new DataStream(32 * 3, true, true);
-            stream.WriteRange(new[]
-                                  {
-                                      new Vector4(0.0f, 0.5f, 0.5f, 1.0f), new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-                                      new Vector4(0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
-                                      new Vector4(-0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f)
-                                  });
-            stream.Position = 0;
+        //                                  var rasterDesc = new RasterizerStateDescription();
+        //                                  rasterDesc.CullMode = CullMode.Back;
+        //                                  rasterDesc.FillMode = FillMode.Solid;
+        //                                  rasterDesc.IsMultisampleEnabled = true;
+        //                                  rasterizerState = new RasterizerState(device, rasterDesc);
 
-            // Instantiate Vertex buiffer from vertex data
-            var vertices = new Buffer(device, stream, new BufferDescription()
-            {
-                BindFlags = BindFlags.VertexBuffer,
-                CpuAccessFlags = CpuAccessFlags.None,
-                OptionFlags = ResourceOptionFlags.None,
-                SizeInBytes = 32 * 3,
-                Usage = ResourceUsage.Default,
-                StructureByteStride = 0
-            });
-            stream.Release();
+        //                              }
 
-            // Prepare All the stages
-            context.InputAssembler.SetInputLayout(layout);
-            context.InputAssembler.SetPrimitiveTopology(PrimitiveTopology.TriangleList);
-            context.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(vertices, 32, 0));
-            context.VertexShader.Set(vertexShader);
-            context.Rasterizer.SetViewports(new Viewport(0, 0, form.ClientSize.Width, form.ClientSize.Height, 0.0f, 1.0f));
-            context.PixelShader.Set(pixelShader);
-            context.OutputMerger.SetTargets(renderView);
+        //                              // Prepare All the stages
+        //                              Context.InputAssembler.SetInputLayout(layout);
+        //                              Context.InputAssembler.SetPrimitiveTopology(PrimitiveTopology.TriangleList);
+        //                              Context.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(vertices, 32, 0));
+        //                              Context.VertexShader.Set(vertexShader);
+        //                              Context.Rasterizer.SetViewports(new Viewport(0, 0, game.Form.ClientSize.Width, game.Form.ClientSize.Height, 0.0f, 1.0f));
+        //                              Context.Rasterizer.State = rasterizerState;
+        //                              Context.PixelShader.Set(pixelShader);
+        //                              Context.OutputMerger.SetTargets(game.RenderView);
 
-            // Main loop
-            RenderLoop.Run(form, () =>
-            {
-                context.ClearRenderTargetView(renderView, new Color4(1.0f, 0.0f, 0.0f, 0.0f));
-                context.Draw(3, 0);
-                swapChain.Present(0, PresentFlags.None);
-            });
+        //                              Context.Draw(3, 0);
 
-            // Release all resources
-            vertexShaderByteCode.Release();
-            vertexShader.Release();
-            pixelShaderByteCode.Release();
-            pixelShader.Release();
-            vertices.Release();
-            layout.Release();
-            renderView.Release();
-            backBuffer.Release();
-            context.ClearState();
-            context.Flush();
-            device.Release();
-            context.Release();
-            swapChain.Release();
-            factory.Release();
-        }
+        //                          };
+
+        //    game.Run();
+        //    /*layout.Release();
+        //    s.Release();*/
+        //}
 
         [Test]
-        public void TestPlaySoundXAudio2()
-        {
-            var xaudio2 = new XAudio2();
-            var masteringVoice = new MasteringVoice(xaudio2);
-
-
-            var waveFormat = new WaveFormat(44100, 32, 2);
-            var sourceVoice = new SourceVoice(xaudio2, waveFormat);
-
-            int bufferSize = waveFormat.ConvertLatencyToByteSize(60000);
-            DataStream dataStream = new DataStream(bufferSize, true, true);
-
-            int numberOfSamples = bufferSize / waveFormat.BlockAlign;
-            for (int i = 0; i < numberOfSamples; i++)
-            {
-                double vibrato = Math.Cos(2 * Math.PI * 10.0 * i / waveFormat.SampleRate);
-                float value = (float)(Math.Cos(2 * Math.PI * (220.0 + 4.0 * vibrato) * i / waveFormat.SampleRate) * 0.5);
-                dataStream.Write(value);
-                dataStream.Write(value);
-            }
-            dataStream.Position = 0;
-
-            var audioBuffer = new AudioBuffer { Stream = dataStream, Flags = BufferFlags.EndOfStream, AudioBytes = bufferSize };
-
-            var reverb = new Reverb();
-            EffectDescriptor effectDescriptor = new EffectDescriptor(reverb);
-            sourceVoice.SetEffectChain(effectDescriptor);
-            sourceVoice.EnableEffect(0);
-
-            sourceVoice.SubmitSourceBuffer(ref audioBuffer, null);
-
-            sourceVoice.Start();
-
-            Console.WriteLine("Play sound");
-            for (int i = 0; i < 60; i++)
-            {
-                Console.Write(".");
-                Console.Out.Flush();
-                Thread.Sleep(1000);
-            }
-        }
-
-        [Test]
-        public void TestPlaySoundDirectSound()
-        {
-            DirectSound directSound = new DirectSound();
-
-            var form = new Form();
-            form.Text = "SharpDX - DirectSound Demo";
-
-            // Set Cooperative Level to PRIORITY (priority level can call the SetFormat and Compact methods)
-            //
-            directSound.SetCooperativeLevel(form.Handle, CooperativeLevel.Priority);
-
-            // Create PrimarySoundBuffer
-            var primaryBufferDesc = new SoundBufferDescription();
-            primaryBufferDesc.Flags = SharpDX.DirectSound.BufferFlags.PrimaryBuffer;
-            primaryBufferDesc.AlgorithmFor3D = Guid.Empty;
-
-            var primarySoundBuffer = new PrimarySoundBuffer(directSound, primaryBufferDesc);
-
-            // Play the PrimarySound Buffer
-            primarySoundBuffer.Play(0, SharpDX.DirectSound.PlayFlags.Looping);
-
-            // Default WaveFormat Stereo 44100 16 bit
-            WaveFormat waveFormat = new WaveFormat();
-
-            // Create SecondarySoundBuffer
-            var secondaryBufferDesc = new SoundBufferDescription();
-            secondaryBufferDesc.BufferBytes = waveFormat.ConvertLatencyToByteSize(60000);
-            secondaryBufferDesc.Format = waveFormat;
-            secondaryBufferDesc.Flags = SharpDX.DirectSound.BufferFlags.GetCurrentPosition2 | SharpDX.DirectSound.BufferFlags.ControlPositionNotify |
-                                        SharpDX.DirectSound.BufferFlags.GlobalFocus |
-                                        SharpDX.DirectSound.BufferFlags.ControlVolume | SharpDX.DirectSound.BufferFlags.StickyFocus;
-            secondaryBufferDesc.AlgorithmFor3D = Guid.Empty;
-            var secondarySoundBuffer = new SecondarySoundBuffer(directSound, secondaryBufferDesc);
-
-            // Get Capabilties from secondary sound buffer
-            var capabilities = secondarySoundBuffer.Capabilities;
-
-            // Lock the buffer
-            DataStream dataPart2;
-            var dataPart1 = secondarySoundBuffer.Lock(0, capabilities.BufferBytes, LockFlags.EntireBuffer, out dataPart2);
-
-            // Fill the buffer with some sound
-            int numberOfSamples = capabilities.BufferBytes / waveFormat.BlockAlign;
-            for (int i = 0; i < numberOfSamples; i++)
-            {
-                double vibrato = Math.Cos(2 * Math.PI * 10.0 * i / waveFormat.SampleRate);
-                short value = (short)(Math.Cos(2 * Math.PI * (220.0 + 4.0 * vibrato) * i / waveFormat.SampleRate) * 16384);
-                // Not too loud
-                dataPart1.Write(value);
-                dataPart1.Write(value);
-            }
-
-            // Unlock the buffer
-            secondarySoundBuffer.Unlock(dataPart1, dataPart2);
-
-            // Play the song
-            secondarySoundBuffer.Play(0, SharpDX.DirectSound.PlayFlags.Looping);
-
-            Application.Run(form);
-        }
-
-        [Test]
-        public void TestDX11Game()
+        public void TestDirectX11Game()
         {
             var game = new DX11Game();
-           
-            VertexShader vertexShader = null;
-            ShaderBytecode pixelShaderByteCode = null;
-            InputLayout layout = null;
-            Buffer vertices = null;
-            PixelShader pixelShader = null;
-
-            RasterizerState rasterizerState = null;
-            game.GameLoopEvent += delegate
-                                  {
-                                      var device = game.Device;
-                                      var Context = device.ImmediateContext;
-                                      if (game.FrameCount == 0)
-                                      {
-                                          byte[] shaderCode = null;
-                                          using (var strm = Assembly.GetExecutingAssembly().GetManifestResourceStream("MHGameWork.TheWizards.Tests.DirectX11.MiniTri.fx"))
-                                          {
-                                              shaderCode = new byte[(int)strm.Length];
-                                              strm.Read(shaderCode, 0, (int)strm.Length);
-                                          }
-
-                                          var vertexShaderByteCode = ShaderBytecode.Compile(shaderCode, "VS", "vs_4_0", ShaderFlags.None,
-                                                            EffectFlags.None);
-                                          vertexShader = new VertexShader(device, vertexShaderByteCode);
-
-                                          pixelShaderByteCode = ShaderBytecode.Compile(shaderCode, "PS", "ps_4_0", ShaderFlags.None,
-                                                                                       EffectFlags.None);
-                                          pixelShader = new PixelShader(device, pixelShaderByteCode);
-
-                                          // Layout from VertexShader input signature
-                                          layout = new InputLayout(device, ShaderSignature.GetInputSignature(vertexShaderByteCode), new[] { 
-                                                                                                                                              new InputElement("POSITION",0,Format.R32G32B32A32_Float,0,0),
-                                                                                                                                              new InputElement("COLOR",0,Format.R32G32B32A32_Float,16,0)
-                                                                                                                                          });
-
-                                          // Write vertex data to a datastream
-                                          var stream = new DataStream(32 * 3, true, true);
-                                          stream.WriteRange(new[]
-                                                {
-                                                    new Vector4(0.0f, 0.5f, 0.5f, 1.0f), new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-                                                    new Vector4(0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
-                                                    new Vector4(-0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f)
-                                                });
-                                          stream.Position = 0;
-
-
-
-                                          // Instantiate Vertex buiffer from vertex data
-                                          vertices = new Buffer(device, stream, new BufferDescription()
-                                                                                    {
-                                                                                        BindFlags = BindFlags.VertexBuffer,
-                                                                                        CpuAccessFlags = CpuAccessFlags.None,
-                                                                                        OptionFlags = ResourceOptionFlags.None,
-                                                                                        SizeInBytes = 32 * 3,
-                                                                                        Usage = ResourceUsage.Default,
-                                                                                        StructureByteStride = 0
-                                                                                    });
-
-                                          stream.Release();
-
-                                          var rasterDesc = new RasterizerStateDescription();
-                                          rasterDesc.CullMode = CullMode.Back;
-                                          rasterDesc.FillMode = FillMode.Solid;
-                                          rasterDesc.IsMultisampleEnabled = true;
-                                          rasterizerState = new RasterizerState(device, rasterDesc);
-
-                                      }
-
-                                      // Prepare All the stages
-                                      Context.InputAssembler.SetInputLayout(layout);
-                                      Context.InputAssembler.SetPrimitiveTopology(PrimitiveTopology.TriangleList);
-                                      Context.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(vertices, 32, 0));
-                                      Context.VertexShader.Set(vertexShader);
-                                      Context.Rasterizer.SetViewports(new Viewport(0, 0, game.Form.ClientSize.Width, game.Form.ClientSize.Height, 0.0f, 1.0f));
-                                      Context.Rasterizer.State = rasterizerState;
-                                      Context.PixelShader.Set(pixelShader);
-                                      Context.OutputMerger.SetTargets(game.RenderView);
-
-                                      Context.Draw(3, 0);
-
-                                  };
-
             game.Run();
-            /*layout.Release();
-            s.Release();*/
         }
     }
 }
