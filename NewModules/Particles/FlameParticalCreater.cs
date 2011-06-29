@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Particles
 {
-    public class FlameParticelCreater : IParticleCreater
+    public class FlameParticleCreater : IParticleCreater
     {
         private readonly Emitter emmiter;
         private Seeder seed = new Seeder(123);

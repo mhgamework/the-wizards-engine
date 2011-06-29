@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Tests.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.Tests.Particles
@@ -40,7 +41,10 @@ namespace MHGameWork.TheWizards.Tests.Particles
             var texPool = new TexturePool();
             var testTexture = GetTestTexture();
             SimpleParticleCreater creater = new SimpleParticleCreater();
-            emit = new Emitter(texPool, pool, game, testTexture, 5, 5, creater,"basic");
+            EmitterParameters param = new EmitterParameters();
+            param.texture = testTexture;
+            param.particleCreater = creater;
+            emit = new Emitter(texPool, pool, game, param);
             Seeder seed = new Seeder(54);
             game.InitializeEvent += delegate
                                         {
@@ -75,16 +79,18 @@ namespace MHGameWork.TheWizards.Tests.Particles
         {
             Emitter emit;
             XNAGame game = new XNAGame();
-            BallParticleCreater creater;
             game.DrawFps = true;
 
             var pool = new VertexDeclarationPool();
             pool.SetVertexElements<Emitter.ParticleVertex>(Emitter.ParticleVertex.VertexElements);
             var texPool = new TexturePool();
             var testTexture = GetTestTexture();
-            creater = new BallParticleCreater();
-            emit = new Emitter(texPool, pool, game, testTexture, 5f, 5f, creater, "calculateBall");
-            game.Wpf.CreateClassForm(emit);
+            BallParticleCreater creater = new BallParticleCreater();
+            EmitterParameters param = new EmitterParameters();
+            param.texture = testTexture;
+            param.particleCreater = creater;
+            emit = new Emitter(texPool, pool, game, param);
+            game.Wpf.CreateClassForm(param);
             Seeder seed = new Seeder(54);
             var curve = Curve3DTester.CreateTestCurve();
             game.InitializeEvent += delegate
@@ -130,15 +136,19 @@ namespace MHGameWork.TheWizards.Tests.Particles
         {
             Emitter emit;
             XNAGame game = new XNAGame();
-            FlameParticelCreater creater;
+            FlameParticleCreater creater;
             game.DrawFps = true;
 
             var pool = new VertexDeclarationPool();
             pool.SetVertexElements<Emitter.ParticleVertex>(Emitter.ParticleVertex.VertexElements);
             var texPool = new TexturePool();
             var testTexture = GetTestTexture();
-            creater = new FlameParticelCreater();
-            emit = new Emitter(texPool, pool, game, testTexture, 2f, 2f, creater, "calculateFlame");
+            creater = new FlameParticleCreater();
+            EmitterParameters param = new EmitterParameters();
+            param.EffectName = "calculateFlame";
+            param.texture = testTexture;
+            param.particleCreater = creater;
+            emit = new Emitter(texPool, pool, game, param);
             Seeder seed = new Seeder(54);
 
             var curve = Curve3DTester.CreateTestCurve();
@@ -190,14 +200,19 @@ namespace MHGameWork.TheWizards.Tests.Particles
             var texPool = new TexturePool();
             var testTexture = GetTestTexture();
             creater = new SparkelParticleCreater();
-            emit = new Emitter(texPool, pool, game, testTexture, 5f, 1f, creater, "CalculateSpark");
-            //game.Wpf.CreateClassForm(emit);
-            emit.Directional = true;
+            EmitterParameters param = new EmitterParameters();
+            param.EffectName = "CalculateSpark";
+            param.texture = testTexture;
+            param.particleCreater = creater;
+            emit = new Emitter(texPool, pool, game, param);
+
+            param.Directional = true;
             Seeder seed = new Seeder(54);
-            emit.uvStart = new Vector2(0, 0.5f);
-            emit.uvSize = new Vector2(0.5f, 0.1f);
-            emit.StartColor = Color.LightYellow;
-            emit.EndColor = Color.OrangeRed;
+            param.UvStart = new Vector2(0, 0.5f);
+            param.UvSize = new Vector2(0.5f, 0.1f);
+            param.startColor = Color.LightYellow;
+            param.endColor = Color.OrangeRed;
+            game.Wpf.CreateClassForm(param);
             game.InitializeEvent += delegate
             {
                 texPool.Initialize(game);
@@ -234,6 +249,62 @@ namespace MHGameWork.TheWizards.Tests.Particles
         //    emit.EndColor = new Color(0,0,0);
         //}
 
+
+        [Test]
+        public void BasicEffectTest()
+        {
+            
+            XNAGame game = new XNAGame();
+            SparkelParticleCreater creater;
+            game.DrawFps = true;
+
+            var pool = new VertexDeclarationPool();
+            pool.SetVertexElements<Emitter.ParticleVertex>(Emitter.ParticleVertex.VertexElements);
+            var texPool = new TexturePool();
+            var testTexture = GetTestTexture();
+            creater = new SparkelParticleCreater();
+            EmitterParameters param = new EmitterParameters();
+            param.EffectName = "CalculateSpark";
+            param.texture = testTexture;
+            param.particleCreater = creater;
+            param.Directional = true;
+            Seeder seed = new Seeder(54);
+            param.UvStart = new Vector2(0, 0.5f);
+            param.UvSize = new Vector2(0.5f, 0.1f);
+            param.startColor = Color.LightYellow;
+            param.endColor = Color.OrangeRed;
+            param.Continueous = false;
+            //game.Wpf.CreateClassForm(param);
+
+            ParticleEffect effect = new ParticleEffect(game, pool, texPool);
+            effect.AddEmitter(param);
+            game.InitializeEvent += delegate
+            {
+                texPool.Initialize(game);
+                pool.Initialize(game);
+                effect.Initialize();
+
+            };
+            float dist = 0;
+            game.UpdateEvent += delegate
+                                    {
+                                        if(game.Keyboard.IsKeyPressed(Keys.T))
+                                        {
+                                            effect.Trigger();
+                                        }
+                                        effect.Update();
+
+                                    };
+            game.DrawEvent += delegate
+            {
+               game.GraphicsDevice.Clear(Color.Black);
+               game.GraphicsDevice.RenderState.CullMode = CullMode.None;
+               effect.Render(game.SpectaterCamera.ViewProjection, game.SpectaterCamera.ViewInverse);
+
+            };
+
+            game.Run();
+        }
         private void Temp(float dist, Emitter emit, Curve3D curve)
         {
             emit.SetPosition(curve.Evaluate(dist*3)*2);

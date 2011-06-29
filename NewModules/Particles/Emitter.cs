@@ -16,22 +16,15 @@ namespace MHGameWork.TheWizards.Particles
         private readonly TexturePool texturePool;
         private readonly VertexDeclarationPool declarationPool;
         private readonly IXNAGame game;
-        // postions are the upper right corner of the particle
         public float[] particles;
-        private ITexture texture;
-        private Vector3 position;
-        private ParticleVertex[] renderData;
-        public float particleWidth, particleHeight;
+         private ParticleVertex[] renderData;
+       
         private readonly IParticleCreater particleCreater;
-        private int maxParticles;
-
-        private float MaxLifeTime = 2.5f;
-        private int particlesPerSecond;
-        public float ParticleFrequency { get { return 1f / ParticlesPerSecond; } }
+        
         private int emptyIndex = 0;
         private int startIndex = 0;
         private float time = 0;
-        private int size = 128;
+        //private int size = 128;
         private ParticleSimulater simulater;
         private RenderTarget2D target;
         private Texture2D allParticles;
@@ -44,24 +37,18 @@ namespace MHGameWork.TheWizards.Particles
         private int vertexCount;
         private int triangleCount;
         private int vertexStride;
-        public float particleWidthEnd=5;
-        public float particleHeightEnd = 1;
-        public float darkScale = 0.6f;
-        private Color startColor = new Color(new Vector3(1, 0.4f, 0.4f));
-        private Color endColor=new Color(new Vector3(0.4f,0.2f,0.2f));
-        public Boolean Directional = false;
-        public Vector2 uvStart = Vector2.Zero;
-        public Vector2 uvSize = new Vector2(1, 1);
-        public Emitter(TexturePool texturePool, VertexDeclarationPool declarationPool, IXNAGame game, ITexture texture, float particleWidth, float particleHeight, IParticleCreater particleCreater,String effectName)
+        private int maxParticles;
+    
+
+        private EmitterParameters parameters;
+        public Emitter(TexturePool texturePool, VertexDeclarationPool declarationPool, IXNAGame game, EmitterParameters parameters)
         {
             this.texturePool = texturePool;
-            this.particleHeight = particleHeight;
-            this.particleCreater = particleCreater;
-            this.particleWidth = particleWidth;
-            this.texture = texture;
+            
             this.declarationPool = declarationPool;
             this.game = game;
-              simulater = new ParticleSimulater(game, size,effectName);
+            this.parameters = parameters;
+            simulater = new ParticleSimulater(game, parameters.size, parameters.EffectName);
             ParticlesPerSecond = 250;
 
 
@@ -69,26 +56,26 @@ namespace MHGameWork.TheWizards.Particles
 
         public Color StartColor
         {
-            get { return startColor; }
-            set { startColor = value; }
+            get { return parameters.startColor; }
+            set { parameters.startColor = value; }
         }
 
         public Color EndColor
         {
-            get { return endColor; }
-            set { endColor = value; }
+            get { return parameters.endColor; }
+            set { parameters.endColor = value; }
         }
 
         public int ParticlesPerSecond
         {
-            get { return particlesPerSecond; }
-            set { particlesPerSecond = value; }
+            get { return parameters.particlesPerSecond; }
+            set { parameters.particlesPerSecond = value; }
         }
 
 
         public void Initialize()
         {
-            maxParticles = size * size;
+            maxParticles = parameters.size * parameters.size;
             particles = new float[maxParticles];
             renderData = new ParticleVertex[maxParticles * 6];
             simulater.Initialize();
@@ -98,12 +85,7 @@ namespace MHGameWork.TheWizards.Particles
             game.GraphicsDevice.SetRenderTarget(0, null);
             allParticles = target.GetTexture();
 
-
-           /* timeTarget = new RenderTarget2D(game.GraphicsDevice, size, size, 1, SurfaceFormat.Single);
-            game.GraphicsDevice.SetRenderTarget(0, timeTarget);
-            game.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
-            game.GraphicsDevice.SetRenderTarget(0, null);*/
-            timeTexture = new Texture2D(game.GraphicsDevice,size,size,1,TextureUsage.None,SurfaceFormat.Single);
+        timeTexture = new Texture2D(game.GraphicsDevice, parameters.size, parameters.size, 1, TextureUsage.None, SurfaceFormat.Single);
 
         }     
         //depends on what kind of effect you want so I'm not sure if this is the right spot
@@ -112,6 +94,12 @@ namespace MHGameWork.TheWizards.Particles
             emptyIndex++;
             if (emptyIndex == maxParticles)
             { emptyIndex = 0; }
+        }
+        public void Reset()
+        {
+            emptyIndex = 0;
+            startIndex = 0;
+            time = 0;
         }
         public void TestUpdate()
         {
@@ -124,9 +112,9 @@ namespace MHGameWork.TheWizards.Particles
                         startIndex = i;
                 }
             }
-            if (time + game.Elapsed > ParticleFrequency)
+            if (time + game.Elapsed > parameters.ParticleFrequency)
             {
-                AddParticles((int)(ParticlesPerSecond * (time + game.Elapsed)), position, Vector3.Zero);
+                AddParticles((int)(ParticlesPerSecond * (time + game.Elapsed)), parameters.position, Vector3.Zero);
                 time = 0;
             }
             else
@@ -134,8 +122,19 @@ namespace MHGameWork.TheWizards.Particles
                 time += game.Elapsed;
             }
         }
+        
+        public float TimeSinceStart;
+        
         public void Update()
         {
+            TimeSinceStart += game.Elapsed;
+            bool createParticles = true;
+            if(!parameters.Continueous)
+            {
+                if(parameters.CreationTime>TimeSinceStart)
+                { createParticles = false;}
+            }
+
             for (int i = 0; i < particles.Length; i++)
             {
                 particles[i] -= game.Elapsed;
@@ -154,9 +153,9 @@ namespace MHGameWork.TheWizards.Particles
                 
             }
 
-            if (time + game.Elapsed > ParticleFrequency)
+            if ((time + game.Elapsed > parameters.ParticleFrequency) && createParticles)
             {
-                AddParticles(particleCreater, (int)(ParticlesPerSecond * (time + game.Elapsed)));
+                AddParticles(parameters.particleCreater, (int)(ParticlesPerSecond * (time + game.Elapsed)));
                 time = 0;
             }
             else
@@ -166,14 +165,14 @@ namespace MHGameWork.TheWizards.Particles
         }
         public void SetPosition(Vector3 pos)
         {
-            position = pos;
+            parameters.position = pos;
         }
         [Obsolete]
         public void AddParticles(int amount, Vector3 position, Vector3 velocity)
         {
             for (int i = 0; i < amount; i++)
             {
-                particles[emptyIndex] = MaxLifeTime;
+                particles[emptyIndex] = parameters.MaxLifeTime;
                 simulater.AddNewParticle(position, velocity, emptyIndex);
                 incrementEmptyIndex();
             }
@@ -191,12 +190,14 @@ namespace MHGameWork.TheWizards.Particles
             {
                 Single[] singleTime = new Single[1];
                 singleTime[0] = (float)(((XNAGame)game).GameTime.TotalGameTime.TotalMilliseconds);
-                timeTexture.SetData<Single>(0, new Rectangle(emptyIndex % size, (int)(emptyIndex / size), 1, 1),singleTime, 0, 1, SetDataOptions.None);
-                particles[emptyIndex] = MaxLifeTime;
+                timeTexture.SetData<Single>(0, new Rectangle(emptyIndex % parameters.size, (int)(emptyIndex / parameters.size), 1, 1), singleTime, 0, 1, SetDataOptions.None);
+                particles[emptyIndex] = parameters.MaxLifeTime;
                 Vector3 pos;
                 Vector3 velo;
-                creater.GetNewParticleData(out pos, out velo);
-                simulater.AddNewParticle(pos + position, velo, emptyIndex);
+               
+                    creater.GetNewParticleData(out pos, out velo);
+                
+                simulater.AddNewParticle(pos + parameters.position, velo, emptyIndex);
                 incrementEmptyIndex();
             }
 
@@ -219,7 +220,7 @@ namespace MHGameWork.TheWizards.Particles
         }
         private Vector2 getUVFromIndex(int index)
         {
-            return new Vector2(index % size, (int)(index / size));
+            return new Vector2(index % parameters.size, (int)(index / parameters.size));
         }
        
 
@@ -234,31 +235,31 @@ namespace MHGameWork.TheWizards.Particles
 
         public void setShader()
         {
-            if (!Directional)
+            if (!parameters.Directional)
             {
                 shader.SetTechnique("Billboard");
             }
             else
             {
                 shader.SetTechnique("DirectionalBillboard");
-                shader.SetParameter("startPosition", position);
+                shader.SetParameter("startPosition", parameters.position);
             }
             shader.SetParameter("world", Matrix.Identity);
             shader.SetParameter("viewProjection", Matrix.Identity);
             shader.SetParameter("viewInverse", Matrix.Identity);
-            shader.SetParameter("diffuseTexture", texturePool.LoadTexture(texture));
-            shader.SetParameter("size", size);
+            shader.SetParameter("diffuseTexture", texturePool.LoadTexture(parameters.texture));
+            shader.SetParameter("size", parameters.size);
             //effect parameter
             shader.SetParameter("timeTexture", timeTexture);
-            shader.SetParameter("width", particleWidth);
-            shader.SetParameter("height", particleHeight);
-            shader.SetParameter("widthEnd", particleWidthEnd);
-            shader.SetParameter("heightEnd", particleHeightEnd);
-            shader.SetParameter("startColor", new Color(StartColor.ToVector3()*darkScale));
-            shader.SetParameter("endColor", new Color(EndColor.ToVector3()*darkScale));
-            shader.SetParameter("oneOverTotalLifeTime", 1/(MaxLifeTime*1000));
-            shader.SetParameter("uvStart", uvStart);
-            shader.SetParameter("uvSize", uvSize);
+            shader.SetParameter("width", parameters.particleWidth);
+            shader.SetParameter("height", parameters.particleHeight);
+            shader.SetParameter("widthEnd", parameters.particleWidthEnd);
+            shader.SetParameter("heightEnd", parameters.particleHeightEnd);
+            shader.SetParameter("startColor", new Color(StartColor.ToVector3() * parameters.darkScale));
+            shader.SetParameter("endColor", new Color(EndColor.ToVector3() * parameters.darkScale));
+            shader.SetParameter("oneOverTotalLifeTime", 1 / (parameters.MaxLifeTime * 1000));
+            shader.SetParameter("uvStart", parameters.UvStart);
+            shader.SetParameter("uvSize", parameters.UvSize);
         }
 
         public void SetRenderData()
@@ -268,8 +269,8 @@ namespace MHGameWork.TheWizards.Particles
         }
         public void Render(Matrix viewProjection, Matrix viewInverse)
         {
-            
-            simulater.RenderUpdate(game.Elapsed, position);
+
+            simulater.RenderUpdate(game.Elapsed, parameters.position);
             setShader();
             game.GraphicsDevice.SetRenderTarget(0, target);
             game.GraphicsDevice.Clear(Color.Black);
