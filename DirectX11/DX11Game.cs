@@ -24,7 +24,7 @@ namespace DirectX11
 
         public DX11Game()
         {
-
+            SlimDX.Configuration.EnableObjectTracking = true; // Logs stacktraces of COM object creation
         }
 
 

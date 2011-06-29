@@ -134,6 +134,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
         public void TestDirectX11SimpleShader()
         {
             var game = new DX11Game();
+            game.InitDirectX();
             var device = game.Device;
             var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/MiniTri.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
             var effect = new Effect(device, bytecode);
