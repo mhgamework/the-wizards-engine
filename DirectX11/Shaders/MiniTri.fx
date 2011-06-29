@@ -23,17 +23,29 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+
+Texture2D txDiffuse;
+SamplerState samLinear
+{
+    Filter = MIN_MAG_MIP_LINEAR;
+    AddressU = Wrap;
+    AddressV = Wrap;
+};
+
 struct VS_IN
 {
 	float4 pos : POSITION;
 	float4 col : COLOR;
+	float2 uv : TEXCOORD;
 };
 
 struct PS_IN
 {
 	float4 pos : SV_POSITION;
 	float4 col : COLOR;
+	float2 uv : TEXCOORD;
 };
+
 
 PS_IN VS( VS_IN input )
 {
@@ -41,12 +53,17 @@ PS_IN VS( VS_IN input )
 	
 	output.pos = input.pos;
 	output.col = input.col;
+	output.uv = input.uv;
 	
 	return output;
 }
 
 float4 PS( PS_IN input ) : SV_Target
 {
+	//return float4(1,1,0,1);
+	//return float4(input.uv,0,1);
+	return txDiffuse.Sample( samLinear, input.pos.xy/600);
+
 	return input.col;
 }
 
@@ -57,5 +74,6 @@ technique10 Render
 		SetGeometryShader( 0 );
 		SetVertexShader( CompileShader( vs_4_0, VS() ) );
 		SetPixelShader( CompileShader( ps_4_0, PS() ) );
+
 	}
 }

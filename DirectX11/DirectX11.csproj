@@ -44,11 +44,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DX11Game.cs" />
+    <Compile Include="Graphics\ICamera.cs" />
+    <Compile Include="Graphics\SpectaterCamera.cs" />
+    <Compile Include="Input\TWMouse.cs" />
+    <Compile Include="Input\TWKeyboard.cs" />
+    <Compile Include="MathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Shaders\MiniTri.fx" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -18,10 +18,6 @@ namespace DirectX11
         private Texture2D backBuffer;
         private RenderTargetView renderView;
         private Device device;
-        private InputLayout layout;
-        private EffectTechnique technique;
-        private EffectPass pass;
-        private Buffer vertices;
         public event Action GameLoopEvent;
 
         public int FrameCount { get; private set; }
@@ -31,7 +27,6 @@ namespace DirectX11
 
         }
 
-        public DeviceContext Context { get; private set; }
 
         public Device Device
         { get; private set; }
@@ -51,17 +46,11 @@ namespace DirectX11
 
         private void GameLoop()
         {
-            device.ImmediateContext.ClearRenderTargetView(renderView, Color.Black);
+            device.ImmediateContext.ClearRenderTargetView(renderView, Color.Yellow);
 
-            device.ImmediateContext.InputAssembler.InputLayout = layout;
-            device.ImmediateContext.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleList;
-            device.ImmediateContext.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(vertices, 32, 0));
+            if (GameLoopEvent != null) GameLoopEvent();
 
-            for (int i = 0; i < technique.Description.PassCount; ++i)
-            {
-                pass.Apply(device.ImmediateContext);
-                device.ImmediateContext.Draw(3, 0);
-            }
+
 
             swapChain.Present(0, PresentFlags.None);
             FrameCount++;
@@ -69,26 +58,42 @@ namespace DirectX11
 
         public void Run()
         {
+            if (!IsDirectXInitialized) InitDirectX();
 
-            form = new RenderForm("SlimDX - MiniTri Direct3D 11 Sample");
+
+            MessagePump.Run(form, GameLoop);
+
+            disposeResources();
+        }
+
+        public bool IsDirectXInitialized
+        {
+            get { return form != null; }
+        }
+
+        public void InitDirectX()
+        {
+            if (IsDirectXInitialized) throw new InvalidOperationException();
+            form = new RenderForm("The Wizards - DirectX 11");
             var desc = new SwapChainDescription()
-            {
-                BufferCount = 1,
-                ModeDescription = new ModeDescription(form.ClientSize.Width, form.ClientSize.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm),
-                IsWindowed = true,
-                OutputHandle = form.Handle,
-                SampleDescription = new SampleDescription(4, 0),
-                SwapEffect = SwapEffect.Discard,
-                Usage = Usage.RenderTargetOutput,
+                           {
 
-            };
+                               BufferCount = 1,
+                               ModeDescription = new ModeDescription(form.ClientSize.Width, form.ClientSize.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm),
+                               IsWindowed = true,
+                               OutputHandle = form.Handle,
+                               SampleDescription = new SampleDescription(4, 0),
+                               SwapEffect = SwapEffect.Discard,
+                               Usage = Usage.RenderTargetOutput,
+
+                           };
 
 
 
             //Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
-            Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.None, desc, out device, out swapChain);
+            Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
 
-            var result = device.CheckMultisampleQualityLevels(Format.R8G8B8A8_UNorm, 2);
+            //var result = device.CheckMultisampleQualityLevels(Format.R8G8B8A8_UNorm, 2);
 
 
             var factory = swapChain.GetParent<Factory>();
@@ -96,57 +101,23 @@ namespace DirectX11
 
             backBuffer = Texture2D.FromSwapChain<Texture2D>(swapChain, 0);
             renderView = new RenderTargetView(device, backBuffer);
-            var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/MiniTri.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
-            var effect = new Effect(device, bytecode);
-            technique = effect.GetTechniqueByIndex(0);
-            pass = technique.GetPassByIndex(0);
-            layout = new InputLayout(device, pass.Description.Signature, new[] {
-                                                                                   new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),
-                                                                                   new InputElement("COLOR", 0, Format.R32G32B32A32_Float, 16, 0) 
-                                                                               });
 
-            var stream = new DataStream(3 * 32, true, true);
-            stream.WriteRange(new[] {
-                new Vector4(0.0f, 0.5f, 0.5f, 1.0f), new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4(0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
-                new Vector4(-0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f)
-            });
-            stream.Position = 0;
 
-            vertices = new SlimDX.Direct3D11.Buffer(device, stream, new BufferDescription()
-                                                                        {
-                                                                            BindFlags = BindFlags.VertexBuffer,
-                                                                            CpuAccessFlags = CpuAccessFlags.None,
-                                                                            OptionFlags = ResourceOptionFlags.None,
-                                                                            SizeInBytes = 3 * 32,
-                                                                            Usage = ResourceUsage.Default
-                                                                        });
-            stream.Dispose();
+
 
             device.ImmediateContext.OutputMerger.SetTargets(renderView);
             device.ImmediateContext.Rasterizer.SetViewports(new Viewport(0, 0, form.ClientSize.Width, form.ClientSize.Height, 0.0f, 1.0f));
+        }
 
-            MessagePump.Run(form, GameLoop);
-
-            bytecode.Dispose();
-            vertices.Dispose();
-            layout.Dispose();
-            effect.Dispose();
+        private void disposeResources()
+        {
             renderView.Dispose();
             backBuffer.Dispose();
             device.Dispose();
             swapChain.Dispose();
-
-
-
-
-
-
-
-
-
-
         }
+
+
 
 
         void form_Resize(object sender, System.EventArgs e)
