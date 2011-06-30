@@ -18,56 +18,52 @@ namespace MHGameWork.TheWizards.Particles
         private IXNAGame game;
         private VertexDeclarationPool pool;
         private readonly TexturePool texPool;
-        private bool initialized=false;
+        private bool initialized = false;
         bool running = false;
         private float timeSinceStarted;
         public float playtime = 2f;
-        public ParticleEffect(IXNAGame game,VertexDeclarationPool pool,TexturePool texPool)
+        public ParticleEffect(IXNAGame game, VertexDeclarationPool pool, TexturePool texPool)
         {
-            this.game= game;
+            this.game = game;
             this.pool = pool;
             this.texPool = texPool;
         }
         public void Initialize()
-       {
-           initialized = true;
-           for (int i = 0; i < emitters.Count; i++)
-           {
-               emitters[i].Initialize();
-               emitters[i].InitializeRender();
-               emitters[i].CreateRenderData();
-               emitters[i].SetRenderData();
-           }
-       }
+        {
+            initialized = true;
+            for (int i = 0; i < emitters.Count; i++)
+            {
+                emitters[i].Initialize();
+                emitters[i].InitializeRender();
+                emitters[i].CreateRenderData();
+                emitters[i].SetRenderData();
+            }
+        }
         public void Trigger()
         {
             running = true;
             for (int i = 0; i < emitters.Count; i++)
             {
-                emitters[i].TimeSinceStart = 0;
                 emitters[i].Reset();
             }
             timeSinceStarted = 0;
         }
         public void Update()
         {
-            
-            if(timeSinceStarted>playtime)
+            if (timeSinceStarted > playtime)
             {
                 running = false;
-               
             }
-            if (running)
+
+            if (!running) return;
+
+            timeSinceStarted += game.Elapsed;
+            for (int i = 0; i < emitters.Count; i++)
             {
-                timeSinceStarted += game.Elapsed;
-                for (int i = 0; i < emitters.Count; i++)
-                {
-                    emitters[i].Update();
-                }
+                emitters[i].Update();
             }
-            
         }
-        public void Render(Matrix viewProjection,Matrix viewInverse)
+        public void Render(Matrix viewProjection, Matrix viewInverse)
         {
             if (running)
             {

@@ -213,6 +213,7 @@ namespace MHGameWork.TheWizards.Tests.Particles
             param.startColor = Color.LightYellow;
             param.endColor = Color.OrangeRed;
             game.Wpf.CreateClassForm(param);
+
             game.InitializeEvent += delegate
             {
                 texPool.Initialize(game);
@@ -274,9 +275,9 @@ namespace MHGameWork.TheWizards.Tests.Particles
             param.startColor = Color.LightYellow;
             param.endColor = Color.OrangeRed;
             param.Continueous = false;
-            //game.Wpf.CreateClassForm(param);
+            
 
-            ParticleEffect effect = new ParticleEffect(game, pool, texPool);
+            ParticleEffect effect = new ParticleEffect(game, pool, texPool);game.Wpf.CreateClassForm(effect);
             effect.AddEmitter(param);
             game.InitializeEvent += delegate
             {
