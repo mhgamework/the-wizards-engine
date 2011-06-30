@@ -1,3 +1,4 @@
+using System;
 using SlimDX.DirectInput;
 
 namespace DirectX11.Input
@@ -15,6 +16,10 @@ namespace DirectX11.Input
 
         public void UpdateKeyboardState(KeyboardState nKeyboardState)
         {
+            /*foreach (var key in nKeyboardState.PressedKeys)
+            {
+                Console.WriteLine(key);
+            }*/
             prevKeyboardState = keyboardState;
             keyboardState = nKeyboardState;
 

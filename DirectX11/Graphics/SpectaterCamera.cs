@@ -340,8 +340,8 @@ namespace DirectX11.Graphics
             Vector3 vSnelheid = new Vector3();
 
             if (keyboard.IsKeyDown(Key.S)) { vSnelheid += MathHelper.Forward; }
-            if (keyboard.IsKeyDown(Key.Z)) { vSnelheid += MathHelper.Backward; }
-            if (keyboard.IsKeyDown(Key.Q)) { vSnelheid += MathHelper.Right; }
+            if (keyboard.IsKeyDown(Key.W)) { vSnelheid += MathHelper.Backward; }
+            if (keyboard.IsKeyDown(Key.A)) { vSnelheid += MathHelper.Right; }
             if (keyboard.IsKeyDown(Key.D)) { vSnelheid += MathHelper.Left; }
             if (keyboard.IsKeyDown(Key.Space)) { vSnelheid += MathHelper.Up; }
             if (keyboard.IsKeyDown(Key.LeftControl)) { vSnelheid += MathHelper.Down; }

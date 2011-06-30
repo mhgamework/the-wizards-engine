@@ -28,8 +28,11 @@ namespace DirectX11
         }
 
 
+
         public Device Device
-        { get; private set; }
+        {
+            get { return device; }
+        }
 
         public RenderForm Form
         {
@@ -117,6 +120,10 @@ namespace DirectX11
             swapChain.Dispose();
         }
 
+        public void Exit()
+        {
+            form.Close();
+        }
 
 
 

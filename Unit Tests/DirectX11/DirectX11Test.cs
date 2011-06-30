@@ -5,13 +5,17 @@ using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 using DirectX11;
+using DirectX11.Graphics;
 using DirectX11.Input;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
+using SlimDX.DirectInput;
 using SlimDX.DXGI;
 using SlimDX.RawInput;
+using Effect = SlimDX.Direct3D11.Effect;
+using EffectFlags = SlimDX.D3DCompiler.EffectFlags;
 
 namespace MHGameWork.TheWizards.Tests.DirectX11
 {
@@ -138,7 +142,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             var device = game.Device;
             var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/MiniTri.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
             var effect = new Effect(device, bytecode);
-            var technique = effect.GetTechniqueByIndex(0);
+            var technique = effect.GetTechniqueByName("Render");
             var pass = technique.GetPassByIndex(0);
             var layout = new InputLayout(device, pass.Description.Signature,
                                      new[] {
@@ -197,6 +201,248 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                                       };
 
             game.Run();
+
+
+            bytecode.Dispose();
+            effect.Dispose();
+            layout.Dispose();
+            vertices.Dispose();
+            diffuseTexture.Dispose();
+            diffuseTextureRv.Dispose();
+
+        }
+        [Test]
+        public void TestDirectX11TransformShader()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+            var device = game.Device;
+            var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/MiniTri.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
+            var effect = new Effect(device, bytecode);
+            var technique = effect.GetTechniqueByName("RenderTransform");
+            var pass = technique.GetPassByIndex(0);
+            var layout = new InputLayout(device, pass.Description.Signature,
+                                     new[] {
+                                               new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),
+                                               new InputElement("COLOR", 0, Format.R32G32B32A32_Float, 16, 0),
+                                               new InputElement("TEXCOORD", 0, Format.R32G32_Float, 32, 0) 
+                                           });
+
+            var vertexStride = (16 + 16 + 8);
+            var stream = new DataStream(3 * vertexStride, true, true);
+            stream.WriteRange(new[] { 
+                                        new VertexCustom(new Vector4(-1.0f, 0, 0, 1.0f),new Vector4(1.0f, 0.0f, 0.0f, 1.0f),new Vector2(0.5f,0)),
+                                        new VertexCustom(new Vector4(0f, 1f, 0, 1.0f), new Vector4(0.0f, 1.0f, 0.0f, 1.0f),new Vector2(0f,1f)),
+                                        new VertexCustom(new Vector4(1f, 0f, 0, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f),new Vector2(1f,1f))
+                                    });
+            stream.Position = 0;
+
+
+
+            var vertices = new SlimDX.Direct3D11.Buffer(device, stream, new BufferDescription()
+            {
+                BindFlags = BindFlags.VertexBuffer,
+                CpuAccessFlags = CpuAccessFlags.None,
+                OptionFlags = ResourceOptionFlags.None,
+                SizeInBytes = 3 * vertexStride,
+                Usage = ResourceUsage.Default
+            });
+            stream.Dispose();
+
+            var world = Matrix.Translation(MathHelper.Forward);
+            var viewProjection = Matrix.LookAtRH(Vector3.UnitZ * 5, -Vector3.UnitZ, MathHelper.Up)
+                        * Matrix.PerspectiveFovRH(MathHelper.PiOver4, 4f / 3f, 0.1f, 1000f);
+
+
+            var diffuseShaderVariable = effect.GetVariableByName("txDiffuse").AsResource();
+            effect.GetVariableBySemantic("world").AsMatrix().SetMatrix(world);
+
+
+
+            effect.GetVariableBySemantic("viewprojection").AsMatrix().SetMatrix(
+                viewProjection);
+
+            effect.GetVariableBySemantic("world").AsMatrix().SetMatrix(Matrix.Identity);
+            //effect.GetVariableBySemantic("viewprojection").AsMatrix().SetMatrix(Matrix.Identity);
+
+            var texturePath = @"..\GameData\Core\Wallpaper001.png";
+
+            var diffuseTexture = Texture2D.FromFile(device, texturePath);
+
+            var diffuseTextureRv = new ShaderResourceView(device, diffuseTexture);
+
+
+            diffuseShaderVariable.SetResource(diffuseTextureRv);
+
+
+            var rasterizerState = RasterizerState.FromDescription(device, new RasterizerStateDescription()
+                                                                              {
+                                                                                  CullMode = CullMode.None,
+                                                                                  FillMode = FillMode.Solid
+                                                                              });
+
+            device.ImmediateContext.Rasterizer.State = rasterizerState;
+
+            game.GameLoopEvent += delegate
+            {
+                device.ImmediateContext.InputAssembler.InputLayout = layout;
+                device.ImmediateContext.InputAssembler.PrimitiveTopology =
+                    PrimitiveTopology.TriangleList;
+                device.ImmediateContext.InputAssembler.SetVertexBuffers(0,
+                                                                        new VertexBufferBinding
+                                                                            (vertices,
+                                                                             vertexStride, 0));
+
+                for (int i = 0; i < technique.Description.PassCount; ++i)
+                {
+                    pass.Apply(device.ImmediateContext);
+                    device.ImmediateContext.Draw(3, 0);
+                }
+            };
+
+            game.Run();
+
+            bytecode.Dispose();
+            effect.Dispose();
+            layout.Dispose();
+            vertices.Dispose();
+            diffuseTexture.Dispose();
+            diffuseTextureRv.Dispose();
+            rasterizerState.Dispose();
+
+        }
+
+        [Test]
+        public void TestDirectX11SpecaterCamera()
+        {
+
+            var keyboard = new TWKeyboard();
+            var dev = new SlimDX.DirectInput.DirectInput();
+            var kb = new SlimDX.DirectInput.Keyboard(dev);
+            kb.Acquire();
+
+            var mouse = new TWMouse();
+            var m = new SlimDX.DirectInput.Mouse(dev);
+            m.Acquire();
+
+
+
+
+
+
+            var game = new DX11Game();
+            game.InitDirectX();
+            var device = game.Device;
+            var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/MiniTri.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
+            var effect = new Effect(device, bytecode);
+            var technique = effect.GetTechniqueByName("RenderTransform");
+            var pass = technique.GetPassByIndex(0);
+            var layout = new InputLayout(device, pass.Description.Signature,
+                                     new[] {
+                                               new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),
+                                               new InputElement("COLOR", 0, Format.R32G32B32A32_Float, 16, 0),
+                                               new InputElement("TEXCOORD", 0, Format.R32G32_Float, 32, 0) 
+                                           });
+
+            var vertexStride = (16 + 16 + 8);
+            var stream = new DataStream(3 * vertexStride, true, true);
+            stream.WriteRange(new[] { 
+                                        new VertexCustom(new Vector4(-1.0f, 0, 0, 1.0f),new Vector4(1.0f, 0.0f, 0.0f, 1.0f),new Vector2(0.5f,0)),
+                                        new VertexCustom(new Vector4(0f, 1f, 0, 1.0f), new Vector4(0.0f, 1.0f, 0.0f, 1.0f),new Vector2(0f,1f)),
+                                        new VertexCustom(new Vector4(1f, 0f, 0, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f),new Vector2(1f,1f))
+                                    });
+            stream.Position = 0;
+
+
+
+            var vertices = new SlimDX.Direct3D11.Buffer(device, stream, new BufferDescription()
+            {
+                BindFlags = BindFlags.VertexBuffer,
+                CpuAccessFlags = CpuAccessFlags.None,
+                OptionFlags = ResourceOptionFlags.None,
+                SizeInBytes = 3 * vertexStride,
+                Usage = ResourceUsage.Default
+            });
+            stream.Dispose();
+
+            //var world = Matrix.Translation(MathHelper.Forward);
+
+            /*var viewProjection = Matrix.LookAtRH(Vector3.UnitZ * 5, -Vector3.UnitZ, MathHelper.Up)
+                        * Matrix.PerspectiveFovRH(MathHelper.PiOver4, 4f / 3f, 0.1f, 1000f);*/
+
+
+            var diffuseShaderVariable = effect.GetVariableByName("txDiffuse").AsResource();
+            var worldParam = effect.GetVariableByName("world").AsMatrix();
+            //worldParam.AsMatrix().SetMatrix(world);
+
+
+            var viewProjParam = effect.GetVariableBySemantic("viewprojection").AsMatrix();
+            /*viewProjParam.SetMatrix(
+                viewProjection);*/
+
+            //worldParam.SetMatrix(Matrix.Identity);
+            //effect.GetVariableBySemantic("viewprojection").AsMatrix().SetMatrix(Matrix.Identity);
+
+            var texturePath = @"..\GameData\Core\Wallpaper001.png";
+
+            var diffuseTexture = Texture2D.FromFile(device, texturePath);
+
+            var diffuseTextureRv = new ShaderResourceView(device, diffuseTexture);
+
+
+            diffuseShaderVariable.SetResource(diffuseTextureRv);
+
+
+            var rasterizerState = RasterizerState.FromDescription(device, new RasterizerStateDescription()
+            {
+                CullMode = CullMode.None,
+                FillMode = FillMode.Solid
+            });
+
+            device.ImmediateContext.Rasterizer.State = rasterizerState;
+
+
+            var cam = new SpectaterCamera(keyboard, mouse);
+
+            game.GameLoopEvent += delegate
+                                  {
+                                      mouse.UpdateMouseState(m.GetCurrentState());
+                                      keyboard.UpdateKeyboardState(kb.GetCurrentState());
+                                      cam.Update(0.001f);
+
+                                      device.ImmediateContext.InputAssembler.InputLayout = layout;
+                                      device.ImmediateContext.InputAssembler.PrimitiveTopology =
+                                          PrimitiveTopology.TriangleList;
+                                      device.ImmediateContext.InputAssembler.SetVertexBuffers(0,
+                                                                                              new VertexBufferBinding
+                                                                                                  (vertices,
+                                                                                                   vertexStride, 0));
+
+                                      for (int i = 0; i < technique.Description.PassCount; ++i)
+                                      {
+                                          pass.Apply(device.ImmediateContext);
+                                          device.ImmediateContext.Draw(3, 0);
+                                      }
+
+                                      viewProjParam.SetMatrix(cam.ViewProjection);
+                                      worldParam.SetMatrix(Matrix.Identity);
+                                      if (keyboard.IsKeyDown(Key.Escape)) game.Exit();
+
+
+                                  };
+
+            game.Run();
+
+            bytecode.Dispose();
+            effect.Dispose();
+            layout.Dispose();
+            vertices.Dispose();
+            diffuseTexture.Dispose();
+            diffuseTextureRv.Dispose();
+            rasterizerState.Dispose();
+            kb.Dispose();
+            m.Dispose();
+            dev.Dispose();
         }
 
         [Test]

@@ -23,6 +23,20 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+matrix world: WORLD;
+matrix viewProjection: VIEWPROJECTION;
+
+matrix GetWorld() { return world; }
+matrix GetViewProjection() { return viewProjection; }
+float4 Transform(float4 pos) 
+{
+	matrix m = mul(world,viewProjection); 
+	return mul(pos,m);
+}
+float4 Transform(float3 pos) 
+{
+	return Transform(float4(pos,1));
+}
 
 Texture2D txDiffuse;
 SamplerState samLinear
@@ -67,12 +81,33 @@ float4 PS( PS_IN input ) : SV_Target
 	return input.col;
 }
 
+PS_IN VSTransform( VS_IN input )
+{
+	PS_IN output = (PS_IN)0;
+	
+	output.pos = Transform(input.pos);
+	output.col = input.col;
+	output.uv = output.pos.xy;
+	
+	return output;
+}
+
 technique10 Render
 {
 	pass P0
 	{
 		SetGeometryShader( 0 );
 		SetVertexShader( CompileShader( vs_4_0, VS() ) );
+		SetPixelShader( CompileShader( ps_4_0, PS() ) );
+
+	}
+}
+technique10 RenderTransform
+{
+	pass P0
+	{
+		SetGeometryShader( 0 );
+		SetVertexShader( CompileShader( vs_4_0, VSTransform() ) );
 		SetPixelShader( CompileShader( ps_4_0, PS() ) );
 
 	}
