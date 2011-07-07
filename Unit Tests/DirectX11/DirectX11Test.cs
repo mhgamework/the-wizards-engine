@@ -446,6 +446,83 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
         }
 
         [Test]
+        public void TestLineManager3D()
+        {
+
+            var keyboard = new TWKeyboard();
+            var dev = new SlimDX.DirectInput.DirectInput();
+            var kb = new SlimDX.DirectInput.Keyboard(dev);
+            kb.Acquire();
+
+            var mouse = new TWMouse();
+            var m = new SlimDX.DirectInput.Mouse(dev);
+            m.Acquire();
+
+
+
+            var game = new DX11Game();
+            game.InitDirectX();
+            var device = game.Device;
+
+            var rasterizerState = RasterizerState.FromDescription(device, new RasterizerStateDescription()
+            {
+                CullMode = CullMode.None,
+                FillMode = FillMode.Solid
+            });
+
+            device.ImmediateContext.Rasterizer.State = rasterizerState;
+
+
+            var cam = new SpectaterCamera(keyboard, mouse);
+
+            var lineManager = new LineManager3D(device);
+
+            game.GameLoopEvent += delegate
+            {
+                mouse.UpdateMouseState(m.GetCurrentState());
+                keyboard.UpdateKeyboardState(kb.GetCurrentState());
+                cam.Update(0.001f);
+
+                for (int num = 0; num < 200; num++)
+                {
+                    lineManager.AddLine(
+                        new Vector3(-12.0f + num / 4.0f, 13.0f, 0),
+                        new Vector3(-17.0f + num / 4.0f, -13.0f, 0),
+                        new Color4((byte)(255 - num) / 255f, 14 / 255f, (byte)num / 255f));
+                } // for
+
+                lineManager.DrawGroundShadows = true;
+                lineManager.AddCenteredBox(new Vector3(4, 4, 4), 2, new Color4(1, 0, 0));
+
+                lineManager.WorldMatrix =
+                    Matrix.Translation(MathHelper.Up * 30);
+
+                for (int num = 0; num < 200; num++)
+                {
+                    lineManager.AddLine(
+                        new Vector3(-12.0f + num / 4.0f, 13.0f, 0),
+                        new Vector3(-17.0f + num / 4.0f, -13.0f, 0),
+                        new Color4((byte)(255 - num) / 255f, 14 / 255f, (byte)num / 255f));
+                } // for
+
+
+
+                lineManager.Render(cam);
+                if (keyboard.IsKeyDown(Key.Escape)) game.Exit();
+
+
+            };
+
+            game.Run();
+
+            rasterizerState.Dispose();
+            kb.Dispose();
+            m.Dispose();
+            dev.Dispose();
+
+        }
+
+        [Test]
         public void TestRawInput()
         {
             //NOT WORKING

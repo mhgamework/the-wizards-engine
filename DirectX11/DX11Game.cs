@@ -1,154 +1,107 @@
 ﻿using System;
-using System.Drawing;
-using SlimDX;
-using SlimDX.Direct3D11;
-using SlimDX.DXGI;
-using SlimDX.Windows;
-using SlimDX.D3DCompiler;
-using Buffer = SlimDX.Direct3D11.Buffer;
-using Device = SlimDX.Direct3D11.Device;
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using DirectX11.Graphics;
+using DirectX11.Input;
+using SlimDX.DirectInput;
 
 namespace DirectX11
 {
+    /// <summary>
+    /// This is actually a helper class used in testing. It can be used across all classes to simplify development.
+    /// However, this class might be removed later, or this class could be a front-end class (facade).
+    /// Currently, this is implemented as a (partial) facade for DX11 (partial because it exposes the Device)
+    /// </summary>
     public class DX11Game
     {
-        private SwapChain swapChain;
-        private RenderForm form;
-        private Texture2D backBuffer;
-        private RenderTargetView renderView;
-        private Device device;
-        public event Action GameLoopEvent;
-
-        public int FrameCount { get; private set; }
-
         public DX11Game()
         {
-            SlimDX.Configuration.EnableObjectTracking = true; // Logs stacktraces of COM object creation
+            form = new DX11Form();
+            form.GameLoopEvent += new Action(form_GameLoopEvent);
         }
 
-
-
-        public Device Device
+        void form_GameLoopEvent()
         {
-            get { return device; }
+            updateElapsed();
+
+            updateInput();
+
+            if (keyboard.IsKeyDown(Key.Escape)) Exit();
+
+            SpecaterCamera.Update(Elapsed);
+            LineManager3D.Render(Camera);
+
         }
 
-        public RenderForm Form
+        private void updateInput()
         {
-            get { return form; }
-            set { form = value; }
+            mouse.UpdateMouseState(diMouse.GetCurrentState());
+            keyboard.UpdateKeyboardState(diKeyboard.GetCurrentState());
         }
 
-        public RenderTargetView RenderView
+        private void updateElapsed()
         {
-            get { return renderView; }
-            set { renderView = value; }
+            var nextFrameTime = SlimDX.Configuration.Timer.Elapsed;
+            Elapsed = (float)(nextFrameTime - lastFrameTime).TotalSeconds;
+            lastFrameTime = nextFrameTime;
         }
 
-
-        private void GameLoop()
-        {
-            device.ImmediateContext.ClearRenderTargetView(renderView, Color.Yellow);
-
-            if (GameLoopEvent != null) GameLoopEvent();
-
-
-
-            swapChain.Present(0, PresentFlags.None);
-            FrameCount++;
-        }
-
+        private TimeSpan lastFrameTime;
+        private TWKeyboard keyboard;
+        private TWMouse mouse;
+        private DX11Form form;
+        private Keyboard diKeyboard;
+        private Mouse diMouse;
+        private DirectInput diDevice;
+        public float Elapsed { get; private set; }
         public void Run()
         {
-            if (!IsDirectXInitialized) InitDirectX();
+
+            keyboard = new TWKeyboard();
+            diDevice = new SlimDX.DirectInput.DirectInput();
+            diKeyboard = new SlimDX.DirectInput.Keyboard(diDevice);
+            diKeyboard.Acquire();
+
+            mouse = new TWMouse();
+            diMouse = new SlimDX.DirectInput.Mouse(diDevice);
+            diMouse.Acquire();
+
+            SpecaterCamera = new SpectaterCamera(keyboard, mouse);
+            Camera = SpecaterCamera;
 
 
-            MessagePump.Run(form, GameLoop);
 
-            disposeResources();
+            form.Run();
+
         }
-
-        public bool IsDirectXInitialized
-        {
-            get { return form != null; }
-        }
-
-        public void InitDirectX()
-        {
-            if (IsDirectXInitialized) throw new InvalidOperationException();
-            form = new RenderForm("The Wizards - DirectX 11");
-            var desc = new SwapChainDescription()
-                           {
-
-                               BufferCount = 1,
-                               ModeDescription = new ModeDescription(form.ClientSize.Width, form.ClientSize.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm),
-                               IsWindowed = true,
-                               OutputHandle = form.Handle,
-                               SampleDescription = new SampleDescription(4, 0),
-                               SwapEffect = SwapEffect.Discard,
-                               Usage = Usage.RenderTargetOutput,
-
-                           };
-
-
-
-            //Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
-            Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
-
-            //var result = device.CheckMultisampleQualityLevels(Format.R8G8B8A8_UNorm, 2);
-
-
-            var factory = swapChain.GetParent<Factory>();
-            factory.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
-
-            backBuffer = Texture2D.FromSwapChain<Texture2D>(swapChain, 0);
-            renderView = new RenderTargetView(device, backBuffer);
-
-
-
-
-            device.ImmediateContext.OutputMerger.SetTargets(renderView);
-            device.ImmediateContext.Rasterizer.SetViewports(new Viewport(0, 0, form.ClientSize.Width, form.ClientSize.Height, 0.0f, 1.0f));
-        }
-
-        private void disposeResources()
-        {
-            renderView.Dispose();
-            backBuffer.Dispose();
-            device.Dispose();
-            swapChain.Dispose();
-        }
-
         public void Exit()
         {
-            form.Close();
+            form.Exit();
+
+            diKeyboard.Dispose();
+            diMouse.Dispose();
+            diDevice.Dispose();
+            
+
+        }
+        public ICamera Camera { get; set; }
+
+
+
+        // Helper
+
+        public SpectaterCamera SpecaterCamera { get; private set; }
+        public LineManager3D LineManager3D { get; private set; }
+
+        public TWKeyboard Keyboard
+        {
+            get { return keyboard; }
         }
 
-
-
-        void form_Resize(object sender, System.EventArgs e)
+        public TWMouse Mouse
         {
-            // Disabled, this causes random crashes atm
-
-            return;
-            /*backBuffer.Release();
-            RenderView.Release();
-            try
-            {
-                var r = swapChain.ResizeBuffers(swapChain.Description.BufferCount, Form.ClientSize.Width, Form.ClientSize.Height,
-                                     swapChain.Description.ModeDescription.Format, (int)SwapChainFlags.None);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debugger.Break();
-            }
-
-
-            backBuffer = Resource.FromSwapChain<Texture2D>(swapChain, 0);
-            RenderView = new RenderTargetView(Device, backBuffer);
-            Context.OutputMerger.SetTargets(RenderView);
-            Context.Rasterizer.SetViewports(new Viewport(0, 0, Form.ClientSize.Width, Form.ClientSize.Height, 0.0f, 1.0f));*/
+            get { return mouse; }
         }
     }
 }
