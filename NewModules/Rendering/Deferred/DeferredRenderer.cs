@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Common.Core;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.OBJParser;
+using MHGameWork.TheWizards.ServerClient.CascadedShadowMaps;
 using Microsoft.Win32.SafeHandles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

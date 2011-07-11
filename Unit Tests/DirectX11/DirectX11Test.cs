@@ -22,6 +22,8 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
     [TestFixture]
     public class DirectX11Test
     {
+        public const string Wallpaper001_png = @"..\GameData\Core\Wallpaper001.png";
+
         private struct VertexCustom
         {
             public Vector4 Pos;
@@ -115,7 +117,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
         //                              Context.Rasterizer.SetViewports(new Viewport(0, 0, game.Form.ClientSize.Width, game.Form.ClientSize.Height, 0.0f, 1.0f));
         //                              Context.Rasterizer.State = rasterizerState;
         //                              Context.PixelShader.Set(pixelShader);
-        //                              Context.OutputMerger.SetTargets(game.RenderView);
+        //                              Context.OutputMerger.SetTargets(game.RenderTargetView);
 
         //                              Context.Draw(3, 0);
 
@@ -125,6 +127,14 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
         //    /*layout.Release();
         //    s.Release();*/
         //}
+
+        [Test]
+        public void TestDirectX11Form()
+        {
+            var game = new DX11Form();
+            game.InitDirectX();
+            game.Run();
+        }
 
         [Test]
         public void TestDirectX11Game()
@@ -137,7 +147,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
         [Test]
         public void TestDirectX11SimpleShader()
         {
-            var game = new DX11Game();
+            var game = new DX11Form();
             game.InitDirectX();
             var device = game.Device;
             var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/MiniTri.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
@@ -173,7 +183,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             var diffuseShaderVariable = effect.GetVariableByName("txDiffuse").AsResource();
 
-            var texturePath = @"..\GameData\Core\Wallpaper001.png";
+            var texturePath = Wallpaper001_png;
 
             var diffuseTexture = Texture2D.FromFile(device, texturePath);
 
@@ -214,7 +224,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
         [Test]
         public void TestDirectX11TransformShader()
         {
-            var game = new DX11Game();
+            var game = new DX11Form();
             game.InitDirectX();
             var device = game.Device;
             var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/MiniTri.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
@@ -265,10 +275,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             effect.GetVariableBySemantic("world").AsMatrix().SetMatrix(Matrix.Identity);
             //effect.GetVariableBySemantic("viewprojection").AsMatrix().SetMatrix(Matrix.Identity);
 
-            var texturePath = @"..\GameData\Core\Wallpaper001.png";
-
-            var diffuseTexture = Texture2D.FromFile(device, texturePath);
-
+            var diffuseTexture = Texture2D.FromFile(device, Wallpaper001_png);
             var diffuseTextureRv = new ShaderResourceView(device, diffuseTexture);
 
 
@@ -330,7 +337,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
 
 
-            var game = new DX11Game();
+            var game = new DX11Form();
             game.InitDirectX();
             var device = game.Device;
             var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/MiniTri.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
@@ -383,7 +390,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             //worldParam.SetMatrix(Matrix.Identity);
             //effect.GetVariableBySemantic("viewprojection").AsMatrix().SetMatrix(Matrix.Identity);
 
-            var texturePath = @"..\GameData\Core\Wallpaper001.png";
+            var texturePath = Wallpaper001_png;
 
             var diffuseTexture = Texture2D.FromFile(device, texturePath);
 
@@ -460,7 +467,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
 
 
-            var game = new DX11Game();
+            var game = new DX11Form();
             game.InitDirectX();
             var device = game.Device;
 
@@ -584,5 +591,256 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             m.Dispose();
             dev.Dispose();
         }
+
+
+        [Test]
+        public void TestFullscreenQuad()
+        {
+            BasicShader shader = null;
+            FullScreenQuad quad = null;
+            var game = new DX11Game();
+            game.InitDirectX();
+
+            var device = game.Device;
+
+            var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/FullScreenQuad.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
+            var effect = new Effect(game.Device, bytecode);
+            var technique = effect.GetTechniqueByName("TestQuadTextured");
+            var pass = technique.GetPassByIndex(0);
+
+            quad = new FullScreenQuad(game.Device);
+
+            var diffuseShaderVariable = effect.GetVariableByName("txDiffuse").AsResource();
+
+            var texturePath = Wallpaper001_png;
+
+            var diffuseTexture = Texture2D.FromFile(device, texturePath);
+
+            var diffuseTextureRv = new ShaderResourceView(device, diffuseTexture);
+            diffuseShaderVariable.SetResource(diffuseTextureRv);
+
+            var inputLayout = FullScreenQuad.CreateInputLayout(device, pass);
+
+            game.GameLoopEvent += delegate
+            {
+                pass.Apply(game.Device.ImmediateContext);
+
+                quad.Draw(inputLayout);
+            };
+            game.Run();
+        }
+
+        [Test]
+        public void TestBasicShaderAutoReload()
+        {
+            BasicShader shader = null;
+            FullScreenQuad quad = null;
+            var game = new DX11Game();
+            game.InitDirectX();
+
+            var fi = new FileInfo("../../DirectX11/Shaders/TestAutoReload.fx");
+            var include = new FileInfo("../../DirectX11/Shaders/IncludeTest.fx");
+
+
+            using (var fs = new StreamWriter(fi.OpenWrite()))
+            {
+                fs.WriteLine("float4 Color = float4(1,0,0,1);");
+            }
+            using (var fs = new StreamWriter(include.OpenWrite()))
+            {
+                fs.WriteLine("float4 Color2 = float4(0,0,0,1);");
+            }
+
+            shader = BasicShader.LoadAutoreload(game, fi);
+            shader.SetTechnique("TestAutoReload");
+            quad = new FullScreenQuad(game.Device);
+
+
+
+            var inputLayout = FullScreenQuad.CreateInputLayout(game.Device, shader.GetCurrentPass(0));
+            var time = 0f;
+            game.GameLoopEvent += delegate
+                                      {
+                                          shader.Apply();
+                                          quad.Draw(inputLayout);
+
+                                          if (time > 2 && time < 3)
+                                              using (var fs = new StreamWriter(fi.OpenWrite()))
+                                              {
+                                                  fs.WriteLine("float4 Color = float4(0,1,0,1);");
+                                                  time = 5;
+                                              }
+
+                                          time += game.Elapsed;
+
+                                      };
+            game.Run();
+        }
+
+        [Test]
+        public void TestBasicShaderIncludeRoot()
+        {
+            BasicShader shader = null;
+            FullScreenQuad quad = null;
+            var game = new DX11Game();
+            game.InitDirectX();
+
+            var fi = new FileInfo("../../DirectX11/Shaders/TestAutoReload.fx");
+            var include = new FileInfo("../../DirectX11/Shaders/IncludeTest.fx");
+
+
+            using (var fs = new StreamWriter(fi.OpenWrite()))
+            {
+                fs.WriteLine("float4 Color = float4(1,0,0,1);");
+            }
+            using (var fs = new StreamWriter(include.OpenWrite()))
+            {
+                fs.WriteLine("float4 Color2 = float4(0,0,0,1);");
+            }
+
+            shader = BasicShader.LoadAutoreload(game, fi);
+            shader.SetTechnique("TestAutoReload");
+            quad = new FullScreenQuad(game.Device);
+
+
+
+            var inputLayout = FullScreenQuad.CreateInputLayout(game.Device, shader.GetCurrentPass(0));
+            var time = 0f;
+            game.GameLoopEvent += delegate
+            {
+                shader.Apply();
+                quad.Draw(inputLayout);
+
+                if (time > 2 && time < 3)
+                    using (var fs = new StreamWriter(fi.OpenWrite()))
+                    {
+                        fs.WriteLine("float4 Color = float4(1,1,0,1);");
+                        time = 5;
+                    }
+
+
+                if (time > 6 && time < 7)
+                    using (var fs = new StreamWriter(include.OpenWrite()))
+                    {
+                        fs.WriteLine("float4 Color2 = float4(-1,0,0,1);");
+                        time = 10;
+                    }
+
+                time += game.Elapsed;
+
+            };
+            game.Run();
+        }
+
+        [Test]
+        public void TestRenderToTexture()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+
+            var target = new Texture2D(game.Device, new Texture2DDescription
+                                                        {
+                                                            BindFlags =
+                                                                BindFlags.RenderTarget | BindFlags.ShaderResource,
+                                                            Format = Format.R8G8B8A8_UNorm,
+                                                            Width = 400,
+                                                            Height = 400,
+                                                            ArraySize = 1,
+                                                            SampleDescription = new SampleDescription(1, 0)
+                                                        });
+            var targetView = new RenderTargetView(game.Device, target);
+
+            var depthStencil = new Texture2D(game.Device, new Texture2DDescription
+                                                        {
+                                                            BindFlags = BindFlags.DepthStencil | BindFlags.ShaderResource,
+                                                            Format = Format.R32_Typeless,
+                                                            Width = 400,
+                                                            Height = 400,
+                                                            ArraySize = 1,
+                                                            SampleDescription = new SampleDescription(1, 0)
+                                                        });
+            var depthStencilView = new DepthStencilView(game.Device, depthStencil, new DepthStencilViewDescription
+                                                                                       {
+                                                                                           Format = Format.D32_Float,
+                                                                                           Flags = DepthStencilViewFlags.None,
+                                                                                           Dimension = DepthStencilViewDimension.Texture2D
+                                                                                       });
+
+
+
+            var context = game.Device.ImmediateContext;
+
+            var oldRTV = context.OutputMerger.GetRenderTargets(1);
+            var oldDSV = context.OutputMerger.GetDepthStencilView();
+
+
+            context.OutputMerger.SetTargets(depthStencilView, targetView);
+
+            context.ClearDepthStencilView(depthStencilView, DepthStencilClearFlags.Depth, 1, 0);
+            context.ClearRenderTargetView(targetView, new Color4(1f, 0.5f, 0));
+
+            game.LineManager3D.AddLine(new Vector3(0, 0, 0), new Vector3(3, 3, 3), new Color4(0, 0, 1f));
+            game.LineManager3D.Render(game.Camera);
+
+            context.OutputMerger.SetTargets(oldDSV, oldRTV);
+
+
+            Texture2D.SaveTextureToFile(game.Device.ImmediateContext, target, ImageFileFormat.Dds,
+                                        TWDir.Test.CreateSubdirectory("DirectX11") + "\\RTT_Target.dds");
+
+            // It seems saving typeless resources gives troubles
+            Texture2D.SaveTextureToFile(game.Device.ImmediateContext, depthStencil, ImageFileFormat.Dds,
+                                        TWDir.Test.CreateSubdirectory("DirectX11") + "\\RTT_Depth.dds");
+
+            var depthRV = new ShaderResourceView(game.Device, depthStencil, new ShaderResourceViewDescription
+                                                                                {
+                                                                                    ArraySize = 1,
+                                                                                    Dimension = ShaderResourceViewDimension.Texture2D,
+                                                                                    Format = Format.R32_Float,
+                                                                                    MipLevels = -1
+                                                                                });
+
+            var targetRV = new ShaderResourceView(game.Device, target, new ShaderResourceViewDescription
+                                                                           {
+
+                                                                           });
+
+
+
+            game.GameLoopEvent += delegate
+                                      {
+                                          game.TextureRenderer.Draw(targetRV, new Vector2(10, 10), new Vector2(300, 300 * 3 / 4f));
+                                          //game.TextureRenderer.Draw(targetRV, new Vector2(320, 10), new Vector2(300, 300 * 3 / 4f));
+                                      };
+            game.Run();
+
+
+        }
+
+        [Test]
+        public void TestTextureRenderer()
+        {
+            var form = new DX11Form();
+            form.InitDirectX();
+            var device = form.Device;
+            var texturePath = Wallpaper001_png;
+
+            var diffuseTexture = Texture2D.FromFile(device, texturePath);
+
+            var diffuseTextureRv = new ShaderResourceView(device, diffuseTexture);
+
+
+            var renderer = new TextureRenderer(form.Device);
+
+
+            form.GameLoopEvent += delegate
+                                      {
+                                          renderer.Draw(diffuseTextureRv, new Vector2(10, 10), new Vector2(200, 200));
+                                      };
+
+            form.Run();
+        }
+
+
     }
 }

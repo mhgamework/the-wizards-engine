@@ -143,6 +143,14 @@ namespace DirectX11
             backward = new Vector3(0, 0, 1);
             one = new Vector3(1, 1, 1);
         }
+
+        public static Vector3 GetTranslation(this Matrix mat)
+        {
+            Vector3 scale, translation;
+            Quaternion rotation;
+            mat.Decompose(out scale, out rotation, out translation);
+            return translation;
+        }
     }
 
 

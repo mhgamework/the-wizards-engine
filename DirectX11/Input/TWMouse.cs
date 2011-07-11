@@ -153,8 +153,8 @@ namespace DirectX11.Input
                     SetNeutralMouseState();
                     //TODO: prevMouseState = new MouseState(neutralMouseState.X, neutralMouseState.Y, neutralMouseState.ScrollWheelValue, prevLeftPressed(), prevMouseState.MiddleButton, prevRightPressed(), prevMouseState.XButton1, prevMouseState.XButton2);
 
-
-                    if (gameInActive)
+                    
+                    if (gameInActive || savedCursorPosition.HasValue)
                     {
                         // The game was inactive in previous update, so the last mouseState is invalid.
                         // We make sure the mouse changes during disabled time don't apply.
@@ -177,9 +177,18 @@ namespace DirectX11.Input
             relativeY *= Speed;
 
 
+
             //TODO: relativeScrollWheel = mouseState.ScrollWheelValue - prevScrollWheel;
 
+            //TODO: This should prob be removed later on
+            if (!CursorEnabled && savedCursorPosition.HasValue)
+            {
+                // cursor was enabled last frame, dont process movement
+                relativeX = 0;
+                relativeY = 0;
+                savedCursorPosition = null;
 
+            }
 
         }
 

@@ -8,12 +8,13 @@ using Device = SlimDX.Direct3D11.Device;
 
 namespace DirectX11.Graphics
 {
+    //TODO: WARNING no depthbuffer has been initialized yet!!
     public class DX11Form
     {
         private SwapChain swapChain;
         private RenderForm form;
         private Texture2D backBuffer;
-        private RenderTargetView renderView;
+        private RenderTargetView renderTargetView;
         private Device device;
         public event Action GameLoopEvent;
 
@@ -37,16 +38,19 @@ namespace DirectX11.Graphics
             set { form = value; }
         }
 
-        public RenderTargetView RenderView
+        public RenderTargetView RenderTargetView
         {
-            get { return renderView; }
-            set { renderView = value; }
+            get { return renderTargetView; }
+            set { renderTargetView = value; }
         }
 
 
         private void gameLoop()
         {
-            device.ImmediateContext.ClearRenderTargetView(renderView, Color.Yellow);
+            //TODO: create depth buffer
+            //device.ImmediateContext.ClearDepthStencilView(device.ImmediateContext.OutputMerger.GetDepthStencilView(),
+            //                                              DepthStencilClearFlags.Depth, 1, 0);
+            device.ImmediateContext.ClearRenderTargetView(renderTargetView, Color.Yellow);
 
             if (GameLoopEvent != null) GameLoopEvent();
 
@@ -82,7 +86,8 @@ namespace DirectX11.Graphics
                                ModeDescription = new ModeDescription(form.ClientSize.Width, form.ClientSize.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm),
                                IsWindowed = true,
                                OutputHandle = form.Handle,
-                               SampleDescription = new SampleDescription(4, 0),
+                               SampleDescription = new SampleDescription(1, 0), // No multisampling!
+                               //SampleDescription = new SampleDescription(4, 0),
                                SwapEffect = SwapEffect.Discard,
                                Usage = Usage.RenderTargetOutput,
 
@@ -100,18 +105,27 @@ namespace DirectX11.Graphics
             factory.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
 
             backBuffer = Texture2D.FromSwapChain<Texture2D>(swapChain, 0);
-            renderView = new RenderTargetView(device, backBuffer);
+            
+            renderTargetView = new RenderTargetView(device, backBuffer);
 
 
 
 
-            device.ImmediateContext.OutputMerger.SetTargets(renderView);
+            device.ImmediateContext.OutputMerger.SetTargets(renderTargetView);
+            device.ImmediateContext.Rasterizer.SetViewports(new Viewport(0, 0, form.ClientSize.Width, form.ClientSize.Height, 0.0f, 1.0f));
+        }
+
+
+        public void SetBackbuffer()
+        {
+            //TODO: set depth here
+            Device.ImmediateContext.OutputMerger.SetTargets((DepthStencilView)null, RenderTargetView);
             device.ImmediateContext.Rasterizer.SetViewports(new Viewport(0, 0, form.ClientSize.Width, form.ClientSize.Height, 0.0f, 1.0f));
         }
 
         private void disposeResources()
         {
-            renderView.Dispose();
+            renderTargetView.Dispose();
             backBuffer.Dispose();
             device.Dispose();
             swapChain.Dispose();
@@ -130,7 +144,7 @@ namespace DirectX11.Graphics
 
             return;
             /*backBuffer.Release();
-            RenderView.Release();
+            RenderTargetView.Release();
             try
             {
                 var r = swapChain.ResizeBuffers(swapChain.Description.BufferCount, Form.ClientSize.Width, Form.ClientSize.Height,
@@ -143,8 +157,8 @@ namespace DirectX11.Graphics
 
 
             backBuffer = Resource.FromSwapChain<Texture2D>(swapChain, 0);
-            RenderView = new RenderTargetView(Device, backBuffer);
-            Context.OutputMerger.SetTargets(RenderView);
+            RenderTargetView = new RenderTargetView(Device, backBuffer);
+            Context.OutputMerger.SetTargets(RenderTargetView);
             Context.Rasterizer.SetViewports(new Viewport(0, 0, Form.ClientSize.Width, Form.ClientSize.Height, 0.0f, 1.0f));*/
         }
     }

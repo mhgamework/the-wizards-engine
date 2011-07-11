@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.ServerClient;
+using MHGameWork.TheWizards.ServerClient.CascadedShadowMaps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;

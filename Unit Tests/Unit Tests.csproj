@@ -135,6 +135,7 @@
     <Compile Include="Client\ClientTest.cs" />
     <Compile Include="Collada\ColladaTest.cs" />
     <Compile Include="CoreTest.cs" />
+    <Compile Include="DirectX11\DeferredTest.cs" />
     <Compile Include="DirectX11\SharpDXTest.cs" />
     <Compile Include="DirectX11\DirectX11Test.cs" />
     <Compile Include="Editor\EditorTest.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="World\TestSyncedActor.cs" />
     <Compile Include="World\WorldTest.cs" />
     <Compile Include="Xml\XmlTest.cs" />
+    <Compile Include="XNAConversion.cs" />
     <Compile Include="ZipTest.cs" />
   </ItemGroup>
   <ItemGroup>
