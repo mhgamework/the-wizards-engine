@@ -57,6 +57,7 @@
     <Compile Include="Input\TWKeyboard.cs" />
     <Compile Include="MathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\Deferred\CombineFinalRenderer.cs" />
     <Compile Include="Rendering\Deferred\PointLightRenderer.cs" />
     <Compile Include="Rendering\Deferred\SpotLightRenderer.cs" />
     <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
@@ -120,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Shaders\TestHelper.fx" />
+    <EmbeddedResource Include="Shaders\Deferred\CombineFinalOld.fx" />
     <None Include="Shaders\GBuffer.fx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -12,6 +12,8 @@ namespace DirectX11.Rendering.Deferred
 {
     public class GBuffer : IDisposable
     {
+        public int Width { get; private set; }
+        public int Height { get; private set; }
         private readonly Device device;
         private Texture2D diffuse;
         private Texture2D normal;
@@ -25,6 +27,8 @@ namespace DirectX11.Rendering.Deferred
 
         public GBuffer(Device device, int width, int height)
         {
+            Width = width;
+            Height = height;
             this.device = device;
             context = device.ImmediateContext;
             var desc = new Texture2DDescription

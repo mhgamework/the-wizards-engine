@@ -301,6 +301,85 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             game.Run();
         }
 
+        [Test]
+        public void TestComineFinalRenderer()
+        {
+            //TODO: add a way to show the specular in the alpha channel
+
+            var game = new DX11Game();
+            game.InitDirectX();
+            var device = game.Device;
+            var context = device.ImmediateContext;
+
+            var filledGBuffer = new TestFilledGBuffer(game, 800, 600);
+
+            var spot = new SpotLightRenderer(game, filledGBuffer.GBuffer);
+            var point = new PointLightRenderer(game, filledGBuffer.GBuffer);
+            var directional = new DirectionalLightRenderer(game, filledGBuffer.GBuffer);
+
+            var state = 0;
+
+
+            var combineFinal = new CombineFinalRenderer(game, filledGBuffer.GBuffer);
+
+
+            game.GameLoopEvent += delegate
+            {
+                filledGBuffer.Draw();
+
+                game.SetBackbuffer();
+
+                if (game.Keyboard.IsKeyPressed(Key.D1))
+                    state = 0;
+                if (game.Keyboard.IsKeyPressed(Key.D2))
+                    state = 1;
+                if (game.Keyboard.IsKeyPressed(Key.D3))
+                    state = 2;
+                if (game.Keyboard.IsKeyPressed(Key.D4))
+                    state = 3;
+
+                switch (state)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        directional.LightDirection = game.SpecaterCamera.CameraDirection;
+                        break;
+                    case 2:
+                        point.LightPosition = game.SpecaterCamera.CameraPosition;
+
+                        break;
+                    case 3:
+                        spot.LightPosition = game.SpecaterCamera.CameraPosition;
+                        spot.SpotDirection = game.SpecaterCamera.CameraDirection;
+                        break;
+                }
+
+
+
+                if (game.Keyboard.IsKeyDown(Key.I))
+                    drawGBuffer(game, filledGBuffer.GBuffer);
+                else
+                {
+                    combineFinal.ClearLightAccumulation();
+                    combineFinal.SetLightAccumulationStates();
+                    directional.Draw();
+                    spot.Draw();
+                    point.Draw();
+
+                    context.ClearState();
+                    game.SetBackbuffer();
+
+                    combineFinal.DrawCombined();
+
+                }
+
+            };
+
+            game.Run();
+        }
+
+
         public class TestFilledGBuffer :IDisposable
         {
             private readonly DX11Game game;
