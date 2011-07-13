@@ -79,6 +79,7 @@ namespace DirectX11.Graphics
         {
             if (IsDirectXInitialized) throw new InvalidOperationException();
             form = new RenderForm("The Wizards - DirectX 11");
+            form.TopMost = true;
             var desc = new SwapChainDescription()
                            {
 

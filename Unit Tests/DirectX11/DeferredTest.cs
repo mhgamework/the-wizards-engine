@@ -11,15 +11,19 @@ using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
+using SlimDX.DXGI;
 using BasicShader = DirectX11.Graphics.BasicShader;
 using Buffer = SlimDX.Direct3D11.Buffer;
 using Device = SlimDX.Direct3D11.Device;
+using Resource = SlimDX.Direct3D11.Resource;
 
 namespace MHGameWork.TheWizards.Tests.DirectX11
 {
     [TestFixture]
     public class DeferredTest
     {
+        private static readonly string HdrImageDDS = TWDir.Test.CreateSubdirectory("Deferred") + "\\HdrImage.dds";
+
         [Test]
         public void TestGBuffer()
         {
@@ -40,7 +44,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
         }
 
-        private void drawGBuffer(DX11Game game, GBuffer buffer)
+        private static void drawGBuffer(DX11Game game, GBuffer buffer)
         {
             game.TextureRenderer.Draw(buffer.DiffuseRV, new Vector2(10, 10),
                                       new Vector2(300, 300));
@@ -244,7 +248,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                                                                            {
                                                                                IsDepthEnabled = false,
                                                                                IsStencilEnabled = false,
-                                                                               
+
                                                                            });
 
 
@@ -272,7 +276,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                         break;
                     case 2:
                         point.LightPosition = game.SpecaterCamera.CameraPosition;
-                        
+
                         break;
                     case 3:
                         spot.LightPosition = game.SpecaterCamera.CameraPosition;
@@ -308,26 +312,397 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             var game = new DX11Game();
             game.InitDirectX();
+
+            var test = new TestCombineFinalClass(game);
+
+            game.GameLoopEvent += delegate
+                                  {
+                                      test.DrawUpdatedDeferredRendering();
+
+                                      game.Device.ImmediateContext.ClearState();
+                                      game.SetBackbuffer();
+
+                                      test.DrawCombined();
+                                  };
+
+            game.Run();
+        }
+
+        [Test]
+        public void TestToneMap()
+        {
+
+            var game = new DX11Game();
+            game.InitDirectX();
             var device = game.Device;
             var context = device.ImmediateContext;
 
-            var filledGBuffer = new TestFilledGBuffer(game, 800, 600);
 
-            var spot = new SpotLightRenderer(game, filledGBuffer.GBuffer);
-            var point = new PointLightRenderer(game, filledGBuffer.GBuffer);
-            var directional = new DirectionalLightRenderer(game, filledGBuffer.GBuffer);
-
-            var state = 0;
+            var toneMap = new ToneMapRenderer(game);
 
 
-            var combineFinal = new CombineFinalRenderer(game, filledGBuffer.GBuffer);
+            var hdrImage = Texture2D.FromFile(device, HdrImageDDS);
+
+            var hdrImageRV = new ShaderResourceView(device, hdrImage);
+
+            var avgLuminance = 1f;
+
+            game.GameLoopEvent += delegate
+                                      {
+                                          if (game.Keyboard.IsKeyDown(Key.UpArrow))
+                                              avgLuminance += game.Elapsed;
+                                          if (game.Keyboard.IsKeyDown(Key.DownArrow))
+                                              avgLuminance -= game.Elapsed;
+
+                                          toneMap.DrawTonemapped(hdrImageRV, avgLuminance);
+
+                                      };
+
+            game.Run();
+        }
+
+
+        [Test]
+        public void TestCalculateAverageLogLuminance()
+        {
+
+            var game = new DX11Game();
+            game.InitDirectX();
+            var device = game.Device;
+            var context = device.ImmediateContext;
+
+
+
+
+            var hdrImage1 = Texture2D.FromFile(device, HdrImageDDS);
+
+            var hdrImage1RV = new ShaderResourceView(device, hdrImage1);
+
+
+
+            var desc = new Texture2DDescription
+            {
+                BindFlags =
+                    BindFlags.RenderTarget | BindFlags.ShaderResource,
+                Format = Format.R16G16B16A16_Float,
+                Width = 300,
+                Height = 300,
+                ArraySize = 1,
+                SampleDescription = new SampleDescription(1, 0),
+                MipLevels = 1,
+                OptionFlags = ResourceOptionFlags.GenerateMipMaps
+            };
+            var hdrImage = new Texture2D(device, desc);
+
+            var hdrImageRTV = new RenderTargetView(device, hdrImage);
+            var hdrImageRV = new ShaderResourceView(device, hdrImage);
+            var calculater = new AverageLuminanceCalculater(game, hdrImageRV);
 
 
             game.GameLoopEvent += delegate
+                                      {
+                                          context.OutputMerger.SetTargets(hdrImageRTV);
+                                          context.Rasterizer.SetViewports(new Viewport(0, 0, 300, 300));
+
+                                          if (game.Keyboard.IsKeyPressed(Key.D1))
+                                              game.TextureRenderer.Draw(hdrImage1RV, new Vector2(), new Vector2(300, 300));
+                                          if (game.Keyboard.IsKeyPressed(Key.D2))
+                                              context.ClearRenderTargetView(hdrImageRTV, new Color4(1, 1, 1, 1));
+
+                                          calculater.DrawUpdatedLogLuminance();
+
+                                          context.ClearState();
+                                          game.SetBackbuffer();
+
+                                          game.TextureRenderer.Draw(calculater.LuminanceRV, new Vector2(10, 10),
+                                                                     new Vector2(300, 300));
+
+                                          game.TextureRenderer.Draw(calculater.AverageLuminanceRV, new Vector2(320, 10),
+                                                                    new Vector2(300, 300));
+
+
+                                      };
+
+            game.Run();
+        }
+        [Test]
+        public void TestAdjustedAverageLuminance()
+        {
+
+            var game = new DX11Game();
+            game.InitDirectX();
+            var device = game.Device;
+            var context = device.ImmediateContext;
+
+
+
+
+            var hdrImage1 = Texture2D.FromFile(device, HdrImageDDS);
+
+            var hdrImage1RV = new ShaderResourceView(device, hdrImage1);
+
+
+
+            var desc = new Texture2DDescription
+            {
+                BindFlags =
+                    BindFlags.RenderTarget | BindFlags.ShaderResource,
+                Format = Format.R16G16B16A16_Float,
+                Width = 300,
+                Height = 300,
+                ArraySize = 1,
+                SampleDescription = new SampleDescription(1, 0),
+                MipLevels = 1,
+                OptionFlags = ResourceOptionFlags.GenerateMipMaps
+            };
+            var hdrImage = new Texture2D(device, desc);
+
+            var hdrImageRTV = new RenderTargetView(device, hdrImage);
+            var hdrImageRV = new ShaderResourceView(device, hdrImage);
+
+            var calculater = new AverageLuminanceCalculater(game, hdrImageRV);
+
+
+            game.GameLoopEvent += delegate
+                                  {
+
+                                      context.OutputMerger.SetTargets(hdrImageRTV);
+
+                                      if (game.Keyboard.IsKeyPressed(Key.D1))
+                                          game.TextureRenderer.Draw(hdrImage1RV, new Vector2(), new Vector2(300, 300));
+                                      if (game.Keyboard.IsKeyPressed(Key.D2))
+                                          context.ClearRenderTargetView(hdrImageRTV, new Color4(1, 1, 1, 1));
+
+
+                                      calculater.DrawUpdatedLogLuminance();
+                                      calculater.DrawUpdatedAdaptedLogLuminance();
+
+                                      context.ClearState();
+                                      game.SetBackbuffer();
+
+                                      game.TextureRenderer.Draw(calculater.AverageLuminanceRV, new Vector2(10, 10),
+                                                                new Vector2(300, 300));
+                                      game.TextureRenderer.Draw(hdrImageRV, new Vector2(320, 10),
+                                                                new Vector2(300, 300));
+                                      game.TextureRenderer.Draw(calculater.CurrAverageLumRV, new Vector2(10, 320),
+                                                                new Vector2(270, 270));
+
+                                  };
+
+            game.Run();
+        }
+
+        [Test]
+        public void TestAutoAdjustTonemap()
+        {
+
+            var game = new DX11Game();
+            game.InitDirectX();
+            var device = game.Device;
+            var context = device.ImmediateContext;
+
+
+
+
+            var hdrImage1 = Texture2D.FromFile(device, HdrImageDDS);
+
+            var hdrImage1RV = new ShaderResourceView(device, hdrImage1);
+
+
+
+            var desc = new Texture2DDescription
+            {
+                BindFlags =
+                    BindFlags.RenderTarget | BindFlags.ShaderResource,
+                Format = Format.R16G16B16A16_Float,
+                Width = 300,
+                Height = 300,
+                ArraySize = 1,
+                SampleDescription = new SampleDescription(1, 0),
+                MipLevels = 1,
+                OptionFlags = ResourceOptionFlags.GenerateMipMaps
+            };
+            var hdrImage = new Texture2D(device, desc);
+
+            var hdrImageRTV = new RenderTargetView(device, hdrImage);
+            var hdrImageRV = new ShaderResourceView(device, hdrImage);
+
+            var calculater = new AverageLuminanceCalculater(game, hdrImageRV);
+
+            var toneMap = new ToneMapRenderer(game);
+
+            game.GameLoopEvent += delegate
+            {
+                context.Rasterizer.SetViewports(new Viewport(0, 0, 300, 300));
+
+                context.OutputMerger.SetTargets(hdrImageRTV);
+
+                if (game.Keyboard.IsKeyPressed(Key.D1))
+                    game.TextureRenderer.Draw(hdrImage1RV, new Vector2(), new Vector2(300, 300));
+                if (game.Keyboard.IsKeyPressed(Key.D2))
+                    context.ClearRenderTargetView(hdrImageRTV, new Color4(1, 1, 1, 1));
+
+
+                calculater.DrawUpdatedLogLuminance();
+                calculater.DrawUpdatedAdaptedLogLuminance();
+
+                context.ClearState();
+                game.SetBackbuffer();
+
+
+                //game.TextureRenderer.Draw(calculater.AverageLuminanceRV, new Vector2(10, 10),
+                //                          new Vector2(300, 300));
+                game.TextureRenderer.Draw(hdrImageRV, new Vector2(320, 10),
+                                          new Vector2(300, 300));
+                game.TextureRenderer.Draw(calculater.CurrAverageLumRV, new Vector2(10, 320),
+                                          new Vector2(270, 270));
+
+                context.Rasterizer.SetViewports(new Viewport(10, 10, 300, 300));
+
+                toneMap.DrawTonemapped(hdrImageRV, calculater.CurrAverageLumRV);
+
+
+            };
+
+            game.Run();
+        }
+
+        [Test]
+        public void TestLightsToneMap()
+        {
+
+            var game = new DX11Game();
+            game.InitDirectX();
+            var device = game.Device;
+            var context = device.ImmediateContext;
+
+
+
+
+            var hdrImage1 = Texture2D.FromFile(device, HdrImageDDS);
+
+            var hdrImage1RV = new ShaderResourceView(device, hdrImage1);
+
+
+
+            var desc = new Texture2DDescription
+            {
+                BindFlags =
+                    BindFlags.RenderTarget | BindFlags.ShaderResource,
+                Format = Format.R16G16B16A16_Float,
+                Width = 800,
+                Height = 600,
+                ArraySize = 1,
+                SampleDescription = new SampleDescription(1, 0),
+                MipLevels = 1,
+                OptionFlags = ResourceOptionFlags.GenerateMipMaps
+            };
+            var hdrImage = new Texture2D(device, desc);
+
+            var hdrImageRTV = new RenderTargetView(device, hdrImage);
+            var hdrImageRV = new ShaderResourceView(device, hdrImage);
+
+            var calculater = new AverageLuminanceCalculater(game, hdrImageRV);
+
+            var toneMap = new ToneMapRenderer(game);
+
+            var combineFinal = new TestCombineFinalClass(game);
+
+            game.GameLoopEvent += delegate
+                                  {
+                                      combineFinal.DrawUpdatedDeferredRendering();
+                                      if (game.Keyboard.IsKeyDown(Key.I)) return;
+                                      context.Rasterizer.SetViewports(new Viewport(0, 0, 800, 600));
+
+                                      context.OutputMerger.SetTargets(hdrImageRTV);
+
+                                      combineFinal.DrawCombined();
+
+
+
+                                      calculater.DrawUpdatedLogLuminance();
+                                      calculater.DrawUpdatedAdaptedLogLuminance();
+
+                                      context.ClearState();
+                                      game.SetBackbuffer();
+
+
+                                      if (game.Keyboard.IsKeyDown(Key.K))
+                                      {
+
+                                          game.TextureRenderer.Draw(calculater.AverageLuminanceRV, new Vector2(10, 10),
+                                                                     new Vector2(300, 300));
+                                          game.TextureRenderer.Draw(hdrImageRV, new Vector2(320, 10),
+                                                                    new Vector2(300, 300));
+                                          game.TextureRenderer.Draw(calculater.CurrAverageLumRV, new Vector2(10, 320),
+                                                                    new Vector2(270, 270));
+                                      }
+                                      else
+
+                                          toneMap.DrawTonemapped(hdrImageRV, calculater.CurrAverageLumRV);
+
+
+                                  };
+
+            game.Run();
+        }
+
+        public class TestCombineFinalClass
+        {
+            private readonly DX11Game game;
+            private TestFilledGBuffer filledGBuffer;
+            private SpotLightRenderer spot;
+            private PointLightRenderer point;
+            private DirectionalLightRenderer directional;
+            private int state;
+            private CombineFinalRenderer combineFinal;
+            private Texture2D hdrImage;
+            private RenderTargetView hdrImageRTV;
+            private ShaderResourceView hdrImageRV;
+            private DeviceContext context;
+
+            public TestCombineFinalClass(DX11Game game)
+            {
+                this.game = game;
+
+                var device = game.Device;
+                context = device.ImmediateContext;
+
+                filledGBuffer = new TestFilledGBuffer(game, 800, 600);
+
+                spot = new SpotLightRenderer(game, filledGBuffer.GBuffer);
+                point = new PointLightRenderer(game, filledGBuffer.GBuffer);
+                directional = new DirectionalLightRenderer(game, filledGBuffer.GBuffer);
+
+                state = 0;
+
+
+                combineFinal = new CombineFinalRenderer(game, filledGBuffer.GBuffer);
+
+
+
+                var desc = new Texture2DDescription
+                {
+                    BindFlags =
+                        BindFlags.RenderTarget | BindFlags.ShaderResource,
+                    Format = Format.R16G16B16A16_Float,
+                    Width = filledGBuffer.GBuffer.Width,
+                    Height = filledGBuffer.GBuffer.Height,
+                    ArraySize = 1,
+                    SampleDescription = new SampleDescription(1, 0),
+                    MipLevels = 1
+                };
+                hdrImage = new Texture2D(device, desc);
+
+                hdrImageRTV = new RenderTargetView(device, hdrImage);
+                hdrImageRV = new ShaderResourceView(device, hdrImage);
+
+            }
+
+            public void DrawUpdatedDeferredRendering()
             {
                 filledGBuffer.Draw();
 
-                game.SetBackbuffer();
 
                 if (game.Keyboard.IsKeyPressed(Key.D1))
                     state = 0;
@@ -358,7 +733,12 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
 
                 if (game.Keyboard.IsKeyDown(Key.I))
+                {
+                    context.ClearState();
+                    game.SetBackbuffer();
                     drawGBuffer(game, filledGBuffer.GBuffer);
+
+                }
                 else
                 {
                     combineFinal.ClearLightAccumulation();
@@ -367,20 +747,35 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                     spot.Draw();
                     point.Draw();
 
-                    context.ClearState();
-                    game.SetBackbuffer();
 
-                    combineFinal.DrawCombined();
+
+
+                    context.ClearState();
+                    game.SetBackbuffer(); // This is to set viewport, not sure this is correct
+
+                    context.OutputMerger.SetTargets(hdrImageRTV);
+                    DrawCombined();
+
+
 
                 }
 
-            };
 
-            game.Run();
+
+                if (game.Keyboard.IsKeyPressed(Key.O))
+                {
+                    Resource.SaveTextureToFile(game.Device.ImmediateContext, hdrImage, ImageFileFormat.Dds,
+                                               HdrImageDDS);
+                }
+            }
+
+            public void DrawCombined()
+            {
+                combineFinal.DrawCombined();
+            }
         }
 
-
-        public class TestFilledGBuffer :IDisposable
+        public class TestFilledGBuffer : IDisposable
         {
             private readonly DX11Game game;
             private BasicShader shader;

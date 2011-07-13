@@ -1,4 +1,5 @@
 ﻿
+#include <TestHelper.fx>
 #include <GBuffer.fx>
 
 float4x4 World;
@@ -93,11 +94,13 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
     //reflection vector
     float3 reflectionVector = normalize(reflect(-lightVector, normal));
     //camera-to-surface vector
-    float3 directionToCamera = normalize(cameraPosition - position);
+    float3 directionToCamera = normalize(cameraPosition - position.xyz);
     //compute specular light
     float specularLight = specularIntensity * pow( saturate(dot(reflectionVector, directionToCamera)), specularPower);
-
+	//return t(saturate(dot(reflectionVector, directionToCamera)));
 	
+	// Big booboo: when dot(reflectionVector, directionToCamera) <0, specularLight seems to become negative infinity?
+	if (specularLight< 0) specularLight = 0; 
 
     //take into account attenuation and lightIntensity.
     return attenuation * lightIntensity * float4(diffuseLight.rgb,specularLight);

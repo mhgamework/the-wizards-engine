@@ -67,32 +67,6 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     output.TexCoord = input.TexCoord - halfPixel;
     return output;
 }
-float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
-{
-
-
-    float3 diffuseColor = tex2D(colorSampler,input.TexCoord).rgb;
-	
-    float4 light = tex2D(lightSampler,input.TexCoord);
-	float4 ambientOcclusion = tex2D(ambientOcclusionSampler,input.TexCoord).r;
-    float3 diffuseLight = light.rgb;
-    float specularLight = light.a;
-	float3 ambient=float3(1,1,1)*0.3f;
-
-
-    return float4((diffuseColor * (diffuseLight+ambient*(1-ambientOcclusion)) + specularLight),1);
-}
-
-
-technique Technique1
-{
-    pass Pass1
-    {
-        VertexShader = compile vs_2_0 VertexShaderFunction();
-        PixelShader = compile ps_2_0 PixelShaderFunction();
-    }
-}
-
 
 
 float g_fMiddleGrey = 0.6f; 

@@ -99,7 +99,7 @@ namespace DirectX11.Rendering.Deferred
         public void Clear()
         {
             context.ClearRenderTargetView(diffuseRTV, new Color4(0, 0, 0, 0));
-            context.ClearRenderTargetView(normalRTV, new Color4(0.5f, 0.5f, 0.5f, 0));
+            context.ClearRenderTargetView(normalRTV, new Color4(0, 0.5f, 0.5f, 0.5f));
             context.ClearDepthStencilView(depthStencilView, DepthStencilClearFlags.Depth, 1, 0);
         }
         /// <summary>

@@ -25,9 +25,9 @@ namespace DirectX11.Rendering.Deferred
         private InputLayout layout;
         private Texture2D lightAccumulationMap;
         private BlendState blendState;
-        private ShaderResourceView lightAccumulationRV;
         private RenderTargetView lightAccumulationRTV;
 
+        public ShaderResourceView LightAccumulationRV { get; private set; }
 
         public CombineFinalRenderer(DX11Game game, GBuffer gBuffer)
         {
@@ -60,7 +60,7 @@ namespace DirectX11.Rendering.Deferred
             lightAccumulationMap = new Texture2D(device, desc);
 
             lightAccumulationRTV = new RenderTargetView(device, lightAccumulationMap);
-            lightAccumulationRV = new ShaderResourceView(device, lightAccumulationMap);
+            LightAccumulationRV = new ShaderResourceView(device, lightAccumulationMap);
 
             var bsDesc = new BlendStateDescription();
             var b = new RenderTargetBlendDescription();
@@ -78,6 +78,7 @@ namespace DirectX11.Rendering.Deferred
             blendState = BlendState.FromDescription(device, bsDesc);
         }
 
+
         public void ClearLightAccumulation()
         {
             context.ClearRenderTargetView(lightAccumulationRTV, new Color4());
@@ -92,7 +93,7 @@ namespace DirectX11.Rendering.Deferred
         public void DrawCombined()
         {
             shader.Effect.GetVariableByName("colorMap").AsResource().SetResource(gBuffer.DiffuseRV);
-            shader.Effect.GetVariableByName("lightMap").AsResource().SetResource(lightAccumulationRV);
+            shader.Effect.GetVariableByName("lightMap").AsResource().SetResource(LightAccumulationRV);
 
 
             shader.Apply();

@@ -173,7 +173,7 @@ namespace DirectX11.Graphics
             {
                 startPoint.Y = 0;
                 endPoint.Y = 0;
-                lines.AddLine(startPoint, endPoint, new Color4(30, 30, 30, 255));
+                lines.AddLine(startPoint, endPoint, new Color4(255/255f, 30/255f, 30/255f, 30/255f));
             }
 
         } // AddLine(startPoint, startColor, endPoint)

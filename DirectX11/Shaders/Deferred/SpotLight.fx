@@ -188,7 +188,9 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 	
 	//TODO: WARNING: shadow disabled
 	shadowTerm = 1;
-
+		
+	// Big booboo: when dot(reflectionVector, directionToCamera) <0, specularLight seems to become negative infinity?
+	if (specularLight< 0) specularLight = 0; 
 	return attenuation * lightIntensity * float4(diffuseLight.rgb,specularLight)* shadowTerm;
 
     

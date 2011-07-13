@@ -445,13 +445,6 @@
     <Compile Include="Terrain\Editor\TerrainRaiseTool.cs" />
     <Compile Include="Terrain\Editor\TerrainWorldEditorExtension.cs" />
     <Compile Include="Terrain\Editor\TerrainWorldEditorGUI.cs" />
-    <Compile Include="Utilities\TestRunner.cs" />
-    <Compile Include="Utilities\TestRunnerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Utilities\TestRunnerForm.Designer.cs">
-      <DependentUpon>TestRunnerForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="WorldDatabase\DataElementFactoryIdentifier.cs" />
     <Compile Include="WorldDatabase\DataElementIdentifier.cs" />
     <Compile Include="WorldDatabase\DataElementXMLFactory.cs" />
@@ -465,9 +458,6 @@
     <Compile Include="WorldDatabase\IDataElementFactory.cs" />
     <Compile Include="WorldDatabase\WorkingCopy.cs" />
     <Compile Include="WorldDatabase\WorldDatabase.cs" />
-    <EmbeddedResource Include="Utilities\TestRunnerForm.resx">
-      <DependentUpon>TestRunnerForm.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Character\Editor\CharacterEditorForm.resx">

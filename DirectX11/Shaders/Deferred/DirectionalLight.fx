@@ -70,6 +70,10 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 	//return float4(dot(reflectionVector, directionToCamera),0,0,1);
 	//compute specular light
     float specularLight = g.SpecularIntensity * pow( saturate(dot(reflectionVector, directionToCamera)), power);
+
+		
+	// Big booboo: when dot(reflectionVector, directionToCamera) <0, specularLight seems to become negative infinity?
+	if (specularLight< 0) specularLight = 0; 
     //output the two lights
     return float4(diffuseLight.rgb, specularLight) ;
 	//return float4(specularLight,0,0,0);

@@ -54,7 +54,7 @@ namespace DirectX11.Graphics
         {
             reloadFile = fi;
             autoReload();
-            var watcher = new FileSystemWatcher(fi.DirectoryName, "*");
+            var watcher = new FileSystemWatcher(fi.DirectoryName, fi.Name);
 
             watcher.NotifyFilter = NotifyFilters.LastWrite;
             watcher.Changed += delegate(object sender, FileSystemEventArgs e)
