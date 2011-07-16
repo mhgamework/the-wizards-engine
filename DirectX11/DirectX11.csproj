@@ -62,7 +62,6 @@
     <Compile Include="Rendering\Deferred\ToneMapRenderer.cs" />
     <Compile Include="Rendering\Deferred\PointLightRenderer.cs" />
     <Compile Include="Rendering\Deferred\SpotLightRenderer.cs" />
-    <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
     <Compile Include="Rendering\Deferred\DirectionalLightRenderer.cs" />
     <Compile Include="Rendering\Deferred\GBuffer.cs" />
     <Compile Include="Rendering\Deferred\GBufferShader.cs" />
@@ -92,13 +91,13 @@
     <EmbeddedResource Include="Shaders\TextureRenderer.fx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Shaders\Deferred\AmbientOcclusion.fx" />
+    <EmbeddedResource Include="Shaders\Deferred\TODO\AmbientOcclusion.fx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Shaders\Deferred\SpotLight.fx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Shaders\Deferred\Blur.fx" />
+    <EmbeddedResource Include="Shaders\Deferred\TODO\Blur.fx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Shaders\Deferred\CombineFinal.fx" />
@@ -107,26 +106,28 @@
     <EmbeddedResource Include="Shaders\Deferred\DirectionalLight.fx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Shaders\Deferred\Downsample.fx" />
+    <EmbeddedResource Include="Shaders\Deferred\TODO\Downsample.fx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Shaders\Deferred\PointLight.fx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Shaders\Deferred\RandomNormals.png" />
+    <EmbeddedResource Include="Shaders\Deferred\TODO\RandomNormals.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Shaders\Deferred\RenderGBuffer.fx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Shaders\Deferred\ShadowMap.fx" />
+    <EmbeddedResource Include="Shaders\Deferred\TODO\ShadowMap.fx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Shaders\TestHelper.fx" />
-    <EmbeddedResource Include="Shaders\Deferred\CombineFinalOld.fx" />
+    <EmbeddedResource Include="Shaders\Deferred\TODO\CombineFinalOld.fx" />
     <EmbeddedResource Include="Shaders\Deferred\ToneMap.fx" />
     <EmbeddedResource Include="Shaders\Deferred\Luminance.fx" />
+    <EmbeddedResource Include="Shaders\Deferred\DeferredMesh.fx" />
     <None Include="Shaders\GBuffer.fx" />
+    <EmbeddedResource Include="Shaders\SSAO\HorizonSSAO.fx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

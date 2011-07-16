@@ -29,7 +29,7 @@ namespace DirectX11.Graphics
 
         public Device Device
         {
-            get { return device; }
+            get { if (device == null) throw new InvalidOperationException("DirectX not yet initialized!"); return device; }
         }
 
         public RenderForm Form
@@ -56,7 +56,7 @@ namespace DirectX11.Graphics
 
 
 
-            swapChain.Present(0, PresentFlags.None);
+            swapChain.Present(1, PresentFlags.None);
             FrameCount++;
         }
 
@@ -80,24 +80,26 @@ namespace DirectX11.Graphics
             if (IsDirectXInitialized) throw new InvalidOperationException();
             form = new RenderForm("The Wizards - DirectX 11");
             form.TopMost = true;
-            var desc = new SwapChainDescription()
+            //WARNING: THERE IS ONLY ONE BUFFER ATM. (no backbuffer?)
+            var desc = new SwapChainDescription
                            {
 
-                               BufferCount = 1,
+                               BufferCount = 3, // Set to 3 here for triple buffering?
                                ModeDescription = new ModeDescription(form.ClientSize.Width, form.ClientSize.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm),
                                IsWindowed = true,
                                OutputHandle = form.Handle,
                                SampleDescription = new SampleDescription(1, 0), // No multisampling!
-                               //SampleDescription = new SampleDescription(4, 0),
+                               //SampleDescription = ne w SampleDescription(4, 0),
                                SwapEffect = SwapEffect.Discard,
-                               Usage = Usage.RenderTargetOutput,
+                               Usage = Usage.RenderTargetOutput | Usage.BackBuffer, // backbuffer added, no clue wat it does
+
 
                            };
 
 
 
+            Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.None, desc, out device, out swapChain);
             //Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
-            Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
 
             //var result = device.CheckMultisampleQualityLevels(Format.R8G8B8A8_UNorm, 2);
 

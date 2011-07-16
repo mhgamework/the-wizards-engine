@@ -31,21 +31,38 @@ namespace DirectX11.Graphics
             includeHandler = new IncludeHandler();
         }
 
+        private List<BasicShader> clones = new List<BasicShader>();
+
+        public BasicShader ParentShader { get; private set; }
+
+        public bool IsClone
+        {
+            get { return ParentShader != null; }
+        }
+
         public BasicShader Clone()
         {
-            throw new NotImplementedException("Implement this while supporting auto-reloading");
-            /*BasicShader clone = new BasicShader(game);
-            clone.effect = effect.Clone(game.GraphicsDevice);
-            clone.LoadParameters();
+            if (IsClone) throw new InvalidOperationException("Can't clone a cloned shader!");
 
-            return clone;*/
+            var clone = new BasicShader(device);
+            clone.loadCloned(this);
 
+            //Track clones
+            clones.Add(clone);
+
+
+            return clone;
         }
 
 
         public static BasicShader LoadAutoreload(IGraphicsManager graphics, FileInfo fi)
         {
+            return LoadAutoreload(graphics, fi, null);
+        }
+        public static BasicShader LoadAutoreload(IGraphicsManager graphics, FileInfo fi, Action<BasicShader> loadedDelegate)
+        {
             var s = new BasicShader(graphics.Device);
+            if (loadedDelegate != null) s.loadedEvent += loadedDelegate;
             s.loadAutoreload(fi);
             graphics.AddBasicShader(s);
             return s;
@@ -78,6 +95,16 @@ namespace DirectX11.Graphics
                 }
             };
             watcher.EnableRaisingEvents = true;
+        }
+
+        private void loadCloned(BasicShader baseShader)
+        {
+            ParentShader = baseShader;
+            Effect = ParentShader.Effect.Clone(false);
+            if (ParentShader.CurrentTechnique != null)
+                SetTechnique(ParentShader.CurrentTechnique.Description.Name);
+
+
         }
 
         private class IncludeHandler : Include
@@ -136,8 +163,8 @@ namespace DirectX11.Graphics
                         //while (lastWrite == File.GetLastWriteTime(filename))
                         {
                             System.Threading.Thread.Sleep(3000);
-                            
-                            
+
+
                         }
 
                     }
@@ -188,6 +215,23 @@ namespace DirectX11.Graphics
             loadFromFXFile(reloadFile.FullName);
             if (techniqueName != null)
                 SetTechnique(techniqueName);
+
+            onLoaded();
+
+            //Reload cloned shaders
+            foreach (var clone in clones)
+            {
+                clone.loadCloned(this);
+            }
+
+
+        }
+
+        private event Action<BasicShader> loadedEvent;
+
+        private void onLoaded()
+        {
+            if (loadedEvent != null) loadedEvent(this);
         }
 
 

@@ -1,12 +1,15 @@
 ﻿
-// For use in testing
-
+#include <TestHelper.fx>
 #include <GBuffer.fx>
 
 matrix World;
-matrix View;
-matrix Projection;
-float specularIntensity = 0.2f;
+single cbuffer sharedData
+{
+	matrix View;
+	matrix Projection;
+};
+
+float specularIntensity = 8.0f;
 float specularPower = 0.2f;
 Texture2D txDiffuse;
 SamplerState samLinear
@@ -32,22 +35,25 @@ struct VertexShaderOutput
 ;
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
-    VertexShaderOutput output;
+    VertexShaderOutput output = (VertexShaderOutput)0;
+	
+	//output.Position = input.Position;
+	//output.TexCoord = float2(0,0);
+	//output.Normal = float3(1,0,0);
+	//return output;
     matrix worldViewProj = mul(World,mul(View,Projection));
     //float4 worldPosition = mul(input.Position, World);
     //float4 viewPosition = mul(worldPosition, View);
     //output.Position = mul(viewPosition, Projection);
 	output.Position = mul(input.Position, worldViewProj);
+	
+	float farClip = 400;
+	//output.Position.z = output.Position.z * output.Position.w / farClip;// Test: use linear depth
     output.TexCoord = input.TexCoord;
     //pass the texture coordinates further
-    output.Normal = mul(float4(input.Normal,1),World).xyz; //Note: w might be lost, but normal has no length anyway
+    output.Normal = normalize(mul(input.Normal,(float3x3)World)); 
     //get normal into world space
     return output;
-}
-
-float test()
-{
-	return 0.0f;
 }
 
 

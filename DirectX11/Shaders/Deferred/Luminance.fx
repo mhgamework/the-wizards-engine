@@ -64,7 +64,7 @@ float4 CalcAdaptedLumPS (VertexShaderOutput input)  : SV_TARGET0
 	float fLastLum = lastLum.Sample(samLinear,0).r;
     float fCurrentLogLum = currentLum.Sample(samLinear,0).r;
     
-	float fCurrentLum = 1e-5+ exp(fCurrentLogLum);
+	float fCurrentLum = 1+ 1e-5+ exp(fCurrentLogLum); // I have no clue why there is +1 here, but it was in the original code
 	//float fCurrentLum = fCurrentLogLum; 
 
     // Adapt the luminance using Pattanaik's technique
@@ -73,7 +73,7 @@ float4 CalcAdaptedLumPS (VertexShaderOutput input)  : SV_TARGET0
 //	return t(0.1f);
 	//return t(fCurrentLum);
     //return t(fLastLum+ (fCurrentLum - fLastLum) );
-	if (fAdaptedLum < 0) fAdaptedLum = 0;
+	//if (fAdaptedLum < 0) fAdaptedLum = 0;
     return float4(fAdaptedLum, 1.0f, 1.0f, 1.0f);
 }
 

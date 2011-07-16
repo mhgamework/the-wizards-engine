@@ -1,77 +1,335 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
+using System.IO;
+using System.Reflection;
+using System.Threading;
+using DirectX11;
+using DirectX11.Graphics;
+using DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Common.Core;
+using MHGameWork.TheWizards.Entity;
+using MHGameWork.TheWizards.OBJParser;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
+using MHGameWork.TheWizards.ServerClient;
+using MHGameWork.TheWizards.Tests.DirectX11;
 using NUnit.Framework;
+using SlimDX;
+using SlimDX.Direct3D11;
+using Buffer = SlimDX.Direct3D11.Buffer;
+using DataStream = SlimDX.DataStream;
+using TexturePool = MHGameWork.TheWizards.Rendering.TexturePool;
 
 namespace MHGameWork.TheWizards.Tests.Rendering
 {
     [TestFixture]
     public class DeferredRenderingTest
     {
-        [Test]
-        [RequiresThread(System.Threading.ApartmentState.STA)]
-        public void TestDeferredRenderer()
+
+        public static RAMMesh CreateMerchantsHouseMeshOLD()
         {
-            var game = new XNAGame();
+            return RenderingTest.CreateMerchantsHouseMeshOLD();
+        }
+        public static RAMMesh CreateMerchantsHouseMesh(OBJToRAMMeshConverter c)
+        {
+            return RenderingTest.CreateMerchantsHouseMesh(c);
+        }
+        public static RAMMesh CreateGuildHouseMesh(OBJToRAMMeshConverter c)
+        {
+            return RenderingTest.CreateGuildHouseMesh(c);
+        }
 
-            var renderer = new DeferredRenderer(RenderingTest.CreateMerchantsHouseMeshOLD(), TestFiles.WoodPlanksBareJPG);
+        public static RAMMesh CreateMeshFromObj(OBJToRAMMeshConverter c, string obj, string mtl)
+        {
+            return RenderingTest.CreateMeshFromObj(c, obj, mtl);
+        }
 
-            renderer.OutputMode = DeferredRenderer.DeferredOutputMode.Diffuse;
 
-            game.AddXNAObject(renderer);
 
-            game.UpdateEvent += delegate
-                                    {
-                                        if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.D1))
-                                        {
-                                            renderer.OutputMode = DeferredRenderer.DeferredOutputMode.Final;
-                                        }
-                                        if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.D2))
-                                        {
-                                            renderer.OutputMode = DeferredRenderer.DeferredOutputMode.Diffuse;
-                                        }
-                                        if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.D3))
-                                        {
-                                            renderer.OutputMode = DeferredRenderer.DeferredOutputMode.Normal;
-                                        }
-                                        if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.D4))
-                                        {
-                                            renderer.OutputMode = DeferredRenderer.DeferredOutputMode.Depth;
-                                        }
-                                        if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.D5))
-                                        {
-                                            renderer.OutputMode = DeferredRenderer.DeferredOutputMode.LightAccumulation;
-                                        }
-                                        if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.D6))
-                                        {
-                                            renderer.OutputMode = DeferredRenderer.DeferredOutputMode.ShadowMap;
-                                        }
-                                        if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.D7))
-                                        {
-                                            renderer.OutputMode = DeferredRenderer.DeferredOutputMode.AmbientOcclusion;
-                                        }
-                                        if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.D8))
-                                        {
-                                            renderer.OutputMode = DeferredRenderer.DeferredOutputMode.BlurX;
-                                        }
-                                        if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.D9))
-                                        {
-                                            renderer.OutputMode = DeferredRenderer.DeferredOutputMode.BlurY;
-                                        }
-                                        if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.NumPad1))
-                                            renderer.OutputMode = DeferredRenderer.DeferredOutputMode.Downsample;
-                                        if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.NumPad2))
-                                            renderer.OutputMode = DeferredRenderer.DeferredOutputMode.DownsampleBlurX;
-                                        if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.NumPad3))
-                                            renderer.OutputMode = DeferredRenderer.DeferredOutputMode.DownsampleBlurY;
-                                        if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.NumPad4))
-                                            renderer.OutputMode = DeferredRenderer.DeferredOutputMode.ToneMapped;
-                                    };
+
+        [Test]
+        [RequiresThread(ApartmentState.STA)]
+        public void TestLoadTexture()
+        {
+            DX11Game game = new DX11Game();
+            var pool = new TheWizards.Rendering.Deferred.TexturePool(game);
+
+            RAMTexture tex = GetTestTexture();
+
+            game.GameLoopEvent += delegate
+            {
+                //We should do this ACTUALLY in real usage situations, but it proves we cache the data.
+                int row = 0;
+                int col = 0;
+                int width = 10;
+                for (int i = 0; i < 100; i++)
+                {
+                    row = i / width;
+                    col = i % width;
+                    game.TextureRenderer.Draw(pool.LoadTexture(tex), new Vector2(10 + col * 40, 10 + row * 40), new Vector2(40, 40));
+                }
+
+
+            };
 
             game.Run();
+        }
+
+        public static RAMTexture GetTestTexture()
+        {
+            var tex = new RAMTexture();
+
+            var data = tex.GetCoreData();
+            data.StorageType = TextureCoreData.TextureStorageType.Disk;
+            data.DiskFilePath = TestFiles.BrickRoundJPG;
+            /*data.StorageType = TextureCoreData.TextureStorageType.Assembly;
+            data.Assembly = Assembly.GetExecutingAssembly();
+            data.AssemblyResourceName = "MHGameWork.TheWizards.Tests.OBJParser.Files.maps.BrickRound0030_7_S.jpg";*/
+            return tex;
+        }
+
+
+
+
+        [Test]
+        [RequiresThread(ApartmentState.STA)]
+        public void TestRenderDefaultModelShader()
+        {
+
+            var shaders = new List<BasicShader>();
+
+
+            DX11Game game = new DX11Game();
+            game.InitDirectX();
+
+            var context = game.Device.ImmediateContext;
+
+            var shader = BasicShader.LoadAutoreload(game, DeferredMeshRenderer.DeferredMeshFX);
+            shader.SetTechnique("Technique1");
+
+            var gBuffer = new GBuffer(game.Device, 800, 600);
+
+
+            var layout = new InputLayout(game.Device, shader.GetCurrentPass(0).Description.Signature, DeferredMeshVertex.Elements);
+            DeferredMeshVertex[] vertices = new DeferredMeshVertex[4];
+
+
+            vertices[1] = new DeferredMeshVertex(Vector3.Zero.ToVector4(), Vector2.Zero, MathHelper.Up);
+            vertices[0] = new DeferredMeshVertex(MathHelper.Forward.ToVector4(), Vector2.UnitX, MathHelper.Up);
+            vertices[2] = new DeferredMeshVertex((MathHelper.Forward + MathHelper.Right).ToVector4(), Vector2.UnitX + Vector2.UnitY, MathHelper.Up);
+            vertices[3] = new DeferredMeshVertex(MathHelper.Right.ToVector4(), Vector2.UnitY, MathHelper.Up);
+
+            Buffer vb;
+            using (var strm = new DataStream(vertices, true, false))
+            {
+
+                vb = new Buffer(game.Device, strm, (int)strm.Length, ResourceUsage.Immutable, BindFlags.VertexBuffer,
+                                CpuAccessFlags.None, ResourceOptionFlags.None, 0);
+            }
+
+
+
+            Texture2D tex;
+            using (var strm = File.OpenRead(TestFiles.WoodPlanksBareJPG))
+                tex = Texture2D.FromStream(game.Device, strm, (int)strm.Length);
+
+            var texRV = new ShaderResourceView(game.Device, tex);
+
+            BasicShader s;
+            //s = shader.Clone();
+            //s.DiffuseColor = new Vector4(1, 0, 0, 0);
+            //s.Technique = DefaultModelShader.TechniqueType.Colored;
+            //shaders.Add(s);
+
+            s = shader.Clone();
+            s.Effect.GetVariableByName("txDiffuse").AsResource().SetResource(texRV);
+            //s.DiffuseTexture = tex;
+            //s.Technique = DefaultModelShader.TechniqueType.Textured;
+            shaders.Add(s);
+
+
+
+            game.GameLoopEvent += delegate
+                                  {
+                                      gBuffer.Clear();
+                                      gBuffer.SetTargetsToOutputMerger();
+
+                                      context.Rasterizer.State = game.HelperStates.RasterizerShowAll;
+
+                                      context.InputAssembler.InputLayout = layout;
+                                      context.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleStrip;
+
+                                      // Use shared variables
+                                      shader.Effect.GetVariableByName("View").AsMatrix().SetMatrix(game.Camera.View);
+                                      shader.Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(game.Camera.Projection);
+
+                                      shader.Apply();
+                                      for (int i = 0; i < shaders.Count; i++)
+                                      {
+                                          //shaders[i].ViewProjection = game.Camera.ViewProjection;
+                                          shaders[i].Effect.GetVariableByName("World").AsMatrix().SetMatrix(Matrix.Translation(MathHelper.Right * i * 3) * Matrix.Scaling(MathHelper.One * 10));
+                                          context.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(vb, DeferredMeshVertex.SizeInBytes, 0));
+
+                                          shaders[i].Apply();
+                                          context.Draw(4, 0);
+
+                                      }
+
+                                      context.ClearState();
+                                      game.SetBackbuffer();
+
+                                      DeferredTest.DrawGBuffer(game, gBuffer);
+                                  };
+
+            game.Run();
+        }
+
+        [Test]
+        [RequiresThread(ApartmentState.STA)]
+        public void TestMeshRendererSimple()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+            var context = game.Device.ImmediateContext;
+
+            var mesh = CreateSimpleTestMesh();
+
+            var texturePool = new TheWizards.Rendering.Deferred.TexturePool(game);
+
+            var gBuffer = new GBuffer(game.Device, 800, 600);
+
+            var renderer = new DeferredMeshRenderer(game, gBuffer, texturePool);
+
+
+            DeferredMeshRenderElement middle = null;
+
+            for (int i = 0; i < 50; i++)
+            {
+                for (int j = 0; j < 50; j++)
+                {
+
+                    var el = renderer.AddMesh(mesh);
+                    el.WorldMatrix = Matrix.Translation(MathHelper.Right * i * 2 + Vector3.UnitZ * j * 2);
+
+                    if (i > 20 && i < 30 && j > 20 && j < 30)
+                        el.Delete();
+                }
+
+            }
+
+            game.GameLoopEvent += delegate
+            {
+                gBuffer.Clear();
+                gBuffer.SetTargetsToOutputMerger();
+
+                context.Rasterizer.State = game.HelperStates.RasterizerShowAll;
+
+                renderer.Draw();
+
+                context.ClearState();
+                game.SetBackbuffer();
+
+                DeferredTest.DrawGBuffer(game, gBuffer);
+            };
+
+            game.Run();
+
+        }
+
+
+
+        [Test]
+        [RequiresThread(ApartmentState.STA)]
+        public void TestMeshRendererAdvanced()
+        {
+            var texFactory = new RAMTextureFactory();
+            var c = new OBJToRAMMeshConverter(texFactory);
+
+            var game = new DX11Game();
+            game.InitDirectX();
+            var context = game.Device.ImmediateContext;
+
+            var importer = new ObjImporter();
+            importer.AddMaterialFileStream("Crate01.mtl", File.OpenRead(TestFiles.CrateMtl));
+            importer.ImportObjFile(TestFiles.CrateObj);
+
+            var mesh = c.CreateMesh(importer);
+
+            RAMMesh mesh2 = CreateMerchantsHouseMesh(c);
+
+
+            RAMMesh mesh3 = CreateGuildHouseMesh(c);
+
+            var gBuffer = new GBuffer(game.Device, 800, 600);
+
+            DeferredMeshRenderer renderer = InitDefaultMeshRenderer(game, gBuffer);
+
+
+            var el = renderer.AddMesh(mesh);
+            el.WorldMatrix = Matrix.Translation(MathHelper.Right * 0 * 2 + Vector3.UnitZ * 0 * 2);
+
+            el = renderer.AddMesh(mesh2);
+            el.WorldMatrix = Matrix.Translation(new Vector3(0, 0, 80));
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    el = renderer.AddMesh(mesh3);
+                    el.WorldMatrix = Matrix.Translation(new Vector3(j * 30, 0, 70 + i * 30));
+                }
+            }
+
+
+
+            game.GameLoopEvent += delegate
+            {
+                gBuffer.Clear();
+                gBuffer.SetTargetsToOutputMerger();
+
+                context.Rasterizer.State = game.HelperStates.RasterizerShowAll;
+
+                renderer.Draw();
+
+                context.ClearState();
+                game.SetBackbuffer();
+
+                DeferredTest.DrawGBuffer(game, gBuffer);
+            };
+            game.Run();
+
+        }
+
+        public static DeferredMeshRenderer InitDefaultMeshRenderer(DX11Game game, GBuffer gBuffer)
+        {
+            var texturePool = new TheWizards.Rendering.Deferred.TexturePool(game);
+
+            var renderer = new DeferredMeshRenderer(game, gBuffer, texturePool);
+
+            return renderer;
+        }
+
+
+
+        public static IMesh CreateSimpleTestMesh()
+        {
+            IMesh mesh;
+
+            mesh = new RAMMesh();
+
+            var part = new MeshCoreData.Part();
+            part.ObjectMatrix = Microsoft.Xna.Framework.Matrix.Identity;
+            part.MeshPart = new RAMMeshPart();
+            ((RAMMeshPart)part.MeshPart).SetGeometryData(MeshPartGeometryData.CreateTestSquare());
+
+            var mat = new MeshCoreData.Material();
+
+            mat.DiffuseMap = GetTestTexture();
+
+            part.MeshMaterial = mat;
+            mesh.GetCoreData().Parts.Add(part);
+
+            return mesh;
         }
     }
 }

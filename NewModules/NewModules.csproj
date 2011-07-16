@@ -94,6 +94,7 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="SlimDX, Version=4.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
     <Reference Include="StillDesign.PhysX.Net">
       <HintPath>..\_Libraries\PhysX.Net\References\Debug\XNA 2.0\StillDesign.PhysX.Net.dll</HintPath>
     </Reference>
@@ -181,6 +182,12 @@
     </Compile>
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientFiles.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientMain.cs" />
+    <Compile Include="Rendering\Deferred\DeferredMeshVertex.cs" />
+    <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
+    <Compile Include="Rendering\Deferred\DeferredMeshRenderer.cs" />
+    <Compile Include="Rendering\Deferred\DeferredMeshRenderElement.cs" />
+    <Compile Include="Rendering\Deferred\TexturePool.cs" />
+    <Compile Include="Rendering\SSAO\HorizonSSAORenderer.cs" />
     <Compile Include="Terrain\Geomipmap\IndexBufferBuilder.cs" />
     <Compile Include="Terrain\Geomipmap\ITerrainBlock.cs" />
     <Compile Include="Terrain\Preprocesser\PreprocessedNode.cs" />
@@ -318,7 +325,7 @@
     <Compile Include="Physics\MeshCollisionData.cs" />
     <Compile Include="Physics\MeshPhysicsElementFactory.cs" />
     <Compile Include="Player\PlayerController.cs" />
-    <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
+    <Compile Include="Rendering\Deferred\DeferredRendererOud.cs" />
     <Compile Include="Rendering\IMeshFactory.cs" />
     <Compile Include="Rendering\IMeshRenderElement.cs" />
     <Compile Include="Rendering\ISimpleMeshRenderer.cs" />
@@ -345,6 +352,7 @@
     <Compile Include="Xml\ICustomSerializer.cs" />
     <Compile Include="Xml\IInternalSerializer.cs" />
     <Compile Include="Xml\TWXmlSerializer.cs" />
+    <Compile Include="XNAConversion.cs" />
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\DeferredShader.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\Blur.fx" />
@@ -581,6 +589,10 @@
     <ProjectReference Include="..\Deprecated\ServerClientOud\ServerClientOud.csproj">
       <Project>{409E248D-79B7-4644-886A-A01C1211D6DD}</Project>
       <Name>ServerClientOud</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DirectX11\DirectX11.csproj">
+      <Project>{A58AF8D7-8C17-43F6-B994-C67F590F416A}</Project>
+      <Name>DirectX11</Name>
     </ProjectReference>
     <ProjectReference Include="..\Networking\Networking.csproj">
       <Project>{5552CBE1-F647-4B3A-A353-A252E4CB0008}</Project>

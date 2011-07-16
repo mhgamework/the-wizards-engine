@@ -37,14 +37,14 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             game.GameLoopEvent += delegate
                                       {
 
-                                          drawGBuffer(game, buffer);
+                                          DrawGBuffer(game, buffer);
                                       };
 
             game.Run();
 
         }
 
-        private static void drawGBuffer(DX11Game game, GBuffer buffer)
+        public static void DrawGBuffer(DX11Game game, GBuffer buffer)
         {
             game.TextureRenderer.Draw(buffer.DiffuseRV, new Vector2(10, 10),
                                       new Vector2(300, 300));
@@ -72,7 +72,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
                                           game.SetBackbuffer();
 
-                                          drawGBuffer(game, filledGBuffer.GBuffer);
+                                          DrawGBuffer(game, filledGBuffer.GBuffer);
                                       };
 
             game.Run();
@@ -115,7 +115,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 }
 
                 if (game.Keyboard.IsKeyDown(Key.I))
-                    drawGBuffer(game, filledGBuffer.GBuffer);
+                    DrawGBuffer(game, filledGBuffer.GBuffer);
                 else
                     light.Draw();
 
@@ -157,7 +157,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 }
 
                 if (game.Keyboard.IsKeyDown(Key.I))
-                    drawGBuffer(game, filledGBuffer.GBuffer);
+                    DrawGBuffer(game, filledGBuffer.GBuffer);
                 else
                     light.Draw();
 
@@ -197,7 +197,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 }
 
                 if (game.Keyboard.IsKeyDown(Key.I))
-                    drawGBuffer(game, filledGBuffer.GBuffer);
+                    DrawGBuffer(game, filledGBuffer.GBuffer);
                 else
                     light.Draw();
 
@@ -287,7 +287,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
 
                 if (game.Keyboard.IsKeyDown(Key.I))
-                    drawGBuffer(game, filledGBuffer.GBuffer);
+                    DrawGBuffer(game, filledGBuffer.GBuffer);
                 else
                 {
                     context.OutputMerger.DepthStencilState = depthState;
@@ -736,7 +736,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 {
                     context.ClearState();
                     game.SetBackbuffer();
-                    drawGBuffer(game, filledGBuffer.GBuffer);
+                    DrawGBuffer(game, filledGBuffer.GBuffer);
 
                 }
                 else
@@ -851,6 +851,12 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 public Vector2 UV;
 
                 public const int SizeInBytes = 4 * (4 + 3 + 2);
+                public static readonly InputElement[] Elements = new[]
+                                                                {
+                                                                    new InputElement("POSITION",0, SlimDX.DXGI.Format.R32G32B32A32_Float,0,0),
+                                                                    new InputElement("NORMAL",0, SlimDX.DXGI.Format.R32G32B32_Float,16,0),
+                                                                    new InputElement("TEXCOORD",0, SlimDX.DXGI.Format.R32G32_Float,16+12,0)
+                                                                };
             }
 
             public TestBox(Device device, ShaderSignature signature)
@@ -858,19 +864,14 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 this.device = device;
                 context = device.ImmediateContext;
 
-                layout = new InputLayout(device, signature, new[]
-                                                                {
-                                                                    new InputElement("POSITION",0, SlimDX.DXGI.Format.R32G32B32A32_Float,0,0),
-                                                                    new InputElement("NORMAL",0, SlimDX.DXGI.Format.R32G32B32_Float,16,0),
-                                                                    new InputElement("TEXCOORD",0, SlimDX.DXGI.Format.R32G32_Float,16+12,0)
-                                                                });
+                layout = new InputLayout(device, signature, Vertex.Elements);
                 TangentVertex[] vertices;
                 short[] indices;
                 BoxMesh.CreateUnitBoxVerticesAndIndices(out vertices, out indices);
 
                 var verts = vertices.Select(v => new Vertex
                 {
-                    Pos = new Vector4(v.pos.ToSlimDX(), 1),
+                    Pos = new Vector4(v.pos.ToSlimDX() * 5, 1),
                     Normal = v.normal.ToSlimDX(),
                     UV = v.uv.ToSlimDX()
                 }).ToArray();

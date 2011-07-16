@@ -149,6 +149,11 @@ namespace DirectX11
             var nextFrameTime = SlimDX.Configuration.Timer.Elapsed;
             Elapsed = (float)(nextFrameTime - lastFrameTime).TotalSeconds;
             lastFrameTime = nextFrameTime;
+
+            fpsCalculater.AddFrame(Elapsed);
+
+            form.Form.Text = FPS.ToString();
+
         }
 
         public Device Device { get { return form.Device; } }
@@ -186,6 +191,7 @@ namespace DirectX11
 
             LineManager3D = new LineManager3D(form.Device);
             TextureRenderer = new TextureRenderer(form.Device);
+            HelperStates = new HelperStatesContainer(form.Device);
 
         }
         public void Run()
@@ -215,6 +221,12 @@ namespace DirectX11
 
         public SpectaterCamera SpecaterCamera { get; private set; }
         public LineManager3D LineManager3D { get; private set; }
+        /// <summary>
+        /// Contains some pipeline states for easy use.
+        /// </summary>
+        public HelperStatesContainer HelperStates { get; private set; }
+        public float FPS { get { return fpsCalculater.AverageFps; } }
+        private MHGameWork.TheWizards.Graphics.AverageFPSCalculater fpsCalculater = new MHGameWork.TheWizards.Graphics.AverageFPSCalculater();
 
         public TWKeyboard Keyboard
         {
@@ -238,6 +250,27 @@ namespace DirectX11
         public void SetBackbuffer()
         {
             form.SetBackbuffer();
+        }
+
+        public class HelperStatesContainer
+        {
+            private readonly Device device;
+
+            public HelperStatesContainer(Device device)
+            {
+                this.device = device;
+
+                RasterizerShowAll = RasterizerState.FromDescription(device, new RasterizerStateDescription
+                                                                                {
+                                                                                    CullMode = CullMode.None,
+                                                                                    FillMode = FillMode.Solid
+                                                                                });
+            }
+
+            /// <summary>
+            /// Culling is disabled and fillmode is solid
+            /// </summary>
+            public RasterizerState RasterizerShowAll { get; set; }
         }
     }
 }

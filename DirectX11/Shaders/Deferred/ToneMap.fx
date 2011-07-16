@@ -26,7 +26,9 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     output.TexCoord = input.TexCoord;
     return output;
 }
+//float g_fMiddleGrey = 0.6f; Original
 float g_fMiddleGrey = 0.6f; 
+
 float g_fMaxLuminance = 16.0f; 
 
 static const float3 LUM_CONVERT = float3(0.299f, 0.587f, 0.114f); 
