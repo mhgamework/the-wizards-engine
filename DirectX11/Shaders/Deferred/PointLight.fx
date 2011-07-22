@@ -18,7 +18,7 @@ float lightRadius;
 //control the brightness of the light
 float lightIntensity = 1.0f;
 // diffuse color, and specularIntensity in the alpha channel
-
+TextureCube shadowMap;
 SamplerState samLinear
 {
     Filter = MIN_MAG_MIP_LINEAR;
@@ -99,11 +99,24 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
     float specularLight = specularIntensity * pow( saturate(dot(reflectionVector, directionToCamera)), specularPower);
 	//return t(saturate(dot(reflectionVector, directionToCamera)));
 	
+	float shadowTerm = 1;
+
+#ifndef DISABLE_SHADOWS
+	float3 toLight = position.xyz - lightPosition;
+	float fLightDepth = length(toLight);
+	toLight = normalize(toLight);
+	toLight = normalize(float3(1,input.TexCoord.y,input.TexCoord.x));
+	float shadowMapDepth = shadowMap.Sample(samLinear,toLight).x;
+	return t(shadowMapDepth);
+	shadowTerm = (shadowMapDepth< fLightDepth-0.001f) ? 0.0f: 1.0f;
+
+#endif
+
 	// Big booboo: when dot(reflectionVector, directionToCamera) <0, specularLight seems to become negative infinity?
 	if (specularLight< 0) specularLight = 0; 
 
     //take into account attenuation and lightIntensity.
-    return attenuation * lightIntensity * float4(diffuseLight.rgb,specularLight);
+    return attenuation * lightIntensity * float4(diffuseLight.rgb,specularLight) * shadowTerm;
 }
 technique10 Technique0
 {

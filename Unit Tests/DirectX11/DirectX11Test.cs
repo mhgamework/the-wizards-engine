@@ -530,6 +530,26 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
         }
 
         [Test]
+        public void TestLineManager3DFrustum()
+        {
+
+            var game = new DX11Game();
+
+            game.InitDirectX();
+
+            var mat = game.SpecaterCamera.ViewProjection;
+
+            game.GameLoopEvent += delegate
+                                      {
+                                          if (game.Keyboard.IsKeyDown(Key.K))
+                                              mat = game.SpecaterCamera.ViewProjection;
+                                          game.LineManager3D.AddViewFrustum(mat, new Color4(1, 0, 0));
+                                      };
+            game.Run();
+        }
+
+
+        [Test]
         public void TestRawInput()
         {
             //NOT WORKING

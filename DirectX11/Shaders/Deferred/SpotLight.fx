@@ -1,5 +1,6 @@
 ﻿
 #include <GBuffer.fx>
+#include <TestHelper.fx>
 
 float4x4 World;
 float4x4 View;
@@ -30,6 +31,12 @@ SamplerState samLinear
     AddressU = Wrap;
     AddressV = Wrap;
 };
+SamplerState samPoint
+{
+    Filter = MIN_MAG_MIP_POINT;
+    AddressU = Wrap;
+    AddressV = Wrap;
+};
 struct VertexShaderInput
 {
     float3 Position : POSITION0;
@@ -40,6 +47,7 @@ struct VertexShaderOutput
     float4 ScreenPosition : SV_POSITION;
     float2 TexCoord : TEXCOORD0;
 };
+
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
     VertexShaderOutput output;
@@ -65,17 +73,20 @@ float CalcShadowTermPCF(float fLightDepth, float2 vShadowTexCoord,float scaledBi
     
 	// Determine the lerp amounts           
 	float2 vLerps = frac(vShadowMapCoord);
-
+	
 	//float scaledBias = BIAS*(1-fLightDepth);
 	//float scaledBias = BIAS;
 
 	// Read in the 4 samples, doing a depth check for each
 	float fSamples[4];	
-	fSamples[0] =  (shadowMap.Sample(samLinear, vShadowTexCoord).x + scaledBias < fLightDepth) ? 0.0f: 1.0f;  
-	fSamples[1] = (shadowMap.Sample(samLinear, vShadowTexCoord + float2(1.0/g_vShadowMapSize.x, 0)).x + scaledBias < fLightDepth) ? 0.0f: 1.0f;  
-	fSamples[2] = (shadowMap.Sample(samLinear, vShadowTexCoord + float2(0, 1.0/g_vShadowMapSize.y)).x + scaledBias < fLightDepth) ? 0.0f: 1.0f;  
-	fSamples[3] = (shadowMap.Sample(samLinear, vShadowTexCoord + float2(1.0/g_vShadowMapSize.x, 1.0/g_vShadowMapSize.y)).x + scaledBias < fLightDepth) ? 0.0f: 1.0f;  
+	fSamples[0] =  (shadowMap.Sample(samPoint, vShadowTexCoord).x + scaledBias < fLightDepth) ? 0.0f: 1.0f;  
+	
+	fSamples[1] = (shadowMap.Sample(samPoint, vShadowTexCoord + float2(1.0/g_vShadowMapSize.x, 0)).x + scaledBias < fLightDepth) ? 0.0f: 1.0f;  
+	fSamples[2] = (shadowMap.Sample(samPoint, vShadowTexCoord + float2(0, 1.0/g_vShadowMapSize.y)).x + scaledBias < fLightDepth) ? 0.0f: 1.0f;  
+	fSamples[3] = (shadowMap.Sample(samPoint, vShadowTexCoord + float2(1.0/g_vShadowMapSize.x, 1.0/g_vShadowMapSize.y)).x + scaledBias < fLightDepth) ? 0.0f: 1.0f;  
     
+	//return fSamples[0];
+
 	// lerp between the shadow values to calculate our light amount
 	fShadowTerm = lerp(lerp(fSamples[0], fSamples[1], vLerps.x), lerp( fSamples[2], fSamples[3], vLerps.x), vLerps.y);							  
 								
@@ -120,37 +131,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 
 
 
-	//Shadow Map
-
-	float4 shadowMapPosition = mul(position,LightViewProjection);
-	float fLightDepth = shadowMapPosition.z / shadowMapPosition.w;
-	float2 vShadowTexCoord = 0.5 * shadowMapPosition.xy / shadowMapPosition.w + float2(0.5f, 0.5f);
-    //vShadowTexCoord.x = vShadowTexCoord.x / NUM_SPLITS + fOffset;
-    vShadowTexCoord.y = 1.0f - vShadowTexCoord.y;
-        
-    // Offset the coordinate by half a texel so we sample it correctly
-    vShadowTexCoord += (0.5f / g_vShadowMapSize);
-	//float2 shadowTexCoord= float2(shadowMapPosition.x*0.5f+0.5f,shadowMapPosition.y*0.5f+0.5f);
 	
-	//float4 ret2 = float4(vShadowTexCoord,0,0);
-	
-	//return ret2;
-
-	/*if (abs(shadowMapPosition.x)>1 || abs(shadowMapPosition.y)>1) ret2 = float4(0,0,0,0);
-
-	return ret2;*/
-	
-
-	float shadowMapDepth = shadowMap.Sample(samLinear, vShadowTexCoord).r;
-
-	//return float4(0,0,(shadowMapDepth< fLightDepth-0.001f) ? 0.0f: 1.0f,0);
-	//return float4(fLightDepth,shadowMapDepth,(shadowMapDepth< fLightDepth) ? 1.0f: 0.0f,0);
-
-	//return float4(shadowMapDepth,0,0,0);
-	float shadowTerm = (shadowMapDepth< fLightDepth-0.001f) ? 0.0f: 1.0f;
-	//return float4(shadowTerm,0,0,0);
-	shadowTerm = CalcShadowTermPCF(fLightDepth,vShadowTexCoord,BIAS);
-	//shadowTerm = CalcShadowTermPCF(fLightDepth,vShadowTexCoord,bias+BIAS/(1-depthVal));
 
 
 
@@ -187,7 +168,32 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 	}
 	
 	//TODO: WARNING: shadow disabled
-	shadowTerm = 1;
+
+	float shadowTerm = 1;
+
+	//Shadow Map
+#ifndef DISABLE_SHADOWS
+	float4 shadowMapPosition = mul(position,LightViewProjection);
+	float fLightDepth = shadowMapPosition.z / shadowMapPosition.w;
+	float2 vShadowTexCoord = 0.5 * shadowMapPosition.xy / shadowMapPosition.w + float2(0.5f, 0.5f);
+	//return t(vShadowTexCoord);
+    //vShadowTexCoord.x = vShadowTexCoord.x / NUM_SPLITS + fOffset;
+    vShadowTexCoord.y = 1.0f - vShadowTexCoord.y;
+        
+    // Offset the coordinate by half a texel so we sample it correctly
+    //vShadowTexCoord += (0.5f / g_vShadowMapSize);
+	//float2 shadowTexCoord= float2(shadowMapPosition.x*0.5f+0.5f,shadowMapPosition.y*0.5f+0.5f);
+	
+	
+
+	float shadowMapDepth = shadowMap.Sample(samLinear, vShadowTexCoord).r;
+
+
+	shadowTerm = (shadowMapDepth< fLightDepth-0.001f) ? 0.0f: 1.0f;
+	shadowTerm = CalcShadowTermPCF(fLightDepth,vShadowTexCoord,BIAS);
+	//shadowTerm = CalcShadowTermPCF(fLightDepth,vShadowTexCoord,bias+BIAS/(1-depthVal));
+#endif
+
 		
 	// Big booboo: when dot(reflectionVector, directionToCamera) <0, specularLight seems to become negative infinity?
 	if (specularLight< 0) specularLight = 0; 

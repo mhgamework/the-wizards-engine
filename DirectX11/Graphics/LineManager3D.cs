@@ -122,7 +122,7 @@ namespace DirectX11.Graphics
         public LineManager3D(Device device)
         {
             this.device = device;
-            intialize();
+            initialize();
             //var stream = new DataStream(3 * vertexStride, true, true);
             //stream.Position = 0;
 
@@ -338,6 +338,8 @@ namespace DirectX11.Graphics
         /// <returns></returns>
         private Vector3 RayRayIntersection(Ray ray1, Ray ray2)
         {
+            
+
             //equation: a (V1 X V2) = (P2 - P1) X V2
             //          a p1 = p2
             // taken from: http://mathforum.org/library/drmath/view/62814.html
@@ -350,6 +352,29 @@ namespace DirectX11.Graphics
             float a = p2.Length() / p1.Length();
 
             return ray1.Position + ray1.Direction * a;
+
+        }
+
+        public void AddViewFrustum(Matrix viewProjection, Color4 color)
+        {
+
+            var corners = new Vector3[8];
+
+            int i = 0;
+            corners[i] = new Vector3(-1, 1, 0); i++;
+            corners[i] = new Vector3(1, 1, 0); i++;
+            corners[i] = new Vector3(1, -1, 0); i++;
+            corners[i] = new Vector3(-1, -1, 0); i++;
+            corners[i] = new Vector3(-1, 1, 1); i++;
+            corners[i] = new Vector3(1, 1, 1); i++;
+            corners[i] = new Vector3(1, -1, 1); i++;
+            corners[i] = new Vector3(-1, -1, 1); i++;
+
+            var mat = Matrix.Invert(viewProjection);
+
+              Vector3.TransformCoordinate(corners, ref mat, corners);
+
+            AddViewFrustum(corners, color);
 
         }
 
@@ -394,7 +419,7 @@ namespace DirectX11.Graphics
 
         }
 
-        private void intialize()
+        private void initialize()
         {
             var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/LineRendering.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
             var effect = new Effect(device, bytecode);

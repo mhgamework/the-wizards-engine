@@ -98,8 +98,8 @@ namespace DirectX11.Graphics
 
 
 
-            Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.None, desc, out device, out swapChain);
-            //Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
+            //Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.None, desc, out device, out swapChain);
+            Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
 
             //var result = device.CheckMultisampleQualityLevels(Format.R8G8B8A8_UNorm, 2);
 

@@ -32,6 +32,7 @@ namespace DirectX11.Graphics
         }
 
         private List<BasicShader> clones = new List<BasicShader>();
+        private ShaderMacro[] shaderMacros;
 
         public BasicShader ParentShader { get; private set; }
 
@@ -61,8 +62,13 @@ namespace DirectX11.Graphics
         }
         public static BasicShader LoadAutoreload(IGraphicsManager graphics, FileInfo fi, Action<BasicShader> loadedDelegate)
         {
+            return LoadAutoreload(graphics, fi, loadedDelegate, null);
+        }
+        public static BasicShader LoadAutoreload(IGraphicsManager graphics, FileInfo fi, Action<BasicShader> loadedDelegate, ShaderMacro[] macros)
+        {
             var s = new BasicShader(graphics.Device);
             if (loadedDelegate != null) s.loadedEvent += loadedDelegate;
+            s.shaderMacros = macros;
             s.loadAutoreload(fi);
             graphics.AddBasicShader(s);
             return s;
@@ -126,7 +132,7 @@ namespace DirectX11.Graphics
             }
         }
 
-        private void loadFromFXFile(string filename)
+        private void loadFromFXFile(string filename, ShaderMacro[] shaderMacros)
         {
 
             //WARNING: using ShaderFlags.SkipOptimization simply causes compiler to go berserk when using functions, they get skipped or smth
@@ -141,9 +147,10 @@ namespace DirectX11.Graphics
 
                 try
                 {
+                    
                     bytecode = ShaderBytecode.CompileFromFile(filename, "fx_5_0",
                                                               ShaderFlags.WarningsAreErrors | ShaderFlags.EnableStrictness |
-                                                              ShaderFlags.Debug, EffectFlags.None, null, includeHandler);
+                                                              ShaderFlags.Debug, EffectFlags.None, shaderMacros, includeHandler);
                     break;
                 }
                 catch (Exception ex)
@@ -212,7 +219,7 @@ namespace DirectX11.Graphics
         {
             string techniqueName = null;
             if (CurrentTechnique != null) techniqueName = CurrentTechnique.Description.Name;
-            loadFromFXFile(reloadFile.FullName);
+            loadFromFXFile(reloadFile.FullName,shaderMacros);
             if (techniqueName != null)
                 SetTechnique(techniqueName);
 

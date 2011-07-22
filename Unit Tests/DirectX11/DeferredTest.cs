@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using DirectX11;
+using DirectX11.Graphics;
 using DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.Graphics;
 using NUnit.Framework;
@@ -655,13 +656,23 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             var light = new SpotLightRenderer(game, filledGBuffer.GBuffer);
             light.LightRadius *= 2;
 
+            light.ShadowsEnabled = true;
+
             var toggle = false;
+
+            
 
             game.GameLoopEvent += delegate
                                       {
+                                          filledGBuffer.DrawUpdatedGBuffer();
+
+                                          light.UpdateLightCamera();
+                                          game.Camera = light.LightCamera;
+
                                           light.UpdateShadowMap(filledGBuffer.Draw);
 
-                                          filledGBuffer.DrawUpdatedGBuffer();
+                                          game.Camera = game.SpecaterCamera;
+
 
                                           game.SetBackbuffer();
 
@@ -681,9 +692,70 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                                           {
                                               light.Draw();
                                               game.TextureRenderer.Draw(light.ShadowMapRv, new Vector2(10, 10), new Vector2(300, 300));
+                                              game.LineManager3D.AddViewFrustum(light.LightCamera.ViewProjection,
+                                                                                new Color4(1, 0, 0));
                                           }
 
                                       };
+
+            game.Run();
+        }
+
+        [Test]
+        public void TestPointLightRendererShadowing()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+            var device = game.Device;
+            var context = device.ImmediateContext;
+
+            var filledGBuffer = new TestFilledGBuffer(game, 800, 600);
+
+            var light = new PointLightRenderer(game, filledGBuffer.GBuffer);
+            light.LightRadius *= 2;
+
+            light.ShadowsEnabled = true;
+
+            var toggle = false;
+
+
+
+            game.GameLoopEvent += delegate
+            {
+                filledGBuffer.DrawUpdatedGBuffer();
+
+                light.UpdateShadowMap(delegate(CustomCamera lightCamera)
+                                          {
+                                              game.Camera = lightCamera;
+
+                                              filledGBuffer.Draw();
+
+                                              game.Camera = game.SpecaterCamera;
+                                          });
+
+
+                game.SetBackbuffer();
+
+                if (game.Keyboard.IsKeyPressed(Key.C))
+                    toggle = !toggle;
+
+                if (toggle)
+                {
+
+                    light.LightPosition = game.SpecaterCamera.CameraPosition;
+                }
+
+                if (game.Keyboard.IsKeyDown(Key.I))
+                    DrawGBuffer(game, filledGBuffer.GBuffer);
+                else
+                {
+                    light.Draw();
+                    //game.TextureRenderer.Draw(light.ShadowCubeMapRv, new Vector2(10, 10), new Vector2(300, 300));
+                    game.LineManager3D.AddViewFrustum(light.LightCameras[1].ViewProjection,
+                                                      new Color4(1, 0, 0));
+                }
+
+            };
 
             game.Run();
         }

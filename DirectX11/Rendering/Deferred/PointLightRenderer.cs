@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DirectX11.Graphics;
 using SlimDX;
+using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 
 namespace DirectX11.Rendering.Deferred
@@ -17,7 +18,7 @@ namespace DirectX11.Rendering.Deferred
         private readonly DX11Game game;
         private readonly GBuffer gBuffer;
         private DeviceContext context;
-        private BasicShader pointLightShader;
+        private BasicShader noShadowsShader;
 
 
         private Vector3 color;
@@ -36,6 +37,10 @@ namespace DirectX11.Rendering.Deferred
         public Vector3 LightPosition { get; set; }
         public float LightIntensity { get; set; }
         public float LightRadius { get; set; }
+        private int shadowMapSize = 1024;
+        private BasicShader shadowsShader;
+        private ShaderResourceView[] shadowCubeMapRVs;
+        private DepthStencilView[] depthStencilViewFaces;
 
         public PointLightRenderer(DX11Game game, GBuffer gBuffer)
         {
@@ -44,15 +49,11 @@ namespace DirectX11.Rendering.Deferred
             var device = game.Device;
             context = device.ImmediateContext;
 
-            pointLightShader = BasicShader.LoadAutoreload(game,
-                                                new System.IO.FileInfo(
-                                                    "..\\..\\DirectX11\\Shaders\\Deferred\\PointLight.fx"));
-
-            pointLightShader.SetTechnique("Technique0");
+            reloadShader(game);
 
             quad = new FullScreenQuad(device);
 
-            layout = FullScreenQuad.CreateInputLayout(device, pointLightShader.GetCurrentPass(0));
+            layout = FullScreenQuad.CreateInputLayout(device, noShadowsShader.GetCurrentPass(0));
 
             LightPosition = new Vector3(0, 6, 0);
             LightRadius = 6;
@@ -71,30 +72,107 @@ namespace DirectX11.Rendering.Deferred
             //    CullMode = CullMode.Back
             //});
 
+            var shadowCubeMap = new Texture2D(device, new Texture2DDescription
+                                                          {
+                                                              ArraySize = 6,
+                                                              BindFlags =
+                                                                  BindFlags.DepthStencil | BindFlags.ShaderResource,
+                                                              CpuAccessFlags = CpuAccessFlags.None,
+                                                              Format = SlimDX.DXGI.Format.R32_Typeless,
+                                                              Height = shadowMapSize,
+                                                              Width = shadowMapSize,
+                                                              MipLevels = 1,
+                                                              OptionFlags = ResourceOptionFlags.TextureCube,
+                                                              SampleDescription =
+                                                                  new SlimDX.DXGI.SampleDescription(1, 0),
+                                                              Usage = ResourceUsage.Default
+                                                          });
+            depthStencilViewFaces = new DepthStencilView[6];
+            shadowCubeMapRVs = new ShaderResourceView[6];
+            LightCameras = new CustomCamera[6];
 
+            for (int i = 0; i < 6; i++)
+            {
+                depthStencilViewFaces[i] = new DepthStencilView(device, shadowCubeMap, new DepthStencilViewDescription
+                                                                                           {
+                                                                                               Dimension =
+                                                                                                   DepthStencilViewDimension
+                                                                                                   .Texture2D,
+                                                                                               ArraySize = 1,
+                                                                                               FirstArraySlice = i,
+                                                                                               Flags =
+                                                                                                   DepthStencilViewFlags
+                                                                                                   .None,
+                                                                                               Format =
+                                                                                                   SlimDX.DXGI.Format.
+                                                                                                   D32_Float,
+                                                                                               MipSlice = 0
+                                                                                           });
+
+                //ShadowCubeMapRVs[i] = new ShaderResourceView(device, shadowCubeMap, new ShaderResourceViewDescription
+                //{
+                //    Dimension = ShaderResourceViewDimension.Texture2D,
+                //    ArraySize = 1,
+                //    FirstArraySlice = i,
+                //    Format = SlimDX.DXGI.Format.R32_Float,
+                //    MipLevels = 1,
+                //    MostDetailedMip = 0
+                //});
+                LightCameras[i] = new CustomCamera();
+            }
+
+            ShadowCubeMapRv = new ShaderResourceView(device, shadowCubeMap, new ShaderResourceViewDescription
+                                                                                {
+                                                                                    Dimension = ShaderResourceViewDimension.TextureCube,
+                                                                                    MostDetailedMip = 0,
+                                                                                    MipLevels = 1,
+                                                                                    Format = SlimDX.DXGI.Format.R32_Float
+                                                                                });
 
 
         }
 
+        private void reloadShader(DX11Game game)
+        {
+            noShadowsShader = BasicShader.LoadAutoreload(game,
+                                                          new System.IO.FileInfo(
+                                                              "..\\..\\DirectX11\\Shaders\\Deferred\\PointLight.fx"), null, new[] { new ShaderMacro("DISABLE_SHADOWS") });
+
+            noShadowsShader.SetTechnique("Technique0");
+
+            shadowsShader = BasicShader.LoadAutoreload(game,
+                                              new System.IO.FileInfo(
+                                                  "..\\..\\DirectX11\\Shaders\\Deferred\\PointLight.fx"));
+
+            shadowsShader.SetTechnique("Technique0");
+        }
+
         public void Draw()
         {
-
+            BasicShader shader;
+            if (ShadowsEnabled)
+            {
+                shader = shadowsShader;
+                shader.Effect.GetVariableByName("shadowMap").AsResource().SetResource(ShadowCubeMapRv);
+            }
+            else
+                shader = noShadowsShader;
 
             //compute the light world matrix
             //scale according to light radius, and translate it to light position
             Matrix sphereWorldMatrix = Matrix.Scaling(new Vector3(1, 1, 1) * LightRadius) * Matrix.Translation(LightPosition);
-            pointLightShader.Effect.GetVariableByName("World").AsMatrix().SetMatrix(sphereWorldMatrix);
-            pointLightShader.Effect.GetVariableByName("View").AsMatrix().SetMatrix(game.Camera.View);
-            pointLightShader.Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(game.Camera.Projection);
+            shader.Effect.GetVariableByName("World").AsMatrix().SetMatrix(sphereWorldMatrix);
+            shader.Effect.GetVariableByName("View").AsMatrix().SetMatrix(game.Camera.View);
+            shader.Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(game.Camera.Projection);
             //light position
-            pointLightShader.Effect.GetVariableByName("lightPosition").AsVector().Set(LightPosition);
+            shader.Effect.GetVariableByName("lightPosition").AsVector().Set(LightPosition);
             //set the color, radius and Intensity
-            pointLightShader.Effect.GetVariableByName("Color").AsVector().Set(color);
-            pointLightShader.Effect.GetVariableByName("lightRadius").AsScalar().Set(LightRadius);
-            pointLightShader.Effect.GetVariableByName("lightIntensity").AsScalar().Set(LightIntensity);
+            shader.Effect.GetVariableByName("Color").AsVector().Set(color);
+            shader.Effect.GetVariableByName("lightRadius").AsScalar().Set(LightRadius);
+            shader.Effect.GetVariableByName("lightIntensity").AsScalar().Set(LightIntensity);
             //parameters for specular computations
-            pointLightShader.Effect.GetVariableByName("cameraPosition").AsVector().Set(game.Camera.ViewInverse.GetTranslation());
-            pointLightShader.Effect.GetVariableByName("InvertViewProjection").AsMatrix().SetMatrix(Matrix.Invert(game.Camera.View * game.Camera.Projection));
+            shader.Effect.GetVariableByName("cameraPosition").AsVector().Set(game.Camera.ViewInverse.GetTranslation());
+            shader.Effect.GetVariableByName("InvertViewProjection").AsMatrix().SetMatrix(Matrix.Invert(game.Camera.View * game.Camera.Projection));
             //size of a halfpixel, for texture coordinates alignment
             //pointLightShader.Effect.GetVariableByName("halfPixel").AsVector().Set(halfPixel);
 
@@ -107,24 +185,94 @@ namespace DirectX11.Rendering.Deferred
             //    GraphicsDevice.RenderState.CullMode = CullMode.CullCounterClockwiseFace;
 
 
-            gBuffer.SetToShader(pointLightShader);
+            gBuffer.SetToShader(shader);
 
-            pointLightShader.Apply();
+            shader.Apply();
             //drawSpherePrimitives();
             quad.Draw(layout);
 
-            gBuffer.UnsetFromShader(pointLightShader);
+            gBuffer.UnsetFromShader(shader);
 
-            pointLightShader.Apply();
+            shader.Apply();
 
 
 
         }
 
 
+
+        public delegate void ShadowMapRenderDelegate(CustomCamera lightCamera);
+        public void UpdateShadowMap(ShadowMapRenderDelegate renderScene)
+        {
+            var projection = Matrix.PerspectiveFovRH(MathHelper.PiOver2, 1, 0.01f, LightRadius + 1f);
+            for (int i = 0; i < 6; i++)
+            {
+                Vector3 vLookDirection;
+                Vector3 vUpVec;
+
+                switch (i)
+                {
+                    case 0:
+                        vLookDirection = new Vector3(1.0f, 0.0f, 0.0f);
+                        vUpVec = new Vector3(0.0f, 1.0f, 0.0f);
+                        break;
+                    case 1:
+                        vLookDirection = new Vector3(-1.0f, 0.0f, 0.0f);
+                        vUpVec = new Vector3(0.0f, 1.0f, 0.0f);
+                        break;
+                    case 2:
+                        vLookDirection = new Vector3(0.0f, 1.0f, 0.0f);
+                        vUpVec = new Vector3(0.0f, 0.0f, -1.0f);
+                        break;
+                    case 3:
+                        vLookDirection = new Vector3(0.0f, -1.0f, 0.0f);
+                        vUpVec = new Vector3(0.0f, 0.0f, 1.0f);
+                        break;
+                    case 4:
+                        vLookDirection = new Vector3(0.0f, 0.0f, 1.0f);
+                        vUpVec = new Vector3(0.0f, 1.0f, 0.0f);
+                        break;
+                    case 5:
+                        vLookDirection = new Vector3(0.0f, 0.0f, -1.0f);
+                        vUpVec = new Vector3(0.0f, 1.0f, 0.0f);
+                        break;
+                    default:
+                        vLookDirection = new Vector3();
+                        vUpVec = new Vector3();
+                        break;
+                }
+
+                var view = Matrix.LookAtRH(LightPosition, LightPosition + vLookDirection, vUpVec); //WAS: LH
+
+                context.ClearState();
+                context.ClearDepthStencilView(depthStencilViewFaces[i], DepthStencilClearFlags.Depth, 1, 0);
+                context.Rasterizer.SetViewports(new Viewport(0, 0, shadowMapSize, shadowMapSize));
+                context.OutputMerger.SetTargets(depthStencilViewFaces[i]);
+                LightCameras[i].SetViewProjectionMatrix(view, projection);
+                renderScene(LightCameras[i]);
+            }
+
+
+        }
+
+        public bool ShadowsEnabled { get; set; }
+
+        /// <summary>
+        /// WARNING: THIS DOES NOT WORK IN D3D 10.0
+        /// </summary>
+        public ShaderResourceView[] ShadowCubeMapRVs
+        {
+            get { return shadowCubeMapRVs; }
+        }
+
+        public CustomCamera[] LightCameras { get; private set; }
+
+        public ShaderResourceView ShadowCubeMapRv { get; private set; }
+
+
         public void Dispose()
         {
-            pointLightShader.Dispose();
+            noShadowsShader.Dispose();
             layout.Dispose();
             quad.Dispose();
         }
