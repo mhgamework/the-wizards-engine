@@ -40,7 +40,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	output.Position = mul(input.Position, worldViewProj);
     output.TexCoord = input.TexCoord;
     //pass the texture coordinates further
-    output.Normal = mul(float4(input.Normal,1),World).xyz; //Note: w might be lost, but normal has no length anyway
+    output.Normal = mul(input.Normal,(float3x3)World); //Note: w might be lost, but normal has no length anyway
     //get normal into world space
     return output;
 }

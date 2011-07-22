@@ -19,6 +19,11 @@ namespace DirectX11.Rendering.Deferred
         private DeviceContext context;
         private BasicShader spotLightShader;
 
+        private Texture2D shadowMap;
+        private ShaderResourceView shadowMapRV;
+        private DepthStencilView shadowMapDSV;
+
+
 
         private Vector3 color;
         private FullScreenQuad quad;
@@ -39,7 +44,13 @@ namespace DirectX11.Rendering.Deferred
         public Vector3 SpotDirection { get; set; }
         public float SpotLightAngle { get; set; }
         public float SpotDecayExponent { get; set; }
-        
+
+        public ShaderResourceView ShadowMapRv
+        {
+            get { return shadowMapRV; }
+            set { shadowMapRV = value; }
+        }
+
         public SpotLightRenderer(DX11Game game, GBuffer gBuffer)
         {
             this.game = game;
@@ -67,6 +78,21 @@ namespace DirectX11.Rendering.Deferred
 
             Color = new Vector3(1, 1, 0.9f);
 
+
+            //shadowMap = new Texture2D(device, new Texture2DDescription
+            //                                      {
+            //                                          ArraySize = 1,
+            //                                          BindFlags = BindFlags.DepthStencil | BindFlags.ShaderResource,
+            //                                          CpuAccessFlags = CpuAccessFlags.None,
+            //                                          Format = SlimDX.DXGI.Format.R32_Typeless,
+            //                                          Width = 1024,
+            //                                          Height = 1024,
+            //                                          MipLevels = 1,
+            //                                          Usage = ResourceUsage.Default,
+            //                                          SampleDescription = new SlimDX.DXGI.SampleDescription(0, 1)
+            //                                      });
+
+
             //var rasterizerInside = RasterizerState.FromDescription(device, new RasterizerStateDescription
             //                                                                   {
             //                                                                       CullMode = CullMode.Front
@@ -87,7 +113,7 @@ namespace DirectX11.Rendering.Deferred
 
 
             float spotLightAngleCosine = (float)Math.Cos(SpotLightAngle);
-            Vector3 forward = MathHelper .Forward;
+            Vector3 forward = MathHelper.Forward;
             Vector3 targetPlaneX = MathHelper.Right;
             Vector3 targetPlaneY = MathHelper.Up;
 
@@ -113,7 +139,7 @@ namespace DirectX11.Rendering.Deferred
             //    return;
 
 
-            
+
             //spotLightShader.Effect.GetVariableByName("shadowMap").SetValue(shadowMapRT.GetTexture());
             //compute the light world matrix
             //scale according to light radius, and translate it to light position
@@ -170,6 +196,40 @@ namespace DirectX11.Rendering.Deferred
 
 
 
+        }
+
+        public Matrix GetLightMatrix()
+        {
+            float spotLightAngleCosine = (float)Math.Cos(SpotLightAngle);
+            Vector3 forward = MathHelper.Forward;
+            Vector3 targetPlaneX = MathHelper.Right;
+            Vector3 targetPlaneY = MathHelper.Up;
+
+            var world = Matrix.Identity;
+
+            world *= Matrix.Scaling(new Vector3(LightRadius, LightRadius, LightRadius));
+            world *= Matrix.Scaling((float)Math.Tan(SpotLightAngle) * (targetPlaneX + targetPlaneY) + forward);
+            Vector3 up = MathHelper.Up;
+            if (Math.Abs(Vector3.Dot(up, SpotDirection)) > 0.999)
+                up = MathHelper.Right;
+
+
+            world *= Matrix.Invert(Matrix.LookAtRH(Vector3.Zero, -SpotDirection, up));//world *= Matrix.CreateWorld(Vector3.Zero, -SpotDirection, up);
+            world *= Matrix.Translation(LightPosition);
+
+            Matrix view = Matrix.Invert(world);
+            Matrix projection = Matrix.PerspectiveFovRH(MathHelper.PiOver2, 1, 0.01f, 1);
+
+            return view * projection;
+        }
+
+        public void UpdateShadowMap(Action renderScene)
+        {
+            context.ClearState();
+            context.ClearDepthStencilView(shadowMapDSV, DepthStencilClearFlags.Depth, 1, 0);
+            context.OutputMerger.SetTargets(shadowMapDSV);
+
+            renderScene();
         }
     }
 }

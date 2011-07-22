@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
     [TestFixture]
     public class DeferredTest
     {
-        private static readonly string HdrImageDDS = TWDir.Test.CreateSubdirectory("Deferred") + "\\HdrImage.dds";
+        private static readonly string HdrImageDDS = TWDir.GameData.CreateSubdirectory("Core") + "\\HdrImage.dds";
 
         [Test]
         public void TestGBuffer()
@@ -68,7 +68,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             game.GameLoopEvent += delegate
                                       {
-                                          filledGBuffer.Draw();
+                                          filledGBuffer.DrawUpdatedGBuffer();
 
                                           game.SetBackbuffer();
 
@@ -95,7 +95,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             game.GameLoopEvent += delegate
             {
-                filledGBuffer.Draw();
+                filledGBuffer.DrawUpdatedGBuffer();
 
                 game.SetBackbuffer();
 
@@ -142,7 +142,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             game.GameLoopEvent += delegate
             {
-                filledGBuffer.Draw();
+                filledGBuffer.DrawUpdatedGBuffer();
 
                 game.SetBackbuffer();
 
@@ -183,7 +183,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             game.GameLoopEvent += delegate
             {
-                filledGBuffer.Draw();
+                filledGBuffer.DrawUpdatedGBuffer();
 
                 game.SetBackbuffer();
 
@@ -254,7 +254,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             game.GameLoopEvent += delegate
             {
-                filledGBuffer.Draw();
+                filledGBuffer.DrawUpdatedGBuffer();
 
                 game.SetBackbuffer();
 
@@ -579,11 +579,6 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
 
 
-            var hdrImage1 = Texture2D.FromFile(device, HdrImageDDS);
-
-            var hdrImage1RV = new ShaderResourceView(device, hdrImage1);
-
-
 
             var desc = new Texture2DDescription
             {
@@ -647,6 +642,54 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             game.Run();
         }
 
+        [Test]
+        public void TestSpotLightRendererShadowing()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+            var device = game.Device;
+            var context = device.ImmediateContext;
+
+            var filledGBuffer = new TestFilledGBuffer(game, 800, 600);
+
+            var light = new SpotLightRenderer(game, filledGBuffer.GBuffer);
+            light.LightRadius *= 2;
+
+            var toggle = false;
+
+            game.GameLoopEvent += delegate
+                                      {
+                                          light.UpdateShadowMap(filledGBuffer.Draw);
+
+                                          filledGBuffer.DrawUpdatedGBuffer();
+
+                                          game.SetBackbuffer();
+
+                                          if (game.Keyboard.IsKeyPressed(Key.C))
+                                              toggle = !toggle;
+
+                                          if (toggle)
+                                          {
+
+                                              light.SpotDirection = game.SpecaterCamera.CameraDirection;
+                                              light.LightPosition = game.SpecaterCamera.CameraPosition;
+                                          }
+
+                                          if (game.Keyboard.IsKeyDown(Key.I))
+                                              DrawGBuffer(game, filledGBuffer.GBuffer);
+                                          else
+                                          {
+                                              light.Draw();
+                                              game.TextureRenderer.Draw(light.ShadowMapRv, new Vector2(10, 10), new Vector2(300, 300));
+                                          }
+
+                                      };
+
+            game.Run();
+        }
+
+
+
         public class TestCombineFinalClass
         {
             private readonly DX11Game game;
@@ -701,7 +744,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             public void DrawUpdatedDeferredRendering()
             {
-                filledGBuffer.Draw();
+                filledGBuffer.DrawUpdatedGBuffer();
 
 
                 if (game.Keyboard.IsKeyPressed(Key.D1))
@@ -765,7 +808,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 if (game.Keyboard.IsKeyPressed(Key.O))
                 {
                     Resource.SaveTextureToFile(game.Device.ImmediateContext, hdrImage, ImageFileFormat.Dds,
-                                               HdrImageDDS);
+                                               TWDir.Test.CreateSubdirectory("Deferred") + "\\HdrImage.dds");
                 }
             }
 
@@ -807,21 +850,30 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             public GBuffer GBuffer { get; set; }
 
-            public void Draw()
+            public void DrawUpdatedGBuffer()
             {
                 GBuffer.Clear();
                 GBuffer.SetTargetsToOutputMerger();
 
-                shader.Effect.GetVariableByName("txDiffuse").AsResource().SetResource(diffuseTextureRv);
-                shader.Effect.GetVariableByName("World").AsMatrix().SetMatrix(Matrix.Identity);
-                shader.Effect.GetVariableByName("View").AsMatrix().SetMatrix(game.Camera.View);
-                shader.Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(game.Camera.Projection);
-                shader.Apply();
+                Draw();
 
-                box.Draw();
+            }
 
+            public void Draw()
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        shader.Effect.GetVariableByName("txDiffuse").AsResource().SetResource(diffuseTextureRv);
+                        shader.Effect.GetVariableByName("World").AsMatrix().SetMatrix(Matrix.Translation(8 * i, 0, 8 * j));
+                        shader.Effect.GetVariableByName("View").AsMatrix().SetMatrix(game.Camera.View);
+                        shader.Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(game.Camera.Projection);
+                        shader.Apply();
 
-
+                        box.Draw();
+                    }
+                }
             }
 
             public void Dispose()

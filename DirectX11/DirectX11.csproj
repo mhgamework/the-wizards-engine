@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DX11Game.cs" />
     <Compile Include="Graphics\BasicShader.cs" />
+    <Compile Include="Graphics\CustomCamera.cs" />
     <Compile Include="Graphics\DX11Form.cs" />
     <Compile Include="Graphics\FullScreenQuad.cs" />
     <Compile Include="Graphics\ICamera.cs" />
