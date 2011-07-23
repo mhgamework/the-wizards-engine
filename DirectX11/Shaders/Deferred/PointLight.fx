@@ -11,6 +11,7 @@ float3 Color;
 float3 cameraPosition; 
 //this is used to compute the world-position
 float4x4 InvertViewProjection; 
+float4x4 ShadowMapProjection;
 //this is the position of the light
 float3 lightPosition;
 //how far does this light reach
@@ -22,6 +23,12 @@ TextureCube shadowMap;
 SamplerState samLinear
 {
     Filter = MIN_MAG_MIP_LINEAR;
+    AddressU = Wrap;
+    AddressV = Wrap;
+};
+SamplerState samPoint
+{
+    Filter = MIN_MAG_MIP_POINT;
     AddressU = Wrap;
     AddressV = Wrap;
 };
@@ -51,16 +58,24 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     //output.ScreenPosition = output.Position;
     //return output;
 }
-float2 halfPixel;
+
+float ConvertToLinearDepth(float depth, float4x4 projection)
+{
+	return projection._43 / (depth - projection._33);
+}
+float ConvertToLinearDepth(float depth, float zNear, float zFar)
+{
+	float Projection43 = -zNear * zFar / (zFar-zNear);
+	float Projection33 = zFar / (zFar - zNear);
+	return Projection43 / (depth - Projection33);
+}
+
+
 float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 {
 	GBuffer_Raw g = SampleGBuffer(samLinear, input.TexCoord);
 
     float2 texCoord = input.TexCoord;
-	
-    //allign texels to pixels
-    texCoord -=halfPixel;
-    //get normal data from the normalMap
 	
     //tranform normal back into [-1,1] range
     float3 normal = g.Normal;
@@ -76,6 +91,9 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 	position.y = -(input.TexCoord.y * 2.0f - 1.0f);
 	position.z = g.Depth;
 	position.w = 1.0f;
+
+	
+
     //transform to world space
     position = mul(position, InvertViewProjection);
     position /= position.w;
@@ -104,11 +122,22 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 #ifndef DISABLE_SHADOWS
 	float3 toLight = position.xyz - lightPosition;
 	float fLightDepth = length(toLight);
+
 	toLight = normalize(toLight);
-	toLight = normalize(float3(1,input.TexCoord.y,input.TexCoord.x));
-	float shadowMapDepth = shadowMap.Sample(samLinear,toLight).x;
-	return t(shadowMapDepth);
-	shadowTerm = (shadowMapDepth< fLightDepth-0.001f) ? 0.0f: 1.0f;
+
+	// This my friend, is a MHGW trick.
+	// The largest component of the toLight vector determines which face of the cube is used.
+	//   This means that this component is the projection of the toLight vector onto the axis that points to the correct
+	//   cube face. By multiplying fLightDepth * longest we project onto this axis, and get the view space depth.
+	float longest = max(max(toLight.x,toLight.y),toLight.z); 
+	fLightDepth = fLightDepth * longest;
+
+
+	float shadowMapDepth = shadowMap.Sample(samPoint,toLight.xyz).x;
+	//shadowMapDepth = ConvertToLinearDepth(shadowMapDepth, zNear,zFar);
+	shadowMapDepth = ConvertToLinearDepth(shadowMapDepth, ShadowMapProjection);
+
+	shadowTerm = (shadowMapDepth< fLightDepth*0.99f) ? 0.0f: 1.0f;
 
 #endif
 
@@ -118,6 +147,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
     //take into account attenuation and lightIntensity.
     return attenuation * lightIntensity * float4(diffuseLight.rgb,specularLight) * shadowTerm;
 }
+
 technique10 Technique0
 {
     pass Pass0

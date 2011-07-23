@@ -41,6 +41,7 @@ namespace DirectX11.Rendering.Deferred
         private BasicShader shadowsShader;
         private ShaderResourceView[] shadowCubeMapRVs;
         private DepthStencilView[] depthStencilViewFaces;
+        private Matrix shadowMapProjection;
 
         public PointLightRenderer(DX11Game game, GBuffer gBuffer)
         {
@@ -97,7 +98,7 @@ namespace DirectX11.Rendering.Deferred
                                                                                            {
                                                                                                Dimension =
                                                                                                    DepthStencilViewDimension
-                                                                                                   .Texture2D,
+                                                                                                   .Texture2DArray,
                                                                                                ArraySize = 1,
                                                                                                FirstArraySlice = i,
                                                                                                Flags =
@@ -154,6 +155,7 @@ namespace DirectX11.Rendering.Deferred
             {
                 shader = shadowsShader;
                 shader.Effect.GetVariableByName("shadowMap").AsResource().SetResource(ShadowCubeMapRv);
+                shader.Effect.GetVariableByName("ShadowMapProjection").AsMatrix().SetMatrix(shadowMapProjection);
             }
             else
                 shader = noShadowsShader;
@@ -204,9 +206,10 @@ namespace DirectX11.Rendering.Deferred
         public delegate void ShadowMapRenderDelegate(CustomCamera lightCamera);
         public void UpdateShadowMap(ShadowMapRenderDelegate renderScene)
         {
-            var projection = Matrix.PerspectiveFovRH(MathHelper.PiOver2, 1, 0.01f, LightRadius + 1f);
+            shadowMapProjection = Matrix.PerspectiveFovLH(MathHelper.PiOver2, 1, 1f, LightRadius+1 );
             for (int i = 0; i < 6; i++)
             {
+                Performance.BeginEvent(new Color4(1, 1, 0), "ShadowCubeFace" + i.ToString());
                 Vector3 vLookDirection;
                 Vector3 vUpVec;
 
@@ -242,17 +245,21 @@ namespace DirectX11.Rendering.Deferred
                         break;
                 }
 
-                var view = Matrix.LookAtRH(LightPosition, LightPosition + vLookDirection, vUpVec); //WAS: LH
+                var view = Matrix.LookAtLH(LightPosition, LightPosition + vLookDirection, vUpVec); //WAS: LH
 
-                context.ClearState();
                 context.ClearDepthStencilView(depthStencilViewFaces[i], DepthStencilClearFlags.Depth, 1, 0);
+
+                //if (i != 0) continue;
+
+                //context.ClearDepthStencilView(depthStencilViewFaces[i], DepthStencilClearFlags.Depth, 0, 0);
+                LightCameras[i].SetViewProjectionMatrix(view, shadowMapProjection);
+                context.ClearState();
                 context.Rasterizer.SetViewports(new Viewport(0, 0, shadowMapSize, shadowMapSize));
                 context.OutputMerger.SetTargets(depthStencilViewFaces[i]);
-                LightCameras[i].SetViewProjectionMatrix(view, projection);
                 renderScene(LightCameras[i]);
+
+                Performance.EndEvent();
             }
-
-
         }
 
         public bool ShadowsEnabled { get; set; }

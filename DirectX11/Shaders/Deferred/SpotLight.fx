@@ -190,7 +190,10 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 
 
 	shadowTerm = (shadowMapDepth< fLightDepth-0.001f) ? 0.0f: 1.0f;
-	shadowTerm = CalcShadowTermPCF(fLightDepth,vShadowTexCoord,BIAS);
+
+	float bias = depthVal*0.001;
+
+	shadowTerm = CalcShadowTermPCF(fLightDepth,vShadowTexCoord,bias);
 	//shadowTerm = CalcShadowTermPCF(fLightDepth,vShadowTexCoord,bias+BIAS/(1-depthVal));
 #endif
 

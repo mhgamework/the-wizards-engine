@@ -719,7 +719,6 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             var toggle = false;
 
 
-
             game.GameLoopEvent += delegate
             {
                 filledGBuffer.DrawUpdatedGBuffer();
@@ -745,14 +744,19 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                     light.LightPosition = game.SpecaterCamera.CameraPosition;
                 }
 
+
                 if (game.Keyboard.IsKeyDown(Key.I))
                     DrawGBuffer(game, filledGBuffer.GBuffer);
                 else
                 {
                     light.Draw();
                     //game.TextureRenderer.Draw(light.ShadowCubeMapRv, new Vector2(10, 10), new Vector2(300, 300));
-                    game.LineManager3D.AddViewFrustum(light.LightCameras[1].ViewProjection,
-                                                      new Color4(1, 0, 0));
+                    for (int i = 0; i < 6; i++)
+                    {
+                        game.LineManager3D.AddViewFrustum(light.LightCameras[i].ViewProjection,
+                                                  new Color4(0, 1, 0));
+                    }
+                
                 }
 
             };
@@ -933,6 +937,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             public void Draw()
             {
+                game.Device.ImmediateContext.Rasterizer.State = game.HelperStates.RasterizerShowAll;
                 for (int i = 0; i < 3; i++)
                 {
                     for (int j = 0; j < 3; j++)
