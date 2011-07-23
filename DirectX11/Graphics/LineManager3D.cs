@@ -355,27 +355,13 @@ namespace DirectX11.Graphics
 
         }
 
+        public void AddViewFrustum(BoundingFrustum frustum, Color4 color)
+        {
+            AddViewFrustum(frustum.GetCorners(), color);
+        }
         public void AddViewFrustum(Matrix viewProjection, Color4 color)
         {
-
-            var corners = new Vector3[8];
-
-            int i = 0;
-            corners[i] = new Vector3(-1, 1, 0); i++;
-            corners[i] = new Vector3(1, 1, 0); i++;
-            corners[i] = new Vector3(1, -1, 0); i++;
-            corners[i] = new Vector3(-1, -1, 0); i++;
-            corners[i] = new Vector3(-1, 1, 1); i++;
-            corners[i] = new Vector3(1, 1, 1); i++;
-            corners[i] = new Vector3(1, -1, 1); i++;
-            corners[i] = new Vector3(-1, -1, 1); i++;
-
-            var mat = Matrix.Invert(viewProjection);
-
-              Vector3.TransformCoordinate(corners, ref mat, corners);
-
-            AddViewFrustum(corners, color);
-
+            AddViewFrustum((new BoundingFrustum(viewProjection)), color);
         }
 
         public void AddViewFrustum(Vector3[] corners, Color4 color)

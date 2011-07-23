@@ -186,7 +186,7 @@ namespace DirectX11.Rendering.Deferred
             //else
             //    GraphicsDevice.RenderState.CullMode = CullMode.CullCounterClockwiseFace;
 
-
+            
             gBuffer.SetToShader(shader);
 
             shader.Apply();
