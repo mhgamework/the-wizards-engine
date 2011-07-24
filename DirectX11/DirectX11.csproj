@@ -147,6 +147,7 @@
     <EmbeddedResource Include="Shaders\Deferred\ToneMap.fx" />
     <EmbeddedResource Include="Shaders\Deferred\Luminance.fx" />
     <EmbeddedResource Include="Shaders\Deferred\DeferredMesh.fx" />
+    <None Include="Shaders\Common.fx" />
     <None Include="Shaders\CSM\CSM.fx" />
     <None Include="Shaders\GBuffer.fx" />
     <EmbeddedResource Include="Shaders\SSAO\HorizonSSAO.fx" />

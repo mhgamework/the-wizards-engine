@@ -1,83 +1,60 @@
-#include <TestHelper.fx>
+#include <Common.fx>
 
 float4x4	g_matWorld;
 float4x4	g_matWorldIT;
 float4x4	g_matViewProj;
+float4x4	g_matProj;
 
 float4x4	g_matInvView;
 float		g_fFarClip;
 
 static const int NUM_SPLITS = 4;
 float4x4	g_matLightViewProj [NUM_SPLITS];
-float2		g_vClipPlanes[NUM_SPLITS];
+float4		g_vClipPlanes[NUM_SPLITS]; // Was float2
 float2		g_vShadowMapSize;
-float2		g_vOcclusionTextureSize;
+//float2		g_vOcclusionTextureSize;
 
-float3		g_vFrustumCornersVS [4];
+float4		g_vFrustumCornersVS [4]; // Was float3
 
 bool		g_bShowSplitColors = true;
 
 static const float BIAS = 0.006f;
 
-texture DepthTexture;
-sampler2D DepthTextureSampler = sampler_state
+Texture2D DepthTexture;
+Texture2D ShadowMap;
+
+SamplerState samPoint
 {
-    Texture = <DepthTexture>;
-    MinFilter = point;
-    MagFilter = point;
-    MipFilter = none;
+    Filter = MIN_MAG_MIP_POINT;
+    AddressU = Wrap;
+    AddressV = Wrap;
 };
 
-texture ShadowMap;
-sampler2D ShadowMapSampler = sampler_state
+struct PS_IN
 {
-    Texture = <ShadowMap>;
-    MinFilter = point; 
-    MagFilter = point; 
-    MipFilter = none; 
+	float4 vPositionCS				: SV_POSITION;
+	float2 vTexCoord				: TEXCOORD0;
+	float3 vFrustumCornerVS			: TEXCOORD1;
 };
-
-
-
-// Vertex shader for outputting light-space depth to the shadow map
-void GenerateShadowMapVS(	in float4 in_vPositionOS	: POSITION,
-							out float4 out_vPositionCS	: POSITION,
-							out float2 out_vDepthCS		: TEXCOORD0	)
-{
-	// Figure out the position of the vertex in view space and clip space
-	float4x4 matWorldViewProj = mul(g_matWorld, g_matViewProj);
-    out_vPositionCS = mul(in_vPositionOS, matWorldViewProj);
-	out_vDepthCS = out_vPositionCS.zw;
-}
-
-// Pixel shader for outputting light-space depth to the shadow map
-float4 GenerateShadowMapPS(in float2 in_vDepthCS : TEXCOORD0) : COLOR0
-{
-	// Negate and divide by distance to far clip (so that depth is in range [0,1])
-	float fDepth = in_vDepthCS.x / in_vDepthCS.y;			
-		
-    return float4(fDepth, 1, 1, 1); 
-}
-
-
 
 // Vertex shader for rendering the full-screen quad used for calculating
 // the shadow occlusion factor.
-void ShadowTermVS (	in float3 in_vPositionOS				: POSITION,
-					in float3 in_vTexCoordAndCornerIndex	: TEXCOORD0,		
-					out float4 out_vPositionCS				: POSITION,
-					out float2 out_vTexCoord				: TEXCOORD0,
-					out float3 out_vFrustumCornerVS			: TEXCOORD1	)
+PS_IN ShadowTermVS (	in float3 in_vPositionOS				: POSITION,
+					in float3 in_vTexCoordAndCornerIndex	: TEXCOORD0)
 {
+	PS_IN ret;
+
 	// Offset the position by half a pixel to correctly align texels to pixels
-	out_vPositionCS.x = in_vPositionOS.x - (1.0f / g_vOcclusionTextureSize.x);
-	out_vPositionCS.y = in_vPositionOS.y + (1.0f / g_vOcclusionTextureSize.y);
-	out_vPositionCS.z = in_vPositionOS.z;
-	out_vPositionCS.w = 1.0f;
+	ret.vPositionCS.x = in_vPositionOS.x;
+	ret.vPositionCS.y = in_vPositionOS.y;
+	ret.vPositionCS.z = in_vPositionOS.z;
+	ret.vPositionCS.w = 1.0f;
 	
 	// Pass along the texture coordiante and the position of the frustum corner
-	out_vTexCoord = in_vTexCoordAndCornerIndex.xy;
-	out_vFrustumCornerVS = g_vFrustumCornersVS[in_vTexCoordAndCornerIndex.z];
+	ret.vTexCoord = in_vTexCoordAndCornerIndex.xy;
+	ret.vFrustumCornerVS = g_vFrustumCornersVS[in_vTexCoordAndCornerIndex.z].xyz;
+
+	return ret;
 }	
 
 // Calculates the shadow occlusion using bilinear PCF
@@ -93,10 +70,10 @@ float CalcShadowTermPCF(float fLightDepth, float2 vShadowTexCoord)
 
 	// Read in the 4 samples, doing a depth check for each
 	float fSamples[4];	
-	fSamples[0] = (tex2D(ShadowMapSampler, vShadowTexCoord).x + BIAS < fLightDepth) ? 0.0f: 1.0f;  
-	fSamples[1] = (tex2D(ShadowMapSampler, vShadowTexCoord + float2(1.0/g_vShadowMapSize.x, 0)).x + BIAS < fLightDepth) ? 0.0f: 1.0f;  
-	fSamples[2] = (tex2D(ShadowMapSampler, vShadowTexCoord + float2(0, 1.0/g_vShadowMapSize.y)).x + BIAS < fLightDepth) ? 0.0f: 1.0f;  
-	fSamples[3] = (tex2D(ShadowMapSampler, vShadowTexCoord + float2(1.0/g_vShadowMapSize.x, 1.0/g_vShadowMapSize.y)).x + BIAS < fLightDepth) ? 0.0f: 1.0f;  
+	fSamples[0] = (ShadowMap.Sample(samPoint, vShadowTexCoord).x + BIAS < fLightDepth) ? 0.0f: 1.0f;  
+	fSamples[1] = (ShadowMap.Sample(samPoint, vShadowTexCoord + float2(1.0/g_vShadowMapSize.x, 0)).x + BIAS < fLightDepth) ? 0.0f: 1.0f;  
+	fSamples[2] = (ShadowMap.Sample(samPoint, vShadowTexCoord + float2(0, 1.0/g_vShadowMapSize.y)).x + BIAS < fLightDepth) ? 0.0f: 1.0f;  
+	fSamples[3] = (ShadowMap.Sample(samPoint, vShadowTexCoord + float2(1.0/g_vShadowMapSize.x, 1.0/g_vShadowMapSize.y)).x + BIAS < fLightDepth) ? 0.0f: 1.0f;  
     
 	// lerp between the shadow values to calculate our light amount
 	fShadowTerm = lerp(lerp(fSamples[0], fSamples[1], vLerps.x), lerp( fSamples[2], fSamples[3], vLerps.x), vLerps.y);							  
@@ -120,7 +97,7 @@ float CalcShadowTermSoftPCF(float fLightDepth, float2 vShadowTexCoord, int iSqrt
 			vOffset = float2(x, y);				
 			vOffset /= g_vShadowMapSize;
 			float2 vSamplePoint = vShadowTexCoord + vOffset;			
-			float fDepth = tex2D(ShadowMapSampler, vSamplePoint).x;
+			float fDepth = ShadowMap.Sample(samPoint, vSamplePoint).x;
 			float fSample = (fLightDepth <= fDepth + BIAS);
 			
 			// Edge tap smoothing
@@ -149,15 +126,15 @@ float CalcShadowTermSoftPCF(float fLightDepth, float2 vShadowTexCoord, int iSqrt
 }
 
 // Pixel shader for computing the shadow occlusion factor
-float4 ShadowTermPS(	in float2 in_vTexCoord			: TEXCOORD0,
-						in float3 in_vFrustumCornerVS	: TEXCOORD1,
-						uniform int iFilterSize	)	: COLOR0
+float4 ShadowTermPS( PS_IN input, uniform int iFilterSize	)	: SV_TARGET0
 {
 	// Reconstruct view-space position from the depth buffer
-	float fPixelDepth = tex2D(DepthTextureSampler, in_vTexCoord).r;
-    //return float4(fPixelDepth,0,0,1);
-	float4 vPositionVS = float4(fPixelDepth * in_vFrustumCornerVS, 1.0f);	
-	//return vPositionVS;
+	float fPixelDepth = DepthTexture.Sample(samPoint, input.vTexCoord).r;
+	fPixelDepth = ConvertToLinearDepth(fPixelDepth, g_matProj);
+	//return t(frac(-fPixelDepth*10000));
+
+	float4 vPositionVS = float4(fPixelDepth * input.vFrustumCornerVS, 1.0f);	
+	return t(frac(vPositionVS));
 	// Figure out which split this pixel belongs to, based on view-space depth.
 	float4x4 matLightViewProj = g_matLightViewProj[0];
 	float fOffset = 0;
@@ -170,7 +147,6 @@ float4 ShadowTermPS(	in float2 in_vTexCoord			: TEXCOORD0,
 	float3 vColor = vSplitColors[0];
 	int iCurrentSplit = 0;
 		
-	// Unrolling the loop allows for a performance boost on the 360
 	for (int i = 1; i < NUM_SPLITS; i++)
 	{
 		if (vPositionVS.z <= g_vClipPlanes[i].x && vPositionVS.z > g_vClipPlanes[i].y)
@@ -212,74 +188,72 @@ float4 ShadowTermPS(	in float2 in_vTexCoord			: TEXCOORD0,
 }
 
 
-technique GenerateShadowMap
+BlendState NoBlend
 {
-	pass p0
-	{
-		ZWriteEnable = true;
-		ZEnable = true;		
-		AlphaBlendEnable = false;
-		FillMode = Solid;
-		//CullMode = CCW;
-		
-		VertexShader = compile vs_2_0 GenerateShadowMapVS();
-        PixelShader = compile ps_2_0 GenerateShadowMapPS();
-	}
-}
+	BlendEnable[0] = false;
+};
+RasterizerState NoCull
+{
+	CullMode = NONE;
+};
+DepthStencilState NoDepth
+{
+	DepthEnable = false;
+};
 
-technique CreateShadowTerm2x2PCF
+technique10 CreateShadowTerm2x2PCF
 {
     pass p0
     {
-		ZWriteEnable = false;
-		ZEnable = false;
-		AlphaBlendEnable = false;
-		CullMode = NONE;
+		SetBlendState( NoBlend, float4( 0.0f, 0.0f, 0.0f, 0.0f ), 0xFFFFFFFF );
+		SetRasterizerState( NoCull );
+		SetDepthStencilState( NoDepth , 0);
 
-        VertexShader = compile vs_3_0 ShadowTermVS();
-        PixelShader = compile ps_3_0 ShadowTermPS(2);	
+		SetGeometryShader( NULL );
+        SetVertexShader( CompileShader( vs_4_0, ShadowTermVS() ) );
+        SetPixelShader( CompileShader( ps_4_0, ShadowTermPS(2) ) );	
     }
 }
 
-technique CreateShadowTerm3x3PCF
+technique10 CreateShadowTerm3x3PCF
 {
     pass p0
     {
-		ZWriteEnable = false;
-		ZEnable = false;
-		AlphaBlendEnable = false;
-		CullMode = NONE;
+		SetBlendState( NoBlend, float4( 0.0f, 0.0f, 0.0f, 0.0f ), 0xFFFFFFFF );
+		SetRasterizerState( NoCull );
+		SetDepthStencilState( NoDepth , 0);
 
-        VertexShader = compile vs_3_0 ShadowTermVS();
-        PixelShader = compile ps_3_0 ShadowTermPS(3);	
+		SetGeometryShader( NULL );
+		SetVertexShader( CompileShader( vs_4_0, ShadowTermVS() ) );
+        SetPixelShader( CompileShader( ps_4_0, ShadowTermPS(3) ) );	
     }
 }
 
-technique CreateShadowTerm5x5PCF
+technique10 CreateShadowTerm5x5PCF
 {
     pass p0
     {
-		ZWriteEnable = false;
-		ZEnable = false;
-		AlphaBlendEnable = false;
-		CullMode = NONE;
+		SetBlendState( NoBlend, float4( 0.0f, 0.0f, 0.0f, 0.0f ), 0xFFFFFFFF );
+		SetRasterizerState( NoCull );
+		SetDepthStencilState( NoDepth , 0);
 
-        VertexShader = compile vs_3_0 ShadowTermVS();
-        PixelShader = compile ps_3_0 ShadowTermPS(5);	
+		SetGeometryShader( NULL );
+        SetVertexShader( CompileShader( vs_4_0, ShadowTermVS() ) );
+        SetPixelShader( CompileShader( ps_4_0, ShadowTermPS(5) ) );	
     }
 }
 
-technique CreateShadowTerm7x7PCF
+technique10 CreateShadowTerm7x7PCF
 {
     pass p0
     {
-		ZWriteEnable = false;
-		ZEnable = false;
-		AlphaBlendEnable = false;
-		CullMode = NONE;
+		SetBlendState( NoBlend, float4( 0.0f, 0.0f, 0.0f, 0.0f ), 0xFFFFFFFF );
+		SetRasterizerState( NoCull );
+		SetDepthStencilState( NoDepth , 0);
 
-        VertexShader = compile vs_3_0 ShadowTermVS();
-        PixelShader = compile ps_3_0 ShadowTermPS(7);	
+		SetGeometryShader( NULL );
+		SetVertexShader( CompileShader( vs_4_0, ShadowTermVS() ) );
+        SetPixelShader( CompileShader( ps_4_0, ShadowTermPS(7) ) );	
     }
 }
 

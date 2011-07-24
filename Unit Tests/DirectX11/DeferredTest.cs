@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using DirectX11;
 using DirectX11.Graphics;
+using DirectX11.Rendering.CSM;
 using DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.Graphics;
 using NUnit.Framework;
@@ -124,6 +125,133 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             game.Run();
         }
+        [Test]
+        public void TestCascadedShadowMapping()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+            var device = game.Device;
+            var context = device.ImmediateContext;
+
+            var filledGBuffer = new TestFilledGBuffer(game, 800, 600);
+
+            var csmRenderer = new CSMRenderer(game);
+
+            var toggle = false;
+
+            var light = new DirectionalLight();
+            
+
+            game.GameLoopEvent += delegate
+                                      {
+                                          context.ClearState();
+                filledGBuffer.DrawUpdatedGBuffer();
+
+                csmRenderer.UpdateShadowMap(delegate(OrthographicCamera lightCamera)
+                                                {
+                                                    game.Camera = lightCamera;
+
+                                                    filledGBuffer.Draw();
+
+                                                    game.Camera = game.SpecaterCamera;
+                                                }, light, game.SpecaterCamera);
+
+                game.SetBackbuffer();
+
+                if (game.Keyboard.IsKeyPressed(Key.C))
+                    toggle = !toggle;
+
+                if (toggle)
+                {
+
+                    light.Direction = game.SpecaterCamera.CameraDirection;
+                }
+
+
+                if (game.Keyboard.IsKeyDown(Key.I))
+                    DrawGBuffer(game, filledGBuffer.GBuffer);
+                else
+                {
+                    csmRenderer.RenderShadowOcclusion(game.SpecaterCamera, filledGBuffer.GBuffer.DepthRV);
+                    //light.Draw();
+                    game.TextureRenderer.Draw(csmRenderer.ShadowMapRV, new Vector2(10, 10), new Vector2(590, 200));
+                    
+                    for (int i = 0; i < 6; i++)
+                    {
+                        //game.LineManager3D.AddViewFrustum(light.LightCameras[i].ViewProjection,
+                        //new Color4(0, 1, 0));
+                    }
+
+                }
+
+            };
+
+            game.Run();
+
+        }
+        [Test]
+        public void TestDirectionalLightShadowing()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+            var device = game.Device;
+            var context = device.ImmediateContext;
+
+            var filledGBuffer = new TestFilledGBuffer(game, 800, 600);
+
+            var light = new DirectionalLightRenderer(game, filledGBuffer.GBuffer);
+
+            light.ShadowsEnabled = true;
+
+            var toggle = false;
+
+
+            game.GameLoopEvent += delegate
+            {
+                filledGBuffer.DrawUpdatedGBuffer();
+
+                //light.UpdateShadowMap(delegate(CustomCamera lightCamera)
+                //{
+                //    game.Camera = lightCamera;
+
+                //    filledGBuffer.Draw();
+
+                //    game.Camera = game.SpecaterCamera;
+                //});
+
+
+                game.SetBackbuffer();
+
+                if (game.Keyboard.IsKeyPressed(Key.C))
+                    toggle = !toggle;
+
+                if (toggle)
+                {
+
+                    light.LightDirection = game.SpecaterCamera.CameraDirection;
+                }
+
+
+                if (game.Keyboard.IsKeyDown(Key.I))
+                    DrawGBuffer(game, filledGBuffer.GBuffer);
+                else
+                {
+                    light.Draw();
+                    //game.TextureRenderer.Draw(light.ShadowCubeMapRv, new Vector2(10, 10), new Vector2(300, 300));
+                    for (int i = 0; i < 6; i++)
+                    {
+                        //game.LineManager3D.AddViewFrustum(light.LightCameras[i].ViewProjection,
+                        //new Color4(0, 1, 0));
+                    }
+
+                }
+
+            };
+
+            game.Run();
+        }
+
+
 
         [Test]
         public void TestSpotLightRendererAccumulation()
@@ -660,7 +788,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             var toggle = false;
 
-            
+
 
             game.GameLoopEvent += delegate
                                       {
@@ -756,7 +884,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                         game.LineManager3D.AddViewFrustum(light.LightCameras[i].ViewProjection,
                                                   new Color4(0, 1, 0));
                     }
-                
+
                 }
 
             };

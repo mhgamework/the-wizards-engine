@@ -1,6 +1,7 @@
 ﻿
-#include <TestHelper.fx>
+
 #include <GBuffer.fx>
+#include <Common.fx>
 
 float4x4 World;
 float4x4 View;
@@ -20,6 +21,9 @@ float lightRadius;
 float lightIntensity = 1.0f;
 // diffuse color, and specularIntensity in the alpha channel
 TextureCube shadowMap;
+
+
+
 SamplerState samLinear
 {
     Filter = MIN_MAG_MIP_LINEAR;
@@ -59,16 +63,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     //return output;
 }
 
-float ConvertToLinearDepth(float depth, float4x4 projection)
-{
-	return projection._43 / (depth - projection._33);
-}
-float ConvertToLinearDepth(float depth, float zNear, float zFar)
-{
-	float Projection43 = -zNear * zFar / (zFar-zNear);
-	float Projection33 = zFar / (zFar - zNear);
-	return Projection43 / (depth - Projection33);
-}
+
 
 
 float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0

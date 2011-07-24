@@ -3,6 +3,7 @@ using System.IO;
 using DirectX11.Graphics;
 using SlimDX;
 using SlimDX.Direct3D11;
+using System.Linq;
 
 namespace DirectX11.Rendering.CSM
 {
@@ -23,7 +24,7 @@ namespace DirectX11.Rendering.CSM
         public const int ShadowMapSize = 2048;
         public const int NumSplits = 4;
 
-        public Texture2D shadowMap;
+        private Texture2D shadowMap;
         public BasicShader shadowMapShader;
         public Effect shadowMapEffect;
 
@@ -38,6 +39,7 @@ namespace DirectX11.Rendering.CSM
         Vector3[] splitFrustumCornersVS = new Vector3[8];
         OrthographicCamera[] lightCameras = new OrthographicCamera[NumSplits];
         Matrix[] lightViewProjectionMatrices = new Matrix[NumSplits];
+        Matrix[] lightProjectionMatrices = new Matrix[NumSplits];
         Vector2[] lightClipPlanes = new Vector2[NumSplits];
         float[] splitDepths = new float[NumSplits + 1];
 
@@ -47,10 +49,11 @@ namespace DirectX11.Rendering.CSM
         string[] shadowOcclusionTechniques = new string[4];
         private DeviceContext context;
         private DepthStencilView shadowMapDsv;
-        private ShaderResourceView shadowMapRV;
+        private InputLayout layout;
+        public ShaderResourceView ShadowMapRV { get; private set; }
 
 
-        public delegate void RenderPrimitives(Matrix viewProjection);
+        public delegate void RenderPrimitives(OrthographicCamera lightCamera);
 
         /// <summary>
         /// Gets or sets a value indicating whether or not shadow occlusion
@@ -89,12 +92,13 @@ namespace DirectX11.Rendering.CSM
             // Create the shadow map, using a 32-bit floating-point surface format
             shadowMap = new Texture2D(device, new Texture2DDescription
                                                   {
-                                                      Width = ShadowMapSize * NumSplits,
+                                                      Width = ShadowMapSize*NumSplits,
                                                       Height = ShadowMapSize,
                                                       MipLevels = 1,
                                                       ArraySize = 1,
                                                       BindFlags = BindFlags.DepthStencil | BindFlags.ShaderResource,
-                                                      Format = SlimDX.DXGI.Format.R32_Typeless
+                                                      Format = SlimDX.DXGI.Format.R32_Typeless,
+                                                      SampleDescription = new SlimDX.DXGI.SampleDescription(1, 0)
 
                                                   });
 
@@ -106,7 +110,7 @@ namespace DirectX11.Rendering.CSM
                                                                            Format = SlimDX.DXGI.Format.D32_Float,
                                                                            MipSlice = 0
                                                                        });
-            shadowMapRV = new ShaderResourceView(device, shadowMap, new ShaderResourceViewDescription
+            ShadowMapRV = new ShaderResourceView(device, shadowMap, new ShaderResourceViewDescription
                                                                 {
                                                                     ArraySize = 1,
                                                                     Dimension = ShaderResourceViewDimension.Texture2D,
@@ -119,12 +123,18 @@ namespace DirectX11.Rendering.CSM
             // Create the full-screen quad
             fullScreenQuad = new FullScreenQuad(device);
 
+
+
             // We'll keep an array of EffectTechniques that will let us map a
             // ShadowFilteringType to a technique for calculating shadow occlusion
             shadowOcclusionTechniques[0] = "CreateShadowTerm2x2PCF";
             shadowOcclusionTechniques[1] = "CreateShadowTerm3x3PCF";
             shadowOcclusionTechniques[2] = "CreateShadowTerm5x5PCF";
             shadowOcclusionTechniques[3] = "CreateShadowTerm7x7PCF";
+
+            shadowMapShader.SetTechnique(shadowOcclusionTechniques[0]);
+
+            layout = FullScreenQuad.CreateInputLayout(device, shadowMapShader.GetCurrentPass(0));
         }
 
         /// <summary>
@@ -288,13 +298,14 @@ namespace DirectX11.Rendering.CSM
 
             context.Rasterizer.SetViewports(splitViewport);
 
-            renderDelegate(lightCameras[splitIndex].ViewProjection);
+            renderDelegate(lightCameras[splitIndex]);
         }
 
         /// <summary>
-        /// Renders a texture containing the final shadow occlusion
+        /// Renders the shadowOcclusion.
+        /// This is actually only used for testing
         /// </summary>
-        protected void RenderShadowOcclusion(ICamera mainCamera, ShaderResourceView depthTextureRV)
+        public void RenderShadowOcclusion(ICamera mainCamera, ShaderResourceView depthTextureRV)
         {
             // Set the device to render to our shadow occlusion texture, and to use
             // the original DepthStencilSurface
@@ -312,24 +323,27 @@ namespace DirectX11.Rendering.CSM
                 lightClipPlanes[i].Y = -splitDepths[i + 1];
 
                 lightViewProjectionMatrices[i] = lightCameras[i].ViewProjection;
+                //lightProjectionMatrices[i] = lightCameras[i].Projection;
                 //lightCameras[ i ].GetViewProjMatrix( out  );
             }
 
             // Setup the Effect
             shadowMapShader.SetTechnique(shadowOcclusionTechniques[(int)filteringType]);
             shadowMapShader.Effect.GetVariableByName("g_matInvView").AsMatrix().SetMatrix(cameraTransform);
+            shadowMapShader.Effect.GetVariableByName("g_matProj").AsMatrix().SetMatrix(mainCamera.Projection);
             shadowMapShader.Effect.GetVariableByName("g_matLightViewProj").AsMatrix().SetMatrixArray(lightViewProjectionMatrices);
-            //TODO: shadowMapShader.Effect.GetVariableByName( "g_vFrustumCornersVS" ).AsVector().Set ( farFrustumCornersVS );
-            //TODO: shadowMapShader.Effect.GetVariableByName( "g_vClipPlanes" ).AsVector().Set( lightClipPlanes );
-            shadowMapShader.Effect.GetVariableByName("ShadowMap").AsResource().SetResource(shadowMapRV);
+            //shadowMapShader.Effect.GetVariableByName("g_matLightProj").AsMatrix().SetMatrixArray(lightProjectionMatrices);
+            shadowMapShader.Effect.GetVariableByName("g_vFrustumCornersVS").AsVector().Set(farFrustumCornersVS.Select(o => new Vector4(o, 1)).ToArray());
+            shadowMapShader.Effect.GetVariableByName("g_vClipPlanes").AsVector().Set(lightClipPlanes.Select(o => new Vector4(o, 1, 1)).ToArray());
+            shadowMapShader.Effect.GetVariableByName("ShadowMap").AsResource().SetResource(ShadowMapRV);
             shadowMapShader.Effect.GetVariableByName("DepthTexture").AsResource().SetResource(depthTextureRV);
-            //TODO: shadowMapShader.Effect.GetVariableByName( "g_vOcclusionTextureSize" ).SetValue( new Vector2( shadowOcclusion.Width, shadowOcclusion.Height ) );
+            //shadowMapShader.Effect.GetVariableByName( "g_vOcclusionTextureSize" ).AsVector() .Set( new Vector2( shadowOcclusion.Width, shadowOcclusion.Height ) );
             shadowMapShader.Effect.GetVariableByName("g_vShadowMapSize").AsVector().Set(new Vector2(shadowMap.Description.Width, shadowMap.Description.Height));
             shadowMapShader.Effect.GetVariableByName("g_bShowSplitColors").AsScalar().Set(showCascadeSplits);
 
             shadowMapShader.GetCurrentPass(0).Apply(context);
             // Draw the full screen quad		
-            //TODO: fullScreenQuad.Draw();
+            fullScreenQuad.Draw(layout);
 
 
             // Set to render to the back buffer

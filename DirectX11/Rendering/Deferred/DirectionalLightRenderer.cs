@@ -42,6 +42,9 @@ namespace DirectX11.Rendering.Deferred
             }
         }
 
+        public bool ShadowsEnabled { get; set; }
+
+
         public DirectionalLightRenderer(DX11Game game, GBuffer gBuffer)
         {
             this.game = game;
@@ -68,7 +71,7 @@ namespace DirectX11.Rendering.Deferred
         public void Draw()
         {
             shader.Effect.GetVariableByName("cameraPosition").AsVector().Set(game.Camera.ViewInverse.GetTranslation());
-            shader.Effect.GetVariableByName("InvertViewProjection").AsMatrix().SetMatrix(Matrix.Invert( game.Camera.ViewProjection));
+            shader.Effect.GetVariableByName("InvertViewProjection").AsMatrix().SetMatrix(Matrix.Invert(game.Camera.ViewProjection));
             shader.Effect.GetVariableByName("lightDirection").AsVector().Set(lightDirection);
             shader.Effect.GetVariableByName("Color").AsVector().Set(color);
 
