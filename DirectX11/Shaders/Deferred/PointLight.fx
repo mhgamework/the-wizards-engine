@@ -124,7 +124,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 	// The largest component of the toLight vector determines which face of the cube is used.
 	//   This means that this component is the projection of the toLight vector onto the axis that points to the correct
 	//   cube face. By multiplying fLightDepth * longest we project onto this axis, and get the view space depth.
-	float longest = max(max(toLight.x,toLight.y),toLight.z); 
+	float longest = max(max(abs(toLight.x),abs(toLight.y)),abs(toLight.z)); 
 	fLightDepth = fLightDepth * longest;
 
 

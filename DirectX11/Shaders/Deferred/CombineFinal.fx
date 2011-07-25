@@ -1,4 +1,6 @@
-﻿Texture2D colorMap;
+﻿#include <TestHelper.fx>
+
+Texture2D colorMap;
 Texture2D lightMap;
 Texture2D ambientOcclusionMap;
 SamplerState samLinear
@@ -38,9 +40,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
     float3 diffuseLight = light.rgb *2;
     float specularLight = light.a;
 	float3 ambient=float3(1,1,1)*0.3f;
-
-
-    return float4((diffuseColor * (diffuseLight+ambient*(1-ambientOcclusion)) + specularLight.xxx)*3,1);
+    return float4((diffuseColor * (diffuseLight+ambient*(1-ambientOcclusion)) + specularLight.xxx),1);
 }
 
 

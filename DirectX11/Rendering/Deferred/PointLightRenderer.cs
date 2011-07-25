@@ -37,6 +37,8 @@ namespace DirectX11.Rendering.Deferred
         public Vector3 LightPosition { get; set; }
         public float LightIntensity { get; set; }
         public float LightRadius { get; set; }
+        public bool ShadowsEnabled { get; set; }
+
         private int shadowMapSize = 1024;
         private BasicShader shadowsShader;
         private ShaderResourceView[] shadowCubeMapRVs;
@@ -262,7 +264,6 @@ namespace DirectX11.Rendering.Deferred
             }
         }
 
-        public bool ShadowsEnabled { get; set; }
 
         /// <summary>
         /// WARNING: THIS DOES NOT WORK IN D3D 10.0

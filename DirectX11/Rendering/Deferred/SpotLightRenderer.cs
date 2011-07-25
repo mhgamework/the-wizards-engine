@@ -47,6 +47,7 @@ namespace DirectX11.Rendering.Deferred
         public Vector3 SpotDirection { get; set; }
         public float SpotLightAngle { get; set; }
         public float SpotDecayExponent { get; set; }
+        public bool ShadowsEnabled { get; set; }
 
         public CustomCamera LightCamera { get; private set; }
 
@@ -55,7 +56,6 @@ namespace DirectX11.Rendering.Deferred
             get { return shadowMapRV; }
             set { shadowMapRV = value; }
         }
-        public bool ShadowsEnabled { get; set; }
 
         public SpotLightRenderer(DX11Game game, GBuffer gBuffer)
         {

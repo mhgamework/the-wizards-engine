@@ -252,8 +252,6 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             game.Run();
         }
 
-
-
         [Test]
         public void TestSpotLightRendererAccumulation()
         {
@@ -436,7 +434,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
         }
 
         [Test]
-        public void TestComineFinalRenderer()
+        public void TestCombineFinalRenderer()
         {
             //TODO: add a way to show the specular in the alpha channel
 
@@ -490,7 +488,6 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             game.Run();
         }
-
 
         [Test]
         public void TestCalculateAverageLogLuminance()

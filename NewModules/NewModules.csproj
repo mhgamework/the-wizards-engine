@@ -186,6 +186,9 @@
     <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
     <Compile Include="Rendering\Deferred\DeferredMeshRenderer.cs" />
     <Compile Include="Rendering\Deferred\DeferredMeshRenderElement.cs" />
+    <Compile Include="Rendering\Deferred\DirectionalLight.cs" />
+    <Compile Include="Rendering\Deferred\PointLight.cs" />
+    <Compile Include="Rendering\Deferred\SpotLight.cs" />
     <Compile Include="Rendering\Deferred\TexturePool.cs" />
     <Compile Include="Rendering\SSAO\HorizonSSAORenderer.cs" />
     <Compile Include="Terrain\Geomipmap\IndexBufferBuilder.cs" />

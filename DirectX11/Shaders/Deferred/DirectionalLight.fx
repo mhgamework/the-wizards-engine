@@ -48,7 +48,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 {
 	GBuffer_Raw g = SampleGBuffer(samLinear, input.TexCoord);
-	
+	  
 	//compute screen-space position
 	float4 position;
 	position.x = input.TexCoord.x * 2.0f - 1.0f;

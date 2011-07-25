@@ -85,7 +85,10 @@ namespace DirectX11.Rendering.Deferred
         }
         public void SetLightAccumulationStates()
         {
+            var viewport = new Viewport(0, 0, gBuffer.Width, gBuffer.Height);
+
             context.OutputMerger.SetTargets(lightAccumulationRTV);
+            context.Rasterizer.SetViewports(viewport);
             context.OutputMerger.BlendState = blendState;
             context.OutputMerger.DepthStencilState = null;
         }

@@ -16,6 +16,7 @@ using MHGameWork.TheWizards.Tests.DirectX11;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.Direct3D11;
+using SlimDX.DirectInput;
 using Buffer = SlimDX.Direct3D11.Buffer;
 using DataStream = SlimDX.DataStream;
 using TexturePool = MHGameWork.TheWizards.Rendering.TexturePool;
@@ -26,10 +27,6 @@ namespace MHGameWork.TheWizards.Tests.Rendering
     public class DeferredRenderingTest
     {
 
-        public static RAMMesh CreateMerchantsHouseMeshOLD()
-        {
-            return RenderingTest.CreateMerchantsHouseMeshOLD();
-        }
         public static RAMMesh CreateMerchantsHouseMesh(OBJToRAMMeshConverter c)
         {
             return RenderingTest.CreateMerchantsHouseMesh(c);
@@ -48,7 +45,6 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
 
         [Test]
-        [RequiresThread(ApartmentState.STA)]
         public void TestLoadTexture()
         {
             DX11Game game = new DX11Game();
@@ -87,12 +83,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             data.AssemblyResourceName = "MHGameWork.TheWizards.Tests.OBJParser.Files.maps.BrickRound0030_7_S.jpg";*/
             return tex;
         }
-
-
-
-
         [Test]
-        [RequiresThread(ApartmentState.STA)]
         public void TestRenderDefaultModelShader()
         {
 
@@ -185,7 +176,6 @@ namespace MHGameWork.TheWizards.Tests.Rendering
         }
 
         [Test]
-        [RequiresThread(ApartmentState.STA)]
         public void TestMeshRendererSimple()
         {
             var game = new DX11Game();
@@ -236,10 +226,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
         }
 
-
-
         [Test]
-        [RequiresThread(ApartmentState.STA)]
         public void TestMeshRendererAdvanced()
         {
             var texFactory = new RAMTextureFactory();
@@ -300,6 +287,64 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
         }
 
+
+        [Test]
+        public void TestDeferredRendererSimple()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+
+            var renderer = new DeferredRenderer(game);
+
+            var mesh = CreateMerchantsHouseMesh(new OBJToRAMMeshConverter(new RAMTextureFactory()));
+
+            var el = renderer.CreateMeshElement(mesh);
+            var directional = renderer.CreateDirectionalLight();
+            directional.ShadowsEnabled = true;
+            var point = renderer.CreatePointLight();
+            point.LightRadius *= 2;
+            point.ShadowsEnabled = true; 
+            var spot = renderer.CreateSpotLight();
+            spot.LightRadius *= 2;
+            spot.ShadowsEnabled = true;
+
+            int state = 0;
+            game.GameLoopEvent += delegate
+                                      {
+                                          if (game.Keyboard.IsKeyPressed(Key.D1))
+                                              state = 0;
+                                          if (game.Keyboard.IsKeyPressed(Key.D2))
+                                              state = 1;
+                                          if (game.Keyboard.IsKeyPressed(Key.D3))
+                                              state = 2;
+                                          if (game.Keyboard.IsKeyPressed(Key.D4))
+                                              state = 3;
+
+                                          switch (state)
+                                          {
+                                              case 0:
+                                                  break;
+                                              case 1:
+                                                  directional.LightDirection = game.SpecaterCamera.CameraDirection;
+                                                  break;
+                                              case 2:
+                                                  point.LightPosition = game.SpecaterCamera.CameraPosition;
+
+                                                  break;
+                                              case 3:
+                                                  spot.LightPosition = game.SpecaterCamera.CameraPosition;
+                                                  spot.SpotDirection = game.SpecaterCamera.CameraDirection;
+                                                  break;
+                                          }
+
+                                          renderer.Draw();
+
+                                      };
+
+            game.Run();
+        }
+
+
         public static DeferredMeshRenderer InitDefaultMeshRenderer(DX11Game game, GBuffer gBuffer)
         {
             var texturePool = new TheWizards.Rendering.Deferred.TexturePool(game);
@@ -308,8 +353,6 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
             return renderer;
         }
-
-
 
         public static IMesh CreateSimpleTestMesh()
         {
