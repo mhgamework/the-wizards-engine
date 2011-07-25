@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DirectX11.Graphics;
+using DirectX11.Rendering.CSM;
 using SlimDX;
+using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 
 namespace DirectX11.Rendering.Deferred
@@ -17,7 +19,7 @@ namespace DirectX11.Rendering.Deferred
         private readonly DX11Game game;
         private readonly GBuffer gBuffer;
         private DeviceContext context;
-        private BasicShader shader;
+        private BasicShader shadowsShader;
 
         private Vector3 lightDirection;
         public Vector3 LightDirection
@@ -44,6 +46,8 @@ namespace DirectX11.Rendering.Deferred
 
         public bool ShadowsEnabled { get; set; }
 
+        public CSMRenderer CSMRenderer { get; private set; }
+
 
         public DirectionalLightRenderer(DX11Game game, GBuffer gBuffer)
         {
@@ -52,24 +56,54 @@ namespace DirectX11.Rendering.Deferred
             var device = game.Device;
             context = device.ImmediateContext;
 
-            shader = BasicShader.LoadAutoreload(game,
+            shadowsShader = BasicShader.LoadAutoreload(game,
                                                 new System.IO.FileInfo(
                                                     "..\\..\\DirectX11\\Shaders\\Deferred\\DirectionalLight.fx"));
 
-            shader.SetTechnique("Technique0");
+            shadowsShader.SetTechnique("Technique0");
+
+            noShadowsShader = BasicShader.LoadAutoreload(game,
+                                                         new System.IO.FileInfo(
+                                                             "..\\..\\DirectX11\\Shaders\\Deferred\\DirectionalLight.fx"), null, new[] { new ShaderMacro("DISABLE_SHADOWS") });
+
+            noShadowsShader.SetTechnique("Technique0");
 
             quad = new FullScreenQuad(device);
 
-            layout = FullScreenQuad.CreateInputLayout(device, shader.GetCurrentPass(0));
+            layout = FullScreenQuad.CreateInputLayout(device, shadowsShader.GetCurrentPass(0));
 
             LightDirection = Vector3.Normalize(new Vector3(1, 2, 1));
             Color = new Vector3(1, 1, 0.9f);
 
+            CSMRenderer = new CSM.CSMRenderer(game);
 
+
+        }
+
+        private DirectionalLight csmLight = new DirectionalLight();
+        private BasicShader noShadowsShader;
+
+        public void DrawUpdatedShadowmap(CSM.CSMRenderer.RenderPrimitives renderDelegate, ICamera mainCamera)
+        {
+            csmLight.Direction = LightDirection;
+            CSMRenderer.UpdateShadowMap(renderDelegate, csmLight, mainCamera);
         }
 
         public void Draw()
         {
+            BasicShader shader;
+
+            if (ShadowsEnabled)
+            {
+                shader = shadowsShader;
+
+                CSMRenderer.SetShadowOcclusionShaderVariables(shader, game.Camera);
+                shader.Effect.GetVariableByName("InvertProjection").AsMatrix().SetMatrix(
+                    Matrix.Invert(game.Camera.Projection));
+            }
+            else
+                shader = noShadowsShader;
+
             shader.Effect.GetVariableByName("cameraPosition").AsVector().Set(game.Camera.ViewInverse.GetTranslation());
             shader.Effect.GetVariableByName("InvertViewProjection").AsMatrix().SetMatrix(Matrix.Invert(game.Camera.ViewProjection));
             shader.Effect.GetVariableByName("lightDirection").AsVector().Set(lightDirection);
@@ -81,8 +115,13 @@ namespace DirectX11.Rendering.Deferred
             quad.Draw(layout);
 
             gBuffer.UnsetFromShader(shader);
+            if (ShadowsEnabled)
+                CSMRenderer.UnSetShadowOcclusionShaderVariables(shader);
+
 
             shader.Apply();
+
+
 
 
 

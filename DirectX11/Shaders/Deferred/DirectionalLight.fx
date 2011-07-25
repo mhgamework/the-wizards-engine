@@ -1,6 +1,12 @@
 ﻿
 #include <GBuffer.fx>
 
+
+#ifndef DISABLE_SHADOWS
+#include <CSM/CSMCommon.fx>
+#endif
+
+
 //direction of the light
 float3 lightDirection;
 //color of the light 
@@ -9,6 +15,8 @@ float3 Color;
 float3 cameraPosition; 
 //this is used to compute the world-position
 matrix InvertViewProjection; 
+
+matrix InvertProjection;
 
 SamplerState samLinear
 {
@@ -47,6 +55,11 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 	position.y = -(input.TexCoord.y * 2.0f - 1.0f);
 	position.z = g.Depth;
 	position.w = 1.0f;
+	 
+	float4 vPositionVS = mul( position , InvertProjection );
+	vPositionVS /= vPositionVS.w; 
+
+	//return vPositionVS;
 	
 	//transform to world space
 	position = mul(position, InvertViewProjection);
@@ -71,11 +84,19 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 	//compute specular light
     float specularLight = g.SpecularIntensity * pow( saturate(dot(reflectionVector, directionToCamera)), power);
 
+	int iSplit;
+	int iFilterSize = 7;
+
+	float shadowTerm = 1;
+
+#ifndef DISABLE_SHADOWS
+	shadowTerm = CalculateCSMShadowTerm(vPositionVS, iSplit, iFilterSize);
+#endif
 		
 	// Big booboo: when dot(reflectionVector, directionToCamera) <0, specularLight seems to become negative infinity?
 	if (specularLight< 0) specularLight = 0; 
     //output the two lights
-    return float4(diffuseLight.rgb, specularLight) ;
+    return float4(diffuseLight.rgb, specularLight) * shadowTerm;
 	//return float4(specularLight,0,0,0);
 }
 technique10 Technique0

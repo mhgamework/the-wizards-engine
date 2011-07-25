@@ -140,51 +140,51 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             var toggle = false;
 
             var light = new DirectionalLight();
-            
+
 
             game.GameLoopEvent += delegate
                                       {
                                           context.ClearState();
-                filledGBuffer.DrawUpdatedGBuffer();
+                                          filledGBuffer.DrawUpdatedGBuffer();
 
-                csmRenderer.UpdateShadowMap(delegate(OrthographicCamera lightCamera)
-                                                {
-                                                    game.Camera = lightCamera;
+                                          csmRenderer.UpdateShadowMap(delegate(OrthographicCamera lightCamera)
+                                                                          {
+                                                                              game.Camera = lightCamera;
 
-                                                    filledGBuffer.Draw();
+                                                                              filledGBuffer.Draw();
 
-                                                    game.Camera = game.SpecaterCamera;
-                                                }, light, game.SpecaterCamera);
+                                                                              game.Camera = game.SpecaterCamera;
+                                                                          }, light, game.SpecaterCamera);
 
-                game.SetBackbuffer();
+                                          game.SetBackbuffer();
 
-                if (game.Keyboard.IsKeyPressed(Key.C))
-                    toggle = !toggle;
+                                          if (game.Keyboard.IsKeyPressed(Key.C))
+                                              toggle = !toggle;
 
-                if (toggle)
-                {
+                                          if (toggle)
+                                          {
 
-                    light.Direction = game.SpecaterCamera.CameraDirection;
-                }
+                                              light.Direction = game.SpecaterCamera.CameraDirection;
+                                          }
 
 
-                if (game.Keyboard.IsKeyDown(Key.I))
-                    DrawGBuffer(game, filledGBuffer.GBuffer);
-                else
-                {
-                    csmRenderer.RenderShadowOcclusion(game.SpecaterCamera, filledGBuffer.GBuffer.DepthRV);
-                    //light.Draw();
-                    game.TextureRenderer.Draw(csmRenderer.ShadowMapRV, new Vector2(10, 10), new Vector2(590, 200));
-                    
-                    for (int i = 0; i < 6; i++)
-                    {
-                        //game.LineManager3D.AddViewFrustum(light.LightCameras[i].ViewProjection,
-                        //new Color4(0, 1, 0));
-                    }
+                                          if (game.Keyboard.IsKeyDown(Key.I))
+                                              DrawGBuffer(game, filledGBuffer.GBuffer);
+                                          else
+                                          {
+                                              csmRenderer.RenderShadowOcclusion(game.SpecaterCamera, filledGBuffer.GBuffer.DepthRV);
+                                              //light.Draw();
+                                              game.TextureRenderer.Draw(csmRenderer.ShadowMapRV, new Vector2(10, 10), new Vector2(590, 200));
 
-                }
+                                              for (int i = 0; i < 6; i++)
+                                              {
+                                                  //game.LineManager3D.AddViewFrustum(light.LightCameras[i].ViewProjection,
+                                                  //new Color4(0, 1, 0));
+                                              }
 
-            };
+                                          }
+
+                                      };
 
             game.Run();
 
@@ -210,14 +210,15 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             {
                 filledGBuffer.DrawUpdatedGBuffer();
 
-                //light.UpdateShadowMap(delegate(CustomCamera lightCamera)
-                //{
-                //    game.Camera = lightCamera;
 
-                //    filledGBuffer.Draw();
+                light.DrawUpdatedShadowmap(delegate(OrthographicCamera lightCamera)
+                {
+                    game.Camera = lightCamera;
 
-                //    game.Camera = game.SpecaterCamera;
-                //});
+                    filledGBuffer.Draw();
+
+                    game.Camera = game.SpecaterCamera;
+                }, game.SpecaterCamera);
 
 
                 game.SetBackbuffer();
@@ -237,7 +238,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 else
                 {
                     light.Draw();
-                    //game.TextureRenderer.Draw(light.ShadowCubeMapRv, new Vector2(10, 10), new Vector2(300, 300));
+                    game.TextureRenderer.Draw(light.CSMRenderer.ShadowMapRV, new Vector2(10, 10), new Vector2(590, 200));
                     for (int i = 0; i < 6; i++)
                     {
                         //game.LineManager3D.AddViewFrustum(light.LightCameras[i].ViewProjection,

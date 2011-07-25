@@ -92,7 +92,7 @@ namespace DirectX11.Rendering.CSM
             // Create the shadow map, using a 32-bit floating-point surface format
             shadowMap = new Texture2D(device, new Texture2DDescription
                                                   {
-                                                      Width = ShadowMapSize*NumSplits,
+                                                      Width = ShadowMapSize * NumSplits,
                                                       Height = ShadowMapSize,
                                                       MipLevels = 1,
                                                       ArraySize = 1,
@@ -182,6 +182,11 @@ namespace DirectX11.Rendering.CSM
             for (int i = 1; i < splitDepths.Length - 1; i++)
                 splitDepths[i] = splitConstant * near * (float)Math.Pow(far / near, i / N) + (1.0f - splitConstant) * ((near + (i / N)) * (far - near));
 
+
+
+
+
+
             // Render our scene geometry to each split of the cascade
             for (int i = 0; i < NumSplits; i++)
             {
@@ -191,6 +196,18 @@ namespace DirectX11.Rendering.CSM
                 lightCameras[i] = CalculateFrustum(light, mainCamera, minZ, maxZ);
 
                 renderShadowMap(renderDelegate, i);
+            }
+
+
+            // We'll use these clip planes to determine which split a pixel belongs to
+            for (int i = 0; i < NumSplits; i++)
+            {
+                lightClipPlanes[i].X = -splitDepths[i];
+                lightClipPlanes[i].Y = -splitDepths[i + 1];
+
+                lightViewProjectionMatrices[i] = lightCameras[i].ViewProjection;
+                //lightProjectionMatrices[i] = lightCameras[i].Projection;
+                //lightCameras[ i ].GetViewProjMatrix( out  );
             }
 
         }
@@ -259,6 +276,8 @@ namespace DirectX11.Rendering.CSM
             lightCamera.View = viewMatrix;
 
 
+
+
             if (RenderDebug)
             {
                 game.LineManager3D.AddCenteredBox(frustumCentroid - (light.Direction * distFromCentroid), 1.0f,
@@ -316,30 +335,14 @@ namespace DirectX11.Rendering.CSM
             cameraTransform = mainCamera.ViewInverse;
             //mainCamera.GetWorldMatrix( out cameraTransform );
 
-            // We'll use these clip planes to determine which split a pixel belongs to
-            for (int i = 0; i < NumSplits; i++)
-            {
-                lightClipPlanes[i].X = -splitDepths[i];
-                lightClipPlanes[i].Y = -splitDepths[i + 1];
-
-                lightViewProjectionMatrices[i] = lightCameras[i].ViewProjection;
-                //lightProjectionMatrices[i] = lightCameras[i].Projection;
-                //lightCameras[ i ].GetViewProjMatrix( out  );
-            }
-
             // Setup the Effect
             shadowMapShader.SetTechnique(shadowOcclusionTechniques[(int)filteringType]);
-            shadowMapShader.Effect.GetVariableByName("g_matInvView").AsMatrix().SetMatrix(cameraTransform);
-            shadowMapShader.Effect.GetVariableByName("g_matProj").AsMatrix().SetMatrix(mainCamera.Projection);
-            shadowMapShader.Effect.GetVariableByName("g_matLightViewProj").AsMatrix().SetMatrixArray(lightViewProjectionMatrices);
-            //shadowMapShader.Effect.GetVariableByName("g_matLightProj").AsMatrix().SetMatrixArray(lightProjectionMatrices);
+            shadowMapShader.Effect.GetVariableByName("g_matProj").AsMatrix().SetMatrix(Matrix.Invert(mainCamera.Projection));
             shadowMapShader.Effect.GetVariableByName("g_vFrustumCornersVS").AsVector().Set(farFrustumCornersVS.Select(o => new Vector4(o, 1)).ToArray());
-            shadowMapShader.Effect.GetVariableByName("g_vClipPlanes").AsVector().Set(lightClipPlanes.Select(o => new Vector4(o, 1, 1)).ToArray());
-            shadowMapShader.Effect.GetVariableByName("ShadowMap").AsResource().SetResource(ShadowMapRV);
             shadowMapShader.Effect.GetVariableByName("DepthTexture").AsResource().SetResource(depthTextureRV);
-            //shadowMapShader.Effect.GetVariableByName( "g_vOcclusionTextureSize" ).AsVector() .Set( new Vector2( shadowOcclusion.Width, shadowOcclusion.Height ) );
-            shadowMapShader.Effect.GetVariableByName("g_vShadowMapSize").AsVector().Set(new Vector2(shadowMap.Description.Width, shadowMap.Description.Height));
             shadowMapShader.Effect.GetVariableByName("g_bShowSplitColors").AsScalar().Set(showCascadeSplits);
+
+            SetShadowOcclusionShaderVariables(shadowMapShader, mainCamera);
 
             shadowMapShader.GetCurrentPass(0).Apply(context);
             // Draw the full screen quad		
@@ -348,11 +351,26 @@ namespace DirectX11.Rendering.CSM
 
             // Set to render to the back buffer
             //graphicsDevice.SetRenderTarget( 0, null );
-
+            UnSetShadowOcclusionShaderVariables(shadowMapShader);
 
             shadowMapShader.Effect.GetVariableByName("ShadowMap").AsResource().SetResource(null);
             shadowMapShader.Effect.GetVariableByName("DepthTexture").AsResource().SetResource(null);
             shadowMapShader.GetCurrentPass(0).Apply(context);
+
+        }
+
+        public void SetShadowOcclusionShaderVariables(BasicShader shader, ICamera mainCamera)
+        {
+            shader.Effect.GetVariableByName("g_matInvView").AsMatrix().SetMatrix(mainCamera.ViewInverse);
+            shader.Effect.GetVariableByName("g_matLightViewProj").AsMatrix().SetMatrixArray(lightViewProjectionMatrices);
+            shader.Effect.GetVariableByName("g_vClipPlanes").AsVector().Set(lightClipPlanes.Select(o => new Vector4(o, 1, 1)).ToArray());
+            shader.Effect.GetVariableByName("ShadowMap").AsResource().SetResource(ShadowMapRV);
+            shader.Effect.GetVariableByName("g_vShadowMapSize").AsVector().Set(new Vector2(shadowMap.Description.Width, shadowMap.Description.Height));
+
+        }
+        public void UnSetShadowOcclusionShaderVariables(BasicShader shader)
+        {
+            shader.Effect.GetVariableByName("ShadowMap").AsResource().SetResource(null);
 
         }
 

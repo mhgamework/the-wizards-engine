@@ -90,13 +90,13 @@ namespace DirectX11.Graphics
             watcher.EnableRaisingEvents = true;
 
             watcher = new FileSystemWatcher(IncludeHandler.GlobalShaderPath, "*");
-
+            watcher.IncludeSubdirectories = true;
             watcher.NotifyFilter = NotifyFilters.LastWrite;
             watcher.Changed += delegate(object sender, FileSystemEventArgs e)
             {
                 lock (this)
                 {
-                    if (includeHandler.IncludedFiles.Contains(e.Name))
+                    if (includeHandler.IncludedFiles.Contains(e.Name.Replace("\\", "/"))) 
                         reloadScheduled = true;
                 }
             };
