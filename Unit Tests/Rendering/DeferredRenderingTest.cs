@@ -344,6 +344,8 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             game.Run();
         }
 
+       
+
 
         public static DeferredMeshRenderer InitDefaultMeshRenderer(DX11Game game, GBuffer gBuffer)
         {

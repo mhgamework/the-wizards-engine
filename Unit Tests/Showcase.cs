@@ -20,6 +20,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
+using SlimDX.DirectInput;
 using MathHelper = DirectX11.MathHelper;
 using TexturePool = MHGameWork.TheWizards.Rendering.TexturePool;
 
@@ -517,5 +518,68 @@ namespace MHGameWork.TheWizards.Tests
 
         }
 
+
+        [Test]
+        public void TestDeferredRendererCity()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+
+            var renderer = new DeferredRenderer(game);
+
+            var c = new OBJToRAMMeshConverter(new RAMTextureFactory());
+
+
+            var importer = new ObjImporter();
+            importer.AddMaterialFileStream("Town001.mtl", new FileStream("../../bin/GameData/Core/Town/OBJ03/Town001.mtl", FileMode.Open));
+            importer.ImportObjFile("../../bin/GameData/Core/Town/OBJ03/Town001.obj");
+
+            var mesh = c.CreateMesh(importer);
+
+            var el = renderer.CreateMeshElement(mesh);
+            var directional = renderer.CreateDirectionalLight();
+            directional.ShadowsEnabled = true;
+            var point = renderer.CreatePointLight();
+            point.LightRadius *= 2;
+            //point.ShadowsEnabled = true;
+            var spot = renderer.CreateSpotLight();
+            spot.LightRadius *= 2;
+            spot.ShadowsEnabled = true;
+
+            int state = 0;
+            game.GameLoopEvent += delegate
+            {
+                if (game.Keyboard.IsKeyPressed(Key.D1))
+                    state = 0;
+                if (game.Keyboard.IsKeyPressed(Key.D2))
+                    state = 1;
+                if (game.Keyboard.IsKeyPressed(Key.D3))
+                    state = 2;
+                if (game.Keyboard.IsKeyPressed(Key.D4))
+                    state = 3;
+
+                switch (state)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        directional.LightDirection = game.SpecaterCamera.CameraDirection;
+                        break;
+                    case 2:
+                        point.LightPosition = game.SpecaterCamera.CameraPosition;
+
+                        break;
+                    case 3:
+                        spot.LightPosition = game.SpecaterCamera.CameraPosition;
+                        spot.SpotDirection = game.SpecaterCamera.CameraDirection;
+                        break;
+                }
+
+                renderer.Draw();
+
+            };
+
+            game.Run();
+        }
     }
 }

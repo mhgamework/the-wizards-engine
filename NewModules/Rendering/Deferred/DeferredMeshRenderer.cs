@@ -29,6 +29,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             this.texturePool = texturePool;
             context = game.Device.ImmediateContext;
 
+            Culler = new CullerNoCull();
+
             initialize();
         }
 
@@ -50,6 +52,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private InputLayout layout;
         private ShaderResourceView checkerTextureRV;
 
+        public ICuller Culler { get; set; }
 
         public DeferredMeshRenderElement AddMesh(IMesh mesh)
         {
@@ -213,6 +216,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         public void Draw()
         {
+            //TODO: call UpdateCullable in the correct places
+            Culler.CullCamera = game.Camera;
+            Culler.UpdateVisibility();
 
             Performance.BeginEvent(new Color4(System.Drawing.Color.Red), "BeginDrawDeferredMeshes");
             context.InputAssembler.InputLayout = layout;
@@ -231,6 +237,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 for (int j = 0; j < data.WorldMatrices.Count; j++)
                 {
                     if (data.ElementDeleted[j]) continue;
+                    if (((ICullable)data).VisibleReferenceCount == 0) continue;
                     var mat = data.WorldMatrices[j];
                     renderMesh(data, mat);
                 }

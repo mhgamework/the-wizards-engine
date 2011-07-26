@@ -47,6 +47,10 @@ float CalcShadowTermPCF(float fLightDepth, float2 vShadowTexCoord)
 // Calculates the shadow term using PCF soft-shadowing
 float CalcShadowTermSoftPCF(float fLightDepth, float2 vShadowTexCoord, int iSqrtSamples)
 {
+	float bias = BIAS;
+	bias = 0.001 * fLightDepth;
+	//bias = 0.0005;
+	//bias = 0.001;
 	float fShadowTerm = 0.0f;  
 		
 	float fRadius = (iSqrtSamples - 1.0f) / 2;
@@ -61,7 +65,7 @@ float CalcShadowTermSoftPCF(float fLightDepth, float2 vShadowTexCoord, int iSqrt
 			vOffset /= g_vShadowMapSize;
 			float2 vSamplePoint = vShadowTexCoord + vOffset;			
 			float fDepth = ShadowMap.Sample(samPoint, vSamplePoint).x;
-			float fSample = (fLightDepth <= fDepth + BIAS);
+			float fSample = (fLightDepth <= fDepth + bias);
 			
 			// Edge tap smoothing
 			float xWeight = 1;

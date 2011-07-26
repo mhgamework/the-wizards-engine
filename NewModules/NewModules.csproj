@@ -182,6 +182,7 @@
     </Compile>
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientFiles.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientMain.cs" />
+    <Compile Include="Rendering\CullerNoCull.cs" />
     <Compile Include="Rendering\Deferred\DeferredMeshVertex.cs" />
     <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
     <Compile Include="Rendering\Deferred\DeferredMeshRenderer.cs" />
