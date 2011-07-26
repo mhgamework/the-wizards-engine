@@ -115,5 +115,37 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             game.Run();
 
         }
+
+        [Test]
+        public void TestCombineFinalSSAO()
+        {
+            //TODO: add a way to show the specular in the alpha channel
+
+            var game = new DX11Game();
+            game.InitDirectX();
+
+            var test = new DeferredTest.TestCombineFinalClass(game);
+
+            var ssao = new HorizonSSAORenderer(game, 800, 600);
+
+
+            game.GameLoopEvent += delegate
+            {
+                test.DrawUpdatedDeferredRendering();
+
+                ssao.OnFrameRender(test.FilledGBuffer.GBuffer.DepthRV, test.FilledGBuffer.GBuffer.NormalRV);
+
+
+                game.Device.ImmediateContext.ClearState();
+                game.SetBackbuffer();
+
+                test.DrawCombined(ssao.MSsaoBuffer.pSRV);
+
+                //game.TextureRenderer.Draw(ssao.MSsaoBuffer.pSRV, new SlimDX.Vector2(0, 0),
+                //                                                   new SlimDX.Vector2(800, 600));
+            };
+
+            game.Run();
+        }
     }
 }

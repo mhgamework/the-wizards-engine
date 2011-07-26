@@ -9,6 +9,12 @@ SamplerState samLinear
     AddressU = Wrap;
     AddressV = Wrap;
 };
+SamplerState samPoint
+{
+    Filter = MIN_MAG_MIP_POINT;
+    AddressU = Wrap;
+    AddressV = Wrap;
+};
 struct VertexShaderInput
 {
     float3 Position : POSITION0;
@@ -36,11 +42,10 @@ float3 ToneMap(float3 vColor)
 {
 
 	// Get the calculated average luminance 
-	//NOTE: 300 is TOO HUGE??
+	//NOTE: between -infinity and 16 ?
 	//TODO: float fLumAvg = 300;//tex2D(PointSampler1, float2(0.5f, 0.5f)).r;    
 	
-	float fLumAvg = lumAvgMap.Sample(samLinear,float2(0.5f,0.5f)).r;
-	 
+	float fLumAvg = lumAvgMap.Sample(samPoint,float2(0.5f,0.5f)).r;
 	// Calculate the luminance of the current pixel 
 	float fLumPixel = dot(vColor, LUM_CONVERT);     
 	// Apply the modified operator (Eq. 4) 

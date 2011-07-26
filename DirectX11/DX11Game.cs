@@ -243,6 +243,10 @@ namespace DirectX11
             basicShaders.Add(shader);
         }
 
+        public void AddToWindowTitle(string text)
+        {
+            form.Form.Text += text;
+        }
 
         /// <summary>
         /// Sets the OutputMerger's targets and depthstencilview to the backbuffer's, and sets the viewport

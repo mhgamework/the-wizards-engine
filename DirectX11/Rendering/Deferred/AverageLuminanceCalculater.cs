@@ -74,7 +74,8 @@ namespace DirectX11.Rendering.Deferred
                                                                                Dimension = ShaderResourceViewDimension.Texture2D,
                                                                                Flags = ShaderResourceViewExtendedBufferFlags.None,
                                                                                MipLevels = 1,
-                                                                               MostDetailedMip = luminanceMap.Description.MipLevels - 1
+                                                                               MostDetailedMip = luminanceMap.Description.MipLevels - 1,
+                                                                               Format = Format.R32_Float
                                                                            });
 
             
@@ -88,7 +89,7 @@ namespace DirectX11.Rendering.Deferred
                 Height = 1,
                 ArraySize = 1,
                 SampleDescription = new SampleDescription(1, 0),
-                MipLevels = 1
+                MipLevels = 1,
             };
 
             averageLum1 = new Texture2D(device, descMini);
@@ -121,6 +122,7 @@ namespace DirectX11.Rendering.Deferred
 
         public void DrawUpdatedLogLuminance()
         {
+            context.ClearState();
             context.OutputMerger.SetTargets(luminanceRTV);
             context.Rasterizer.SetViewports(new Viewport(0, 0, luminanceMap.Description.Width,
                                                          luminanceMap.Description.Height));
@@ -134,6 +136,7 @@ namespace DirectX11.Rendering.Deferred
             shader.Effect.GetVariableByName("hdrImage").AsResource().SetResource(null);
             shader.Apply();
 
+            //TODO: Do not use GenerateMips, generate the manually. This might solve the NAN problem
             context.GenerateMips(luminanceRV);
 
 
@@ -141,6 +144,7 @@ namespace DirectX11.Rendering.Deferred
 
         public void DrawUpdatedAdaptedLogLuminance()
         {
+            context.ClearState();
             swapAverageLumMaps();
 
             context.OutputMerger.SetTargets(currAverageLumRTV);

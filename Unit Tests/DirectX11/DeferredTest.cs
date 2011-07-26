@@ -895,7 +895,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
         public class TestCombineFinalClass
         {
             private readonly DX11Game game;
-            private TestFilledGBuffer filledGBuffer;
+            public TestFilledGBuffer FilledGBuffer { get; private set; }
             private SpotLightRenderer spot;
             private PointLightRenderer point;
             private DirectionalLightRenderer directional;
@@ -913,16 +913,16 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 var device = game.Device;
                 context = device.ImmediateContext;
 
-                filledGBuffer = new TestFilledGBuffer(game, 800, 600);
+                FilledGBuffer = new TestFilledGBuffer(game, 800, 600);
 
-                spot = new SpotLightRenderer(game, filledGBuffer.GBuffer);
-                point = new PointLightRenderer(game, filledGBuffer.GBuffer);
-                directional = new DirectionalLightRenderer(game, filledGBuffer.GBuffer);
+                spot = new SpotLightRenderer(game, FilledGBuffer.GBuffer);
+                point = new PointLightRenderer(game, FilledGBuffer.GBuffer);
+                directional = new DirectionalLightRenderer(game, FilledGBuffer.GBuffer);
 
                 state = 0;
 
 
-                combineFinal = new CombineFinalRenderer(game, filledGBuffer.GBuffer);
+                combineFinal = new CombineFinalRenderer(game, FilledGBuffer.GBuffer);
 
 
 
@@ -931,8 +931,8 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                     BindFlags =
                         BindFlags.RenderTarget | BindFlags.ShaderResource,
                     Format = Format.R16G16B16A16_Float,
-                    Width = filledGBuffer.GBuffer.Width,
-                    Height = filledGBuffer.GBuffer.Height,
+                    Width = FilledGBuffer.GBuffer.Width,
+                    Height = FilledGBuffer.GBuffer.Height,
                     ArraySize = 1,
                     SampleDescription = new SampleDescription(1, 0),
                     MipLevels = 1
@@ -946,7 +946,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             public void DrawUpdatedDeferredRendering()
             {
-                filledGBuffer.DrawUpdatedGBuffer();
+                FilledGBuffer.DrawUpdatedGBuffer();
 
 
                 if (game.Keyboard.IsKeyPressed(Key.D1))
@@ -981,7 +981,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 {
                     context.ClearState();
                     game.SetBackbuffer();
-                    DrawGBuffer(game, filledGBuffer.GBuffer);
+                    DrawGBuffer(game, FilledGBuffer.GBuffer);
 
                 }
                 else
@@ -1017,6 +1017,10 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             public void DrawCombined()
             {
                 combineFinal.DrawCombined();
+            }
+            public void DrawCombined(ShaderResourceView ambientOcclusionSRV)
+            {
+                combineFinal.DrawCombined(ambientOcclusionSRV);
             }
         }
 
@@ -1076,6 +1080,17 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
                         box.Draw();
                     }
+                }
+
+                for (int j = 0; j < 3; j++)
+                {
+                    shader.Effect.GetVariableByName("txDiffuse").AsResource().SetResource(diffuseTextureRv);
+                    shader.Effect.GetVariableByName("World").AsMatrix().SetMatrix(Matrix.Translation(18, 1, 8 * j));
+                    shader.Effect.GetVariableByName("View").AsMatrix().SetMatrix(game.Camera.View);
+                    shader.Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(game.Camera.Projection);
+                    shader.Apply();
+
+                    box.Draw();
                 }
             }
 

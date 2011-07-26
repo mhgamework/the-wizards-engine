@@ -388,12 +388,13 @@ float4 HORIZON_BASED_AO_PS( uniform bool useNormal, uniform int qualityMode, Pos
 {
 	
     float3 P = fetch_eye_pos(IN.texUV);
+	
 	//return t(P);
     
     // Project the radius of influence g_R from eye space to texture space.
     // The scaling by 0.5 is to go from [-1,1] to [0,1].
     float2 step_size = 0.5 * g_R  * g_FocalLen / P.z ;
-	//return t(step_size);
+	//return t(step_size*10);
     // Early out if the projected radius is smaller than 1 pixel.
     float numSteps = min ( g_NumSteps, min(step_size.x * g_Resolution.x, step_size.y * g_Resolution.y));
     if( numSteps < 1.0 ) return 1.0;
@@ -472,8 +473,8 @@ float4 HORIZON_BASED_AO_PS( uniform bool useNormal, uniform int qualityMode, Pos
         //}
         break;
     }
-
-    return 1.0 - ao / g_NumDir * g_Contrast;
+	//return ao;
+    return ao / g_NumDir * g_Contrast; // Was inverted (1-x)
 }
 
 //----------------------------------------------------------------------------------

@@ -95,8 +95,13 @@ namespace DirectX11.Rendering.Deferred
 
         public void DrawCombined()
         {
+            DrawCombined(null);
+        }
+        public void DrawCombined(ShaderResourceView ambientOcclusionRV)
+        {
             shader.Effect.GetVariableByName("colorMap").AsResource().SetResource(gBuffer.DiffuseRV);
             shader.Effect.GetVariableByName("lightMap").AsResource().SetResource(LightAccumulationRV);
+            shader.Effect.GetVariableByName("ambientOcclusionMap").AsResource().SetResource(ambientOcclusionRV);
 
 
             shader.Apply();
@@ -104,6 +109,7 @@ namespace DirectX11.Rendering.Deferred
 
             shader.Effect.GetVariableByName("colorMap").AsResource().SetResource(null);
             shader.Effect.GetVariableByName("lightMap").AsResource().SetResource(null);
+            shader.Effect.GetVariableByName("ambientOcclusionMap").AsResource().SetResource(null);
             shader.Apply();
 
 

@@ -9,7 +9,7 @@ single cbuffer sharedData
 	matrix Projection;
 };
 
-float specularIntensity = 8.0f;
+float specularIntensity = 0.1f;
 float specularPower = 0.2f;
 Texture2D txDiffuse;
 SamplerState samLinear

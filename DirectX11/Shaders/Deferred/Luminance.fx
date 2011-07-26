@@ -8,6 +8,12 @@ SamplerState samLinear
     AddressU = Wrap;
     AddressV = Wrap;
 };
+SamplerState samPoint
+{
+    Filter = MIN_MAG_MIP_POINT;
+    AddressU = Clamp;
+    AddressV = Clamp;
+};
 struct VertexShaderInput
 {
     float3 Position : POSITION0;
@@ -51,7 +57,7 @@ Texture2D lastLum;
 Texture2D currentLum;
 float g_fDt;
 
-float4 CalcAdaptedLumPS (VertexShaderOutput input)  : SV_TARGET0
+float CalcAdaptedLumPS (VertexShaderOutput input)  : SV_TARGET0
 {
 	
 	// CurrentLum is logarithmic scale
@@ -60,20 +66,25 @@ float4 CalcAdaptedLumPS (VertexShaderOutput input)  : SV_TARGET0
 	// NOTE: these scales i divised from the original code for this algorithm
 	// However, logically i dont see why this should be like this
 	// Both give nonlinear fading between adapted luminance levels
-
-	float fLastLum = lastLum.Sample(samLinear,0).r;
-    float fCurrentLogLum = currentLum.Sample(samLinear,0).r;
-    
-	float fCurrentLum = 1+ 1e-5+ exp(fCurrentLogLum); // I have no clue why there is +1 here, but it was in the original code
+	
+	float fLastLum = lastLum.Sample(samPoint,0).r;
+    float fCurrentLogLum = currentLum.Sample(samPoint,0).x;
+	
+	//if (fCurrentLogLum>1 || fCurrentLogLum < 2 )return 1;// fCurrentLogLum = -6,898349;
+	//if (fCurrentLogLum>1 )return 1;// fCurrentLogLum = -6,898349;
+	//if (fCurrentLogLum < 2 )return 1;// fCurrentLogLum = -6,898349;
+	//return fCurrentLogLum;
+	float fCurrentLum =  1e-5+ exp(fCurrentLogLum); // I have no clue why there is +1 here, but it was in the original code. EDIT: the +1 sucks
+	//return fCurrentLum;
 	//float fCurrentLum = fCurrentLogLum; 
-
     // Adapt the luminance using Pattanaik's technique
     const float fTau = 0.5f;
+	
     float fAdaptedLum = fLastLum + (fCurrentLum - fLastLum) * (1 - exp(-g_fDt * fTau));
-//	return t(0.1f);
+	//	return t(0.1f);
 	//return t(fCurrentLum);
     //return t(fLastLum+ (fCurrentLum - fLastLum) );
-	//if (fAdaptedLum < 0) fAdaptedLum = 0;
+	if (! (fAdaptedLum > 0 && fAdaptedLum <10000)) fAdaptedLum = fLastLum; // MEGA CHEAT, to solve the strange NAN problem
     return float4(fAdaptedLum, 1.0f, 1.0f, 1.0f);
 }
 
