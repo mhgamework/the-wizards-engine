@@ -149,7 +149,7 @@ namespace MHGameWork.TheWizards.Physics
 
         public ContainmentType ContainedInNode(ClientPhysicsQuadTreeNode _node)
         {
-            return _node.NodeData.BoundingBox.Contains(GetBoundingSphere());
+            return _node.NodeData.BoundingBox.xna().Contains(GetBoundingSphere());
         }
 
         #endregion

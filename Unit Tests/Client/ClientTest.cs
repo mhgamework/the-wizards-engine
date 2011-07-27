@@ -295,7 +295,7 @@ namespace MHGameWork.TheWizards.Tests.Client
 
             public ContainmentType ContainedInNode( ClientPhysicsQuadTreeNode _node )
             {
-                return _node.NodeData.BoundingBox.Contains( new BoundingSphere( Center, Radius ) );
+                return _node.NodeData.BoundingBox.xna().Contains(new BoundingSphere(Center, Radius));
             }
 
             #endregion

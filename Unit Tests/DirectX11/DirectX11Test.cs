@@ -537,12 +537,12 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             game.InitDirectX();
 
-            var mat = game.SpecaterCamera.ViewProjection;
+            var mat = game.SpectaterCamera.ViewProjection;
 
             game.GameLoopEvent += delegate
                                       {
                                           if (game.Keyboard.IsKeyDown(Key.K))
-                                              mat = game.SpecaterCamera.ViewProjection;
+                                              mat = game.SpectaterCamera.ViewProjection;
                                           game.LineManager3D.AddViewFrustum(mat, new Color4(1, 0, 0));
                                       };
             game.Run();

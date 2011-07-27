@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.Rendering
         public ICamera CullCamera
         {
             get { return cullCamera; }
-            set { cullCamera = value; culler.CullCamera = cullCamera; }
+            set { cullCamera = value; culler.CullCamera = new ConversionCameraDX(cullCamera); }
         }
         public ICamera RenderCamera
         {

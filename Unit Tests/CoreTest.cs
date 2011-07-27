@@ -38,7 +38,7 @@ namespace MHGameWork.TheWizards.Tests
 
             TestQuadTreeNode root = new TestQuadTreeNode();
             QuadTreeNodeData<TestQuadTreeNode> rootNodeData = new QuadTreeNodeData<TestQuadTreeNode>();
-            rootNodeData.BoundingBox = new BoundingBox(new Vector3(-20, -20, -20), new Vector3(20, 20, 20));
+            rootNodeData.BoundingBox = new BoundingBox(new Vector3(-20, -20, -20), new Vector3(20, 20, 20)).dx();
 
 
             TestQuadTreeNode child = new TestQuadTreeNode();
@@ -46,7 +46,7 @@ namespace MHGameWork.TheWizards.Tests
             child = new TestQuadTreeNode();
             rootNodeData.UpperLeft = child;
             childNodeData.Parent = root;
-            childNodeData.BoundingBox = new BoundingBox(new Vector3(-20, -20, -20), new Vector3(0, 20, 0));
+            childNodeData.BoundingBox = new BoundingBox(new Vector3(-20, -20, -20), new Vector3(0, 20, 0)).dx();
 
             child.NodeData = childNodeData;
 
@@ -66,7 +66,7 @@ namespace MHGameWork.TheWizards.Tests
             TestQuadTreeNode root = new TestQuadTreeNode();
 
             root.NodeData = new QuadTreeNodeData<TestQuadTreeNode>(
-                new BoundingBox(new Vector3(-100, -5, -100), new Vector3(100, 5, 100))
+                new BoundingBox(new Vector3(-100, -5, -100), new Vector3(100, 5, 100)).dx()
                 );
 
             QuadTree.Split(root, 4);

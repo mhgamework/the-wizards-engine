@@ -19,6 +19,7 @@ using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
 using Buffer = SlimDX.Direct3D11.Buffer;
 using DataStream = SlimDX.DataStream;
+using SpectaterCamera = DirectX11.Graphics.SpectaterCamera;
 using TexturePool = MHGameWork.TheWizards.Rendering.TexturePool;
 
 namespace MHGameWork.TheWizards.Tests.Rendering
@@ -303,7 +304,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             directional.ShadowsEnabled = true;
             var point = renderer.CreatePointLight();
             point.LightRadius *= 2;
-            point.ShadowsEnabled = true; 
+            point.ShadowsEnabled = true;
             var spot = renderer.CreateSpotLight();
             spot.LightRadius *= 2;
             spot.ShadowsEnabled = true;
@@ -325,15 +326,15 @@ namespace MHGameWork.TheWizards.Tests.Rendering
                                               case 0:
                                                   break;
                                               case 1:
-                                                  directional.LightDirection = game.SpecaterCamera.CameraDirection;
+                                                  directional.LightDirection = game.SpectaterCamera.CameraDirection;
                                                   break;
                                               case 2:
-                                                  point.LightPosition = game.SpecaterCamera.CameraPosition;
+                                                  point.LightPosition = game.SpectaterCamera.CameraPosition;
 
                                                   break;
                                               case 3:
-                                                  spot.LightPosition = game.SpecaterCamera.CameraPosition;
-                                                  spot.SpotDirection = game.SpecaterCamera.CameraDirection;
+                                                  spot.LightPosition = game.SpectaterCamera.CameraPosition;
+                                                  spot.SpotDirection = game.SpectaterCamera.CameraDirection;
                                                   break;
                                           }
 
@@ -344,7 +345,145 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             game.Run();
         }
 
-       
+
+        [Test]
+        public void TestMeshRendererSimpleCulling()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+            var context = game.Device.ImmediateContext;
+
+            var mesh = CreateSimpleTestMesh();
+
+            var texturePool = new TheWizards.Rendering.Deferred.TexturePool(game);
+
+            var gBuffer = new GBuffer(game.Device, 800, 600);
+
+            var renderer = new DeferredMeshRenderer(game, gBuffer, texturePool);
+
+
+            DeferredMeshRenderElement middle = null;
+
+
+
+
+
+
+
+
+
+            Vector3 radius = new Vector3(100, 1000, 100);
+            FrustumCuller culler = new FrustumCuller(new BoundingBox(-radius, radius), 5);
+
+            //QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
+
+
+            SpectaterCamera cullCam = new SpectaterCamera(game.Keyboard, game.Mouse, 10f, 80);
+
+            cullCam.Positie = new Vector3(8, 10, 8);
+            cullCam.EnableUserInput = false;
+
+            SpectaterCamera renderCam = game.SpectaterCamera;
+
+            culler.CullCamera = cullCam;
+
+            renderer.Culler = culler;
+
+            bool rotate = true;
+            int selectedNode = -1;
+
+
+
+            for (int i = 0; i < 50; i++)
+            {
+                for (int j = 0; j < 50; j++)
+                {
+
+                    var el = renderer.AddMesh(mesh);
+                    el.WorldMatrix = Matrix.Translation(MathHelper.Right * i * 2 + Vector3.UnitZ * j * 2);
+
+                    if (i > 20 && i < 30 && j > 20 && j < 30)
+                        el.Delete();
+                }
+
+            }
+            game.GameLoopEvent += delegate
+            {
+                culler.UpdateVisibility();
+
+                if (rotate)
+                    cullCam.AngleHorizontal += game.Elapsed * MathHelper.Pi * (1 / 8f);
+                cullCam.Update(game.Elapsed);
+                if (game.Keyboard.IsKeyPressed(Key.NumberPadPlus))
+                    selectedNode++;
+                if (game.Keyboard.IsKeyPressed(Key.NumberPadMinus))
+                    selectedNode--;
+
+                if (game.Keyboard.IsKeyPressed(Key.Return))
+                {
+                    int count = -1;
+                    //visualizer.RenderNodeGroundBoundig(game, culler.RootNode,
+                    //delegate(FrustumCuller.CullNode node, out Color col)
+                    //{
+                    //    col = Color.Red;
+                    //    count++;
+                    //    if (count == selectedNode)
+                    //    {
+                    //        node.Tag = "SELECTED!";
+                    //    }
+                    //    return count == selectedNode;
+                    //});
+                }
+
+                if (game.Keyboard.IsKeyPressed(Key.NumberPad0))
+                    rotate = !rotate;
+
+
+                game.LineManager3D.AddViewFrustum(new BoundingFrustum(cullCam.ViewProjection), new Color4());
+                //for (int i = 0; i < cullObjects.Count; i++)
+                //{
+                //    game.LineManager3D.AddBox(cullObjects[i].BoundingBox, Color.Red);
+                //}
+                //visualizer.RenderNodeGroundBoundig(game, culler.RootNode,
+                //    delegate(FrustumCuller.CullNode node, out Color col)
+                //    {
+                //        if (node.Visible)
+                //        {
+                //            col = Color.Orange;
+                //        }
+                //        else
+                //        {
+                //            col = Color.Green;
+
+                //        }
+
+                //        return true;
+                //    });
+
+
+
+
+
+
+
+
+                gBuffer.Clear();
+                gBuffer.SetTargetsToOutputMerger();
+
+                context.Rasterizer.State = game.HelperStates.RasterizerShowAll;
+
+                renderer.Draw();
+
+                context.ClearState();
+                game.SetBackbuffer();
+
+                DeferredTest.DrawGBuffer(game, gBuffer);
+            };
+
+            game.Run();
+
+        }
+
 
 
         public static DeferredMeshRenderer InitDefaultMeshRenderer(DX11Game game, GBuffer gBuffer)

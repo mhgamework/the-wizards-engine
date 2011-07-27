@@ -492,7 +492,7 @@ namespace MHGameWork.TheWizards.Tests
 
             var gBuffer = new GBuffer(game.Device, 800, 600);
 
-            var renderer = new DeferredMeshRenderer(game,gBuffer,texturePool);
+            var renderer = new DeferredMeshRenderer(game, gBuffer, texturePool);
 
 
 
@@ -534,9 +534,13 @@ namespace MHGameWork.TheWizards.Tests
             importer.AddMaterialFileStream("Town001.mtl", new FileStream("../../bin/GameData/Core/Town/OBJ03/Town001.mtl", FileMode.Open));
             importer.ImportObjFile("../../bin/GameData/Core/Town/OBJ03/Town001.obj");
 
-            var mesh = c.CreateMesh(importer);
+            var meshes = c.CreateMeshesFromObjects(importer);
 
-            var el = renderer.CreateMeshElement(mesh);
+            foreach (var ramMesh in meshes)
+            {
+                var el = renderer.CreateMeshElement(ramMesh);
+
+            }
             var directional = renderer.CreateDirectionalLight();
             directional.ShadowsEnabled = true;
             var point = renderer.CreatePointLight();
@@ -563,19 +567,25 @@ namespace MHGameWork.TheWizards.Tests
                     case 0:
                         break;
                     case 1:
-                        directional.LightDirection = game.SpecaterCamera.CameraDirection;
+                        directional.LightDirection = game.SpectaterCamera.CameraDirection;
                         break;
                     case 2:
-                        point.LightPosition = game.SpecaterCamera.CameraPosition;
+                        point.LightPosition = game.SpectaterCamera.CameraPosition;
 
                         break;
                     case 3:
-                        spot.LightPosition = game.SpecaterCamera.CameraPosition;
-                        spot.SpotDirection = game.SpecaterCamera.CameraDirection;
+                        spot.LightPosition = game.SpectaterCamera.CameraPosition;
+                        spot.SpotDirection = game.SpectaterCamera.CameraDirection;
                         break;
                 }
 
                 renderer.Draw();
+
+                for (int i = 0; i < renderer.DEBUG_MeshRenderer.Elements.Count; i++)
+                {
+                    var el = renderer.DEBUG_MeshRenderer.Elements[i];
+                    game.LineManager3D.AddBox(el.BoundingBox.dx(), new SlimDX.Color4(0,1,0));
+                }
 
             };
 

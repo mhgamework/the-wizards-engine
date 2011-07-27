@@ -38,6 +38,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private Texture2D tempTex;
         private HorizonSSAORenderer ssao;
 
+        private FrustumCuller frustumCuller;
+
 
         public DeferredRenderer(DX11Game game)
         {
@@ -97,12 +99,14 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             tempTex = new Texture2D(device, tempDesc);
 
 
-            
+
             ssao = new HorizonSSAORenderer(game, 800, 600);
 
 
-           
 
+            Vector3 radius = new Vector3(1000, 1000, 1000);
+            frustumCuller = new FrustumCuller(new BoundingBox(-radius, radius), 5);
+            meshRenderer.Culler = frustumCuller;
 
 
         }
@@ -138,6 +142,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             context.ClearState();
             gBuffer.Clear();
             gBuffer.SetTargetsToOutputMerger();
+            frustumCuller.CullCamera = game.Camera;
+            frustumCuller.UpdateVisibility();
             meshRenderer.Draw();
 
             combineFinalRenderer.ClearLightAccumulation();
@@ -192,10 +198,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
                 if (l.ShadowsEnabled)
                 {
-                    r.UpdateLightCamera();
-                    game.Camera = r.LightCamera;
-                    r.UpdateShadowMap(meshRenderer.Draw);
-                    game.Camera = game.SpecaterCamera;
+                    updateSpotShadows(r);
                 }
 
                 combineFinalRenderer.SetLightAccumulationStates();
@@ -209,7 +212,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             game.Device.ImmediateContext.ClearState();
             game.SetBackbuffer(); // This is to set default viewport only, because i am lazy
-            
+
             context.OutputMerger.SetTargets(hdrImageRtv);
 
             combineFinalRenderer.DrawCombined(ssao.MSsaoBuffer.pSRV);
@@ -233,6 +236,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         }
 
+
+
         private T readPixel<T>(Resource resource) where T : struct
         {
             context.CopySubresourceRegion(resource, Resource.CalculateSubresourceIndex(0, 0, 1),
@@ -247,24 +252,45 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             return ret;
         }
 
-        private void updatePointShadows(PointLightRenderer r)
-        {
-            r.UpdateShadowMap(delegate(CustomCamera lightCamera)
-                                  {
-                                      game.Camera = lightCamera;
-                                      meshRenderer.Draw();
-                                      game.Camera = game.SpecaterCamera;
-                                  });
-        }
+
 
         private void updateDirectionalShadows(DirectionalLightRenderer r)
         {
             r.DrawUpdatedShadowmap(delegate(OrthographicCamera lightCamera)
                                        {
                                            game.Camera = lightCamera;
+                                           frustumCuller.CullCamera = game.Camera;
+                                           frustumCuller.UpdateVisibility();
                                            meshRenderer.Draw();
-                                           game.Camera = game.SpecaterCamera;
+                                           game.Camera = game.SpectaterCamera;
                                        }, game.Camera);
         }
+        private void updatePointShadows(PointLightRenderer r)
+        {
+            r.UpdateShadowMap(delegate(CustomCamera lightCamera)
+            {
+                game.Camera = lightCamera;
+                frustumCuller.CullCamera = game.Camera;
+                frustumCuller.UpdateVisibility();
+                meshRenderer.Draw();
+                game.Camera = game.SpectaterCamera;
+            });
+        }
+        private void updateSpotShadows(SpotLightRenderer r)
+        {
+            r.UpdateLightCamera();
+            game.Camera = r.LightCamera;
+            frustumCuller.CullCamera = game.Camera;
+            frustumCuller.UpdateVisibility();
+            r.UpdateShadowMap(meshRenderer.Draw);
+            game.Camera = game.SpectaterCamera;
+        }
+
+
+
+
+        public DeferredMeshRenderer DEBUG_MeshRenderer { get { return meshRenderer; } }
+
+
     }
 }

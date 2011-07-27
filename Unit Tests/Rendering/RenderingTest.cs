@@ -476,7 +476,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
         {
             XNAGame game = new XNAGame();
             Vector3 radius = new Vector3(100, 1000, 100);
-            FrustumCuller culler = new FrustumCuller(new BoundingBox(-radius, radius), 4);
+            FrustumCuller culler = new FrustumCuller(new BoundingBox(-radius, radius).dx(), 4);
 
 
             QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
@@ -545,7 +545,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
         {
             XNAGame game = new XNAGame();
             Vector3 radius = new Vector3(100, 1000, 100);
-            FrustumCuller culler = new FrustumCuller(new BoundingBox(-radius, radius), 6);
+            FrustumCuller culler = new FrustumCuller(new BoundingBox(-radius, radius).dx(), 6);
             game.DrawFps = true;
             game.IsFixedTimeStep = false;
 
@@ -568,7 +568,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
             SpectaterCamera cullCam = new SpectaterCamera(game, 10f, 80);
             cullCam.Positie = new Vector3(8, 10, 8);
-            culler.CullCamera = cullCam;
+            culler.CullCamera = new ConversionCameraDX(cullCam);
             cullCam.EnableUserInput = false;
 
             bool rotate = true;
@@ -656,7 +656,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
         {
             XNAGame game = new XNAGame();
             Vector3 radius = new Vector3(100, 1000, 100);
-            FrustumCuller culler = new FrustumCuller(new BoundingBox(-radius, radius), 5);
+            FrustumCuller culler = new FrustumCuller(new BoundingBox(-radius, radius).dx(), 5);
             SimpleRenderer renderer = new SimpleRenderer(game, culler);
             game.AddXNAObject(renderer);
 
@@ -816,7 +816,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             #endregion
         }
 
-       
+
 
         public static IMesh CreateSimpleTestMesh()
         {

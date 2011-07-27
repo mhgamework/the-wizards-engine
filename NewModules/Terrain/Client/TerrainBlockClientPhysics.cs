@@ -78,7 +78,7 @@ namespace MHGameWork.TheWizards.Terrain.Client
 
 
             //Note: if this causes errors, use the trick explained above.
-            return _node.NodeData.BoundingBox.Contains( GetBoundingBox() );
+            return _node.NodeData.BoundingBox.xna().Contains( GetBoundingBox() );
         }
 
         /// <summary>

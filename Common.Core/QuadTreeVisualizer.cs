@@ -106,7 +106,7 @@ namespace MHGameWork.TheWizards
             else
                 col = levelColors[levelColors.Length - 1];
 
-            game.LineManager3D.AddBox(quadTreeNode.NodeData.BoundingBox, col);
+            game.LineManager3D.AddBox(quadTreeNode.NodeData.BoundingBox.xna(), col);
         }
 
         public void RenderNodeGroundBoundig<T>(IXNAGame game, IQuadTreeNode<T> quadTreeNode) where T : IQuadTreeNode<T>
@@ -132,11 +132,11 @@ namespace MHGameWork.TheWizards
             else
                 col = levelColors[levelColors.Length - 1];
 
-            Vector3 radius = node.BoundingBox.Max - node.BoundingBox.Min;
+            Vector3 radius = (node.BoundingBox.Maximum - node.BoundingBox.Minimum).xna();
             Vector3 radX = new Vector3(radius.X, 0, 0);
             Vector3 radY = new Vector3(0, radius.Y, 0);
             Vector3 radZ = new Vector3(0, 0, radius.Z);
-            Vector3 min = node.BoundingBox.Min;
+            Vector3 min = node.BoundingBox.Minimum.xna();
             min.Y = -1 + level;
 
 
@@ -192,11 +192,11 @@ namespace MHGameWork.TheWizards
             int level = QuadTree.CalculateLevel(quadTreeNode);
 
 
-            Vector3 radius = node.BoundingBox.Max - node.BoundingBox.Min;
+            Vector3 radius = (node.BoundingBox.Maximum - node.BoundingBox.Minimum).xna();
             Vector3 radX = new Vector3(radius.X, 0, 0);
             Vector3 radY = new Vector3(0, radius.Y, 0);
             Vector3 radZ = new Vector3(0, 0, radius.Z);
-            Vector3 min = node.BoundingBox.Min;
+            Vector3 min = node.BoundingBox.Minimum.xna();
             min.Y = -1 + level;
 
 

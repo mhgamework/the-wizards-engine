@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards;
 using SlimDX;
 
 namespace DirectX11
@@ -13,7 +14,7 @@ namespace DirectX11
         public BoundingFrustum(Matrix viewProjection)
         {
             this.Matrix = viewProjection;
-           
+
 
         }
 
@@ -42,6 +43,11 @@ namespace DirectX11
             GetCorners(corners);
 
             return corners;
+        }
+
+        public static implicit operator Microsoft.Xna.Framework.BoundingFrustum(BoundingFrustum b)
+        {
+            return new Microsoft.Xna.Framework.BoundingFrustum(b.Matrix.xna());
         }
     }
 }

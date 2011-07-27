@@ -119,6 +119,7 @@
     <Reference Include="nunit.framework">
       <HintPath>..\_Libraries\NUnit-2.5.7.10213\bin\net-2.0\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="SlimDX, Version=2.0.10.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -317,6 +318,9 @@
     <Compile Include="Raycast\RaycastHelper.cs" />
     <Compile Include="Raycast\RaycastResult.cs" />
     <Compile Include="Seeder.cs" />
+    <Compile Include="SlimDXConversion\SlimDXConversion.cs" />
+    <Compile Include="SlimDXConversion\BoundingFrustum.cs" />
+    <Compile Include="SlimDXConversion\MathHelper.cs" />
     <Compile Include="TWDir.cs" />
     <Compile Include="Utilities\TestRunner.cs" />
     <Compile Include="Utilities\TestRunnerForm.cs">

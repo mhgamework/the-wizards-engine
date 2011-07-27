@@ -1,9 +1,12 @@
 using System;
+using Microsoft.Xna.Framework.Graphics;
 using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 using SlimDX.DXGI;
 using Device = SlimDX.Direct3D11.Device;
+using Effect = SlimDX.Direct3D11.Effect;
+using EffectPass = SlimDX.Direct3D11.EffectPass;
 
 namespace DirectX11.Graphics
 {

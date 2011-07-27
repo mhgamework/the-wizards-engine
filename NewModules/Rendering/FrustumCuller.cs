@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
-using MHGameWork.TheWizards.ServerClient;
-using Microsoft.Xna.Framework;
+using System.Diagnostics;
+using DirectX11;
+using DirectX11.Graphics;
+using MHGameWork.TheWizards.Rendering.Deferred;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.Rendering
 {
@@ -59,8 +62,13 @@ namespace MHGameWork.TheWizards.Rendering
             node.PlaceCullable(cullable);
 
         }
+        /// <summary>
+        /// TODO: test this, i think this doesnt work correctly. Objects seem to remain in the tree
+        /// </summary>
+        /// <param name="cullable"></param>
         public void RemoveCullable(ICullable cullable)
         {
+
             cullables.Remove(cullable);
 
             CullNode node = cullableNodeRelations[cullable];
@@ -128,7 +136,7 @@ namespace MHGameWork.TheWizards.Rendering
             /// <param name="cullable"></param>
             public void PlaceCullable(ICullable cullable)
             {
-                if (nodeData.BoundingBox.Contains(cullable.BoundingBox) == ContainmentType.Disjoint)
+                if (nodeData.BoundingBox.xna().Contains(cullable.BoundingBox) == Microsoft.Xna.Framework.ContainmentType.Disjoint)
                     return;
 
                 if (QuadTree.IsLeafNode(this))
@@ -168,7 +176,7 @@ namespace MHGameWork.TheWizards.Rendering
 
             public CullNode FindContainingNode(ICullable cullable)
             {
-                if (nodeData.BoundingBox.Contains(cullable.BoundingBox) != Microsoft.Xna.Framework.ContainmentType.Contains)
+                if (nodeData.BoundingBox.xna().Contains(cullable.BoundingBox) != Microsoft.Xna.Framework.ContainmentType.Contains)
                     return null;
 
                 if (QuadTree.IsLeafNode(this)) return this;
@@ -192,7 +200,7 @@ namespace MHGameWork.TheWizards.Rendering
 
             public CullNode FindEncapsulatingNodeUpwards(ICullable cullable)
             {
-                if (nodeData.BoundingBox.Contains(cullable.BoundingBox) == ContainmentType.Contains)
+                if (nodeData.BoundingBox.xna().Contains(cullable.BoundingBox) == Microsoft.Xna.Framework.ContainmentType.Contains)
                     return this;
 
                 if (nodeData.Parent == null) return this;
@@ -218,6 +226,7 @@ namespace MHGameWork.TheWizards.Rendering
                 for (int i = 0; i < cullables.Count; i++)
                 {
                     cullables[i].VisibleReferenceCount += modifier;
+
                 }
             }
 
@@ -240,10 +249,9 @@ namespace MHGameWork.TheWizards.Rendering
                 }
 
 
-                ContainmentType result;
-                result = frustum.Contains(nodeData.BoundingBox);
+                var result = ((Microsoft.Xna.Framework.BoundingFrustum)frustum).Contains(nodeData.BoundingBox.xna());
 
-                if (result == ContainmentType.Disjoint)
+                if (result == Microsoft.Xna.Framework.ContainmentType .Disjoint)
                 {
                     if (visible == false) return;
                     setVisibility(false);
@@ -260,7 +268,7 @@ namespace MHGameWork.TheWizards.Rendering
                 }
 
 
-                if (result == ContainmentType.Contains)
+                if (result == Microsoft.Xna.Framework.ContainmentType.Contains)
                 {
                     if (visible) return;
 

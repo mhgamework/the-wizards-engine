@@ -103,7 +103,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
                 if (game.Keyboard.IsKeyDown(Key.C))
                 {
-                    game.SpecaterCamera.Enabled = false;
+                    game.SpectaterCamera.Enabled = false;
 
                     var mat = Matrix.RotationY(game.Mouse.RelativeX * game.Elapsed * 5) * Matrix.RotationX(game.Mouse.RelativeY * game.Elapsed * 5);
 
@@ -113,7 +113,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 }
                 else
                 {
-                    game.SpecaterCamera.Enabled = true;
+                    game.SpectaterCamera.Enabled = true;
                 }
 
                 if (game.Keyboard.IsKeyDown(Key.I))
@@ -153,8 +153,8 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
                                                                               filledGBuffer.Draw();
 
-                                                                              game.Camera = game.SpecaterCamera;
-                                                                          }, light, game.SpecaterCamera);
+                                                                              game.Camera = game.SpectaterCamera;
+                                                                          }, light, game.SpectaterCamera);
 
                                           game.SetBackbuffer();
 
@@ -164,7 +164,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                                           if (toggle)
                                           {
 
-                                              light.Direction = game.SpecaterCamera.CameraDirection;
+                                              light.Direction = game.SpectaterCamera.CameraDirection;
                                           }
 
 
@@ -172,7 +172,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                                               DrawGBuffer(game, filledGBuffer.GBuffer);
                                           else
                                           {
-                                              csmRenderer.RenderShadowOcclusion(game.SpecaterCamera, filledGBuffer.GBuffer.DepthRV);
+                                              csmRenderer.RenderShadowOcclusion(game.SpectaterCamera, filledGBuffer.GBuffer.DepthRV);
                                               //light.Draw();
                                               game.TextureRenderer.Draw(csmRenderer.ShadowMapRV, new Vector2(10, 10), new Vector2(590, 200));
 
@@ -217,8 +217,8 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
                     filledGBuffer.Draw();
 
-                    game.Camera = game.SpecaterCamera;
-                }, game.SpecaterCamera);
+                    game.Camera = game.SpectaterCamera;
+                }, game.SpectaterCamera);
 
 
                 game.SetBackbuffer();
@@ -229,7 +229,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 if (toggle)
                 {
 
-                    light.LightDirection = game.SpecaterCamera.CameraDirection;
+                    light.LightDirection = game.SpectaterCamera.CameraDirection;
                 }
 
 
@@ -280,8 +280,8 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 if (toggle)
                 {
 
-                    light.SpotDirection = game.SpecaterCamera.CameraDirection;
-                    light.LightPosition = game.SpecaterCamera.CameraPosition;
+                    light.SpotDirection = game.SpectaterCamera.CameraDirection;
+                    light.LightPosition = game.SpectaterCamera.CameraPosition;
                 }
 
                 if (game.Keyboard.IsKeyDown(Key.I))
@@ -321,7 +321,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 if (toggle)
                 {
 
-                    light.LightPosition = game.SpecaterCamera.CameraPosition;
+                    light.LightPosition = game.SpectaterCamera.CameraPosition;
                 }
 
                 if (game.Keyboard.IsKeyDown(Key.I))
@@ -400,15 +400,15 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                     case 0:
                         break;
                     case 1:
-                        directional.LightDirection = game.SpecaterCamera.CameraDirection;
+                        directional.LightDirection = game.SpectaterCamera.CameraDirection;
                         break;
                     case 2:
-                        point.LightPosition = game.SpecaterCamera.CameraPosition;
+                        point.LightPosition = game.SpectaterCamera.CameraPosition;
 
                         break;
                     case 3:
-                        spot.LightPosition = game.SpecaterCamera.CameraPosition;
-                        spot.SpotDirection = game.SpecaterCamera.CameraDirection;
+                        spot.LightPosition = game.SpectaterCamera.CameraPosition;
+                        spot.SpotDirection = game.SpectaterCamera.CameraDirection;
                         break;
                 }
 
@@ -797,7 +797,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
                                           light.UpdateShadowMap(filledGBuffer.Draw);
 
-                                          game.Camera = game.SpecaterCamera;
+                                          game.Camera = game.SpectaterCamera;
 
 
                                           game.SetBackbuffer();
@@ -808,8 +808,8 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                                           if (toggle)
                                           {
 
-                                              light.SpotDirection = game.SpecaterCamera.CameraDirection;
-                                              light.LightPosition = game.SpecaterCamera.CameraPosition;
+                                              light.SpotDirection = game.SpectaterCamera.CameraDirection;
+                                              light.LightPosition = game.SpectaterCamera.CameraPosition;
                                           }
 
                                           if (game.Keyboard.IsKeyDown(Key.I))
@@ -855,7 +855,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
                                               filledGBuffer.Draw();
 
-                                              game.Camera = game.SpecaterCamera;
+                                              game.Camera = game.SpectaterCamera;
                                           });
 
 
@@ -867,7 +867,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 if (toggle)
                 {
 
-                    light.LightPosition = game.SpecaterCamera.CameraPosition;
+                    light.LightPosition = game.SpectaterCamera.CameraPosition;
                 }
 
 
@@ -963,15 +963,15 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                     case 0:
                         break;
                     case 1:
-                        directional.LightDirection = game.SpecaterCamera.CameraDirection;
+                        directional.LightDirection = game.SpectaterCamera.CameraDirection;
                         break;
                     case 2:
-                        point.LightPosition = game.SpecaterCamera.CameraPosition;
+                        point.LightPosition = game.SpectaterCamera.CameraPosition;
 
                         break;
                     case 3:
-                        spot.LightPosition = game.SpecaterCamera.CameraPosition;
-                        spot.SpotDirection = game.SpecaterCamera.CameraDirection;
+                        spot.LightPosition = game.SpectaterCamera.CameraPosition;
+                        spot.SpotDirection = game.SpectaterCamera.CameraDirection;
                         break;
                 }
 

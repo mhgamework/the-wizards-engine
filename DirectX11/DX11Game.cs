@@ -40,7 +40,7 @@ namespace DirectX11
 
 
 
-            SpecaterCamera.Update(Elapsed);
+            SpectaterCamera.Update(Elapsed);
 
             updateBasicShaders();
 
@@ -184,8 +184,8 @@ namespace DirectX11
             diMouse = new SlimDX.DirectInput.Mouse(diDevice);
             diMouse.Acquire();
 
-            SpecaterCamera = new SpectaterCamera(keyboard, mouse);
-            Camera = SpecaterCamera;
+            SpectaterCamera = new SpectaterCamera(keyboard, mouse);
+            Camera = SpectaterCamera;
 
 
 
@@ -219,7 +219,7 @@ namespace DirectX11
 
         // Helper
 
-        public SpectaterCamera SpecaterCamera { get; private set; }
+        public SpectaterCamera SpectaterCamera { get; private set; }
         public LineManager3D LineManager3D { get; private set; }
         /// <summary>
         /// Contains some pipeline states for easy use.

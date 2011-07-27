@@ -1,15 +1,25 @@
 ﻿using System;
+using System.Linq;
 using SlimDX;
-using BoundingBox = Microsoft.Xna.Framework.BoundingBox;
 
 namespace MHGameWork.TheWizards.Rendering.Deferred
 {
     public class DeferredMeshRenderElement : ICullable
     {
+        public DeferredMeshRenderElement(DeferredMeshRenderer renderer, IMesh mesh)
+        {
+            Renderer = renderer;
+            Mesh = mesh;
+            worldMatrix = Matrix.Identity;
+            visible = true;
+            updateBoundingBox();
+        }
+
         public DeferredMeshRenderer Renderer { get; private set; }
         public IMesh Mesh { get; private set; }
         private Matrix worldMatrix;
         private BoundingBox boundingBox;
+        private bool visible;
 
         public Matrix WorldMatrix
         {
@@ -17,6 +27,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             set
             {
                 worldMatrix = value;
+                updateBoundingBox();
+                Renderer.Culler.UpdateCullable(this);
                 Renderer.UpdateWorldMatrix(this);
             }
         }
@@ -27,17 +39,19 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         internal int ElementNumber { get; set; }
 
 
-        public DeferredMeshRenderElement(DeferredMeshRenderer renderer, IMesh mesh)
-        {
-            Renderer = renderer;
-            Mesh = mesh;
-            worldMatrix = Matrix.Identity;
-            updateBoundingBox();
-        }
 
         private void updateBoundingBox()
         {
-            throw new NotImplementedException();
+            //Lol!
+
+            boundingBox = Mesh.GetCoreData().Parts.Select(part =>
+                Microsoft.Xna.Framework.BoundingBox.CreateFromPoints(
+                part.MeshPart.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position)))
+                .Aggregate(new Microsoft.Xna.Framework.BoundingBox(), (current, t) => current.MergeWith(t)).dx();
+
+            boundingBox = SlimDX.BoundingBox.FromPoints(Vector3.TransformCoordinate(boundingBox.GetCorners(), ref worldMatrix));
+
+
         }
 
         /// <summary>
@@ -55,12 +69,36 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         #region ICullable Members
 
-        Microsoft.Xna.Framework.BoundingBox ICullable.BoundingBox
+        public Microsoft.Xna.Framework.BoundingBox BoundingBox
         {
-            get { return boundingBox; }
+            get { return boundingBox.xna(); }
         }
 
-        int ICullable.VisibleReferenceCount { get; set; }
+        private int visibleReferenceCount;
+        int ICullable.VisibleReferenceCount
+        {
+            get { return visibleReferenceCount; }
+            set
+            {
+                if (visibleReferenceCount == value) return; visibleReferenceCount = value;
+                if (Renderer != null) // This check should be removed, it is a cheat and shouldn't be necessary
+                    Renderer.UpdateVisibility(this);
+            }
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                return visible;
+            }
+            set
+            {
+                if (value == visible) return;
+                visible = value;
+                Renderer.UpdateVisibility(this);
+            }
+        }
 
         #endregion
     }

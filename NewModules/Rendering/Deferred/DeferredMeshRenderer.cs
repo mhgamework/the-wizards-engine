@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using DirectX11;
@@ -13,6 +14,8 @@ using DataStream = SlimDX.DataStream;
 
 namespace MHGameWork.TheWizards.Rendering.Deferred
 {
+    //TODO: call UpdateCullable in the correct places
+
     /// <summary>
     /// This class manages a number of IMesh elements and renders them to a GBuffer
     /// Note that this class does not share IMeshPart data, that is parts are not shared across meshes
@@ -52,7 +55,22 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private InputLayout layout;
         private ShaderResourceView checkerTextureRV;
 
-        public ICuller Culler { get; set; }
+        private ICuller culler;
+        public ICuller Culler
+        {
+            get { return culler; }
+            set
+            {
+                if (Elements.Count != 0)
+                    throw new InvalidOperationException("Realtime changing not supported yet");
+                culler = value;
+            }
+        }
+
+        public List<DeferredMeshRenderElement> Elements
+        {
+            get { return elements; }
+        }
 
         public DeferredMeshRenderElement AddMesh(IMesh mesh)
         {
@@ -66,9 +84,14 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             el.ElementNumber = data.WorldMatrices.Count;
             data.WorldMatrices.Add(el.WorldMatrix);
             data.ElementDeleted.Add(false);
+            data.ElementVisible.Add(true);
 
 
-            elements.Add(el);
+            Elements.Add(el);
+
+            Culler.AddCullable(el);
+
+            UpdateVisibility(el);
 
             return el;
         }
@@ -82,8 +105,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             data.ElementDeleted[el.ElementNumber] = true;
 
+            Culler.RemoveCullable(el);
 
-            elements.Remove(el);
+            Elements.Remove(el);
 
         }
 
@@ -136,8 +160,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 var partList = parts[renderMat];
 
                 renderMat.Parts = new MeshRenderPart[partList.Count];
+                if (partList.Count > 20) Debugger.Break();
                 for (int j = 0; j < partList.Count; j++)
                 {
+                    
                     var part = partList[j];
                     var renderPart = new MeshRenderPart();
                     renderMat.Parts[j] = renderPart;
@@ -181,6 +207,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         {
             renderDataDict[el.Mesh].WorldMatrices[el.ElementNumber] = el.WorldMatrix;
         }
+        public void UpdateVisibility(DeferredMeshRenderElement el)
+        {
+            var visible = el.Visible && ((ICullable)el).VisibleReferenceCount > 0;
+            renderDataDict[el.Mesh].ElementVisible[el.ElementNumber] = visible;
+        }
 
 
 
@@ -216,10 +247,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         public void Draw()
         {
-            //TODO: call UpdateCullable in the correct places
-            Culler.CullCamera = game.Camera;
-            Culler.UpdateVisibility();
-
+            drawCalls = 0;
             Performance.BeginEvent(new Color4(System.Drawing.Color.Red), "BeginDrawDeferredMeshes");
             context.InputAssembler.InputLayout = layout;
             context.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleList;
@@ -237,16 +265,18 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 for (int j = 0; j < data.WorldMatrices.Count; j++)
                 {
                     if (data.ElementDeleted[j]) continue;
-                    if (((ICullable)data).VisibleReferenceCount == 0) continue;
+                    if (!data.ElementVisible[j]) continue;
                     var mat = data.WorldMatrices[j];
                     renderMesh(data, mat);
                 }
             }
             Performance.EndEvent();
 
+            game.AddToWindowTitle("Calls: " + drawCalls);
 
         }
 
+        private int drawCalls;
         private void renderMesh(MeshRenderData data, Matrix world)
         {
             for (int i = 0; i < data.Materials.Length; i++)
@@ -272,6 +302,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                                                                     DeferredMeshVertex.SizeInBytes, 0));
 
                     context.DrawIndexed(part.PrimitiveCount * 3, 0, 0);
+                    drawCalls++;
                     Performance.SetMarker(new Color4(System.Drawing.Color.Orange), "DrawMeshElement");
 
 
@@ -352,6 +383,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             public List<Matrix> WorldMatrices = new List<Matrix>();
             public List<bool> ElementDeleted = new List<bool>();
+            public List<bool> ElementVisible = new List<bool>();
             public MeshRenderMaterial[] Materials;
 
         }
