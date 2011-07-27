@@ -263,15 +263,15 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                     var el = data.Elements[j];
                     if (el.IsDeleted) continue;
                     if (!el.IsVisibleToCamera) continue;
-                    //if (culler.CullCamera != null)
-                    //    if (!frustum.Intersects(el.BoundingBox)) continue;
+                    if (culler.CullCamera != null)
+                        if (!frustum.Intersects(el.BoundingBox)) continue;
                     var mat = data.WorldMatrices[j];
                     renderMesh(data, mat);
                 }
             }
             Performance.EndEvent();
 
-           // game.AddToWindowTitle("Calls: " + drawCalls);
+           game.AddToWindowTitle("Calls: " + drawCalls);
 
         }
         public void DrawDepthOnly()
@@ -307,7 +307,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             }
             Performance.EndEvent();
 
-            //game.AddToWindowTitle("Calls: " + drawCalls);
+            game.AddToWindowTitle("Calls: " + drawCalls);
 
         }
 

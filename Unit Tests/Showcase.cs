@@ -549,7 +549,6 @@ namespace MHGameWork.TheWizards.Tests
 
             for (int index = 0; index < meshes.Count; index++)
             {
-                if (index != 100) continue;
                 var ramMesh = meshes[index];
                 var el = renderer.CreateMeshElement(ramMesh);
                 
@@ -558,7 +557,7 @@ namespace MHGameWork.TheWizards.Tests
             directional.ShadowsEnabled = true;
             var point = renderer.CreatePointLight();
             point.LightRadius *= 2;
-            //point.ShadowsEnabled = true;
+            point.ShadowsEnabled = true;
             var spot = renderer.CreateSpotLight();
             spot.LightRadius *= 2;
             spot.ShadowsEnabled = true;
@@ -625,18 +624,18 @@ namespace MHGameWork.TheWizards.Tests
 
                 renderer.Draw();
 
-                renderer.DEBUG_FrustumCuller.CullCamera = game.Camera;
-                renderer.DEBUG_FrustumCuller.UpdateVisibility();
-                for (int i = 0; i < renderer.DEBUG_MeshRenderer.Elements.Count; i++)
-                {
-                    var el = renderer.DEBUG_MeshRenderer.Elements[i];
-                    
-                    if (el.IsVisibleToCamera)
-                        game.LineManager3D.AddBox(el.BoundingBox.dx(), new SlimDX.Color4(0, 1, 0));
-                }
+              
                 if (false)
                 {
+                    renderer.DEBUG_FrustumCuller.CullCamera = game.Camera;
+                    renderer.DEBUG_FrustumCuller.UpdateVisibility();
+                    for (int i = 0; i < renderer.DEBUG_MeshRenderer.Elements.Count; i++)
+                    {
+                        var el = renderer.DEBUG_MeshRenderer.Elements[i];
 
+                        if (el.IsVisibleToCamera)
+                            game.LineManager3D.AddBox(el.BoundingBox.dx(), new SlimDX.Color4(0, 1, 0));
+                    }
 
                     visualizer.RenderNodeGroundBoundig(game, renderer.DEBUG_FrustumCuller.RootNode/*,
                                                    delegate(FrustumCuller.CullNode quadTreeNode, out Color4 color4)
