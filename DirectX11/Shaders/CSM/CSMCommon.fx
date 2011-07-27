@@ -48,7 +48,7 @@ float CalcShadowTermPCF(float fLightDepth, float2 vShadowTexCoord)
 float CalcShadowTermSoftPCF(float fLightDepth, float2 vShadowTexCoord, int iSqrtSamples)
 {
 	float bias = BIAS;
-	bias = 0.001 * fLightDepth;
+	//bias = 0.001 * fLightDepth;
 	//bias = 0.0005;
 	//bias = 0.001;
 	float fShadowTerm = 0.0f;  

@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.Tests
         public void TestQuadtreeVisualizer()
         {
             TestQuadTreeNode root = createSimpleQuadtree();
-            QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
+            QuadTreeVisualizerXNA visualizer = new QuadTreeVisualizerXNA();
 
             XNAGame game = new XNAGame();
 
@@ -77,7 +77,7 @@ namespace MHGameWork.TheWizards.Tests
 
             QuadTree.MergeRecursive(root.NodeData.UpperRight);
 
-            QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
+            QuadTreeVisualizerXNA visualizer = new QuadTreeVisualizerXNA();
 
             XNAGame game = new XNAGame();
 

@@ -67,6 +67,14 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         public bool IsDeleted { get { return Renderer == null; } }
 
+        public bool IsVisibleToCamera
+        {
+            get
+            {
+                return Visible && ((ICullable) this).VisibleReferenceCount > 0;
+            }
+        }
+
         #region ICullable Members
 
         public Microsoft.Xna.Framework.BoundingBox BoundingBox
@@ -81,8 +89,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             set
             {
                 if (visibleReferenceCount == value) return; visibleReferenceCount = value;
-                if (Renderer != null) // This check should be removed, it is a cheat and shouldn't be necessary
-                    Renderer.UpdateVisibility(this);
             }
         }
 
@@ -96,7 +102,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             {
                 if (value == visible) return;
                 visible = value;
-                Renderer.UpdateVisibility(this);
             }
         }
 

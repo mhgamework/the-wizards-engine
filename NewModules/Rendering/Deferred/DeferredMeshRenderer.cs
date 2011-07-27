@@ -7,10 +7,15 @@ using DirectX11;
 using DirectX11.Graphics;
 using DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.Common.Core;
+using Microsoft.Xna.Framework.Graphics;
 using SlimDX;
 using SlimDX.Direct3D11;
+using BoundingFrustum = Microsoft.Xna.Framework.BoundingFrustum;
 using Buffer = SlimDX.Direct3D11.Buffer;
+using CullMode = SlimDX.Direct3D11.CullMode;
 using DataStream = SlimDX.DataStream;
+using FillMode = SlimDX.Direct3D11.FillMode;
+using Texture2D = SlimDX.Direct3D11.Texture2D;
 
 namespace MHGameWork.TheWizards.Rendering.Deferred
 {
@@ -83,15 +88,13 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             el.ElementNumber = data.WorldMatrices.Count;
             data.WorldMatrices.Add(el.WorldMatrix);
-            data.ElementDeleted.Add(false);
-            data.ElementVisible.Add(true);
+            data.Elements.Add(el);
 
 
             Elements.Add(el);
 
             Culler.AddCullable(el);
 
-            UpdateVisibility(el);
 
             return el;
         }
@@ -101,9 +104,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             if (el.IsDeleted) throw new InvalidOperationException();
 
             var data = getRenderData(el.Mesh);
-
-
-            data.ElementDeleted[el.ElementNumber] = true;
 
             Culler.RemoveCullable(el);
 
@@ -163,7 +163,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 if (partList.Count > 20) Debugger.Break();
                 for (int j = 0; j < partList.Count; j++)
                 {
-                    
+
                     var part = partList[j];
                     var renderPart = new MeshRenderPart();
                     renderMat.Parts[j] = renderPart;
@@ -207,13 +207,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         {
             renderDataDict[el.Mesh].WorldMatrices[el.ElementNumber] = el.WorldMatrix;
         }
-        public void UpdateVisibility(DeferredMeshRenderElement el)
-        {
-            var visible = el.Visible && ((ICullable)el).VisibleReferenceCount > 0;
-            renderDataDict[el.Mesh].ElementVisible[el.ElementNumber] = visible;
-        }
-
-
 
 
         private void initialize()
@@ -257,6 +250,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             baseShader.Apply();
             context.Rasterizer.State = rasterizerState;
 
+            BoundingFrustum frustum = new BoundingFrustum(Matrix.Identity.xna());
+            if (culler.CullCamera != null)
+                frustum = new Microsoft.Xna.Framework.BoundingFrustum(culler.CullCamera.ViewProjection.xna());
 
             for (int i = 0; i < renderDatas.Count; i++)
             {
@@ -264,15 +260,54 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 var data = renderDatas[i];
                 for (int j = 0; j < data.WorldMatrices.Count; j++)
                 {
-                    if (data.ElementDeleted[j]) continue;
-                    if (!data.ElementVisible[j]) continue;
+                    var el = data.Elements[j];
+                    if (el.IsDeleted) continue;
+                    if (!el.IsVisibleToCamera) continue;
+                    //if (culler.CullCamera != null)
+                    //    if (!frustum.Intersects(el.BoundingBox)) continue;
                     var mat = data.WorldMatrices[j];
                     renderMesh(data, mat);
                 }
             }
             Performance.EndEvent();
 
-            game.AddToWindowTitle("Calls: " + drawCalls);
+           // game.AddToWindowTitle("Calls: " + drawCalls);
+
+        }
+        public void DrawDepthOnly()
+        {
+            drawCalls = 0;
+            Performance.BeginEvent(new Color4(System.Drawing.Color.Red), "DMeshes-Depth");
+            context.InputAssembler.InputLayout = layout;
+            context.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleList;
+
+            baseShader.Effect.GetVariableByName("View").AsMatrix().SetMatrix(game.Camera.View);
+            baseShader.Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(game.Camera.Projection);
+            baseShader.Apply();
+            context.Rasterizer.State = rasterizerState;
+
+            BoundingFrustum frustum = new BoundingFrustum(Matrix.Identity.xna());
+            if (culler.CullCamera != null)
+                frustum = new Microsoft.Xna.Framework.BoundingFrustum(culler.CullCamera.ViewProjection.xna());
+
+            for (int i = 0; i < renderDatas.Count; i++)
+            {
+                //TODO: use instancing here
+                var data = renderDatas[i];
+                for (int j = 0; j < data.WorldMatrices.Count; j++)
+                {
+                    var el = data.Elements[j];
+                    if (el.IsDeleted) continue;
+                    if (!el.IsVisibleToCamera) continue;
+                    if (culler.CullCamera != null)
+                        if (!frustum.Intersects(el.BoundingBox)) continue;
+                    var mat = data.WorldMatrices[j];
+                    renderMeshDepthOnly(data, mat);
+                }
+            }
+            Performance.EndEvent();
+
+            //game.AddToWindowTitle("Calls: " + drawCalls);
 
         }
 
@@ -310,6 +345,39 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             }
         }
 
+
+        private void renderMeshDepthOnly(MeshRenderData data, Matrix world)
+        {
+            for (int i = 0; i < data.Materials.Length; i++)
+            {
+                var mat = data.Materials[i];
+
+
+                for (int j = 0; j < mat.Parts.Length; j++)
+                {
+                    var part = mat.Parts[j];
+
+                    Performance.BeginEvent(new Color4(System.Drawing.Color.Red), "DMesh-Depth");
+
+
+
+                    baseShader.Effect.GetVariableByName("World").AsMatrix().SetMatrix(world * part.ObjectMatrix);
+                    baseShader.Apply();
+
+
+                    context.InputAssembler.SetIndexBuffer(part.IndexBuffer, SlimDX.DXGI.Format.R32_UInt, 0); //Using int indexbuffers
+                    context.InputAssembler.SetVertexBuffers(0,
+                                                            new VertexBufferBinding(part.VertexBuffer,
+                                                                                    DeferredMeshVertex.SizeInBytes, 0));
+
+                    context.DrawIndexed(part.PrimitiveCount * 3, 0, 0);
+                    drawCalls++;
+
+                    Performance.EndEvent();
+
+                }
+            }
+        }
 
 
 
@@ -382,8 +450,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             }
 
             public List<Matrix> WorldMatrices = new List<Matrix>();
-            public List<bool> ElementDeleted = new List<bool>();
-            public List<bool> ElementVisible = new List<bool>();
+            public List<DeferredMeshRenderElement> Elements = new List<DeferredMeshRenderElement>();
             public MeshRenderMaterial[] Materials;
 
         }

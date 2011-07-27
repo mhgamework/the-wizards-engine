@@ -1,42 +1,39 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.ServerClient.Water;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using DirectX11;
+using SlimDX;
 
 namespace MHGameWork.TheWizards
 {
     public class QuadTreeVisualizer
     {
 
-        private readonly Color[] levelColors;
+        private readonly Color4[] levelColor4s;
 
         public QuadTreeVisualizer()
         {
 
-            levelColors = new Color[8];
-            levelColors[0] = Color.Red;
-            levelColors[1] = Color.Orange;
-            levelColors[2] = Color.Yellow;
-            levelColors[3] = Color.Purple;
-            levelColors[4] = Color.LightGreen;
-            levelColors[5] = Color.Green;
-            levelColors[6] = Color.Brown;
-            levelColors[7] = Color.DarkGoldenrod;
+            levelColor4s = new Color4[8];
+            levelColor4s[0] = new Color4(1, 0, 0);
+            levelColor4s[1] = new Color4(1, 165 / 255f, 0);
+            levelColor4s[2] = new Color4(1, 1, 0);
+            levelColor4s[3] = new Color4(0.5f, 0, 0.5f);
+            levelColor4s[4] = new Color4(144 / 255f, 238 / 255f, 144 / 255f);
+            levelColor4s[5] = new Color4(0, 0.5f, 0);
+            levelColor4s[6] = new Color4(165 / 255f, 42 / 255f, 42 / 255f);
+            levelColor4s[7] = new Color4(184 / 255f, 134 / 255f, 11 / 255f);
 
         }
 
 
-        private void RenderBoundingBox(IXNAGame game, BoundingBox box, Color col)
+        private void RenderBoundingBox(DX11Game game, BoundingBox box, Color4 col)
         {
-            Vector3 radius = box.Max - box.Min;
+            Vector3 radius = box.Maximum - box.Minimum;
             Vector3 radX = new Vector3(radius.X, 0, 0);
             Vector3 radY = new Vector3(0, radius.Y, 0);
             Vector3 radZ = new Vector3(0, 0, radius.Z);
-            Vector3 min = box.Min;
+            Vector3 min = box.Minimum;
 
 
 
@@ -87,7 +84,7 @@ namespace MHGameWork.TheWizards
         }
 
 
-        public void RenderNodeBoundingBox<T>(IXNAGame game, IQuadTreeNode<T> quadTreeNode) where T : IQuadTreeNode<T>
+        public void RenderNodeBoundingBox<T>(DX11Game game, IQuadTreeNode<T> quadTreeNode) where T : IQuadTreeNode<T>
         {
             if (quadTreeNode == null) return;
 
@@ -98,18 +95,18 @@ namespace MHGameWork.TheWizards
             RenderNodeBoundingBox(game, node.LowerLeft);
             RenderNodeBoundingBox(game, node.LowerRight);
 
-          //TODO: Calculate level is quite lame here and slow, since we loop the tree level by level
+            //TODO: Calculate level is quite lame here and slow, since we loop the tree level by level
             int level = QuadTree.CalculateLevel(quadTreeNode);
-            Color col;
-            if (level < levelColors.Length)
-                col = levelColors[level];
+            Color4 col;
+            if (level < levelColor4s.Length)
+                col = levelColor4s[level];
             else
-                col = levelColors[levelColors.Length - 1];
+                col = levelColor4s[levelColor4s.Length - 1];
 
-            game.LineManager3D.AddBox(quadTreeNode.NodeData.BoundingBox.xna(), col);
+            game.LineManager3D.AddBox(quadTreeNode.NodeData.BoundingBox, col);
         }
 
-        public void RenderNodeGroundBoundig<T>(IXNAGame game, IQuadTreeNode<T> quadTreeNode) where T : IQuadTreeNode<T>
+        public void RenderNodeGroundBoundig<T>(DX11Game game, IQuadTreeNode<T> quadTreeNode) where T : IQuadTreeNode<T>
         {
             if (quadTreeNode == null) return;
 
@@ -126,17 +123,17 @@ namespace MHGameWork.TheWizards
 
             //TODO: Calculate level is quite lame here and slow, since we loop the tree level by level
             int level = QuadTree.CalculateLevel(quadTreeNode);
-            Color col;
-            if (level < levelColors.Length)
-                col = levelColors[level];
+            Color4 col;
+            if (level < levelColor4s.Length)
+                col = levelColor4s[level];
             else
-                col = levelColors[levelColors.Length - 1];
+                col = levelColor4s[levelColor4s.Length - 1];
 
-            Vector3 radius = (node.BoundingBox.Maximum - node.BoundingBox.Minimum).xna();
+            Vector3 radius = (node.BoundingBox.Maximum - node.BoundingBox.Minimum);
             Vector3 radX = new Vector3(radius.X, 0, 0);
             Vector3 radY = new Vector3(0, radius.Y, 0);
             Vector3 radZ = new Vector3(0, 0, radius.Z);
-            Vector3 min = node.BoundingBox.Minimum.xna();
+            Vector3 min = node.BoundingBox.Minimum;
             min.Y = -1 + level;
 
 
@@ -157,22 +154,22 @@ namespace MHGameWork.TheWizards
         }
 
         /// <summary>
-        /// This function should return true when the given node should be rendered in given color, otherwise false.
+        /// This function should return true when the given node should be rendered in given Color4, otherwise false.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="quadTreeNode"></param>
-        /// <param name="color"></param>
+        /// <param name="Color4"></param>
         /// <returns></returns>
-        public delegate bool RenderNodePredicate<T>(T quadTreeNode, out Color color) where T : class, IQuadTreeNode<T>;
+        public delegate bool RenderNodePredicate<T>(T quadTreeNode, out Color4 Color4) where T : class, IQuadTreeNode<T>;
 
         /// <summary>
-        /// This functions loops through all nodes and renders the node when the given predicate returns true for given node. It uses the out color argument to determine the color of the rendered node.
+        /// This functions loops through all nodes and renders the node when the given predicate returns true for given node. It uses the out Color4 argument to determine the Color4 of the rendered node.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="game"></param>
         /// <param name="quadTreeNode"></param>
         /// <param name="predicate"></param>
-        public void RenderNodeGroundBoundig<T>(IXNAGame game, T quadTreeNode, RenderNodePredicate<T> predicate) where T : class, IQuadTreeNode<T>
+        public void RenderNodeGroundBoundig<T>(DX11Game game, T quadTreeNode, RenderNodePredicate<T> predicate) where T : class, IQuadTreeNode<T>
         {
             if (quadTreeNode == null) return;
 
@@ -184,7 +181,7 @@ namespace MHGameWork.TheWizards
             RenderNodeGroundBoundig(game, node.LowerRight, predicate);
 
 
-            Color col;
+            Color4 col;
 
             if (!predicate(quadTreeNode, out col)) return;
 
@@ -192,11 +189,11 @@ namespace MHGameWork.TheWizards
             int level = QuadTree.CalculateLevel(quadTreeNode);
 
 
-            Vector3 radius = (node.BoundingBox.Maximum - node.BoundingBox.Minimum).xna();
+            Vector3 radius = (node.BoundingBox.Maximum - node.BoundingBox.Minimum);
             Vector3 radX = new Vector3(radius.X, 0, 0);
             Vector3 radY = new Vector3(0, radius.Y, 0);
             Vector3 radZ = new Vector3(0, 0, radius.Z);
-            Vector3 min = node.BoundingBox.Minimum.xna();
+            Vector3 min = node.BoundingBox.Minimum;
             min.Y = -1 + level;
 
 

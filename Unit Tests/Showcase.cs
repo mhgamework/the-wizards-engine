@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using DirectX11;
+using DirectX11.Graphics;
 using DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Entity;
@@ -20,9 +21,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
+using SlimDX;
 using SlimDX.DirectInput;
 using MathHelper = DirectX11.MathHelper;
+using Matrix = Microsoft.Xna.Framework.Matrix;
 using TexturePool = MHGameWork.TheWizards.Rendering.TexturePool;
+using Vector3 = Microsoft.Xna.Framework.Vector3;
 
 namespace MHGameWork.TheWizards.Tests
 {
@@ -95,7 +99,7 @@ namespace MHGameWork.TheWizards.Tests
             var crateMesh = OBJParserTest.GetCrateMesh(c);
 
             var sphereMesh = new SphereMesh(0.3f, 20, Color.Green);
-            var visualizer = new QuadTreeVisualizer();
+            var visualizer = new QuadTreeVisualizerXNA();
 
             game.AddXNAObject(physicsElementFactory);
 
@@ -237,7 +241,7 @@ namespace MHGameWork.TheWizards.Tests
             game.IsFixedTimeStep = false;
             game.DrawFps = true;
 
-            var visualizer = new QuadTreeVisualizer();
+            var visualizer = new QuadTreeVisualizerXNA();
 
             game.AddXNAObject(physicsElementFactory);
 
@@ -343,7 +347,7 @@ namespace MHGameWork.TheWizards.Tests
             game.IsFixedTimeStep = false;
             game.DrawFps = true;
 
-            var visualizer = new QuadTreeVisualizer();
+            var visualizer = new QuadTreeVisualizerXNA();
 
             game.AddXNAObject(physicsElementFactory);
 
@@ -502,6 +506,11 @@ namespace MHGameWork.TheWizards.Tests
 
             game.GameLoopEvent += delegate
                                   {
+
+
+
+
+
                                       gBuffer.Clear();
                                       gBuffer.SetTargetsToOutputMerger();
 
@@ -513,6 +522,7 @@ namespace MHGameWork.TheWizards.Tests
                                       DeferredTest.DrawGBuffer(game, gBuffer);
 
                                   };
+            SlimDX.Configuration.EnableObjectTracking = false;
 
             game.Run();
 
@@ -524,6 +534,7 @@ namespace MHGameWork.TheWizards.Tests
         {
             var game = new DX11Game();
             game.InitDirectX();
+            SlimDX.Configuration.EnableObjectTracking = false;
 
             var renderer = new DeferredRenderer(game);
 
@@ -536,10 +547,12 @@ namespace MHGameWork.TheWizards.Tests
 
             var meshes = c.CreateMeshesFromObjects(importer);
 
-            foreach (var ramMesh in meshes)
+            for (int index = 0; index < meshes.Count; index++)
             {
+                if (index != 100) continue;
+                var ramMesh = meshes[index];
                 var el = renderer.CreateMeshElement(ramMesh);
-
+                
             }
             var directional = renderer.CreateDirectionalLight();
             directional.ShadowsEnabled = true;
@@ -550,7 +563,12 @@ namespace MHGameWork.TheWizards.Tests
             spot.LightRadius *= 2;
             spot.ShadowsEnabled = true;
 
+            var visualizer = new QuadTreeVisualizer();
+
+            var otherCam = new SpectaterCamera(game.Keyboard, game.Mouse, 1, 10000);
+            var camState = false;
             int state = 0;
+            bool rotate = false;
             game.GameLoopEvent += delegate
             {
                 if (game.Keyboard.IsKeyPressed(Key.D1))
@@ -561,6 +579,15 @@ namespace MHGameWork.TheWizards.Tests
                     state = 2;
                 if (game.Keyboard.IsKeyPressed(Key.D4))
                     state = 3;
+
+                if (game.Keyboard.IsKeyPressed(Key.C))
+                    camState = !camState;
+
+                if (game.Keyboard.IsKeyPressed(Key.NumberPad0))
+                    rotate = !rotate;
+
+                if (rotate)
+                    game.SpectaterCamera.AngleHorizontal += game.Elapsed * MathHelper.Pi * (1 / 8f);
 
                 switch (state)
                 {
@@ -579,15 +606,52 @@ namespace MHGameWork.TheWizards.Tests
                         break;
                 }
 
+                if (camState)
+                {
+                    game.Camera = game.SpectaterCamera;
+                    renderer.DEBUG_SeperateCullCamera = null;
+                }
+                else
+                {
+                    game.Camera = otherCam;
+                    renderer.DEBUG_SeperateCullCamera = game.SpectaterCamera;
+
+
+                }
+                game.SpectaterCamera.EnableUserInput = camState;
+                otherCam.EnableUserInput = !camState;
+                otherCam.Update(game.Elapsed);
+
+
                 renderer.Draw();
 
+                renderer.DEBUG_FrustumCuller.CullCamera = game.Camera;
+                renderer.DEBUG_FrustumCuller.UpdateVisibility();
                 for (int i = 0; i < renderer.DEBUG_MeshRenderer.Elements.Count; i++)
                 {
                     var el = renderer.DEBUG_MeshRenderer.Elements[i];
-                    game.LineManager3D.AddBox(el.BoundingBox.dx(), new SlimDX.Color4(0,1,0));
+                    
+                    if (el.IsVisibleToCamera)
+                        game.LineManager3D.AddBox(el.BoundingBox.dx(), new SlimDX.Color4(0, 1, 0));
+                }
+                if (false)
+                {
+
+
+                    visualizer.RenderNodeGroundBoundig(game, renderer.DEBUG_FrustumCuller.RootNode/*,
+                                                   delegate(FrustumCuller.CullNode quadTreeNode, out Color4 color4)
+                                                       {
+                                                           color4 = new Color4(1, 0, 0);
+                                                           return true;
+                                                       }*/);
                 }
 
+                game.LineManager3D.AddViewFrustum(game.SpectaterCamera.ViewProjection, new SlimDX.Color4(1, 0, 0));
+
+
+
             };
+
 
             game.Run();
         }

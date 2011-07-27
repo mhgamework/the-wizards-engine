@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MHGameWork.TheWizards
 {
@@ -25,6 +26,10 @@ namespace MHGameWork.TheWizards
                                                       v.M21, v.M22, v.M23, v.M24,
                                                       v.M31, v.M32, v.M33, v.M34,
                                                       v.M41, v.M42, v.M43, v.M44);
+        }
+        public static Color xna(this SlimDX.Color4 v)
+        {
+            return new Color(v.ToVector4().xna());
         }
 
 
@@ -62,7 +67,10 @@ namespace MHGameWork.TheWizards
                            M44 = v.M44
                        };
         }
-
+        public static SlimDX.Color4 dx(this Color v)
+        {
+            return new SlimDX.Color4(v.ToVector4().dx());
+        }
 
     }
 }

@@ -306,7 +306,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
             game.Graphics1.ToggleFullScreen();
 
             var sphereMesh = new SphereMesh(0.3f, 20, Color.Green);
-            var visualizer = new QuadTreeVisualizer();
+            var visualizer = new QuadTreeVisualizerXNA();
 
             game.AddXNAObject(physicsElementFactory);
 

@@ -140,7 +140,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
             Curve3D curve1 = ClientTest.CreateTestObject1MovementCurve();
 
 
-            QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
+            QuadTreeVisualizerXNA visualizer = new QuadTreeVisualizerXNA();
             float time = 0;
             TerrainBlockClientPhysics block1 = null;
             TerrainBlockClientPhysics block2 = null;
@@ -242,7 +242,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
             Curve3D curve1 = ClientTest.CreateTestObject1MovementCurve();
 
 
-            QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
+            QuadTreeVisualizerXNA visualizer = new QuadTreeVisualizerXNA();
             float time = 0;
             TerrainClientPhysics terrain = null;
 

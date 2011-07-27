@@ -6,6 +6,9 @@ using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Rendering
 {
+    /// <summary>
+    /// Maybe keep for testing?
+    /// </summary>
     [Obsolete("There is no longer any use for this class. It may reappear later but for now better not use this. See Also DefaultRenderer")]
     public class SimpleRenderer : IXNAObject
     {

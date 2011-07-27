@@ -142,6 +142,7 @@
     <Compile Include="Physics\TestSphereShooter.cs" />
     <Compile Include="ProceduralTerrainGeneration\NoiseTests.cs" />
     <Compile Include="ProceduralTerrainGeneration\TerrainGenerationTests.cs" />
+    <Compile Include="Rendering\CullingTest.cs" />
     <Compile Include="Rendering\DeferredRenderingTest.cs" />
     <Compile Include="Rendering\SSAOTest.cs" />
     <Compile Include="Scene\SceneEditorTest.cs" />

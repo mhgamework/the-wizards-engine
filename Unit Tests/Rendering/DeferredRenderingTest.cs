@@ -223,6 +223,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
                 DeferredTest.DrawGBuffer(game, gBuffer);
             };
 
+
             game.Run();
 
         }
@@ -297,6 +298,8 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
             var renderer = new DeferredRenderer(game);
 
+            var otherCam = new SpectaterCamera(game.Keyboard, game.Mouse, 1, 10000);
+
             var mesh = CreateMerchantsHouseMesh(new OBJToRAMMeshConverter(new RAMTextureFactory()));
 
             var el = renderer.CreateMeshElement(mesh);
@@ -310,6 +313,9 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             spot.ShadowsEnabled = true;
 
             int state = 0;
+
+            var camState = false;
+
             game.GameLoopEvent += delegate
                                       {
                                           if (game.Keyboard.IsKeyPressed(Key.D1))
@@ -320,6 +326,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
                                               state = 2;
                                           if (game.Keyboard.IsKeyPressed(Key.D4))
                                               state = 3;
+                                          
 
                                           switch (state)
                                           {
@@ -338,9 +345,29 @@ namespace MHGameWork.TheWizards.Tests.Rendering
                                                   break;
                                           }
 
+                                          if (game.Keyboard.IsKeyPressed(Key.C))
+                                              camState = !camState;
+
+                                          if (camState)
+                                          {
+                                              game.Camera = game.SpectaterCamera;
+                                              renderer.DEBUG_SeperateCullCamera = null;
+                                          }
+                                          else
+                                          {
+                                              game.Camera = otherCam;
+                                              renderer.DEBUG_SeperateCullCamera = game.SpectaterCamera;
+                                              
+
+                                          }
+                                          game.SpectaterCamera.EnableUserInput = camState;
+                                          otherCam.EnableUserInput = !camState;
+                                          otherCam.Update(game.Elapsed);
                                           renderer.Draw();
 
                                       };
+
+            
 
             game.Run();
         }

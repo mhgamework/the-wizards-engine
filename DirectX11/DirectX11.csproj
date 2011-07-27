@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="QuadTreeVisualizer.cs" />
     <Compile Include="SlimDXConversion\ConversionCameraXNA.cs" />
     <Compile Include="DX11Game.cs" />
     <Compile Include="Graphics\BasicShader.cs" />

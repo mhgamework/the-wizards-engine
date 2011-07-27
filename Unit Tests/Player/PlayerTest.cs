@@ -344,7 +344,7 @@ namespace MHGameWork.TheWizards.Tests.Player
 
             TheWizards.Client.ClientPhysicsQuadTreeNode tree = ClientTest.CreateTestClientPhysicsQuadtree();
 
-            QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
+            QuadTreeVisualizerXNA visualizer = new QuadTreeVisualizerXNA();
 
             game.InitializeEvent += delegate
              {

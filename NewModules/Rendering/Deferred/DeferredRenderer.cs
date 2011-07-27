@@ -19,7 +19,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
     public class DeferredRenderer
     {
         private readonly DX11Game game;
-        private DeferredMeshRenderer meshRenderer;
         private DirectionalLightRenderer directionalLightRenderer;
         private SpotLightRenderer spotLightRenderer;
         private PointLightRenderer pointLightRenderer;
@@ -39,6 +38,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private HorizonSSAORenderer ssao;
 
         private FrustumCuller frustumCuller;
+        private DeferredMeshRenderer meshRenderer;
 
 
         public DeferredRenderer(DX11Game game)
@@ -105,7 +105,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
             Vector3 radius = new Vector3(1000, 1000, 1000);
-            frustumCuller = new FrustumCuller(new BoundingBox(-radius, radius), 5);
+            frustumCuller = new FrustumCuller(new BoundingBox(-radius, radius), 6);
             meshRenderer.Culler = frustumCuller;
 
 
@@ -143,6 +143,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             gBuffer.Clear();
             gBuffer.SetTargetsToOutputMerger();
             frustumCuller.CullCamera = game.Camera;
+            if (DEBUG_SeperateCullCamera != null) frustumCuller.CullCamera = DEBUG_SeperateCullCamera;
             frustumCuller.UpdateVisibility();
             meshRenderer.Draw();
 
@@ -159,7 +160,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 r.ShadowsEnabled = l.ShadowsEnabled;
 
                 if (l.ShadowsEnabled)
+                {
                     updateDirectionalShadows(r);
+                }
                 combineFinalRenderer.SetLightAccumulationStates();
 
                 r.Draw();
@@ -256,41 +259,45 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         private void updateDirectionalShadows(DirectionalLightRenderer r)
         {
+            var mainCamera = game.Camera;
+            if (DEBUG_SeperateCullCamera != null) mainCamera = DEBUG_SeperateCullCamera;
+
             r.DrawUpdatedShadowmap(delegate(OrthographicCamera lightCamera)
                                        {
+                                           var oldCam = game.Camera;
                                            game.Camera = lightCamera;
                                            frustumCuller.CullCamera = game.Camera;
                                            frustumCuller.UpdateVisibility();
-                                           meshRenderer.Draw();
-                                           game.Camera = game.SpectaterCamera;
-                                       }, game.Camera);
+                                           meshRenderer.DrawDepthOnly();
+                                           game.Camera = oldCam;
+                                       }, mainCamera);
         }
         private void updatePointShadows(PointLightRenderer r)
         {
             r.UpdateShadowMap(delegate(CustomCamera lightCamera)
             {
+                var oldCam = game.Camera;
                 game.Camera = lightCamera;
                 frustumCuller.CullCamera = game.Camera;
                 frustumCuller.UpdateVisibility();
-                meshRenderer.Draw();
-                game.Camera = game.SpectaterCamera;
+                meshRenderer.DrawDepthOnly();
+                game.Camera = oldCam;
             });
         }
         private void updateSpotShadows(SpotLightRenderer r)
         {
+            var oldCam = game.Camera;
             r.UpdateLightCamera();
             game.Camera = r.LightCamera;
             frustumCuller.CullCamera = game.Camera;
             frustumCuller.UpdateVisibility();
-            r.UpdateShadowMap(meshRenderer.Draw);
-            game.Camera = game.SpectaterCamera;
+            r.UpdateShadowMap(meshRenderer.DrawDepthOnly);
+            game.Camera = oldCam;
         }
 
-
-
-
         public DeferredMeshRenderer DEBUG_MeshRenderer { get { return meshRenderer; } }
-
+        public FrustumCuller DEBUG_FrustumCuller { get { return frustumCuller; } }
+        public ICamera DEBUG_SeperateCullCamera { get; set; }
 
     }
 }
