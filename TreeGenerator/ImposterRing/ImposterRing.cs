@@ -674,7 +674,7 @@ namespace TreeGenerator.ImposterRing
         {
             Vector3 radius = new Vector3(2048 * 5, 4000, 2048 * 5);
             //Vector3 radius = new Vector3(256, 4000, 256);
-            FrustumCuller culler = new FrustumCuller(new BoundingBox(-radius, radius), 4);
+            FrustumCullerSimple culler = new FrustumCullerSimple(new BoundingBox(-radius, radius), 4);
 
 
             XNAGame game;
@@ -873,9 +873,9 @@ namespace TreeGenerator.ImposterRing
         private class RenderablesDelayedRenderProvider : IDelayedRenderProvider
         {
             private List<ISimpleRenderable> renderables = new List<ISimpleRenderable>();
-            private FrustumCuller culler;
+            private FrustumCullerSimple culler;
             private IXNAGame game;
-            public RenderablesDelayedRenderProvider(List<ISimpleRenderable> _renderables, FrustumCuller culler)
+            public RenderablesDelayedRenderProvider(List<ISimpleRenderable> _renderables, FrustumCullerSimple culler)
             {
                 this.culler = culler;
                 this.renderables = _renderables;

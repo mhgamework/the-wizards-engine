@@ -28,7 +28,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             {
                 worldMatrix = value;
                 updateBoundingBox();
-                Renderer.Culler.UpdateCullable(this);
                 Renderer.UpdateWorldMatrix(this);
             }
         }
@@ -66,14 +65,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         }
 
         public bool IsDeleted { get { return Renderer == null; } }
-
-        public bool IsVisibleToCamera
-        {
-            get
-            {
-                return Visible && ((ICullable) this).VisibleReferenceCount > 0;
-            }
-        }
 
         #region ICullable Members
 

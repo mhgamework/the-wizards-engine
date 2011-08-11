@@ -170,6 +170,7 @@
     <Compile Include="Cogs\CogRaycastReport.cs" />
     <Compile Include="Cogs\ICogComponent.cs" />
     <Compile Include="Cogs\StaticBox.cs" />
+    <Compile Include="CompactQuadTree.cs" />
     <Compile Include="Editor\EditorCamera.cs" />
     <Compile Include="Editor\EditorGrid.cs" />
     <Compile Include="Editor\FromEditorProject\DevExpressRibbonMerger.cs" />
@@ -191,6 +192,8 @@
     <Compile Include="Rendering\Deferred\PointLight.cs" />
     <Compile Include="Rendering\Deferred\SpotLight.cs" />
     <Compile Include="Rendering\Deferred\TexturePool.cs" />
+    <Compile Include="Rendering\FrustumCuller.cs" />
+    <Compile Include="Rendering\FrustumCullerView.cs" />
     <Compile Include="Rendering\SSAO\HorizonSSAORenderer.cs" />
     <Compile Include="Terrain\Geomipmap\IndexBufferBuilder.cs" />
     <Compile Include="Terrain\Geomipmap\ITerrainBlock.cs" />
@@ -421,7 +424,7 @@
     <Compile Include="Rendering\DefaultRenderElement.cs" />
     <Compile Include="Rendering\DefaultRenderer.cs" />
     <Compile Include="Rendering\IDefaultModelMaterial.cs" />
-    <Compile Include="Rendering\FrustumCuller.cs" />
+    <Compile Include="Rendering\FrustumCullerSimple.cs" />
     <Compile Include="Rendering\ICullable.cs" />
     <Compile Include="Rendering\IDefaultRenderable.cs" />
     <Compile Include="Rendering\ISimpleRenderable.cs" />

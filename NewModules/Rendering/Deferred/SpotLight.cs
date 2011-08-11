@@ -18,7 +18,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         public Vector3 Color { get; set; }
         public bool ShadowsEnabled { get; set; }
 
-        public SpotLight()
+        public FrustumCullerView ShadowView { get; set; }
+
+        public SpotLight(FrustumCuller culler)
         {
             LightPosition = new Vector3(0, 6, 0);
             LightRadius = 6;
@@ -29,6 +31,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
             Color = new Vector3(1, 1, 0.9f);
+            ShadowView = culler.CreateView();
 
         }
     }

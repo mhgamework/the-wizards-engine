@@ -39,6 +39,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         private FrustumCuller frustumCuller;
         private DeferredMeshRenderer meshRenderer;
+        private FrustumCullerView gbufferView;
 
 
         public DeferredRenderer(DX11Game game)
@@ -104,124 +105,59 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
 
-            Vector3 radius = new Vector3(1000, 1000, 1000);
-            frustumCuller = new FrustumCuller(new BoundingBox(-radius, radius), 6);
-            meshRenderer.Culler = frustumCuller;
+            Vector3 radius = new Vector3(500, 1000, 500);
+            frustumCuller = new FrustumCuller(new BoundingBox(-radius, radius), 8);
 
+            gbufferView = frustumCuller.CreateView();
+            meshRenderer.Culler = frustumCuller;
 
         }
 
         public DirectionalLight CreateDirectionalLight()
         {
-            var light = new DirectionalLight();
+            var light = new DirectionalLight(frustumCuller);
             directionalLights.Add(light);
             return light;
         }
 
         public PointLight CreatePointLight()
         {
-            var light = new PointLight();
+            var light = new PointLight(frustumCuller);
             pointLights.Add(light);
             return light;
         }
 
         public SpotLight CreateSpotLight()
         {
-            var light = new SpotLight();
+            var light = new SpotLight(frustumCuller);
             spotLights.Add(light);
             return light;
         }
 
         public DeferredMeshRenderElement CreateMeshElement(IMesh mesh)
         {
-            return meshRenderer.AddMesh(mesh);
+            var el = meshRenderer.AddMesh(mesh);
+
+            return el;
         }
 
         public void Draw()
         {
             context.ClearState();
-            gBuffer.Clear();
-            gBuffer.SetTargetsToOutputMerger();
-            frustumCuller.CullCamera = game.Camera;
-            if (DEBUG_SeperateCullCamera != null) frustumCuller.CullCamera = DEBUG_SeperateCullCamera;
-            frustumCuller.UpdateVisibility();
-            meshRenderer.Draw();
+
+
+            drawGBuffer();
 
             combineFinalRenderer.ClearLightAccumulation();
 
-            // Possibly do all shadowmap up front, even cache some shadow maps.
 
-            for (int i = 0; i < directionalLights.Count; i++)
-            {
-                var l = directionalLights[i];
-                var r = directionalLightRenderer;
-                r.LightDirection = l.LightDirection;
-                r.Color = l.Color;
-                r.ShadowsEnabled = l.ShadowsEnabled;
+            drawLights();
 
-                if (l.ShadowsEnabled)
-                {
-                    updateDirectionalShadows(r);
-                }
-                combineFinalRenderer.SetLightAccumulationStates();
+            updateSSAO();
 
-                r.Draw();
-            }
+            drawHdrImage();
 
-            for (int i = 0; i < pointLights.Count; i++)
-            {
-                var l = pointLights[i];
-                var r = pointLightRenderer;
-                r.LightIntensity = l.LightIntensity;
-                r.LightPosition = l.LightPosition;
-                r.LightRadius = l.LightRadius;
-                r.Color = l.Color;
-                r.ShadowsEnabled = l.ShadowsEnabled;
-
-                if (l.ShadowsEnabled)
-                    updatePointShadows(r);
-
-                combineFinalRenderer.SetLightAccumulationStates();
-
-                r.Draw();
-            }
-
-            for (int i = 0; i < spotLights.Count; i++)
-            {
-                var l = spotLights[i];
-                var r = spotLightRenderer;
-                r.LightIntensity = l.LightIntensity;
-                r.LightPosition = l.LightPosition;
-                r.LightRadius = l.LightRadius;
-                r.SpotDecayExponent = l.SpotDecayExponent;
-                r.SpotDirection = l.SpotDirection;
-                r.SpotLightAngle = l.SpotLightAngle;
-                r.Color = l.Color;
-                r.ShadowsEnabled = l.ShadowsEnabled;
-
-                if (l.ShadowsEnabled)
-                {
-                    updateSpotShadows(r);
-                }
-
-                combineFinalRenderer.SetLightAccumulationStates();
-
-                r.Draw();
-            }
-
-
-
-            ssao.OnFrameRender(gBuffer.DepthRV, gBuffer.NormalRV);
-
-            game.Device.ImmediateContext.ClearState();
-            game.SetBackbuffer(); // This is to set default viewport only, because i am lazy
-
-            context.OutputMerger.SetTargets(hdrImageRtv);
-
-            combineFinalRenderer.DrawCombined(ssao.MSsaoBuffer.pSRV);
-
-            calculater.DrawUpdatedLogLuminance();
-            calculater.DrawUpdatedAdaptedLogLuminance();
+            updateTonemapLuminance();
 
             context.ClearState();
             game.SetBackbuffer();
@@ -239,7 +175,146 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         }
 
+        private void updateTonemapLuminance()
+        {
+            calculater.DrawUpdatedLogLuminance();
+            calculater.DrawUpdatedAdaptedLogLuminance();
+        }
 
+        private void drawHdrImage()
+        {
+            game.Device.ImmediateContext.ClearState();
+            game.SetBackbuffer(); // This is to set default viewport only, because i am lazy
+
+            context.OutputMerger.SetTargets(hdrImageRtv);
+
+            combineFinalRenderer.DrawCombined(ssao.MSsaoBuffer.pSRV);
+        }
+
+        private void updateSSAO()
+        {
+            ssao.OnFrameRender(gBuffer.DepthRV, gBuffer.NormalRV);
+        }
+
+        private void drawLights()
+        {
+            // Possibly do all shadowmap up front, even cache some shadow maps.
+
+            for (int i = 0; i < directionalLights.Count; i++)
+            {
+                var l = directionalLights[i];
+                var r = directionalLightRenderer;
+                setDirectionalLightToRenderer(r, l);
+
+                if (l.ShadowsEnabled)
+                {
+                    updateDirectionalShadows(r, l.ShadowViews);
+                }
+                combineFinalRenderer.SetLightAccumulationStates();
+
+                r.Draw();
+            }
+
+            for (int i = 0; i < pointLights.Count; i++)
+            {
+                var l = pointLights[i];
+                var r = pointLightRenderer;
+                setPointLightToRenderer(r, l);
+
+                if (l.ShadowsEnabled)
+                    updatePointShadows(r, l.Views);
+
+                combineFinalRenderer.SetLightAccumulationStates();
+
+                r.Draw();
+            }
+
+            for (int i = 0; i < spotLights.Count; i++)
+            {
+                var l = spotLights[i];
+                var r = spotLightRenderer;
+                setSpotLightToRenderer(r, l);
+
+                if (l.ShadowsEnabled)
+                {
+                    updateSpotShadows(r,l.ShadowView);
+                }
+
+                combineFinalRenderer.SetLightAccumulationStates();
+
+                r.Draw();
+            }
+        }
+
+        private void setSpotLightToRenderer(SpotLightRenderer r, SpotLight l)
+        {
+            r.LightIntensity = l.LightIntensity;
+            r.LightPosition = l.LightPosition;
+            r.LightRadius = l.LightRadius;
+            r.SpotDecayExponent = l.SpotDecayExponent;
+            r.SpotDirection = l.SpotDirection;
+            r.SpotLightAngle = l.SpotLightAngle;
+            r.Color = l.Color;
+            r.ShadowsEnabled = l.ShadowsEnabled;
+        }
+
+        private void setDirectionalLightToRenderer(DirectionalLightRenderer r, DirectionalLight l)
+        {
+            r.LightDirection = l.LightDirection;
+            r.Color = l.Color;
+            r.ShadowsEnabled = l.ShadowsEnabled;
+        }
+
+        private void setPointLightToRenderer(PointLightRenderer r, PointLight l)
+        {
+            r.LightIntensity = l.LightIntensity;
+            r.LightPosition = l.LightPosition;
+            r.LightRadius = l.LightRadius;
+            r.Color = l.Color;
+            r.ShadowsEnabled = l.ShadowsEnabled;
+        }
+
+        private void drawGBuffer()
+        {
+            gBuffer.Clear();
+            gBuffer.SetTargetsToOutputMerger();
+
+            drawGBufferMeshes();
+        }
+
+        private void drawGBufferMeshes()
+        {
+            var cullCam = DEBUG_SeperateCullCamera;
+            if (cullCam == null) cullCam = game.Camera;
+
+            gbufferView.UpdateVisibility(cullCam.ViewProjection);
+            setMeshRendererVisibles(gbufferView);
+            meshRenderer.Draw();
+        }
+
+        private void setMeshRendererVisibles(FrustumCullerView view)
+        {
+
+            var cullables = view.GetVisibleCullables();
+            setAllMeshesInvisible();
+            for (int i = 0; i < cullables.Count; i++)
+            {
+                var c = (DeferredMeshRenderElement)cullables[i];
+                c.Visible = true;
+                //game.LineManager3D.AddBox(c.BoundingBox.dx(), new Color4(0, 1, 0));
+            }
+        }
+
+        /// <summary>
+        /// This could be optimized later on
+        /// </summary>
+        private void setAllMeshesInvisible()
+        {
+            for (int i = 0; i < meshRenderer.Elements.Count; i++)
+            {
+                meshRenderer.Elements[i].Visible = false;
+            }
+        }
 
         private T readPixel<T>(Resource resource) where T : struct
         {
@@ -257,40 +332,45 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
 
-        private void updateDirectionalShadows(DirectionalLightRenderer r)
+        private void updateDirectionalShadows(DirectionalLightRenderer r, FrustumCullerView[] views)
         {
             var mainCamera = game.Camera;
             if (DEBUG_SeperateCullCamera != null) mainCamera = DEBUG_SeperateCullCamera;
-
+            int num = 0;
             r.DrawUpdatedShadowmap(delegate(OrthographicCamera lightCamera)
                                        {
+                                           var view = views[0];
+                                           num++;
                                            var oldCam = game.Camera;
                                            game.Camera = lightCamera;
-                                           frustumCuller.CullCamera = game.Camera;
-                                           frustumCuller.UpdateVisibility();
+                                           view.UpdateVisibility(lightCamera.ViewProjection);
+                                           setMeshRendererVisibles(view);
                                            meshRenderer.DrawDepthOnly();
                                            game.Camera = oldCam;
                                        }, mainCamera);
         }
-        private void updatePointShadows(PointLightRenderer r)
+        private void updatePointShadows(PointLightRenderer r, FrustumCullerView[] views)
         {
+            int num = 0;
             r.UpdateShadowMap(delegate(CustomCamera lightCamera)
-            {
-                var oldCam = game.Camera;
-                game.Camera = lightCamera;
-                frustumCuller.CullCamera = game.Camera;
-                frustumCuller.UpdateVisibility();
-                meshRenderer.DrawDepthOnly();
-                game.Camera = oldCam;
-            });
+                                  {
+                                      var view = views[num];
+                                      num++;
+                                      var oldCam = game.Camera;
+                                      game.Camera = lightCamera;
+                                      view.UpdateVisibility(lightCamera.ViewProjection);
+                                      setMeshRendererVisibles(view);
+                                      meshRenderer.DrawDepthOnly();
+                                      game.Camera = oldCam;
+                                  });
         }
-        private void updateSpotShadows(SpotLightRenderer r)
+        private void updateSpotShadows(SpotLightRenderer r, FrustumCullerView view)
         {
             var oldCam = game.Camera;
             r.UpdateLightCamera();
             game.Camera = r.LightCamera;
-            frustumCuller.CullCamera = game.Camera;
-            frustumCuller.UpdateVisibility();
+            view.UpdateVisibility(r.LightCamera.ViewProjection);
+            setMeshRendererVisibles(view);
             r.UpdateShadowMap(meshRenderer.DrawDepthOnly);
             game.Camera = oldCam;
         }

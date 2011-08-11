@@ -31,6 +31,10 @@ namespace MHGameWork.TheWizards
         {
             return new Color(v.ToVector4().xna());
         }
+        public static Microsoft.Xna.Framework.Plane xna(this SlimDX.Plane v)
+        {
+            return new Microsoft.Xna.Framework.Plane(v.Normal.xna(), v.D);
+        }
 
 
         public static SlimDX.BoundingBox dx(this Microsoft.Xna.Framework.BoundingBox v)
@@ -70,6 +74,10 @@ namespace MHGameWork.TheWizards
         public static SlimDX.Color4 dx(this Color v)
         {
             return new SlimDX.Color4(v.ToVector4().dx());
+        }
+        public static SlimDX.Plane dx(this Microsoft.Xna.Framework.Plane v)
+        {
+            return new SlimDX.Plane(v.Normal.dx(), v.D);
         }
 
     }

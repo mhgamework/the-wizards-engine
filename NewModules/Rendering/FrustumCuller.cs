@@ -1,51 +1,59 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using DirectX11;
-using DirectX11.Graphics;
-using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Rendering
 {
-    public interface ICuller
-    {
-        ICamera CullCamera { get; set; }
-        void AddCullable(ICullable cullable);
-        void RemoveCullable(ICullable cullable);
-        void UpdateVisibility();
-        void UpdateCullable(ICullable cullable);
-    }
-
     /// <summary>
-    /// Could be renamed FrustumCuller
     /// TODO: the height of the treenodes should be updated to encapsulate the cullables height
     /// </summary>
-    public class FrustumCuller : ICuller
+    public class FrustumCuller
     {
         private List<ICullable> cullables = new List<ICullable>();
+        private List<CullableItem> cullablesLookup = new List<CullableItem>(); //TODO: clean this periodically
         /// <summary>
         /// Rename cullableContainingNodes
         /// </summary>
-        private Dictionary<ICullable, CullNode> cullableNodeRelations = new Dictionary<ICullable, CullNode>();
-        private ICamera cullCamera;
-
-        public ICamera CullCamera
-        {
-            get { return cullCamera; }
-            set { cullCamera = value; }
-        }
+        private Dictionary<ICullable, CullNode> cullableContainingNodes = new Dictionary<ICullable, CullNode>();
+        private Dictionary<ICullable, CullableItem> cullableItemMap = new Dictionary<ICullable, CullableItem>();
 
         public CullNode RootNode;
+        public BoundingBox TreeBounding { get; private set; }
+        public int NumberLevels { get; private set; }
 
-        public FrustumCuller(BoundingBox quadtreeBounding, int numberSplits)
+        private CullNode[] cullNodes;
+
+        private List<FrustumCullerView> views = new List<FrustumCullerView>();
+        private int viewCullablesBufferSize = 16;
+
+        public FrustumCuller(BoundingBox quadtreeBounding, int numberLevels)
         {
+            TreeBounding = quadtreeBounding;
+            NumberLevels = numberLevels;
             RootNode = new CullNode();
             QuadTreeNodeData<CullNode> data = new QuadTreeNodeData<CullNode>();
             data.BoundingBox = quadtreeBounding;
             RootNode.NodeData = data;
 
-            QuadTree.Split(RootNode, numberSplits);
+            QuadTree.Split(RootNode, numberLevels - 1);
+            
+            cullNodes = new CullNode[CompactQuadTree<bool>.CalculateNbNodes(numberLevels)];
+            buildCullNodeArray(RootNode, new CompactQuadTree<bool>.Node(0));
+
+            expandCullablesBuffer();
+
+        }
+
+        private void buildCullNodeArray(CullNode node, CompactQuadTree<bool>.Node cNode)
+        {
+            cullNodes[cNode.Index] = node;
+            node.Index = cNode.Index;
+            if (QuadTree.IsLeafNode(node)) return;
+            buildCullNodeArray(node.NodeData.LowerLeft, cNode.LowerLeft);
+            buildCullNodeArray(node.NodeData.LowerRight, cNode.LowerRight);
+            buildCullNodeArray(node.NodeData.UpperLeft, cNode.UpperLeft);
+            buildCullNodeArray(node.NodeData.UpperRight, cNode.UpperRight);
+
 
         }
 
@@ -53,15 +61,36 @@ namespace MHGameWork.TheWizards.Rendering
         {
             if (cullables.Contains(cullable)) throw new InvalidOperationException();
             cullables.Add(cullable);
+            var item = new CullableItem { Cullable = cullable, Index = cullablesLookup.Count };
+            cullablesLookup.Add(item);
+            cullableItemMap[cullable] = item;
 
 
             CullNode node = RootNode.FindContainingNode(cullable);
-            cullableNodeRelations[cullable] = node;
+            cullableContainingNodes[cullable] = node;
 
             if (node == null) node = RootNode;
-            node.PlaceCullable(cullable);
+            node.PlaceCullable(item);
 
+
+            if (viewCullablesBufferSize <= cullablesLookup.Count)
+            {
+                expandCullablesBuffer();
+            }
         }
+
+
+
+        private void expandCullablesBuffer()
+        {
+            viewCullablesBufferSize *= 2;
+            for (int i = 0; i < views.Count; i++)
+            {
+                var view = views[i];
+                view.ResizeCullablesBuffer(viewCullablesBufferSize);
+            }
+        }
+
         /// <summary>
         /// TODO: test this, i think this doesnt work correctly. Objects seem to remain in the tree
         /// </summary>
@@ -71,15 +100,15 @@ namespace MHGameWork.TheWizards.Rendering
 
             cullables.Remove(cullable);
 
-            CullNode node = cullableNodeRelations[cullable];
+            CullNode node = cullableContainingNodes[cullable];
 
-            node.RemoveCullable(cullable);
+            node.RemoveCullable(cullableItemMap[cullable]);
 
         }
 
         public void UpdateCullable(ICullable cullable)
         {
-            CullNode oldNode = cullableNodeRelations[cullable];
+            CullNode oldNode = cullableContainingNodes[cullable];
             CullNode newNode = oldNode.FindEncapsulatingNodeUpwards(cullable);
             newNode = newNode.FindContainingNode(cullable);
 
@@ -87,33 +116,51 @@ namespace MHGameWork.TheWizards.Rendering
 
             if (newNode == oldNode) return;
 
-            cullableNodeRelations[cullable] = newNode;
+            cullableContainingNodes[cullable] = newNode;
 
-            oldNode.RemoveCullable(cullable);
-            newNode.PlaceCullable(cullable);
+            var item = cullableItemMap[cullable];
+
+            oldNode.RemoveCullable(item);
+            newNode.PlaceCullable(item);
         }
 
-        public void UpdateVisibility()
+        public FrustumCullerView CreateView()
         {
-            RootNode.UpdateVisibility(new BoundingFrustum(cullCamera.ViewProjection));
+            var view = new FrustumCullerView(this);
+            views.Add(view);
+
+            view.ResizeCullablesBuffer(viewCullablesBufferSize);
+            return view;
         }
+
+        public CullNode GetCullNode(int index)
+        {
+            return cullNodes[index];
+        }
+
+        public ICullable GetCullableByIndex(int index)
+        {
+            return cullablesLookup[index].Cullable;
+        }
+
+        public class CullableItem
+        {
+            public int Index;
+            public ICullable Cullable;
+        }
+
 
         public class CullNode : IQuadTreeNode<CullNode>
         {
-            private List<ICullable> cullables = new List<ICullable>();
-            private bool visible;
-            public bool Visible
-            {
-                get { return visible; }
-            }
+            public int Index;
+            private List<CullableItem> cullables = new List<CullableItem>();
 
             public string Tag;
 
-            public List<ICullable> Cullables
+            public List<CullableItem> Cullables
             {
                 get { return cullables; }
             }
-
             private QuadTreeNodeData<CullNode> nodeData;
 
             public QuadTreeNodeData<CullNode> NodeData
@@ -134,9 +181,9 @@ namespace MHGameWork.TheWizards.Rendering
             /// Returns the node the cullable was added to
             /// </summary>
             /// <param name="cullable"></param>
-            public void PlaceCullable(ICullable cullable)
+            public void PlaceCullable(CullableItem cullable)
             {
-                if (nodeData.BoundingBox.xna().Contains(cullable.BoundingBox) == Microsoft.Xna.Framework.ContainmentType.Disjoint)
+                if (nodeData.BoundingBox.xna().Contains(cullable.Cullable.BoundingBox) == Microsoft.Xna.Framework.ContainmentType.Disjoint)
                     return;
 
                 if (QuadTree.IsLeafNode(this))
@@ -152,7 +199,7 @@ namespace MHGameWork.TheWizards.Rendering
 
             }
 
-            public void RemoveCullable(ICullable cullable)
+            public void RemoveCullable(CullableItem cullable)
             {
                 // This line cannot be used since data may have changed
                 /*if (nodeData.BoundingBox.Contains(cullable.BoundingBox) == ContainmentType.Disjoint)
@@ -207,84 +254,7 @@ namespace MHGameWork.TheWizards.Rendering
                 return nodeData.Parent.FindEncapsulatingNodeUpwards(cullable);
             }
 
-            public void UpdateVisibility(BoundingFrustum frustum)
-            {
-                updateVisibility(ref frustum, false);
-            }
 
-            private void setVisibility(bool value)
-            {
-                // Check if visiblity has changed. This shouldnt be relevant, since only non-leaf nodes, without cullables
-                //  can have this status called
-                if (visible == value) return;
-                visible = value;
-
-
-                int modifier;
-                if (visible) modifier = 1; else modifier = -1;
-
-                for (int i = 0; i < cullables.Count; i++)
-                {
-                    cullables[i].VisibleReferenceCount += modifier;
-
-                }
-            }
-
-            private void updateVisibility(ref BoundingFrustum frustum, bool skipFrustumCheck)
-            {
-                /*int i = 0;
-                if (Tag != null) i++;*/
-                if (skipFrustumCheck)
-                {
-                    if (visible == nodeData.Parent.visible) return;
-                    setVisibility(nodeData.Parent.visible);
-
-                    if (QuadTree.IsLeafNode(this)) return;
-                    nodeData.LowerLeft.updateVisibility(ref frustum, true);
-                    nodeData.LowerRight.updateVisibility(ref frustum, true);
-                    nodeData.UpperLeft.updateVisibility(ref frustum, true);
-                    nodeData.UpperRight.updateVisibility(ref frustum, true);
-
-                    return;
-                }
-
-
-                var result = ((Microsoft.Xna.Framework.BoundingFrustum)frustum).Contains(nodeData.BoundingBox.xna());
-
-                if (result == Microsoft.Xna.Framework.ContainmentType .Disjoint)
-                {
-                    if (visible == false) return;
-                    setVisibility(false);
-
-                    if (QuadTree.IsLeafNode(this)) return;
-                    //Note that, these calls are not strictly necessary. EDIT: are prohibited, this is exactly the speedup of using a quadtree struct
-                    // When traversing the tree from top to bottom, a invisible node will be reached, 
-                    // lower nodes need not be updated.
-                    nodeData.LowerLeft.updateVisibility(ref frustum, true);
-                    nodeData.LowerRight.updateVisibility(ref frustum, true);
-                    nodeData.UpperLeft.updateVisibility(ref frustum, true);
-                    nodeData.UpperRight.updateVisibility(ref frustum, true);
-                    return;
-                }
-
-
-                if (result == Microsoft.Xna.Framework.ContainmentType.Contains)
-                {
-                    if (visible) return;
-
-                    skipFrustumCheck = true;
-                }
-
-                setVisibility(true);
-                if (QuadTree.IsLeafNode(this)) return;
-
-                nodeData.LowerLeft.updateVisibility(ref frustum, skipFrustumCheck);
-                nodeData.LowerRight.updateVisibility(ref frustum, skipFrustumCheck);
-                nodeData.UpperLeft.updateVisibility(ref frustum, skipFrustumCheck);
-                nodeData.UpperRight.updateVisibility(ref frustum, skipFrustumCheck);
-
-
-            }
         }
     }
 }

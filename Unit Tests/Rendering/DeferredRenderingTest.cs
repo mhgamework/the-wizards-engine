@@ -400,7 +400,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
 
             Vector3 radius = new Vector3(100, 1000, 100);
-            FrustumCuller culler = new FrustumCuller(new BoundingBox(-radius, radius), 5);
+            FrustumCullerSimple culler = new FrustumCullerSimple(new BoundingBox(-radius, radius), 5);
 
             //QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
 
@@ -414,7 +414,8 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
             culler.CullCamera = cullCam;
 
-            renderer.Culler = culler;
+            throw new NotImplementedException();
+            //renderer.Culler = culler;
 
             bool rotate = true;
             int selectedNode = -1;

@@ -473,7 +473,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
         {
             XNAGame game = new XNAGame();
             Vector3 radius = new Vector3(100, 1000, 100);
-            FrustumCuller culler = new FrustumCuller(new BoundingBox(-radius, radius).dx(), 5);
+            FrustumCullerSimple culler = new FrustumCullerSimple(new BoundingBox(-radius, radius).dx(), 5);
             SimpleRenderer renderer = new SimpleRenderer(game, culler);
             game.AddXNAObject(renderer);
 
@@ -574,7 +574,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
                     visualizer.RenderNodeGroundBoundig(game, culler.RootNode,
                         delegate(FrustumCuller.CullNode node, out Color col)
                         {
-                            if (node.Visible)
+                            if (culler.View.IsNodeVisible(node))
                             {
                                 col = Color.Orange;
                             }

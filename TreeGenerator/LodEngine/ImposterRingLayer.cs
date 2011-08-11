@@ -19,7 +19,7 @@ namespace TreeGenerator.LodEngine
        private List<ISimpleRenderable> rendrables = new List<ISimpleRenderable>();
 
        private SimpleRenderer renderer;
-       private FrustumCuller culler;
+       private FrustumCullerSimple culler;
        private EngineTreeRenderDataGenerater treeRenderGenerater;
        private XNAGame game;
        //private float ringRadius;
@@ -27,7 +27,7 @@ namespace TreeGenerator.LodEngine
        public void initialize(XNAGame game, BoundingBox CullerBoundingBox, int numberOfSplits)
        {
            this.game = game;
-            culler = new FrustumCuller(CullerBoundingBox, numberOfSplits);
+            culler = new FrustumCullerSimple(CullerBoundingBox, numberOfSplits);
            renderer = new SimpleRenderer(game, culler);
            ring.initialize(game);
            renderProvider = new RenderablesDelayedRenderProvider(rendrables, culler);
@@ -160,9 +160,9 @@ namespace TreeGenerator.LodEngine
    public class RenderablesDelayedRenderProvider : IDelayedRenderProvider
    {
        private List<ISimpleRenderable> renderables = new List<ISimpleRenderable>();
-       private FrustumCuller culler;
+       private FrustumCullerSimple culler;
        private IXNAGame game;
-       public RenderablesDelayedRenderProvider(List<ISimpleRenderable> _renderables, FrustumCuller culler)
+       public RenderablesDelayedRenderProvider(List<ISimpleRenderable> _renderables, FrustumCullerSimple culler)
        {
            this.culler = culler;
            this.renderables = _renderables;

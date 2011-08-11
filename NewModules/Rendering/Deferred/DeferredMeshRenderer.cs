@@ -37,8 +37,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             this.texturePool = texturePool;
             context = game.Device.ImmediateContext;
 
-            Culler = new CullerNoCull();
-
             initialize();
         }
 
@@ -60,22 +58,13 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private InputLayout layout;
         private ShaderResourceView checkerTextureRV;
 
-        private ICuller culler;
-        public ICuller Culler
-        {
-            get { return culler; }
-            set
-            {
-                if (Elements.Count != 0)
-                    throw new InvalidOperationException("Realtime changing not supported yet");
-                culler = value;
-            }
-        }
 
         public List<DeferredMeshRenderElement> Elements
         {
             get { return elements; }
         }
+
+        public FrustumCuller Culler { get; set; }
 
         public DeferredMeshRenderElement AddMesh(IMesh mesh)
         {
@@ -92,9 +81,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
             Elements.Add(el);
-
-            Culler.AddCullable(el);
-
+            if (Culler != null)
+                Culler.AddCullable(el);
 
             return el;
         }
@@ -103,11 +91,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         {
             if (el.IsDeleted) throw new InvalidOperationException();
 
-            var data = getRenderData(el.Mesh);
-
-            Culler.RemoveCullable(el);
+            if (Culler != null)
+                Culler.RemoveCullable(el);
 
             Elements.Remove(el);
+
 
         }
 
@@ -170,7 +158,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
                     renderPart.IndexBuffer = CreateMeshPartIndexBuffer(part.MeshPart);
                     renderPart.VertexBuffer = CreateMeshPartVertexBuffer(part.MeshPart);
-                    renderPart.ObjectMatrix = part.ObjectMatrix.ToSlimDX();
+                    renderPart.ObjectMatrix = part.ObjectMatrix.dx();
 
                     var geomData = part.MeshPart.GetGeometryData();
                     int vertCount = geomData.GetSourceVector3(MeshPartGeometryData.Semantic.Position).Length;
@@ -182,6 +170,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 renderMat.Shader = baseShader.Clone();
 
                 ShaderResourceView diffuseRV = checkerTextureRV;
+                
                 if (renderMat.Material.DiffuseMap != null)
                 {
 
@@ -196,6 +185,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                     //renderMat.Shader.Technique = DefaultModelShader.TechniqueType.Textured;
 
                 }
+                renderMat.DiffuseTexture = diffuseRV;
                 renderMat.Shader.Effect.GetVariableByName("txDiffuse").AsResource().SetResource(diffuseRV);
 
             }
@@ -206,6 +196,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         public void UpdateWorldMatrix(DeferredMeshRenderElement el)
         {
             renderDataDict[el.Mesh].WorldMatrices[el.ElementNumber] = el.WorldMatrix;
+
+            if (Culler != null)
+                Culler.UpdateCullable(el);
+
         }
 
 
@@ -231,11 +225,28 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             layout = new InputLayout(game.Device, baseShader.GetCurrentPass(0).Description.Signature, DeferredMeshVertex.Elements);
 
+            perObjectBuffer = new Buffer(game.Device, new BufferDescription
+                                                          {
+                                                              BindFlags = BindFlags.ConstantBuffer,
+                                                              CpuAccessFlags = CpuAccessFlags.Write,
+                                                              OptionFlags = ResourceOptionFlags.None,
+                                                              SizeInBytes = 16 * 4, // PerObjectCB
+                                                              Usage = ResourceUsage.Dynamic,
+                                                              StructureByteStride = 0
+                                                          });
+
+            perObjectStrm = new DataStream(baseShader.Effect.GetConstantBufferByName("perObject").ConstantBuffer.Description.SizeInBytes, false, true);
+            perObjectBox = new DataBox(0, 0, perObjectStrm);
 
             for (int i = 0; i < renderDatas.Count; i++)
             {
                 initMeshRenderData(renderDatas[i]);
             }
+        }
+
+        private struct PerObjectCB
+        {
+            public Matrix WorldMatrix;
         }
 
         public void Draw()
@@ -247,12 +258,14 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             baseShader.Effect.GetVariableByName("View").AsMatrix().SetMatrix(game.Camera.View);
             baseShader.Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(game.Camera.Projection);
+            baseShader.Effect.GetConstantBufferByName("perObject").ConstantBuffer = perObjectBuffer;
+            //perObjectBuffer = baseShader.Effect.GetConstantBufferByName("perObject").ConstantBuffer;
+
+
+
             baseShader.Apply();
             context.Rasterizer.State = rasterizerState;
 
-            BoundingFrustum frustum = new BoundingFrustum(Matrix.Identity.xna());
-            if (culler.CullCamera != null)
-                frustum = new Microsoft.Xna.Framework.BoundingFrustum(culler.CullCamera.ViewProjection.xna());
 
             for (int i = 0; i < renderDatas.Count; i++)
             {
@@ -262,16 +275,14 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 {
                     var el = data.Elements[j];
                     if (el.IsDeleted) continue;
-                    if (!el.IsVisibleToCamera) continue;
-                    if (culler.CullCamera != null)
-                        if (!frustum.Intersects(el.BoundingBox)) continue;
+                    if (!el.Visible) continue;
                     var mat = data.WorldMatrices[j];
                     renderMesh(data, mat);
                 }
             }
             Performance.EndEvent();
 
-           game.AddToWindowTitle("Calls: " + drawCalls);
+            //game.AddToWindowTitle("Calls: " + drawCalls);
 
         }
         public void DrawDepthOnly()
@@ -286,10 +297,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             baseShader.Apply();
             context.Rasterizer.State = rasterizerState;
 
-            BoundingFrustum frustum = new BoundingFrustum(Matrix.Identity.xna());
-            if (culler.CullCamera != null)
-                frustum = new Microsoft.Xna.Framework.BoundingFrustum(culler.CullCamera.ViewProjection.xna());
-
             for (int i = 0; i < renderDatas.Count; i++)
             {
                 //TODO: use instancing here
@@ -298,20 +305,22 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 {
                     var el = data.Elements[j];
                     if (el.IsDeleted) continue;
-                    if (!el.IsVisibleToCamera) continue;
-                    if (culler.CullCamera != null)
-                        if (!frustum.Intersects(el.BoundingBox)) continue;
+                    if (!el.Visible) continue;
                     var mat = data.WorldMatrices[j];
                     renderMeshDepthOnly(data, mat);
                 }
             }
             Performance.EndEvent();
 
-            game.AddToWindowTitle("Calls: " + drawCalls);
+            //game.AddToWindowTitle("Calls: " + drawCalls);
 
         }
 
         private int drawCalls;
+        private DataStream perObjectStrm;
+        private DataBox perObjectBox;
+        private Buffer perObjectBuffer;
+
         private void renderMesh(MeshRenderData data, Matrix world)
         {
             for (int i = 0; i < data.Materials.Length; i++)
@@ -323,13 +332,23 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 {
                     var part = mat.Parts[j];
 
-                    var shader = mat.Shader;
 
 
+                    //context.PixelShader.SetConstantBuffer(mat.PerObjectConstantBuffer, 0);
                     //shaders[i].ViewProjection = game.Camera.ViewProjection;
-                    shader.Effect.GetVariableByName("World").AsMatrix().SetMatrix(world * part.ObjectMatrix);
-                    mat.Shader.Apply();
+                    //mat.Shader.Effect.GetVariableByName("World").AsMatrix().SetMatrix(world * part.ObjectMatrix);
+                    //mat.Shader.Apply();
 
+                    var box = context.MapSubresource(perObjectBuffer, 0, 64, MapMode.WriteDiscard,
+                                           MapFlags.None);
+                    box.Data.Write(new PerObjectCB
+                                       {
+                                           WorldMatrix = Matrix.Transpose(world * part.ObjectMatrix)
+                                       });
+
+                    context.UnmapSubresource(perObjectBuffer, 0);
+
+                    context.PixelShader.SetShaderResource(mat.DiffuseTexture, 0);
 
                     context.InputAssembler.SetIndexBuffer(part.IndexBuffer, SlimDX.DXGI.Format.R32_UInt, 0); //Using int indexbuffers
                     context.InputAssembler.SetVertexBuffers(0,
@@ -459,8 +478,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         {
             public MeshCoreData.Material Material;
 
-
+            public ShaderResourceView DiffuseTexture;
             public BasicShader Shader;
+            public Buffer PerObjectConstantBuffer;
             public MeshRenderPart[] Parts;
         }
 

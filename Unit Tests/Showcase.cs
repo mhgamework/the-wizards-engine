@@ -551,7 +551,7 @@ namespace MHGameWork.TheWizards.Tests
             {
                 var ramMesh = meshes[index];
                 var el = renderer.CreateMeshElement(ramMesh);
-                
+
             }
             var directional = renderer.CreateDirectionalLight();
             directional.ShadowsEnabled = true;
@@ -624,25 +624,28 @@ namespace MHGameWork.TheWizards.Tests
 
                 renderer.Draw();
 
-              
+
                 if (false)
                 {
-                    renderer.DEBUG_FrustumCuller.CullCamera = game.Camera;
-                    renderer.DEBUG_FrustumCuller.UpdateVisibility();
-                    for (int i = 0; i < renderer.DEBUG_MeshRenderer.Elements.Count; i++)
-                    {
-                        var el = renderer.DEBUG_MeshRenderer.Elements[i];
+                    //renderer.DEBUG_FrustumCuller.CullCamera = game.Camera;
+                    //renderer.DEBUG_FrustumCuller.UpdateVisibility();
+                    //for (int i = 0; i < renderer.DEBUG_MeshRenderer.Elements.Count; i++)
+                    //{
+                    //    var el = renderer.DEBUG_MeshRenderer.Elements[i];
 
-                        if (el.IsVisibleToCamera)
-                            game.LineManager3D.AddBox(el.BoundingBox.dx(), new SlimDX.Color4(0, 1, 0));
-                    }
+                    //    game.LineManager3D.AddBox(el.BoundingBox.dx(), new SlimDX.Color4(0, 1, 0));
+                    //}
 
-                    visualizer.RenderNodeGroundBoundig(game, renderer.DEBUG_FrustumCuller.RootNode/*,
+                    //visualizer.RenderNodeGroundBoundig(game, renderer.DEBUG_FrustumCuller.RootNode);
+                    visualizer.RenderNodeGroundBoundig(game, renderer.DEBUG_FrustumCuller.RootNode,
                                                    delegate(FrustumCuller.CullNode quadTreeNode, out Color4 color4)
                                                        {
-                                                           color4 = new Color4(1, 0, 0);
+                                                           if (point.Views[2].IsNodeVisible(quadTreeNode))
+                                                               color4 = new Color4(1, 0, 0);
+                                                           else
+                                                               color4 = new Color4(0, 1, 0);
                                                            return true;
-                                                       }*/);
+                                                       });
                 }
 
                 game.LineManager3D.AddViewFrustum(game.SpectaterCamera.ViewProjection, new SlimDX.Color4(1, 0, 0));

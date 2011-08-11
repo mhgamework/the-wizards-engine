@@ -1,3 +1,4 @@
+using System;
 using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -191,6 +192,16 @@ namespace MHGameWork.TheWizards.Tests
                     };
 
             game.Run();
+        }
+
+        [Test]
+        public void TestCompactQuadTree()
+        {
+            var tree = new CompactQuadTree<bool>(6);
+
+            if (tree.GetRoot().UpperLeft.UpperLeft.UpperLeft.Index != 1 + 4 + 16) throw new Exception("Test failed"); // This is a lame test but anyways
+            
+
         }
 
         class TestQuadTreeNode : IQuadTreeNode<TestQuadTreeNode>

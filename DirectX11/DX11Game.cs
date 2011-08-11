@@ -178,10 +178,12 @@ namespace DirectX11
             keyboard = new TWKeyboard();
             diDevice = new SlimDX.DirectInput.DirectInput();
             diKeyboard = new SlimDX.DirectInput.Keyboard(diDevice);
+            //diKeyboard.SetCooperativeLevel(form.Form, CooperativeLevel.Nonexclusive | CooperativeLevel.Foreground);
             diKeyboard.Acquire();
 
             mouse = new TWMouse();
             diMouse = new SlimDX.DirectInput.Mouse(diDevice);
+            //diMouse.SetCooperativeLevel(form.Form, CooperativeLevel.Exclusive | CooperativeLevel.Foreground);
             diMouse.Acquire();
 
             SpectaterCamera = new SpectaterCamera(keyboard, mouse);

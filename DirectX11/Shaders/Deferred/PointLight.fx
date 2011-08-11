@@ -127,11 +127,14 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 	float longest = max(max(abs(toLight.x),abs(toLight.y)),abs(toLight.z)); 
 	fLightDepth = fLightDepth * longest;
 
-
 	float shadowMapDepth = shadowMap.Sample(samPoint,toLight.xyz).x;
+
+	//float4 vPositionVS = mul( position , InvertProjection );
+	//vPositionVS /= vPositionVS.w; 
+
 	//shadowMapDepth = ConvertToLinearDepth(shadowMapDepth, zNear,zFar);
 	shadowMapDepth = ConvertToLinearDepth(shadowMapDepth, ShadowMapProjection);
-
+	//return t(-shadowMapDepth);
 	shadowTerm = (shadowMapDepth< fLightDepth*0.99f) ? 0.0f: 1.0f;
 
 #endif

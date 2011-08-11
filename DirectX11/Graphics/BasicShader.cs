@@ -28,11 +28,13 @@ namespace DirectX11.Graphics
         private BasicShader(Device device)
         {
             this.device = device;
+            context = device.ImmediateContext;
             includeHandler = new IncludeHandler();
         }
 
         private List<BasicShader> clones = new List<BasicShader>();
         private ShaderMacro[] shaderMacros;
+        private DeviceContext context;
 
         public BasicShader ParentShader { get; private set; }
 
@@ -249,7 +251,7 @@ namespace DirectX11.Graphics
         {
             // Render all passes (usually just one)
             var pass = CurrentTechnique.GetPassByIndex(0);
-            pass.Apply(device.ImmediateContext);
+            pass.Apply(context);
         }
 
         public EffectPass GetCurrentPass(int index)

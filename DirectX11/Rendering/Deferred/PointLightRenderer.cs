@@ -208,46 +208,13 @@ namespace DirectX11.Rendering.Deferred
         public delegate void ShadowMapRenderDelegate(CustomCamera lightCamera);
         public void UpdateShadowMap(ShadowMapRenderDelegate renderScene)
         {
-            shadowMapProjection = Matrix.PerspectiveFovLH(MathHelper.PiOver2, 1, 1f, LightRadius+1 );
+            //shadowMapProjection = Matrix.PerspectiveFovLH(MathHelper.PiOver2, 1, 1f, LightRadius + 1);
+            shadowMapProjection = CreateShadowMapProjection(LightRadius);
             for (int i = 0; i < 6; i++)
             {
                 Performance.BeginEvent(new Color4(1, 1, 0), "ShadowCubeFace" + i.ToString());
-                Vector3 vLookDirection;
-                Vector3 vUpVec;
 
-                switch (i)
-                {
-                    case 0:
-                        vLookDirection = new Vector3(1.0f, 0.0f, 0.0f);
-                        vUpVec = new Vector3(0.0f, 1.0f, 0.0f);
-                        break;
-                    case 1:
-                        vLookDirection = new Vector3(-1.0f, 0.0f, 0.0f);
-                        vUpVec = new Vector3(0.0f, 1.0f, 0.0f);
-                        break;
-                    case 2:
-                        vLookDirection = new Vector3(0.0f, 1.0f, 0.0f);
-                        vUpVec = new Vector3(0.0f, 0.0f, -1.0f);
-                        break;
-                    case 3:
-                        vLookDirection = new Vector3(0.0f, -1.0f, 0.0f);
-                        vUpVec = new Vector3(0.0f, 0.0f, 1.0f);
-                        break;
-                    case 4:
-                        vLookDirection = new Vector3(0.0f, 0.0f, 1.0f);
-                        vUpVec = new Vector3(0.0f, 1.0f, 0.0f);
-                        break;
-                    case 5:
-                        vLookDirection = new Vector3(0.0f, 0.0f, -1.0f);
-                        vUpVec = new Vector3(0.0f, 1.0f, 0.0f);
-                        break;
-                    default:
-                        vLookDirection = new Vector3();
-                        vUpVec = new Vector3();
-                        break;
-                }
-
-                var view = Matrix.LookAtLH(LightPosition, LightPosition + vLookDirection, vUpVec); //WAS: LH
+                var view = CreateShadowMapView(LightPosition, i); // TODO: store this value instead of rebuilding every time
 
                 context.ClearDepthStencilView(depthStencilViewFaces[i], DepthStencilClearFlags.Depth, 1, 0);
 
@@ -262,6 +229,50 @@ namespace DirectX11.Rendering.Deferred
 
                 Performance.EndEvent();
             }
+        }
+
+        public static Matrix CreateShadowMapView(Vector3 lightPosition, int cubeFace)
+        {
+            Vector3 vLookDirection;
+            Vector3 vUpVec;
+            switch (cubeFace)
+            {
+                case 0:
+                    vLookDirection = new Vector3(1.0f, 0.0f, 0.0f);
+                    vUpVec = new Vector3(0.0f, 1.0f, 0.0f);
+                    break;
+                case 1:
+                    vLookDirection = new Vector3(-1.0f, 0.0f, 0.0f);
+                    vUpVec = new Vector3(0.0f, 1.0f, 0.0f);
+                    break;
+                case 2:
+                    vLookDirection = new Vector3(0.0f, 1.0f, 0.0f);
+                    vUpVec = new Vector3(0.0f, 0.0f, -1.0f);
+                    break;
+                case 3:
+                    vLookDirection = new Vector3(0.0f, -1.0f, 0.0f);
+                    vUpVec = new Vector3(0.0f, 0.0f, 1.0f);
+                    break;
+                case 4:
+                    vLookDirection = new Vector3(0.0f, 0.0f, 1.0f);
+                    vUpVec = new Vector3(0.0f, 1.0f, 0.0f);
+                    break;
+                case 5:
+                    vLookDirection = new Vector3(0.0f, 0.0f, -1.0f);
+                    vUpVec = new Vector3(0.0f, 1.0f, 0.0f);
+                    break;
+                default:
+                    vLookDirection = new Vector3();
+                    vUpVec = new Vector3();
+                    break;
+            }
+            var view = Matrix.LookAtLH(lightPosition, lightPosition + vLookDirection, vUpVec); //WAS: LH
+            return view;
+        }
+
+        public static Matrix CreateShadowMapProjection(float lightRadius)
+        {
+            return Matrix.PerspectiveFovLH(MathHelper.PiOver2, 1, 1f, lightRadius + 1);
         }
 
 
