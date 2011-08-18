@@ -140,6 +140,7 @@
     <Compile Include="DirectX11\DeferredTest.cs" />
     <Compile Include="DirectX11\SharpDXTest.cs" />
     <Compile Include="DirectX11\DirectX11Test.cs" />
+    <Compile Include="DirectX11\TessellationTest.cs" />
     <Compile Include="Editor\EditorTest.cs" />
     <Compile Include="Forms\ClassFormTest.cs" />
     <Compile Include="Particles\ParticleTests.cs" />

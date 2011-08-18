@@ -1,5 +1,5 @@
-float4 Color = float4(1,1,0,1);
-#include "IncludeTest.fx"
+float4 Color = float4(1,0,0,1);
+#include <IncludeTest.fx>
 struct VS_IN
 {
 	float3 pos : POSITION;
