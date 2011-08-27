@@ -1,3 +1,4 @@
+using System;
 using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,7 +17,7 @@ namespace MHGameWork.TheWizards.Tests
         public void TestQuadtreeVisualizer()
         {
             TestQuadTreeNode root = createSimpleQuadtree();
-            QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
+            QuadTreeVisualizerXNA visualizer = new QuadTreeVisualizerXNA();
 
             XNAGame game = new XNAGame();
 
@@ -38,7 +39,7 @@ namespace MHGameWork.TheWizards.Tests
 
             TestQuadTreeNode root = new TestQuadTreeNode();
             QuadTreeNodeData<TestQuadTreeNode> rootNodeData = new QuadTreeNodeData<TestQuadTreeNode>();
-            rootNodeData.BoundingBox = new BoundingBox(new Vector3(-20, -20, -20), new Vector3(20, 20, 20));
+            rootNodeData.BoundingBox = new BoundingBox(new Vector3(-20, -20, -20), new Vector3(20, 20, 20)).dx();
 
 
             TestQuadTreeNode child = new TestQuadTreeNode();
@@ -46,7 +47,7 @@ namespace MHGameWork.TheWizards.Tests
             child = new TestQuadTreeNode();
             rootNodeData.UpperLeft = child;
             childNodeData.Parent = root;
-            childNodeData.BoundingBox = new BoundingBox(new Vector3(-20, -20, -20), new Vector3(0, 20, 0));
+            childNodeData.BoundingBox = new BoundingBox(new Vector3(-20, -20, -20), new Vector3(0, 20, 0)).dx();
 
             child.NodeData = childNodeData;
 
@@ -66,7 +67,7 @@ namespace MHGameWork.TheWizards.Tests
             TestQuadTreeNode root = new TestQuadTreeNode();
 
             root.NodeData = new QuadTreeNodeData<TestQuadTreeNode>(
-                new BoundingBox(new Vector3(-100, -5, -100), new Vector3(100, 5, 100))
+                new BoundingBox(new Vector3(-100, -5, -100), new Vector3(100, 5, 100)).dx()
                 );
 
             QuadTree.Split(root, 4);
@@ -77,7 +78,7 @@ namespace MHGameWork.TheWizards.Tests
 
             QuadTree.MergeRecursive(root.NodeData.UpperRight);
 
-            QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
+            QuadTreeVisualizerXNA visualizer = new QuadTreeVisualizerXNA();
 
             XNAGame game = new XNAGame();
 
@@ -191,6 +192,16 @@ namespace MHGameWork.TheWizards.Tests
                     };
 
             game.Run();
+        }
+
+        [Test]
+        public void TestCompactQuadTree()
+        {
+            var tree = new CompactQuadTree<bool>(6);
+
+            if (tree.GetRoot().UpperLeft.UpperLeft.UpperLeft.Index != 1 + 4 + 16) throw new Exception("Test failed"); // This is a lame test but anyways
+            
+
         }
 
         class TestQuadTreeNode : IQuadTreeNode<TestQuadTreeNode>

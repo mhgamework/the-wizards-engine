@@ -483,7 +483,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
             Curve3D curve1 = ClientTest.CreateTestObject1MovementCurve();
 
 
-            var visualizer = new QuadTreeVisualizer();
+            var visualizer = new QuadTreeVisualizerXNA();
             float time = 0;
 
             var spheres = new List<ClientPhysicsTestSphere>();
@@ -596,7 +596,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
 
 
 
-            var visualizer = new QuadTreeVisualizer();
+            var visualizer = new QuadTreeVisualizerXNA();
 
             var meshes = new List<MeshDynamicPhysicsElement>();
 
@@ -727,7 +727,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
 
 
             var builder = new MeshPhysicsActorBuilder(new MeshPhysicsPool());
-            var visualizer = new QuadTreeVisualizer();
+            var visualizer = new QuadTreeVisualizerXNA();
             float time = 0;
 
             var spheres = new List<MeshDynamicPhysicsElement>();

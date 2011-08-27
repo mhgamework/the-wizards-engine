@@ -91,6 +91,25 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugUnmanaged|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\bin\Binaries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>..\bin\Binaries\ServerClient.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevComponents.DotNetBar2, Version=7.7.0.2, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86">
@@ -224,10 +243,6 @@
     <ProjectReference Include="..\Deprecated\ServerClientOud\ServerClientOud.csproj">
       <Project>{409E248D-79B7-4644-886A-A01C1211D6DD}</Project>
       <Name>ServerClientOud</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DirectX10\DirectX10.csproj">
-      <Project>{10DF4E9C-85C6-438F-BE1D-DC4DCF3C0B49}</Project>
-      <Name>DirectX10</Name>
     </ProjectReference>
     <ProjectReference Include="..\Editor\Editor.csproj">
       <Project>{A356B2CF-4BBA-4DB4-9FB3-5646F9887048}</Project>

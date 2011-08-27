@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Xna.Framework;
+using SlimDX;
 
 namespace MHGameWork.TheWizards
 {

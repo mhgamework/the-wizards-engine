@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.ServerClient;
+using MHGameWork.TheWizards.ServerClient.CascadedShadowMaps;
 using Microsoft.Xna.Framework.Graphics;
 using MHGameWork.TheWizards.Common.Core.Collada;
 using Microsoft.Xna.Framework;

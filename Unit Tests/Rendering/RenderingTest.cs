@@ -485,203 +485,20 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
         }
 
-        /// <summary>
-        /// TODO: test remove cullable
-        /// </summary>
-        [Test]
-        [RequiresThread(ApartmentState.STA)]
-        public void TestCullerPlaceInTree()
-        {
-            XNAGame game = new XNAGame();
-            Vector3 radius = new Vector3(100, 1000, 100);
-            FrustumCuller culler = new FrustumCuller(new BoundingBox(-radius, radius), 4);
-
-
-            QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
-
-            List<TestCullObject> cullObjects = new List<TestCullObject>();
-
-
-            TestCullObject obj;
-
-            obj = new TestCullObject(new Vector3(5, 2, 5), 2);
-            cullObjects.Add(obj);
-
-            obj = new TestCullObject(new Vector3(-20, 2, -20), 15);
-            cullObjects.Add(obj);
-
-            obj = new TestCullObject(new Vector3(100, 2, -20), 4);
-            cullObjects.Add(obj);
-
-            obj = new TestCullObject(new Vector3(-50, 9, 24), 20);
-            cullObjects.Add(obj);
-
-            for (int i = 0; i < cullObjects.Count; i++)
-            {
-                culler.AddCullable(cullObjects[i]);
-            }
-            game.UpdateEvent +=
-                delegate
-                {
-                };
-
-            game.DrawEvent +=
-                delegate
-                {
-                    for (int i = 0; i < cullObjects.Count; i++)
-                    {
-                        game.LineManager3D.AddBox(cullObjects[i].BoundingBox, Color.Red);
-                    }
-                    visualizer.RenderNodeGroundBoundig(game, culler.RootNode,
-                        delegate(FrustumCuller.CullNode node, out Color col)
-                        {
-                            col = Color.Green;
-
-                            return node.Cullables.Count == 0;
-                        });
-
-                    visualizer.RenderNodeGroundBoundig(game, culler.RootNode,
-                       delegate(FrustumCuller.CullNode node, out Color col)
-                       {
-                           col = Color.Orange;
-
-                           return node.Cullables.Count > 0;
-                       });
-                };
-
-
-
-            game.Run();
-        }
-
-        /// <summary>
-        /// There is still a problem with this test. The second level nodes get put on visible on what seems to be an incorrect moment.
-        /// </summary>
-        [Test]
-        [RequiresThread(ApartmentState.STA)]
-        public void TestCullerVisibility()
-        {
-            XNAGame game = new XNAGame();
-            Vector3 radius = new Vector3(100, 1000, 100);
-            FrustumCuller culler = new FrustumCuller(new BoundingBox(-radius, radius), 6);
-            game.DrawFps = true;
-            game.IsFixedTimeStep = false;
-
-
-
-            QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
-
-            List<TestCullObject> cullObjects = new List<TestCullObject>();
-
-
-            TestCullObject obj;
-
-
-            for (int i = 0; i < cullObjects.Count; i++)
-            {
-                culler.AddCullable(cullObjects[i]);
-            }
-
-
-
-            SpectaterCamera cullCam = new SpectaterCamera(game, 10f, 80);
-            cullCam.Positie = new Vector3(8, 10, 8);
-            culler.CullCamera = cullCam;
-            cullCam.EnableUserInput = false;
-
-            bool rotate = true;
-
-            int selectedNode = -1;
-
-
-            game.UpdateEvent +=
-                delegate
-                {
-                    culler.UpdateVisibility();
-                    if (rotate)
-                        cullCam.AngleHorizontal += game.Elapsed * MathHelper.Pi * (1 / 8f);
-
-                    if (game.Keyboard.IsKeyPressed(Keys.Add))
-                        selectedNode++;
-                    if (game.Keyboard.IsKeyPressed(Keys.Subtract))
-                        selectedNode--;
-
-                    if (game.Keyboard.IsKeyPressed(Keys.Enter))
-                    {
-                        int count = -1;
-                        visualizer.RenderNodeGroundBoundig(game, culler.RootNode,
-                        delegate(FrustumCuller.CullNode node, out Color col)
-                        {
-                            col = Color.Red;
-                            count++;
-                            if (count == selectedNode)
-                            {
-                                node.Tag = "SELECTED!";
-                            }
-                            return count == selectedNode;
-                        });
-                    }
-
-                    if (game.Keyboard.IsKeyPressed(Keys.NumPad0))
-                        rotate = !rotate;
-
-                };
-
-            game.DrawEvent +=
-                delegate
-                {
-                    game.LineManager3D.AddViewFrustum(new BoundingFrustum(cullCam.ViewProjection), Color.Black);
-                    for (int i = 0; i < cullObjects.Count; i++)
-                    {
-                        game.LineManager3D.AddBox(cullObjects[i].BoundingBox, Color.Red);
-                    }
-                    visualizer.RenderNodeGroundBoundig(game, culler.RootNode,
-                        delegate(FrustumCuller.CullNode node, out Color col)
-                        {
-                            col = Color.Green;
-
-                            return !node.Visible;
-                        });
-
-                    visualizer.RenderNodeGroundBoundig(game, culler.RootNode,
-                       delegate(FrustumCuller.CullNode node, out Color col)
-                       {
-                           col = Color.Orange;
-
-                           return node.Visible;
-                       });
-
-
-                    /*int count = -1;
-                    visualizer.RenderNodeGroundBoundig(game, culler.RootNode,
-                    delegate(Culler.CullNode node, out Color col)
-                    {
-                        col = Color.Red;
-                        count++;
-                        return count == selectedNode;
-                    });*/
-                };
-
-
-
-            game.Run();
-        }
-
-
         [Test]
         [RequiresThread(ApartmentState.STA)]
         public void TestRendererFrustumCulling()
         {
             XNAGame game = new XNAGame();
             Vector3 radius = new Vector3(100, 1000, 100);
-            FrustumCuller culler = new FrustumCuller(new BoundingBox(-radius, radius), 5);
+            FrustumCullerSimple culler = new FrustumCullerSimple(new BoundingBox(-radius, radius).dx(), 5);
             SimpleRenderer renderer = new SimpleRenderer(game, culler);
             game.AddXNAObject(renderer);
 
             game.DrawFps = true;
             game.IsFixedTimeStep = false;
 
-            QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
+            QuadTreeVisualizerXNA visualizer = new QuadTreeVisualizerXNA();
             List<TestCullObject> cullObjects = new List<TestCullObject>();
 
 
@@ -775,7 +592,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
                     visualizer.RenderNodeGroundBoundig(game, culler.RootNode,
                         delegate(FrustumCuller.CullNode node, out Color col)
                         {
-                            if (node.Visible)
+                            if (culler.View.IsNodeVisible(node))
                             {
                                 col = Color.Orange;
                             }
@@ -834,46 +651,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             #endregion
         }
 
-        /// <summary>
-        /// A culler that doesnt cull 
-        /// for testing , DUH!
-        /// </summary>
-        public class CullerNoCull : ICuller
-        {
-            public CullerNoCull()
-            {
 
-            }
-
-            public ICamera CullCamera
-            {
-                get
-                {
-                    return null;
-                }
-                set
-                {
-                }
-            }
-
-            public void AddCullable(ICullable cullable)
-            {
-                cullable.VisibleReferenceCount++;
-            }
-            public void RemoveCullable(ICullable cullable)
-            {
-                cullable.VisibleReferenceCount--;
-            }
-
-            public void UpdateVisibility()
-            {
-            }
-
-            public void UpdateCullable(ICullable cullable)
-            {
-            }
-
-        }
 
         public static IMesh CreateSimpleTestMesh()
         {

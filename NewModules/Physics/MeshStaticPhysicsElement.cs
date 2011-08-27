@@ -148,7 +148,7 @@ namespace MHGameWork.TheWizards.Physics
 
         public Microsoft.Xna.Framework.ContainmentType ContainedInNode(ClientPhysicsQuadTreeNode _node)
         {
-            return _node.NodeData.BoundingBox.Contains(boundingSphere);
+            return _node.NodeData.BoundingBox.xna().Contains(boundingSphere);
 
         }
 

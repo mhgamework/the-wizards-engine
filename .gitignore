@@ -10,6 +10,8 @@ obj/
 
 .svn/
 
+# Dont ignore bin folder in libraries
+!/_Libraries/*/bin
 
 # The /bin folder
 
@@ -70,9 +72,11 @@ Thumbs.db
 /NsightRunner/Interm/
 /NsightRunner/Debug/
 
+
 /NsightRunner/Release/
 /Release/NsightRunner.exe
 /Release/NsightRunner.pdb
 /bin/Dotway.WPF.Controls.dll
 /bin/nunit.framework.dll
-/bin/nunit.framework.xml
+/bin/Dotway.WPF.Controls.dll
+/bin/nunit.framework.dll/bin/nunit.framework.xml

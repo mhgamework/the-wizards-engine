@@ -223,7 +223,7 @@ namespace MHGameWork.TheWizards.Tests.Entity
             Curve3D curve1 = ClientTest.CreateTestObject1MovementCurve();
 
 
-            QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
+            QuadTreeVisualizerXNA visualizer = new QuadTreeVisualizerXNA();
             float time = 0;
 
             List<ClientPhysicsTestSphere> spheres = new List<ClientPhysicsTestSphere>();

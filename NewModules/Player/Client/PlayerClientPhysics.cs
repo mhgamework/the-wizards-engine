@@ -81,7 +81,7 @@ namespace MHGameWork.TheWizards.Player.Client
             //TODO: make this the actual size of the controller
             BoundingBox bb = new BoundingBox( currentPosition + new Vector3( -0.5f, -0.5f, -0.5f ), currentPosition + new Vector3( 0.5f, 0.5f, 0.5f ) );
 
-            return _node.NodeData.BoundingBox.Contains( bb );
+            return _node.NodeData.BoundingBox.xna().Contains(bb);
 
         }
 

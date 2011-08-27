@@ -71,20 +71,21 @@
     <Reference Include="DevComponents.DotNetBar2">
       <HintPath>..\_Libraries\DevComponents.DotNetBar2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Charts.v10.1.Core, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Data.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraBars.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraCharts.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraPivotGrid.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraPivotGrid.v10.1.Core, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraPrinting.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraReports.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraScheduler.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraScheduler.v10.1.Core, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraScheduler.v10.1.Reporting, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraTreeList.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v10.1">
+      <HintPath>..\..\devxpress\DevExpress.Data.v10.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v10.1">
+      <HintPath>..\..\devxpress\DevExpress.Utils.v10.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v10.1">
+      <HintPath>..\..\devxpress\DevExpress.XtraBars.v10.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v10.1">
+      <HintPath>..\..\devxpress\DevExpress.XtraEditors.v10.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraTreeList.v10.1">
+      <HintPath>..\..\devxpress\DevExpress.XtraTreeList.v10.1.dll</HintPath>
+    </Reference>
     <Reference Include="Dotway.WPF.Controls">
       <HintPath>..\_Libraries\Dotway.WPFLibraries\Dotway.WPF\Dotway.WPF.Controls.dll</HintPath>
     </Reference>
@@ -100,6 +101,7 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="SlimDX, Version=4.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
     <Reference Include="StillDesign.PhysX.Net">
       <HintPath>..\_Libraries\PhysX.Net\References\Debug\XNA 2.0\StillDesign.PhysX.Net.dll</HintPath>
     </Reference>
@@ -176,6 +178,7 @@
     <Compile Include="Cogs\CogRaycastReport.cs" />
     <Compile Include="Cogs\ICogComponent.cs" />
     <Compile Include="Cogs\StaticBox.cs" />
+    <Compile Include="CompactQuadTree.cs" />
     <Compile Include="Editor\EditorCamera.cs" />
     <Compile Include="Editor\EditorGrid.cs" />
     <Compile Include="Editor\FromEditorProject\DevExpressRibbonMerger.cs" />
@@ -199,6 +202,18 @@
     <Compile Include="Rendering\DiskRenderingAssetFactory.cs" />
     <Compile Include="Terrain\Geomipmap\HeightmapNormalCalculator.cs" />
     <Compile Include="Rendering\SimpleMeshFactory.cs" />
+    <Compile Include="Rendering\CullerNoCull.cs" />
+    <Compile Include="Rendering\Deferred\DeferredMeshVertex.cs" />
+    <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
+    <Compile Include="Rendering\Deferred\DeferredMeshRenderer.cs" />
+    <Compile Include="Rendering\Deferred\DeferredMeshRenderElement.cs" />
+    <Compile Include="Rendering\Deferred\DirectionalLight.cs" />
+    <Compile Include="Rendering\Deferred\PointLight.cs" />
+    <Compile Include="Rendering\Deferred\SpotLight.cs" />
+    <Compile Include="Rendering\Deferred\TexturePool.cs" />
+    <Compile Include="Rendering\FrustumCuller.cs" />
+    <Compile Include="Rendering\FrustumCullerView.cs" />
+    <Compile Include="Rendering\SSAO\HorizonSSAORenderer.cs" />
     <Compile Include="Terrain\Geomipmap\IndexBufferBuilder.cs" />
     <Compile Include="Terrain\Geomipmap\ITerrainBlock.cs" />
     <Compile Include="Terrain\Geomipmap\MinDistanceCalculator.cs" />
@@ -338,7 +353,7 @@
     <Compile Include="Physics\MeshCollisionData.cs" />
     <Compile Include="Physics\MeshPhysicsElementFactory.cs" />
     <Compile Include="Player\PlayerController.cs" />
-    <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
+    <Compile Include="Rendering\Deferred\DeferredRendererOud.cs" />
     <Compile Include="Rendering\IMeshFactory.cs" />
     <Compile Include="Rendering\IMeshRenderElement.cs" />
     <Compile Include="Rendering\ISimpleMeshRenderer.cs" />
@@ -371,6 +386,7 @@
     <Compile Include="Xml\ICustomSerializer.cs" />
     <Compile Include="Xml\IInternalSerializer.cs" />
     <Compile Include="Xml\TWXmlSerializer.cs" />
+    <Compile Include="XNAConversion.cs" />
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\DeferredShader.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\Blur.fx" />
@@ -435,7 +451,7 @@
     <Compile Include="Rendering\DefaultRenderElement.cs" />
     <Compile Include="Rendering\DefaultRenderer.cs" />
     <Compile Include="Rendering\IDefaultModelMaterial.cs" />
-    <Compile Include="Rendering\FrustumCuller.cs" />
+    <Compile Include="Rendering\FrustumCullerSimple.cs" />
     <Compile Include="Rendering\ICullable.cs" />
     <Compile Include="Rendering\IDefaultRenderable.cs" />
     <Compile Include="Rendering\ISimpleRenderable.cs" />
@@ -613,6 +629,10 @@
     <ProjectReference Include="..\Deprecated\ServerClientOud\ServerClientOud.csproj">
       <Project>{409E248D-79B7-4644-886A-A01C1211D6DD}</Project>
       <Name>ServerClientOud</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DirectX11\DirectX11.csproj">
+      <Project>{A58AF8D7-8C17-43F6-B994-C67F590F416A}</Project>
+      <Name>DirectX11</Name>
     </ProjectReference>
     <ProjectReference Include="..\Networking\Networking.csproj">
       <Project>{5552CBE1-F647-4B3A-A353-A252E4CB0008}</Project>

@@ -125,10 +125,18 @@
     <Reference Include="DevComponents.DotNetBar2">
       <HintPath>..\..\_Libraries\DevComponents.DotNetBar2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Data.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraBars.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v10.1">
+      <HintPath>..\..\..\devxpress\DevExpress.Data.v10.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v10.1">
+      <HintPath>..\..\..\devxpress\DevExpress.Utils.v10.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v10.1">
+      <HintPath>..\..\..\devxpress\DevExpress.XtraBars.v10.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v10.1">
+      <HintPath>..\..\..\devxpress\DevExpress.XtraEditors.v10.1.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
     <Reference Include="System" />

@@ -88,7 +88,7 @@ namespace MHGameWork.TheWizards.Tests.Client
 
             float time = 0;
 
-            QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
+            QuadTreeVisualizerXNA visualizer = new QuadTreeVisualizerXNA();
 
             XNAGame game = new XNAGame();
 
@@ -162,7 +162,7 @@ namespace MHGameWork.TheWizards.Tests.Client
 
             float time = 0;
             bool progressTime = true;
-            QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
+            QuadTreeVisualizerXNA visualizer = new QuadTreeVisualizerXNA();
 
             XNAGame game = new XNAGame();
 
@@ -295,7 +295,7 @@ namespace MHGameWork.TheWizards.Tests.Client
 
             public ContainmentType ContainedInNode( ClientPhysicsQuadTreeNode _node )
             {
-                return _node.NodeData.BoundingBox.Contains( new BoundingSphere( Center, Radius ) );
+                return _node.NodeData.BoundingBox.xna().Contains(new BoundingSphere(Center, Radius));
             }
 
             #endregion

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Xna.Framework;
+using SlimDX;
 
 namespace MHGameWork.TheWizards
 {
@@ -82,9 +82,9 @@ namespace MHGameWork.TheWizards
         public static void Split<T>(T node) where T : class, IQuadTreeNode<T>
         {
             if (node.NodeData.UpperLeft != null && node.NodeData.UpperRight != null && node.NodeData.LowerLeft != null && node.NodeData.LowerRight != null) return;
-            Vector3 half = new Vector3(node.NodeData.BoundingBox.Max.X - node.NodeData.BoundingBox.Min.X, 0, node.NodeData.BoundingBox.Max.Z - node.NodeData.BoundingBox.Min.Z);
+            Vector3 half = new Vector3(node.NodeData.BoundingBox.Maximum.X - node.NodeData.BoundingBox.Minimum.X, 0, node.NodeData.BoundingBox.Maximum.Z - node.NodeData.BoundingBox.Minimum.Z);
             half *= 0.5f;
-            half.Y = node.NodeData.BoundingBox.Max.Y - node.NodeData.BoundingBox.Min.Y;
+            half.Y = node.NodeData.BoundingBox.Maximum.Y - node.NodeData.BoundingBox.Minimum.Y;
 
             //NOTE: This is a heavy operation, since it copies the nodeData to the stack, and later in the code back to the heap.
             // Performance should be verified.
@@ -95,28 +95,28 @@ namespace MHGameWork.TheWizards
 
             if (node.NodeData.UpperLeft == null)
             {
-                min = nodeData.BoundingBox.Min + new Vector3(0, 0, 0);
+                min = nodeData.BoundingBox.Minimum + new Vector3(0, 0, 0);
                 childData.BoundingBox = new BoundingBox(min, min + half);
                 nodeData.UpperLeft = node.CreateChild(childData);
                 nodeData.UpperLeft.NodeData = childData;
             }
             if (node.NodeData.UpperRight == null)
             {
-                min = nodeData.BoundingBox.Min + new Vector3(half.X, 0, 0);
+                min = nodeData.BoundingBox.Minimum + new Vector3(half.X, 0, 0);
                 childData.BoundingBox = new BoundingBox(min, min + half);
                 nodeData.UpperRight = node.CreateChild(childData);
             } nodeData.UpperRight.NodeData = childData;
 
             if (node.NodeData.LowerLeft == null)
             {
-                min = nodeData.BoundingBox.Min + new Vector3(0, 0, half.Z);
+                min = nodeData.BoundingBox.Minimum + new Vector3(0, 0, half.Z);
                 childData.BoundingBox = new BoundingBox(min, min + half);
                 nodeData.LowerLeft = node.CreateChild(childData);
                 nodeData.LowerLeft.NodeData = childData;
             }
             if (node.NodeData.LowerRight == null)
             {
-                min = nodeData.BoundingBox.Min + new Vector3(half.X, 0, half.Z);
+                min = nodeData.BoundingBox.Minimum + new Vector3(half.X, 0, half.Z);
                 childData.BoundingBox = new BoundingBox(min, min + half);
                 nodeData.LowerRight = node.CreateChild(childData);
                 nodeData.LowerRight.NodeData = childData;

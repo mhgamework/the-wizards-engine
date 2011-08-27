@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -31,30 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SharpDX">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.D3DCompiler">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.D3DCompiler.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Direct3D11">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.Direct3D11.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.DirectSound">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.DirectSound.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.DXGI">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.DXGI.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Error">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.Error.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.XAPO">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.XAPO.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.XAudio2">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.XAudio2.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
+    <Reference Include="SlimDX, Version=4.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -66,9 +44,118 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="QuadTreeVisualizer.cs" />
+    <Compile Include="SlimDXConversion\ConversionCameraXNA.cs" />
     <Compile Include="DX11Game.cs" />
+    <Compile Include="Graphics\BasicShader.cs" />
+    <Compile Include="Graphics\CustomCamera.cs" />
+    <Compile Include="Graphics\DX11Form.cs" />
+    <Compile Include="Graphics\FullScreenQuad.cs" />
+    <Compile Include="Graphics\ICamera.cs" />
+    <Compile Include="Graphics\IGraphicsManager.cs" />
+    <Compile Include="Graphics\LineManager3D.cs" />
+    <Compile Include="Graphics\LineManager3DLines.cs" />
+    <Compile Include="Graphics\SpectaterCamera.cs" />
+    <Compile Include="Graphics\TextureRenderer.cs" />
+    <Compile Include="Input\TWMouse.cs" />
+    <Compile Include="Input\TWKeyboard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\CSM\CSMRenderer.cs" />
+    <Compile Include="Rendering\CSM\Light.cs" />
+    <Compile Include="Rendering\CSM\OrthographicCamera.cs" />
+    <Compile Include="Rendering\Deferred\AverageLuminanceCalculater.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rendering\Deferred\CombineFinalRenderer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rendering\Deferred\DirectionalLightRenderer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rendering\Deferred\GBuffer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rendering\Deferred\GBufferShader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rendering\Deferred\PointLightRenderer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rendering\Deferred\SpotLightRenderer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rendering\Deferred\ToneMapRenderer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SlimDXConversion\ConversionCameraDX.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\MiniTri.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\LineRendering.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Core\Common.Core.csproj">
+      <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
+      <Name>Common.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\FullScreenQuad.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\TestAutoReload.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\IncludeTest.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\TextureRenderer.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\Deferred\TODO\AmbientOcclusion.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\Deferred\SpotLight.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\Deferred\TODO\Blur.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\Deferred\CombineFinal.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\Deferred\DirectionalLight.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\Deferred\TODO\Downsample.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\Deferred\PointLight.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\Deferred\TODO\RandomNormals.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\Deferred\RenderGBuffer.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\Deferred\TODO\ShadowMap.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\TestHelper.fx" />
+    <EmbeddedResource Include="Shaders\Deferred\TODO\CombineFinalOld.fx" />
+    <EmbeddedResource Include="Shaders\Deferred\ToneMap.fx" />
+    <EmbeddedResource Include="Shaders\Deferred\Luminance.fx" />
+    <EmbeddedResource Include="Shaders\Deferred\DeferredMesh.fx" />
+    <None Include="Shaders\Common.fx" />
+    <None Include="Shaders\CSM\CSMCommon.fx" />
+    <None Include="Shaders\CSM\CSM.fx" />
+    <None Include="Shaders\GBuffer.fx" />
+    <EmbeddedResource Include="Shaders\SSAO\HorizonSSAO.fx" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

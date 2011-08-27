@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.ServerClient;
+using MHGameWork.TheWizards.ServerClient.CascadedShadowMaps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;

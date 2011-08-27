@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.Client
 
         public ClientPhysicsQuadTreeNode(BoundingBox boundingBox)
         {
-            nodeData = new QuadTreeNodeData<ClientPhysicsQuadTreeNode>(boundingBox);
+            nodeData = new QuadTreeNodeData<ClientPhysicsQuadTreeNode>(boundingBox.dx());
             physicsEnabled = false;
             physicsObjects = new List<IClientPhysicsObject>();
             dynamicObjectsCount = 0;

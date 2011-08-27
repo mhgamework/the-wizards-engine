@@ -430,7 +430,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
             var shooter = new TestSphereShooter(game, engine, root, game.SpectaterCamera);
             game.AddXNAObject(shooter);
 
-            var visualizer = new QuadTreeVisualizer();
+            var visualizer = new QuadTreeVisualizerXNA();
             game.DrawEvent += delegate
                                   {
                                       visualizer.RenderNodeGroundBoundig(game, root,

@@ -66,10 +66,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Deprecated\Common.NetworkingVB\bin\Debug\Common.NetworkingVB.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Data.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraBars.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v10.1">
+      <HintPath>..\..\devxpress\DevExpress.Data.v10.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v10.1">
+      <HintPath>..\..\devxpress\DevExpress.Utils.v10.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v10.1">
+      <HintPath>..\..\devxpress\DevExpress.XtraBars.v10.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v10.1">
+      <HintPath>..\..\devxpress\DevExpress.XtraEditors.v10.1.dll</HintPath>
+    </Reference>
     <Reference Include="Editor, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Editor\bin\x86\Debug\Editor.dll</HintPath>
@@ -96,6 +104,10 @@
     <Reference Include="ServerClientOud, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Deprecated\ServerClientOud\bin\x86\Debug\ServerClientOud.dll</HintPath>
+    </Reference>
+    <Reference Include="SlimDX, Version=4.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files\SlimDX SDK (March 2011)\Bin\net40\x86\SlimDX.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
