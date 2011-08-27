@@ -992,7 +992,6 @@ Global
 		{E7F313DB-EDA4-4894-AE46-B220B53A6A48}.DebugUnmanaged|x86.Build.0 = Debug|x86
 		{E7F313DB-EDA4-4894-AE46-B220B53A6A48}.Release|Any CPU.ActiveCfg = Release|x86
 		{E7F313DB-EDA4-4894-AE46-B220B53A6A48}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{E7F313DB-EDA4-4894-AE46-B220B53A6A48}.Release|Mixed Platforms.Build.0 = Release|x86
 		{E7F313DB-EDA4-4894-AE46-B220B53A6A48}.Release|Win32.ActiveCfg = Release|x86
 		{E7F313DB-EDA4-4894-AE46-B220B53A6A48}.Release|x86.ActiveCfg = Release|x86
 		{E7F313DB-EDA4-4894-AE46-B220B53A6A48}.Release|x86.Build.0 = Release|x86
@@ -1014,7 +1013,6 @@ Global
 		{A55E266E-07E0-40CF-81DD-C71248BF9848}.Current|x86.ActiveCfg = Debug|x86
 		{A55E266E-07E0-40CF-81DD-C71248BF9848}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{A55E266E-07E0-40CF-81DD-C71248BF9848}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{A55E266E-07E0-40CF-81DD-C71248BF9848}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{A55E266E-07E0-40CF-81DD-C71248BF9848}.Debug|Win32.ActiveCfg = Debug|x86
 		{A55E266E-07E0-40CF-81DD-C71248BF9848}.Debug|x86.ActiveCfg = Debug|x86
 		{A55E266E-07E0-40CF-81DD-C71248BF9848}.Debug|x86.Build.0 = Debug|x86

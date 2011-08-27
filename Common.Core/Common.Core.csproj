@@ -119,7 +119,10 @@
     <Reference Include="nunit.framework">
       <HintPath>..\_Libraries\NUnit-2.5.7.10213\bin\net-2.0\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="SlimDX, Version=2.0.10.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
+    <Reference Include="SlimDX, Version=4.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files\SlimDX SDK (March 2011)\Bin\net40\x86\SlimDX.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
