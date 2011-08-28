@@ -148,7 +148,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 var partList = parts[renderMat];
 
                 renderMat.Parts = new MeshRenderPart[partList.Count];
-                if (partList.Count > 20) Debugger.Break();
+                //if (partList.Count > 20) Debugger.Break();
                 for (int j = 0; j < partList.Count; j++)
                 {
 

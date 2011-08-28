@@ -537,27 +537,28 @@ namespace MHGameWork.TheWizards.Tests.Terrain
 
         private HeightMap createTestHeightmap(int blockSize, int size)
         {
-            var heightmap = new HeightMap(blockSize * size + 1, blockSize * size + 1);
+            throw new NotImplementedException("Todo:fix this test");
+            //var heightmap = new HeightMap(blockSize * size + 1, blockSize * size + 1);
 
-            var noise = new PerlinNoiseGenerater();
+            //var noise = new PerlinNoiseGenerater();
 
-            for (int i = 0; i < heightmap.Width; i++)
-                for (int j = 0; j < heightmap.Length; j++)
-                {
-                    var height = 0f;
-                    float freq, ampl;
-                    freq = 0.002f*3; ampl = 900; height += noise.interpolatedNoise(i * freq, j * freq) * ampl; noise.CreateRandomOffset();
-                    freq = 0.01f*3; ampl = 100; height += noise.interpolatedNoise(i * freq, j * freq) * ampl; noise.CreateRandomOffset();
-                    freq = 0.1f*3; ampl = 15; height += noise.interpolatedNoise(i * freq, j * freq) * ampl; noise.CreateRandomOffset();
-                    freq = 1f*3; ampl = 0.3f; height += noise.interpolatedNoise(i * freq, j * freq) * ampl; noise.CreateRandomOffset();
-                    //freq = 2f; ampl = 0.2f; height += noise.interpolatedNoise(i * freq, j * freq) * ampl;
-                    
-                    heightmap.SetHeight(i, j, height);
+            //for (int i = 0; i < heightmap.Width; i++)
+            //    for (int j = 0; j < heightmap.Length; j++)
+            //    {
+            //        var height = 0f;
+            //        float freq, ampl;
+            //        freq = 0.002f*3; ampl = 900; height += noise.interpolatedNoise(i * freq, j * freq) * ampl; noise.CreateRandomOffset();
+            //        freq = 0.01f*3; ampl = 100; height += noise.interpolatedNoise(i * freq, j * freq) * ampl; noise.CreateRandomOffset();
+            //        freq = 0.1f*3; ampl = 15; height += noise.interpolatedNoise(i * freq, j * freq) * ampl; noise.CreateRandomOffset();
+            //        freq = 1f*3; ampl = 0.3f; height += noise.interpolatedNoise(i * freq, j * freq) * ampl; noise.CreateRandomOffset();
+            //        //freq = 2f; ampl = 0.2f; height += noise.interpolatedNoise(i * freq, j * freq) * ampl;
+
+            //        heightmap.SetHeight(i, j, height);
 
 
 
-                }
-            return heightmap;
+            //    }
+            //return heightmap;
         }
     }
 }
