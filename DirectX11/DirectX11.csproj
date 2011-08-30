@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -154,6 +154,8 @@
     <None Include="Shaders\CSM\CSM.fx" />
     <None Include="Shaders\GBuffer.fx" />
     <EmbeddedResource Include="Shaders\SSAO\HorizonSSAO.fx" />
+    <None Include="Shaders\Particles\BasicParticleAnimation.fx" />
+    <None Include="Shaders\Particles\BillBoardShader.fx" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

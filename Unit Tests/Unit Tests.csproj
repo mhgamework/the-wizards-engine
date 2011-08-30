@@ -192,9 +192,6 @@
     <Compile Include="Terrain\TerrainRenderingTest.cs" />
     <Compile Include="TestFiles.cs" />
     <Compile Include="TestTWGame.cs" />
-    <Compile Include="TileEngine\SnapEngineTest.cs" />
-    <Compile Include="TileEngine\TestClass.cs" />
-    <Compile Include="TileEngine\TileEngineTest.cs" />
     <Compile Include="Treegenerater\TreeSynchronisationTest.cs" />
     <Compile Include="Utilities\UtilitiesTest.cs" />
     <Compile Include="Versioning\VersioningTest.cs" />
@@ -270,10 +267,6 @@
     <ProjectReference Include="..\Server\Server.csproj">
       <Project>{53269219-3E5B-4F70-83A9-3C6C9C714FEC}</Project>
       <Name>Server</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TileEngine\TileEngine.csproj">
-      <Project>{C8054DE1-9794-4A07-9E68-6F0E68AA90D5}</Project>
-      <Name>TileEngine</Name>
     </ProjectReference>
     <ProjectReference Include="..\TreeGenerator\TreeGenerator.csproj">
       <Project>{E7F313DB-EDA4-4894-AE46-B220B53A6A48}</Project>

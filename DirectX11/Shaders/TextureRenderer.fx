@@ -1,6 +1,6 @@
 float2 OffsetSS;
 float2 Scale;
-
+float4 Color;
 struct VS_IN
 {
 	float3 pos : POSITION;
@@ -39,6 +39,11 @@ float4 TexturedPS( PS_IN input ) : SV_Target
 	float4 col = txDiffuse.Sample( samLinear, input.uv.xy );
 	return  col;
 }
+float4 ColoredPS( PS_IN input ) : SV_Target
+{
+	
+	return  Color;
+}
 
 
 technique10 TextureRenderer
@@ -48,6 +53,16 @@ technique10 TextureRenderer
 		SetGeometryShader( 0 );
 		SetVertexShader( CompileShader( vs_4_0, FullScreenQuadVS() ) );
 		SetPixelShader( CompileShader( ps_4_0, TexturedPS() ) );
+
+	}
+}
+technique10 ColorRenderer
+{
+	pass P0
+	{
+		SetGeometryShader( 0 );
+		SetVertexShader( CompileShader( vs_4_0, FullScreenQuadVS() ) );
+		SetPixelShader( CompileShader( ps_4_0, ColoredPS() ) );
 
 	}
 }

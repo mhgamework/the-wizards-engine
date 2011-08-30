@@ -3,19 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Rendering;
+using System.Windows.Media.Animation;
+using DirectX11;
+using DirectX11.Graphics;
+using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.ServerClient;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.SqlServer.Server;
+using SlimDX;
+using SlimDX.D3DCompiler;
+using SlimDX.Direct3D11;
+using Buffer = SlimDX.Direct3D11.Buffer;
+using Format = SlimDX.DXGI.Format;
+using Texture2D = SlimDX.Direct3D11.Texture2D;
+
 
 namespace MHGameWork.TheWizards.Particles
 {
     public class Emitter
     {
-        private readonly TexturePool texturePool;
-        private readonly VertexDeclarationPool declarationPool;
-        private readonly IXNAGame game;
+        private readonly Rendering.Deferred.TexturePool texturePool;
+        //private readonly VertexDeclarationPool declarationPool;
+        private readonly DX11Game game;
         public float[] particles;
         private ParticleVertex[] renderData;
 
@@ -26,41 +34,78 @@ namespace MHGameWork.TheWizards.Particles
         private float time = 0;
         //private int size = 128;
         private ParticleSimulater simulater;
-        private RenderTarget2D target;
+        private RenderTargetView allParticlesRTV;
+        private ShaderResourceView allParticlesSRV;
         private Texture2D allParticles;
         // apperently to change it on the grapicscard I need an rendertarget
-        private RenderTarget2D timeTarget;
+        private RenderTargetView timeTarget;
         private Texture2D timeTexture;
+        private ShaderResourceView timeTextureRSV;
         private BasicShader shader;
-        private VertexBuffer vertexBuffer;
-        private VertexDeclaration decl;
+        private Buffer vertexBuffer;
+        private InputLayout layout;
         private int vertexCount;
         private int triangleCount;
         private int vertexStride;
         private int maxParticles;
-
+        private float totalElapsedtime;
 
         private EmitterParameters parameters;
-        public Emitter(TexturePool texturePool, VertexDeclarationPool declarationPool, IXNAGame game, EmitterParameters parameters)
+        public Emitter(TexturePool texturePool, DX11Game game, EmitterParameters parameters,int width,int height)
         {
             this.texturePool = texturePool;
 
-            this.declarationPool = declarationPool;
+            //this.declarationPool = declarationPool;
             this.game = game;
+            context = game.Device.ImmediateContext;
+
             this.parameters = parameters;
+            this.width = width;
+            this.height = height;
             simulater = new ParticleSimulater(game, parameters.size, parameters.EffectName);
             ParticlesPerSecond = 250;
 
 
+            var blendStateDescription = new BlendStateDescription();
+            blendStateDescription.RenderTargets[0].BlendEnable = true;
+            blendStateDescription.RenderTargets[0].BlendOperation = BlendOperation.Add;
+            blendStateDescription.RenderTargets[0].BlendOperationAlpha = BlendOperation.Add;
+            blendStateDescription.RenderTargets[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;
+            blendStateDescription.RenderTargets[0].SourceBlend = BlendOption.One;
+            blendStateDescription.RenderTargets[0].SourceBlendAlpha = BlendOption.One;
+            blendStateDescription.RenderTargets[0].DestinationBlend = BlendOption.One;
+            blendStateDescription.RenderTargets[0].DestinationBlendAlpha = BlendOption.One;
+
+            additiveBlendState = BlendState.FromDescription(game.Device, blendStateDescription);
+            blendStateDescription.RenderTargets[0].BlendEnable = true;
+            blendStateDescription.RenderTargets[0].BlendOperation = BlendOperation.Add;
+            blendStateDescription.RenderTargets[0].BlendOperationAlpha = BlendOperation.Add;
+            blendStateDescription.RenderTargets[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;
+            blendStateDescription.RenderTargets[0].SourceBlend = BlendOption.One;
+            blendStateDescription.RenderTargets[0].SourceBlendAlpha = BlendOption.One;
+            blendStateDescription.RenderTargets[0].DestinationBlend = BlendOption.InverseSourceAlpha;
+            blendStateDescription.RenderTargets[0].DestinationBlendAlpha = BlendOption.InverseSourceAlpha;
+
+            normalBlendState = BlendState.FromDescription(game.Device, blendStateDescription);
+
+            depthStencilState = DepthStencilState.FromDescription(game.Device, new DepthStencilStateDescription
+                                                                                   {
+                                                                                       IsDepthEnabled = true,
+                                                                                       DepthWriteMask = DepthWriteMask.Zero,
+                                                                                        DepthComparison= Comparison.LessEqual
+
+                                                                                   });
+
+
         }
 
-        public Color StartColor
+        public Color4 StartColor
         {
             get { return parameters.startColor; }
             set { parameters.startColor = value; }
         }
 
-        public Color EndColor
+        public Color4 EndColor
         {
             get { return parameters.endColor; }
             set { parameters.endColor = value; }
@@ -79,14 +124,51 @@ namespace MHGameWork.TheWizards.Particles
             particles = new float[maxParticles];
             renderData = new ParticleVertex[maxParticles * 6];
             simulater.Initialize();
-            target = new RenderTarget2D(game.GraphicsDevice, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height, 1, SurfaceFormat.Color);
-            game.GraphicsDevice.SetRenderTarget(0, target);
-            game.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
-            game.GraphicsDevice.SetRenderTarget(0, null);
-            allParticles = target.GetTexture();
+            //allParticlesRTV =new RenderTarget2D(game.GraphicsDevice, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height, 1, SurfaceFormat.Color);
+            allParticles = new Texture2D(game.Device, new Texture2DDescription()
+                                                          {
+                                                              ArraySize = 1,
+                                                              CpuAccessFlags = CpuAccessFlags.None,
+                                                              BindFlags =
+                                                                  BindFlags.RenderTarget | BindFlags.ShaderResource,
+                                                              Format = Format.R8G8B8A8_UNorm,
+                                                              Height = height,
+                                                              Width = width,
+                                                              MipLevels = 1,
+                                                              OptionFlags = ResourceOptionFlags.None,
+                                                              SampleDescription =
+                                                                  new SlimDX.DXGI.SampleDescription(1, 0),
+                                                              Usage = ResourceUsage.Default
 
-            timeTexture = new Texture2D(game.GraphicsDevice, parameters.size, parameters.size, 1, TextureUsage.None, SurfaceFormat.Single);
 
+            });
+            allParticlesRTV = new RenderTargetView(game.Device, allParticles);
+            allParticlesSRV = new ShaderResourceView(game.Device, allParticles);
+
+
+            //game.GraphicsDevice.SetRenderTarget(0, allParticlesRTV);
+            //game.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
+            //game.GraphicsDevice.SetRenderTarget(0, null);
+            //allParticles = allParticlesRTV.GetTexture();
+
+            timeTexture = new Texture2D(game.Device, new Texture2DDescription()
+            {
+                ArraySize = 1,
+                CpuAccessFlags = CpuAccessFlags.None,
+                BindFlags =BindFlags.RenderTarget | BindFlags.ShaderResource,
+                Format = Format.R32_Float,
+                Height = parameters.size,
+                Width = parameters.size,
+                MipLevels = 1,
+                OptionFlags = ResourceOptionFlags.None,
+                SampleDescription =
+                    new SlimDX.DXGI.SampleDescription(1, 0),
+                Usage = ResourceUsage.Default
+
+
+            });
+            timeTextureRSV = new ShaderResourceView(game.Device, timeTexture);
+            timeTarget = new RenderTargetView(game.Device, timeTexture);
         }
         //depends on what kind of effect you want so I'm not sure if this is the right spot
         private void incrementEmptyIndex()
@@ -126,6 +208,12 @@ namespace MHGameWork.TheWizards.Particles
         }
 
         public float TimeSinceStart;
+        private DeviceContext context;
+        private BlendState additiveBlendState;
+        private DepthStencilState depthStencilState;
+        private int height;
+        private int width;
+        private BlendState normalBlendState;
 
         public void Update()
         {
@@ -183,17 +271,37 @@ namespace MHGameWork.TheWizards.Particles
 
         public void AddParticles(IParticleCreater creater, int amount)
         {
-            game.GraphicsDevice.Textures[0] = null;
+            /*game.GraphicsDevice.Textures[0] = null;
             game.GraphicsDevice.Textures[1] = null;
             game.GraphicsDevice.Textures[2] = null;
-            game.GraphicsDevice.Textures[3] = null;
+            game.GraphicsDevice.Textures[3] = null;*/
 
             for (int i = 0; i < amount; i++)
             {
                 if (emptyIndex < 0) emptyIndex = 0;
                 Single[] singleTime = new Single[1];
-                singleTime[0] = (float)(((XNAGame)game).GameTime.TotalGameTime.TotalMilliseconds);
-                timeTexture.SetData<Single>(0, new Rectangle(emptyIndex % parameters.size, (int)(emptyIndex / parameters.size), 1, 1), singleTime, 0, 1, SetDataOptions.None);
+                singleTime[0] = totalElapsedtime;
+                //timeTexture.SetData<Single>(0, new Rectangle(emptyIndex % parameters.size, (int)(emptyIndex / parameters.size), 1, 1), singleTime, 0, 1, SetDataOptions.None);
+
+                
+               /* var box = context.MapSubresource(timeTexture, 0,
+                                                 timeTexture.Description.Height*timeTexture.Description.Width*4,
+                                                 MapMode.WriteDiscard, MapFlags.None);
+                box.Data.Position = box.RowPitch*(int) (emptyIndex/parameters.size) + emptyIndex%parameters.size;
+                box.Data.Write(totalElapsedtime);
+                
+                context.UnmapSubresource(timeTexture, 0);*/
+                context.OutputMerger.SetTargets(timeTarget);
+                context.Rasterizer.SetViewports(new Viewport(emptyIndex%parameters.size,
+                                                             (int) (emptyIndex/parameters.size), 1, 1));
+                //context.ClearRenderTargetView(timeTarget, new Color4(new Vector3(totalElapsedtime)));//note: there might be an conversion error from Color4 to float
+
+
+
+                
+
+                game.TextureRenderer.DrawColor(new Color4(0,totalElapsedtime,0,0),Vector2.Zero,new Vector2(1,1));
+                vertexCount = emptyIndex * 4;
                 particles[emptyIndex] = parameters.MaxLifeTime;
                 Vector3 pos;
                 Vector3 velo;
@@ -229,11 +337,26 @@ namespace MHGameWork.TheWizards.Particles
 
         public void InitializeRender()
         {
-            shader = BasicShader.LoadFromEmbeddedFile(game, Assembly.GetExecutingAssembly(), "MHGameWork.TheWizards.Particles.Files.BillBoardShader.fx", "..\\..\\NewModules\\Particles\\Files\\BillBoardShader.fx", new EffectPool());
+          
+            shader = BasicShader.LoadAutoreload(game,
+                                                new System.IO.FileInfo(
+                                                    "..\\..\\DirectX11\\Shaders\\Particles\\BillBoardShader.fx"), null);
             setShader();
             vertexStride = ParticleVertex.SizeInBytes;
-            vertexBuffer = new VertexBuffer(game.GraphicsDevice, typeof(ParticleVertex), maxParticles * 6, BufferUsage.WriteOnly);
-            decl = declarationPool.GetVertexDeclaration<ParticleVertex>();
+            var desc = new BufferDescription
+                           {
+                               BindFlags = BindFlags.VertexBuffer,
+                               CpuAccessFlags = CpuAccessFlags.Write,
+                               OptionFlags = ResourceOptionFlags.None,
+                               SizeInBytes = maxParticles * 6 * ParticleVertex.SizeInBytes,
+                               StructureByteStride = ParticleVertex.SizeInBytes,
+                               Usage = ResourceUsage.Dynamic
+                           };
+
+            vertexBuffer = new Buffer(game.Device, desc);//game.GraphicsDevice, typeof(ParticleVertex), maxParticles * 6, BufferUsage.WriteOnly);
+            layout = new InputLayout(game.Device, ParticleVertex.VertexElements,
+                                     shader.GetCurrentPass(0).Description.Signature);
+            //decl = declarationPool.GetVertexDeclaration<ParticleVertex>();
         }
 
         public void setShader()
@@ -245,105 +368,124 @@ namespace MHGameWork.TheWizards.Particles
             else
             {
                 shader.SetTechnique("DirectionalBillboard");
-                shader.SetParameter("startPosition", parameters.position);
+                shader.Effect.GetVariableByName("startPosition").AsVector().Set(parameters.position);
             }
-            shader.SetParameter("world", Matrix.Identity);
-            shader.SetParameter("viewProjection", Matrix.Identity);
-            shader.SetParameter("viewInverse", Matrix.Identity);
-            shader.SetParameter("diffuseTexture", texturePool.LoadTexture(parameters.texture));
-            shader.SetParameter("size", parameters.size);
+            shader.Effect.GetVariableByName("world").AsMatrix().SetMatrix(Matrix.Identity);
+            shader.Effect.GetVariableByName("viewProjection").AsMatrix().SetMatrix(Matrix.Identity);
+            shader.Effect.GetVariableByName("viewInverse").AsMatrix().SetMatrix(Matrix.Identity);
+            shader.Effect.GetVariableByName("txDiffuse").AsResource().SetResource(texturePool.LoadTexture(parameters.texture));
+            shader.Effect.GetVariableByName("size").AsScalar().Set(parameters.size);
             //effect parameter
-            shader.SetParameter("timeTexture", timeTexture);
-            shader.SetParameter("width", parameters.particleWidth);
-            shader.SetParameter("height", parameters.particleHeight);
-            shader.SetParameter("widthEnd", parameters.particleWidthEnd);
-            shader.SetParameter("heightEnd", parameters.particleHeightEnd);
-            shader.SetParameter("startColor", new Color(StartColor.ToVector3() * parameters.darkScale));
-            shader.SetParameter("endColor", new Color(EndColor.ToVector3() * parameters.darkScale));
-            shader.SetParameter("oneOverTotalLifeTime", 1 / (parameters.MaxLifeTime * 1000));
-            shader.SetParameter("uvStart", parameters.UvStart);
-            shader.SetParameter("uvSize", parameters.UvSize);
+            shader.Effect.GetVariableByName("timeTexture").AsResource().SetResource(timeTextureRSV);
+            shader.Effect.GetVariableByName("width").AsScalar().Set(parameters.particleWidth);
+            shader.Effect.GetVariableByName("height").AsScalar().Set(parameters.particleHeight);
+            shader.Effect.GetVariableByName("widthEnd").AsScalar().Set(parameters.particleWidthEnd);
+            shader.Effect.GetVariableByName("heightEnd").AsScalar().Set(parameters.particleHeightEnd);
+            shader.Effect.GetVariableByName("startColor").AsVector().Set(new Color4(StartColor.ToVector3() * parameters.darkScale));
+            shader.Effect.GetVariableByName("endColor").AsVector().Set(new Color4(EndColor.ToVector3() * parameters.darkScale));
+            shader.Effect.GetVariableByName("oneOverTotalLifeTime").AsScalar().Set(1 / (parameters.MaxLifeTime));
+            shader.Effect.GetVariableByName("uvStart").AsVector().Set(parameters.UvStart);
+            shader.Effect.GetVariableByName("uvSize").AsVector().Set(parameters.UvSize);
+            shader.Apply();
         }
 
         public void SetRenderData()
         {
-            vertexBuffer.SetData(renderData);
+            var box = context.MapSubresource(vertexBuffer, 0, renderData.Length * ParticleVertex.SizeInBytes,
+                                             MapMode.WriteDiscard, MapFlags.None);
+            box.Data.WriteRange(renderData);
+            context.UnmapSubresource(vertexBuffer, 0);
+
             vertexCount = emptyIndex * 4;
         }
         public void Render(Matrix viewProjection, Matrix viewInverse)
         {
-
+            totalElapsedtime += game.Elapsed;
             simulater.RenderUpdate(game.Elapsed, parameters.position);
+            context.ClearState();
+
             setShader();
-            game.GraphicsDevice.SetRenderTarget(0, target);
-            game.GraphicsDevice.Clear(Color.Black);
-            game.GraphicsDevice.RenderState.AlphaBlendEnable = true;
-            game.GraphicsDevice.RenderState.SourceBlend = Blend.SourceAlpha;
-            game.GraphicsDevice.RenderState.DestinationBlend = Blend.One;
-            game.GraphicsDevice.RenderState.DepthBufferEnable = false;
+            context.Rasterizer.SetViewports(new Viewport(0, 0, allParticles.Description.Width,
+                                                         allParticles.Description.Height));
+            context.ClearRenderTargetView(allParticlesRTV, new Color4(0,0,0,0));
+            context.OutputMerger.SetTargets(allParticlesRTV);
+            context.Rasterizer.State = game.HelperStates.RasterizerShowAll;
+
+
+            context.OutputMerger.DepthStencilState = depthStencilState;
+
             //xna alpha style
             // Set the alpha blend mode.
-            game.GraphicsDevice.RenderState.AlphaBlendEnable = true;
-            game.GraphicsDevice.RenderState.AlphaBlendOperation = BlendFunction.Add;
-            game.GraphicsDevice.RenderState.SourceBlend = Blend.SourceAlpha;
-            //game.GraphicsDevice.RenderState.DestinationBlend = Blend.InverseSourceAlpha;
-            game.GraphicsDevice.RenderState.DestinationBlend = Blend.One;
+            context.OutputMerger.BlendState = additiveBlendState;
+
 
             // Set the alpha test mode.
-            game.GraphicsDevice.RenderState.AlphaTestEnable = true;
-            game.GraphicsDevice.RenderState.AlphaFunction = CompareFunction.Greater;
-            game.GraphicsDevice.RenderState.ReferenceAlpha = 0;
+            //game.GraphicsDevice.RenderState.AlphaTestEnable = true;
+            //game.GraphicsDevice.RenderState.AlphaFunction = CompareFunction.Greater;
+            //game.GraphicsDevice.RenderState.ReferenceAlpha = 0;
 
             // Enable the depth buffer (so particles will not be visible through
             // solid objects like the ground plane), but disable depth writes
             // (so particles will not obscure other particles).
-            game.GraphicsDevice.RenderState.DepthBufferEnable = true;
-            game.GraphicsDevice.RenderState.DepthBufferWriteEnable = false;
+
+            //game.GraphicsDevice.RenderState.DepthBufferEnable = true;
+            //game.GraphicsDevice.RenderState.DepthBufferWriteEnable = false;
 
             //end xna alpha style
-            shader.SetParameter("currentTime", (float)(((XNAGame)game).GameTime.TotalGameTime.TotalMilliseconds));
-            shader.SetParameter("displacementTexture", simulater.getOldPosition());
-            shader.SetParameter("viewProjection", viewProjection);
-            shader.SetParameter("viewInverse", viewInverse);
-            shader.SetParameter("world", Matrix.Identity);
-            shader.RenderMultipass(renderPrimitivesAsBillBoards);
-            game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
-            game.GraphicsDevice.RenderState.DepthBufferEnable = true;
-            game.GraphicsDevice.SetRenderTarget(0, null);
 
-            var g = (XNAGame)game;
-            g.SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.SaveState);
+            SlimDX.Performance.BeginEvent ( new Color4(0,1,0,0), "Problem!");
+
+            shader.Effect.GetVariableByName("currentTime").AsScalar().Set(totalElapsedtime);
+            shader.Effect.GetVariableByName("displacementTexture").AsResource().SetResource(simulater.getOldPositionSRV());
+            shader.Effect.GetVariableByName("viewProjection").AsMatrix().SetMatrix( viewProjection);
+            shader.Effect.GetVariableByName("viewInverse").AsMatrix().SetMatrix(viewInverse);
+            shader.Effect.GetVariableByName("world").AsMatrix().SetMatrix(Matrix.Identity);
+            shader.Apply();
+            renderPrimitivesAsBillBoards();
+
+            SlimDX.Performance.EndEvent();
+
+            /*game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
+            game.GraphicsDevice.RenderState.DepthBufferEnable = true;
+            game.GraphicsDevice.SetRenderTarget(0, null);*/
+
+           
+           /* g.SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.SaveState);
             g.SpriteBatch.Draw(allParticles, Vector2.Zero, Color.White);
 
-            g.SpriteBatch.End();
+            g.SpriteBatch.End();*/
+            //game.TextureRenderer.Draw(allParticlesSRV, Vector2.Zero, new Vector2(800, 600));//note: screensize
 
+            shader.Effect.GetVariableByName("timeTexture").AsResource().SetResource(null);
+            shader.Effect.GetVariableByName("displacementTexture").AsResource().SetResource(null);
 
-            shader.SetParameter("timeTexture", (Texture2D)null);
-            shader.effect.CommitChanges();
+            shader.Apply();
+            context.ClearState();
+            game.SetBackbuffer();
+            game.TextureRenderer.Draw(timeTextureRSV, new Vector2(0, 400), new Vector2(200, 200));
+            context.OutputMerger.BlendState = normalBlendState;
+            game.TextureRenderer.Draw(allParticlesSRV, new Vector2(0,0), new Vector2(800, 600));//note: screen size
+            
         }
         private void renderPrimitivesAsBillBoards()
         {
+
             if (emptyIndex < 0) return;
+            context.InputAssembler.InputLayout = layout;
+            context.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleList;
+            context.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(vertexBuffer, vertexStride, 0));
             if (emptyIndex > startIndex)
             {
 
-                game.GraphicsDevice.VertexDeclaration = decl;
-                game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
-                game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, startIndex * 6, (emptyIndex - startIndex) * 2);
+                context.Draw((emptyIndex - startIndex) * 2, startIndex * 6);
+
             }
             else
             {
-                if (emptyIndex > 0)
-                {
-                    game.GraphicsDevice.VertexDeclaration = decl;
-                    game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
-                    game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, emptyIndex * 2);
-                }
-                game.GraphicsDevice.VertexDeclaration = decl;
-                game.GraphicsDevice.Vertices[0].SetSource(vertexBuffer, 0, vertexStride);
-                game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, startIndex * 6, (particles.Length - startIndex) * 2);
+                context.Draw((particles.Length - startIndex) * 2, startIndex * 6);
+                context.Draw(emptyIndex*2, 0);
             }
-            //game.GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, particles.Length * 2);
+
         }
 
         public struct ParticleVertex
@@ -357,11 +499,11 @@ namespace MHGameWork.TheWizards.Particles
                 this.texCoord = texCoord;
             }
 
-            public static readonly VertexElement[] VertexElements =
-     {
-        
-         new VertexElement(0, 0, VertexElementFormat.Vector2, VertexElementMethod.Default, VertexElementUsage.TextureCoordinate, 0),
-         new VertexElement(0, sizeof(float)*2, VertexElementFormat.Vector2, VertexElementMethod.Default, VertexElementUsage.TextureCoordinate, 1),
+            public static readonly InputElement[] VertexElements =
+                {
+
+                    new InputElement("TEXCOORD", 0, Format.R32G32_Float, 0),//warning offset not specified
+                     new InputElement("TEXCOORD", 1, Format.R32G32_Float, 0),
         
 
      };

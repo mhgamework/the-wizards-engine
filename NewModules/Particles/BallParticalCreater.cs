@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Rendering;
-using Microsoft.Xna.Framework;
+using DirectX11;
+using SlimDX;
+
 
 namespace MHGameWork.TheWizards.Particles
 {

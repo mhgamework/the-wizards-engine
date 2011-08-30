@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+using SlimDX;
+
 
 namespace MHGameWork.TheWizards.Particles
 {
@@ -13,7 +14,7 @@ namespace MHGameWork.TheWizards.Particles
         public void GetNewParticleData(out Vector3 position, out Vector3 velocity)
         {
             position = Vector3.Zero;
-            velocity = seed.NextVector3(new Vector3(-1, 0, -1), new Vector3(1, 1, 1));
+            velocity = seed.NextVector3(new Vector3(-1, 0, -1).xna(), new Vector3(1, 1, 1).xna()).dx();
             velocity.Normalize();
             velocity*= speed*50;
         }

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.Graphics;
+
 using MHGameWork.TheWizards.Rendering;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using SlimDX;
+
 
 namespace MHGameWork.TheWizards.Particles
 {
@@ -17,8 +17,8 @@ namespace MHGameWork.TheWizards.Particles
         public float particleWidth, particleHeight;
         public  IParticleCreater particleCreater;
         
-        public float MaxLifeTime = 2.5f;
-        public int particlesPerSecond=250;
+        public float MaxLifeTime = 2.5f;//2.5
+        public int particlesPerSecond=250;//250
         public float ParticleFrequency { get { return 1f / ParticlesPerSecond; } }
         public int ParticlesPerSecond
         {
@@ -27,11 +27,11 @@ namespace MHGameWork.TheWizards.Particles
         }
         public int size = 128;
 
-        public float particleWidthEnd = 5;
-        public float particleHeightEnd = 1;
+        public float particleWidthEnd = 2;
+        public float particleHeightEnd = 2;
         public float darkScale = 0.6f;
-        public Color startColor = new Color(new Vector3(1, 0.4f, 0.4f));
-        public Color endColor = new Color(new Vector3(0.4f, 0.2f, 0.2f));
+        public Color4 startColor = new Color4(new Vector3(0,1, 0));
+        public Color4 endColor = new Color4(new Vector3(1,0, 0));
         public Boolean Directional = false;
         public Vector2 UvStart = Vector2.Zero;
         public Vector2 UvSize = new Vector2(1, 1);

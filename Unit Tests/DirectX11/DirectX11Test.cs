@@ -856,6 +856,8 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             form.GameLoopEvent += delegate
                                       {
                                           renderer.Draw(diffuseTextureRv, new Vector2(10, 10), new Vector2(200, 200));
+                                          renderer.DrawColor(new Color4(0, 1, 0), new Vector2(210, 210),
+                                                             new Vector2(150, 150));
                                       };
 
             form.Run();

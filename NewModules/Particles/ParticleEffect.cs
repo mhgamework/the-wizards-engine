@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Rendering;
-using Microsoft.Xna.Framework;
+using DirectX11;
+using MHGameWork.TheWizards.Rendering.Deferred;
+using SlimDX;
+
 
 namespace MHGameWork.TheWizards.Particles
 {
@@ -15,17 +16,17 @@ namespace MHGameWork.TheWizards.Particles
         public Vector3 Normal;
         private List<EmitterParameters> emitterParameters = new List<EmitterParameters>();
         private List<Emitter> emitters = new List<Emitter>();
-        private IXNAGame game;
-        private VertexDeclarationPool pool;
+        private DX11Game game;
+        //private VertexDeclarationPool pool;
         private readonly TexturePool texPool;
         private bool initialized = false;
         bool running = false;
         private float timeSinceStarted;
         public float playtime = 2f;
-        public ParticleEffect(IXNAGame game, VertexDeclarationPool pool, TexturePool texPool)
+        public ParticleEffect(DX11Game game, TexturePool texPool)
         {
             this.game = game;
-            this.pool = pool;
+            //this.pool = pool;
             this.texPool = texPool;
         }
         public void Initialize()
@@ -76,7 +77,7 @@ namespace MHGameWork.TheWizards.Particles
         public void AddEmitter(EmitterParameters emitterParameters)
         {
             this.emitterParameters.Add(emitterParameters);
-            Emitter emit = new Emitter(texPool, pool, game, emitterParameters);
+            Emitter emit = new Emitter(texPool, game, emitterParameters,800,600);//note: screenspace
             if (initialized)
             {
                 emit.Initialize();

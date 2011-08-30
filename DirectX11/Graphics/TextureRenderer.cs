@@ -22,6 +22,7 @@ namespace DirectX11.Graphics
         private InputLayout layout;
         private FullScreenQuad quad;
         private DeviceContext context;
+        private Effect effect;
 
         public TextureRenderer(Device device)
         {
@@ -31,7 +32,7 @@ namespace DirectX11.Graphics
                                                           ShaderFlags.None,
                                                           EffectFlags.None);
 
-            var effect = new Effect(device, bytecode);
+            effect = new Effect(device, bytecode);
             var technique = effect.GetTechniqueByName("TextureRenderer");
             pass = technique.GetPassByIndex(0);
             //TODO: use constant buffers
@@ -52,17 +53,8 @@ namespace DirectX11.Graphics
         public void Draw(ShaderResourceView tex, Vector2 pos, Vector2 size)
         {
             
-            var viewport =  context.Rasterizer.GetViewports()[0];
-            var scale = new Vector2(size.X/viewport.Width, size.Y/viewport.Height);
-            
-            // We need to correct for the y-inversion
-
-            var offsetSS = new Vector2(pos.X/viewport.Width*2,  pos.Y/viewport.Height*2);
-            
-
+            setQuadTransform(size, pos);
             pTxDiffuse.SetResource(tex);
-            pOffsetSS.Set(offsetSS);
-            pScale.Set(scale);
 
             pass.Apply(context);
             quad.Draw(layout);
@@ -76,6 +68,34 @@ namespace DirectX11.Graphics
 
 
         }
+        public void DrawColor(Color4 color, Vector2 pos, Vector2 size)
+        {
 
+            setQuadTransform(size, pos);
+            effect.GetVariableByName("Color").AsVector().Set(color);
+            effect.GetTechniqueByName("ColorRenderer").GetPassByIndex(0).Apply(context);
+            quad.Draw(layout);
+
+
+  
+
+            // This should update the constant buffers and unset the resource. Should be optimized in some way
+            pass.Apply(context);
+
+
+        }
+        private void setQuadTransform(Vector2 size, Vector2 pos)
+        {
+            var viewport =  context.Rasterizer.GetViewports()[0];
+            var scale = new Vector2(size.X/viewport.Width, size.Y/viewport.Height);
+            
+            // We need to correct for the y-inversion
+
+            var offsetSS = new Vector2(pos.X/viewport.Width*2,  pos.Y/viewport.Height*2);
+            
+
+            pOffsetSS.Set(offsetSS);
+            pScale.Set(scale);
+        }
     }
 }
