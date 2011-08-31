@@ -6,6 +6,7 @@ using DirectX11;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Particles;
 using MHGameWork.TheWizards.Rendering;
+//using MHGameWork.TheWizards.Tests.Graphics;
 using MHGameWork.TheWizards.Tests.Graphics;
 using NUnit.Framework;
 using SlimDX;
@@ -108,15 +109,16 @@ namespace MHGameWork.TheWizards.Tests.Particles
             {
                 // emit.setShader();  
                 emit.Update();
-                //if (dist > 100)
-                //{
-                //    dist = 0;
-                //}
-                //else
-                //{
-                //    dist += game.Elapsed * 1;
-                //}//emit.SetPosition(new Vector3(dist, 0, 0));
-                //Temp(dist, emit, curve);
+                if (dist > 100)
+                {
+                    dist = 0;
+                }
+                else
+                {
+                    dist += game.Elapsed * 1;
+                }
+                //emit.SetPosition(new Vector3(dist, 0, 0));
+                Temp(dist, emit, curve);
 
                 //Draw part
 
@@ -131,61 +133,56 @@ namespace MHGameWork.TheWizards.Tests.Particles
 
             game.Run();
         }
-        //[Test]
-        //public void FlameTest()
-        //{
-        //    Emitter emit;
-        //    XNAGame game = new XNAGame();
-        //    FlameParticleCreater creater;
-        //    game.DrawFps = true;
+        [Test]
+        public void FlameTest()
+        {
+            Emitter emit;
+            DX11Game game = new DX11Game();
+            game.InitDirectX();
+            FlameParticleCreater creater;
+            //game.DrawFps = true;
 
-        //    var pool = new VertexDeclarationPool();
-        //    pool.SetVertexElements<Emitter.ParticleVertex>(Emitter.ParticleVertex.VertexElements);
-        //    var texPool = new TexturePool();
-        //    var testTexture = GetTestTexture();
-        //    creater = new FlameParticleCreater();
-        //    EmitterParameters param = new EmitterParameters();
-        //    param.EffectName = "calculateFlame";
-        //    param.texture = testTexture;
-        //    param.particleCreater = creater;
-        //    emit = new Emitter(texPool, pool, game, param);
-        //    Seeder seed = new Seeder(54);
+            //var pool = new VertexDeclarationPool();
+            //pool.SetVertexElements<Emitter.ParticleVertex>(Emitter.ParticleVertex.VertexElements);
+            var texPool = new TexturePool(game);
+            var testTexture = GetTestTexture();
+            creater = new FlameParticleCreater();
+            EmitterParameters param = new EmitterParameters();
+            param.EffectName = "calculateFlame";
+            param.texture = testTexture;
+            param.particleCreater = creater;
+            emit = new Emitter(texPool, game, param,800,600);
+            Seeder seed = new Seeder(54);
 
-        //    var curve = Curve3DTester.CreateTestCurve();
+            var curve = Curve3DTester.CreateTestCurve();
+
             
-        //    game.InitializeEvent += delegate
-        //    {
-        //        texPool.Initialize(game);
-        //        pool.Initialize(game);
+                //texPool.Initialize(game);
+                //pool.Initialize(game);
 
-        //        emit.Initialize();
-        //        emit.InitializeRender();
+                emit.Initialize();
+                emit.InitializeRender();
 
 
-        //        emit.CreateRenderData();
-        //        emit.SetRenderData();
-        //        //emit.AddParticles(creater,1);
-        //    };
-        //    float dist = 0;
-        //    game.UpdateEvent += delegate
-        //    {
-        //        dist += game.Elapsed;
-        //        // emit.setShader();  
-        //        //Temp(dist, emit, curve);
-                
-        //        //setColors(emit);
-        //        emit.Update();
+                emit.CreateRenderData();
+                emit.SetRenderData();
+                //emit.AddParticles(creater,1);
+            
+            float dist = 0;
+            game.GameLoopEvent += delegate
+            {
+                dist += game.Elapsed;
+                // emit.setShader();  
+                //Temp(dist, emit, curve);
 
-        //    };
-        //    game.DrawEvent += delegate
-        //    {
-        //        //game.GraphicsDevice.Clear(Color.Black);
-        //        game.GraphicsDevice.RenderState.CullMode = CullMode.None;
-        //        emit.Render(game.SpectaterCamera.ViewProjection, game.SpectaterCamera.ViewInverse);
-        //    };
+                //setColors(emit);
+                emit.Update();
+            emit.Render(game.SpectaterCamera.ViewProjection, game.SpectaterCamera.ViewInverse);
 
-        //    game.Run();
-        //}
+            };
+           
+            game.Run();
+        }
 
         //[Test]
         //public void SparkleTest()

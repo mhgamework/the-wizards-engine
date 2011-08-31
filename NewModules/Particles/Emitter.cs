@@ -63,7 +63,7 @@ namespace MHGameWork.TheWizards.Particles
             this.width = width;
             this.height = height;
             simulater = new ParticleSimulater(game, parameters.size, parameters.EffectName);
-            ParticlesPerSecond = 250;
+            
 
 
             var blendStateDescription = new BlendStateDescription();
@@ -74,7 +74,7 @@ namespace MHGameWork.TheWizards.Particles
             blendStateDescription.RenderTargets[0].SourceBlend = BlendOption.One;
             blendStateDescription.RenderTargets[0].SourceBlendAlpha = BlendOption.One;
             blendStateDescription.RenderTargets[0].DestinationBlend = BlendOption.One;
-            blendStateDescription.RenderTargets[0].DestinationBlendAlpha = BlendOption.One;
+            blendStateDescription.RenderTargets[0].DestinationBlendAlpha = BlendOption.InverseSourceAlpha;
 
             additiveBlendState = BlendState.FromDescription(game.Device, blendStateDescription);
             blendStateDescription.RenderTargets[0].BlendEnable = true;
@@ -113,8 +113,8 @@ namespace MHGameWork.TheWizards.Particles
 
         public int ParticlesPerSecond
         {
-            get { return parameters.particlesPerSecond; }
-            set { parameters.particlesPerSecond = value; }
+            get { return parameters.ParticlesPerSecond; }
+            set { parameters.ParticlesPerSecond = value; }
         }
 
 
@@ -224,7 +224,7 @@ namespace MHGameWork.TheWizards.Particles
                 if (parameters.CreationTime < TimeSinceStart)
                 { createParticles = false; }
             }
-
+            
             for (int i = 0; i < particles.Length; i++)
             {
                 particles[i] -= game.Elapsed;
@@ -240,7 +240,7 @@ namespace MHGameWork.TheWizards.Particles
                     if (particles[i] <= 0 && particles[0] > 0)
                         startIndex = 0;
                 }
-
+                
             }
 
             if ((time + game.Elapsed > parameters.ParticleFrequency) && createParticles)
@@ -271,6 +271,7 @@ namespace MHGameWork.TheWizards.Particles
 
         public void AddParticles(IParticleCreater creater, int amount)
         {
+            context.ClearState();
             /*game.GraphicsDevice.Textures[0] = null;
             game.GraphicsDevice.Textures[1] = null;
             game.GraphicsDevice.Textures[2] = null;
@@ -291,6 +292,7 @@ namespace MHGameWork.TheWizards.Particles
                 box.Data.Write(totalElapsedtime);
                 
                 context.UnmapSubresource(timeTexture, 0);*/
+                
                 context.OutputMerger.SetTargets(timeTarget);
                 context.Rasterizer.SetViewports(new Viewport(emptyIndex%parameters.size,
                                                              (int) (emptyIndex/parameters.size), 1, 1));
@@ -476,14 +478,16 @@ namespace MHGameWork.TheWizards.Particles
             context.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(vertexBuffer, vertexStride, 0));
             if (emptyIndex > startIndex)
             {
-
-                context.Draw((emptyIndex - startIndex) * 2, startIndex * 6);
-
+                
+                context.Draw((emptyIndex - startIndex) * 6, startIndex * 6);
+                game.AddToWindowTitle("count: "+(emptyIndex - startIndex).ToString());
             }
             else
             {
-                context.Draw((particles.Length - startIndex) * 2, startIndex * 6);
-                context.Draw(emptyIndex*2, 0);
+                context.Draw((particles.Length - startIndex) * 6, startIndex * 6);
+                context.Draw(emptyIndex*6, 0);
+                game.AddToWindowTitle("count: "+((particles.Length - startIndex) + emptyIndex).ToString());
+
             }
 
         }

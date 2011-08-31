@@ -17,15 +17,15 @@ namespace MHGameWork.TheWizards.Particles
         public float particleWidth, particleHeight;
         public  IParticleCreater particleCreater;
         
-        public float MaxLifeTime = 2.5f;//2.5
-        public int particlesPerSecond=250;//250
+        public float MaxLifeTime = 1.5f;//2.5
+        private int particlesPerSecond=250;//250
         public float ParticleFrequency { get { return 1f / ParticlesPerSecond; } }
         public int ParticlesPerSecond
         {
             get { return particlesPerSecond; }
             set { if(value*MaxLifeTime<size*size){particlesPerSecond = value;} }
         }
-        public int size = 128;
+        public int size = 64;
 
         public float particleWidthEnd = 2;
         public float particleHeightEnd = 2;
