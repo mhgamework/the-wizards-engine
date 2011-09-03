@@ -156,6 +156,7 @@
     <Compile Include="Assets\ServerAssetSyncer.cs" />
     <Compile Include="Assets\ClientTextureAsset.cs" />
     <Compile Include="Assets\ServerMeshAsset.cs" />
+    <Compile Include="Building\HUDRenderer.cs" />
     <Compile Include="Character\Editor\Character.cs" />
     <Compile Include="Character\Editor\CharacterBone.cs" />
     <Compile Include="Character\Editor\CharacterBuilder.cs" />

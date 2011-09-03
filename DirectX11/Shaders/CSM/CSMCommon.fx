@@ -12,7 +12,7 @@ SamplerState samPoint
     AddressU = Wrap;
     AddressV = Wrap;
 };
-static const float BIAS = 0.006f;
+static const float BIAS = 0.0004f; // 0.006
 
 
 // Calculates the shadow occlusion using bilinear PCF
@@ -21,7 +21,7 @@ float CalcShadowTermPCF(float fLightDepth, float2 vShadowTexCoord)
 
 
 	float bias = -0.005 * fLightDepth; // Not sure this does anything
-	//bias = -BIAS;
+	bias = -BIAS;
 
 	float fShadowTerm = 0.0f;
 

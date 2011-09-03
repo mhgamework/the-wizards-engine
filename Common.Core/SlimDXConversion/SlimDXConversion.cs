@@ -35,6 +35,10 @@ namespace MHGameWork.TheWizards
         {
             return new Microsoft.Xna.Framework.Plane(v.Normal.xna(), v.D);
         }
+        public static Microsoft.Xna.Framework.Ray xna(this SlimDX.Ray v)
+        {
+            return new Microsoft.Xna.Framework.Ray(v.Position.xna(), v.Direction.xna());
+        }
 
 
         public static SlimDX.BoundingBox dx(this Microsoft.Xna.Framework.BoundingBox v)
@@ -78,6 +82,10 @@ namespace MHGameWork.TheWizards
         public static SlimDX.Plane dx(this Microsoft.Xna.Framework.Plane v)
         {
             return new SlimDX.Plane(v.Normal.dx(), v.D);
+        }
+        public static SlimDX.Ray dx(this Microsoft.Xna.Framework.Ray v)
+        {
+            return new SlimDX.Ray(v.Position.dx(), v.Direction.dx());
         }
 
     }

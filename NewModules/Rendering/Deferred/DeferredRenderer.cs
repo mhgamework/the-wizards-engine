@@ -136,6 +136,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         public DeferredMeshRenderElement CreateMeshElement(IMesh mesh)
         {
+            if (mesh == null) throw new NullReferenceException();
             var el = meshRenderer.AddMesh(mesh);
 
             return el;
@@ -287,8 +288,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             var cullCam = DEBUG_SeperateCullCamera;
             if (cullCam == null) cullCam = game.Camera;
 
-            gbufferView.UpdateVisibility(cullCam.ViewProjection);
-            setMeshRendererVisibles(gbufferView);
+            //TODO: fix culling+removing of elements
+            //gbufferView.UpdateVisibility(cullCam.ViewProjection);
+            //setMeshRendererVisibles(gbufferView);
             meshRenderer.Draw();
         }
 
@@ -343,8 +345,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                            num++;
                                            var oldCam = game.Camera;
                                            game.Camera = lightCamera;
-                                           view.UpdateVisibility(lightCamera.ViewProjection);
-                                           setMeshRendererVisibles(view);
+                                           //TODO: fix culling+removing of elements
+                                           //view.UpdateVisibility(lightCamera.ViewProjection);
+                                           //setMeshRendererVisibles(view);
                                            meshRenderer.DrawDepthOnly();
                                            game.Camera = oldCam;
                                        }, mainCamera);
@@ -358,8 +361,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                       num++;
                                       var oldCam = game.Camera;
                                       game.Camera = lightCamera;
-                                      view.UpdateVisibility(lightCamera.ViewProjection);
-                                      setMeshRendererVisibles(view);
+                                      //TODO: fix culling+removing of elements
+                                      //view.UpdateVisibility(lightCamera.ViewProjection);
+                                      //setMeshRendererVisibles(view);
                                       meshRenderer.DrawDepthOnly();
                                       game.Camera = oldCam;
                                   });
@@ -369,8 +373,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             var oldCam = game.Camera;
             r.UpdateLightCamera();
             game.Camera = r.LightCamera;
-            view.UpdateVisibility(r.LightCamera.ViewProjection);
-            setMeshRendererVisibles(view);
+            //TODO: fix culling+removing of elements
+            //view.UpdateVisibility(r.LightCamera.ViewProjection);
+            //setMeshRendererVisibles(view);
             r.UpdateShadowMap(meshRenderer.DrawDepthOnly);
             game.Camera = oldCam;
         }
