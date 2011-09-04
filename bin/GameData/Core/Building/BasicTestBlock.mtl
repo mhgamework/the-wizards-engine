@@ -1,5 +1,5 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 03.09.2011 22:17:27
+# File Created: 04.09.2011 10:17:29
 
 newmtl 01___Default
 	Ns 9.999999
@@ -12,5 +12,7 @@ newmtl 01___Default
 	Kd 0.588235 0.588235 0.588235
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka maps\BrickLargeBare0093_2_S.jpg
-	map_Kd maps\BrickLargeBare0093_2_S.jpg
+	map_Ka maps\BrickLargeBare0093_2_S_Scaled.jpg
+	map_Kd maps\BrickLargeBare0093_2_S_Scaled.jpg
+	map_bump maps\BrickLargeBare0093_2_S_ScaledNORMAL.jpg
+	bump maps\BrickLargeBare0093_2_S_ScaledNORMAL.jpg
