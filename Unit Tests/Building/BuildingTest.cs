@@ -67,7 +67,7 @@ namespace MHGameWork.TheWizards.Tests.Building
                                          "\\BasicTestBlock.mtl");
 
             var HUDRenderer = new HUDRenderer(game, renderer);
-            HUDRenderer.setMesh(mesh);
+            HUDRenderer.SetMesh(mesh);
 
 
 
@@ -76,7 +76,6 @@ namespace MHGameWork.TheWizards.Tests.Building
                 game.SpectaterCamera.CameraPosition =
                     new SlimDX.Vector3(game.SpectaterCamera.CameraPosition.X, 2,
                                        game.SpectaterCamera.CameraPosition.Z);
-
                 HUDRenderer.Update();
                 renderer.Draw();
             };
@@ -91,8 +90,10 @@ namespace MHGameWork.TheWizards.Tests.Building
             game.InitDirectX();
 
             var renderer = new DeferredRenderer(game);
-            var meshConverter = new OBJToRAMMeshConverter(new RAMTextureFactory());
+            var HUDRenderer = new HUDRenderer(game, renderer);
+            var placeTool = new PlaceTool(game, renderer);
 
+            var meshConverter = new OBJToRAMMeshConverter(new RAMTextureFactory());
             var mesh = CreateMeshFromObj(meshConverter,
                                          TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
                                          "\\BasicTestBlock.obj",
@@ -104,18 +105,14 @@ namespace MHGameWork.TheWizards.Tests.Building
                                          TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
                                          "\\Plane.mtl");
 
-            var HUDRenderer = new HUDRenderer(game, renderer);
-
             DirectionalLight light = renderer.CreateDirectionalLight();
             light.ShadowsEnabled = true;
             light.LightDirection = Vector3.Normalize(new Vector3(2, -1, 3));
 
             var planeEl = renderer.CreateMeshElement(planeMesh);
             planeEl.WorldMatrix = Matrix.Scaling(new Vector3(100, 100, 100));
-            var ghost = renderer.CreateMeshElement(mesh);
 
-            var placePos = new Vector3();
-
+            IMesh activeMesh = mesh;
 
 
             game.GameLoopEvent += delegate
@@ -124,29 +121,20 @@ namespace MHGameWork.TheWizards.Tests.Building
                     new SlimDX.Vector3(game.SpectaterCamera.CameraPosition.X, 2,
                                        game.SpectaterCamera.CameraPosition.Z);
 
-                Ray ray;
-                Plane p = new Plane(new Vector3(0, 1, 0), 0);
+                if (game.Keyboard.IsKeyPressed(Key.NumberPad0))
+                    activeMesh = null;
 
-                ray.Position = game.SpectaterCamera.CameraPosition;
-                ray.Direction = game.SpectaterCamera.CameraDirection;
-
-                var intersects = ray.xna().Intersects(p.xna());
-                if (intersects.HasValue)
+                if (game.Keyboard.IsKeyPressed(Key.NumberPad1))
                 {
-                    placePos = ray.Position + intersects.Value * ray.Direction;
+                    activeMesh = mesh;
                 }
 
-                placePos.Y = 0;
-                ghost.WorldMatrix = Matrix.Translation(placePos);
 
-                if (game.Keyboard.IsKeyPressed(Key.NumberPad0))
-                    HUDRenderer.setMesh(null);
-                if (game.Keyboard.IsKeyPressed(Key.NumberPad1))
-                    HUDRenderer.setMesh(mesh);
-                if (game.Mouse.LeftMousePressed)
-                    placeBlock(placePos);
+                HUDRenderer.SetMesh(activeMesh);
+                placeTool.SetMesh(activeMesh);
 
                 HUDRenderer.Update();
+                placeTool.Update();
 
                 renderer.Draw();
 
@@ -155,10 +143,7 @@ namespace MHGameWork.TheWizards.Tests.Building
             game.Run();
         }
 
-        private void placeBlock(Vector3 pos)
-        {
 
-        }
 
 
     }

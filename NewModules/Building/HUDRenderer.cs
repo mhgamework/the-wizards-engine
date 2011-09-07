@@ -42,7 +42,7 @@ namespace MHGameWork.TheWizards.Building
 
         }
 
-        public void setMesh(IMesh mesh)
+        public void SetMesh(IMesh mesh)
         {
             if (meshElement != null)
                 meshElement.Delete();
