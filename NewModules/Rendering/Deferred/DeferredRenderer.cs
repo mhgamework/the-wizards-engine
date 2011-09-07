@@ -106,7 +106,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
             Vector3 radius = new Vector3(500, 1000, 500);
-            frustumCuller = new FrustumCuller(new BoundingBox(-radius, radius), 8);
+            frustumCuller = new FrustumCuller(new BoundingBox(-radius, radius), 1);
 
             gbufferView = frustumCuller.CreateView();
             meshRenderer.Culler = frustumCuller;

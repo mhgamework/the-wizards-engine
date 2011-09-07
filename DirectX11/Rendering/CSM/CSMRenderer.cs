@@ -21,7 +21,7 @@ namespace DirectX11.Rendering.CSM
 
         public bool RenderDebug = false;
 
-        public const int ShadowMapSize = 2048;
+        public const int ShadowMapSize = 512;
         public const int NumSplits = 4;
 
         private Texture2D shadowMap;

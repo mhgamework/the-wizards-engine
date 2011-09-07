@@ -154,6 +154,8 @@ namespace DirectX11
 
             form.Form.Text = FPS.ToString();
 
+            if (Elapsed > 1 / 30f) Elapsed = 1/30f;
+
         }
 
         public Device Device { get { return form.Device; } }
