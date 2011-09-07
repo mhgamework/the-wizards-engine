@@ -639,30 +639,57 @@ namespace TreeGenerator.TerrrainGeneration
         public Vector2[,] velocityMap;
         public void ComputeVelocityMap()
         {
-            for (int i = 1; i < width-1; i++)
+            Vector4[,] oldFlowMap = GetOldFlowMap();
+            float[,] newWaterMap = GetNewWaterMap();
+            var computeVelocityParams = new computeVelocityParams(new IndexStruct(0,0), oldFlowMap, newWaterMap, GetOldWaterMap(), gridSize);
+            for (int i = 1; i < width - 1; i++)
             {
                 for (int j = 1; j < length-1; j++)
                 {
                     //if (GetOldWaterMap()[i,j]>0.001f)
                     //{
-                        velocityMap[i, j] = computeVelocity(new IndexStruct(i, j));
+
+                    computeVelocityParams.Position = new IndexStruct(i, j);
+
+                    velocityMap[i, j] = computeVelocity(ref computeVelocityParams);
                     //}
                 }
             }
         }
-        private Vector2 computeVelocity(IndexStruct position)
+
+        public struct computeVelocityParams
         {
-            Vector4 flowC = GetOldFlowMap()[position.X, position.Y];
-            Vector4 flowL = GetOldFlowMap()[position.X-1, position.Y];
-            Vector4 flowR = GetOldFlowMap()[position.X+1, position.Y];
-            Vector4 flowT = GetOldFlowMap()[position.X, position.Y-1];
-            Vector4 flowB = GetOldFlowMap()[position.X, position.Y+1];
+            public IndexStruct Position;
+            public Vector4[,] OldFlowMap;
+            public float[,] NewWaterMap;
+            public float[,] GetOldWaterMap;
+            public float Size;
+
+            public computeVelocityParams(IndexStruct position, Vector4[,] oldFlowMap, float[,] newWaterMap, float[,] getOldWaterMap, float size)
+            {
+                Position = position;
+                OldFlowMap = oldFlowMap;
+                NewWaterMap = newWaterMap;
+                GetOldWaterMap = getOldWaterMap;
+                Size = size;
+            }
+
+         
+        }
+
+        private static Vector2 computeVelocity(ref computeVelocityParams computeVelocityParams)
+        {
+            Vector4 flowC = computeVelocityParams.OldFlowMap[computeVelocityParams.Position.X, computeVelocityParams.Position.Y];
+            Vector4 flowL = computeVelocityParams.OldFlowMap[computeVelocityParams.Position.X-1, computeVelocityParams.Position.Y];
+            Vector4 flowR = computeVelocityParams.OldFlowMap[computeVelocityParams.Position.X+1, computeVelocityParams.Position.Y];
+            Vector4 flowT = computeVelocityParams.OldFlowMap[computeVelocityParams.Position.X, computeVelocityParams.Position.Y-1];
+            Vector4 flowB = computeVelocityParams.OldFlowMap[computeVelocityParams.Position.X, computeVelocityParams.Position.Y+1];
 
             Vector2 velocityData = new Vector2();
             velocityData.X = -(flowL.Y + flowC.Y - flowR.X - flowC.X) / 2.0f;
             velocityData.Y = -(flowT.W + flowC.W- flowB.Z - flowC.Z) / 2.0f;
 
-            float velocityMax = gridSize * (GetNewWaterMap()[position.X, position.Y] + GetOldWaterMap()[position.X, position.Y]) * 0.5f;
+            float velocityMax = computeVelocityParams.Size * (computeVelocityParams.NewWaterMap[computeVelocityParams.Position.X, computeVelocityParams.Position.Y] + computeVelocityParams.GetOldWaterMap[computeVelocityParams.Position.X, computeVelocityParams.Position.Y]) * 0.5f;
             float velocityFactor=velocityData.Length();
             if (velocityFactor>velocityMax)
             {

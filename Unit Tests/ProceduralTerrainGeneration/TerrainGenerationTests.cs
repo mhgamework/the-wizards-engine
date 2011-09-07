@@ -4,6 +4,7 @@ using System.Text;
 using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using TreeGenerator.NoiseGenerater;
 using NUnit.Framework;
 
@@ -46,7 +47,7 @@ namespace TreeGenerator.TerrrainGeneration
                         }
                     }
 
-                    texture = heigthmap.CreateTexture(width, length, heigthValues, max - min, game.GraphicsDevice);
+                    texture = heigthmap.CreateTextureFloat(width, length, heigthValues, game.GraphicsDevice);
 
                 };
 
@@ -162,8 +163,9 @@ namespace TreeGenerator.TerrrainGeneration
                     colorsbase.Add(Color.White);
                 }
             }
-            //heightDataErrosionDiffernce = heightData;
+            //heightDataErrosionDiffernce = heightData
             heightDataErrosion = gen.GenerateHydrolicErrosion(heightData, 50 * width * height, width, height);
+
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
@@ -1160,12 +1162,12 @@ namespace TreeGenerator.TerrrainGeneration
             game.SpectaterCamera.FarClip = 10000f;
             PerlinNoiseGenerater noise;
             noise = new PerlinNoiseGenerater();
-            float factor = 0.1f;
-            float scale = 4f;
+            float factor = 0.3f;
+            float scale = 3f;
             List<Vector3> positions = new List<Vector3>();
             List<Color> colors = new List<Color>();
-            int width = 200;
-            int height = 200;
+            int width = 250;
+            int height = 250;
             float lengthFactor = 0.5f;
             float heightFactor = 2;
             SimpleTerrain terrain;
@@ -1208,6 +1210,7 @@ namespace TreeGenerator.TerrrainGeneration
             }
             //float diff = heigest - lowest;
             //float diffIsland = heigestIsland - lowestIsland;
+            //float heighest = 0;
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
@@ -1222,9 +1225,13 @@ namespace TreeGenerator.TerrrainGeneration
 
                     heightData[i, j] = heightDataFBM[i, j] * heightDataRidge[i, j];
                     heightDataFinal[i, j] = heightData[i, j] * heightDataIsland[i, j] * scale;
+                    //if (heighest < heightDataFinal[i, j])
+                    //    heighest = heightDataFinal[i, j];
                 }
             }
-
+            // now i have the none erroted terrain
+            heightDataFinal = gen.GenerateHydrolicErrosion(heightDataFinal,500*width, width, height);
+            
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
@@ -1242,10 +1249,13 @@ namespace TreeGenerator.TerrrainGeneration
                 }
             }
             terrain = new SimpleTerrain(game, positions, colors, width, height);
-            gen.newWaterSystem(heightDataFinal, 1, 1, 0.9f, 1, 0.0001f);
+            gen.newWaterSystem(heightDataFinal, 1, 1, 0.85f, 1, 0.005f);
 
             //water = new SimpleTerrain(game, waterPositions, waterColors, width, height);
-            float[,] waterData = new float[width, height]; ;
+            float[,] waterData = new float[width, height];
+            float[,] meanWaterData = new float[width,height];
+            Vector2[,] meanVelocity = new Vector2[width,height];
+            int waterCycles = 0;
             game.InitializeEvent +=
                 delegate
                 {
@@ -1296,7 +1306,18 @@ namespace TreeGenerator.TerrrainGeneration
                         gen.AnimateClouds();
                         gen.ComputeOneWaterCycleNew();
                         waterData = gen.GetOldWaterMap();
+                        /*waterCycles++;
+                        gen.ComputeVelocityMap();
+                        for (int i = 0; i < width; i++)
+                        {
+                            for (int j = 0; j < height; j++)
+                            {
+                                meanWaterData[i, j] += waterData[i, j];
+                                meanVelocity[i, j] += gen.velocityMap[i, j];
 
+                                //simpleErrosion(gen, i, j, waterData, heightDataFinal);
+                            }
+                        }*/
 
 
 
@@ -1352,7 +1373,7 @@ namespace TreeGenerator.TerrrainGeneration
                         {
                             for (int j = 0; j < height; j++)
                             {
-                                positions.Add(new Vector3(i * lengthFactor, heightDataFinal[i, j], j * lengthFactor));
+                                positions.Add(new Vector3(i , heightDataFinal[i, j], j ));
                                 if (heightDataFinal[i, j] > 0)
                                 {
                                     colors.Add(Color.LightGreen);
@@ -1393,6 +1414,24 @@ namespace TreeGenerator.TerrrainGeneration
                     if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.T))
                     {
                         gen.SingleThermalErosionCycle();
+                    }
+                    if(game.Keyboard.IsKeyPressed(Keys.M))
+                    {
+                        var heightMap = new HeigthMapGenerater();
+                        var texture =heightMap.CreateTextureFloat(width, height, heightDataFinal, game.GraphicsDevice);
+                        texture.Save("height.dds", ImageFileFormat.Dds);
+                        //for (int i = 0; i < width; i++)
+                        //{
+                        //    for (int j = 0; j < height; j++)
+                        //    {
+                        //        meanWaterData[i, j]/= waterCycles;
+                        //        meanVelocity[i, j]/= waterCycles;
+                        //    }   
+                        //}
+                        texture = heightMap.CreateTextureFloat(width, height, meanWaterData, game.GraphicsDevice);
+                        texture.Save("meanWater.dds", ImageFileFormat.Dds);
+                        texture = heightMap.CreateTextureVector2(width, height, meanVelocity, game.GraphicsDevice);
+                        texture.Save("meanVelocity.dds", ImageFileFormat.Dds);
                     }
                 };
 
@@ -1461,6 +1500,7 @@ namespace TreeGenerator.TerrrainGeneration
                         }
                         game.LineManager3D.Render(lines);
                     }
+                    
                     terrain.Render();
                     if (VelocityRender)
                     {
@@ -1485,6 +1525,41 @@ namespace TreeGenerator.TerrrainGeneration
             game.Run();
         }
 
+        private void simpleErrosion(ProceduralHeigthGenerater gen, int i, int j, float[,] waterData, float[,] heightDataFinal)
+        {
+            var myFactor = 0f;
+            if (waterData[i, j]>0.5f )
+            {
+                myFactor = -waterData[i, j] * 0.5f +1;
+            }
+            else
+            {
+                myFactor = waterData[i, j] * (1*0.5f)/0.5f +0.5f;
+            }
+
+
+            //Kernel
+            var velocity = new Vector2();
+            for (int k = -1; k < 2; k++)
+            {
+                for (int l = -1; l < 2; l++)
+                {
+                    velocity += get(gen.velocityMap, k + i, l + j);
+                }
+            }
+            velocity /= 9;
+            heightDataFinal[i, j] -= MathHelper.Clamp(velocity.Length() * 0.1f * MathHelper.Clamp(myFactor, 0, 1), 0, 0.005f);
+        }
+        private static Vector2 get(Vector2[,] map, int x, int y)
+        {
+            if (x < 0 ) x = 0;
+            if (y<0) y = 0;
+            if (x > map.GetLength(0) - 1) x = map.GetLength(0) - 1;
+            if (y > map.GetLength(1) - 1) y = map.GetLength(1) - 1;
+
+            return map[x, y];
+
+        }
 
         //thermal errosion tests
         [Test]

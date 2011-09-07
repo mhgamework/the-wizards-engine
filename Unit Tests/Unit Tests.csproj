@@ -145,6 +145,7 @@
     <Compile Include="Gameplay\FortressTest.cs" />
     <Compile Include="Physics\TestSphereShooter.cs" />
     <Compile Include="ProceduralTerrainGeneration\NoiseTests.cs" />
+    <Compile Include="ProceduralTerrainGeneration\TerrainConverter.cs" />
     <Compile Include="ProceduralTerrainGeneration\TerrainGenerationTests.cs" />
     <Compile Include="Rendering\CullingTest.cs" />
     <Compile Include="Rendering\DeferredRenderingTest.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="WorldDatabase\TerrainDataElement.cs" />
     <Compile Include="WorldDatabase\TerrainDataElementFactory.cs" />
     <Compile Include="Player\XNATaskQueueTester.cs" />
+    <Compile Include="WorldSimulation\WorldSimulationTests.cs" />
     <Compile Include="World\Static\SimpleStaticWorldObject.cs" />
     <Compile Include="World\Static\SimpleStaticWorldObjectFactory.cs" />
     <Compile Include="World\SimpleWorldEntity.cs" />

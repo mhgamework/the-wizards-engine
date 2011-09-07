@@ -9,20 +9,45 @@ namespace TreeGenerator.TerrrainGeneration
     public class HeigthMapGenerater
     {
         private Texture2D texture;
-        private List<Color> colors = new List<Color>();
-        public Texture2D CreateTexture(int width, int length, float[,] HeightValues,float HeightDifference,GraphicsDevice device)
+        
+        
+        public Texture2D CreateTextureFloat(int width, int length, float[,] HeightValues,GraphicsDevice device)
         {
-            
+            float[] height = new float[width*length];
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < length; j++)
                 {
-                    colors.Add(new Color(new Vector4(HeightValues[i, j] / HeightDifference, HeightValues[i, j] / HeightDifference, HeightValues[i, j] / HeightDifference, 1.0f)));
+                    height[i*width + j] = HeightValues[i, j];
+
                 }
             }
 
-            texture = new Texture2D(device, width, length, 1, TextureUsage.None, SurfaceFormat.Color);
-            texture.SetData(colors.ToArray());
+            texture = new Texture2D(device, width, length, 1, TextureUsage.None, SurfaceFormat.Single);
+            texture.SetData(height);
+            return texture;
+        }
+        public Texture2D CreateTextureVector2(int width, int length, Vector2[,] values, GraphicsDevice device)
+        {
+            //Vector4[] height = new Vector4[width * length ];
+            Vector2[] height = new Vector2[width*length];
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < length; j++)
+                {
+                    //var el = new Vector3(values[i, j].X, values[i, j].Y, values[i, j].Z);
+                    
+                    if(values[i,j].Length()>0.0001)
+                    {
+                        int k = 5;
+                    }
+                    //height[i * width + j] = new Vector4(Vector3.Normalize(el),el.Length());
+                    height[i*width + j] = values[i, j];
+                }
+            }
+
+            texture = new Texture2D(device, width, length, 1, TextureUsage.None, SurfaceFormat.Vector2);
+            texture.SetData(height);
             return texture;
         }
 
