@@ -6,6 +6,9 @@ using MHGameWork.TheWizards.Rendering.Deferred;
 
 namespace MHGameWork.TheWizards.Building
 {
+    /// <summary>
+    /// Responsible for creating new blocks in the world.
+    /// </summary>
     public class BlockFactory
     {
         private readonly DeferredRenderer renderer;
@@ -23,7 +26,7 @@ namespace MHGameWork.TheWizards.Building
         }
 
 
-        public Block CreateBlock(Rendering.IMesh mesh, Point3 ghostPos)
+        public Block CreateBlock(BlockType type, Point3 ghostPos)
         {
             for(int i = 0; i < BlockList.Count; i++)
             {
@@ -31,7 +34,7 @@ namespace MHGameWork.TheWizards.Building
                     throw new InvalidOperationException();
             }
 
-            var block = new Block(renderer, mesh, ghostPos);
+            var block = new Block(renderer, type, ghostPos);
 
             return block;
         }

@@ -158,8 +158,10 @@
     <Compile Include="Assets\ServerMeshAsset.cs" />
     <Compile Include="Building\Block.cs" />
     <Compile Include="Building\BlockFactory.cs" />
+    <Compile Include="Building\BlockType.cs" />
     <Compile Include="Building\HUDRenderer.cs" />
     <Compile Include="Building\PlaceTool.cs" />
+    <Compile Include="Building\PlayerController.cs" />
     <Compile Include="Building\Point3.cs" />
     <Compile Include="Character\Editor\Character.cs" />
     <Compile Include="Character\Editor\CharacterBone.cs" />

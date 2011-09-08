@@ -60,6 +60,8 @@ namespace MHGameWork.TheWizards.Tests.Building
             var renderer = new DeferredRenderer(game);
             var meshConverter = new OBJToRAMMeshConverter(new RAMTextureFactory());
 
+            var factory = new BlockTypeFactory();
+
             var mesh = CreateMeshFromObj(meshConverter,
                                          TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
                                          "\\BasicTestBlock.obj",
@@ -67,7 +69,7 @@ namespace MHGameWork.TheWizards.Tests.Building
                                          "\\BasicTestBlock.mtl");
 
             var HUDRenderer = new HUDRenderer(game, renderer);
-            HUDRenderer.SetMesh(mesh);
+            HUDRenderer.SetBlockType(factory.CreateNewBlockType(mesh));
 
 
 
@@ -93,6 +95,7 @@ namespace MHGameWork.TheWizards.Tests.Building
 
             var renderer = new DeferredRenderer(game);
             var blockFactory = new BlockFactory(renderer);
+            var blockTypeFactory = new BlockTypeFactory();
 
             var HUDRenderer = new HUDRenderer(game, renderer);
             var placeTool = new PlaceTool(game, renderer, blockFactory);
@@ -117,7 +120,8 @@ namespace MHGameWork.TheWizards.Tests.Building
             var planeEl = renderer.CreateMeshElement(planeMesh);
             planeEl.WorldMatrix = Matrix.Scaling(new Vector3(100, 100, 100));
 
-            IMesh activeMesh = mesh;
+            var activeType = blockTypeFactory.CreateNewBlockType(mesh);
+            placeTool.SetBlockType(activeType);
 
 
             game.GameLoopEvent += delegate
@@ -126,17 +130,9 @@ namespace MHGameWork.TheWizards.Tests.Building
                     new SlimDX.Vector3(game.SpectaterCamera.CameraPosition.X, 2,
                                        game.SpectaterCamera.CameraPosition.Z);
 
-                if (game.Keyboard.IsKeyPressed(Key.NumberPad0))
-                    activeMesh = null;
 
-                if (game.Keyboard.IsKeyPressed(Key.NumberPad1))
-                {
-                    activeMesh = mesh;
-                }
-
-
-                HUDRenderer.SetMesh(activeMesh);
-                placeTool.SetMesh(activeMesh);
+                HUDRenderer.SetBlockType(activeType);
+                placeTool.SetBlockType(activeType);
 
                 HUDRenderer.Update();
                 placeTool.Update();
@@ -157,6 +153,7 @@ namespace MHGameWork.TheWizards.Tests.Building
 
            var renderer = new DeferredRenderer(game);
            var blockFactory = new BlockFactory(renderer);
+           var blockTypeFactory = new BlockTypeFactory();
 
            var HUDRenderer = new HUDRenderer(game, renderer);
            var placeTool = new PlaceTool(game, renderer, blockFactory);
@@ -184,25 +181,91 @@ namespace MHGameWork.TheWizards.Tests.Building
            var planeEl = renderer.CreateMeshElement(planeMesh);
            planeEl.WorldMatrix = Matrix.Scaling(new Vector3(100, 100, 100));
 
-           IMesh activeMesh = mesh;
-
+           var activeType = blockTypeFactory.CreateNewBlockType(mesh);
+           placeTool.SetBlockType(activeType);
            
 
 
            game.GameLoopEvent += delegate
            {
                playerController.Update();
+
+
+               HUDRenderer.SetBlockType(activeType);
+
+               HUDRenderer.Update();
+               placeTool.Update();
+
+
+               renderer.Draw();
+           };
+
+           game.Run();
+       }
+
+       [Test]
+       public void TestMultipleBlockTypes()
+       {
+           var game = new DX11Game();
+           game.InitDirectX();
+
+           var renderer = new DeferredRenderer(game);
+           var blockFactory = new BlockFactory(renderer);
+           var blockTypeFactory = new BlockTypeFactory();
+
+           var HUDRenderer = new HUDRenderer(game, renderer);
+           var placeTool = new PlaceTool(game, renderer, blockFactory);
+
+
+           var playerController = new PlayerController(game, blockFactory);
+
+
+           var meshConverter = new OBJToRAMMeshConverter(new RAMTextureFactory());
+           var brickMesh = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                        "\\BasicTestBlock.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                        "\\BasicTestBlock.mtl");
+           var woodMesh = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\WoodPlankBlock").FullName +
+                                        "\\WoodPlankBlock.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\WoodPlankBlock").FullName +
+                                        "\\WoodPlankBlock.mtl");
+
+           blockTypeFactory.CreateNewBlockType(brickMesh);
+           blockTypeFactory.CreateNewBlockType(woodMesh);
+
+           var planeMesh = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                        "\\Plane.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                        "\\Plane.mtl");
+
+           DirectionalLight light = renderer.CreateDirectionalLight();
+           light.ShadowsEnabled = true;
+           light.LightDirection = Vector3.Normalize(new Vector3(2, -1, 3));
+
+           var planeEl = renderer.CreateMeshElement(planeMesh);
+           planeEl.WorldMatrix = Matrix.Scaling(new Vector3(100, 100, 100));
+
+           BlockType activeType = null;
+
+
+
+
+           game.GameLoopEvent += delegate
+           {
+               playerController.Update();
                if (game.Keyboard.IsKeyPressed(Key.NumberPad0))
-                   activeMesh = null;
-
+                   activeType = null;
                if (game.Keyboard.IsKeyPressed(Key.NumberPad1))
-               {
-                   activeMesh = mesh;
-               }
+                   activeType = blockTypeFactory.TypeList[0];
+               if (game.Keyboard.IsKeyPressed(Key.NumberPad2))
+                   activeType = blockTypeFactory.TypeList[1];
 
 
-               HUDRenderer.SetMesh(activeMesh);
-               placeTool.SetMesh(activeMesh);
+               HUDRenderer.SetBlockType(activeType);
+               placeTool.SetBlockType(activeType);
 
                HUDRenderer.Update();
                placeTool.Update();

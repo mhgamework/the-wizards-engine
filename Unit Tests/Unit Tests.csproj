@@ -133,8 +133,8 @@
     <Compile Include="Assets\AssetsSynchronizationTest.cs" />
     <Compile Include="Assets\SimpleAsset.cs" />
     <Compile Include="Assets\SimpleAssetFactory.cs" />
+    <Compile Include="Building\BlockTypeFactory.cs" />
     <Compile Include="Building\BuildingTest.cs" />
-    <Compile Include="Building\PlayerController.cs" />
     <Compile Include="Client\ClientTest.cs" />
     <Compile Include="Collada\ColladaTest.cs" />
     <Compile Include="CoreTest.cs" />

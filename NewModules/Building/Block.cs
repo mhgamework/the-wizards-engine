@@ -8,20 +8,29 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.Building
 {
+    /// <summary>
+    /// Responsible for representing a block in the world. It keeps information about this block and makes sure it is rendered.
+    /// </summary>
     public class Block
     {
         private readonly DeferredRenderer renderer;
-        private readonly IMesh mesh;
+        private readonly BlockType type;
+        private DeferredMeshRenderElement meshEl;
         public Point3 Position { get; private set; }
 
-        public Block(DeferredRenderer renderer, IMesh mesh, Point3 position)
+        public Block(DeferredRenderer renderer, BlockType type, Point3 position)
         {
             this.renderer = renderer;
-            this.mesh = mesh;
+            this.type = type;
             Position = position;
-            var meshEl = renderer.CreateMeshElement(mesh);
+            meshEl = renderer.CreateMeshElement(type.mesh);
             meshEl.WorldMatrix = Matrix.Translation(position+ new Vector3(0.5f,0,0.5f));
             
+        }
+
+        public void DeleteFromRenderer()
+        {
+            meshEl.Delete();
         }
     }
 }

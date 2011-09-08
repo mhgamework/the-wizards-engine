@@ -10,13 +10,16 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.Building
 {
+    /// <summary>
+    /// Responsible for placement by the user of blocks in the world of given blocktype.
+    /// </summary>
     public class PlaceTool
     {
         private readonly DX11Game game;
         private DeferredRenderer renderer;
         private BlockFactory blockFactory;
 
-        private DeferredMeshRenderElement ghost;
+        private BlockType ghost;
         private Point3 currentGhostPos;
 
 
@@ -30,16 +33,19 @@ namespace MHGameWork.TheWizards.Building
 
         public void Update()
         {
-            if (ghost == null)
-                return;
+            //if (ghost == null)
+                //return;
 
             currentGhostPos = CalculatePlacePos();
             
-            ghost.WorldMatrix = Matrix.Translation(currentGhostPos+ new Vector3(0.5f,0,0.5f));
+            //ghost.WorldMatrix = Matrix.Translation(currentGhostPos+ new Vector3(0.5f,0,0.5f));
 
 
             if (game.Keyboard.IsKeyPressed(Key.E))
                 PlaceBlock();
+
+            if (game.Keyboard.IsKeyPressed(Key.R))
+                DeleteBlock();
 
         }
 
@@ -126,19 +132,29 @@ namespace MHGameWork.TheWizards.Building
 
         private void PlaceBlock()
         {
-            var block = blockFactory.CreateBlock(ghost.Mesh, currentGhostPos);
+            if (ghost == null) return;
+            var block = blockFactory.CreateBlock(ghost, currentGhostPos);
             blockFactory.AddBlock(block);
         }
 
-        public void SetMesh(IMesh mesh)
-        {
-            if (ghost != null && ghost.Mesh == mesh) return;
-            if (ghost != null)
-                ghost.Delete();
-            ghost = null;
 
-            if (mesh != null)
-                ghost = renderer.CreateMeshElement(mesh);
+        private void DeleteBlock()
+        {
+            Block rayBlock;
+            Vector3 intersectPoint;
+            CalculateClosestBlockIntersection(out rayBlock, out intersectPoint);
+
+            if (blockFactory.BlockList.Contains(rayBlock))
+            {
+                rayBlock.DeleteFromRenderer();
+                blockFactory.BlockList.Remove(rayBlock);
+            }
+        }
+
+
+        public void SetBlockType(BlockType type)
+        {
+            ghost = type;
         }
 
 

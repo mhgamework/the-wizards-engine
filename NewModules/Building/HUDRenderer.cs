@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.Building
                 rotationLoop += 0.01f;
             else rotationLoop = 0;
 
-            Matrix projectionMatrix = Matrix.Scaling(new Vector3(0.3f, 0.3f, 0.3f))
+            Matrix projectionMatrix = Matrix.Translation(MathHelper.Up * -0.5f)* Matrix.Scaling(new Vector3(0.3f, 0.3f, 0.3f))
                                         * Matrix.RotationZ(rotationLoop * 1.1f + 45) * Matrix.RotationX(2) * Matrix.RotationY(rotationLoop)
                                         * Matrix.Scaling(new Vector3(3 / 4f, 1, 1))
                                         * Matrix.Translation(new Vector3(0.6f, -0.6f, 0.6f));
@@ -42,15 +42,17 @@ namespace MHGameWork.TheWizards.Building
 
         }
 
-        public void SetMesh(IMesh mesh)
+        public void SetBlockType(BlockType type)
         {
-            if (meshElement != null && meshElement.Mesh == mesh) return;
-            if (meshElement != null)
-                meshElement.Delete();
-            meshElement = null;
+            if (type != null && meshElement != null)
+            {
+                if (meshElement.Mesh == type.mesh) return;
+            }
+            if(meshElement != null) meshElement.Delete();
 
-            if (mesh != null)
-                meshElement = renderer.CreateMeshElement(mesh);
+            meshElement = null;
+            if (type != null)
+                meshElement = renderer.CreateMeshElement(type.mesh);
         }
     }
 }
