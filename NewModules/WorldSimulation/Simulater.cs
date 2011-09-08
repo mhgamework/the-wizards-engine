@@ -13,7 +13,8 @@ namespace MHGameWork.TheWizards.WorldSimulation
         private List<Creature> creatures = new List<Creature>();
         private readonly List<Resource> resources;
         private readonly List<Building> buildings;
-        private int persistance=12;
+        private int persistance = 12;
+        private List<Creature> newCreatures = new List<Creature>();
 
         public Simulater(List<Creature> creatures, List<Resource> resources)
         {
@@ -21,7 +22,7 @@ namespace MHGameWork.TheWizards.WorldSimulation
             this.resources = resources;
             this.buildings = new List<Building>();
         }
-        public Simulater(List<Creature> creatures, List<Resource> resources,List<Building> buildings)
+        public Simulater(List<Creature> creatures, List<Resource> resources, List<Building> buildings)
         {
             this.creatures = creatures;
             this.resources = resources;
@@ -46,12 +47,12 @@ namespace MHGameWork.TheWizards.WorldSimulation
                 var currentItem = creature.Behaviour.Priorities.Find(o => o.Priority == creature.CurrentPriority);
                 if (currentItem != null)
                 {
-                    
+
                     currentItem.Level += persistance;
                 }
 
                 creature.Behaviour.Priorities.Sort((a, b) => (int)(b.Level * 100 - a.Level * 100));// mind accuracy
-            
+
                 //var highest = creature.Behaviour.Priorities[0];
 
                 //if (highest.Level - currentItem.Level < 10)
@@ -64,15 +65,20 @@ namespace MHGameWork.TheWizards.WorldSimulation
                 for (int j = 0; j < creature.Behaviour.PriorityCount(); j++)
                 {
                     var priority = creature.Behaviour.Priorities[j];
-
-                    creature.CurrentAction = priority.Priority.GetNextAction(creature, this);
+                    IAction act=priority.Priority.GetNextAction(creature, this);
+                if (act != null)
+                {
+                    if(creature.CurrentAction!=null)
+                    if (creature.CurrentAction.GetType() != act.GetType())
+                        creature.CurrentAction.ForcedEnd();
+                    creature.CurrentAction = act;
                     creature.CurrentPriority = priority.Priority;
-                    if (creature.CurrentAction != null) break;
+                    break;}
+                    
+                    
                 }
 
-                if(creature.CurrentAction == null)
-                {int k=0;}
-
+               
             }
         }
         private void UpdateActions(float elapsed)
@@ -82,7 +88,8 @@ namespace MHGameWork.TheWizards.WorldSimulation
                 creatures[i].CurrentAction.Apply(elapsed, creatures[i]);
                 if (creatures[i].CurrentAction.Fullfilled())
                 {
-                    creatures[i].CurrentAction.End(); creatures[i].CurrentAction = null; }
+                    creatures[i].CurrentAction.End(); creatures[i].CurrentAction = null;
+                }
             }
         }
         public void updateResources(float elapsed)
@@ -99,6 +106,7 @@ namespace MHGameWork.TheWizards.WorldSimulation
             UpdateActions(elapsed);
             updateResources(elapsed);
             RemoveDeath();
+            AddNewBorn();
         }
 
         private void RemoveDeath()
@@ -118,17 +126,29 @@ namespace MHGameWork.TheWizards.WorldSimulation
                 }
             }
         }
-
+        private void AddNewBorn()
+        {
+            for (int i = 0; i < newCreatures.Count; i++)
+            {
+                creatures.Add(newCreatures[i]);
+            }
+            newCreatures = new List<Creature>();//note not sure if the other get's deleted
+        }
         public void AddBuilding(Building building)
         {
             Buildings.Add(building);
         }
-        
+
 
         public List<Building> Buildings
         {
             get { return buildings; }
         }
 
-   
+
+        public void AddCreature(Creature baby)
+        {
+            newCreatures.Add(baby);
+        }
+    }
 }

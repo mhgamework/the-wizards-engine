@@ -57,5 +57,10 @@ namespace MHGameWork.TheWizards.WorldSimulation.Actions
                 return true;
             return false;
         }
+
+       public void ForcedEnd()
+       {
+           //not nececary here
+       }
     }
 }

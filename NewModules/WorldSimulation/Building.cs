@@ -12,6 +12,8 @@ namespace MHGameWork.TheWizards.WorldSimulation
        public Vector3 Position;
        public float Size;
        public Creature Creature;
+       public bool Home=false;
+
        public Building(Vector3 position,Creature creature,BuildingBluePrints print)
        {
            Position = position;

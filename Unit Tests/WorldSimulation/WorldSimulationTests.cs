@@ -106,10 +106,10 @@ namespace MHGameWork.TheWizards.Tests.WorldSimulation
             print.Requirements.Add(ResourceTypes.Wood, 50f);
             print.RequirementTypes.Add(ResourceTypes.Wood);
             print.Size = 4;
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 6; i++)
             {
                 var res = new Resource();
-                res.Position = seeder.NextVector3(new Vector3(-200, 0, -200).xna(), new Vector3(200, 0, 200).xna()).dx();
+                res.Position = seeder.NextVector3(new Vector3(0, 0, 0).xna(), new Vector3(100, 0, 100).xna()).dx();
                 if (i % 2 == 0)
                     res.Type = ResourceTypes.Wood;
                 else
@@ -119,11 +119,11 @@ namespace MHGameWork.TheWizards.Tests.WorldSimulation
 
             }
             List<Creature> creatures = new List<Creature>();
-            for (int i = 0; i <20; i++)
+            for (int i = 0; i <2; i++)
             {
                 var creature = new Creature(i);
                 creature.Behaviour = new GoblinBehavior(creature, print);
-                creature.Position = seeder.NextVector3(new Vector3(-200, 0, -200).xna(), new Vector3(200, 0, 200).xna()).dx();
+                creature.Position = seeder.NextVector3(new Vector3(0, 0, 0).xna(), new Vector3(100, 0, 100).xna()).dx();
                 //creature.SetProperty(Housing.housingLocation, null);
                 creatures.Add(creature);
 

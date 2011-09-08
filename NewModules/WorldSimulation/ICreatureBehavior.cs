@@ -15,8 +15,8 @@ namespace MHGameWork.TheWizards.WorldSimulation
         int PriorityCount();
         IPriority GetHighestPriority { get; }
         void UpdatePriorities(float elapsed);
-        
-        
+        ICreatureBehavior GetNewBehavior(Creature creature);
+
 
 
 

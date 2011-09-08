@@ -14,6 +14,7 @@ namespace MHGameWork.TheWizards.WorldSimulation
         void Apply(float elapsed, Creature creature);
         void End();
         bool Fullfilled();
-     
+
+        void ForcedEnd();
     }
 }

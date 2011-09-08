@@ -10,16 +10,21 @@ namespace MHGameWork.TheWizards.WorldSimulation
     public class GoblinBehavior:ICreatureBehavior,IBellyFillable
     {
         private readonly Creature creature;
+        private readonly BuildingBluePrints blueprint;
+
         private List<IPriority> priorities = new List<IPriority>();
         private List<PriorityItem> items = new List<PriorityItem>();
         private PriorityItem hungerP =new PriorityItem();
         private PriorityItem exploreP= new PriorityItem();
         private PriorityItem deathP = new PriorityItem();
         private PriorityItem housingP = new PriorityItem();
+        private PriorityItem ReProductionP = new PriorityItem();
         public GoblinBehavior(Creature creature,BuildingBluePrints blueprint)
         {
             this.creature = creature;
+            this.blueprint = blueprint;
             creature.SetProperty(Explore.TimeExploredProperty, 0);
+            creature.SetProperty(ReProduction.TimeSinceLastFornication, 0);
             FoodLevel = 80;
             hungerP.Priority = new FillBelly(this);
             items.Add(hungerP);
@@ -29,6 +34,8 @@ namespace MHGameWork.TheWizards.WorldSimulation
             items.Add(deathP);
             housingP.Priority = new Housing(blueprint);
             items.Add(housingP);
+            ReProductionP.Priority = new ReProduction();
+            items.Add(ReProductionP);
         }
       
         
@@ -64,8 +71,8 @@ namespace MHGameWork.TheWizards.WorldSimulation
         {
             //update priority variables
             FoodLevel -= elapsed;
-            creature.SetProperty(Explore.TimeExploredProperty, creature.GetProperty(Explore.TimeExploredProperty) - elapsed); 
-
+            creature.SetProperty(Explore.TimeExploredProperty, creature.GetProperty(Explore.TimeExploredProperty) - elapsed);
+            creature.SetProperty(ReProduction.TimeSinceLastFornication, creature.GetProperty(ReProduction.TimeSinceLastFornication) + elapsed);
             // update priorities
             //FillBelly
             hungerP.Level = 100-FoodLevel;
@@ -76,12 +83,29 @@ namespace MHGameWork.TheWizards.WorldSimulation
             if (FoodLevel < 0)
                 deathP.Level = 5000; 
             //Housing
-            housingP.Level = 35 + FoodLevel;
+            housingP.Level = 35 + FoodLevel-creature.Buildings.Count*40;
+
+            //ReProduction
+            if (creature.GetProperty(ReProduction.TimeSinceLastFornication) < 5)//note: 20 pregnacy time sort of
+            {
+                ReProductionP.Level = 0;
+            }
+            else
+            {
+                ReProductionP.Level = -55 + FoodLevel*0.5f + creature.Buildings.Count*40 +creature.GetProperty(ReProduction.TimeSinceLastFornication);
+            }
             //hightestPriority = items[0].Priority;
             //creature.CurrentPriority = items[0].Priority;
         }
-       
+
+        public ICreatureBehavior GetNewBehavior(Creature creature)
+        {
+           return  new GoblinBehavior(creature, blueprint);// note: not sure about this cheat
+        }
+
 
         public float FoodLevel { get; set; }
+
+
     }
 }

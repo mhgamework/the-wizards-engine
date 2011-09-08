@@ -75,6 +75,11 @@ namespace MHGameWork.TheWizards.WorldSimulation
             return false;
         }
 
+        public void ForcedEnd()
+        {
+            // not needed
+        }
+
         public bool isValid()
         {
             if (moveTo == null)

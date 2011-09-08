@@ -60,7 +60,9 @@ namespace MHGameWork.TheWizards.WorldSimulation.Actions
 
        public void End()
        {
-           sim.AddBuilding(new Building(house.HousingLocation, creature, buildingBluePrints));
+           var building = new Building(house.HousingLocation, creature, buildingBluePrints);
+           creature.Buildings.Add(building);
+           sim.AddBuilding(building);
            house.HousingLocation = new Vector3(12.3f, 45.6f, 78.9f);
        }
 
@@ -70,6 +72,12 @@ namespace MHGameWork.TheWizards.WorldSimulation.Actions
                return true;
            return false;
        }
+
+       public void ForcedEnd()
+       {
+           //throw new NotImplementedException();
+       }
+
        public bool isValid()
        {
            return resourceCheck;

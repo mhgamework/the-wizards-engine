@@ -19,18 +19,27 @@ namespace MHGameWork.TheWizards.WorldSimulation
         public Seeder Seeder;
         
         public bool Alive=true;
-        private Dictionary<object, object> propertyMap = new Dictionary<object, object>();
+        private List<Building> buildings = new List<Building>();//note: not sure if this is the correct place to put this
         private Dictionary<ResourceTypes, float> resources = new Dictionary<ResourceTypes, float>();
+
+        public List<Building> Buildings
+        {
+            get { return buildings; }
+        }
+
         public float GetResource(ResourceTypes type)
         {
             if (!resources.ContainsKey(type)) return 0;
             return resources[type];
         }
-        public void SetResource(ResourceTypes type,float value)
+        public void SetResource(ResourceTypes type, float value)
         {
-            
+
             resources[type] = value;
         }
+        
+        private Dictionary<object, object> propertyMap = new Dictionary<object, object>();
+        
         public T GetProperty<T>(CreatureProperty<T> p)
         {
             return (T)propertyMap[p];

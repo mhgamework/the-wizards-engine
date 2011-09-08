@@ -47,6 +47,12 @@ namespace MHGameWork.TheWizards.WorldSimulation
             return false;
         }
 
+        public void ForcedEnd()
+        {
+            belly.FoodLevel = MathHelper.Lerp(foodlevelStart, foodlevelEnd, totalElapsed / neededTime);
+            //note: fix return the not needed food to the resource here
+        }
+
         public bool isValid()
         {
             if (neededTime < 0.001f)

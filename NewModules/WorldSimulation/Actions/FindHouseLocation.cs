@@ -27,5 +27,10 @@ namespace MHGameWork.TheWizards.WorldSimulation.Actions
        {
            throw new NotImplementedException();
        }
+
+       public void ForcedEnd()
+       {
+           //not nececary
+       }
     }
 }

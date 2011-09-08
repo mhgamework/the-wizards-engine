@@ -364,6 +364,8 @@
     <Compile Include="Versioning\IStreamProvider.cs" />
     <Compile Include="Versioning\Revision.cs" />
     <Compile Include="Versioning\VersioningSystem.cs" />
+    <Compile Include="WorldSimulation\Actions\AtHome.cs" />
+    <Compile Include="WorldSimulation\Actions\Breed.cs" />
     <Compile Include="WorldSimulation\Actions\BuildingBluePrints.cs" />
     <Compile Include="WorldSimulation\Actions\Construct.cs" />
     <Compile Include="WorldSimulation\Actions\Die.cs" />
