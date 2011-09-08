@@ -44,6 +44,7 @@ namespace MHGameWork.TheWizards.Building
 
         public void SetMesh(IMesh mesh)
         {
+            if (meshElement != null && meshElement.Mesh == mesh) return;
             if (meshElement != null)
                 meshElement.Delete();
             meshElement = null;

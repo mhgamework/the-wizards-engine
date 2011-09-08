@@ -85,14 +85,17 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
     float specularLight = g.SpecularIntensity * pow( saturate(dot(reflectionVector, directionToCamera)), power);
 
 	int iSplit;
-	int iFilterSize = 7;
+	int iFilterSize = 2;
 
 	float shadowTerm = 1;
 
 #ifndef DISABLE_SHADOWS
 	shadowTerm = CalculateCSMShadowTerm(vPositionVS, iSplit, iFilterSize);
+	//return float4(GetSplitColor(iSplit),1);
 #endif
 		
+		
+
 	// Big booboo: when dot(reflectionVector, directionToCamera) <0, specularLight seems to become negative infinity?
 	if (specularLight< 0) specularLight = 0; 
     //output the two lights

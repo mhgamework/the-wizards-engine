@@ -132,6 +132,7 @@ namespace MHGameWork.TheWizards.Building
 
         public void SetMesh(IMesh mesh)
         {
+            if (ghost != null && ghost.Mesh == mesh) return;
             if (ghost != null)
                 ghost.Delete();
             ghost = null;

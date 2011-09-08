@@ -379,8 +379,24 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                     Performance.BeginEvent(new Color4(System.Drawing.Color.Red), "DMesh-Depth");
 
 
+                    var box = context.MapSubresource(perObjectBuffer, 0, 64, MapMode.WriteDiscard,
+                                           MapFlags.None);
+                    box.Data.Write(new PerObjectCB
+                    {
+                        WorldMatrix = Matrix.Transpose(world * part.ObjectMatrix)
+                    });
 
-                    baseShader.Effect.GetVariableByName("World").AsMatrix().SetMatrix(world * part.ObjectMatrix);
+                    context.UnmapSubresource(perObjectBuffer, 0);
+
+                    context.InputAssembler.SetIndexBuffer(part.IndexBuffer, SlimDX.DXGI.Format.R32_UInt, 0); //Using int indexbuffers
+                    context.InputAssembler.SetVertexBuffers(0,
+                                                            new VertexBufferBinding(part.VertexBuffer,
+                                                                                    DeferredMeshVertex.SizeInBytes, 0));
+
+                    context.DrawIndexed(part.PrimitiveCount * 3, 0, 0);
+                    drawCalls++;
+
+                    /*baseShader.Effect.GetVariableByName("World").AsMatrix().SetMatrix(world * part.ObjectMatrix);
                     baseShader.Apply();
 
 
@@ -390,7 +406,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                                                                     DeferredMeshVertex.SizeInBytes, 0));
 
                     context.DrawIndexed(part.PrimitiveCount * 3, 0, 0);
-                    drawCalls++;
+                    drawCalls++;*/
 
                     Performance.EndEvent();
 

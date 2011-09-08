@@ -12,16 +12,16 @@ SamplerState samPoint
     AddressU = Wrap;
     AddressV = Wrap;
 };
-static const float BIAS = 0.0004f; // 0.006
+static const float BIAS = 0.001f; // 0.006
 
 
 // Calculates the shadow occlusion using bilinear PCF
-float CalcShadowTermPCF(float fLightDepth, float2 vShadowTexCoord)
+float CalcShadowTermPCF(float fLightDepth, float2 vShadowTexCoord, float bias)
 {
 
 
-	float bias = -0.005 * fLightDepth; // Not sure this does anything
-	bias = -BIAS;
+	//float bias = -0.05 *(1-fLightDepth) ; // Not sure this does anything
+	//bias = -BIAS;
 
 	float fShadowTerm = 0.0f;
 
@@ -115,19 +115,22 @@ float CalculateCSMShadowTerm(float4 vPositionVS, out int iCurrentSplit, uniform 
 	float4x4 matViewToLightViewProj = mul(g_matInvView, matLightViewProj);
 	float4 vPositionLightCS = mul(vPositionVS, matViewToLightViewProj);
 	//return vPositionLightCS;
-	float fLightDepth = vPositionLightCS.z / vPositionLightCS.w;	
+	float fLightDepth = vPositionLightCS.z / vPositionLightCS.w;
+	
 	
 	// Transform from light space to shadow map texture space.
     float2 vShadowTexCoord = 0.5 * vPositionLightCS.xy / vPositionLightCS.w + float2(0.5f, 0.5f);
     vShadowTexCoord.x = vShadowTexCoord.x / NUM_SPLITS + fOffset;
     vShadowTexCoord.y = 1.0f - vShadowTexCoord.y;
-        
+        float bias = 0.0002f* vPositionVS.z+0.0003f;
+		bias = 0.0003f*(1-vPositionVS.z);
 	// Get the shadow occlusion factor and output it
 	float fShadowTerm = 0;
 	if (iFilterSize == 2)
-		fShadowTerm = CalcShadowTermPCF(fLightDepth, vShadowTexCoord);
+		fShadowTerm = CalcShadowTermPCF(fLightDepth, vShadowTexCoord,-bias);
 	else
 		fShadowTerm = CalcShadowTermSoftPCF(fLightDepth, vShadowTexCoord, iFilterSize);
+
 
 	return fShadowTerm;
 }
