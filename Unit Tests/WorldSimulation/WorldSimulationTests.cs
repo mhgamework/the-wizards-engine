@@ -104,26 +104,31 @@ namespace MHGameWork.TheWizards.Tests.WorldSimulation
             BuildingBluePrints print = new BuildingBluePrints();
             print.ConstructionTime = 7;
             print.Requirements.Add(ResourceTypes.Wood, 50f);
+            print.Requirements.Add(ResourceTypes.Stone, 50f);
             print.RequirementTypes.Add(ResourceTypes.Wood);
+            print.RequirementTypes.Add(ResourceTypes.Stone);
             print.Size = 4;
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 15; i++)
             {
                 var res = new Resource();
-                res.Position = seeder.NextVector3(new Vector3(0, 0, 0).xna(), new Vector3(100, 0, 100).xna()).dx();
-                if (i % 2 == 0)
+                res.Position = seeder.NextVector3(new Vector3(0, 0, 0).xna(), new Vector3(200, 0, 200).xna()).dx();
+                if (i % 3 == 0)
                     res.Type = ResourceTypes.Wood;
                 else
-                    res.Type = ResourceTypes.Food;
+                    if (i % 3 == 1)
+                        res.Type = ResourceTypes.Food;
+                    else
+                        res.Type = ResourceTypes.Stone;
                 res.Radius = 1;
                 resources.Add(res);
 
             }
             List<Creature> creatures = new List<Creature>();
-            for (int i = 0; i <2; i++)
+            for (int i = 0; i <4; i++)
             {
-                var creature = new Creature(i);
+                var creature = new Creature(i*20);
                 creature.Behaviour = new GoblinBehavior(creature, print);
-                creature.Position = seeder.NextVector3(new Vector3(0, 0, 0).xna(), new Vector3(100, 0, 100).xna()).dx();
+                creature.Position = seeder.NextVector3(new Vector3(0, 0, 0).xna(), new Vector3(200, 0, 200).xna()).dx();
                 //creature.SetProperty(Housing.housingLocation, null);
                 creatures.Add(creature);
 
@@ -146,6 +151,17 @@ namespace MHGameWork.TheWizards.Tests.WorldSimulation
                     sim.Update(game.Elapsed);
                     sim.Update(game.Elapsed);
                 }
+                if(game.Keyboard.IsKeyDown(Key.NumberPad8))
+                {
+                    sim.Update(game.Elapsed);
+                    sim.Update(game.Elapsed);
+                    sim.Update(game.Elapsed);
+                    sim.Update(game.Elapsed);
+                    sim.Update(game.Elapsed);
+                    sim.Update(game.Elapsed);
+                    sim.Update(game.Elapsed);
+                    sim.Update(game.Elapsed);
+                }
 
 
 
@@ -155,9 +171,25 @@ namespace MHGameWork.TheWizards.Tests.WorldSimulation
                 ///////////// Visualisation///////////////
                 for (int i = 0; i < resources.Count; i++)
                 {
-                    game.LineManager3D.AddCenteredBox(resources[i].Position,
+                    switch (resources[i].Type)
+                    {
+                        case ResourceTypes.Food:
+                            game.LineManager3D.AddCenteredBox(resources[i].Position,
                                                       resources[i].ResourceLevel * 0.005f,
                                                       new SlimDX.Color4(1, 0, 0));
+                            break;
+                        case ResourceTypes.Wood:
+                            game.LineManager3D.AddCenteredBox(resources[i].Position,
+                                                      resources[i].ResourceLevel * 0.005f,
+                                                      new SlimDX.Color4(0.2f, 0.1f, 0));
+                            break;
+                        case ResourceTypes.Stone:
+                            game.LineManager3D.AddCenteredBox(resources[i].Position,
+                                                      resources[i].ResourceLevel * 0.005f,
+                                                      new SlimDX.Color4(0.4f, 0.4f, 0.4f));
+                            break;
+                    }
+                   
                 }
                 for (int i = 0; i < buildings.Count; i++)
                 {
@@ -172,7 +204,7 @@ namespace MHGameWork.TheWizards.Tests.WorldSimulation
                                                       new SlimDX.Color4(0, 1, 0));
                 }
                 if (creatures[0] != null)
-                    game.AddToWindowTitle("FoodLevel: " + ((IBellyFillable)creatures[0].Behaviour).FoodLevel + creatures[0].Behaviour.Priorities[0].Priority.ToString() + ": " + creatures[0].Behaviour.Priorities[0].Level + creatures[0].Behaviour.Priorities[0].Priority.ToString() + ": " + creatures[0].Behaviour.Priorities[1].Level);
+                    game.AddToWindowTitle("#creatures: "+creatures.Count);//"FoodLevel: " + ((IBellyFillable)creatures[0].Behaviour).FoodLevel + creatures[0].Behaviour.Priorities[0].Priority.ToString() + ": " + creatures[0].Behaviour.Priorities[0].Level + creatures[0].Behaviour.Priorities[0].Priority.ToString() + ": " + creatures[0].Behaviour.Priorities[1].Level);
 
             };
             game.Run();

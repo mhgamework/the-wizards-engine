@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.WorldSimulation.Priorities
             if ((creature.CurrentAction is MoveToResource || creature.CurrentAction is Construct || creature.CurrentAction is MoveToPosition||creature.CurrentAction is FindHouseLocation) && creature.CurrentPriority == this)
                 return creature.CurrentAction;
             if (HousingLocation == new Vector3(12.3f, 45.6f, 78.9f))
-                HousingLocation =creature.Seeder.NextVector3(new Vector3(-200, 0, -200).xna(), new Vector3(200, 0, 200).xna()).dx();
+                HousingLocation =creature.Seeder.NextVector3(new Vector3(0, 0, 0).xna(), new Vector3(200, 0, 200).xna()).dx();//note arrea position
             for (int i = 0; i < buildingBluePrints.RequirementTypes.Count; i++)
             {
                 var requirementType = buildingBluePrints.RequirementTypes[i];

@@ -24,6 +24,10 @@ namespace MHGameWork.TheWizards.WorldSimulation.Actions
                      creature.Seeder.NextInt(0, 5)));
             baby.Behaviour = creature.Behaviour.GetNewBehavior(baby);
             baby.Position = creature.Position;
+            ((IBellyFillable)baby.Behaviour).FoodLevel = ((IBellyFillable)creature.Behaviour).FoodLevel * 0.5f +
+                                                ((IBellyFillable)build.Creature.Behaviour).FoodLevel * 0.5f;
+            ((IBellyFillable)creature.Behaviour).FoodLevel *= 0.5f;
+            ((IBellyFillable)build.Creature.Behaviour).FoodLevel *= 0.5f;
             creature.SetProperty(ReProduction.TimeSinceLastFornication, 0);
             build.Creature.SetProperty(ReProduction.TimeSinceLastFornication, 0);
         }

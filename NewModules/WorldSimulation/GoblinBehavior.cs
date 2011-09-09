@@ -92,7 +92,7 @@ namespace MHGameWork.TheWizards.WorldSimulation
             }
             else
             {
-                ReProductionP.Level = -55 + FoodLevel*0.5f + creature.Buildings.Count*40 +creature.GetProperty(ReProduction.TimeSinceLastFornication);
+                ReProductionP.Level = -55 + FoodLevel + creature.Buildings.Count*40 +creature.GetProperty(ReProduction.TimeSinceLastFornication)*0.5f;
             }
             //hightestPriority = items[0].Priority;
             //creature.CurrentPriority = items[0].Priority;

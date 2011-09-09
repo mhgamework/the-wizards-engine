@@ -4,6 +4,7 @@
     {
             None = 0,
             Food,
-            Wood
+            Wood,
+        Stone
     }
 }

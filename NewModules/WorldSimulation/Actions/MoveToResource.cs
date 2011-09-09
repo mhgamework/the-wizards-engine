@@ -31,14 +31,14 @@ namespace MHGameWork.TheWizards.WorldSimulation
            Resource value=null;
             for (int i = 0; i < resources.Count; i++)
             {
-                if(resources[i].Type==type)
+                if (resources[i].Type == type && resources[i].ResourceLevel > resourceTreshold)
                     if (value == null)
                     {
                         value = resources[i];
                     }
                     else
                     {
-                        if ((value.Position - position).LengthSquared() > (resources[i].Position - position).LengthSquared()&&resources[i].ResourceLevel>resourceTreshold)
+                        if ((value.Position - position).LengthSquared() > (resources[i].Position - position).LengthSquared())
                         {
                             value =resources[i];
                         }

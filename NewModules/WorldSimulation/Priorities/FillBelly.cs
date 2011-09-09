@@ -30,14 +30,14 @@ namespace MHGameWork.TheWizards.WorldSimulation
             for (int i = 0; i < simulater.Resources.Count; i++)
             {
                 if (simulater.Resources[i].Type == ResourceTypes.Food)
-                    if (simulater.Resources[i].IsInvinicity(creature.Position) && simulater.Resources[i].ResourceLevel > 0)
+                    if (simulater.Resources[i].IsInvinicity(creature.Position) && simulater.Resources[i].ResourceLevel > 1)//note: needed resources forthem to move
                     {
                         return new Eat(creature, 100, 10, belly, simulater.Resources[i]);
                        
                     }
             }
 
-            var mtrAct = new MoveToResource(ResourceTypes.Food, creature, simulater.Resources, 10f,5);
+           var mtrAct = new MoveToResource(ResourceTypes.Food, creature, simulater.Resources, 10f,10f);
             if (!mtrAct.isValid())
               return null;//note velocity used
             return mtrAct;
