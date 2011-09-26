@@ -227,6 +227,8 @@
     <Compile Include="Particles\SimpleParticleCreater.cs" />
     <Compile Include="Particles\SparkelParticleCreater.cs" />
     <Compile Include="Rendering\DiskRenderingAssetFactory.cs" />
+    <Compile Include="Scripting\ScriptLoader.cs" />
+    <Compile Include="Scripting\ScriptWrapper.cs" />
     <Compile Include="Rendering\MeshLoader.cs" />
     <Compile Include="Terrain\Geomipmap\HeightmapNormalCalculator.cs" />
     <Compile Include="Rendering\SimpleMeshFactory.cs" />

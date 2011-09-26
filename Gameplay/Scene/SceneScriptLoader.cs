@@ -17,12 +17,6 @@ namespace MHGameWork.TheWizards.Scene
 {
     public class SceneScriptLoader : IXNAObject
     {
-        private FileSystemWatcher watcher;
-        private readonly Scene scene;
-        private List<Script> scripts = new List<Script>();
-        private ConcurrentQueue<Script> reloadQueue = new ConcurrentQueue<Script>();
-        private Queue<string> recompileQueue = new Queue<string>();
-
         public SceneScriptLoader(Scene scene)
         {
             this.scene = scene;
@@ -45,45 +39,19 @@ namespace MHGameWork.TheWizards.Scene
             t.Start();
         }
 
-        void watcher_Changed(object sender, FileSystemEventArgs e)
+        public void Initialize(IXNAGame _game)
         {
-
-            lock (recompileQueue)
-            {
-                recompileQueue.Enqueue(e.FullPath);
-                Monitor.Pulse(recompileQueue);
-            }
+        }
+        public void Render(IXNAGame _game)
+        {
+        }
+        public void Update(IXNAGame _game)
+        {
+            Script s;
+            while (reloadQueue.TryDequeue(out s))
+                reloadScriptCode(s);
 
         }
-
-        private void reloadScriptCode(Script s)
-        {
-
-
-            for (int i = 0; i < s.Handles.Count; i++)
-            {
-                var handle = s.Handles[i];
-
-                // Destory old script
-                scene.ExecuteInScriptScope(handle, handle.Script.Destroy);
-                handle.Entity.DestroyEntityHandle(handle);
-
-
-                // Load new script
-                var instance = CreateScriptInstance(s);
-
-
-                var newhandle = handle.Entity.CreateEntityHandle(instance);
-                scene.ExecuteInScriptScope(newhandle, () => instance.Init(newhandle));
-                s.Handles[i] = newhandle;
-
-            }
-
-
-
-
-        }
-
 
         public void LoadScript(Entity entity, FileInfo scriptFile)
         {
@@ -99,6 +67,18 @@ namespace MHGameWork.TheWizards.Scene
 
             s.Handles.Add(handle);
         }
+
+
+
+
+        private FileSystemWatcher watcher;
+        private readonly Scene scene;
+        private List<Script> scripts = new List<Script>();
+        private ConcurrentQueue<Script> reloadQueue = new ConcurrentQueue<Script>();
+        private Queue<string> recompileQueue = new Queue<string>();
+
+       
+
 
         /// <summary>
         /// Thread Safe
@@ -181,19 +161,45 @@ namespace MHGameWork.TheWizards.Scene
 
         }
 
-        public void Initialize(IXNAGame _game)
+        void watcher_Changed(object sender, FileSystemEventArgs e)
         {
-        }
-        public void Render(IXNAGame _game)
-        {
-        }
-        public void Update(IXNAGame _game)
-        {
-            Script s;
-            while (reloadQueue.TryDequeue(out s))
-                reloadScriptCode(s);
+
+            lock (recompileQueue)
+            {
+                recompileQueue.Enqueue(e.FullPath);
+                Monitor.Pulse(recompileQueue);
+            }
 
         }
+
+        private void reloadScriptCode(Script s)
+        {
+
+
+            for (int i = 0; i < s.Handles.Count; i++)
+            {
+                var handle = s.Handles[i];
+
+                // Destory old script
+                scene.ExecuteInScriptScope(handle, handle.Script.Destroy);
+                handle.Entity.DestroyEntityHandle(handle);
+
+
+                // Load new script
+                var instance = CreateScriptInstance(s);
+
+
+                var newhandle = handle.Entity.CreateEntityHandle(instance);
+                scene.ExecuteInScriptScope(newhandle, () => instance.Init(newhandle));
+                s.Handles[i] = newhandle;
+
+            }
+
+
+
+
+        }
+
 
         void recompileJob()
         {
@@ -217,5 +223,7 @@ namespace MHGameWork.TheWizards.Scene
                 }
             }
         }
+
+
     }
 }

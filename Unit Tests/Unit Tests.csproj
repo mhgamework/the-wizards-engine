@@ -186,6 +186,8 @@
     <Compile Include="Scripting\ScriptingTest.cs" />
     <Compile Include="Scripting\SimpleScriptDatabinding.cs" />
     <Compile Include="Scripting\SimpleStateScript.cs" />
+    <Compile Include="Scripting\TestScriptImplementation.cs" />
+    <Compile Include="Scripting\TestScriptWrapper.cs" />
     <Compile Include="Server\LauncherServerTest.cs" />
     <Compile Include="Showcase.cs" />
     <Compile Include="Terrain\SimpleTerrain.cs" />
