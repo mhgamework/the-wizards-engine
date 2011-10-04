@@ -674,7 +674,7 @@ namespace TreeGenerator.ImposterRing
         {
             Vector3 radius = new Vector3(2048 * 5, 4000, 2048 * 5);
             //Vector3 radius = new Vector3(256, 4000, 256);
-            FrustumCullerSimple culler = new FrustumCullerSimple(new BoundingBox(-radius, radius), 4);
+            FrustumCullerSimple culler = new FrustumCullerSimple(new BoundingBox(-radius, radius).dx(), 4);
 
 
             XNAGame game;
@@ -883,7 +883,7 @@ namespace TreeGenerator.ImposterRing
             public void StartDelayedRendering(IXNAGame _game, ICamera camera)
             {
                 game = _game;
-                culler.CullCamera = camera;
+                //culler.CullCamera = camera;
                 culler.UpdateVisibility();
                 index = -1;
             }

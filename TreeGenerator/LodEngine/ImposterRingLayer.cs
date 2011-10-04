@@ -27,7 +27,7 @@ namespace TreeGenerator.LodEngine
        public void initialize(XNAGame game, BoundingBox CullerBoundingBox, int numberOfSplits)
        {
            this.game = game;
-            culler = new FrustumCullerSimple(CullerBoundingBox, numberOfSplits);
+            //culler = new FrustumCullerSimple(CullerBoundingBox, numberOfSplits);
            renderer = new SimpleRenderer(game, culler);
            ring.initialize(game);
            renderProvider = new RenderablesDelayedRenderProvider(rendrables, culler);
@@ -170,7 +170,7 @@ namespace TreeGenerator.LodEngine
        public void StartDelayedRendering(IXNAGame _game, ICamera camera)
        {
            game = _game;
-           culler.CullCamera = camera;
+           //culler.CullCamera = camera;
            culler.UpdateVisibility();
            index = -1;
        }

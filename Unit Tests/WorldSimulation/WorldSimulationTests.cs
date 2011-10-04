@@ -204,7 +204,7 @@ namespace MHGameWork.TheWizards.Tests.WorldSimulation
                                                       new SlimDX.Color4(0, 1, 0));
                 }
                 if (creatures[0] != null)
-                    game.AddToWindowTitle("#creatures: "+creatures.Count);//"FoodLevel: " + ((IBellyFillable)creatures[0].Behaviour).FoodLevel + creatures[0].Behaviour.Priorities[0].Priority.ToString() + ": " + creatures[0].Behaviour.Priorities[0].Level + creatures[0].Behaviour.Priorities[0].Priority.ToString() + ": " + creatures[0].Behaviour.Priorities[1].Level);
+                    game.AddToWindowTitle("#creatures: "+creatures.Count + " FoodLevel: " + ((IBellyFillable)creatures[0].Behaviour).FoodLevel + creatures[0].Behaviour.Priorities[0].Priority.ToString() + ": " + creatures[0].Behaviour.Priorities[0].Level + creatures[0].Behaviour.Priorities[0].Priority.ToString() + ": " + creatures[0].Behaviour.Priorities[1].Level);
 
             };
             game.Run();
