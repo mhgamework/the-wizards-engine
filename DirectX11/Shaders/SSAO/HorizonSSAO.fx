@@ -473,6 +473,7 @@ float4 HORIZON_BASED_AO_PS( uniform bool useNormal, uniform int qualityMode, Pos
         //}
         break;
     }
+	//return 0;
 	//return ao;
     return ao / g_NumDir * g_Contrast; // Was inverted (1-x)
 }

@@ -339,6 +339,8 @@
     <Compile Include="SlimDXConversion\BoundingFrustum.cs" />
     <Compile Include="SlimDXConversion\MathHelper.cs" />
     <Compile Include="TWDir.cs" />
+    <Compile Include="Utilities\EventList.cs" />
+    <Compile Include="Utilities\PrefilledList.cs" />
     <Compile Include="Utilities\TestRunner.cs" />
     <Compile Include="Utilities\TestRunnerForm.cs">
       <SubType>Form</SubType>
