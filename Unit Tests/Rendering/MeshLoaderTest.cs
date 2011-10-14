@@ -15,6 +15,8 @@ namespace MHGameWork.TheWizards.Tests.Rendering
         {
             var mesh = MeshLoader.LoadMeshFromObj(new System.IO.FileInfo(TestFiles.BarrelObj));
 
+
+
         }
     }
 }

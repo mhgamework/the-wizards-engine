@@ -90,5 +90,18 @@ namespace MHGameWork.TheWizards.World
             Removed = 3
 
         }
+
+
+
+
+
+        // Helper methods (?)
+        public Entity CreateNewEntity()
+        {
+            var ent = new Entity(this);
+            Entities.Add(ent);
+            return ent;
+        }
+
     }
 }

@@ -45,14 +45,15 @@ namespace MHGameWork.TheWizards.Rendering
         {
             var importer = new ObjImporter(); //TODO: Garbage Collector fancyness
 
-            var materialFilePath = objFile.FullName.Substring(0, objFile.FullName.Length - objFile.Extension.Length - 1);
+            var materialFilePath = objFile.FullName.Substring(0, objFile.FullName.Length - objFile.Extension.Length) + ".mtl";
+            var materialFileName = objFile.Name.Substring(0, objFile.Name.Length - objFile.Extension.Length) + ".mtl";
             FileStream materialFileStream = null;
             try
             {
                 if (File.Exists(materialFilePath))
                 {
                     materialFileStream = File.Open(materialFilePath, FileMode.Open, FileAccess.Read);
-                    importer.AddMaterialFileStream(materialFilePath, materialFileStream);
+                    importer.AddMaterialFileStream(materialFileName, materialFileStream);
                 }
                 importer.ImportObjFile(objFile.FullName);
                 return instance.converter.CreateMesh(importer);

@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.Tests
     public class WorldTest
     {
         public static string BarrelObj { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\Barrel01.obj"; } }
-        public static string BarrelMtl { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\Barrel01.mtl"; } }
+        //public static string BarrelMtl { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\Barrel01.mtl"; } }
 
         [Test]
         public void TestWorldRenderer()
