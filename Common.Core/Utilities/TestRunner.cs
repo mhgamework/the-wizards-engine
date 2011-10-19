@@ -294,6 +294,9 @@ namespace MHGameWork.TheWizards.Utilities
         private Exception runTestMethod(MethodInfo method)
         {
             var appDomain = AppDomain.CreateDomain("TestRunnerNew");
+            var assembly = appDomain.Load(new AssemblyName(TestsAssembly.FullName));
+
+
             var type = method.DeclaringType;
 
             var obj = new CallbackObject();
@@ -308,7 +311,6 @@ namespace MHGameWork.TheWizards.Utilities
             {
                 obj.RunAutomated = data.RunAutomated;
                 obj.DebugMode = !data.RunAutomated; // setting
-
                 saveState();//save state incase of crash
             }
 
@@ -743,6 +745,7 @@ namespace MHGameWork.TheWizards.Utilities
                 }
 
                 var type = Type.GetType(TypeFullQualifiedName);
+                if (type == null) throw new Exception("Test type not found in the new appdomain!");
                 var test = Activator.CreateInstance(type);
 
                 var method = type.GetMethod(MethodName);

@@ -18,6 +18,10 @@ namespace MHGameWork.TheWizards.Utilities
             this.createItemDelegate = createItemDelegate;
 
             list = new T[10];
+            for (int i = 0; i < list.Length; i++)
+            {
+                list[i] = createItemDelegate();
+            }
 
         }
         private void expandList()

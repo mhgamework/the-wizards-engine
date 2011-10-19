@@ -96,10 +96,15 @@ namespace MHGameWork.TheWizards.World
 
 
         // Helper methods (?)
-        public Entity CreateNewEntity()
+        public Entity CreateNewEntity(IMesh mesh, Matrix worldMatrix)
         {
             var ent = new Entity(this);
+
             Entities.Add(ent);
+
+            ent.Mesh = mesh;
+            ent.WorldMatrix = worldMatrix;
+
             return ent;
         }
 
