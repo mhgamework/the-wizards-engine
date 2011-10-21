@@ -46,13 +46,13 @@ namespace MHGameWork.TheWizards.Building
         {
             if (type != null && meshElement != null)
             {
-                if (meshElement.Mesh == type.mesh) return;
+                if (meshElement.Mesh == type.Mesh) return;
             }
             if(meshElement != null) meshElement.Delete();
 
             meshElement = null;
             if (type != null)
-                meshElement = renderer.CreateMeshElement(type.mesh);
+                meshElement = renderer.CreateMeshElement(type.Mesh);
         }
     }
 }

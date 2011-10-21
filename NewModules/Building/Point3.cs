@@ -21,6 +21,13 @@ namespace MHGameWork.TheWizards.Building
             Z = z;
         }
 
+        public Point3(Vector3 v)
+        {
+            X = (int)Math.Floor(v.X);
+            Y = (int)Math.Floor(v.Y);
+            Z = (int)Math.Floor(v.Z);
+        }
+
         public Vector3 ToVector3()
         {
             return new Vector3(X,Y,Z);

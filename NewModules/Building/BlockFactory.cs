@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Rendering.Deferred;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.Building
 {
@@ -39,7 +40,15 @@ namespace MHGameWork.TheWizards.Building
             return block;
         }
 
-       
 
+        public bool hasBlockAtPosition(Point3 pos)
+        {
+            for(int i =0; i<BlockList.Count;i++)
+            {
+                if (BlockList[i].Position == pos) return true;
+            }
+
+            return false;
+        }
     }
 }

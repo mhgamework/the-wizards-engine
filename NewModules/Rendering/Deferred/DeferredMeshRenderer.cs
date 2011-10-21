@@ -343,7 +343,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                            MapFlags.None);
                     box.Data.Write(new PerObjectCB
                                        {
-                                           WorldMatrix = Matrix.Transpose(world * part.ObjectMatrix)
+                                           WorldMatrix = Matrix.Transpose(part.ObjectMatrix * world)
                                        });
 
                     context.UnmapSubresource(perObjectBuffer, 0);
@@ -383,7 +383,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                            MapFlags.None);
                     box.Data.Write(new PerObjectCB
                     {
-                        WorldMatrix = Matrix.Transpose(world * part.ObjectMatrix)
+                        WorldMatrix = Matrix.Transpose(part.ObjectMatrix * world)
                     });
 
                     context.UnmapSubresource(perObjectBuffer, 0);

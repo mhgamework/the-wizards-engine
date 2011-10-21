@@ -14,7 +14,7 @@ namespace MHGameWork.TheWizards.Building
     public class Block
     {
         private readonly DeferredRenderer renderer;
-        private readonly BlockType type;
+        private BlockType type;
         private DeferredMeshRenderElement meshEl;
         public Point3 Position { get; private set; }
 
@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.Building
             this.renderer = renderer;
             this.type = type;
             Position = position;
-            meshEl = renderer.CreateMeshElement(type.mesh);
+            meshEl = renderer.CreateMeshElement(type.Mesh);
             meshEl.WorldMatrix = Matrix.Translation(position+ new Vector3(0.5f,0,0.5f));
             
         }
@@ -31,6 +31,14 @@ namespace MHGameWork.TheWizards.Building
         public void DeleteFromRenderer()
         {
             meshEl.Delete();
+        }
+
+        public void ChangeTypeTo(BlockType type)
+        {
+            meshEl.Delete();
+            this.type = type;
+            meshEl = renderer.CreateMeshElement(type.Mesh);
+            meshEl.WorldMatrix = type.Transformation * Matrix.Translation(Position + new Vector3(0.5f, 0, 0.5f));
         }
     }
 }

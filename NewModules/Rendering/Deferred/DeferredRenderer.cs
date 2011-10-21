@@ -154,7 +154,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             drawLights();
 
-            updateSSAO();
+            //updateSSAO();
 
             drawHdrImage();
 

@@ -18,16 +18,18 @@ namespace MHGameWork.TheWizards.Building
         private readonly DX11Game game;
         private DeferredRenderer renderer;
         private BlockFactory blockFactory;
+        private readonly BlockPlaceLogic blockPlaceLogic;
 
         private BlockType ghost;
         private Point3 currentGhostPos;
 
 
-        public PlaceTool(DX11Game game, DeferredRenderer renderer, BlockFactory blockFactory)
+        public PlaceTool(DX11Game game, DeferredRenderer renderer, BlockFactory blockFactory, BlockPlaceLogic blockPlaceLogic)
         {
             this.game = game;
             this.renderer = renderer;
             this.blockFactory = blockFactory;
+            this.blockPlaceLogic = blockPlaceLogic;
         }
 
 
@@ -135,6 +137,7 @@ namespace MHGameWork.TheWizards.Building
             if (ghost == null) return;
             var block = blockFactory.CreateBlock(ghost, currentGhostPos);
             blockFactory.AddBlock(block);
+            blockPlaceLogic.CalulateBlocks();
         }
 
 
@@ -148,6 +151,7 @@ namespace MHGameWork.TheWizards.Building
             {
                 rayBlock.DeleteFromRenderer();
                 blockFactory.BlockList.Remove(rayBlock);
+                blockPlaceLogic.CalulateBlocks();
             }
         }
 
