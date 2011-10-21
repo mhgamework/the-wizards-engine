@@ -670,164 +670,165 @@ namespace TreeGenerator.ImposterRing
 
       
 
-        public static void UberDuberTestImposterRing()
-        {
-            Vector3 radius = new Vector3(2048 * 5, 4000, 2048 * 5);
-            //Vector3 radius = new Vector3(256, 4000, 256);
-            FrustumCullerSimple culler = new FrustumCullerSimple(new BoundingBox(-radius, radius), 4);
+        //public static void UberDuberTestImposterRing()
+        //{
+        //    Vector3 radius = new Vector3(2048 * 5, 4000, 2048 * 5);
+        //    //Vector3 radius = new Vector3(256, 4000, 256);
+        //    throw new NotImplementedException();
+        //    //FrustumCullerSimple culler = new FrustumCullerSimple(new BoundingBox(-radius, radius), 4);
 
 
-            XNAGame game;
-            game = new XNAGame();
-            game.DrawFps = true;
-            game.IsFixedTimeStep = false;
-            game.SpectaterCamera.NearClip = 1f;
-            game.SpectaterCamera.FarClip = 20000;
+        //    XNAGame game;
+        //    game = new XNAGame();
+        //    game.DrawFps = true;
+        //    game.IsFixedTimeStep = false;
+        //    game.SpectaterCamera.NearClip = 1f;
+        //    game.SpectaterCamera.FarClip = 20000;
 
 
-            var renderer = new SimpleRenderer(game, culler);
+        //    //var renderer = new SimpleRenderer(game, culler);
 
 
-            List<ISimpleRenderable> renderables = new List<ISimpleRenderable>();
+        //    List<ISimpleRenderable> renderables = new List<ISimpleRenderable>();
 
 
-            Seeder seeder = new Seeder(1);
-            SimplePlaneMesh plane = renderer.CreatePlaneMesh();
-            plane.WorldMatrix = Matrix.Identity;
-            plane.Width = 20000;
-            plane.Height = 20000;
-            renderer.UpdateRenderable(plane);
-            renderables.Add(plane);
+        //    Seeder seeder = new Seeder(1);
+        //    SimplePlaneMesh plane = renderer.CreatePlaneMesh();
+        //    plane.WorldMatrix = Matrix.Identity;
+        //    plane.Width = 20000;
+        //    plane.Height = 20000;
+        //    renderer.UpdateRenderable(plane);
+        //    renderables.Add(plane);
 
-            for (int i = 0; i < 500; i++)
-            {
-                Vector3 pos;
-                pos.X = seeder.NextFloat(-9000, 9000);
-                pos.Y = seeder.NextFloat(0, 3);
-                pos.Z = seeder.NextFloat(-9000, 9000);
+        //    for (int i = 0; i < 500; i++)
+        //    {
+        //        Vector3 pos;
+        //        pos.X = seeder.NextFloat(-9000, 9000);
+        //        pos.Y = seeder.NextFloat(0, 3);
+        //        pos.Z = seeder.NextFloat(-9000, 9000);
 
-                float iRadius = seeder.NextFloat(100, 300);
-                //pos.Y += iRadius * 0.5f;
+        //        float iRadius = seeder.NextFloat(100, 300);
+        //        //pos.Y += iRadius * 0.5f;
 
-                if (seeder.NextInt(0, 2) == 0)
-                {
-                    SimpleBoxMesh mesh = renderer.CreateBoxMesh();
-                    mesh.WorldMatrix = Matrix.CreateTranslation(pos);
-                    mesh.Dimensions = Vector3.One * iRadius;
-                    mesh.Color = seeder.NextColor();
-                    renderer.UpdateRenderable(mesh);
-                    renderables.Add(mesh);
-                }
-                else
-                {
-                    SimpleSphereMesh mesh = renderer.CreateSphereMesh();
-                    mesh.WorldMatrix = Matrix.CreateTranslation(pos);
-                    mesh.Color = seeder.NextColor();
-                    mesh.Radius = iRadius;
-                    renderer.UpdateRenderable(mesh);
-                    renderables.Add(mesh);
+        //        if (seeder.NextInt(0, 2) == 0)
+        //        {
+        //            SimpleBoxMesh mesh = renderer.CreateBoxMesh();
+        //            mesh.WorldMatrix = Matrix.CreateTranslation(pos);
+        //            mesh.Dimensions = Vector3.One * iRadius;
+        //            mesh.Color = seeder.NextColor();
+        //            renderer.UpdateRenderable(mesh);
+        //            renderables.Add(mesh);
+        //        }
+        //        else
+        //        {
+        //            SimpleSphereMesh mesh = renderer.CreateSphereMesh();
+        //            mesh.WorldMatrix = Matrix.CreateTranslation(pos);
+        //            mesh.Color = seeder.NextColor();
+        //            mesh.Radius = iRadius;
+        //            renderer.UpdateRenderable(mesh);
+        //            renderables.Add(mesh);
 
-                }
+        //        }
 
-            }
+        //    }
 
-            RenderablesDelayedRenderProvider renderProvider = new RenderablesDelayedRenderProvider(renderables, culler);
-            ImposterRing ring = new ImposterRing();
+        //    RenderablesDelayedRenderProvider renderProvider = new RenderablesDelayedRenderProvider(renderables, culler);
+        //    ImposterRing ring = new ImposterRing();
 
-            bool drawTextures = false;
+        //    bool drawTextures = false;
 
-            game.Graphics1.PreparingDeviceSettings +=
-                delegate(object sender, PreparingDeviceSettingsEventArgs e)
-                    {
-                        // This prevents bazooka style clearing of SetRenderTarget command (causing the depthbuffer to malfunction)
-                        /*e.GraphicsDeviceInformation.PresentationParameters.RenderTargetUsage =
-                            RenderTargetUsage.PreserveContents;*/
+        //    game.Graphics1.PreparingDeviceSettings +=
+        //        delegate(object sender, PreparingDeviceSettingsEventArgs e)
+        //            {
+        //                // This prevents bazooka style clearing of SetRenderTarget command (causing the depthbuffer to malfunction)
+        //                /*e.GraphicsDeviceInformation.PresentationParameters.RenderTargetUsage =
+        //                    RenderTargetUsage.PreserveContents;*/
                         
-                    };
+        //            };
 
-            game.InitializeEvent +=
-                delegate
-                {
-                    renderer.Initialize(game);
-                    ring.initialize(game);
-                    ring.renderProvider = renderProvider;
-                };
-            bool renderMesh = false;
-            game.UpdateEvent +=
-                delegate
-                {
-                    ring.Update();
+        //    game.InitializeEvent +=
+        //        delegate
+        //        {
+        //            renderer.Initialize(game);
+        //            ring.initialize(game);
+        //            ring.renderProvider = renderProvider;
+        //        };
+        //    bool renderMesh = false;
+        //    game.UpdateEvent +=
+        //        delegate
+        //        {
+        //            ring.Update();
 
-                    if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.T))
-                        drawTextures = !drawTextures;
+        //            if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.T))
+        //                drawTextures = !drawTextures;
 
-                    if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.U))
-                    {
-                        ring.needsUpdate = true;
-                    }
-                    if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.M))
-                    {
-                        if (renderMesh)
-                        {
-                            renderMesh = false;
-                        }
-                        else
-                        {
-                            renderMesh = true;
-                        }
+        //            if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.U))
+        //            {
+        //                ring.needsUpdate = true;
+        //            }
+        //            if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.M))
+        //            {
+        //                if (renderMesh)
+        //                {
+        //                    renderMesh = false;
+        //                }
+        //                else
+        //                {
+        //                    renderMesh = true;
+        //                }
 
-                    }
-                };
-            game.DrawEvent +=
-                delegate
-                {
-                    for (int i = 0; i < 8; i++)
-                    {
-                        ICamera cam = ring.createImposterCamera(i);
-                        game.LineManager3D.AddViewFrustum(new BoundingFrustum(cam.ViewProjection), Color.Red);
-                    }
-
-
-                    game.GraphicsDevice.RenderState.CullMode = CullMode.None;
-                    if (!game.Keyboard.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.G))
-                        ring.Render();
-                    renderables[0].Render();
-
-                    game.GraphicsDevice.RenderState.CullMode = CullMode.CullCounterClockwiseFace;
-                    game.GraphicsDevice.RenderState.DepthBufferEnable = true;
-                    if (renderMesh)
-                    {
-                        float distSqMax = ring.radius * ring.radius;
-                        float distSq;
-                        //game.GraphicsDevice.RenderState.DepthBufferEnable = false;
-                        for (int i = 0; i < renderables.Count; i++)
-                        {
-                            /*distSq = (((renderables[i].BoundingBox.Max - renderables[i].BoundingBox.Min) * 0.5f) - game.SpectaterCamera.CameraPosition).LengthSquared();
-                            if (distSq <= distSqMax)*/
-                            renderables[i].Render();
+        //            }
+        //        };
+        //    game.DrawEvent +=
+        //        delegate
+        //        {
+        //            for (int i = 0; i < 8; i++)
+        //            {
+        //                ICamera cam = ring.createImposterCamera(i);
+        //                game.LineManager3D.AddViewFrustum(new BoundingFrustum(cam.ViewProjection), Color.Red);
+        //            }
 
 
-                        }
-                        for (int i = 0; i < ring.triangleCount; i++)
-                        {
-                            game.LineManager3D.AddTriangle(ring.MeshVertices[i].Position, ring.MeshVertices[i + 1].Position, ring.MeshVertices[i + 2].Position, Color.Black);
-                        }
-                    }
+        //            game.GraphicsDevice.RenderState.CullMode = CullMode.None;
+        //            if (!game.Keyboard.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.G))
+        //                ring.Render();
+        //            renderables[0].Render();
 
-                    game.SpriteBatch.Begin();
-                    for (int i = 0; i < 6; i++)
-                    {
-                        if (ring.textures[i] == null) continue;
-                        game.SpriteBatch.Draw(ring.textures[i], new Rectangle(10 + 110 * i, 10, 100, 100), Color.White);
+        //            game.GraphicsDevice.RenderState.CullMode = CullMode.CullCounterClockwiseFace;
+        //            game.GraphicsDevice.RenderState.DepthBufferEnable = true;
+        //            if (renderMesh)
+        //            {
+        //                float distSqMax = ring.radius * ring.radius;
+        //                float distSq;
+        //                //game.GraphicsDevice.RenderState.DepthBufferEnable = false;
+        //                for (int i = 0; i < renderables.Count; i++)
+        //                {
+        //                    /*distSq = (((renderables[i].BoundingBox.Max - renderables[i].BoundingBox.Min) * 0.5f) - game.SpectaterCamera.CameraPosition).LengthSquared();
+        //                    if (distSq <= distSqMax)*/
+        //                    renderables[i].Render();
 
-                    }
-                    game.SpriteBatch.End();
+
+        //                }
+        //                for (int i = 0; i < ring.triangleCount; i++)
+        //                {
+        //                    game.LineManager3D.AddTriangle(ring.MeshVertices[i].Position, ring.MeshVertices[i + 1].Position, ring.MeshVertices[i + 2].Position, Color.Black);
+        //                }
+        //            }
+
+        //            game.SpriteBatch.Begin();
+        //            for (int i = 0; i < 6; i++)
+        //            {
+        //                if (ring.textures[i] == null) continue;
+        //                game.SpriteBatch.Draw(ring.textures[i], new Rectangle(10 + 110 * i, 10, 100, 100), Color.White);
+
+        //            }
+        //            game.SpriteBatch.End();
 
 
 
-                };
-            game.Run();
-        }
+        //        };
+        //    game.Run();
+        //}
 
 
         private class ButterflyDelayedRenderProvider : IDelayedRenderProvider
@@ -883,7 +884,8 @@ namespace TreeGenerator.ImposterRing
             public void StartDelayedRendering(IXNAGame _game, ICamera camera)
             {
                 game = _game;
-                culler.CullCamera = camera;
+                throw new NotImplementedException();
+                //culler.CullCamera = camera;
                 culler.UpdateVisibility();
                 index = -1;
             }

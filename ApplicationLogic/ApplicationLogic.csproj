@@ -73,7 +73,9 @@
     <Reference Include="nunit.framework">
       <HintPath>..\_Libraries\NUnit-2.5.7.10213\bin\net-2.0\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="StillDesign.PhysX.Net, Version=0.11.0.0, Culture=neutral, processorArchitecture=x86" />
+    <Reference Include="StillDesign.PhysX.Net">
+      <HintPath>..\_Libraries\PhysX.Net\References\Debug\XNA 2.0\StillDesign.PhysX.Net.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>

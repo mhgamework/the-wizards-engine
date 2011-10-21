@@ -259,7 +259,7 @@ namespace TreeGenerator
         [Test]
         public  void UberDuberTestImposterRing()
         {
-            ImposterRing.ImposterRing.UberDuberTestImposterRing();
+            //ImposterRing.ImposterRing.UberDuberTestImposterRing();
         }
         [Test]
         public  void TestEditorMeshPartRenderDataSimple2()

@@ -72,20 +72,25 @@
     <Reference Include="DevComponents.DotNetBar2">
       <HintPath>..\_Libraries\DevComponents.DotNetBar2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Data.v10.1">
-      <HintPath>..\..\devxpress\DevExpress.Data.v10.1.dll</HintPath>
+    <Reference Include="DevExpress.Data.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Libraries\DevExpress v10.1\DevExpress.Data.v10.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Utils.v10.1">
-      <HintPath>..\..\devxpress\DevExpress.Utils.v10.1.dll</HintPath>
+    <Reference Include="DevExpress.Utils.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Libraries\DevExpress v10.1\DevExpress.Utils.v10.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraBars.v10.1">
-      <HintPath>..\..\devxpress\DevExpress.XtraBars.v10.1.dll</HintPath>
+    <Reference Include="DevExpress.XtraBars.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Libraries\DevExpress v10.1\DevExpress.XtraBars.v10.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraEditors.v10.1">
-      <HintPath>..\..\devxpress\DevExpress.XtraEditors.v10.1.dll</HintPath>
+    <Reference Include="DevExpress.XtraEditors.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Libraries\DevExpress v10.1\DevExpress.XtraEditors.v10.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraTreeList.v10.1">
-      <HintPath>..\..\devxpress\DevExpress.XtraTreeList.v10.1.dll</HintPath>
+    <Reference Include="DevExpress.XtraTreeList.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Libraries\DevExpress v10.1\DevExpress.XtraTreeList.v10.1.dll</HintPath>
     </Reference>
     <Reference Include="Dotway.WPF.Controls">
       <HintPath>..\_Libraries\Dotway.WPFLibraries\Dotway.WPF\Dotway.WPF.Controls.dll</HintPath>
