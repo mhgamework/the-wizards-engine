@@ -34,7 +34,8 @@ namespace MHGameWork.TheWizards.Utilities
         public T Add()
         {
             if (Count == list.Length) expandList();
-            return list[Count];
+            Count++;
+            return list[Count-1];
 
         }
         public void Clear()

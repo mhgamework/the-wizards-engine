@@ -17,22 +17,6 @@ namespace MHGameWork.TheWizards.World
     {
         public EventList<Entity> Entities { get; private set; }
 
-        /// <summary>
-        /// TODO, move to object factory API
-        /// </summary>
-        /// <param name="mesh"></param>
-        /// <param name="worldMatrix"></param>
-        /// <returns></returns>
-        public Entity CreateNewEntity(IMesh mesh, Matrix worldMatrix)
-        {
-            var ent = new Entity(this);
-            Entities.Add(ent);
-            ent.Mesh = mesh;
-            ent.WorldMatrix = worldMatrix;
-
-            return ent;
-        }
-
         public WorldNoSectors()
         {
             Entities = new EventList<Entity>(delegate(Entity obj)

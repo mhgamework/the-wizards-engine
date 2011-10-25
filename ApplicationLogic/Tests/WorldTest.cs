@@ -32,7 +32,7 @@ namespace MHGameWork.TheWizards.Tests
 
             var mesh = MeshLoader.LoadMeshFromObj(new FileInfo(BarrelObj));
 
-            world.CreateNewEntity(mesh, Matrix.Translation(new Vector3(1, 0, 0)));
+            world.CreateNewEntity(mesh, Matrix.Translation(new Vector3(5, 0, 2)));
             game.GameLoopEvent += delegate
                                   {
                                       worldRenderer.ProcessWorldChanges();
