@@ -84,7 +84,7 @@ namespace MHGameWork.TheWizards.Tests.Building
 
             game.Run();
         }
-        
+
         [Test]
         public void TestPlaceBlock()
         {
@@ -345,7 +345,7 @@ namespace MHGameWork.TheWizards.Tests.Building
 
             game.Run();
         }
-        
+
         [Test]
         public void TestBlockPlaceLogic()
         {
@@ -382,18 +382,18 @@ namespace MHGameWork.TheWizards.Tests.Building
                                          "\\Plane.obj",
                                          TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
                                          "\\Plane.mtl");
-            
+
             var partZh = new MeshCoreData.Part
             {
                 MeshPart = halfWallMesh.GetCoreData().Parts[0].MeshPart,
                 MeshMaterial = halfWallMesh.GetCoreData().Parts[0].MeshMaterial,
-                ObjectMatrix = Matrix.Translation(new Vector3(0,0.5f,0)).xna()
+                ObjectMatrix = Matrix.Translation(new Vector3(0, 0.5f, 0)).xna()
             };
             var partMinZ = new MeshCoreData.Part
                            {
                                MeshPart = halfWallMesh.GetCoreData().Parts[0].MeshPart,
                                MeshMaterial = halfWallMesh.GetCoreData().Parts[0].MeshMaterial,
-                               ObjectMatrix = Matrix.RotationY((float) Math.PI).xna()
+                               ObjectMatrix = Matrix.RotationY((float)Math.PI).xna()
                            };
             var partMinZh = new MeshCoreData.Part
             {
@@ -405,13 +405,13 @@ namespace MHGameWork.TheWizards.Tests.Building
             {
                 MeshPart = halfWallMesh.GetCoreData().Parts[0].MeshPart,
                 MeshMaterial = halfWallMesh.GetCoreData().Parts[0].MeshMaterial,
-                ObjectMatrix = Matrix.RotationY((float)Math.PI *0.5f).xna()
+                ObjectMatrix = Matrix.RotationY((float)Math.PI * 0.5f).xna()
             };
             var partXh = new MeshCoreData.Part
             {
                 MeshPart = halfWallMesh.GetCoreData().Parts[0].MeshPart,
                 MeshMaterial = halfWallMesh.GetCoreData().Parts[0].MeshMaterial,
-                ObjectMatrix = Matrix.RotationY((float)Math.PI *0.5f).xna() * Matrix.Translation(new Vector3(0, 0.5f, 0)).xna()
+                ObjectMatrix = Matrix.RotationY((float)Math.PI * 0.5f).xna() * Matrix.Translation(new Vector3(0, 0.5f, 0)).xna()
             };
             var partMinX = new MeshCoreData.Part
             {
@@ -426,8 +426,8 @@ namespace MHGameWork.TheWizards.Tests.Building
                 ObjectMatrix = Matrix.RotationY((float)Math.PI * -0.5f).xna() * Matrix.Translation(new Vector3(0, 0.5f, 0)).xna()
             };
 
-           
-            Point3[] basicBlockLayoutList = {new Point3(0, 0, 0)};
+
+            Point3[] basicBlockLayoutList = { new Point3(0, 0, 0) };
             var basicBlockLayout = new BlockLayout(basicBlockLayoutList);
 
             var wallStraight = new RAMMesh();
@@ -440,7 +440,7 @@ namespace MHGameWork.TheWizards.Tests.Building
                                             new Point3(1, -1, 0), new Point3(1, 0, 0), new Point3(1, 1, 0),
                                             new Point3(0,0,0) };
             var straightLayout = new BlockLayout(straightLayoutList);
-            
+
             var wallBend = new RAMMesh();
             wallBend.GetCoreData().Parts.Add(halfWallMesh.GetCoreData().Parts[0]);
             wallBend.GetCoreData().Parts.Add(partZh);
@@ -520,10 +520,74 @@ namespace MHGameWork.TheWizards.Tests.Building
             game.Run();
         }
 
-        
+        [Test]
+        public void TestBlockLogicSimple()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+
+            var renderer = new DeferredRenderer(game);
+            var blockFactory = new BlockFactory(renderer);
+            var blockTypeFactory = new BlockTypeFactory();
+            var blockPlaceLogic = new BlockPlaceLogic(blockTypeFactory, blockFactory);
+
+            var meshConverter = new OBJToRAMMeshConverter(new RAMTextureFactory());
+            var planeMesh = CreateMeshFromObj(meshConverter,
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                         "\\Plane.obj",
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                         "\\Plane.mtl");
+
+            loadBasicWalls(meshConverter, blockTypeFactory);
+
+           // var placeTool = new PlaceTool(game, renderer, blockFactory, blockPlaceLogic);
+
+
+            var playerController = new PlayerController(game, blockFactory);
+
+            BlockType activeType = blockTypeFactory.TypeList[0];
+
+
+            DirectionalLight light = renderer.CreateDirectionalLight();
+            light.ShadowsEnabled = true;
+            light.LightDirection = Vector3.Normalize(new Vector3(2, -1, 3));
+
+            var planeEl = renderer.CreateMeshElement(planeMesh);
+            planeEl.WorldMatrix = Matrix.Scaling(new Vector3(100, 100, 100));
+
+            Point3 pos1 = new Point3(0, 0, 0);
+            BlockType blockType1 = blockTypeFactory.TypeList[1];
+            blockFactory.CreateBlock(blockType1, pos1);
+            
+            Point3 pos2 = new Point3(1, 0, 0);
+            BlockType blockType2 = blockTypeFactory.TypeList[2];
+            //blockFactory.CreateBlock(blockType2, pos2);
+
+            blockPlaceLogic.CalulateBlocks();
+
+            /*
+            Point3 pos3 = new Point3(1, 0, 2);
+            BlockType blockType3 = blockTypeFactory.TypeList[3];
+            blockFactory.CreateBlock(blockType3, pos3);
+            */
+            game.GameLoopEvent += delegate
+            {
+                playerController.Update();
+
+                //placeTool.SetBlockType(activeType);
+
+                //placeTool.Update();
+
+                renderer.Draw();
+            };
+
+            game.Run();
+        }
+
+
         private void loadBasicWalls(OBJToRAMMeshConverter meshConverter, BlockTypeFactory blockTypeFactory)
         {
-            
+
             var halfWallMesh = CreateMeshFromObj(meshConverter,
                                          TWDir.GameData.CreateSubdirectory("Core\\Building\\HalfWall").FullName +
                                          "\\HalfWall.obj",
@@ -536,7 +600,7 @@ namespace MHGameWork.TheWizards.Tests.Building
                                         TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
                                         "\\BasicTestBlock.mtl");
 
-            
+
             var partZh = new MeshCoreData.Part
             {
                 MeshPart = halfWallMesh.GetCoreData().Parts[0].MeshPart,
