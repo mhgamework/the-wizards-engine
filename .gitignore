@@ -80,3 +80,5 @@ Thumbs.db
 /bin/nunit.framework.dll
 /bin/Dotway.WPF.Controls.dll
 /bin/nunit.framework.dll/bin/nunit.framework.xml
+
+*.~*
