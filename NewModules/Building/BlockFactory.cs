@@ -36,6 +36,7 @@ namespace MHGameWork.TheWizards.Building
             }
 
             var block = new Block(renderer, type, ghostPos);
+            AddBlock(block);
 
             return block;
         }

@@ -8,9 +8,9 @@ namespace MHGameWork.TheWizards.Building
 {
     public struct BlockLayout
     {
-        public int Layout;
+        public uint Layout;
 
-        public static Dictionary<Point3, int> Masks = new Dictionary<Point3, int>();
+        public static Dictionary<Point3, uint> Masks = new Dictionary<Point3, uint>();
         public static List<Point3> Axes = new List<Point3>();
         static BlockLayout()
         {
@@ -51,7 +51,7 @@ namespace MHGameWork.TheWizards.Building
             
             for (int i = 0; i < axes.Count; i++)
             {
-                Masks.Add(axes[i], 1 << i);
+                Masks.Add(axes[i],(uint)( 1 << i));
             }
     Masks.Add(new Point3(0, 0, 0), 0);
           Axes.Add(new Point3(0, 0, 0));
@@ -68,12 +68,12 @@ namespace MHGameWork.TheWizards.Building
             }
         }
 
-        public BlockLayout(int layout) : this()
+        public BlockLayout(uint layout) : this()
         {
             Layout = layout;
         }
 
-        public static int GetMask(Point3 offset)
+        public static uint GetMask(Point3 offset)
         {
             return Masks[offset];
         }

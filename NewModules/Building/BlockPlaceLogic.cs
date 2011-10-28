@@ -31,49 +31,10 @@ namespace MHGameWork.TheWizards.Building
                 {
                     var currentType = blockTypeFactory.TypeList[j];
                      
-                    if (canHaveAsType(currentBlock, currentType))
-                        currentBlock.ChangeTypeTo(currentType); break;
+                    if (canHaveAsType(currentBlock.Position, currentType))
+                    { currentBlock.ChangeTypeTo(currentType); break;}
                 }
-
-                /*
-                var n = new Point3(currentBlockPos + Vector3.UnitX * -1);
-                var s = new Point3(currentBlockPos + Vector3.UnitX);
-                var e = new Point3(currentBlockPos + Vector3.UnitZ);
-                var w = new Point3(currentBlockPos + Vector3.UnitZ * -1);
-
                 
-
-                if(hasBlock(n))
-                {
-                    currentBlock.ChangeTypeTo(blockTypeFactory.TypeList[0], Matrix.RotationY((float)Math.PI * -0.5f));
-                    
-                    if(hasBlock(w))
-                    {
-                        currentBlock.ChangeTypeTo(blockTypeFactory.TypeList[1], Matrix.RotationY((float)Math.PI * -0.5f));
-
-                        if(hasBlock(s))
-                        {
-                            currentBlock.ChangeTypeTo(blockTypeFactory.TypeList[2], Matrix.RotationY((float)Math.PI * -0.5f));
-
-                            if(hasBlock(e))
-                            {
-                                currentBlock.ChangeTypeTo(blockTypeFactory.TypeList[3], Matrix.RotationY(0));
-                            }
-                        }
-
-                        if(hasBlock(e))
-                        {
-                            currentBlock.ChangeTypeTo(blockTypeFactory.TypeList[2], Matrix.RotationY((float)Math.PI * 0.5f));
-                        }
-                    }
-
-                    if(hasBlock(e))
-                    {
-                        currentBlock.ChangeTypeTo(blockTypeFactory.TypeList[2], Matrix.RotationY((float)Math.PI * 0.5f));
-                        
-                    }
-                }
-                */
             }
         }
 
@@ -82,14 +43,15 @@ namespace MHGameWork.TheWizards.Building
             return blockFactory.hasBlockAtPosition(pos);
         }
 
-        private bool canHaveAsType(Block b, BlockType t)
+        private bool canHaveAsType(Point3 pos, BlockType t)
         {
-            var worldLayout = calculateWorldLayout(b);
+            var worldLayout = calculateWorldLayout(pos);
+
 
             return (~t.Layout.Layout & worldLayout.Layout) == 0;
         }
 
-        private BlockLayout calculateWorldLayout(Block block)
+        private BlockLayout calculateWorldLayout(Point3 pos)
         {
             var coords = new List<Point3>();
 
@@ -114,7 +76,7 @@ namespace MHGameWork.TheWizards.Building
             for (int i = 0; i < coords.Count; i++)
             {
                 var c = coords[i];
-                if (hasBlock(new Point3((block.Position.X + c.X), (block.Position.Y + c.Y), (block.Position.Z + c.Z))))
+                if (hasBlock(new Point3((pos.X + c.X), (pos.Y + c.Y), (pos.Z + c.Z))))
                     ret.Layout |= BlockLayout.GetMask(c);
             }
 

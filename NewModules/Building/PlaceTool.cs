@@ -136,7 +136,7 @@ namespace MHGameWork.TheWizards.Building
         {
             if (ghost == null) return;
             var block = blockFactory.CreateBlock(ghost, currentGhostPos);
-            blockFactory.AddBlock(block);
+           // blockFactory.AddBlock(block); is done by the blockfactory on creating a block
             blockPlaceLogic.CalulateBlocks();
         }
 

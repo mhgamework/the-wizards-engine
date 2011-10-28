@@ -26,23 +26,33 @@ namespace MHGameWork.TheWizards.Tests.Building
         {
             for (int i = 0; i < rotationList.Count; i++)
             {
+                uint k = 0;
                 var currentRotation = rotationList[i];
                 for (int j = 0; j < BlockLayout.Axes.Count; j++)
                 {
-                    var k = 0;
+
                     var axis = BlockLayout.Axes[j];
                     var transformedAxis = Vector3.TransformNormal(axis, currentRotation);
                     var transformedPoint = new Point3((int)Math.Round(transformedAxis.X), (int)Math.Round(transformedAxis.Y), (int)Math.Round(transformedAxis.Z));
-                    k |= BlockLayout.GetMask(axis) & BlockLayout.GetMask(transformedPoint);
+
+                    if ((layout.Layout & BlockLayout.GetMask(axis)) != 0)
+                        k |= BlockLayout.GetMask(transformedPoint);
 
 
-                    var ret = CreateNewBlockType(mesh, new BlockLayout(k));
 
-                    ret.Transformation = currentRotation;
                 }
+                var type = CreateNewBlockType(mesh, new BlockLayout(k));
+
+                type.Transformation = currentRotation;
             }
         }
 
+        /// <summary>
+        /// This is deprecated, for backwards compatibility
+        /// </summary>
+        /// <param name="mesh"></param>
+        /// <param name="layout"></param>
+        /// <returns></returns>
         public BlockType CreateNewBlockType(IMesh mesh, BlockLayout layout)
         {
             var ret = new BlockType(mesh);
