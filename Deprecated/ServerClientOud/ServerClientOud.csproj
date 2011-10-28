@@ -126,16 +126,19 @@
       <HintPath>..\..\_Libraries\DevComponents.DotNetBar2.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Data.v10.1">
-      <HintPath>..\..\..\devxpress\DevExpress.Data.v10.1.dll</HintPath>
+      <HintPath>..\..\_Libraries\DevExpress v10.1\DevExpress.Data.v10.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Utils.v10.1">
-      <HintPath>..\..\..\devxpress\DevExpress.Utils.v10.1.dll</HintPath>
+      <HintPath>..\..\_Libraries\DevExpress v10.1\DevExpress.Utils.v10.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.XtraBars.v10.1">
-      <HintPath>..\..\..\devxpress\DevExpress.XtraBars.v10.1.dll</HintPath>
+      <HintPath>..\..\_Libraries\DevExpress v10.1\DevExpress.XtraBars.v10.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.XtraEditors.v10.1">
-      <HintPath>..\..\..\devxpress\DevExpress.XtraEditors.v10.1.dll</HintPath>
+      <HintPath>..\..\_Libraries\DevExpress v10.1\DevExpress.XtraEditors.v10.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraTreeList.v10.1">
+      <HintPath>..\..\_Libraries\DevExpress v10.1\DevExpress.XtraTreeList.v10.1.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
@@ -248,9 +251,7 @@
     <Compile Include="Test\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Test\Form2.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Test\Form2.cs" />
     <Compile Include="Test\Form2.Designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
