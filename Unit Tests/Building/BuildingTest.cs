@@ -678,6 +678,7 @@ namespace MHGameWork.TheWizards.Tests.Building
             Point3 pos5 = new Point3(2, 0, 1);
             BlockType blockType1 = blockTypeFactory.TypeList[1];
            
+            //testinput
             blockFactory.CreateBlock(blockType1, pos1);
             blockFactory.CreateBlock(blockType1, pos2);
             blockFactory.CreateBlock(blockType1, pos3);
@@ -775,8 +776,9 @@ namespace MHGameWork.TheWizards.Tests.Building
             wallStraight.GetCoreData().Parts.Add(partZh);
             wallStraight.GetCoreData().Parts.Add(partMinZ);
             wallStraight.GetCoreData().Parts.Add(partMinZh);
-            Point3[] straightLayoutList = { new Point3(0, 0, 0),
-                                            new Point3(0, 0, -1), new Point3(0, 0, 0), new Point3(0, 0, 1)};
+            Point3[] straightLayoutList = { new Point3(-1,0,1), new Point3(-1,0,-1),
+                                            new Point3(0, 0, -1), new Point3(0, 0, 0), new Point3(0, 0, 1),
+                                            new Point3(1,0,1), new Point3(1,0,-1)};
 
             var straightLayout = new BlockLayout(straightLayoutList);
 
@@ -785,8 +787,9 @@ namespace MHGameWork.TheWizards.Tests.Building
             wallBend.GetCoreData().Parts.Add(partZh);
             wallBend.GetCoreData().Parts.Add(partX);
             wallBend.GetCoreData().Parts.Add(partXh);
-            Point3[] bendLayoutList = { new Point3(0, 0, 0), 
-                                              new Point3(1, 0, 0), new Point3(0, 0, 0), new Point3(0, 0, 1)};
+            Point3[] bendLayoutList = { new Point3(-1,0,1), new Point3(-1,0,-1), 
+                                        new Point3(0, 0, 1), new Point3(0, 0, 0), 
+                                        new Point3(1, 0, 1), new Point3(1,0,0), new Point3(1,0,-1)};
             var bendLayout = new BlockLayout(bendLayoutList);
 
             var wallT = new RAMMesh();
@@ -796,8 +799,9 @@ namespace MHGameWork.TheWizards.Tests.Building
             wallT.GetCoreData().Parts.Add(partXh);
             wallT.GetCoreData().Parts.Add(partMinZ);
             wallT.GetCoreData().Parts.Add(partMinZh);
-            Point3[] tLayoutList = { new Point3(0, 0, 0), 
-                                              new Point3(1, 0, 0), new Point3(0, 0, 0), new Point3(0, 0, 1), new Point3(0, 0,-1)};
+            Point3[] tLayoutList = { new Point3(-1, 0, 1), new Point3(-1,0,-1), 
+                                     new Point3(0, 0, 1), new Point3(0, 0, 0), new Point3(0, 0, -1), 
+                                     new Point3(1, 0,1), new Point3(1,0,0), new Point3(1,0,-1)};
             var tLayout = new BlockLayout(tLayoutList);
 
             var wallCross = new RAMMesh();
@@ -809,8 +813,9 @@ namespace MHGameWork.TheWizards.Tests.Building
             wallCross.GetCoreData().Parts.Add(partMinZh);
             wallCross.GetCoreData().Parts.Add(partMinX);
             wallCross.GetCoreData().Parts.Add(partMinXh);
-            Point3[] crossLayoutList = { new Point3(0, 0, 0),
-                                              new Point3(1, 0, 0), new Point3(0, 0, 0), new Point3(0, 0, 1), new Point3(0, 0,-1), new Point3(-1, 0, 0)};
+            Point3[] crossLayoutList = { new Point3(-1, 0, 1), new Point3(-1, 0, 0), new Point3(-1, 0, -1), 
+                                         new Point3(0, 0, 1), new Point3(0, 0, 0), new Point3(0, 0, -1), 
+                                         new Point3(1, 0, 1), new Point3(1, 0, 0), new Point3(1, 0, -1)};
             var crossLayout = new BlockLayout(crossLayoutList);
 
 

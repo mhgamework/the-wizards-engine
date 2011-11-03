@@ -42,6 +42,7 @@ namespace MHGameWork.TheWizards.Building
             
             //ghost.WorldMatrix = Matrix.Translation(currentGhostPos+ new Vector3(0.5f,0,0.5f));
 
+            game.LineManager3D. AddCenteredBox(currentGhostPos + new Vector3(0.5f,0.5f,0.5f), 1, new Color4(System.Drawing.Color.Red));
 
             if (game.Keyboard.IsKeyPressed(Key.E))
                 PlaceBlock();
@@ -71,14 +72,14 @@ namespace MHGameWork.TheWizards.Building
                 if (intersects.HasValue)
                 {
                     placePos = ray.Position + intersects.Value * ray.Direction;
-                    game.LineManager3D.AddLine(placePos, placePos + MathHelper.Up, new Color4(0, 0.5f, 0));
+                    //game.LineManager3D.AddLine(placePos, placePos + MathHelper.Up, new Color4(0, 0.5f, 0));
                 }
 
             }
             else
             {
                 var placePoint = intersectPoint - (rayBlock.Position + new Vector3(0.5f, 0.5f, 0.5f));
-                game.LineManager3D.AddCenteredBox(intersectPoint, 0.2f, new Color4(0, 0.5f, 0));
+                //game.LineManager3D.AddCenteredBox(intersectPoint, 0.2f, new Color4(0, 0.5f, 0));
                 var placeDir = getMainAxis( Vector3.Normalize( placePoint));
                 placePos = rayBlock.Position + placeDir;
             }
