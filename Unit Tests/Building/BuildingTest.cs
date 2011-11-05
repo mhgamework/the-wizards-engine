@@ -142,8 +142,7 @@ namespace MHGameWork.TheWizards.Tests.Building
 
             game.Run();
         }
-
-
+        
         [Test]
         public void TestPlayerMovement()
         {
@@ -962,5 +961,303 @@ namespace MHGameWork.TheWizards.Tests.Building
             blockTypeFactory.AddRotatedBlocktypes(wallT, tLayout);
             blockTypeFactory.AddRotatedBlocktypes(wallCross, crossLayout);
         }
+   
+        /// <summary>
+        /// Tests if a DynamicBlock can be created and if its slots can be filled in properly.
+        /// Test succeeds if:
+        /// - a cross is displayed at xyz = 100 with floors
+        /// - a T at xyz = -10-1 (with a missing -z wall) with floors
+        /// - a block with floors and skew walls at xyz = 102
+        /// </summary>
+        [Test]
+        public void TestSetDynamicBlockSlots()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+            var renderer = new DeferredRenderer(game);
+            var meshConverter = new OBJToRAMMeshConverter(new RAMTextureFactory());
+            var planeMesh = CreateMeshFromObj(meshConverter,
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                         "\\Plane.obj",
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                         "\\Plane.mtl");
+            DirectionalLight light = renderer.CreateDirectionalLight();
+            light.ShadowsEnabled = true;
+            light.LightDirection = Vector3.Normalize(new Vector3(2, -1, 3));
+            var planeEl = renderer.CreateMeshElement(planeMesh);
+            planeEl.WorldMatrix = Matrix.Scaling(new Vector3(100, 100, 100)) * Matrix.Translation(new Vector3(0, -0.5f, 0));
+
+            var basicStraight = CreateMeshFromObj(meshConverter,
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicStraight").FullName +
+                                         "\\BasicStraight.obj",
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicStraight").FullName +
+                                         "\\BasicStraight.mtl");
+            var basicPillar = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicPillar").FullName +
+                                        "\\BasicPillar.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicPillar").FullName +
+                                        "\\BasicPillar.mtl");
+            var basicFloor = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicFloor").FullName +
+                                        "\\BasicFloor.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicFloor").FullName +
+                                        "\\BasicFloor.mtl");
+            var basicSkew = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicSkew").FullName +
+                                        "\\BasicSkew.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicSkew").FullName +
+                                        "\\BasicSkew.mtl");
+            
+            var dynBlock1 = new DynamicBlock(new Point3(1, 0, 0), renderer);
+            var dynBlock2 = new DynamicBlock(new Point3(-1, 0, -1), renderer);
+            var dynBlock3 = new DynamicBlock(new Point3(1, 0, 2), renderer);
+
+            var straightUnit = new BuildUnit(basicStraight);
+            var pillarUnit = new BuildUnit(basicPillar);
+            var floorUnit = new BuildUnit(basicFloor);
+            var skewUnit = new BuildUnit(basicSkew);
+            
+            dynBlock1.SetStraight(DynamicBlockDirection.X, 0,straightUnit);
+            dynBlock1.SetStraight(DynamicBlockDirection.X, 1, straightUnit);
+            dynBlock1.SetStraight(DynamicBlockDirection.MinX, 0, straightUnit);
+            dynBlock1.SetStraight(DynamicBlockDirection.MinX, 1, straightUnit);
+            dynBlock1.SetStraight(DynamicBlockDirection.Z, 0, straightUnit);
+            dynBlock1.SetStraight(DynamicBlockDirection.Z, 1, straightUnit);
+            dynBlock1.SetStraight(DynamicBlockDirection.MinZ, 0, straightUnit);
+            dynBlock1.SetStraight(DynamicBlockDirection.MinZ, 1, straightUnit);
+            dynBlock1.SetPillar(pillarUnit);
+            dynBlock1.SetFloor(DynamicBlockDirection.MinXMinZ, 0, floorUnit);
+            dynBlock1.SetFloor(DynamicBlockDirection.MinXMinZ, 1, floorUnit);
+            dynBlock1.SetFloor(DynamicBlockDirection.XMinZ, 0, floorUnit);
+            dynBlock1.SetFloor(DynamicBlockDirection.XMinZ, 1, floorUnit);
+            dynBlock1.SetFloor(DynamicBlockDirection.MinXZ, 0, floorUnit);
+            dynBlock1.SetFloor(DynamicBlockDirection.MinXZ, 1, floorUnit);
+            dynBlock1.SetFloor(DynamicBlockDirection.XZ, 0, floorUnit);
+            dynBlock1.SetFloor(DynamicBlockDirection.XZ, 1, floorUnit);
+
+            dynBlock2.SetStraight(DynamicBlockDirection.X, 0, straightUnit);
+            dynBlock2.SetStraight(DynamicBlockDirection.X, 1, straightUnit);
+            dynBlock2.SetStraight(DynamicBlockDirection.MinX, 0, straightUnit);
+            dynBlock2.SetStraight(DynamicBlockDirection.MinX, 1, straightUnit);
+            dynBlock2.SetStraight(DynamicBlockDirection.Z, 0, straightUnit);
+            dynBlock2.SetStraight(DynamicBlockDirection.Z, 1, straightUnit);
+            dynBlock2.SetPillar(pillarUnit);
+            dynBlock2.SetFloor(DynamicBlockDirection.MinXMinZ, 0, floorUnit);
+            dynBlock2.SetFloor(DynamicBlockDirection.MinXMinZ, 1, floorUnit);
+            dynBlock2.SetFloor(DynamicBlockDirection.XMinZ, 0, floorUnit);
+            dynBlock2.SetFloor(DynamicBlockDirection.XMinZ, 1, floorUnit);
+            dynBlock2.SetFloor(DynamicBlockDirection.MinXZ, 0, floorUnit);
+            dynBlock2.SetFloor(DynamicBlockDirection.MinXZ, 1, floorUnit);
+            dynBlock2.SetFloor(DynamicBlockDirection.XZ, 0, floorUnit);
+            dynBlock2.SetFloor(DynamicBlockDirection.XZ, 1, floorUnit);
+
+            dynBlock3.SetSkew(DynamicBlockDirection.MinXMinZ, 0, skewUnit);
+            dynBlock3.SetSkew(DynamicBlockDirection.MinXMinZ, 1, skewUnit);
+            dynBlock3.SetSkew(DynamicBlockDirection.XZ, 0, skewUnit);
+            dynBlock3.SetSkew(DynamicBlockDirection.XZ, 1, skewUnit);
+            dynBlock3.SetSkew(DynamicBlockDirection.MinXZ, 0, skewUnit);
+            dynBlock3.SetSkew(DynamicBlockDirection.MinXZ, 1, skewUnit);
+            dynBlock3.SetSkew(DynamicBlockDirection.XMinZ, 0, skewUnit);
+            dynBlock3.SetSkew(DynamicBlockDirection.XMinZ, 1, skewUnit);
+            dynBlock3.SetFloor(DynamicBlockDirection.MinXMinZ, 0, floorUnit);
+            dynBlock3.SetFloor(DynamicBlockDirection.MinXMinZ, 1, floorUnit);
+            dynBlock3.SetFloor(DynamicBlockDirection.XMinZ, 0, floorUnit);
+            dynBlock3.SetFloor(DynamicBlockDirection.XMinZ, 1, floorUnit);
+            dynBlock3.SetFloor(DynamicBlockDirection.MinXZ, 0, floorUnit);
+            dynBlock3.SetFloor(DynamicBlockDirection.MinXZ, 1, floorUnit);
+            dynBlock3.SetFloor(DynamicBlockDirection.XZ, 0, floorUnit);
+            dynBlock3.SetFloor(DynamicBlockDirection.XZ, 1, floorUnit);
+            
+            game.GameLoopEvent += delegate
+            {
+                game.SpectaterCamera.CameraPosition =
+                                             new SlimDX.Vector3(game.SpectaterCamera.CameraPosition.X, 2,
+                                                                game.SpectaterCamera.CameraPosition.Z);
+                renderer.Draw();
+            };
+
+            game.Run();
+        }
+        
+        /// <summary>
+        /// Tests if straight walls can be placed.
+        /// Test succeeded if:
+        /// - only a pillar is visible at xyz = 001
+        /// - a series of connencted walls is visible near the x-axis
+        /// - some walls are correctly removed when 'R' is pressed
+        /// - the same walls are added again removed when 'E' is pressed
+        /// </summary>
+        [Test]
+        public void TestPlaceStraightWallsDynamic()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+            var renderer = new DeferredRenderer(game);
+            var meshConverter = new OBJToRAMMeshConverter(new RAMTextureFactory());
+            var planeMesh = CreateMeshFromObj(meshConverter,
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                         "\\Plane.obj",
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                         "\\Plane.mtl");
+            DirectionalLight light = renderer.CreateDirectionalLight();
+            light.ShadowsEnabled = true;
+            light.LightDirection = Vector3.Normalize(new Vector3(2, -1, 3));
+            var planeEl = renderer.CreateMeshElement(planeMesh);
+            planeEl.WorldMatrix = Matrix.Scaling(new Vector3(100, 100, 100)) * Matrix.Translation(new Vector3(0, -0.5f, 0));
+
+            var basicStraightMesh = CreateMeshFromObj(meshConverter,
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicStraight").FullName +
+                                         "\\BasicStraight.obj",
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicStraight").FullName +
+                                         "\\BasicStraight.mtl");
+            var basicPillarMesh = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicPillar").FullName +
+                                        "\\BasicPillar.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicPillar").FullName +
+                                        "\\BasicPillar.mtl");
+
+            var basicStraight = new BuildUnit(basicStraightMesh);
+            var basicPillar = new BuildUnit(basicPillarMesh);
+            var straightWallType1 = new WallType();
+
+            straightWallType1.StraightUnit = basicStraight;
+            straightWallType1.PillarUnit = basicPillar;
+
+            var dynBlockFactory = new DynamicBlockFactory(renderer);
+            var resolver = new DynamicBlockResolver(dynBlockFactory);
+            var wallPlacer = new StraightWallPlacer(dynBlockFactory, resolver);
+
+            wallPlacer.PlaceStraightWall(new Point3(1, 0, 0), straightWallType1);
+            wallPlacer.PlaceStraightWall(new Point3(2, 0, 0), straightWallType1);
+            wallPlacer.PlaceStraightWall(new Point3(2, 0, -1), straightWallType1);
+            wallPlacer.PlaceStraightWall(new Point3(3, 0, -1), straightWallType1);
+            wallPlacer.PlaceStraightWall(new Point3(3, 0, 0), straightWallType1);
+            wallPlacer.PlaceStraightWall(new Point3(0, 0, 1), straightWallType1);
+
+            
+
+            game.GameLoopEvent += delegate
+            {
+                game.SpectaterCamera.CameraPosition =
+                                             new SlimDX.Vector3(game.SpectaterCamera.CameraPosition.X, 2,
+                                                                game.SpectaterCamera.CameraPosition.Z);
+                if(game.Keyboard.IsKeyPressed(Key.R))
+                    wallPlacer.RemoveStraightWall(new Point3(3, 0, 0));
+                if (game.Keyboard.IsKeyPressed(Key.E))
+                    wallPlacer.PlaceStraightWall(new Point3(3, 0, 0), straightWallType1);
+
+                renderer.Draw();
+            };
+
+            game.Run();
+        }
+
+        [Test]
+        public void TestPlaceSkewWallsDynamic()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+            var renderer = new DeferredRenderer(game);
+            var meshConverter = new OBJToRAMMeshConverter(new RAMTextureFactory());
+            var planeMesh = CreateMeshFromObj(meshConverter,
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                         "\\Plane.obj",
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                         "\\Plane.mtl");
+            DirectionalLight light = renderer.CreateDirectionalLight();
+            light.ShadowsEnabled = true;
+            light.LightDirection = Vector3.Normalize(new Vector3(2, -1, 3));
+            var planeEl = renderer.CreateMeshElement(planeMesh);
+            planeEl.WorldMatrix = Matrix.Scaling(new Vector3(100, 100, 100)) * Matrix.Translation(new Vector3(0, -0.5f, 0));
+
+            var basicStraightMesh = CreateMeshFromObj(meshConverter,
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicStraight").FullName +
+                                         "\\BasicStraight.obj",
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicStraight").FullName +
+                                         "\\BasicStraight.mtl");
+            var basicPillarMesh = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicPillar").FullName +
+                                        "\\BasicPillar.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicPillar").FullName +
+                                        "\\BasicPillar.mtl");
+            var basicSkewMesh = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicSkew").FullName +
+                                        "\\BasicSkew.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicSkew").FullName +
+                                        "\\BasicSkew.mtl");
+
+            var basicStraight = new BuildUnit(basicStraightMesh);
+            var basicPillar = new BuildUnit(basicPillarMesh);
+            var basicSkew = new BuildUnit(basicSkewMesh);
+
+            var wallType = new WallType();
+            wallType.StraightUnit = basicStraight;
+            wallType.PillarUnit = basicPillar;
+            wallType.SkewUnit = basicSkew;
+
+            var dynBlockFactory = new DynamicBlockFactory(renderer);
+            var resolver = new DynamicBlockResolver(dynBlockFactory);
+
+            var straightWallPlacer = new StraightWallPlacer(dynBlockFactory, resolver);
+            var skewWallPlacer = new SkewWallPlacer(dynBlockFactory, resolver);
+
+            straightWallPlacer.PlaceStraightWall(new Point3(1, 0, 0), wallType);
+
+            
+            straightWallPlacer.PlaceStraightWall(new Point3(5, 0, 1), wallType);
+            straightWallPlacer.PlaceStraightWall(new Point3(6, 0, 2), wallType);
+            straightWallPlacer.PlaceStraightWall(new Point3(7, 0, 3), wallType);
+            straightWallPlacer.PlaceStraightWall(new Point3(6, 0, 4), wallType);
+            straightWallPlacer.PlaceStraightWall(new Point3(5, 0, 3), wallType);
+            straightWallPlacer.PlaceStraightWall(new Point3(5, 0, 5), wallType);
+            straightWallPlacer.PlaceStraightWall(new Point3(6, 0, 5), wallType);
+            straightWallPlacer.PlaceStraightWall(new Point3(4, 0, 4), wallType);
+            straightWallPlacer.PlaceStraightWall(new Point3(3, 0, 4), wallType);
+            
+            
+            skewWallPlacer.PlaceSkewWall(new Point3(6, 0, 1), wallType);
+            skewWallPlacer.PlaceSkewWall(new Point3(7, 0, 2), wallType);
+            skewWallPlacer.PlaceSkewWall(new Point3(7, 0, 4), wallType);
+            skewWallPlacer.PlaceSkewWall(new Point3(5, 0, 4), wallType);
+            skewWallPlacer.PlaceSkewWall(new Point3(2, 0, 4), wallType);
+            skewWallPlacer.PlaceSkewWall(new Point3(2, 0, 5), wallType);
+            
+
+            game.GameLoopEvent += delegate
+            {
+                game.SpectaterCamera.CameraPosition =
+                                             new SlimDX.Vector3(game.SpectaterCamera.CameraPosition.X, 2,
+                                                                game.SpectaterCamera.CameraPosition.Z);
+
+                if (game.Keyboard.IsKeyPressed(Key.R))
+                {
+                    straightWallPlacer.RemoveStraightWall(new Point3(6, 0, 2));
+                    straightWallPlacer.RemoveStraightWall(new Point3(5, 0, 3));
+                    straightWallPlacer.RemoveStraightWall(new Point3(6, 0, 5));
+                    skewWallPlacer.RemoveSkewWall(new Point3(7, 0, 2));
+                    skewWallPlacer.RemoveSkewWall(new Point3(5, 0, 4));
+                }
+                if (game.Keyboard.IsKeyPressed(Key.E))
+                {
+                    straightWallPlacer.PlaceStraightWall(new Point3(6, 0, 2), wallType);
+                    straightWallPlacer.PlaceStraightWall(new Point3(5, 0, 3), wallType);
+                    straightWallPlacer.PlaceStraightWall(new Point3(6, 0, 5), wallType);
+                    skewWallPlacer.PlaceSkewWall(new Point3(7, 0, 2), wallType);
+                    skewWallPlacer.PlaceSkewWall(new Point3(5, 0, 4), wallType);
+                }
+
+                renderer.Draw();
+            };
+
+            game.Run();
+        }
+
+        [Test]
+        public void TestPlaceFloorsDynamic()
+        {
+            
+        }
+
+
     }
 }

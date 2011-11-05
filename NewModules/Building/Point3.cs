@@ -56,6 +56,19 @@ namespace MHGameWork.TheWizards.Building
         {
             return string.Format("X: {0},Y: {1},Z: {2}", X, Y, Z);
         }
+
+        public static Point3 UnitX()
+        {
+            return new Point3(1, 0, 0);
+        }
+        public static Point3 UnitY()
+        {
+            return new Point3(0, 1, 0);
+        }
+        public static Point3 UnitZ()
+        {
+            return new Point3(0, 0, 1);
+        }
     }               
 }                   
                     
