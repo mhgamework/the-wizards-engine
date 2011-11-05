@@ -20,6 +20,7 @@ namespace MHGameWork.TheWizards.Building
 
         public bool hasStraightWalls;
         public bool hasSkewWalls;
+        public bool hasFullFloor;
 
         private Dictionary<DynamicBlockDirection, BuildSlot> straightSlotsLow = new Dictionary<DynamicBlockDirection, BuildSlot>();
         private Dictionary<DynamicBlockDirection, BuildSlot> straightSlotsHigh = new Dictionary<DynamicBlockDirection, BuildSlot>();

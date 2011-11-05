@@ -32,8 +32,8 @@ namespace MHGameWork.TheWizards.Building
             var minX = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position - Vector3.UnitX));
             var z = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position + Vector3.UnitZ));
             var minZ = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position - Vector3.UnitZ));
-            
-            if(x!=null && x.HasWalls())
+
+            if (x != null && x.HasWalls())
             {
                 if (b.GetStraightSlot(DynamicBlockDirection.X, 0).BuildUnit == null)
                     b.SetStraight(DynamicBlockDirection.X, 0, type.StraightUnit);
@@ -90,7 +90,7 @@ namespace MHGameWork.TheWizards.Building
             var z = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position + Vector3.UnitZ));
             var minZ = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position - Vector3.UnitZ));
 
-            if(x != null && minZ != null && x.HasWalls() && minZ.HasWalls())
+            if (x != null && minZ != null && x.HasWalls() && minZ.HasWalls())
             {
                 if (b.GetSkewSlot(DynamicBlockDirection.XMinZ, 0).BuildUnit == null)
                     b.SetSkew(DynamicBlockDirection.XMinZ, 0, type.SkewUnit);
@@ -138,6 +138,99 @@ namespace MHGameWork.TheWizards.Building
                 b.SetSkew(DynamicBlockDirection.XZ, 0, null);
                 b.SetSkew(DynamicBlockDirection.XZ, 1, null);
             }
+        }
+
+        public void ResolveFloors(DynamicBlock b, FloorType type)
+        {
+            var x = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position + Vector3.UnitX));
+            var minX = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position - Vector3.UnitX));
+            var z = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position + Vector3.UnitZ));
+            var minZ = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position - Vector3.UnitZ));
+            var xMinZ = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position + Vector3.UnitX - Vector3.UnitZ));
+            var xz = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position + Vector3.UnitX + Vector3.UnitZ));
+            var minXMinZ = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position - Vector3.UnitX - Vector3.UnitZ));
+            var minXZ = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position - Vector3.UnitX + Vector3.UnitZ));
+
+
+
+            if ((x != null && x.hasFullFloor) || (xMinZ != null && xMinZ.hasFullFloor) || (minZ != null && minZ.hasFullFloor))
+            {
+                if (b.GetFloorSlot(DynamicBlockDirection.XMinZ, 1).BuildUnit == null)
+                    b.SetFloor(DynamicBlockDirection.XMinZ, 1, type.DefaultUnit);
+
+                if (b.GetSkewSlot(DynamicBlockDirection.XMinZ, 0).BuildUnit == null)
+                {
+                    if (b.GetFloorSlot(DynamicBlockDirection.XMinZ, 0).BuildUnit == null)
+                        b.SetFloor(DynamicBlockDirection.XMinZ, 0, type.DefaultUnit);
+                }
+            }
+            else
+            {
+                b.SetFloor(DynamicBlockDirection.XMinZ, 0, null);
+                b.SetFloor(DynamicBlockDirection.XMinZ, 1, null);
+            }
+            if ((minZ != null && minZ.hasFullFloor) || (minXMinZ != null && minXMinZ.hasFullFloor) || (minX != null && minX.hasFullFloor))
+            {
+                if (b.GetFloorSlot(DynamicBlockDirection.MinXMinZ, 1).BuildUnit == null)
+                    b.SetFloor(DynamicBlockDirection.MinXMinZ, 1, type.DefaultUnit);
+
+                if (b.GetSkewSlot(DynamicBlockDirection.MinXMinZ, 0).BuildUnit == null)
+                {
+                    if (b.GetFloorSlot(DynamicBlockDirection.MinXMinZ, 0).BuildUnit == null)
+                        b.SetFloor(DynamicBlockDirection.MinXMinZ, 0, type.DefaultUnit);
+                }
+            }
+            else
+            {
+                b.SetFloor(DynamicBlockDirection.MinXMinZ, 0, null);
+                b.SetFloor(DynamicBlockDirection.MinXMinZ, 1, null);
+            }
+            if ((minX != null && minX.hasFullFloor) || (minXZ != null && minXZ.hasFullFloor) || (z != null && z.hasFullFloor))
+            {
+                if (b.GetFloorSlot(DynamicBlockDirection.MinXZ, 1).BuildUnit == null)
+                    b.SetFloor(DynamicBlockDirection.MinXZ, 1, type.DefaultUnit);
+
+                if (b.GetSkewSlot(DynamicBlockDirection.MinXZ, 0).BuildUnit == null)
+                {
+                    if (b.GetFloorSlot(DynamicBlockDirection.MinXZ, 0).BuildUnit == null)
+                        b.SetFloor(DynamicBlockDirection.MinXZ, 0, type.DefaultUnit);
+                }
+            }
+            else
+            {
+                b.SetFloor(DynamicBlockDirection.MinXZ, 0, null);
+                b.SetFloor(DynamicBlockDirection.MinXZ, 1, null);
+            }
+            if ((z != null && z.hasFullFloor) || (xz != null && xz.hasFullFloor) || (x != null && x.hasFullFloor))
+            {
+                if (b.GetFloorSlot(DynamicBlockDirection.XZ, 1).BuildUnit == null)
+                    b.SetFloor(DynamicBlockDirection.XZ, 1, type.DefaultUnit);
+
+                if (b.GetSkewSlot(DynamicBlockDirection.XZ, 0).BuildUnit == null)
+                {
+                    if (b.GetFloorSlot(DynamicBlockDirection.XZ, 0).BuildUnit == null)
+                        b.SetFloor(DynamicBlockDirection.XZ, 0, type.DefaultUnit);
+                }
+            }
+            else
+            {
+                b.SetFloor(DynamicBlockDirection.XZ, 0, null);
+                b.SetFloor(DynamicBlockDirection.XZ, 1, null);
+            }
+
+            if (b.GetFloorSlot(DynamicBlockDirection.MinXMinZ, 0).BuildUnit != null
+                                    && b.GetFloorSlot(DynamicBlockDirection.MinXMinZ, 1).BuildUnit != null
+                                    && b.GetFloorSlot(DynamicBlockDirection.MinXZ, 0).BuildUnit != null
+                                    && b.GetFloorSlot(DynamicBlockDirection.MinXZ, 1).BuildUnit != null
+                                    && b.GetFloorSlot(DynamicBlockDirection.XMinZ, 0).BuildUnit != null
+                                    && b.GetFloorSlot(DynamicBlockDirection.XMinZ, 1).BuildUnit != null
+                                    && b.GetFloorSlot(DynamicBlockDirection.XZ, 0).BuildUnit != null
+                                    && b.GetFloorSlot(DynamicBlockDirection.XZ, 1).BuildUnit != null)
+            {
+                b.hasFullFloor = true;
+            }
+            else
+                b.hasFullFloor = false;
         }
     }
 }

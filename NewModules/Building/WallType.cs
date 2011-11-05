@@ -13,22 +13,22 @@ namespace MHGameWork.TheWizards.Building
         private BuildUnit straightUnit;
         public BuildUnit StraightUnit
         {
-            get { return new BuildUnit(straightUnit.Mesh, "StraightWallType"); }
-            set { straightUnit = value; value.buildUnitType = "StraightWallType"; }
+            get { return new BuildUnit(straightUnit.Mesh, "WallType"); }
+            set { straightUnit = value; value.buildUnitType = "WallType"; }
         }
 
         private BuildUnit pillarUnit;
         public BuildUnit PillarUnit
         {
-            get { return new BuildUnit(pillarUnit.Mesh, "StraightWallType"); }
-            set { pillarUnit = value;  value.buildUnitType = "StraightWallType"; }
+            get { return new BuildUnit(pillarUnit.Mesh, "WallType"); }
+            set { pillarUnit = value; value.buildUnitType = "WallType"; }
         }
 
         private BuildUnit skewUnit;
         public BuildUnit SkewUnit
         {
-            get { return new BuildUnit(skewUnit.Mesh, "SkewWallType"); }
-            set { skewUnit = value; value.buildUnitType = "SkewWallType"; }
+            get { return new BuildUnit(skewUnit.Mesh, "WallType"); }
+            set { skewUnit = value; value.buildUnitType = "WallType"; }
         }
     }
 }
