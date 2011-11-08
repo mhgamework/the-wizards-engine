@@ -100,7 +100,7 @@ namespace MHGameWork.TheWizards.Tests.WorldSimulation
             DX11Game game = new DX11Game();
 
             List<Resource> resources = new List<Resource>();
-            List<Building> buildings = new List<Building>();
+            var buildings = new List<TheWizards.WorldSimulation.Building>();
             BuildingBluePrints print = new BuildingBluePrints();
             print.ConstructionTime = 7;
             print.Requirements.Add(ResourceTypes.Wood, 50f);

@@ -76,6 +76,7 @@
     <Reference Include="nunit.framework">
       <HintPath>..\_Libraries\NUnit-2.5.7.10213\bin\net-2.0\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="SlimDX, Version=4.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
     <Reference Include="StillDesign.PhysX.Net">
       <HintPath>..\_Libraries\PhysX.Net\References\Debug\XNA 2.0\StillDesign.PhysX.Net.dll</HintPath>
     </Reference>
@@ -103,9 +104,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\CoreTest.cs" />
     <Compile Include="World\ClientWorldSector.cs" />
+    <Compile Include="World\Entity.cs" />
+    <Compile Include="World\Rendering\EntityRenderData.cs" />
+    <Compile Include="World\Rendering\WorldRenderer.cs" />
     <Compile Include="World\ServerWorld.cs" />
-    <Compile Include="World\WorldRenderer.cs" />
-    <Compile Include="World\ClientWorld.cs" />
+    <Compile Include="World\WorldNoSectors.cs" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
