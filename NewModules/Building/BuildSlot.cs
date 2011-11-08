@@ -14,6 +14,7 @@ namespace MHGameWork.TheWizards.Building
     /// </summary>
     public class BuildSlot
     {
+        private readonly Vector3 scaling;
         public BuildUnit BuildUnit;
         private readonly DynamicBlock block;
         public Vector3 RelativeTranslation;
@@ -27,6 +28,16 @@ namespace MHGameWork.TheWizards.Building
             this.RelativeTranslation = RelativeTranslation;
             this.RelativeRotationY = RelativeRotationY; 
             this.renderer = renderer;
+            scaling = new Vector3(1, 1, 1);
+        }
+
+        public BuildSlot(DynamicBlock block, Vector3 RelativeTranslation, float RelativeRotationY, Vector3 scaling, DeferredRenderer renderer)
+        {
+            this.block = block;
+            this.RelativeTranslation = RelativeTranslation;
+            this.RelativeRotationY = RelativeRotationY;
+            this.renderer = renderer;
+            this.scaling = scaling;
         }
 
         public void SetBuildUnit(BuildUnit buildUnit)
@@ -40,7 +51,7 @@ namespace MHGameWork.TheWizards.Building
             if (buildUnit != null)
             {
                 meshEl = renderer.CreateMeshElement(buildUnit.Mesh);
-                meshEl.WorldMatrix = Matrix.RotationY(RelativeRotationY)*Matrix.Translation(RelativeTranslation)*
+                meshEl.WorldMatrix = Matrix.Scaling(scaling) * Matrix.RotationY(RelativeRotationY)*Matrix.Translation(RelativeTranslation)*
                                      Matrix.Translation(block.Position);
             }
         }

@@ -81,6 +81,10 @@ namespace MHGameWork.TheWizards.Building
                 resolver.ResolveWalls(z, null);
             if (minZ != null)
                 resolver.ResolveWalls(minZ, null);
+
+            if (b.IsEmpty())
+                dynBlockFactory.RemoveBlock(b);
+                
         }
     }
 }

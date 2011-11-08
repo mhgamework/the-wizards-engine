@@ -168,6 +168,9 @@
     <Compile Include="Building\DynamicBlockDirection.cs" />
     <Compile Include="Building\DynamicBlockFactory.cs" />
     <Compile Include="Building\DynamicBlockResolver.cs" />
+    <Compile Include="Building\DynamicPlaceMode.cs" />
+    <Compile Include="Building\DynamicPlaceTool.cs" />
+    <Compile Include="Building\DynamicTypeFactory.cs" />
     <Compile Include="Building\FloorPlacer.cs" />
     <Compile Include="Building\FloorType.cs" />
     <Compile Include="Building\HUDRenderer.cs" />

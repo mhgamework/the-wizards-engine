@@ -7,7 +7,7 @@ using SlimDX;
 namespace MHGameWork.TheWizards.Building
 {
     /// <summary>
-    /// Responsible for adding floors to the DynamicBlock at given position. It is not possible to add floors to a block which has walls.
+    /// Responsible for adding floors to the DynamicBlock at given position.
     /// </summary>
     public class FloorPlacer
     {
@@ -20,6 +20,50 @@ namespace MHGameWork.TheWizards.Building
             this.resolver = resolver;
         }
 
+
+        public void PlaceFloor(Vector3 pos, FloorType type)
+        {
+            var b = dynBlockFactory.GetBlockAtPosition(pos);
+            if (b == null)
+                b = dynBlockFactory.CreateNewDynamicBlock(new Point3(pos));
+
+            Vector3 relPos = pos - b.Position;
+            DynamicBlockDirection floorDir;
+            int closeFar;
+            getClosestFloorDirection(relPos, out floorDir, out closeFar);
+
+            b.SetFloor(floorDir, closeFar, type.DefaultUnit);
+        }
+        
+        public void RemoveFloor(Vector3 pos)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void getClosestFloorDirection(Vector3 pos, out DynamicBlockDirection dir, out int closeFar)
+        {
+            if(pos.X > 0)
+            {
+                if (pos.Z > 0)
+                    dir = DynamicBlockDirection.XZ;
+                else
+                    dir = DynamicBlockDirection.XMinZ;
+            }
+            else
+            {
+                if (pos.Z > 0)
+                    dir = DynamicBlockDirection.MinXZ;
+                else
+                    dir = DynamicBlockDirection.MinXMinZ;
+            }
+
+            if (pos.X < 0.5f && pos.Z < 0.5f)
+                closeFar = 0;
+            else
+                closeFar = 1;
+        }
+
+        /*
         public void PlaceFloor(Point3 pos, FloorType type)
         {
             var b = dynBlockFactory.GetBlockAtPosition(pos);
@@ -112,6 +156,9 @@ namespace MHGameWork.TheWizards.Building
                 resolver.ResolveFloors(xz, null);
             if (minXMinZ != null)
                 resolver.ResolveFloors(minXMinZ, null);
-        }
+
+            if (b.IsEmpty())
+                dynBlockFactory.RemoveBlock(b);
+        }*/
     }
 }

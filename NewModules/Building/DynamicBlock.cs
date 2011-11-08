@@ -117,7 +117,7 @@ namespace MHGameWork.TheWizards.Building
 
             return ret;
         }
-        
+
         /// <summary>
         /// Default position = 000
         /// Default rotation is direction of x-axis
@@ -150,10 +150,10 @@ namespace MHGameWork.TheWizards.Building
             var floorXMinZF = new BuildSlot(this, new Vector3(0.25f, -0.5f, -0.25f), (float)Math.PI, renderer);
             var floorMinXZC = new BuildSlot(this, new Vector3(-0.25f, -0.5f, 0.25f), (float)Math.PI, renderer);
             var floorMinXZF = new BuildSlot(this, new Vector3(-0.25f, -0.5f, 0.25f), 0, renderer);
-            var floorXZC = new BuildSlot(this, new Vector3(0.25f, -0.5f, 0.25f), (float)-Math.PI * 0.5f, renderer);
-            var floorXZF = new BuildSlot(this, new Vector3(0.25f, -0.5f, 0.25f), (float)Math.PI * 0.5f, renderer);
-            var floorMinXMinZC = new BuildSlot(this, new Vector3(-0.25f, -0.5f, -0.25f), (float)Math.PI * 0.5f, renderer);
-            var floorMinXMinZF = new BuildSlot(this, new Vector3(-0.25f, -0.5f, -0.25f), (float)-Math.PI * 0.5f, renderer);
+            var floorXZC = new BuildSlot(this, new Vector3(0.25f, -0.5f, 0.25f), (float)Math.PI, new Vector3(-1, 1, 1), renderer);
+            var floorXZF = new BuildSlot(this, new Vector3(0.25f, -0.5f, 0.25f), 0, new Vector3(-1, 1, 1), renderer);
+            var floorMinXMinZC = new BuildSlot(this, new Vector3(-0.25f, -0.5f, -0.25f), (float)Math.PI, new Vector3(1, 1, -1), renderer);
+            var floorMinXMinZF = new BuildSlot(this, new Vector3(-0.25f, -0.5f, -0.25f), 0, new Vector3(1, 1, -1), renderer);
 
             floorSlotsClose.Add(DynamicBlockDirection.XMinZ, floorXMinZC);
             floorSlotsClose.Add(DynamicBlockDirection.XZ, floorXZC);
@@ -188,7 +188,7 @@ namespace MHGameWork.TheWizards.Building
         internal bool HasUnitOfType(string p)
         {
             var it01 = straightSlotsLow.Values.GetEnumerator();
-            while( it01.Current != straightSlotsLow.Values.Last())
+            while (it01.Current != straightSlotsLow.Values.Last())
             {
                 it01.MoveNext();
                 if (it01.Current.BuildUnit != null && it01.Current.BuildUnit.buildUnitType == p)
@@ -243,10 +243,69 @@ namespace MHGameWork.TheWizards.Building
 
             return false;
         }
-   
+
         public bool HasWalls()
         {
             return hasSkewWalls || hasStraightWalls;
+        }
+
+        internal bool IsEmpty()
+        {
+            var it01 = straightSlotsLow.Values.GetEnumerator();
+            while (it01.Current != straightSlotsLow.Values.Last())
+            {
+                it01.MoveNext();
+                if (it01.Current.BuildUnit != null)
+                    return false;
+            }
+
+            var it02 = straightSlotsHigh.Values.GetEnumerator();
+            while (it02.Current != straightSlotsHigh.Values.Last())
+            {
+                it02.MoveNext();
+                if (it02.Current.BuildUnit != null)
+                    return false;
+            }
+
+            var it03 = floorSlotsClose.Values.GetEnumerator();
+            while (it03.Current != floorSlotsClose.Values.Last())
+            {
+                it03.MoveNext();
+                if (it03.Current.BuildUnit != null)
+                    return false;
+            }
+
+            var it04 = floorSlotsFar.Values.GetEnumerator();
+            while (it04.Current != floorSlotsFar.Values.Last())
+            {
+                it04.MoveNext();
+                if (it04.Current.BuildUnit != null)
+                    return false;
+            }
+
+            var it05 = skewSlotsLow.Values.GetEnumerator();
+            while (it05.Current != skewSlotsLow.Values.Last())
+            {
+                it05.MoveNext();
+                if (it05.Current.BuildUnit != null)
+                    return false;
+            }
+
+            var it06 = skewSlotsHigh.Values.GetEnumerator();
+            while (it06.Current != skewSlotsHigh.Values.Last())
+            {
+                it06.MoveNext();
+                if (it06.Current.BuildUnit != null)
+                    return false;
+            }
+
+            if (pillar.BuildUnit != null)
+                return false;
+
+            if (pillarh.BuildUnit != null)
+                return false;
+
+            return true;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Rendering.Deferred;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.Building
 {
@@ -12,7 +13,7 @@ namespace MHGameWork.TheWizards.Building
     public class DynamicBlockFactory
     {
         private readonly DeferredRenderer renderer;
-        private List<DynamicBlock> blockList = new List<DynamicBlock>();
+        public List<DynamicBlock> BlockList = new List<DynamicBlock>();
 
         public DynamicBlockFactory(DeferredRenderer renderer)
         {
@@ -26,9 +27,9 @@ namespace MHGameWork.TheWizards.Building
         /// <returns></returns>
         public DynamicBlock GetBlockAtPosition(Point3 pos)
         {
-            for (int i = 0; i < blockList.Count; i++)
+            for (int i = 0; i < BlockList.Count; i++)
             {
-                var cBlock = blockList[i];
+                var cBlock = BlockList[i];
                 if (cBlock.Position == pos)
                     return cBlock;
             }
@@ -39,7 +40,19 @@ namespace MHGameWork.TheWizards.Building
         public DynamicBlock CreateNewDynamicBlock(Point3 pos)
         {
             var ret = new DynamicBlock(pos, renderer);
-            blockList.Add(ret);
+            BlockList.Add(ret);
             return ret;}
+
+        internal void RemoveBlock(DynamicBlock b)
+        {
+            BlockList.Remove(b);
+            b = null;
+        }
+
+        public DynamicBlock GetBlockAtPosition(Vector3 pos)
+        {
+            Point3 p = new Point3((int)Math.Floor(pos.X), (int)Math.Floor(pos.Y), (int)Math.Floor(pos.Z));
+            return GetBlockAtPosition(p);
+        }
     }
 }

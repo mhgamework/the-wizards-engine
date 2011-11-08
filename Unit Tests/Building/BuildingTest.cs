@@ -1007,6 +1007,7 @@ namespace MHGameWork.TheWizards.Tests.Building
                                         "\\BasicSkew.obj",
                                         TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicSkew").FullName +
                                         "\\BasicSkew.mtl");
+
             
             var dynBlock1 = new DynamicBlock(new Point3(1, 0, 0), renderer);
             var dynBlock2 = new DynamicBlock(new Point3(-1, 0, -1), renderer);
@@ -1073,7 +1074,7 @@ namespace MHGameWork.TheWizards.Tests.Building
                 game.SpectaterCamera.CameraPosition =
                                              new SlimDX.Vector3(game.SpectaterCamera.CameraPosition.X, 2,
                                                                 game.SpectaterCamera.CameraPosition.Z);
-                renderer.Draw();
+               renderer.Draw();
             };
 
             game.Run();
@@ -1259,6 +1260,15 @@ namespace MHGameWork.TheWizards.Tests.Building
             game.Run();
         }
 
+        /// <summary>
+        /// TEST DOESNT WORK PROPERLY ANYMORE
+        /// Tests if floors can be placed and adjacent blocks are altered correctly.
+        /// Test succeeded if:
+        /// - the walls from the skewWallsTest are visible
+        /// - some floor-pieces are visible, they all touch a wall
+        /// - no floor piece is added to xyz = 001
+        /// - pressing A results in displaying a box around every dynamicBlock
+        /// </summary>
         [Test]
         public void TestPlaceFloorsDynamic()
         {
@@ -1345,6 +1355,7 @@ namespace MHGameWork.TheWizards.Tests.Building
             floorPlacer.PlaceFloor(new Point3(3, 0, 3), floorType);
             floorPlacer.PlaceFloor(new Point3(6, 0, 3), floorType);
 
+            bool displayBoxes = true;
 
             game.GameLoopEvent += delegate
             {
@@ -1370,6 +1381,19 @@ namespace MHGameWork.TheWizards.Tests.Building
                     floorPlacer.PlaceFloor(new Point3(3, 0, 3), floorType);
                     floorPlacer.PlaceFloor(new Point3(6, 0, 3), floorType);
                 }
+                if (game.Keyboard.IsKeyPressed(Key.Q))
+                {
+                    displayBoxes = !displayBoxes;
+                }
+
+                if (displayBoxes)
+                {
+                    for (int i = 0; i < dynBlockFactory.BlockList.Count; i++)
+                    {
+                        var cPos = dynBlockFactory.BlockList[i].Position;
+                        game.LineManager3D.AddCenteredBox(cPos, 1, System.Drawing.Color.White);
+                    }
+                }
 
                 renderer.Draw();
             };
@@ -1377,6 +1401,107 @@ namespace MHGameWork.TheWizards.Tests.Building
             game.Run();
         }
 
+       
+        [Test]
+        public void TestWallFloorDynamicPLAY()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+            var renderer = new DeferredRenderer(game);
+            var meshConverter = new OBJToRAMMeshConverter(new RAMTextureFactory());
+            var planeMesh = CreateMeshFromObj(meshConverter,
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                         "\\Plane.obj",
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                         "\\Plane.mtl");
+            DirectionalLight light = renderer.CreateDirectionalLight();
+            light.ShadowsEnabled = true;
+            light.LightDirection = Vector3.Normalize(new Vector3(2, -1, 3));
+            var planeEl = renderer.CreateMeshElement(planeMesh);
+            planeEl.WorldMatrix = Matrix.Scaling(new Vector3(100, 100, 100)) * Matrix.Translation(new Vector3(0, -0.5f, 0));
 
+            var basicStraightMesh = CreateMeshFromObj(meshConverter,
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicStraight").FullName +
+                                         "\\BasicStraight.obj",
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicStraight").FullName +
+                                         "\\BasicStraight.mtl");
+            var basicPillarMesh = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicPillar").FullName +
+                                        "\\BasicPillar.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicPillar").FullName +
+                                        "\\BasicPillar.mtl");
+            var basicSkewMesh = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicSkew").FullName +
+                                        "\\BasicSkew.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicSkew").FullName +
+                                        "\\BasicSkew.mtl");
+            var basicFloorMesh = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicFloor").FullName +
+                                        "\\BasicFloor.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicFloor").FullName +
+                                        "\\BasicFloor.mtl");
+
+            var basicStraight = new BuildUnit(basicStraightMesh);
+            var basicPillar = new BuildUnit(basicPillarMesh);
+            var basicSkew = new BuildUnit(basicSkewMesh);
+            var basicFloor = new BuildUnit(basicFloorMesh);
+
+            var wallType = new WallType();
+            wallType.StraightUnit = basicStraight;
+            wallType.PillarUnit = basicPillar;
+            wallType.SkewUnit = basicSkew;
+
+            var floorType = new FloorType();
+            floorType.DefaultUnit = basicFloor;
+
+            var dynBlockFactory = new DynamicBlockFactory(renderer);
+            var dynTypeFactory = new DynamicTypeFactory();
+            dynTypeFactory.WallTypes.Add(wallType);
+            dynTypeFactory.FloorTypes.Add(floorType);
+            var resolver = new DynamicBlockResolver(dynBlockFactory);
+
+            var straightWallPlacer = new StraightWallPlacer(dynBlockFactory, resolver);
+            var skewWallPlacer = new SkewWallPlacer(dynBlockFactory, resolver);
+            var floorPlacer = new FloorPlacer(dynBlockFactory, resolver);
+
+            var placeTool = new DynamicPlaceTool(game, dynBlockFactory, dynTypeFactory, straightWallPlacer, skewWallPlacer, floorPlacer);
+            placeTool.PlaceMode = DynamicPlaceMode.StraightWallMode;
+
+
+            bool displayBoxes = false;
+            game.GameLoopEvent += delegate
+            {
+                if(game.Keyboard.IsKeyPressed(Key.NumberPad1))
+                    placeTool.PlaceMode = DynamicPlaceMode.StraightWallMode;
+                if(game.Keyboard.IsKeyPressed(Key.NumberPad2))
+                    placeTool.PlaceMode = DynamicPlaceMode.SkewWallMode;
+                if (game.Keyboard.IsKeyPressed(Key.NumberPad3))
+                    placeTool.PlaceMode = DynamicPlaceMode.FloorMode;
+                
+                if (game.Keyboard.IsKeyPressed(Key.Q))
+                    displayBoxes = !displayBoxes;
+
+                if (displayBoxes)
+                {
+                    for (int i = 0; i < dynBlockFactory.BlockList.Count; i++)
+                    {
+                        var cPos = dynBlockFactory.BlockList[i].Position;
+                        game.LineManager3D.AddCenteredBox(cPos, 1, System.Drawing.Color.Gray);
+                    }
+                }
+
+                placeTool.Update();
+
+                renderer.Draw();
+            };
+
+            game.Run();
+        }
+
+        [Test]
+        public void TestPlaceWindows()
+        {
+            
+        }
     }
 }
