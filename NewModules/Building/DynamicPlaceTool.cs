@@ -13,22 +13,20 @@ namespace MHGameWork.TheWizards.Building
         private readonly DX11Game game;
         private readonly DynamicBlockFactory blockFactory;
         private readonly DynamicTypeFactory typeFactory;
-        private readonly StraightWallPlacer straightWallPlacer;
-        private readonly SkewWallPlacer skewWallPlacer;
+        private readonly WallPlacer wallPlacer;
         private readonly FloorPlacer floorPlacer;
         public DynamicPlaceMode PlaceMode;
 
         private int wallTypeIndex = 0;
         private int floorTypeIndex = 0;
-        private int planeHeight = 0;
+        private float planeHeight = -0.5f;
 
-        public DynamicPlaceTool(DX11Game game, DynamicBlockFactory blockFactory, DynamicTypeFactory typeFactory, StraightWallPlacer straightWallPlacer, SkewWallPlacer skewWallPlacer, FloorPlacer floorPlacer)
+        public DynamicPlaceTool(DX11Game game, DynamicBlockFactory blockFactory, DynamicTypeFactory typeFactory, WallPlacer wallPlacer,FloorPlacer floorPlacer)
         {
             this.game = game;
             this.blockFactory = blockFactory;
             this.typeFactory = typeFactory;
-            this.straightWallPlacer = straightWallPlacer;
-            this.skewWallPlacer = skewWallPlacer;
+            this.wallPlacer = wallPlacer;
             this.floorPlacer = floorPlacer;
         }
 
@@ -48,10 +46,10 @@ namespace MHGameWork.TheWizards.Building
             Point3 selectedPos;
             CalculatePlacePos(out selectedPos, out selectedBlock);
 
-            
+
 
             if (game.Keyboard.IsKeyPressed(Key.E))
-                straightWallPlacer.PlaceStraightWall(selectedPos, typeFactory.WallTypes[wallTypeIndex]);
+                wallPlacer.PlaceStraightWall(selectedPos, typeFactory.WallTypes[wallTypeIndex]);
             if (selectedBlock != null)
             {
                 game.LineManager3D.AddCenteredBox(selectedBlock.Position, 1, System.Drawing.Color.White);
@@ -71,7 +69,7 @@ namespace MHGameWork.TheWizards.Building
             CalculatePlacePos(out selectedPos, out selectedBlock);
 
             if (game.Keyboard.IsKeyPressed(Key.E))
-                skewWallPlacer.PlaceSkewWall(selectedPos, typeFactory.WallTypes[wallTypeIndex]);
+                wallPlacer.PlaceSkewWall(selectedPos, typeFactory.WallTypes[wallTypeIndex]);
             if (selectedBlock != null)
             {
                 game.LineManager3D.AddCenteredBox(selectedBlock.Position, 1, System.Drawing.Color.White);
@@ -86,8 +84,8 @@ namespace MHGameWork.TheWizards.Building
 
         private void removeWall(Point3 pos)
         {
-            skewWallPlacer.RemoveSkewWall(pos);
-            straightWallPlacer.RemoveStraightWall(pos);
+            wallPlacer.RemoveSkewWall(pos);
+            wallPlacer.RemoveStraightWall(pos);
         }
 
         private void executeFloorMode()
@@ -97,18 +95,19 @@ namespace MHGameWork.TheWizards.Building
             if (game.Keyboard.IsKeyPressed(Key.DownArrow))
             {
                 planeHeight--;
-                if (planeHeight < 0)
-                    planeHeight = 0;
+                if (planeHeight < -0.5f)
+                    planeHeight = -0.5f;
             }
 
             drawGrid(planeHeight);
             Vector3 placePos = getPlaneIntersection(planeHeight);
 
-            game.LineManager3D.AddCenteredBox(placePos, 0.1f, System.Drawing.Color.Blue);
+            game.LineManager3D.AddLine(placePos + new Vector3(-0.5f, 0, 0), placePos + new Vector3(0.5f, 0, 0), System.Drawing.Color.Blue);
+            game.LineManager3D.AddLine(placePos + new Vector3(0, 0, -0.5f), placePos + new Vector3(0, 0, 0.5f), System.Drawing.Color.Blue);
 
-            if (game.Keyboard.IsKeyPressed(Key.E))
+            if (game.Keyboard.IsKeyDown(Key.E))
                 floorPlacer.PlaceFloor(placePos, typeFactory.FloorTypes[floorTypeIndex]);
-            if (game.Keyboard.IsKeyPressed(Key.R))
+            if (game.Keyboard.IsKeyDown(Key.R))
                 floorPlacer.RemoveFloor(placePos);
         }
 
@@ -181,7 +180,7 @@ namespace MHGameWork.TheWizards.Building
             return intersectDir;
         }
 
-        private Vector3 getPlaneIntersection(int height)
+        private Vector3 getPlaneIntersection(float height)
         {
             Ray ray = new Ray(game.SpectaterCamera.CameraPosition, game.SpectaterCamera.CameraDirection);
             Plane p = new Plane(new Vector3(0, 1, 0), height);
@@ -195,19 +194,24 @@ namespace MHGameWork.TheWizards.Building
 
             return pos;
         }
-    
-        private void drawGrid(int height)
+
+        private void drawGrid(float height)
         {
-            Point3 middlePoint = new Point3((int)Math.Floor(getPlaneIntersection(height).X), (int)Math.Floor(getPlaneIntersection(height).Y), (int)Math.Floor(getPlaneIntersection(height).Z));
+            Vector3 rawPoint = getPlaneIntersection(height);
+            Vector3 middlePoint = new Vector3((int)Math.Floor(rawPoint.X), height, (int)Math.Floor(rawPoint.Z));
             int gridSize = 3;
 
-            for (int i = -gridSize; i <= gridSize; i++)
+            for (int i = 0; i <= gridSize; i++)
             {
-                for (int j = -gridSize; j <= gridSize; j++)
+                for (int j = 0; j <= gridSize; j++)
                 {
-                    game.LineManager3D.AddLine(middlePoint + new Vector3(i, 0, j), middlePoint + new Vector3(i, 0, -j),
+                    game.LineManager3D.AddLine(middlePoint + new Vector3(-i - 0.5f, 0, j + 0.5f), middlePoint + new Vector3(-i - 0.5f, 0, -j - 0.5f),
                                                System.Drawing.Color.Blue);
-                    game.LineManager3D.AddLine(middlePoint + new Vector3(-i, 0, j), middlePoint + new Vector3(i, 0, j),
+                    game.LineManager3D.AddLine(middlePoint + new Vector3(i + 0.5f, 0, j + 0.5f), middlePoint + new Vector3(i + 0.5f, 0, -j - 0.5f),
+                                               System.Drawing.Color.Blue);
+                    game.LineManager3D.AddLine(middlePoint + new Vector3(-i - 0.5f, 0, -j - 0.5f), middlePoint + new Vector3(i + 0.5f, 0, -j - 0.5f),
+                                               System.Drawing.Color.Blue);
+                    game.LineManager3D.AddLine(middlePoint + new Vector3(-i - 0.5f, 0, j + 0.5f), middlePoint + new Vector3(i + 0.5f, 0, j + 0.5f),
                                                System.Drawing.Color.Blue);
 
                 }

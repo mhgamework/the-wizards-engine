@@ -177,8 +177,7 @@
     <Compile Include="Building\PlaceTool.cs" />
     <Compile Include="Building\PlayerController.cs" />
     <Compile Include="Building\Point3.cs" />
-    <Compile Include="Building\SkewWallPlacer.cs" />
-    <Compile Include="Building\StraightWallPlacer.cs" />
+    <Compile Include="Building\WallPlacer.cs" />
     <Compile Include="Building\WallType.cs" />
     <Compile Include="Character\Editor\Character.cs" />
     <Compile Include="Character\Editor\CharacterBone.cs" />

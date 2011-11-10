@@ -23,9 +23,10 @@ namespace MHGameWork.TheWizards.Building
 
         public void PlaceFloor(Vector3 pos, FloorType type)
         {
-            var b = dynBlockFactory.GetBlockAtPosition(pos);
+            var blockPos = dynBlockFactory.CalculateBlockPos(pos);
+            var b = dynBlockFactory.GetBlockAtPosition(blockPos);
             if (b == null)
-                b = dynBlockFactory.CreateNewDynamicBlock(new Point3(pos));
+                b = dynBlockFactory.CreateNewDynamicBlock(blockPos);
 
             Vector3 relPos = pos - b.Position;
             DynamicBlockDirection floorDir;
@@ -37,7 +38,20 @@ namespace MHGameWork.TheWizards.Building
         
         public void RemoveFloor(Vector3 pos)
         {
-            throw new NotImplementedException();
+            var blockPos = dynBlockFactory.CalculateBlockPos(pos);
+            var b = dynBlockFactory.GetBlockAtPosition(blockPos);
+            if (b == null)
+                return;
+
+            Vector3 relPos = pos - b.Position;
+            DynamicBlockDirection floorDir;
+            int closeFar;
+            getClosestFloorDirection(relPos, out floorDir, out closeFar);
+
+            b.SetFloor(floorDir, closeFar, null);
+
+            if (b.IsEmpty())
+                dynBlockFactory.RemoveBlock(b);
         }
 
         private void getClosestFloorDirection(Vector3 pos, out DynamicBlockDirection dir, out int closeFar)
@@ -57,7 +71,7 @@ namespace MHGameWork.TheWizards.Building
                     dir = DynamicBlockDirection.MinXMinZ;
             }
 
-            if (pos.X < 0.5f && pos.Z < 0.5f)
+            if (Math.Abs(pos.X) < 0.25f && Math.Abs(pos.Z) < 0.25f)
                 closeFar = 0;
             else
                 closeFar = 1;

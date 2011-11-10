@@ -36,6 +36,12 @@ namespace MHGameWork.TheWizards.Building
             return null;
         }
 
+        public Point3 CalculateBlockPos(Vector3 vPos)
+        {
+            
+            return new Point3((int)Math.Round(vPos.X), (int)Math.Round(vPos.Y), (int)Math.Round(vPos.Z));
+        }
+
        
         public DynamicBlock CreateNewDynamicBlock(Point3 pos)
         {
