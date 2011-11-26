@@ -2,22 +2,9 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Threading;
-using System.Windows.Forms;
-using MHGameWork.TheWizards.ClientMain;
-using MHGameWork.TheWizards.Common.Core.Graphics;
-using MHGameWork.TheWizards.Entity.Client;
-using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Main;
-using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;
-using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.ServerClientMain;
-using MHGameWork.TheWizards.Tests;
-using MHGameWork.TheWizards.Tests.Animation;
-using MHGameWork.TheWizards.Tests.Entity;
-using MHGameWork.TheWizards.Tests.Physics;
-using MHGameWork.TheWizards.Tests.Rendering;
-using MHGameWork.TheWizards.Tests.Utilities;
 using MHGameWork.TheWizards.Utilities;
 using Microsoft.Xna.Framework;
 using StillDesign.PhysX;
@@ -57,7 +44,7 @@ namespace MHGameWork.TheWizards.ServerClient
 
 
                 TestRunner runner = new TestRunner();
-                runner.TestsAssembly = typeof(MainTest).Assembly;
+                runner.TestsAssembly = Assembly.LoadFrom("Unit Tests.dll");
                 runner.RunTestNewProcessPath = "\"" + Assembly.GetExecutingAssembly().Location + "\"" + " -test {0}";
 
 

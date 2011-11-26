@@ -270,10 +270,6 @@
       <Project>{53269219-3E5B-4F70-83A9-3C6C9C714FEC}</Project>
       <Name>Server</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Unit Tests\Unit Tests.csproj">
-      <Project>{C79FDAC0-960D-4E13-981D-7A9D2CA3B6A8}</Project>
-      <Name>Unit Tests</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
