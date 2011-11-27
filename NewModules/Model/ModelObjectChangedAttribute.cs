@@ -16,11 +16,12 @@ namespace MHGameWork.TheWizards.Model
     {
         public override void OnSetValue(LocationInterceptionArgs args)
         {
-            args.ProceedSetValue();
+            
             if (args.Value != args.GetCurrentValue())
             {
                 Console.WriteLine("Changeed!");
             }
+            args.ProceedSetValue();
             base.OnSetValue(args);
         }
     }

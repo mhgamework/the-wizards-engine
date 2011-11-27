@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\Binaries\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>2</WarningLevel>
@@ -143,6 +143,7 @@
     <Compile Include="DirectX11\TessellationTest.cs" />
     <Compile Include="Editor\EditorTest.cs" />
     <Compile Include="Forms\ClassFormTest.cs" />
+    <Compile Include="Model\ModelTest.cs" />
     <Compile Include="Particles\ParticleTests.cs" />
     <Compile Include="Gameplay\FortressTest.cs" />
     <Compile Include="Physics\TestSphereShooter.cs" />
