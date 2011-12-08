@@ -288,8 +288,8 @@ Global
 		{9543AC00-CDE5-4759-BD98-2D031D16DFD4}.DebugAllUnmanaged|Win32.ActiveCfg = Debug|Any CPU
 		{9543AC00-CDE5-4759-BD98-2D031D16DFD4}.DebugAllUnmanaged|x86.ActiveCfg = Debug|x86
 		{9543AC00-CDE5-4759-BD98-2D031D16DFD4}.DebugAllUnmanaged|x86.Build.0 = Debug|x86
-		{9543AC00-CDE5-4759-BD98-2D031D16DFD4}.NewModules|Any CPU.ActiveCfg = Debug|Any CPU
-		{9543AC00-CDE5-4759-BD98-2D031D16DFD4}.NewModules|Any CPU.Build.0 = Debug|Any CPU
+		{9543AC00-CDE5-4759-BD98-2D031D16DFD4}.NewModules|Any CPU.ActiveCfg = Debug|x86
+		{9543AC00-CDE5-4759-BD98-2D031D16DFD4}.NewModules|Any CPU.Build.0 = Debug|x86
 		{9543AC00-CDE5-4759-BD98-2D031D16DFD4}.NewModules|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{9543AC00-CDE5-4759-BD98-2D031D16DFD4}.NewModules|Mixed Platforms.Build.0 = Debug|Any CPU
 		{9543AC00-CDE5-4759-BD98-2D031D16DFD4}.NewModules|Win32.ActiveCfg = Debug|Any CPU

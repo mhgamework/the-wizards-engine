@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.Rendering.Deferred;
 
 namespace MHGameWork.TheWizards.World.Rendering
@@ -10,10 +11,10 @@ namespace MHGameWork.TheWizards.World.Rendering
     /// </summary>
     public class WorldRenderer
     {
-        private readonly WorldNoSectors world;
+        private readonly ModelContainer world;
         private readonly DeferredRenderer renderer;
-        private Dictionary<Entity, EntityRenderData> entityRenderDataMap = new Dictionary<Entity, EntityRenderData>();
-        public WorldRenderer(WorldNoSectors world, DeferredRenderer renderer)
+        private Dictionary<Model.Entity, EntityRenderData> entityRenderDataMap = new Dictionary<Model.Entity, EntityRenderData>();
+        public WorldRenderer(ModelContainer world, DeferredRenderer renderer)
         {
             this.world = world;
             this.renderer = renderer;
@@ -22,39 +23,42 @@ namespace MHGameWork.TheWizards.World.Rendering
         public void ProcessWorldChanges()
         {
             int length;
-            WorldNoSectors.EntityChange[] entityChanges;
-            world.GetEntityChanges(out entityChanges, out length);
+            ModelContainer.ObjectChange[] objectChanges;
+            world.GetEntityChanges(out objectChanges, out length);
 
 
             for (int i = 0; i < length; i++)
             {
-                var change = entityChanges[i];
+                var change = objectChanges[i];
+
+                var ent = (Model.Entity)change.ModelObject;
+
                 switch (change.ChangeType)
                 {
-                    case WorldNoSectors.WorldChangeType.None:
+                    case ModelContainer.WorldChangeType.None:
                         //Huh?
                         throw new InvalidOperationException();
                         break;
-                    case WorldNoSectors.WorldChangeType.Added:
-                        if (entityRenderDataMap.ContainsKey(change.Entity))
+                    case ModelContainer.WorldChangeType.Added:
+                        if (entityRenderDataMap.ContainsKey(ent))
                             throw new InvalidOperationException("Invalid change, entity is already in the renderer");
 
-                        var renderData = new EntityRenderData(change.Entity, renderer);
-                        entityRenderDataMap[change.Entity] = renderData;
+                        var renderData = new EntityRenderData(ent, renderer);
+                        entityRenderDataMap[ent] = renderData;
 
                         renderData.UpdateRenderData();
 
                         break;
-                    case WorldNoSectors.WorldChangeType.Modified:
-                        if (!entityRenderDataMap.ContainsKey(change.Entity))
+                    case ModelContainer.WorldChangeType.Modified:
+                        if (!entityRenderDataMap.ContainsKey(ent))
                             throw new InvalidOperationException("Invalid change, entity is not in the renderer");
-                        entityRenderDataMap[change.Entity].UpdateRenderData();
+                        entityRenderDataMap[ent].UpdateRenderData();
                         break;
-                    case WorldNoSectors.WorldChangeType.Removed:
-                        if (!entityRenderDataMap.ContainsKey(change.Entity))
+                    case ModelContainer.WorldChangeType.Removed:
+                        if (!entityRenderDataMap.ContainsKey(ent))
                             throw new InvalidOperationException("Invalid change, entity is not in the renderer");
-                        entityRenderDataMap[change.Entity].RemoveRenderData();
-                        entityRenderDataMap.Remove(change.Entity);
+                        entityRenderDataMap[ent].RemoveRenderData();
+                        entityRenderDataMap.Remove(ent);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

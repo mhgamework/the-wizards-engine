@@ -51,6 +51,7 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <PostSharpHost>Managed</PostSharpHost>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -225,6 +226,8 @@
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientFiles.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientMain.cs" />
     <Compile Include="Model\Entity.cs" />
+    <Compile Include="Model\IModelObject.cs" />
+    <Compile Include="Model\ModelContainer.cs" />
     <Compile Include="Model\ModelObjectChangedAttribute.cs" />
     <Compile Include="Particles\BallParticalCreater.cs" />
     <Compile Include="Particles\EmitterParameters.cs" />

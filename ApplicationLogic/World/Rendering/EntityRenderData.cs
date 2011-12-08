@@ -8,12 +8,12 @@ namespace MHGameWork.TheWizards.World.Rendering
 {
     public class EntityRenderData
     {
-        private readonly Entity entity;
+        private readonly Model.Entity entity;
         private readonly DeferredRenderer renderer;
 
         private DeferredMeshRenderElement element;
 
-        public EntityRenderData(Entity entity, DeferredRenderer renderer)
+        public EntityRenderData(Model.Entity entity, DeferredRenderer renderer)
         {
             this.entity = entity;
             this.renderer = renderer;
