@@ -26,6 +26,7 @@
     <DocumentationFile>
     </DocumentationFile>
     <UseVSHostingProcess>true</UseVSHostingProcess>
+    <PostSharpHost>Managed</PostSharpHost>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
