@@ -327,7 +327,6 @@ namespace MHGameWork.TheWizards.Tests.Rendering
                                           if (game.Keyboard.IsKeyPressed(Key.D4))
                                               state = 3;
                                           
-
                                           switch (state)
                                           {
                                               case 0:
@@ -367,10 +366,90 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
                                       };
 
+            game.Run();
+        }
+
+        [Test]
+        public void TestDeferredRendererCastsShadowsField()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+
+            var renderer = new DeferredRenderer(game);
+
+            var otherCam = new SpectaterCamera(game.Keyboard, game.Mouse, 1, 10000);
+
+            var mesh = CreateMerchantsHouseMesh(new OBJToRAMMeshConverter(new RAMTextureFactory()));
             
+
+            var el = renderer.CreateMeshElement(mesh);
+            el.CastsShadows = false;
+            var directional = renderer.CreateDirectionalLight();
+            directional.ShadowsEnabled = true;
+            var point = renderer.CreatePointLight();
+            point.LightRadius *= 2;
+            point.ShadowsEnabled = true;
+            var spot = renderer.CreateSpotLight();
+            spot.LightRadius *= 2;
+            spot.ShadowsEnabled = true;
+
+            int state = 0;
+
+            var camState = false;
+
+            game.GameLoopEvent += delegate
+            {
+                if (game.Keyboard.IsKeyPressed(Key.D1))
+                    state = 0;
+                if (game.Keyboard.IsKeyPressed(Key.D2))
+                    state = 1;
+                if (game.Keyboard.IsKeyPressed(Key.D3))
+                    state = 2;
+                if (game.Keyboard.IsKeyPressed(Key.D4))
+                    state = 3;
+
+                switch (state)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        directional.LightDirection = game.SpectaterCamera.CameraDirection;
+                        break;
+                    case 2:
+                        point.LightPosition = game.SpectaterCamera.CameraPosition;
+
+                        break;
+                    case 3:
+                        spot.LightPosition = game.SpectaterCamera.CameraPosition;
+                        spot.SpotDirection = game.SpectaterCamera.CameraDirection;
+                        break;
+                }
+
+                if (game.Keyboard.IsKeyPressed(Key.C))
+                    camState = !camState;
+
+                if (camState)
+                {
+                    game.Camera = game.SpectaterCamera;
+                    renderer.DEBUG_SeperateCullCamera = null;
+                }
+                else
+                {
+                    game.Camera = otherCam;
+                    renderer.DEBUG_SeperateCullCamera = game.SpectaterCamera;
+
+
+                }
+                game.SpectaterCamera.EnableUserInput = camState;
+                otherCam.EnableUserInput = !camState;
+                otherCam.Update(game.Elapsed);
+                renderer.Draw();
+
+            };
 
             game.Run();
         }
+
 
 
         [Test]

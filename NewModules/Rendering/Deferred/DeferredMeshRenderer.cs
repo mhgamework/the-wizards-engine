@@ -285,7 +285,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             //game.AddToWindowTitle("Calls: " + drawCalls);
 
         }
-        public void DrawDepthOnly()
+        public void DrawShadowCastersDepth()
         {
             drawCalls = 0;
             Performance.BeginEvent(new Color4(System.Drawing.Color.Red), "DMeshes-Depth");
@@ -306,6 +306,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                     var el = data.Elements[j];
                     if (el.IsDeleted) continue;
                     if (!el.Visible) continue;
+                    if (!el.CastsShadows) continue;
                     var mat = data.WorldMatrices[j];
                     renderMeshDepthOnly(data, mat);
                 }

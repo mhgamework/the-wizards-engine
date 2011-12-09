@@ -12,10 +12,12 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             Mesh = mesh;
             worldMatrix = Matrix.Identity;
             visible = true;
+            CastsShadows = true;
             updateBoundingBox();
         }
 
         public DeferredMeshRenderer Renderer { get; private set; }
+        public bool CastsShadows { get; set; }
         public IMesh Mesh { get; private set; }
         private Matrix worldMatrix;
         private BoundingBox boundingBox;
