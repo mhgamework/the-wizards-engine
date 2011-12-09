@@ -18,7 +18,6 @@ namespace MHGameWork.TheWizards.Model
                 Message.Write(MessageLocation.Of(locationInfo.PropertyInfo), SeverityType.Error, "ModelErrorCode", "ModelObjectChangedAttribute was applied to a class not implementing IModelObject: " +
                     locationInfo.DeclaringType.FullName);
             }
-            Message.Write(SeverityType.Warning, "mqlsdkfj", locationInfo.PropertyInfo.Name);
             if (locationInfo.LocationKind == LocationKind.Property && locationInfo.PropertyInfo.PropertyType.Equals(typeof(ModelContainer))) //TODO: maybe cheat
                 return false;
             return base.CompileTimeValidate(locationInfo);
