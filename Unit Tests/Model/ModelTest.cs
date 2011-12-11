@@ -75,45 +75,5 @@ namespace MHGameWork.TheWizards.Tests.Model
             game.Run();
         }
 
-        [Test]
-        public void TestVirtualModelSyncer()
-        {
-            var game = new DX11Game();
-            game.InitDirectX();
-
-
-            var clientContainer = new ModelContainer();
-            var serverContainer = new ModelContainer();
-
-            var mesh = OBJParser.OBJParserTest.GetBarrelMesh(new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
-
-            var deferred = new DeferredRenderer(game);
-            var renderer = new WorldRenderer(clientContainer, deferred);
-
-            var light = deferred.CreateDirectionalLight();
-            light.LightDirection = Vector3.Normalize(new Vector3(1, -1, 1));
-            light.ShadowsEnabled = true;
-
-            var time = 0f;
-
-
-
-            game.GameLoopEvent += delegate
-            {
-                time += game.Elapsed;
-                ent.Mesh = mesh;
-                ent.WorldMatrix = Matrix.Translation(Vector3.UnitX * time);
-
-                renderer.ProcessWorldChanges();
-                container.ClearDirty();
-
-                deferred.Draw();
-            };
-
-            game.Run();
-        }
-
-
-
     }
 }

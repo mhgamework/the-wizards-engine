@@ -7,7 +7,7 @@ using PostSharp.Reflection;
 namespace MHGameWork.TheWizards.Model
 {
     [Serializable]
-    [MulticastAttributeUsage(MulticastTargets.Property)]
+    [MulticastAttributeUsage(MulticastTargets.Property, PersistMetaData = true)]
     public sealed class ModelObjectChangedAttribute : LocationInterceptionAspect
     {
         public override bool CompileTimeValidate(LocationInfo locationInfo)

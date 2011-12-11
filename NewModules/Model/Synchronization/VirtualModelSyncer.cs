@@ -6,14 +6,23 @@ using MHGameWork.TheWizards.Utilities;
 
 namespace MHGameWork.TheWizards.Model.Synchronization
 {
+    /// <summary>
+    /// TODO: fix unique id collision
+    /// </summary>
     public class VirtualModelSyncer : IVirtualEndpoint
     {
         private readonly ModelContainer container;
+        private IVirtualEndpoint remoteEndPoint;
 
 
         public VirtualModelSyncer(ModelContainer container)
         {
             this.container = container;
+        }
+
+        public void setEndpoint(IVirtualEndpoint endPoint)
+        {
+            remoteEndPoint = endPoint;
         }
 
         public void ApplyRemoteChanges()
@@ -26,6 +35,7 @@ namespace MHGameWork.TheWizards.Model.Synchronization
 
         public void SendLocalChanges()
         {
+            localChanges.Clear();
             int length;
             ModelContainer.ObjectChange[] array;
             container.GetEntityChanges(out array, out length);
@@ -38,17 +48,19 @@ namespace MHGameWork.TheWizards.Model.Synchronization
                 syncChange.Object = syncedObject;
                 syncChange.ChangeType = change.ChangeType;
             }
+
+            remoteEndPoint.ApplyModelChanges(localChanges);
+
         }
 
         public class ChangesBuffer : IEnumerable<SyncChange>
         {
             private PrefilledList<SyncChange> buffer = new PrefilledList<SyncChange>(() => new SyncChange());
-            private int position = -1;
-            private int size = 0;
 
             public IEnumerator<SyncChange> GetEnumerator()
             {
-                for (int i = 0; i < size; i++)
+
+                for (int i = 0; i < buffer.Count; i++)
                 {
                     yield return buffer[i];
                 }
@@ -106,7 +118,11 @@ namespace MHGameWork.TheWizards.Model.Synchronization
         private void applyObjectAdded(SyncChange change)
         {
             var newInstance = (IModelObject)Activator.CreateInstance(change.Object.ModelObject.GetType());
-            newInstance.Initialize(container);
+            container.AddObject(newInstance);
+
+            var syncedObject = new SyncedObject { ModelObject = newInstance, UniqueId = change.Object.UniqueId }; //TODO: fix id clashing
+            objects.Add(syncedObject);
+
 
             synchronizeModelObject(change.Object.ModelObject, newInstance);
         }
@@ -136,6 +152,7 @@ namespace MHGameWork.TheWizards.Model.Synchronization
 
         private List<SyncedObject> objects = new List<SyncedObject>();
         private int nextUniqueId = 1;
+
         private SyncedObject getSyncedObject(IModelObject obj)
         {
             var ret = objects.Find(o => o.ModelObject == obj);
@@ -144,6 +161,7 @@ namespace MHGameWork.TheWizards.Model.Synchronization
                 ret = new SyncedObject();
                 ret.ModelObject = obj;
                 ret.UniqueId = nextUniqueId++;
+                objects.Add(ret);
             }
             return ret;
         }
