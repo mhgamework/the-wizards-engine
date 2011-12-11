@@ -19,7 +19,10 @@ namespace MHGameWork.TheWizards.Building
 
         private int wallTypeIndex = 0;
         private int floorTypeIndex = 0;
-        private float planeHeight = -0.5f;
+        public float planeHeight = -0.5f;
+
+        private Vector3 ptpStart = new Vector3(1000,0,0);
+        private Vector3 ptpEnd = new Vector3(1000,0,0);
 
         public DynamicPlaceTool(DX11Game game, DynamicBlockFactory blockFactory, DynamicTypeFactory typeFactory, WallPlacer wallPlacer,FloorPlacer floorPlacer)
         {
@@ -38,6 +41,10 @@ namespace MHGameWork.TheWizards.Building
                 executeSkewWallMode();
             if (PlaceMode == DynamicPlaceMode.FloorMode)
                 executeFloorMode();
+            if (PlaceMode == DynamicPlaceMode.PTPStraightMode)
+                executePTPStraightMode();
+            if (PlaceMode == DynamicPlaceMode.PTPSkewMode)
+                executePTPSkewMode();
         }
 
         private void executeStraightWallMode()
@@ -70,12 +77,15 @@ namespace MHGameWork.TheWizards.Building
 
             if (game.Keyboard.IsKeyPressed(Key.E))
                 wallPlacer.PlaceSkewWall(selectedPos, typeFactory.WallTypes[wallTypeIndex]);
+            
             if (selectedBlock != null)
             {
                 game.LineManager3D.AddCenteredBox(selectedBlock.Position, 1, System.Drawing.Color.White);
 
                 if (game.Keyboard.IsKeyPressed(Key.R))
                     removeWall(selectedBlock.Position);
+                if (game.Keyboard.IsKeyPressed(Key.T))
+                    wallPlacer.RotateSkewWall(selectedBlock.Position);
             }
             else
                 game.LineManager3D.AddCenteredBox(selectedPos, 1, System.Drawing.Color.Blue);
@@ -99,7 +109,7 @@ namespace MHGameWork.TheWizards.Building
                     planeHeight = -0.5f;
             }
 
-            drawGrid(planeHeight);
+            drawMovingGrid(planeHeight);
             Vector3 placePos = getPlaneIntersection(planeHeight);
 
             game.LineManager3D.AddLine(placePos + new Vector3(-0.5f, 0, 0), placePos + new Vector3(0.5f, 0, 0), System.Drawing.Color.Blue);
@@ -110,6 +120,83 @@ namespace MHGameWork.TheWizards.Building
             if (game.Keyboard.IsKeyDown(Key.R))
                 floorPlacer.RemoveFloor(placePos);
         }
+
+        private void executePTPStraightMode()
+        {
+            drawGrid(planeHeight);
+
+            var pos = snapToFaceMids(getPlaneIntersection(planeHeight));
+
+            if (ptpStart != new Vector3(1000, 0, 0) && Math.Abs(Vector3.Distance(ptpStart, pos)) > 1.01f)
+                pos = new Vector3(1000, 0, 0);
+            
+                game.LineManager3D.AddCenteredBox(pos, 0.2f, System.Drawing.Color.LightBlue);
+
+            if (game.Keyboard.IsKeyPressed(Key.R))
+            {
+                ptpStart = new Vector3(1000,0,0); //represents the 'NaN-vector3'
+                ptpEnd = new Vector3(1000, 0, 0);
+            }
+
+            if(ptpEnd != new Vector3(1000,0,0))
+            {
+                wallPlacer.PlaceStraightWallsPointToPoint(ptpStart, ptpEnd, typeFactory.WallTypes[wallTypeIndex]);
+                ptpStart = ptpEnd;
+                ptpEnd = new Vector3(1000, 0, 0);
+            }
+
+            else if(ptpStart != new Vector3(1000,0,0))
+            {
+                game.LineManager3D.AddCenteredBox(ptpStart, 0.2f, System.Drawing.Color.Red);
+
+                if (game.Keyboard.IsKeyPressed(Key.E))
+                    ptpEnd = pos;
+            }
+
+            else if (game.Keyboard.IsKeyPressed(Key.E))
+                ptpStart = pos;
+
+
+        }
+
+        private void executePTPSkewMode()
+        {
+            drawGrid(planeHeight);
+
+            var pos = snapToFaceMids(getPlaneIntersection(planeHeight));
+            
+            if (ptpStart != new Vector3(1000, 0, 0) && Math.Abs(Vector3.Distance(ptpStart, pos)) > 1.01f)
+                pos = new Vector3(1000, 0, 0);
+
+            game.LineManager3D.AddCenteredBox(pos, 0.2f, System.Drawing.Color.LightBlue);
+
+            if (game.Keyboard.IsKeyPressed(Key.R))
+            {
+                ptpStart = new Vector3(1000, 0, 0); //represents the 'NaN-vector3'
+                ptpEnd = new Vector3(1000, 0, 0);
+            }
+
+            if (ptpEnd != new Vector3(1000, 0, 0))
+            {
+                wallPlacer.PlaceSkewWallsPointToPoint(ptpStart, ptpEnd, typeFactory.WallTypes[wallTypeIndex]);
+                ptpStart = ptpEnd;
+                ptpEnd = new Vector3(1000, 0, 0);
+            }
+
+            else if (ptpStart != new Vector3(1000, 0, 0))
+            {
+                game.LineManager3D.AddCenteredBox(ptpStart, 0.2f, System.Drawing.Color.Red);
+
+                if (game.Keyboard.IsKeyPressed(Key.E))
+                    ptpEnd = pos;
+            }
+
+            else if (game.Keyboard.IsKeyPressed(Key.E))
+                ptpStart = pos;
+
+
+        }
+
 
         private void CalculatePlacePos(out Point3 placePos, out DynamicBlock selectedBlock)
         {
@@ -183,7 +270,7 @@ namespace MHGameWork.TheWizards.Building
         private Vector3 getPlaneIntersection(float height)
         {
             Ray ray = new Ray(game.SpectaterCamera.CameraPosition, game.SpectaterCamera.CameraDirection);
-            Plane p = new Plane(new Vector3(0, 1, 0), height);
+            Plane p = new Plane(new Vector3(0, 1, 0), -height);
             var pos = new Vector3();
 
             var intersects = ray.xna().Intersects(p.xna());
@@ -195,7 +282,7 @@ namespace MHGameWork.TheWizards.Building
             return pos;
         }
 
-        private void drawGrid(float height)
+        private void drawMovingGrid(float height)
         {
             Vector3 rawPoint = getPlaneIntersection(height);
             Vector3 middlePoint = new Vector3((int)Math.Floor(rawPoint.X), height, (int)Math.Floor(rawPoint.Z));
@@ -216,6 +303,40 @@ namespace MHGameWork.TheWizards.Building
 
                 }
             }
+        }
+
+        private void drawGrid(float height)
+        {
+            Vector3 middlePoint = new Vector3(0, height, 0);
+            int gridSize = 50;
+
+            for (int i = 0; i <= gridSize; i++)
+            {
+                for (int j = 0; j <= gridSize; j++)
+                {
+                    game.LineManager3D.AddLine(middlePoint + new Vector3(-i - 0.5f, 0, j + 0.5f), middlePoint + new Vector3(-i - 0.5f, 0, -j - 0.5f),
+                                               System.Drawing.Color.Gray);
+                    game.LineManager3D.AddLine(middlePoint + new Vector3(i + 0.5f, 0, j + 0.5f), middlePoint + new Vector3(i + 0.5f, 0, -j - 0.5f),
+                                               System.Drawing.Color.Gray);
+                    game.LineManager3D.AddLine(middlePoint + new Vector3(-i - 0.5f, 0, -j - 0.5f), middlePoint + new Vector3(i + 0.5f, 0, -j - 0.5f),
+                                               System.Drawing.Color.Gray);
+                    game.LineManager3D.AddLine(middlePoint + new Vector3(-i - 0.5f, 0, j + 0.5f), middlePoint + new Vector3(i + 0.5f, 0, j + 0.5f),
+                                               System.Drawing.Color.Gray);
+
+                }
+            }
+        }
+
+        public Vector3 snapToFaceMids(Vector3 pos)
+        {
+            var ret1 = new Vector3((float)Math.Floor(pos.X) + 0.5f, planeHeight, (float)Math.Floor(pos.Z));
+            var ret2 = new Vector3((float)Math.Floor(pos.X), planeHeight, (float)Math.Floor(pos.Z) + 0.5f);
+
+            if (Math.Abs(Vector3.Distance(pos, ret1)) < Math.Abs(Vector3.Distance(pos, ret2)))
+                return ret1;
+            else
+                return ret2;
+
         }
     }
 }

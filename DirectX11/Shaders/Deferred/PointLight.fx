@@ -135,7 +135,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 	//shadowMapDepth = ConvertToLinearDepth(shadowMapDepth, zNear,zFar);
 	shadowMapDepth = ConvertToLinearDepth(shadowMapDepth, ShadowMapProjection);
 	//return t(-shadowMapDepth);
-	shadowTerm = (shadowMapDepth< fLightDepth*0.99f) ? 0.0f: 1.0f;
+	shadowTerm = (shadowMapDepth< fLightDepth*0.996f) ? 0.0f: 1.0f;
 
 #endif
 

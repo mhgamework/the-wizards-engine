@@ -142,7 +142,7 @@ namespace MHGameWork.TheWizards.Tests.Building
 
             game.Run();
         }
-        
+
         [Test]
         public void TestPlayerMovement()
         {
@@ -594,7 +594,7 @@ namespace MHGameWork.TheWizards.Tests.Building
                 MeshMaterial = halfWallMesh.GetCoreData().Parts[0].MeshMaterial,
                 ObjectMatrix = Matrix.RotationY((float)Math.PI * -0.5f).xna() * Matrix.Translation(new Vector3(0, 0.5f, 0)).xna()
             };
-            
+
             var wallBend = new RAMMesh();
             wallBend.GetCoreData().Parts.Add(partZ);
             wallBend.GetCoreData().Parts.Add(partZh);
@@ -619,13 +619,13 @@ namespace MHGameWork.TheWizards.Tests.Building
             Point3 pos1 = new Point3(0, 0, 0);
             BlockType blockType1 = blockTypeFactory.TypeList[1];
             blockFactory.CreateBlock(blockType1, pos1);
-            
+
             Point3 pos2 = new Point3(1, 0, 0);
             blockFactory.CreateBlock(blockType1, pos2);
 
             blockPlaceLogic.CalulateBlocks();
 
-            
+
             game.GameLoopEvent += delegate
             {
                 playerController.Update();
@@ -676,7 +676,7 @@ namespace MHGameWork.TheWizards.Tests.Building
             Point3 pos4 = new Point3(1, 0, 2);
             Point3 pos5 = new Point3(2, 0, 1);
             BlockType blockType1 = blockTypeFactory.TypeList[1];
-           
+
             //testinput
             blockFactory.CreateBlock(blockType1, pos1);
             blockFactory.CreateBlock(blockType1, pos2);
@@ -767,7 +767,7 @@ namespace MHGameWork.TheWizards.Tests.Building
             };
 
 
-            Point3[] basicBlockLayoutList = { new Point3(0, 0, 0)};
+            Point3[] basicBlockLayoutList = { new Point3(0, 0, 0) };
             var basicBlockLayout = new BlockLayout(basicBlockLayoutList);
 
             var wallStraight = new RAMMesh();
@@ -961,7 +961,7 @@ namespace MHGameWork.TheWizards.Tests.Building
             blockTypeFactory.AddRotatedBlocktypes(wallT, tLayout);
             blockTypeFactory.AddRotatedBlocktypes(wallCross, crossLayout);
         }
-   
+
         /// <summary>
         /// Tests if a DynamicBlock can be created and if its slots can be filled in properly.
         /// Test succeeds if:
@@ -1008,7 +1008,7 @@ namespace MHGameWork.TheWizards.Tests.Building
                                         TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicSkew").FullName +
                                         "\\BasicSkew.mtl");
 
-            
+
             var dynBlock1 = new DynamicBlock(new Point3(1, 0, 0), renderer);
             var dynBlock2 = new DynamicBlock(new Point3(-1, 0, -1), renderer);
             var dynBlock3 = new DynamicBlock(new Point3(1, 0, 2), renderer);
@@ -1017,8 +1017,8 @@ namespace MHGameWork.TheWizards.Tests.Building
             var pillarUnit = new BuildUnit(basicPillar);
             var floorUnit = new BuildUnit(basicFloor);
             var skewUnit = new BuildUnit(basicSkew);
-            
-            dynBlock1.SetStraight(DynamicBlockDirection.X, 0,straightUnit);
+
+            dynBlock1.SetStraight(DynamicBlockDirection.X, 0, straightUnit);
             dynBlock1.SetStraight(DynamicBlockDirection.X, 1, straightUnit);
             dynBlock1.SetStraight(DynamicBlockDirection.MinX, 0, straightUnit);
             dynBlock1.SetStraight(DynamicBlockDirection.MinX, 1, straightUnit);
@@ -1068,18 +1068,18 @@ namespace MHGameWork.TheWizards.Tests.Building
             dynBlock3.SetFloor(DynamicBlockDirection.MinXZ, 1, floorUnit);
             dynBlock3.SetFloor(DynamicBlockDirection.XZ, 0, floorUnit);
             dynBlock3.SetFloor(DynamicBlockDirection.XZ, 1, floorUnit);
-            
+
             game.GameLoopEvent += delegate
             {
                 game.SpectaterCamera.CameraPosition =
                                              new SlimDX.Vector3(game.SpectaterCamera.CameraPosition.X, 2,
                                                                 game.SpectaterCamera.CameraPosition.Z);
-               renderer.Draw();
+                renderer.Draw();
             };
 
             game.Run();
         }
-        
+
         /// <summary>
         /// Tests if straight walls can be placed.
         /// Test succeeded if:
@@ -1135,14 +1135,14 @@ namespace MHGameWork.TheWizards.Tests.Building
             wallPlacer.PlaceStraightWall(new Point3(3, 0, 0), straightWallType1);
             wallPlacer.PlaceStraightWall(new Point3(0, 0, 1), straightWallType1);
 
-            
+
 
             game.GameLoopEvent += delegate
             {
                 game.SpectaterCamera.CameraPosition =
                                              new SlimDX.Vector3(game.SpectaterCamera.CameraPosition.X, 2,
                                                                 game.SpectaterCamera.CameraPosition.Z);
-                if(game.Keyboard.IsKeyPressed(Key.R))
+                if (game.Keyboard.IsKeyPressed(Key.R))
                     wallPlacer.RemoveStraightWall(new Point3(3, 0, 0));
                 if (game.Keyboard.IsKeyPressed(Key.E))
                     wallPlacer.PlaceStraightWall(new Point3(3, 0, 0), straightWallType1);
@@ -1228,7 +1228,7 @@ namespace MHGameWork.TheWizards.Tests.Building
             wallPlacer.PlaceSkewWall(new Point3(5, 0, 4), wallType);
             wallPlacer.PlaceSkewWall(new Point3(2, 0, 4), wallType);
             wallPlacer.PlaceSkewWall(new Point3(2, 0, 5), wallType);
-            
+
 
             game.GameLoopEvent += delegate
             {
@@ -1284,7 +1284,7 @@ namespace MHGameWork.TheWizards.Tests.Building
             light.LightDirection = Vector3.Normalize(new Vector3(2, -1, 3));
             var planeEl = renderer.CreateMeshElement(planeMesh);
             planeEl.WorldMatrix = Matrix.Scaling(new Vector3(100, 100, 100)) * Matrix.Translation(new Vector3(0, -0.5f, 0));
-           
+
             var basicFloorMesh = CreateMeshFromObj(meshConverter,
                                         TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicFloor").FullName +
                                         "\\BasicFloor.obj",
@@ -1300,13 +1300,13 @@ namespace MHGameWork.TheWizards.Tests.Building
             var resolver = new DynamicBlockResolver(dynBlockFactory);
 
             var floorPlacer = new FloorPlacer(dynBlockFactory, resolver);
-            
-             floorPlacer.PlaceFloor(new Vector3(0.1f,0f,0.1f), floorType);
-             floorPlacer.PlaceFloor(new Vector3(0.4f, 0f, 0.4f), floorType);
-             floorPlacer.PlaceFloor(new Vector3(-0.1f, 0f, 0.1f), floorType);
-             floorPlacer.PlaceFloor(new Vector3(-0.3f, 0f, -0.3f), floorType);
-             floorPlacer.PlaceFloor(new Vector3(0, 0f, 0.6f), floorType);
-             floorPlacer.PlaceFloor(new Vector3(0.51f, 0f, 0), floorType);
+
+            floorPlacer.PlaceFloor(new Vector3(0.1f, 0f, 0.1f), floorType);
+            floorPlacer.PlaceFloor(new Vector3(0.4f, 0f, 0.4f), floorType);
+            floorPlacer.PlaceFloor(new Vector3(-0.1f, 0f, 0.1f), floorType);
+            floorPlacer.PlaceFloor(new Vector3(-0.3f, 0f, -0.3f), floorType);
+            floorPlacer.PlaceFloor(new Vector3(0, 0f, 0.6f), floorType);
+            floorPlacer.PlaceFloor(new Vector3(0.51f, 0f, 0), floorType);
 
             bool displayBoxes = true;
 
@@ -1399,7 +1399,7 @@ namespace MHGameWork.TheWizards.Tests.Building
         }
 
         [Test]
-        public void TestPlaceWallsPointToPoint()
+        public void TestPlaceStraightWallsPointToPoint()
         {
             DX11Game game;
             DeferredRenderer renderer;
@@ -1410,8 +1410,11 @@ namespace MHGameWork.TheWizards.Tests.Building
             WallPlacer wallPlacer;
             loadDynamic(out game, out renderer, out placeTool, out dynBlockFactory, out dynTypeFactory, out floorPlacer, out wallPlacer);
 
-            
-            //wallPlacer.PlaceWallsPointToPoint(new Point3(0, 0,0), new Point3(0, 0, 3), dynTypeFactory.WallTypes[0]);
+            //Note that exactly one coordinate from these vectors should be 0.5 +- n!! 
+            wallPlacer.PlaceStraightWallsPointToPoint(new Vector3(0, 0, -0.5f), new Vector3(0, 0, 3.5f), dynTypeFactory.WallTypes[0]);
+            wallPlacer.PlaceStraightWallsPointToPoint(new Vector3(2.5f, 0, 0), new Vector3(8, 0, 3.5f), dynTypeFactory.WallTypes[0]);
+            wallPlacer.PlaceStraightWallsPointToPoint(new Vector3(-0.5f, 0, 2), new Vector3(-8.5f, 0, -2), dynTypeFactory.WallTypes[0]);
+            wallPlacer.PlaceStraightWallsPointToPoint(new Vector3(5, 0, 5.5f), new Vector3(5, 0, 6.5f), dynTypeFactory.WallTypes[0]);
 
             bool displayBoxes = true;
             game.GameLoopEvent += delegate
@@ -1434,13 +1437,53 @@ namespace MHGameWork.TheWizards.Tests.Building
 
             game.Run();
         }
-        
+
+        [Test]
+        public void TestPlaceSkewWallsPointToPoint()
+        {
+            DX11Game game;
+            DeferredRenderer renderer;
+            DynamicPlaceTool placeTool;
+            DynamicBlockFactory dynBlockFactory;
+            DynamicTypeFactory dynTypeFactory;
+            FloorPlacer floorPlacer;
+            WallPlacer wallPlacer;
+            loadDynamic(out game, out renderer, out placeTool, out dynBlockFactory, out dynTypeFactory, out floorPlacer, out wallPlacer);
+
+            //Note that exactly one coordinate from these vectors should be 0.5 +- n!! 
+            wallPlacer.PlaceSkewWallsPointToPoint(new Vector3(2.5f, 0, 0), new Vector3(0, 0, 2.5f), dynTypeFactory.WallTypes[0]);
+            wallPlacer.PlaceSkewWallsPointToPoint(new Vector3(2.5f, 1, 0), new Vector3(0, 1, 2.5f), dynTypeFactory.WallTypes[0]);
+            wallPlacer.PlaceSkewWallsPointToPoint(new Vector3(2.5f, 0, 0), new Vector3(5, 0, 2.5f), dynTypeFactory.WallTypes[0]);
+            wallPlacer.PlaceSkewWallsPointToPoint(new Vector3(5, 0, 5.5f), new Vector3(20, 0, 2.5f), dynTypeFactory.WallTypes[0]);
+
+            bool displayBoxes = true;
+            game.GameLoopEvent += delegate
+            {
+                if (game.Keyboard.IsKeyPressed(Key.Q))
+                {
+                    displayBoxes = !displayBoxes;
+                }
+                if (displayBoxes)
+                {
+                    for (int i = 0; i < dynBlockFactory.BlockList.Count; i++)
+                    {
+                        var cPos = dynBlockFactory.BlockList[i].Position;
+                        game.LineManager3D.AddCenteredBox(cPos, 1, System.Drawing.Color.White);
+                    }
+                }
+
+                renderer.Draw();
+            };
+
+            game.Run();
+        }
+
         [Test]
         public void TestPlaceWindows()
         {
-            
+
         }
-       
+
         /// <summary>
         /// PLAYTEST
         /// Tests all features that are working.
@@ -1463,14 +1506,72 @@ namespace MHGameWork.TheWizards.Tests.Building
 
             bool displayBoxes = false;
             game.GameLoopEvent += delegate
+                                      {
+                                          game.SpectaterCamera.CameraPosition = new Vector3(game.SpectaterCamera.CameraPosition.X, placeTool.planeHeight + 2.5f, game.SpectaterCamera.CameraPosition.Z);
+
+                                          if (game.Keyboard.IsKeyPressed(Key.NumberPad1))
+                                              placeTool.PlaceMode = DynamicPlaceMode.StraightWallMode;
+                                          if (game.Keyboard.IsKeyPressed(Key.NumberPad2))
+                                              placeTool.PlaceMode = DynamicPlaceMode.SkewWallMode;
+                                          if (game.Keyboard.IsKeyPressed(Key.NumberPad3))
+                                              placeTool.PlaceMode = DynamicPlaceMode.FloorMode;
+                                          if (game.Keyboard.IsKeyPressed(Key.NumberPad4))
+                                              placeTool.PlaceMode = DynamicPlaceMode.PTPStraightMode;
+                                          if (game.Keyboard.IsKeyPressed(Key.NumberPad5))
+                                              placeTool.PlaceMode = DynamicPlaceMode.PTPSkewMode;
+
+                                          if (game.Keyboard.IsKeyPressed(Key.UpArrow))
+                                              placeTool.planeHeight++;
+                                          if (game.Keyboard.IsKeyPressed(Key.DownArrow))
+                                          {
+                                              placeTool.planeHeight--;
+                                              if (placeTool.planeHeight < -0.5)
+                                                  placeTool.planeHeight++;
+                                          }
+
+                                          if (game.Keyboard.IsKeyPressed(Key.Q))
+                                              displayBoxes = !displayBoxes;
+
+                                          if (displayBoxes)
+                                          {
+                                              for (int i = 0; i < dynBlockFactory.BlockList.Count; i++)
+                                              {
+                                                  var cPos = dynBlockFactory.BlockList[i].Position;
+                                                  game.LineManager3D.AddCenteredBox(cPos, 1, System.Drawing.Color.Gray);
+                                              }
+                                          }
+
+                                          placeTool.Update();
+
+                                          renderer.Draw();
+                                      };
+
+            game.Run();
+        }
+
+        [Test]
+        public void TestPlayerPTP()
+        {
+            DX11Game game;
+            DeferredRenderer renderer;
+            DynamicPlaceTool placeTool;
+            DynamicBlockFactory dynBlockFactory;
+            DynamicTypeFactory dynTypeFactory;
+            FloorPlacer floorPlacer;
+            WallPlacer wallPlacer;
+            loadDynamic(out game, out renderer, out placeTool, out dynBlockFactory, out dynTypeFactory, out floorPlacer, out wallPlacer);
+
+            Vector3 pos1 = new Vector3(0, 0, 0.6f);
+            Assert.GreaterOrEqual(0.5f, -1 * placeTool.snapToFaceMids(pos1).Z);
+
+            Vector3 pos2 = new Vector3(0, 0, 0.9f);
+            Assert.GreaterOrEqual(0.5f, -1 * placeTool.snapToFaceMids(pos1).Z);
+
+            placeTool.PlaceMode = DynamicPlaceMode.PTPStraightMode;
+
+            bool displayBoxes = false;
+            game.GameLoopEvent += delegate
             {
-                if(game.Keyboard.IsKeyPressed(Key.NumberPad1))
-                    placeTool.PlaceMode = DynamicPlaceMode.StraightWallMode;
-                if(game.Keyboard.IsKeyPressed(Key.NumberPad2))
-                    placeTool.PlaceMode = DynamicPlaceMode.SkewWallMode;
-                if (game.Keyboard.IsKeyPressed(Key.NumberPad3))
-                    placeTool.PlaceMode = DynamicPlaceMode.FloorMode;
-                
                 if (game.Keyboard.IsKeyPressed(Key.Q))
                     displayBoxes = !displayBoxes;
 
@@ -1483,6 +1584,11 @@ namespace MHGameWork.TheWizards.Tests.Building
                     }
                 }
 
+                if (game.Keyboard.IsKeyPressed(Key.NumberPad1))
+                    placeTool.PlaceMode = DynamicPlaceMode.PTPStraightMode;
+                if (game.Keyboard.IsKeyPressed(Key.NumberPad2))
+                    placeTool.PlaceMode = DynamicPlaceMode.PTPSkewMode;
+
                 placeTool.Update();
 
                 renderer.Draw();
@@ -1491,7 +1597,7 @@ namespace MHGameWork.TheWizards.Tests.Building
             game.Run();
         }
 
-        
+
         /// <summary>
         /// Sets up a DX11Game, loads meshes, creates BuildUnits, adds them to Types, creates factories, placers and a placetool.
         /// </summary>
@@ -1503,16 +1609,44 @@ namespace MHGameWork.TheWizards.Tests.Building
             game.InitDirectX();
             renderer = new DeferredRenderer(game);
             var meshConverter = new OBJToRAMMeshConverter(new RAMTextureFactory());
-            var planeMesh = CreateMeshFromObj(meshConverter,
-                                         TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
-                                         "\\Plane.obj",
-                                         TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
-                                         "\\Plane.mtl");
+
             DirectionalLight light = renderer.CreateDirectionalLight();
-            light.ShadowsEnabled = true;
+            light.ShadowsEnabled = false;
             light.LightDirection = Vector3.Normalize(new Vector3(2, -1, 3));
+
+            PointLight light2 = renderer.CreatePointLight();
+            light2.LightPosition = new Vector3(0, 80, 40);
+            light2.ShadowsEnabled = true;
+            light2.LightRadius = 1000; //does this do anything??
+            light2.LightIntensity = 1;
+
+            /* old white planemesh
+            var planeMesh = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                        "\\Plane.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                        "\\Plane.mtl");
             var planeEl = renderer.CreateMeshElement(planeMesh);
             planeEl.WorldMatrix = Matrix.Scaling(new Vector3(100, 100, 100)) * Matrix.Translation(new Vector3(0, -0.5f, 0));
+            */
+
+            var planeMesh = CreateMeshFromObj(meshConverter,
+                                       TWDir.GameData.CreateSubdirectory("Core\\GroundPlane").FullName +
+                                       "\\GroundPlane001.obj",
+                                       TWDir.GameData.CreateSubdirectory("Core\\GroundPlane").FullName +
+                                       "\\GroundPlane001.mtl");
+            var planeEl = renderer.CreateMeshElement(planeMesh);
+            planeEl.WorldMatrix = Matrix.Scaling(new Vector3(20, 20, 20)) * Matrix.Translation(new Vector3(0, -0.5f, 0));
+
+            var skydome = CreateMeshFromObj(meshConverter,
+                                         TWDir.GameData.CreateSubdirectory("Core\\Skydome").FullName +
+                                         "\\Skydome001.obj",
+                                         TWDir.GameData.CreateSubdirectory("Core\\Skydome").FullName +
+                                         "\\Skydome001.mtl");
+            var skydomeEl = renderer.CreateMeshElement(skydome);
+            skydomeEl.WorldMatrix = Matrix.Scaling(new Vector3(1, 1, 1));
+
+
 
             var basicStraightMesh = CreateMeshFromObj(meshConverter,
                                          TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicStraight").FullName +
@@ -1559,6 +1693,6 @@ namespace MHGameWork.TheWizards.Tests.Building
 
             placeTool = new DynamicPlaceTool(game, dynBlockFactory, dynTypeFactory, wallPlacer, floorPlacer);
         }
-        
+
     }
 }

@@ -20,6 +20,8 @@ namespace MHGameWork.TheWizards.Building
 
         public void ResolveWalls(DynamicBlock b, WallType type)
         {
+            if (b == null)
+                return;
             if (b.hasStraightWalls)
                 resolveStraightWalls(b, type);
             if (b.hasSkewWalls)
@@ -28,6 +30,12 @@ namespace MHGameWork.TheWizards.Building
 
         private void resolveStraightWalls(DynamicBlock b, WallType type)
         {
+            if (!b.hasStraightWalls)
+                return;
+
+            if(b.getPillarSlot().BuildUnit == null)
+                b.SetPillar(type.PillarUnit);
+
             var x = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position + Vector3.UnitX));
             var minX = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position - Vector3.UnitX));
             var z = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position + Vector3.UnitZ));
@@ -138,8 +146,31 @@ namespace MHGameWork.TheWizards.Building
                 b.SetSkew(DynamicBlockDirection.XZ, 0, null);
                 b.SetSkew(DynamicBlockDirection.XZ, 1, null);
             }
+            if ((x != null && minX != null && x.HasWalls() && minX.HasWalls()) || (z != null && minZ != null && z.HasWalls() && minZ.HasWalls()))
+            {
+                if (b.GetSkewSlot(DynamicBlockDirection.XMinZ, 0).BuildUnit == null)
+                    b.SetSkew(DynamicBlockDirection.XMinZ, 0, type.SkewUnit);
+                if (b.GetSkewSlot(DynamicBlockDirection.XMinZ, 1).BuildUnit == null)
+                    b.SetSkew(DynamicBlockDirection.XMinZ, 1, type.SkewUnit);
+
+                if (b.GetSkewSlot(DynamicBlockDirection.MinXMinZ, 0).BuildUnit == null)
+                    b.SetSkew(DynamicBlockDirection.MinXMinZ, 0, type.SkewUnit);
+                if (b.GetSkewSlot(DynamicBlockDirection.MinXMinZ, 1).BuildUnit == null)
+                    b.SetSkew(DynamicBlockDirection.MinXMinZ, 1, type.SkewUnit);
+
+                if (b.GetSkewSlot(DynamicBlockDirection.MinXZ, 0).BuildUnit == null)
+                    b.SetSkew(DynamicBlockDirection.MinXZ, 0, type.SkewUnit);
+                if (b.GetSkewSlot(DynamicBlockDirection.MinXZ, 1).BuildUnit == null)
+                    b.SetSkew(DynamicBlockDirection.MinXZ, 1, type.SkewUnit);
+
+                if (b.GetSkewSlot(DynamicBlockDirection.XZ, 0).BuildUnit == null)
+                    b.SetSkew(DynamicBlockDirection.XZ, 0, type.SkewUnit);
+                if (b.GetSkewSlot(DynamicBlockDirection.XZ, 1).BuildUnit == null)
+                    b.SetSkew(DynamicBlockDirection.XZ, 1, type.SkewUnit);
+            }
         }
 
+        //PROBABLY NOT USED ANYMORE
         public void ResolveFloors(DynamicBlock b, FloorType type)
         {
             var x = dynBlockFactory.GetBlockAtPosition(new Point3(b.Position + Vector3.UnitX));

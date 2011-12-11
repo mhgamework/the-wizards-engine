@@ -7,6 +7,6 @@ namespace MHGameWork.TheWizards.Building
 {
     public enum DynamicPlaceMode
     {
-        StraightWallMode, SkewWallMode, FloorMode, WindowMode, DecoMode
+        StraightWallMode, SkewWallMode, PTPStraightMode, PTPSkewMode, FloorMode, WindowMode, DecoMode
     }
 }

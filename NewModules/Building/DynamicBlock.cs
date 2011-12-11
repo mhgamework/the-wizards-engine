@@ -49,6 +49,11 @@ namespace MHGameWork.TheWizards.Building
             pillarh.SetBuildUnit(buildUnit);
         }
 
+        public BuildSlot getPillarSlot()
+        {
+            return pillar;
+        }
+
         public void SetFloor(DynamicBlockDirection dir, int closeFar, BuildUnit buildUnit)
         {
             GetFloorSlot(dir, closeFar).SetBuildUnit(buildUnit);
@@ -306,6 +311,40 @@ namespace MHGameWork.TheWizards.Building
                 return false;
 
             return true;
+        }
+    
+        public static DynamicBlockDirection GetDirectionFromVector(Vector3 v)
+        {
+
+            if(v.X == 0)
+            {
+                if (v.Z == 0)
+                    throw new Exception("invalid vector given");
+                if(v.Z < 0)
+                    return DynamicBlockDirection.MinZ;
+                if(v.Z > 0)
+                    return DynamicBlockDirection.Z;
+            }
+            if(v.X < 0)
+            {
+                if (v.Z == 0)
+                    return DynamicBlockDirection.MinX;
+                if (v.Z < 0)
+                    return DynamicBlockDirection.MinXMinZ;
+                if (v.Z > 0)
+                    return DynamicBlockDirection.MinXZ;
+            }
+            if (v.X > 0)
+            {
+                if (v.Z == 0)
+                    return DynamicBlockDirection.X;
+                if (v.Z < 0)
+                    return DynamicBlockDirection.XMinZ;
+                if (v.Z > 0)
+                    return DynamicBlockDirection.XZ;
+            }
+
+            return DynamicBlockDirection.X; // wont happen
         }
     }
 }
