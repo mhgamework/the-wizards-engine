@@ -12,12 +12,14 @@ namespace MHGameWork.TheWizards.Model.Synchronization
     public class VirtualModelSyncer : IVirtualEndpoint
     {
         private readonly ModelContainer container;
+        private readonly byte unqiueSyncerId;
         private IVirtualEndpoint remoteEndPoint;
 
 
-        public VirtualModelSyncer(ModelContainer container)
+        public VirtualModelSyncer(ModelContainer container, byte unqiueSyncerID)
         {
             this.container = container;
+            unqiueSyncerId = unqiueSyncerID;
         }
 
         public void setEndpoint(IVirtualEndpoint endPoint)
@@ -120,7 +122,7 @@ namespace MHGameWork.TheWizards.Model.Synchronization
             var newInstance = (IModelObject)Activator.CreateInstance(change.Object.ModelObject.GetType());
             container.AddObject(newInstance);
 
-            var syncedObject = new SyncedObject { ModelObject = newInstance, UniqueId = change.Object.UniqueId }; //TODO: fix id clashing
+            var syncedObject = new SyncedObject { ModelObject = newInstance, UniqueId = change.Object.UniqueId };
             objects.Add(syncedObject);
 
 
@@ -160,7 +162,7 @@ namespace MHGameWork.TheWizards.Model.Synchronization
             {
                 ret = new SyncedObject();
                 ret.ModelObject = obj;
-                ret.UniqueId = nextUniqueId++;
+                ret.UniqueId = unqiueSyncerId << 24 + nextUniqueId++;
                 objects.Add(ret);
             }
             return ret;

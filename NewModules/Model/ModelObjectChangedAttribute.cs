@@ -18,7 +18,12 @@ namespace MHGameWork.TheWizards.Model
                 Message.Write(MessageLocation.Of(locationInfo.PropertyInfo), SeverityType.Error, "ModelErrorCode", "ModelObjectChangedAttribute was applied to a class not implementing IModelObject: " +
                     locationInfo.DeclaringType.FullName);
             }
-            if (locationInfo.LocationKind == LocationKind.Property && locationInfo.PropertyInfo.PropertyType.Equals(typeof(ModelContainer))) //TODO: maybe cheat
+            if (locationInfo.LocationKind != LocationKind.Property)
+                return false;
+
+            if (!locationInfo.PropertyInfo.CanRead || !locationInfo.PropertyInfo.CanWrite)
+                return false;
+            if (locationInfo.LocationKind == LocationKind.Property && locationInfo.PropertyInfo.PropertyType.Equals(typeof(ModelContainer))) // dont sync modelcontainers!
                 return false;
             return base.CompileTimeValidate(locationInfo);
         }

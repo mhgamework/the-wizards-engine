@@ -45,8 +45,8 @@ namespace MHGameWork.TheWizards.Tests.Model
             light.ShadowsEnabled = true;
 
 
-            var serverSyncer = new VirtualModelSyncer(serverContainer);
-            var clientSyncer = new VirtualModelSyncer(clientContainer);
+            var serverSyncer = new VirtualModelSyncer(serverContainer, 1);
+            var clientSyncer = new VirtualModelSyncer(clientContainer, 2);
             serverSyncer.setEndpoint(clientSyncer);
             clientSyncer.setEndpoint(serverSyncer);
 
@@ -64,7 +64,7 @@ namespace MHGameWork.TheWizards.Tests.Model
                 serverSyncer.SendLocalChanges();
 
                 renderer.ProcessWorldChanges();
-                
+
                 clientContainer.ClearDirty();
                 serverContainer.ClearDirty();
 
@@ -102,6 +102,92 @@ namespace MHGameWork.TheWizards.Tests.Model
             game.Run();
         }
 
+        [Test]
+        public void TestServerCreateModifyDestroy()
+        {
+            TheWizards.Model.Entity ent = null;
+
+            Vector3 pos = new Vector3();
+            Vector3 velocity = new Vector3();
+
+            GameLoopAction = delegate
+                             {
+                                 if (ent == null)
+                                 {
+                                     ent = new TheWizards.Model.Entity();
+                                     serverContainer.AddObject(ent);
+                                     ent.Mesh = mesh;
+                                     pos = Vector3.UnitY * 4f;
+                                     velocity = Vector3.UnitY;
+                                 }
+                                 else if (pos.Y < 0)
+                                 {
+                                     serverContainer.RemoveObject(ent);
+                                     ent = null;
+                                 }
+                                 else
+                                 {
+                                     velocity -= Vector3.UnitY * game.Elapsed;
+                                     pos += velocity * game.Elapsed;
+
+                                     ent.Mesh = mesh;
+                                     ent.WorldMatrix = Matrix.Translation(pos);
+                                 }
+
+
+                             };
+
+            game.Run();
+        }
+
+
+        [ModelObjectChanged]
+        private class SingleEmitter : IModelObject
+        {
+            private readonly ModelContainer container;
+            private Vector3 pos;
+            private Vector3 velocity;
+
+            public IMesh Mesh { get; set; }
+
+            public TheWizards.Model.Entity Entity { get; set; }
+
+            public SingleEmitter()
+            {
+            }
+
+            public void Update(float elapsed)
+            {
+                if (Entity == null)
+                {
+                    Entity = new TheWizards.Model.Entity();
+                    container.AddObject(Entity);
+                    Entity.Mesh = Mesh;
+                    pos = Vector3.UnitY * 4f;
+                    velocity = Vector3.UnitY;
+                }
+                else if (pos.Y < 0)
+                {
+                    container.RemoveObject(Entity);
+                    Entity = null;
+                }
+                else
+                {
+                    velocity -= Vector3.UnitY * elapsed;
+                    pos += velocity * elapsed;
+
+                    Entity.Mesh = Mesh;
+                    Entity.WorldMatrix = Matrix.Translation(pos);
+                }
+            }
+
+            public ModelContainer Container { get; private set; }
+
+            public void Initialize(ModelContainer container)
+            {
+                Container = container;
+            }
+        }
 
     }
 }
