@@ -23,24 +23,13 @@ namespace MHGameWork.TheWizards.Model
             return base.CompileTimeValidate(locationInfo);
         }
 
-        public override void CompileTimeInitialize(LocationInfo targetLocation, AspectInfo aspectInfo)
-        {
-            base.CompileTimeInitialize(targetLocation, aspectInfo);
-        }
-
-        public override void RuntimeInitialize(LocationInfo locationInfo)
-        {
-
-            base.RuntimeInitialize(locationInfo);
-        }
-
-
         public override void OnSetValue(LocationInterceptionArgs args)
         {
-
             if (args.Value != args.GetCurrentValue())
             {
-                Console.WriteLine("Changed!");
+                var obj = (IModelObject)args.Instance;
+                if (obj.Container != null)
+                    obj.Container.NotifyObjectModified(obj);
             }
             args.ProceedSetValue();
             base.OnSetValue(args);

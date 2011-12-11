@@ -46,6 +46,10 @@ namespace MHGameWork.TheWizards.Model
         {
             if (Objects.Contains(obj)) throw new InvalidOperationException("Object already added");
 
+            Objects.Add(obj);
+
+            obj.Initialize(this);
+
             flagChanged(obj, WorldChangeType.Added);
         }
         public void RemoveObject(IModelObject obj)
@@ -77,9 +81,12 @@ namespace MHGameWork.TheWizards.Model
                 return;
             }
 
-            if (changeType == WorldChangeType.Modified && (ret.ChangeType == WorldChangeType.None || ret.ChangeType == WorldChangeType.Modified))
+            if (changeType == WorldChangeType.Modified)
             {
-                ret.ChangeType = changeType;
+                if (ret.ChangeType == WorldChangeType.None || ret.ChangeType == WorldChangeType.Modified)
+                {
+                    ret.ChangeType = changeType;
+                }
                 return;
             }
 
@@ -128,7 +135,8 @@ namespace MHGameWork.TheWizards.Model
         // Helper methods (?)
         public Entity CreateNewEntity(IMesh mesh, Matrix worldMatrix)
         {
-            var ent = new Entity(this);
+            var ent = new Entity();
+            ent.Initialize(this);
 
             Objects.Add(ent);
 

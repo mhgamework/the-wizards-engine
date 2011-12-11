@@ -226,10 +226,13 @@
     </Compile>
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientFiles.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\ServerClientMain.cs" />
+    <Compile Include="Model\Synchronization\IVirtualEndpoint.cs" />
+    <Compile Include="Model\Synchronization\VirtualModelSyncer.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\IModelObject.cs" />
     <Compile Include="Model\ModelContainer.cs" />
     <Compile Include="Model\ModelObjectChangedAttribute.cs" />
+    <Compile Include="Model\Synchronization\VirtualMultiEndpoint.cs" />
     <Compile Include="Particles\BallParticalCreater.cs" />
     <Compile Include="Particles\EmitterParameters.cs" />
     <Compile Include="Particles\FlameParticalCreater.cs" />

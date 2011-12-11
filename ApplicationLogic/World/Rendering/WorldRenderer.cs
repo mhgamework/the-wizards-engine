@@ -31,6 +31,10 @@ namespace MHGameWork.TheWizards.World.Rendering
             {
                 var change = objectChanges[i];
 
+
+                if (!(change.ModelObject is Model.Entity))
+                    continue;
+
                 var ent = (Model.Entity)change.ModelObject;
 
                 switch (change.ChangeType)
