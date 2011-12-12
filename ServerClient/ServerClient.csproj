@@ -176,7 +176,10 @@
   <ItemGroup>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
-    <None Include="App.config" />
+    <None Include="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\TranslationGizmoLogo.png" />
     <None Include="Resources\TranslationGizmoLogo64.png" />
     <Content Include="Novodex_C_Wrapper.dll">

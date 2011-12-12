@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.Tests.Building;
@@ -12,10 +13,31 @@ namespace MHGameWork.TheWizards.Building
     /// <summary>
     /// Responsible for storing and rendering a BuildUnit. It has a position relative to the position of the DynamicBlock it belongs to.
     /// </summary>
-    public class BuildSlot
+    [ModelObjectChanged]
+    public class BuildSlot : IModelObject
     {
+        public Vector3 Scaling
+        {
+            get { return scaling; }
+        }
+
+        public DynamicBlock Block
+        {
+            get { return block; }
+        }
+
+        public Vector3 RelativeTranslation1
+        {
+            get { return RelativeTranslation; }
+        }
+
+        public float RelativeRotationY1
+        {
+            get { return RelativeRotationY; }
+        }
+
         private readonly Vector3 scaling;
-        public BuildUnit BuildUnit;
+        public BuildUnit BuildUnit { get; set; }
         private readonly DynamicBlock block;
         public Vector3 RelativeTranslation;
         public float RelativeRotationY;
@@ -42,18 +64,15 @@ namespace MHGameWork.TheWizards.Building
 
         public void SetBuildUnit(BuildUnit buildUnit)
         {
-            if (meshEl != null)
-            {
-                meshEl.Delete();
-                meshEl = null;
-            }
-            this.BuildUnit = buildUnit;
-            if (buildUnit != null)
-            {
-                meshEl = renderer.CreateMeshElement(buildUnit.Mesh);
-                meshEl.WorldMatrix = Matrix.Scaling(scaling) * Matrix.RotationY(RelativeRotationY)*Matrix.Translation(RelativeTranslation)*
-                                     Matrix.Translation(block.Position);
-            }
+            BuildUnit = buildUnit;
+            return;
+            
+        }
+
+        public ModelContainer Container { get; private set; }
+        public void Initialize(ModelContainer container)
+        {
+            Container = container;
         }
     }
 }

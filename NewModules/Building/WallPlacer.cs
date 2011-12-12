@@ -87,6 +87,11 @@ namespace MHGameWork.TheWizards.Building
 
         }
 
+        /// <summary>
+        /// currently not used 
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="type"></param>
         public void AddSkewWall(Point3 pos, WallType type)
         {
             var b = dynBlockFactory.GetBlockAtPosition(pos);
@@ -97,20 +102,32 @@ namespace MHGameWork.TheWizards.Building
                 return;
             b.hasSkewWalls = true;
 
-            int nbWalls = b.getNbSkewWalls();
-
-            if(nbWalls == 0)
-            //dummy-implementation, rotate for other placements
-            //should be decided on  
-            b.SetSkew(DynamicBlockDirection.XZ, 0, type.SkewUnit);
-            b.SetSkew(DynamicBlockDirection.XZ, 1, type.SkewUnit);
+            int nbSkewWalls = b.GetNbSkewWalls();
+            b.EmptyAllSkewSlots();
+            
+            if (nbSkewWalls >= 0)
+            {
+                b.SetSkew(DynamicBlockDirection.XZ, 0, type.SkewUnit);
+                b.SetSkew(DynamicBlockDirection.XZ, 1, type.SkewUnit);
+            }
+            if (nbSkewWalls >= 1)
+            {
+                b.SetSkew(DynamicBlockDirection.MinXZ, 0, type.SkewUnit);
+                b.SetSkew(DynamicBlockDirection.MinXZ, 1, type.SkewUnit);
+            }
+            if (nbSkewWalls >= 2)
+            {
+                b.SetSkew(DynamicBlockDirection.XMinZ, 0, type.SkewUnit);
+                b.SetSkew(DynamicBlockDirection.XMinZ, 1, type.SkewUnit);   
+            }
+            if (nbSkewWalls == 3)
+            {
+                b.SetSkew(DynamicBlockDirection.MinXMinZ, 0, type.SkewUnit);
+                b.SetSkew(DynamicBlockDirection.MinXMinZ, 1, type.SkewUnit);
+            }
+            
         }
 
-        /// <summary>
-        /// Should not be used anymore
-        /// </summary>
-        /// <param name="pos"></param>
-        /// <param name="type"></param>
         public void PlaceResolvedSkewWall(Point3 pos, WallType type)
         {
             var b = dynBlockFactory.GetBlockAtPosition(pos);

@@ -7,6 +7,7 @@ namespace MHGameWork.TheWizards.Model
     /// <summary>
     /// Responsible for representing a independent object in the World. It is not part of any greater system, like the building/terrain/trees
     /// </summary>
+    [ModelObjectChanged]
     public class Entity : IModelObject
     {
         public Entity()
@@ -14,10 +15,8 @@ namespace MHGameWork.TheWizards.Model
             WorldMatrix = Matrix.Identity;
         }
 
-        [ModelObjectChanged]
+        
         public IMesh Mesh { get; set; }
-
-        [ModelObjectChanged]
         public Matrix WorldMatrix { get; set; }
 
         public ModelContainer Container { get; private set; }

@@ -6,6 +6,7 @@ using DirectX11;
 using DirectX11.Graphics;
 using MHGameWork.TheWizards.Building;
 using MHGameWork.TheWizards.Entity;
+using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
@@ -20,6 +21,109 @@ namespace MHGameWork.TheWizards.Tests.Building
     [TestFixture]
     public class BuildingTest
     {
+        private ModelContainer container;
+        private DynamicBlockFactory dynBlockFactory;
+        private DX11Game game;
+        private DeferredRenderer renderer;
+        private DynamicTypeFactory dynTypeFactory;
+        private WallPlacer wallPlacer;
+        private FloorPlacer floorPlacer;
+        private DynamicPlaceTool placeTool;
+        private BuildSlotRenderer buildSlotRenderer;
+
+        [SetUp]
+        public void Init()
+        {
+            container = new ModelContainer();
+            game = new DX11Game();
+            game.InitDirectX();
+            renderer = new DeferredRenderer(game);
+            buildSlotRenderer = new BuildSlotRenderer(container, renderer);
+            var meshConverter = new OBJToRAMMeshConverter(new RAMTextureFactory());
+
+            DirectionalLight light = renderer.CreateDirectionalLight();
+            light.ShadowsEnabled = false;
+            light.LightDirection = Vector3.Normalize(new Vector3(2, -1, 3));
+
+            PointLight light2 = renderer.CreatePointLight();
+            light2.LightPosition = new Vector3(0, 80, 40);
+            light2.ShadowsEnabled = true;
+            light2.LightRadius = 1000; //does this do anything??
+            light2.LightIntensity = 1;
+
+            /* old white planemesh
+            var planeMesh = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                        "\\Plane.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
+                                        "\\Plane.mtl");
+            var planeEl = renderer.CreateMeshElement(planeMesh);
+            planeEl.WorldMatrix = Matrix.Scaling(new Vector3(100, 100, 100)) * Matrix.Translation(new Vector3(0, -0.5f, 0));
+            */
+
+            var planeMesh = CreateMeshFromObj(meshConverter,
+                                       TWDir.GameData.CreateSubdirectory("Core\\GroundPlane").FullName +
+                                       "\\GroundPlane001.obj",
+                                       TWDir.GameData.CreateSubdirectory("Core\\GroundPlane").FullName +
+                                       "\\GroundPlane001.mtl");
+            var planeEl = renderer.CreateMeshElement(planeMesh);
+            planeEl.WorldMatrix = Matrix.Scaling(new Vector3(20, 20, 20)) * Matrix.Translation(new Vector3(0, -0.5f, 0));
+
+            var skydome = CreateMeshFromObj(meshConverter,
+                                         TWDir.GameData.CreateSubdirectory("Core\\Skydome").FullName +
+                                         "\\Skydome001.obj",
+                                         TWDir.GameData.CreateSubdirectory("Core\\Skydome").FullName +
+                                         "\\Skydome001.mtl");
+            var skydomeEl = renderer.CreateMeshElement(skydome);
+            skydomeEl.WorldMatrix = Matrix.Scaling(new Vector3(1, 1, 1));
+
+
+
+            var basicStraightMesh = CreateMeshFromObj(meshConverter,
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicStraight").FullName +
+                                         "\\BasicStraight.obj",
+                                         TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicStraight").FullName +
+                                         "\\BasicStraight.mtl");
+            var basicPillarMesh = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicPillar").FullName +
+                                        "\\BasicPillar.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicPillar").FullName +
+                                        "\\BasicPillar.mtl");
+            var basicSkewMesh = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicSkew").FullName +
+                                        "\\BasicSkew.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicSkew").FullName +
+                                        "\\BasicSkew.mtl");
+            var basicFloorMesh = CreateMeshFromObj(meshConverter,
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicFloor").FullName +
+                                        "\\BasicFloor.obj",
+                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicFloor").FullName +
+                                        "\\BasicFloor.mtl");
+
+            var basicStraight = new BuildUnit(basicStraightMesh);
+            var basicPillar = new BuildUnit(basicPillarMesh);
+            var basicSkew = new BuildUnit(basicSkewMesh);
+            var basicFloor = new BuildUnit(basicFloorMesh);
+
+            var wallType = new WallType();
+            wallType.StraightUnit = basicStraight;
+            wallType.PillarUnit = basicPillar;
+            wallType.SkewUnit = basicSkew;
+
+            var floorType = new FloorType();
+            floorType.DefaultUnit = basicFloor;
+
+            dynBlockFactory = new DynamicBlockFactory(renderer, container);
+            dynTypeFactory = new DynamicTypeFactory();
+            dynTypeFactory.WallTypes.Add(wallType);
+            dynTypeFactory.FloorTypes.Add(floorType);
+            var resolver = new DynamicBlockResolver(dynBlockFactory);
+
+            wallPlacer = new WallPlacer(dynBlockFactory, resolver);
+            floorPlacer = new FloorPlacer(dynBlockFactory, resolver);
+
+            placeTool = new DynamicPlaceTool(game, dynBlockFactory, dynTypeFactory, wallPlacer, floorPlacer);
+        }
 
         public static RAMMesh CreateMeshFromObj(OBJToRAMMeshConverter c, string obj, string mtl)
         {
@@ -1009,9 +1113,9 @@ namespace MHGameWork.TheWizards.Tests.Building
                                         "\\BasicSkew.mtl");
 
 
-            var dynBlock1 = new DynamicBlock(new Point3(1, 0, 0), renderer);
-            var dynBlock2 = new DynamicBlock(new Point3(-1, 0, -1), renderer);
-            var dynBlock3 = new DynamicBlock(new Point3(1, 0, 2), renderer);
+            var dynBlock1 = new DynamicBlock(new Point3(1, 0, 0), renderer, container);
+            var dynBlock2 = new DynamicBlock(new Point3(-1, 0, -1), renderer, container);
+            var dynBlock3 = new DynamicBlock(new Point3(1, 0, 2), renderer, container);
 
             var straightUnit = new BuildUnit(basicStraight);
             var pillarUnit = new BuildUnit(basicPillar);
@@ -1124,7 +1228,7 @@ namespace MHGameWork.TheWizards.Tests.Building
             straightWallType1.StraightUnit = basicStraight;
             straightWallType1.PillarUnit = basicPillar;
 
-            var dynBlockFactory = new DynamicBlockFactory(renderer);
+            var dynBlockFactory = new DynamicBlockFactory(renderer, container);
             var resolver = new DynamicBlockResolver(dynBlockFactory);
             var wallPlacer = new WallPlacer(dynBlockFactory, resolver);
 
@@ -1203,7 +1307,7 @@ namespace MHGameWork.TheWizards.Tests.Building
             wallType.PillarUnit = basicPillar;
             wallType.SkewUnit = basicSkew;
 
-            var dynBlockFactory = new DynamicBlockFactory(renderer);
+            var dynBlockFactory = new DynamicBlockFactory(renderer, container);
             var resolver = new DynamicBlockResolver(dynBlockFactory);
 
             var wallPlacer = new WallPlacer(dynBlockFactory, resolver);
@@ -1296,7 +1400,7 @@ namespace MHGameWork.TheWizards.Tests.Building
             var floorType = new FloorType();
             floorType.DefaultUnit = basicFloor;
 
-            var dynBlockFactory = new DynamicBlockFactory(renderer);
+            var dynBlockFactory = new DynamicBlockFactory(renderer, container);
             var resolver = new DynamicBlockResolver(dynBlockFactory);
 
             var floorPlacer = new FloorPlacer(dynBlockFactory, resolver);
@@ -1364,14 +1468,7 @@ namespace MHGameWork.TheWizards.Tests.Building
         [Test]
         public void TestPaintFloorsDynamic()
         {
-            DX11Game game;
-            DeferredRenderer renderer;
-            DynamicPlaceTool placeTool;
-            DynamicBlockFactory dynBlockFactory;
-            DynamicTypeFactory dynTypeFactory;
-            FloorPlacer floorPlacer;
-            WallPlacer wallPlacer;
-            loadDynamic(out game, out renderer, out placeTool, out dynBlockFactory, out dynTypeFactory, out floorPlacer, out wallPlacer);
+            
 
             placeTool.PlaceMode = DynamicPlaceMode.FloorMode;
 
@@ -1401,15 +1498,7 @@ namespace MHGameWork.TheWizards.Tests.Building
         [Test]
         public void TestPlaceStraightWallsPointToPoint()
         {
-            DX11Game game;
-            DeferredRenderer renderer;
-            DynamicPlaceTool placeTool;
-            DynamicBlockFactory dynBlockFactory;
-            DynamicTypeFactory dynTypeFactory;
-            FloorPlacer floorPlacer;
-            WallPlacer wallPlacer;
-            loadDynamic(out game, out renderer, out placeTool, out dynBlockFactory, out dynTypeFactory, out floorPlacer, out wallPlacer);
-
+           
             //Note that exactly one coordinate from these vectors should be 0.5 +- n!! 
             wallPlacer.PlaceStraightWallsPointToPoint(new Vector3(0, 0, -0.5f), new Vector3(0, 0, 3.5f), dynTypeFactory.WallTypes[0]);
             wallPlacer.PlaceStraightWallsPointToPoint(new Vector3(2.5f, 0, 0), new Vector3(8, 0, 3.5f), dynTypeFactory.WallTypes[0]);
@@ -1441,14 +1530,7 @@ namespace MHGameWork.TheWizards.Tests.Building
         [Test]
         public void TestPlaceSkewWallsPointToPoint()
         {
-            DX11Game game;
-            DeferredRenderer renderer;
-            DynamicPlaceTool placeTool;
-            DynamicBlockFactory dynBlockFactory;
-            DynamicTypeFactory dynTypeFactory;
-            FloorPlacer floorPlacer;
-            WallPlacer wallPlacer;
-            loadDynamic(out game, out renderer, out placeTool, out dynBlockFactory, out dynTypeFactory, out floorPlacer, out wallPlacer);
+            
 
             //Note that exactly one coordinate from these vectors should be 0.5 +- n!! 
             wallPlacer.PlaceSkewWallsPointToPoint(new Vector3(2.5f, 0, 0), new Vector3(0, 0, 2.5f), dynTypeFactory.WallTypes[0]);
@@ -1492,14 +1574,7 @@ namespace MHGameWork.TheWizards.Tests.Building
         [Test]
         public void TestWallFloorDynamicPLAY()
         {
-            DX11Game game;
-            DeferredRenderer renderer;
-            DynamicPlaceTool placeTool;
-            DynamicBlockFactory dynBlockFactory;
-            DynamicTypeFactory dynTypeFactory;
-            FloorPlacer floorPlacer;
-            WallPlacer wallPlacer;
-            loadDynamic(out game, out renderer, out placeTool, out dynBlockFactory, out dynTypeFactory, out floorPlacer, out wallPlacer);
+            
 
             placeTool.PlaceMode = DynamicPlaceMode.StraightWallMode;
 
@@ -1541,8 +1616,11 @@ namespace MHGameWork.TheWizards.Tests.Building
                                               }
                                           }
 
+
                                           placeTool.Update();
 
+                                          buildSlotRenderer.ProcessWorldChanges();
+                                          container.ClearDirty();
                                           renderer.Draw();
                                       };
 
@@ -1552,14 +1630,7 @@ namespace MHGameWork.TheWizards.Tests.Building
         [Test]
         public void TestPlayerPTP()
         {
-            DX11Game game;
-            DeferredRenderer renderer;
-            DynamicPlaceTool placeTool;
-            DynamicBlockFactory dynBlockFactory;
-            DynamicTypeFactory dynTypeFactory;
-            FloorPlacer floorPlacer;
-            WallPlacer wallPlacer;
-            loadDynamic(out game, out renderer, out placeTool, out dynBlockFactory, out dynTypeFactory, out floorPlacer, out wallPlacer);
+           
 
             Vector3 pos1 = new Vector3(0, 0, 0.6f);
             Assert.GreaterOrEqual(0.5f, -1 * placeTool.snapToFaceMids(pos1).Z);
@@ -1596,103 +1667,5 @@ namespace MHGameWork.TheWizards.Tests.Building
 
             game.Run();
         }
-
-
-        /// <summary>
-        /// Sets up a DX11Game, loads meshes, creates BuildUnits, adds them to Types, creates factories, placers and a placetool.
-        /// </summary>
-        /// <param name="game"></param>
-        /// <param name="placeTool"></param>
-        private void loadDynamic(out DX11Game game, out DeferredRenderer renderer, out DynamicPlaceTool placeTool, out DynamicBlockFactory dynBlockFactory, out DynamicTypeFactory dynTypeFactory, out FloorPlacer floorPlacer, out WallPlacer wallPlacer)
-        {
-            game = new DX11Game();
-            game.InitDirectX();
-            renderer = new DeferredRenderer(game);
-            var meshConverter = new OBJToRAMMeshConverter(new RAMTextureFactory());
-
-            DirectionalLight light = renderer.CreateDirectionalLight();
-            light.ShadowsEnabled = false;
-            light.LightDirection = Vector3.Normalize(new Vector3(2, -1, 3));
-
-            PointLight light2 = renderer.CreatePointLight();
-            light2.LightPosition = new Vector3(0, 80, 40);
-            light2.ShadowsEnabled = true;
-            light2.LightRadius = 1000; //does this do anything??
-            light2.LightIntensity = 1;
-
-            /* old white planemesh
-            var planeMesh = CreateMeshFromObj(meshConverter,
-                                        TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
-                                        "\\Plane.obj",
-                                        TWDir.GameData.CreateSubdirectory("Core\\Building").FullName +
-                                        "\\Plane.mtl");
-            var planeEl = renderer.CreateMeshElement(planeMesh);
-            planeEl.WorldMatrix = Matrix.Scaling(new Vector3(100, 100, 100)) * Matrix.Translation(new Vector3(0, -0.5f, 0));
-            */
-
-            var planeMesh = CreateMeshFromObj(meshConverter,
-                                       TWDir.GameData.CreateSubdirectory("Core\\GroundPlane").FullName +
-                                       "\\GroundPlane001.obj",
-                                       TWDir.GameData.CreateSubdirectory("Core\\GroundPlane").FullName +
-                                       "\\GroundPlane001.mtl");
-            var planeEl = renderer.CreateMeshElement(planeMesh);
-            planeEl.WorldMatrix = Matrix.Scaling(new Vector3(20, 20, 20)) * Matrix.Translation(new Vector3(0, -0.5f, 0));
-
-            var skydome = CreateMeshFromObj(meshConverter,
-                                         TWDir.GameData.CreateSubdirectory("Core\\Skydome").FullName +
-                                         "\\Skydome001.obj",
-                                         TWDir.GameData.CreateSubdirectory("Core\\Skydome").FullName +
-                                         "\\Skydome001.mtl");
-            var skydomeEl = renderer.CreateMeshElement(skydome);
-            skydomeEl.WorldMatrix = Matrix.Scaling(new Vector3(1, 1, 1));
-
-
-
-            var basicStraightMesh = CreateMeshFromObj(meshConverter,
-                                         TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicStraight").FullName +
-                                         "\\BasicStraight.obj",
-                                         TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicStraight").FullName +
-                                         "\\BasicStraight.mtl");
-            var basicPillarMesh = CreateMeshFromObj(meshConverter,
-                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicPillar").FullName +
-                                        "\\BasicPillar.obj",
-                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicPillar").FullName +
-                                        "\\BasicPillar.mtl");
-            var basicSkewMesh = CreateMeshFromObj(meshConverter,
-                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicSkew").FullName +
-                                        "\\BasicSkew.obj",
-                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicSkew").FullName +
-                                        "\\BasicSkew.mtl");
-            var basicFloorMesh = CreateMeshFromObj(meshConverter,
-                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicFloor").FullName +
-                                        "\\BasicFloor.obj",
-                                        TWDir.GameData.CreateSubdirectory("Core\\Building\\DynamicBlock\\BasicFloor").FullName +
-                                        "\\BasicFloor.mtl");
-
-            var basicStraight = new BuildUnit(basicStraightMesh);
-            var basicPillar = new BuildUnit(basicPillarMesh);
-            var basicSkew = new BuildUnit(basicSkewMesh);
-            var basicFloor = new BuildUnit(basicFloorMesh);
-
-            var wallType = new WallType();
-            wallType.StraightUnit = basicStraight;
-            wallType.PillarUnit = basicPillar;
-            wallType.SkewUnit = basicSkew;
-
-            var floorType = new FloorType();
-            floorType.DefaultUnit = basicFloor;
-
-            dynBlockFactory = new DynamicBlockFactory(renderer);
-            dynTypeFactory = new DynamicTypeFactory();
-            dynTypeFactory.WallTypes.Add(wallType);
-            dynTypeFactory.FloorTypes.Add(floorType);
-            var resolver = new DynamicBlockResolver(dynBlockFactory);
-
-            wallPlacer = new WallPlacer(dynBlockFactory, resolver);
-            floorPlacer = new FloorPlacer(dynBlockFactory, resolver);
-
-            placeTool = new DynamicPlaceTool(game, dynBlockFactory, dynTypeFactory, wallPlacer, floorPlacer);
-        }
-
     }
 }

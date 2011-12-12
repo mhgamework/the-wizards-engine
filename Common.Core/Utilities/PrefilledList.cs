@@ -27,6 +27,10 @@ namespace MHGameWork.TheWizards.Utilities
         private void expandList()
         {
             Array.Resize(ref list, list.Length * 2);
+            for (int i = list.Length / 2; i < list.Length; i++)
+            {
+                list[i] = createItemDelegate();
+            }
         }
 
 
@@ -35,7 +39,7 @@ namespace MHGameWork.TheWizards.Utilities
         {
             if (Count == list.Length) expandList();
             Count++;
-            return list[Count-1];
+            return list[Count - 1];
 
         }
         public void Clear()

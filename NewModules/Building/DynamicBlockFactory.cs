@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
 
@@ -13,11 +14,13 @@ namespace MHGameWork.TheWizards.Building
     public class DynamicBlockFactory
     {
         private readonly DeferredRenderer renderer;
+        private readonly ModelContainer container;
         public List<DynamicBlock> BlockList = new List<DynamicBlock>();
 
-        public DynamicBlockFactory(DeferredRenderer renderer)
+        public DynamicBlockFactory(DeferredRenderer renderer, ModelContainer container)
         {
             this.renderer = renderer;
+            this.container = container;
         }
 
         /// <summary>
@@ -45,7 +48,7 @@ namespace MHGameWork.TheWizards.Building
        
         public DynamicBlock CreateNewDynamicBlock(Point3 pos)
         {
-            var ret = new DynamicBlock(pos, renderer);
+            var ret = new DynamicBlock(pos, renderer, container);
             BlockList.Add(ret);
             return ret;}
 

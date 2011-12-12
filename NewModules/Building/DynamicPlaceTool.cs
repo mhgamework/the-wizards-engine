@@ -209,7 +209,7 @@ namespace MHGameWork.TheWizards.Building
 
             if (rayBlock == null)
             {
-                rawPlacePos = getPlaneIntersection(0);
+                rawPlacePos = getPlaneIntersection(0f);
             }
             else
             {

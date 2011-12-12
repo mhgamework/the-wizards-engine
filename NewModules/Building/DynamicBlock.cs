@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Building;
+using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
@@ -31,10 +32,13 @@ namespace MHGameWork.TheWizards.Building
         private BuildSlot pillarh;
         private BuildSlot pillar;
 
-        public DynamicBlock(Point3 pos, DeferredRenderer renderer)
+        private ModelContainer container;
+
+        public DynamicBlock(Point3 pos, DeferredRenderer renderer, ModelContainer container)
         {
             Position = pos;
             this.renderer = renderer;
+            this.container = container;
             initializeSlots();
         }
 
@@ -129,14 +133,14 @@ namespace MHGameWork.TheWizards.Building
         /// </summary>
         private void initializeSlots()
         {
-            var straightX = new BuildSlot(this, new Vector3(0.25f, -0.25f, 0), 0, renderer);
-            var straightXh = new BuildSlot(this, new Vector3(0.25f, 0.25f, 0), 0, renderer);
-            var straightMinX = new BuildSlot(this, new Vector3(-0.25f, -0.25f, 0), (float)Math.PI, renderer);
-            var straightMinXh = new BuildSlot(this, new Vector3(-0.25f, 0.25f, 0), (float)Math.PI, renderer);
-            var straightZ = new BuildSlot(this, new Vector3(0, -0.25f, 0.25f), (float)-Math.PI * 0.5f, renderer);
-            var straightZh = new BuildSlot(this, new Vector3(0, 0.25f, 0.25f), (float)-Math.PI * 0.5f, renderer);
-            var straightMinZ = new BuildSlot(this, new Vector3(0, -0.25f, -0.25f), (float)Math.PI * 0.5f, renderer);
-            var straightMinZh = new BuildSlot(this, new Vector3(0, 0.25f, -0.25f), (float)Math.PI * 0.5f, renderer);
+            var straightX = createBuildSlot(this, new Vector3(0.25f, -0.25f, 0), 0, renderer);
+            var straightXh = createBuildSlot(this, new Vector3(0.25f, 0.25f, 0), 0, renderer);
+            var straightMinX = createBuildSlot(this, new Vector3(-0.25f, -0.25f, 0), (float)Math.PI, renderer);
+            var straightMinXh = createBuildSlot(this, new Vector3(-0.25f, 0.25f, 0), (float)Math.PI, renderer);
+            var straightZ = createBuildSlot(this, new Vector3(0, -0.25f, 0.25f), (float)-Math.PI * 0.5f, renderer);
+            var straightZh = createBuildSlot(this, new Vector3(0, 0.25f, 0.25f), (float)-Math.PI * 0.5f, renderer);
+            var straightMinZ = createBuildSlot(this, new Vector3(0, -0.25f, -0.25f), (float)Math.PI * 0.5f, renderer);
+            var straightMinZh = createBuildSlot(this, new Vector3(0, 0.25f, -0.25f), (float)Math.PI * 0.5f, renderer);
 
             straightSlotsLow.Add(DynamicBlockDirection.X, straightX);
             straightSlotsLow.Add(DynamicBlockDirection.MinX, straightMinX);
@@ -148,17 +152,17 @@ namespace MHGameWork.TheWizards.Building
             straightSlotsHigh.Add(DynamicBlockDirection.Z, straightZh);
             straightSlotsHigh.Add(DynamicBlockDirection.MinZ, straightMinZh);
 
-            pillar = new BuildSlot(this, new Vector3(0, -0.25f, 0), 0, renderer);
-            pillarh = new BuildSlot(this, new Vector3(0, 0.25f, 0), 0, renderer);
+            pillar = createBuildSlot(this, new Vector3(0, -0.25f, 0), 0, renderer);
+            pillarh = createBuildSlot(this, new Vector3(0, 0.25f, 0), 0, renderer);
 
-            var floorXMinZC = new BuildSlot(this, new Vector3(0.25f, -0.5f, -0.25f), 0, renderer);
-            var floorXMinZF = new BuildSlot(this, new Vector3(0.25f, -0.5f, -0.25f), (float)Math.PI, renderer);
-            var floorMinXZC = new BuildSlot(this, new Vector3(-0.25f, -0.5f, 0.25f), (float)Math.PI, renderer);
-            var floorMinXZF = new BuildSlot(this, new Vector3(-0.25f, -0.5f, 0.25f), 0, renderer);
-            var floorXZC = new BuildSlot(this, new Vector3(0.25f, -0.5f, 0.25f), (float)Math.PI, new Vector3(-1, 1, 1), renderer);
-            var floorXZF = new BuildSlot(this, new Vector3(0.25f, -0.5f, 0.25f), 0, new Vector3(-1, 1, 1), renderer);
-            var floorMinXMinZC = new BuildSlot(this, new Vector3(-0.25f, -0.5f, -0.25f), (float)Math.PI, new Vector3(1, 1, -1), renderer);
-            var floorMinXMinZF = new BuildSlot(this, new Vector3(-0.25f, -0.5f, -0.25f), 0, new Vector3(1, 1, -1), renderer);
+            var floorXMinZC = createBuildSlot(this, new Vector3(0.25f, -0.5f, -0.25f), 0, renderer);
+            var floorXMinZF = createBuildSlot(this, new Vector3(0.25f, -0.5f, -0.25f), (float)Math.PI, renderer);
+            var floorMinXZC = createBuildSlot(this, new Vector3(-0.25f, -0.5f, 0.25f), (float)Math.PI, renderer);
+            var floorMinXZF = createBuildSlot(this, new Vector3(-0.25f, -0.5f, 0.25f), 0, renderer);
+            var floorXZC = createBuildSlot(this, new Vector3(0.25f, -0.5f, 0.25f), (float)Math.PI, new Vector3(-1, 1, 1), renderer);
+            var floorXZF = createBuildSlot(this, new Vector3(0.25f, -0.5f, 0.25f), 0, new Vector3(-1, 1, 1), renderer);
+            var floorMinXMinZC = createBuildSlot(this, new Vector3(-0.25f, -0.5f, -0.25f), (float)Math.PI, new Vector3(1, 1, -1), renderer);
+            var floorMinXMinZF = createBuildSlot(this, new Vector3(-0.25f, -0.5f, -0.25f), 0, new Vector3(1, 1, -1), renderer);
 
             floorSlotsClose.Add(DynamicBlockDirection.XMinZ, floorXMinZC);
             floorSlotsClose.Add(DynamicBlockDirection.XZ, floorXZC);
@@ -170,14 +174,14 @@ namespace MHGameWork.TheWizards.Building
             floorSlotsFar.Add(DynamicBlockDirection.MinXZ, floorMinXZF);
             floorSlotsFar.Add(DynamicBlockDirection.MinXMinZ, floorMinXMinZF);
 
-            var skewXMinZ = new BuildSlot(this, new Vector3(0.25f, -0.25f, -0.25f), 0, renderer);
-            var skewXMinZh = new BuildSlot(this, new Vector3(0.25f, 0.25f, -0.25f), 0, renderer);
-            var skewMinXZ = new BuildSlot(this, new Vector3(-0.25f, -0.25f, 0.25f), (float)Math.PI, renderer);
-            var skewMinXZh = new BuildSlot(this, new Vector3(-0.25f, 0.25f, 0.25f), (float)Math.PI, renderer);
-            var skewXZ = new BuildSlot(this, new Vector3(0.25f, -0.25f, 0.25f), (float)-Math.PI * 0.5f, renderer);
-            var skewXZh = new BuildSlot(this, new Vector3(0.25f, 0.25f, 0.25f), (float)-Math.PI * 0.5f, renderer);
-            var skewMinXMinZ = new BuildSlot(this, new Vector3(-0.25f, -0.25f, -0.25f), (float)Math.PI * 0.5f, renderer);
-            var skewMinXMinZh = new BuildSlot(this, new Vector3(-0.25f, 0.25f, -0.25f), (float)Math.PI * 0.5f, renderer);
+            var skewXMinZ = createBuildSlot(this, new Vector3(0.25f, -0.25f, -0.25f), 0, renderer);
+            var skewXMinZh = createBuildSlot(this, new Vector3(0.25f, 0.25f, -0.25f), 0, renderer);
+            var skewMinXZ = createBuildSlot(this, new Vector3(-0.25f, -0.25f, 0.25f), (float)Math.PI, renderer);
+            var skewMinXZh = createBuildSlot(this, new Vector3(-0.25f, 0.25f, 0.25f), (float)Math.PI, renderer);
+            var skewXZ = createBuildSlot(this, new Vector3(0.25f, -0.25f, 0.25f), (float)-Math.PI * 0.5f, renderer);
+            var skewXZh = createBuildSlot(this, new Vector3(0.25f, 0.25f, 0.25f), (float)-Math.PI * 0.5f, renderer);
+            var skewMinXMinZ = createBuildSlot(this, new Vector3(-0.25f, -0.25f, -0.25f), (float)Math.PI * 0.5f, renderer);
+            var skewMinXMinZh = createBuildSlot(this, new Vector3(-0.25f, 0.25f, -0.25f), (float)Math.PI * 0.5f, renderer);
 
             skewSlotsLow.Add(DynamicBlockDirection.XMinZ, skewXMinZ);
             skewSlotsLow.Add(DynamicBlockDirection.MinXZ, skewMinXZ);
@@ -188,6 +192,20 @@ namespace MHGameWork.TheWizards.Building
             skewSlotsHigh.Add(DynamicBlockDirection.MinXZ, skewMinXZh);
             skewSlotsHigh.Add(DynamicBlockDirection.XZ, skewXZh);
             skewSlotsHigh.Add(DynamicBlockDirection.MinXMinZ, skewMinXMinZh);
+        }
+
+        public BuildSlot createBuildSlot(DynamicBlock block, Vector3 RelativeTranslation, float RelativeRotationY, DeferredRenderer renderer)
+        {
+            var ret = new BuildSlot(block, RelativeTranslation, RelativeRotationY, renderer);
+            container.AddObject(ret);
+            return ret;
+        }
+
+        public BuildSlot createBuildSlot(DynamicBlock block, Vector3 RelativeTranslation, float RelativeRotationY, Vector3 scaling, DeferredRenderer renderer)
+        {
+            var ret = new BuildSlot(block, RelativeTranslation, RelativeRotationY, scaling, renderer);
+            container.AddObject(ret);
+            return ret;
         }
 
         internal bool HasUnitOfType(string p)
@@ -312,20 +330,20 @@ namespace MHGameWork.TheWizards.Building
 
             return true;
         }
-    
+
         public static DynamicBlockDirection GetDirectionFromVector(Vector3 v)
         {
 
-            if(v.X == 0)
+            if (v.X == 0)
             {
                 if (v.Z == 0)
                     throw new Exception("invalid vector given");
-                if(v.Z < 0)
+                if (v.Z < 0)
                     return DynamicBlockDirection.MinZ;
-                if(v.Z > 0)
+                if (v.Z > 0)
                     return DynamicBlockDirection.Z;
             }
-            if(v.X < 0)
+            if (v.X < 0)
             {
                 if (v.Z == 0)
                     return DynamicBlockDirection.MinX;
@@ -347,7 +365,12 @@ namespace MHGameWork.TheWizards.Building
             return DynamicBlockDirection.X; // wont happen
         }
 
-        public int getNbSkewWalls()
+        public int GetNbSkewWalls()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EmptyAllSkewSlots()
         {
             throw new NotImplementedException();
         }
