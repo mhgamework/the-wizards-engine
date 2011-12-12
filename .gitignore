@@ -82,3 +82,4 @@ Thumbs.db
 /bin/nunit.framework.dll/bin/nunit.framework.xml
 
 *.~*
+/packages/PostSharp.2.1.5.1/tools/Release/*
