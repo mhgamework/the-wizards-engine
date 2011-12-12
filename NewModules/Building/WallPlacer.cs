@@ -87,7 +87,31 @@ namespace MHGameWork.TheWizards.Building
 
         }
 
-        public void PlaceSkewWall(Point3 pos, WallType type)
+        public void AddSkewWall(Point3 pos, WallType type)
+        {
+            var b = dynBlockFactory.GetBlockAtPosition(pos);
+            if (b == null)
+                b = dynBlockFactory.CreateNewDynamicBlock(pos);
+
+            if (b.hasStraightWalls)
+                return;
+            b.hasSkewWalls = true;
+
+            int nbWalls = b.getNbSkewWalls();
+
+            if(nbWalls == 0)
+            //dummy-implementation, rotate for other placements
+            //should be decided on  
+            b.SetSkew(DynamicBlockDirection.XZ, 0, type.SkewUnit);
+            b.SetSkew(DynamicBlockDirection.XZ, 1, type.SkewUnit);
+        }
+
+        /// <summary>
+        /// Should not be used anymore
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="type"></param>
+        public void PlaceResolvedSkewWall(Point3 pos, WallType type)
         {
             var b = dynBlockFactory.GetBlockAtPosition(pos);
             if (b == null)

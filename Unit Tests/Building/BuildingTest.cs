@@ -1222,12 +1222,12 @@ namespace MHGameWork.TheWizards.Tests.Building
             wallPlacer.PlaceStraightWall(new Point3(3, 0, 4), wallType);
 
 
-            wallPlacer.PlaceSkewWall(new Point3(6, 0, 1), wallType);
-            wallPlacer.PlaceSkewWall(new Point3(7, 0, 2), wallType);
-            wallPlacer.PlaceSkewWall(new Point3(7, 0, 4), wallType);
-            wallPlacer.PlaceSkewWall(new Point3(5, 0, 4), wallType);
-            wallPlacer.PlaceSkewWall(new Point3(2, 0, 4), wallType);
-            wallPlacer.PlaceSkewWall(new Point3(2, 0, 5), wallType);
+            wallPlacer.PlaceResolvedSkewWall(new Point3(6, 0, 1), wallType);
+            wallPlacer.PlaceResolvedSkewWall(new Point3(7, 0, 2), wallType);
+            wallPlacer.PlaceResolvedSkewWall(new Point3(7, 0, 4), wallType);
+            wallPlacer.PlaceResolvedSkewWall(new Point3(5, 0, 4), wallType);
+            wallPlacer.PlaceResolvedSkewWall(new Point3(2, 0, 4), wallType);
+            wallPlacer.PlaceResolvedSkewWall(new Point3(2, 0, 5), wallType);
 
 
             game.GameLoopEvent += delegate
@@ -1249,8 +1249,8 @@ namespace MHGameWork.TheWizards.Tests.Building
                     wallPlacer.PlaceStraightWall(new Point3(6, 0, 2), wallType);
                     wallPlacer.PlaceStraightWall(new Point3(5, 0, 3), wallType);
                     wallPlacer.PlaceStraightWall(new Point3(6, 0, 5), wallType);
-                    wallPlacer.PlaceSkewWall(new Point3(7, 0, 2), wallType);
-                    wallPlacer.PlaceSkewWall(new Point3(5, 0, 4), wallType);
+                    wallPlacer.PlaceResolvedSkewWall(new Point3(7, 0, 2), wallType);
+                    wallPlacer.PlaceResolvedSkewWall(new Point3(5, 0, 4), wallType);
                 }
 
                 renderer.Draw();

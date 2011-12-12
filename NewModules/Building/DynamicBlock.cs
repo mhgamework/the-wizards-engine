@@ -346,5 +346,10 @@ namespace MHGameWork.TheWizards.Building
 
             return DynamicBlockDirection.X; // wont happen
         }
+
+        public int getNbSkewWalls()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

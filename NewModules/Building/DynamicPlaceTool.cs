@@ -76,7 +76,7 @@ namespace MHGameWork.TheWizards.Building
             CalculatePlacePos(out selectedPos, out selectedBlock);
 
             if (game.Keyboard.IsKeyPressed(Key.E))
-                wallPlacer.PlaceSkewWall(selectedPos, typeFactory.WallTypes[wallTypeIndex]);
+                wallPlacer.PlaceResolvedSkewWall(selectedPos, typeFactory.WallTypes[wallTypeIndex]);
             
             if (selectedBlock != null)
             {
