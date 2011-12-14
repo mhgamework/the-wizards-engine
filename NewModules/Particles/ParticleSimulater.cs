@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Text;
 using DirectX11;
 using DirectX11.Graphics;
-using MHGameWork.TheWizards.Collada.DOM140.Generated;
 using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;

@@ -115,10 +115,6 @@
     </NestedContentProject>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ColladaSchema\ColladaSchema.csproj">
-      <Project>{1EBCA61D-7015-426C-83DB-4602CE0F4194}</Project>
-      <Name>ColladaSchema</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>

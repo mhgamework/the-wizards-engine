@@ -1,5 +1,4 @@
 using System;
-using MHGameWork.TheWizards.Collada.COLLADA140;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
