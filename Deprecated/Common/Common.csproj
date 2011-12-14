@@ -109,7 +109,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataStream.cs" />
-    <Compile Include="Communication.cs" />
     <Compile Include="Engine\IGameFile.cs" />
     <Compile Include="Engine\IGameFileManager.cs" />
     <Compile Include="GameClientData.cs" />
@@ -132,9 +131,6 @@
     <Compile Include="GeoMipMap\TerrainLightmapGenerator.cs" />
     <Compile Include="GeoMipMap\WeightMap.cs" />
     <Compile Include="IGameEngine.cs" />
-    <Compile Include="Network\TimeUpdatePacket.cs" />
-    <Compile Include="Network\DeltaSnapshotPacket.cs" />
-    <Compile Include="Network\UpdateEntityPacket.cs" />
     <Compile Include="PlayerInputData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Wereld\QuadtreeChildDirection.cs" />
@@ -155,14 +151,6 @@
     <ProjectReference Include="..\CommonVB\CommonVB.vbproj">
       <Project>{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}</Project>
       <Name>CommonVB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Game3DPlay\Game3DPlay.csproj">
-      <Project>{3ADBAB57-A020-46BA-8422-250995E5228E}</Project>
-      <Name>Game3DPlay</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NovodexWrapperXNA\NovodexWrapperXNA.csproj">
-      <Project>{82AFF428-C42B-4C92-AA2A-D5C1A8662BB3}</Project>
-      <Name>NovodexWrapperXNA</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

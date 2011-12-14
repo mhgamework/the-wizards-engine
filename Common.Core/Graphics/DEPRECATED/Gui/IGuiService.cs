@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.ServerClient.Gui
 
         void Process();
         void Render();
-        void Tick( MHGameWork.Game3DPlay.Core.Elements.TickEventArgs e );
+        //void Tick( MHGameWork.Game3DPlay.Core.Elements.TickEventArgs e );
         void StartDrag( GuiControl control );
     }
 }

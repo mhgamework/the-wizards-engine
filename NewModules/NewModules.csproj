@@ -455,10 +455,6 @@
     <Folder Include="Particles\Files\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Client\Client.csproj">
-      <Project>{64749FE6-E3AF-4666-BB9F-8CCFF4D30E2D}</Project>
-      <Name>Client</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ColladaSchema\ColladaSchema.csproj">
       <Project>{1EBCA61D-7015-426C-83DB-4602CE0F4194}</Project>
       <Name>ColladaSchema</Name>
@@ -466,10 +462,6 @@
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Deprecated\AdminClientVB\AdminClientVB.vbproj">
-      <Project>{807ED3B3-6313-46CE-9CA3-B6DB9735AAFA}</Project>
-      <Name>AdminClientVB</Name>
     </ProjectReference>
     <ProjectReference Include="..\Deprecated\Common.NetworkingVB\Common.NetworkingVB.vbproj">
       <Project>{80D950C7-F9F6-4569-93D9-20833B52ACD9}</Project>
@@ -482,14 +474,6 @@
     <ProjectReference Include="..\Deprecated\Common\Common.csproj">
       <Project>{8162E3FE-A9B6-4F93-94F0-89C74CB7D53D}</Project>
       <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Deprecated\Game3DPlay\Game3DPlay.csproj">
-      <Project>{3ADBAB57-A020-46BA-8422-250995E5228E}</Project>
-      <Name>Game3DPlay</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Deprecated\NovodexWrapperXNA\NovodexWrapperXNA.csproj">
-      <Project>{82AFF428-C42B-4C92-AA2A-D5C1A8662BB3}</Project>
-      <Name>NovodexWrapperXNA</Name>
     </ProjectReference>
     <ProjectReference Include="..\DirectX11\DirectX11.csproj">
       <Project>{A58AF8D7-8C17-43F6-B994-C67F590F416A}</Project>

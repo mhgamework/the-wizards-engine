@@ -113,19 +113,9 @@
     <Import Include="System.Windows" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseClient.vb" />
-    <Compile Include="BaseMain.vb" />
     <Compile Include="ByteOps\ByteConverter.vb" />
     <Compile Include="ByteOps\ByteReader.vb" />
     <Compile Include="ByteOps\ByteWriter.vb" />
-    <Compile Include="Menu\DesignKnop.Designer.vb">
-      <DependentUpon>DesignKnop.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Menu\DesignKnop.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Menu\Knop.vb" />
-    <Compile Include="Menu\Knop001.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -141,15 +131,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Network\Packets\LoginPacket.vb" />
-    <Compile Include="Novodex\CustomOutputStream.vb" />
-    <Compile Include="Novodex\CustomReport.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Menu\DesignKnop.resx">
-      <DependentUpon>DesignKnop.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -172,14 +155,6 @@
     <ProjectReference Include="..\Common.NetworkingVB\Common.NetworkingVB.vbproj">
       <Project>{80D950C7-F9F6-4569-93D9-20833B52ACD9}</Project>
       <Name>Common.NetworkingVB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Game3DPlay\Game3DPlay.csproj">
-      <Project>{3ADBAB57-A020-46BA-8422-250995E5228E}</Project>
-      <Name>Game3DPlay</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NovodexWrapperXNA\NovodexWrapperXNA.csproj">
-      <Project>{82AFF428-C42B-4C92-AA2A-D5C1A8662BB3}</Project>
-      <Name>NovodexWrapperXNA</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

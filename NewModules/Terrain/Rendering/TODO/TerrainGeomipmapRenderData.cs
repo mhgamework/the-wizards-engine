@@ -1324,25 +1324,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
 
-        public void Process( MHGameWork.Game3DPlay.Core.Elements.ProcessEventArgs e )
-        {
-            //if ( blocks == null )
-            //{
-            //    if ( loadBlocksTask.IsEmpty )
-            //    {
-            //        loadBlocksTask = engine.LoadingManager.AddLoadTaskAdvanced( LoadBlocksTaskDelegate, LoadingTaskType.Normal );
-            //    }
-            //    else if ( loadBlocksTask.State == LoadingTaskState.Completed )
-            //    {
-            //        //should happen because blocks wont be null in that case
-            //        throw new Exception();
-            //    }
-            //}
-        }
-
-        public void Render()
-        {
-        }
+       
 
 
 

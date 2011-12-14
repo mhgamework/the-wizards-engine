@@ -150,10 +150,6 @@
     </Validate>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Client\Client.csproj">
-      <Name>Client</Name>
-      <Project>{64749fe6-e3af-4666-bb9f-8ccff4d30e2d}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
       <Name>Common.Core</Name>
       <Project>{372ff145-4b2d-40a4-b171-cfff159e4c91}</Project>

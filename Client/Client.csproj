@@ -129,10 +129,6 @@
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Deprecated\ClientVB\ClientVB.vbproj">
-      <Project>{8218D77F-2FB6-48E5-867C-85EEA4A4B75E}</Project>
-      <Name>ClientVB</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Deprecated\CommonVB\CommonVB.vbproj">
       <Project>{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}</Project>
       <Name>CommonVB</Name>

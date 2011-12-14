@@ -10,7 +10,6 @@ using MHGameWork.TheWizards.Common.GeoMipMap;
 using System.IO;
 using MHGameWork.TheWizards.Common;
 using MHGameWork.TheWizards.ServerClient.TWXNAEngine;
-using NovodexWrapper;
 
 namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 {
@@ -378,7 +377,6 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
 
 
-        protected NxActor actor;
 
         //private TerrainMaterial material;
 

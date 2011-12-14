@@ -375,12 +375,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Deprecated\Game3DPlay\Game3DPlay.csproj">
-      <Project>{3ADBAB57-A020-46BA-8422-250995E5228E}</Project>
-      <Name>Game3DPlay</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

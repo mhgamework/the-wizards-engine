@@ -244,10 +244,10 @@ namespace MHGameWork.TheWizards.ServerClient.Gui
 
         }
 
-        public void Tick( MHGameWork.Game3DPlay.Core.Elements.TickEventArgs e )
-        {
+        //public void Tick( MHGameWork.Game3DPlay.Core.Elements.TickEventArgs e )
+        //{
 
-        }
+        //}
 
 
 
