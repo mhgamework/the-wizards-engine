@@ -97,7 +97,6 @@
     <Import Include="MHGameWork.Game3DPlay.Core.Elements" />
     <Import Include="MHGameWork.Game3DPlay.Gui" />
     <Import Include="MHGameWork.TheWizards.Common.Core" />
-    <Import Include="MHGameWork.TheWizards.Common.Networking" />
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="Microsoft.Win32.SafeHandles" />
     <Import Include="Microsoft.Xna" />
@@ -131,6 +130,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Networking\BaseByteReader.vb" />
+    <Compile Include="Networking\BaseByteWriter.vb" />
+    <Compile Include="Networking\BaseConnection.vb" />
+    <Compile Include="Networking\DataStream.vb" />
+    <Compile Include="Networking\GameFile.vb" />
+    <Compile Include="Networking\GameFilesList.vb" />
+    <Compile Include="Networking\INetworkSerializable.vb" />
+    <Compile Include="Networking\TCPClientConnection.vb" />
+    <Compile Include="Networking\TCPConnection.vb" />
+    <Compile Include="Networking\TCPConnectionListener.vb" />
+    <Compile Include="Networking\TCPPacketBuilder.vb" />
+    <Compile Include="Networking\UDPConnection.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -150,12 +161,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common.NetworkingVB\Common.NetworkingVB.vbproj">
-      <Project>{80D950C7-F9F6-4569-93D9-20833B52ACD9}</Project>
-      <Name>Common.NetworkingVB</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

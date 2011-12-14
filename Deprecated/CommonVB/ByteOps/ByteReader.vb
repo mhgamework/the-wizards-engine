@@ -1,4 +1,5 @@
 Imports System.IO
+Imports MHGameWork.TheWizards.Common.Networking
 
 Public Class ByteReader
     Inherits BaseByteReader

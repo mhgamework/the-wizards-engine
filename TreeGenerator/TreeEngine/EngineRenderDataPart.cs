@@ -10,7 +10,6 @@ using MHGameWork.TheWizards.ServerClient;
 using MHGameWork.TheWizards.Common.Core.Collada;
 using MHGameWork.TheWizards.Common.Core.Graphics;
 using TreeGenerator.Clouds;
-using GameFile = MHGameWork.TheWizards.Common.Networking.GameFile;
 using Seeder = TreeGenerator.help.Seeder;
 
 

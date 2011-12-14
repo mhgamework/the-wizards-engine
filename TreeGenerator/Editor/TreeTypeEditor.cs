@@ -4,10 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.ServerClient.Editor;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using MHGameWork.TheWizards.Editor;
 using TreeGenerator.TreeEngine;
 using Seeder = TreeGenerator.help.Seeder;
 

@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.Common.Networking;
+﻿using MHGameWork.TheWizards.Common;
+using MHGameWork.TheWizards.Common.Networking;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections;

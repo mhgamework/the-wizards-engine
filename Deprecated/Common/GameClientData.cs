@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards.Common.Networking;
 
 namespace MHGameWork.TheWizards.Common
 {
-    public class GameClientData : Networking.INetworkSerializable
+    public class GameClientData : INetworkSerializable
     {
         public int PlayerEntityID;
 

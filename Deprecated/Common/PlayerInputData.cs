@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards.Common.Networking;
 
 namespace MHGameWork.TheWizards.Common
 {
-    public class PlayerInputData : Common.Networking.INetworkSerializable
+    public class PlayerInputData : INetworkSerializable
     {
         private bool moveForward;
         private bool moveBackwards;

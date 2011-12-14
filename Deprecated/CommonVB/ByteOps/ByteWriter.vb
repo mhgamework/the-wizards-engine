@@ -1,3 +1,5 @@
+Imports MHGameWork.TheWizards.Common.Networking
+
 Public Class ByteWriter
     Inherits BaseByteWriter
 

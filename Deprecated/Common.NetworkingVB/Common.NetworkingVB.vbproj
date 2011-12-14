@@ -96,13 +96,6 @@
     <Import Include="System.Diagnostics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseByteReader.vb" />
-    <Compile Include="BaseByteWriter.vb" />
-    <Compile Include="BaseConnection.vb" />
-    <Compile Include="DataStream.vb" />
-    <Compile Include="GameFile.vb" />
-    <Compile Include="GameFilesList.vb" />
-    <Compile Include="INetworkSerializable.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -118,11 +111,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="TCPClientConnection.vb" />
-    <Compile Include="TCPConnection.vb" />
-    <Compile Include="TCPConnectionListener.vb" />
-    <Compile Include="TCPPacketBuilder.vb" />
-    <Compile Include="UDPConnection.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
