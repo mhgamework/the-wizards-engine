@@ -117,8 +117,32 @@ namespace DirectX11
 
         public bool AllowF3InputToggle { get; set; }
         bool inputJustToggled = false;
+
+        private Boolean isMouseExclusive = true;
+
         private void updateInput()
         {
+            if (diKeyboard.Acquire().IsFailure)
+                return;
+
+            if (!mouse.CursorEnabled != isMouseExclusive)
+            {
+                // Exclusive mode is incorrect
+                // set to correct exclusive mode
+                diMouse.Unacquire();
+                if (mouse.CursorEnabled)
+                {
+                    diMouse.SetCooperativeLevel(form.Form, CooperativeLevel.Nonexclusive | CooperativeLevel.Foreground);
+                }
+                else
+                {
+
+                    diMouse.SetCooperativeLevel(form.Form, CooperativeLevel.Exclusive | CooperativeLevel.Foreground);
+                }
+
+                isMouseExclusive = !mouse.CursorEnabled;
+            }
+          
 
             var keyboardState = diKeyboard.GetCurrentState();
 
@@ -137,7 +161,8 @@ namespace DirectX11
             //MouseState mouseState = Microsoft.Xna.Framework.Input.Mouse.GetState();
 
             keyboard.UpdateKeyboardState(keyboardState);
-            mouse.UpdateMouseState(diMouse.GetCurrentState());
+            if (diMouse.Acquire().IsSuccess)
+                mouse.UpdateMouseState(diMouse.GetCurrentState());
 
             // Allows the game to exit
             if (keyboard.IsKeyDown(Key.Escape))
@@ -154,7 +179,7 @@ namespace DirectX11
 
             form.Form.Text = FPS.ToString();
 
-            if (Elapsed > 1 / 30f) Elapsed = 1/30f;
+            if (Elapsed > 1 / 30f) Elapsed = 1 / 30f;
 
         }
 
@@ -178,15 +203,17 @@ namespace DirectX11
 
 
             keyboard = new TWKeyboard();
+
+
             diDevice = new SlimDX.DirectInput.DirectInput();
             diKeyboard = new SlimDX.DirectInput.Keyboard(diDevice);
-            //diKeyboard.SetCooperativeLevel(form.Form, CooperativeLevel.Nonexclusive | CooperativeLevel.Foreground);
+            diKeyboard.SetCooperativeLevel(form.Form, CooperativeLevel.Nonexclusive | CooperativeLevel.Foreground);
             diKeyboard.Acquire();
 
+
             mouse = new TWMouse();
-            diMouse = new SlimDX.DirectInput.Mouse(diDevice);
-            //diMouse.SetCooperativeLevel(form.Form, CooperativeLevel.Exclusive | CooperativeLevel.Foreground);
-            diMouse.Acquire();
+            diMouse = new SlimDX.DirectInput.Mouse(new DirectInput());
+            diMouse.SetCooperativeLevel(form.Form, CooperativeLevel.Exclusive | CooperativeLevel.Foreground);
 
             SpectaterCamera = new SpectaterCamera(keyboard, mouse);
             Camera = SpectaterCamera;
