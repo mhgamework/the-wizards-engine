@@ -134,14 +134,7 @@
     <Compile Include="Networking\BaseByteWriter.vb" />
     <Compile Include="Networking\BaseConnection.vb" />
     <Compile Include="Networking\DataStream.vb" />
-    <Compile Include="Networking\GameFile.vb" />
-    <Compile Include="Networking\GameFilesList.vb" />
     <Compile Include="Networking\INetworkSerializable.vb" />
-    <Compile Include="Networking\TCPClientConnection.vb" />
-    <Compile Include="Networking\TCPConnection.vb" />
-    <Compile Include="Networking\TCPConnectionListener.vb" />
-    <Compile Include="Networking\TCPPacketBuilder.vb" />
-    <Compile Include="Networking\UDPConnection.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

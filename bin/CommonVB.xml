@@ -6,11 +6,7 @@ CommonVB
 </name>
 </assembly>
 <members>
-<member name="M:MHGameWork.TheWizards.Common.Networking.TCPConnectionListener.ListenForClients">
-	<summary>
-	</summary>
-	<remarks>Not Thread safe! draait niet in main thread</remarks>
-</member><member name="P:MHGameWork.TheWizards.Common.My.Resources.Resources.ResourceManager">
+<member name="P:MHGameWork.TheWizards.Common.My.Resources.Resources.ResourceManager">
 	<summary>
   Returns the cached ResourceManager instance used by this class.
 </summary>
@@ -39,22 +35,6 @@ CommonVB
 	<param name="nPacket"></param>
 	<remarks></remarks>
 </member><member name="M:MHGameWork.TheWizards.Common.Networking.BaseConnection.SendMessages">
-	<summary>
-	</summary>
-	<remarks>Not Thread safe! draait niet in main thread</remarks>
-</member><member name="F:MHGameWork.TheWizards.Common.Networking.TCPConnection.mBuffer">
-	<summary>
- MAY ONLY BE USED BY ReceiveMessageJob !!!!!
- </summary>
-	<remarks></remarks>
-</member><member name="P:MHGameWork.TheWizards.Common.Networking.TCPConnection.TempEndPoint">
-	<summary>
- Thread Safe
- </summary>
-	<value></value>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:MHGameWork.TheWizards.Common.Networking.TCPConnection.ConnectToServer">
 	<summary>
 	</summary>
 	<remarks>Not Thread safe! draait niet in main thread</remarks>
