@@ -50,10 +50,10 @@ namespace MHGameWork.TheWizards.Entities
             ObjectTagManager = new TagManager<TaggedObject>( Database );
 
             EntityTagManager.AddGenerater( new MHGameWork.TheWizards.ServerClient.Database.SimpleTagGenerater<EntityFullData, TaggedEntity>() );
-            EntityTagManager.AddGenerater( new MHGameWork.TheWizards.ServerClient.Database.SimpleTagGenerater<MHGameWork.TheWizards.ServerClient.Entity.Rendering.EntityRenderData, TaggedEntity>() );
+            //EntityTagManager.AddGenerater( new MHGameWork.TheWizards.ServerClient.Database.SimpleTagGenerater<MHGameWork.TheWizards.ServerClient.Entity.Rendering.EntityRenderData, TaggedEntity>() );
 
             ObjectTagManager.AddGenerater( new MHGameWork.TheWizards.ServerClient.Database.SimpleTagGenerater<ObjectFullData, TaggedObject>() );
-            ObjectTagManager.AddGenerater( new MHGameWork.TheWizards.ServerClient.Database.SimpleTagGenerater<MHGameWork.TheWizards.ServerClient.Entity.Rendering.ObjectRenderData, TaggedObject>() );
+            //ObjectTagManager.AddGenerater( new MHGameWork.TheWizards.ServerClient.Database.SimpleTagGenerater<MHGameWork.TheWizards.ServerClient.Entity.Rendering.ObjectRenderData, TaggedObject>() );
             
         }
 

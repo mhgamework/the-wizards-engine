@@ -8,10 +8,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 {
+    /// <summary>
+    /// Parts where removed here, this is not to be used ,go look in the project's history
+    /// </summary>
     public class TerrainMaterial : IDisposable
     {
         IXNAGame game;
-        private List<TerrainShader> shaders;
         private List<TerrainBlock> batchedBlocks = new List<TerrainBlock>();
         private MHGameWork.TheWizards.ServerClient.Terrain.Rendering.TerrainGeomipmapRenderData terrainGeomipmapRenderData;
 
@@ -50,10 +52,8 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
             if ( batchedBlocks.Count == 0 ) return;
             //if ( effects == null ) return;
-            if ( shaders == null || game.Keyboard.IsKeyPressed( Microsoft.Xna.Framework.Input.Keys.L ) ) Load();
 
             //this occurs when this is a material without textures
-            if ( shaders == null ) return;
 
 
 
@@ -68,69 +68,6 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
             game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
 
 
-
-
-
-
-
-            TerrainShader iEffect;
-
-            for ( int i = 0; i < shaders.Count; i++ )
-            {
-                iEffect = shaders[ i ];
-
-
-                if ( game.Keyboard.IsKeyPressed( Microsoft.Xna.Framework.Input.Keys.I ) )
-                {
-                    iEffect.SetTechnique( "DrawWeightmapTexcoordsPreprocessed" );
-
-                }
-                if ( game.Keyboard.IsKeyPressed( Microsoft.Xna.Framework.Input.Keys.O ) )
-                {
-                    iEffect.SetTechnique( "DrawWeightmapPreprocessed" );
-                }
-                if ( game.Keyboard.IsKeyPressed( Microsoft.Xna.Framework.Input.Keys.U ) )
-                {
-                    iEffect.SetTechnique( "DrawTexturedPreprocessed" );
-                }
-
-                iEffect.ViewProjection = game.Camera.ViewProjection;
-
-
-
-                iEffect.Effect.Begin();
-
-                for ( int iPass = 0; iPass < iEffect.Effect.CurrentTechnique.Passes.Count; iPass++ )
-                {
-                    EffectPass pass = iEffect.Effect.CurrentTechnique.Passes[ iPass ];
-
-
-                    pass.Begin();
-
-
-                    /*if ( ServerClientMainOud.instance.ProcessEventArgs.Keyboard.IsKeyDown( Microsoft.Xna.Framework.Input.Keys.W ) )
-                    {
-
-                        if ( engine.XNAGame.GraphicsDevice.RenderState.FillMode == FillMode.Solid )
-                        { engine.XNAGame.GraphicsDevice.RenderState.FillMode = FillMode.WireFrame; }
-                        else { engine.XNAGame.GraphicsDevice.RenderState.FillMode = FillMode.Solid; }
-                    }*/
-
-                    for ( int iBlock = 0; iBlock < batchedBlocks.Count; iBlock++ )
-                    {
-                        DrawBlockPrimitives( batchedBlocks[ iBlock ] );
-                    }
-
-                    pass.End();
-                }
-
-                iEffect.Effect.End();
-
-
-
-                game.GraphicsDevice.RenderState.AlphaBlendEnable = true;
-
-            }
 
 
 
@@ -270,9 +207,9 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         protected void DrawBlockPrimitives( TerrainBlock block )
         {
             if ( block.VertexBuffer == null || block.IndexBuffer == null ) return;
-
-            game.GraphicsDevice.Vertices[ 0 ].SetSource( block.VertexBuffer, 0, XNAGeoMipMap.VertexMultitextured.SizeInBytes );
-            game.GraphicsDevice.Indices = block.IndexBuffer;
+            throw new NotImplementedException();
+            //game.GraphicsDevice.Vertices[ 0 ].SetSource( block.VertexBuffer, 0, XNAGeoMipMap.VertexMultitextured.SizeInBytes );
+            //game.GraphicsDevice.Indices = block.IndexBuffer;
 
 
             //TODO: make TotalTriangles?
@@ -294,42 +231,6 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
                 }
                 effects = null;
             }
-
-            TerrainShader iEffect = null;
-
-            if ( Textures.Count == 0 ) return;
-
-            shaders = new List<TerrainShader>();
-            //effects = new MHGameWork.TheWizards.ServerClient.Engine.ShaderEffect[ (int)Math.Ceiling( (double)Textures.Count / 4 ) ];
-            paramsWorldViewProjection = new EffectParameter[ (int)( Textures.Count / 4 ) + 1 ];
-
-            for ( int iTex = 0; iTex < Textures.Count; iTex += 4 )
-            {
-                //iEffect = new MHGameWork.TheWizards.ServerClient.Engine.ShaderEffect( terrain.Engine, terrain.BaseTerrain.Content.RootDirectory + @"\Content\TerrainEditor.fx" );
-                iEffect = TerrainShader.CreateNew( game );
-
-                iEffect.World = terrainGeomipmapRenderData.WorldMatrix;
-
-                //iEffect.Effect.Parameters[ "WeightMap" ].SetValue( terrain.ViewWeightmaps[ iTex >> 2 ] );
-                iEffect.WeightMap = Weightmaps[ iTex >> 2 ];
-
-                if ( Textures.Count > iTex + 0 )
-                    iEffect.SetParameter( "Texture1", Textures[ iTex + 0 ].DiffuseMap );
-                if ( Textures.Count > iTex + 1 )
-                    iEffect.SetParameter( "Texture2", Textures[ iTex + 1 ].DiffuseMap );
-                if ( Textures.Count > iTex + 2 )
-                    iEffect.SetParameter( "Texture3", Textures[ iTex + 2 ].DiffuseMap );
-                if ( Textures.Count > iTex + 3 )
-                    iEffect.SetParameter( "Texture4", Textures[ iTex + 3 ].DiffuseMap );
-
-                //paramsWorldViewProjection[ iTex >> 2 ] = iEffect.Effect.Parameters[ "WorldViewProjection" ];
-
-                shaders.Add( iEffect );
-                //effects[ iTex >> 2 ] = iEffect;
-            }
-
-
-
 
 
 
@@ -469,7 +370,6 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
         //private Terrain terrain;
 
-        private ServerClientMainOud engine;
 
         private Engine.ShaderEffect[] effects;
 
@@ -478,13 +378,13 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         EffectParameter[] paramsWorldViewProjection;
 
 
-        private Engine.GameFileOud effectFile;
+        //private Engine.GameFileOud effectFile;
 
-        public Engine.GameFileOud EffectFile
-        {
-            get { return effectFile; }
-            set { effectFile = value; }
-        }
+        //public Engine.GameFileOud EffectFile
+        //{
+        //    get { return effectFile; }
+        //    set { effectFile = value; }
+        //}
 
 
 

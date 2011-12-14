@@ -158,6 +158,9 @@
     <Compile Include="Editor\FromEditorProject\Temp\Terrain\TaggedTerrain.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Editor\FromEditorProject\Temp\Terrain\TerrainManagerService.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Editor\FromEditorProject\TODO\EditorTerrainAlphaMap.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -168,6 +171,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Entity\TODO\EntityFullData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entity\TODO\EntityManagerService.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Entity\TODO\ModelFullData.cs">
@@ -198,6 +204,12 @@
     <Compile Include="Scripting\ScriptLoader.cs" />
     <Compile Include="Scripting\ScriptWrapper.cs" />
     <Compile Include="Rendering\MeshLoader.cs" />
+    <Compile Include="ServerclientDeprecated\DiskLoaderService.cs" />
+    <Compile Include="ServerclientDeprecated\DiskSerializerService.cs" />
+    <Compile Include="ServerclientDeprecated\IDiskSerializer.cs" />
+    <Compile Include="ServerclientDeprecated\QuadTree.cs" />
+    <Compile Include="ServerclientDeprecated\QuadTreeNode.cs" />
+    <Compile Include="Terrain\Editor\TerrainRaiseTool.cs" />
     <Compile Include="Terrain\Geomipmap\HeightmapNormalCalculator.cs" />
     <Compile Include="Rendering\SimpleMeshFactory.cs" />
     <Compile Include="Rendering\CullerNoCull.cs" />
@@ -216,6 +228,30 @@
     <Compile Include="Terrain\Geomipmap\ITerrainBlock.cs" />
     <Compile Include="Terrain\Geomipmap\MinDistanceCalculator.cs" />
     <Compile Include="Terrain\Rendering\TerrainShaderNew.cs" />
+    <Compile Include="Terrain\Rendering\TODO\ITerrainBlockRenderable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Terrain\Rendering\TODO\TerrainBlock.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Terrain\Rendering\TODO\TerrainGeomipmapRenderData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Terrain\Rendering\TODO\TerrainMaterial.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Terrain\Rendering\TODO\TerrainQuadTreeNodeData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Terrain\Rendering\TODO\TerrainStatistics.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Terrain\Rendering\TODO\TerrainTexture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Terrain\Rendering\TODO\TerrainWeightMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Terrain\TerrainFullData.cs" />
     <Compile Include="Terrain\HeightMap.cs" />
     <Compile Include="Entity\Client\EntityClientPhysics.cs" />

@@ -110,7 +110,6 @@
     <Compile Include="DirectX11\SharpDXTest.cs" />
     <Compile Include="DirectX11\DirectX11Test.cs" />
     <Compile Include="DirectX11\TessellationTest.cs" />
-    <Compile Include="Editor\EditorTest.cs" />
     <Compile Include="Forms\ClassFormTest.cs" />
     <Compile Include="Model\ModelTest.cs" />
     <Compile Include="Particles\ParticleTests.cs" />
@@ -123,7 +122,6 @@
     <Compile Include="Rendering\DeferredRenderingTest.cs" />
     <Compile Include="Rendering\MeshLoaderTest.cs" />
     <Compile Include="Rendering\SSAOTest.cs" />
-    <Compile Include="Scene\SceneEditorTest.cs" />
     <Compile Include="Entity\EntityClientTest.cs" />
     <Compile Include="Entity\EntityTest.cs" />
     <Compile Include="Gameplay\GameplayTest.cs" />
@@ -143,7 +141,6 @@
     <Compile Include="Graphics\GraphicsTest.cs" />
     <Compile Include="Networking\DataPacket.cs" />
     <Compile Include="Networking\DataPacketFactory.cs" />
-    <Compile Include="Entity\EntityEditorTest.cs" />
     <Compile Include="Networking\ErrorPacket.cs" />
     <Compile Include="Networking\ErrorPacketFactory.cs" />
     <Compile Include="Networking\NetworkingClientTest.cs" />
@@ -164,7 +161,6 @@
     <Compile Include="Terrain\SimpleTerrain.cs" />
     <Compile Include="Terrain\SimpleTerrainBlock.cs" />
     <Compile Include="Terrain\TerrainClientTest.cs" />
-    <Compile Include="Terrain\TerrainEditorTest.cs" />
     <Compile Include="Terrain\TerrainRenderingTest.cs" />
     <Compile Include="TestFiles.cs" />
     <Compile Include="TestTWGame.cs" />

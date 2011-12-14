@@ -39,19 +39,19 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain
 
         #endregion
 
-        //public void SaveTerrain( TerrainManagerService tms, IXMLFile ixmlFile )
-        //{
-        //    ixmlFile.RootNode.Clear();
+        public void SaveTerrain(TerrainManagerService tms, IXMLFile ixmlFile)
+        {
+            ixmlFile.RootNode.Clear();
 
 
-        //    TWXmlNode fullDataNode = ixmlFile.RootNode.CreateChildNode( "TerrainFullData" );
-        //    GetFullData().SaveFullData( tms.Database );
+            TWXmlNode fullDataNode = ixmlFile.RootNode.CreateChildNode("TerrainFullData");
+            GetFullData().SaveFullData(tms.Database);
 
-        //    ixmlFile.RootNode.AddChildNode( "PreprocessedDataRelativeFilename", PreprocessedDataRelativeFilename );
+            ixmlFile.RootNode.AddChildNode("PreprocessedDataRelativeFilename", PreprocessedDataRelativeFilename);
 
-        //    ixmlFile.SaveToDisk();
-        //    ixmlFile = null;
-        //}
+            ixmlFile.SaveToDisk();
+            ixmlFile = null;
+        }
 
         #region ITagged Members
         private List<ITag> tags = new List<ITag>();

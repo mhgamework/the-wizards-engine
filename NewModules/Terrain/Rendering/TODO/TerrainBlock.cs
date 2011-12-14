@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards.Common.Wereld;
 using MHGameWork.TheWizards.ServerClient.TWClient;
 using MHGameWork.TheWizards.Terrain;
 using Microsoft.Xna.Framework;
@@ -921,30 +922,15 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 
         #region ITerrainBlock Members
 
-        private Wereld.QuadTreeNode quadtreeNode;
-
-        public void AssignToQuadtreeNode(MHGameWork.TheWizards.Common.Wereld.IQuadtreeNode node)
+        public void AssignToQuadtreeNode(IQuadtreeNode node)
         {
-            if (node is Wereld.QuadTreeNode)
-            {
-                throw new ArgumentException("Only nodes that are ServerClient.Wereld.QuadTreeNode can be added to this blocks");
-            }
-
-            quadtreeNode = (Wereld.QuadTreeNode)node;
-
-            throw new Exception("The method or operation is not implemented.");
+            throw new NotImplementedException();
         }
 
-        public MHGameWork.TheWizards.Common.Wereld.IQuadtreeNode GetIQuadtreeNode()
+        public IQuadtreeNode GetIQuadtreeNode()
         {
-            return (MHGameWork.TheWizards.Common.Wereld.IQuadtreeNode)quadtreeNode;
-
+            throw new NotImplementedException();
         }
-
-        #endregion
-
-        #region ITerrainBlock Members
-
 
         public ITerrainBlock GetNeighbour(TerrainBlockEdge edge)
         {
@@ -986,8 +972,6 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         //New version
 
 
-
-        protected Wereld.QuadTreeNode quadTreeNode;
         protected BoundingBox localBoundingBox = new BoundingBox();
 
 
@@ -1044,11 +1028,6 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
             get { return terrainGeomipmapRenderData; }
 
         }
-
-
-        public Wereld.QuadTreeNode QuadTreeNode
-        { get { return quadTreeNode; } set { quadTreeNode = value; } }
-
         public BoundingBox LocalBoundingBox
         {
             get { return localBoundingBox; }

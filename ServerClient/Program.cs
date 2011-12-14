@@ -88,8 +88,8 @@ namespace MHGameWork.TheWizards.ServerClient
                 //WizardsEditorFormDevcomponents.RunWorldEditor();
                 //WizardsEditor.TestRunEditorDevcomponents();
                 //WizardsEditor.TestRunEditor();
-                EditorMain.TheWizardsEditor editor = new MHGameWork.TheWizards.EditorMain.TheWizardsEditor();
-                editor.Run();
+                //EditorMain.TheWizardsEditor editor = new MHGameWork.TheWizards.EditorMain.TheWizardsEditor();
+                //editor.Run();
 
             }
             else
@@ -403,8 +403,9 @@ namespace MHGameWork.TheWizards.ServerClient
 
         public static void RunGame()
         {
-            ServerClientMain main = new ServerClientMain();
-            main.Run();
+            throw new NotImplementedException();
+            //ServerClientMain main = new ServerClientMain();
+            //main.Run();
         }
     }
 }

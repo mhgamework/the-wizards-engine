@@ -4,7 +4,6 @@ using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.ServerClient.Terrain;
-using MHGameWork.TheWizards.ServerClient.TWClient;
 using MHGameWork.TheWizards.Terrain;
 using MHGameWork.TheWizards.Terrain.Client;
 using MHGameWork.TheWizards.Terrain.Editor;
@@ -80,7 +79,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
 
                     data.Position = new Vector3(3, 10, -5);
 
-                    renderData.CreateBlocksAndQuadtree(new LoadingTask());
+                    renderData.CreateBlocksAndQuadtree();
 
                     TerrainBlockHeightfieldBuilder builder = new TerrainBlockHeightfieldBuilder();
                     builder.BuildHeightfieldActor(engine.Scene, data, blockX, blockZ, height);
@@ -159,7 +158,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
                     data.Position = new Vector3(data.BlockSize * -4, 0, data.BlockSize * -4);
                     data.HeightMap = new HeightMap(data.NumBlocksX * data.BlockSize, data.NumBlocksZ * data.BlockSize);
 
-                    renderData.CreateBlocksAndQuadtree(new LoadingTask());
+                    renderData.CreateBlocksAndQuadtree();
 
                     TerrainBlockHeightfieldBuilder builder = new TerrainBlockHeightfieldBuilder();
 
@@ -273,7 +272,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
                     TerrainRaiseTool.RaiseTerrain(data, -7, 50, 50, 30);
                     TerrainRaiseTool.RaiseTerrain(data, 0, 0, 300, 10);
 
-                    renderData.CreateBlocksAndQuadtree(new LoadingTask());
+                    renderData.CreateBlocksAndQuadtree();
 
                     terrain = new TerrainClientPhysics(data);
 

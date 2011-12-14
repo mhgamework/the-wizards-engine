@@ -147,7 +147,6 @@
     <Compile Include="ClientMain\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditorMain\TheWizardsEditor.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

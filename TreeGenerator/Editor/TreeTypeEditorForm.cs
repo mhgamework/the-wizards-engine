@@ -11,15 +11,15 @@ namespace TreeGenerator.Editor
 {
     public partial class TreeTypeEditorForm : DevExpress.XtraBars.Ribbon.RibbonForm
     {
-        public MHGameWork.TheWizards.ServerClient.Editor.XNAGameControl XNAGameControl;
+        //public MHGameWork.TheWizards.ServerClient.Editor.XNAGameControl XNAGameControl;
 
         public bool btnAddlevelClicked;
         public TreeTypeEditorForm()
         {
             InitializeComponent();
-            XNAGameControl = new MHGameWork.TheWizards.ServerClient.Editor.XNAGameControl();
-            XNAGameControl.Dock = DockStyle.Fill;
-            clientPanel.Controls.Add(XNAGameControl);
+            //XNAGameControl = new MHGameWork.TheWizards.ServerClient.Editor.XNAGameControl();
+            //XNAGameControl.Dock = DockStyle.Fill;
+            //clientPanel.Controls.Add(XNAGameControl);
             
         }
 
