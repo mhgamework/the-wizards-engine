@@ -135,10 +135,6 @@
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Deprecated\ServerClientOud\ServerClientOud.csproj">
-      <Project>{409E248D-79B7-4644-886A-A01C1211D6DD}</Project>
-      <Name>ServerClientOud</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Editor\Editor.csproj">
       <Project>{A356B2CF-4BBA-4DB4-9FB3-5646F9887048}</Project>
       <Name>Editor</Name>

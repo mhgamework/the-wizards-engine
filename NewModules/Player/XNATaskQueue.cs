@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.ServerClient;
 using MHGameWork.TheWizards.ServerClient.TWClient;
 
 

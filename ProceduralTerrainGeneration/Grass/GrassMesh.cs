@@ -676,48 +676,51 @@ namespace TreeGenerator.Grass
         }
         public void SetUpTerrain(Vector3 corner1, Vector3 corner2)
         {
-            TerrainPosition = corner1;
-            float lenght = corner2.Z - corner1.Z;
-            float with = corner2.X - corner1.X;
-            int blocksize = 20;
-            Database database = loadDatabaseServices();
-            TerrainManagerService tms = new TerrainManagerService(database);
-            TaggedTerrain taggedTerrain = tms.CreateTerrain();
+            throw new NotImplementedException();
+
+           // TerrainPosition = corner1;
+           // float lenght = corner2.Z - corner1.Z;
+           // float with = corner2.X - corner1.X;
+           // int blocksize = 20;
+           // Database database = loadDatabaseServices();
+           // TerrainManagerService tms = new TerrainManagerService(database);
+           // TaggedTerrain taggedTerrain = tms.CreateTerrain();
 
 
-            data = null;
+           // data = null;
 
 
-            data = taggedTerrain.GetFullData();
-            data.NumBlocksX = (int)(with / blocksize);
-            data.NumBlocksZ = (int)(lenght / blocksize);
-            data.BlockSize = blocksize;
-            data.SizeX = data.NumBlocksX * data.BlockSize;
-            data.SizeZ = data.NumBlocksZ * data.BlockSize;
-            data.Position = TerrainPosition;//new Vector3(-data.BlockSize * (data.NumBlocksX / 2), 4, -data.BlockSize * (data.NumBlocksZ / 2));
-           // data.HeightMap = new TerrainHeightMap(data.NumBlocksX * data.BlockSize, data.NumBlocksZ * data.BlockSize);
+           // data = taggedTerrain.GetFullData();
+           // data.NumBlocksX = (int)(with / blocksize);
+           // data.NumBlocksZ = (int)(lenght / blocksize);
+           // data.BlockSize = blocksize;
+           // data.SizeX = data.NumBlocksX * data.BlockSize;
+           // data.SizeZ = data.NumBlocksZ * data.BlockSize;
+           // data.Position = TerrainPosition;//new Vector3(-data.BlockSize * (data.NumBlocksX / 2), 4, -data.BlockSize * (data.NumBlocksZ / 2));
+           //// data.HeightMap = new TerrainHeightMap(data.NumBlocksX * data.BlockSize, data.NumBlocksZ * data.BlockSize);
 
-            TerrainRaiseTool.RaiseTerrain(data, 300, 300, 60, 100);
-            TerrainRaiseTool.RaiseTerrain(data, 0, 600, 120, 30);
-            TerrainRaiseTool.RaiseTerrain(data, 600, 0, 60, 400);
-            TerrainRaiseTool.RaiseTerrain(data, 78, 112, 18, -5);
-            TerrainRaiseTool.RaiseTerrain(data, -7, 50, 50, 30);
-            TerrainRaiseTool.RaiseTerrain(data, 0, 0, 300, 10);
-            TerrainRaiseTool.RaiseTerrain(data, 0, 0, 100, 40);
-            TerrainRaiseTool.RaiseTerrain(data, 500, 500, 100, 60);
+           // TerrainRaiseTool.RaiseTerrain(data, 300, 300, 60, 100);
+           // TerrainRaiseTool.RaiseTerrain(data, 0, 600, 120, 30);
+           // TerrainRaiseTool.RaiseTerrain(data, 600, 0, 60, 400);
+           // TerrainRaiseTool.RaiseTerrain(data, 78, 112, 18, -5);
+           // TerrainRaiseTool.RaiseTerrain(data, -7, 50, 50, 30);
+           // TerrainRaiseTool.RaiseTerrain(data, 0, 0, 300, 10);
+           // TerrainRaiseTool.RaiseTerrain(data, 0, 0, 100, 40);
+           // TerrainRaiseTool.RaiseTerrain(data, 500, 500, 100, 60);
 
 
 
         }
         private Database loadDatabaseServices()
         {
-            Database database = new Database();
-            database.AddService(new DiskSerializerService(database, Application.StartupPath + "\\WizardsEditorSave"));
-            database.AddService(new DiskLoaderService(database));
-            database.AddService(new SettingsService(database, Application.StartupPath + "\\Settings.xml"));
-            database.AddService(new UniqueIDService(database));
+            throw new NotImplementedException();
+            //Database database = new Database();
+            //database.AddService(new DiskSerializerService(database, Application.StartupPath + "\\WizardsEditorSave"));
+            //database.AddService(new DiskLoaderService(database));
+            //database.AddService(new SettingsService(database, Application.StartupPath + "\\Settings.xml"));
+            //database.AddService(new UniqueIDService(database));
 
-            return database;
+            //return database;
         }
         private void LoadHeightData()
         {

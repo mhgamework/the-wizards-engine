@@ -4,8 +4,6 @@ using System.Text;
 using MHGameWork.TheWizards.Entities;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.ServerClient.Editor;
 
 namespace MHGameWork.TheWizards.Entities
 {
@@ -64,31 +62,33 @@ namespace MHGameWork.TheWizards.Entities
 
         public void SaveToDisk( Database.Database database )
         {
-            MHGameWork.TheWizards.ServerClient.Database.DiskSerializerService dss = database.FindService<MHGameWork.TheWizards.ServerClient.Database.DiskSerializerService>();
-            MHGameWork.TheWizards.ServerClient.Database.IXMLFile file = dss.OpenXMLFile( "Entities/" + taggedEntity.UniqueID + "-FullData.txt", "Entity.EntityFullData" );
-            TWXmlNode node = file.RootNode;
-            node.Clear();
+            throw new NotImplementedException();
+            //MHGameWork.TheWizards.ServerClient.Database.DiskSerializerService dss = database.FindService<MHGameWork.TheWizards.ServerClient.Database.DiskSerializerService>();
+            //MHGameWork.TheWizards.ServerClient.Database.IXMLFile file = dss.OpenXMLFile( "Entities/" + taggedEntity.UniqueID + "-FullData.txt", "Entity.EntityFullData" );
+            //TWXmlNode node = file.RootNode;
+            //node.Clear();
 
 
 
-            node.AddChildNode( "TaggedObject", TaggedObject.UniqueID );
-            XMLSerializer.WriteTransformation( node.CreateChildNode( "Transform" ), Transform );
+            //node.AddChildNode( "TaggedObject", TaggedObject.UniqueID );
+            //XMLSerializer.WriteTransformation( node.CreateChildNode( "Transform" ), Transform );
 
-            file.SaveToDisk();
-            
+            //file.SaveToDisk();
+
         }
         private void LoadFromDisk( Database.Database database )
         {
-            MHGameWork.TheWizards.ServerClient.Database.DiskSerializerService dss = database.FindService<MHGameWork.TheWizards.ServerClient.Database.DiskSerializerService>();
-            MHGameWork.TheWizards.ServerClient.Database.IXMLFile file = dss.OpenXMLFile( "Entities/" + taggedEntity.UniqueID + "-FullData.txt", "Entity.EntityFullData" );
-            TWXmlNode node = file.RootNode;
+            throw new NotImplementedException();
+            //MHGameWork.TheWizards.ServerClient.Database.DiskSerializerService dss = database.FindService<MHGameWork.TheWizards.ServerClient.Database.DiskSerializerService>();
+            //MHGameWork.TheWizards.ServerClient.Database.IXMLFile file = dss.OpenXMLFile( "Entities/" + taggedEntity.UniqueID + "-FullData.txt", "Entity.EntityFullData" );
+            //TWXmlNode node = file.RootNode;
 
-            TWXmlNode testNode = node.FindChildNode( "TaggedObject" );
-            if ( testNode == null ) return;
+            //TWXmlNode testNode = node.FindChildNode( "TaggedObject" );
+            //if ( testNode == null ) return;
 
 
-            TaggedObject = database.FindService<EntityManagerService>().GetObject( node.ReadChildNodeValue( "TaggedObject" ) );
-            Transform = XMLSerializer.ReadTransformation( node.FindChildNode( "Transform" ) );
+            //TaggedObject = database.FindService<EntityManagerService>().GetObject( node.ReadChildNodeValue( "TaggedObject" ) );
+            //Transform = XMLSerializer.ReadTransformation( node.FindChildNode( "Transform" ) );
 
             
         }

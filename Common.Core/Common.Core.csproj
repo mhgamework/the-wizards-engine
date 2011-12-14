@@ -194,6 +194,7 @@
     <Compile Include="Graphics\DEPRECATED\ICursor.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Graphics\FullScreenQuad.cs" />
     <Compile Include="Graphics\PlaneMesh.cs" />
     <Compile Include="Graphics\SphereMesh.cs" />
     <Compile Include="Graphics\ColladaShader.cs" />
@@ -301,6 +302,7 @@
     <Compile Include="SlimDXConversion\BoundingFrustum.cs" />
     <Compile Include="SlimDXConversion\MathHelper.cs" />
     <Compile Include="TWDir.cs" />
+    <Compile Include="Utilities\AdvancedQueue.cs" />
     <Compile Include="Utilities\EventList.cs" />
     <Compile Include="Utilities\PrefilledList.cs" />
     <Compile Include="Utilities\TestRunner.cs" />

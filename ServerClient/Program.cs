@@ -21,13 +21,9 @@ namespace MHGameWork.TheWizards.ServerClient
         [STAThread]
         static void Main(string[] args)
         {
-            /*ProgramOud.TestServerClientNetwork001();
-            return;*/
 
             var fi = new FileInfo("Console.log");
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
-            ProgramOud.Main();
-            //return;
 
             OudMain();
 
@@ -407,8 +403,6 @@ namespace MHGameWork.TheWizards.ServerClient
 
         public static void RunGame()
         {
-            UnitTest.Run<TestWaterShadowsScattering>();
-            return;
             ServerClientMain main = new ServerClientMain();
             main.Run();
         }

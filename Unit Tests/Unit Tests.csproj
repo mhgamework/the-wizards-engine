@@ -209,10 +209,6 @@
       <Project>{8162E3FE-A9B6-4F93-94F0-89C74CB7D53D}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Deprecated\ServerClientOud\ServerClientOud.csproj">
-      <Project>{409E248D-79B7-4644-886A-A01C1211D6DD}</Project>
-      <Name>ServerClientOud</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DirectX11\DirectX11.csproj">
       <Project>{A58AF8D7-8C17-43F6-B994-C67F590F416A}</Project>
       <Name>DirectX11</Name>
