@@ -19,6 +19,8 @@ DevExpress 10.1.5.0 (research patched version by Danny Su)
 
 Visual C++ 2008 redistributable package (NOT SP1)
 
+PostSharp in the /_Libraries folder must be installed to develop
+
 
 ----DEBUG:
 Currently The Wizards is using Debug StillDesign.PhysX libaries. They use the Debug Visual C++ 2008 libraries, which are only installed by VS 2008.
