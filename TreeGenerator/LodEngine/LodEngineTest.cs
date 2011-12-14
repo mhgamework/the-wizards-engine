@@ -8,7 +8,6 @@ using MHGameWork.TheWizards.ServerClient;
 using MHGameWork.TheWizards.ServerClient.CascadedShadowMaps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SampleCommon;
 using TreeGenerator.TreeEngine;
 using NUnit.Framework;
 using Seeder = TreeGenerator.help.Seeder;
@@ -553,125 +552,127 @@ namespace TreeGenerator.LodEngine
         [Test]
         public void TestRenderDepthTree()
         {
-            XNAGame game = new XNAGame();
-            game.DrawFps = true;
-            game.IsFixedTimeStep = false;
+            throw new NotImplementedException();
+            //XNAGame game = new XNAGame();
+            //game.DrawFps = true;
+            //game.IsFixedTimeStep = false;
 
 
-            EngineTreeRenderData renderData;
-            EngineTreeRenderDataGenerater gen = new EngineTreeRenderDataGenerater(10);
-            renderData = gen.GetRenderData(TreeStructure.GetTestTreeStructure(game), game, 0);
+            //EngineTreeRenderData renderData;
+            //EngineTreeRenderDataGenerater gen = new EngineTreeRenderDataGenerater(10);
+            //renderData = gen.GetRenderData(TreeStructure.GetTestTreeStructure(game), game, 0);
 
-            TWRenderElement renderElement;
-            DirectionalLight light = null;
-            BasicShader depthShader, modelShader;
-            game.InitializeEvent +=
-                delegate
-                {
+            //TWRenderElement renderElement;
+            //DirectionalLight light = null;
+            //BasicShader depthShader, modelShader;
+            //game.InitializeEvent +=
+            //    delegate
+            //    {
 
-                    light = new DirectionalLight();
-                    light.Direction = new Vector3(0.3f, -0.8f, 0.3f);
-                    light.Direction.Normalize();
-                    light.Color = Color.Red.ToVector3();
-                    int width = game.GraphicsDevice.PresentationParameters.BackBufferWidth;
-                    int height = game.GraphicsDevice.PresentationParameters.BackBufferHeight;
-                    renderData.Initialize();
+            //        light = new DirectionalLight();
+            //        light.Direction = new Vector3(0.3f, -0.8f, 0.3f);
+            //        light.Direction.Normalize();
+            //        light.Color = Color.Red.ToVector3();
+            //        int width = game.GraphicsDevice.PresentationParameters.BackBufferWidth;
+            //        int height = game.GraphicsDevice.PresentationParameters.BackBufferHeight;
+            //        renderData.Initialize();
 
-                };
-            game.UpdateEvent +=
-                delegate
-                {
+            //    };
+            //game.UpdateEvent +=
+            //    delegate
+            //    {
 
-                };
-            game.DrawEvent +=
-                delegate
-                {
-                    renderData.RenderLinearDepth();
-                    //game.LineManager3D.AddBox(BoundingBox.CreateFromPoints(renderData.BoundingBoxData), Color.Red);
-                };
-            game.Run();
+            //    };
+            //game.DrawEvent +=
+            //    delegate
+            //    {
+            //        renderData.RenderLinearDepth();
+            //        //game.LineManager3D.AddBox(BoundingBox.CreateFromPoints(renderData.BoundingBoxData), Color.Red);
+            //    };
+            //game.Run();
         }
        [Test]
         public void TestShadowedTree()
-        {
-            XNAGame game = new XNAGame();
-            game.DrawFps = true;
-            game.IsFixedTimeStep = false;
+       {
+           throw new NotImplementedException();
+           //XNAGame game = new XNAGame();
+           //game.DrawFps = true;
+           //game.IsFixedTimeStep = false;
 
 
-            EngineTreeRenderData renderData;
-            EngineTreeRenderDataGenerater gen = new EngineTreeRenderDataGenerater(10);
-            renderData = gen.GetRenderData(TreeStructure.GetTestTreeStructure(game), game, 0);
+           //EngineTreeRenderData renderData;
+           //EngineTreeRenderDataGenerater gen = new EngineTreeRenderDataGenerater(10);
+           //renderData = gen.GetRenderData(TreeStructure.GetTestTreeStructure(game), game, 0);
 
 
-            CSMRenderer CsmRenderer = null;
-            DirectionalLight light = null;
-            SpectaterCamera cam = null;
-            RenderTarget2D renderTarget = null;
-            bool goSpectator = false;
-            game.InitializeEvent +=
-                delegate
-                {
-                    CsmRenderer = new CSMRenderer(game);
-                    
-                    cam = new SpectaterCamera(game);
-                    game.SpectaterCamera.FarClip = 1000;
-                    cam.Enabled = false;
-                    light = new DirectionalLight();
-                    light.Direction = new Vector3(0.3f, -0.8f, 0.3f);
-                    light.Direction.Normalize();
-                    light.Color = Color.Red.ToVector3();
-                    int width = game.GraphicsDevice.PresentationParameters.BackBufferWidth;
-                    int height = game.GraphicsDevice.PresentationParameters.BackBufferHeight;
-                    renderTarget = new RenderTarget2D(game.GraphicsDevice, width, height, 1, SurfaceFormat.Single, RenderTargetUsage.DiscardContents);
-                    renderData.Initialize();
+           //CSMRenderer CsmRenderer = null;
+           //DirectionalLight light = null;
+           //SpectaterCamera cam = null;
+           //RenderTarget2D renderTarget = null;
+           //bool goSpectator = false;
+           //game.InitializeEvent +=
+           //    delegate
+           //    {
+           //        CsmRenderer = new CSMRenderer(game);
 
-                };
-            game.UpdateEvent +=
-                delegate
-                {
-                    if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.C))
-                    {
-                        goSpectator = !goSpectator;
+           //        cam = new SpectaterCamera(game);
+           //        game.SpectaterCamera.FarClip = 1000;
+           //        cam.Enabled = false;
+           //        light = new DirectionalLight();
+           //        light.Direction = new Vector3(0.3f, -0.8f, 0.3f);
+           //        light.Direction.Normalize();
+           //        light.Color = Color.Red.ToVector3();
+           //        int width = game.GraphicsDevice.PresentationParameters.BackBufferWidth;
+           //        int height = game.GraphicsDevice.PresentationParameters.BackBufferHeight;
+           //        renderTarget = new RenderTarget2D(game.GraphicsDevice, width, height, 1, SurfaceFormat.Single, RenderTargetUsage.DiscardContents);
+           //        renderData.Initialize();
 
-                        cam.Enabled = goSpectator;
-                        game.SpectaterCamera.Enabled = !goSpectator;
+           //    };
+           //game.UpdateEvent +=
+           //    delegate
+           //    {
+           //        if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.C))
+           //        {
+           //            goSpectator = !goSpectator;
 
-                        if (goSpectator)
-                            game.SetCamera(cam);
-                        else
-                            game.SetCamera(game.SpectaterCamera);
+           //            cam.Enabled = goSpectator;
+           //            game.SpectaterCamera.Enabled = !goSpectator;
 
-                    }
+           //            if (goSpectator)
+           //                game.SetCamera(cam);
+           //            else
+           //                game.SetCamera(game.SpectaterCamera);
 
-                };
-            game.DrawEvent +=
-                delegate
-                {
+           //        }
 
-                    game.GraphicsDevice.SetRenderTarget(0, renderTarget);
-                    renderData.RenderLinearDepth();
-                    game.GraphicsDevice.SetRenderTarget(0, null);
-                    CsmRenderer.ShowCascadeSplits = true;
-                    CsmRenderer.RenderDebug = true;
-                    CsmRenderer.Enabled = true;
-                    CsmRenderer.Render(
-                    delegate(IXNAGame game1, BasicShader effect)
-                    {
-                        
-                        effect.SetParameter("g_matWorld", Matrix.Identity);
-                        //effect.SetParameter("g_matViewProj", cam.ViewProjection);
-                        effect.effect.CommitChanges();
-                        renderData.RenderPrimitives();
-                    }, renderTarget, light, cam);
+           //    };
+           //game.DrawEvent +=
+           //    delegate
+           //    {
 
-                    renderData.Render(game);
-                    game.SpriteBatch.Begin();
-                    game.SpriteBatch.Draw(CsmRenderer.shadowMap.GetTexture(), new Rectangle(0, 0, 128 * 4, 128), Color.White);
-                    game.SpriteBatch.End();
+           //        game.GraphicsDevice.SetRenderTarget(0, renderTarget);
+           //        renderData.RenderLinearDepth();
+           //        game.GraphicsDevice.SetRenderTarget(0, null);
+           //        CsmRenderer.ShowCascadeSplits = true;
+           //        CsmRenderer.RenderDebug = true;
+           //        CsmRenderer.Enabled = true;
+           //        CsmRenderer.Render(
+           //        delegate(IXNAGame game1, BasicShader effect)
+           //        {
 
-                };
-            game.Run();
-        }
+           //            effect.SetParameter("g_matWorld", Matrix.Identity);
+           //            //effect.SetParameter("g_matViewProj", cam.ViewProjection);
+           //            effect.effect.CommitChanges();
+           //            renderData.RenderPrimitives();
+           //        }, renderTarget, light, cam);
+
+           //        renderData.Render(game);
+           //        game.SpriteBatch.Begin();
+           //        game.SpriteBatch.Draw(CsmRenderer.shadowMap.GetTexture(), new Rectangle(0, 0, 128 * 4, 128), Color.White);
+           //        game.SpriteBatch.End();
+
+           //    };
+           //game.Run();
+       }
     }
 }

@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
-using MHGameWork.TheWizards.ServerClient.Sky;
 using MHGameWork.TheWizards.Common.Core.Collada;
 using MHGameWork.TheWizards.Graphics;
 
@@ -36,7 +35,7 @@ namespace TreeGenerator.Imposter
         IXNAGame game;
         GraphicsDevice device;
         //just for testing
-        TWModel model;
+        //TWModel model;
         private Vector3[] boundingBox = new Vector3[8];
         Matrix WorldMatrix = Matrix.Identity;
 
@@ -76,7 +75,7 @@ namespace TreeGenerator.Imposter
             game = _game;
             throw new NotImplementedException();
            // renderObject = TestGrassMesh;
-            boundingBox = CreateBoundingBox(model);
+            //boundingBox = CreateBoundingBox(model);
             device = game.GraphicsDevice;
             BoundingBoxPosition = new Vector3((boundingBox[1].X + boundingBox[0].X) * 0.5f, boundingBox[0].Y, (boundingBox[2].Z + boundingBox[0].Z) * 0.5f);
             MinDistance = MinDistance * MinDistance;
@@ -87,10 +86,10 @@ namespace TreeGenerator.Imposter
             MHGameWork.TheWizards.ServerClient.ICamera beginCamera = game.Camera;
 
             //for testing
-            model = TWModel.FromColladaModel(game, ColladaModel.LoadWall001());
-            model.WorldMatrix *= Matrix.CreateScale(0.05f);
-            model.WorldMatrix *= Matrix.CreateRotationX(-MathHelper.PiOver2);
-            model.WorldMatrix *= Matrix.CreateTranslation(BoundingBoxPosition);
+            //model = TWModel.FromColladaModel(game, ColladaModel.LoadWall001());
+            //model.WorldMatrix *= Matrix.CreateScale(0.05f);
+            //model.WorldMatrix *= Matrix.CreateRotationX(-MathHelper.PiOver2);
+            //model.WorldMatrix *= Matrix.CreateTranslation(BoundingBoxPosition);
 
             //WorldMatrix = model.WorldMatrix;
             Vector3 cameraPosition = game.Camera.ViewInverse.Translation;
@@ -320,38 +319,38 @@ namespace TreeGenerator.Imposter
 
         }
 
-        public Vector3[] CreateBoundingBox(TWModel model)
-        {
-            Vector3[] boundingbox = new Vector3[8];
-            //for (int i = 0; i < model.Parts.Count; i++)
-            //{
+        //public Vector3[] CreateBoundingBox(TWModel model)
+        //{
+        //    Vector3[] boundingbox = new Vector3[8];
+        //    //for (int i = 0; i < model.Parts.Count; i++)
+        //    //{
 
-            //}
-            //lets say i can get this
-            //wall
-            /*boundingbox[3] = new Vector3(8, 0, 19);
-            boundingbox[2] = new Vector3(11, 0, 19);
-            boundingbox[4] = new Vector3(8, 5, 19);
-            boundingbox[5] = new Vector3(11, 5, 19);
-            boundingbox[0] = new Vector3(8, 0, 11);
-            boundingbox[1] = new Vector3(11, 0, 11);
-            boundingbox[7] = new Vector3(8, 5, 11);
-            boundingbox[6] = new Vector3(11, 5, 11);*/
+        //    //}
+        //    //lets say i can get this
+        //    //wall
+        //    /*boundingbox[3] = new Vector3(8, 0, 19);
+        //    boundingbox[2] = new Vector3(11, 0, 19);
+        //    boundingbox[4] = new Vector3(8, 5, 19);
+        //    boundingbox[5] = new Vector3(11, 5, 19);
+        //    boundingbox[0] = new Vector3(8, 0, 11);
+        //    boundingbox[1] = new Vector3(11, 0, 11);
+        //    boundingbox[7] = new Vector3(8, 5, 11);
+        //    boundingbox[6] = new Vector3(11, 5, 11);*/
 
-            //grass
-            boundingbox[0] = new Vector3(9, 0, 14);
-            boundingbox[1] = new Vector3(11, 0, 14);
-            boundingbox[2] = new Vector3(11, 0, 16);
-            boundingbox[3] = new Vector3(9, 0, 16);
-            boundingbox[4] = new Vector3(9, 2, 16);
-            boundingbox[5] = new Vector3(11, 2, 16);
-            boundingbox[6] = new Vector3(11, 2, 14);
-            boundingbox[7] = new Vector3(9, 2, 14);
+        //    //grass
+        //    boundingbox[0] = new Vector3(9, 0, 14);
+        //    boundingbox[1] = new Vector3(11, 0, 14);
+        //    boundingbox[2] = new Vector3(11, 0, 16);
+        //    boundingbox[3] = new Vector3(9, 0, 16);
+        //    boundingbox[4] = new Vector3(9, 2, 16);
+        //    boundingbox[5] = new Vector3(11, 2, 16);
+        //    boundingbox[6] = new Vector3(11, 2, 14);
+        //    boundingbox[7] = new Vector3(9, 2, 14);
 
 
 
-            return boundingbox;
-        }
+        //    return boundingbox;
+        //}
 
         protected void ComputeBoundingBoxFromPoints(Vector3[] vertices, out Vector3 min, out Vector3 max)
         {

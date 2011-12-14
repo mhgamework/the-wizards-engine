@@ -164,12 +164,14 @@
     <Compile Include="Editor\FromEditorProject\TODO\EditorTerrainAlphaMap.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Entities\Editor\Rendering\EditorMaterial.cs" />
     <Compile Include="Entity\Editor\EditorMesh.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Entity\Editor\EditorMeshPart.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Entity\Editor\EditorMeshPartRenderData.cs" />
     <Compile Include="Entity\TODO\EntityFullData.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -207,6 +209,7 @@
     <Compile Include="ServerclientDeprecated\DiskLoaderService.cs" />
     <Compile Include="ServerclientDeprecated\DiskSerializerService.cs" />
     <Compile Include="ServerclientDeprecated\IDiskSerializer.cs" />
+    <Compile Include="ServerclientDeprecated\IRenderPrimitives.cs" />
     <Compile Include="ServerclientDeprecated\QuadTree.cs" />
     <Compile Include="ServerclientDeprecated\QuadTreeNode.cs" />
     <Compile Include="Terrain\Editor\TerrainRaiseTool.cs" />

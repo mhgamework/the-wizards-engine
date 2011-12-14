@@ -33,13 +33,13 @@ namespace TreeGenerator.Editor
         int seed = 123;
         private bool notInSelectFunction = true;
 
-        public XNAGameControl XNAGameControl
-        {
-            get
-            {
-                return Form.XNAGameControl;
-            }
-        }
+        //public XNAGameControl XNAGameControl
+        //{
+        //    get
+        //    {
+        //        return Form.XNAGameControl;
+        //    }
+        //}
 
         private bool needRecreate = false;
 
@@ -56,9 +56,9 @@ namespace TreeGenerator.Editor
             Form.rbWobbleAxialSplit.Properties.Maximum = 60;*/
 
 
-            XNAGameControl.UpdateEvent += new XNAGameControl.GameTimeEventHandler(XNAGameControl_UpdateEvent);
-            XNAGameControl.InitializeEvent += new EventHandler(XNAGameControl_InitializeEvent);
-            XNAGameControl.DrawEvent += new XNAGameControl.GameTimeEventHandler(XNAGameControl_DrawEvent);
+            //XNAGameControl.UpdateEvent += new XNAGameControl.GameTimeEventHandler(XNAGameControl_UpdateEvent);
+            //XNAGameControl.InitializeEvent += new EventHandler(XNAGameControl_InitializeEvent);
+            //XNAGameControl.DrawEvent += new XNAGameControl.GameTimeEventHandler(XNAGameControl_DrawEvent);
             
             Form.Size = new System.Drawing.Size(1280, 1024);
             Form.btnAddLevel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(btnAddLevel_ItemClick);
@@ -516,7 +516,7 @@ namespace TreeGenerator.Editor
 
         void Form_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
         {
-            XNAGameControl.Exit();
+            //XNAGameControl.Exit();
         }
 
         void rbDropAngle_ValueChanged(object sender, EventArgs e)
@@ -736,29 +736,29 @@ namespace TreeGenerator.Editor
         {
 
 
-            XNAGameControl.GraphicsDevice.RenderState.AlphaTestEnable = true;
-            XNAGameControl.GraphicsDevice.RenderState.ReferenceAlpha = 80;
-            XNAGameControl.GraphicsDevice.RenderState.AlphaFunction = CompareFunction.GreaterEqual;
+            //XNAGameControl.GraphicsDevice.RenderState.AlphaTestEnable = true;
+            //XNAGameControl.GraphicsDevice.RenderState.ReferenceAlpha = 80;
+            //XNAGameControl.GraphicsDevice.RenderState.AlphaFunction = CompareFunction.GreaterEqual;
        
-            RenderData.draw();
-            XNAGameControl.GraphicsDevice.RenderState.AlphaTestEnable = false;
+            //RenderData.draw();
+            //XNAGameControl.GraphicsDevice.RenderState.AlphaTestEnable = false;
          
         }
 
         void XNAGameControl_InitializeEvent(object sender, EventArgs e)
         {
-            LineRenderer = new TreeLineRenderer(XNAGameControl);
-            TreeStructure = treeStructureGenerater.GenerateTree(TreeTypeData, seed);
-            //RenderManager.Intialize(XNAGameControl, "trunk001.jpg");
+            //LineRenderer = new TreeLineRenderer(XNAGameControl);
+            //TreeStructure = treeStructureGenerater.GenerateTree(TreeTypeData, seed);
+            ////RenderManager.Intialize(XNAGameControl, "trunk001.jpg");
 
-            RenderGen = new EngineTreeRenderDataGenerater(20);
-            TreeRenderManager bodyManager = new TreeRenderManager();
-            TreeRenderManager leafManager = new TreeRenderManager();
-            RenderData = RenderGen.GetRenderData(TreeStructure, XNAGameControl, 0);
+            //RenderGen = new EngineTreeRenderDataGenerater(20);
+            //TreeRenderManager bodyManager = new TreeRenderManager();
+            //TreeRenderManager leafManager = new TreeRenderManager();
+            //RenderData = RenderGen.GetRenderData(TreeStructure, XNAGameControl, 0);
 
 
 
-            RenderData.Initialize();
+            //RenderData.Initialize();
           
 
         }
@@ -766,35 +766,35 @@ namespace TreeGenerator.Editor
         void XNAGameControl_UpdateEvent(Microsoft.Xna.Framework.GameTime ntime)
         {
 
-            if (needRecreate)
-            {
+            //if (needRecreate)
+            //{
 
-                recreateTreeRenderData();
-            }
-            if (Form.btnAddlevelClicked)
-            {
+            //    recreateTreeRenderData();
+            //}
+            //if (Form.btnAddlevelClicked)
+            //{
                 
-                Form.btnAddlevelClicked = false;
-            }
+            //    Form.btnAddlevelClicked = false;
+            //}
 
 
-            if (XNAGameControl.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.S))
-            {
-                btSeed_ItemClick(null, null);
-            }
+            //if (XNAGameControl.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.S))
+            //{
+            //    btSeed_ItemClick(null, null);
+            //}
 
          
         }
 
         private void recreateTreeRenderData()
         {
-            RenderGen = new EngineTreeRenderDataGenerater(20);
-            TreeStructure = treeStructureGenerater.GenerateTree(TreeTypeData, seed);
-            RenderGen.GetRenderData(TreeStructure, XNAGameControl, 0);
-            RenderData = RenderGen.TreeRenderData;
-            RenderData.Initialize();
+            //RenderGen = new EngineTreeRenderDataGenerater(20);
+            //TreeStructure = treeStructureGenerater.GenerateTree(TreeTypeData, seed);
+            //RenderGen.GetRenderData(TreeStructure, XNAGameControl, 0);
+            //RenderData = RenderGen.TreeRenderData;
+            //RenderData.Initialize();
          
-            needRecreate = false;
+            //needRecreate = false;
         }
 
         public void AddLevel()
