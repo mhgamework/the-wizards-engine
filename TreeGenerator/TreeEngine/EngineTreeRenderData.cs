@@ -1,16 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.ServerClient;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.Common.Core.Collada;
-using MHGameWork.TheWizards.Common.Core.Graphics;
 using TreeGenerator.help;
-using TreeGenerator.Imposter;
 using MHGameWork.TheWizards.Graphics;
 using TreeGenerator.LodEngine;
 namespace TreeGenerator.TreeEngine
@@ -32,6 +23,7 @@ namespace TreeGenerator.TreeEngine
             Leaves = new List<EngineTreeRenderDataPart>();
             leaves = new List<bool>();
         }
+
 
         public void Initialize()
         {

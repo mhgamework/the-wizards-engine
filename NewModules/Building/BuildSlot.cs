@@ -41,7 +41,6 @@ namespace MHGameWork.TheWizards.Building
         private readonly DynamicBlock block;
         public Vector3 RelativeTranslation;
         public float RelativeRotationY;
-        private DeferredMeshRenderElement meshEl;
         private readonly DeferredRenderer renderer;
 
         public BuildSlot(DynamicBlock block, Vector3 RelativeTranslation, float RelativeRotationY, DeferredRenderer renderer)

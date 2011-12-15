@@ -92,17 +92,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Import Include="MHGameWork.Game3DPlay" />
-    <Import Include="MHGameWork.Game3DPlay.Core" />
-    <Import Include="MHGameWork.Game3DPlay.Core.Elements" />
-    <Import Include="MHGameWork.Game3DPlay.Gui" />
     <Import Include="MHGameWork.TheWizards.Common.Core" />
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="Microsoft.Win32.SafeHandles" />
     <Import Include="Microsoft.Xna" />
     <Import Include="Microsoft.Xna.Framework" />
     <Import Include="Microsoft.Xna.Framework.Graphics" />
-    <Import Include="NovodexWrapper" />
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />

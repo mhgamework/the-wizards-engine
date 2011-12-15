@@ -23,7 +23,6 @@ namespace MHGameWork.TheWizards.Terrain.Client
 
         public TerrainBlockClientPhysics(StillDesign.PhysX.Scene scene, TerrainFullData terrainData, int blockX, int blockZ, float blockHeight, TerrainBlockHeightfieldBuilder builder)
         {
-            MHGameWork.TheWizards.WorldDatabase.DataRevision rev;
 
             this.blockHeight = blockHeight;
             this.blockZ = blockZ;

@@ -125,7 +125,6 @@ namespace MHGameWork.TheWizards.WorldDatabase
         {
             if (!System.IO.File.Exists(getOverallStateFile())) return;
             TWXmlNode node;
-            TWXmlNode[] childNodes;
 
             TWXmlNode root = TWXmlNode.GetRootNodeFromFile(getOverallStateFile());
             if (root.Name != "OverallState") throw new Exception();

@@ -146,7 +146,6 @@ namespace MHGameWork.TheWizards.Entities
             set { objectMatrix = value; }
         }
 
-        private Matrix localMatrix;
 	
 
         private BoundingBox boundingBox;

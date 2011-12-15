@@ -50,7 +50,6 @@ namespace MHGameWork.TheWizards.Rendering
                 var el = Renderer.CreateRenderElement(renderable);
                 el.WorldMatrix = part.ObjectMatrix;
 
-                int a;
 
             }
 

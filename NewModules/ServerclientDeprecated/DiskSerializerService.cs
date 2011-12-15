@@ -130,7 +130,7 @@ namespace MHGameWork.TheWizards.ServerClient.Database
                     relativeFilenameHeader = file.Reader.ReadString();
                     headerEnd = file.Reader.ReadString();
                 }
-                catch ( Exception e )
+                catch ( Exception )
                 {
                     throw new InvalidOperationException( "Invalid file format!!(incorrect 'DiskSerializerService' header)" );
 

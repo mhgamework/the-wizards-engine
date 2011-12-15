@@ -168,14 +168,13 @@ namespace MHGameWork.TheWizards.WorldDatabase
 
             if (!System.IO.File.Exists(getRevisionFile(rev))) return null;
             TWXmlNode node;
-            TWXmlNode[] childNodes;
 
             TWXmlNode root = TWXmlNode.GetRootNodeFromFile(getRevisionFile(rev));
             if (root.Name != "Revision") throw new Exception();
             node = root.FindChildNode("WorldDatabase");
             if (node == null || node.GetAttribute("version") != "01.01") throw new Exception();
 
-            int fileNextUniqueID = root.ReadChildNodeValueInt("NextUniqueID");
+            //int fileNextUniqueID = root.ReadChildNodeValueInt("NextUniqueID");
 
 
             TWXmlNode dataItemTypesNode = root.FindChildNode("DataItemTypes");

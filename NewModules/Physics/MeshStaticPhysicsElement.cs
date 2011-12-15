@@ -56,8 +56,8 @@ namespace MHGameWork.TheWizards.Physics
             boundingSphere.Center = Vector3.Transform(boundingSphere.Center, worldMatrix);
             //SCALING NOT SUPPORTED
 
-            Vector3 transl, scaling;
-            Quaternion rot;
+            //Vector3 transl, scaling;
+            //Quaternion rot;
             /*model.ObjectMatrix.Decompose(out scaling, out rot, out transl);
             bs.Radius *= MathHelper.Max(MathHelper.Max(scaling.X, scaling.Y), scaling.Z);
             scaling = entityFullData.Transform.Scaling;

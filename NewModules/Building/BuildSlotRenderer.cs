@@ -40,9 +40,7 @@ namespace MHGameWork.TheWizards.Building
                 switch (change.ChangeType)
                 {
                     case ModelContainer.WorldChangeType.None:
-
                         throw new InvalidOperationException();
-                        break;
                     case ModelContainer.WorldChangeType.Added:
                         setMeshRenderElement(ent);
                         break;

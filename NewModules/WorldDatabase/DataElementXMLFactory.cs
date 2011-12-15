@@ -28,13 +28,13 @@ namespace MHGameWork.TheWizards.WorldDatabase
         IDataElement IDataElementFactory.ReadFromDisk( DataItemIdentifier item, DataRevisionIdentifier revision )
         {
             throw new NotImplementedException();
-            return ReadFromDisk( item, revision );
+            //return ReadFromDisk( item, revision );
         }
 
         public void WriteToDisk( DataItemIdentifier item, DataRevisionIdentifier revision, IDataElement dataElement )
         {
             throw new NotImplementedException();
-            WriteToDisk( item, revision, (T)dataElement );
+            //WriteToDisk( item, revision, (T)dataElement );
         }
     }
 }

@@ -114,7 +114,6 @@
     <Compile Include="GameClientData.cs" />
     <Compile Include="GameIniFile.cs" />
     <Compile Include="GeoMipMap\Buffer2D.cs" />
-    <Compile Include="GeoMipMap\TerrainInfoFile.cs" />
     <Compile Include="GeoMipMap\FilePointer.cs" />
     <Compile Include="GeoMipMap\TerrainListFile.cs" />
     <Compile Include="GeoMipMap\HeightMap.cs" />

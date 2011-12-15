@@ -36,11 +36,12 @@ namespace MHGameWork.TheWizards.Tests.Building
 
             if (jumpTimeLeft > 0)
             {
-                offset += Vector3.UnitY * game.Elapsed * (gravity + 4*1.8f) * (jumpTimeLeft / 0.5f);
+                offset += Vector3.UnitY * game.Elapsed * (gravity + 4 * 1.8f) * (jumpTimeLeft / 0.5f);
                 jumpTimeLeft -= game.Elapsed;
             }
 
 
+#pragma warning disable 642
             if (tryMove(previousPos + offset)) ;
             else if (tryMove(previousPos + Vector3.UnitX * offset.X + Vector3.UnitZ * offset.Z)) ;
             else if (tryMove(previousPos + Vector3.UnitX * offset.X)) ;
@@ -48,6 +49,7 @@ namespace MHGameWork.TheWizards.Tests.Building
             else if (tryMove(previousPos + Vector3.UnitY * offset.Y)) ;
             else if (tryMove(previousPos + Vector3.UnitZ * offset.Z + Vector3.UnitY * offset.Y)) ;
             else if (tryMove(previousPos + Vector3.UnitZ * offset.Z)) ;
+#pragma warning restore 642
 
             if (game.SpectaterCamera.CameraPosition.Y < 1.4)
                 game.SpectaterCamera.CameraPosition -= Vector3.UnitY * (game.SpectaterCamera.CameraPosition.Y - 1.4f);

@@ -201,7 +201,6 @@ namespace MHGameWork.TheWizards.Building
         private void CalculatePlacePos(out Point3 placePos, out DynamicBlock selectedBlock)
         {
             Vector3 rawPlacePos = new Vector3(0, 0, 0);
-            var ret = new Point3();
             DynamicBlock rayBlock;
             Vector3 intersectPoint;
 

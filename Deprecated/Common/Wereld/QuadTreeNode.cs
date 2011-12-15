@@ -295,16 +295,12 @@ namespace MHGameWork.TheWizards.Common.Wereld
             {
                 case ChildDir.UpperLeft:
                     return upperLeft;
-                    break;
                 case ChildDir.UpperRight:
                     return upperRight;
-                    break;
                 case ChildDir.LowerLeft:
                     return lowerLeft;
-                    break;
                 case ChildDir.LowerRight:
                     return lowerRight;
-                    break;
                 default:
                     throw new ArgumentException( "Invalid value", "dir" );
             }

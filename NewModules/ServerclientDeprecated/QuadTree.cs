@@ -130,15 +130,6 @@ namespace MHGameWork.TheWizards.ServerClient.TWClient
 
 
 
-
-        private int maxNodeEntities = 4;
-        private Vector2 minNodeSize = new Vector2( 10, 10 );
-
-        private Color[] levelColors;
-
-
-
-
         //        public bool OrdenEntity( ClientEntityHolder entH ) { return OrdenEntity( this, entH ); }
         //        public bool OrdenEntity( QuadTreeNode node, ClientEntityHolder entH )
         //        {

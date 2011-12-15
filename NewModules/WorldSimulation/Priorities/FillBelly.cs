@@ -26,7 +26,6 @@ namespace MHGameWork.TheWizards.WorldSimulation
             if ((creature.CurrentAction is MoveToResource || creature.CurrentAction is Eat) && creature.CurrentPriority == this )
                 return creature.CurrentAction;
 
-            IAction act = null;
             for (int i = 0; i < simulater.Resources.Count; i++)
             {
                 if (simulater.Resources[i].Type == ResourceTypes.Food)
