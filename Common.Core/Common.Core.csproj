@@ -305,14 +305,6 @@
     <Compile Include="Utilities\AdvancedQueue.cs" />
     <Compile Include="Utilities\EventList.cs" />
     <Compile Include="Utilities\PrefilledList.cs" />
-    <Compile Include="Utilities\TestRunner.cs" />
-    <Compile Include="Utilities\TestRunnerGUI.cs" />
-    <Compile Include="Utilities\TestRunnerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Utilities\TestRunnerForm.Designer.cs">
-      <DependentUpon>TestRunnerForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Water\Camera.cs" />
     <Compile Include="Water\Mesh.cs" />
     <Compile Include="Water\SubGrid.cs" />
@@ -329,9 +321,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Graphics\Files\LineRendering.fx" />
-    <EmbeddedResource Include="Utilities\TestRunnerForm.resx">
-      <DependentUpon>TestRunnerForm.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Graphics\Files\ColladaModel.fx" />

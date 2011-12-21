@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using MHGameWork.TheWizards.TestRunner;
 using MHGameWork.TheWizards.Utilities;
 using System.Reflection;
 

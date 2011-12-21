@@ -232,6 +232,10 @@
       <Project>{53269219-3E5B-4F70-83A9-3C6C9C714FEC}</Project>
       <Name>Server</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TestRunner\TestRunner.csproj">
+      <Project>{AC6C51CE-96FB-401B-9B51-1302F273A52A}</Project>
+      <Name>TestRunner</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TreeGenerator\TreeGenerator.csproj">
       <Project>{E7F313DB-EDA4-4894-AE46-B220B53A6A48}</Project>
       <Name>TreeGenerator</Name>

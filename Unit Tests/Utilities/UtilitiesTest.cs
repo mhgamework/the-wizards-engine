@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows;
+using MHGameWork.TheWizards.TestRunner;
 using MHGameWork.TheWizards.Utilities;
 using NUnit.Framework;
 
@@ -13,6 +14,9 @@ namespace MHGameWork.TheWizards.Tests.Utilities
     [TestFixture]
     public class UtilitiesTest
     {
+        /// <summary>
+        /// TODO: move test
+        /// </summary>
         [Test]
         public void TestTestRunner()
         {

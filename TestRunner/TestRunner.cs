@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading;
 using MHGameWork.TheWizards.Graphics;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Utilities
+namespace MHGameWork.TheWizards.TestRunner
 {
     public class TestRunner
     {

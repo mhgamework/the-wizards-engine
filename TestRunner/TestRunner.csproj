@@ -8,7 +8,7 @@
     <ProjectGuid>{AC6C51CE-96FB-401B-9B51-1302F273A52A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestRunner</RootNamespace>
+    <RootNamespace>MHGameWork.TheWizards.TestRunner</RootNamespace>
     <AssemblyName>TestRunner</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
@@ -41,8 +41,15 @@
     <Reference Include="CommandLine">
       <HintPath>..\_Libraries\libcmdline-1.8.0.7-beta-bin\libcmdline\bin\Release\CommandLine.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=3.1.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Xna.Framework.Game\2.0.0.0__6d5c3888ef60e27d\Microsoft.Xna.Framework.Game.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.7.10213, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,9 +60,22 @@
     <Compile Include="CommandlineOptions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestRunner.cs" />
+    <Compile Include="TestRunnerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestRunnerForm.Designer.cs">
+      <DependentUpon>TestRunnerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestRunnerGUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestRunnerForm.resx">
+      <DependentUpon>TestRunnerForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">

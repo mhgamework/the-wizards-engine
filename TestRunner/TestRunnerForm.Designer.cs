@@ -1,4 +1,4 @@
-﻿namespace MHGameWork.TheWizards.Utilities
+﻿namespace MHGameWork.TheWizards.TestRunner
 {
     partial class TestRunnerForm
     {

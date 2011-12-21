@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
 using CommandLine;
 
-namespace TestRunner
+namespace MHGameWork.TheWizards.TestRunner
 {
     class Program
     {
@@ -22,8 +17,9 @@ namespace TestRunner
             }
 
 
-            var runner = new MHGameWork.TheWizards.Utilities.TestRunner();
-            runner.RunTest(options.AssemblyName, options.TypeFullQualifiedName, options.MethodName);
+            var runner = new TestRunner();
+            var result = runner.RunTest(options.AssemblyName, options.TypeFullQualifiedName, options.MethodName);
+
 
 
 

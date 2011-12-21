@@ -5,6 +5,7 @@ using System.Threading;
 using MHGameWork.TheWizards.Main;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.ServerClient;
+using MHGameWork.TheWizards.TestRunner;
 using MHGameWork.TheWizards.Tests;
 using MHGameWork.TheWizards.Utilities;
 using Microsoft.Xna.Framework;

@@ -135,6 +135,10 @@
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
       <Name>NewModules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TestRunner\TestRunner.csproj">
+      <Project>{AC6C51CE-96FB-401B-9B51-1302F273A52A}</Project>
+      <Name>TestRunner</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TreeGenerator\TreeGenerator.csproj">
       <Project>{E7F313DB-EDA4-4894-AE46-B220B53A6A48}</Project>
       <Name>TreeGenerator</Name>

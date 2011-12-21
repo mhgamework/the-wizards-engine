@@ -139,6 +139,10 @@
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
       <Name>NewModules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TestRunner\TestRunner.csproj">
+      <Project>{AC6C51CE-96FB-401B-9B51-1302F273A52A}</Project>
+      <Name>TestRunner</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
