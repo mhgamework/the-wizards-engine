@@ -7,7 +7,7 @@ using MHGameWork.TheWizards.Graphics;
 
 namespace TreeGenerator.help
 {
-    class TreestructureGenerator
+    public class TreestructureGenerator
     {
         public string TreeTypeXML;
         public string TreeType;

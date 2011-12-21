@@ -78,52 +78,51 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain
         /// <param name="node"></param>
         public void LoadFullData( TheWizards.Database.Database database )
         {
-            throw new NotImplementedException();
-            //Database.DiskSerializerService dss = database.FindService<Database.DiskSerializerService>();
-            //Database.IXMLFile file = dss.OpenXMLFile( "Terrains/" + taggedTerrain.UniqueID + "-FullData.txt", "Terrain.TerrainFullData" );
-            //TWXmlNode node = file.RootNode;
+            Database.DiskSerializerService dss = database.FindService<Database.DiskSerializerService>();
+            Database.IXMLFile file = dss.OpenXMLFile("Terrains/" + taggedTerrain.UniqueID + "-FullData.txt", "Terrain.TerrainFullData");
+            TWXmlNode node = file.RootNode;
 
-            //TerrainFullData data = this;
-            //TWXmlNode testNode = node.FindChildNode( "Position" );
-            //if ( testNode == null ) return;
-
-
-            //data.Position = XMLSerializer.ReadVector3( node.FindChildNode( "Position" ) );
-            //data.SizeX = int.Parse( node.ReadChildNodeValue( "SizeX" ) );
-            //data.SizeZ = int.Parse( node.ReadChildNodeValue( "SizeZ" ) );
-
-            //data.BlockSize = node.ReadChildNodeValueInt( "BlockSize", 0 );
-            //data.NumBlocksX = node.ReadChildNodeValueInt( "NumBlocksX", 0 );
-            //data.NumBlocksZ = node.ReadChildNodeValueInt( "NumBlocksZ", 0 );
-
-            //if ( node.FindChildNode( "Heightmap" ) != null )
-            //    data.HeightMap = HeightMap.LoadFromXml( node.FindChildNode( "Heightmap" ) );
-
-            //TWXmlNode texturesNode = node.FindChildNode( "Textures" );
-            ////int count = texturesNode.GetAttributeInt( "Count" );
-
-            //TWXmlNode[] textureNodes = texturesNode.GetChildNodes();
-
-            //for ( int i = 0; i < textureNodes.Length; i++ )
-            //{
-
-            //    TWXmlNode textureNode = textureNodes[ i ];
-
-            //    if ( textureNode.Name != "Texture" ) continue;
-
-            //    string diffuseTexture = textureNode.ReadChildNodeValue( "DiffuseTextureFullPath" );
-            //    string normalTexture = textureNode.ReadChildNodeValue( "NormalTextureFullPath" );
-            //    EditorTerrainAlphaMap alphaMap = EditorTerrainAlphaMap.LoadFromXml( textureNode.FindChildNode( "AlphaMap" ) );
+            TerrainFullData data = this;
+            TWXmlNode testNode = node.FindChildNode("Position");
+            if (testNode == null) return;
 
 
-            //    TerrainFullData.TerrainTexture texture = new TerrainFullData.TerrainTexture( data, diffuseTexture );
-            //    texture.AlphaMap.Dispose();
-            //    texture.AlphaMap = alphaMap;
-            //    texture.NormalTexture = normalTexture;
+            data.Position = XMLSerializer.ReadVector3(node.FindChildNode("Position"));
+            data.SizeX = int.Parse(node.ReadChildNodeValue("SizeX"));
+            data.SizeZ = int.Parse(node.ReadChildNodeValue("SizeZ"));
 
-            //    data.Textures.Add( texture );
+            data.BlockSize = node.ReadChildNodeValueInt("BlockSize", 0);
+            data.NumBlocksX = node.ReadChildNodeValueInt("NumBlocksX", 0);
+            data.NumBlocksZ = node.ReadChildNodeValueInt("NumBlocksZ", 0);
 
-            //}
+            if (node.FindChildNode("Heightmap") != null)
+                data.HeightMap = HeightMap.LoadFromXml(node.FindChildNode("Heightmap"));
+
+            TWXmlNode texturesNode = node.FindChildNode("Textures");
+            //int count = texturesNode.GetAttributeInt( "Count" );
+
+            TWXmlNode[] textureNodes = texturesNode.GetChildNodes();
+
+            for (int i = 0; i < textureNodes.Length; i++)
+            {
+
+                TWXmlNode textureNode = textureNodes[i];
+
+                if (textureNode.Name != "Texture") continue;
+
+                string diffuseTexture = textureNode.ReadChildNodeValue("DiffuseTextureFullPath");
+                string normalTexture = textureNode.ReadChildNodeValue("NormalTextureFullPath");
+                EditorTerrainAlphaMap alphaMap = EditorTerrainAlphaMap.LoadFromXml(textureNode.FindChildNode("AlphaMap"));
+
+
+                TerrainFullData.TerrainTexture texture = new TerrainFullData.TerrainTexture(data, diffuseTexture);
+                texture.AlphaMap.Dispose();
+                texture.AlphaMap = alphaMap;
+                texture.NormalTexture = normalTexture;
+
+                data.Textures.Add(texture);
+
+            }
 
 
         }

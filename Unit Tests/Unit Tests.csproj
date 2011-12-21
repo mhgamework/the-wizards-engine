@@ -162,6 +162,7 @@
     <Compile Include="Terrain\TerrainClientTest.cs" />
     <Compile Include="Terrain\TerrainRenderingTest.cs" />
     <Compile Include="TestFiles.cs" />
+    <Compile Include="Treegenerater\Tests.cs" />
     <Compile Include="TestTWGame.cs" />
     <Compile Include="Treegenerater\TreeSynchronisationTest.cs" />
     <Compile Include="Utilities\UtilitiesTest.cs" />

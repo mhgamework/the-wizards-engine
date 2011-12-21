@@ -172,7 +172,6 @@
     <Compile Include="SideProjectTests.cs" />
     <Compile Include="SimpleTextureFactory.cs" />
     <Compile Include="SimpleTreeTypeFactory.cs" />
-    <Compile Include="Tests.cs" />
     <Compile Include="TODO\help\Branch.cs" />
     <Compile Include="Directions.cs" />
     <Compile Include="TODO\help\leaves.cs" />

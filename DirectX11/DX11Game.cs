@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using DirectX11.Graphics;
 using DirectX11.Input;
+using MHGameWork.TheWizards.TestRunner;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
@@ -34,6 +35,12 @@ namespace DirectX11
 
         void gameLoop()
         {
+            if (TotalRunTime > 3 && TestRunner.IsRunningAutomated)
+            {
+                Exit();
+                return;                
+            }
+
             updateElapsed();
 
             updateInput();
@@ -142,7 +149,7 @@ namespace DirectX11
 
                 isMouseExclusive = !mouse.CursorEnabled;
             }
-          
+
 
             var keyboardState = diKeyboard.GetCurrentState();
 
@@ -174,6 +181,7 @@ namespace DirectX11
             var nextFrameTime = SlimDX.Configuration.Timer.Elapsed;
             Elapsed = (float)(nextFrameTime - lastFrameTime).TotalSeconds;
             lastFrameTime = nextFrameTime;
+            TotalRunTime += Elapsed;
 
             fpsCalculater.AddFrame(Elapsed);
 
@@ -195,6 +203,7 @@ namespace DirectX11
         private List<BasicShader> basicShaders;
         public TextureRenderer TextureRenderer { get; private set; }
         public float Elapsed { get; private set; }
+        public float TotalRunTime { get; private set; }
         public bool IsDirectXInitialized { get { return form.IsDirectXInitialized; } }
 
         public void InitDirectX()
@@ -249,7 +258,6 @@ namespace DirectX11
 
 
         // Helper
-
         public SpectaterCamera SpectaterCamera { get; private set; }
         public LineManager3D LineManager3D { get; private set; }
         /// <summary>

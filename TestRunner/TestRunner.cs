@@ -6,8 +6,11 @@ using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.TestRunner
 {
+    [Serializable]
     public class TestRunner
     {
+        public static bool IsRunningAutomated { get; private set; }
+
         /// <summary>
         /// This method runs given test method and stores returns the result of the test
         /// </summary>
@@ -19,7 +22,7 @@ namespace MHGameWork.TheWizards.TestRunner
             Exception throwedException = null;
             try
             {
-                enableAutomatedTesting(); 
+                enableAutomatedTesting();
                 PerformTestJob(test, method);
             }
             catch (Exception ex)
@@ -69,7 +72,7 @@ namespace MHGameWork.TheWizards.TestRunner
             var method = type.GetMethod(methodName);
 
 
-            return RunTest(test,method);
+            return RunTest(test, method);
         }
 
 
@@ -77,11 +80,13 @@ namespace MHGameWork.TheWizards.TestRunner
         {
             XNAGame.AutoShutdown = 3;
             XNAGame.DefaultInputDisabled = true;
+            IsRunningAutomated = true;
         }
         private void disableAutomatedTesting()
         {
             XNAGame.AutoShutdown = -1;
             XNAGame.DefaultInputDisabled = false;
+            IsRunningAutomated = false;
         }
 
         /// <summary>

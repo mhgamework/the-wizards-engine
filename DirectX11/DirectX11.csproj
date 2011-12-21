@@ -115,6 +115,10 @@
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TestRunner\TestRunner.csproj">
+      <Project>{AC6C51CE-96FB-401B-9B51-1302F273A52A}</Project>
+      <Name>TestRunner</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Shaders\FullScreenQuad.fx" />

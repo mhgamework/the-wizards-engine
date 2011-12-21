@@ -14,7 +14,7 @@ using MHGameWork.TheWizards.Graphics;
 
 namespace TreeGenerator.help
 {
-    class Leaf
+    public class Leaf
     {
         #region variables
 
