@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using CommandLine;
 
 namespace TestRunner
 {
@@ -11,22 +12,14 @@ namespace TestRunner
         [STAThread]
         static void Main(string[] args)
         {
-            throw new NotImplementedException();
-            if (args[0] == "-test")
-            {
-                runTests(args[1]);
-                    return;
-            }
-                
-            /*var testsAssemblyPath = args[0];
-            var testClass = args[1];
-            var testMethod = args[1];*/
+            var options = new CommandlineOptions();
+            ICommandLineParser parser = new CommandLineParser();
+            if (!parser.ParseArguments(args, options))
+                Console.WriteLine("Invalid input!");
 
-            for(;;)
-            {
-                Console.WriteLine("Alive!");
-                Thread.Sleep(1000);
-            }
+            var obj = new MHGameWork.TheWizards.Utilities.TestRunner.CallbackObject();
+            
+
         }
 
         private static void runTests(string testName)

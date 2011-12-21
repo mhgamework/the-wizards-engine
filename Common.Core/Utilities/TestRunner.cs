@@ -301,7 +301,6 @@ namespace MHGameWork.TheWizards.Utilities
 
             var obj = new CallbackObject();
             obj.AssemblyName = TestsAssembly.FullName;
-            obj.TypeFullName = method.DeclaringType.FullName;
             obj.TypeFullQualifiedName = method.DeclaringType.AssemblyQualifiedName;
             obj.MethodName = method.Name;
             obj.AutoShutDown = autoShutDownValue;
@@ -719,7 +718,6 @@ namespace MHGameWork.TheWizards.Utilities
         [Serializable]
         public class CallbackObject
         {
-            public string TypeFullName;
             public string TypeFullQualifiedName;
             public string MethodName;
             public string AssemblyName;
