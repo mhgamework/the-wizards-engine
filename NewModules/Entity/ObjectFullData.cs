@@ -101,12 +101,11 @@ namespace MHGameWork.TheWizards.Entity
         }
         private void LoadFromDisk(Database.Database database)
         {
-            throw new NotImplementedException();
-            //MHGameWork.TheWizards.ServerClient.Database.DiskSerializerService dss = database.FindService<MHGameWork.TheWizards.ServerClient.Database.DiskSerializerService>();
-            //MHGameWork.TheWizards.ServerClient.Database.IXMLFile file = dss.OpenXMLFile("Objects/" + this.TaggedObject.UniqueID + "-FullData.txt", "Entity.ObjectFullData");
-            //TWXmlNode node = file.RootNode;
+            MHGameWork.TheWizards.ServerClient.Database.DiskSerializerService dss = database.FindService<MHGameWork.TheWizards.ServerClient.Database.DiskSerializerService>();
+            MHGameWork.TheWizards.ServerClient.Database.IXMLFile file = dss.OpenXMLFile("Objects/" + this.TaggedObject.UniqueID + "-FullData.txt", "Entity.ObjectFullData");
+            TWXmlNode node = file.RootNode;
 
-            //ObjectFullDataFactory.LoadFromXML(this, node);
+            ObjectFullDataFactory.LoadFromXML(this, node);
         }
 
 

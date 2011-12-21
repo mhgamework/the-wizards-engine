@@ -210,7 +210,7 @@ namespace MHGameWork.TheWizards.Physics
                 actor.Dispose();
                 if (!sleeping)
                     node.RemoveDynamicObjectFromIntersectingNodes(this);
-
+                actor = null;
             }
         }
 
