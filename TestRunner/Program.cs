@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using CommandLine;
@@ -15,17 +16,27 @@ namespace TestRunner
             var options = new CommandlineOptions();
             ICommandLineParser parser = new CommandLineParser();
             if (!parser.ParseArguments(args, options))
-                Console.WriteLine("Invalid input!");
+            {
+                Console.Error.WriteLine(options.GetUsage());
+                return;
+            }
 
-            var obj = new MHGameWork.TheWizards.Utilities.TestRunner.CallbackObject();
+
+            var obj = new MHGameWork.TheWizards.Utilities.TestRunnerGUI.CallbackObject();
+            obj.MethodName = options.MethodName;
+            obj.TypeFullQualifiedName = options.TypeFullQualifiedName;
+
+            obj.RunAutomated = true;
+            obj.AutoShutDown = 3;
             
+            obj.Assembly = Assembly.LoadFrom(options.AssemblyName);
+
+
+
+            obj.RunTest();
 
         }
 
-        private static void runTests(string testName)
-        {
-            if (testName == "Exception")
-                throw new Exception("Test exception!");
-        }
+      
     }
 }

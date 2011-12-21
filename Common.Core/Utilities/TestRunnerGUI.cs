@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.Utilities
 {
-    public class TestRunner
+    public class TestRunnerGUI
     {
         // These tests are accessible in the Tests themselves (while running them)
 
@@ -32,39 +32,12 @@ namespace MHGameWork.TheWizards.Utilities
             private set { lock (scopeLock) isRunningAutomated = value; }
         }
 
-        private static string runTestOtherProcessCommand;
-        public static Process RunTestInOtherProcess(string testPath)
-        {
-            // Cheat for the moment
-            var complete = string.Format(runTestOtherProcessCommand, testPath);
-
-            lock (scopeLock)
-            {
-                //var pi = new ProcessStartInfo(complete);
-                // Cheating the crap out of me
-                var pi = new ProcessStartInfo(complete.Substring(0, complete.IndexOf("\"", 3) + 1), complete.Substring(complete.IndexOf("\"", 3) + 2));
-                pi.UseShellExecute = false;
-
-                var process = new Process();
-                process.StartInfo = pi;
-                process.Start();
-                return process;
-            }
-        }
-
-
-
         private static object scopeLock = new object();
         //TODO
         //public bool AutoStartMode { get; set; }
 
-        /// <summary>
-        /// the command line to execute. {0} will be replace by the test name
-        /// </summary>
-        public string RunTestNewProcessPath { get; set; }
 
         private TestRunnerForm mainForm;
-        private Dictionary<string, TreeNode> nodesDict = new Dictionary<string, TreeNode>();
         private TreeDataNode RootNode;
         private float autoShutDownValue = 2;
         SaveData data;
@@ -75,10 +48,6 @@ namespace MHGameWork.TheWizards.Utilities
 
         public void Run()
         {
-            var assembly = TestsAssembly;
-
-
-
             mainForm = new TestRunnerForm();
 
             buildTestsTree();
@@ -191,6 +160,7 @@ namespace MHGameWork.TheWizards.Utilities
         }
         private void updateParents(TreeDataNode node)
         {
+            if (node == null) return;
             var parent = node.Parent;
             while (parent != null)
             {
@@ -239,7 +209,7 @@ namespace MHGameWork.TheWizards.Utilities
             if (data.DontRerun) resuming = false;
             if (data.LastTestRunPath == null)
                 resuming = false;
-
+            if (node == null) return;
             if (node.IsTestMethod)
             {
                 if (data.DontRerun && node.State != TestState.None)
@@ -291,20 +261,38 @@ namespace MHGameWork.TheWizards.Utilities
 
         }
 
+
+        public static void RunTestInOtherProcess(Assembly assembly, string className, string method)
+        {
+            // Run in new process
+
+            var args = String.Format("-a \"{0}\" -c \"{1}\" -m \"{2}\"", assembly.Location, className, method);
+            var info = new ProcessStartInfo("TestRunner.exe", args);
+            var p = Process.Start(info);
+            p.WaitForExit();
+        }
+
         private Exception runTestMethod(MethodInfo method)
         {
-            var appDomain = AppDomain.CreateDomain("TestRunnerNew");
-            var assembly = appDomain.Load(new AssemblyName(TestsAssembly.FullName));
-
-
-            var type = method.DeclaringType;
-
             var obj = new CallbackObject();
-            obj.AssemblyName = TestsAssembly.FullName;
             obj.TypeFullQualifiedName = method.DeclaringType.AssemblyQualifiedName;
             obj.MethodName = method.Name;
             obj.AutoShutDown = autoShutDownValue;
-            obj.RunTestOtherProcessCommand = RunTestNewProcessPath;
+            //obj.RunTestOtherProcessCommand = RunTestNewProcessPath;
+
+
+            if (data.RunAutomated)
+            {
+                RunTestInOtherProcess(method.DeclaringType.Assembly, method.DeclaringType.FullName, obj.MethodName);
+                return null;
+            }
+
+
+            var appDomain = AppDomain.CreateDomain("TestRunnerNew");
+            appDomain.Load(new AssemblyName(TestsAssembly.FullName));
+
+
+
 
             if (data != null) // This is in case of running with RunTestByName (without userinterface)
             {
@@ -358,6 +346,7 @@ namespace MHGameWork.TheWizards.Utilities
 
         private void updateNodeRecursive(TreeDataNode node)
         {
+            if (node == null) return;
             // Update children
             for (int i = 0; i < node.Children.Count; i++)
             {
@@ -720,7 +709,7 @@ namespace MHGameWork.TheWizards.Utilities
         {
             public string TypeFullQualifiedName;
             public string MethodName;
-            public string AssemblyName;
+            public Assembly Assembly;
 
             public bool RunAutomated;
             public float AutoShutDown;
@@ -732,7 +721,7 @@ namespace MHGameWork.TheWizards.Utilities
 
             public void RunTest()
             {
-                TestRunner.runTestOtherProcessCommand = this.RunTestOtherProcessCommand;
+                //TestRunner.runTestOtherProcessCommand = this.RunTestOtherProcessCommand;
                 XNAGame.AutoShutdown = AutoShutDown;
                 XNAGame.DefaultInputDisabled = true;
 
@@ -742,7 +731,16 @@ namespace MHGameWork.TheWizards.Utilities
                     XNAGame.DefaultInputDisabled = false;
                 }
 
-                var type = Type.GetType(TypeFullQualifiedName);
+                Type type;
+
+                if (Assembly == null)
+                {
+                    type = Type.GetType(TypeFullQualifiedName);
+                }
+                else
+                {
+                    type = Assembly.GetType(TypeFullQualifiedName);
+                }
                 if (type == null) throw new Exception("Test type not found in the new appdomain!");
                 var test = Activator.CreateInstance(type);
 
@@ -757,7 +755,7 @@ namespace MHGameWork.TheWizards.Utilities
 
             }
 
-            private void runTestDebug(object test, MethodInfo method)
+            private static void runTestDebug(object test, MethodInfo method)
             {
                 var thread = new Thread(delegate()
                 {
@@ -777,37 +775,7 @@ namespace MHGameWork.TheWizards.Utilities
                 Exception ThrowedException = null;
                 var thread = new Thread(delegate()
                 {
-                    try
-                    {
-                        runTestJob(test, method);
-                    }
-                    catch (Exception ex)
-                    {
-                        ThrowedException = ex;
-                        Console.WriteLine(ex);
-
-                        var attrs = method.GetCustomAttributes(typeof(ExpectedExceptionAttribute), false);
-                        for (int i = 0; i < attrs.Length; i++)
-                        {
-                            var attr = (ExpectedExceptionAttribute)attrs[i];
-                            if (ex.GetType() == attr.ExpectedException)
-                            {
-                                if (attr.ExpectedMessage == ex.Message || attr.ExpectedMessage == null)
-                                {
-                                    ThrowedException = null;
-                                    Console.WriteLine("This Exception is a valid result for this test");
-                                    break;
-                                }
-
-                            }
-                        }
-
-                    }
-                    catch
-                    {
-                        Console.WriteLine("An Unmanaged exception has been thrown!!");
-                        ThrowedException = new Exception("An Unmanaged exception has been thrown!!");
-                    }
+                    ThrowedException = RunTest(test, method);
 
                 });
 
@@ -820,7 +788,44 @@ namespace MHGameWork.TheWizards.Utilities
                 AppDomain.CurrentDomain.SetData("TestException", ThrowedException);
             }
 
-            private void runTestJob(object test, MethodInfo method)
+            public static Exception RunTest(object test, MethodInfo method)
+            {
+                Exception throwedException = null;
+                try
+                {
+                    runTestJob(test, method);
+                }
+                catch (Exception ex)
+                {
+                    throwedException = ex;
+                    Console.WriteLine(ex);
+
+                    var attrs = method.GetCustomAttributes(typeof(ExpectedExceptionAttribute), false);
+                    for (int i = 0; i < attrs.Length; i++)
+                    {
+                        var attr = (ExpectedExceptionAttribute)attrs[i];
+                        if (ex.GetType() == attr.ExpectedException)
+                        {
+                            if (attr.ExpectedMessage == ex.Message || attr.ExpectedMessage == null)
+                            {
+                                throwedException = null;
+                                Console.WriteLine("This Exception is a valid result for this test");
+                                break;
+                            }
+
+                        }
+                    }
+
+                }
+                catch
+                {
+                    Console.WriteLine("An Unmanaged exception has been thrown!!");
+                    throwedException = new Exception("An Unmanaged exception has been thrown!!");
+                }
+                return throwedException;
+            }
+
+            private static void runTestJob(object test, MethodInfo method)
             {
                 var setupMethod = FindSingleMethodWithAttribute(test.GetType(),
                                                                 typeof(NUnit.Framework.SetUpAttribute));
@@ -862,6 +867,7 @@ namespace MHGameWork.TheWizards.Utilities
 
             return methods[0];
         }
+
 
     }
 

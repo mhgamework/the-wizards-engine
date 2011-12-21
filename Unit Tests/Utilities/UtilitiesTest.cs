@@ -16,9 +16,9 @@ namespace MHGameWork.TheWizards.Tests.Utilities
         [Test]
         public void TestTestRunner()
         {
-            TestRunner runner = new TestRunner();
-            runner.TestsAssembly = Assembly.GetExecutingAssembly();
-            runner.Run();
+            TestRunnerGUI runnerGui = new TestRunnerGUI();
+            runnerGui.TestsAssembly = Assembly.GetExecutingAssembly();
+            runnerGui.Run();
         }
 
         [Test]
@@ -70,9 +70,9 @@ namespace MHGameWork.TheWizards.Tests.Utilities
         [Test]
         public void TestRunTestByName()
         {
-            TestRunner runner = new TestRunner();
-            runner.TestsAssembly = Assembly.GetExecutingAssembly();
-            runner.RunTestByName("MHGameWork.TheWizards.Tests.Utilities.UtilitiesTest.TestSimpleTest");
+            TestRunnerGUI runnerGui = new TestRunnerGUI();
+            runnerGui.TestsAssembly = Assembly.GetExecutingAssembly();
+            runnerGui.RunTestByName("MHGameWork.TheWizards.Tests.Utilities.UtilitiesTest.TestSimpleTest");
 
         }
 
@@ -83,7 +83,7 @@ namespace MHGameWork.TheWizards.Tests.Utilities
         [Test]
         public void TestRunNestedTestNewProcess()
         {
-            var p = TestRunner.RunTestInOtherProcess("MHGameWork.TheWizards.Tests.Utilities.UtilitiesTest.TestSimpleTest");
+            TestRunnerGUI.RunTestInOtherProcess(typeof(UtilitiesTest).Assembly, "MHGameWork.TheWizards.Tests.Utilities.UtilitiesTest", "TestSimpleTest");
 
         }
     }

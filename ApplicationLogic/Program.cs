@@ -38,18 +38,18 @@ namespace MHGameWork.TheWizards
 
 
 
-                TestRunner runner = new TestRunner();
-                runner.TestsAssembly = typeof(CoreTest).Assembly;
-                runner.RunTestNewProcessPath = "\"" + Assembly.GetExecutingAssembly().Location + "\"" + " -test {0}";
+                TestRunnerGUI runnerGui = new TestRunnerGUI();
+                runnerGui.TestsAssembly = typeof(CoreTest).Assembly;
+                //runner.RunTestNewProcessPath = "\"" + Assembly.GetExecutingAssembly().Location + "\"" + " -test {0}";
 
 
                 if (args.Length == 2 && args[0] == "-test")
                 {
-                    runner.RunTestByName(args[1]);
+                    runnerGui.RunTestByName(args[1]);
                 }
                 else
                 {
-                    runner.Run();
+                    runnerGui.Run();
 
                 }
 

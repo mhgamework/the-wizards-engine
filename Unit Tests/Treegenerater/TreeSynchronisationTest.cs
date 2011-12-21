@@ -273,17 +273,18 @@ namespace TreeGenerator.EngineSynchronisation
         [Test]
         public void TestServer()
         {
-            Process p = null;
-            ThreadPool.QueueUserWorkItem(delegate
-            {
-                    System.Threading.Thread.Sleep(3000);
+            throw new NotImplementedException();
+            //Process p = null;
+            //ThreadPool.QueueUserWorkItem(delegate
+            //{
+            //        System.Threading.Thread.Sleep(3000);
 
-                p = TestRunner.RunTestInOtherProcess("TreeGenerator.EngineSynchronisation.TreeSynchronisationTest.TestClientSynchronisation");
-            });
+            //    p = TestRunner.RunTestInOtherProcess("TreeGenerator.EngineSynchronisation.TreeSynchronisationTest.TestClientSynchronisation");
+            //});
 
-            TestServerSynchronisation();
+            //TestServerSynchronisation();
 
-            if (p != null) p.Kill();
+            //if (p != null) p.Kill();
 
         }
     }

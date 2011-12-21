@@ -36,21 +36,18 @@ namespace MHGameWork.TheWizards.ServerClient
                 redir.WriteLine("--------------------Start Logging!");
                 Console.SetOut(redir);
 
-
-
-
-                TestRunner runner = new TestRunner();
-                runner.TestsAssembly = Assembly.LoadFrom("Unit Tests.dll");
-                runner.RunTestNewProcessPath = "\"" + Assembly.GetExecutingAssembly().Location + "\"" + " -test {0}";
+                TestRunnerGUI runnerGui = new TestRunnerGUI();
+                runnerGui.TestsAssembly = Assembly.LoadFrom("Unit Tests.dll");
+                //runner.RunTestNewProcessPath = "\"" + Assembly.GetExecutingAssembly().Location + "\"" + " -test {0}";
 
 
                 if (args.Length == 2 && args[0] == "-test")
                 {
-                    runner.RunTestByName(args[1]);
+                    runnerGui.RunTestByName(args[1]);
                 }
                 else
                 {
-                    runner.Run();
+                    runnerGui.Run();
 
                 }
 

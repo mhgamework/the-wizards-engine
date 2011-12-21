@@ -49,36 +49,8 @@ namespace MHGameWork.TheWizards.Tests
 
             server.Stop();
         }
-        [Test]
-        public void TestClient()
-        {
-            var p = TestRunner.RunTestInOtherProcess("MHGameWork.TheWizards.Tests.MainTest.RunServer");
-            System.Threading.Thread.Sleep(5000);
-            RunClient();
-            if (!p.HasExited)
-                p.Kill();
 
-
-        }
-
-        [Test]
-        public void TestServer()
-        {
-            var server = new TheWizardsServer();
-            Process p = null;
-            ThreadPool.QueueUserWorkItem(delegate
-            {
-                while (!server.IsReady)
-                    System.Threading.Thread.Sleep(500);
-
-                p = TestRunner.RunTestInOtherProcess("MHGameWork.TheWizards.Tests.MainTest.RunClient");
-            });
-
-            server.Start();
-
-            if (p != null) p.Kill();
-
-        }
+      
 
 
     }

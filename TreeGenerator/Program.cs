@@ -19,9 +19,9 @@ namespace TreeGenerator
         [STAThread()]
         static void Main(string[] args)
         {
-            TestRunner runner = new TestRunner();
-            runner.TestsAssembly = Assembly.GetExecutingAssembly();
-            runner.Run();
+            TestRunnerGUI runnerGui = new TestRunnerGUI();
+            runnerGui.TestsAssembly = Assembly.GetExecutingAssembly();
+            runnerGui.Run();
 
             //TreestructureGenerator.TestGenerator();
 

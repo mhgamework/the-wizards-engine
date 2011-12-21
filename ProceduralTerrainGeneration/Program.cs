@@ -16,9 +16,9 @@ namespace ProceduralTerrainGeneration
         static void Main()
         {
             
-            TestRunner runner = new TestRunner();
-            runner.TestsAssembly = Assembly.GetExecutingAssembly();
-            runner.Run();
+            TestRunnerGUI runnerGui = new TestRunnerGUI();
+            runnerGui.TestsAssembly = Assembly.GetExecutingAssembly();
+            runnerGui.Run();
 
         }
     }
