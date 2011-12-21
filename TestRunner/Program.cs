@@ -22,18 +22,12 @@ namespace TestRunner
             }
 
 
-            var obj = new MHGameWork.TheWizards.Utilities.TestRunnerGUI.CallbackObject();
-            obj.MethodName = options.MethodName;
-            obj.TypeFullQualifiedName = options.TypeFullQualifiedName;
-
-            obj.RunAutomated = true;
-            obj.AutoShutDown = 3;
-            
-            obj.Assembly = Assembly.LoadFrom(options.AssemblyName);
+            var runner = new MHGameWork.TheWizards.Utilities.TestRunner();
+            runner.RunTest(options.AssemblyName, options.TypeFullQualifiedName, options.MethodName);
 
 
 
-            obj.RunTest();
+          
 
         }
 

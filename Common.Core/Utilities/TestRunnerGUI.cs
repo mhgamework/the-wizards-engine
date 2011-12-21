@@ -277,8 +277,6 @@ namespace MHGameWork.TheWizards.Utilities
             var obj = new CallbackObject();
             obj.TypeFullQualifiedName = method.DeclaringType.AssemblyQualifiedName;
             obj.MethodName = method.Name;
-            obj.AutoShutDown = autoShutDownValue;
-            //obj.RunTestOtherProcessCommand = RunTestNewProcessPath;
 
 
             if (data.RunAutomated)
@@ -296,7 +294,6 @@ namespace MHGameWork.TheWizards.Utilities
 
             if (data != null) // This is in case of running with RunTestByName (without userinterface)
             {
-                obj.RunAutomated = data.RunAutomated;
                 obj.DebugMode = !data.RunAutomated; // setting
                 saveState();//save state incase of crash
             }
@@ -565,8 +562,6 @@ namespace MHGameWork.TheWizards.Utilities
 
         public class SaveData
         {
-
-
             public string SelectedPath;
             public bool RunAutomated;
             /// <summary>
@@ -574,14 +569,8 @@ namespace MHGameWork.TheWizards.Utilities
             /// </summary>
             public bool DontRerun;
 
-            //public bool RunInSeperateAppdomain;
-
-
             public string RunningTestsNodePath;
             public string LastTestRunPath;
-
-
-
 
             public TreeDataNode Rootnode;
 
@@ -709,57 +698,32 @@ namespace MHGameWork.TheWizards.Utilities
         {
             public string TypeFullQualifiedName;
             public string MethodName;
-            public Assembly Assembly;
-
-            public bool RunAutomated;
-            public float AutoShutDown;
             public bool DebugMode;
 
-            public string RunTestOtherProcessCommand;
 
+            private TestRunner runner = new TestRunner();
 
 
             public void RunTest()
             {
-                //TestRunner.runTestOtherProcessCommand = this.RunTestOtherProcessCommand;
-                XNAGame.AutoShutdown = AutoShutDown;
-                XNAGame.DefaultInputDisabled = true;
-
-                if (!RunAutomated)
-                {
-                    XNAGame.AutoShutdown = -1;
-                    XNAGame.DefaultInputDisabled = false;
-                }
-
                 Type type;
 
-                if (Assembly == null)
-                {
-                    type = Type.GetType(TypeFullQualifiedName);
-                }
-                else
-                {
-                    type = Assembly.GetType(TypeFullQualifiedName);
-                }
+                type = Type.GetType(TypeFullQualifiedName);
+
                 if (type == null) throw new Exception("Test type not found in the new appdomain!");
                 var test = Activator.CreateInstance(type);
-
                 var method = type.GetMethod(MethodName);
-
                 if (DebugMode)
                     runTestDebug(test, method);
                 else
                     runTestAutomated(test, method);
-
-                //method.Invoke(test, null);
-
             }
 
-            private static void runTestDebug(object test, MethodInfo method)
+            private void runTestDebug(object test, MethodInfo method)
             {
                 var thread = new Thread(delegate()
                 {
-                    runTestJob(test, method);
+                    runner.PerformTestJob(test, method);
 
                 });
 
@@ -775,7 +739,7 @@ namespace MHGameWork.TheWizards.Utilities
                 Exception ThrowedException = null;
                 var thread = new Thread(delegate()
                 {
-                    ThrowedException = RunTest(test, method);
+                    ThrowedException = runner.RunTest(test, method);
 
                 });
 
@@ -788,86 +752,8 @@ namespace MHGameWork.TheWizards.Utilities
                 AppDomain.CurrentDomain.SetData("TestException", ThrowedException);
             }
 
-            public static Exception RunTest(object test, MethodInfo method)
-            {
-                Exception throwedException = null;
-                try
-                {
-                    runTestJob(test, method);
-                }
-                catch (Exception ex)
-                {
-                    throwedException = ex;
-                    Console.WriteLine(ex);
 
-                    var attrs = method.GetCustomAttributes(typeof(ExpectedExceptionAttribute), false);
-                    for (int i = 0; i < attrs.Length; i++)
-                    {
-                        var attr = (ExpectedExceptionAttribute)attrs[i];
-                        if (ex.GetType() == attr.ExpectedException)
-                        {
-                            if (attr.ExpectedMessage == ex.Message || attr.ExpectedMessage == null)
-                            {
-                                throwedException = null;
-                                Console.WriteLine("This Exception is a valid result for this test");
-                                break;
-                            }
-
-                        }
-                    }
-
-                }
-                catch
-                {
-                    Console.WriteLine("An Unmanaged exception has been thrown!!");
-                    throwedException = new Exception("An Unmanaged exception has been thrown!!");
-                }
-                return throwedException;
-            }
-
-            private static void runTestJob(object test, MethodInfo method)
-            {
-                var setupMethod = FindSingleMethodWithAttribute(test.GetType(),
-                                                                typeof(NUnit.Framework.SetUpAttribute));
-                if (setupMethod != null)
-                {
-                    var setupDeleg = (TestDelegate)Delegate.CreateDelegate(typeof(TestDelegate), test, setupMethod);
-                    setupDeleg();
-                }
-
-
-
-                var testDeleg = (TestDelegate)Delegate.CreateDelegate(typeof(TestDelegate), test, method);
-                testDeleg();
-
-
-
-                var tearDownMethod = FindSingleMethodWithAttribute(test.GetType(),
-                                                typeof(NUnit.Framework.TearDownAttribute));
-                if (tearDownMethod != null)
-                {
-                    var tearDownDeleg = (TestDelegate)Delegate.CreateDelegate(typeof(TestDelegate), test, tearDownMethod);
-                    tearDownDeleg();
-                }
-
-
-            }
         }
-
-        private delegate void TestDelegate();
-
-        public static MethodInfo FindSingleMethodWithAttribute(Type type, Type attributeType)
-        {
-            var methods =
-                    type.GetMethods().Where(
-                        m => m.GetCustomAttributes(attributeType, false).Length > 0).ToArray();
-
-            if (methods.Length == 0) return null;
-            if (methods.Length > 1) throw new Exception("More than one method with given attributeType found!");
-
-            return methods[0];
-        }
-
 
     }
 

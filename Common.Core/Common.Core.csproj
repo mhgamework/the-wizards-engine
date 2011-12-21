@@ -305,6 +305,7 @@
     <Compile Include="Utilities\AdvancedQueue.cs" />
     <Compile Include="Utilities\EventList.cs" />
     <Compile Include="Utilities\PrefilledList.cs" />
+    <Compile Include="Utilities\TestRunner.cs" />
     <Compile Include="Utilities\TestRunnerGUI.cs" />
     <Compile Include="Utilities\TestRunnerForm.cs">
       <SubType>Form</SubType>
