@@ -20,6 +20,7 @@ namespace MHGameWork.TheWizards.Tests.Utilities
         [Test]
         public void TestTestRunner()
         {
+            throw new NotImplementedException(); // This causes problems with automated testing
             TestRunnerGUI runnerGui = new TestRunnerGUI();
             runnerGui.TestsAssembly = Assembly.GetExecutingAssembly();
             runnerGui.Run();

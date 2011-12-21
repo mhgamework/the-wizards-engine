@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.TestRunner
                         if (attr.ExpectedMessage == ex.Message || attr.ExpectedMessage == null)
                         {
                             throwedException = null;
-                            Console.WriteLine("This Exception is a valid result for this test");
+                            //Console.WriteLine("This Exception is a valid result for this test");
                             break;
                         }
 

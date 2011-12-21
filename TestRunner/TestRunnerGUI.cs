@@ -36,7 +36,6 @@ namespace MHGameWork.TheWizards.TestRunner
 
         private TestRunnerForm mainForm;
         private TreeDataNode RootNode;
-        private float autoShutDownValue = 2;
         SaveData data;
 
         public Assembly TestsAssembly
@@ -227,7 +226,7 @@ namespace MHGameWork.TheWizards.TestRunner
                 Console.WriteLine("Running Test: " + node.TestMethod.DeclaringType.FullName + "." + node.TestMethod.Name);
 
                 node.State = TestState.Failed;
-                var ex = runTestMethod(node.TestMethod);
+                var testResult = runTestMethod(node.TestMethod);
 
 
                 ClearScopedVariables();
@@ -238,8 +237,8 @@ namespace MHGameWork.TheWizards.TestRunner
 
 
 
-                if (ex != null)
-                    if (ex is NotImplementedException)
+                if (!testResult.Success)
+                    if (testResult.ErrorType == typeof(NotImplementedException).FullName)
                         node.State = TestState.NotImplemented;
                     else
                         node.State = TestState.Failed;
@@ -259,30 +258,44 @@ namespace MHGameWork.TheWizards.TestRunner
         }
 
 
-        public static void RunTestInOtherProcess(Assembly assembly, string className, string method)
+        public static TestResult RunTestInOtherProcess(Assembly assembly, string className, string method)
         {
             // Run in new process
 
             var args = String.Format("-a \"{0}\" -c \"{1}\" -m \"{2}\"", assembly.Location, className, method);
             var info = new ProcessStartInfo("TestRunner.exe", args);
+            info.UseShellExecute = false;
+            info.RedirectStandardOutput = true;
+            
             var p = Process.Start(info);
-            p.WaitForExit();
+            p.WaitForExit(5000);
+            if (!p.HasExited)
+            {
+                p.Kill();
+                return new TestResult {Success = false, ErrorMessage = "Test was aborted for taking to long!"};
+            }
+            var s = new XmlSerializer(typeof(TestResult));
+            string xml = null;
+
+            while (!p.StandardOutput.EndOfStream)
+            {
+                var line = p.StandardOutput.ReadLine();
+                if (line == ">>>Start Result")
+                    xml = p.StandardOutput.ReadToEnd();
+
+            }
+            if (xml == null) throw new InvalidOperationException();
+            return (TestResult)s.Deserialize(new StringReader(xml));
         }
 
-        private Exception runTestMethod(MethodInfo method)
+        private TestResult runTestMethod(MethodInfo method)
         {
+            if (data.RunAutomated)
+                return RunTestInOtherProcess(method.DeclaringType.Assembly, method.DeclaringType.FullName, method.Name);
+
             var obj = new CallbackObject();
             obj.TypeFullQualifiedName = method.DeclaringType.AssemblyQualifiedName;
             obj.MethodName = method.Name;
-
-
-            if (data.RunAutomated)
-            {
-                RunTestInOtherProcess(method.DeclaringType.Assembly, method.DeclaringType.FullName, obj.MethodName);
-                return null;
-            }
-
-
             var appDomain = AppDomain.CreateDomain("TestRunnerNew");
             appDomain.Load(new AssemblyName(TestsAssembly.FullName));
 
@@ -314,7 +327,7 @@ namespace MHGameWork.TheWizards.TestRunner
             GC.WaitForFullGCComplete();
             GC.WaitForPendingFinalizers();
 
-            return ex;
+            return TestResult.FromException(ex);
             //obj.RunTest();
 
         }

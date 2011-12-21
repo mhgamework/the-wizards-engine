@@ -1,4 +1,4 @@
-float4 Color = float4(1,0,0,1);
+float4 Color = float4(1,1,0,1);
 #include <IncludeTest.fx>
 struct VS_IN
 {
