@@ -266,13 +266,13 @@ namespace MHGameWork.TheWizards.TestRunner
             var info = new ProcessStartInfo("TestRunner.exe", args);
             info.UseShellExecute = false;
             info.RedirectStandardOutput = true;
-            
+
             var p = Process.Start(info);
-            p.WaitForExit(5000);
+            p.WaitForExit(7000);
             if (!p.HasExited)
             {
                 p.Kill();
-                return new TestResult {Success = false, ErrorMessage = "Test was aborted for taking to long!"};
+                return new TestResult { Success = false, ErrorMessage = "Test was aborted for taking to long!" };
             }
             var s = new XmlSerializer(typeof(TestResult));
             string xml = null;
@@ -281,9 +281,19 @@ namespace MHGameWork.TheWizards.TestRunner
             {
                 var line = p.StandardOutput.ReadLine();
                 if (line == ">>>Start Result")
-                    xml = p.StandardOutput.ReadToEnd();
+                    break;
 
             }
+            while (!p.StandardOutput.EndOfStream)
+            {
+                var line = p.StandardOutput.ReadLine();
+
+                if (line == "<<<End Result")
+                    break;
+
+                xml += line;
+            }
+            
             if (xml == null) throw new InvalidOperationException();
             return (TestResult)s.Deserialize(new StringReader(xml));
         }

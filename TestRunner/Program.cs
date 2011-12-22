@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.TestRunner
             
             Console.WriteLine(w.GetStringBuilder().ToString());
 
-
+            Console.WriteLine("<<<End Result");
         }
 
        
