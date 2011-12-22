@@ -206,6 +206,11 @@ namespace DirectX11
         public float TotalRunTime { get; private set; }
         public bool IsDirectXInitialized { get { return form.IsDirectXInitialized; } }
 
+        public RenderTargetView BackBufferRTV
+        {
+            get { return form.RenderTargetView; }
+        }
+
         public void InitDirectX()
         {
             form.InitDirectX();

@@ -22,7 +22,7 @@ namespace DirectX11.Graphics
 
         public DX11Form()
         {
-            SlimDX.Configuration.EnableObjectTracking = true; // Logs stacktraces of COM object creation
+            //Configuration.EnableObjectTracking = true; // Logs stacktraces of COM object creation
         }
 
 
@@ -158,7 +158,7 @@ namespace DirectX11.Graphics
 
             return;
             /*backBuffer.Release();
-            RenderTargetView.Release();
+            BackBufferRTV.Release();
             try
             {
                 var r = swapChain.ResizeBuffers(swapChain.Description.BufferCount, Form.ClientSize.Width, Form.ClientSize.Height,
@@ -171,8 +171,8 @@ namespace DirectX11.Graphics
 
 
             backBuffer = Resource.FromSwapChain<Texture2D>(swapChain, 0);
-            RenderTargetView = new RenderTargetView(Device, backBuffer);
-            Context.OutputMerger.SetTargets(RenderTargetView);
+            BackBufferRTV = new BackBufferRTV(Device, backBuffer);
+            Context.OutputMerger.SetTargets(BackBufferRTV);
             Context.Rasterizer.SetViewports(new Viewport(0, 0, Form.ClientSize.Width, Form.ClientSize.Height, 0.0f, 1.0f));*/
         }
     }

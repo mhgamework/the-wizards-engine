@@ -20,7 +20,7 @@ namespace DirectX11.Rendering.Deferred
         private Texture2D depth;
         private RenderTargetView diffuseRTV;
         private RenderTargetView normalRTV;
-        private DepthStencilView depthStencilView;
+        public DepthStencilView DepthStencilView { get; private set; }
         private DeviceContext context;
         private Viewport viewport;
 
@@ -63,7 +63,7 @@ namespace DirectX11.Rendering.Deferred
             diffuseRTV = new RenderTargetView(device, diffuse);
             normalRTV = new RenderTargetView(device, normal);
 
-            depthStencilView = new DepthStencilView(device, depth, new DepthStencilViewDescription
+            DepthStencilView = new DepthStencilView(device, depth, new DepthStencilViewDescription
                                                                        {
                                                                            Format = Format.D32_Float,
                                                                            Flags = DepthStencilViewFlags.None,
@@ -92,7 +92,7 @@ namespace DirectX11.Rendering.Deferred
 
         public void SetTargetsToOutputMerger()
         {
-            context.OutputMerger.SetTargets(depthStencilView, diffuseRTV, normalRTV);
+            context.OutputMerger.SetTargets(DepthStencilView, diffuseRTV, normalRTV);
             context.Rasterizer.SetViewports(viewport);
 
         }
@@ -100,7 +100,7 @@ namespace DirectX11.Rendering.Deferred
         {
             context.ClearRenderTargetView(diffuseRTV, new Color4(0, 0, 0, 0));
             context.ClearRenderTargetView(normalRTV, new Color4(0, 0.5f, 0.5f, 0.5f));
-            context.ClearDepthStencilView(depthStencilView, DepthStencilClearFlags.Depth, 1, 0);
+            context.ClearDepthStencilView(DepthStencilView, DepthStencilClearFlags.Depth, 1, 0);
         }
         /// <summary>
         /// The shader should include GBuffer.fx
@@ -132,7 +132,7 @@ namespace DirectX11.Rendering.Deferred
             depth.Dispose();
             diffuseRTV.Dispose();
             normalRTV.Dispose();
-            depthStencilView.Dispose();
+            DepthStencilView.Dispose();
             DiffuseRV.Dispose();
             NormalRV.Dispose();
             DepthRV.Dispose();

@@ -165,6 +165,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             toneMap.DrawTonemapped(hdrImageRV, calculater.CurrAverageLumRV);
 
+
+            // TODO: currently cheat
+            context.OutputMerger.SetTargets(gBuffer.DepthStencilView, game.BackBufferRTV);
+
             //game.TextureRenderer.Draw(hdrImageRV, new Vector2(10, 10), new Vector2(100, 100));
             //game.TextureRenderer.Draw(directionalLightRenderer.CSMRenderer.ShadowMapRV, new Vector2(10, 10), new Vector2(550, 200));
 

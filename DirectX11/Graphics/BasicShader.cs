@@ -98,7 +98,7 @@ namespace DirectX11.Graphics
             {
                 lock (this)
                 {
-                    if (includeHandler.IncludedFiles.Contains(e.Name.Replace("\\", "/"))) 
+                    if (includeHandler.IncludedFiles.Contains(e.Name.Replace("\\", "/")))
                         reloadScheduled = true;
                 }
             };
@@ -149,10 +149,10 @@ namespace DirectX11.Graphics
 
                 try
                 {
-                    
                     bytecode = ShaderBytecode.CompileFromFile(filename, "fx_5_0",
                                                               ShaderFlags.WarningsAreErrors | ShaderFlags.EnableStrictness |
                                                               ShaderFlags.Debug, EffectFlags.None, shaderMacros, includeHandler);
+                    //bytecode = ShaderBytecode.CompileFromFile(filename, "fx_5_0", ShaderFlags.OptimizationLevel3 | ShaderFlags.SkipValidation, EffectFlags.None, shaderMacros, includeHandler);
                     break;
                 }
                 catch (Exception ex)
@@ -221,7 +221,7 @@ namespace DirectX11.Graphics
         {
             string techniqueName = null;
             if (CurrentTechnique != null) techniqueName = CurrentTechnique.Description.Name;
-            loadFromFXFile(reloadFile.FullName,shaderMacros);
+            loadFromFXFile(reloadFile.FullName, shaderMacros);
             if (techniqueName != null)
                 SetTechnique(techniqueName);
 

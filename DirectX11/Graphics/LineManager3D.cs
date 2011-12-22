@@ -431,6 +431,7 @@ namespace DirectX11.Graphics
         /// </summary>
         public void Render(LineManager3DLines nLines, ICamera cam)
         {
+            
             nLines.UpdateVertexBuffer(device);
             // Need to build vertex buffer?
 

@@ -117,7 +117,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
         //                              Context.Rasterizer.SetViewports(new Viewport(0, 0, game.Form.ClientSize.Width, game.Form.ClientSize.Height, 0.0f, 1.0f));
         //                              Context.Rasterizer.State = rasterizerState;
         //                              Context.PixelShader.Set(pixelShader);
-        //                              Context.OutputMerger.SetTargets(game.RenderTargetView);
+        //                              Context.OutputMerger.SetTargets(game.BackBufferRTV);
 
         //                              Context.Draw(3, 0);
 
