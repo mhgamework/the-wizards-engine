@@ -28,7 +28,8 @@ namespace MHGameWork.TheWizards.Gameplay
             ScriptLayer.Scene = scene.PhysicsElementFactory.Engine.Scene;
 
             var c = new PlayerController(playerData);
-            scene.Game.AddXNAObject(c);
+            throw new NotImplementedException(); // Old XNA code to be ported
+            //scene.Game.AddXNAObject(c);
             return c;
         }
 

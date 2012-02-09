@@ -14,16 +14,44 @@ namespace MHGameWork.TheWizards.Player
     [ModelObjectChanged]
     public class PlayerData : IModelObject
     {
-        public Vector3 Position;
+        private Vector3 position;
+        public Vector3 Position
+        {
+            get { return position; }
+            set
+            {
+                position = value;
+                updateEntity();
+            }
+        }
+
+        private Model.Entity entity;
+        public Model.Entity Entity
+        {
+            get { return entity; }
+            set { entity = value;
+                updateEntity();
+            }
+        }
 
         public float Health;
 
         public float LookAngleHorizontal;
         public float LookAngleVertical;
 
-        
+
 
         public string Name;
+
+
+        private void updateEntity()
+        {
+            if (entity == null) return;
+            entity.WorldMatrix = Matrix.Translation(position);
+        }
+
+
+
         private ModelContainer container;
 
         public ModelContainer Container

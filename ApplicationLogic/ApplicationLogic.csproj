@@ -103,10 +103,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\CoreTest.cs" />
-    <Compile Include="World\ClientWorldSector.cs" />
-    <Compile Include="World\Rendering\EntityRenderData.cs" />
-    <Compile Include="World\Rendering\WorldRenderer.cs" />
-    <Compile Include="World\ServerWorld.cs" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">

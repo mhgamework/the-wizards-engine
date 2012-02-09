@@ -131,7 +131,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
 
                     controller = new PlayerController(new PlayerData());
-                    controller.Initialize(game);
+                    throw new NotImplementedException();
+                    //controller.Initialize(game);
 
                     server.Start();
                     serverA = serverSyncer.CreateActor(controller);
@@ -148,7 +149,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                     client.SyncronizeRemotePacketIDs();
 
                     controllerClient = new PlayerController(new PlayerData());
-                    controllerClient.Initialize(game);
+                    throw new NotImplementedException();
+                    //controllerClient.Initialize(game);
 
 
                     var clientA = clientSyncer.CreateActor(controllerClient);
@@ -165,13 +167,14 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                     controller.HorizontalAngle = cam.LookAngleHorizontal;
 
                     ProcessPlayerInputDirect(controller, game);
-                    controller.Update(game);
+                    throw new NotImplementedException();
+                    //controller.Update(game);
                     serverSyncer.Update(game.Elapsed);
                     ScriptLayer.Physics.UpdateScene(game.Elapsed, serverScene);
 
 
-
-                    controllerClient.Update(game);
+                    throw new NotImplementedException();
+                    //controllerClient.Update(game);
                     clientSyncer.Update(game.Elapsed);
                 }
 
@@ -240,8 +243,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                                 var iS =
                                     new PlayerInputServer(
                                         inputServerTransporter.GetTransporterForClient(server.Clients[i]), c);
-
-                                c.Initialize(game);
+                                throw new NotImplementedException();
+                               // c.Initialize(game);
 
                                 var a = serverSyncer.CreateActor(c);
 
@@ -265,7 +268,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
                     for (int i = 0; i < controllers.Count; i++)
                     {
-                        controllers[i].Update(game);
+                        throw new NotImplementedException();
+                        //controllers[i].Update(game);
                         inputServers[i].Update(game.Elapsed);
                     }
                     serverSyncer.Update(game.Elapsed);
@@ -334,8 +338,9 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                     {
                         var p = dataPacketTransporter.Receive();
                         var c = new PlayerController(new PlayerData());
-                        c.Initialize(game);
-                        game.AddXNAObject(c);
+                        throw new NotImplementedException();
+                        //c.Initialize(game);
+                        //game.AddXNAObject(c);
 
                         var clientA = clientSyncer.CreateActor(c);
                         clientA.ID = BitConverter.ToUInt16(p.Data, 0);
@@ -353,7 +358,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
                     for (int i = 0; i < controllerClients.Count; i++)
                     {
-                        controllerClients[i].Update(game);
+                        throw new NotImplementedException();
+                        //controllerClients[i].Update(game);
                     }
                     clientSyncer.Update(game.Elapsed);
 
@@ -412,7 +418,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
 
                     controller = new PlayerController(new PlayerData());
-                    controller.Initialize(game);
+                    //controller.Initialize(game);
 
                     inputTrans = PlayerInputServer.CreateTransporter(server);
 
@@ -447,7 +453,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 }
                 else
                 {
-                    controller.Update(game);
+                    throw new NotImplementedException();
+                    //controller.Update(game);
                     ScriptLayer.Physics.UpdateScene(game.Elapsed, serverScene);
                     inputServer.Update(game.Elapsed);
 

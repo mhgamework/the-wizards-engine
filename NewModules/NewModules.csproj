@@ -415,6 +415,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Particles\Files\" />
+    <Folder Include="Player\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">

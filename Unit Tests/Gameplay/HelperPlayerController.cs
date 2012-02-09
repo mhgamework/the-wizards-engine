@@ -24,7 +24,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             game.SetCamera(ThirdPersonCamera);
             ThirdPersonCamera.Enabled = true;
             game.AddXNAObject(ThirdPersonCamera);
-            game.AddXNAObject(Controller);
+            throw new NotImplementedException();
+            //game.AddXNAObject(Controller);
         }
 
         public void Initialize(IXNAGame _game)

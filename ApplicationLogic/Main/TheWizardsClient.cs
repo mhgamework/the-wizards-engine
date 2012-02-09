@@ -163,8 +163,9 @@ namespace MHGameWork.TheWizards.Main
             {
                 var p = playerControllerTransporter.Receive();
                 var c = new GamePlay.PlayerController(new PlayerData());
-                c.Initialize(game);
-                game.AddXNAObject(c);
+                throw new NotImplementedException();
+                //c.Initialize(game);
+                //game.AddXNAObject(c);
 
                 var clientA = clientSyncer.CreateActor(c);
                 clientA.ID = BitConverter.ToUInt16(p.Data, 0);
@@ -182,7 +183,7 @@ namespace MHGameWork.TheWizards.Main
 
             for (int i = 0; i < controllerClients.Count; i++)
             {
-                controllerClients[i].Update(game);
+                //controllerClients[i].Update(game);
             }
             if (clientSyncer != null)
                 clientSyncer.Update(game.Elapsed);

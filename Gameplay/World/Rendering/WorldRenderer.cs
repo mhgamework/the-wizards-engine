@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards.World.Rendering
     /// This class is responsible for rendering a world. It will manage all states on the renderer(s). 
     /// For inputs it requires a (dynamic)world and some kind of camera info(more than just camera, it can contain info about probable movement etc)
     /// </summary>
-    public class WorldRenderer
+    public class WorldRenderer : ISimulator
     {
         private readonly ModelContainer world;
         private readonly DeferredRenderer renderer;
@@ -69,6 +69,11 @@ namespace MHGameWork.TheWizards.World.Rendering
                 }
             }
 
+        }
+
+        public void Simulate()
+        {
+            ProcessWorldChanges();
         }
     }
 }

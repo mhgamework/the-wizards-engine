@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using DirectX11;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Scripting;
@@ -16,10 +17,10 @@ using IDisposable = StillDesign.PhysX.IDisposable;
 namespace MHGameWork.TheWizards.GamePlay
 {
     /// <summary>
-    /// WARNING: requires ScriptLayer!
+    /// The outline of this class is not strictly enough defined, it handles some of the PhysX related stuff
     /// TODO: Fix the controllerhitreport stuff
     /// </summary>
-    public class PlayerController : IXNAObject, IWorldSyncActor
+    public class PlayerController :  IWorldSyncActor
     {
 
         private PlayerData player;
@@ -45,7 +46,6 @@ namespace MHGameWork.TheWizards.GamePlay
         private CapsuleController controller;
 
         private ControllerManager manager;
-        private IXNAGame game;
         /*private PlayerThirdPersonCamera camera;
 
         public PlayerThirdPersonCamera Camera
@@ -61,7 +61,6 @@ namespace MHGameWork.TheWizards.GamePlay
         public PlayerController(PlayerData _player)
         {
             player = _player;
-            game = ScriptLayer.Game;
             movementSpeed = 4f; // 1.5f
 
             //game.AddXNAObject(this); //BAD
@@ -81,9 +80,9 @@ namespace MHGameWork.TheWizards.GamePlay
 
 
 
-        public void Initialize(IXNAGame _game)
+        public void Initialize(StillDesign.PhysX.Scene _scene)
         {
-            scene = ScriptLayer.Scene;
+            scene = _scene;
 
             manager = scene.CreateControllerManager();
 
@@ -109,12 +108,14 @@ namespace MHGameWork.TheWizards.GamePlay
 
         }
 
-        public void Render(IXNAGame _game)
+        public void Render(DX11Game _game)
         {
         }
 
-        public void Update(IXNAGame _game)
+        public void Update(DX11Game _game)
         {
+
+            var game = TW.Game;
 
             if (movementDisabled) frameMovement = Vector3.Zero;
 

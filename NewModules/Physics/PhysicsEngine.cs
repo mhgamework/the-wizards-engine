@@ -57,6 +57,7 @@ namespace MHGameWork.TheWizards.Physics
         public void Initialize()
         {
             //
+            if (Scene != null) return;
 
 
 
@@ -163,7 +164,6 @@ namespace MHGameWork.TheWizards.Physics
 
         public void Initialize(IXNAGame _game)
         {
-            if (Scene == null)
                 Initialize();
         }
 

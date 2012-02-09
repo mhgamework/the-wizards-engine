@@ -5,6 +5,8 @@ using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Model;
+using MHGameWork.TheWizards.Model.Simulation;
+using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.World.Rendering;
@@ -16,6 +18,14 @@ namespace MHGameWork.TheWizards.Tests.Model
     [TestFixture]
     public class ModelTest
     {
+        private RAMMesh mesh;
+
+        [SetUp]
+        public void Setup()
+        {
+            mesh = OBJParser.OBJParserTest.GetBarrelMesh(new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
+        }
+
         [Test]
         public void TestChangeEntity()
         {
@@ -40,45 +50,52 @@ namespace MHGameWork.TheWizards.Tests.Model
         [Test]
         public void TestWorldRenderer()
         {
-            var game = new DX11Game();
-            game.InitDirectX();
-            
-            
-            var container = new ModelContainer();
+
+            var game = new LocalGame();
 
             var ent = new TheWizards.Model.Entity();
-            container.AddObject(ent);
+            TW.Model .AddObject(ent);
 
-            var mesh = OBJParser.OBJParserTest.GetBarrelMesh(new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
-
-            var deferred = new DeferredRenderer(game);
-            var renderer = new WorldRenderer(container, deferred);
-
-            var light = deferred.CreateDirectionalLight();
-            light.LightDirection = Vector3.Normalize(new Vector3(1, -1, 1));
-            light.ShadowsEnabled = true;
+           
+            ent.Mesh = mesh;
 
             var time = 0f;
 
-            game.GameLoopEvent += delegate
-                                  {
-                                      time += game.Elapsed;
-                                      ent.Mesh = mesh;
-                                      ent.WorldMatrix = Matrix.Translation(Vector3.UnitX*time);
 
-                                      renderer.ProcessWorldChanges();
-                                      container.ClearDirty();
+            game
+                .AddSimulator(new BasicSimulator(delegate
+                                                     {
+                                                         time += TW.Game.Elapsed;
+                                                         ent.Mesh = mesh;
+                                                         ent.WorldMatrix = Matrix.Translation(Vector3.UnitX * time);
+                                                     }))
+                .AddSimulator(new SimpleWorldRenderer());
 
-                                      deferred.Draw();
-                                  };
+
 
             game.Run();
+
         }
 
         [Test]
         public void TestPlayerMovement()
         {
-            
+            var game = new LocalGame();
+
+            var ent = new TheWizards.Model.Entity();
+            ent.Mesh = mesh;
+            TW.Model.AddObject(ent);
+
+            var player = new PlayerData();
+            TW.Model.AddObject(player);
+            player.Entity = ent;
+
+            game
+                .AddSimulator(new LocalPlayer(player))
+                .AddSimulator(new SimpleWorldRenderer());
+
+
+            game.Run();
         }
     }
 }

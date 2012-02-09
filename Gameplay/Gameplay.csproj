@@ -97,8 +97,8 @@
     <Compile Include="Gameplay\Horse.cs" />
     <Compile Include="Gameplay\IPlayer.cs" />
     <Compile Include="Gameplay\IPlayerMove.cs" />
-    <Compile Include="Gameplay\PlayerController.cs" />
     <Compile Include="Gameplay\Fortress\PlayerEntity.cs" />
+    <Compile Include="Gameplay\PlayerController.cs" />
     <Compile Include="Gameplay\PlayerInputClient.cs" />
     <Compile Include="Gameplay\PlayerInputPacket.cs" />
     <Compile Include="Gameplay\PlayerInputServer.cs" />
@@ -108,8 +108,10 @@
     <Compile Include="Gameplay\Fortress\SpawnCrystal.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\IModelObject.cs" />
+    <Compile Include="Model\ISimulator.cs" />
     <Compile Include="Model\ModelContainer.cs" />
     <Compile Include="Model\ModelObjectChangedAttribute.cs" />
+    <Compile Include="Model\Simulation\BasicSimulator.cs" />
     <Compile Include="Model\Simulation\LocalPlayer.cs" />
     <Compile Include="Model\Synchronization\IVirtualEndpoint.cs" />
     <Compile Include="Model\Synchronization\VirtualModelSyncer.cs" />
@@ -139,6 +141,11 @@
     <Compile Include="Scripting\ScriptLayer.cs" />
     <Compile Include="Scripting\ScriptRunner.cs" />
     <Compile Include="Gameplay\ThrowMove.cs" />
+    <Compile Include="TW.cs" />
+    <Compile Include="World\ClientWorldSector.cs" />
+    <Compile Include="World\Rendering\EntityRenderData.cs" />
+    <Compile Include="World\Rendering\WorldRenderer.cs" />
+    <Compile Include="World\ServerWorld.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">

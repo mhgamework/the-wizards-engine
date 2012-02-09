@@ -273,8 +273,8 @@ namespace MHGameWork.TheWizards.Main
                         var iS =
                             new PlayerInputServer(
                                 inputServerTransporter.GetTransporterForClient(packetManager.Clients[i]), c);
-
-                        c.Initialize(xnaGame);
+                        throw new NotImplementedException();
+                        //c.Initialize(xnaGame);
 
                         var a = serverSyncer.CreateActor(c);
 
@@ -295,7 +295,7 @@ namespace MHGameWork.TheWizards.Main
             }
             for (int i = 0; i < controllers.Count; i++)
             {
-                controllers[i].Update(game);
+                //controllers[i].Update(game);
                 inputServers[i].Update(game.Elapsed);
             }
             serverSyncer.Update(game.Elapsed);
