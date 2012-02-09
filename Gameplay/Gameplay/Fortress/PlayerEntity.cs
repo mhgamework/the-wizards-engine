@@ -72,7 +72,7 @@ namespace MHGameWork.TheWizards.Gameplay.Fortress
             if (holdingCrystal != null)
             {
                 var normal = Vector3.TransformNormal(Vector3.Forward, cam.ViewInverse);
-                holdingCrystal.Position = player.GetData().Position + normal*2;
+                holdingCrystal.Position = player.GetData().Position.xna() + normal*2;
             }
             if (Handle.Input.IsKeyDown(Keys.Z))
             {
@@ -109,7 +109,7 @@ namespace MHGameWork.TheWizards.Gameplay.Fortress
                
 
                 var normal = Vector3.TransformNormal(Vector3.Forward, cam.ViewInverse);
-                var ray = new Ray(player.GetData().Position, normal);
+                var ray = new Ray(player.GetData().Position.xna(), normal);
                 var ent = Handle.RaycastScene(ray, o => o.Entity.GetAttachedScript<SpawnCrystal>() != null);
 
                 if (ent.IsHit)

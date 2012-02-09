@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards.Client;
+using MHGameWork.TheWizards.GamePlay;
 using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Player.Client
@@ -17,7 +18,7 @@ namespace MHGameWork.TheWizards.Player.Client
         public PlayerClientPhysics( PlayerController _controller )
         {
             controller = _controller;
-            currentPosition = controller.RetrievePosition();
+            currentPosition = controller.GlobalPosition;
         }
 
 
@@ -31,7 +32,7 @@ namespace MHGameWork.TheWizards.Player.Client
             // First adds count, then removes. This is simply to ensure that objects are not flicked on of this frame
 
             Vector3 oldPosition = currentPosition;
-            Vector3 newPosition = controller.RetrievePosition();
+            Vector3 newPosition = controller.GlobalPosition;
             currentPosition = newPosition;
 
             ClientPhysicsQuadTreeNode oldNode = node;

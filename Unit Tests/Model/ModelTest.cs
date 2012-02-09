@@ -75,5 +75,10 @@ namespace MHGameWork.TheWizards.Tests.Model
             game.Run();
         }
 
+        [Test]
+        public void TestPlayerMovement()
+        {
+            
+        }
     }
 }

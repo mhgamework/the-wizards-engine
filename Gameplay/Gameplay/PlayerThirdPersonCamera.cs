@@ -81,7 +81,7 @@ namespace MHGameWork.TheWizards.Gameplay
 
         private void createViewMatrix()
         {
-            var camPos = player.Position + CameraOffset;
+            var camPos = player.Position.xna() + CameraOffset;
             Vector3 pos, lookDir, up;
 
             lookDir = Vector3.Forward;

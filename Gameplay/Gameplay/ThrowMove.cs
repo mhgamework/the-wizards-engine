@@ -100,7 +100,7 @@ namespace MHGameWork.TheWizards.Gameplay
 
 
 
-            return controller.Player.Position + Vector3.Up * 2 + offset * -0.5f+right*0.5f;
+            return controller.Player.Position.xna() + Vector3.Up * 2 + offset * -0.5f + right * 0.5f;
             
         }
     }

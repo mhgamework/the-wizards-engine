@@ -32,7 +32,7 @@ namespace MHGameWork.TheWizards.Gameplay
             return c;
         }
 
-        public PlayerThirdPersonCamera  EnablePlayerCamera(IPlayer player, PlayerController controller)
+        public PlayerThirdPersonCamera EnablePlayerCamera(IPlayer player, PlayerController controller)
         {
             this.controller = controller;
             thirdPersonCamera = new PlayerThirdPersonCamera(scene.Game, player.GetData());

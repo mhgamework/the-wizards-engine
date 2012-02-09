@@ -120,30 +120,6 @@
     <Compile Include="Assets\ServerAssetSyncer.cs" />
     <Compile Include="Assets\ClientTextureAsset.cs" />
     <Compile Include="Assets\ServerMeshAsset.cs" />
-    <Compile Include="Building\Block.cs" />
-    <Compile Include="Building\BlockFactory.cs" />
-    <Compile Include="Building\BlockLayout.cs" />
-    <Compile Include="Building\BlockPlaceLogic.cs" />
-    <Compile Include="Building\BlockType.cs" />
-    <Compile Include="Building\BlockTypeFactory.cs" />
-    <Compile Include="Building\BuildSlot.cs" />
-    <Compile Include="Building\BuildSlotRenderer.cs" />
-    <Compile Include="Building\BuildUnit.cs" />
-    <Compile Include="Building\DynamicBlock.cs" />
-    <Compile Include="Building\DynamicBlockDirection.cs" />
-    <Compile Include="Building\DynamicBlockFactory.cs" />
-    <Compile Include="Building\DynamicBlockResolver.cs" />
-    <Compile Include="Building\DynamicPlaceMode.cs" />
-    <Compile Include="Building\DynamicPlaceTool.cs" />
-    <Compile Include="Building\DynamicTypeFactory.cs" />
-    <Compile Include="Building\FloorPlacer.cs" />
-    <Compile Include="Building\FloorType.cs" />
-    <Compile Include="Building\HUDRenderer.cs" />
-    <Compile Include="Building\PlaceTool.cs" />
-    <Compile Include="Building\PlayerController.cs" />
-    <Compile Include="Building\Point3.cs" />
-    <Compile Include="Building\WallPlacer.cs" />
-    <Compile Include="Building\WallType.cs" />
     <Compile Include="Client\ClientPhysicsQuadTreeNode.cs" />
     <Compile Include="Client\ClientPhysicsTestSphere.cs" />
     <Compile Include="Client\ClientXNAGameService.cs" />
@@ -187,13 +163,6 @@
     <Compile Include="Entity\TODO\TaggedObject.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\Synchronization\IVirtualEndpoint.cs" />
-    <Compile Include="Model\Synchronization\VirtualModelSyncer.cs" />
-    <Compile Include="Model\Entity.cs" />
-    <Compile Include="Model\IModelObject.cs" />
-    <Compile Include="Model\ModelContainer.cs" />
-    <Compile Include="Model\ModelObjectChangedAttribute.cs" />
-    <Compile Include="Model\Synchronization\VirtualMultiEndpoint.cs" />
     <Compile Include="Particles\BallParticalCreater.cs" />
     <Compile Include="Particles\EmitterParameters.cs" />
     <Compile Include="Particles\FlameParticalCreater.cs" />
@@ -271,7 +240,6 @@
     <Compile Include="Physics\MeshPhysicsActorBuilder.cs" />
     <Compile Include="Physics\MeshCollisionData.cs" />
     <Compile Include="Physics\MeshPhysicsElementFactory.cs" />
-    <Compile Include="Player\PlayerController.cs" />
     <Compile Include="Rendering\Deferred\DeferredRendererOud.cs" />
     <Compile Include="Rendering\IMeshFactory.cs" />
     <Compile Include="Rendering\IMeshRenderElement.cs" />
@@ -365,12 +333,6 @@
     <Compile Include="Physics\Temp\Math.cs" />
     <Compile Include="Physics\User Output.cs" />
     <Compile Include="Physics\Temp\Vertex Grid.cs" />
-    <Compile Include="Player\Client\PlayerClientPhysics.cs" />
-    <Compile Include="Player\PlayerData.cs" />
-    <Compile Include="Player\PlayerInput.cs" />
-    <Compile Include="Player\PlayerRenderer.cs" />
-    <Compile Include="Player\PlayerService.cs" />
-    <Compile Include="Player\XNATaskQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

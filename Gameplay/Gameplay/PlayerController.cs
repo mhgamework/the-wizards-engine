@@ -100,7 +100,7 @@ namespace MHGameWork.TheWizards.GamePlay
             };*/
 
             CapsuleController capsuleController = manager.CreateController<CapsuleController>(capsuleControllerDesc);
-            capsuleController.Position = player.Position;
+            capsuleController.Position = player.Position.xna();
             capsuleController.Actor.Name = "PlayerController";
             capsuleController.SetCollisionEnabled(true);
 
@@ -132,7 +132,7 @@ namespace MHGameWork.TheWizards.GamePlay
 
             if (velocity.LengthSquared() > 0.001f)
             {
-                while( controllerHitReport.HitQueue.Count> 0)
+                while (controllerHitReport.HitQueue.Count > 0)
                 {
                     var hit = controllerHitReport.HitQueue.Dequeue();
                     var frictionDot = Vector3.Dot(velocity, hit.WorldNormal);
@@ -153,9 +153,9 @@ namespace MHGameWork.TheWizards.GamePlay
                     }
                 }
             }
-             controllerHitReport.HitQueue.Clear();
+            controllerHitReport.HitQueue.Clear();
             // This is bad practice ( 2-way dependancy ) (no clue what this means)
-            player.Position = controller.Position;
+            player.Position = controller.Position.dx();
 
             //Gravity
             var gravity = Vector3.Down * 10;
@@ -165,7 +165,7 @@ namespace MHGameWork.TheWizards.GamePlay
             frameMovement += velocity * game.Elapsed;
 
             var oldPos = controller.Position;
-            
+
             // Apply fake gravity. Downward speed is constant. 
             controller.Move(frameMovement);
             frameMovement = Vector3.Zero;
@@ -177,7 +177,7 @@ namespace MHGameWork.TheWizards.GamePlay
             if (Math.Abs((controller.Position - oldPos).Y) < 0.001) velocity.Y = 0;
 
 
-            player.Position = controller.Position;
+            player.Position = controller.Position.dx();
 
             //Console.WriteLine(velocity);
         }

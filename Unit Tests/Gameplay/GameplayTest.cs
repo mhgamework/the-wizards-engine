@@ -493,7 +493,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             game.DrawEvent +=
                 delegate
                 {
-                    game.LineManager3D.AddCenteredBox(player.Position, 1, Color.Red);
+                    game.LineManager3D.AddCenteredBox(player.Position.xna(), 1, Color.Red);
                 };
 
             game.Run();
@@ -628,7 +628,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         {
             throw new NotImplementedException();
             var player = createPlayerData();
-            player.Position = new Vector3(0, 3, 0);
+            player.Position = new Vector3(0, 3, 0).dx();
 
 
 
@@ -679,7 +679,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         {
             PlayerData player = new PlayerData();
             player.Name = "MHGameWork";
-            player.Position = Vector3.One;
+            player.Position = Vector3.One.dx();
             return player;
         }
 

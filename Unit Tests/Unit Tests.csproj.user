@@ -3,4 +3,7 @@
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <RemoteDebugEnabled>false</RemoteDebugEnabled>
+  </PropertyGroup>
 </Project>

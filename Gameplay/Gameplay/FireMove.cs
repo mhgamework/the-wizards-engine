@@ -89,7 +89,7 @@ namespace MHGameWork.TheWizards.Gameplay
 
             var right = Vector3.Cross(offset, Vector3.Up);
 
-            return controller.Player.Position + Vector3.Up * 1.5f + offset * +0.5f + right * -0.5f;
+            return controller.Player.Position.xna() + Vector3.Up * 1.5f + offset * +0.5f + right * -0.5f;
 
         }
         private Vector3 calculateRightOrbPosition()
@@ -100,7 +100,7 @@ namespace MHGameWork.TheWizards.Gameplay
 
             var right = Vector3.Cross(offset, Vector3.Up);
 
-            return controller.Player.Position + Vector3.Up * 1.5f + offset * +0.5f + right * 0.5f;
+            return controller.Player.Position.xna() + Vector3.Up * 1.5f + offset * +0.5f + right * 0.5f;
 
         }
     }
