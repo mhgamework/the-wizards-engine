@@ -9,6 +9,7 @@ using MHGameWork.TheWizards.Model.Simulation;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
+using MHGameWork.TheWizards.Simulation;
 using MHGameWork.TheWizards.World.Rendering;
 using NUnit.Framework;
 using SlimDX;
@@ -92,7 +93,11 @@ namespace MHGameWork.TheWizards.Tests.Model
 
             game
                 .AddSimulator(new LocalPlayer(player))
+                .AddSimulator(new ThirdPersonCameraSimulator())
                 .AddSimulator(new SimpleWorldRenderer());
+
+
+            TW.Model.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
 
 
             game.Run();

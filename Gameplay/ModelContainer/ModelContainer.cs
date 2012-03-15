@@ -129,22 +129,23 @@ namespace MHGameWork.TheWizards.Model
         }
 
 
-
-
-
-        // Helper methods (?)
-        public Entity CreateNewEntity(IMesh mesh, Matrix worldMatrix)
+        public T GetSingleton<T>() where T : class, IModelObject, new()
         {
-            var ent = new Entity();
-            ent.Initialize(this);
+            foreach (var obj in Objects)
+            {
+                if (obj is T)
+                    return (T)obj;
+            }
 
-            Objects.Add(ent);
-
-            ent.Mesh = mesh;
-            ent.WorldMatrix = worldMatrix;
-
-            return ent;
+            var ret = new T();
+            AddObject(ret);
+            return ret;
         }
+
+
+
+
+
 
     }
 }

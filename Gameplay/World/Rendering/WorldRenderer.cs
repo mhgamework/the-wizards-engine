@@ -42,7 +42,6 @@ namespace MHGameWork.TheWizards.World.Rendering
                     case ModelContainer.WorldChangeType.None:
                         //Huh?
                         throw new InvalidOperationException();
-                        break;
                     case ModelContainer.WorldChangeType.Added:
                         if (entityRenderDataMap.ContainsKey(ent))
                             throw new InvalidOperationException("Invalid change, entity is already in the renderer");
