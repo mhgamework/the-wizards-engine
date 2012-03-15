@@ -67,10 +67,7 @@ namespace DirectX11.Graphics
         }
         private void createProjectionMatrix()
         {
-            //proj = Matrix.PerspectiveFovRH(game.ClientSize.X, game.ClientSize.Y, nearClip, farClip);
-            proj = Matrix.PerspectiveFovRH(0.45f,
-                //4 / 3F, 1.23456f, 10000.0f );
-        4 / 3F, nearClip, farClip);
+            proj = Matrix.PerspectiveFovRH(0.45f, 4 / 3F, nearClip, farClip);
         }
 
         private void createViewMatrix()
@@ -165,8 +162,8 @@ namespace DirectX11.Graphics
 
                 // Gebruik 2degraadsvergl voor afstand: f(x) = ax^2 + bx + c
                 // We zeggen dat x=0 volledig ingezoomd en x=1 volledig uitgezoomd
-                // dus: minimum=p1->(0,minDist)    p->(1,maxDist) 
-                // Invullen geeft: 
+                // dus: minimum=p1->(0,minDist)    p->(1,maxDist)
+                // Invullen geeft:
                 //    []   maxDist = a + b + c
                 //    []   0 = -b/(2a)
                 //    []   minDist = c

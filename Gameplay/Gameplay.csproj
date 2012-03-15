@@ -115,7 +115,7 @@
     <Compile Include="ModelContainer\ModelObjectChangedAttribute.cs" />
     <Compile Include="Model\SimpleWorldRenderer.cs" />
     <Compile Include="Simulation\BasicSimulator.cs" />
-    <Compile Include="Simulation\LocalPlayer.cs" />
+    <Compile Include="Simulation\LocalPlayerSimulator.cs" />
     <Compile Include="ModelContainer\Synchronization\IVirtualEndpoint.cs" />
     <Compile Include="ModelContainer\Synchronization\VirtualModelSyncer.cs" />
     <Compile Include="ModelContainer\Synchronization\VirtualMultiEndpoint.cs" />

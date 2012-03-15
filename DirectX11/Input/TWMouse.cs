@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using SlimDX.DirectInput;
 
@@ -178,7 +179,7 @@ namespace DirectX11.Input
 
 
 
-            //TODO: relativeScrollWheel = mouseState.ScrollWheelValue - prevScrollWheel;
+            relativeScrollWheel = state.Z;
 
             //TODO: This should prob be removed later on
             if (!CursorEnabled && savedCursorPosition.HasValue)
