@@ -114,6 +114,7 @@
     <Compile Include="ModelContainer\ModelContainer.cs" />
     <Compile Include="ModelContainer\ModelObjectChangedAttribute.cs" />
     <Compile Include="Model\SimpleWorldRenderer.cs" />
+    <Compile Include="Model\Sphere.cs" />
     <Compile Include="Simulation\BasicSimulator.cs" />
     <Compile Include="Simulation\LocalPlayerSimulator.cs" />
     <Compile Include="ModelContainer\Synchronization\IVirtualEndpoint.cs" />

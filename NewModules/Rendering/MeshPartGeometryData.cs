@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Rendering
@@ -85,6 +86,26 @@ namespace MHGameWork.TheWizards.Rendering
             public Vector4[] DataVector4;
         }
 
+
+        public void SetSourcesFromTangentVertices(short[] indices, TangentVertex[] vertices)
+        {
+            MeshPartGeometryData geom = this;
+            Source source;
+            var positions = new Vector3[indices.Length];
+            var normals = new Vector3[indices.Length];
+            for (int i = 0; i < indices.Length; i++)
+            {
+                positions[i] = vertices[indices[i]].pos;
+            }
+
+            source = new Source();
+            geom.Sources.Add(source);
+            source.DataVector3 = positions;
+
+            source = new Source();
+            geom.Sources.Add(source);
+            source.DataVector3 = normals;
+        }
 
 
 

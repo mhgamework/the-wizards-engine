@@ -91,6 +91,7 @@ namespace MHGameWork.TheWizards.Tests.Model
             TW.Model.AddObject(player);
             player.Entity = ent;
 
+
             game
                 .AddSimulator(new LocalPlayerSimulator(player))
                 .AddSimulator(new ThirdPersonCameraSimulator())
@@ -99,7 +100,6 @@ namespace MHGameWork.TheWizards.Tests.Model
 
             TW.Model.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
             TW.Model.GetSingleton<CameraInfo>().FirstPersonCameraTarget = player.Entity;
-
 
             game.Run();
         }
