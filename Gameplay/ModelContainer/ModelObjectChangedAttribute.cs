@@ -4,7 +4,7 @@ using PostSharp.Aspects;
 using PostSharp.Extensibility;
 using PostSharp.Reflection;
 
-namespace MHGameWork.TheWizards.Model
+namespace MHGameWork.TheWizards.ModelContainer
 {
     [Serializable]
     [MulticastAttributeUsage(MulticastTargets.Property, PersistMetaData = true)]

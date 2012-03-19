@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Utilities;
-using SlimDX;
 
-namespace MHGameWork.TheWizards.Model
+namespace MHGameWork.TheWizards.ModelContainer
 {
     /// <summary>
     /// Responsible for providing access to World Data.

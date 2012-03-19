@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Model;
+using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
@@ -28,7 +29,7 @@ namespace MHGameWork.TheWizards.Tests.Model
 
             game.InitDirectX();
 
-            var container = new ModelContainer();
+            var container = new ModelContainer.ModelContainer();
 
             physX = new PhysicsEngine();
             physX.Initialize();
@@ -65,7 +66,7 @@ namespace MHGameWork.TheWizards.Tests.Model
 
         }
 
-        private void setTWGlobals(ModelContainer container)
+        private void setTWGlobals(ModelContainer.ModelContainer container)
         {
             TW.Game = game;
             TW.Model = container;

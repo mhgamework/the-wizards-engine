@@ -6,6 +6,7 @@ using DirectX11;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Entity.Client;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;

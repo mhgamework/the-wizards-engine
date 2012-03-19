@@ -1,4 +1,5 @@
 ﻿using System;
+using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
@@ -19,8 +20,8 @@ namespace MHGameWork.TheWizards.Model
         public IMesh Mesh { get; set; }
         public Matrix WorldMatrix { get; set; }
 
-        public ModelContainer Container { get; private set; }
-        public void Initialize(ModelContainer container)
+        public ModelContainer.ModelContainer Container { get; private set; }
+        public void Initialize(ModelContainer.ModelContainer container)
         {
             Container = container;
         }

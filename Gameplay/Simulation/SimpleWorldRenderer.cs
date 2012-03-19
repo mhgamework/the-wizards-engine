@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Model;
+﻿using MHGameWork.TheWizards.Model;
+using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.World.Rendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Tests.Model
+namespace MHGameWork.TheWizards.Simulation
 {
     public class SimpleWorldRenderer : ISimulator
     {

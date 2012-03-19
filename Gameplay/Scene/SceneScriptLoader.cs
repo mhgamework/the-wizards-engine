@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Scripting.API;

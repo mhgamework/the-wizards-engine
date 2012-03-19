@@ -11,10 +11,10 @@ namespace MHGameWork.TheWizards.Building
 {
     public class BuildSlotRenderer
     {
-        private readonly ModelContainer world;
+        private readonly ModelContainer.ModelContainer world;
         private readonly DeferredRenderer renderer;
         private Dictionary<BuildSlot, DeferredMeshRenderElement> BuildSlotRenderDataMap = new Dictionary<BuildSlot, DeferredMeshRenderElement>();
-        public BuildSlotRenderer(ModelContainer world, DeferredRenderer renderer)
+        public BuildSlotRenderer(ModelContainer.ModelContainer world, DeferredRenderer renderer)
         {
             this.world = world;
             this.renderer = renderer;
@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.Building
         public void ProcessWorldChanges()
         {
             int length;
-            ModelContainer.ObjectChange[] objectChanges;
+            ModelContainer.ModelContainer.ObjectChange[] objectChanges;
             world.GetEntityChanges(out objectChanges, out length);
 
 
@@ -39,15 +39,15 @@ namespace MHGameWork.TheWizards.Building
 
                 switch (change.ChangeType)
                 {
-                    case ModelContainer.WorldChangeType.None:
+                    case ModelContainer.ModelContainer.WorldChangeType.None:
                         throw new InvalidOperationException();
-                    case ModelContainer.WorldChangeType.Added:
+                    case ModelContainer.ModelContainer.WorldChangeType.Added:
                         setMeshRenderElement(ent);
                         break;
-                    case ModelContainer.WorldChangeType.Modified:
+                    case ModelContainer.ModelContainer.WorldChangeType.Modified:
                         setMeshRenderElement(ent);
                         break;
-                    case ModelContainer.WorldChangeType.Removed:
+                    case ModelContainer.ModelContainer.WorldChangeType.Removed:
                         DeferredMeshRenderElement meshEl = BuildSlotRenderDataMap[ent];
                         if (meshEl != null)
                         {

@@ -5,7 +5,6 @@ using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Model;
-using MHGameWork.TheWizards.Model.Simulation;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
@@ -30,7 +29,7 @@ namespace MHGameWork.TheWizards.Tests.Model
         [Test]
         public void TestChangeEntity()
         {
-            var container = new ModelContainer();
+            var container = new ModelContainer.ModelContainer();
 
             var ent = new TheWizards.Model.Entity();
             container.AddObject(ent);
@@ -38,7 +37,7 @@ namespace MHGameWork.TheWizards.Tests.Model
             ent.Mesh = new RAMMesh();
 
             int length;
-            ModelContainer.ObjectChange[] array;
+            ModelContainer.ModelContainer.ObjectChange[] array;
             container.GetEntityChanges(out array, out length);
 
 

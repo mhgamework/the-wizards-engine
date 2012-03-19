@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using DirectX11;
-using MHGameWork.TheWizards.Building;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Tests.Building
+namespace MHGameWork.TheWizards.Building
 {
     /// <summary>
     /// Responsible for creating new BlockTypes

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11.Graphics;
+﻿using DirectX11.Graphics;
 using MHGameWork.TheWizards.GamePlay;
-using MHGameWork.TheWizards.Player;
-using Microsoft.Xna.Framework.Input;
+using MHGameWork.TheWizards.Model;
+using MHGameWork.TheWizards.ModelContainer;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.Model.Simulation
+namespace MHGameWork.TheWizards.Simulation
 {
     /// <summary>
     /// This class is responsible for simulating the local player input

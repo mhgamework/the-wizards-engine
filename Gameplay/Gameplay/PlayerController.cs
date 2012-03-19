@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Scripting;
 using MHGameWork.TheWizards.ServerClient;

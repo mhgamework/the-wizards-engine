@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DirectX11.Graphics;
+using MHGameWork.TheWizards.ModelContainer;
 
 namespace MHGameWork.TheWizards.Model
 {

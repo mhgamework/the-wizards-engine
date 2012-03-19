@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.Player;
 
 namespace MHGameWork.TheWizards.Gameplay

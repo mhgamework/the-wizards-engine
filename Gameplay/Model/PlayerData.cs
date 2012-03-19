@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Model;
+using MHGameWork.TheWizards.ModelContainer;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Player
+namespace MHGameWork.TheWizards.Model
 {
     /// <summary>
     /// Functionality
@@ -52,14 +49,14 @@ namespace MHGameWork.TheWizards.Player
 
 
 
-        private ModelContainer container;
+        private ModelContainer.ModelContainer container;
 
-        public ModelContainer Container
+        public ModelContainer.ModelContainer Container
         {
             get { return container; }
         }
 
-        public void Initialize(ModelContainer container)
+        public void Initialize(ModelContainer.ModelContainer container)
         {
             this.container = container;
         }

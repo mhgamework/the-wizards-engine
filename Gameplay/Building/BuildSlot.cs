@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Model;
+using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.Tests.Building;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Building
@@ -68,8 +68,8 @@ namespace MHGameWork.TheWizards.Building
             
         }
 
-        public ModelContainer Container { get; private set; }
-        public void Initialize(ModelContainer container)
+        public ModelContainer.ModelContainer Container { get; private set; }
+        public void Initialize(ModelContainer.ModelContainer container)
         {
             Container = container;
         }

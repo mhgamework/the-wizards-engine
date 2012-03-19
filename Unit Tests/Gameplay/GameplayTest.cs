@@ -6,6 +6,7 @@ using System.Threading;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Gameplay.Fortress;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
 using MHGameWork.TheWizards.Networking.Server;

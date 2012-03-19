@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MHGameWork.TheWizards.Model.Synchronization
+﻿namespace MHGameWork.TheWizards.ModelContainer.Synchronization
 {
     public interface IVirtualEndpoint
     {

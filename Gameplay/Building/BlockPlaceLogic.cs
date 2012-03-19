@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.Tests.Building;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Building

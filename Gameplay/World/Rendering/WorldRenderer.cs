@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MHGameWork.TheWizards.Model;
+using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Rendering.Deferred;
 
 namespace MHGameWork.TheWizards.World.Rendering
@@ -11,10 +12,10 @@ namespace MHGameWork.TheWizards.World.Rendering
     /// </summary>
     public class WorldRenderer : ISimulator
     {
-        private readonly ModelContainer world;
+        private readonly ModelContainer.ModelContainer world;
         private readonly DeferredRenderer renderer;
         private Dictionary<Model.Entity, EntityRenderData> entityRenderDataMap = new Dictionary<Model.Entity, EntityRenderData>();
-        public WorldRenderer(ModelContainer world, DeferredRenderer renderer)
+        public WorldRenderer(ModelContainer.ModelContainer world, DeferredRenderer renderer)
         {
             this.world = world;
             this.renderer = renderer;
@@ -23,7 +24,7 @@ namespace MHGameWork.TheWizards.World.Rendering
         public void ProcessWorldChanges()
         {
             int length;
-            ModelContainer.ObjectChange[] objectChanges;
+            ModelContainer.ModelContainer.ObjectChange[] objectChanges;
             world.GetEntityChanges(out objectChanges, out length);
 
 
@@ -39,10 +40,10 @@ namespace MHGameWork.TheWizards.World.Rendering
 
                 switch (change.ChangeType)
                 {
-                    case ModelContainer.WorldChangeType.None:
+                    case ModelContainer.ModelContainer.WorldChangeType.None:
                         //Huh?
                         throw new InvalidOperationException();
-                    case ModelContainer.WorldChangeType.Added:
+                    case ModelContainer.ModelContainer.WorldChangeType.Added:
                         if (entityRenderDataMap.ContainsKey(ent))
                             throw new InvalidOperationException("Invalid change, entity is already in the renderer");
 
@@ -52,12 +53,12 @@ namespace MHGameWork.TheWizards.World.Rendering
                         renderData.UpdateRenderData();
 
                         break;
-                    case ModelContainer.WorldChangeType.Modified:
+                    case ModelContainer.ModelContainer.WorldChangeType.Modified:
                         if (!entityRenderDataMap.ContainsKey(ent))
                             throw new InvalidOperationException("Invalid change, entity is not in the renderer");
                         entityRenderDataMap[ent].UpdateRenderData();
                         break;
-                    case ModelContainer.WorldChangeType.Removed:
+                    case ModelContainer.ModelContainer.WorldChangeType.Removed:
                         if (!entityRenderDataMap.ContainsKey(ent))
                             throw new InvalidOperationException("Invalid change, entity is not in the renderer");
                         entityRenderDataMap[ent].RemoveRenderData();

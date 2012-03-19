@@ -14,10 +14,10 @@ namespace MHGameWork.TheWizards.Building
     public class DynamicBlockFactory
     {
         private readonly DeferredRenderer renderer;
-        private readonly ModelContainer container;
+        private readonly ModelContainer.ModelContainer container;
         public List<DynamicBlock> BlockList = new List<DynamicBlock>();
 
-        public DynamicBlockFactory(DeferredRenderer renderer, ModelContainer container)
+        public DynamicBlockFactory(DeferredRenderer renderer, ModelContainer.ModelContainer container)
         {
             this.renderer = renderer;
             this.container = container;

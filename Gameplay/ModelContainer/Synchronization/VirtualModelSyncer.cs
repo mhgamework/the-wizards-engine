@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MHGameWork.TheWizards.Utilities;
 
-namespace MHGameWork.TheWizards.Model.Synchronization
+namespace MHGameWork.TheWizards.ModelContainer.Synchronization
 {
     /// <summary>
     /// TODO: fix unique id collision

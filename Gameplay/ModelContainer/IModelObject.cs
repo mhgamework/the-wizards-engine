@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MHGameWork.TheWizards.Model
+﻿namespace MHGameWork.TheWizards.ModelContainer
 {
     /// <summary>
     /// Should have an empty constructor, if automatic synchronization is to be used.

@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.Tests.Building
     [TestFixture]
     public class BuildingTest
     {
-        private ModelContainer container;
+        private ModelContainer.ModelContainer container;
         private DynamicBlockFactory dynBlockFactory;
         private DX11Game game;
         private DeferredRenderer renderer;
@@ -34,7 +34,7 @@ namespace MHGameWork.TheWizards.Tests.Building
         [SetUp]
         public void Init()
         {
-            container = new ModelContainer();
+            container = new ModelContainer.ModelContainer();
             game = new DX11Game();
             game.InitDirectX();
             renderer = new DeferredRenderer(game);
