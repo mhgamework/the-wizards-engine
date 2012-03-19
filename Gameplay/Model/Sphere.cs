@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DirectX11;
 using MHGameWork.TheWizards.Entity;
+using MHGameWork.TheWizards.Entity.Client;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
@@ -17,6 +20,76 @@ namespace MHGameWork.TheWizards.Model
             var ent = new Entity();
 
             ent.Mesh = createSphereMesh();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            XNAGame game = new XNAGame();
+
+            var data = ent.Mesh.GetCollisionData();
+
+
+            var box = new MeshCollisionData.Box();
+            box.Dimensions = MathHelper.One.xna() * 2;
+            box.Orientation = Matrix.Identity.xna();
+
+            data.Boxes.Add(box);
+
+            var builder = new MeshPhysicsActorBuilder(new MeshPhysicsPool());
+
+            var dEl = new MeshDynamicPhysicsElement(ent.Mesh, Matrix.Identity.xna(), builder);
+
+            dEl.InitDynamic(TW.Scene);
+            dEl.Actor.LinearVelocity = game.SpectaterCamera.CameraDirection * 10;
+
+
+            //TODO: use the MeshP
+            var factory = new MeshPhysicsElementFactory(engine, root);
+            game.AddXNAObject(factory);
+
+
+      
+          
+
+            //TODO: this update function must be called
+            //game.UpdateEvent += delegate
+            //{
+
+            //        dEl.Update(root, game);
+
+            //};
+
+
+
+
+
+
+
+
+
 
         }
 
