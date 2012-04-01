@@ -83,3 +83,6 @@ Thumbs.db
 
 *.~*
 /packages/*
+/bin/CommonVB.dll
+/bin/CommonVB.pdb
+/bin/CommonVB.xml
