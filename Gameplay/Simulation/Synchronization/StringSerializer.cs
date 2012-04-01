@@ -10,12 +10,23 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
     {
         public static StringSerializer Create()
         {
-            
+            var ret = new StringSerializer();
+
+            ret.Add(typeof(int), o => o.ToString(), s => int.Parse(s));
+            ret.Add(typeof(uint), o => o.ToString(), s => uint.Parse(s));
+            ret.Add(typeof(short), o => o.ToString(), s => short.Parse(s));
+            ret.Add(typeof(ushort), o => o.ToString(), s => ushort.Parse(s));
+            ret.Add(typeof(byte), o => o.ToString(), s => byte.Parse(s));
+            ret.Add(typeof(string), o => (string)o, s => s);
+
+
+            return ret;
+
         }
 
-         public string serialize(object obj)
-         {
-             var type = obj.GetType();
+        public string Serialize(object obj)
+        {
+            var type = obj.GetType();
 
             if (!serializers.ContainsKey(type))
             {
@@ -27,7 +38,7 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
 
         }
 
-        public string deserialize(string value, Type type)
+        public string Deserialize(string value, Type type)
         {
             if (!deserializers.ContainsKey(type))
             {
@@ -35,12 +46,18 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
                 return "UNKNOWN";
             }
 
-            return serialize(value);
+            return Serialize(value);
 
         }
 
+        public void Add(Type t, Func<object, string> serializer, Func<string, object> deserializer)
+        {
+            serializers.Add(t, serializer);
+            deserializers.Add(t, deserializer);
+        }
 
-        Dictionary<Type, Func<object,string>> serializers = new Dictionary<Type,Func<object,string> >();
+
+        Dictionary<Type, Func<object, string>> serializers = new Dictionary<Type, Func<object, string>>();
         Dictionary<Type, Func<string, object>> deserializers = new Dictionary<Type, Func<string, object>>();
 
 

@@ -21,12 +21,10 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
 
         private IServerPacketTransporter<ChangePacket> transporter;
 
-        public NetworkSyncerSimulator()
+        public NetworkSyncerSimulator(IServerPacketTransporter<ChangePacket> transporter)
         {
-            
-
+            this.transporter = transporter;
         }
-
 
         public void Simulate()
         {
@@ -153,7 +151,7 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
                 return asset.Guid.ToString();
             }
 
-            return stringSerializer.serialize(obj);
+            return stringSerializer.Serialize(obj);
 
         }
 
@@ -170,7 +168,7 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
             }
 
 
-            return stringSerializer.deserialize(value, type);
+            return stringSerializer.Deserialize(value, type);
 
         }
 
