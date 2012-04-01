@@ -114,6 +114,7 @@
     <Compile Include="Collada\TODO\ColladaMeshOud.cs" />
     <Compile Include="Collada\TODO\ColladaModelOud.cs" />
     <Compile Include="Collada\TODO\ColladaTextureOud.cs" />
+    <Compile Include="Collections\DictionaryTwoWay.cs" />
     <Compile Include="Database\Database.cs" />
     <Compile Include="Database\IGameObject.cs" />
     <Compile Include="Database\IGameService.cs" />
@@ -305,9 +306,9 @@
     <Compile Include="SlimDXConversion\BoundingFrustum.cs" />
     <Compile Include="SlimDXConversion\MathHelper.cs" />
     <Compile Include="TWDir.cs" />
-    <Compile Include="Utilities\AdvancedQueue.cs" />
-    <Compile Include="Utilities\EventList.cs" />
-    <Compile Include="Utilities\PrefilledList.cs" />
+    <Compile Include="Collections\AdvancedQueue.cs" />
+    <Compile Include="Collections\EventList.cs" />
+    <Compile Include="Collections\PrefilledList.cs" />
     <Compile Include="Water\Camera.cs" />
     <Compile Include="Water\Mesh.cs" />
     <Compile Include="Water\SubGrid.cs" />
