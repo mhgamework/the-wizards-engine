@@ -43,7 +43,7 @@ namespace MHGameWork.TheWizards.Tests.World
             game.InitializeEvent += delegate
                                     {
                                         physicsEngine.Initialize();
-                                        serverScene = physicsEngine.Core.CreateScene(physicsEngine.Scene.Gravity, true);
+                                        serverScene = physicsEngine.CreateScene(physicsEngine.Scene.Gravity, true);
 
 
                                         debugRenderer = new PhysicsDebugRenderer(game, physicsEngine.Scene);
@@ -131,7 +131,7 @@ namespace MHGameWork.TheWizards.Tests.World
             game.InitializeEvent += delegate
                                     {
                                         physicsEngine.Initialize();
-                                        serverScene = physicsEngine.Core.CreateScene(physicsEngine.Scene.Gravity, true);
+                                        serverScene = physicsEngine.CreateScene(physicsEngine.Scene.Gravity, true);
 
 
                                         debugRenderer = new PhysicsDebugRenderer(game, physicsEngine.Scene);
@@ -210,7 +210,7 @@ namespace MHGameWork.TheWizards.Tests.World
             game.InitializeEvent += delegate
                                     {
                                         physicsEngine.Initialize();
-                                        serverScene = physicsEngine.Core.CreateScene(physicsEngine.Scene.Gravity, true);
+                                        serverScene = physicsEngine.CreateScene(physicsEngine.Scene.Gravity, true);
 
 
                                         debugRenderer = new PhysicsDebugRenderer(game, physicsEngine.Scene);
@@ -279,7 +279,7 @@ namespace MHGameWork.TheWizards.Tests.World
             game.InitializeEvent += delegate
             {
                 physicsEngine.Initialize();
-                serverScene = physicsEngine.Core.CreateScene(physicsEngine.Scene.Gravity, true);
+                serverScene = physicsEngine.CreateScene(physicsEngine.Scene.Gravity, true);
 
 
                 debugRenderer = new PhysicsDebugRenderer(game, physicsEngine.Scene);
@@ -348,7 +348,7 @@ namespace MHGameWork.TheWizards.Tests.World
             game.InitializeEvent += delegate
             {
                 physicsEngine.Initialize();
-                serverScene = physicsEngine.Core.CreateScene(physicsEngine.Scene.Gravity, true);
+                serverScene = physicsEngine.CreateScene(physicsEngine.Scene.Gravity, true);
 
 
                 debugRenderer = new PhysicsDebugRenderer(game, physicsEngine.Scene);

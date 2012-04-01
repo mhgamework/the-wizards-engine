@@ -123,7 +123,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 if (game.FrameNumber == 1)
                 {
 
-                    serverScene = ScriptLayer.Physics.Core.CreateScene(ScriptLayer.Physics.Scene.Gravity, true);
+                    serverScene = ScriptLayer.Physics.CreateScene(ScriptLayer.Physics.Scene.Gravity, true);
                     debugRendererServer = new PhysicsDebugRenderer(game, serverScene);
                     game.AddXNAObject(debugRendererServer);
                     debugRendererServer.Initialize(game);
@@ -220,7 +220,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 if (game.FrameNumber == 1)
                 {
 
-                    serverScene = ScriptLayer.Physics.Core.CreateScene(ScriptLayer.Physics.Scene.Gravity, true);
+                    serverScene = ScriptLayer.Physics.CreateScene(ScriptLayer.Physics.Scene.Gravity, true);
                     debugRendererServer = new PhysicsDebugRenderer(game, serverScene);
                     game.AddXNAObject(debugRendererServer);
                     debugRendererServer.Initialize(game);
@@ -410,7 +410,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 if (game.FrameNumber == 1)
                 {
 
-                    serverScene = ScriptLayer.Physics.Core.CreateScene(ScriptLayer.Physics.Scene.Gravity, true);
+                    serverScene = ScriptLayer.Physics.CreateScene(ScriptLayer.Physics.Scene.Gravity, true);
                     debugRendererServer = new PhysicsDebugRenderer(game, serverScene);
                     game.AddXNAObject(debugRendererServer);
                     debugRendererServer.Initialize(game);

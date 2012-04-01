@@ -12,17 +12,44 @@ using IDisposable = System.IDisposable;
 namespace MHGameWork.TheWizards.Physics
 {
     /// <summary>
-    /// this is more of a helper class and can lose its use later in the engine
+    /// This is more of a helper class and can lose its use later in the engine
+    /// EDIT: the PhysX Core has become 'static' to solve problems with the underlying unmanaged code
     /// </summary>
     public class PhysicsEngine : IDisposable, IXNAObject
     {
-        private Core _core;
         private StillDesign.PhysX.Scene _scene;
 
-        public Core Core
+        private static Core core;
+        private static Core Core
         {
-            get { return _core; }
-            set { _core = value; }
+            get
+            {
+                if (core == null)
+                {
+
+                    CoreDescription coreDesc = new CoreDescription();
+                    UserOutput output = new UserOutput();
+
+                    core = new Core(coreDesc, output);
+
+                    core.SetParameter(PhysicsParameter.VisualizationScale, 2.0f);
+                    core.SetParameter(PhysicsParameter.VisualizeCollisionShapes, true);
+                    core.SetParameter(PhysicsParameter.VisualizeActorAxes, true);
+                    core.SetParameter(PhysicsParameter.VisualizeClothMesh, true);
+                    core.SetParameter(PhysicsParameter.VisualizeJointLocalAxes, true);
+                    core.SetParameter(PhysicsParameter.VisualizeJointLimits, true);
+                    core.SetParameter(PhysicsParameter.VisualizeFluidPosition, true);
+                    core.SetParameter(PhysicsParameter.VisualizeFluidEmitters, false); // Slows down rendering a bit to much
+                    core.SetParameter(PhysicsParameter.VisualizeForceFields, true);
+                    core.SetParameter(PhysicsParameter.VisualizeSoftBodyMesh, true);
+
+
+
+                    // Connect to the remote debugger if its there
+                    core.Foundation.RemoteDebugger.Connect("localhost");
+                }
+                return core;
+            }
         }
 
         public StillDesign.PhysX.Scene Scene
@@ -37,20 +64,13 @@ namespace MHGameWork.TheWizards.Physics
 
         }
 
-        /// <summary>
-        /// This constructor is specifically implemented to allow multiple runs of a engine, for server-client testing
-        /// </summary>
-        public PhysicsEngine(Core core)
-        {
-            _core = core;
-        }
 
         ~PhysicsEngine()
         {
-            // Without this the application can hang because of the physx not being disposed. (never)
-            if (_core != null)
-                _core.Dispose();
-            _core = null;
+            //// Without this the application can hang because of the physx not being disposed. (never)
+            //if (_core != null)
+            //    _core.Dispose();
+            //_core = null;
 
         }
 
@@ -63,50 +83,7 @@ namespace MHGameWork.TheWizards.Physics
 
 
 
-            if (_core == null)
-            {
-                if (StillDesign.PhysX.Core.IsCoreCreated)
-                {
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                }
-                if (StillDesign.PhysX.Core.IsCoreCreated)
-                    throw new InvalidOperationException("Core is already created and cannot be released");
-
-                CoreDescription coreDesc = new CoreDescription();
-                UserOutput output = new UserOutput();
-
-                _core = new Core(coreDesc, output);
-
-                Core core = this.Core;
-                core.SetParameter(PhysicsParameter.VisualizationScale, 2.0f);
-                core.SetParameter(PhysicsParameter.VisualizeCollisionShapes, true);
-                core.SetParameter(PhysicsParameter.VisualizeActorAxes, true);
-                core.SetParameter(PhysicsParameter.VisualizeClothMesh, true);
-                core.SetParameter(PhysicsParameter.VisualizeJointLocalAxes, true);
-                core.SetParameter(PhysicsParameter.VisualizeJointLimits, true);
-                core.SetParameter(PhysicsParameter.VisualizeFluidPosition, true);
-                core.SetParameter(PhysicsParameter.VisualizeFluidEmitters, false); // Slows down rendering a bit to much
-                core.SetParameter(PhysicsParameter.VisualizeForceFields, true);
-                core.SetParameter(PhysicsParameter.VisualizeSoftBodyMesh, true);
-
-
-
-                //TODO: this was at the bottom of the function
-
-                // Connect to the remote debugger if its there
-                core.Foundation.RemoteDebugger.Connect("localhost");
-            }
+          
 
 
 
@@ -116,7 +93,7 @@ namespace MHGameWork.TheWizards.Physics
             sceneDesc.GroundPlaneEnabled = true;
             sceneDesc.UserContactReport = new CustomContactReport(this);
 
-            this.Scene = _core.CreateScene(sceneDesc);
+            this.Scene = Core.CreateScene(sceneDesc);
 
 
 
@@ -142,29 +119,34 @@ namespace MHGameWork.TheWizards.Physics
             scene.FetchResults(SimulationStatus.RigidBodyFinished, true);
         }
 
+        
+
         #region IDisposable Members
 
         public void Dispose()
         {
-            if (_core != null)
-            {
-                _core.Dispose();
 
+            if (Scene != null)
+            {
+                Scene.Dispose();
+                Scene = null;
             }
-            _core = null;
+            //if (_core != null)
+            //{
+            //    _core.Dispose();
+
+            //}
+            //_core = null;
         }
 
         #endregion
 
-        /// <summary>
-        /// This should be removed
-        /// </summary>
-        /// <param name="_game"></param>
+        // This should be removed
         #region IXNAObject Members
 
         public void Initialize(IXNAGame _game)
         {
-                Initialize();
+            Initialize();
         }
 
         public void Render(IXNAGame _game)
@@ -195,6 +177,11 @@ namespace MHGameWork.TheWizards.Physics
         public void OnContactNotify(ContactPair contactInformation, ContactPairFlag events)
         {
             if (contactNofityEvent != null) contactNofityEvent(contactInformation, events);
+        }
+
+        public Scene CreateScene(Vector3 gravity, bool b)
+        {
+            return Core.CreateScene(gravity, b);
         }
     }
 }
