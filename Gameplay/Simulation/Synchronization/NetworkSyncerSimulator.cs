@@ -117,7 +117,7 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
                     var key = p.Keys[i];
                     var value = p.Values[i];
 
-                    var att = ReflectionHelper.getAttributeByName(target.GetType(), key);
+                    var att = ReflectionHelper.GetAttributeByName(target.GetType(), key);
 
                     att.SetData(target, deserializeObject(value, att.Type));
 

@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.Reflection
             return ret;
         }
 
-        public static IAttribute getAttributeByName(Type type, string name)
+        public static IAttribute GetAttributeByName(Type type, string name)
         {
             var field = type.GetFields().FirstOrDefault(f => f.Name == name);
             if (field != null)
