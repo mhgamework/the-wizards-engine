@@ -275,6 +275,10 @@ namespace MHGameWork.TheWizards.Networking
                 {
                     return variableName + " = (" + castType + ")reader.ReadByte();";
                 }
+                if (System.Enum.GetUnderlyingType(variableType) == typeof(int))
+                {
+                    return variableName + " = (" + castType + ")reader.ReadInt32();";
+                }
             }
             if (variableType.IsArray)
             {
@@ -315,7 +319,7 @@ namespace MHGameWork.TheWizards.Networking
             {
                 var baseType = System.Enum.GetUnderlyingType(variableType);
 
-                if (baseType == typeof(byte))
+                if (baseType == typeof(byte) || baseType == typeof(int))
                 {
                     return "writer.Write((byte)" + variableName + ");";
                 }
