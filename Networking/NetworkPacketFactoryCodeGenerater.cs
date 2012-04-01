@@ -331,6 +331,7 @@ namespace MHGameWork.TheWizards.Networking
             if (variableType.IsArray)
             {
                 var ret = "";
+                ret += 
                 ret += "writer.Write(" + variableName + ".Length);\n";
                 ret += "for (int iArray = 0; iArray < " + variableName + ".Length; iArray++) \n";
                 ret += "{\n";

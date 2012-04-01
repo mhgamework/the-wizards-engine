@@ -8,7 +8,7 @@ using MHGameWork.TheWizards.Networking.Client;
 namespace MHGameWork.TheWizards.Networking.Server
 {
     /// <summary>
-    /// 
+    /// This class implements the IServerPacketTransporter interface, using client packet transporters to send and receive from multiple endpoints
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class ServerPacketTransporterNetworked<T> : IServerPacketTransporterNetworked, IServerPacketTransporter<T> where T : INetworkPacket

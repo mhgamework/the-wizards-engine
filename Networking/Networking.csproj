@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyBuilder.cs" />
+    <Compile Include="Client\BasicPacketTransporter.cs" />
     <Compile Include="Client\ClientPacketManagerNetworked.cs" />
     <Compile Include="Client\ClientPacketRequesterNetworked.cs" />
     <Compile Include="Client\ClientPacketTransporterNetworked.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Client\IClientPacketTransporterNetworked.cs" />
     <Compile Include="CodeGeneraterReader.cs" />
     <Compile Include="CodeGeneraterWriter.cs" />
+    <Compile Include="DummyClient.cs" />
     <Compile Include="Files\ClientFileTransporter.cs" />
     <Compile Include="Files\FilePartPacket.cs" />
     <Compile Include="Files\ReceivedFileInfo.cs" />

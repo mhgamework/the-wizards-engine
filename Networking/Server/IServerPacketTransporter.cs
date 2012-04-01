@@ -6,6 +6,10 @@ using MHGameWork.TheWizards.Networking.Client;
 
 namespace MHGameWork.TheWizards.Networking.Server
 {
+    /// <summary>
+    /// This interface allows packetcommunication from a single endpoint to multiple clients.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IServerPacketTransporter<T> where T : INetworkPacket
     {
 

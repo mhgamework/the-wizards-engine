@@ -11,23 +11,15 @@ namespace MHGameWork.TheWizards.Networking.Client
     {
         public class ClientPacketTransporterNetworked<T> : IClientPacketTransporterNetworked, IClientPacketTransporter<T> where T : INetworkPacket
         {
-            private PacketFlags flags;
-            private int networkID;
             private INetworkPacketFactory<T> factory;
-            private int waitingReceiversCount;
 
-            private Queue<T> newPacketsQueue;
+
+            private BasicPacketTransporter<T> internalTransporter;
 
             /// <summary>
             /// Internal use!
             /// </summary>
-            public int WaitingReceiversCount
-            {
-                [DebuggerStepThrough]
-                get { return waitingReceiversCount; }
-                [DebuggerStepThrough]
-                set { waitingReceiversCount = value; }
-            }
+            public int WaitingReceiversCount { get; set; }
 
             private string uniqueName;
             public string UniqueName
@@ -35,15 +27,9 @@ namespace MHGameWork.TheWizards.Networking.Client
                 get { return uniqueName; }
             }
 
-            public PacketFlags Flags
-            {
-                get { return flags; }
-            }
+            public PacketFlags Flags { get; private set; }
 
-            public int NetworkID
-            {
-                get { return networkID; }
-            }
+            public int NetworkID { get; private set; }
 
             public INetworkPacketFactory<T> Factory
             {
@@ -53,7 +39,7 @@ namespace MHGameWork.TheWizards.Networking.Client
 
             public void SetNetworkID(int id)
             {
-                networkID = id;
+                NetworkID = id;
             }
 
 
@@ -61,43 +47,30 @@ namespace MHGameWork.TheWizards.Networking.Client
 
             public ClientPacketTransporterNetworked(PacketFlags flags, int networkId, INetworkPacketFactory<T> factory, ClientPacketManagerNetworked manager, string _uniqueName)
             {
-                this.flags = flags;
-                networkID = networkId;
+                this.Flags = flags;
+                NetworkID = networkId;
                 this.factory = factory;
                 this.manager = manager;
                 this.uniqueName = _uniqueName;
-                newPacketsQueue = new Queue<T>();
+                internalTransporter = new BasicPacketTransporter<T>(p => manager.SendPacket(this, p));
             }
 
             #region IClientPacketTransporter<T> Members
 
             public void Send(T packet)
             {
-                manager.SendPacket(this, packet);
+                internalTransporter.Send(packet);
             }
 
-            private int waitingReceivers = 0;
 
             public int WaitingReceivers
             {
-                get { lock (newPacketsQueue) return waitingReceivers; }
+                get { return internalTransporter.WaitingReceivers; }
             }
 
             public T Receive()
             {
-                lock (newPacketsQueue)
-                {
-                    while (newPacketsQueue.Count == 0)
-                    {
-                        waitingReceivers++;
-                        Monitor.Wait(newPacketsQueue);
-                        waitingReceivers--;
-                    }
-
-                    return newPacketsQueue.Dequeue();
-                }
-
-
+                return internalTransporter.Receive();
             }
 
             /// <summary>
@@ -105,13 +78,7 @@ namespace MHGameWork.TheWizards.Networking.Client
             /// </summary>
             public Boolean PacketAvailable
             {
-                get
-                {
-                    lock (newPacketsQueue)
-                    {
-                        return newPacketsQueue.Count - waitingReceivers > 0;
-                    }
-                }
+                get { return internalTransporter.PacketAvailable; }
             }
 
 
@@ -123,17 +90,7 @@ namespace MHGameWork.TheWizards.Networking.Client
             {
                 T packet = factory.FromStream(br);
 
-                lock (newPacketsQueue)
-                {
-                    // Performance hit here: not type safe?
-                    newPacketsQueue.Enqueue(packet);
-
-                    if (newPacketsQueue.Count > 1000)
-                        throw new Exception("Packet buffer overflow: To much packets in the newPacketsQueue");
-
-
-                    Monitor.Pulse(newPacketsQueue);
-                }
+                internalTransporter.QueueReceivedPacket(packet);
             }
 
             #endregion
