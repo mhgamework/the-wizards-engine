@@ -49,5 +49,17 @@ namespace MHGameWork.TheWizards.Tests
 
             server.Stop();
         }
+
+        [Test]
+        public void RunServerClient()
+        {
+            var server = new TheWizardsServerCore();
+            server.Start();
+
+            var client = new TheWizardsClient();
+            client.AttachServerCore(server);
+
+            client.Run();
+        }
     }
 }

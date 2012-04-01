@@ -33,6 +33,7 @@ namespace MHGameWork.TheWizards.Main
         private ClientPacketManagerNetworked packetManager;
         private ModelContainer.ModelContainer container;
         private List<ISimulator> simulators = new List<ISimulator>();
+        private TheWizardsServerCore serverCore;
 
         public TheWizardsClient()
         {
@@ -40,7 +41,14 @@ namespace MHGameWork.TheWizards.Main
 
         }
 
-
+        /// <summary>
+        /// This attaches a server to this client. The server will be simulated 'in clock' with the client
+        /// </summary>
+        /// <param name="servercore"></param>
+        public void AttachServerCore(TheWizardsServerCore serverCore)
+        {
+            this.serverCore = serverCore;
+        }
 
 
         private void setScriptLayerScope()
@@ -150,6 +158,10 @@ namespace MHGameWork.TheWizards.Main
             //physicsDebugRenderer.Update();
 
 
+            if (serverCore != null)
+            {
+                serverCore.Tick(game.Elapsed);
+            }
         }
 
 

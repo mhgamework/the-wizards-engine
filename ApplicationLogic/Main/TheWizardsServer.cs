@@ -34,8 +34,7 @@ using PlayerController = MHGameWork.TheWizards.GamePlay.PlayerController;
 namespace MHGameWork.TheWizards.Main
 {
     /// <summary>
-    /// This is the main class, the starting point of the server, and delegates all functionality to the functionality classes, but decides which functionalities are used and when they are used.
-    /// This class will call other Application Logic classes that implemented some more complicated but specific functionality.
+    /// This is the main class, the starting point of the server. It starts and runs the server using a DX11Game event loop.
     /// </summary>
     public class TheWizardsServer
     {
