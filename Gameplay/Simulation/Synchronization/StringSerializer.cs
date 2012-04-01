@@ -43,7 +43,10 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
             if (!deserializers.ContainsKey(type))
             {
                 Console.WriteLine("StringSerializer: no deserializer for type {0}", type);
-                return "UNKNOWN";
+                if (type.IsValueType)
+                    return Activator.CreateInstance(type);
+                else
+                    return null;
             }
 
             return deserializers[type](value);

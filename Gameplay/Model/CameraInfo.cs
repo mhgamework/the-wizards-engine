@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using DirectX11.Graphics;
 using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.ModelContainer.Synchronization;
 
 namespace MHGameWork.TheWizards.Model
 {
+    [NoSync]
     public class CameraInfo : BaseModelObject
     {
         public CameraInfo()

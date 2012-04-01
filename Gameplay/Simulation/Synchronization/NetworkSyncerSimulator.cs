@@ -4,6 +4,7 @@ using System.Linq;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Collections;
 using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.ModelContainer.Synchronization;
 using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.Reflection;
 
@@ -48,6 +49,8 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
                 var change = array[i];
 
                 if (change.ChangeType == ModelContainer.ModelContainer.WorldChangeType.None) continue;
+                if (Attribute.GetCustomAttribute(change.ModelObject.GetType(), typeof(NoSyncAttribute)) != null)
+                    continue; // don't sync this type of object
 
                 // Clear buffers
                 keys.Clear();
@@ -90,6 +93,11 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
                     case ModelContainer.ModelContainer.WorldChangeType.Added:
                         target = (IModelObject)Activator.CreateInstance(resolveTypeName(p.TypeFullName));
                         setObjectGuid(target, p.Guid);
+                        if (target.Container == null)
+                        {
+                            throw new InvalidOperationException("Modelobject did not add itself to a container!! => " +
+                                                                p.TypeFullName);
+                        }
                         //TW.Model.AddObject(target);   This is called automatically by the modelobject's constructor
                         break;
                     case ModelContainer.ModelContainer.WorldChangeType.Modified:

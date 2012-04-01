@@ -99,10 +99,8 @@ namespace MHGameWork.TheWizards.Main
 
             var ent = new TheWizards.Model.Entity();
             ent.Mesh = GetBarrelMesh(new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory())); ;
-            TW.Model.AddObject(ent);
 
             var player = new PlayerData();
-            TW.Model.AddObject(player);
             player.Entity = ent;
 
             var gen = new NetworkPacketFactoryCodeGenerater(TWDir.GenerateRandomCacheFile("", "dll"));

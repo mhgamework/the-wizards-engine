@@ -14,6 +14,7 @@ namespace MHGameWork.TheWizards.Model
         public Entity()
         {
             WorldMatrix = Matrix.Identity;
+            TW.Model.AddObject(this);
         }
 
         

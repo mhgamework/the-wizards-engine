@@ -107,6 +107,7 @@
     <Compile Include="Gameplay\SimplePlayer.cs" />
     <Compile Include="Gameplay\Fortress\SpawnCrystal.cs" />
     <Compile Include="ModelContainer\BaseModelObject.cs" />
+    <Compile Include="ModelContainer\Synchronization\NoSyncAttribute.cs" />
     <Compile Include="Model\CameraInfo.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="ModelContainer\IModelObject.cs" />

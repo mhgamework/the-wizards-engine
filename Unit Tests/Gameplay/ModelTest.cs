@@ -78,10 +78,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             var ent = new TheWizards.Model.Entity();
             ent.Mesh = mesh;
-            TW.Model.AddObject(ent);
 
             var player = new PlayerData();
-            TW.Model.AddObject(player);
             player.Entity = ent;
 
 
