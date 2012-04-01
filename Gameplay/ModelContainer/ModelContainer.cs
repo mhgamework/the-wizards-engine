@@ -37,6 +37,10 @@ namespace MHGameWork.TheWizards.ModelContainer
             dirtyEntities.GetArray(out array, out length);
         }
 
+        /// <summary>
+        /// Registers a modelobject for change logging. This method is supposed to be called by the ModelObject's themselves
+        /// </summary>
+        /// <param name="obj"></param>
         public void AddObject(IModelObject obj)
         {
             if (Objects.Contains(obj)) throw new InvalidOperationException("Object already added");
@@ -124,6 +128,11 @@ namespace MHGameWork.TheWizards.ModelContainer
         }
 
 
+        /// <summary>
+        /// Returns or creates a unique instance of the modelobject of given type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T GetSingleton<T>() where T : class, IModelObject, new()
         {
             foreach (var obj in Objects)
@@ -133,7 +142,6 @@ namespace MHGameWork.TheWizards.ModelContainer
             }
 
             var ret = new T();
-            AddObject(ret);
             return ret;
         }
 

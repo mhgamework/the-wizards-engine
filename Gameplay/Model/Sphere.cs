@@ -15,35 +15,15 @@ namespace MHGameWork.TheWizards.Model
 {
     public class Sphere : BaseModelObject
     {
+        private Entity ent;
+        private MeshDynamicPhysicsElement dEl;
 
         public Sphere()
         {
-            var ent = new Entity();
-
-            ent.Mesh = createSphereMesh();
+            ent = new Entity();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            ent.Mesh = CreateSphereMesh();
 
 
 
@@ -61,15 +41,15 @@ namespace MHGameWork.TheWizards.Model
 
             var builder = new MeshPhysicsActorBuilder(new MeshPhysicsPool());
 
-            var dEl = new MeshDynamicPhysicsElement(ent.Mesh, Matrix.Identity.xna(), builder);
+            dEl = new MeshDynamicPhysicsElement(ent.Mesh, Matrix.Identity.xna(), builder);
 
             dEl.InitDynamic(TW.Scene);
             dEl.Actor.LinearVelocity = game.SpectaterCamera.CameraDirection * 10;
 
 
             //TODO: use the MeshP
-            var factory = new MeshPhysicsElementFactory(engine, root);
-            game.AddXNAObject(factory);
+            //var factory = new MeshPhysicsElementFactory(engine, root);
+            //game.AddXNAObject(factory);
 
 
       
@@ -94,7 +74,7 @@ namespace MHGameWork.TheWizards.Model
 
         }
 
-        private static RAMMesh createSphereMesh()
+        public static RAMMesh CreateSphereMesh()
         {
             MeshPartGeometryData.Source source;
 
@@ -112,7 +92,23 @@ namespace MHGameWork.TheWizards.Model
 
 
             part.GetGeometryData().SetSourcesFromTangentVertices(indices, vertices);
+
+
+            mesh.GetCoreData().Parts[0].MeshMaterial = new MeshCoreData.Material
+                                                           {
+                                                                DiffuseColor = new Color4(1,0,1,0).xna(),
+                                                                DiffuseMap = null
+                                                           };
+
             return mesh;
+        }
+
+        /// <summary>
+        /// Applies simulated changes from PhysX to this sphere
+        /// </summary>
+        public void ProcessPhysXChanges()
+        {
+            ent.WorldMatrix = dEl.Actor.GlobalOrientation.dx();
         }
     }
 }
