@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Dotway.WPF.Controls;
 using Dotway.WPF.Controls.Utilities;
+using MHGameWork.TheWizards.Reflection;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MHGameWork.TheWizards.Forms

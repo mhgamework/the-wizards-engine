@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MHGameWork.TheWizards.Forms
+namespace MHGameWork.TheWizards.Reflection
 {
     public interface IAttribute
     {

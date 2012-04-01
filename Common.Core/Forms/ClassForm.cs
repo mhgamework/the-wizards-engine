@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using MHGameWork.TheWizards.Reflection;
 using MHGameWork.TheWizards.Wpf;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -48,7 +48,7 @@ namespace MHGameWork.TheWizards.Forms
             col.Width = GridLength.Auto;
             mainPanel.ColumnDefinitions.Add(col);
             mainPanel.ColumnDefinitions.Add(new ColumnDefinition());
-            var attributes = getAllAttributes(attribute.Type);
+            var attributes = ReflectionHelper. GetAllAttributes(attribute.Type);
 
             mainPanel.VerticalAlignment = VerticalAlignment.Top;
 
@@ -83,23 +83,7 @@ namespace MHGameWork.TheWizards.Forms
             return gridElement;
         }
 
-        private List<IAttribute> getAllAttributes(Type type)
-        {
-            var ret = new List<IAttribute>();
-            foreach (var fi in type.GetFields())
-            {
-                if (!fi.IsPublic) continue;
-
-                ret.Add(new FieldAttribute(fi));
-            }
-            foreach (var fi in type.GetProperties())
-            {
-                if (!fi.CanRead || !fi.CanWrite || !fi.GetGetMethod().IsPublic || !fi.GetSetMethod().IsPublic) continue;
-
-                ret.Add(new PropertyAttribute(fi));
-            }
-            return ret;
-        }
+      
 
         private IFormElement createFormElement(IAttribute att)
         {
@@ -196,52 +180,6 @@ namespace MHGameWork.TheWizards.Forms
 
         }
 
-
-        private class FieldAttribute : IAttribute
-        {
-            public Type Type { get { return fi.FieldType; } }
-            public string Name { get { return fi.Name; } }
-            private readonly FieldInfo fi;
-
-            public FieldAttribute(FieldInfo fi)
-            {
-                this.fi = fi;
-            }
-
-
-            public object GetData(object obj)
-            {
-                return fi.GetValue(obj);
-            }
-
-            public void SetData(object obj, object value)
-            {
-                fi.SetValue(obj, value);
-            }
-        }
-        private class PropertyAttribute : IAttribute
-        {
-            private readonly PropertyInfo fi;
-            public Type Type { get { return fi.PropertyType; } }
-            public string Name { get { return fi.Name; } }
-
-            public PropertyAttribute(PropertyInfo fi)
-            {
-                this.fi = fi;
-            }
-
-
-            public object GetData(object obj)
-            {
-                return fi.GetGetMethod().Invoke(obj, null);
-            }
-
-            public void SetData(object obj, object value)
-            {
-                fi.GetSetMethod().Invoke(obj, new[] { value });
-            }
-
-        }
         /// <summary>
         /// This simply forms a way to access the DataContext
         /// </summary>
