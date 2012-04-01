@@ -1,5 +1,7 @@
-﻿using MHGameWork.TheWizards.Entity;
+﻿using System.IO;
+using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Model;
+using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Simulation;
 using NUnit.Framework;
@@ -111,5 +113,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             game.Run();
         }
+
+
     }
 }

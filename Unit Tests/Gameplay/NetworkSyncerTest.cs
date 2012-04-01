@@ -147,6 +147,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             public int Number { get; set; }
             public string Text { get; set; }
+            public string EmptyProperty { get; set; }
 
             public bool FieldsEqual(object o)
             {

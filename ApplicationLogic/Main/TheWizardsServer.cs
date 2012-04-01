@@ -1,11 +1,14 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using DirectX11;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Model;
+using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Packets;
 using MHGameWork.TheWizards.Networking.Server;
@@ -14,6 +17,8 @@ using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scripting;
+using MHGameWork.TheWizards.Simulation;
+using MHGameWork.TheWizards.Simulation.Synchronization;
 using MHGameWork.TheWizards.World;
 using MHGameWork.TheWizards.World.Static;
 using MHGameWork.TheWizards.XML;
@@ -34,125 +39,107 @@ namespace MHGameWork.TheWizards.Main
     /// </summary>
     public class TheWizardsServer
     {
-        public PhysicsEngine PhysicsEngine
-        {
-            get { return physicsEngine; }
-        }
+        public PhysicsEngine PhysicsEngine { get; private set; }
 
-        private Physics.PhysicsEngine physicsEngine;
-        private Physics.PhysicsDebugRenderer physicsDebugRenderer;
+        //private Physics.PhysicsDebugRenderer physicsDebugRenderer;
 
-        private XNAGame xnaGame;
-
-        public XNAGame XnaGame
-        {
-            get { return xnaGame; }
-        }
-
+        public DX11Game Game { get; private set; }
 
 
         public TheWizardsServer()
         {
         }
 
-        private bool startInExisting;
 
         private bool firstUpdate = true;
         private ServerPacketManagerNetworked packetManager;
-        private ServerSyncer serverSyncer;
-        private ServerPacketTransporterNetworked<DataPacket> playerControllerTransporter;
-        private List<PlayerController> controllers;
-        private List<PlayerInputServer> inputServers;
-        private IServerPacketTransporter<PlayerInputPacket> inputServerTransporter;
-        private ServerTreeSyncer serverTreeSyncer;
-        private Seeder seeder;
-        private TreeServer treeServer;
-        private ServerStaticWorldObjectSyncer serverStaticWorldObjectSyncer;
         private ServerAssetSyncer assetSyncer;
-        private ServerRenderingAssetFactory renderingAssetFactory;
-        private StaticEntityContainer staticEntityContainer;
+
+        private ModelContainer.ModelContainer container;
 
 
         public void Start()
         {
-            xnaGame = new XNAGame();
-            xnaGame.InputDisabled = true;
-            xnaGame.Window.Title = "The Wizards Server - MHGameWork All Rights Reserved";
+            Game = new DX11Game();
+            Game.InputDisabled = true;
+            //xnaGame.Window.Title = "The Wizards Server - MHGameWork All Rights Reserved";
 
-            xnaGame.InitializeEvent += new EventHandler(xnaGame_InitializeEvent);
-            xnaGame.UpdateEvent += new XNAGame.XNAGameLoopEventHandler(xnaGame_UpdateEvent);
-            xnaGame.DrawEvent += new XNAGame.XNAGameLoopEventHandler(xnaGame_DrawEvent);
-            xnaGame.Exiting += new EventHandler(xnaGame_Exiting);
+            Game.GameLoopEvent += new Action<DX11Game>(xnaGame_GameLoopEvent);
+            //xnaGame.Exiting += new EventHandler(xnaGame_Exiting);
 
-            physicsEngine = new Physics.PhysicsEngine();
-            physicsEngine.Initialize();
-            treeServer = new TreeServer();
+            PhysicsEngine = new Physics.PhysicsEngine();
+            PhysicsEngine.Initialize();
+
+
+
+
 
 
             packetManager = new ServerPacketManagerNetworked(10045, 10046);
 
-            setupPlayerSycing();
-            treeServer.SetUp(packetManager);
+
+            // Assets
 
             DirectoryInfo assetsDirectory = getAssetsDirectory();
             assetSyncer = new ServerAssetSyncer(packetManager, assetsDirectory);
             assetSyncer.LoadAssetInformation();
             assetSyncer.Start();
-            renderingAssetFactory = new ServerRenderingAssetFactory(assetSyncer);
 
-            serverStaticWorldObjectSyncer = new ServerStaticWorldObjectSyncer(packetManager);
 
-            staticEntityContainer = loadStaticEntityContainerFromDisk();
+            // Simulation
 
-            staticEntityContainer.InitAll(serverStaticWorldObjectSyncer);
+            container = new ModelContainer.ModelContainer();
 
+            var gen = new NetworkPacketFactoryCodeGenerater(TWDir.GenerateRandomCacheFile("", "dll"));
+
+            simulators.Add(new NetworkSyncerSimulator(packetManager.CreatePacketTransporter("NetworkSyncer", gen.GetFactory<ChangePacket>(), PacketFlags.TCP)));
+
+            gen.BuildFactoriesAssembly();
+
+
+
+
+            // Start the server
 
             packetManager.Start();
+            Game.InitDirectX();
+
+            mainLoop();
+
+            saveAll();
+            Game.Exit(); //TODO: this correct?
+            PhysicsEngine.Dispose();
 
 
-            createInitialData();
+        }
 
-            if (!startInExisting)
+        void xnaGame_GameLoopEvent(DX11Game obj)
+        {
+            setScriptLayerScope();
+
+            if (firstUpdate)
             {
-                mainLoop();
-
-
-                xnaGame.Dispose();
-                physicsEngine.Dispose();
-
+                IsReady = true;
+                firstUpdate = false;
             }
 
-        }
 
-        private StaticEntityContainer loadStaticEntityContainerFromDisk()
-        {
-            var container = new StaticEntityContainer();
-            if (File.Exists(getStaticEntityContainerFilePath()))
-                using (var fs = File.Open(getStaticEntityContainerFilePath(), FileMode.Open, FileAccess.Read, FileShare.Delete))
-                {
-                    var s = new TWXmlSerializer<StaticEntityContainer>();
-                    s.AddCustomSerializer(AssetSerializer.CreateDeserializer(renderingAssetFactory));
-                    s.Deserialize(container, fs);
-                }
-
-            return container;
-        }
-
-        private void saveStaticEntityContainerFromDisk(StaticEntityContainer container)
-        {
-            using (var fs = File.Open(getStaticEntityContainerFilePath(), FileMode.Create, FileAccess.Write, FileShare.Delete))
+            foreach (var sim in simulators)
             {
-                var s = new TWXmlSerializer<StaticEntityContainer>();
-                s.AddCustomSerializer(AssetSerializer.CreateSerializer());
-                s.Serialize(container, fs);
+                sim.Simulate();
             }
 
+            container.ClearDirty();
+
+            PhysicsEngine.Update(Game.Elapsed);
+
+
+
+
+
+
         }
 
-        private string getStaticEntityContainerFilePath()
-        {
-            return TWDir.GameData + "\\ServerStaticEntityContainer.xml";
-        }
 
         private DirectoryInfo getAssetsDirectory()
         {
@@ -161,163 +148,32 @@ namespace MHGameWork.TheWizards.Main
 
         public bool IsReady { get; private set; }
 
-        private void setupPlayerSycing()
-        {
-            serverSyncer = new ServerSyncer(packetManager);
-            playerControllerTransporter = packetManager.CreatePacketTransporter("PlayerControllerID",
-                                                                                new DataPacket.Factory(), PacketFlags.TCP);
-            inputServerTransporter = PlayerInputServer.CreateTransporter(packetManager);
-
-            controllers = new List<PlayerController>();
-
-            inputServers = new List<PlayerInputServer>();
-        }
-
         public void Stop()
         {
-            xnaGame.Exit();
+            Game.Exit();
         }
 
-        void xnaGame_Exiting(object sender, EventArgs e)
-        {
-            saveAll();
-        }
 
         private void saveAll()
         {
             assetSyncer.SaveAssetInformation();
-            saveStaticEntityContainerFromDisk(staticEntityContainer);
-        }
-
-        void xnaGame_InitializeEvent(object sender, EventArgs e)
-        {
-            xnaGame.GetWindowForm().Location = new System.Drawing.Point(0, 0);
-
-            physicsDebugRenderer = new MHGameWork.TheWizards.Physics.PhysicsDebugRenderer(xnaGame, physicsEngine.Scene);
-            physicsDebugRenderer.Initialize(xnaGame);
-
-            setScriptLayerScope();
-
-
-
-
-
-
         }
 
 
         private void setScriptLayerScope()
         {
-            ScriptLayer.Game = xnaGame;
-            ScriptLayer.ScriptRunner = new ScriptRunner(xnaGame);
-            ScriptLayer.Physics = physicsEngine;
-            ScriptLayer.Scene = physicsEngine.Scene;
+            TW.Game = Game;
+            TW.PhysX = PhysicsEngine;
+            TW.Scene = PhysicsEngine.Scene;
+            TW.Model = container;
         }
 
 
-        void xnaGame_DrawEvent()
-        {
-            physicsDebugRenderer.Render(xnaGame);
-        }
 
-
-        void xnaGame_UpdateEvent()
-        {
-            if (firstUpdate)
-            {
-                IsReady = true;
-                firstUpdate = false;
-            }
-
-
-
-            physicsEngine.Update(xnaGame.Elapsed);
-
-
-            updatePlayers();
-
-
-
-            treeServer.Update(xnaGame);
-
-
-            updateStaticWorldObjects();
-        }
-
-        private void updateStaticWorldObjects()
-        {
-            var game = xnaGame;
-
-            if (game.Keyboard.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.O))
-            {
-                var o = new StaticEntity();
-                o.Mesh = testMesh;
-                o.WorldMatrix = Matrix.CreateTranslation(game.SpectaterCamera.CameraPosition);
-                staticEntityContainer.Entities.Add(o);
-                o.Init(serverStaticWorldObjectSyncer);
-            }
-
-            serverStaticWorldObjectSyncer.Update(game.Elapsed);
-        }
-
-
-        private void updatePlayers()
-        {
-            var game = xnaGame;
-
-            if (packetManager.Clients.Count > inputServers.Count)
-            {
-                if (packetManager.Clients[inputServers.Count].IsReady)
-                    for (int i = inputServers.Count; i < packetManager.Clients.Count; i++)
-                    {
-                        var c = new PlayerController(new PlayerData());
-                        var iS =
-                            new PlayerInputServer(
-                                inputServerTransporter.GetTransporterForClient(packetManager.Clients[i]), c);
-                        throw new NotImplementedException();
-                        //c.Initialize(xnaGame);
-
-                        var a = serverSyncer.CreateActor(c);
-
-                        //dataPacketTransporter.GetTransporterForClient(server.Clients[i]).Send(new DataPacket() { Data = BitConverter.GetBytes(a.ID) });
-                        playerControllerTransporter.SendAll(new DataPacket() { Data = BitConverter.GetBytes(a.ID) });
-
-                        for (int j = 0; j < i; j++)
-                        {
-                            //Cheat
-                            playerControllerTransporter.GetTransporterForClient(packetManager.Clients[i]).Send(new DataPacket() { Data = BitConverter.GetBytes((ushort)(j + 2)) });
-
-                        }
-
-                        controllers.Add(c);
-                        inputServers.Add(iS);
-
-                    }
-            }
-            for (int i = 0; i < controllers.Count; i++)
-            {
-                //controllers[i].Update(game);
-                inputServers[i].Update(game.Elapsed);
-            }
-            serverSyncer.Update(game.Elapsed);
-        }
 
         private void mainLoop()
         {
-            xnaGame.Run();
-        }
-
-
-        private void createInitialData()
-        {
-            if (assetSyncer.GetAsset(TestMeshGuid) != null)
-            {
-                testMesh = renderingAssetFactory.GetMesh(TestMeshGuid);
-            }
-            else
-            {
-                testMesh = CreateTestServerMesh(assetSyncer);
-            }
+            Game.Run();
         }
 
 
@@ -337,6 +193,7 @@ namespace MHGameWork.TheWizards.Main
         private static readonly Guid TestMeshGuid = new Guid("569875FF-BCE3-434C-9725-FDBF090A6CC9");
 
         private IMesh testMesh;
+        private List<ISimulator> simulators = new List<ISimulator>();
 
         private static ServerMeshAsset CreateTestServerMesh(ServerAssetSyncer serverSyncer)
         {

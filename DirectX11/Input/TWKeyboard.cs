@@ -10,7 +10,8 @@ namespace DirectX11.Input
 
         public TWKeyboard()
         {
-
+            prevKeyboardState = new KeyboardState();
+            keyboardState = new KeyboardState();
         }
 
 

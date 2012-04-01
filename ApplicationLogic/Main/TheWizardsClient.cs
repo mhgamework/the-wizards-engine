@@ -1,23 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
-using MHGameWork.TheWizards.Assets;
+using DirectX11;
 using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.Gameplay;
-using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Model;
+using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
-using MHGameWork.TheWizards.Networking.Packets;
+using MHGameWork.TheWizards.Networking.Server;
+using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;
-using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Scripting;
-using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.World;
-using MHGameWork.TheWizards.World.Static;
-using Microsoft.Xna.Framework.Graphics;
-using PlayerController = MHGameWork.TheWizards.GamePlay.PlayerController;
+using MHGameWork.TheWizards.Simulation;
+using MHGameWork.TheWizards.Simulation.Synchronization;
 
 namespace MHGameWork.TheWizards.Main
 {
@@ -27,275 +23,100 @@ namespace MHGameWork.TheWizards.Main
     public class TheWizardsClient
     {
 
-        private XNAGame xnaGame;
-        public XNAGame XNAGame { get { return xnaGame; } }
+        private DX11Game xnaGame;
+        public DX11Game XNAGame { get { return xnaGame; } }
 
 
         private PhysicsEngine physicsEngine;
-        private PhysicsDebugRenderer physicsDebugRenderer;
+        //private PhysicsDebugRenderer physicsDebugRenderer;
 
-        private bool needLogin;
-
-        float time = 0;
-
-        private volatile bool loginComplete;
         private ClientPacketManagerNetworked packetManager;
-        private ClientSyncer clientSyncer;
-        private IClientPacketTransporter<DataPacket> playerControllerTransporter;
-        private PlayerInputClient inputClient;
-        private PlayerThirdPersonCamera cam;
-        private List<PlayerController> controllerClients;
-        private TreeClient treeClient;
-        private ClientStaticWorldObjectSyncer clientStaticWorldObjectSyncer;
-        private ClientStaticWorldObjectSyncer staticWorldObjectSyncer;
-        private SimpleMeshRenderer renderer;
-
-        private object updateLock = new object();
+        private ModelContainer.ModelContainer container;
+        private List<ISimulator> simulators = new List<ISimulator>();
 
         public TheWizardsClient()
         {
             physicsEngine = new PhysicsEngine();
-            xnaGame = new XNAGame();
-            xnaGame.DrawFps = true;
+            xnaGame = new DX11Game();
 
             /*xnaGame.Graphics1.PreferredBackBufferWidth = 1440;
             xnaGame.Graphics1.PreferredBackBufferHeight = 900;
             xnaGame.Graphics1.ToggleFullScreen();*/
-
-            xnaGame.Window.Title = "The Wizards Client - MHGameWork All Rights Reserved";
-            treeClient = new TreeClient();
+            //xnaGame.Window.Title = "The Wizards Client - MHGameWork All Rights Reserved";
 
 
         }
 
 
-        void xnaGame_Exiting(object sender, EventArgs e)
-        {
-        }
 
-        void xnaGame_DrawEvent()
-        {
-            physicsDebugRenderer.Render(xnaGame);
-
-            xnaGame.GraphicsDevice.RenderState.CullMode = CullMode.None;
-            treeClient.Render();
-        }
-
-        void xnaGame_UpdateEvent()
-        {
-            // Test for doing synchronized calls to the main thread:
-            lock (this)
-            {
-                // Signal waiting threads that the main thread is locked
-                //Monitor.Pulse(this);
-
-                //Monitor.Wait(this); // Wait until other thread pulses ready
-            }
-
-
-
-            var game = xnaGame;
-
-
-            updatePlayers(game);
-
-
-            physicsEngine.Update(xnaGame);
-            physicsDebugRenderer.Update(xnaGame);
-
-            treeClient.Update();
-
-            if (clientStaticWorldObjectSyncer != null)
-                clientStaticWorldObjectSyncer.Update(game.Elapsed);
-            if (worldObjectFactory != null)
-                worldObjectFactory.Update();
-
-            lock (updateLock)
-            {
-                updateWaiting = true;
-
-                while (blockUpdateWaitingCount > 0)
-                {
-
-                    Monitor.Pulse(updateLock);
-                    Monitor.Wait(updateLock);
-
-                }
-
-                updateWaiting = false;
-            }
-
-        }
-
-
-        private AutoResetEvent test = new AutoResetEvent(false);
-        private ManualResetEvent blockEvent = new ManualResetEvent(false);
-
-        private int blockUpdateWaitingCount;
-        private bool updateWaiting;
-        private SimpleAssetStaticWorldObjectFactory worldObjectFactory;
-
-        private void blockUpdate()
-        {
-            lock (updateLock)
-            {
-                blockUpdateWaitingCount++;
-                while (!updateWaiting)
-                    Monitor.Wait(updateLock);
-            }
-        }
-        private void unblockUpdate()
-        {
-            lock (updateLock)
-            {
-                if (blockUpdateWaitingCount < 0) throw new InvalidOperationException();
-                blockUpdateWaitingCount--;
-                Monitor.Pulse(updateLock);
-            }
-
-        }
-
-        private void updatePlayers(XNAGame game)
-        {
-            if (playerControllerTransporter == null) return;
-            if (clientSyncer == null) return;
-
-            while (playerControllerTransporter.PacketAvailable)
-            {
-                var p = playerControllerTransporter.Receive();
-                var c = new GamePlay.PlayerController(new PlayerData());
-                throw new NotImplementedException();
-                //c.Initialize(game);
-                //game.AddXNAObject(c);
-
-                var clientA = clientSyncer.CreateActor(c);
-                clientA.ID = BitConverter.ToUInt16(p.Data, 0);
-
-
-                if (cam == null)
-                {
-                    cam = new PlayerThirdPersonCamera(game, c.Player);
-                    cam.Enabled = true;
-                    game.AddXNAObject(cam);
-                    game.SetCamera(cam);
-                }
-
-            }
-
-            for (int i = 0; i < controllerClients.Count; i++)
-            {
-                //controllerClients[i].Update(game);
-            }
-            if (clientSyncer != null)
-                clientSyncer.Update(game.Elapsed);
-            if (staticWorldObjectSyncer != null)
-                staticWorldObjectSyncer.Update(xnaGame.Elapsed);
-
-
-
-            if (inputClient != null)
-            {
-                inputClient.Update(game);
-                if (cam != null)
-                    inputClient.HorizontalLookAngle = cam.LookAngleHorizontal;
-            }
-        }
-
-        void xnaGame_InitializeEvent(object sender, EventArgs e)
-        {
-            xnaGame.GetWindowForm().Location = new System.Drawing.Point(800, 0);
-            physicsEngine = new PhysicsEngine();
-
-            physicsEngine.Initialize(xnaGame);
-            physicsDebugRenderer = new PhysicsDebugRenderer(xnaGame, physicsEngine.Scene);
-            physicsDebugRenderer.Initialize(xnaGame);
-
-
-
-            treeClient.Initialize(xnaGame);
-
-
-            var vertexDeclarationPool = new VertexDeclarationPool();
-            vertexDeclarationPool.SetVertexElements<TangentVertex>(TangentVertex.VertexElements);
-
-            var texturePool = new TexturePool();
-            var meshPartPool = new MeshPartPool();
-
-            renderer = new SimpleMeshRenderer(texturePool, meshPartPool, vertexDeclarationPool);
-
-
-
-            xnaGame.AddXNAObject(renderer);
-            xnaGame.AddXNAObject(vertexDeclarationPool);
-            xnaGame.AddXNAObject(texturePool);
-            xnaGame.AddXNAObject(meshPartPool);
-
-
-
-
-            setScriptLayerScope();
-        }
 
         private void setScriptLayerScope()
         {
-            ScriptLayer.Game = xnaGame;
-            ScriptLayer.ScriptRunner = new ScriptRunner(xnaGame);
-            ScriptLayer.Physics = physicsEngine;
-            ScriptLayer.Scene = physicsEngine.Scene;
+            TW.Game = xnaGame;
+            TW.PhysX = physicsEngine;
+            TW.Scene = physicsEngine.Scene;
+            TW.Model = container;
         }
 
         private void setUp()
         {
-            xnaGame.InitializeEvent += xnaGame_InitializeEvent;
-            xnaGame.UpdateEvent += xnaGame_UpdateEvent;
-            xnaGame.DrawEvent += xnaGame_DrawEvent;
-            xnaGame.Exiting += xnaGame_Exiting;
+            xnaGame.GameLoopEvent += xnaGame_GameLoopEvent;
+
+            //((SpectaterCamera)xnaGame.Camera).FarClip = 1000;
 
 
-            ((SpectaterCamera)xnaGame.Camera).FarClip = 1000;
-
-
-            XNAGame.SpectaterCamera.NearClip = 0.1f;
-            XNAGame.SpectaterCamera.FarClip = 1000f;
+            //XNAGame.SpectaterCamera.NearClip = 0.1f;
+            //XNAGame.SpectaterCamera.FarClip = 1000f;
 
 
 
 
+            xnaGame.InitDirectX();
+            //xnaGame.GetWindowForm().Location = new System.Drawing.Point(800, 0);
+            physicsEngine = new PhysicsEngine();
 
-            controllerClients = new List<PlayerController>();
-
-
-            var t = new Thread(startJob);
-            t.Name = "ClientStartJob";
-            t.Start();
-
-
-
-        }
+            physicsEngine.Initialize();
+            //physicsDebugRenderer = new PhysicsDebugRenderer(xnaGame, physicsEngine.Scene);
+            //physicsDebugRenderer.Initialize(xnaGame);
 
 
-        private void startJob()
-        {
-            //var conn = ConnectTCP(10045, "127.0.0.1");
-            var conn = ConnectTCP(10045, "5.23.165.201");
+            var conn = ConnectTCP(10045, "127.0.0.1");
+            //var conn = ConnectTCP(10045, "5.23.165.201");
             conn.Receiving = true;
             packetManager = new ClientPacketManagerNetworked(conn);
 
 
 
+            container = new ModelContainer.ModelContainer();
+            setScriptLayerScope();
+
+            var ent = new TheWizards.Model.Entity();
+            ent.Mesh = GetBarrelMesh(new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory())); ;
+            TW.Model.AddObject(ent);
+
+            var player = new PlayerData();
+            TW.Model.AddObject(player);
+            player.Entity = ent;
+
+            var gen = new NetworkPacketFactoryCodeGenerater(TWDir.GenerateRandomCacheFile("", "dll"));
+            var transporter = new ServerPacketTransporterNetworked<ChangePacket>();
+            transporter.AddClientTransporter(new DummyClient("Server"),
+                                             packetManager.CreatePacketTransporter("NetworkSyncer",
+                                                                                   gen.GetFactory<ChangePacket>(),
+                                                                                   PacketFlags.TCP));
+            gen.BuildFactoriesAssembly();
 
 
-            treeClient.StartJob(packetManager);
+            this
+                .AddSimulator(new LocalPlayerSimulator(player))
+                .AddSimulator(new NetworkSyncerSimulator(transporter))
+                .AddSimulator(new ThirdPersonCameraSimulator())
+                .AddSimulator(new SimpleWorldRenderer());
 
 
-            while (renderer == null)
-                Thread.Sleep(100);
+            TW.Model.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
+            TW.Model.GetSingleton<CameraInfo>().FirstPersonCameraTarget = player.Entity;
 
-
-            var syncer = new ClientAssetSyncer(packetManager, TWDir.GameData.CreateSubdirectory("ClientAssets"));
-            syncer.Start();
-            worldObjectFactory = new SimpleAssetStaticWorldObjectFactory(renderer, syncer);
-            staticWorldObjectSyncer = new ClientStaticWorldObjectSyncer(packetManager, worldObjectFactory);
 
 
             packetManager.WaitForUDPConnected();
@@ -303,54 +124,36 @@ namespace MHGameWork.TheWizards.Main
 
 
 
-            treeClient.RequestInitialState();
-            startJobPlayerPhysics();
-
-
 
         }
 
-        private void startJobPlayerPhysics()
+        private TheWizardsClient AddSimulator(ISimulator sim)
         {
-            playerControllerTransporter = packetManager.CreatePacketTransporter("PlayerControllerID",
-                                                                                new Networking.Packets.DataPacket.Factory(), PacketFlags.TCP);
-            clientSyncer = new ClientSyncer(packetManager);
-            inputClient = new PlayerInputClient(packetManager);
+            simulators.Add(sim);
+            return this;
         }
 
-
-        private void establishTCP(out TCPConnection conn1, out  TCPConnection conn2)
+        void xnaGame_GameLoopEvent(DX11Game obj)
         {
-            TCPConnectionListener listener = new TCPConnectionListener(10010);
-            conn2 = null;
 
-            TCPConnection connected = null;
+            var game = xnaGame;
+            setScriptLayerScope();
 
-            AutoResetEvent ev = new AutoResetEvent(false);
 
-            listener.ClientConnected += delegate(object sender, TCPConnectionListener.ClientConnectedEventArgs e)
+            foreach (var sim in simulators)
             {
-                connected = new TCPConnection(e.CL);
-                ev.Set();
-            };
+                sim.Simulate();
+            }
+
+            container.ClearDirty();
+
+            physicsEngine.Update(xnaGame.Elapsed);
+            //physicsDebugRenderer.Update();
 
 
-            listener.Listening = true;
-
-            Thread.Sleep(500);
-
-            conn1 = ConnectTCP(10010, "127.0.0.1");
-
-
-            ev.WaitOne();
-
-            conn2 = connected;
-
-
-
-            listener.Listening = false;
-            listener.Dispose();
         }
+
+
 
         public static TCPConnection ConnectTCP(int port, string ip)
         {
@@ -378,6 +181,26 @@ namespace MHGameWork.TheWizards.Main
             xnaGame.Exit();
             xnaGame = null;
         }
+
+
+        public static RAMMesh GetBarrelMesh(OBJToRAMMeshConverter c)
+        {
+            var fsMat = new FileStream(BarrelMtl, FileMode.Open);
+
+            var importer = new ObjImporter();
+            importer.AddMaterialFileStream("Barrel01.mtl", fsMat);
+
+            importer.ImportObjFile(BarrelObj);
+
+            var meshes = c.CreateMeshesFromObjects(importer);
+
+            fsMat.Close();
+
+            return meshes[0];
+        }
+
+        public static string BarrelObj { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\Barrel01.obj"; } }
+        public static string BarrelMtl { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\Barrel01.mtl"; } }
 
     }
 }

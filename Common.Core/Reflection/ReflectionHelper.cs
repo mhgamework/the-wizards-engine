@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.Reflection
             }
             foreach (var fi in type.GetProperties())
             {
-                if (!fi.CanRead || !fi.CanWrite || !fi.GetGetMethod().IsPublic || !fi.GetSetMethod().IsPublic) continue;
+                if (!fi.CanRead || !fi.CanWrite || fi.GetGetMethod() == null || fi.GetSetMethod() == null || !fi.GetGetMethod().IsPublic || !fi.GetSetMethod().IsPublic) continue;
 
                 ret.Add(new PropertyAttribute(fi));
             }

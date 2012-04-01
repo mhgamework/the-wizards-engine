@@ -17,6 +17,7 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
     /// </summary>
     public class NetworkSyncerSimulator : ISimulator
     {
+        private const string nullString = "[[[[NULL]]]]";
         private StringSerializer stringSerializer = StringSerializer.Create();
 
         private IServerPacketTransporter<ChangePacket> transporter;
@@ -144,6 +145,8 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
 
         private string serializeObject(object obj)
         {
+            if (obj == null)
+                return nullString;
             var type = obj.GetType();
             if (type is IModelObject)
             {
@@ -161,6 +164,8 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
 
         private object deserializeObject(string value, Type type)
         {
+            if (value == nullString)
+                return null;
             if (type is IModelObject)
             {
                 var guid = Guid.Parse(value);

@@ -49,9 +49,5 @@ namespace MHGameWork.TheWizards.Tests
 
             server.Stop();
         }
-
-      
-
-
     }
 }
