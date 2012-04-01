@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.Collections
 
         public bool Contains(U u)
         {
-            return uMap.ContainsKey(u);
+            return tMap.ContainsKey(u);
         }
 
         public void Add(T t, U u)
