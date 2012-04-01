@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11;
-using MHGameWork.TheWizards.Entity;
+﻿using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Model;
-using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.Simulation;
-using MHGameWork.TheWizards.World.Rendering;
 using NUnit.Framework;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Tests.Model
+namespace MHGameWork.TheWizards.Tests.Gameplay
 {
     [TestFixture]
     public class ModelTest

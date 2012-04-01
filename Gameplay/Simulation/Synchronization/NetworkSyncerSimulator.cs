@@ -179,7 +179,7 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
         {
             if (!guidMap.Contains(obj))
             {
-                guidMap.Add(obj, new Guid());
+                guidMap.Add(obj, Guid.NewGuid());
             }
             return guidMap[obj];
         }
