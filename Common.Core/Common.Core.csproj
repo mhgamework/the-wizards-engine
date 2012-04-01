@@ -129,8 +129,10 @@
     <Compile Include="EmbeddedFile.cs" />
     <Compile Include="Forms\ClassForm.cs" />
     <Compile Include="Forms\ColorElement.cs" />
+    <Compile Include="Reflection\FieldAttribute.cs" />
     <Compile Include="Forms\GridElement.cs" />
-    <Compile Include="Forms\IAttribute.cs" />
+    <Compile Include="Reflection\PropertyAttribute.cs" />
+    <Compile Include="Reflection\IAttribute.cs" />
     <Compile Include="Forms\IFormElement.cs" />
     <Compile Include="Forms\ReadonlyElement.cs" />
     <Compile Include="Forms\TextBoxElement.cs" />
@@ -297,6 +299,7 @@
     <Compile Include="Raycast\RaycastHelper.cs" />
     <Compile Include="Raycast\RaycastResult.cs" />
     <Compile Include="Raycast\SimpleRaycaster.cs" />
+    <Compile Include="Reflection\ReflectionHelper.cs" />
     <Compile Include="Seeder.cs" />
     <Compile Include="SlimDXConversion\SlimDXConversion.cs" />
     <Compile Include="SlimDXConversion\BoundingFrustum.cs" />
