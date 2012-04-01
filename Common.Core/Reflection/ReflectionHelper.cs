@@ -28,5 +28,23 @@ namespace MHGameWork.TheWizards.Reflection
             }
             return ret;
         }
+
+        public static IAttribute getAttributeByName(Type type, string name)
+        {
+            var field = type.GetFields().First(f => f.Name == name);
+            if (field != null)
+            {
+                return new FieldAttribute(field);
+            }
+
+            var property = type.GetProperties().First(f => f.Name == name);
+            if (property != null)
+            {
+                return new PropertyAttribute(property);
+            }
+
+            return null;
+
+        }
     }
 }
