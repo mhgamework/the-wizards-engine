@@ -88,10 +88,18 @@ namespace MHGameWork.TheWizards.Networking
 
             }
 
+            var sources = new List<string>();
 
-            File.WriteAllLines(generatedAssemblyFilename.Replace(".dll", ".cs"), code.ToArray());
+            int num = 0;
+            foreach (var codeFile in code)
+            {
+                var sourceFile = generatedAssemblyFilename.Replace(".dll", num + ".cs");
+                sources.Add(sourceFile);
+                File.WriteAllText(sourceFile, codeFile);
+                num++;
+            }
 
-            Assembly assembly = AssemblyBuilder.CompileExecutable(cp, code.ToArray());
+            Assembly assembly = AssemblyBuilder.CompileExecutableFromFile(cp, sources.ToArray());
 
             if (assembly == null) throw new InvalidOperationException();
 
@@ -328,9 +336,13 @@ namespace MHGameWork.TheWizards.Networking
             {
                 var baseType = System.Enum.GetUnderlyingType(variableType);
 
-                if (baseType == typeof(byte) || baseType == typeof(int))
+                if (baseType == typeof(byte))
                 {
                     return "writer.Write((byte)" + variableName + ");";
+                }
+                if (baseType == typeof(int))
+                {
+                    return "writer.Write((int)" + variableName + ");";
                 }
             }
             if (variableType == typeof(Guid))

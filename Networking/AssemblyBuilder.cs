@@ -36,6 +36,14 @@ namespace MHGameWork.TheWizards.Networking
         {
             return CompileExecutable(cp, new string[] { code });
         }
+        public static Assembly CompileExecutableFromFile(CompilerParameters cp, String[] files)
+        {
+            CodeDomProvider provider = new Microsoft.CSharp.CSharpCodeProvider();
+
+            CompilerResults cr = provider.CompileAssemblyFromFile(cp, files);
+
+            return processCompilationResult(cr);
+        }
         public static Assembly CompileExecutable(CompilerParameters cp, String[] code)
         {
             CodeDomProvider provider = new Microsoft.CSharp.CSharpCodeProvider();
