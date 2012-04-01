@@ -56,7 +56,7 @@ namespace MHGameWork.TheWizards.Tests.Model
             var ent = new TheWizards.Model.Entity();
             TW.Model .AddObject(ent);
 
-           
+            mesh = Sphere.CreateSphereMesh();
             ent.Mesh = mesh;
 
             var time = 0f;
@@ -99,6 +99,23 @@ namespace MHGameWork.TheWizards.Tests.Model
 
             TW.Model.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
             TW.Model.GetSingleton<CameraInfo>().FirstPersonCameraTarget = player.Entity;
+
+            game.Run();
+        }
+
+        [Test]
+        public void TestSphere()
+        {
+            var game = new LocalGame();
+
+
+            var sphere = new Sphere();
+
+            game
+                .AddSimulator(new PhysXUpdateSimulator())
+                .AddSimulator(new SimpleWorldRenderer());
+
+
 
             game.Run();
         }
