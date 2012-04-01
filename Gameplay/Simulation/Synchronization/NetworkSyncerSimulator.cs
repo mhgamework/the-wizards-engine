@@ -24,6 +24,7 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
         public NetworkSyncerSimulator(IServerPacketTransporter<ChangePacket> transporter)
         {
             this.transporter = transporter;
+            transporter.EnableReceiveMode();
         }
 
         public void Simulate()
@@ -43,7 +44,9 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
 
             for (int i = 0; i < length; i++)
             {
-                var change = array[length];
+                var change = array[i];
+
+                if (change.ChangeType == ModelContainer.ModelContainer.WorldChangeType.None) continue;
 
                 // Clear buffers
                 keys.Clear();
@@ -85,7 +88,8 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
                 {
                     case ModelContainer.ModelContainer.WorldChangeType.Added:
                         target = (IModelObject)Activator.CreateInstance(resolveTypeName(p.TypeFullName));
-                        TW.Model.AddObject(target);
+                        setObjectGuid(target, p.Guid);
+                        //TW.Model.AddObject(target);   This is called automatically by the modelobject's constructor
                         break;
                     case ModelContainer.ModelContainer.WorldChangeType.Modified:
                         target = getObjectByGuid(p.Guid);
@@ -174,6 +178,13 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
 
 
         private DictionaryTwoWay<IModelObject, Guid> guidMap = new DictionaryTwoWay<IModelObject, Guid>();
+
+        private void setObjectGuid(IModelObject obj, Guid guid)
+        {
+            if (guidMap.Contains(obj) || guidMap.Contains(guid))
+                throw new InvalidOperationException("Already added!!");
+            guidMap.Add(obj, guid);
+        }
 
         private Guid getObjectGuid(IModelObject obj)
         {

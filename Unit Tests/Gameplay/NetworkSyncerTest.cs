@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
@@ -21,12 +22,23 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         [SetUp]
         public void SetUp()
         {
-            clientA = new BasicPacketTransporter<ChangePacket>(p => clientB.QueueReceivedPacket(p));
-            clientB = new BasicPacketTransporter<ChangePacket>(p => clientA.QueueReceivedPacket(p));
+            clientA = new BasicPacketTransporter<ChangePacket>(
+                delegate(ChangePacket p)
+                {
+                    clientB.QueueReceivedPacket(p);
+                    Thread.Sleep(500);// Cheat to make the packet arrive immediately
+                });
+            clientB = new BasicPacketTransporter<ChangePacket>(
+
+                delegate(ChangePacket p)
+                {
+                    clientA.QueueReceivedPacket(p);
+                    Thread.Sleep(500);// Cheat to make the packet arrive immediately
+                });
         }
 
         [Test]
-        public void TestOneWaySyncSimple()
+        public void TestSingleObjectSync()
         {
             var syncerA = new NetworkSyncerSimulator(createTransporterA());
             var syncerB = new NetworkSyncerSimulator(createTransporterB());
@@ -36,16 +48,76 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             // Enter scope A, step 1
             TW.Model = containerA;
-            containerA.AddObject(new BasicModelObject { Number = 42, Text = "Goblin" });
+            new BasicModelObject { Number = 42, Text = "Goblin" };
             syncerA.Simulate();
 
             // Enter scope B, step 1
             TW.Model = containerB;
             syncerB.Simulate();
 
-
             // step 1 verification:
-            containerA.Objects[0].Equals(containerB.Objects[0]);
+            Assert.True(((BasicModelObject)containerA.Objects[0]).FieldsEqual(containerB.Objects[0]));
+
+            // step 1 clear
+            containerA.ClearDirty();
+            containerB.ClearDirty();
+
+
+
+
+            // Enter scope A, step 2
+            TW.Model = containerA;
+            syncerA.Simulate();
+
+            // Enter scope B, step 2
+            TW.Model = containerB;
+            ((BasicModelObject)TW.Model.Objects[0]).Text = "Sheep";
+            syncerB.Simulate();
+
+            // step 2 verification:
+            Assert.False(((BasicModelObject)containerA.Objects[0]).FieldsEqual(containerB.Objects[0]));
+
+            // step 2 clear
+            containerA.ClearDirty();
+            containerB.ClearDirty();
+
+
+
+
+            // Enter scope A, step 3
+            TW.Model = containerA;
+            syncerA.Simulate();
+
+            // Enter scope B, step 3
+            TW.Model = containerB;
+            syncerB.Simulate();
+
+            // step 3 verification:
+            Assert.True(((BasicModelObject)containerA.Objects[0]).FieldsEqual(containerB.Objects[0]));
+
+            // step 3 clear
+            containerA.ClearDirty();
+            containerB.ClearDirty();
+
+
+
+
+            // Enter scope A, step 4
+            TW.Model = containerA;
+            TW.Model.RemoveObject(TW.Model.Objects[0]);
+            syncerA.Simulate();
+
+            // Enter scope B, step 4
+            TW.Model = containerB;
+            syncerB.Simulate();
+
+            // step 4 verification:
+            Assert.AreEqual(0, containerA.Objects.Count);
+            Assert.AreEqual(0, containerB.Objects.Count);
+
+            // step 4 clear
+            containerA.ClearDirty();
+            containerB.ClearDirty();
 
 
         }
@@ -65,33 +137,25 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             return ret;
         }
 
+        [ModelObjectChanged]
         private class BasicModelObject : BaseModelObject
         {
-            public int Number;
-            public string Text;
-
-            public bool Equals(BasicModelObject other)
+            public BasicModelObject()
             {
+
+            }
+
+            public int Number { get; set; }
+            public string Text { get; set; }
+
+            public bool FieldsEqual(object o)
+            {
+                var other = (BasicModelObject)o;
                 if (ReferenceEquals(null, other)) return false;
                 if (ReferenceEquals(this, other)) return true;
                 return other.Number == Number && Equals(other.Text, Text);
             }
 
-            public override bool Equals(object obj)
-            {
-                if (ReferenceEquals(null, obj)) return false;
-                if (ReferenceEquals(this, obj)) return true;
-                if (obj.GetType() != typeof(BasicModelObject)) return false;
-                return Equals((BasicModelObject)obj);
-            }
-
-            public override int GetHashCode()
-            {
-                unchecked
-                {
-                    return (Number * 397) ^ (Text != null ? Text.GetHashCode() : 0);
-                }
-            }
         }
 
 

@@ -38,7 +38,7 @@ namespace MHGameWork.TheWizards.ModelContainer
         }
 
         /// <summary>
-        /// Registers a modelobject for change logging. This method is supposed to be called by the ModelObject's themselves
+        /// Registers a modelobject for change logging. This method is supposed to be called by the ModelObject's themselves, not by user
         /// </summary>
         /// <param name="obj"></param>
         public void AddObject(IModelObject obj)
@@ -51,9 +51,14 @@ namespace MHGameWork.TheWizards.ModelContainer
 
             flagChanged(obj, WorldChangeType.Added);
         }
+        /// <summary>
+        /// TODO: this should be called automatically using a weak references system
+        /// </summary>
+        /// <param name="obj"></param>
         public void RemoveObject(IModelObject obj)
         {
             if (!Objects.Contains(obj)) throw new InvalidOperationException("Object not in list");
+            Objects.Remove(obj);
             flagChanged(obj, WorldChangeType.Removed);
         }
 
@@ -73,6 +78,12 @@ namespace MHGameWork.TheWizards.ModelContainer
         {
             var ret = getChange(obj);
 
+            if (changeType == WorldChangeType.Removed && ret.ChangeType == WorldChangeType.Added)
+            {
+                // Object was added, and removed again, so nothing happened!
+                ret.ChangeType = WorldChangeType.None;
+                return;
+            }
 
             if (changeType == WorldChangeType.Added || changeType == WorldChangeType.Removed) // added or removed are exclusive
             {
@@ -120,6 +131,10 @@ namespace MHGameWork.TheWizards.ModelContainer
 
         public enum WorldChangeType
         {
+            /// <summary>
+            /// Note: the meaning of the none-state has been changed from an illegal state, to a state where nothing changed
+            ///        and is now a valid state
+            /// </summary>
             None = 0,
             Added = 1,
             Modified = 2,

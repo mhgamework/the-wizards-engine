@@ -38,7 +38,7 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
 
         }
 
-        public string Deserialize(string value, Type type)
+        public object Deserialize(string value, Type type)
         {
             if (!deserializers.ContainsKey(type))
             {
@@ -46,7 +46,7 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
                 return "UNKNOWN";
             }
 
-            return Serialize(value);
+            return deserializers[type](value);
 
         }
 

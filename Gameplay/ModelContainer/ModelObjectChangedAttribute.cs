@@ -6,6 +6,10 @@ using PostSharp.Reflection;
 
 namespace MHGameWork.TheWizards.ModelContainer
 {
+    /// <summary>
+    /// Applying this attribute to an IModelObject implementing class will make it notify the ModelContainer it holds of property changes.
+    /// NOTE: only PROPERTY changes
+    /// </summary>
     [Serializable]
     [MulticastAttributeUsage(MulticastTargets.Property, PersistMetaData = true)]
     public sealed class ModelObjectChangedAttribute : LocationInterceptionAspect
@@ -25,6 +29,11 @@ namespace MHGameWork.TheWizards.ModelContainer
                 return false;
             if (locationInfo.LocationKind == LocationKind.Property && locationInfo.PropertyInfo.PropertyType.Equals(typeof(ModelContainer))) // dont sync modelcontainers!
                 return false;
+
+
+            Message.Write(MessageLocation.Of(locationInfo.PropertyInfo), SeverityType.Info, "ModelErrorCode", "Added ModelContainer changelogging to:: " +
+                    locationInfo.DeclaringType.FullName);
+
             return base.CompileTimeValidate(locationInfo);
         }
 

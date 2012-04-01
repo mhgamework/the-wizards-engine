@@ -6,10 +6,14 @@
     [ModelObjectChanged]
     public class BaseModelObject : IModelObject
     {
+        private int DEBUG_ID;
+
+        private static int DEBUG_NEXTID = 0;
 
         public BaseModelObject()
         {
             TW.Model.AddObject(this);
+            DEBUG_ID = DEBUG_NEXTID++;
         }
 
         public ModelContainer Container { get; private set; }
