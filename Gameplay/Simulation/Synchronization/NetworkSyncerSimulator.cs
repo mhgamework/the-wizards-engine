@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
+using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Collections;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.Reflection;
-using MHGameWork.TheWizards.Simulation.Synchronization;
 
-namespace MHGameWork.TheWizards.Simulation
+namespace MHGameWork.TheWizards.Simulation.Synchronization
 {
     /// <summary>
     /// This simulator is responsible for sending local changes to the remotes, and then accepting
@@ -17,13 +15,13 @@ namespace MHGameWork.TheWizards.Simulation
     /// 
     /// All changes from simulators that run after this simulator are NOT synced over network
     /// </summary>
-    public class NetworkSyncer : ISimulator
+    public class NetworkSyncerSimulator : ISimulator
     {
         private StringSerializer stringSerializer = StringSerializer.Create();
 
         private IServerPacketTransporter<ChangePacket> transporter;
 
-        public NetworkSyncer()
+        public NetworkSyncerSimulator()
         {
             
 
@@ -149,6 +147,11 @@ namespace MHGameWork.TheWizards.Simulation
             {
                 return getObjectGuid((IModelObject)obj).ToString();
             }
+            if (type is IAsset)
+            {
+                var asset = (IAsset)obj;
+                return asset.Guid.ToString();
+            }
 
             return stringSerializer.serialize(obj);
 
@@ -160,6 +163,10 @@ namespace MHGameWork.TheWizards.Simulation
             {
                 var guid = Guid.Parse(value);
                 return getObjectByGuid(guid);
+            }
+            if (type is IAsset)
+            {
+                throw new NotImplementedException();
             }
 
 
