@@ -113,6 +113,8 @@
     <Compile Include="ModelContainer\ISimulator.cs" />
     <Compile Include="ModelContainer\ModelContainer.cs" />
     <Compile Include="ModelContainer\ModelObjectChangedAttribute.cs" />
+    <Compile Include="Simulation\NetworkSyncer.cs" />
+    <Compile Include="Simulation\PhysXUpdateSimulator.cs" />
     <Compile Include="Simulation\SimpleWorldRenderer.cs" />
     <Compile Include="Model\Sphere.cs" />
     <Compile Include="Simulation\BasicSimulator.cs" />
