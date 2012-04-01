@@ -259,8 +259,11 @@ namespace MHGameWork.TheWizards.Networking
             }
             if (variableType == typeof(byte[]))
             {
-                var ret = "";
-                ret += variableName + " = reader.ReadBytes(reader.ReadInt32());";
+                var ret = "{";
+                ret += "var count = reader.ReadInt32();\n";
+                ret += "if (count != -1 ) {\n";
+                ret += variableName + " = reader.ReadBytes(count);";
+                ret += "}}\n";
                 return ret;
             }
             if (variableType == typeof(Guid))
@@ -284,11 +287,12 @@ namespace MHGameWork.TheWizards.Networking
             {
                 var ret = "{";
                 ret += "var count = reader.ReadInt32();\n";
+                ret += "if (count != -1 ) {\n";
                 ret += variableName + " = new " + variableType.GetElementType().FullName + "[count];\n";
                 ret += "for (int iArray = 0; iArray < count; iArray++) \n";
                 ret += "{\n";
                 ret += generateLoadVariable(variableName + "[iArray]", variableType.GetElementType());
-                ret += "}}\n";
+                ret += "}}}\n";
                 return ret;
             }
 
@@ -310,8 +314,13 @@ namespace MHGameWork.TheWizards.Networking
             if (variableType == typeof(byte[]))
             {
                 var ret = "";
+                ret += "if (" + variableName + " == null) {\n";
+                ret += "writer.Write((int)-1);\n";
+
+                ret += "} else {\n";
                 ret += "writer.Write(" + variableName + ".Length);";
                 ret += "writer.Write(" + variableName + ");";
+                ret += "}\n";
                 return ret;
 
             }
@@ -331,11 +340,16 @@ namespace MHGameWork.TheWizards.Networking
             if (variableType.IsArray)
             {
                 var ret = "";
-                ret += 
+                ret += "if (" + variableName + " == null) {\n";
+                ret += "writer.Write((int)-1);\n";
+
+                ret += "} else {\n";
+
                 ret += "writer.Write(" + variableName + ".Length);\n";
                 ret += "for (int iArray = 0; iArray < " + variableName + ".Length; iArray++) \n";
                 ret += "{\n";
                 ret += generateSaveVariable(variableName + "[iArray]", variableType.GetElementType());
+                ret += "}\n";
                 ret += "}\n";
                 return ret;
             }

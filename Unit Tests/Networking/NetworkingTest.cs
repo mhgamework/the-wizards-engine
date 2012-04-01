@@ -267,9 +267,9 @@ namespace MHGameWork.TheWizards.Tests.Networking
                     && Equals(other.Text, Text)
                     && other.Boolean.Equals(Boolean)
                     && other.GetalFloat.Equals(GetalFloat)
-                    && Buffer.SequenceEqual(other.Buffer)
+                    && ((Buffer == other.Buffer) || Buffer.SequenceEqual(other.Buffer))
                     && Equals(other.Enum, Enum)
-                    && other.Array.SequenceEqual(Array)
+                    && ((Array == other.Array) || other.Array.SequenceEqual(Array))
                     && Guid.Equals(other.Guid);
             }
 
