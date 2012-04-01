@@ -113,7 +113,7 @@
     <Compile Include="ModelContainer\ISimulator.cs" />
     <Compile Include="ModelContainer\ModelContainer.cs" />
     <Compile Include="ModelContainer\ModelObjectChangedAttribute.cs" />
-    <Compile Include="Simulation\NetworkSyncer.cs" />
+    <Compile Include="Simulation\Synchronization\NetworkSyncerSimulator.cs" />
     <Compile Include="Simulation\PhysXUpdateSimulator.cs" />
     <Compile Include="Simulation\SimpleWorldRenderer.cs" />
     <Compile Include="Model\Sphere.cs" />
@@ -147,6 +147,7 @@
     <Compile Include="Scripting\ScriptLayer.cs" />
     <Compile Include="Scripting\ScriptRunner.cs" />
     <Compile Include="Gameplay\ThrowMove.cs" />
+    <Compile Include="Simulation\Synchronization\StringSerializer.cs" />
     <Compile Include="Simulation\ThirdPersonCameraSimulator.cs" />
     <Compile Include="TW.cs" />
     <Compile Include="World\ClientWorldSector.cs" />

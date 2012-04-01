@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using MHGameWork.TheWizards.Collections;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Reflection;
 using MHGameWork.TheWizards.Simulation.Synchronization;
@@ -15,14 +16,14 @@ namespace MHGameWork.TheWizards.Simulation
     /// 
     /// All changes from simulators that run after this simulator are NOT synced over network
     /// </summary>
-    public class NetworkSyncer:ISimulator
+    public class NetworkSyncer : ISimulator
     {
         private StringSerializer stringSerializer = StringSerializer.Create();
 
         public NetworkSyncer()
         {
-         
-            
+
+
         }
 
 
@@ -30,7 +31,7 @@ namespace MHGameWork.TheWizards.Simulation
         {
 
             // Send local changes
-            
+
             int length;
             ModelContainer.ModelContainer.ObjectChange[] array;
             TW.Model.GetEntityChanges(out array, out length);
@@ -65,7 +66,7 @@ namespace MHGameWork.TheWizards.Simulation
 
                 p.Keys = keys.ToArray();
                 p.Values = values.ToArray();
-                
+
 
 
 
@@ -83,7 +84,7 @@ namespace MHGameWork.TheWizards.Simulation
                 switch (p.ChangeType)
                 {
                     case ModelContainer.ModelContainer.WorldChangeType.Added:
-                        target = (IModelObject) Activator.CreateInstance(resolveTypeName(p.TypeFullName));
+                        target = (IModelObject)Activator.CreateInstance(resolveTypeName(p.TypeFullName));
                         TW.Model.AddObject(target);
                         break;
                     case ModelContainer.ModelContainer.WorldChangeType.Modified:
@@ -134,11 +135,11 @@ namespace MHGameWork.TheWizards.Simulation
             var type = obj.GetType();
             if (type is IModelObject)
             {
-                return getObjectGuid((IModelObject) obj).ToString();
+                return getObjectGuid((IModelObject)obj).ToString();
             }
 
             return stringSerializer.serialize(obj);
-        
+
         }
 
         private object deserializeObject(string value, Type type)
@@ -150,19 +151,27 @@ namespace MHGameWork.TheWizards.Simulation
             }
 
 
-            return stringSerializer.deserialize(value,type );
+            return stringSerializer.deserialize(value, type);
 
         }
 
 
+        private DictionaryTwoWay<IModelObject, Guid> guidMap = new DictionaryTwoWay<IModelObject, Guid>();
 
         private Guid getObjectGuid(IModelObject obj)
         {
-            
+            if (!guidMap.Contains(obj))
+            {
+                guidMap.Add(obj, new Guid());
+            }
+            return guidMap[obj];
         }
         private IModelObject getObjectByGuid(Guid guid)
         {
-            
+            if (!guidMap.Contains(guid))
+                return null;
+
+            return guidMap[guid];
         }
 
         public class ChangePacket
@@ -174,7 +183,7 @@ namespace MHGameWork.TheWizards.Simulation
             public string[] Values;
 
         }
-        
+
 
     }
 }
