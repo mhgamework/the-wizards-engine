@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using MHGameWork.TheWizards.Collections;
 using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.Reflection;
 using MHGameWork.TheWizards.Simulation.Synchronization;
 
@@ -20,9 +21,11 @@ namespace MHGameWork.TheWizards.Simulation
     {
         private StringSerializer stringSerializer = StringSerializer.Create();
 
+        private IServerPacketTransporter<ChangePacket> transporter;
+
         public NetworkSyncer()
         {
-
+            
 
         }
 
@@ -67,6 +70,7 @@ namespace MHGameWork.TheWizards.Simulation
                 p.Keys = keys.ToArray();
                 p.Values = values.ToArray();
 
+                transporter.SendAll(p); // Send!!
 
 
 
@@ -127,7 +131,15 @@ namespace MHGameWork.TheWizards.Simulation
 
         private List<ChangePacket> acceptRemoteChanges()
         {
-            throw new NotImplementedException();
+            var ret = new List<ChangePacket>();
+
+            while (transporter.PacketAvailable)
+            {
+                IClient client;
+                ret.Add(transporter.Receive(out client));
+            }
+
+            return ret;
         }
 
         private string serializeObject(object obj)
@@ -173,17 +185,5 @@ namespace MHGameWork.TheWizards.Simulation
 
             return guidMap[guid];
         }
-
-        public class ChangePacket
-        {
-            public ModelContainer.ModelContainer.WorldChangeType ChangeType;
-            public Guid Guid;
-            public string TypeFullName;
-            public string[] Keys;
-            public string[] Values;
-
-        }
-
-
     }
 }
