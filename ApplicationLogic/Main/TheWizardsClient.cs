@@ -36,13 +36,6 @@ namespace MHGameWork.TheWizards.Main
 
         public TheWizardsClient()
         {
-            physicsEngine = new PhysicsEngine();
-            xnaGame = new DX11Game();
-
-            /*xnaGame.Graphics1.PreferredBackBufferWidth = 1440;
-            xnaGame.Graphics1.PreferredBackBufferHeight = 900;
-            xnaGame.Graphics1.ToggleFullScreen();*/
-            //xnaGame.Window.Title = "The Wizards Client - MHGameWork All Rights Reserved";
 
 
         }
@@ -60,7 +53,13 @@ namespace MHGameWork.TheWizards.Main
 
         private void setUp()
         {
+            physicsEngine = new PhysicsEngine();
+            xnaGame = new DX11Game();
             xnaGame.GameLoopEvent += xnaGame_GameLoopEvent;
+            /*xnaGame.Graphics1.PreferredBackBufferWidth = 1440;
+        xnaGame.Graphics1.PreferredBackBufferHeight = 900;
+        xnaGame.Graphics1.ToggleFullScreen();*/
+            //xnaGame.Window.Title = "The Wizards Client - MHGameWork All Rights Reserved";
 
             //((SpectaterCamera)xnaGame.Camera).FarClip = 1000;
 
@@ -155,7 +154,7 @@ namespace MHGameWork.TheWizards.Main
 
 
 
-        public static TCPConnection ConnectTCP(int port, string ip)
+        private static TCPConnection ConnectTCP(int port, string ip)
         {
             AutoResetEvent ev = new AutoResetEvent(false);
 

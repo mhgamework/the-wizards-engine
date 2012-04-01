@@ -95,6 +95,7 @@
     <Compile Include="Entity\StaticEntityContainer.cs" />
     <Compile Include="Main\TheWizardsClient.cs" />
     <Compile Include="Main\TheWizardsServer.cs" />
+    <Compile Include="Main\TheWizardsServerCore.cs" />
     <Compile Include="Main\TreeClient.cs" />
     <Compile Include="Main\TreeServer.cs" />
     <Compile Include="Networking\Client\GameClient.cs" />
