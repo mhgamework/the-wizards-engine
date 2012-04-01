@@ -207,6 +207,13 @@ namespace MHGameWork.TheWizards.Graphics
             i++;
 
 
+            // Generate normals
+            for (int j = 0; j < vertices.Length; j++)
+            {
+                vertices[j].normal = Vector3.Normalize(vertices[j].pos);
+            }
+
+
             int numIndices = (numVertsOnRing * 2 * 3) * numRings;
 
             indices = new short[numIndices];
