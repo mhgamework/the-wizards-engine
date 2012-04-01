@@ -211,11 +211,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                                                                    FillMode = FillMode.Solid,
                                                                                });
 
-            //checkerTexture = Texture2D.FromFile(game.GraphicsDevice,
-            //                                    EmbeddedFile.GetStream(
-            //                                        "MHGameWork.TheWizards.Rendering.Files.Checker.png", "Checker.png"));
+            checkerTexture = Texture2D.FromFile(game.Device,TWDir.GameData.CreateSubdirectory("Core").FullName + "\\checker.png");
 
-            checkerTextureRV = null;
+            checkerTextureRV = new ShaderResourceView(game.Device,checkerTexture);
 
 
             baseShader = BasicShader.LoadAutoreload(game, DeferredMeshFX);
