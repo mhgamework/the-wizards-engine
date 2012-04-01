@@ -93,18 +93,36 @@ namespace MHGameWork.TheWizards.Rendering
             Source source;
             var positions = new Vector3[indices.Length];
             var normals = new Vector3[indices.Length];
+            var uvs = new Vector2[indices.Length];
+            var tangents = new Vector3[indices.Length];
             for (int i = 0; i < indices.Length; i++)
             {
                 positions[i] = vertices[indices[i]].pos;
+                normals[i] = vertices[indices[i]].normal;
+                uvs[i] = vertices[indices[i]].uv;
+                tangents[i] = vertices[indices[i]].tangent;
             }
 
             source = new Source();
             geom.Sources.Add(source);
+            source.Semantic = Semantic.Position;
             source.DataVector3 = positions;
 
             source = new Source();
             geom.Sources.Add(source);
+            source.Semantic = Semantic.Normal;
             source.DataVector3 = normals;
+
+
+            source = new Source();
+            geom.Sources.Add(source);
+            source.Semantic = Semantic.Texcoord;
+            source.DataVector2 = uvs;
+
+            source = new Source();
+            geom.Sources.Add(source);
+            source.Semantic = Semantic.Tangent;
+            source.DataVector3 = tangents;
         }
 
 
