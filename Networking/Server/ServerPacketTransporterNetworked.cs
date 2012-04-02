@@ -22,12 +22,29 @@ namespace MHGameWork.TheWizards.Networking.Server
 
         public void SendAll(T packet)
         {
+            SendAllExcept(null, packet);
+        }
+
+        public void SendAllExcept(IClient client, T packet)
+        {
             for (int i = 0; i < transporters.Count; i++)
             {
+                bool skip = false;
+                //TODO: use speedup!!
+                if (client != null)
+                    foreach (var pair in transportersDict)
+                        if (client.Equals(pair.Key) && pair.Value == transporters[i]) skip = true;
+
+                if (skip) continue;
+
                 transporters[i].Send(packet);
             }
         }
-        
+
+        public void SendTo(IClient client, T packet)
+        {
+            getTransporterForClientInternal(client).Send(packet);
+        }
 
 
         private bool receiveMode;
@@ -112,7 +129,7 @@ namespace MHGameWork.TheWizards.Networking.Server
         {
             // check if this client is ready.
             if (!client.IsReady) throw new InvalidOperationException("This client is not yet ready!");
-         
+
             transportersPublished = true;
             return transportersDict[client];
         }
@@ -156,7 +173,7 @@ namespace MHGameWork.TheWizards.Networking.Server
                         Monitor.Pulse(receiveQueue);
                     }
                 }
-              
+
             }
         }
 

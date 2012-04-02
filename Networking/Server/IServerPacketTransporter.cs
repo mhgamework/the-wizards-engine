@@ -14,6 +14,8 @@ namespace MHGameWork.TheWizards.Networking.Server
     {
 
         void SendAll(T packet);
+        void SendAllExcept(IClient client, T packet);
+        void SendTo(IClient client, T packet);
 
         T Receive(out IClient client);
 
