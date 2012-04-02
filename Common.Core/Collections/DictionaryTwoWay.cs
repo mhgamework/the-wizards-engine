@@ -32,6 +32,15 @@ namespace MHGameWork.TheWizards.Collections
             tMap.Add(u, t);
         }
 
+        public IEnumerable<U> GetAllU()
+        {
+            return uMap.Values;
+        }
+        public IEnumerable<T> GetAllT()
+        {
+            return tMap.Values;
+        }
+
         public T this[U u] { get { return tMap[u]; } }
         public U this[T t] { get { return uMap[t]; } }
     }

@@ -17,7 +17,7 @@ namespace MHGameWork.TheWizards.Model
             TW.Model.AddObject(this);
         }
 
-        
+
         public IMesh Mesh { get; set; }
         public Matrix WorldMatrix { get; set; }
 
@@ -25,6 +25,11 @@ namespace MHGameWork.TheWizards.Model
         public void Initialize(ModelContainer.ModelContainer container)
         {
             Container = container;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Mesh: {0}, WorldMatrix: {1}", Mesh, WorldMatrix);
         }
     }
 }

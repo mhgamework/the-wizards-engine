@@ -15,6 +15,8 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
     /// the changes from the remotes and applying it to the local model.
     /// 
     /// All changes from simulators that run after this simulator are NOT synced over network
+    /// 
+    /// The syncer sends broadcasts a dummy change to all the remotes, as a cheat to notify them of our existance
     /// </summary>
     public class NetworkSyncerSimulator : ISimulator
     {
@@ -29,19 +31,107 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
             transporter.EnableReceiveMode();
         }
 
+        bool firstSimulate = true;
+
         public void Simulate()
         {
+            if (firstSimulate)
+            {
+                // Broadcast dummy change to the remotes to notify them of our existance
+                transporter.SendAll(new ChangePacket { ChangeType = ModelContainer.ModelContainer.WorldChangeType.None });
+                firstSimulate = false;
+            }
 
             // Send local changes
+            sendLocalChanges();
 
+            // Accept remote changes
+            acceptRemoteChanges();
+        }
+
+        private void acceptRemoteChanges()
+        {
+            while (transporter.PacketAvailable)
+            {
+                IClient client;
+                var p = transporter.Receive(out client);
+
+                // Check if we need to send a full model state
+                if (isNewClient(client))
+                {
+                    foreach (var obj in getSyncedObjects())
+                    {
+                        transporter.SendTo(client,
+                                           createChangePacket(obj, ModelContainer.ModelContainer.WorldChangeType.Added));
+                    }
+                    markClientNotNew(client);
+                }
+
+                // Relay changes to the previously synced clients (except the origin of the packet!!)! TODO: bounce problem??
+
+                foreach (var cl in clients)
+                {
+                    if (cl == client) continue;
+
+                    transporter.SendTo(cl, p);
+                }
+
+                // Integrate change in our model
+
+                applyChangePacket(p);
+            }
+        }
+
+        private void applyChangePacket(ChangePacket p)
+        {
+            IModelObject target;
+            switch (p.ChangeType)
+            {
+                case ModelContainer.ModelContainer.WorldChangeType.Added:
+                    target = (IModelObject)Activator.CreateInstance(resolveTypeName(p.TypeFullName));
+                    setObjectGuid(target, p.Guid);
+                    if (target.Container == null)
+                    {
+                        throw new InvalidOperationException("Modelobject did not add itself to a container!! => " +
+                                                            p.TypeFullName);
+                    }
+                    //TW.Model.AddObject(target);   This is called automatically by the modelobject's constructor
+                    break;
+                case ModelContainer.ModelContainer.WorldChangeType.Modified:
+                    target = getObjectByGuid(p.Guid);
+                    break;
+                case ModelContainer.ModelContainer.WorldChangeType.Removed:
+                    target = getObjectByGuid(p.Guid);
+                    TW.Model.RemoveObject(target);
+                    return;
+                case ModelContainer.ModelContainer.WorldChangeType.None:
+                    // do nothing! This should be a dummy packet to notify us of a remote's existance
+                    return;
+                default:
+                    throw new InvalidOperationException();
+            }
+
+            for (int i = 0; i < p.Keys.Length; i++)
+            {
+                var key = p.Keys[i];
+                var value = p.Values[i];
+
+                var att = ReflectionHelper.GetAttributeByName(target.GetType(), key);
+
+                att.SetData(target, deserializeObject(value, att.Type));
+
+
+            }
+        }
+
+        private void sendLocalChanges()
+        {
             int length;
             ModelContainer.ModelContainer.ObjectChange[] array;
             TW.Model.GetEntityChanges(out array, out length);
 
 
             // Buffers
-            var keys = new List<string>();
-            var values = new List<string>();
 
 
             for (int i = 0; i < length; i++)
@@ -52,79 +142,48 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
                 if (Attribute.GetCustomAttribute(change.ModelObject.GetType(), typeof(NoSyncAttribute)) != null)
                     continue; // don't sync this type of object
 
-                // Clear buffers
-                keys.Clear();
-                values.Clear();
+                // Create a change packet
 
-                var p = new ChangePacket();
+                ChangePacket p = createChangePacket(change.ModelObject, change.ChangeType);
 
-                p.ChangeType = change.ChangeType;
-                p.Guid = getObjectGuid(change.ModelObject);
-                p.TypeFullName = change.ModelObject.GetType().FullName;
+                // Send!!
 
-                foreach (var att in ReflectionHelper.GetAllAttributes(change.ModelObject.GetType()))
+                foreach (var cl in clients)
                 {
-                    keys.Add(att.Name);
-                    IModelObject source = change.ModelObject;
-                    values.Add(serializeObject(att.GetData(source)));
-
+                    // Send to each previously synced client these delta updates
+                    transporter.SendTo(cl, p);
                 }
 
-                p.Keys = keys.ToArray();
-                p.Values = values.ToArray();
-
-                transporter.SendAll(p); // Send!!
 
 
 
             }
+        }
 
-            // Accept remote changes
+        private ChangePacket createChangePacket(IModelObject obj, ModelContainer.ModelContainer.WorldChangeType changeType)
+        {
+            // Clear buffers
 
+            keys.Clear();
+            values.Clear();
 
-            var remoteChanges = acceptRemoteChanges();
-            foreach (var p in remoteChanges)
+            var p = new ChangePacket();
+
+            p.ChangeType = changeType;
+            p.Guid = getObjectGuid(obj);
+            p.TypeFullName = obj.GetType().FullName;
+
+            foreach (var att in ReflectionHelper.GetAllAttributes(obj.GetType()))
             {
-                IModelObject target;
+                keys.Add(att.Name);
+                IModelObject source = obj;
+                values.Add(serializeObject(att.GetData(source)));
 
-
-                switch (p.ChangeType)
-                {
-                    case ModelContainer.ModelContainer.WorldChangeType.Added:
-                        target = (IModelObject)Activator.CreateInstance(resolveTypeName(p.TypeFullName));
-                        setObjectGuid(target, p.Guid);
-                        if (target.Container == null)
-                        {
-                            throw new InvalidOperationException("Modelobject did not add itself to a container!! => " +
-                                                                p.TypeFullName);
-                        }
-                        //TW.Model.AddObject(target);   This is called automatically by the modelobject's constructor
-                        break;
-                    case ModelContainer.ModelContainer.WorldChangeType.Modified:
-                        target = getObjectByGuid(p.Guid);
-                        break;
-                    case ModelContainer.ModelContainer.WorldChangeType.Removed:
-                        target = getObjectByGuid(p.Guid);
-                        TW.Model.RemoveObject(target);
-                        continue; // stop here for this object
-
-                    default:
-                        throw new InvalidOperationException();
-                }
-
-                for (int i = 0; i < p.Keys.Length; i++)
-                {
-                    var key = p.Keys[i];
-                    var value = p.Values[i];
-
-                    var att = ReflectionHelper.GetAttributeByName(target.GetType(), key);
-
-                    att.SetData(target, deserializeObject(value, att.Type));
-
-
-                }
             }
 
+            p.Keys = keys.ToArray();
+            p.Values = values.ToArray();
+            return p;
         }
 
         /// <summary>
@@ -136,19 +195,6 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
         private Type resolveTypeName(string name)
         {
             return AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).First(o => o.FullName == name);
-        }
-
-        private List<ChangePacket> acceptRemoteChanges()
-        {
-            var ret = new List<ChangePacket>();
-
-            while (transporter.PacketAvailable)
-            {
-                IClient client;
-                ret.Add(transporter.Receive(out client));
-            }
-
-            return ret;
         }
 
         private string serializeObject(object obj)
@@ -189,8 +235,22 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
 
         }
 
+        private List<IClient> clients = new List<IClient>();
+        private Boolean isNewClient(IClient client)
+        {
+            return !clients.Contains(client);
+        }
+        private void markClientNotNew(IClient client)
+        {
+            if (!isNewClient(client))
+                throw new InvalidOperationException();
+            clients.Add(client);
+        }
+
 
         private DictionaryTwoWay<IModelObject, Guid> guidMap = new DictionaryTwoWay<IModelObject, Guid>();
+        private List<string> values = new List<string>();
+        private List<string> keys = new List<string>();
 
         private void setObjectGuid(IModelObject obj, Guid guid)
         {
@@ -213,6 +273,11 @@ namespace MHGameWork.TheWizards.Simulation.Synchronization
                 return null;
 
             return guidMap[guid];
+        }
+
+        private IEnumerable<IModelObject> getSyncedObjects()
+        {
+            return guidMap.GetAllT();
         }
     }
 }
