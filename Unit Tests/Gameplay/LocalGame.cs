@@ -78,5 +78,9 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         {
             game.Run();
         }
+        public void Exit()
+        {
+            game.Exit();    
+        }
     }
 }

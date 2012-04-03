@@ -28,6 +28,7 @@ namespace MHGameWork.TheWizards.World.Rendering
             if (create)
             {
                 RemoveRenderData();
+                if (entity.Mesh == null) return;
                 element = renderer.CreateMeshElement(entity.Mesh);
             }
 

@@ -26,7 +26,6 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             var container = new ModelContainer.ModelContainer();
 
             var ent = new TheWizards.Model.Entity();
-            container.AddObject(ent);
 
             ent.Mesh = new RAMMesh();
 
@@ -48,7 +47,6 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             var game = new LocalGame();
 
             var ent = new TheWizards.Model.Entity();
-            TW.Model .AddObject(ent);
 
             mesh = Sphere.CreateSphereMesh();
             ent.Mesh = mesh;
@@ -58,14 +56,29 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             game
                 .AddSimulator(new BasicSimulator(delegate
-                                                     {
-                                                         time += TW.Game.Elapsed;
-                                                         ent.Mesh = mesh;
-                                                         ent.WorldMatrix = Matrix.Translation(Vector3.UnitX * time);
-                                                     }))
+                                                 {
+                                                     time += TW.Game.Elapsed;
+                                                     ent.Mesh = mesh;
+                                                     ent.WorldMatrix = Matrix.Translation(Vector3.UnitX * time);
+                                                 }))
                 .AddSimulator(new SimpleWorldRenderer());
 
 
+
+            game.Run();
+
+        }
+
+        [Test]
+        public void TestEntityWithNoMesh()
+        {
+
+            var game = new LocalGame();
+
+            new Model.Entity();
+
+            game
+                .AddSimulator(new SimpleWorldRenderer());
 
             game.Run();
 
