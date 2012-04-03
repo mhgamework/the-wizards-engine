@@ -259,7 +259,9 @@ namespace MHGameWork.TheWizards.Networking
             }
             if (variableType == typeof(string))
             {
-                return variableName + " = reader.ReadString();";
+                return 
+                    "if (reader.ReadBoolean()) " + 
+                    variableName + " = reader.ReadString();";
             }
             if (variableType == typeof(float))
             {
@@ -312,12 +314,17 @@ namespace MHGameWork.TheWizards.Networking
         {
 
             if (variableType == typeof(int)
-                || variableType == typeof(string)
                 || variableType == typeof(float)
-                || variableType == typeof(bool)
-                || variableType == typeof(string))
+                || variableType == typeof(bool))
             {
                 return "writer.Write(" + variableName + ");";
+            }
+            if (variableType == typeof(string))
+            {
+                return 
+                    "writer.Write(" + variableName + " != null);\n" +
+                    "if (" + variableName + " != null)" + 
+                    "writer.Write(" + variableName + ");";
             }
             if (variableType == typeof(byte[]))
             {
