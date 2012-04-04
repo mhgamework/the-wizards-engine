@@ -104,11 +104,7 @@ namespace MHGameWork.TheWizards.Main
             container = new ModelContainer.ModelContainer();
             setScriptLayerScope();
 
-            var ent = new TheWizards.Model.Entity();
-            ent.Mesh = GetBarrelMesh(new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory())); ;
-
-            var player = new PlayerData();
-            player.Entity = ent;
+            var player = new PlayerData(); // create a player
 
             var gen = new NetworkPacketFactoryCodeGenerater(TWDir.GenerateRandomCacheFile("", "dll"));
             var transporter = new ServerPacketTransporterNetworked<ChangePacket>();
@@ -120,7 +116,7 @@ namespace MHGameWork.TheWizards.Main
 
 
             this
-                .AddSimulator(new LocalPlayerSimulator(player))
+                .AddSimulator(new LocalPlayerSimulator(player)) 
                 .AddSimulator(new NetworkSyncerSimulator(transporter))
                 .AddSimulator(new ThirdPersonCameraSimulator())
                 .AddSimulator(new SimpleWorldRenderer());
@@ -210,25 +206,6 @@ namespace MHGameWork.TheWizards.Main
             xnaGame = null;
         }
 
-
-        public static RAMMesh GetBarrelMesh(OBJToRAMMeshConverter c)
-        {
-            var fsMat = new FileStream(BarrelMtl, FileMode.Open);
-
-            var importer = new ObjImporter();
-            importer.AddMaterialFileStream("Barrel01.mtl", fsMat);
-
-            importer.ImportObjFile(BarrelObj);
-
-            var meshes = c.CreateMeshesFromObjects(importer);
-
-            fsMat.Close();
-
-            return meshes[0];
-        }
-
-        public static string BarrelObj { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\Barrel01.obj"; } }
-        public static string BarrelMtl { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\Barrel01.mtl"; } }
 
         /// <summary>
         /// This will make the game run a single frame.

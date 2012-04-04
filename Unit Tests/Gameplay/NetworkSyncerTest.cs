@@ -275,6 +275,53 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
         }
 
+        [Test]
+        public void TestSyncModelobjectRelation()
+        {
+            var syncerA = new NetworkSyncerSimulator(createTransporterA());
+            var syncerB = new NetworkSyncerSimulator(createTransporterB());
+
+            var containerA = new ModelContainer.ModelContainer();
+            var containerB = new ModelContainer.ModelContainer();
+
+            // Step 0 is to allow sending dummy packets 2-way
+            // Enter scope A, step 0
+            TW.Model = containerA;
+            syncerA.Simulate();
+
+            // Enter scope B, step 0
+            TW.Model = containerB;
+            syncerB.Simulate();
+            // step 0 verification:
+            Assert.AreEqual(containerA.Objects.Count, containerB.Objects.Count);
+
+            // step 0 clear
+            containerA.ClearDirty();
+            containerB.ClearDirty();
+
+
+            // Enter scope A, step 1
+            TW.Model = containerA;
+            var obj = new ReferenceModelObject();
+            obj.Remote = new BasicModelObject {Number = 8};
+            syncerA.Simulate();
+
+            // Enter scope B, step 1
+            TW.Model = containerB;
+            syncerB.Simulate();
+
+            // step 1 verification:
+            Assert.AreEqual(containerA.Objects.Count, containerB.Objects.Count);
+            Assert.AreEqual(containerA.Objects[0].ToString(), containerB.Objects[1].ToString());  // Order will be inversed, because of the dependencies between the objects
+            Assert.AreEqual(containerA.Objects[1].ToString(), containerB.Objects[0].ToString());
+
+            // step 1 clear
+            containerA.ClearDirty();
+            containerB.ClearDirty();
+
+
+        }
+
         private IServerPacketTransporter<ChangePacket> createTransporterA()
         {
             var ret = new ServerPacketTransporterNetworked<ChangePacket>();
@@ -314,7 +361,15 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             }
         }
 
+        private class ReferenceModelObject : BaseModelObject
+        {
+            public BasicModelObject Remote { get; set; }
 
+            public override string ToString()
+            {
+                return string.Format("Remote: {0}", Remote);
+            }
+        }
 
 
     }

@@ -45,7 +45,7 @@ namespace MHGameWork.TheWizards.ModelContainer
                 if (obj.Container != null)
                     obj.Container.NotifyObjectModified(obj);
             }
-            args.ProceedSetValue();
+            //args.ProceedSetValue();
             base.OnSetValue(args);
         }
     }
