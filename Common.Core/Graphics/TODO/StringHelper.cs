@@ -515,22 +515,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
         /// </summary>
         static public string ExtractFilename( string pathFile, bool cutExtension )
         {
-            if ( pathFile == null )
-                return "";
-
-            // Update 2006-09-29: also checking for normal slashes, needed
-            // for support reading 3ds max stuff.
-            string[] fileName = pathFile.Split( new char[] { '\\', '/' } );
-            if ( fileName.Length == 0 )
-            {
-                if ( cutExtension )
-                    return CutExtension( pathFile );
-                return pathFile;
-            } // if (fileName.Length)
-
-            if ( cutExtension )
-                return CutExtension( fileName[ fileName.Length - 1 ] );
-            return fileName[ fileName.Length - 1 ];
+            return TheWizards.FileHelper.ExtractFilename(pathFile, cutExtension);
         } // ExtractFilename(pathFile, cutExtension)
 
         /// <summary>
@@ -539,14 +524,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
         /// </summary>
         static public string GetDirectory( string pathFile )
         {
-            if ( pathFile == null )
-                return "";
-            int i = pathFile.LastIndexOf( "\\" );
-            if ( i >= 0 && i < pathFile.Length )
-                // Return directory
-                return pathFile.Substring( 0, i );
-            // No sub directory found (parent of some dir is "")
-            return "";
+            return TheWizards.FileHelper.GetDirectory(pathFile);
         } // GetDirectory(pathFile)
 
         /// <summary>
@@ -555,8 +533,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
         /// </summary>
         static public string CutOneFolderOff( string path )
         {
-            // GetDirectory does exactly what we need!
-            return GetDirectory( path );
+            return TheWizards.FileHelper.CutOneFolderOff(path);
         } // CutOneFolderOff(path)
 
         /// <summary>
@@ -566,16 +543,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
         /// </summary>
         static public string[] SplitDirectories( string path )
         {
-            ArrayList localList = new ArrayList();
-            localList.Add( path );
-            do
-            {
-                path = CutOneFolderOff( path );
-                if ( path.Length > 0 )
-                    localList.Add( path );
-            } while ( path.Length > 0 );
-
-            return (string[])localList.ToArray( typeof( string ) );
+            return TheWizards.FileHelper.SplitDirectories(path);
         } // SplitDirectories(path)
 
         /// <summary>
@@ -586,12 +554,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
         /// </summary>
         static public string RemoveFirstDirectory( string path )
         {
-            int i = path.IndexOf( "\\" );
-            if ( i >= 0 && i < path.Length )
-                // Return rest of path
-                return path.Substring( i + 1 );
-            // No first directory found, just return original path
-            return path;
+            return TheWizards.FileHelper.RemoveFirstDirectory(path);
         } // RemoveFirstDirectory(path)
 
         /// <summary>
@@ -601,27 +564,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
         /// </summary>
         static public bool IsDirectSubfolder( string subfolder, string mainFolder )
         {
-            // First check if subFolder is really a sub folder of mainFolder
-            if ( subfolder != null &&
-                subfolder.StartsWith( mainFolder ) )
-            {
-                // Same order?
-                if ( subfolder.Length < mainFolder.Length + 1 )
-                    // Then it ain't a sub folder!
-                    return false;
-                // Ok, now check if this is direct sub folder or some sub folder
-                // of mainFolder sub folder
-                string folder = subfolder.Remove( 0, mainFolder.Length + 1 );
-                // Check if this is really a direct sub folder
-                for ( int i = 0; i < folder.Length; i++ )
-                    if ( folder[ i ] == '\\' )
-                        // No, this is a sub folder of mainFolder sub folder
-                        return false;
-                // Ok, this is a direct sub folder of mainFolder!
-                return true;
-            } // if (subFolder)
-            // Not even any sub folder!
-            return false;
+            return TheWizards.FileHelper.IsDirectSubfolder(subfolder, mainFolder);
         } // IsDirectSubFolder(subFolder, mainFolder)
 
         /// <summary>
@@ -629,12 +572,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
         /// </summary>
         static public string CutExtension( string file )
         {
-            if ( file == null )
-                return "";
-            int l = file.LastIndexOf( '.' );
-            if ( l > 0 )
-                return file.Remove( l, file.Length - l );
-            return file;
+            return TheWizards.FileHelper.CutExtension(file);
         } // CutExtension(file)
 
         /// <summary>
@@ -643,12 +581,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
         /// </summary>
         static public string GetExtension( string file )
         {
-            if ( file == null )
-                return "";
-            int l = file.LastIndexOf( '.' );
-            if ( l > 0 && l < file.Length )
-                return file.Remove( 0, l + 1 );
-            return "";
+            return TheWizards.FileHelper.GetExtension(file);
         } // GetExtension(file)
         #endregion
 
