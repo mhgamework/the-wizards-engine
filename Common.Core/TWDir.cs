@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards
 
         public static string GenerateRandomCacheFile(string path, string extension)
         {
-            return Cache + "\\path\\CacheFile" + (new Random()).Next(0, 10000000) + "." + extension;
+            return Cache + path+"\\CacheFile" + (new Random()).Next(0, 10000000) + "." + extension;
         }
     }
 }

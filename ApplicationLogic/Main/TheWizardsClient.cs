@@ -35,9 +35,17 @@ namespace MHGameWork.TheWizards.Main
         private List<ISimulator> simulators = new List<ISimulator>();
         private TheWizardsServerCore serverCore;
 
+        private ManualResetEvent initializedEvent = new ManualResetEvent(false);
+
+        private bool holdLoop = true;
+
+        /// <summary>
+        /// If this is true, the game will just run without holding each step
+        /// </summary>
+        private bool runContinuously = false;
+
         public TheWizardsClient()
         {
-
 
         }
 
@@ -50,6 +58,13 @@ namespace MHGameWork.TheWizards.Main
             this.serverCore = serverCore;
         }
 
+        /// <summary>
+        /// In this mode, the client will wait until StepSingle is called, and then process one frame
+        /// </summary>
+        public void EnableSingleStepMode()
+        {
+            runContinuously = false;
+        }
 
         private void setScriptLayerScope()
         {
@@ -130,6 +145,8 @@ namespace MHGameWork.TheWizards.Main
 
 
 
+            initializedEvent.Set();
+
         }
 
         private TheWizardsClient AddSimulator(ISimulator sim)
@@ -140,26 +157,41 @@ namespace MHGameWork.TheWizards.Main
 
         void xnaGame_GameLoopEvent(DX11Game obj)
         {
-
-            var game = xnaGame;
-            setScriptLayerScope();
-
-
-            foreach (var sim in simulators)
+            lock (this)
             {
-                sim.Simulate();
+                if (!runContinuously)
+                {
+                    // Wait while the loop is on hold
+                    while (holdLoop)
+                        Monitor.Wait(this);
+                }
+
+
+                var game = xnaGame;
+                setScriptLayerScope();
+
+
+                foreach (var sim in simulators)
+                {
+                    sim.Simulate();
+                }
+
+                container.ClearDirty();
+
+                physicsEngine.Update(xnaGame.Elapsed);
+                //physicsDebugRenderer.Update();
+
+
+                if (serverCore != null)
+                {
+                    serverCore.Tick(game.Elapsed);
+                }
+
+                Monitor.Pulse(this); // Give control back to the singlestep method, if its listening
             }
 
-            container.ClearDirty();
-
-            physicsEngine.Update(xnaGame.Elapsed);
-            //physicsDebugRenderer.Update();
 
 
-            if (serverCore != null)
-            {
-                serverCore.Tick(game.Elapsed);
-            }
         }
 
 
@@ -211,5 +243,27 @@ namespace MHGameWork.TheWizards.Main
         public static string BarrelObj { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\Barrel01.obj"; } }
         public static string BarrelMtl { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\Barrel01.mtl"; } }
 
+        /// <summary>
+        /// This will make the game run a single frame.
+        /// If the client is not yet initialized, this method will block
+        /// SingleStepMode must be enabled!
+        /// </summary>
+        public void StepSingle()
+        {
+            WaitUntilInitialized();
+
+            lock (this)
+            {
+                holdLoop = false; // Allow the loop to continue, but still blocks the loop
+                Monitor.Pulse(this); // Puts the game loop in the ready queue
+                Monitor.Wait(this); // Releases the lock, the game loop can now run!
+                holdLoop = true; // Hold the loop again
+            }
+        }
+
+        public void WaitUntilInitialized()
+        {
+            initializedEvent.WaitOne();
+        }
     }
 }

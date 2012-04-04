@@ -61,5 +61,34 @@ namespace MHGameWork.TheWizards.Tests
 
             client.Run();
         }
+
+        [Test]
+        public void RunServer2Clients()
+        {
+            var server = new TheWizardsServerCore();
+            server.Start();
+
+
+            var client1 = new TheWizardsClient();
+            var client2 = new TheWizardsClient();
+
+            client1.AttachServerCore(server);
+
+            client1.EnableSingleStepMode();
+            client2.EnableSingleStepMode();
+
+            new Thread(client1.Run) { Name = "Client 1" }.Start();
+            client1.WaitUntilInitialized();
+
+            new Thread(client2.Run) { Name = "Client 2" }.Start();
+            client2.WaitUntilInitialized();
+
+            while (true)
+            {
+                client1.StepSingle();
+                client2.StepSingle();
+            }
+
+        }
     }
 }
