@@ -128,6 +128,7 @@
     <Compile Include="Database\TagManagerObject.cs" />
     <Compile Include="Database\UniqueIDService.cs" />
     <Compile Include="EmbeddedFile.cs" />
+    <Compile Include="FileHelper.cs" />
     <Compile Include="Forms\ClassForm.cs" />
     <Compile Include="Forms\ColorElement.cs" />
     <Compile Include="Reflection\FieldAttribute.cs" />
