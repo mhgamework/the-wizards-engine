@@ -244,7 +244,7 @@ namespace DirectX11
             if (!IsDirectXInitialized)
                 InitDirectX();
 
-
+            Running = true;
             form.Run();
 
         }
@@ -255,6 +255,8 @@ namespace DirectX11
             diKeyboard.Dispose();
             diMouse.Dispose();
             diDevice.Dispose();
+
+            Running = false;
 
 
         }
@@ -271,6 +273,8 @@ namespace DirectX11
         public HelperStatesContainer HelperStates { get; private set; }
         public float FPS { get { return fpsCalculater.AverageFps; } }
         private MHGameWork.TheWizards.Graphics.AverageFPSCalculater fpsCalculater = new MHGameWork.TheWizards.Graphics.AverageFPSCalculater();
+
+        public bool Running { get; private set; }
 
         public TWKeyboard Keyboard
         {

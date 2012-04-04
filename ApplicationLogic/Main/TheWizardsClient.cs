@@ -67,6 +67,7 @@ namespace MHGameWork.TheWizards.Main
 
         private void setUp()
         {
+            
             physicsEngine = new PhysicsEngine();
             xnaGame = new DX11Game();
             xnaGame.GameLoopEvent += xnaGame_GameLoopEvent;

@@ -57,11 +57,12 @@ namespace MHGameWork.TheWizards.Tests
             server.Start();
 
             var client = new TheWizardsClient();
-
+            client.EnableSingleStepMode();
+            
             new Thread(client.Run) { Name = "Client" }.Start();
             client.WaitUntilInitialized();
 
-            while (true)
+            while (client.XNAGame.Running)
             {
                 client.StepSingle();
                 server.Tick(client.XNAGame.Elapsed);
@@ -88,7 +89,7 @@ namespace MHGameWork.TheWizards.Tests
             new Thread(client2.Run) { Name = "Client 2" }.Start();
             client2.WaitUntilInitialized();
 
-            while (true)
+            while (client1.XNAGame.Running || client2.XNAGame.Running)
             {
                 client1.StepSingle();
                 client2.StepSingle();
