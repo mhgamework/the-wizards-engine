@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards
         public static bool IsFileInDirectory(FileInfo fi, DirectoryInfo di)
         {
 
-            if (fi.Directory.FullName == di.FullName)
+            if (fi.Directory.IsSameDirectory(di)) 
                 return true;
 
             return IsChildFolder(fi.Directory, di);
@@ -41,7 +41,7 @@ namespace MHGameWork.TheWizards
                 return false;
             childFolder = childFolder.Parent;
 
-            if (childFolder.FullName == parentFolder.FullName)
+            if (childFolder.IsSameDirectory(parentFolder))
                 return true;
 
             return IsChildFolder(childFolder, parentFolder);
@@ -79,7 +79,15 @@ namespace MHGameWork.TheWizards
 
 
 
-
+        static public bool IsSameDirectory(this DirectoryInfo info, DirectoryInfo other)
+        {
+            return (
+                0 == String.Compare(
+                    System.IO.Path.GetFullPath(info.FullName).TrimEnd('\\'),
+                    System.IO.Path.GetFullPath(other.FullName).TrimEnd('\\'),
+                    StringComparison.InvariantCultureIgnoreCase))
+                ;
+        }    
 
         #region Copied stuff, no tests yet
         /// <summary>
