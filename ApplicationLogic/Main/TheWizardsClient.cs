@@ -33,7 +33,6 @@ namespace MHGameWork.TheWizards.Main
         private ClientPacketManagerNetworked packetManager;
         private ModelContainer.ModelContainer container;
         private List<ISimulator> simulators = new List<ISimulator>();
-        private TheWizardsServerCore serverCore;
 
         private ManualResetEvent initializedEvent = new ManualResetEvent(false);
 
@@ -49,14 +48,6 @@ namespace MHGameWork.TheWizards.Main
 
         }
 
-        /// <summary>
-        /// This attaches a server to this client. The server will be simulated 'in clock' with the client
-        /// </summary>
-        /// <param name="servercore"></param>
-        public void AttachServerCore(TheWizardsServerCore serverCore)
-        {
-            this.serverCore = serverCore;
-        }
 
         /// <summary>
         /// In this mode, the client will wait until StepSingle is called, and then process one frame
@@ -181,11 +172,6 @@ namespace MHGameWork.TheWizards.Main
                 physicsEngine.Update(xnaGame.Elapsed);
                 //physicsDebugRenderer.Update();
 
-
-                if (serverCore != null)
-                {
-                    serverCore.Tick(game.Elapsed);
-                }
 
                 Monitor.Pulse(this); // Give control back to the singlestep method, if its listening
             }

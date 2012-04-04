@@ -57,9 +57,16 @@ namespace MHGameWork.TheWizards.Tests
             server.Start();
 
             var client = new TheWizardsClient();
-            client.AttachServerCore(server);
 
-            client.Run();
+            new Thread(client.Run) { Name = "Client" }.Start();
+            client.WaitUntilInitialized();
+
+            while (true)
+            {
+                client.StepSingle();
+                server.Tick(client.XNAGame.Elapsed);
+            }
+
         }
 
         [Test]
@@ -71,8 +78,6 @@ namespace MHGameWork.TheWizards.Tests
 
             var client1 = new TheWizardsClient();
             var client2 = new TheWizardsClient();
-
-            client1.AttachServerCore(server);
 
             client1.EnableSingleStepMode();
             client2.EnableSingleStepMode();
@@ -87,6 +92,7 @@ namespace MHGameWork.TheWizards.Tests
             {
                 client1.StepSingle();
                 client2.StepSingle();
+                server.Tick(client1.XNAGame.Elapsed);
             }
 
         }
