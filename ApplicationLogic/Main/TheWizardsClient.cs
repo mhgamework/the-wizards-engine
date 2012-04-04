@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.Main
 
         private ManualResetEvent initializedEvent = new ManualResetEvent(false);
 
-        private bool holdLoop = true;
+        private bool holdLoop = false;
 
         /// <summary>
         /// If this is true, the game will just run without holding each step
