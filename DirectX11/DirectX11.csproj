@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphics\CompiledShaderCache.cs" />
     <Compile Include="Graphics\ThirdPersonCamera.cs" />
     <Compile Include="QuadTreeVisualizer.cs" />
     <Compile Include="SlimDXConversion\ConversionCameraXNA.cs" />

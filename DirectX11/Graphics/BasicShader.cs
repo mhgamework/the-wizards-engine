@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.ServerClient;
@@ -23,18 +24,19 @@ namespace DirectX11.Graphics
         //TODO: replace with manualresetevent
         private bool reloadScheduled;
         private FileInfo reloadFile;
-        private IncludeHandler includeHandler;
 
         private BasicShader(Device device)
         {
             this.device = device;
             context = device.ImmediateContext;
-            includeHandler = new IncludeHandler();
         }
 
         private List<BasicShader> clones = new List<BasicShader>();
         private ShaderMacro[] shaderMacros;
         private DeviceContext context;
+
+        // filenames of all the fx files this shader used to compile itself
+        private string[] shaderDependencies;
 
         public BasicShader ParentShader { get; private set; }
 
@@ -91,14 +93,14 @@ namespace DirectX11.Graphics
                                    };
             watcher.EnableRaisingEvents = true;
 
-            watcher = new FileSystemWatcher(IncludeHandler.GlobalShaderPath, "*");
+            watcher = new FileSystemWatcher(CompiledShaderCache.Current.RootShaderPath, "*");
             watcher.IncludeSubdirectories = true;
             watcher.NotifyFilter = NotifyFilters.LastWrite;
             watcher.Changed += delegate(object sender, FileSystemEventArgs e)
             {
                 lock (this)
                 {
-                    if (includeHandler.IncludedFiles.Contains(e.Name.Replace("\\", "/")))
+                    if (shaderDependencies.Contains(e.Name.Replace("\\", "/")))
                         reloadScheduled = true;
                 }
             };
@@ -115,32 +117,11 @@ namespace DirectX11.Graphics
 
         }
 
-        private class IncludeHandler : Include
-        {
-            public List<string> IncludedFiles = new List<string>();
-            public const string GlobalShaderPath = "../../DirectX11/Shaders/";
-
-            public void Open(IncludeType type, string fileName, Stream parentStream, out Stream stream)
-            {
-                if (type != IncludeType.System)
-                    throw new NotImplementedException();
-                IncludedFiles.Add(fileName);
-                var fs = File.OpenRead(GlobalShaderPath + fileName);
-                stream = fs;
-            }
-            public void Close(Stream stream)
-            {
-                stream.Close();
-            }
-        }
+      
 
         private void loadFromFXFile(string filename, ShaderMacro[] shaderMacros)
         {
-
-            //WARNING: using ShaderFlags.SkipOptimization simply causes compiler to go berserk when using functions, they get skipped or smth
-            //var bytecodeOri = ShaderBytecode.CompileFromFile(filename, "fx_5_0",
-            //                               ShaderFlags.WarningsAreErrors | ShaderFlags.SkipOptimization |
-            //                               ShaderFlags.Debug, EffectFlags.None, null, includeHandler);
+            
             ShaderBytecode bytecode = null;
 
             for (; ; )
@@ -149,10 +130,8 @@ namespace DirectX11.Graphics
 
                 try
                 {
-                    bytecode = ShaderBytecode.CompileFromFile(filename, "fx_5_0",
-                                                              ShaderFlags.WarningsAreErrors | ShaderFlags.EnableStrictness |
-                                                              ShaderFlags.Debug, EffectFlags.None, shaderMacros, includeHandler);
-                    //bytecode = ShaderBytecode.CompileFromFile(filename, "fx_5_0", ShaderFlags.OptimizationLevel3 | ShaderFlags.SkipValidation, EffectFlags.None, shaderMacros, includeHandler);
+                    bytecode = CompiledShaderCache.Current.CompileFromFile(filename, "fx_5_0", shaderMacros);
+                    
                     break;
                 }
                 catch (Exception ex)
@@ -163,18 +142,13 @@ namespace DirectX11.Graphics
                         Console.WriteLine(ex.Message);
                         return;
                     }
-                    else
+                    Console.WriteLine("Shader cannot be loaded. Attempt to reload in 3 sec...");
+                    Console.WriteLine(ex.Message);
+
+                    //while (lastWrite == File.GetLastWriteTime(filename))
                     {
+                        System.Threading.Thread.Sleep(3000);
 
-                        Console.WriteLine("Shader cannot be loaded. Attempt to reload in 3 sec...");
-                        Console.WriteLine(ex.Message);
-
-                        //while (lastWrite == File.GetLastWriteTime(filename))
-                        {
-                            System.Threading.Thread.Sleep(3000);
-
-
-                        }
 
                     }
                 }
