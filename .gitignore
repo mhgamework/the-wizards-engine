@@ -86,3 +86,7 @@ Thumbs.db
 /bin/CommonVB.dll
 /bin/CommonVB.pdb
 /bin/CommonVB.xml
+/bin/Binaries/msvcr90d.dll
+/bin/Binaries/Microsoft.VC90.DebugCRT.manifest
+/bin/Binaries/msvcm90d.dll
+/bin/Binaries/msvcp90d.dll
