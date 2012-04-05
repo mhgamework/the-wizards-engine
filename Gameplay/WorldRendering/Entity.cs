@@ -17,11 +17,13 @@ namespace MHGameWork.TheWizards.Model
         {
             WorldMatrix = Matrix.Identity;
             TW.Model.AddObject(this);
+            Visible = true;
         }
 
 
         public IMesh Mesh { get; set; }
         public Matrix WorldMatrix { get; set; }
+        public bool Visible { get; set; }
 
         public ModelContainer.ModelContainer Container { get; private set; }
         public void Initialize(ModelContainer.ModelContainer container)

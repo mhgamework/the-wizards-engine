@@ -8,6 +8,7 @@ namespace MHGameWork.TheWizards.ModelContainer.Synchronization
 {
     /// <summary>
     /// TODO: fix unique id collision
+    /// TODO: finish this
     /// </summary>
     public class VirtualModelSyncer : IVirtualEndpoint
     {

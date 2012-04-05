@@ -69,6 +69,29 @@ namespace MHGameWork.TheWizards.Building
         {
             return new Point3(0, 0, 1);
         }
+
+        public bool Equals(Point3 other)
+        {
+            return other.X == X && other.Y == Y && other.Z == Z;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (obj.GetType() != typeof (Point3)) return false;
+            return Equals((Point3) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int result = X;
+                result = (result*397) ^ Y;
+                result = (result*397) ^ Z;
+                return result;
+            }
+        }
     }               
 }                   
                     

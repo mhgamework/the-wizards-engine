@@ -34,7 +34,7 @@ namespace MHGameWork.TheWizards.Main
         private ModelContainer.ModelContainer container;
         private List<ISimulator> simulators = new List<ISimulator>();
 
-        private ManualResetEvent initializedEvent = new ManualResetEvent(false);
+        private ManualResetEvent runningEvent = new ManualResetEvent(false);
 
         private bool holdLoop = false;
 
@@ -133,7 +133,7 @@ namespace MHGameWork.TheWizards.Main
 
 
 
-            initializedEvent.Set();
+            
 
         }
 
@@ -145,6 +145,7 @@ namespace MHGameWork.TheWizards.Main
 
         void xnaGame_GameLoopEvent(DX11Game obj)
         {
+            runningEvent.Set();
             lock (this)
             {
                 if (!runContinuously)
@@ -214,7 +215,7 @@ namespace MHGameWork.TheWizards.Main
         /// </summary>
         public void StepSingle()
         {
-            WaitUntilInitialized();
+            WaitUntilRunning();
 
             lock (this)
             {
@@ -225,9 +226,9 @@ namespace MHGameWork.TheWizards.Main
             }
         }
 
-        public void WaitUntilInitialized()
+        public void WaitUntilRunning()
         {
-            initializedEvent.WaitOne();
+            runningEvent.WaitOne();
         }
     }
 }

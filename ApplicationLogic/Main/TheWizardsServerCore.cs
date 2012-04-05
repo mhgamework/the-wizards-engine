@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Entity;
+using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Server;
@@ -71,6 +72,11 @@ namespace MHGameWork.TheWizards.Main
 
             gen.BuildFactoriesAssembly();
 
+            setScriptLayerScope();
+
+            new TiledEntity() { Position = new Building.Point3(0, 0, 0) };
+            new TiledEntity() { Position = new Building.Point3(0, 1, 1) };
+            new TiledEntity() { Position = new Building.Point3(0, 1, 2) };
 
 
 
@@ -124,7 +130,7 @@ namespace MHGameWork.TheWizards.Main
 
         public bool IsReady { get; private set; }
 
- 
+
 
 
         private void saveAll()

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DirectX11;
 using DirectX11.Graphics;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.ModelContainer.Synchronization;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.Model
 {
@@ -35,6 +37,17 @@ namespace MHGameWork.TheWizards.Model
             None,
             Specator,
             FirstPerson
+        }
+
+
+        public Ray GetCenterScreenRay()
+        {
+            var ret = new Ray
+                          {
+                              Position = Vector3.TransformCoordinate(Vector3.Zero, ActiveCamera.ViewInverse),
+                              Direction = Vector3.TransformNormal(MathHelper.Forward, ActiveCamera.ViewInverse)
+                          };
+            return ret;
         }
     }
 }

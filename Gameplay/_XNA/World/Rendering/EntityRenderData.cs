@@ -33,6 +33,7 @@ namespace MHGameWork.TheWizards.World.Rendering
             }
 
             element.WorldMatrix = entity.WorldMatrix;
+            element.Visible = entity.Visible;
 
 
         }

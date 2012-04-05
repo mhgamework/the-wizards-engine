@@ -9,6 +9,7 @@ namespace MHGameWork.TheWizards.Player.Client
 {
     /// <summary>
     /// This class implements the IClientPhysicsObject interface, thus represents the client physics object for a player.
+    /// TODO: reintegrate and move to correct place
     /// </summary>
     public class PlayerClientPhysics : IClientPhysicsObject
     {

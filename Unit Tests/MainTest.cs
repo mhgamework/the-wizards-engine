@@ -60,7 +60,7 @@ namespace MHGameWork.TheWizards.Tests
             client.EnableSingleStepMode();
             
             new Thread(client.Run) { Name = "Client" }.Start();
-            client.WaitUntilInitialized();
+            client.WaitUntilRunning();
 
             while (client.XNAGame.Running)
             {
@@ -84,10 +84,10 @@ namespace MHGameWork.TheWizards.Tests
             client2.EnableSingleStepMode();
 
             new Thread(client1.Run) { Name = "Client 1" }.Start();
-            client1.WaitUntilInitialized();
+            client1.WaitUntilRunning();
 
             new Thread(client2.Run) { Name = "Client 2" }.Start();
-            client2.WaitUntilInitialized();
+            client2.WaitUntilRunning();
 
             while (client1.XNAGame.Running || client2.XNAGame.Running)
             {

@@ -8,6 +8,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.Simulation.Synchronization
 {
+    /// <summary>
+    /// This class serializes arbitrary value-types into a string format, and can deserialize them
+    /// </summary>
     public class StringSerializer
     {
         private StringBuilder builder = new StringBuilder();

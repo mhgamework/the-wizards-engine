@@ -7,7 +7,9 @@ using MHGameWork.TheWizards.ServerClient.TWClient;
 
 namespace MHGameWork.TheWizards.Player
 {
-
+    /// <summary>
+    /// TODO: move to correct place
+    /// </summary>
     public class XNATaskQueue : IXNAObject
     {
         private IXNAGame game;
