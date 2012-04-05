@@ -121,7 +121,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             var strm = new DataStream(16 * 4, true, true);
 
-            var multiplier = 3;
+            var multiplier = 2;
             strm.Write(new Half4(new Half(135f / 255f * multiplier), new Half(206f / 255f * multiplier), new Half(235 / 255f * multiplier), new Half(1)));
             strm.Position = 0;
             var dataRectangle = new DataRectangle(16 * 4, strm);

@@ -46,8 +46,10 @@ float4 LuminancePS (	VertexShaderOutput input)  : SV_TARGET0
    
     // calculate the luminance using a weighted average
     float fLuminance = dot(vColor, LUM_CONVERT) ;
-                
+	fLuminance = clamp(fLuminance,0.2f,100);
+    
     float fLogLuminace = log(1e-5 + fLuminance); 
+
         return t(fLogLuminace); //TODO:remove this
     // Output the luminance to the render target
     return float4(fLogLuminace, 1.0f, 0.0f, 0.0f);

@@ -122,8 +122,11 @@ float CalculateCSMShadowTerm(float4 vPositionVS, out int iCurrentSplit, uniform 
     float2 vShadowTexCoord = 0.5 * vPositionLightCS.xy / vPositionLightCS.w + float2(0.5f, 0.5f);
     vShadowTexCoord.x = vShadowTexCoord.x / NUM_SPLITS + fOffset;
     vShadowTexCoord.y = 1.0f - vShadowTexCoord.y;
-        float bias = 0.0002f* vPositionVS.z+0.0003f;
-		bias = 0.0003f*(1-vPositionVS.z);
+
+	//float bias = 0.001f;
+
+        float bias = 0.0001f* vPositionVS.z+0.0003f;
+		bias = 0.0001f*(1-vPositionVS.z);
 	// Get the shadow occlusion factor and output it
 	float fShadowTerm = 0;
 	if (iFilterSize == 2)
@@ -131,7 +134,7 @@ float CalculateCSMShadowTerm(float4 vPositionVS, out int iCurrentSplit, uniform 
 	else
 		fShadowTerm = CalcShadowTermSoftPCF(fLightDepth, vShadowTexCoord, iFilterSize);
 
-
+		
 	return fShadowTerm;
 }
 
