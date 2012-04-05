@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -319,6 +320,15 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             containerB.ClearDirty();
 
 
+        }
+
+        [Test]
+        public void TestStringSerializerEnum()
+        {
+            var s = StringSerializer.Create();
+            var serialized = s.Serialize(FileMode.Create);
+            var deserialized = s.Deserialize(serialized, typeof (FileMode));
+            Assert.AreEqual(FileMode.Create, deserialized);
         }
 
         private IServerPacketTransporter<ChangePacket> createTransporterA()

@@ -41,6 +41,11 @@ namespace MHGameWork.TheWizards.Synchronization
                 return serializers[obj.GetType()](obj);
             }
 
+            if (type.IsEnum)
+            {
+                return serializers[Enum.GetUnderlyingType(type)](obj);
+            }
+
             if (type.IsValueType)
             {
                 try
@@ -73,6 +78,11 @@ namespace MHGameWork.TheWizards.Synchronization
             if (deserializers.ContainsKey(type))
             {
                 return deserializers[type](value);
+            }
+
+            if (type.IsEnum)
+            {
+                return Enum.ToObject(type, deserializers[Enum.GetUnderlyingType(type)](value));
             }
 
 
