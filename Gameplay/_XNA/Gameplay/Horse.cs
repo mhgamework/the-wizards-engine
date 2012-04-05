@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using MHGameWork.TheWizards._XNA.Scripting;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Scripting;
 using Microsoft.Xna.Framework;
 using StillDesign.PhysX;
 
-namespace MHGameWork.TheWizards.Gameplay
+namespace MHGameWork.TheWizards._XNA.Gameplay
 {
     public class Horse : IStateScript
     {

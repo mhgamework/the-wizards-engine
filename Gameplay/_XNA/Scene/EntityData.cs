@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Scripting.API;
+using MHGameWork.TheWizards._XNA.Scripting.API;
 
-namespace MHGameWork.TheWizards.Scene
+namespace MHGameWork.TheWizards._XNA.Scene
 {
     public class EntityData
     {

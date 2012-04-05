@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.Rendering;
 
-namespace MHGameWork.TheWizards.Scene
+namespace MHGameWork.TheWizards._XNA.Scene
 {
     public interface ISceneMeshProvider
     {

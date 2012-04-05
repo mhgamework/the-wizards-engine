@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Scripting;
-using MHGameWork.TheWizards.Scripting.API;
+using MHGameWork.TheWizards._XNA.Scripting;
+using MHGameWork.TheWizards._XNA.Scripting.API;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StillDesign.PhysX;
 
-namespace MHGameWork.TheWizards.Gameplay
+namespace MHGameWork.TheWizards._XNA.Gameplay
 {
-    public class EnergyOrb : Scripting.IStateScript, IScript
+    public class EnergyOrb : TheWizards.Scripting.IStateScript, IScript
     {
         private bool _chargeMode;
         public bool ChargeModeEnabled

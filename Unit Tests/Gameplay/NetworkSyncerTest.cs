@@ -7,8 +7,7 @@ using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
 using MHGameWork.TheWizards.Networking.Server;
-using MHGameWork.TheWizards.Simulation;
-using MHGameWork.TheWizards.Simulation.Synchronization;
+using MHGameWork.TheWizards.Synchronization;
 using NUnit.Framework;
 using SlimDX;
 
@@ -257,7 +256,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             // Enter scope A, step 1
             TW.Model = containerA;
-            new Model.Entity {WorldMatrix = Matrix.Translation(2, 0, 3)};
+            new WorldRendering.Entity {WorldMatrix = Matrix.Translation(2, 0, 3)};
             syncerA.Simulate();
 
             // Enter scope B, step 1

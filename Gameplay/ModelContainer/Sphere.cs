@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11;
+﻿using DirectX11;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Entity.Client;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Model
+namespace MHGameWork.TheWizards.ModelContainer
 {
     public class Sphere : BaseModelObject
     {
-        private Entity ent;
+        private WorldRendering.Entity ent;
         private MeshDynamicPhysicsElement dEl;
 
         public Sphere()
         {
-            ent = new Entity();
+            ent = new WorldRendering.Entity();
 
 
             ent.Mesh = CreateSphereMesh();

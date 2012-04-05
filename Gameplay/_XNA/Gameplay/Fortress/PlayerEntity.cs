@@ -1,11 +1,9 @@
 ﻿using System;
-using MHGameWork.TheWizards.Player;
-using MHGameWork.TheWizards.Scripting.API;
+using MHGameWork.TheWizards._XNA.Scripting.API;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using PlayerController = MHGameWork.TheWizards.GamePlay.PlayerController;
 
-namespace MHGameWork.TheWizards.Gameplay.Fortress
+namespace MHGameWork.TheWizards._XNA.Gameplay.Fortress
 {
     /// <summary>
     /// This represents the Current Player, not any player in the fortress map

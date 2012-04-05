@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards.Building;
 using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.Simulation
+namespace MHGameWork.TheWizards.Tiling
 {
     /// <summary>
     /// This simulator will process user input and allow the player to place/manipulate tiles.
@@ -21,7 +18,7 @@ namespace MHGameWork.TheWizards.Simulation
     {
         private IMesh[] meshes;
 
-        private Model.Entity ghostEntity;
+        private WorldRendering.Entity ghostEntity;
         private TileRotation ghostRotation;
 
         public TileEditorSimulator()
@@ -30,7 +27,7 @@ namespace MHGameWork.TheWizards.Simulation
             meshes[0] = null;
             meshes[1] = GetBarrelMesh(new OBJToRAMMeshConverter(new RAMTextureFactory()));
 
-            ghostEntity = new Model.Entity();
+            ghostEntity = new WorldRendering.Entity();
 
         }
 

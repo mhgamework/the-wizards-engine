@@ -1,10 +1,9 @@
-﻿using System;
-using MHGameWork.TheWizards.ModelContainer;
-using MHGameWork.TheWizards.ModelContainer.Synchronization;
+﻿using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Synchronization;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Model
+namespace MHGameWork.TheWizards.WorldRendering
 {
     /// <summary>
     /// Responsible for representing a independent object in the World. It is not part of any greater system, like the building/terrain/trees

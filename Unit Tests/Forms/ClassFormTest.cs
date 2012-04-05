@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Threading;
 using MHGameWork.TheWizards.Forms;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Scene;
 using MHGameWork.TheWizards.Wpf;
 using NUnit.Framework;
 

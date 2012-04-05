@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Reflection;
-using SlimDX;
 
-namespace MHGameWork.TheWizards.Simulation.Synchronization
+namespace MHGameWork.TheWizards.Synchronization
 {
     /// <summary>
     /// This class serializes arbitrary value-types into a string format, and can deserialize them

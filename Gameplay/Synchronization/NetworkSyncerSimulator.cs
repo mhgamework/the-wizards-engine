@@ -4,11 +4,10 @@ using System.Linq;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Collections;
 using MHGameWork.TheWizards.ModelContainer;
-using MHGameWork.TheWizards.ModelContainer.Synchronization;
 using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.Reflection;
 
-namespace MHGameWork.TheWizards.Simulation.Synchronization
+namespace MHGameWork.TheWizards.Synchronization
 {
     /// <summary>
     /// This simulator is responsible for sending local changes to the remotes, and then accepting

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace MHGameWork.TheWizards.Gameplay
+namespace MHGameWork.TheWizards._XNA.Gameplay
 {
     public class PlayerInputClient
     {

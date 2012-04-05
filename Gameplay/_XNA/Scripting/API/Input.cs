@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
+﻿using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace MHGameWork.TheWizards.Scripting.API
+namespace MHGameWork.TheWizards._XNA.Scripting.API
 {
     public class Input
     {

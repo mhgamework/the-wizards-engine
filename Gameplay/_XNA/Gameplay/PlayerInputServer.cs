@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.GamePlay;
-using MHGameWork.TheWizards.Networking;
+﻿using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
 using MHGameWork.TheWizards.Networking.Server;
 
-namespace MHGameWork.TheWizards.Gameplay
+namespace MHGameWork.TheWizards._XNA.Gameplay
 {
     public class PlayerInputServer
     {

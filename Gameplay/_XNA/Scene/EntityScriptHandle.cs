@@ -1,11 +1,10 @@
 ﻿using System;
-using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards._XNA.Gameplay;
+using MHGameWork.TheWizards._XNA.Scripting.API;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Scripting.API;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
-namespace MHGameWork.TheWizards.Scene
+namespace MHGameWork.TheWizards._XNA.Scene
 {
     public class EntityScriptHandle : APIEntity, IEntityHandle
     {

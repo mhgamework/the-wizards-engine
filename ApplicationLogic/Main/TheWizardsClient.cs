@@ -4,16 +4,16 @@ using System.IO;
 using System.Threading;
 using DirectX11;
 using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
 using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;
+using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Simulation;
-using MHGameWork.TheWizards.Simulation.Synchronization;
+using MHGameWork.TheWizards.Synchronization;
+using MHGameWork.TheWizards.WorldRendering;
 
 namespace MHGameWork.TheWizards.Main
 {

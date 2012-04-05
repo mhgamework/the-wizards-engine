@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Utilities;
 
-namespace MHGameWork.TheWizards.ModelContainer.Synchronization
+namespace MHGameWork.TheWizards.Synchronization
 {
     /// <summary>
     /// TODO: fix unique id collision
@@ -12,12 +13,12 @@ namespace MHGameWork.TheWizards.ModelContainer.Synchronization
     /// </summary>
     public class VirtualModelSyncer : IVirtualEndpoint
     {
-        private readonly ModelContainer container;
+        private readonly ModelContainer.ModelContainer container;
         private readonly byte unqiueSyncerId;
         private IVirtualEndpoint remoteEndPoint;
 
 
-        public VirtualModelSyncer(ModelContainer container, byte unqiueSyncerID)
+        public VirtualModelSyncer(ModelContainer.ModelContainer container, byte unqiueSyncerID)
         {
             this.container = container;
             unqiueSyncerId = unqiueSyncerID;
@@ -40,7 +41,7 @@ namespace MHGameWork.TheWizards.ModelContainer.Synchronization
         {
             localChanges.Clear();
             int length;
-            ModelContainer.ObjectChange[] array;
+            ModelContainer.ModelContainer.ObjectChange[] array;
             container.GetEntityChanges(out array, out length);
 
             for (int i = 0; i < length; i++)
@@ -98,13 +99,13 @@ namespace MHGameWork.TheWizards.ModelContainer.Synchronization
 
                 switch (change.ChangeType)
                 {
-                    case ModelContainer.WorldChangeType.Added:
+                    case ModelContainer.ModelContainer.WorldChangeType.Added:
                         applyObjectAdded(change);
                         break;
-                    case ModelContainer.WorldChangeType.Modified:
+                    case ModelContainer.ModelContainer.WorldChangeType.Modified:
                         applyObjectModified(change);
                         break;
-                    case ModelContainer.WorldChangeType.Removed:
+                    case ModelContainer.ModelContainer.WorldChangeType.Removed:
                         applyObjectRemoved(change);
                         break;
                     default:
@@ -115,7 +116,7 @@ namespace MHGameWork.TheWizards.ModelContainer.Synchronization
         public class SyncChange
         {
             public SyncedObject Object;
-            public ModelContainer.WorldChangeType ChangeType;
+            public ModelContainer.ModelContainer.WorldChangeType ChangeType;
         }
 
         private void applyObjectAdded(SyncChange change)

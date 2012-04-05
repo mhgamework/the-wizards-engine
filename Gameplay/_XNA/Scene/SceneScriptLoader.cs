@@ -5,16 +5,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
+using MHGameWork.TheWizards._XNA.Scripting.API;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Player;
-using MHGameWork.TheWizards.Scripting.API;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.Scene
+namespace MHGameWork.TheWizards._XNA.Scene
 {
     public class SceneScriptLoader : IXNAObject
     {

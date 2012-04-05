@@ -5,15 +5,14 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Simulation;
-using MHGameWork.TheWizards.Simulation.Synchronization;
+using MHGameWork.TheWizards.Synchronization;
+using MHGameWork.TheWizards.Tiling;
 using MHGameWork.TheWizards.XML;
 
 namespace MHGameWork.TheWizards.Main

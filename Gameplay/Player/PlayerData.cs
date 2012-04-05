@@ -5,7 +5,7 @@ using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Model
+namespace MHGameWork.TheWizards.Player
 {
     /// <summary>
     /// Functionality
@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.Model
 
         public PlayerData()
         {
-            Entity = new Entity();
+            Entity = new WorldRendering.Entity();
 
             Entity.Mesh = GetBarrelMesh(new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
         }
@@ -33,8 +33,8 @@ namespace MHGameWork.TheWizards.Model
             }
         }
 
-        private Model.Entity entity;
-        public Model.Entity Entity
+        private WorldRendering.Entity entity;
+        public WorldRendering.Entity Entity
         {
             get { return entity; }
             set

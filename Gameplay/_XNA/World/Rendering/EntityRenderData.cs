@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Rendering.Deferred;
+﻿using MHGameWork.TheWizards.Rendering.Deferred;
 
-namespace MHGameWork.TheWizards.World.Rendering
+namespace MHGameWork.TheWizards._XNA.World.Rendering
 {
     public class EntityRenderData
     {
-        private readonly Model.Entity entity;
+        private readonly WorldRendering.Entity entity;
         private readonly DeferredRenderer renderer;
 
         private DeferredMeshRenderElement element;
 
-        public EntityRenderData(Model.Entity entity, DeferredRenderer renderer)
+        public EntityRenderData(WorldRendering.Entity entity, DeferredRenderer renderer)
         {
             this.entity = entity;
             this.renderer = renderer;

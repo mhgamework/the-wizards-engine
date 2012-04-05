@@ -1,23 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Building;
-using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.ModelContainer;
-using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Model
+namespace MHGameWork.TheWizards.Tiling
 {
     public class TiledEntity : BaseModelObject
     {
         public static readonly Vector3 TileSize = new Vector3(3, 4, 3);
 
-        private Entity entity;
+        private WorldRendering.Entity entity;
 
         private Point3 position;
         public Point3 Position
@@ -79,7 +73,7 @@ namespace MHGameWork.TheWizards.Model
 
         public TiledEntity()
         {
-            entity = new Entity();
+            entity = new WorldRendering.Entity();
 
         }
 

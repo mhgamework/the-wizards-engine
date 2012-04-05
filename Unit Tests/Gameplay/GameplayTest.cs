@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using MHGameWork.TheWizards.Gameplay;
-using MHGameWork.TheWizards.Gameplay.Fortress;
+using MHGameWork.TheWizards._XNA.Gameplay;
+using MHGameWork.TheWizards._XNA.Scripting;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
 using MHGameWork.TheWizards.Networking.Server;
@@ -21,7 +20,7 @@ using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
 using StillDesign.PhysX;
 using DataPacket = MHGameWork.TheWizards.Networking.Packets.DataPacket;
-using PlayerController = MHGameWork.TheWizards.GamePlay.PlayerController;
+using PlayerController = MHGameWork.TheWizards._XNA.Gameplay.PlayerController;
 
 namespace MHGameWork.TheWizards.Tests.Gameplay
 {

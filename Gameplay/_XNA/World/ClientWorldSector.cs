@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MHGameWork.TheWizards.World
+﻿namespace MHGameWork.TheWizards._XNA.World
 {
     public class ClientWorldSector
     {

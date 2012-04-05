@@ -1,13 +1,10 @@
 using System;
-using System.Diagnostics;
 using DirectX11.Graphics;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.Player;
-using Microsoft.Xna.Framework;
 using ICamera = MHGameWork.TheWizards.ServerClient.ICamera;
 
-namespace MHGameWork.TheWizards.Gameplay
+namespace MHGameWork.TheWizards._XNA.Gameplay
 {
     public class PlayerThirdPersonCamera : ICamera, IXNAObject
     {

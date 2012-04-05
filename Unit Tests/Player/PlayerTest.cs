@@ -1,9 +1,7 @@
 using System;
+using MHGameWork.TheWizards._XNA.Gameplay;
 using MHGameWork.TheWizards.Client;
-using MHGameWork.TheWizards.Gameplay;
-using MHGameWork.TheWizards.GamePlay;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Player.Client;

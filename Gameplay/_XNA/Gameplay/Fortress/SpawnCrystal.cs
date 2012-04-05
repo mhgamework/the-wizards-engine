@@ -1,8 +1,8 @@
 ﻿using System;
-using MHGameWork.TheWizards.Scripting.API;
+using MHGameWork.TheWizards._XNA.Scripting.API;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.Gameplay.Fortress
+namespace MHGameWork.TheWizards._XNA.Gameplay.Fortress
 {
     public class SpawnCrystal : IScript, IUpdateHandler
     {

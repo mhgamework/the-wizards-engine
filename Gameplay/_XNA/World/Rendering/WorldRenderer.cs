@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Rendering.Deferred;
 
-namespace MHGameWork.TheWizards.World.Rendering
+namespace MHGameWork.TheWizards._XNA.World.Rendering
 {
     /// <summary>
     /// This class is responsible for rendering a world. It will manage all states on the renderer(s). 
@@ -14,7 +13,7 @@ namespace MHGameWork.TheWizards.World.Rendering
     {
         private readonly ModelContainer.ModelContainer world;
         private readonly DeferredRenderer renderer;
-        private Dictionary<Model.Entity, EntityRenderData> entityRenderDataMap = new Dictionary<Model.Entity, EntityRenderData>();
+        private Dictionary<WorldRendering.Entity, EntityRenderData> entityRenderDataMap = new Dictionary<WorldRendering.Entity, EntityRenderData>();
         public WorldRenderer(ModelContainer.ModelContainer world, DeferredRenderer renderer)
         {
             this.world = world;
@@ -33,10 +32,10 @@ namespace MHGameWork.TheWizards.World.Rendering
                 var change = objectChanges[i];
 
 
-                if (!(change.ModelObject is Model.Entity))
+                if (!(change.ModelObject is WorldRendering.Entity))
                     continue;
 
-                var ent = (Model.Entity)change.ModelObject;
+                var ent = (WorldRendering.Entity)change.ModelObject;
 
                 switch (change.ChangeType)
                 {

@@ -1,10 +1,9 @@
-﻿using MHGameWork.TheWizards.Model;
+﻿using MHGameWork.TheWizards._XNA.World.Rendering;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.World.Rendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Simulation
+namespace MHGameWork.TheWizards.WorldRendering
 {
     public class SimpleWorldRenderer : ISimulator
     {

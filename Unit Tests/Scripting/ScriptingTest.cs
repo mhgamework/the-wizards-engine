@@ -6,17 +6,17 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
+using MHGameWork.TheWizards._XNA.Gameplay;
+using MHGameWork.TheWizards._XNA.Scene;
+using MHGameWork.TheWizards._XNA.Scripting;
 using MHGameWork.TheWizards.Client;
-using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Scene;
 using MHGameWork.TheWizards.Scripting;
-using MHGameWork.TheWizards.Scripting.API;
 using MHGameWork.TheWizards.Tests.Gameplay;
 using MHGameWork.TheWizards.Tests.OBJParser;
 using MHGameWork.TheWizards.Tests.Rendering;
@@ -105,7 +105,7 @@ namespace MHGameWork.TheWizards.Tests.Scripting
         {
             var twGame = new TestTWGame();
 
-            var scene = new TheWizards.Scene.Scene(twGame.Renderer, twGame.PhysicsFactory);
+            var scene = new _XNA.Scene.Scene(twGame.Renderer, twGame.PhysicsFactory);
             twGame.Game.AddXNAObject(scene);
 
             var loader = new SceneScriptLoader(scene);
@@ -113,7 +113,7 @@ namespace MHGameWork.TheWizards.Tests.Scripting
             var fi = new FileInfo(TWDir.Scripts + "/TestScript.cs");
 
 
-            var ent = new TheWizards.Scene.Entity(scene);
+            var ent = new _XNA.Scene.Entity(scene);
             ent.Mesh = twGame.BarrelMesh;
 
             loader.LoadScript(ent, fi);
@@ -151,7 +151,7 @@ namespace MHGameWork.TheWizards.Tests.Scripting
             twGame.Game.AddXNAObject(controller);
             twGame.Game.SetCamera(controller.ThirdPersonCamera);
 
-            var scene = new TheWizards.Scene.Scene(twGame.Renderer, twGame.PhysicsFactory);
+            var scene = new _XNA.Scene.Scene(twGame.Renderer, twGame.PhysicsFactory);
             var ent = scene.CreateEntity();
             ent.Mesh = twGame.BarrelMesh;
             ent.Transformation = new Transformation(Vector3.Up * 0.5f + Vector3.Forward * 3);
@@ -203,7 +203,7 @@ namespace MHGameWork.TheWizards.Tests.Scripting
             twGame.Game.AddXNAObject(controller);
             twGame.Game.SetCamera(controller.ThirdPersonCamera);
 
-            var scene = new TheWizards.Scene.Scene(twGame.Renderer, twGame.PhysicsFactory);
+            var scene = new _XNA.Scene.Scene(twGame.Renderer, twGame.PhysicsFactory);
             var ent = scene.CreateEntity();
             ent.Mesh = RenderingTest.CreateMeshFromObj(new OBJToRAMMeshConverter(new RAMTextureFactory()),
                                                        TestFiles.StorageHouseDoorLeftObj,

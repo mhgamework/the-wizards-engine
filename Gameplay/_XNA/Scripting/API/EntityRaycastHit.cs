@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.Scripting.API
+namespace MHGameWork.TheWizards._XNA.Scripting.API
 {
     public struct EntityRaycastHit
     {

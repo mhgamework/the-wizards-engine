@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using MHGameWork.TheWizards.Graphics;
 
-namespace MHGameWork.TheWizards.Scripting
+namespace MHGameWork.TheWizards._XNA.Scripting
 {
     /// <summary>
     /// This is a basic test implementation of a scriptrunner

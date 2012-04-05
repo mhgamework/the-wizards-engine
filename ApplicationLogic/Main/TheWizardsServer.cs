@@ -5,9 +5,7 @@ using System.IO;
 using DirectX11;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Packets;
@@ -17,8 +15,6 @@ using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scripting;
-using MHGameWork.TheWizards.Simulation;
-using MHGameWork.TheWizards.Simulation.Synchronization;
 using MHGameWork.TheWizards.World;
 using MHGameWork.TheWizards.World.Static;
 using MHGameWork.TheWizards.XML;
@@ -29,7 +25,7 @@ using StillDesign.PhysX;
 using TreeGenerator.EngineSynchronisation;
 using TreeGenerator.LodEngine;
 using TreeGenerator.TreeEngine;
-using PlayerController = MHGameWork.TheWizards.GamePlay.PlayerController;
+using PlayerController = MHGameWork.TheWizards._XNA.Gameplay.PlayerController;
 
 namespace MHGameWork.TheWizards.Main
 {

@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards._XNA.Gameplay;
+using MHGameWork.TheWizards._XNA.Scripting.API;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Scripting.API;
-using MHGameWork.TheWizards.ServerClient.Editor;
 using Microsoft.Xna.Framework;
 using StillDesign.PhysX;
 using Ray = Microsoft.Xna.Framework.Ray;
 
-namespace MHGameWork.TheWizards.Scene
+namespace MHGameWork.TheWizards._XNA.Scene
 {
 
     /// <summary>

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MHGameWork.TheWizards.Scripting.API
+﻿namespace MHGameWork.TheWizards._XNA.Scripting.API
 {
     public interface IUpdateHandler
     {

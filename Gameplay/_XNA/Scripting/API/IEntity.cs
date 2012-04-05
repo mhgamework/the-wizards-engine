@@ -1,7 +1,7 @@
 ﻿using MHGameWork.TheWizards.Rendering;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.Scripting.API
+namespace MHGameWork.TheWizards._XNA.Scripting.API
 {
     /// <summary>
     /// This represents an entity in the script API

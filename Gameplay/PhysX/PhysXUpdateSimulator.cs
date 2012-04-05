@@ -1,8 +1,6 @@
-﻿using System;
-using MHGameWork.TheWizards.Model;
-using MHGameWork.TheWizards.ModelContainer;
+﻿using MHGameWork.TheWizards.ModelContainer;
 
-namespace MHGameWork.TheWizards.Simulation
+namespace MHGameWork.TheWizards.PhysX
 {
     /// <summary>
     /// This simulator pushes the changes from PhysX into the model

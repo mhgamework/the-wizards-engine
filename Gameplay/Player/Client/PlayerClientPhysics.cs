@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards._XNA.Gameplay;
 using MHGameWork.TheWizards.Client;
-using MHGameWork.TheWizards.GamePlay;
 using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Player.Client

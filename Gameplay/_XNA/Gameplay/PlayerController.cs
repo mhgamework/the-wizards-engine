@@ -1,21 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using DirectX11;
-using MHGameWork.TheWizards.Gameplay;
-using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.Player;
-using MHGameWork.TheWizards.Scripting;
-using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.World;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using StillDesign.PhysX;
-using IDisposable = StillDesign.PhysX.IDisposable;
 
-namespace MHGameWork.TheWizards.GamePlay
+namespace MHGameWork.TheWizards._XNA.Gameplay
 {
     /// <summary>
     /// The outline of this class is not strictly enough defined, it handles some of the PhysX related stuff

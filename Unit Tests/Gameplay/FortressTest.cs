@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.Gameplay;
-using MHGameWork.TheWizards.Gameplay.Fortress;
+using MHGameWork.TheWizards._XNA.Gameplay;
+using MHGameWork.TheWizards._XNA.Gameplay.Fortress;
+using MHGameWork.TheWizards._XNA.Scene;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Scene;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 
@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             var game = new TestTWGame();
 
-            var scene = new TheWizards.Scene.Scene(game.Renderer, game.PhysicsFactory);
+            var scene = new _XNA.Scene.Scene(game.Renderer, game.PhysicsFactory);
             scene.MeshProvider = new FortressMeshProvider(game);
             game.Game.AddXNAObject(scene);
             var psc = new PlayerSceneComponent(scene);
@@ -50,7 +50,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             var game = new TestTWGame();
 
-            var scene = new TheWizards.Scene.Scene(game.Renderer, game.PhysicsFactory);
+            var scene = new _XNA.Scene.Scene(game.Renderer, game.PhysicsFactory);
             game.Game.AddXNAObject(scene);
             var psc = new PlayerSceneComponent(scene);
             game.Game.AddXNAObject(psc);
@@ -87,7 +87,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             var game = new TestTWGame();
 
-            var scene = new TheWizards.Scene.Scene(game.Renderer, game.PhysicsFactory);
+            var scene = new _XNA.Scene.Scene(game.Renderer, game.PhysicsFactory);
             game.Game.AddXNAObject(scene);
 
             game.Game.UpdateEvent += delegate
@@ -114,7 +114,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         {
             var game = new TestTWGame();
 
-            var scene = new TheWizards.Scene.Scene(game.Renderer, game.PhysicsFactory);
+            var scene = new _XNA.Scene.Scene(game.Renderer, game.PhysicsFactory);
             game.Game.AddXNAObject(scene);
             var psc = new PlayerSceneComponent(scene);
             game.Game.AddXNAObject(psc);

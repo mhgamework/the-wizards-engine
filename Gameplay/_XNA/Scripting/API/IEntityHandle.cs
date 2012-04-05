@@ -1,10 +1,9 @@
 ﻿using System;
-using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards._XNA.Gameplay;
 using MHGameWork.TheWizards.Rendering;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
-namespace MHGameWork.TheWizards.Scripting.API
+namespace MHGameWork.TheWizards._XNA.Scripting.API
 {
     /// <summary>
     /// This represents an entity in the API, but also gives access to all scripting functions

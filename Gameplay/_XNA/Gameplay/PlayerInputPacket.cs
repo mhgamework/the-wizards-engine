@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards.Networking;
-using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.Gameplay
+namespace MHGameWork.TheWizards._XNA.Gameplay
 {
     public struct PlayerInputPacket : INetworkPacket
     {

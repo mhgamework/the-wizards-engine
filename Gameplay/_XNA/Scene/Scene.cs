@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+using MHGameWork.TheWizards._XNA.Scripting.API;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Scripting.API;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StillDesign.PhysX;
 using Ray = Microsoft.Xna.Framework.Ray;
 
-namespace MHGameWork.TheWizards.Scene
+namespace MHGameWork.TheWizards._XNA.Scene
 {
     /// <summary>
     /// This is NOT a data class, 
@@ -309,9 +307,9 @@ namespace MHGameWork.TheWizards.Scene
 
             }
 
-            public Scripting.API.EntityRaycastHit ToAPIRaycastHit()
+            public TheWizards.Scripting.API.EntityRaycastHit ToAPIRaycastHit()
             {
-                return new Scripting.API.EntityRaycastHit
+                return new TheWizards.Scripting.API.EntityRaycastHit
                 {
                     Distance = Distance,
                     Entity = Entity.APIEntity,

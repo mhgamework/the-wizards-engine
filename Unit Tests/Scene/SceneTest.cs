@@ -17,7 +17,7 @@ namespace MHGameWork.TheWizards.Tests.Scene
         {
             var game = new TestTWGame();
 
-            var scene = new TheWizards.Scene.Scene(game.Renderer, game.PhysicsFactory);
+            var scene = new _XNA.Scene.Scene(game.Renderer, game.PhysicsFactory);
             game.Game.AddXNAObject(scene);
             var ent = scene.CreateEntity();
             ent.Mesh = game.BarrelMesh;

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using StillDesign.PhysX;
 
-namespace MHGameWork.TheWizards.Scripting.API
+namespace MHGameWork.TheWizards._XNA.Scripting.API
 {
     /// <summary>
     /// This is currently for use with the RegisterContact function in the EntityHandle

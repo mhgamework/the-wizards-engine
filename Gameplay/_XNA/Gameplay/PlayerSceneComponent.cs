@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using MHGameWork.TheWizards._XNA.Scene;
+using MHGameWork.TheWizards._XNA.Scripting;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.Player;
-using MHGameWork.TheWizards.Scene;
-using MHGameWork.TheWizards.Scripting;
-using PlayerController = MHGameWork.TheWizards.GamePlay.PlayerController;
 
-namespace MHGameWork.TheWizards.Gameplay
+namespace MHGameWork.TheWizards._XNA.Gameplay
 {
     public class PlayerSceneComponent : IXNAObject
     {
@@ -45,7 +40,7 @@ namespace MHGameWork.TheWizards.Gameplay
             return thirdPersonCamera;
         }
 
-        public void RaiseUseEvent(Scripting.API.IEntity entity, IPlayer player)
+        public void RaiseUseEvent(TheWizards.Scripting.API.IEntity entity, IPlayer player)
         {
             var ent = (APIEntity)entity;
             ent.Entity.RaisePlayerUse(player);

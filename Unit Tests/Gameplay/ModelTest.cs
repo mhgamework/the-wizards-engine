@@ -1,9 +1,11 @@
 ﻿using System.IO;
 using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.Model;
+using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.OBJParser;
+using MHGameWork.TheWizards.PhysX;
+using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Simulation;
+using MHGameWork.TheWizards.WorldRendering;
 using NUnit.Framework;
 using SlimDX;
 
@@ -25,7 +27,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         {
             var container = new ModelContainer.ModelContainer();
 
-            var ent = new TheWizards.Model.Entity();
+            var ent = new WorldRendering.Entity();
 
             ent.Mesh = new RAMMesh();
 
@@ -46,7 +48,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             var game = new LocalGame();
 
-            var ent = new TheWizards.Model.Entity();
+            var ent = new WorldRendering.Entity();
 
             mesh = Sphere.CreateSphereMesh();
             ent.Mesh = mesh;
@@ -75,7 +77,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             var game = new LocalGame();
 
-            new Model.Entity();
+            new WorldRendering.Entity();
 
             game
                 .AddSimulator(new SimpleWorldRenderer());
@@ -89,7 +91,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         {
             var game = new LocalGame();
 
-            var ent = new TheWizards.Model.Entity();
+            var ent = new WorldRendering.Entity();
             ent.Mesh = mesh;
 
             var player = new PlayerData();

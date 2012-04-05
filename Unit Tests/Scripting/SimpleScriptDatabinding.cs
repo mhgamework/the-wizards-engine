@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.Scene;
-using MHGameWork.TheWizards.Scripting.API;
+using MHGameWork.TheWizards._XNA.Scripting.API;
 using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Tests.Scripting

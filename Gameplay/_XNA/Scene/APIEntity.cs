@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using MHGameWork.TheWizards._XNA.Scripting.API;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Scripting.API;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.Scene
+namespace MHGameWork.TheWizards._XNA.Scene
 {
     public class APIEntity : IEntity
     {

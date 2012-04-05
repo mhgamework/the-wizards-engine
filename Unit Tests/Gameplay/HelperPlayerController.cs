@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards._XNA.Gameplay;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Model;
 using MHGameWork.TheWizards.Player;
-using PlayerController = MHGameWork.TheWizards.GamePlay.PlayerController;
+using PlayerController = MHGameWork.TheWizards._XNA.Gameplay.PlayerController;
 
 namespace MHGameWork.TheWizards.Tests.Gameplay
 {

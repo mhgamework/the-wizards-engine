@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
+﻿using MHGameWork.TheWizards.Graphics;
 using StillDesign.PhysX;
 
-namespace MHGameWork.TheWizards.Scripting
+namespace MHGameWork.TheWizards._XNA.Scripting
 {
     /// <summary>
     /// This class is the facade between the scripts and the rest of the wizards.
