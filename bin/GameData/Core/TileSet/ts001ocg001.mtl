@@ -1,5 +1,18 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 31.03.2012 13:33:46
+# File Created: 04.04.2012 18:17:09
+
+newmtl Walls_Brick01
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Kd maps\BrickOldSharp0264_23_S_colored.jpg
 
 newmtl Metal001
 	Ns 10.000000
@@ -27,16 +40,3 @@ newmtl Tiles01
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
 	map_Kd maps\TilesPlain0069_11_S.jpg
-
-newmtl Walls_Brick01
-	Ns 10.000000
-	Ni 1.500000
-	d 1.000000
-	Tr 0.000000
-	Tf 1.000000 1.000000 1.000000 
-	illum 2
-	Ka 0.588000 0.588000 0.588000
-	Kd 0.588000 0.588000 0.588000
-	Ks 0.000000 0.000000 0.000000
-	Ke 0.000000 0.000000 0.000000
-	map_Kd maps\BrickOldSharp0264_23_S_colored.jpg
