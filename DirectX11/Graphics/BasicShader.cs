@@ -131,7 +131,7 @@ namespace DirectX11.Graphics
                 try
                 {
                     bytecode = CompiledShaderCache.Current.CompileFromFile(filename, "fx_5_0", shaderMacros);
-                    
+                    shaderDependencies = CompiledShaderCache.Current.LastCompiledFiles;
                     break;
                 }
                 catch (Exception ex)
