@@ -107,9 +107,12 @@ namespace MHGameWork.TheWizards.Tiling
             var pos = ray.Position + ray.Direction * dist.Value;
 
             var ret = new Point3();
-            ret.X = (int)Math.Round(pos.X / TiledEntity.TileSize.X);
-            ret.Y = (int)Math.Round(pos.Y / TiledEntity.TileSize.Y);
-            ret.Z = (int)Math.Round(pos.Z / TiledEntity.TileSize.Z);
+            //ret.X = (int)Math.Round(pos.X / TiledEntity.TileSize.X);
+            //ret.Y = (int)Math.Round(pos.Y / TiledEntity.TileSize.Y);
+            //ret.Z = (int)Math.Round(pos.Z / TiledEntity.TileSize.Z);
+            ret.X = (int)Math.Floor(pos.X / TiledEntity.TileSize.X);
+            ret.Y = 0;
+            ret.Z = (int)Math.Floor(pos.Z / TiledEntity.TileSize.Z);
 
             return ret;
         }
