@@ -23,33 +23,13 @@ namespace MHGameWork.TheWizards.Tiling
 
         public TileEditorSimulator()
         {
-            meshes = new IMesh[2];
+            meshes = new IMesh[8];
             meshes[0] = null;
-            meshes[1] = GetBarrelMesh(new OBJToRAMMeshConverter(new RAMTextureFactory()));
+            meshes[1] = MeshFactory.Load("Core\\TileSet\\ts001sg001");
 
             ghostEntity = new WorldRendering.Entity();
 
         }
-
-        public static string BarrelObj { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\TileSet\ts001sg001.obj"; } }
-        public static string BarrelMtl { get { return TWDir.GameData.CreateSubdirectory("Core") + @"\TileSet\ts001sg001.mtl"; } }
-
-        public static RAMMesh GetBarrelMesh(OBJToRAMMeshConverter c)
-        {
-            var fsMat = new FileStream(BarrelMtl, FileMode.Open);
-
-            var importer = new ObjImporter();
-            importer.AddMaterialFileStream("ts001sg001.mtl", fsMat);
-
-            importer.ImportObjFile(BarrelObj);
-
-            var meshes = c.CreateMeshesFromObjects(importer);
-
-            fsMat.Close();
-
-            return meshes[0];
-        }
-
         public void Simulate()
         {
             var cursorTilePosition = getCursorTilePosition();
@@ -66,6 +46,30 @@ namespace MHGameWork.TheWizards.Tiling
             if (TW.Game.Keyboard.IsKeyPressed(Key.D2))
             {
                 setCurrentMesh(meshes[1]);
+            }
+            if (TW.Game.Keyboard.IsKeyPressed(Key.D3))
+            {
+                setCurrentMesh(meshes[2]);
+            }
+            if (TW.Game.Keyboard.IsKeyPressed(Key.D4))
+            {
+                setCurrentMesh(meshes[3]);
+            }
+            if (TW.Game.Keyboard.IsKeyPressed(Key.D5))
+            {
+                setCurrentMesh(meshes[4]);
+            }
+            if (TW.Game.Keyboard.IsKeyPressed(Key.D6))
+            {
+                setCurrentMesh(meshes[5]);
+            }
+            if (TW.Game.Keyboard.IsKeyPressed(Key.D7))
+            {
+                setCurrentMesh(meshes[6]);
+            }
+            if (TW.Game.Keyboard.IsKeyPressed(Key.D8))
+            {
+                setCurrentMesh(meshes[7]);
             }
             if (TW.Game.Mouse.LeftMouseJustPressed)
             {

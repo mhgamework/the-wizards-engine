@@ -92,6 +92,9 @@
     <Compile Include="Building\Point3.cs" />
     <Compile Include="Building\WallPlacer.cs" />
     <Compile Include="Building\WallType.cs" />
+    <Compile Include="WorldRendering\MeshFactory.cs" />
+    <Compile Include="WorldRendering\RenderingModel.cs" />
+    <Compile Include="WorldRendering\SimpleMeshFactory.cs" />
     <Compile Include="_XNA\Gameplay\FireMove.cs" />
     <Compile Include="_XNA\Gameplay\EnergyOrb.cs" />
     <Compile Include="_XNA\Gameplay\Fortress\Minion.cs" />
@@ -183,7 +186,9 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="doc.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

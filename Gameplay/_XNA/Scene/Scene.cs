@@ -307,9 +307,9 @@ namespace MHGameWork.TheWizards._XNA.Scene
 
             }
 
-            public TheWizards.Scripting.API.EntityRaycastHit ToAPIRaycastHit()
+            public _XNA.Scripting.API.EntityRaycastHit ToAPIRaycastHit()
             {
-                return new TheWizards.Scripting.API.EntityRaycastHit
+                return new _XNA.Scripting.API.EntityRaycastHit
                 {
                     Distance = Distance,
                     Entity = Entity.APIEntity,

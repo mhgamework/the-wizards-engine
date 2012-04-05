@@ -1,6 +1,7 @@
 ﻿using System;
 using MHGameWork.TheWizards._XNA.Scene;
 using MHGameWork.TheWizards._XNA.Scripting;
+using MHGameWork.TheWizards._XNA.Scripting.API;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Player;
 
@@ -40,7 +41,7 @@ namespace MHGameWork.TheWizards._XNA.Gameplay
             return thirdPersonCamera;
         }
 
-        public void RaiseUseEvent(TheWizards.Scripting.API.IEntity entity, IPlayer player)
+        public void RaiseUseEvent(IEntity entity, IPlayer player)
         {
             var ent = (APIEntity)entity;
             ent.Entity.RaisePlayerUse(player);
