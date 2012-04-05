@@ -12,7 +12,7 @@ namespace MHGameWork.TheWizards.Entity
     public class RAMMesh : IMesh
     {
         private MeshCoreData coreData = new MeshCoreData();
-        public Guid Guid { get; private set; }
+        public Guid Guid { get; set; }
 
         public RAMMesh()
         {

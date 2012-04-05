@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.Collections;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.Reflection;
+using MHGameWork.TheWizards.WorldRendering;
 
 namespace MHGameWork.TheWizards.Synchronization
 {
@@ -339,7 +340,11 @@ namespace MHGameWork.TheWizards.Synchronization
                 return true;
             }
             if (typeof(IAsset).IsAssignableFrom(type))
+            {
+                deserialized = TW.Model.GetSingleton<RenderingModel>().AssetFactory.GetAsset(type, Guid.Parse(value));
                 return true;
+
+            }
 
 
             deserialized = stringSerializer.Deserialize(value, type);

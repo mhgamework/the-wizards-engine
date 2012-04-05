@@ -13,6 +13,7 @@ using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Synchronization;
+using MHGameWork.TheWizards.Tiling;
 using MHGameWork.TheWizards.WorldRendering;
 
 namespace MHGameWork.TheWizards.Main
@@ -117,6 +118,7 @@ namespace MHGameWork.TheWizards.Main
 
             this
                 .AddSimulator(new LocalPlayerSimulator(player)) 
+                .AddSimulator(new TileEditorSimulator())
                 .AddSimulator(new NetworkSyncerSimulator(transporter))
                 .AddSimulator(new ThirdPersonCameraSimulator())
                 .AddSimulator(new SimpleWorldRenderer());

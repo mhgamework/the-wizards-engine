@@ -16,7 +16,9 @@ namespace MHGameWork.TheWizards.WorldRendering
         public RenderingModel()
         {
             MeshFactory = new SimpleMeshFactory();
+            AssetFactory = new SimpleAssetFactory();
         }
         public SimpleMeshFactory MeshFactory { get; private set; }
+        public SimpleAssetFactory AssetFactory { get; private set; }
     }
 }

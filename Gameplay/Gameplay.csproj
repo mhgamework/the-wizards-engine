@@ -95,6 +95,7 @@
     <Compile Include="Tiling\TileRotationExtension.cs" />
     <Compile Include="WorldRendering\MeshFactory.cs" />
     <Compile Include="WorldRendering\RenderingModel.cs" />
+    <Compile Include="WorldRendering\SimpleAssetFactory.cs" />
     <Compile Include="WorldRendering\SimpleMeshFactory.cs" />
     <Compile Include="_XNA\Gameplay\FireMove.cs" />
     <Compile Include="_XNA\Gameplay\EnergyOrb.cs" />
