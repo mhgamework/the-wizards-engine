@@ -51,27 +51,10 @@ namespace MHGameWork.TheWizards.Tiling
 
         public static Matrix CreateEntityWorldMatrix(TileRotation tileRotation, Point3 position)
         {
-            return Matrix.RotationY(getRotationRadians(tileRotation)) * Matrix.Translation(new Vector3(position.X * TileSize.X, position.Y * TileSize.Y, position.Z * TileSize.Z) + TileSize * 0.5f);
+            return Matrix.RotationY(tileRotation.GetRadians()) * Matrix.Translation(new Vector3(position.X * TileSize.X, position.Y * TileSize.Y, position.Z * TileSize.Z) + TileSize * 0.5f);
         }
 
-        private static float getRotationRadians(TileRotation rot)
-        {
-            switch (rot)
-            {
-                case TileRotation.Rotation0:
-                    return 0;
-                case TileRotation.Rotation180:
-                    return MathHelper.Pi;
-                case TileRotation.Rotation90:
-                    return MathHelper.PiOver2;
-                case TileRotation.Rotation270:
-                    return MathHelper.PiOver2 * 3;
-
-            }
-            throw new InvalidOperationException();
-        }
-
-        public TiledEntity()
+      public TiledEntity()
         {
             entity = new WorldRendering.Entity();
 

@@ -26,6 +26,9 @@ namespace MHGameWork.TheWizards.Tiling
             meshes = new IMesh[8];
             meshes[0] = null;
             meshes[1] = MeshFactory.Load("Core\\TileSet\\ts001sg001");
+            meshes[2] = MeshFactory.Load("Core\\TileSet\\ts001icg001");
+            meshes[3] = MeshFactory.Load("Core\\TileSet\\ts001ocg001");
+            meshes[4] = MeshFactory.Load("Core\\TileSet\\ts001g001");
 
             ghostEntity = new WorldRendering.Entity();
 

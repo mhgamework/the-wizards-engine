@@ -92,6 +92,7 @@
     <Compile Include="Building\Point3.cs" />
     <Compile Include="Building\WallPlacer.cs" />
     <Compile Include="Building\WallType.cs" />
+    <Compile Include="Tiling\TileRotationExtension.cs" />
     <Compile Include="WorldRendering\MeshFactory.cs" />
     <Compile Include="WorldRendering\RenderingModel.cs" />
     <Compile Include="WorldRendering\SimpleMeshFactory.cs" />
