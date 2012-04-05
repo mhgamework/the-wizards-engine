@@ -40,6 +40,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private FrustumCuller frustumCuller;
         private DeferredMeshRenderer meshRenderer;
         private FrustumCullerView gbufferView;
+        private ShaderResourceView skyColorRV;
+        private readonly int screenWidth;
+        private readonly int screenHeight;
+        private DepthStencilState backgroundDepthStencilState;
 
 
         public DeferredRenderer(DX11Game game)
@@ -48,8 +52,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             var device = game.Device;
             context = device.ImmediateContext;
 
-            int width = 800;
-            int height = 600;
+            screenWidth = 800;
+            int width = screenWidth;
+            screenHeight = 600;
+            int height = screenHeight;
 
             gBuffer = new GBuffer(game.Device, width, height);
             texturePool = new TexturePool(game);
@@ -67,8 +73,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 BindFlags =
                     BindFlags.RenderTarget | BindFlags.ShaderResource,
                 Format = Format.R16G16B16A16_Float,
-                Width = 800,
-                Height = 600,
+                Width = screenWidth,
+                Height = screenHeight,
                 ArraySize = 1,
                 SampleDescription = new SampleDescription(1, 0),
                 MipLevels = 1
@@ -101,7 +107,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
 
-            ssao = new HorizonSSAORenderer(game, 800, 600);
+            ssao = new HorizonSSAORenderer(game, screenWidth, screenHeight);
 
 
 
@@ -110,6 +116,41 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             gbufferView = frustumCuller.CreateView();
             meshRenderer.Culler = frustumCuller;
+
+            Texture2D skyColorTexture;// = Texture2D.FromFile(game.Device, TWDir.GameData.CreateSubdirectory("Core") + "\\skyColor.bmp");
+
+            var strm = new DataStream(16 * 4, true, true);
+
+            var multiplier = 3;
+            strm.Write(new Half4(new Half(135f / 255f * multiplier), new Half(206f / 255f * multiplier), new Half(235 / 255f * multiplier), new Half(1)));
+            strm.Position = 0;
+            var dataRectangle = new DataRectangle(16 * 4, strm);
+
+            skyColorTexture = new Texture2D(game.Device, new Texture2DDescription
+                               {
+                                   ArraySize = 1,
+                                   BindFlags = BindFlags.ShaderResource,
+                                   CpuAccessFlags = CpuAccessFlags.None,
+                                   Format = Format.R16G16B16A16_Float,
+                                   Height = 1,
+                                   MipLevels = 1,
+                                   OptionFlags = ResourceOptionFlags.None,
+                                   SampleDescription = new SampleDescription(1, 0),
+                                   Usage = ResourceUsage.Default,
+                                   Width = 1
+                               }, dataRectangle);
+
+            skyColorRV = new ShaderResourceView(game.Device, skyColorTexture);
+            backgroundDepthStencilState = DepthStencilState.FromDescription(game.Device, new DepthStencilStateDescription()
+            {
+                IsDepthEnabled = true,
+                DepthComparison = Comparison.LessEqual,
+                DepthWriteMask = DepthWriteMask.Zero,
+
+
+
+            });
+
 
         }
 
@@ -167,9 +208,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
             // TODO: currently cheat
-            context.OutputMerger.SetTargets(gBuffer.DepthStencilView, game.BackBufferRTV);
+            //            context.OutputMerger.SetTargets(gBuffer.DepthStencilView, game.BackBufferRTV);
 
-            //game.TextureRenderer.Draw(hdrImageRV, new Vector2(10, 10), new Vector2(100, 100));
+            game.TextureRenderer.Draw(hdrImageRV, new Vector2(10, 10), new Vector2(100, 100));
             //game.TextureRenderer.Draw(directionalLightRenderer.CSMRenderer.ShadowMapRV, new Vector2(10, 10), new Vector2(550, 200));
 
 
@@ -195,6 +236,16 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             context.OutputMerger.SetTargets(hdrImageRtv);
 
             combineFinalRenderer.DrawCombined(ssao.MSsaoBuffer.pSRV);
+
+
+            // Clear background to certain color
+            context.OutputMerger.SetTargets(gBuffer.DepthStencilView, hdrImageRtv);
+
+            context.OutputMerger.DepthStencilState = backgroundDepthStencilState;
+
+            game.TextureRenderer.Draw(skyColorRV, new Vector2(), new Vector2(screenWidth, screenHeight));
+
+
         }
 
         private void updateSSAO()
@@ -243,7 +294,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
                 if (l.ShadowsEnabled)
                 {
-                    updateSpotShadows(r,l.ShadowView);
+                    updateSpotShadows(r, l.ShadowView);
                 }
 
                 combineFinalRenderer.SetLightAccumulationStates();
@@ -282,6 +333,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         private void drawGBuffer()
         {
+            //gBuffer.Clear(Microsoft.Xna.Framework.Graphics.Color.SkyBlue.dx());
             gBuffer.Clear();
             gBuffer.SetTargetsToOutputMerger();
 
