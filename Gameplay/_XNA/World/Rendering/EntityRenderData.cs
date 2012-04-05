@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards._XNA.World.Rendering
         {
             bool create = false;
 
-            if (element == null || element.Mesh == entity.Mesh) create = true;
+            if (element == null || element.Mesh != entity.Mesh) create = true;
 
             if (create)
             {

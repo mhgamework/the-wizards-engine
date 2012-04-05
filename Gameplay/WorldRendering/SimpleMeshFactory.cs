@@ -47,11 +47,12 @@ namespace MHGameWork.TheWizards.WorldRendering
 
             importer.ImportObjFile(objFile);
 
-            var meshes = converter.CreateMeshesFromObjects(importer);
+            
+            var meshes = converter.CreateMesh(importer);
 
             fsMat.Close();
 
-            return meshes[0];
+            return meshes;
         }
     }
 }
