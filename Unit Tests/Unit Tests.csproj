@@ -66,6 +66,9 @@
     <Reference Include="PostSharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\_Libraries\Rhino.Mocks-3.6-Build-21\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="SharpDX">
       <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.dll</HintPath>
     </Reference>
@@ -134,6 +137,7 @@
     <Compile Include="Gameplay\LocalGame.cs" />
     <Compile Include="Gameplay\ModelTest.cs" />
     <Compile Include="Gameplay\NetworkSyncerTest.cs" />
+    <Compile Include="Gameplay\PersistenceTest.cs" />
     <Compile Include="Gameplay\TilingTest.cs" />
     <Compile Include="Particles\ParticleTests.cs" />
     <Compile Include="Gameplay\FortressTest.cs" />

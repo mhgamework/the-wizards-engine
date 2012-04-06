@@ -29,6 +29,7 @@ namespace MHGameWork.TheWizards.Synchronization
         {
             this.transporter = transporter;
             transporter.EnableReceiveMode();
+            typeSerializer = TypeSerializer.Create();
         }
 
         bool firstSimulate = true;
@@ -133,7 +134,7 @@ namespace MHGameWork.TheWizards.Synchronization
             {
                 case ModelContainer.ModelContainer.WorldChangeType.Added:
 
-                    var type = resolveTypeName(p.TypeFullName);
+                    var type = typeSerializer.Deserialize(p.TypeFullName);
 
                     if (!deserializeValues(type, p, out deserialized))
                         return false;
@@ -263,7 +264,7 @@ namespace MHGameWork.TheWizards.Synchronization
 
             p.ChangeType = changeType;
             p.Guid = getObjectGuid(obj);
-            p.TypeFullName = obj.GetType().FullName;
+            p.TypeFullName = typeSerializer.Serialize(obj.GetType());
 
             foreach (var att in ReflectionHelper.GetAllAttributes(obj.GetType()))
             {
@@ -284,16 +285,7 @@ namespace MHGameWork.TheWizards.Synchronization
             return p;
         }
 
-        /// <summary>
-        /// Resolves a remote type 'FullName' to a local loaded Type (this could require more specific logic later on)
-        /// Note: probably INCREDIBLY SLOW
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        private Type resolveTypeName(string name)
-        {
-            return AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).First(o => o.FullName == name);
-        }
+
 
         private string serializeObject(object obj)
         {
@@ -368,6 +360,7 @@ namespace MHGameWork.TheWizards.Synchronization
         private DictionaryTwoWay<IModelObject, Guid> guidMap = new DictionaryTwoWay<IModelObject, Guid>();
         private List<string> values = new List<string>();
         private List<string> keys = new List<string>();
+        private TypeSerializer typeSerializer;
 
         private void setObjectGuid(IModelObject obj, Guid guid)
         {

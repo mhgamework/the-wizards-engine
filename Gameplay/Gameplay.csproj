@@ -92,6 +92,10 @@
     <Compile Include="Building\Point3.cs" />
     <Compile Include="Building\WallPlacer.cs" />
     <Compile Include="Building\WallType.cs" />
+    <Compile Include="Persistence\AutoSaveSimulator.cs" />
+    <Compile Include="Persistence\ModelSerializer.cs" />
+    <Compile Include="Persistence\PersistAttribute.cs" />
+    <Compile Include="Synchronization\TypeSerializer.cs" />
     <Compile Include="Tiling\TileModel.cs" />
     <Compile Include="Tiling\TileRotationExtension.cs" />
     <Compile Include="WorldRendering\MeshFactory.cs" />
@@ -192,6 +196,7 @@
   <ItemGroup>
     <Content Include="doc.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

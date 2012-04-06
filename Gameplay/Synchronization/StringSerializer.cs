@@ -7,6 +7,7 @@ namespace MHGameWork.TheWizards.Synchronization
 {
     /// <summary>
     /// This class serializes arbitrary value-types into a string format, and can deserialize them
+    /// TODO: Maybe move to better location
     /// </summary>
     public class StringSerializer
     {

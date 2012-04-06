@@ -9,10 +9,12 @@ using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.OBJParser;
+using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Synchronization;
 using MHGameWork.TheWizards.Tiling;
+using MHGameWork.TheWizards.WorldRendering;
 using MHGameWork.TheWizards.XML;
 
 namespace MHGameWork.TheWizards.Main
@@ -53,6 +55,11 @@ namespace MHGameWork.TheWizards.Main
             packetManager = new ServerPacketManagerNetworked(10045, 10046);
 
 
+            // Init scope
+            container = new ModelContainer.ModelContainer();
+            setScriptLayerScope();
+
+
             // Assets
 
             DirectoryInfo assetsDirectory = getAssetsDirectory();
@@ -60,23 +67,27 @@ namespace MHGameWork.TheWizards.Main
             assetSyncer.LoadAssetInformation();
             assetSyncer.Start();
 
+            var modelSerializer = new ModelSerializer(StringSerializer.Create(),
+                                                      TW.Model.GetSingleton<RenderingModel>().AssetFactory);
+
+            string saveFile = TWDir.GameData.CreateSubdirectory("ServerSave") + "\\model.txt";
+            if (File.Exists(saveFile))
+            {
+                using (var fs = File.Open(saveFile, FileMode.Open, FileAccess.Read, FileShare.None))
+                using (var reader = new StreamReader(fs))
+                    modelSerializer.Deserialize(TW.Model, reader);
+            }
+
 
             // Simulation
 
-            container = new ModelContainer.ModelContainer();
 
             var gen = new NetworkPacketFactoryCodeGenerater(TWDir.GenerateRandomCacheFile("", "dll"));
 
             simulators.Add(new NetworkSyncerSimulator(packetManager.CreatePacketTransporter("NetworkSyncer", gen.GetFactory<ChangePacket>(), PacketFlags.TCP)));
+            simulators.Add(new AutoSaveSimulator(saveFile, TimeSpan.FromSeconds(3), modelSerializer));
 
             gen.BuildFactoriesAssembly();
-
-            setScriptLayerScope();
-
-            new TiledEntity() { Position = new Building.Point3(0, 0, 0) };
-            new TiledEntity() { Position = new Building.Point3(0, 1, 1) };
-            new TiledEntity() { Position = new Building.Point3(0, 1, 2) };
-
 
 
             // Start the server

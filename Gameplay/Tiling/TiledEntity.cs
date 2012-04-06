@@ -7,6 +7,7 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.Tiling
 {
+    [Persistence.Persist]
     public class TiledEntity : BaseModelObject
     {
         public static readonly Vector3 TileSize = new Vector3(3, 4, 3);

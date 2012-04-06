@@ -14,10 +14,11 @@ namespace MHGameWork.TheWizards.WorldRendering
     {
         public object GetAsset(Type type, Guid guid)
         {
-            if (type == typeof(IMesh))
+            // Problem with the type parameter! a guid is global anyway, why specify by type?
+            //if (type == typeof(IMesh))
                 return TW.Model.GetSingleton<RenderingModel>().MeshFactory.GetMesh(guid);
 
-            return null;
+            //return null;
         }
     }
 }
