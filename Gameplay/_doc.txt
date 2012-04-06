@@ -1,0 +1,6 @@
+﻿This project contains all classes that use the TW-scoped information for doing their work.
+
+The TW class provides access to several key elements for the gameplay layer. The elements set in this class define the current 'scope' in which all code in the gameplaymodule is running.
+Changing the scope will change the behaviour of the gameplay classes.
+
+TODO: or a 'scope' object should be declared, or all data should go to the ModelContainer, so that the current scope is entirely defined by which ModelContainer is used.

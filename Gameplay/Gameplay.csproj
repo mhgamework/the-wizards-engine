@@ -194,7 +194,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="doc.txt" />
+    <Content Include="Building\_doc.txt" />
+    <Content Include="ModelContainer\_doc.txt" />
+    <Content Include="_doc.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
