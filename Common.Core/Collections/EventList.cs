@@ -6,6 +6,10 @@ using System.Text;
 
 namespace MHGameWork.TheWizards.Utilities
 {
+    /// <summary>
+    /// This class implements a enumerable collection which calls delegates when the list is changed
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class EventList<T> : IEnumerable, IEnumerable<T>
     {
         private readonly Action<T> onAdd;
