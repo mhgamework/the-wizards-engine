@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace MHGameWork.TheWizards.Tests.Gameplay
 {
     [TestFixture]
-    public class TileEditorTest
+    public class TilingTest
     {
         [Test]
         public void TestTileEditor()
@@ -25,6 +25,12 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             TW.Model.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.Specator;
 
             game.Run();
+        }
+
+        [Test]
+        public void Test()
+        {
+            
         }
 
     }

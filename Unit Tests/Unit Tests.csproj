@@ -134,7 +134,7 @@
     <Compile Include="Gameplay\LocalGame.cs" />
     <Compile Include="Gameplay\ModelTest.cs" />
     <Compile Include="Gameplay\NetworkSyncerTest.cs" />
-    <Compile Include="Gameplay\TileEditorTest.cs" />
+    <Compile Include="Gameplay\TilingTest.cs" />
     <Compile Include="Particles\ParticleTests.cs" />
     <Compile Include="Gameplay\FortressTest.cs" />
     <Compile Include="Physics\TestSphereShooter.cs" />

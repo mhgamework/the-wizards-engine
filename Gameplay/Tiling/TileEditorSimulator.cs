@@ -36,10 +36,15 @@ namespace MHGameWork.TheWizards.Tiling
         public void Simulate()
         {
             var cursorTilePosition = getCursorTilePosition();
-            if (cursorTilePosition.HasValue)
+            if (canPlaceTile())
             {
+                ghostEntity.Visible = true;
                 ghostEntity.WorldMatrix = TiledEntity.CreateEntityWorldMatrix(ghostRotation,
                                                                               cursorTilePosition.Value);
+            }
+            else
+            {
+                ghostEntity.Visible = false;
             }
 
             if (TW.Game.Keyboard.IsKeyPressed(Key.D1))
@@ -74,25 +79,41 @@ namespace MHGameWork.TheWizards.Tiling
             {
                 setCurrentMesh(meshes[7]);
             }
-            if (TW.Game.Mouse.LeftMouseJustPressed)
+            if (TW.Game.Mouse.RightMouseJustPressed)
             {
                 ghostRotation = (TileRotation)(((int)ghostRotation + 1) % 4);
             }
-            if (TW.Game.Keyboard.IsKeyPressed(Key.F))
+            if (TW.Game.Mouse.LeftMouseJustPressed)
             {
-                if (cursorTilePosition.HasValue)
-                {
-                    new TiledEntity
-                        {
-                            Position = cursorTilePosition.Value,
-                            Rotation = ghostRotation,
-                            Mesh = ghostEntity.Mesh
-                        };
-                }
+                actionDo(cursorTilePosition);
+             
 
             }
 
 
+        }
+
+        private void actionDo(Point3? cursorTilePosition)
+        {
+            if (ghostEntity.Mesh == null)
+            {
+                // Remove tile
+                if (!cursorTilePosition.HasValue) return;
+                var tile = TW.Model.GetSingleton<TileModel>().GetTileAt(cursorTilePosition.Value);
+                if (tile != null)
+                    tile.Delete();
+            }
+            else
+            {
+                // Place new tile
+                if (!canPlaceTile()) return;
+                new TiledEntity
+                    {
+                        Position = cursorTilePosition.Value,
+                        Rotation = ghostRotation,
+                        Mesh = ghostEntity.Mesh
+                    };
+            }
         }
 
         private Point3? getCursorTilePosition()
@@ -115,6 +136,17 @@ namespace MHGameWork.TheWizards.Tiling
             ret.Z = (int)Math.Floor(pos.Z / TiledEntity.TileSize.Z);
 
             return ret;
+        }
+
+        private bool canPlaceTile()
+        {
+            var pos = getCursorTilePosition();
+            if (!pos.HasValue) return false;
+            return canPlaceTileAt(pos.Value);
+        }
+        private bool canPlaceTileAt(Point3 p)
+        {
+            return TW.Model.GetSingleton<TileModel>().GetTileAt(p) == null;
         }
 
         private void setCurrentMesh(IMesh mesh)

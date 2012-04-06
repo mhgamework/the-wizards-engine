@@ -54,10 +54,19 @@ namespace MHGameWork.TheWizards.Tiling
             return Matrix.RotationY(tileRotation.GetRadians()) * Matrix.Translation(new Vector3(position.X * TileSize.X, position.Y * TileSize.Y, position.Z * TileSize.Z) + TileSize * 0.5f);
         }
 
-      public TiledEntity()
+        public TiledEntity()
         {
             entity = new WorldRendering.Entity();
 
+        }
+
+        /// <summary>
+        /// TODO: design generic pattern for disposal!
+        /// </summary>
+        public void Delete()
+        {
+            TW.Model.RemoveObject(entity);
+            TW.Model.RemoveObject(this);
         }
 
 
