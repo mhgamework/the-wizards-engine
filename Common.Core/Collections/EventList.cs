@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MHGameWork.TheWizards.Utilities
 {
-    public class EventList<T> : IEnumerable
+    public class EventList<T> : IEnumerable, IEnumerable<T>
     {
         private readonly Action<T> onAdd;
         private readonly Action<T> onRemove;
@@ -56,6 +56,11 @@ namespace MHGameWork.TheWizards.Utilities
             }
         }
 
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            return list.GetEnumerator();
+        }
 
         public IEnumerator GetEnumerator()
         {
