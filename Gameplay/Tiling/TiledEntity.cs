@@ -7,6 +7,10 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.Tiling
 {
+
+    /// <summary>
+    /// Represents a 'tile' placed in the world. 
+    /// </summary>
     [Persistence.Persist]
     public class TiledEntity : BaseModelObject
     {

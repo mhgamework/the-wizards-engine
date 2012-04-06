@@ -6,6 +6,9 @@ using DirectX11;
 
 namespace MHGameWork.TheWizards.Tiling
 {
+    /// <summary>
+    /// Provides functions for the TileRotation enum
+    /// </summary>
     public static class TileRotationExtension
     {
         public static float GetRadians(this TileRotation rot)

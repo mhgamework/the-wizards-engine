@@ -6,6 +6,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.WorldRendering
 {
+    /// <summary>
+    /// Contains information about the camerastate used in rendering
+    /// </summary>
     [NoSync]
     public class CameraInfo : BaseModelObject
     {
