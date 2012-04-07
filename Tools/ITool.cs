@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-class BuildServer
+namespace Tools
 {
-    public static void Main()
+    public interface ITool
     {
-        
+        void Execute();
     }
 }

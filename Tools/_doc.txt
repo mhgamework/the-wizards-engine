@@ -1,0 +1,5 @@
+﻿This project allows for running simple tools in commandline. 
+
+Syntax: tool.exe [ToolClassName]
+
+Example: tool test
