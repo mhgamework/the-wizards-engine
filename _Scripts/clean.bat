@@ -1,3 +1,5 @@
+cd ..
+
 rmdir /S /Q "bin/Binaries"
 rmdir /S /Q "bin/Cache"
 

@@ -29,6 +29,7 @@ namespace DocumentationHelper
                     .Union(getDocFilesEnumerable("Common.Core"))
                     .Union(getDocFilesEnumerable("Networking"))
                     .Union(getDocFilesEnumerable("DocumentationHelper"))
+                    .Union(getDocFilesEnumerable("Tools"))
                     ;
 
                 try
