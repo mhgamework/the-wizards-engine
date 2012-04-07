@@ -49,21 +49,37 @@ namespace Tools
             //Console.WriteLine(p.StandardOutput.ReadToEnd());
 
 
+            RunExecutable(exePath, "");
+
+            Console.WriteLine("<<<<<<<<Completed run of " + targetFile);
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="arguments"></param>
+        /// <param name="runLockstep">true when the exe output should be redirected to this program and executing should be halted</param>
+        public static void RunExecutable(string filename, string arguments, bool runLockstep = true)
+        {
+            Process p;
             p = Process.Start(new ProcessStartInfo
-            {
-                FileName = exePath,
-                Arguments = "",
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                RedirectStandardOutput = true
-            });
+                                  {
+                                      FileName = filename,
+                                      Arguments = arguments,
+                                      CreateNoWindow = true,
+                                      UseShellExecute = false,
+                                      RedirectStandardOutput = true
+                                  });
+
+            if (!runLockstep)
+                return;
+
             while (!p.HasExited)
             {
                 Console.WriteLine(p.StandardOutput.ReadLine());
             }
-
-            Console.WriteLine("<<<<<<<<Completed run of " + targetFile);
-
         }
     }
 }

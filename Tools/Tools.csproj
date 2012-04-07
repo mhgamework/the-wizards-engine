@@ -49,13 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
     <Compile Include="Tools\BuildServer.cs" />
     <Compile Include="CSRunner.cs" />
     <Compile Include="ITool.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\CodeMetrics.cs" />
+    <Compile Include="Tools\Commit.cs" />
+    <Compile Include="Tools\Dir.cs" />
+    <Compile Include="Tools\Log.cs" />
     <Compile Include="Tools\Test.cs" />
+    <Compile Include="TortoiseProc.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
