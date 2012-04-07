@@ -5,6 +5,10 @@
 /*/*/bin/*
 obj/
 
+# Ignore build folder
+
+/build/*
+
 
 # Ignore all .svn folders just for safety
 
