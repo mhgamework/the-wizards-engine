@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
+    <Compile Include="Tools\Bash.cs" />
     <Compile Include="Tools\BuildServer.cs" />
     <Compile Include="CSRunner.cs" />
     <Compile Include="ITool.cs" />
