@@ -6,6 +6,7 @@ namespace Tools.Tools
     {
         public void Execute()
         {
+
             Console.WriteLine("Server build successfully!");
         }
     }

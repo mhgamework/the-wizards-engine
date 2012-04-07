@@ -15,10 +15,14 @@ namespace Tools
         [STAThread]
         static void Main(string[] args)
         {
-            if (args.Length != 1)
+            if (args.Length < 1)
             {
                 Console.WriteLine("Missing argument!");
                 return;
+            }
+            if (args.Length >= 2)
+            {
+                Environment.CurrentDirectory = new DirectoryInfo(args[1]).FullName;
             }
 
             var type = Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(o => o.Name.ToLower() == args[0]);
