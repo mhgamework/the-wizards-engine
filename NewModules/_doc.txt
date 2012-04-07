@@ -1,0 +1,3 @@
+﻿The NewModules project contains many seperate independent functionality packages for the wizards.
+
+TODO: this project could be renamed to something more appropriate, since it actually contains the 'Functionality classes'

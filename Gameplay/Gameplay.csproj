@@ -196,6 +196,7 @@
   <ItemGroup>
     <Content Include="Building\_doc.txt" />
     <Content Include="ModelContainer\_doc.txt" />
+    <Content Include="Persistence\_doc.txt" />
     <Content Include="_doc.txt" />
   </ItemGroup>
   <ItemGroup />

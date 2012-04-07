@@ -1,0 +1,8 @@
+﻿The Persistence namespace allows for automatic serialization of ModelObjects.
+
+An IModelObject marked with the PersistAttribute will be automatically serialized and deserialized when the ModelContainer is saved/loaded
+
+Currently, the entire Model is stored in a single line based file.
+
+TODO: split this in some way? \\
+TODO: maybe remove the 'heading numbers', to allow for git versioning (like in The Witness, cfr blog)

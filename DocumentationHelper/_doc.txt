@@ -1,0 +1,3 @@
+﻿The DocumentationHelper collects all _doc.txt files, and uploads them to the wiki under the 'source' subfolder. Some preprocessing is done on these _doc.txt files.
+
+Idea: Make the DocumentationHelper run as a background service which uploads on file changes. Together with an autorefresh functionality in DokuWiki this gives a GUI for editing the wiki :P
