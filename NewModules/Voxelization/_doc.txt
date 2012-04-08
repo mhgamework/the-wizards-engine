@@ -1,0 +1,7 @@
+﻿This namespace allows for voxelization of meshes. The current implementation is simple:
+
+  * For each triangle
+    * For each voxel intersecting with the triangle's bounding box
+	  * Create 13 principal axes for the voxel-triangle intersection
+	  * Use 'separating axes theorem': Check if there is a separation between the projection of both objects on each axis
+	  * If there is no separation, a voxel is set 
