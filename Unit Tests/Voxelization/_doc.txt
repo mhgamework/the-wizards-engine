@@ -1,0 +1,3 @@
+﻿This namespace provides simple shell-voxelization for triangle meshes.
+
+This can be used in the AI navmesh creation!

@@ -1,0 +1,12 @@
+﻿This module contains the high-level rendering functionality.
+
+===== TODO =====
+  * add a MeshBuilder to easily create meshes for debugging purposes (currently stub implementation)
+  * add move the creation functions (tangentvertex) in GeometryData to the MeshBuilder 
+  * add some helper functions to manipulate meshes 
+  * support colored rendering 
+  * support transparency 
+  * add debug visualizations 
+  * fix CSM boundingbox calculation 
+  * find why SSAO is so slow
+  * the IMesh should be converted to SlimDX math

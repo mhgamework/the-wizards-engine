@@ -195,6 +195,7 @@
     <Compile Include="Treegenerater\TreeSynchronisationTest.cs" />
     <Compile Include="Utilities\UtilitiesTest.cs" />
     <Compile Include="Versioning\VersioningTest.cs" />
+    <Compile Include="Voxelization\VoxelizerTest.cs" />
     <Compile Include="WorldDatabase\WorldDatabaseTest.cs" />
     <Compile Include="WorldDatabase\TerrainData2Element.cs" />
     <Compile Include="WorldDatabase\TerrainData2ElementFactory.cs" />
@@ -300,6 +301,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Voxelization\_doc.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

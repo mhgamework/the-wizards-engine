@@ -191,6 +191,7 @@
     <Compile Include="Particles\SimpleParticleCreater.cs" />
     <Compile Include="Particles\SparkelParticleCreater.cs" />
     <Compile Include="Rendering\DiskRenderingAssetFactory.cs" />
+    <Compile Include="Rendering\MeshBuilder.cs" />
     <Compile Include="Scripting\ScriptLoader.cs" />
     <Compile Include="Scripting\ScriptWrapper.cs" />
     <Compile Include="Rendering\MeshLoader.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="Versioning\IStreamProvider.cs" />
     <Compile Include="Versioning\Revision.cs" />
     <Compile Include="Versioning\VersioningSystem.cs" />
+    <Compile Include="Voxelization\Voxelizer.cs" />
     <Compile Include="WorldSimulation\Actions\AtHome.cs" />
     <Compile Include="WorldSimulation\Actions\Breed.cs" />
     <Compile Include="WorldSimulation\Actions\BuildingBluePrints.cs" />
@@ -462,6 +464,7 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Rendering\_doc.txt" />
     <Content Include="Scripting\_doc.txt" />
     <Content Include="_doc.txt" />
   </ItemGroup>
