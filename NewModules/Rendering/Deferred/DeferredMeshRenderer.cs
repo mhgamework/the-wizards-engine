@@ -151,8 +151,12 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 //if (partList.Count > 20) Debugger.Break();
                 for (int j = 0; j < partList.Count; j++)
                 {
-
                     var part = partList[j];
+                    var geomData = part.MeshPart.GetGeometryData();
+                    int vertCount = geomData.GetSourceVector3(MeshPartGeometryData.Semantic.Position).Length;
+                    if (vertCount == 0) continue;
+
+
                     var renderPart = new MeshRenderPart();
                     renderMat.Parts[j] = renderPart;
 
@@ -160,8 +164,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                     renderPart.VertexBuffer = CreateMeshPartVertexBuffer(part.MeshPart);
                     renderPart.ObjectMatrix = part.ObjectMatrix.dx();
 
-                    var geomData = part.MeshPart.GetGeometryData();
-                    int vertCount = geomData.GetSourceVector3(MeshPartGeometryData.Semantic.Position).Length;
 
                     renderPart.VertexCount = vertCount;
                     renderPart.PrimitiveCount = vertCount / 3;
@@ -170,7 +172,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 renderMat.Shader = baseShader.Clone();
 
                 ShaderResourceView diffuseRV = checkerTextureRV;
-                
+
                 if (renderMat.Material.DiffuseMap != null)
                 {
 
@@ -211,9 +213,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                                                                    FillMode = FillMode.Solid,
                                                                                });
 
-            checkerTexture = Texture2D.FromFile(game.Device,TWDir.GameData.CreateSubdirectory("Core").FullName + "\\checker.png");
+            checkerTexture = Texture2D.FromFile(game.Device, TWDir.GameData.CreateSubdirectory("Core").FullName + "\\checker.png");
 
-            checkerTextureRV = new ShaderResourceView(game.Device,checkerTexture);
+            checkerTextureRV = new ShaderResourceView(game.Device, checkerTexture);
 
 
             baseShader = BasicShader.LoadAutoreload(game, DeferredMeshFX);
@@ -330,7 +332,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 for (int j = 0; j < mat.Parts.Length; j++)
                 {
                     var part = mat.Parts[j];
-
+                    if (part == null) continue;
 
 
                     //context.PixelShader.SetConstantBuffer(mat.PerObjectConstantBuffer, 0);
@@ -374,6 +376,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 for (int j = 0; j < mat.Parts.Length; j++)
                 {
                     var part = mat.Parts[j];
+                    if (part == null) continue;
 
                     Performance.BeginEvent(new Color4(System.Drawing.Color.Red), "DMesh-Depth");
 

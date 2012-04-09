@@ -190,6 +190,7 @@
     <Compile Include="Particles\ParticleSimulater.cs" />
     <Compile Include="Particles\SimpleParticleCreater.cs" />
     <Compile Include="Particles\SparkelParticleCreater.cs" />
+    <Compile Include="Rendering\DebugVisualizer.cs" />
     <Compile Include="Rendering\DiskRenderingAssetFactory.cs" />
     <Compile Include="Rendering\MeshBuilder.cs" />
     <Compile Include="Scripting\ScriptLoader.cs" />
@@ -270,6 +271,7 @@
     <Compile Include="Versioning\IStreamProvider.cs" />
     <Compile Include="Versioning\Revision.cs" />
     <Compile Include="Versioning\VersioningSystem.cs" />
+    <Compile Include="Voxelization\VoxelGrid.cs" />
     <Compile Include="Voxelization\Voxelizer.cs" />
     <Compile Include="WorldSimulation\Actions\AtHome.cs" />
     <Compile Include="WorldSimulation\Actions\Breed.cs" />
@@ -466,6 +468,7 @@
   <ItemGroup>
     <Content Include="Rendering\_doc.txt" />
     <Content Include="Scripting\_doc.txt" />
+    <Content Include="Voxelization\_doc.txt" />
     <Content Include="_doc.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

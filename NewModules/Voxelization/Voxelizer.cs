@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DirectX11;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Tests.Voxelization;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Voxelization
@@ -12,7 +14,7 @@ namespace MHGameWork.TheWizards.Voxelization
     /// </summary>
     public class Voxelizer
     {
-        public bool[, ,] Voxelize(IMesh mesh, float resolution)
+        public VoxelGrid Voxelize(IMesh mesh, float resolution)
         {
             var positions = new List<Vector3>();
 
@@ -29,7 +31,7 @@ namespace MHGameWork.TheWizards.Voxelization
 
         }
 
-        public bool[, ,] Voxelize(Vector3[] positions, int[] indices, float resolution)
+        public VoxelGrid Voxelize(Vector3[] positions, int[] indices, float resolution)
         {
             var bb = BoundingBox.FromPoints(positions);
 
@@ -38,38 +40,36 @@ namespace MHGameWork.TheWizards.Voxelization
 
 
             var range = (bb.Maximum - bb.Minimum) / resolution;
-            var voxelDimensions = new int[]
-                                      {
-                                          (int) Math.Ceiling(range.X), 
-                                          (int) Math.Ceiling(range.Y),
-                                          (int) Math.Ceiling(range.Z)
-                                      };
-
-            for (int i = 0; i < voxelDimensions.Length; i++)
-            {
-                if (voxelDimensions[i] == 0) voxelDimensions[i] = 1; // for flat meshes
-            }
 
 
-            var ret = new bool[voxelDimensions[0], voxelDimensions[1], voxelDimensions[2]];
+            bb.Minimum = bb.Minimum / resolution;
+            bb.Maximum = bb.Maximum / resolution;
+
+            var ret = new VoxelGrid(new Building.Point3((int)bb.Minimum.X, (int)bb.Minimum.Y, (int)bb.Minimum.Z),
+                                    new Building.Point3((int)bb.Maximum.X, (int)bb.Maximum.Y, (int)bb.Maximum.Z));
+
+
 
             for (int i = 0; i < indices.Count(); i += 3)
             {
-                // convert all coords to a new base: resolution --> 1   bb.min --> origin
+                // convert all coords to a new base: resolution --> 1   (int)bb.min --> origin
 
-                triangle[0] = (positions[indices[i]] - bb.Minimum) / resolution;
-                triangle[1] = (positions[indices[i + 1]] - bb.Minimum) / resolution;
-                triangle[2] = (positions[indices[i + 2]] - bb.Minimum) / resolution;
+                triangle[0] = (positions[indices[i]]) / resolution;
+                triangle[1] = (positions[indices[i + 1]]) / resolution;
+                triangle[2] = (positions[indices[i + 2]]) / resolution;
 
                 var triangleBB = BoundingBox.FromPoints(triangle);
+
+                triangleBB.Minimum -= MathHelper.One * 0.1f; // This is to fix floating point errors, stretch the bb a bit, do some extra tests
+                triangleBB.Maximum += MathHelper.One * 0.1f; // This is to fix floating point errors, stretch the bb a bit, do some extra tests
 
                 // Go through each voxel crossing the triangle
                 var start = new int[3];
                 var end = new int[3];
 
-                start[0] = (int)triangleBB.Minimum.X;
-                start[1] = (int)triangleBB.Minimum.Y;
-                start[2] = (int)triangleBB.Minimum.Z;
+                start[0] = (int)Math.Floor(triangleBB.Minimum.X);
+                start[1] = (int)Math.Floor(triangleBB.Minimum.Y);
+                start[2] = (int)Math.Floor(triangleBB.Minimum.Z);
                 end[0] = (int)Math.Ceiling(triangleBB.Maximum.X);
                 end[1] = (int)Math.Ceiling(triangleBB.Maximum.Y);
                 end[2] = (int)Math.Ceiling(triangleBB.Maximum.Z);
@@ -93,7 +93,7 @@ namespace MHGameWork.TheWizards.Voxelization
                 for (int j = 0; j < 3; j++)
                     for (int k = 0; k < 3; k++)
                     {
-                        separatingAxes[4 + k + 3*j] = Vector3.Cross(separatingAxes[j], rays[k].Direction);
+                        separatingAxes[4 + k + 3 * j] = Vector3.Cross(separatingAxes[j], rays[k].Direction);
                     }
 
 
@@ -106,6 +106,12 @@ namespace MHGameWork.TheWizards.Voxelization
                     for (int y = start[1]; y < end[1]; y++)
                         for (int z = start[2]; z < end[2]; z++)
                         {
+                            if (x < ret.Min.X) continue;
+                            if (y < ret.Min.Y) continue;
+                            if (z < ret.Min.Z) continue;
+                            if (x > ret.Max.X) continue;
+                            if (y > ret.Max.Y) continue;
+                            if (z > ret.Max.Z) continue;
                             //if (x >= ret.GetLength(0)) continue; // boundary problems!
                             //if (y >= ret.GetLength(1)) continue; // boundary problems!
                             //if (z >= ret.GetLength(2)) continue; // boundary problems!
@@ -125,7 +131,7 @@ namespace MHGameWork.TheWizards.Voxelization
                             }
                             if (!separated)
                                 ret[x, y, z] = true;
-                            
+
 
 
                         }
@@ -160,9 +166,9 @@ namespace MHGameWork.TheWizards.Voxelization
                 if (dot < min2) min2 = dot;
             }
 
-            if (min1 > max2)
+            if (min1 > max2 + 0.01f) // Give some leeway
                 return true;
-            if (max1 < min2)
+            if (max1 < min2 - 0.01f)
                 return true;
 
             return false;
