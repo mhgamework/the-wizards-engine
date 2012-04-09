@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Graphics\CompiledShaderCache.cs" />
     <Compile Include="Graphics\ThirdPersonCamera.cs" />
+    <Compile Include="Point3.cs" />
     <Compile Include="QuadTreeVisualizer.cs" />
     <Compile Include="SlimDXConversion\ConversionCameraXNA.cs" />
     <Compile Include="DX11Game.cs" />

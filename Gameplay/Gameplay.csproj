@@ -89,13 +89,16 @@
     <Compile Include="Building\HUDRenderer.cs" />
     <Compile Include="Building\PlaceTool.cs" />
     <Compile Include="Building\PlayerController.cs" />
-    <Compile Include="Building\Point3.cs" />
     <Compile Include="Building\WallPlacer.cs" />
     <Compile Include="Building\WallType.cs" />
     <Compile Include="Persistence\AutoSaveSimulator.cs" />
     <Compile Include="Persistence\ModelSerializer.cs" />
     <Compile Include="Persistence\PersistAttribute.cs" />
     <Compile Include="Synchronization\TypeSerializer.cs" />
+    <Compile Include="Tiling\TileBoundary.cs" />
+    <Compile Include="Tiling\TileBoundaryWinding.cs" />
+    <Compile Include="Tiling\TileFace.cs" />
+    <Compile Include="Tiling\TileFaceExtensions.cs" />
     <Compile Include="Tiling\TileModel.cs" />
     <Compile Include="Tiling\TileRotationExtension.cs" />
     <Compile Include="WorldRendering\MeshFactory.cs" />
@@ -197,6 +200,7 @@
     <Content Include="Building\_doc.txt" />
     <Content Include="ModelContainer\_doc.txt" />
     <Content Include="Persistence\_doc.txt" />
+    <Content Include="Tiling\_doc.txt" />
     <Content Include="_doc.txt" />
   </ItemGroup>
   <ItemGroup />
