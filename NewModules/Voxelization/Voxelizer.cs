@@ -31,6 +31,13 @@ namespace MHGameWork.TheWizards.Voxelization
 
         }
 
+        /// <summary>
+        /// The returned voxelgrid has the same origin as the original mesh. The space is not discretized with unit=resolution
+        /// </summary>
+        /// <param name="positions"></param>
+        /// <param name="indices"></param>
+        /// <param name="resolution"></param>
+        /// <returns></returns>
         public VoxelGrid Voxelize(Vector3[] positions, int[] indices, float resolution)
         {
             var bb = BoundingBox.FromPoints(positions);
@@ -39,10 +46,7 @@ namespace MHGameWork.TheWizards.Voxelization
             var rays = new Ray[3];
 
 
-            var range = (bb.Maximum - bb.Minimum) / resolution;
-
-
-            bb.Minimum = bb.Minimum / resolution;
+            bb.Minimum = bb.Minimum / resolution; // to voxel space
             bb.Maximum = bb.Maximum / resolution;
 
             var ret = new VoxelGrid(new Building.Point3((int)bb.Minimum.X, (int)bb.Minimum.Y, (int)bb.Minimum.Z),
