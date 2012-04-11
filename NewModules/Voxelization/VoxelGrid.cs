@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.Building;
+using DirectX11;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Tests.Voxelization

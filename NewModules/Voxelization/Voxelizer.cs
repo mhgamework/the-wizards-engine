@@ -49,8 +49,8 @@ namespace MHGameWork.TheWizards.Voxelization
             bb.Minimum = bb.Minimum / resolution; // to voxel space
             bb.Maximum = bb.Maximum / resolution;
 
-            var ret = new VoxelGrid(new Building.Point3((int)bb.Minimum.X, (int)bb.Minimum.Y, (int)bb.Minimum.Z),
-                                    new Building.Point3((int)bb.Maximum.X, (int)bb.Maximum.Y, (int)bb.Maximum.Z));
+            var ret = new VoxelGrid(new Point3((int)bb.Minimum.X, (int)bb.Minimum.Y, (int)bb.Minimum.Z),
+                                    new Point3((int)bb.Maximum.X, (int)bb.Maximum.Y, (int)bb.Maximum.Z));
 
 
 
