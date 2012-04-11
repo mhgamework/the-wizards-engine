@@ -3,6 +3,9 @@ using SlimDX;
 
 namespace DirectX11
 {
+    /// <summary>
+    /// This struct represents a discrete vector
+    /// </summary>
     public struct Point3
     {
         public int X;
@@ -18,11 +21,15 @@ namespace DirectX11
             Z = z;
         }
 
+        /// <summary>
+        /// This uses a vector3 as a point3, note that this uses Math.round to convert the coords
+        /// </summary>
+        /// <param name="v"></param>
         public Point3(Vector3 v)
         {
-            X = (int)Math.Floor(v.X);
-            Y = (int)Math.Floor(v.Y);
-            Z = (int)Math.Floor(v.Z);
+            X = (int)Math.Round(v.X);
+            Y = (int)Math.Round(v.Y);
+            Z = (int)Math.Round(v.Z);
         }
 
         public Vector3 ToVector3()

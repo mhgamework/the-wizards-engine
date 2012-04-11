@@ -5,6 +5,7 @@ using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Tiling;
+using MHGameWork.TheWizards.Voxelization;
 using MHGameWork.TheWizards.WorldRendering;
 using NUnit.Framework;
 using SlimDX;
@@ -37,9 +38,14 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         {
             var game = new LocalGame();
 
+            var voxelizer = new Voxelizer();
+
 
             var mesh1 = MeshFactory.Load("Core\\TileSet\\ts001sg001");
             var mesh2 = MeshFactory.Load("Core\\TileSet\\ts001icg001");
+
+            var voxels1 = voxelizer.Voxelize(mesh1, TileBoundary.SurfaceResolution);
+            var voxels2 = voxelizer.Voxelize(mesh2, TileBoundary.SurfaceResolution);
 
 
             var bound1 = TileBoundary.CreateFromMesh(mesh1, tileBounding, TileFace.Front);
@@ -58,6 +64,12 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 }
 
             new WorldRendering.Entity() { Mesh = builder.CreateMesh(), WorldMatrix = Matrix.Identity };
+
+            new WorldRendering.Entity() { Mesh = Voxelizer.CreateVoxelMesh(voxels1), WorldMatrix = Matrix.Scaling(MathHelper.One * TileBoundary.SurfaceResolution) * Matrix.Translation(-10, 0, 0) };
+            new WorldRendering.Entity() { Mesh = mesh1, WorldMatrix =Matrix.Translation(-10, 0, 0) };
+
+            new WorldRendering.Entity() { Mesh = Voxelizer.CreateVoxelMesh(voxels2), WorldMatrix = Matrix.Scaling(MathHelper.One * TileBoundary.SurfaceResolution) * Matrix.Translation(-10, 0, 6) };
+            new WorldRendering.Entity() { Mesh = mesh2, WorldMatrix = Matrix.Translation(-10, 0, 6) };
 
 
             game
@@ -78,8 +90,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             var mesh2 = MeshFactory.Load("Core\\TileSet\\ts001icg001");
 
 
-            var bound1 = TileBoundary.CreateFromMesh(mesh1, tileBounding, TileFace.Front);
-            var bound2 = TileBoundary.CreateFromMesh(mesh2, tileBounding, TileFace.Front);
+            var bound1 = TileBoundary.CreateFromMesh(mesh1, tileBounding, TileFace.Back);
+            var bound2 = TileBoundary.CreateFromMesh(mesh2, tileBounding, TileFace.Back);
 
             Assert.True(bound1.Matches(bound2, new TileBoundaryWinding()));
 

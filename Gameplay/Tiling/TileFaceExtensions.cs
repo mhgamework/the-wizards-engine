@@ -18,15 +18,15 @@ namespace MHGameWork.TheWizards.Tiling
             ups = new Vector3[7];
             rights = new Vector3[7];
 
-            normals[(int)TileFace.Front] = Vector3.UnitZ;
-            normals[(int)TileFace.Back] = -Vector3.UnitZ;
+            normals[(int)TileFace.Back] = Vector3.UnitZ;
+            normals[(int)TileFace.Front] = -Vector3.UnitZ;
             normals[(int)TileFace.Left] = Vector3.UnitX;
             normals[(int)TileFace.Right] = -Vector3.UnitX;
             normals[(int)TileFace.Up] = Vector3.UnitY;
             normals[(int)TileFace.Down] = -Vector3.UnitY;
 
-            ups[(int)TileFace.Front] = Vector3.UnitY;
             ups[(int)TileFace.Back] = Vector3.UnitY;
+            ups[(int)TileFace.Front] = Vector3.UnitY;
             ups[(int)TileFace.Left] = Vector3.UnitY;
             ups[(int)TileFace.Right] = Vector3.UnitY;
             ups[(int)TileFace.Up] = Vector3.UnitZ;

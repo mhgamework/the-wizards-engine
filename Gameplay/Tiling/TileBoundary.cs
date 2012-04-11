@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.Tiling
     /// </summary>
     public class TileBoundary
     {
-        private const float SurfaceResolution = 0.1f;
+        public const float SurfaceResolution = 0.1f;
 
         /// <summary>
         /// Readonly!!
@@ -48,6 +48,7 @@ namespace MHGameWork.TheWizards.Tiling
 
         /// <summary>
         /// TODO: this contains offbyone errors, and needs advanced graphical debugging to fix without wasting to much time
+        /// WARNING: tileBounding should be a multiple of SurfaceResolution to prevent off-by-one errors
         /// </summary>
         /// <param name="mesh"></param>
         /// <param name="tileBounding"></param>
@@ -66,40 +67,40 @@ namespace MHGameWork.TheWizards.Tiling
             //DebugVisualizer.ShowVoxelGrid(voxels);
 
             // Convert to voxel space
-            tileBounding.Minimum *= 1 / SurfaceResolution;
-            tileBounding.Maximum *= 1 / SurfaceResolution;
+            tileBounding.Minimum /= SurfaceResolution;
+            tileBounding.Maximum /= SurfaceResolution;
 
-            // Shrink the bounding box a bit to fix boundary errors
-            tileBounding.Minimum += MathHelper.One * 0.1f;
-            tileBounding.Maximum -= MathHelper.One * 0.1f;
+            // TileBounding should contain integers at this point, otherwise issues may occur
+
+            var min = tileBounding.Minimum;
+            var max = tileBounding.Maximum - MathHelper.One; // tileBounding gives a boundary, so the voxel inside the boundary at the bounding.max starts at bounding.max - 1
 
             // Determine the surface dimensions and location
 
             // get the correct slice, the dot product is a trick to select the axis, the second dot is to get the sign of the face vector
-            var minX = (int)Math.Floor(Vector3.Dot(tileBounding.Minimum, face.Right() * Vector3.Dot(face.Right(), MathHelper.One)));
-            var minY = (int)Math.Floor(Vector3.Dot(tileBounding.Minimum, face.Up() * Vector3.Dot(face.Up(), MathHelper.One)));
+            // Using Round, the numbers should be integers with rounding errors
+            var minX = (int)Math.Round(Vector3.Dot(min, face.Right() * Vector3.Dot(face.Right(), MathHelper.One)));
+            var minY = (int)Math.Round(Vector3.Dot(min, face.Up() * Vector3.Dot(face.Up(), MathHelper.One)));
 
-            var maxX = (int)Math.Floor(Vector3.Dot(tileBounding.Maximum, face.Right() * Vector3.Dot(face.Right(), MathHelper.One)));
-            var maxY = (int)Math.Floor(Vector3.Dot(tileBounding.Maximum, face.Up() * Vector3.Dot(face.Up(), MathHelper.One)));
+            var maxX = (int)Math.Round(Vector3.Dot(max, face.Right() * Vector3.Dot(face.Right(), MathHelper.One)));
+            var maxY = (int)Math.Round(Vector3.Dot(max, face.Up() * Vector3.Dot(face.Up(), MathHelper.One)));
 
 
             var val = Vector3.Dot(face.Normal(), MathHelper.One);
             var unit = face.Normal() * val;
 
-            Vector3 offset;
-
             Vector3 vectorOffset;
             if (val > 0)
             {
                 // use max
-                vectorOffset = Vector3.Dot(unit, tileBounding.Maximum) * face.Normal();
+                vectorOffset = Vector3.Dot(unit, max) * unit;
             }
             else
             {
                 // use min
-                vectorOffset = Vector3.Dot(unit, tileBounding.Minimum) * face.Normal();
+                vectorOffset = Vector3.Dot(unit, min) * unit;
             }
-            offset = new Point3((int)Math.Floor(vectorOffset.X), (int)Math.Floor(vectorOffset.Y), (int)Math.Floor(vectorOffset.Z));
+            var offset = new Point3(vectorOffset);
 
 
 
@@ -113,10 +114,10 @@ namespace MHGameWork.TheWizards.Tiling
             {
                 for (int y = minY; y < maxY; y++)
                 {
-                    var pos = face.Up() * y + face.Right() * x;
+                    var pos = new Point3(face.Up() * y + face.Right() * x);
                     pos += offset;
 
-                    ret.Surface[x - minX, y - minY] = voxels[(int)pos.X, (int)pos.Y, (int)pos.Z];
+                    ret.Surface[x - minX, y - minY] = voxels[pos.X, pos.Y, pos.Z];
 
                 }
             }

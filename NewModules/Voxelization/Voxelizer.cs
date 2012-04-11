@@ -33,6 +33,7 @@ namespace MHGameWork.TheWizards.Voxelization
 
         /// <summary>
         /// The returned voxelgrid has the same origin as the original mesh. The space is not discretized with unit=resolution
+        /// The triangle edges have a simulated 'width' to stabilize discontinuity problems
         /// </summary>
         /// <param name="positions"></param>
         /// <param name="indices"></param>
@@ -49,14 +50,15 @@ namespace MHGameWork.TheWizards.Voxelization
             bb.Minimum = bb.Minimum / resolution; // to voxel space
             bb.Maximum = bb.Maximum / resolution;
 
-            var ret = new VoxelGrid(new Point3((int)bb.Minimum.X, (int)bb.Minimum.Y, (int)bb.Minimum.Z),
-                                    new Point3((int)bb.Maximum.X, (int)bb.Maximum.Y, (int)bb.Maximum.Z));
+            var ret = new VoxelGrid(new Point3(bb.Minimum - MathHelper.One), new Point3(bb.Maximum + MathHelper.One)); // The One is to allow Triangle edgewidth
+
+            var edgeWidth = 0.1f; // Edge width in voxel space, should be smaller than 1 (voxel size), probably even more
 
 
 
             for (int i = 0; i < indices.Count(); i += 3)
             {
-                // convert all coords to a new base: resolution --> 1   (int)bb.min --> origin
+                // convert all coords to a new base: resolution --> 1   origin --> origin
 
                 triangle[0] = (positions[indices[i]]) / resolution;
                 triangle[1] = (positions[indices[i + 1]]) / resolution;
@@ -64,8 +66,8 @@ namespace MHGameWork.TheWizards.Voxelization
 
                 var triangleBB = BoundingBox.FromPoints(triangle);
 
-                triangleBB.Minimum -= MathHelper.One * 0.1f; // This is to fix floating point errors, stretch the bb a bit, do some extra tests
-                triangleBB.Maximum += MathHelper.One * 0.1f; // This is to fix floating point errors, stretch the bb a bit, do some extra tests
+                triangleBB.Minimum -= MathHelper.One * edgeWidth; // Expand the bb by edgewidth, this should fit the expanded triangle?
+                triangleBB.Maximum += MathHelper.One * edgeWidth; // Expand the bb by edgewidth, this should fit the expanded triangle?
 
                 // Go through each voxel crossing the triangle
                 var start = new int[3];
@@ -129,7 +131,7 @@ namespace MHGameWork.TheWizards.Voxelization
 
                             for (int j = 0; j < separatingAxes.Length; j++)
                             {
-                                if (checkSeperated(voxelCorners, triangle, separatingAxes[j]))
+                                if (checkSeperated(voxelCorners, triangle, separatingAxes[j], edgeWidth)) // triangle and voxel must be separated by more than edgeWidth
                                     separated = true;
 
                             }
@@ -147,11 +149,13 @@ namespace MHGameWork.TheWizards.Voxelization
 
         /// <summary>
         /// Checks if objects overlap by projecting them on give plane p and seeing if they overlap on that plane
+        /// The separationDistance is the min distance 2 objects must have to be separated
         /// </summary>
         /// <param name="object1"></param>
         /// <param name="object2"></param>
         /// <param name="p"></param>
-        private bool checkSeperated(Vector3[] object1, Vector3[] object2, Vector3 axis)
+        /// <param name="separationDistance"></param>
+        private bool checkSeperated(Vector3[] object1, Vector3[] object2, Vector3 axis, float separationDistance)
         {
             float max1 = float.MinValue;
             float min1 = float.MaxValue;
@@ -170,9 +174,9 @@ namespace MHGameWork.TheWizards.Voxelization
                 if (dot < min2) min2 = dot;
             }
 
-            if (min1 > max2 + 0.01f) // Give some leeway
+            if (min1 > max2 + separationDistance) // Give some leeway
                 return true;
-            if (max1 < min2 - 0.01f)
+            if (max1 < min2 - separationDistance)
                 return true;
 
             return false;
@@ -204,6 +208,25 @@ namespace MHGameWork.TheWizards.Voxelization
                     break;
                 }
             }
+        }
+
+
+        public static IMesh CreateVoxelMesh(VoxelGrid ret)
+        {
+            var builder = new MeshBuilder();
+
+            for (int x = ret.Min.X; x <= ret.Max.X; x++)
+                for (int y = ret.Min.Y; y <= ret.Max.Y; y++)
+                    for (int z = ret.Min.Z; z <= ret.Max.Z; z++)
+                    {
+                        if (!ret[x, y, z]) continue;
+
+
+                        builder.AddBox(new Vector3(x, y, z), (new Vector3(x, y, z) + MathHelper.One));
+                    }
+
+
+            return builder.CreateMesh();
         }
     }
 }

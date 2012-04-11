@@ -5,6 +5,7 @@ using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.Tests.Voxelization;
+using MHGameWork.TheWizards.Voxelization;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Rendering
@@ -27,20 +28,7 @@ namespace MHGameWork.TheWizards.Rendering
 
             var ret = grid;
 
-            var builder = new MeshBuilder();
-
-            for (int x = ret.Min.X; x <= ret.Max.X; x++)
-                for (int y = ret.Min.Y; y <= ret.Max.Y; y++)
-                    for (int z = ret.Min.Z; z <= ret.Max.Z; z++)
-                    {
-                        if (!ret[x, y, z]) continue;
-
-
-                        builder.AddBox(new Vector3(x, y, z), (new Vector3(x, y, z) + MathHelper.One));
-                    }
-
-
-            var voxelMesh = builder.CreateMesh();
+            IMesh voxelMesh = Voxelizer.CreateVoxelMesh(ret);
 
             var voxel = renderer.CreateMeshElement(voxelMesh);
             voxel.WorldMatrix = Matrix.Translation(0, 0, 0);
@@ -51,5 +39,6 @@ namespace MHGameWork.TheWizards.Rendering
             };
             game.Run();
         }
+
     }
 }

@@ -10,6 +10,8 @@ namespace MHGameWork.TheWizards.Tests.Voxelization
     /// <summary>
     /// Represents a 3D grid of voxels
     /// Voxel with coordinate (x,y,z) goes from (x,y,z) to (x+1,y+1,z+1)
+    /// TODO: allow dynamic expansion/shrinkage of the grid
+    /// IDEA: use an dynamic octree to save space
     /// </summary>
     public class VoxelGrid
     {

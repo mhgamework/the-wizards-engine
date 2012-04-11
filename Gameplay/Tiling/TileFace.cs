@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.Tiling
         Down,
         Left,
         Right,
-        Front,
-        Back
+        Back,
+        Front
     }
 }
