@@ -6,9 +6,9 @@
     /// </summary>
     public enum TileRotation
     {
-        Rotation0,
-        Rotation90,
-        Rotation180,
-        Rotation270
+        Rotation0 = 0,
+        Rotation90 = 1,
+        Rotation180 = 2,
+        Rotation270 = 3
     }
 }

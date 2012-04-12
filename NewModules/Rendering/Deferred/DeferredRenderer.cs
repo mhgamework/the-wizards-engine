@@ -214,6 +214,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             //game.TextureRenderer.Draw(directionalLightRenderer.CSMRenderer.ShadowMapRV, new Vector2(10, 10), new Vector2(550, 200));
 
 
+            context.OutputMerger.SetTargets(gBuffer.DepthStencilView, context.OutputMerger.GetRenderTargets(1)[0]); // Cheat to enable LineManager3D depth
+            //TODO: create a depth buffer that has normal 1/x depth for use in further rendering (not sure actually whether using linear depth at the moment)
+
             //var currAv = readPixel<float>(calculater.CurrAverageLumRV.Resource);
             //var av = 1e-5 + (float)Math.Exp(readPixel<float>(calculater.AverageLuminanceRV.Resource));
             //var text = string.Format("Average: {0:00.000}  Curr: {1:00.000}", av, currAv);

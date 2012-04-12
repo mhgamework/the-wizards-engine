@@ -9,6 +9,7 @@ using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 using SlimDX.DirectInput;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.Tiling
 {
@@ -21,6 +22,9 @@ namespace MHGameWork.TheWizards.Tiling
 
         private WorldRendering.Entity ghostEntity;
         private TileRotation ghostRotation;
+
+        private BoundingBox tileBounding = new BoundingBox(new Vector3(-1.5f, -2, -1.5f), new Vector3(1.5f, 2f, 1.5f));
+        private TileRotation matchedGhostRotation;
 
         public TileEditorSimulator()
         {
@@ -39,8 +43,11 @@ namespace MHGameWork.TheWizards.Tiling
             var cursorTilePosition = getCursorTilePosition();
             if (canPlaceTile())
             {
+                if (ghostEntity.Mesh != null)
+                    matchedGhostRotation = findFittingRotation(ghostEntity.Mesh, cursorTilePosition.Value, ghostRotation);
+
                 ghostEntity.Visible = true;
-                ghostEntity.WorldMatrix = TiledEntity.CreateEntityWorldMatrix(ghostRotation,
+                ghostEntity.WorldMatrix = TiledEntity.CreateEntityWorldMatrix(matchedGhostRotation,
                                                                               cursorTilePosition.Value);
             }
             else
@@ -87,12 +94,55 @@ namespace MHGameWork.TheWizards.Tiling
             if (TW.Game.Mouse.LeftMouseJustPressed)
             {
                 actionDo(cursorTilePosition);
-             
+
 
             }
 
 
         }
+
+        /// <summary>
+        /// Returns a rotation for which the given tile fits at the given location
+        /// Returns rotation when no match
+        /// </summary>
+        /// <param name="mesh"></param>
+        /// <param name="ghostPos"></param>
+        /// <param name="rotation"></param>
+        /// <returns></returns>
+        private TileRotation findFittingRotation(IMesh mesh, Point3 ghostPos, TileRotation rotation)
+        {
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (checkTileFits(mesh, ghostPos, rotation)) return rotation;
+                rotation.Rotate(TileRotation.Rotation90);
+            }
+
+            return rotation;
+
+
+
+        }
+
+        private bool checkTileFits(IMesh mesh, Point3 tilePos, TileRotation rotation)
+        {
+            var dirs = new[] { new Point3(1, 0, 0), new Point3(-1, 0, 0), new Point3(0, 0, 1), new Point3(0, 0, -1) };
+            foreach (var dir in dirs)
+            {
+                var tile = TW.Model.GetSingleton<TileModel>().GetTileAt(tilePos + dir);
+                var face = Enum.GetValues(typeof(TileFace)).Cast<TileFace>().First(f => f.Normal() == dir.ToVector3());
+
+                var bounding1 = TileBoundary.CreateFromMesh(mesh, tileBounding, face);
+                var bounding2 = TileBoundary.CreateFromMesh(tile.Mesh, tileBounding, face.GetOpposing());
+
+                if (!bounding1.Matches(bounding2, new TileBoundaryWinding { Rotation = TileRotation.Rotation0, Mirror = true }))
+                    return false;
+
+
+            }
+            return true;
+        }
+
 
         private void actionDo(Point3? cursorTilePosition)
         {
@@ -111,7 +161,7 @@ namespace MHGameWork.TheWizards.Tiling
                 new TiledEntity
                     {
                         Position = cursorTilePosition.Value,
-                        Rotation = ghostRotation,
+                        Rotation = matchedGhostRotation,
                         Mesh = ghostEntity.Mesh
                     };
             }

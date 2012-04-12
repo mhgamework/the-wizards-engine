@@ -41,5 +41,14 @@ namespace MHGameWork.TheWizards.Tests.Voxelization
         }
 
 
+        public IEnumerable<BoundingBox> GetVoxelBoundingBoxes()
+        {
+            for (int x = Min.X; x <= Max.X; x++)
+                for (int y = Min.Y; y <= Max.Y; y++)
+                    for (int z = Min.Z; z <= Max.Z; z++)
+                        if (this[x, y, z])
+                            yield return new BoundingBox(new Vector3(x, y, z), new Vector3(x + 1, y + 1, z + 1));
+        }
+
     }
 }

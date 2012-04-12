@@ -11,11 +11,25 @@ namespace MHGameWork.TheWizards.Rendering
 {
     /// <summary>
     /// This is a helper class which allows for easy mesh composition, mainly usefull for debugging visualization
+    /// TODO: Use texturefactory
     /// </summary>
     public class MeshBuilder
     {
         private List<Microsoft.Xna.Framework.Vector3> positions = new List<Microsoft.Xna.Framework.Vector3>();
         private List<Microsoft.Xna.Framework.Vector3> normals = new List<Microsoft.Xna.Framework.Vector3>();
+        private List<Microsoft.Xna.Framework.Vector2> uvs = new List<Microsoft.Xna.Framework.Vector2>();
+
+
+        private RAMTexture texPlaceholder16;
+
+        public MeshBuilder()
+        {
+            texPlaceholder16 = new RAMTexture();
+            texPlaceholder16.GetCoreData().StorageType = TextureCoreData.TextureStorageType.Disk;
+            texPlaceholder16.GetCoreData().DiskFilePath = TWDir.GameData.CreateSubdirectory("Core") +
+                                                          "\\Placeholder16.png";
+
+        }
 
         public void AddBox(Vector3 min, Vector3 max)
         {
@@ -34,6 +48,7 @@ namespace MHGameWork.TheWizards.Rendering
 
                 positions.Add(pos + min.xna());
                 normals.Add(vertices[indices[i]].normal);
+                uvs.Add(vertices[indices[i]].uv);
 
 
             }
@@ -43,11 +58,11 @@ namespace MHGameWork.TheWizards.Rendering
         {
             var geom = new MeshPartGeometryData();
             geom.Sources.Add(new MeshPartGeometryData.Source
-                                 {
-                                     DataVector3 = positions.ToArray(),
-                                     Number = 0,
-                                     Semantic = MeshPartGeometryData.Semantic.Position
-                                 });
+            {
+                DataVector3 = positions.ToArray(),
+                Number = 0,
+                Semantic = MeshPartGeometryData.Semantic.Position
+            });
             geom.Sources.Add(new MeshPartGeometryData.Source
             {
                 DataVector3 = normals.ToArray(),
@@ -55,6 +70,12 @@ namespace MHGameWork.TheWizards.Rendering
                 Semantic = MeshPartGeometryData.Semantic.Normal
             });
 
+            geom.Sources.Add(new MeshPartGeometryData.Source
+            {
+                DataVector2 = uvs.ToArray(),
+                Number = 0,
+                Semantic = MeshPartGeometryData.Semantic.Texcoord
+            });
 
             var part = new RAMMeshPart();
             part.SetGeometryData(geom);
@@ -62,7 +83,7 @@ namespace MHGameWork.TheWizards.Rendering
             var mesh = new RAMMesh();
             mesh.GetCoreData().Parts.Add(new MeshCoreData.Part
                                              {
-                                                 MeshMaterial = new MeshCoreData.Material { DiffuseColor = Color.White },
+                                                 MeshMaterial = new MeshCoreData.Material { DiffuseColor = Color.White, DiffuseMap = texPlaceholder16 },
                                                  MeshPart = part,
                                                  ObjectMatrix = Matrix.Identity.xna()
                                              });

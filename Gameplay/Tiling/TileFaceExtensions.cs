@@ -42,5 +42,28 @@ namespace MHGameWork.TheWizards.Tiling
         public static Vector3 Normal(this TileFace face) { return normals[(int)face]; }
         public static Vector3 Up(this TileFace face) { return ups[(int)face]; }
         public static Vector3 Right(this TileFace face) { return rights[(int)face]; }
+
+        public static TileFace GetOpposing(this TileFace face)
+        {
+            switch (face)
+            {
+                case TileFace.Front:
+                    return TileFace.Back;
+                case TileFace.Back:
+                    return TileFace.Front;
+                case TileFace.Left:
+                    return TileFace.Right;
+                case TileFace.Right:
+                    return TileFace.Left;
+                case TileFace.Up:
+                    return TileFace.Down;
+                case TileFace.Down:
+                    return TileFace.Up;
+                default:
+                    throw new InvalidOperationException();
+
+
+            }
+        }
     }
 }

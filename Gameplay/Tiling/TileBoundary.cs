@@ -35,10 +35,17 @@ namespace MHGameWork.TheWizards.Tiling
             if (Surface.GetLength(0) != other.Surface.GetLength(0)) return false;
             if (Surface.GetLength(1) != other.Surface.GetLength(1)) return false;
 
+
             for (int i = 0; i < Surface.GetLength(0); i++)
                 for (int j = 0; j < Surface.GetLength(1); j++)
                 {
-                    if (Surface[i, j] != other.Surface[i, j])
+                    var x = i;
+                    var y = j;
+
+                    if (winding.Mirror)
+                        x = Surface.GetLength(0) - 1 - x;
+
+                    if (Surface[i, j] != other.Surface[x, y])
                         return false;
                 }
 

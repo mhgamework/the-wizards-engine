@@ -157,8 +157,8 @@ namespace MHGameWork.TheWizards.Graphics
             i -= 4;
             vertices[i].uv = new Vector2(0, 0); i++;
             vertices[i].uv = new Vector2(0, 1); i++;
-            vertices[i].uv = new Vector2(1, 1); i++;
             vertices[i].uv = new Vector2(1, 0); i++;
+            vertices[i].uv = new Vector2(1, 1); i++;
 
             for (int j = i - 4; j < i; j++)
             {
@@ -174,8 +174,8 @@ namespace MHGameWork.TheWizards.Graphics
             i -= 4;
             vertices[i].uv = new Vector2(0, 0); i++;
             vertices[i].uv = new Vector2(0, 1); i++;
-            vertices[i].uv = new Vector2(1, 1); i++;
             vertices[i].uv = new Vector2(1, 0); i++;
+            vertices[i].uv = new Vector2(1, 1); i++;
 
             for (int j = i - 4; j < i; j++)
             {
@@ -192,8 +192,8 @@ namespace MHGameWork.TheWizards.Graphics
             i -= 4;
             vertices[i].uv = new Vector2(0, 0); i++;
             vertices[i].uv = new Vector2(0, 1); i++;
-            vertices[i].uv = new Vector2(1, 1); i++;
             vertices[i].uv = new Vector2(1, 0); i++;
+            vertices[i].uv = new Vector2(1, 1); i++;
 
             for (int j = i - 4; j < i; j++)
             {
@@ -209,8 +209,8 @@ namespace MHGameWork.TheWizards.Graphics
             i -= 4;
             vertices[i].uv = new Vector2(0, 0); i++;
             vertices[i].uv = new Vector2(0, 1); i++;
-            vertices[i].uv = new Vector2(1, 1); i++;
             vertices[i].uv = new Vector2(1, 0); i++;
+            vertices[i].uv = new Vector2(1, 1); i++;
 
             for (int j = i - 4; j < i; j++)
             {
@@ -226,8 +226,8 @@ namespace MHGameWork.TheWizards.Graphics
             i -= 4;
             vertices[i].uv = new Vector2(0, 0); i++;
             vertices[i].uv = new Vector2(0, 1); i++;
-            vertices[i].uv = new Vector2(1, 1); i++;
             vertices[i].uv = new Vector2(1, 0); i++;
+            vertices[i].uv = new Vector2(1, 1); i++;
 
             for (int j = i - 4; j < i; j++)
             {
@@ -243,8 +243,8 @@ namespace MHGameWork.TheWizards.Graphics
             i -= 4;
             vertices[i].uv = new Vector2(0, 0); i++;
             vertices[i].uv = new Vector2(0, 1); i++;
-            vertices[i].uv = new Vector2(1, 1); i++;
             vertices[i].uv = new Vector2(1, 0); i++;
+            vertices[i].uv = new Vector2(1, 1); i++;
 
             for (int j = i - 4; j < i; j++)
             {

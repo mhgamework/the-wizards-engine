@@ -26,7 +26,12 @@ namespace MHGameWork.TheWizards.Tiling
 
             }
             throw new InvalidOperationException();
+        
         }
 
+        public static TileRotation Rotate(this TileRotation rot, TileRotation rotation)
+        {
+            return (TileRotation) (((int) rot + (int) rotation)%4);
+        }
     }
 }
