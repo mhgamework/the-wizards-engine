@@ -79,6 +79,7 @@ namespace DirectX11
             if (!RenderAxis) return;
             var old = LineManager3D.DrawGroundShadows;
             LineManager3D.DrawGroundShadows = false;
+            LineManager3D.WorldMatrix = Matrix.Identity;
             LineManager3D.AddLine(new Vector3(0, 0, 0), new Vector3(10, 0, 0), Color.Red);
             LineManager3D.AddLine(new Vector3(0, 0, 0), new Vector3(0, 10, 0), Color.Green);
             LineManager3D.AddLine(new Vector3(0, 0, 0), new Vector3(0, 0, 10), Color.Blue);
