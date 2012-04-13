@@ -7,25 +7,14 @@ using MHGameWork.TheWizards.Rendering;
 
 namespace MHGameWork.TheWizards.Assets
 {
-    public class ServerMeshPartAsset : IMeshPart
+    public class ServerMeshPartAsset : ClientMeshPartAsset
     {
-        private MeshPartGeometryData geomData;
         public ServerAsset Asset { get; set; }
-
-        public Guid Guid
-        {
-            get { return Asset.GUID; }
-        }
-
-        public MeshPartGeometryData GetGeometryData()
-        {
-            return geomData;
-        }
 
         public ServerMeshPartAsset(ServerAsset asset)
         {
             Asset = asset;
-            geomData = new MeshPartGeometryData();
+            //TODO: add asset file components
         }
 
         

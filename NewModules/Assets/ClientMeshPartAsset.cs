@@ -36,11 +36,22 @@ namespace MHGameWork.TheWizards.Assets
             return data;
         }
 
-
+        protected ClientMeshPartAsset()
+        {
+            
+        }
         public ClientMeshPartAsset(ClientAsset asset, TWXmlSerializer<MeshPartGeometryData> geomSerializer)
         {
             this.geomSerializer = geomSerializer;
             Asset = asset;
+        }
+
+        public void SaveGeometryData(MeshPartGeometryData data)
+        {
+            using (var fs = Asset.GetFileComponent(GeomDataFileIndex).OpenWrite())
+            {
+                geomSerializer.Serialize(data, fs);
+            }
         }
 
     }

@@ -33,6 +33,10 @@ namespace MHGameWork.TheWizards
         public static DirectoryInfo Cache { get; private set; }
         public static DirectoryInfo GameData { get; private set; }
         public static DirectoryInfo Scripts { get; private set; }
+        /// <summary>
+        /// This folder contains the assets for user use: clean tree of objects (no technical stuff)
+        /// </summary>
+        public static DirectoryInfo Assets { get; private set; }
 
         static TWDir()
         {
@@ -50,6 +54,7 @@ namespace MHGameWork.TheWizards
             Cache = RootDirectory.CreateSubdirectory("Cache");
             GameData = RootDirectory.CreateSubdirectory("GameData");
             Scripts = RootDirectory.CreateSubdirectory("Scripts");
+            Assets = RootDirectory.CreateSubdirectory("Assets");
         }
 
         public static string GenerateRandomCacheFile(string path, string extension)

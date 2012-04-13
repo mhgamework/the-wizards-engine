@@ -1,0 +1,7 @@
+﻿This namespace implements the Asset Pipeline in TheWizards
+
+The TWDir.Assets folder contains a tree structure of all assets. 
+Currently the files in this tree are 'placeholder' files that represents each asset, and contain the Asset's GUID.
+
+When new assets are placed in the tree structure, the engine will automatically pick them up and add them to the internal system. 
+If the added files need preprocessing, preprocessing happens and a asset placeholder is added to the tree, when the engine shuts down these pre-processed files are removed

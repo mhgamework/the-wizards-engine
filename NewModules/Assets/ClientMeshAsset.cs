@@ -22,7 +22,10 @@ namespace MHGameWork.TheWizards.Assets
             get { return Asset.GUID; }
         }
 
-   
+        protected ClientMeshAsset()
+        {
+
+        }
         public ClientMeshAsset(ClientAsset asset, TWXmlSerializer<MeshCoreData> coreSerializer, TWXmlSerializer<MeshCollisionData> collisionSerializer)
         {
             Asset = asset;
@@ -49,5 +52,17 @@ namespace MHGameWork.TheWizards.Assets
                 return collisionData;
             }
         }
+
+        public void SaveCoreData(MeshCoreData data)
+        {
+            using (var fs = Asset.GetFileComponent(CoreDataFileIndex).OpenWrite())
+                coreSerializer.Serialize(data, fs);
+        }
+        public void SaveCollisionData(MeshCollisionData data)
+        {
+            using (var fs = Asset.GetFileComponent(CoreDataFileIndex).OpenWrite())
+                collisionSerializer.Serialize(data, fs);
+        }
+
     }
 }

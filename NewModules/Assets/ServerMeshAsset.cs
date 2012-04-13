@@ -7,34 +7,19 @@ using MHGameWork.TheWizards.Rendering;
 
 namespace MHGameWork.TheWizards.Assets
 {
-    public class ServerMeshAsset : IMesh
-    {
-        private MeshCoreData coreData;
-        private MeshCollisionData collisionData;
-        public ServerAsset Asset { get; set; }
 
-        public Guid Guid
-        {
-            get { return Asset.GUID; }
-        }
+    /// <summary>
+    /// TODO: this is being merged with ClientMeshAsset
+    /// </summary>
+    public class ServerMeshAsset :ClientMeshAsset
+    {
+        public ServerAsset Asset { get; set; }
 
         public ServerMeshAsset(ServerAsset asset)
         {
             Asset = asset;
-            coreData = new MeshCoreData();
-            collisionData = new MeshCollisionData();
+            //TODO: add file components
         }
-
-        
-
-        public MeshCoreData GetCoreData()
-        {
-            return coreData;
-        }
-
-        public MeshCollisionData GetCollisionData()
-        {
-            return collisionData;
-        }
+     
     }
 }
