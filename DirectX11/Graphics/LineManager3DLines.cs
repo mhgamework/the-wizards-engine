@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using SlimDX;
 using SlimDX.Direct3D11;
+using Buffer = SlimDX.Direct3D11.Buffer;
 
 namespace DirectX11.Graphics
 {
@@ -8,7 +10,7 @@ namespace DirectX11.Graphics
     /// This class can be used to store lines for rendering with the LineManager3D. 
     /// You can add lines to this object, and render them each frame without having to re-add them all like in the LineManager3D
     /// </summary>
-    public class LineManager3DLines
+    public class LineManager3DLines : IDisposable
     {
         public struct VertexPositionColor
         {
@@ -349,5 +351,9 @@ namespace DirectX11.Graphics
             NumOfLines = 0;
         }
 
+        public void Dispose()
+        {
+            vertexBuffer.Dispose();
+        }
     }
 }

@@ -453,7 +453,7 @@ namespace DirectX11.Graphics
                     worldViewProjParam.SetMatrix(cam.ViewProjection);
 
                     pass.Apply(device.ImmediateContext);
-                    device.ImmediateContext.Draw(lines.NumOfPrimitives * 2, 0);
+                    device.ImmediateContext.Draw(nLines.NumOfPrimitives * 2, 0);
 
 
 
