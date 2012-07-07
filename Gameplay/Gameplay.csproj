@@ -68,6 +68,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assetbrowser\AssetbrowserData.cs" />
+    <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
+    <Compile Include="Assetbrowser\AssetbrowserProcessor.cs" />
     <Compile Include="Building\Block.cs" />
     <Compile Include="Building\BlockFactory.cs" />
     <Compile Include="Building\BlockLayout.cs" />
@@ -105,6 +108,7 @@
     <Compile Include="WorldRendering\RenderingModel.cs" />
     <Compile Include="WorldRendering\SimpleAssetFactory.cs" />
     <Compile Include="WorldRendering\SimpleMeshFactory.cs" />
+    <Compile Include="WorldRendering\WireframeBox.cs" />
     <Compile Include="_XNA\Gameplay\FireMove.cs" />
     <Compile Include="_XNA\Gameplay\EnergyOrb.cs" />
     <Compile Include="_XNA\Gameplay\Fortress\Minion.cs" />
@@ -171,8 +175,8 @@
     <Compile Include="Tiling\TileEditorSimulator.cs" />
     <Compile Include="TW.cs" />
     <Compile Include="_XNA\World\ClientWorldSector.cs" />
-    <Compile Include="_XNA\World\Rendering\EntityRenderData.cs" />
-    <Compile Include="_XNA\World\Rendering\WorldRenderer.cs" />
+    <Compile Include="WorldRendering\EntityRenderData.cs" />
+    <Compile Include="WorldRendering\WorldRenderer.cs" />
     <Compile Include="_XNA\World\ServerWorld.cs" />
   </ItemGroup>
   <ItemGroup>
