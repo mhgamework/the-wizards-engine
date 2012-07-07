@@ -50,7 +50,7 @@ namespace MHGameWork.TheWizards.Synchronization
                 var syncedObject = getSyncedObject(change.ModelObject);
                 var syncChange = localChanges.Add();
                 syncChange.Object = syncedObject;
-                syncChange.ChangeType = change.ChangeType;
+                syncChange.Change = change.Change;
             }
 
             remoteEndPoint.ApplyModelChanges(localChanges);
@@ -97,15 +97,15 @@ namespace MHGameWork.TheWizards.Synchronization
             foreach (var change in changes)
             {
 
-                switch (change.ChangeType)
+                switch (change.Change)
                 {
-                    case ModelContainer.ModelContainer.WorldChangeType.Added:
+                    case ModelChange.Added:
                         applyObjectAdded(change);
                         break;
-                    case ModelContainer.ModelContainer.WorldChangeType.Modified:
+                    case ModelChange.Modified:
                         applyObjectModified(change);
                         break;
-                    case ModelContainer.ModelContainer.WorldChangeType.Removed:
+                    case ModelChange.Removed:
                         applyObjectRemoved(change);
                         break;
                     default:
@@ -116,7 +116,7 @@ namespace MHGameWork.TheWizards.Synchronization
         public class SyncChange
         {
             public SyncedObject Object;
-            public ModelContainer.ModelContainer.WorldChangeType ChangeType;
+            public ModelChange Change;
         }
 
         private void applyObjectAdded(SyncChange change)

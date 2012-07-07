@@ -94,6 +94,7 @@
     <Compile Include="Building\PlayerController.cs" />
     <Compile Include="Building\WallPlacer.cs" />
     <Compile Include="Building\WallType.cs" />
+    <Compile Include="ModelContainer\ModelChange.cs" />
     <Compile Include="Persistence\AutoSaveSimulator.cs" />
     <Compile Include="Persistence\ModelSerializer.cs" />
     <Compile Include="Persistence\PersistAttribute.cs" />

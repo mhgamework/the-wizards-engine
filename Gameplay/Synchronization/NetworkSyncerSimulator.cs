@@ -39,7 +39,7 @@ namespace MHGameWork.TheWizards.Synchronization
             if (firstSimulate)
             {
                 // Broadcast dummy change to the remotes to notify them of our existance
-                transporter.SendAll(new ChangePacket { ChangeType = ModelContainer.ModelContainer.WorldChangeType.None });
+                transporter.SendAll(new ChangePacket { Change = ModelChange.None });
                 firstSimulate = false;
             }
 
@@ -65,7 +65,7 @@ namespace MHGameWork.TheWizards.Synchronization
                     foreach (var obj in getSyncedObjects())
                     {
                         transporter.SendTo(client,
-                                           createChangePacket(obj, ModelContainer.ModelContainer.WorldChangeType.Added));
+                                           createChangePacket(obj, ModelChange.Added));
                     }
                     markClientNotNew(client);
                 }
@@ -130,9 +130,9 @@ namespace MHGameWork.TheWizards.Synchronization
 
             IModelObject target;
             object[] deserialized;
-            switch (p.ChangeType)
+            switch (p.Change)
             {
-                case ModelContainer.ModelContainer.WorldChangeType.Added:
+                case ModelChange.Added:
 
                     var type = typeSerializer.Deserialize(p.TypeFullName);
 
@@ -148,7 +148,7 @@ namespace MHGameWork.TheWizards.Synchronization
                     applyValues(target, p.Keys, deserialized); // Set initial data
 
                     break;
-                case ModelContainer.ModelContainer.WorldChangeType.Modified:
+                case ModelChange.Modified:
 
                     target = getObjectByGuid(p.Guid);
 
@@ -158,11 +158,11 @@ namespace MHGameWork.TheWizards.Synchronization
                     applyValues(target, p.Keys, deserialized); // Apply changes
 
                     break;
-                case ModelContainer.ModelContainer.WorldChangeType.Removed:
+                case ModelChange.Removed:
                     target = getObjectByGuid(p.Guid);
                     TW.Model.RemoveObject(target);
                     return true;
-                case ModelContainer.ModelContainer.WorldChangeType.None:
+                case ModelChange.None:
                     // do nothing! This should be a dummy packet to notify us of a remote's existance
                     return true;
                 default:
@@ -231,13 +231,13 @@ namespace MHGameWork.TheWizards.Synchronization
             {
                 var change = array[i];
 
-                if (change.ChangeType == ModelContainer.ModelContainer.WorldChangeType.None) continue;
+                if (change.Change == ModelChange.None) continue;
                 if (Attribute.GetCustomAttribute(change.ModelObject.GetType(), typeof(NoSyncAttribute)) != null)
                     continue; // don't sync this type of object
 
                 // Create a change packet
 
-                ChangePacket p = createChangePacket(change.ModelObject, change.ChangeType);
+                ChangePacket p = createChangePacket(change.ModelObject, change.Change);
 
                 // Send!!
 
@@ -253,7 +253,7 @@ namespace MHGameWork.TheWizards.Synchronization
             }
         }
 
-        private ChangePacket createChangePacket(IModelObject obj, ModelContainer.ModelContainer.WorldChangeType changeType)
+        private ChangePacket createChangePacket(IModelObject obj, ModelChange change)
         {
             // Clear buffers
 
@@ -262,7 +262,7 @@ namespace MHGameWork.TheWizards.Synchronization
 
             var p = new ChangePacket();
 
-            p.ChangeType = changeType;
+            p.Change = change;
             p.Guid = getObjectGuid(obj);
             p.TypeFullName = typeSerializer.Serialize(obj.GetType());
 

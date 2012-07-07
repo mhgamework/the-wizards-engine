@@ -26,6 +26,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         public void TestChangeEntity()
         {
             var container = new ModelContainer.ModelContainer();
+            TW.Model = container;
 
             var ent = new WorldRendering.Entity();
 

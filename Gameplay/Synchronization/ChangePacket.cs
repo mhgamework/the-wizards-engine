@@ -1,4 +1,5 @@
 ﻿using System;
+using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Networking;
 
 namespace MHGameWork.TheWizards.Synchronization
@@ -8,7 +9,7 @@ namespace MHGameWork.TheWizards.Synchronization
     /// </summary>
     public class ChangePacket : INetworkPacket
     {
-        public ModelContainer.ModelContainer.WorldChangeType ChangeType;
+        public ModelChange Change;
         public Guid Guid;
         public string TypeFullName;
         public string[] Keys;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.ServerClient.Entity.Rendering;
 using SlimDX;
@@ -36,17 +37,17 @@ namespace MHGameWork.TheWizards.Building
 
                 var ent = (BuildSlot)change.ModelObject;
 
-                switch (change.ChangeType)
+                switch (change.Change)
                 {
-                    case ModelContainer.ModelContainer.WorldChangeType.None:
+                    case ModelChange.None:
                         throw new InvalidOperationException();
-                    case ModelContainer.ModelContainer.WorldChangeType.Added:
+                    case ModelChange.Added:
                         setMeshRenderElement(ent);
                         break;
-                    case ModelContainer.ModelContainer.WorldChangeType.Modified:
+                    case ModelChange.Modified:
                         setMeshRenderElement(ent);
                         break;
-                    case ModelContainer.ModelContainer.WorldChangeType.Removed:
+                    case ModelChange.Removed:
                         DeferredMeshRenderElement meshEl = BuildSlotRenderDataMap[ent];
                         if (meshEl != null)
                         {

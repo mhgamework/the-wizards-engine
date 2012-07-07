@@ -30,7 +30,7 @@ namespace MHGameWork.TheWizards.ModelContainer
             if (locationInfo.LocationKind == LocationKind.Property && locationInfo.PropertyInfo.PropertyType.Equals(typeof(ModelContainer))) // dont sync modelcontainers!
                 return false;
 
-
+            Console.WriteLine("Yello!");
             Message.Write(MessageLocation.Of(locationInfo.PropertyInfo), SeverityType.Info, "ModelErrorCode", "Added ModelContainer changelogging to:: " +
                     locationInfo.DeclaringType.FullName);
 

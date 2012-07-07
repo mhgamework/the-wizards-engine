@@ -19,12 +19,12 @@ namespace MHGameWork.TheWizards.ModelContainer
                                              {
                                                  var change = dirtyEntities.Add();
                                                  change.ModelObject = obj;
-                                                 change.ChangeType = WorldChangeType.Added;
+                                                 change.Change = ModelChange.Added;
                                              }, delegate(IModelObject obj)
                                                 {
                                                     var change = dirtyEntities.Add();
                                                     change.ModelObject = obj;
-                                                    change.ChangeType = WorldChangeType.Removed;
+                                                    change.Change = ModelChange.Removed;
                                                 });
 
             dirtyEntities = new PrefilledList<ObjectChange>(() => new ObjectChange());
@@ -49,7 +49,7 @@ namespace MHGameWork.TheWizards.ModelContainer
 
             obj.Initialize(this);
 
-            flagChanged(obj, WorldChangeType.Added);
+            flagChanged(obj, ModelChange.Added);
         }
         /// <summary>
         /// TODO: this should be called automatically using a weak references system
@@ -59,7 +59,7 @@ namespace MHGameWork.TheWizards.ModelContainer
         {
             if (!Objects.Contains(obj)) throw new InvalidOperationException("Object not in list");
             Objects.Remove(obj);
-            flagChanged(obj, WorldChangeType.Removed);
+            flagChanged(obj, ModelChange.Removed);
         }
 
 
@@ -71,31 +71,31 @@ namespace MHGameWork.TheWizards.ModelContainer
         public void NotifyObjectModified(IModelObject obj)
         {
             if (!Objects.Contains(obj)) throw new InvalidOperationException("Object not in this container!");
-            flagChanged(obj, WorldChangeType.Modified);
+            flagChanged(obj, ModelChange.Modified);
         }
 
-        private void flagChanged(IModelObject obj, WorldChangeType changeType)
+        private void flagChanged(IModelObject obj, ModelChange change)
         {
             var ret = getChange(obj);
 
-            if (changeType == WorldChangeType.Removed && ret.ChangeType == WorldChangeType.Added)
+            if (change == ModelChange.Removed && ret.Change == ModelChange.Added)
             {
                 // Object was added, and removed again, so nothing happened!
-                ret.ChangeType = WorldChangeType.None;
+                ret.Change = ModelChange.None;
                 return;
             }
 
-            if (changeType == WorldChangeType.Added || changeType == WorldChangeType.Removed) // added or removed are exclusive
+            if (change == ModelChange.Added || change == ModelChange.Removed) // added or removed are exclusive
             {
-                ret.ChangeType = changeType;
+                ret.Change = change;
                 return;
             }
 
-            if (changeType == WorldChangeType.Modified)
+            if (change == ModelChange.Modified)
             {
-                if (ret.ChangeType == WorldChangeType.None || ret.ChangeType == WorldChangeType.Modified)
+                if (ret.Change == ModelChange.None || ret.Change == ModelChange.Modified)
                 {
-                    ret.ChangeType = changeType;
+                    ret.Change = change;
                 }
                 return;
             }
@@ -117,7 +117,7 @@ namespace MHGameWork.TheWizards.ModelContainer
 
             var ret = dirtyEntities.Add();
             ret.ModelObject = obj;
-            ret.ChangeType = WorldChangeType.None;
+            ret.Change = ModelChange.None;
 
             return ret;
         }
@@ -126,20 +126,7 @@ namespace MHGameWork.TheWizards.ModelContainer
         public class ObjectChange
         {
             public IModelObject ModelObject { get; set; }
-            public WorldChangeType ChangeType { get; set; }
-        }
-
-        public enum WorldChangeType
-        {
-            /// <summary>
-            /// Note: the meaning of the none-state has been changed from an illegal state, to a state where nothing changed
-            ///        and is now a valid state
-            /// </summary>
-            None = 0,
-            Added = 1,
-            Modified = 2,
-            Removed = 3
-
+            public ModelChange Change { get; set; }
         }
 
 
@@ -161,10 +148,10 @@ namespace MHGameWork.TheWizards.ModelContainer
         }
 
 
-
-
-
-
+        public bool HasChanged(IModelObject obj)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

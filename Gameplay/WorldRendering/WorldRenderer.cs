@@ -13,7 +13,6 @@ namespace MHGameWork.TheWizards._XNA.World.Rendering
     {
         private readonly ModelContainer.ModelContainer world;
         private readonly DeferredRenderer renderer;
-        private Dictionary<WorldRendering.Entity, EntityRenderData> entityRenderDataMap = new Dictionary<WorldRendering.Entity, EntityRenderData>();
         public WorldRenderer(ModelContainer.ModelContainer world, DeferredRenderer renderer)
         {
             this.world = world;
@@ -32,42 +31,71 @@ namespace MHGameWork.TheWizards._XNA.World.Rendering
                 var change = objectChanges[i];
 
 
-                if (!(change.ModelObject is WorldRendering.Entity))
-                    continue;
-
-                var ent = (WorldRendering.Entity)change.ModelObject;
-
-                switch (change.ChangeType)
-                {
-                    case ModelContainer.ModelContainer.WorldChangeType.None:
-                        //Huh?
-                        throw new InvalidOperationException();
-                    case ModelContainer.ModelContainer.WorldChangeType.Added:
-                        if (entityRenderDataMap.ContainsKey(ent))
-                            throw new InvalidOperationException("Invalid change, entity is already in the renderer");
-
-                        var renderData = new EntityRenderData(ent, renderer);
-                        entityRenderDataMap[ent] = renderData;
-
-                        renderData.UpdateRenderData();
-
-                        break;
-                    case ModelContainer.ModelContainer.WorldChangeType.Modified:
-                        if (!entityRenderDataMap.ContainsKey(ent))
-                            throw new InvalidOperationException("Invalid change, entity is not in the renderer");
-                        entityRenderDataMap[ent].UpdateRenderData();
-                        break;
-                    case ModelContainer.ModelContainer.WorldChangeType.Removed:
-                        if (!entityRenderDataMap.ContainsKey(ent))
-                            throw new InvalidOperationException("Invalid change, entity is not in the renderer");
-                        entityRenderDataMap[ent].RemoveRenderData();
-                        entityRenderDataMap.Remove(ent);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                if ((change.ModelObject is WorldRendering.Entity))
+                    updateEntity(change);
+                if ((change.ModelObject is WorldRendering.WireframeBox))
+                    updateWireframeBox(change);
             }
 
+        }
+
+        private void updateEntity(ModelContainer.ModelContainer.ObjectChange change)
+        {
+            var ent = (WorldRendering.Entity) change.ModelObject;
+
+                if (change.Change ==  ModelChange.Added)
+                {
+                    if (ent.get<EntityRenderData>() != null)
+                        throw new InvalidOperationException("Invalid change, entity is already in the renderer");
+
+                    var renderData = new EntityRenderData(ent, renderer);
+                    ent.set<EntityRenderData>(renderData);
+
+                    renderData.UpdateRenderData();
+
+                }
+            if(change.Change ==  ModelChange.Modified || change.Change == ModelChange.Added)
+            {
+                if (ent.get<EntityRenderData>() == null)
+                    throw new InvalidOperationException("Invalid change, entity is not in the renderer");
+                ent.get<EntityRenderData>().UpdateRenderData();
+            }
+            if (change.Change ==  ModelChange.Removed)
+            {
+                if (ent.get<EntityRenderData>() == null)
+                    throw new InvalidOperationException("Invalid change, entity is not in the renderer");
+                ent.get<EntityRenderData>().RemoveRenderData();
+                ent.set<EntityRenderData>(null);
+            }
+        }
+        private void updateWireframeBox(ModelContainer.ModelContainer.ObjectChange change)
+        {
+            var ent = (WorldRendering.Entity) change.ModelObject;
+
+                if (change.Change ==  ModelChange.Added)
+                {
+                    if (ent.get<EntityRenderData>() != null)
+                        throw new InvalidOperationException("Invalid change, entity is already in the renderer");
+
+                    var renderData = new EntityRenderData(ent, renderer);
+                    ent.set<EntityRenderData>(renderData);
+
+                    renderData.UpdateRenderData();
+
+                }
+            if(change.Change ==  ModelChange.Modified || change.Change == ModelChange.Added)
+            {
+                if (ent.get<EntityRenderData>() == null)
+                    throw new InvalidOperationException("Invalid change, entity is not in the renderer");
+                ent.get<EntityRenderData>().UpdateRenderData();
+            }
+            if (change.Change ==  ModelChange.Removed)
+            {
+                if (ent.get<EntityRenderData>() == null)
+                    throw new InvalidOperationException("Invalid change, entity is not in the renderer");
+                ent.get<EntityRenderData>().RemoveRenderData();
+                ent.set<EntityRenderData>(null);
+            }
         }
 
         public void Simulate()
