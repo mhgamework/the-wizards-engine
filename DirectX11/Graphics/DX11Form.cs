@@ -50,7 +50,7 @@ namespace DirectX11.Graphics
             //TODO: create depth buffer
             //device.ImmediateContext.ClearDepthStencilView(device.ImmediateContext.OutputMerger.GetDepthStencilView(),
             //                                              DepthStencilClearFlags.Depth, 1, 0);
-            device.ImmediateContext.ClearRenderTargetView(renderTargetView, Color.Yellow);
+            //            device.ImmediateContext.ClearRenderTargetView(renderTargetView, Color.Yellow);
 
             if (GameLoopEvent != null) GameLoopEvent();
 
@@ -108,9 +108,9 @@ namespace DirectX11.Graphics
                 Console.WriteLine("Unable to initialize device in Debug Mode. Running in normal mode instead!");
                 Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.None, desc, out device, out swapChain);
 
-            } 
+            }
 
-            
+
 
             //var result = device.CheckMultisampleQualityLevels(Format.R8G8B8A8_UNorm, 2);
 
@@ -119,7 +119,7 @@ namespace DirectX11.Graphics
             factory.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
 
             backBuffer = Texture2D.FromSwapChain<Texture2D>(swapChain, 0);
-            
+
             renderTargetView = new RenderTargetView(device, backBuffer);
 
 

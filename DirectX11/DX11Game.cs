@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using DirectX11.Graphics;
 using DirectX11.Input;
 using MHGameWork.TheWizards.TestRunner;
@@ -24,7 +25,7 @@ namespace DirectX11
         public DX11Game()
         {
             form = new DX11Form();
-            form.GameLoopEvent += new Action(gameLoop);
+            form.GameLoopEvent += messageLoop;
             RenderAxis = true;
             basicShaders = new List<BasicShader>();
 
@@ -35,19 +36,36 @@ namespace DirectX11
 
         void gameLoop()
         {
+            while (true)
+            {
+                messageloopIdle.WaitOne(); // Wait for messageloop to become idle
+                messageloopIdle.Reset(); // Event handled?
+
+                Console.WriteLine("Gameloop");
+
+                gameLoopStep();
+
+                gameloopIdle.Set(); // Done!    
+            }
+
+        }
+
+        void gameLoopStep()
+        {
+
             if (TotalRunTime > 3 && TestRunner.IsRunningAutomated)
             {
                 Exit();
-                return;                
+                return;
             }
+
+            ResetWindowTitle();
 
             updateElapsed();
 
-            updateInput();
-
-
-
             SpectaterCamera.Update(Elapsed);
+
+            form.Device.ImmediateContext.ClearRenderTargetView(form.RenderTargetView, Color.Yellow);
 
             updateBasicShaders();
 
@@ -56,7 +74,87 @@ namespace DirectX11
             renderAxisLines();
 
             LineManager3D.Render(Camera);
+        }
 
+
+        private void messageLoop()
+        {
+            messageloopIdle.Set(); // Idle
+            gameloopIdle.WaitOne(); // wait for gameloop to finish
+            gameloopIdle.Reset(); // Event handled?
+
+            Console.WriteLine("Messageloop");
+
+
+            updateInput();
+
+            if (!Running)
+            {
+
+                if (diDevice == null)
+                    return;
+
+                // shutdown!
+                form.Exit();
+
+                diKeyboard.Dispose();
+                diMouse.Dispose();
+                diDevice.Dispose();
+
+                diKeyboard = null;
+                diMouse = null;
+                diDevice = null;
+
+                return;
+            }
+
+
+            lock (pauseLock)
+            {
+                if (paused)
+                {
+                    // Check if we need to unpause
+                    if (Keyboard.IsKeyReleased(Key.Space) || keyboard.IsKeyReleased(Key.Return))
+                    {
+                        paused = false;
+                        
+                    }
+
+                    Monitor.Pulse(pauseLock); // This causes the gameloop to say its idle :P careful!
+
+                }
+                else
+                {
+                    // Not paused, run normally
+
+                    // Nothing to do! ==> idle
+
+                }
+            }
+        }
+
+        private ManualResetEvent messageloopIdle = new ManualResetEvent(false);
+        private ManualResetEvent gameloopIdle = new ManualResetEvent(false);
+
+        private object pauseLock = new object();
+
+        private bool paused;
+
+        /// <summary>
+        /// This pauses the gameloop, but keeps the messageloop responsive
+        /// To be called from within the gameloop!!!
+        /// </summary>
+        public void Pause()
+        {
+            lock (pauseLock)
+            {
+                paused = true;
+                while (paused)
+                {
+                    gameloopIdle.Set();
+                    Monitor.Wait(pauseLock);
+                }
+            }
         }
 
         private void doGameLoopEvent()
@@ -130,8 +228,12 @@ namespace DirectX11
 
         private void updateInput()
         {
-            if (diKeyboard.Acquire().IsFailure)
+            var acquire = diKeyboard.Acquire();
+            if (acquire.IsFailure)
+            {
+                keyboard.UpdateKeyboardState(new KeyboardState()); // reset!!
                 return;
+            }
 
             if (!mouse.CursorEnabled != isMouseExclusive)
             {
@@ -186,7 +288,7 @@ namespace DirectX11
 
             fpsCalculater.AddFrame(Elapsed);
 
-            form.Form.Text = FPS.ToString();
+            AddToWindowTitle( FPS.ToString());
 
             if (Elapsed > 1 / 30f) Elapsed = 1 / 30f;
 
@@ -246,16 +348,18 @@ namespace DirectX11
                 InitDirectX();
 
             Running = true;
+
+            var t = new Thread(gameLoop);
+            t.Name = "DX11Game:GameLoop";
+            t.Start();
+
+
             form.Run();
 
         }
         public void Exit()
         {
-            form.Exit();
-
-            diKeyboard.Dispose();
-            diMouse.Dispose();
-            diDevice.Dispose();
+            
 
             Running = false;
 
@@ -275,7 +379,12 @@ namespace DirectX11
         public float FPS { get { return fpsCalculater.AverageFps; } }
         private MHGameWork.TheWizards.Graphics.AverageFPSCalculater fpsCalculater = new MHGameWork.TheWizards.Graphics.AverageFPSCalculater();
 
-        public bool Running { get; private set; }
+        private bool running;
+        public bool Running
+        {
+            get { lock(this) return running; }
+            private set { lock(this) running = value; }
+        }
 
         public TWKeyboard Keyboard
         {
@@ -294,7 +403,11 @@ namespace DirectX11
 
         public void AddToWindowTitle(string text)
         {
-            form.Form.Text += text;
+            form.Form.BeginInvoke(new Action(delegate { form.Form.Text += text; }));
+        }
+        public void ResetWindowTitle()
+        {
+            form.Form.BeginInvoke(new Action(delegate { form.Form.Text = ""; }));
         }
 
         /// <summary>
