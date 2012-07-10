@@ -228,6 +228,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
 
         }
 
+
         [Test]
         public void TestMeshRendererAdvanced()
         {
@@ -287,6 +288,29 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             };
             game.Run();
 
+        }
+
+
+        [Test]
+        public void TestDeferredRendererLineElement()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+
+            var renderer = new DeferredRenderer(game);
+
+            var el = renderer.CreateLinesElement();
+
+            el.Lines.AddBox(new BoundingBox(Vector3.Zero, MathHelper.One), new Color4(1, 0, 0));
+
+            
+            game.GameLoopEvent += delegate
+            {
+                renderer.Draw();
+
+            };
+
+            game.Run();
         }
 
 

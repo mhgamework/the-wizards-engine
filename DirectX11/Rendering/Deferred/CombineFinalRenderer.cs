@@ -10,8 +10,6 @@ using SlimDX.DXGI;
 namespace DirectX11.Rendering.Deferred
 {
     /// <summary>
-    /// This draws light accumulation from a directional light (full screen)
-    /// the rgb components contain diffuse, alpha contains specular
     /// </summary>
     public class CombineFinalRenderer
     {

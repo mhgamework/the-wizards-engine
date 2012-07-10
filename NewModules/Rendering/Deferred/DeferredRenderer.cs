@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Rendering.SSAO;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DXGI;
+using Device = SlimDX.Direct3D11.Device;
 using MapFlags = SlimDX.DXGI.MapFlags;
 using Resource = SlimDX.Direct3D11.Resource;
 
@@ -45,6 +46,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private readonly int screenHeight;
         private DepthStencilState backgroundDepthStencilState;
 
+        private LineManager3D lineManager;
+        private List<DeferredLinesElement> lineElements = new List<DeferredLinesElement>();
 
         public DeferredRenderer(DX11Game game)
         {
@@ -151,6 +154,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             });
 
+            lineManager = new LineManager3D(game.Device);
 
         }
 
@@ -183,23 +187,31 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             return el;
         }
 
+        public DeferredLinesElement CreateLinesElement()
+        {
+            var el = new DeferredLinesElement(this, game.Device);
+            lineElements.Add(el);
+            return el;
+        }
+
+        public void DeleteLinesElement(DeferredLinesElement el)
+        {
+            if (!lineElements.Contains(el)) throw new InvalidOperationException();
+            lineElements.Remove(el);
+            el.Lines.Dispose();
+        }
+
         public void Draw()
         {
-            context.ClearState();
+            resetDevice();
 
-
-            drawGBuffer();
-
-            combineFinalRenderer.ClearLightAccumulation();
-
-
-            drawLights();
-
+            drawGBuffer(gBuffer);
+            drawLights(combineFinalRenderer);
             //updateSSAO();
-
-            drawHdrImage();
-
-            updateTonemapLuminance();
+            drawCombinedHdrImage(hdrImageRtv, gBuffer, combineFinalRenderer, skyColorRV, ssao.MSsaoBuffer.pSRV);
+            drawLines(hdrImageRtv);
+            return;
+            updateTonemapLuminance(calculater);
 
             context.ClearState();
             game.SetBackbuffer();
@@ -210,7 +222,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             // TODO: currently cheat
             //            context.OutputMerger.SetTargets(gBuffer.DepthStencilView, game.BackBufferRTV);
 
-            game.TextureRenderer.Draw(hdrImageRV, new Vector2(10, 10), new Vector2(100, 100));
+            //game.TextureRenderer.Draw(hdrImageRV, new Vector2(10, 10), new Vector2(100, 100));
+            //drawLines();
             //game.TextureRenderer.Draw(directionalLightRenderer.CSMRenderer.ShadowMapRV, new Vector2(10, 10), new Vector2(550, 200));
 
 
@@ -222,28 +235,54 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         }
 
-        private void updateTonemapLuminance()
+        private void resetDevice()
         {
-            calculater.DrawUpdatedLogLuminance();
-            calculater.DrawUpdatedAdaptedLogLuminance();
+            context.ClearState();
         }
 
-        private void drawHdrImage()
+        private void drawLines(RenderTargetView target)
+        {
+            context.ClearState();
+            context.OutputMerger.SetTargets(target);
+            game.SetBackbuffer();
+            game.LineManager3D.WorldMatrix = Matrix.Identity;
+            game.LineManager3D.AddLine(new Vector3(1, 1, 1), new Vector3(2, 2, 2), new Color4(1, 1, 0, 0));
+            game.LineManager3D.Render(game.Camera);
+
+
+            foreach (var el in lineElements)
+            {
+                Performance.SetMarker(new Color4(1,0,0),"MarkerLines");
+                SlimDX.Performance.BeginEvent(new Color4(1,0,0), "RenderLines");
+                el.Lines.AddLine(new Vector3(1, 1, 1), new Vector3(2, 2, 2), new Color4(1, 1, 0, 0));
+                game.LineManager3D.Render(el.Lines, game.Camera);
+                SlimDX.Performance.EndEvent();
+            }
+
+        }
+
+        private void updateTonemapLuminance(AverageLuminanceCalculater calculator)
+        {
+            calculator.DrawUpdatedLogLuminance();
+            calculator.DrawUpdatedAdaptedLogLuminance();
+        }
+
+        private void drawCombinedHdrImage(RenderTargetView output, GBuffer buffer, CombineFinalRenderer finalRenderer, ShaderResourceView background, ShaderResourceView ssao)
         {
             game.Device.ImmediateContext.ClearState();
             game.SetBackbuffer(); // This is to set default viewport only, because i am lazy
 
-            context.OutputMerger.SetTargets(hdrImageRtv);
+            context.OutputMerger.SetTargets(output);
 
-            combineFinalRenderer.DrawCombined(ssao.MSsaoBuffer.pSRV);
+            finalRenderer.DrawCombined(ssao);
 
 
             // Clear background to certain color
-            context.OutputMerger.SetTargets(gBuffer.DepthStencilView, hdrImageRtv);
+            context.OutputMerger.SetTargets(buffer.DepthStencilView, output);
 
             context.OutputMerger.DepthStencilState = backgroundDepthStencilState;
 
-            game.TextureRenderer.Draw(skyColorRV, new Vector2(), new Vector2(screenWidth, screenHeight));
+            game.TextureRenderer.Draw(background, new Vector2(), new Vector2(screenWidth, screenHeight));
 
 
         }
@@ -253,8 +292,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             ssao.OnFrameRender(gBuffer.DepthRV, gBuffer.NormalRV);
         }
 
-        private void drawLights()
+        private void drawLights(CombineFinalRenderer finalRenderer)
         {
+            finalRenderer.ClearLightAccumulation();
+
             // Possibly do all shadowmap up front, even cache some shadow maps.
 
             for (int i = 0; i < directionalLights.Count; i++)
@@ -267,7 +308,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 {
                     updateDirectionalShadows(r, l.ShadowViews);
                 }
-                combineFinalRenderer.SetLightAccumulationStates();
+                finalRenderer.SetLightAccumulationStates();
 
                 r.Draw();
             }
@@ -281,7 +322,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 if (l.ShadowsEnabled)
                     updatePointShadows(r, l.Views);
 
-                combineFinalRenderer.SetLightAccumulationStates();
+                finalRenderer.SetLightAccumulationStates();
 
                 r.Draw();
             }
@@ -297,7 +338,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                     updateSpotShadows(r, l.ShadowView);
                 }
 
-                combineFinalRenderer.SetLightAccumulationStates();
+                finalRenderer.SetLightAccumulationStates();
 
                 r.Draw();
             }
@@ -331,11 +372,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             r.ShadowsEnabled = l.ShadowsEnabled;
         }
 
-        private void drawGBuffer()
+        private void drawGBuffer(GBuffer buffer)
         {
             //gBuffer.Clear(Microsoft.Xna.Framework.Graphics.Color.SkyBlue.dx());
-            gBuffer.Clear();
-            gBuffer.SetTargetsToOutputMerger();
+            buffer.Clear();
+            buffer.SetTargetsToOutputMerger();
 
             drawGBufferMeshes();
         }
@@ -396,7 +437,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             var mainCamera = game.Camera;
             if (DEBUG_SeperateCullCamera != null) mainCamera = DEBUG_SeperateCullCamera;
             int num = 0;
-            r.DrawUpdatedShadowmap(delegate(OrthographicCamera lightCamera)
+            r.UpdateShadowmap(delegate(OrthographicCamera lightCamera)
                                        {
                                            var view = views[0];
                                            num++;
@@ -441,5 +482,25 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         public FrustumCuller DEBUG_FrustumCuller { get { return frustumCuller; } }
         public ICamera DEBUG_SeperateCullCamera { get; set; }
 
+    }
+
+    public class DeferredLinesElement
+    {
+        private readonly DeferredRenderer renderer;
+        public LineManager3DLines Lines { get; private set; }
+
+        public DeferredLinesElement(DeferredRenderer renderer, Device device)
+        {
+            this.renderer = renderer;
+            Lines = new LineManager3DLines(device);
+        }
+
+
+        public void Delete()
+        {
+            renderer.DeleteLinesElement(this);
+            Lines = null;
+
+        }
     }
 }

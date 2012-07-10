@@ -211,7 +211,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 filledGBuffer.DrawUpdatedGBuffer();
 
 
-                light.DrawUpdatedShadowmap(delegate(OrthographicCamera lightCamera)
+                light.UpdateShadowmap(delegate(OrthographicCamera lightCamera)
                 {
                     game.Camera = lightCamera;
 

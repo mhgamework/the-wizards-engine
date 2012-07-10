@@ -13,6 +13,7 @@ namespace DirectX11.Rendering.Deferred
     /// <summary>
     /// This draws light accumulation from a directional light (full screen)
     /// the rgb components contain diffuse, alpha contains specular
+    /// This outputs onto a normal single render target
     /// </summary>
     public class DirectionalLightRenderer
     {
@@ -83,12 +84,21 @@ namespace DirectX11.Rendering.Deferred
         private DirectionalLight csmLight = new DirectionalLight();
         private BasicShader noShadowsShader;
 
-        public void DrawUpdatedShadowmap(CSM.CSMRenderer.RenderPrimitives renderDelegate, ICamera mainCamera)
+        /// <summary>
+        /// ??
+        /// </summary>
+        /// <param name="renderDelegate"></param>
+        /// <param name="mainCamera"></param>
+        public void UpdateShadowmap(CSM.CSMRenderer.RenderPrimitives renderDelegate, ICamera mainCamera)
         {
             csmLight.Direction = LightDirection;
             CSMRenderer.UpdateShadowMap(renderDelegate, csmLight, mainCamera);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void Draw()
         {
             BasicShader shader;
