@@ -52,14 +52,27 @@ namespace MHGameWork.TheWizards.TestRunner
             rootNode = builder.CreateTestsTree(TestsAssembly);
             rootNode.SortRecursive();
 
-           
-
-
-
             var sel = new TestSelectionInterface(rootNode);
-            sel.ResumeTest = resumeTestRun;
-            sel.RunTestGroup = doTestRun;
-            sel.RunTestMethod = doTestRun;
+            sel.ResumeTest = delegate
+                             {
+                                 sel.Hide();
+                                 resumeTestRun();
+                                 sel.Show();
+                             };
+            sel.RunTestGroup = delegate(TestNode obj)
+                               {
+                                   data.SelectedPath = sel.SelectedNodePath;
+                                   sel.Hide();
+                                   doTestRun(obj);
+                                   sel.Show();
+                               };
+            sel.RunTestMethod = delegate(TestNode obj)
+                                {
+                                    data.SelectedPath = sel.SelectedNodePath;
+                                    sel.Hide();
+                                    doTestRun(obj);
+                                    sel.Show();
+                                }; 
 
 
 
@@ -114,8 +127,12 @@ namespace MHGameWork.TheWizards.TestRunner
         {
             if (!data.DontRerun)
                 clearNodeStatusRecursive(node);
+
             data.RunningTestsNodePath = node.GetPath();
             data.LastTestRunPath = null;
+            data.Rootnode = rootNode;
+            data.Save(getSaveFilePath());
+
             resumeTestRun();
         }
         private void resumeTestRun()

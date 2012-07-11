@@ -182,9 +182,14 @@ namespace MHGameWork.TheWizards.TestRunner
                 showSettingsPanel();
         }
 
-        
 
-
-
+        public void Hide()
+        {
+            mainForm.Hide();
+        }
+        public void Show()
+        {
+            mainForm.Show();
+        }
     }
 }
