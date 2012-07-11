@@ -447,7 +447,7 @@ namespace DirectX11.Graphics
                         PrimitiveTopology.LineList;
                     device.ImmediateContext.InputAssembler.SetVertexBuffers(0,
                                                                             new VertexBufferBinding
-                                                                                (lines.VertexBuffer,
+                                                                                (nLines.VertexBuffer,
                                                                                  vertexStride, 0));
 
                     worldViewProjParam.SetMatrix(cam.ViewProjection);
