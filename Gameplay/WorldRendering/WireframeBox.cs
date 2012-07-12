@@ -12,16 +12,17 @@ namespace MHGameWork.TheWizards.WorldRendering
     [NoSync]
     public class WireframeBox : BaseModelObject
     {
+
         public WireframeBox()
         {
-            BoundingBox = new BoundingBox(Vector3.Zero, MathHelper.One);
             WorldMatrix = Matrix.Identity;
             Visible = true;
         }
 
 
-        public BoundingBox BoundingBox { get; set; }
         public Matrix WorldMatrix { get; set; }
         public bool Visible { get; set; }
+        public Color4 Color { get; set; }
+
     }
 }
