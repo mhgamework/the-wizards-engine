@@ -1,6 +1,7 @@
 ﻿using System;
+using MHGameWork.TheWizards.ModelContainer;
 
-namespace MHGameWork.TheWizards.ModelContainer
+namespace MHGameWork.TheWizards.Simulators
 {
     public class BasicSimulator : ISimulator
     {

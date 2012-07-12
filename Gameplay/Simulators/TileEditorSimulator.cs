@@ -1,16 +1,13 @@
 ﻿using System;
-using System.IO;
 using DirectX11;
-using MHGameWork.TheWizards.Building;
-using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.ModelContainer;
-using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Tiling;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.Tiling
+namespace MHGameWork.TheWizards.Simulators
 {
     /// <summary>
     /// This simulator will process user input and allow the player to place/manipulate tiles.

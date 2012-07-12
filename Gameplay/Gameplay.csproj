@@ -70,7 +70,7 @@
   <ItemGroup>
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
-    <Compile Include="Assetbrowser\AssetbrowserProcessor.cs" />
+    <Compile Include="Simulators\AssetbrowserSimulator.cs" />
     <Compile Include="Building\Block.cs" />
     <Compile Include="Building\BlockFactory.cs" />
     <Compile Include="Building\BlockLayout.cs" />
@@ -95,7 +95,7 @@
     <Compile Include="Building\WallPlacer.cs" />
     <Compile Include="Building\WallType.cs" />
     <Compile Include="ModelContainer\ModelChange.cs" />
-    <Compile Include="Persistence\AutoSaveSimulator.cs" />
+    <Compile Include="Simulators\AutoSaveSimulator.cs" />
     <Compile Include="Persistence\ModelSerializer.cs" />
     <Compile Include="Persistence\PersistAttribute.cs" />
     <Compile Include="Synchronization\TypeSerializer.cs" />
@@ -137,12 +137,12 @@
     <Compile Include="Tiling\TiledEntity.cs" />
     <Compile Include="Tiling\TileRotation.cs" />
     <Compile Include="Synchronization\ChangePacket.cs" />
-    <Compile Include="Synchronization\NetworkSyncerSimulator.cs" />
-    <Compile Include="PhysX\PhysXUpdateSimulator.cs" />
-    <Compile Include="WorldRendering\SimpleWorldRenderer.cs" />
+    <Compile Include="Simulators\NetworkSyncerSimulator.cs" />
+    <Compile Include="Simulators\PhysXUpdateSimulator.cs" />
+    <Compile Include="Simulators\RenderingSimulator.cs" />
     <Compile Include="ModelContainer\Sphere.cs" />
-    <Compile Include="ModelContainer\BasicSimulator.cs" />
-    <Compile Include="Player\LocalPlayerSimulator.cs" />
+    <Compile Include="Simulators\BasicSimulator.cs" />
+    <Compile Include="Simulators\LocalPlayerSimulator.cs" />
     <Compile Include="Synchronization\IVirtualEndpoint.cs" />
     <Compile Include="Synchronization\VirtualModelSyncer.cs" />
     <Compile Include="Synchronization\VirtualMultiEndpoint.cs" />
@@ -172,8 +172,8 @@
     <Compile Include="_XNA\Scripting\ScriptRunner.cs" />
     <Compile Include="_XNA\Gameplay\ThrowMove.cs" />
     <Compile Include="Synchronization\StringSerializer.cs" />
-    <Compile Include="WorldRendering\ThirdPersonCameraSimulator.cs" />
-    <Compile Include="Tiling\TileEditorSimulator.cs" />
+    <Compile Include="Simulators\ThirdPersonCameraSimulator.cs" />
+    <Compile Include="Simulators\TileEditorSimulator.cs" />
     <Compile Include="TW.cs" />
     <Compile Include="_XNA\World\ClientWorldSector.cs" />
     <Compile Include="WorldRendering\EntityRenderData.cs" />
@@ -208,7 +208,9 @@
     <Content Include="Tiling\_doc.txt" />
     <Content Include="_doc.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="PhysX\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

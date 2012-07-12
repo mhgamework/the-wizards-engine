@@ -139,6 +139,7 @@
     <Compile Include="Gameplay\NetworkSyncerTest.cs" />
     <Compile Include="Gameplay\PersistenceTest.cs" />
     <Compile Include="Gameplay\TilingTest.cs" />
+    <Compile Include="Gameplay\WorldRenderingTest.cs" />
     <Compile Include="Particles\ParticleTests.cs" />
     <Compile Include="Gameplay\FortressTest.cs" />
     <Compile Include="Physics\TestSphereShooter.cs" />

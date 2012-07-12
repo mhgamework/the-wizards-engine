@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Rendering.Deferred;
 
-namespace MHGameWork.TheWizards._XNA.World.Rendering
+namespace MHGameWork.TheWizards.WorldRendering
 {
     /// <summary>
     /// This class is responsible for rendering a world. It will manage all states on the renderer(s). 
     /// For inputs it requires a (dynamic)world and some kind of camera info(more than just camera, it can contain info about probable movement etc)
     /// </summary>
-    public class WorldRenderer : ISimulator
+    public class WorldRenderer 
     {
         private readonly ModelContainer.ModelContainer world;
         private readonly DeferredRenderer renderer;

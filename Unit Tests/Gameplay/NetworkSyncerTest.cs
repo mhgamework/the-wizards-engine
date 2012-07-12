@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
 using MHGameWork.TheWizards.Networking.Server;
+using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.Synchronization;
 using NUnit.Framework;
 using SlimDX;

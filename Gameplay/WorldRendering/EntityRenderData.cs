@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.Rendering.Deferred;
 
-namespace MHGameWork.TheWizards._XNA.World.Rendering
+namespace MHGameWork.TheWizards.WorldRendering
 {
     public class EntityRenderData
     {

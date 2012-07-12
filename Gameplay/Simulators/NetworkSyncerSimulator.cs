@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Collections;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.Reflection;
+using MHGameWork.TheWizards.Synchronization;
 using MHGameWork.TheWizards.WorldRendering;
 
-namespace MHGameWork.TheWizards.Synchronization
+namespace MHGameWork.TheWizards.Simulators
 {
     /// <summary>
     /// This simulator is responsible for sending local changes to the remotes, and then accepting

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.Tiling;
 using MHGameWork.TheWizards.Voxelization;
 using MHGameWork.TheWizards.WorldRendering;
@@ -25,7 +26,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             game
                 .AddSimulator(new TileEditorSimulator())
-                .AddSimulator(new SimpleWorldRenderer());
+                .AddSimulator(new RenderingSimulator());
 
 
             TW.Model.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.Specator;
@@ -73,7 +74,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
 
             game
-              .AddSimulator(new SimpleWorldRenderer());
+              .AddSimulator(new RenderingSimulator());
 
             game.Run();
 

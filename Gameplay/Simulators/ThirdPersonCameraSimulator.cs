@@ -1,8 +1,9 @@
 ﻿using DirectX11.Graphics;
 using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.WorldRendering
+namespace MHGameWork.TheWizards.Simulators
 {
     public class ThirdPersonCameraSimulator : ISimulator
     {

@@ -12,6 +12,7 @@ using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.Synchronization;
 using MHGameWork.TheWizards.Tiling;
 using MHGameWork.TheWizards.WorldRendering;
@@ -121,7 +122,7 @@ namespace MHGameWork.TheWizards.Main
                 .AddSimulator(new TileEditorSimulator())
                 .AddSimulator(new NetworkSyncerSimulator(transporter))
                 .AddSimulator(new ThirdPersonCameraSimulator())
-                .AddSimulator(new SimpleWorldRenderer());
+                .AddSimulator(new RenderingSimulator());
 
 
             TW.Model.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;

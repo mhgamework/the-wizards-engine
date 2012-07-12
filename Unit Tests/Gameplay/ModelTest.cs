@@ -2,9 +2,9 @@
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.OBJParser;
-using MHGameWork.TheWizards.PhysX;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.WorldRendering;
 using NUnit.Framework;
 using SlimDX;
@@ -64,7 +64,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                                                      ent.Mesh = mesh;
                                                      ent.WorldMatrix = Matrix.Translation(Vector3.UnitX * time);
                                                  }))
-                .AddSimulator(new SimpleWorldRenderer());
+                .AddSimulator(new RenderingSimulator());
 
 
 
@@ -81,7 +81,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             new WorldRendering.Entity();
 
             game
-                .AddSimulator(new SimpleWorldRenderer());
+                .AddSimulator(new RenderingSimulator());
 
             game.Run();
 
@@ -102,7 +102,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             game
                 .AddSimulator(new LocalPlayerSimulator(player))
                 .AddSimulator(new ThirdPersonCameraSimulator())
-                .AddSimulator(new SimpleWorldRenderer());
+                .AddSimulator(new RenderingSimulator());
 
 
             TW.Model.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
@@ -121,7 +121,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             game
                 .AddSimulator(new PhysXUpdateSimulator())
-                .AddSimulator(new SimpleWorldRenderer());
+                .AddSimulator(new RenderingSimulator());
 
 
 

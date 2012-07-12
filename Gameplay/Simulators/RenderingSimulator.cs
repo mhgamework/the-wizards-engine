@@ -1,17 +1,20 @@
-﻿using MHGameWork.TheWizards._XNA.World.Rendering;
-using MHGameWork.TheWizards.ModelContainer;
+﻿using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Rendering.Deferred;
+using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.WorldRendering
+namespace MHGameWork.TheWizards.Simulators
 {
-    public class SimpleWorldRenderer : ISimulator
+    /// <summary>
+    /// Responsible for rendering using a basic rendering system.
+    /// </summary>
+    public class RenderingSimulator : ISimulator
     {
         private DeferredRenderer deferred;
         private WorldRenderer renderer;
         private CameraInfo info;
 
-        public SimpleWorldRenderer()
+        public RenderingSimulator()
         {
             deferred = new DeferredRenderer(TW.Game);
             renderer = new WorldRenderer(TW.Model, deferred);
