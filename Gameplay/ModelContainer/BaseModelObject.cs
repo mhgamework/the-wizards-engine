@@ -5,6 +5,11 @@ namespace MHGameWork.TheWizards.ModelContainer
 {
     /// <summary>
     /// Basic implementation of the functionality that a modelobject is required to implement
+    /// 
+    /// The attachment system is an implementation of a type safe dynamic object mechanism. You can ask if this object contains a specific type of data, and retrieve and set it.
+    /// This means that it is never allowed to add a call like set("dataName",mydata)!! ==> this is not type safe
+    /// Concrete: if you need to attach 2 objects of the same type to a single BaseModelObject, you have to make a seperate class for this, due to the type-safety restriction 
+    ///             (This is of course the whole point of the type safe implementation of a dynamic object)
     /// </summary>
     [ModelObjectChanged]
     public class BaseModelObject : IModelObject

@@ -206,11 +206,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             resetDevice();
 
             drawGBuffer(gBuffer);
+            drawLines(gBuffer);
             drawLights(combineFinalRenderer);
             //updateSSAO();
+            
             drawCombinedHdrImage(hdrImageRtv, gBuffer, combineFinalRenderer, skyColorRV, ssao.MSsaoBuffer.pSRV);
-            drawLines(hdrImageRtv);
-            return;
             updateTonemapLuminance(calculater);
 
             context.ClearState();
@@ -235,28 +235,21 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         }
 
+
+
         private void resetDevice()
         {
             context.ClearState();
         }
 
-        private void drawLines(RenderTargetView target)
+        private void drawLines(GBuffer target)
         {
             context.ClearState();
-            context.OutputMerger.SetTargets(target);
-            game.SetBackbuffer();
-            game.LineManager3D.WorldMatrix = Matrix.Identity;
-            game.LineManager3D.AddLine(new Vector3(1, 1, 1), new Vector3(2, 2, 2), new Color4(1, 1, 0, 0));
-            game.LineManager3D.Render(game.Camera);
-
+            target.SetTargetsToOutputMerger();
 
             foreach (var el in lineElements)
             {
-                Performance.SetMarker(new Color4(1,0,0),"MarkerLines");
-                SlimDX.Performance.BeginEvent(new Color4(1,0,0), "RenderLines");
-                el.Lines.AddLine(new Vector3(1, 1, 1), new Vector3(2, 2, 2), new Color4(1, 1, 0, 0));
                 game.LineManager3D.Render(el.Lines, game.Camera);
-                SlimDX.Performance.EndEvent();
             }
 
         }
