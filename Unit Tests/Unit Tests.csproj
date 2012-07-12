@@ -134,6 +134,7 @@
     <Compile Include="DirectX11\TessellationTest.cs" />
     <Compile Include="FileHelperTest.cs" />
     <Compile Include="Forms\ClassFormTest.cs" />
+    <Compile Include="Gameplay\AssetBrowserTest.cs" />
     <Compile Include="Gameplay\LocalGame.cs" />
     <Compile Include="Gameplay\ModelTest.cs" />
     <Compile Include="Gameplay\NetworkSyncerTest.cs" />
