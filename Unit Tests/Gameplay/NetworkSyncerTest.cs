@@ -45,16 +45,19 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             var syncerA = new NetworkSyncerSimulator(createTransporterA());
             var syncerB = new NetworkSyncerSimulator(createTransporterB());
 
-            var containerA = new ModelContainer.ModelContainer();
-            var containerB = new ModelContainer.ModelContainer();
+            var contextA = new TW.Context { Model = new ModelContainer.ModelContainer() };
+            var contextB = new TW.Context { Model = new ModelContainer.ModelContainer() };
+            var containerA = contextA.Model;
+            var containerB = contextB.Model;
+
 
             // Step 0 is to allow sending dummy packets 2-way
             // Enter scope A, step 0
-            TW.Model = containerA;
+            TW.SetContext(contextA);
             syncerA.Simulate();
 
             // Enter scope B, step 0
-            TW.Model = containerB;
+            TW.SetContext(contextB);
             syncerB.Simulate();
 
             // step 0 verification:
@@ -66,12 +69,12 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
 
             // Enter scope A, step 1
-            TW.Model = containerA;
+            TW.SetContext(contextA);
             new BasicModelObject { Number = 42, Text = "Goblin" };
             syncerA.Simulate();
 
             // Enter scope B, step 1
-            TW.Model = containerB;
+            TW.SetContext(contextB);
             syncerB.Simulate();
 
             // step 1 verification:
@@ -86,11 +89,11 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
 
             // Enter scope A, step 2
-            TW.Model = containerA;
+            TW.SetContext(contextA);
             syncerA.Simulate();
 
             // Enter scope B, step 2
-            TW.Model = containerB;
+            TW.SetContext(contextB);
             ((BasicModelObject)TW.Model.Objects[0]).Text = "Sheep";
             syncerB.Simulate();
 
@@ -105,11 +108,11 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
 
             // Enter scope A, step 3
-            TW.Model = containerA;
+            TW.SetContext(contextA);
             syncerA.Simulate();
 
             // Enter scope B, step 3
-            TW.Model = containerB;
+            TW.SetContext(contextB);
             syncerB.Simulate();
 
             // step 3 verification:
@@ -123,12 +126,12 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
 
             // Enter scope A, step 4
-            TW.Model = containerA;
+            TW.SetContext(contextA);
             TW.Model.RemoveObject(TW.Model.Objects[0]);
             syncerA.Simulate();
 
             // Enter scope B, step 4
-            TW.Model = containerB;
+            TW.SetContext(contextB);
             syncerB.Simulate();
 
             // step 4 verification:
@@ -154,11 +157,13 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             var syncerA = new NetworkSyncerSimulator(transporterA);
             var syncerB = new NetworkSyncerSimulator(transporterB);
 
-            var containerA = new ModelContainer.ModelContainer();
-            var containerB = new ModelContainer.ModelContainer();
+            var contextA = new TW.Context { Model = new ModelContainer.ModelContainer() };
+            var contextB = new TW.Context { Model = new ModelContainer.ModelContainer() };
+            var containerA = contextA.Model;
+            var containerB = contextB.Model;
 
             // Enter scope A, step 1
-            TW.Model = containerA;
+            TW.SetContext(contextA);
             new BasicModelObject { Number = 42, Text = "Goblin" };
             syncerA.Simulate();
 
@@ -174,14 +179,14 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
 
             // Enter scope A, step 2
-            TW.Model = containerA;
+            TW.SetContext(contextA);
             syncerA.Simulate();
 
             // Enter scope B, step 2
             // connect!
             transporterA.AddClientTransporter(new DummyClient("ClientB"), clientB);
             transporterB.AddClientTransporter(new DummyClient("ClientA"), clientA);
-            TW.Model = containerB;
+            TW.SetContext(contextB);
             new BasicModelObject { Number = 2, Text = "Sheep" };
             syncerB.Simulate(); // Should send dummy packet
 
@@ -196,11 +201,11 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
 
             // Enter scope A, step 3
-            TW.Model = containerA;
+            TW.SetContext(contextA);
             syncerA.Simulate(); // Dummy packet should force a world update to container b
 
             // Enter scope B, step 3
-            TW.Model = containerB;
+            TW.SetContext(contextB);
             syncerB.Simulate(); // world update from a should force world update to a from b
 
             // step 3 verification:
@@ -213,11 +218,11 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
 
             // Enter scope A, step 4
-            TW.Model = containerA;
+            TW.SetContext(contextA);
             syncerA.Simulate();
 
             // Enter scope B, step 4
-            TW.Model = containerB;
+            TW.SetContext(contextB);
             syncerB.Simulate();
 
             // step 4 verification:
@@ -236,17 +241,18 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         {
             var syncerA = new NetworkSyncerSimulator(createTransporterA());
             var syncerB = new NetworkSyncerSimulator(createTransporterB());
-
-            var containerA = new ModelContainer.ModelContainer();
-            var containerB = new ModelContainer.ModelContainer();
+            var contextA = new TW.Context { Model = new ModelContainer.ModelContainer() };
+            var contextB = new TW.Context { Model = new ModelContainer.ModelContainer() };
+            var containerA = contextA.Model;
+            var containerB = contextB.Model;
 
             // Step 0 is to allow sending dummy packets 2-way
             // Enter scope A, step 0
-            TW.Model = containerA;
+            TW.SetContext(contextA);
             syncerA.Simulate();
 
             // Enter scope B, step 0
-            TW.Model = containerB;
+            TW.SetContext(contextB);
             syncerB.Simulate();
             // step 0 verification:
             Assert.AreEqual(containerA.Objects.Count, containerB.Objects.Count);
@@ -257,17 +263,17 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
 
             // Enter scope A, step 1
-            TW.Model = containerA;
-            new WorldRendering.Entity {WorldMatrix = Matrix.Translation(2, 0, 3)};
+            TW.SetContext(contextA);
+            new WorldRendering.Entity { WorldMatrix = Matrix.Translation(2, 0, 3) };
             syncerA.Simulate();
 
             // Enter scope B, step 1
-            TW.Model = containerB;
+            TW.SetContext(contextB);
             syncerB.Simulate();
 
             // step 1 verification:
             Assert.AreEqual(containerA.Objects.Count, containerB.Objects.Count);
-            Assert.AreEqual(containerA.Objects[0].ToString(),containerB.Objects[0].ToString());
+            Assert.AreEqual(containerA.Objects[0].ToString(), containerB.Objects[0].ToString());
 
             // step 1 clear
             containerA.ClearDirty();
@@ -282,16 +288,19 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             var syncerA = new NetworkSyncerSimulator(createTransporterA());
             var syncerB = new NetworkSyncerSimulator(createTransporterB());
 
-            var containerA = new ModelContainer.ModelContainer();
-            var containerB = new ModelContainer.ModelContainer();
+            var contextA = new TW.Context { Model = new ModelContainer.ModelContainer() };
+            var contextB = new TW.Context { Model = new ModelContainer.ModelContainer() };
+            var containerA = contextA.Model;
+            var containerB = contextB.Model;
+
 
             // Step 0 is to allow sending dummy packets 2-way
             // Enter scope A, step 0
-            TW.Model = containerA;
+            TW.SetContext(contextA);
             syncerA.Simulate();
 
             // Enter scope B, step 0
-            TW.Model = containerB;
+            TW.SetContext(contextB);
             syncerB.Simulate();
             // step 0 verification:
             Assert.AreEqual(containerA.Objects.Count, containerB.Objects.Count);
@@ -302,13 +311,13 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
 
             // Enter scope A, step 1
-            TW.Model = containerA;
+            TW.SetContext(contextA);
             var obj = new ReferenceModelObject();
-            obj.Remote = new BasicModelObject {Number = 8};
+            obj.Remote = new BasicModelObject { Number = 8 };
             syncerA.Simulate();
 
             // Enter scope B, step 1
-            TW.Model = containerB;
+            TW.SetContext(contextB);
             syncerB.Simulate();
 
             // step 1 verification:
@@ -328,7 +337,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         {
             var s = StringSerializer.Create();
             var serialized = s.Serialize(FileMode.Create);
-            var deserialized = s.Deserialize(serialized, typeof (FileMode));
+            var deserialized = s.Deserialize(serialized, typeof(FileMode));
             Assert.AreEqual(FileMode.Create, deserialized);
         }
 

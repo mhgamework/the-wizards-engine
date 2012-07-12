@@ -62,10 +62,12 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
         private void setTWGlobals(ModelContainer.ModelContainer container)
         {
-            TW.Game = game;
-            TW.Model = container;
-            TW.PhysX = physX;
-            TW.Scene = physX.Scene;
+            var context = new TW.Context();
+            context.Game = game;
+            context.Model = container;
+            context.PhysX = physX;
+            context.Scene = physX.Scene;
+            TW.SetContext(context);
         }
 
         public LocalGame AddSimulator(ISimulator sim)

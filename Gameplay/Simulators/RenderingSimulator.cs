@@ -16,7 +16,8 @@ namespace MHGameWork.TheWizards.Simulators
 
         public RenderingSimulator()
         {
-            deferred = new DeferredRenderer(TW.Game);
+
+            deferred = TW.AcquireRenderer();
             renderer = new WorldRenderer(TW.Model, deferred);
 
             var light = deferred.CreateDirectionalLight();

@@ -24,9 +24,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         [SetUp]
         public void SetUp()
         {
-            model = new ModelContainer.ModelContainer();
-            TW.Model = model; // Set scope
-
+            TW.SetContext(new TW.Context { Model = new ModelContainer.ModelContainer() });
 
             object1 = new TestObject
                         {
@@ -122,7 +120,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             // For testing
             string serialized = getStringFromStream(strm);
 
-            TW.Model = deserialized; // set the scope!!
+            TW.SetContext(new TW.Context { Model = deserialized });
 
             s.Deserialize(deserialized, new StreamReader(strm));
 
@@ -139,7 +137,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             var s = new ModelSerializer(StringSerializer.Create(), assetFactory);
 
             // Add a new entity to the original model, it should not be serialized!
-            new WorldRendering.Entity(); 
+            new WorldRendering.Entity();
 
             var strm = new MemoryStream();
 
@@ -156,7 +154,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             // For testing
             string serialized = getStringFromStream(strm);
 
-            TW.Model = deserialized; // set the scope!!
+            TW.SetContext(new TW.Context { Model = deserialized });
 
             s.Deserialize(deserialized, new StreamReader(strm));
 

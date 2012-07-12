@@ -94,7 +94,6 @@
     <Compile Include="Building\PlayerController.cs" />
     <Compile Include="Building\WallPlacer.cs" />
     <Compile Include="Building\WallType.cs" />
-    <Compile Include="ModelContainer\ModelChange.cs" />
     <Compile Include="Simulators\AutoSaveSimulator.cs" />
     <Compile Include="Persistence\ModelSerializer.cs" />
     <Compile Include="Persistence\PersistAttribute.cs" />
@@ -126,21 +125,16 @@
     <Compile Include="_XNA\Gameplay\PlayerThirdPersonCamera.cs" />
     <Compile Include="_XNA\Gameplay\SimplePlayer.cs" />
     <Compile Include="_XNA\Gameplay\Fortress\SpawnCrystal.cs" />
-    <Compile Include="ModelContainer\BaseModelObject.cs" />
     <Compile Include="Synchronization\NoSyncAttribute.cs" />
     <Compile Include="WorldRendering\CameraInfo.cs" />
     <Compile Include="WorldRendering\Entity.cs" />
-    <Compile Include="ModelContainer\IModelObject.cs" />
-    <Compile Include="ModelContainer\ISimulator.cs" />
-    <Compile Include="ModelContainer\ModelContainer.cs" />
-    <Compile Include="ModelContainer\ModelObjectChangedAttribute.cs" />
     <Compile Include="Tiling\TiledEntity.cs" />
     <Compile Include="Tiling\TileRotation.cs" />
     <Compile Include="Synchronization\ChangePacket.cs" />
     <Compile Include="Simulators\NetworkSyncerSimulator.cs" />
     <Compile Include="Simulators\PhysXUpdateSimulator.cs" />
     <Compile Include="Simulators\RenderingSimulator.cs" />
-    <Compile Include="ModelContainer\Sphere.cs" />
+    <Compile Include="Sphere.cs" />
     <Compile Include="Simulators\BasicSimulator.cs" />
     <Compile Include="Simulators\LocalPlayerSimulator.cs" />
     <Compile Include="Synchronization\IVirtualEndpoint.cs" />
@@ -174,7 +168,6 @@
     <Compile Include="Synchronization\StringSerializer.cs" />
     <Compile Include="Simulators\ThirdPersonCameraSimulator.cs" />
     <Compile Include="Simulators\TileEditorSimulator.cs" />
-    <Compile Include="TW.cs" />
     <Compile Include="_XNA\World\ClientWorldSector.cs" />
     <Compile Include="WorldRendering\EntityRenderData.cs" />
     <Compile Include="WorldRendering\WorldRenderer.cs" />
@@ -203,7 +196,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Building\_doc.txt" />
-    <Content Include="ModelContainer\_doc.txt" />
     <Content Include="Persistence\_doc.txt" />
     <Content Include="Tiling\_doc.txt" />
     <Content Include="_doc.txt" />

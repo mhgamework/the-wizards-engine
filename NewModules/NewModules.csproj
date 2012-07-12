@@ -182,6 +182,13 @@
     <Compile Include="Entity\TODO\TaggedObject.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ModelContainer\BaseModelObject.cs" />
+    <Compile Include="ModelContainer\IModelObject.cs" />
+    <Compile Include="ModelContainer\ISimulator.cs" />
+    <Compile Include="ModelContainer\ModelChange.cs" />
+    <Compile Include="ModelContainer\ModelContainer.cs" />
+    <Compile Include="ModelContainer\ModelObjectChangedAttribute.cs" />
+    <Compile Include="ModelContainer\TW.cs" />
     <Compile Include="Particles\BallParticalCreater.cs" />
     <Compile Include="Particles\EmitterParameters.cs" />
     <Compile Include="Particles\FlameParticalCreater.cs" />
@@ -466,6 +473,7 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ModelContainer\_doc.txt" />
     <Content Include="Rendering\_doc.txt" />
     <Content Include="Scripting\_doc.txt" />
     <Content Include="Voxelization\_doc.txt" />

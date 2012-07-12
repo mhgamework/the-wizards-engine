@@ -152,10 +152,13 @@ namespace MHGameWork.TheWizards.Main
 
         private void setScriptLayerScope()
         {
-            TW.Game = null;
-            TW.PhysX = PhysicsEngine;
-            TW.Scene = PhysicsEngine.Scene;
-            TW.Model = container;
+            var context = new TW.Context();
+            context.Game = null;
+            context.PhysX = PhysicsEngine;
+            context.Scene = PhysicsEngine.Scene;
+            context.Model = container;
+
+            TW.SetContext(context);
         }
 
 
