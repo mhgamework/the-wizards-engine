@@ -115,9 +115,6 @@ namespace MHGameWork.TheWizards.ModelContainer
                     sim.Simulate();
                 }
 
-                container.ClearDirty();
-                physX.Update(game.Elapsed);
-
                 if (game.Keyboard.IsKeyReleased(Key.R))
                 {
                     reloadGameplayDll();
@@ -127,6 +124,11 @@ namespace MHGameWork.TheWizards.ModelContainer
                     needsReload = false;
                     reloadGameplayDll();
                 }
+
+                container.ClearDirty();
+                physX.Update(game.Elapsed);
+
+               
 
             };
 

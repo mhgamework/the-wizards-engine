@@ -31,7 +31,7 @@ namespace MHGameWork.TheWizards.ModelContainer
         }
 
 
-        private Dictionary<Type, object> attached;
+        internal Dictionary<Type, object> attached;
 
         public T get<T>() where T : class
         {
@@ -42,11 +42,17 @@ namespace MHGameWork.TheWizards.ModelContainer
 
         public void set<T>(T value) where T:class
         {
-            if (attached == null) attached = new Dictionary<Type, object>();
-
-            attached.Add(typeof (T), value);
+            set(typeof (T), value);
 
         }
+         
+        internal void set(Type t, object value)
+        {
+            if (attached == null) attached = new Dictionary<Type, object>();
+
+            attached.Add(t, value);
+        }
+        
     }
 }
 

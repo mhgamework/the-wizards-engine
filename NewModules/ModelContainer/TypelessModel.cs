@@ -30,6 +30,11 @@ namespace MHGameWork.TheWizards.ModelContainer
                     t.SetData(att.Name, att.GetData(obj));
                 }
 
+                if (obj is BaseModelObject)
+                {
+                    t.attached = ((BaseModelObject)obj).attached;
+                }
+
                 objects.Add(t);
 
             }
@@ -49,6 +54,30 @@ namespace MHGameWork.TheWizards.ModelContainer
                             att.SetData(obj, t.GetData(att.Name));
                     }
 
+                    if (obj is BaseModelObject)
+                    {
+                        var bmo = obj as BaseModelObject;
+
+                        foreach (var entry in t.attached)
+                        {
+                            var type = entry.Key;
+                            var value = entry.Value;
+
+                            try
+                            {
+                                var newType = assembly.GetType(type.FullName);
+                                if (newType != null) type = newType;
+
+                            }
+                            catch (Exception)
+                            {
+
+                            }
+
+                            bmo.set(type, value);
+                            
+                        }
+                    }
 
 
                 }
@@ -70,6 +99,7 @@ namespace MHGameWork.TheWizards.ModelContainer
             public string Type;
 
             private Dictionary<string, object> map = new Dictionary<string, object>();
+            public Dictionary<Type, object> Attached;
             public object GetData(string name)
             {
                 return map[name];
