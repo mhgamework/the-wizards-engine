@@ -165,16 +165,24 @@ namespace MHGameWork.TheWizards.ModelContainer
             }
             //tryLoadSimulator("MHGameWork.TheWizards.Simulators.RenderingSimulator", activeGameplayAssembly);
 
+
             // End configurable
 
         }
 
         private void updateActiveGameplayAssembly()
         {
-            var tempFile = Path.GetTempFileName();
+            try
+            {
+                var tempFile = Path.GetTempFileName();
 
-            File.Copy(GameplayDll, tempFile, true);
-            activeGameplayAssembly = Assembly.LoadFile(tempFile);
+                File.Copy(GameplayDll, tempFile, true);
+                activeGameplayAssembly = Assembly.LoadFile(tempFile);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         private void reloadGameplayDll()
@@ -182,9 +190,12 @@ namespace MHGameWork.TheWizards.ModelContainer
             var typelessModel = new TypelessModel();
             typelessModel.UpdateFromModel(TW.Model);
             TW.Model.Objects.Clear();
+
             updateActiveGameplayAssembly();
             typelessModel.AddToModel(TW.Model, activeGameplayAssembly);
 
+
+            TW.AcquireRenderer().ClearAll();
             createSimulators();
         }
 

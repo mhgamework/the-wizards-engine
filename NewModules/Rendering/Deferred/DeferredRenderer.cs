@@ -48,6 +48,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         private LineManager3D lineManager;
         private List<DeferredLinesElement> lineElements = new List<DeferredLinesElement>();
+        private List<DeferredMeshRenderElement> meshElements = new List<DeferredMeshRenderElement>();
 
         public DeferredRenderer(DX11Game game)
         {
@@ -184,6 +185,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             if (mesh == null) throw new NullReferenceException();
             var el = meshRenderer.AddMesh(mesh);
 
+            meshElements.Add(el);
+
             return el;
         }
 
@@ -210,7 +213,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             drawLines(gBuffer);
             drawLights(combineFinalRenderer);
             //updateSSAO();
-            
+
             drawCombinedHdrImage(hdrImageRtv, gBuffer, combineFinalRenderer, skyColorRV, ssao.MSsaoBuffer.pSRV);
             updateTonemapLuminance(calculater);
 
@@ -475,6 +478,23 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         public DeferredMeshRenderer DEBUG_MeshRenderer { get { return meshRenderer; } }
         public FrustumCuller DEBUG_FrustumCuller { get { return frustumCuller; } }
         public ICamera DEBUG_SeperateCullCamera { get; set; }
+
+        /// <summary>
+        /// Removes all elements, lights from the renderer
+        /// not correctly implemented at this time!
+        /// </summary>
+        public void ClearAll()
+        {
+            while (lineElements.Count > 0) lineElements[0].Delete();
+            //TODO:
+            foreach (var mesh in meshElements)
+            {
+                if (!mesh.IsDeleted)
+                    mesh.Delete();
+            }
+            meshElements.Clear();
+
+        }
 
     }
 
