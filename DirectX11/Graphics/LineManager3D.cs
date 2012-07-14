@@ -150,6 +150,7 @@ namespace DirectX11.Graphics
                     "XNA device is not initialized, can't init line manager." );*/
 
             lines = new LineManager3DLines(device);
+            lines.SetMaxLines(1024*16);
 
             //shader = BasicShader.LoadFromFXFile( game, game.EngineFiles.LineRenderingShader );
 

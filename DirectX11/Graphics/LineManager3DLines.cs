@@ -9,6 +9,7 @@ namespace DirectX11.Graphics
     /// <summary>
     /// This class can be used to store lines for rendering with the LineManager3D. 
     /// You can add lines to this object, and render them each frame without having to re-add them all like in the LineManager3D
+    /// WARNING: this class currently discards lines when it reaches the max line cap! (there is a function to change the cap)
     /// </summary>
     public class LineManager3DLines : IDisposable
     {
@@ -48,8 +49,7 @@ namespace DirectX11.Graphics
         /// <summary>
         /// Vertex buffer for all lines
         /// </summary>
-        private VertexPositionColor[] lineVertices =
-            new VertexPositionColor[MaxNumOfLines * 2];
+        private VertexPositionColor[] lineVertices;
 
         private int numOfPrimitives = 0;
         private Buffer vertexBuffer;
@@ -106,12 +106,22 @@ namespace DirectX11.Graphics
         /// reseted each frame, we won't add unlimited lines (all new lines
         /// will be ignored if this max. number is reached).
         /// </summary>
-        protected const int MaxNumOfLines = 1048576;//4096 * 4 * 4 * 4 * 4;
+        protected int MaxNumOfLines = -1;//4096 * 4 * 4 * 4 * 4;
+
+        public void SetMaxLines(int num)
+        {
+            MaxNumOfLines = num;
+            lineVertices = new VertexPositionColor[MaxNumOfLines * 2];
+            if (vertexBuffer != null)
+                initialize(vertexBuffer.Device);
+
+        }
         //4096;//40096;//512;//256; // more than in 2D
 
 
         public LineManager3DLines(Device device)
         {
+            SetMaxLines(256);
             initialize(device);
         }
 
@@ -288,6 +298,8 @@ namespace DirectX11.Graphics
 
         private void initialize(Device device)
         {
+            if (vertexBuffer != null) vertexBuffer.Dispose();
+
             var bufferDesc = new BufferDescription(VertexPositionColor.SizeInBytes * lineVertices.Length,
                                                  ResourceUsage.Dynamic, BindFlags.VertexBuffer, CpuAccessFlags.Write,
                                                  ResourceOptionFlags.None, VertexPositionColor.SizeInBytes);
@@ -329,7 +341,7 @@ namespace DirectX11.Graphics
                 //TODO: WARNING: is this a memory leak?
                 //var dataRect = VertexBuffer.AsSurface().Map(SlimDX.DXGI.MapFlags.Discard);
 
-                
+
                 //TODO: WARNING: possible bottleneck here
                 var dataRect = device.ImmediateContext.MapSubresource(vertexBuffer, 0, vertexBuffer.Description.SizeInBytes,
                                                        MapMode.WriteDiscard, MapFlags.None);
