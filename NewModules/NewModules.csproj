@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MHGameWork.TheWizards</RootNamespace>
     <AssemblyName>NewModules</AssemblyName>
@@ -49,6 +49,9 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
     <Optimize>true</Optimize>
     <PostSharpOptimizationMode>OptimizeForBuildTime</PostSharpOptimizationMode>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>MHGameWork.TheWizards.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevComponents.DotNetBar2">
@@ -183,12 +186,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ModelContainer\BaseModelObject.cs" />
+    <Compile Include="ModelContainer\BasicSimulator.cs" />
+    <Compile Include="ModelContainer\Engine.cs" />
     <Compile Include="ModelContainer\IModelObject.cs" />
     <Compile Include="ModelContainer\ISimulator.cs" />
     <Compile Include="ModelContainer\ModelChange.cs" />
     <Compile Include="ModelContainer\ModelContainer.cs" />
     <Compile Include="ModelContainer\ModelObjectChangedAttribute.cs" />
     <Compile Include="ModelContainer\TW.cs" />
+    <Compile Include="ModelContainer\TypelessModel.cs" />
     <Compile Include="Particles\BallParticalCreater.cs" />
     <Compile Include="Particles\EmitterParameters.cs" />
     <Compile Include="Particles\FlameParticalCreater.cs" />
@@ -197,6 +203,9 @@
     <Compile Include="Particles\ParticleSimulater.cs" />
     <Compile Include="Particles\SimpleParticleCreater.cs" />
     <Compile Include="Particles\SparkelParticleCreater.cs" />
+    <Compile Include="Profiling\Profiler.cs" />
+    <Compile Include="Profiling\ProfilingPoint.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Rendering\DebugVisualizer.cs" />
     <Compile Include="Rendering\DiskRenderingAssetFactory.cs" />
     <Compile Include="Rendering\MeshBuilder.cs" />

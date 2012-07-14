@@ -132,6 +132,7 @@
     <Compile Include="DirectX11\SharpDXTest.cs" />
     <Compile Include="DirectX11\DirectX11Test.cs" />
     <Compile Include="DirectX11\TessellationTest.cs" />
+    <Compile Include="Enginetest.cs" />
     <Compile Include="FileHelperTest.cs" />
     <Compile Include="Forms\ClassFormTest.cs" />
     <Compile Include="Gameplay\AssetBrowserTest.cs" />

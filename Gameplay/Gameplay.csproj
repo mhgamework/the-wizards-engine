@@ -135,7 +135,6 @@
     <Compile Include="Simulators\PhysXUpdateSimulator.cs" />
     <Compile Include="Simulators\RenderingSimulator.cs" />
     <Compile Include="Sphere.cs" />
-    <Compile Include="Simulators\BasicSimulator.cs" />
     <Compile Include="Simulators\LocalPlayerSimulator.cs" />
     <Compile Include="Synchronization\IVirtualEndpoint.cs" />
     <Compile Include="Synchronization\VirtualModelSyncer.cs" />
