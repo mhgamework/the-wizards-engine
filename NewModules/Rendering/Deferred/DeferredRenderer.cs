@@ -203,6 +203,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         public void Draw()
         {
+
             resetDevice();
 
             drawGBuffer(gBuffer);

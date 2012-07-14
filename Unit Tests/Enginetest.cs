@@ -14,7 +14,6 @@ namespace MHGameWork.TheWizards.Tests
         public void StartEngine()
         {
             var eng = new Engine();
-            eng.GameplayFolder = new System.IO.DirectoryInfo("../../GamePlay");
             eng.Start();
         }
 

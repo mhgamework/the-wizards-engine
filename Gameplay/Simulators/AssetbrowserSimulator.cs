@@ -38,7 +38,7 @@ namespace MHGameWork.TheWizards.Simulators
                 var col = index % dim;
 
                 var item = currentItem.Children[index];
-                var size = new Vector3(20, 2, 20);
+                var size = new Vector3(30, 2, 20);
                 var pos = new Vector3(row * 45, 0, col * 45);
 
                 item.CreateBox(pos, size);

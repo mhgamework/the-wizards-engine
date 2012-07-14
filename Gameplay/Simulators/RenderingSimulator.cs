@@ -20,12 +20,22 @@ namespace MHGameWork.TheWizards.Simulators
             deferred = TW.AcquireRenderer();
             renderer = new WorldRenderer(TW.Model, deferred);
 
-            var light = deferred.CreateDirectionalLight();
-            light.LightDirection = Vector3.Normalize(new Vector3(1, -1, 1));
-            light.ShadowsEnabled = true;
+            var data = TW.Model.GetSingleton<Data>();
 
+            if (!data.LightCreated)
+            {
+                var light = deferred.CreateDirectionalLight();
+                light.LightDirection = Vector3.Normalize(new Vector3(1, -1, 1));
+                light.ShadowsEnabled = true;
+                data.LightCreated = true;    
+            }
+
+            
 
             info = TW.Model.GetSingleton<CameraInfo>();
+
+            
+
 
         }
 
@@ -35,6 +45,11 @@ namespace MHGameWork.TheWizards.Simulators
             renderer.ProcessWorldChanges();
             deferred.Draw();
 
+        }
+
+        public class Data : BaseModelObject
+        {
+            public bool LightCreated = false;
         }
     }
 }

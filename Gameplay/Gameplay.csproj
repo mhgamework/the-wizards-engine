@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
+    <Compile Include="Plugin.cs" />
     <Compile Include="Simulators\AssetbrowserSimulator.cs" />
     <Compile Include="Building\Block.cs" />
     <Compile Include="Building\BlockFactory.cs" />

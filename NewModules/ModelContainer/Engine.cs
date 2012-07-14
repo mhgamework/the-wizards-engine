@@ -20,46 +20,44 @@ namespace MHGameWork.TheWizards.ModelContainer
     {
         public Engine()
         {
-
+            GameplayDll = "../../Gameplay/bin/x86/Debug/Gameplay.dll";
         }
 
-        public DirectoryInfo GameplayFolder { get; set; }
+        //private Assembly compileGameplay()
+        //{
+        //    CompilerParameters cp = new CompilerParameters();
+        //    cp.GenerateExecutable = false;
+        //    cp.GenerateInMemory = true;
+        //    cp.IncludeDebugInformation = true;
+        //    cp.TreatWarningsAsErrors = false;
+        //    //cp.CompilerOptions = "/optimize";
 
-        private Assembly compileGameplay()
-        {
-            CompilerParameters cp = new CompilerParameters();
-            cp.GenerateExecutable = false;
-            cp.GenerateInMemory = true;
-            cp.IncludeDebugInformation = true;
-            cp.TreatWarningsAsErrors = false;
-            //cp.CompilerOptions = "/optimize";
+        //    //cp.ReferencedAssemblies.Add("System.Core.dll");
+        //    //cp.ReferencedAssemblies.Add("System.Data.dll");
+        //    foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
+        //    {
+        //        if (!a.IsDynamic)
+        //            cp.ReferencedAssemblies.Add(a.Location);
+        //    }
+        //    //cp.ReferencedAssemblies.Add(typeof(IScript).Assembly.Location); // Gameplay
+        //    //cp.ReferencedAssemblies.Add(typeof(Vector3).Assembly.Location); // Microsoft.Xna.Framework
+        //    //cp.ReferencedAssemblies.Add(typeof(PlayerData).Assembly.Location); //NewModules
+        //    //cp.ReferencedAssemblies.Add(typeof(XNAGame).Assembly.Location); //Common.core
 
-            //cp.ReferencedAssemblies.Add("System.Core.dll");
-            //cp.ReferencedAssemblies.Add("System.Data.dll");
-            foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                if (!a.IsDynamic)
-                    cp.ReferencedAssemblies.Add(a.Location);
-            }
-            //cp.ReferencedAssemblies.Add(typeof(IScript).Assembly.Location); // Gameplay
-            //cp.ReferencedAssemblies.Add(typeof(Vector3).Assembly.Location); // Microsoft.Xna.Framework
-            //cp.ReferencedAssemblies.Add(typeof(PlayerData).Assembly.Location); //NewModules
-            //cp.ReferencedAssemblies.Add(typeof(XNAGame).Assembly.Location); //Common.core
+        //    var files = Directory.EnumerateFiles(GameplayFolder.FullName, "*.cs", SearchOption.AllDirectories).ToArray();
 
-            var files = Directory.EnumerateFiles(GameplayFolder.FullName, "*.cs", SearchOption.AllDirectories).ToArray();
+        //    try
+        //    {
 
-            try
-            {
-
-                Assembly assembly = AssemblyBuilder.CompileExecutableFile(cp, files);
-                return assembly;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            return null;
-        }
+        //        Assembly assembly = AssemblyBuilder.CompileExecutableFile(cp, files);
+        //        return assembly;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex);
+        //    }
+        //    return null;
+        //}
 
 
 
@@ -68,7 +66,7 @@ namespace MHGameWork.TheWizards.ModelContainer
         private List<ISimulator> simulators;
         private DX11Game game;
         private PhysicsEngine physX;
-        private string gameplayDll = "Gameplay.dll";
+        public string GameplayDll { get; set; }
 
 
         private void setTWGlobals(ModelContainer container)
@@ -141,7 +139,7 @@ namespace MHGameWork.TheWizards.ModelContainer
 
 
 
-
+            updateActiveGameplayAssembly();
             createSimulators();
 
 
@@ -152,18 +150,31 @@ namespace MHGameWork.TheWizards.ModelContainer
         private void createSimulators()
         {
             simulators.Clear();
-            var tempFile = Path.GetTempFileName();
-
-            File.Copy(gameplayDll, tempFile, true);
-            activeGameplayAssembly = Assembly.LoadFile(tempFile);
-
 
             // This is configurable code
 
-            tryLoadSimulator("MHGameWork.TheWizards.Simulators.RenderingSimulator", activeGameplayAssembly);
+            try
+            {
+                var plugin = (IGameplayPlugin)activeGameplayAssembly.CreateInstance("MHGameWork.TheWizards.Plugin");
+                plugin.Initialize(this);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            //tryLoadSimulator("MHGameWork.TheWizards.Simulators.RenderingSimulator", activeGameplayAssembly);
 
             // End configurable
 
+        }
+
+        private void updateActiveGameplayAssembly()
+        {
+            var tempFile = Path.GetTempFileName();
+
+            File.Copy(GameplayDll, tempFile, true);
+            activeGameplayAssembly = Assembly.LoadFile(tempFile);
         }
 
         private void reloadGameplayDll()
@@ -171,6 +182,7 @@ namespace MHGameWork.TheWizards.ModelContainer
             var typelessModel = new TypelessModel();
             typelessModel.UpdateFromModel(TW.Model);
             TW.Model.Objects.Clear();
+            updateActiveGameplayAssembly();
             typelessModel.AddToModel(TW.Model, activeGameplayAssembly);
 
             createSimulators();
@@ -178,8 +190,10 @@ namespace MHGameWork.TheWizards.ModelContainer
 
         private void startFilesystemWatcher()
         {
-            var watcher = new FileSystemWatcher(new FileInfo(gameplayDll).Directory.FullName);
+            var watcher = new FileSystemWatcher(new FileInfo(GameplayDll).Directory.FullName);
             watcher.Changed += new FileSystemEventHandler(watcher_Changed);
+
+            watcher.EnableRaisingEvents = true;
         }
 
         private volatile bool needsReload = false;
@@ -187,7 +201,7 @@ namespace MHGameWork.TheWizards.ModelContainer
 
         void watcher_Changed(object sender, FileSystemEventArgs e)
         {
-            if (e.FullPath == new FileInfo(gameplayDll).FullName)
+            if (e.FullPath == new FileInfo(GameplayDll).FullName)
                 needsReload = true;
         }
 

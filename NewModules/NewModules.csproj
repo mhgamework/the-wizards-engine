@@ -15,7 +15,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
+    <OutputPath>..\bin\Binaries\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -188,6 +188,7 @@
     <Compile Include="ModelContainer\BaseModelObject.cs" />
     <Compile Include="ModelContainer\BasicSimulator.cs" />
     <Compile Include="ModelContainer\Engine.cs" />
+    <Compile Include="ModelContainer\IGameplayPlugin.cs" />
     <Compile Include="ModelContainer\IModelObject.cs" />
     <Compile Include="ModelContainer\ISimulator.cs" />
     <Compile Include="ModelContainer\ModelChange.cs" />
@@ -427,7 +428,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Client\Client.cd" />
     <EmbeddedResource Include="Rendering\Files\DefaultModelShader.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\ClearGBuffer.fx" />

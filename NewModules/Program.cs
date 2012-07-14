@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards
         public static void Main()
         {
             var eng = new Engine();
-            eng.GameplayFolder = new System.IO.DirectoryInfo("../../GamePlay");
+            eng.GameplayDll = "../../Gameplay/bin/x86/Debug/Gameplay.dll";
             eng.Start();
         }
     }
