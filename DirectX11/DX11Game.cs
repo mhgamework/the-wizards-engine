@@ -41,7 +41,6 @@ namespace DirectX11
                 messageloopIdle.WaitOne(); // Wait for messageloop to become idle
                 messageloopIdle.Reset(); // Event handled?
 
-                Console.WriteLine("Gameloop");
 
                 gameLoopStep();
 
@@ -83,7 +82,6 @@ namespace DirectX11
             gameloopIdle.WaitOne(); // wait for gameloop to finish
             gameloopIdle.Reset(); // Event handled?
 
-            Console.WriteLine("Messageloop");
 
 
             updateInput();
