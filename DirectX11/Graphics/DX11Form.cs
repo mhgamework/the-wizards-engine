@@ -64,6 +64,7 @@ namespace DirectX11.Graphics
         {
             if (!IsDirectXInitialized) InitDirectX();
 
+            
 
             MessagePump.Run(form, gameLoop);
 
@@ -79,6 +80,8 @@ namespace DirectX11.Graphics
         {
             if (IsDirectXInitialized) throw new InvalidOperationException();
             form = new RenderForm("The Wizards - DirectX 11");
+            form.Activated += new EventHandler(form_Activated);
+            form.Deactivate += new EventHandler(form_Deactivate);
             //form.TopMost = true;
             //WARNING: THERE IS ONLY ONE BUFFER ATM. (no backbuffer?)
             var desc = new SwapChainDescription
@@ -127,6 +130,30 @@ namespace DirectX11.Graphics
 
             device.ImmediateContext.OutputMerger.SetTargets(renderTargetView);
             device.ImmediateContext.Rasterizer.SetViewports(new Viewport(0, 0, form.ClientSize.Width, form.ClientSize.Height, 0.0f, 1.0f));
+        }
+
+        private bool active;
+
+        public bool Active
+        {
+            get
+            {
+                lock (this) return active;
+            }
+            set
+            {
+                lock (this) active = value;
+            }
+        }
+
+        void form_Deactivate(object sender, EventArgs e)
+        {
+            Active = false;
+        }
+
+        void form_Activated(object sender, EventArgs e)
+        {
+            Active = true;
         }
 
 

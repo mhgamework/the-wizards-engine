@@ -36,7 +36,7 @@ namespace DirectX11
 
         void gameLoop()
         {
-            while (true)
+            while (running)
             {
                 messageloopIdle.WaitOne(); // Wait for messageloop to become idle
                 messageloopIdle.Reset(); // Event handled?
@@ -51,6 +51,7 @@ namespace DirectX11
 
         void gameLoopStep()
         {
+            
 
             if (TotalRunTime > 3 && TestRunner.IsRunningAutomated)
             {
@@ -82,7 +83,8 @@ namespace DirectX11
             gameloopIdle.WaitOne(); // wait for gameloop to finish
             gameloopIdle.Reset(); // Event handled?
 
-
+            if (!form.Active)
+                Thread.Sleep(500);
 
             updateInput();
 
@@ -349,6 +351,7 @@ namespace DirectX11
 
             var t = new Thread(gameLoop);
             t.Name = "DX11Game:GameLoop";
+            t.IsBackground = true;
             t.Start();
 
 
@@ -357,11 +360,7 @@ namespace DirectX11
         }
         public void Exit()
         {
-            
-
             Running = false;
-
-
         }
         public ICamera Camera { get; set; }
 
