@@ -15,6 +15,11 @@ namespace MHGameWork.TheWizards.ModelContainer
 {
     /// <summary>
     /// This is a host for TW gameplay, it starts and manages the TW context resources, and hotloads the gameplay code
+    /// 
+    /// Hotloading is done by relinking: all simulators and all objects in the model are released (this is supposed to release all old code objects)
+    ///                                  the objects are serialized to a format independent of the old gameplay dll
+    ///                                  The new dll is loaded, and the old types are mapped onto the new types, new objects are created and the links are re-established
+    /// 
     /// </summary>
     public class Engine
     {
@@ -23,45 +28,7 @@ namespace MHGameWork.TheWizards.ModelContainer
             GameplayDll = "../../Gameplay/bin/x86/Debug/Gameplay.dll";
         }
 
-        //private Assembly compileGameplay()
-        //{
-        //    CompilerParameters cp = new CompilerParameters();
-        //    cp.GenerateExecutable = false;
-        //    cp.GenerateInMemory = true;
-        //    cp.IncludeDebugInformation = true;
-        //    cp.TreatWarningsAsErrors = false;
-        //    //cp.CompilerOptions = "/optimize";
-
-        //    //cp.ReferencedAssemblies.Add("System.Core.dll");
-        //    //cp.ReferencedAssemblies.Add("System.Data.dll");
-        //    foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
-        //    {
-        //        if (!a.IsDynamic)
-        //            cp.ReferencedAssemblies.Add(a.Location);
-        //    }
-        //    //cp.ReferencedAssemblies.Add(typeof(IScript).Assembly.Location); // Gameplay
-        //    //cp.ReferencedAssemblies.Add(typeof(Vector3).Assembly.Location); // Microsoft.Xna.Framework
-        //    //cp.ReferencedAssemblies.Add(typeof(PlayerData).Assembly.Location); //NewModules
-        //    //cp.ReferencedAssemblies.Add(typeof(XNAGame).Assembly.Location); //Common.core
-
-        //    var files = Directory.EnumerateFiles(GameplayFolder.FullName, "*.cs", SearchOption.AllDirectories).ToArray();
-
-        //    try
-        //    {
-
-        //        Assembly assembly = AssemblyBuilder.CompileExecutableFile(cp, files);
-        //        return assembly;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex);
-        //    }
-        //    return null;
-        //}
-
-
-
-
+       
 
         private List<ISimulator> simulators;
         private DX11Game game;
