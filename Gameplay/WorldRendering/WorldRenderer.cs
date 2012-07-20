@@ -88,7 +88,7 @@ namespace MHGameWork.TheWizards.WorldRendering
                 el.Lines.ClearAllLines();
 
                 if (ent.Visible)
-                    el.Lines.AddAABB(new BoundingBox(MathHelper.One * -0.5f, MathHelper.One), ent.WorldMatrix, ent.Color);
+                    el.Lines.AddAABB(new BoundingBox(MathHelper.One * -0.5f, MathHelper.One * 0.5f), ent.WorldMatrix, ent.Color);
             }
             if (change.Change == ModelChange.Removed)
             {
