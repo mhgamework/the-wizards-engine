@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assetbrowser\AssetBrowserCamera.cs" />
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
     <Compile Include="Plugin.cs" />

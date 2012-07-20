@@ -9,5 +9,6 @@ namespace MHGameWork.TheWizards.Assetbrowser
     public class AssetbrowserData : BaseModelObject
     {
         public Boolean BrowserEnabled { get; set; }
+        public AssetBrowserCamera Camera { get; set; }
     }
 }

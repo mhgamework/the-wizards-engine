@@ -1,11 +1,13 @@
-using System;
+﻿using System;
+using DirectX11;
+using DirectX11.Graphics;
 using DirectX11.Input;
 using SlimDX;
 using SlimDX.DirectInput;
 
-namespace DirectX11.Graphics
+namespace MHGameWork.TheWizards.Assetbrowser
 {
-    public class SpectaterCamera : ICamera
+    public class AssetBrowserCamera : ICamera
     {
         Matrix view;
         Matrix projection;
@@ -76,7 +78,9 @@ namespace DirectX11.Graphics
             }
         }
 
-        public SpectaterCamera(TWKeyboard keyboard, TWMouse mouse, float nearPlane, float farPlane)
+        public float VerticalMovementSpeed { get; set; }
+
+        public AssetBrowserCamera(TWKeyboard keyboard, TWMouse mouse, float nearPlane, float farPlane)
         {
             enabled = true;
             this.keyboard = keyboard;
@@ -112,7 +116,7 @@ namespace DirectX11.Graphics
         }
 
 
-        public SpectaterCamera(TWKeyboard keyboard, TWMouse mouse)
+        public AssetBrowserCamera(TWKeyboard keyboard, TWMouse mouse)
             : this(keyboard, mouse, 0.1f, 400.0f)
         {
         }
@@ -354,7 +358,12 @@ namespace DirectX11.Graphics
 
             vSnelheid = Vector3.TransformCoordinate(vSnelheid, Matrix.RotationYawPitchRoll(-AngleHorizontal, -AngleVertical, -AngleRoll));
 
-            if (vSnelheid.Length() != 0) vSnelheid.Normalize();
+            
+
+            var ySpeed = vSnelheid.Y;
+            vSnelheid.Y = 0;
+
+            if (vSnelheid.Length() > 0.001) vSnelheid.Normalize();
 
             if (keyboard.IsKeyDown(Key.T))
             {
@@ -368,8 +377,7 @@ namespace DirectX11.Graphics
             vSnelheid *= MovementSpeed;
 
 
-            Snelheid = vSnelheid;
-
+            Snelheid = vSnelheid + ySpeed * Vector3.UnitY * VerticalMovementSpeed;
 
 
 
