@@ -60,10 +60,10 @@ namespace MHGameWork.TheWizards.Simulators
             camera.Update(TW.Game.Elapsed);
 
 
-            var factor = 0.09f;// * TW.Game.Elapsed;
+            var factor = 0.9f;// * TW.Game.Elapsed;
 
-            TW.Game.SpectaterCamera.MovementSpeed = TW.Game.SpectaterCamera.MovementSpeed*(1 - factor) +
-                                                    targetSpeed*factor;
+            TW.Game.SpectaterCamera.MovementSpeed = TW.Game.SpectaterCamera.MovementSpeed * (1 - factor) +
+                                                    targetSpeed * factor;
 
             var browsing = findBrowsingItem(root);
             if (browsing != null)
@@ -77,11 +77,14 @@ namespace MHGameWork.TheWizards.Simulators
                 if (maxChildren < 1) maxChildren = 1;
                 var v = (browsing.Box.Maximum - browsing.Box.Minimum) / maxChildren;
 
-                targetSpeed = v.X *2;
+                targetSpeed = v.X;
+
+                TW.Game.SpectaterCamera.NearClip = v.X * 0.01f;
+                TW.Game.SpectaterCamera.FarClip = v.X * 400f;
 
             }
 
-            var rootBox = new BoundingBox(new Vector3(-50, 0, -50), new Vector3(50, 100, 50));
+            var rootBox = new BoundingBox(new Vector3(-50000, 0, -50000), new Vector3(50000, 100000, 50000));
             root.CreateBox((rootBox.Maximum + rootBox.Minimum) * 0.5f, rootBox.Maximum - rootBox.Minimum);
             placeChildren(rootBox, root);
 
@@ -161,10 +164,16 @@ namespace MHGameWork.TheWizards.Simulators
             // - Quests
             root.Children.Add(new AssetbrowserItem());
             for (int i = 0; i < 8; i++) root.Children[1].Children.Add(new AssetbrowserItem());
+            for (int i = 0; i < 30; i++) root.Children[1].Children[4].Children.Add(new AssetbrowserItem());
+            for (int i = 0; i < 100; i++) root.Children[1].Children[4].Children[15].Children.Add(new AssetbrowserItem());
+            for (int i = 0; i < 100; i++) root.Children[1].Children[4].Children[15].Children[45].Children.Add(new AssetbrowserItem());
+            
 
+                
             // - Placeables
             root.Children.Add(new AssetbrowserItem());
             for (int i = 0; i < 5; i++) root.Children[2].Children.Add(new AssetbrowserItem());
+            for (int i = 0; i < 5; i++) root.Children[2].Children[4].Children.Add(new AssetbrowserItem());
 
             return root;
         }
