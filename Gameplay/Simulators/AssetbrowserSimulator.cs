@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DirectX11;
+using DirectX11.Graphics;
 using MHGameWork.TheWizards.Assetbrowser;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.WorldRendering;
@@ -18,8 +19,7 @@ namespace MHGameWork.TheWizards.Simulators
         private AssetbrowserItem currentItem;
         private AssetbrowserItem root;
         private CameraInfo camInfo;
-
-        private AssetBrowserCamera camera;
+        private AssetBrowserCamera assetCamera;
 
         public AssetbrowserSimulator()
         {
@@ -29,13 +29,8 @@ namespace MHGameWork.TheWizards.Simulators
 
             camInfo = TW.Model.GetSingleton<CameraInfo>();
 
-            camera = data.Camera;
 
-            if (camera == null)
-            {
-                camera = new AssetBrowserCamera(TW.Game.Keyboard, TW.Game.Mouse);
-                data.Camera = camera;
-            }
+            //camera = new AssetBrowserCamera(TW.Game.Keyboard, TW.Game.Mouse);
 
 
         }
@@ -50,14 +45,23 @@ namespace MHGameWork.TheWizards.Simulators
 
             //camInfo.ActiveCamera = camera;
 
-            var speed = camera.Positie.Y;
 
-            if (speed < 1) speed = 1;
 
-            camera.MovementSpeed = (int)speed;
-            camera.VerticalMovementSpeed = 3 * (int)speed;
+            if (assetCamera != null)
+            {
+                var speed = assetCamera.Positie.Y;
 
-            camera.Update(TW.Game.Elapsed);
+                if (speed < 1) speed = 1;
+
+                assetCamera.MovementSpeed = (int)speed;
+                assetCamera.VerticalMovementSpeed = 3 * (int)speed;
+
+                assetCamera.Update(TW.Game.Elapsed);
+                data.CameraPosition = assetCamera.CameraPosition;
+                data.CameraDirection = assetCamera.CameraDirection;
+
+            }
+
 
 
             var factor = 0.9f;// * TW.Game.Elapsed;
@@ -65,24 +69,30 @@ namespace MHGameWork.TheWizards.Simulators
             TW.Game.SpectaterCamera.MovementSpeed = TW.Game.SpectaterCamera.MovementSpeed * (1 - factor) +
                                                     targetSpeed * factor;
 
+            
+
             var browsing = findBrowsingItem(root);
-            if (browsing != null)
-            {
-                var t = browsing.Box;
-                t.Minimum -= MathHelper.One * 0.01f;
-                t.Maximum += MathHelper.One * 0.01f;
-                TW.Game.LineManager3D.AddBox(browsing.Box, new Color4(0, 1, 0));
+            if (browsing == null)
+                browsing = root;
+            var t = browsing.Box;
+            t.Minimum -= MathHelper.One * 0.01f;
+            t.Maximum += MathHelper.One * 0.01f;
+            TW.Game.LineManager3D.AddBox(browsing.Box, new Color4(0, 1, 0));
 
-                var maxChildren = (int)Math.Ceiling(Math.Sqrt(browsing.Children.Count));
-                if (maxChildren < 1) maxChildren = 1;
-                var v = (browsing.Box.Maximum - browsing.Box.Minimum) / maxChildren;
+            var maxChildren = (int)Math.Ceiling(Math.Sqrt(browsing.Children.Count));
+            if (maxChildren < 1) maxChildren = 1;
+            var v = (browsing.Box.Maximum - browsing.Box.Minimum) / maxChildren;
 
-                targetSpeed = v.X;
+            targetSpeed = v.X * 2;
 
-                TW.Game.SpectaterCamera.NearClip = v.X * 0.01f;
-                TW.Game.SpectaterCamera.FarClip = v.X * 400f;
+            TW.Game.SpectaterCamera.NearClip = v.X * 0.01f;
+            TW.Game.SpectaterCamera.FarClip = v.X * 400f;
 
-            }
+            //data.CameraPosition = TW.Game.SpectaterCamera.CameraPosition;
+            //data.CameraDirection = TW.Game.SpectaterCamera.CameraDirection;
+            //if (TW.Game.SpectaterCamera.CameraPosition.Y < 0)
+            //    TW.Game.SpectaterCamera.CameraPosition = new Vector3(TW.Game.SpectaterCamera.CameraPosition.X, 0,
+            //                                                         TW.Game.SpectaterCamera.CameraPosition.Z);
 
             var rootBox = new BoundingBox(new Vector3(-50000, 0, -50000), new Vector3(50000, 100000, 50000));
             root.CreateBox((rootBox.Maximum + rootBox.Minimum) * 0.5f, rootBox.Maximum - rootBox.Minimum);
@@ -104,7 +114,7 @@ namespace MHGameWork.TheWizards.Simulators
 
 
             var offset = bb.Minimum;
-            offset.Y += fullSize.Y * 0.1f;
+            //offset.Y += fullSize.Y * 0.1f;
             offset.X += fullSize.X * 0.1f;// + childSize.X;
             offset.Z += fullSize.Z * 0.1f;// +childSize.Z;
 
@@ -167,9 +177,9 @@ namespace MHGameWork.TheWizards.Simulators
             for (int i = 0; i < 30; i++) root.Children[1].Children[4].Children.Add(new AssetbrowserItem());
             for (int i = 0; i < 100; i++) root.Children[1].Children[4].Children[15].Children.Add(new AssetbrowserItem());
             for (int i = 0; i < 100; i++) root.Children[1].Children[4].Children[15].Children[45].Children.Add(new AssetbrowserItem());
-            
 
-                
+
+
             // - Placeables
             root.Children.Add(new AssetbrowserItem());
             for (int i = 0; i < 5; i++) root.Children[2].Children.Add(new AssetbrowserItem());
