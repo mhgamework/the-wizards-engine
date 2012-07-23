@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using MHGameWork.TheWizards.Graphics;
 using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.TestRunner
@@ -78,15 +77,15 @@ namespace MHGameWork.TheWizards.TestRunner
 
         private void enableAutomatedTesting()
         {
-            XNAGame.AutoShutdown = 3;
+            /*XNAGame.AutoShutdown = 3;
             XNAGame.DefaultInputDisabled = true;
-            IsRunningAutomated = true;
+            IsRunningAutomated = true;*/
         }
         private void disableAutomatedTesting()
         {
-            XNAGame.AutoShutdown = -1;
+            /*XNAGame.AutoShutdown = -1;
             XNAGame.DefaultInputDisabled = false;
-            IsRunningAutomated = false;
+            IsRunningAutomated = false;*/
         }
 
         /// <summary>

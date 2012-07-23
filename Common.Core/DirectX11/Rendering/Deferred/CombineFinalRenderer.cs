@@ -36,7 +36,7 @@ namespace DirectX11.Rendering.Deferred
 
             shader = BasicShader.LoadAutoreload(game,
                                                 new System.IO.FileInfo(
-                                                    "..\\..\\DirectX11\\Shaders\\Deferred\\CombineFinal.fx"));
+                                                    CompiledShaderCache.Current.RootShaderPath + "Deferred\\CombineFinal.fx"));
 
             shader.SetTechnique("Technique0");
 

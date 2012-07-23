@@ -1043,7 +1043,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
                 var diffuseTexture = Texture2D.FromFile(device, DirectX11Test.Wallpaper001_png);
                 diffuseTextureRv = new ShaderResourceView(device, diffuseTexture);
 
-                shader = BasicShader.LoadAutoreload(game, new FileInfo("..\\..\\DirectX11\\Shaders\\Deferred\\RenderGBuffer.fx"));
+                shader = BasicShader.LoadAutoreload(game, new FileInfo(CompiledShaderCache.Current.RootShaderPath + "Deferred\\RenderGBuffer.fx"));
 
                 shader.SetTechnique("Technique1");
 

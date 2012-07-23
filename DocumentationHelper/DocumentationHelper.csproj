@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Common.Core\bin\x86\Debug\Common.Core.dll</HintPath>
+    </Reference>
     <Reference Include="ftplib">
       <HintPath>..\_Libraries\FTPLib\ftplib.dll</HintPath>
     </Reference>
@@ -70,12 +74,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common.Core\Common.Core.csproj">
-      <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
-      <Name>Common.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="_doc.txt" />

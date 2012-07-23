@@ -72,45 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyBuilder.cs" />
-    <Compile Include="Client\BasicPacketTransporter.cs" />
-    <Compile Include="Client\ClientPacketManagerNetworked.cs" />
-    <Compile Include="Client\ClientPacketRequesterNetworked.cs" />
-    <Compile Include="Client\ClientPacketTransporterNetworked.cs" />
-    <Compile Include="Client\IClientPacketManager.cs" />
-    <Compile Include="Client\IClientPacketRequester.cs" />
-    <Compile Include="Client\IClientPacketTransporter.cs" />
-    <Compile Include="Client\IClientPacketTransporterNetworked.cs" />
-    <Compile Include="CodeGeneraterReader.cs" />
-    <Compile Include="CodeGeneraterWriter.cs" />
-    <Compile Include="DummyClient.cs" />
-    <Compile Include="Files\ClientFileTransporter.cs" />
-    <Compile Include="Files\FilePartPacket.cs" />
-    <Compile Include="Files\ReceivedFileInfo.cs" />
-    <Compile Include="Files\StartFilepacket.cs" />
-    <Compile Include="Files\ServerFileTransporter.cs" />
-    <Compile Include="INetworkPacket.cs" />
-    <Compile Include="INetworkPacketCustomSerializable.cs" />
-    <Compile Include="INetworkPacketFactory.cs" />
-    <Compile Include="NetworkPacketAttribute.cs" />
-    <Compile Include="NetworkPacketFactoryCodeGenerater.cs" />
-    <Compile Include="NetworkPacketIgnoreAttribute.cs" />
-    <Compile Include="PacketFlags.cs" />
-    <Compile Include="Packets\BytePacket.cs" />
-    <Compile Include="Packets\DataPacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server\ClientNetworked.cs" />
-    <Compile Include="Server\IClient.cs" />
-    <Compile Include="Server\IServerPacketManager.cs" />
-    <Compile Include="Server\IServerPacketTransporter.cs" />
-    <Compile Include="Server\IServerPacketTransporterNetworked.cs" />
-    <Compile Include="Server\ServerPacketManagerNetworked.cs" />
-    <Compile Include="Server\ServerPacketReceivedCallback.cs" />
-    <Compile Include="Server\ServerPacketTransporterNetworked.cs" />
-    <Compile Include="TCPConnection.cs" />
-    <Compile Include="TCPConnectionListener.cs" />
-    <Compile Include="TCPPacketBuilder.cs" />
-    <Compile Include="UDPConnection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Deprecated\CommonVB\CommonVB.vbproj">

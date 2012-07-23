@@ -86,33 +86,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataStream.cs" />
-    <Compile Include="Engine\IGameFile.cs" />
-    <Compile Include="Engine\IGameFileManager.cs" />
-    <Compile Include="GameClientData.cs" />
-    <Compile Include="GameIniFile.cs" />
-    <Compile Include="GeoMipMap\Buffer2D.cs" />
-    <Compile Include="GeoMipMap\FilePointer.cs" />
-    <Compile Include="GeoMipMap\TerrainListFile.cs" />
-    <Compile Include="GeoMipMap\HeightMap.cs" />
-    <Compile Include="GeoMipMap\ITerrain.cs" />
-    <Compile Include="GeoMipMap\ITerrainBlock.cs" />
-    <Compile Include="GeoMipMap\LightMap.cs" />
-    <Compile Include="GeoMipMap\Terrain.cs" />
-    <Compile Include="GeoMipMap\TerrainBlock.cs" />
-    <Compile Include="GeoMipMap\TerrainBlockEdge.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GeoMipMap\TerrainFunctions.cs" />
-    <Compile Include="GeoMipMap\TerrainInfoOld.cs" />
-    <Compile Include="GeoMipMap\TerrainLightmapGenerator.cs" />
-    <Compile Include="GeoMipMap\WeightMap.cs" />
-    <Compile Include="IGameEngine.cs" />
-    <Compile Include="PlayerInputData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Wereld\QuadtreeChildDirection.cs" />
-    <Compile Include="Wereld\IQuadtreeNode.cs" />
-    <Compile Include="Wereld\QuadTreeNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">

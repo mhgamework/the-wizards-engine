@@ -115,6 +115,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
+    <Reference Include="TestRunner, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <ExecutableExtension>.exe</ExecutableExtension>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientMain\LoginForm.cs">
@@ -217,10 +220,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ApplicationLogic\ApplicationLogic.csproj">
-      <Project>{5B6ADB0D-6DEB-4922-8F2F-72B3468699F6}</Project>
-      <Name>ApplicationLogic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
@@ -233,21 +232,9 @@
       <Project>{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}</Project>
       <Name>Launcher</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Networking\Networking.csproj">
-      <Project>{5552CBE1-F647-4B3A-A353-A252E4CB0008}</Project>
-      <Name>Networking</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NewModules\NewModules.csproj">
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
       <Name>NewModules</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Server\Server.csproj">
-      <Project>{53269219-3E5B-4F70-83A9-3C6C9C714FEC}</Project>
-      <Name>Server</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TestRunner\TestRunner.csproj">
-      <Project>{AC6C51CE-96FB-401B-9B51-1302F273A52A}</Project>
-      <Name>TestRunner</Name>
     </ProjectReference>
     <ProjectReference Include="..\Unit Tests\Unit Tests.csproj">
       <Project>{C79FDAC0-960D-4E13-981D-7A9D2CA3B6A8}</Project>

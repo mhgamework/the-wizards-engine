@@ -68,6 +68,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationLogic\Entity\SimpleAssetStaticWorldObject.cs" />
+    <Compile Include="ApplicationLogic\Entity\SimpleAssetStaticWorldObjectFactory.cs" />
+    <Compile Include="ApplicationLogic\Entity\StaticEntity.cs" />
+    <Compile Include="ApplicationLogic\Entity\StaticEntityContainer.cs" />
+    <Compile Include="ApplicationLogic\Main\TheWizardsClient.cs" />
+    <Compile Include="ApplicationLogic\Main\TheWizardsServer.cs" />
+    <Compile Include="ApplicationLogic\Main\TheWizardsServerCore.cs" />
+    <Compile Include="ApplicationLogic\Main\TreeClient.cs" />
+    <Compile Include="ApplicationLogic\Main\TreeServer.cs" />
+    <Compile Include="ApplicationLogic\Networking\Client\GameClient.cs" />
+    <Compile Include="ApplicationLogic\Networking\Server\GameClient.cs" />
+    <Compile Include="ApplicationLogic\Networking\Server\GameClientListener.cs" />
     <Compile Include="Assetbrowser\AssetBrowserCamera.cs" />
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
@@ -179,13 +191,9 @@
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DirectX11\DirectX11.csproj">
-      <Project>{A58AF8D7-8C17-43F6-B994-C67F590F416A}</Project>
-      <Name>DirectX11</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Networking\Networking.csproj">
-      <Project>{5552CBE1-F647-4B3A-A353-A252E4CB0008}</Project>
-      <Name>Networking</Name>
+    <ProjectReference Include="..\Deprecated\CommonVB\CommonVB.vbproj">
+      <Project>{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}</Project>
+      <Name>CommonVB</Name>
     </ProjectReference>
     <ProjectReference Include="..\NewModules\NewModules.csproj">
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>

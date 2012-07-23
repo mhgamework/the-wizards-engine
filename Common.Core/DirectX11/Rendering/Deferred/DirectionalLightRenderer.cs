@@ -59,13 +59,13 @@ namespace DirectX11.Rendering.Deferred
 
             shadowsShader = BasicShader.LoadAutoreload(game,
                                                 new System.IO.FileInfo(
-                                                    "..\\..\\DirectX11\\Shaders\\Deferred\\DirectionalLight.fx"));
+                                                    CompiledShaderCache.Current.RootShaderPath + "Deferred\\DirectionalLight.fx"));
 
             shadowsShader.SetTechnique("Technique0");
 
             noShadowsShader = BasicShader.LoadAutoreload(game,
                                                          new System.IO.FileInfo(
-                                                             "..\\..\\DirectX11\\Shaders\\Deferred\\DirectionalLight.fx"), null, new[] { new ShaderMacro("DISABLE_SHADOWS") });
+                                                             CompiledShaderCache.Current.RootShaderPath + "Deferred\\DirectionalLight.fx"), null, new[] { new ShaderMacro("DISABLE_SHADOWS") });
 
             noShadowsShader.SetTechnique("Technique0");
 

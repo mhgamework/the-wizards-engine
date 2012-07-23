@@ -8,7 +8,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TreeGenerator</RootNamespace>
     <AssemblyName>TreeGenerator</AssemblyName>
-    <ApplicationIcon>Game.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
@@ -108,121 +109,12 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TestRunner, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <ExecutableExtension>.exe</ExecutableExtension>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AtlasTool\TextureAtlasCreater.cs" />
-    <Compile Include="AtlasTool\TextureForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AtlasTool\TextureForm.Designer.cs">
-      <DependentUpon>TextureForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AtlasTool\TextureUnit.cs" />
-    <Compile Include="Clouds\BaseCloudElement.cs" />
-    <Compile Include="Clouds\BillBoards.cs" />
-    <Compile Include="EngineSynchronisation\ClientAssetTreeTypeFactory.cs" />
-    <Compile Include="EngineSynchronisation\ClientTreeSyncer.cs" />
-    <Compile Include="EngineSynchronisation\ServerTreeTypeAsset.cs" />
-    <Compile Include="EngineSynchronisation\RAMTreeType.cs" />
-    <Compile Include="EngineSynchronisation\ServerTreeSyncer.cs" />
-    <Compile Include="EngineSynchronisation\TreePacket.cs" />
-    <Compile Include="EngineSynchronisation\ClientTreeTypeAsset.cs" />
-    <Compile Include="ImposterRing\IDelayedRenderProvider.cs" />
-    <Compile Include="ImposterRing\ImposterRing.cs" />
-    <Compile Include="ITreeTypeFactory.cs" />
-    <Compile Include="LodEngine\ImposterLodLayer.cs" />
-    <Compile Include="LodEngine\ImposterRingLayer.cs" />
-    <Compile Include="LodEngine\IRenderable.cs" />
-    <Compile Include="LodEngine\ISimpleRendrable.cs" />
-    <Compile Include="LodEngine\ITreeLodLayer.cs" />
-    <Compile Include="LodEngine\LodEngineTest.cs" />
-    <Compile Include="LodEngine\ModelLodLayer.cs" />
-    <Compile Include="LodEngine\TreeLodEngine.cs" />
-    <Compile Include="LodEngine\TreeLodEntity.cs" />
-    <Compile Include="LodEngine\TWRenderElement.cs" />
-    <Compile Include="LodEngine\TWRenderer.cs" />
-    <Compile Include="Morph\Butterfly.cs" />
-    <Compile Include="Morph\MorphModel.cs" />
-    <Compile Include="Imposter\Imposter.cs" />
-    <Compile Include="Imposter\ImposterCamera.cs" />
-    <Compile Include="Imposter\ImposterEngine.cs" />
-    <Compile Include="ObjExporter.cs" />
-    <Compile Include="ObjImporter.cs" />
-    <Compile Include="Editor\TreeTypeEditor.cs" />
-    <Compile Include="Editor\TreeTypeEditorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Editor\TreeTypeEditorForm.Designer.cs">
-      <DependentUpon>TreeTypeEditorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Range.cs" />
-    <Compile Include="RangeSpreading.cs" />
-    <Compile Include="SideProjectTests.cs" />
-    <Compile Include="SimpleTextureFactory.cs" />
-    <Compile Include="SimpleTreeTypeFactory.cs" />
-    <Compile Include="TODO\help\Branch.cs" />
-    <Compile Include="Directions.cs" />
-    <Compile Include="TODO\help\leaves.cs" />
-    <Compile Include="TODO\help\MeshCreator.cs" />
-    <Compile Include="Seeder.cs" />
-    <Compile Include="TODO\help\Segment.cs" />
-    <Compile Include="TODO\help\structs.cs" />
-    <Compile Include="TODO\help\Tree.cs" />
-    <Compile Include="TODO\help\TreestructureGenerator.cs" />
-    <Compile Include="TODO\help\TreeStructureLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="TODO\Game1.cs" />
-    <Compile Include="TreeEngine\EngineRenderDataPart.cs" />
-    <Compile Include="TreeEngine\EngineTree.cs" />
-    <Compile Include="TreeEngine\EngineTreeType.cs" />
-    <Compile Include="TreeEngine\EngineTreeRenderData.cs" />
-    <Compile Include="TreeEngine\EngineTreeRenderDataImp.cs" />
-    <Compile Include="TreeEngine\EngineTreeRenderDataGenerater.cs" />
-    <Compile Include="TreeEngine\TestVolumetricLeafShader.cs" />
-    <Compile Include="TreeEngine\TreeEngine.cs" />
-    <Compile Include="TreeEngine\TreeImposterEngine.cs" />
-    <Compile Include="TreeFlowerType.cs" />
-    <Compile Include="TreeLeafType.cs" />
-    <Compile Include="TreeLineRenderer.cs" />
-    <Compile Include="TreeRenderManager.cs" />
-    <Compile Include="TreeStructure.cs" />
-    <Compile Include="TreeStructureBranch.cs" />
-    <Compile Include="TreeStructureBranchSegment.cs" />
-    <Compile Include="TreeStructureFlower.cs" />
-    <Compile Include="TreeStructureGenerater.cs" />
-    <Compile Include="TreeStructureLeaf.cs" />
-    <Compile Include="TreeStructureLeafGenerater.cs" />
-    <Compile Include="TreeStructureSegment.cs" />
-    <Compile Include="ITreeType.cs" />
-    <Compile Include="TreeTypeData.cs" />
-    <Compile Include="TreeTypeLevel.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Clouds\CloudsTileset.jpg" />
-    <Content Include="Clouds\Design.txt" />
-    <Content Include="Clouds\SingleCloud001-5.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Design tree generater.txt" />
-    <Content Include="Engine\Depth.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <EmbeddedResource Include="Files\PalmTestTree.XML" />
-    <Content Include="Game.ico" />
-    <Content Include="GameThumbnail.png" />
-    <Content Include="Imposter\imposter design.txt" />
-    <Content Include="Imposter\imposter gamesutra.txt" />
-    <Content Include="Imposter\RenderTargetBart.txt" />
-    <Content Include="Morph\butterflyTexture\butterfly4.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Morph\butterflyTexture\transparentButterfly.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <EmbeddedResource Include="Files\TestTree.XML" />
-    <Content Include="todo.txt" />
-    <Content Include="TODO\help\TreeEngineDesign.txt" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
@@ -231,85 +123,9 @@
     </NestedContentProject>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Clouds\shader\BillBoardShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Clouds\shader\CloudShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Clouds\fizimayer-2007-art-thesis cloud.pdf" />
-    <None Include="Clouds\shader\BasicTestShaderAll.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Clouds\shader\BasicTestShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Clouds\SingleCloud001-2.dds" />
-    <None Include="Clouds\SingleCloud001-3.dds" />
-    <None Include="Clouds\SingleCloud001-4.tga">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Clouds\SingleCloud001.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Clouds\SingleCloud001.psd" />
-    <None Include="Engine\ColladaModel.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Engine\LineRendering.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Engine\GrassShader.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Engine\Model.fx" />
-    <None Include="ImposterRing\ImposterRingShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Morph\butterfly.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Morph\MorphShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Properties\DataSources\TreeTypeLevel.datasource" />
-    <None Include="Engine\Habel_2007_IAG-grass_shader.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Shaders\ShadowMap.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TODO\help\ClassDiagram1.cd" />
-    <EmbeddedResource Include="TreeEngine\BillBoardShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <None Include="TreeEngine\LeafMotionShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TreeEngine\PointSpritePerspectiveDepthShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TreeEngine\PointSpritePerspectiveShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="AtlasTool\TextureForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>TextureForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editor\TreeTypeEditorForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>TreeTypeEditorForm.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Clouds\Textures\" />
-    <Folder Include="Copy\" />
-    <Folder Include="Editor\Preprocesser\" />
-    <Folder Include="Rendering\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
@@ -335,17 +151,9 @@
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Networking\Networking.csproj">
-      <Project>{5552CBE1-F647-4B3A-A353-A252E4CB0008}</Project>
-      <Name>Networking</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NewModules\NewModules.csproj">
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
       <Name>NewModules</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TestRunner\TestRunner.csproj">
-      <Project>{AC6C51CE-96FB-401B-9B51-1302F273A52A}</Project>
-      <Name>TestRunner</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

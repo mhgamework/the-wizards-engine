@@ -113,16 +113,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Animation\AMCParser.cs" />
-    <Compile Include="Animation\AMCSample.cs" />
-    <Compile Include="Animation\AMCSegment.cs" />
-    <Compile Include="Animation\Animation.cs" />
-    <Compile Include="Animation\AnimationController.cs" />
-    <Compile Include="Animation\ASFJoint.cs" />
-    <Compile Include="Animation\ASFParser.cs" />
-    <Compile Include="Animation\Joint.cs" />
-    <Compile Include="Animation\Skeleton.cs" />
-    <Compile Include="Animation\SkeletonVisualizer.cs" />
     <Compile Include="Assets\AssetFileMode.cs" />
     <Compile Include="Assets\AssetSynchronizationPriority.cs" />
     <Compile Include="Assets\ClientAssetSyncer.cs" />
@@ -163,28 +153,30 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Entities\Editor\Rendering\EditorMaterial.cs" />
-    <Compile Include="Entity\Editor\EditorMesh.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Entity\Editor\EditorMeshPart.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Entity\Client\EntityClientPhysics.cs" />
+    <Compile Include="Entity\Client\EntityPhysicsActorBuilder.cs" />
+    <Compile Include="Entity\Editor\EditorMesh.cs" />
+    <Compile Include="Entity\Editor\EditorMeshPart.cs" />
     <Compile Include="Entity\Editor\EditorMeshPartRenderData.cs" />
-    <Compile Include="Entity\TODO\EntityFullData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Entity\TODO\EntityManagerService.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Entity\TODO\ModelFullData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Entity\TODO\TaggedEntity.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Entity\TODO\TaggedObject.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Entity\IObject.cs" />
+    <Compile Include="Entity\IObjectData.cs" />
+    <Compile Include="Entity\IObjectDataRenderDataFactory.cs" />
+    <Compile Include="Entity\ModelGeometryData.cs" />
+    <Compile Include="Entity\ObjectCoreData.cs" />
+    <Compile Include="Entity\ObjectFullData.cs" />
+    <Compile Include="Entity\ObjectFullDataFactory.cs" />
+    <Compile Include="Entity\ObjectMeshData.cs" />
+    <Compile Include="Entity\ObjectRenderDataFactory.cs" />
+    <Compile Include="Entity\ObjectRenderElement.cs" />
+    <Compile Include="Entity\RAMMesh.cs" />
+    <Compile Include="Entity\RAMMeshPart.cs" />
+    <Compile Include="Entity\RAMObject.cs" />
+    <Compile Include="Entity\TangentSolver.cs" />
+    <Compile Include="Entity\TODO\EntityFullData.cs" />
+    <Compile Include="Entity\TODO\EntityManagerService.cs" />
+    <Compile Include="Entity\TODO\ModelFullData.cs" />
+    <Compile Include="Entity\TODO\TaggedEntity.cs" />
+    <Compile Include="Entity\TODO\TaggedObject.cs" />
     <Compile Include="ModelContainer\BaseModelObject.cs" />
     <Compile Include="ModelContainer\BasicSimulator.cs" />
     <Compile Include="ModelContainer\Engine.cs" />
@@ -204,36 +196,75 @@
     <Compile Include="Particles\ParticleSimulater.cs" />
     <Compile Include="Particles\SimpleParticleCreater.cs" />
     <Compile Include="Particles\SparkelParticleCreater.cs" />
+    <Compile Include="ProceduralTerrainGeneration\Grass\GrassMesh.cs" />
+    <Compile Include="ProceduralTerrainGeneration\NoiseGenerater\PerlinNoiseGenerater.cs" />
+    <Compile Include="ProceduralTerrainGeneration\NoiseGenerater\SimpleTerrain.cs" />
+    <Compile Include="ProceduralTerrainGeneration\TerrrainGeneration\HeigthMapGenerater.cs" />
+    <Compile Include="ProceduralTerrainGeneration\TerrrainGeneration\ProceduralHeigthGenerater.cs" />
     <Compile Include="Profiling\Profiler.cs" />
     <Compile Include="Profiling\ProfilingPoint.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Rendering\CullerNoCull.cs" />
     <Compile Include="Rendering\DebugVisualizer.cs" />
+    <Compile Include="Rendering\DefaultModelMaterialTextured.cs" />
+    <Compile Include="Rendering\DefaultModelRenderable.cs" />
+    <Compile Include="Rendering\DefaultModelRenderableShared.cs" />
+    <Compile Include="Rendering\DefaultModelShader.cs" />
+    <Compile Include="Rendering\DefaultRenderElement.cs" />
+    <Compile Include="Rendering\DefaultRenderer.cs" />
+    <Compile Include="Rendering\Deferred\DeferredMeshRenderElement.cs" />
+    <Compile Include="Rendering\Deferred\DeferredMeshRenderer.cs" />
+    <Compile Include="Rendering\Deferred\DeferredMeshVertex.cs" />
+    <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
+    <Compile Include="Rendering\Deferred\DeferredRendererOud.cs" />
+    <Compile Include="Rendering\Deferred\DirectionalLight.cs" />
+    <Compile Include="Rendering\Deferred\PointLight.cs" />
+    <Compile Include="Rendering\Deferred\SpotLight.cs" />
+    <Compile Include="Rendering\Deferred\TexturePool.cs" />
     <Compile Include="Rendering\DiskRenderingAssetFactory.cs" />
+    <Compile Include="Rendering\FrustumCuller.cs" />
+    <Compile Include="Rendering\FrustumCullerSimple.cs" />
+    <Compile Include="Rendering\FrustumCullerView.cs" />
+    <Compile Include="Rendering\ICullable.cs" />
+    <Compile Include="Rendering\IDefaultModelMaterial.cs" />
+    <Compile Include="Rendering\IDefaultRenderable.cs" />
+    <Compile Include="Rendering\IMesh.cs" />
+    <Compile Include="Rendering\IMeshFactory.cs" />
+    <Compile Include="Rendering\IMeshPart.cs" />
+    <Compile Include="Rendering\IMeshRenderElement.cs" />
+    <Compile Include="Rendering\ISimpleMeshRenderer.cs" />
+    <Compile Include="Rendering\ISimpleRenderable.cs" />
+    <Compile Include="Rendering\ITexture.cs" />
+    <Compile Include="Rendering\ITextureFactory.cs" />
+    <Compile Include="Rendering\MeshAdditionalData.cs" />
     <Compile Include="Rendering\MeshBuilder.cs" />
+    <Compile Include="Rendering\MeshCoreData.cs" />
+    <Compile Include="Rendering\MeshLoader.cs" />
+    <Compile Include="Rendering\MeshPartAdditionalData.cs" />
+    <Compile Include="Rendering\MeshPartGeometryData.cs" />
+    <Compile Include="Rendering\MeshPartPool.cs" />
+    <Compile Include="Rendering\MeshRenderDataFactory.cs" />
+    <Compile Include="Rendering\RAMTexture.cs" />
+    <Compile Include="Rendering\RAMTextureFactory.cs" />
+    <Compile Include="Rendering\SimpleMeshFactory.cs" />
+    <Compile Include="Rendering\SimpleMeshRenderElement.cs" />
+    <Compile Include="Rendering\SimpleMeshRenderer.cs" />
+    <Compile Include="Rendering\SimpleRenderer.cs" />
+    <Compile Include="Rendering\SSAO\HorizonSSAORenderer.cs" />
+    <Compile Include="Rendering\TextureCoreData.cs" />
+    <Compile Include="Rendering\TexturePool.cs" />
+    <Compile Include="Rendering\VertexDeclarationPool.cs" />
     <Compile Include="Scripting\ScriptLoader.cs" />
     <Compile Include="Scripting\ScriptWrapper.cs" />
-    <Compile Include="Rendering\MeshLoader.cs" />
     <Compile Include="ServerclientDeprecated\DiskLoaderService.cs" />
     <Compile Include="ServerclientDeprecated\DiskSerializerService.cs" />
     <Compile Include="ServerclientDeprecated\IDiskSerializer.cs" />
     <Compile Include="ServerclientDeprecated\IRenderPrimitives.cs" />
     <Compile Include="ServerclientDeprecated\QuadTree.cs" />
     <Compile Include="ServerclientDeprecated\QuadTreeNode.cs" />
+    <Compile Include="Server\Launcher\LauncherServer.cs" />
     <Compile Include="Terrain\Editor\TerrainRaiseTool.cs" />
     <Compile Include="Terrain\Geomipmap\HeightmapNormalCalculator.cs" />
-    <Compile Include="Rendering\SimpleMeshFactory.cs" />
-    <Compile Include="Rendering\CullerNoCull.cs" />
-    <Compile Include="Rendering\Deferred\DeferredMeshVertex.cs" />
-    <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
-    <Compile Include="Rendering\Deferred\DeferredMeshRenderer.cs" />
-    <Compile Include="Rendering\Deferred\DeferredMeshRenderElement.cs" />
-    <Compile Include="Rendering\Deferred\DirectionalLight.cs" />
-    <Compile Include="Rendering\Deferred\PointLight.cs" />
-    <Compile Include="Rendering\Deferred\SpotLight.cs" />
-    <Compile Include="Rendering\Deferred\TexturePool.cs" />
-    <Compile Include="Rendering\FrustumCuller.cs" />
-    <Compile Include="Rendering\FrustumCullerView.cs" />
-    <Compile Include="Rendering\SSAO\HorizonSSAORenderer.cs" />
     <Compile Include="Terrain\Geomipmap\IndexBufferBuilder.cs" />
     <Compile Include="Terrain\Geomipmap\ITerrainBlock.cs" />
     <Compile Include="Terrain\Geomipmap\MinDistanceCalculator.cs" />
@@ -264,11 +295,6 @@
     </Compile>
     <Compile Include="Terrain\TerrainFullData.cs" />
     <Compile Include="Terrain\HeightMap.cs" />
-    <Compile Include="Entity\Client\EntityClientPhysics.cs" />
-    <Compile Include="Entity\Client\EntityPhysicsActorBuilder.cs" />
-    <Compile Include="Entity\IObject.cs" />
-    <Compile Include="Entity\IObjectData.cs" />
-    <Compile Include="Entity\IObjectDataRenderDataFactory.cs" />
     <Compile Include="OBJParser\OBJToRAMMeshConverter.cs" />
     <Compile Include="Particles\Emitter.cs" />
     <Compile Include="Physics\CustomContactReport.cs" />
@@ -278,11 +304,92 @@
     <Compile Include="Physics\MeshPhysicsActorBuilder.cs" />
     <Compile Include="Physics\MeshCollisionData.cs" />
     <Compile Include="Physics\MeshPhysicsElementFactory.cs" />
-    <Compile Include="Rendering\Deferred\DeferredRendererOud.cs" />
-    <Compile Include="Rendering\IMeshFactory.cs" />
-    <Compile Include="Rendering\IMeshRenderElement.cs" />
-    <Compile Include="Rendering\ISimpleMeshRenderer.cs" />
-    <Compile Include="Rendering\ITextureFactory.cs" />
+    <Compile Include="TreeGenerator\AtlasTool\TextureAtlasCreater.cs" />
+    <Compile Include="TreeGenerator\AtlasTool\TextureForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TreeGenerator\AtlasTool\TextureForm.Designer.cs">
+      <DependentUpon>TextureForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TreeGenerator\AtlasTool\TextureUnit.cs" />
+    <Compile Include="TreeGenerator\Clouds\BaseCloudElement.cs" />
+    <Compile Include="TreeGenerator\Clouds\BillBoards.cs" />
+    <Compile Include="TreeGenerator\Directions.cs" />
+    <Compile Include="TreeGenerator\Editor\TreeTypeEditor.cs" />
+    <Compile Include="TreeGenerator\Editor\TreeTypeEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TreeGenerator\Editor\TreeTypeEditorForm.Designer.cs">
+      <DependentUpon>TreeTypeEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TreeGenerator\EngineSynchronisation\ClientAssetTreeTypeFactory.cs" />
+    <Compile Include="TreeGenerator\EngineSynchronisation\ClientTreeSyncer.cs" />
+    <Compile Include="TreeGenerator\EngineSynchronisation\ClientTreeTypeAsset.cs" />
+    <Compile Include="TreeGenerator\EngineSynchronisation\RAMTreeType.cs" />
+    <Compile Include="TreeGenerator\EngineSynchronisation\ServerTreeSyncer.cs" />
+    <Compile Include="TreeGenerator\EngineSynchronisation\ServerTreeTypeAsset.cs" />
+    <Compile Include="TreeGenerator\EngineSynchronisation\TreePacket.cs" />
+    <Compile Include="TreeGenerator\ImposterRing\IDelayedRenderProvider.cs" />
+    <Compile Include="TreeGenerator\ImposterRing\ImposterRing.cs" />
+    <Compile Include="TreeGenerator\Imposter\Imposter.cs" />
+    <Compile Include="TreeGenerator\Imposter\ImposterCamera.cs" />
+    <Compile Include="TreeGenerator\Imposter\ImposterEngine.cs" />
+    <Compile Include="TreeGenerator\ITreeType.cs" />
+    <Compile Include="TreeGenerator\ITreeTypeFactory.cs" />
+    <Compile Include="TreeGenerator\LodEngine\ImposterLodLayer.cs" />
+    <Compile Include="TreeGenerator\LodEngine\ImposterRingLayer.cs" />
+    <Compile Include="TreeGenerator\LodEngine\IRenderable.cs" />
+    <Compile Include="TreeGenerator\LodEngine\ISimpleRendrable.cs" />
+    <Compile Include="TreeGenerator\LodEngine\ITreeLodLayer.cs" />
+    <Compile Include="TreeGenerator\LodEngine\LodEngineTest.cs" />
+    <Compile Include="TreeGenerator\LodEngine\ModelLodLayer.cs" />
+    <Compile Include="TreeGenerator\LodEngine\TreeLodEngine.cs" />
+    <Compile Include="TreeGenerator\LodEngine\TreeLodEntity.cs" />
+    <Compile Include="TreeGenerator\LodEngine\TWRenderElement.cs" />
+    <Compile Include="TreeGenerator\LodEngine\TWRenderer.cs" />
+    <Compile Include="TreeGenerator\Morph\Butterfly.cs" />
+    <Compile Include="TreeGenerator\Morph\MorphModel.cs" />
+    <Compile Include="TreeGenerator\ObjExporter.cs" />
+    <Compile Include="TreeGenerator\ObjImporter.cs" />
+    <Compile Include="TreeGenerator\Program.cs" />
+    <Compile Include="TreeGenerator\Range.cs" />
+    <Compile Include="TreeGenerator\RangeSpreading.cs" />
+    <Compile Include="TreeGenerator\Seeder.cs" />
+    <Compile Include="TreeGenerator\SideProjectTests.cs" />
+    <Compile Include="TreeGenerator\SimpleTextureFactory.cs" />
+    <Compile Include="TreeGenerator\SimpleTreeTypeFactory.cs" />
+    <Compile Include="TreeGenerator\TODO\Game1.cs" />
+    <Compile Include="TreeGenerator\TODO\help\Branch.cs" />
+    <Compile Include="TreeGenerator\TODO\help\leaves.cs" />
+    <Compile Include="TreeGenerator\TODO\help\MeshCreator.cs" />
+    <Compile Include="TreeGenerator\TODO\help\Segment.cs" />
+    <Compile Include="TreeGenerator\TODO\help\structs.cs" />
+    <Compile Include="TreeGenerator\TODO\help\Tree.cs" />
+    <Compile Include="TreeGenerator\TODO\help\TreestructureGenerator.cs" />
+    <Compile Include="TreeGenerator\TODO\help\TreeStructureLevel.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\EngineRenderDataPart.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\EngineTree.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\EngineTreeRenderData.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\EngineTreeRenderDataGenerater.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\EngineTreeRenderDataImp.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\EngineTreeType.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\TestVolumetricLeafShader.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\TreeEngine.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\TreeImposterEngine.cs" />
+    <Compile Include="TreeGenerator\TreeFlowerType.cs" />
+    <Compile Include="TreeGenerator\TreeLeafType.cs" />
+    <Compile Include="TreeGenerator\TreeLineRenderer.cs" />
+    <Compile Include="TreeGenerator\TreeRenderManager.cs" />
+    <Compile Include="TreeGenerator\TreeStructure.cs" />
+    <Compile Include="TreeGenerator\TreeStructureBranch.cs" />
+    <Compile Include="TreeGenerator\TreeStructureBranchSegment.cs" />
+    <Compile Include="TreeGenerator\TreeStructureFlower.cs" />
+    <Compile Include="TreeGenerator\TreeStructureGenerater.cs" />
+    <Compile Include="TreeGenerator\TreeStructureLeaf.cs" />
+    <Compile Include="TreeGenerator\TreeStructureLeafGenerater.cs" />
+    <Compile Include="TreeGenerator\TreeStructureSegment.cs" />
+    <Compile Include="TreeGenerator\TreeTypeData.cs" />
+    <Compile Include="TreeGenerator\TreeTypeLevel.cs" />
     <Compile Include="Versioning\ClientVersioningSyncer.cs" />
     <Compile Include="Versioning\ServerVersioningSyncer.cs" />
     <Compile Include="Versioning\IStreamProvider.cs" />
@@ -343,22 +450,6 @@
     <Compile Include="Xml\TWXmlSerializer.cs" />
     <Compile Include="XNAConversion.cs" />
     <EmbeddedResource Include="Properties\licenses.licx" />
-    <EmbeddedResource Include="Rendering\Deferred\Files\DeferredShader.fx" />
-    <EmbeddedResource Include="Rendering\Deferred\Files\Blur.fx" />
-    <Compile Include="Rendering\IMesh.cs" />
-    <Compile Include="Rendering\IMeshPart.cs" />
-    <Compile Include="Rendering\ITexture.cs" />
-    <Compile Include="Entity\ModelGeometryData.cs" />
-    <Compile Include="Entity\ObjectCoreData.cs" />
-    <Compile Include="Entity\ObjectFullData.cs" />
-    <Compile Include="Entity\ObjectFullDataFactory.cs" />
-    <Compile Include="Entity\ObjectMeshData.cs" />
-    <Compile Include="Entity\ObjectRenderDataFactory.cs" />
-    <Compile Include="Entity\ObjectRenderElement.cs" />
-    <Compile Include="Entity\RAMMesh.cs" />
-    <Compile Include="Entity\RAMMeshPart.cs" />
-    <Compile Include="Entity\RAMObject.cs" />
-    <Compile Include="Entity\TangentSolver.cs" />
     <Compile Include="OBJParser\Face.cs" />
     <Compile Include="OBJParser\FaceVertex.cs" />
     <Compile Include="OBJParser\OBJGroup.cs" />
@@ -379,31 +470,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Rendering\DefaultModelMaterialTextured.cs" />
-    <Compile Include="Rendering\DefaultModelRenderable.cs" />
-    <Compile Include="Rendering\DefaultModelRenderableShared.cs" />
-    <Compile Include="Rendering\DefaultModelShader.cs" />
-    <Compile Include="Rendering\DefaultRenderElement.cs" />
-    <Compile Include="Rendering\DefaultRenderer.cs" />
-    <Compile Include="Rendering\IDefaultModelMaterial.cs" />
-    <Compile Include="Rendering\FrustumCullerSimple.cs" />
-    <Compile Include="Rendering\ICullable.cs" />
-    <Compile Include="Rendering\IDefaultRenderable.cs" />
-    <Compile Include="Rendering\ISimpleRenderable.cs" />
-    <Compile Include="Rendering\MeshAdditionalData.cs" />
-    <Compile Include="Rendering\MeshCoreData.cs" />
-    <Compile Include="Rendering\MeshPartAdditionalData.cs" />
-    <Compile Include="Rendering\MeshPartGeometryData.cs" />
-    <Compile Include="Rendering\MeshPartPool.cs" />
-    <Compile Include="Rendering\MeshRenderDataFactory.cs" />
-    <Compile Include="Rendering\SimpleMeshRenderElement.cs" />
-    <Compile Include="Rendering\SimpleMeshRenderer.cs" />
-    <Compile Include="Rendering\RAMTexture.cs" />
-    <Compile Include="Rendering\SimpleRenderer.cs" />
-    <Compile Include="Rendering\TextureCoreData.cs" />
-    <Compile Include="Rendering\RAMTextureFactory.cs" />
-    <Compile Include="Rendering\TexturePool.cs" />
-    <Compile Include="Rendering\VertexDeclarationPool.cs" />
     <Compile Include="Terrain\Client\TerrainBlockClientPhysics.cs" />
     <Compile Include="Terrain\Client\TerrainBlockHeightfieldBuilder.cs" />
     <Compile Include="Terrain\Client\TerrainClientPhysics.cs" />
@@ -420,6 +486,14 @@
     <Compile Include="WorldDatabase\IDataElementFactory.cs" />
     <Compile Include="WorldDatabase\WorkingCopy.cs" />
     <Compile Include="WorldDatabase\WorldDatabase.cs" />
+    <EmbeddedResource Include="TreeGenerator\AtlasTool\TextureForm.resx">
+      <DependentUpon>TextureForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TreeGenerator\Editor\TreeTypeEditorForm.resx">
+      <DependentUpon>TreeTypeEditorForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -433,22 +507,107 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Client\Client.cd" />
-    <EmbeddedResource Include="Rendering\Files\DefaultModelShader.fx" />
-    <EmbeddedResource Include="Rendering\Deferred\Files\ClearGBuffer.fx" />
-    <EmbeddedResource Include="Rendering\Deferred\Files\RenderGBuffer.fx" />
-    <EmbeddedResource Include="Rendering\Deferred\Files\DirectionalLight.fx" />
-    <EmbeddedResource Include="Rendering\Deferred\Files\CombineFinal.fx" />
-    <EmbeddedResource Include="Rendering\Deferred\Files\PointLight.fx" />
-    <EmbeddedResource Include="Rendering\Deferred\Files\SpotLight.fx" />
-    <EmbeddedResource Include="Rendering\Deferred\Files\ShadowMap.fx" />
+    <None Include="ProceduralTerrainGeneration\Grass\GrassShaderNewDesign.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProceduralTerrainGeneration\Grass\Textures\GrassTextures\flower001%28purple%29.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProceduralTerrainGeneration\Grass\Textures\GrassTextures\flower002%28orange%29.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProceduralTerrainGeneration\Grass\Textures\GrassTextures\grass.tga">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ProceduralTerrainGeneration\Grass\Textures\GrassTextures\m_grassblades.tga">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProceduralTerrainGeneration\Grass\Textures\GrassTextures\textureAtlas01.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <EmbeddedResource Include="Rendering\Deferred\Files\AmbientOcclusion.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\Blur.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\ClearGBuffer.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\CombineFinal.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\DeferredShader.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\DirectionalLight.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\Downsample.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\PointLight.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\RenderGBuffer.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\ShadowMap.fx" />
+    <EmbeddedResource Include="Rendering\Deferred\Files\SpotLight.fx" />
+    <EmbeddedResource Include="Rendering\Files\DefaultModelShader.fx" />
     <None Include="Terrain\Client\TerrainClient.cd" />
     <EmbeddedResource Include="Terrain\Rendering\Files\TerrainGeomipmap.fx" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="TreeGenerator\app.config" />
+    <None Include="TreeGenerator\Clouds\shader\BasicTestShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Clouds\shader\BasicTestShaderAll.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Clouds\shader\BillBoardShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Clouds\shader\CloudShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Clouds\SingleCloud001-2.dds" />
+    <None Include="TreeGenerator\Clouds\SingleCloud001-3.dds" />
+    <None Include="TreeGenerator\Clouds\SingleCloud001-4.tga">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Clouds\SingleCloud001.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Clouds\SingleCloud001.psd" />
+    <None Include="TreeGenerator\Engine\ColladaModel.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <EmbeddedResource Include="Rendering\Deferred\Files\RandomNormals.png" />
     <EmbeddedResource Include="Rendering\Files\Checker.png" />
+    <Content Include="Rendering\_doc.txt" />
+    <Content Include="TreeGenerator\Design tree generater.txt" />
+    <Content Include="TreeGenerator\Engine\Depth.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="TreeGenerator\Engine\GrassShader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Engine\Habel_2007_IAG-grass_shader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Engine\LineRendering.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Engine\Model.fx" />
+    <None Include="TreeGenerator\ImposterRing\ImposterRingShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Morph\butterfly.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Morph\MorphShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Shaders\ShadowMap.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\TODO\help\ClassDiagram1.cd" />
+    <EmbeddedResource Include="TreeGenerator\TreeEngine\BillBoardShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Include="TreeGenerator\TreeEngine\LeafMotionShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\TreeEngine\PointSpritePerspectiveDepthShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\TreeEngine\PointSpritePerspectiveShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\UndoBig.png" />
     <None Include="Resources\SaveMedium.png" />
     <None Include="Resources\SaveBig.png" />
@@ -459,6 +618,10 @@
   <ItemGroup>
     <Folder Include="Particles\Files\" />
     <Folder Include="Player\" />
+    <Folder Include="TreeGenerator\Clouds\Textures\" />
+    <Folder Include="TreeGenerator\Copy\" />
+    <Folder Include="TreeGenerator\Editor\Preprocesser\" />
+    <Folder Include="TreeGenerator\Rendering\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
@@ -469,17 +632,9 @@
       <Project>{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}</Project>
       <Name>CommonVB</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Deprecated\Common\Common.csproj">
-      <Project>{8162E3FE-A9B6-4F93-94F0-89C74CB7D53D}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DirectX11\DirectX11.csproj">
-      <Project>{A58AF8D7-8C17-43F6-B994-C67F590F416A}</Project>
-      <Name>DirectX11</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Networking\Networking.csproj">
-      <Project>{5552CBE1-F647-4B3A-A353-A252E4CB0008}</Project>
-      <Name>Networking</Name>
+    <ProjectReference Include="..\Launcher\Launcher.csproj">
+      <Project>{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}</Project>
+      <Name>Launcher</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -487,8 +642,57 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ModelContainer\_doc.txt" />
-    <Content Include="Rendering\_doc.txt" />
+    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\densityValueTest.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\DifferentGrasstypesTest.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\DifferentGrasstypesTest2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\FirstGrassMap.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\GrassDensityMoreAdvancedTesting1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\GrassMap2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\GrassMap3.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\GrassMap4.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ProceduralTerrainGeneration\Grass\Textures\GrassTextures\Diffuse_grass_.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ProceduralTerrainGeneration\Grass\Textures\GrassTextures\textureAtlas01.XML">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripting\_doc.txt" />
+    <Content Include="TreeGenerator\Clouds\CloudsTileset.jpg" />
+    <Content Include="TreeGenerator\Clouds\Design.txt" />
+    <Content Include="TreeGenerator\Clouds\SingleCloud001-5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="TreeGenerator\Files\PalmTestTree.XML" />
+    <EmbeddedResource Include="TreeGenerator\Files\TestTree.XML" />
+    <Content Include="TreeGenerator\Game.ico" />
+    <Content Include="TreeGenerator\GameThumbnail.png" />
+    <Content Include="TreeGenerator\Imposter\imposter design.txt" />
+    <Content Include="TreeGenerator\Imposter\imposter gamesutra.txt" />
+    <Content Include="TreeGenerator\Imposter\RenderTargetBart.txt" />
+    <Content Include="TreeGenerator\Morph\butterflyTexture\butterfly4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TreeGenerator\Morph\butterflyTexture\transparentButterfly.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TreeGenerator\todo.txt" />
+    <Content Include="TreeGenerator\TODO\help\TreeEngineDesign.txt" />
     <Content Include="Voxelization\_doc.txt" />
     <Content Include="_doc.txt" />
   </ItemGroup>

@@ -140,13 +140,13 @@ namespace DirectX11.Rendering.Deferred
         {
             noShadowsShader = BasicShader.LoadAutoreload(game,
                                                           new System.IO.FileInfo(
-                                                              "..\\..\\DirectX11\\Shaders\\Deferred\\PointLight.fx"), null, new[] { new ShaderMacro("DISABLE_SHADOWS") });
+                                                              CompiledShaderCache.Current.RootShaderPath + "Deferred\\PointLight.fx"), null, new[] { new ShaderMacro("DISABLE_SHADOWS") });
 
             noShadowsShader.SetTechnique("Technique0");
 
             shadowsShader = BasicShader.LoadAutoreload(game,
                                               new System.IO.FileInfo(
-                                                  "..\\..\\DirectX11\\Shaders\\Deferred\\PointLight.fx"));
+                                                  CompiledShaderCache.Current.RootShaderPath + "Deferred\\PointLight.fx"));
 
             shadowsShader.SetTechnique("Technique0");
         }

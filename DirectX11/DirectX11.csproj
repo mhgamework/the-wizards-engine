@@ -57,128 +57,20 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TestRunner, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <ExecutableExtension>.exe</ExecutableExtension>
+      <HintPath>..\TestRunner\bin\Release\TestRunner.exe</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\CompiledShaderCache.cs" />
-    <Compile Include="Graphics\ThirdPersonCamera.cs" />
-    <Compile Include="Point3.cs" />
-    <Compile Include="QuadTreeVisualizer.cs" />
-    <Compile Include="SlimDXConversion\ConversionCameraXNA.cs" />
-    <Compile Include="DX11Game.cs" />
-    <Compile Include="Graphics\BasicShader.cs" />
-    <Compile Include="Graphics\CustomCamera.cs" />
-    <Compile Include="Graphics\DX11Form.cs" />
-    <Compile Include="Graphics\FullScreenQuad.cs" />
-    <Compile Include="Graphics\ICamera.cs" />
-    <Compile Include="Graphics\IGraphicsManager.cs" />
-    <Compile Include="Graphics\LineManager3D.cs" />
-    <Compile Include="Graphics\LineManager3DLines.cs" />
-    <Compile Include="Graphics\SpectaterCamera.cs" />
-    <Compile Include="Graphics\TextureRenderer.cs" />
-    <Compile Include="Input\TWMouse.cs" />
-    <Compile Include="Input\TWKeyboard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rendering\CSM\CSMRenderer.cs" />
-    <Compile Include="Rendering\CSM\Light.cs" />
-    <Compile Include="Rendering\CSM\OrthographicCamera.cs" />
-    <Compile Include="Rendering\Deferred\AverageLuminanceCalculater.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Rendering\Deferred\CombineFinalRenderer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Rendering\Deferred\DirectionalLightRenderer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Rendering\Deferred\GBuffer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Rendering\Deferred\GBufferShader.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Rendering\Deferred\PointLightRenderer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Rendering\Deferred\SpotLightRenderer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Rendering\Deferred\ToneMapRenderer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="SlimDXConversion\ConversionCameraDX.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\MiniTri.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\LineRendering.fx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TestRunner\TestRunner.csproj">
-      <Project>{AC6C51CE-96FB-401B-9B51-1302F273A52A}</Project>
-      <Name>TestRunner</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\FullScreenQuad.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\TestAutoReload.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\IncludeTest.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\TextureRenderer.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\Deferred\TODO\AmbientOcclusion.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\Deferred\SpotLight.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\Deferred\TODO\Blur.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\Deferred\CombineFinal.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\Deferred\DirectionalLight.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\Deferred\TODO\Downsample.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\Deferred\PointLight.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\Deferred\TODO\RandomNormals.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\Deferred\RenderGBuffer.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\Deferred\TODO\ShadowMap.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Shaders\TestHelper.fx" />
-    <EmbeddedResource Include="Shaders\Deferred\TODO\CombineFinalOld.fx" />
-    <EmbeddedResource Include="Shaders\Deferred\ToneMap.fx" />
-    <EmbeddedResource Include="Shaders\Deferred\Luminance.fx" />
-    <EmbeddedResource Include="Shaders\Deferred\DeferredMesh.fx" />
-    <EmbeddedResource Include="Shaders\Deferred\RenderTessellated.fx" />
-    <None Include="Shaders\Common.fx" />
-    <None Include="Shaders\CSM\CSMCommon.fx" />
-    <None Include="Shaders\CSM\CSM.fx" />
-    <None Include="Shaders\GBuffer.fx" />
-    <EmbeddedResource Include="Shaders\SSAO\HorizonSSAO.fx" />
-    <None Include="Shaders\Particles\BasicParticleAnimation.fx" />
-    <None Include="Shaders\Particles\BillBoardShader.fx" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

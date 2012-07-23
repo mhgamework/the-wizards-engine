@@ -77,7 +77,7 @@ namespace MHGameWork.TheWizards.Particles
             quad = new FullScreenQuad(game.Device);
             shader = BasicShader.LoadAutoreload(game,
                                                 new System.IO.FileInfo(
-                                                    "..\\..\\DirectX11\\Shaders\\Particles\\BasicParticleAnimation.fx"), null, new[] { new ShaderMacro("CALCULATE_ACCELERATION",simulation) });
+                                                    CompiledShaderCache.Current.RootShaderPath + "Particles\\BasicParticleAnimation.fx"), null, new[] { new ShaderMacro("CALCULATE_ACCELERATION",simulation) });
             shader.SetTechnique("particleSimulation");
            // shader.AddCustomIncludeHandler("generated.fx",generateIncludeCallback);
             //shader.InitFromEmbeddedFile(game, Assembly.GetExecutingAssembly(), "MHGameWork.TheWizards.Particles.Files.BasicParticleAnimation.fx", "..\\..\\NewModules\\Particles\\Files\\BasicParticleAnimation.fx", new EffectPool());

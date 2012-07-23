@@ -89,21 +89,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entity\SimpleAssetStaticWorldObject.cs" />
-    <Compile Include="Entity\SimpleAssetStaticWorldObjectFactory.cs" />
-    <Compile Include="Entity\StaticEntity.cs" />
-    <Compile Include="Entity\StaticEntityContainer.cs" />
-    <Compile Include="Main\TheWizardsClient.cs" />
-    <Compile Include="Main\TheWizardsServer.cs" />
-    <Compile Include="Main\TheWizardsServerCore.cs" />
-    <Compile Include="Main\TreeClient.cs" />
-    <Compile Include="Main\TreeServer.cs" />
-    <Compile Include="Networking\Client\GameClient.cs" />
-    <Compile Include="Networking\Server\GameClient.cs" />
-    <Compile Include="Networking\Server\GameClientListener.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\CoreTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
@@ -144,9 +130,6 @@
       <Project>{E7F313DB-EDA4-4894-AE46-B220B53A6A48}</Project>
       <Name>TreeGenerator</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

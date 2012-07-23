@@ -87,7 +87,7 @@ namespace DirectX11.Rendering.CSM
             context = device.ImmediateContext;
 
             // Load the effect we need
-            shadowMapShader = BasicShader.LoadAutoreload(game, new FileInfo(@"..\..\DirectX11\Shaders\CSM\CSM.fx"));
+            shadowMapShader = BasicShader.LoadAutoreload(game, new FileInfo(CompiledShaderCache.Current.RootShaderPath + @"CSM\CSM.fx"));
 
             // Create the shadow map, using a 32-bit floating-point surface format
             shadowMap = new Texture2D(device, new Texture2DDescription

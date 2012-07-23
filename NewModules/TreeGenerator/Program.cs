@@ -1,5 +1,4 @@
 using System;
-using MHGameWork.TheWizards.TestRunner;
 using Microsoft.Xna.Framework;
 using TreeGenerator.Clouds;
 using TreeGenerator.help;
@@ -20,9 +19,9 @@ namespace TreeGenerator
         [STAThread()]
         static void Main(string[] args)
         {
-            TestRunnerGUI runnerGui = new TestRunnerGUI();
+            /*TestRunnerGUI runnerGui = new TestRunnerGUI();
             runnerGui.TestsAssembly = Assembly.GetExecutingAssembly();
-            runnerGui.Run();
+            runnerGui.Run();*/
 
             //TreestructureGenerator.TestGenerator();
 

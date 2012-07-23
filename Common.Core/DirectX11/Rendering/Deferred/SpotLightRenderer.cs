@@ -128,7 +128,7 @@ namespace DirectX11.Rendering.Deferred
 
         private void reloadShader(DX11Game game)
         {
-            var fileName = "..\\..\\DirectX11\\Shaders\\Deferred\\SpotLight.fx";
+            var fileName = CompiledShaderCache.Current.RootShaderPath + "Deferred\\SpotLight.fx";
             noShadowsShader = BasicShader.LoadAutoreload(game,
                                                          new System.IO.FileInfo(
                                                              fileName), null, new[] { new ShaderMacro("DISABLE_SHADOWS", "1") });

@@ -27,7 +27,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
     /// </summary>
     public class DeferredMeshRenderer
     {
-        public static readonly FileInfo DeferredMeshFX = new System.IO.FileInfo("..\\..\\DirectX11\\Shaders\\Deferred\\DeferredMesh.fx");
+        public static readonly FileInfo DeferredMeshFX = new System.IO.FileInfo(CompiledShaderCache.Current.RootShaderPath +  "Deferred\\DeferredMesh.fx");
 
 
         public DeferredMeshRenderer(DX11Game game, GBuffer gBuffer, TexturePool texturePool)

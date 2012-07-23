@@ -328,7 +328,7 @@ namespace MHGameWork.TheWizards.Rendering.SSAO
         {
 
 
-            var filename = "..\\..\\DirectX11\\Shaders\\SSAO\\HorizonSSAO.fx";
+            var filename = CompiledShaderCache.Current.RootShaderPath + "SSAO\\HorizonSSAO.fx";
 
 
             shader = BasicShader.LoadAutoreload(game, new System.IO.FileInfo(filename), loadShaderVariables);

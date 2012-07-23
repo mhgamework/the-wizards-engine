@@ -41,7 +41,7 @@ namespace DirectX11.Rendering.Deferred
 
             shader = BasicShader.LoadAutoreload(game,
                                                 new System.IO.FileInfo(
-                                                    "..\\..\\DirectX11\\Shaders\\Deferred\\Luminance.fx"));
+                                                    CompiledShaderCache.Current.RootShaderPath + "Deferred\\Luminance.fx"));
 
             shader.SetTechnique("CalculateLuminance");
 

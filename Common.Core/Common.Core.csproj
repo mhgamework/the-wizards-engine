@@ -80,9 +80,22 @@
     <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
+    <Reference Include="TestRunner">
+      <HintPath>..\bin\Binaries\TestRunner.exe</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animation\AMCParser.cs" />
+    <Compile Include="Animation\AMCSample.cs" />
+    <Compile Include="Animation\AMCSegment.cs" />
+    <Compile Include="Animation\Animation.cs" />
+    <Compile Include="Animation\AnimationController.cs" />
+    <Compile Include="Animation\ASFJoint.cs" />
+    <Compile Include="Animation\ASFParser.cs" />
+    <Compile Include="Animation\Joint.cs" />
+    <Compile Include="Animation\Skeleton.cs" />
+    <Compile Include="Animation\SkeletonVisualizer.cs" />
     <Compile Include="Collada\ColladaAsset.cs" />
     <Compile Include="Collada\ColladaBone.cs" />
     <Compile Include="Collada\ColladaMaterial.cs" />
@@ -96,202 +109,294 @@
     <Compile Include="Collada\TODO\ColladaMeshOud.cs" />
     <Compile Include="Collada\TODO\ColladaModelOud.cs" />
     <Compile Include="Collada\TODO\ColladaTextureOud.cs" />
-    <Compile Include="Collections\DictionaryTwoWay.cs" />
-    <Compile Include="Database\Database.cs" />
-    <Compile Include="Database\IGameObject.cs" />
-    <Compile Include="Database\IGameService.cs" />
-    <Compile Include="Database\ISimpleTag.cs" />
-    <Compile Include="Database\ITag.cs" />
-    <Compile Include="Database\ITagged.cs" />
-    <Compile Include="Database\ITagGenerater.cs" />
-    <Compile Include="Database\SettingsService.cs" />
-    <Compile Include="Database\SimpleTagGenerater.cs" />
-    <Compile Include="Database\TagManager.cs" />
-    <Compile Include="Database\TagManagerObject.cs" />
-    <Compile Include="Database\UniqueIDService.cs" />
-    <Compile Include="EmbeddedFile.cs" />
-    <Compile Include="FileHelper.cs" />
-    <Compile Include="Forms\ClassForm.cs" />
-    <Compile Include="Forms\ColorElement.cs" />
-    <Compile Include="Reflection\FieldAttribute.cs" />
-    <Compile Include="Forms\GridElement.cs" />
-    <Compile Include="Reflection\PropertyAttribute.cs" />
-    <Compile Include="Reflection\IAttribute.cs" />
-    <Compile Include="Forms\IFormElement.cs" />
-    <Compile Include="Forms\ReadonlyElement.cs" />
-    <Compile Include="Forms\TextBoxElement.cs" />
-    <Compile Include="Graphics\AttributeSystem.cs">
+    <Compile Include="Core\Collections\DictionaryTwoWay.cs" />
+    <Compile Include="CommonOld\DataStream.cs" />
+    <Compile Include="CommonOld\Engine\IGameFile.cs" />
+    <Compile Include="CommonOld\Engine\IGameFileManager.cs" />
+    <Compile Include="CommonOld\GameClientData.cs" />
+    <Compile Include="CommonOld\GameIniFile.cs" />
+    <Compile Include="CommonOld\GeoMipMap\Buffer2D.cs" />
+    <Compile Include="CommonOld\GeoMipMap\FilePointer.cs" />
+    <Compile Include="CommonOld\GeoMipMap\HeightMap.cs" />
+    <Compile Include="CommonOld\GeoMipMap\ITerrain.cs" />
+    <Compile Include="CommonOld\GeoMipMap\ITerrainBlock.cs" />
+    <Compile Include="CommonOld\GeoMipMap\LightMap.cs" />
+    <Compile Include="CommonOld\GeoMipMap\Terrain.cs" />
+    <Compile Include="CommonOld\GeoMipMap\TerrainBlock.cs" />
+    <Compile Include="CommonOld\GeoMipMap\TerrainBlockEdge.cs" />
+    <Compile Include="CommonOld\GeoMipMap\TerrainFunctions.cs" />
+    <Compile Include="CommonOld\GeoMipMap\TerrainInfoOld.cs" />
+    <Compile Include="CommonOld\GeoMipMap\TerrainLightmapGenerator.cs" />
+    <Compile Include="CommonOld\GeoMipMap\TerrainListFile.cs" />
+    <Compile Include="CommonOld\GeoMipMap\WeightMap.cs" />
+    <Compile Include="CommonOld\IGameEngine.cs" />
+    <Compile Include="CommonOld\PlayerInputData.cs" />
+    <Compile Include="CommonOld\Wereld\IQuadtreeNode.cs" />
+    <Compile Include="CommonOld\Wereld\QuadtreeChildDirection.cs" />
+    <Compile Include="CommonOld\Wereld\QuadTreeNode.cs" />
+    <Compile Include="Core\Database\Database.cs" />
+    <Compile Include="Core\Database\IGameObject.cs" />
+    <Compile Include="Core\Database\IGameService.cs" />
+    <Compile Include="Core\Database\ISimpleTag.cs" />
+    <Compile Include="Core\Database\ITag.cs" />
+    <Compile Include="Core\Database\ITagged.cs" />
+    <Compile Include="Core\Database\ITagGenerater.cs" />
+    <Compile Include="Core\Database\SettingsService.cs" />
+    <Compile Include="Core\Database\SimpleTagGenerater.cs" />
+    <Compile Include="Core\Database\TagManager.cs" />
+    <Compile Include="Core\Database\TagManagerObject.cs" />
+    <Compile Include="Core\Database\UniqueIDService.cs" />
+    <Compile Include="Core\EmbeddedFile.cs" />
+    <Compile Include="Core\FileHelper.cs" />
+    <Compile Include="Core\Forms\ClassForm.cs" />
+    <Compile Include="Core\Forms\ColorElement.cs" />
+    <Compile Include="DirectX11\DX11Game.cs" />
+    <Compile Include="DirectX11\Graphics\BasicShader.cs" />
+    <Compile Include="DirectX11\Graphics\CompiledShaderCache.cs" />
+    <Compile Include="DirectX11\Graphics\CustomCamera.cs" />
+    <Compile Include="DirectX11\Graphics\DX11Form.cs" />
+    <Compile Include="DirectX11\Graphics\FullScreenQuad.cs" />
+    <Compile Include="DirectX11\Graphics\ICamera.cs" />
+    <Compile Include="DirectX11\Graphics\IGraphicsManager.cs" />
+    <Compile Include="DirectX11\Graphics\LineManager3D.cs" />
+    <Compile Include="DirectX11\Graphics\LineManager3DLines.cs" />
+    <Compile Include="DirectX11\Graphics\SpectaterCamera.cs" />
+    <Compile Include="DirectX11\Graphics\TextureRenderer.cs" />
+    <Compile Include="DirectX11\Graphics\ThirdPersonCamera.cs" />
+    <Compile Include="DirectX11\Input\TWKeyboard.cs" />
+    <Compile Include="DirectX11\Input\TWMouse.cs" />
+    <Compile Include="Core\MathExtra\Point3.cs" />
+    <Compile Include="DirectX11\QuadTreeVisualizer.cs" />
+    <Compile Include="DirectX11\Rendering\CSM\CSMRenderer.cs" />
+    <Compile Include="DirectX11\Rendering\CSM\Light.cs" />
+    <Compile Include="DirectX11\Rendering\CSM\OrthographicCamera.cs" />
+    <Compile Include="DirectX11\Rendering\Deferred\AverageLuminanceCalculater.cs" />
+    <Compile Include="DirectX11\Rendering\Deferred\CombineFinalRenderer.cs" />
+    <Compile Include="DirectX11\Rendering\Deferred\DirectionalLightRenderer.cs" />
+    <Compile Include="DirectX11\Rendering\Deferred\GBuffer.cs" />
+    <Compile Include="DirectX11\Rendering\Deferred\GBufferShader.cs" />
+    <Compile Include="DirectX11\Rendering\Deferred\PointLightRenderer.cs" />
+    <Compile Include="DirectX11\Rendering\Deferred\SpotLightRenderer.cs" />
+    <Compile Include="DirectX11\Rendering\Deferred\ToneMapRenderer.cs" />
+    <Compile Include="DirectX11\SlimDXConversion\ConversionCameraDX.cs" />
+    <Compile Include="DirectX11\SlimDXConversion\ConversionCameraXNA.cs" />
+    <Compile Include="Networking\AssemblyBuilder.cs" />
+    <Compile Include="Networking\Client\BasicPacketTransporter.cs" />
+    <Compile Include="Networking\Client\ClientPacketManagerNetworked.cs" />
+    <Compile Include="Networking\Client\ClientPacketRequesterNetworked.cs" />
+    <Compile Include="Networking\Client\ClientPacketTransporterNetworked.cs" />
+    <Compile Include="Networking\Client\IClientPacketManager.cs" />
+    <Compile Include="Networking\Client\IClientPacketRequester.cs" />
+    <Compile Include="Networking\Client\IClientPacketTransporter.cs" />
+    <Compile Include="Networking\Client\IClientPacketTransporterNetworked.cs" />
+    <Compile Include="Networking\CodeGeneraterReader.cs" />
+    <Compile Include="Networking\CodeGeneraterWriter.cs" />
+    <Compile Include="Networking\DummyClient.cs" />
+    <Compile Include="Networking\Files\ClientFileTransporter.cs" />
+    <Compile Include="Networking\Files\FilePartPacket.cs" />
+    <Compile Include="Networking\Files\ReceivedFileInfo.cs" />
+    <Compile Include="Networking\Files\ServerFileTransporter.cs" />
+    <Compile Include="Networking\Files\StartFilepacket.cs" />
+    <Compile Include="Networking\INetworkPacket.cs" />
+    <Compile Include="Networking\INetworkPacketCustomSerializable.cs" />
+    <Compile Include="Networking\INetworkPacketFactory.cs" />
+    <Compile Include="Networking\NetworkPacketAttribute.cs" />
+    <Compile Include="Networking\NetworkPacketFactoryCodeGenerater.cs" />
+    <Compile Include="Networking\NetworkPacketIgnoreAttribute.cs" />
+    <Compile Include="Networking\PacketFlags.cs" />
+    <Compile Include="Networking\Packets\BytePacket.cs" />
+    <Compile Include="Networking\Packets\DataPacket.cs" />
+    <Compile Include="Networking\Server\ClientNetworked.cs" />
+    <Compile Include="Networking\Server\IClient.cs" />
+    <Compile Include="Networking\Server\IServerPacketManager.cs" />
+    <Compile Include="Networking\Server\IServerPacketTransporter.cs" />
+    <Compile Include="Networking\Server\IServerPacketTransporterNetworked.cs" />
+    <Compile Include="Networking\Server\ServerPacketManagerNetworked.cs" />
+    <Compile Include="Networking\Server\ServerPacketReceivedCallback.cs" />
+    <Compile Include="Networking\Server\ServerPacketTransporterNetworked.cs" />
+    <Compile Include="Networking\TCPConnection.cs" />
+    <Compile Include="Networking\TCPConnectionListener.cs" />
+    <Compile Include="Networking\TCPPacketBuilder.cs" />
+    <Compile Include="Networking\UDPConnection.cs" />
+    <Compile Include="Core\Reflection\FieldAttribute.cs" />
+    <Compile Include="Core\Forms\GridElement.cs" />
+    <Compile Include="Core\Reflection\PropertyAttribute.cs" />
+    <Compile Include="Core\Reflection\IAttribute.cs" />
+    <Compile Include="Core\Forms\IFormElement.cs" />
+    <Compile Include="Core\Forms\ReadonlyElement.cs" />
+    <Compile Include="Core\Forms\TextBoxElement.cs" />
+    <Compile Include="Core\Graphics\AttributeSystem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Cursor.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Cursor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\DrawEventArgs.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\DrawEventArgs.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\GuiAlign.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiAlign.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\GuiButton.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiButton.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\GuiControl.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiControl.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\GuiControlCollection.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiControlCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\GuiGraphics.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiGraphics.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\GuiImage.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiImage.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\GuiListBox.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiListBox.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\GuiListBoxBase.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiListBoxBase.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\GuiServiceXNA.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiServiceXNA.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\GuiWindow.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiWindow.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\GuiWindowBorder.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiWindowBorder.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\IGuiContainer.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\IGuiContainer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\IGuiService.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\IGuiService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\IHandelable.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\IHandelable.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\MouseEventArgs.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\MouseEventArgs.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\Gui\TileSet.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\Gui\TileSet.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\DEPRECATED\ICursor.cs">
+    <Compile Include="Core\Graphics\DEPRECATED\ICursor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\FullScreenQuad.cs" />
-    <Compile Include="Graphics\PlaneMesh.cs" />
-    <Compile Include="Graphics\SphereMesh.cs" />
-    <Compile Include="Graphics\ColladaShader.cs" />
-    <Compile Include="Graphics\Curve3D.cs" />
-    <Compile Include="Graphics\CustomCamera.cs">
+    <Compile Include="Core\Graphics\FullScreenQuad.cs" />
+    <Compile Include="Core\Graphics\PlaneMesh.cs" />
+    <Compile Include="Core\Graphics\SphereMesh.cs" />
+    <Compile Include="Core\Graphics\ColladaShader.cs" />
+    <Compile Include="Core\Graphics\Curve3D.cs" />
+    <Compile Include="Core\Graphics\CustomCamera.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\GameFile.cs">
+    <Compile Include="Core\Graphics\GameFile.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\ICamera.cs">
+    <Compile Include="Core\Graphics\ICamera.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\IGameFile.cs">
+    <Compile Include="Core\Graphics\IGameFile.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\IRenderPrimitives.cs" />
-    <Compile Include="Graphics\IXNAGame.cs">
+    <Compile Include="Core\Graphics\IRenderPrimitives.cs" />
+    <Compile Include="Core\Graphics\IXNAGame.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\IXNAObject.cs" />
-    <Compile Include="Graphics\Keyboard.cs">
+    <Compile Include="Core\Graphics\IXNAObject.cs" />
+    <Compile Include="Core\Graphics\Keyboard.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\LineManager3D.cs">
+    <Compile Include="Core\Graphics\LineManager3D.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\LineManager3DLines.cs">
+    <Compile Include="Core\Graphics\LineManager3DLines.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\Mouse.cs">
+    <Compile Include="Core\Graphics\Mouse.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\OrthographicCamera.cs">
+    <Compile Include="Core\Graphics\OrthographicCamera.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\Primitives.cs" />
-    <Compile Include="Graphics\BasicShader.cs">
+    <Compile Include="Core\Graphics\Primitives.cs" />
+    <Compile Include="Core\Graphics\BasicShader.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\SkinnedBone.cs" />
-    <Compile Include="Graphics\SkinnedMesh.cs" />
-    <Compile Include="Graphics\SkinnedModel.cs" />
-    <Compile Include="Graphics\SkinnedShader.cs" />
-    <Compile Include="Graphics\SkinnedTangentVertex.cs" />
-    <Compile Include="Graphics\SpectaterCamera.cs">
+    <Compile Include="Core\Graphics\SkinnedBone.cs" />
+    <Compile Include="Core\Graphics\SkinnedMesh.cs" />
+    <Compile Include="Core\Graphics\SkinnedModel.cs" />
+    <Compile Include="Core\Graphics\SkinnedShader.cs" />
+    <Compile Include="Core\Graphics\SkinnedTangentVertex.cs" />
+    <Compile Include="Core\Graphics\SpectaterCamera.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\TangentVertex.cs" />
-    <Compile Include="Graphics\TestXNAGame.cs" />
-    <Compile Include="Graphics\Texture.cs">
+    <Compile Include="Core\Graphics\TangentVertex.cs" />
+    <Compile Include="Core\Graphics\TestXNAGame.cs" />
+    <Compile Include="Core\Graphics\Texture.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\TODO\ColorHelper.cs" />
-    <Compile Include="Graphics\TODO\FileHelper.cs" />
-    <Compile Include="Graphics\TODO\Material.cs" />
-    <Compile Include="Graphics\TODO\ShaderEffect.cs" />
-    <Compile Include="Graphics\TODO\StringHelper.cs" />
-    <Compile Include="Graphics\TODO\TangentVertex.cs" />
-    <Compile Include="Graphics\TODO\TextureBookengine.cs" />
-    <Compile Include="Graphics\TODO\XmlHelper.cs" />
-    <Compile Include="Graphics\Transformation.cs" />
-    <Compile Include="Graphics\VertexElementAttribute.cs">
+    <Compile Include="Core\Graphics\TODO\ColorHelper.cs" />
+    <Compile Include="Core\Graphics\TODO\FileHelper.cs" />
+    <Compile Include="Core\Graphics\TODO\Material.cs" />
+    <Compile Include="Core\Graphics\TODO\ShaderEffect.cs" />
+    <Compile Include="Core\Graphics\TODO\StringHelper.cs" />
+    <Compile Include="Core\Graphics\TODO\TangentVertex.cs" />
+    <Compile Include="Core\Graphics\TODO\TextureBookengine.cs" />
+    <Compile Include="Core\Graphics\TODO\XmlHelper.cs" />
+    <Compile Include="Core\Graphics\Transformation.cs" />
+    <Compile Include="Core\Graphics\VertexElementAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\VertexMultitextured.cs">
+    <Compile Include="Core\Graphics\VertexMultitextured.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\XNAGame.cs">
+    <Compile Include="Core\Graphics\XNAGame.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\XNAGameFiles.cs">
+    <Compile Include="Core\Graphics\XNAGameFiles.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="InputBox.cs">
+    <Compile Include="Core\InputBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InputBox.Designer.cs">
+    <Compile Include="Core\InputBox.Designer.cs">
       <DependentUpon>InputBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="IntervalCaller.cs" />
-    <Compile Include="IO\ByteReader.cs" />
-    <Compile Include="IO\ByteWriter.cs" />
-    <Compile Include="IQuadTreeNode.cs" />
-    <Compile Include="MathExtra\Function.cs" />
-    <Compile Include="MathExtra\Functions.cs" />
-    <Compile Include="MathExtra\Polynomial.cs" />
-    <Compile Include="MathExtra\Polynomial4.cs" />
-    <Compile Include="MathExtra\SolvePolynomial.cs" />
+    <Compile Include="Core\IntervalCaller.cs" />
+    <Compile Include="Core\IO\ByteReader.cs" />
+    <Compile Include="Core\IO\ByteWriter.cs" />
+    <Compile Include="Core\IQuadTreeNode.cs" />
+    <Compile Include="Core\MathExtra\Function.cs" />
+    <Compile Include="Core\MathExtra\Functions.cs" />
+    <Compile Include="Core\MathExtra\Polynomial.cs" />
+    <Compile Include="Core\MathExtra\Polynomial4.cs" />
+    <Compile Include="Core\MathExtra\SolvePolynomial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuadTree.cs" />
-    <Compile Include="QuadTreeNodeData.cs" />
-    <Compile Include="QuadTreeVisualizerXNA.cs" />
-    <Compile Include="Raycast\GeometryRaycastResult.cs" />
-    <Compile Include="Raycast\IRaycastable.cs" />
-    <Compile Include="Raycast\IRaycastResult.cs">
+    <Compile Include="Core\QuadTree.cs" />
+    <Compile Include="Core\QuadTreeNodeData.cs" />
+    <Compile Include="Core\QuadTreeVisualizerXNA.cs" />
+    <Compile Include="Core\Raycast\GeometryRaycastResult.cs" />
+    <Compile Include="Core\Raycast\IRaycastable.cs" />
+    <Compile Include="Core\Raycast\IRaycastResult.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Raycast\Raycaster.cs" />
-    <Compile Include="Raycast\RaycastHelper.cs" />
-    <Compile Include="Raycast\RaycastResult.cs" />
-    <Compile Include="Raycast\SimpleRaycaster.cs" />
-    <Compile Include="Reflection\ReflectionHelper.cs" />
-    <Compile Include="Seeder.cs" />
-    <Compile Include="SlimDXConversion\SlimDXConversion.cs" />
-    <Compile Include="SlimDXConversion\BoundingFrustum.cs" />
-    <Compile Include="SlimDXConversion\MathHelper.cs" />
-    <Compile Include="TWDir.cs" />
-    <Compile Include="Collections\AdvancedQueue.cs" />
-    <Compile Include="Collections\EventList.cs" />
-    <Compile Include="Collections\PrefilledList.cs" />
+    <Compile Include="Core\Raycast\Raycaster.cs" />
+    <Compile Include="Core\Raycast\RaycastHelper.cs" />
+    <Compile Include="Core\Raycast\RaycastResult.cs" />
+    <Compile Include="Core\Raycast\SimpleRaycaster.cs" />
+    <Compile Include="Core\Reflection\ReflectionHelper.cs" />
+    <Compile Include="Core\Seeder.cs" />
+    <Compile Include="Core\SlimDXConversion\SlimDXConversion.cs" />
+    <Compile Include="Core\SlimDXConversion\BoundingFrustum.cs" />
+    <Compile Include="Core\SlimDXConversion\MathHelper.cs" />
+    <Compile Include="Core\TWDir.cs" />
+    <Compile Include="Core\Collections\AdvancedQueue.cs" />
+    <Compile Include="Core\Collections\EventList.cs" />
+    <Compile Include="Core\Collections\PrefilledList.cs" />
     <Compile Include="Water\Camera.cs" />
     <Compile Include="Water\Mesh.cs" />
     <Compile Include="Water\SubGrid.cs" />
@@ -299,18 +404,18 @@
     <Compile Include="Water\Vertex.cs" />
     <Compile Include="Water\Water.cs" />
     <Compile Include="Water\WaterTest.cs" />
-    <Compile Include="Wpf\IWindowFactory.cs" />
-    <Compile Include="Wpf\SimpleWindowFactory.cs" />
-    <Compile Include="Wpf\XNAGameWpf.cs" />
-    <Compile Include="XML\XmlNode.cs" />
-    <Compile Include="XML\XMLSerializer.cs" />
-    <Compile Include="XnaMathExtensions.cs" />
+    <Compile Include="Core\Wpf\IWindowFactory.cs" />
+    <Compile Include="Core\Wpf\SimpleWindowFactory.cs" />
+    <Compile Include="Core\Wpf\XNAGameWpf.cs" />
+    <Compile Include="Core\XML\XmlNode.cs" />
+    <Compile Include="Core\XML\XMLSerializer.cs" />
+    <Compile Include="Core\XnaMathExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Graphics\Files\LineRendering.fx" />
+    <EmbeddedResource Include="Core\Graphics\Files\LineRendering.fx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Graphics\Files\ColladaModel.fx" />
+    <EmbeddedResource Include="Core\Graphics\Files\ColladaModel.fx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Collada\Files\SimpleBones001.DAE" />
@@ -320,20 +425,48 @@
     <EmbeddedResource Include="Collada\Files\Wall001.DAE" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Graphics\Files\SkinnedNormalMapping.fx" />
+    <EmbeddedResource Include="Core\Graphics\Files\SkinnedNormalMapping.fx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Graphics\Files\ColladaModelNew.fx" />
-    <EmbeddedResource Include="InputBox.resx">
+    <EmbeddedResource Include="Core\Graphics\Files\ColladaModelNew.fx" />
+    <EmbeddedResource Include="Core\InputBox.resx">
       <SubType>Designer</SubType>
       <DependentUpon>InputBox.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Core.cd" />
-    <EmbeddedResource Include="Graphics\Files\Calibri.xnb" />
-    <Compile Include="Graphics\AverageFPSCalculater.cs" />
-    <Compile Include="Graphics\BoxMesh.cs" />
+    <None Include="Core\Core.cd" />
+    <EmbeddedResource Include="Core\Graphics\Files\Calibri.xnb" />
+    <Compile Include="Core\Graphics\AverageFPSCalculater.cs" />
+    <Compile Include="Core\Graphics\BoxMesh.cs" />
+    <None Include="Shaders\Common.fx" />
+    <None Include="Shaders\CSM\CSM.fx" />
+    <None Include="Shaders\CSM\CSMCommon.fx" />
+    <None Include="Shaders\Deferred\CombineFinal.fx" />
+    <None Include="Shaders\Deferred\DeferredMesh.fx" />
+    <None Include="Shaders\Deferred\DirectionalLight.fx" />
+    <None Include="Shaders\Deferred\Luminance.fx" />
+    <None Include="Shaders\Deferred\PointLight.fx" />
+    <None Include="Shaders\Deferred\RenderGBuffer.fx" />
+    <None Include="Shaders\Deferred\RenderTessellated.fx" />
+    <None Include="Shaders\Deferred\SpotLight.fx" />
+    <None Include="Shaders\Deferred\TODO\AmbientOcclusion.fx" />
+    <None Include="Shaders\Deferred\TODO\Blur.fx" />
+    <None Include="Shaders\Deferred\TODO\CombineFinalOld.fx" />
+    <None Include="Shaders\Deferred\TODO\Downsample.fx" />
+    <None Include="Shaders\Deferred\TODO\ShadowMap.fx" />
+    <None Include="Shaders\Deferred\ToneMap.fx" />
+    <None Include="Shaders\FullScreenQuad.fx" />
+    <None Include="Shaders\GBuffer.fx" />
+    <None Include="Shaders\IncludeTest.fx" />
+    <None Include="Shaders\LineRendering.fx" />
+    <None Include="Shaders\MiniTri.fx" />
+    <None Include="Shaders\Particles\BasicParticleAnimation.fx" />
+    <None Include="Shaders\Particles\BillBoardShader.fx" />
+    <None Include="Shaders\SSAO\HorizonSSAO.fx" />
+    <None Include="Shaders\TestAutoReload.fx" />
+    <None Include="Shaders\TestHelper.fx" />
+    <None Include="Shaders\TextureRenderer.fx" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -351,6 +484,16 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Deprecated\CommonVB\CommonVB.vbproj">
+      <Project>{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}</Project>
+      <Name>CommonVB</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Shaders\Deferred\TODO\RandomNormals.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

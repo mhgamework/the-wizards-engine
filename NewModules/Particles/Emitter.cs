@@ -342,7 +342,7 @@ namespace MHGameWork.TheWizards.Particles
           
             shader = BasicShader.LoadAutoreload(game,
                                                 new System.IO.FileInfo(
-                                                    "..\\..\\DirectX11\\Shaders\\Particles\\BillBoardShader.fx"), null);
+                                                    CompiledShaderCache.Current.RootShaderPath + "Particles\\BillBoardShader.fx"), null);
             setShader();
             vertexStride = ParticleVertex.SizeInBytes;
             var desc = new BufferDescription

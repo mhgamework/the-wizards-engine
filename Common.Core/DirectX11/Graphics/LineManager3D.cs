@@ -411,7 +411,8 @@ namespace DirectX11.Graphics
 
         private void initialize()
         {
-            var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/LineRendering.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
+            
+            var bytecode = ShaderBytecode.CompileFromFile(  CompiledShaderCache.Current.RootShaderPath + "LineRendering.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
             var effect = new Effect(device, bytecode);
             var technique = effect.GetTechniqueByName("LineRendering3D");
             pass = technique.GetPassByIndex(0);

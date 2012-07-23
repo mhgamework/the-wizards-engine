@@ -18,7 +18,7 @@ namespace DirectX11.Graphics
     /// </summary>
     public class CompiledShaderCache
     {
-        private const string GlobalShaderPath = "../../DirectX11/Shaders/";
+        private const string GlobalShaderPath = "../../Common.Core/Shaders/";
 
         static CompiledShaderCache()
         {

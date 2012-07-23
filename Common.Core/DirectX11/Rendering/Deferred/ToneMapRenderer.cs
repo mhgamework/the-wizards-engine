@@ -31,7 +31,7 @@ namespace DirectX11.Rendering.Deferred
 
             shader = BasicShader.LoadAutoreload(game,
                                                 new System.IO.FileInfo(
-                                                    "..\\..\\DirectX11\\Shaders\\Deferred\\ToneMap.fx"));
+                                                    CompiledShaderCache.Current.RootShaderPath + "Deferred\\ToneMap.fx"));
 
             shader.SetTechnique("Technique0");
 

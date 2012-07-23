@@ -116,12 +116,6 @@
       <Project>{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}</Project>
       <Name>CommonVB</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Networking\Networking.csproj">
-      <Project>{5552CBE1-F647-4B3A-A353-A252E4CB0008}</Project>
-      <Name>Networking</Name>
-      <Private>True</Private>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

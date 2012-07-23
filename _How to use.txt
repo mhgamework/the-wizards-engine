@@ -1,3 +1,9 @@
+To compile => all solutions must be compiled!!
+
+/The Wizards.sln
+/The Wizards Tools/The Wizards Tools.sln
+
+-----------
 When using the wizards dlls, this must done:
 
 

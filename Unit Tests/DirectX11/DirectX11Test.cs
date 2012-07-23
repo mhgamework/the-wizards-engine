@@ -185,7 +185,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             var game = new DX11Form();
             game.InitDirectX();
             var device = game.Device;
-            var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/MiniTri.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
+            var bytecode = ShaderBytecode.CompileFromFile("../../Common.Core/Shaders/MiniTri.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
             var effect = new Effect(device, bytecode);
             var technique = effect.GetTechniqueByName("Render");
             var pass = technique.GetPassByIndex(0);
@@ -262,7 +262,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             var game = new DX11Form();
             game.InitDirectX();
             var device = game.Device;
-            var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/MiniTri.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
+            var bytecode = ShaderBytecode.CompileFromFile("../../Common.Core/Shaders/MiniTri.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
             var effect = new Effect(device, bytecode);
             var technique = effect.GetTechniqueByName("RenderTransform");
             var pass = technique.GetPassByIndex(0);
@@ -375,7 +375,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             var game = new DX11Form();
             game.InitDirectX();
             var device = game.Device;
-            var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/MiniTri.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
+            var bytecode = ShaderBytecode.CompileFromFile("../../Common.Core/Shaders/MiniTri.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
             var effect = new Effect(device, bytecode);
             var technique = effect.GetTechniqueByName("RenderTransform");
             var pass = technique.GetPassByIndex(0);
@@ -658,7 +658,7 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
 
             var device = game.Device;
 
-            var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/FullScreenQuad.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
+            var bytecode = ShaderBytecode.CompileFromFile("../../Common.Core/Shaders/FullScreenQuad.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
             var effect = new Effect(game.Device, bytecode);
             var technique = effect.GetTechniqueByName("TestQuadTextured");
             var pass = technique.GetPassByIndex(0);
@@ -693,8 +693,8 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             var game = new DX11Game();
             game.InitDirectX();
 
-            var fi = new FileInfo("../../DirectX11/Shaders/TestAutoReload.fx");
-            var include = new FileInfo("../../DirectX11/Shaders/IncludeTest.fx");
+            var fi = new FileInfo("../../Common.Core/Shaders/TestAutoReload.fx");
+            var include = new FileInfo("../../Common.Core/Shaders/IncludeTest.fx");
 
 
             using (var fs = new StreamWriter(fi.OpenWrite()))
@@ -740,8 +740,8 @@ namespace MHGameWork.TheWizards.Tests.DirectX11
             var game = new DX11Game();
             game.InitDirectX();
 
-            var fi = new FileInfo("../../DirectX11/Shaders/TestAutoReload.fx");
-            var include = new FileInfo("../../DirectX11/Shaders/IncludeTest.fx");
+            var fi = new FileInfo("../../Common.Core/Shaders/TestAutoReload.fx");
+            var include = new FileInfo("../../Common.Core/Shaders/IncludeTest.fx");
 
 
             using (var fs = new StreamWriter(fi.OpenWrite()))

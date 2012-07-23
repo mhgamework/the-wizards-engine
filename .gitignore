@@ -49,6 +49,7 @@ obj/
 # Various application junk
 /Ankh.Load
 _ReSharper.The Wizards/
+/The Wizards Tools/_ReSharper.The Wizards Tools/*
 /The Wizards.4.0.resharper
 /~$e Wizards Design.docx
 /The Wizards.ncb
@@ -94,3 +95,8 @@ Thumbs.db
 /bin/Binaries/Microsoft.VC90.DebugCRT.manifest
 /bin/Binaries/msvcm90d.dll
 /bin/Binaries/msvcp90d.dll
+
+/bin/CommandLine.dll
+/bin/CommandLine.xml
+/bin/TestRunner.exe
+/bin/TestRunner.pdb

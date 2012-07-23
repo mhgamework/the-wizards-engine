@@ -28,7 +28,7 @@ namespace DirectX11.Graphics
         {
             this.device = device;
             context = device.ImmediateContext;
-            var bytecode = ShaderBytecode.CompileFromFile("../../DirectX11/Shaders/TextureRenderer.fx", "fx_5_0",
+            var bytecode = ShaderBytecode.CompileFromFile(CompiledShaderCache.Current.RootShaderPath+ "TextureRenderer.fx", "fx_5_0",
                                                           ShaderFlags.None,
                                                           EffectFlags.None);
 
