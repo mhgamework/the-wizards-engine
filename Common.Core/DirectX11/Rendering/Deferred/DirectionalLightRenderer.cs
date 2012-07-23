@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11.Graphics;
-using DirectX11.Rendering.CSM;
+﻿using DirectX11;
+using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.DirectX11.Rendering.CSM;
 using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 
-namespace DirectX11.Rendering.Deferred
+namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
 {
     /// <summary>
     /// This draws light accumulation from a directional light (full screen)

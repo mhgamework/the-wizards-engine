@@ -1,11 +1,12 @@
 using System;
 using System.IO;
-using DirectX11.Graphics;
+using DirectX11;
+using MHGameWork.TheWizards.DirectX11.Graphics;
 using SlimDX;
 using SlimDX.Direct3D11;
 using System.Linq;
 
-namespace DirectX11.Rendering.CSM
+namespace MHGameWork.TheWizards.DirectX11.Rendering.CSM
 {
     public enum ShadowFilteringType
     {

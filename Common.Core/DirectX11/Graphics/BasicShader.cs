@@ -2,14 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.ServerClient;
-using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 
-namespace DirectX11.Graphics
+namespace MHGameWork.TheWizards.DirectX11.Graphics
 {
     /// <summary>
     /// This class supports automatic reloading

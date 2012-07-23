@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using DirectX11;
-using DirectX11.Graphics;
-using DirectX11.Rendering.CSM;
-using DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.DirectX11.Rendering.CSM;
+using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.Rendering.SSAO;
 using SlimDX;
 using SlimDX.Direct3D11;

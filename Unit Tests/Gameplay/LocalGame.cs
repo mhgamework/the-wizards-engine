@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DirectX11;
+using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Physics;
 

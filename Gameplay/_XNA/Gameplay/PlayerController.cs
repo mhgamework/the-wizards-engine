@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using DirectX11;
+using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.World;
 using Microsoft.Xna.Framework;

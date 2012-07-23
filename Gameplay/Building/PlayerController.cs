@@ -1,4 +1,5 @@
 ﻿using DirectX11;
+using MHGameWork.TheWizards.DirectX11;
 using SlimDX;
 using SlimDX.DirectInput;
 

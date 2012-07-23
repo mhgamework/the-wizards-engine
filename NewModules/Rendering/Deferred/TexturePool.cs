@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.Common.Core;
+using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Graphics;
 using SlimDX.Direct3D11;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using DirectX11;
-using DirectX11.Graphics;
-using DirectX11.Input;
+using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.DirectX11.Input;
 using SlimDX;
 using SlimDX.DirectInput;
 

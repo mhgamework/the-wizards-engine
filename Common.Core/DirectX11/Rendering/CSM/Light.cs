@@ -14,9 +14,10 @@
 //========================================================================
 
 using System;
+using DirectX11;
 using SlimDX;
 
-namespace DirectX11.Rendering.CSM
+namespace MHGameWork.TheWizards.DirectX11.Rendering.CSM
 {
 
     /// <summary>

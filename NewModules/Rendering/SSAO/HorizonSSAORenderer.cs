@@ -1,6 +1,7 @@
 ﻿using System;
 using DirectX11;
-using DirectX11.Graphics;
+using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.DirectX11.Graphics;
 using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;

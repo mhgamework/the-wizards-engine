@@ -1,8 +1,9 @@
 using System.Diagnostics;
-using DirectX11.Graphics;
+using DirectX11;
+using MHGameWork.TheWizards.DirectX11.Graphics;
 using SlimDX;
 
-namespace DirectX11.Rendering.CSM
+namespace MHGameWork.TheWizards.DirectX11.Rendering.CSM
 {
     public class OrthographicCamera : ICamera
     {

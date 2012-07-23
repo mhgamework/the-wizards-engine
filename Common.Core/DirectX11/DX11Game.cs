@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using DirectX11.Graphics;
-using DirectX11.Input;
-using MHGameWork.TheWizards.TestRunner;
+using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.DirectX11.Input;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
 using Device = SlimDX.Direct3D11.Device;
 
-namespace DirectX11
+namespace MHGameWork.TheWizards.DirectX11
 {
     /// <summary>
     /// This is actually a helper class used in testing. It can be used across all classes to simplify development.
@@ -53,7 +50,7 @@ namespace DirectX11
         {
             
 
-            if (TotalRunTime > 3 && TestRunner.IsRunningAutomated)
+            if (TotalRunTime > 3 && TestRunner.TestRunner.IsRunningAutomated)
             {
                 Exit();
                 return;

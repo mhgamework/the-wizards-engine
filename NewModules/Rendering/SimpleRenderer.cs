@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MHGameWork.TheWizards.DirectX11.SlimDXConversion;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;

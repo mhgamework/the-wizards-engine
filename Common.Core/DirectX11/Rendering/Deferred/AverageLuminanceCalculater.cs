@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11.Graphics;
-using SlimDX;
+﻿using MHGameWork.TheWizards.DirectX11.Graphics;
 using SlimDX.Direct3D11;
 using SlimDX.DXGI;
 
-namespace DirectX11.Rendering.Deferred
+namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
 {
     /// <summary>
     /// </summary>

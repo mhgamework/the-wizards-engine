@@ -4,11 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using MHGameWork.TheWizards;
 using SlimDX;
 using SlimDX.D3DCompiler;
 
-namespace DirectX11.Graphics
+namespace MHGameWork.TheWizards.DirectX11.Graphics
 {
     /// <summary>
     /// This class provides compiled shader code. It uses shader filename, fx effect, and macros to parameterize a shader. These parameters are hashed and used

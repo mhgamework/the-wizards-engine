@@ -1,5 +1,5 @@
-﻿using DirectX11.Graphics;
-using MHGameWork.TheWizards._XNA.Gameplay;
+﻿using MHGameWork.TheWizards._XNA.Gameplay;
+using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.WorldRendering;

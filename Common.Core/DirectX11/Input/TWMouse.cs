@@ -1,9 +1,8 @@
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using SlimDX.DirectInput;
 
-namespace DirectX11.Input
+namespace MHGameWork.TheWizards.DirectX11.Input
 {
     /// <summary>
     /// TODO: when in cursorEnabled mode, clicking outside the window should probably

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SlimDX;
+﻿using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 
-namespace DirectX11.Graphics
+namespace MHGameWork.TheWizards.DirectX11.Graphics
 {
     /// <summary>
     /// TODO: batch calls!

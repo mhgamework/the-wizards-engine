@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11.Graphics;
+using MHGameWork.TheWizards.DirectX11.Graphics;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DXGI;
 using Device = SlimDX.Direct3D11.Device;
 
-namespace DirectX11.Rendering.Deferred
+namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
 {
     public class GBuffer : IDisposable
     {

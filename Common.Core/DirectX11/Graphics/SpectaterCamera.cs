@@ -1,9 +1,10 @@
 using System;
-using DirectX11.Input;
+using DirectX11;
+using MHGameWork.TheWizards.DirectX11.Input;
 using SlimDX;
 using SlimDX.DirectInput;
 
-namespace DirectX11.Graphics
+namespace MHGameWork.TheWizards.DirectX11.Graphics
 {
     public class SpectaterCamera : ICamera
     {

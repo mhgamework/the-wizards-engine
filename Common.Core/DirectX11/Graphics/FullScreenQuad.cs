@@ -17,11 +17,11 @@
 using System;
 using SlimDX;
 using SlimDX.Direct3D11;
+using SlimDX.DXGI;
 using Buffer = SlimDX.Direct3D11.Buffer;
 using Device = SlimDX.Direct3D11.Device;
-using Format = SlimDX.DXGI.Format;
 
-namespace DirectX11.Graphics
+namespace MHGameWork.TheWizards.DirectX11.Graphics
 {
     /// <summary>
     /// TODO: promote this to a MHGameWork.TheWizards.Graphics class

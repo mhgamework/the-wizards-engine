@@ -4,9 +4,10 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using DirectX11;
-using DirectX11.Graphics;
-using DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.Common.Core;
+using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
@@ -19,7 +20,7 @@ using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
 using Buffer = SlimDX.Direct3D11.Buffer;
 using DataStream = SlimDX.DataStream;
-using SpectaterCamera = DirectX11.Graphics.SpectaterCamera;
+using SpectaterCamera = MHGameWork.TheWizards.DirectX11.Graphics.SpectaterCamera;
 using TexturePool = MHGameWork.TheWizards.Rendering.TexturePool;
 
 namespace MHGameWork.TheWizards.Tests.Rendering

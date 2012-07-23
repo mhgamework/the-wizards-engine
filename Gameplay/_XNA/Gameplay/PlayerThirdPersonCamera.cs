@@ -1,5 +1,5 @@
 using System;
-using DirectX11.Graphics;
+using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Player;
 using ICamera = MHGameWork.TheWizards.ServerClient.ICamera;

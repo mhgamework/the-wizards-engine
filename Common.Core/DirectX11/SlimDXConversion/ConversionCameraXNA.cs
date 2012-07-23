@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11.Graphics;
+﻿using MHGameWork.TheWizards.DirectX11.Graphics;
 
-namespace MHGameWork.TheWizards
+namespace MHGameWork.TheWizards.DirectX11.SlimDXConversion
 {
  public    class ConversionCameraXNA: MHGameWork.TheWizards.ServerClient.ICamera , ICamera
     {

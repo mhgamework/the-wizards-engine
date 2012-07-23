@@ -1,6 +1,6 @@
 using SlimDX;
 
-namespace DirectX11.Graphics
+namespace MHGameWork.TheWizards.DirectX11.Graphics
 {
     public class CustomCamera : ICamera
     {

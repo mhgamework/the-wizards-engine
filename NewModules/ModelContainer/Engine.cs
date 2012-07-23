@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using DirectX11;
+using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Simulators;

@@ -1,6 +1,6 @@
 using System;
 using System.Diagnostics;
-using DirectX11.Graphics;
+using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
 

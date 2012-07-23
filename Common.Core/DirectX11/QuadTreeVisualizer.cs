@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using DirectX11;
 using SlimDX;
 
-namespace MHGameWork.TheWizards
+namespace MHGameWork.TheWizards.DirectX11
 {
     public class QuadTreeVisualizer
     {

@@ -1,4 +1,4 @@
-﻿using DirectX11.Graphics;
+﻿using MHGameWork.TheWizards.DirectX11.Graphics;
 
 namespace MHGameWork.TheWizards.Rendering
 {
