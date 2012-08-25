@@ -44,6 +44,9 @@ namespace MHGameWork.TheWizards.Simulators
 
             //camInfo.ActiveCamera = camera;
 
+            var rootBox = new BoundingBox(new Vector3(-50000, 0, -50000), new Vector3(50000, 100000, 50000));
+            root.CreateBox((rootBox.Maximum + rootBox.Minimum) * 0.5f, rootBox.Maximum - rootBox.Minimum);
+            placeChildren(rootBox, root);
 
 
             if (assetCamera != null)
@@ -93,9 +96,7 @@ namespace MHGameWork.TheWizards.Simulators
             //    TW.Game.SpectaterCamera.CameraPosition = new Vector3(TW.Game.SpectaterCamera.CameraPosition.X, 0,
             //                                                         TW.Game.SpectaterCamera.CameraPosition.Z);
 
-            var rootBox = new BoundingBox(new Vector3(-50000, 0, -50000), new Vector3(50000, 100000, 50000));
-            root.CreateBox((rootBox.Maximum + rootBox.Minimum) * 0.5f, rootBox.Maximum - rootBox.Minimum);
-            placeChildren(rootBox, root);
+            
 
 
         }
