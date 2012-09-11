@@ -27,6 +27,28 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             game.Run();
         }
+        [Test]
+        public void TestEntityVisible()
+        {
+            var game = new LocalGame();
+
+            game.AddSimulator(new Simulators.WorldRenderingSimulator());
+
+            var e = new WorldRendering.Entity()
+                        {
+                            Mesh = MeshFactory.Load("Core\\TileSet\\ts001sg001"),
+                            Visible = false
+                        };
+
+
+            game.AddSimulator(new BasicSimulator(delegate
+                                                     {
+
+                                                     }));
+
+
+            game.Run();
+        }
 
         [Test]
         public void TestTextarea()
