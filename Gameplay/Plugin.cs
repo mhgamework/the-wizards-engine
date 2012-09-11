@@ -10,6 +10,7 @@ using MHGameWork.TheWizards.Pickup;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Simulators;
+using MHGameWork.TheWizards.Trigger;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 
@@ -19,8 +20,8 @@ namespace MHGameWork.TheWizards
     {
         public void Initialize(Engine engine)
         {
-            testPickupSimulator(engine);
-
+            //testPickupSimulator(engine);
+            testTriggerSimulator(engine);
         }
 
         private void testPickupSimulator(Engine engine)
@@ -51,5 +52,34 @@ namespace MHGameWork.TheWizards
             engine.AddSimulator(new RenderingSimulator());
         }
 
+        private void testTriggerSimulator(Engine engine)
+        {
+            var player = new PlayerData();
+            var cameraInfo = TW.Model.GetSingleton<CameraInfo>();
+            cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
+            cameraInfo.FirstPersonCameraTarget = player.Entity;
+
+            
+
+            var cond01 = new PlayerPositionCondition(player,
+                                                     new BoundingBox(new Vector3(10, 0, 10), new Vector3(15, 5, 15)));
+
+            var act01 = new SpawnAction(Matrix.Translation(new Vector3(15, 0, 15)), MeshFactory.Load("Core\\Crate01"));
+
+            var trig01 = new Trigger.Trigger();
+            trig01.Conditions.Add(cond01);
+            trig01.Actions.Add(act01);
+
+            var triggerSim = new TriggerSimulator();
+            triggerSim.AddTrigger(trig01);
+
+            engine.AddSimulator(triggerSim);
+
+
+            engine.AddSimulator(new LocalPlayerSimulator(player));
+            engine.AddSimulator(new ThirdPersonCameraSimulator());
+
+            engine.AddSimulator(new RenderingSimulator());
+        }
     }
 }

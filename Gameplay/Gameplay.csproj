@@ -138,6 +138,7 @@
     <Compile Include="Simulators\AudioSimulator.cs" />
     <Compile Include="Persistence\AutoSaveSimulator.cs" />
     <Compile Include="Simulators\PickupSimulator.cs" />
+    <Compile Include="Simulators\TriggerSimulator.cs" />
     <Compile Include="Simulators\DebugSimulator.cs" />
     <Compile Include="Debugging\ProfilerSimulator.cs" />
     <Compile Include="PhysX\PhysXDebugRendererSimulator.cs" />
@@ -147,6 +148,11 @@
     <Compile Include="Tiling\TileFaceExtensions.cs" />
     <Compile Include="Tiling\TileModel.cs" />
     <Compile Include="Tiling\TileRotationExtension.cs" />
+    <Compile Include="Trigger\IAction.cs" />
+    <Compile Include="Trigger\ICondition.cs" />
+    <Compile Include="Trigger\PlayerPositionCondition.cs" />
+    <Compile Include="Trigger\SpawnAction.cs" />
+    <Compile Include="Trigger\Trigger.cs" />
     <Compile Include="WorldRendering\EntityBatcherSimulator.cs" />
     <Compile Include="WorldRendering\EntitySimulator.cs" />
     <Compile Include="WorldRendering\PointLight.cs" />

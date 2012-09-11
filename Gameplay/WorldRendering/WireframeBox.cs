@@ -12,6 +12,7 @@ namespace MHGameWork.TheWizards.WorldRendering
 {
     /// <summary>
     /// Represents a WireframeBox in the world
+    /// Adds a wireframe boundingbox to the renderer. The box with identity worldmatrix is origin centered from -0.5 to 0.5
     /// </summary>
     [NoSync]
     public class WireframeBox : EngineModelObject
@@ -21,6 +22,18 @@ namespace MHGameWork.TheWizards.WorldRendering
         {
             WorldMatrix = Matrix.Identity;
             Visible = true;
+        }
+
+        public void FromBoundingBox(BoundingBox box)
+        {
+            float xScale = box.Maximum.X - box.Minimum.X;
+            float yScale = box.Maximum.Y - box.Minimum.Y;
+            float zScale = box.Maximum.Z - box.Minimum.Z;
+
+            Vector3 translation = new Vector3(box.Minimum.X + xScale*0.5f, box.Minimum.Y + yScale*0.5f,
+                                              box.Minimum.Z + zScale*0.5f);
+
+            WorldMatrix = Matrix.Scaling(new Vector3(xScale, yScale, zScale))*Matrix.Translation(translation);
         }
 
 
