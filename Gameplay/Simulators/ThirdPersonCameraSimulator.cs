@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.Simulators
 
         public void Simulate()
         {
-            if (info.Mode != CameraInfo.CameraMode.FirstPerson)
+            if (info.Mode != CameraInfo.CameraMode.ThirdPerson)
                 return;
 
             cam.Target = Vector3.TransformCoordinate(new Vector3(), info.FirstPersonCameraTarget.WorldMatrix);

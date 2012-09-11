@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.WorldRendering
         {
             None,
             Specator,
-            FirstPerson
+            ThirdPerson
         }
 
 
