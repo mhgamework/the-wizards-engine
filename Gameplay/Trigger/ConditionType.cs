@@ -5,9 +5,9 @@ using System.Text;
 
 namespace MHGameWork.TheWizards.Trigger
 {
-    public interface IAction
+    public class ConditionType
     {
-        void Activate();
-        void Reset();
+        public const int SWITCH = 0;
+        public const int ONCE = 1;
     }
 }

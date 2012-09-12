@@ -148,6 +148,7 @@
     <Compile Include="Tiling\TileFaceExtensions.cs" />
     <Compile Include="Tiling\TileModel.cs" />
     <Compile Include="Tiling\TileRotationExtension.cs" />
+    <Compile Include="Trigger\ConditionType.cs" />
     <Compile Include="Trigger\IAction.cs" />
     <Compile Include="Trigger\ICondition.cs" />
     <Compile Include="Trigger\PlayerPositionCondition.cs" />

@@ -5,8 +5,11 @@ using System.Text;
 
 namespace MHGameWork.TheWizards.Trigger
 {
+
     public interface ICondition
     {
         bool IsSatisfied();
+        void SetType(int conditionType);
+        void Invert();
     }
 }

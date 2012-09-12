@@ -60,18 +60,50 @@ namespace MHGameWork.TheWizards
             cameraInfo.FirstPersonCameraTarget = player.Entity;
 
             
-
-            var cond01 = new PlayerPositionCondition(player,
-                                                     new BoundingBox(new Vector3(10, 0, 10), new Vector3(15, 5, 15)));
-
-            var act01 = new SpawnAction(Matrix.Translation(new Vector3(15, 0, 15)), MeshFactory.Load("Core\\Crate01"));
-
+            //Test One-time trigger
+            var cond01 = new PlayerPositionCondition(player, new BoundingBox(new Vector3(10, 0, 10), new Vector3(15, 5, 15)));
+            cond01.SetType(ConditionType.ONCE); //default is SWITCH
+            var act01 = new SpawnAction(Matrix.Translation(new Vector3(12.5f, 2.5f, 12.5f)), MeshFactory.Load("Core\\Crate01"));
             var trig01 = new Trigger.Trigger();
             trig01.Conditions.Add(cond01);
             trig01.Actions.Add(act01);
 
+            //Test Switch-type trigger
+            var cond02 = new PlayerPositionCondition(player, new BoundingBox(new Vector3(0, 0, 10), new Vector3(5, 5, 15)));
+            cond02.SetType(ConditionType.SWITCH);
+            var act02 = new SpawnAction(Matrix.Translation(new Vector3(2.5f, 2.5f, 12.5f)), MeshFactory.Load("Core\\Crate01"));
+            var trig02 = new Trigger.Trigger();
+            trig02.Conditions.Add(cond02);
+            trig02.Actions.Add(act02);
+
+            //Test inverted switch trigger
+            var cond03 = new PlayerPositionCondition(player, new BoundingBox(new Vector3(-10, 0, 10), new Vector3(-15, 5, 15)));
+            cond03.Invert();
+            var act03 = new SpawnAction(Matrix.Translation(new Vector3(-12.5f, 2.5f, 12.5f)), MeshFactory.Load("Core\\Crate01"));
+            var trig03 = new Trigger.Trigger();
+            trig03.Conditions.Add(cond03);
+            trig03.Actions.Add(act03);
+
+            //Test Or-type trigger
+            var cond04 = new PlayerPositionCondition(player, new BoundingBox(new Vector3(5, 0, -10), new Vector3(10, 5, -5)));
+            var cond05 = new PlayerPositionCondition(player, new BoundingBox(new Vector3(5, 0, -2), new Vector3(10, 5, 3)));
+            var act04 = new SpawnAction(Matrix.Translation(new Vector3(7.5f, 2.5f, -3.5f)), MeshFactory.Load("Core\\Crate01"));
+            var trig04 = new Trigger.Trigger();
+            trig04.SetAndOr(true);
+            trig04.Conditions.Add(cond04);
+            trig04.Conditions.Add(cond05);
+            trig04.Actions.Add(act04);
+
+
+
+            
+
             var triggerSim = new TriggerSimulator();
             triggerSim.AddTrigger(trig01);
+            triggerSim.AddTrigger(trig02);
+            triggerSim.AddTrigger(trig03);
+            triggerSim.AddTrigger(trig04);
+
 
             engine.AddSimulator(triggerSim);
 

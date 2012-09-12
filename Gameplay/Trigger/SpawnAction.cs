@@ -9,21 +9,24 @@ namespace MHGameWork.TheWizards.Trigger
 {
     public class SpawnAction : IAction
     {
-        private readonly Matrix matrix;
-        private readonly IMesh mesh;
+        private WorldRendering.Entity ent;
 
         public SpawnAction(Matrix matrix, IMesh mesh)
         {
-            this.matrix = matrix;
-            this.mesh = mesh;
+            ent = new WorldRendering.Entity();
+            ent.Mesh = mesh;
+            ent.WorldMatrix = matrix;
+            ent.Visible = false;
         }
 
         public void Activate()
         {
-            WorldRendering.Entity ent = new WorldRendering.Entity();
-            ent.Mesh = mesh;
-            ent.WorldMatrix = matrix;
             ent.Visible = true;
+        }
+
+        public void Reset()
+        {
+            ent.Visible = false;
         }
     }
 }
