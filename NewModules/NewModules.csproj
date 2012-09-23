@@ -93,7 +93,9 @@
     <Reference Include="PostSharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="SlimDX, Version=4.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
+    <Reference Include="SlimDX, Version=2.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="StillDesign.PhysX.Net">
       <HintPath>..\_Libraries\PhysX.Net\References\Debug\XNA 2.0\StillDesign.PhysX.Net.dll</HintPath>
     </Reference>
@@ -253,6 +255,13 @@
     <Compile Include="Rendering\SSAO\HorizonSSAORenderer.cs" />
     <Compile Include="Rendering\TextureCoreData.cs" />
     <Compile Include="Rendering\TexturePool.cs" />
+    <Compile Include="Rendering\Text\TextTexture.cs" />
+    <Compile Include="Rendering\Text\Unused\Helpers.cs" />
+    <Compile Include="Rendering\Text\Unused\SpriteRenderer.cs" />
+    <Compile Include="Rendering\Text\Unused\Structs.cs" />
+    <Compile Include="Rendering\Text\Unused\TextBlockRenderer.cs" />
+    <Compile Include="Rendering\Text\TextRendererDrawing.cs" />
+    <Compile Include="Rendering\Text\Unused\TextRendererSharedResource.cs" />
     <Compile Include="Rendering\VertexDeclarationPool.cs" />
     <Compile Include="Scripting\ScriptLoader.cs" />
     <Compile Include="Scripting\ScriptWrapper.cs" />
@@ -537,6 +546,8 @@
     <EmbeddedResource Include="Rendering\Deferred\Files\ShadowMap.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\SpotLight.fx" />
     <EmbeddedResource Include="Rendering\Files\DefaultModelShader.fx" />
+    <None Include="Rendering\Text\Unused\SharedResourceShader.fx" />
+    <None Include="Rendering\Text\Unused\SpriteShader.fx" />
     <None Include="Terrain\Client\TerrainClient.cd" />
     <EmbeddedResource Include="Terrain\Rendering\Files\TerrainGeomipmap.fx" />
     <None Include="TreeGenerator\app.config" />
@@ -566,6 +577,7 @@
     </None>
     <EmbeddedResource Include="Rendering\Deferred\Files\RandomNormals.png" />
     <EmbeddedResource Include="Rendering\Files\Checker.png" />
+    <Content Include="Rendering\Text\_doc.txt" />
     <Content Include="Rendering\_doc.txt" />
     <Content Include="TreeGenerator\Design tree generater.txt" />
     <Content Include="TreeGenerator\Engine\Depth.fx">

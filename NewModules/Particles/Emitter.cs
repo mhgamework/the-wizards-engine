@@ -394,7 +394,7 @@ namespace MHGameWork.TheWizards.Particles
 
         public void SetRenderData()
         {
-            var box = context.MapSubresource(vertexBuffer, 0, renderData.Length * ParticleVertex.SizeInBytes,
+            var box = context.MapSubresource(vertexBuffer, 
                                              MapMode.WriteDiscard, MapFlags.None);
             box.Data.WriteRange(renderData);
             context.UnmapSubresource(vertexBuffer, 0);

@@ -343,8 +343,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
 
 
                 //TODO: WARNING: possible bottleneck here
-                var dataRect = device.ImmediateContext.MapSubresource(vertexBuffer, 0, vertexBuffer.Description.SizeInBytes,
-                                                       MapMode.WriteDiscard, MapFlags.None);
+                var dataRect = device.ImmediateContext.MapSubresource(vertexBuffer, MapMode.WriteDiscard, MapFlags.None);
 
                 dataRect.Data.WriteRange(lineVertices, 0, numOfPrimitives * 2);
 

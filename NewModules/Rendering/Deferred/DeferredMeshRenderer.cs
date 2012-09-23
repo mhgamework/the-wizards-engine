@@ -341,7 +341,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                     //mat.Shader.Effect.GetVariableByName("World").AsMatrix().SetMatrix(world * part.ObjectMatrix);
                     //mat.Shader.Apply();
 
-                    var box = context.MapSubresource(perObjectBuffer, 0, 64, MapMode.WriteDiscard,
+                    
+                    var box = context.MapSubresource(perObjectBuffer, MapMode.WriteDiscard,
                                            MapFlags.None);
                     box.Data.Write(new PerObjectCB
                                        {
@@ -382,7 +383,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                     Performance.BeginEvent(new Color4(System.Drawing.Color.Red), "DMesh-Depth");
 
 
-                    var box = context.MapSubresource(perObjectBuffer, 0, 64, MapMode.WriteDiscard,
+                    var box = context.MapSubresource(perObjectBuffer, MapMode.WriteDiscard,
                                            MapFlags.None);
                     box.Data.Write(new PerObjectCB
                     {

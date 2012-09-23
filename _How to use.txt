@@ -21,11 +21,13 @@ add to the app.config file:
 
 Nvidia PhysX
 XNA 2.0 Redist 
+SlimDX SDK for development or Redist (Not Tested)
 DevExpress 10.1.5.0 (research patched version by Danny Su)
 
 Visual C++ 2008 redistributable package (NOT SP1)
 
 PostSharp in the /_Libraries folder must be installed to develop
+
 
 
 ----DEBUG:
