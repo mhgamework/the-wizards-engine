@@ -260,7 +260,7 @@
     <Compile Include="Rendering\Text\Unused\SpriteRenderer.cs" />
     <Compile Include="Rendering\Text\Unused\Structs.cs" />
     <Compile Include="Rendering\Text\Unused\TextBlockRenderer.cs" />
-    <Compile Include="Rendering\Text\TextRendererDrawing.cs" />
+    <Compile Include="Rendering\Text\DrawingToD3D11Conversion.cs" />
     <Compile Include="Rendering\Text\Unused\TextRendererSharedResource.cs" />
     <Compile Include="Rendering\VertexDeclarationPool.cs" />
     <Compile Include="Scripting\ScriptLoader.cs" />
