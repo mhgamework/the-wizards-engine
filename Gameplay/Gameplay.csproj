@@ -106,7 +106,7 @@
     <Compile Include="Assetbrowser\AssetBrowserCamera.cs" />
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
-    <Compile Include="EntityScalingAnimatable.cs" />
+    <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="Pickup\Inventory.cs" />
     <Compile Include="Pickup\ItemEntity.cs" />
     <Compile Include="Pickup\ItemEntityFactory.cs" />
