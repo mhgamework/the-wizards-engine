@@ -124,5 +124,6 @@ namespace MHGameWork.TheWizards.Trigger
         {
             inverted = true;
         }
+    
     }
 }

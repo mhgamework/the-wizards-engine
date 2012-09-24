@@ -28,10 +28,14 @@ namespace MHGameWork.TheWizards.Trigger
             box = new WireframeBox();
             box.Color = new Color4(1, 1, 1);
             box.FromBoundingBox(bb);
+            box.Visible = false;
         }
 
         public bool IsSatisfied()
         {
+            if (box.Visible == false)
+                box.Visible = true;
+
             reCheck();
 
             if (type == ConditionType.ONCE && hasBeenSatisfied)
@@ -72,7 +76,7 @@ namespace MHGameWork.TheWizards.Trigger
 
         private bool isInBetween(float val, float a, float b)
         {
-            if(a < b)
+            if (a < b)
             {
                 return val >= a && val <= b;
             }
@@ -80,7 +84,7 @@ namespace MHGameWork.TheWizards.Trigger
             {
                 return val >= b && val <= a;
             }
-            
+
             return val == a; //a == b in this case
         }
     }

@@ -86,6 +86,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animation\AnimationController.cs" />
+    <Compile Include="Animation\EntityRotationAnimatable.cs" />
+    <Compile Include="Animation\EntityTranslationAnimatable.cs" />
+    <Compile Include="Animation\IAnimatable.cs" />
+    <Compile Include="Animation\Keyframe.cs" />
     <Compile Include="ApplicationLogic\Entity\SimpleAssetStaticWorldObject.cs" />
     <Compile Include="ApplicationLogic\Entity\SimpleAssetStaticWorldObjectFactory.cs" />
     <Compile Include="ApplicationLogic\Entity\StaticEntity.cs" />
@@ -101,6 +106,7 @@
     <Compile Include="Assetbrowser\AssetBrowserCamera.cs" />
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
+    <Compile Include="EntityScalingAnimatable.cs" />
     <Compile Include="Pickup\Inventory.cs" />
     <Compile Include="Pickup\ItemEntity.cs" />
     <Compile Include="Pickup\ItemEntityFactory.cs" />
@@ -109,6 +115,7 @@
     <Compile Include="Audio\SoundEmitterUpdater.cs" />
     <Compile Include="PhysX\EntityPhysXUpdater.cs" />
     <Compile Include="Plugin.cs" />
+    <Compile Include="Simulators\AnimationSimulator.cs" />
     <Compile Include="Raycasting\RaycastResult.cs" />
     <Compile Include="Raycasting\WorldRaycaster.cs" />
     <Compile Include="Simulators\AssetbrowserSimulator.cs" />
@@ -149,6 +156,7 @@
     <Compile Include="Tiling\TileModel.cs" />
     <Compile Include="Tiling\TileRotationExtension.cs" />
     <Compile Include="Trigger\ConditionType.cs" />
+    <Compile Include="Trigger\CreateTriggerAction.cs" />
     <Compile Include="Trigger\IAction.cs" />
     <Compile Include="Trigger\ICondition.cs" />
     <Compile Include="Trigger\PlayerPositionCondition.cs" />

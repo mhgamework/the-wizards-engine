@@ -15,6 +15,7 @@ namespace MHGameWork.TheWizards.WorldRendering
     /// Adds a wireframe boundingbox to the renderer. The box with identity worldmatrix is origin centered from -0.5 to 0.5
     /// </summary>
     [NoSync]
+    [ModelObjectChanged]
     public class WireframeBox : EngineModelObject
     {
 

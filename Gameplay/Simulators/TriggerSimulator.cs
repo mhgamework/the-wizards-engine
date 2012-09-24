@@ -12,8 +12,9 @@ namespace MHGameWork.TheWizards.Simulators
 
         public void Simulate()
         {
-            foreach(Trigger.Trigger t in triggers)
+            for (int i = 0; i < triggers.Count; i++)
             {
+                Trigger.Trigger t = triggers[i];
                 t.Update();
             }
         }
@@ -21,6 +22,16 @@ namespace MHGameWork.TheWizards.Simulators
         public void AddTrigger(Trigger.Trigger t)
         {
             triggers.Add(t);
+        }
+
+        public void RemoveTrigger(Trigger.Trigger t)
+        {
+            triggers.Remove(t);
+        }
+
+        public bool ContainsTrigger(Trigger.Trigger t)
+        {
+            return triggers.Contains(t);
         }
     }
 }
