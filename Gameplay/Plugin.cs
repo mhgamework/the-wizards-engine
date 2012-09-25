@@ -24,7 +24,8 @@ namespace MHGameWork.TheWizards
             //testPickupSimulator(engine);
             //testTriggerSimulator(engine);
             //testWayPointTrigger(engine);
-            testWorldmatrixAnimation(engine);
+            //testWorldmatrixAnimation(engine);
+            testLoadLevel(engine);
         }
 
         /// <summary>
@@ -259,5 +260,22 @@ namespace MHGameWork.TheWizards
             animationController.Play();
         }
     
+        private void testLoadLevel(Engine engine)
+        {
+            var player = new PlayerData();
+            var cameraInfo = TW.Model.GetSingleton<CameraInfo>();
+            cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
+            cameraInfo.FirstPersonCameraTarget = player.Entity;
+
+            var ent = new WorldRendering.Entity();
+            ent.Mesh = MeshFactory.Load("Level01\\Level01");
+
+
+
+            engine.AddSimulator(new LocalPlayerSimulator(player));
+            engine.AddSimulator(new ThirdPersonCameraSimulator());
+
+            engine.AddSimulator(new RenderingSimulator());
+        }
     }
 }
