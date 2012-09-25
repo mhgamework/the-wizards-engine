@@ -11,6 +11,7 @@ using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scripting;
 using MHGameWork.TheWizards.Tests.OBJParser;
+using MHGameWork.TheWizards.Tests.Physics;
 using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Tests
@@ -47,8 +48,9 @@ namespace MHGameWork.TheWizards.Tests
                                                                                          new Vector3(1024, 4000, 1024)));
             QuadTree.Split(PhysicsTreeRoot, 6);
 
-            PhysicsFactory = new MeshPhysicsElementFactory(PhysicsEngine, PhysicsTreeRoot);
-            Game.AddXNAObject(PhysicsFactory);
+            var xnafact = new MeshPhysicsFactoryXNA(PhysicsEngine, PhysicsTreeRoot);
+            PhysicsFactory = xnafact.Factory;
+            Game.AddXNAObject(xnafact);
 
             Renderer = Rendering.RenderingTest.InitDefaultMeshRenderer(Game);
 

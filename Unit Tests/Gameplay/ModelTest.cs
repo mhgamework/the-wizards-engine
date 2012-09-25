@@ -120,7 +120,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             var sphere = new Sphere();
 
             game
-                .AddSimulator(new PhysXUpdateSimulator())
+                .AddSimulator(new PhysXSimulator())
                 .AddSimulator(new WorldRenderingSimulator());
 
 

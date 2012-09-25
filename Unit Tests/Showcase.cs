@@ -66,7 +66,8 @@ namespace MHGameWork.TheWizards.Tests
 
             var root = PhysicsMeshTest.CreatePhysicsQuadtree(20, 5);
 
-            var physicsElementFactory = new MeshPhysicsElementFactory(engine, root);
+            var physicsElementFactoryXNA = new MeshPhysicsFactoryXNA(engine, root);
+            var physicsElementFactory = physicsElementFactoryXNA.Factory;
 
             var physicsElements = new List<MeshStaticPhysicsElement>();
             for (int i = 0; i < 0 * 100 + 1 * meshes.Count; i++)
@@ -102,7 +103,7 @@ namespace MHGameWork.TheWizards.Tests
             var sphereMesh = new SphereMesh(0.3f, 20, Color.Green);
             var visualizer = new QuadTreeVisualizerXNA();
 
-            game.AddXNAObject(physicsElementFactory);
+            game.AddXNAObject(physicsElementFactoryXNA);
 
             game.AddXNAObject(texturePool);
             game.AddXNAObject(meshpartPool);
@@ -236,7 +237,8 @@ namespace MHGameWork.TheWizards.Tests
 
             var root = PhysicsMeshTest.CreatePhysicsQuadtree(16, 4);
 
-            var physicsElementFactory = new MeshPhysicsElementFactory(engine, root);
+            var physicsElementFactoryXNA = new MeshPhysicsFactoryXNA(engine, root);
+            var physicsElementFactory = physicsElementFactoryXNA.Factory;
 
             var game = new XNAGame();
             game.IsFixedTimeStep = false;
@@ -244,7 +246,7 @@ namespace MHGameWork.TheWizards.Tests
 
             var visualizer = new QuadTreeVisualizerXNA();
 
-            game.AddXNAObject(physicsElementFactory);
+            game.AddXNAObject(physicsElementFactoryXNA);
 
             game.AddXNAObject(texturePool);
             game.AddXNAObject(meshpartPool);
@@ -342,7 +344,8 @@ namespace MHGameWork.TheWizards.Tests
 
             var root = PhysicsMeshTest.CreatePhysicsQuadtree(16, 4);
 
-            var physicsElementFactory = new MeshPhysicsElementFactory(engine, root);
+            var physicsElementFactoryXNA = new MeshPhysicsFactoryXNA(engine, root);
+            var physicsElementFactory = physicsElementFactoryXNA.Factory;
 
             var game = new XNAGame();
             game.IsFixedTimeStep = false;
@@ -350,7 +353,7 @@ namespace MHGameWork.TheWizards.Tests
 
             var visualizer = new QuadTreeVisualizerXNA();
 
-            game.AddXNAObject(physicsElementFactory);
+            game.AddXNAObject(physicsElementFactoryXNA);
 
             game.AddXNAObject(texturePool);
             game.AddXNAObject(meshpartPool);

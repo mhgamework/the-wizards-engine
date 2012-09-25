@@ -276,7 +276,8 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
 
             QuadTree.Split(root, 5);
 
-            var physicsElementFactory = new MeshPhysicsElementFactory(engine, root);
+            var physicsElementFactoryXNA = new MeshPhysicsFactoryXNA(engine, root);
+            var physicsElementFactory = physicsElementFactoryXNA.Factory;
 
             var physicsElements = new List<MeshStaticPhysicsElement>();
             for (int i = 0; i < 0 * 100 + 1 * meshes.Count; i++)
@@ -308,7 +309,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
             var sphereMesh = new SphereMesh(0.3f, 20, Color.Green);
             var visualizer = new QuadTreeVisualizerXNA();
 
-            game.AddXNAObject(physicsElementFactory);
+            game.AddXNAObject(physicsElementFactoryXNA);
 
             game.AddXNAObject(texturePool);
             game.AddXNAObject(meshpartPool);

@@ -489,8 +489,9 @@ namespace MHGameWork.TheWizards.Tests.Physics
             var spheres = new List<ClientPhysicsTestSphere>();
             var meshes = new List<MeshStaticPhysicsElement>();
 
-            var factory = new MeshPhysicsElementFactory(engine, root);
-            game.AddXNAObject(factory);
+            var physicsElementFactoryXNA = new MeshPhysicsFactoryXNA(engine, root);
+            var factory = physicsElementFactoryXNA.Factory;
+            game.AddXNAObject(physicsElementFactoryXNA);
 
             var el = factory.CreateStaticElement(mesh, Matrix.CreateTranslation(new Vector3(20, 0, 20)));
             meshes.Add(el);
@@ -600,8 +601,9 @@ namespace MHGameWork.TheWizards.Tests.Physics
 
             var meshes = new List<MeshDynamicPhysicsElement>();
 
-            var factory = new MeshPhysicsElementFactory(engine, root);
-            game.AddXNAObject(factory);
+            var physicsElementFactoryXNA = new MeshPhysicsFactoryXNA(engine, root);
+            var factory = physicsElementFactoryXNA.Factory;
+            game.AddXNAObject(physicsElementFactoryXNA);
 
             game.InitializeEvent += delegate
             {
@@ -733,8 +735,9 @@ namespace MHGameWork.TheWizards.Tests.Physics
             var spheres = new List<MeshDynamicPhysicsElement>();
             var meshes = new List<MeshStaticPhysicsElement>();
 
-            var factory = new MeshPhysicsElementFactory(engine, root);
-            game.AddXNAObject(factory);
+            var physicsElementFactoryXNA = new MeshPhysicsFactoryXNA(engine, root);
+            var factory = physicsElementFactoryXNA.Factory;
+            game.AddXNAObject(physicsElementFactoryXNA);
 
 
             game.InitializeEvent += delegate
@@ -797,7 +800,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
 
                 for (int i = 0; i < spheres.Count; i++)
                 {
-                    spheres[i].Update(root, game);
+                    spheres[i].Update(root);
                 }
 
 
