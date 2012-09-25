@@ -425,12 +425,51 @@ namespace MHGameWork.TheWizards.DirectX11
                                                                                     CullMode = CullMode.None,
                                                                                     FillMode = FillMode.Solid
                                                                                 });
+
+
+                var blendStateDescription = new BlendStateDescription();
+
+                blendStateDescription.RenderTargets[0].BlendEnable = true;
+                blendStateDescription.RenderTargets[0].BlendOperation = BlendOperation.Add;
+                blendStateDescription.RenderTargets[0].BlendOperationAlpha = BlendOperation.Add;
+                blendStateDescription.RenderTargets[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;
+                blendStateDescription.RenderTargets[0].SourceBlend = BlendOption.SourceAlpha;
+                blendStateDescription.RenderTargets[0].SourceBlendAlpha = BlendOption.SourceAlpha;
+                blendStateDescription.RenderTargets[0].DestinationBlend = BlendOption.InverseSourceAlpha;
+                blendStateDescription.RenderTargets[0].DestinationBlendAlpha = BlendOption.InverseSourceAlpha;
+
+                AlphaBlend = BlendState.FromDescription(device, blendStateDescription);
+
+
+
+                blendStateDescription.RenderTargets[0].BlendEnable = true;
+                blendStateDescription.RenderTargets[0].BlendOperation = BlendOperation.Add;
+                blendStateDescription.RenderTargets[0].BlendOperationAlpha = BlendOperation.Add;
+                blendStateDescription.RenderTargets[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;
+                blendStateDescription.RenderTargets[0].SourceBlend = BlendOption.One;
+                blendStateDescription.RenderTargets[0].SourceBlendAlpha = BlendOption.One;
+                blendStateDescription.RenderTargets[0].DestinationBlend = BlendOption.InverseSourceAlpha;
+                blendStateDescription.RenderTargets[0].DestinationBlendAlpha = BlendOption.InverseSourceAlpha;
+
+                AlphaBlendPremultiplied = BlendState.FromDescription(device, blendStateDescription);
+
             }
 
             /// <summary>
             /// Culling is disabled and fillmode is solid
             /// </summary>
             public RasterizerState RasterizerShowAll { get; set; }
+
+            /// <summary>
+            /// Default alpha blending. Dest: InverseSourceAlpha and Source: SourceAlpha
+            /// </summary>
+            public BlendState AlphaBlend { get; set; }
+
+            /// <summary>
+            /// Alpha blending for premultiplied textures. Dest: InverseSourceAlpha and Source: One
+            /// </summary>
+            public BlendState AlphaBlendPremultiplied { get; set; }
+
         }
     }
 }

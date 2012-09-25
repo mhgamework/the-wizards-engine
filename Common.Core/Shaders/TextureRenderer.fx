@@ -37,7 +37,7 @@ PS_IN FullScreenQuadVS( VS_IN input )
 float4 TexturedPS( PS_IN input ) : SV_Target
 {
 	float4 col = txDiffuse.Sample( samLinear, input.uv.xy );
-	return  col;
+	return col;
 }
 float4 ColoredPS( PS_IN input ) : SV_Target
 {

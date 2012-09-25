@@ -102,16 +102,32 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             var tex = txt.UpdateTexture();
             var view = new ShaderResourceView(game.Device, tex);
 
+
+       
+
+
             game.GameLoopEvent += delegate
                                   {
 
+                                      
                                       txt.Clear();
                                       txt.DrawText("The Wizards", new Vector2(0, 0), new Color4(0.3f, 0.3f, 0.3f));
 
                                       txt.UpdateTexture();
 
+
+                                      //Texture2D.SaveTextureToFile(game.Device.ImmediateContext, tex, ImageFileFormat.Png,
+                                      //                            TWDir.Test + "\\TestTextTexture.png");
+
+                                      game.Device.ImmediateContext.OutputMerger.BlendState =
+                                          game.HelperStates.AlphaBlend;
+
                                       game.TextureRenderer.Draw(view, new Vector2(0, 0),
                                                                 new Vector2(100, 100));
+
+                                      
+
+
                                   };
 
             game.Run();
