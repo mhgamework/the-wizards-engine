@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.ModelContainer;
+﻿using System;
+using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Synchronization;
 using SlimDX;
@@ -9,12 +10,14 @@ namespace MHGameWork.TheWizards.WorldRendering
     /// Responsible for representing a independent object in the World. It is not part of any greater system, like the building/terrain/trees
     /// </summary>
     [NoSync]
+    [ModelObjectChanged]
     public class Entity : BaseModelObject
     {
         public Entity()
         {
             WorldMatrix = Matrix.Identity;
             Visible = true;
+            Static = true;
         }
 
 
@@ -27,9 +30,14 @@ namespace MHGameWork.TheWizards.WorldRendering
         /// </summary>
         public bool Solid { get; set; }
         /// <summary>
-        /// Kinematic physics property
+        /// UNTESTED! Kinematic physics property
         /// </summary>
         public bool Kinematic { get; set; }
+
+        /// <summary>
+        /// Set to false when this object should be moved by physics
+        /// </summary>
+        public bool Static { get; set; }
 
         public override string ToString()
         {

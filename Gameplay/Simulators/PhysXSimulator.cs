@@ -16,6 +16,9 @@ namespace MHGameWork.TheWizards.Simulators
 
         private EntityPhysXUpdater entityUpdater;
 
+
+        private PhysicsDebugRenderer debugRenderer;
+
         public PhysXSimulator()
         {
             root = new ClientPhysicsQuadTreeNode(
@@ -25,6 +28,9 @@ namespace MHGameWork.TheWizards.Simulators
             factory.Initialize();
 
             entityUpdater = new EntityPhysXUpdater(factory, root);
+
+            debugRenderer = new PhysicsDebugRenderer(TW.Game,TW.Scene);
+            debugRenderer.Initialize();
         }
 
         public void Simulate()
@@ -47,6 +53,8 @@ namespace MHGameWork.TheWizards.Simulators
                     ((Sphere)change.ModelObject).ProcessPhysXChanges();
                 }
             }
+
+            debugRenderer.Render();
         }
     }
 }

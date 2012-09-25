@@ -114,6 +114,7 @@
     <Compile Include="Simulators\AutoSaveSimulator.cs" />
     <Compile Include="Persistence\ModelSerializer.cs" />
     <Compile Include="Persistence\PersistAttribute.cs" />
+    <Compile Include="Simulators\PhysXDebugRendererSimulator.cs" />
     <Compile Include="Synchronization\TypeSerializer.cs" />
     <Compile Include="Tiling\TileBoundary.cs" />
     <Compile Include="Tiling\TileBoundaryWinding.cs" />
