@@ -221,7 +221,7 @@ namespace MHGameWork.TheWizards.Simulators
         {
             int length;
             ModelContainer.ModelContainer.ObjectChange[] array;
-            TW.Model.GetEntityChanges(out array, out length);
+            TW.Model.GetObjectChanges(out array, out length);
 
 
             // Buffers

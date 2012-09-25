@@ -42,7 +42,7 @@ namespace MHGameWork.TheWizards.Synchronization
             localChanges.Clear();
             int length;
             ModelContainer.ModelContainer.ObjectChange[] array;
-            container.GetEntityChanges(out array, out length);
+            container.GetObjectChanges(out array, out length);
 
             for (int i = 0; i < length; i++)
             {

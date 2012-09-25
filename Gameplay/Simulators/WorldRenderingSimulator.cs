@@ -8,13 +8,13 @@ namespace MHGameWork.TheWizards.Simulators
     /// <summary>
     /// Responsible for rendering using a basic rendering system.
     /// </summary>
-    public class RenderingSimulator : ISimulator
+    public class WorldRenderingSimulator : ISimulator
     {
         private DeferredRenderer deferred;
         private WorldRenderer renderer;
         private CameraInfo info;
 
-        public RenderingSimulator()
+        public WorldRenderingSimulator()
         {
 
             deferred = TW.AcquireRenderer();

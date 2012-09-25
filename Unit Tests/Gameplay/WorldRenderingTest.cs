@@ -17,7 +17,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         {
             var game = new LocalGame();
 
-            game.AddSimulator(new Simulators.RenderingSimulator());
+            game.AddSimulator(new Simulators.WorldRenderingSimulator());
 
             var b = new WireframeBox()
                         {

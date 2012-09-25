@@ -34,7 +34,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             int length;
             ModelContainer.ModelContainer.ObjectChange[] array;
-            container.GetEntityChanges(out array, out length);
+            container.GetObjectChanges(out array, out length);
 
 
 
@@ -64,7 +64,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                                                      ent.Mesh = mesh;
                                                      ent.WorldMatrix = Matrix.Translation(Vector3.UnitX * time);
                                                  }))
-                .AddSimulator(new RenderingSimulator());
+                .AddSimulator(new WorldRenderingSimulator());
 
 
 
@@ -81,7 +81,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             new WorldRendering.Entity();
 
             game
-                .AddSimulator(new RenderingSimulator());
+                .AddSimulator(new WorldRenderingSimulator());
 
             game.Run();
 
@@ -102,7 +102,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             game
                 .AddSimulator(new LocalPlayerSimulator(player))
                 .AddSimulator(new ThirdPersonCameraSimulator())
-                .AddSimulator(new RenderingSimulator());
+                .AddSimulator(new WorldRenderingSimulator());
 
 
             TW.Model.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
@@ -121,7 +121,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             game
                 .AddSimulator(new PhysXUpdateSimulator())
-                .AddSimulator(new RenderingSimulator());
+                .AddSimulator(new WorldRenderingSimulator());
 
 
 

@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.WorldRendering
         {
             int length;
             ModelContainer.ModelContainer.ObjectChange[] objectChanges;
-            world.GetEntityChanges(out objectChanges, out length);
+            world.GetObjectChanges(out objectChanges, out length);
 
 
             for (int i = 0; i < length; i++)

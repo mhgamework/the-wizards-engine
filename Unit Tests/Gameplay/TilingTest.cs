@@ -27,7 +27,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             game
                 .AddSimulator(new TileEditorSimulator())
-                .AddSimulator(new RenderingSimulator());
+                .AddSimulator(new WorldRenderingSimulator());
 
 
             TW.Model.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.Specator;
@@ -75,7 +75,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
 
             game
-              .AddSimulator(new RenderingSimulator());
+              .AddSimulator(new WorldRenderingSimulator());
 
             game.Run();
 

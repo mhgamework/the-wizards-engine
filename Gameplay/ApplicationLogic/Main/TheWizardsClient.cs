@@ -128,7 +128,7 @@ namespace MHGameWork.TheWizards.Main
                 .AddSimulator(new TileEditorSimulator())
                 .AddSimulator(new NetworkSyncerSimulator(transporter))
                 .AddSimulator(new ThirdPersonCameraSimulator())
-                .AddSimulator(new RenderingSimulator());
+                .AddSimulator(new WorldRenderingSimulator());
 
 
             TW.Model.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;

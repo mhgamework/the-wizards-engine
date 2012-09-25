@@ -11,7 +11,7 @@ namespace MHGameWork.TheWizards
         public void Initialize(Engine engine)
         {
             engine.AddSimulator(new Simulators.AssetbrowserSimulator());
-            engine.AddSimulator(new Simulators.RenderingSimulator());
+            engine.AddSimulator(new Simulators.WorldRenderingSimulator());
         }
     }
 }

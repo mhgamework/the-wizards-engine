@@ -124,6 +124,8 @@
     <Compile Include="WorldRendering\RenderingModel.cs" />
     <Compile Include="WorldRendering\SimpleAssetFactory.cs" />
     <Compile Include="WorldRendering\SimpleMeshFactory.cs" />
+    <Compile Include="WorldRendering\Textarea.cs" />
+    <Compile Include="WorldRendering\TextareaUpdater.cs" />
     <Compile Include="WorldRendering\WireframeBox.cs" />
     <Compile Include="_XNA\Gameplay\FireMove.cs" />
     <Compile Include="_XNA\Gameplay\EnergyOrb.cs" />
@@ -149,7 +151,7 @@
     <Compile Include="Synchronization\ChangePacket.cs" />
     <Compile Include="Simulators\NetworkSyncerSimulator.cs" />
     <Compile Include="Simulators\PhysXUpdateSimulator.cs" />
-    <Compile Include="Simulators\RenderingSimulator.cs" />
+    <Compile Include="Simulators\WorldRenderingSimulator.cs" />
     <Compile Include="Sphere.cs" />
     <Compile Include="Simulators\LocalPlayerSimulator.cs" />
     <Compile Include="Synchronization\IVirtualEndpoint.cs" />
@@ -209,6 +211,7 @@
     <Content Include="Building\_doc.txt" />
     <Content Include="Persistence\_doc.txt" />
     <Content Include="Tiling\_doc.txt" />
+    <Content Include="WorldRendering\_doc.txt" />
     <Content Include="_doc.txt" />
   </ItemGroup>
   <ItemGroup>

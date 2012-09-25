@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using MHGameWork.TheWizards.Utilities;
+using MS.Win32;
 
 namespace MHGameWork.TheWizards.ModelContainer
 {
@@ -7,6 +9,7 @@ namespace MHGameWork.TheWizards.ModelContainer
     /// Responsible for providing access to World Data.
     /// Responsible for providing access to World changes
     /// Algorithm: store all changes for 1 frame into a buffer, so that all classes needing those changes can apply them in 1 frame
+    /// TODO: partially implemented, contains dummies
     /// </summary>
     public class ModelContainer
     {
@@ -32,7 +35,7 @@ namespace MHGameWork.TheWizards.ModelContainer
         }
 
         private PrefilledList<ObjectChange> dirtyEntities;
-        public void GetEntityChanges(out ObjectChange[] array, out int length)
+        public void GetObjectChanges(out ObjectChange[] array, out int length)
         {
             dirtyEntities.GetArray(out array, out length);
         }
@@ -150,8 +153,25 @@ namespace MHGameWork.TheWizards.ModelContainer
 
         public bool HasChanged(IModelObject obj)
         {
-            throw new NotImplementedException();
+            //TODO: dummy implementation
+            return true;
+
         }
+
+
+        public IEnumerable<ObjectChange> GetChangesOfType<T>() where T : IModelObject
+        {
+            for (int i = 0; i < dirtyEntities.Count; i++)
+            {
+                var change = dirtyEntities[i];
+                if (change.ModelObject is T)
+                    yield return change;
+            }
+        }
+
+
+
+
     }
 }
 
