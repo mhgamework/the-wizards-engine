@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
 
 
             PhysicsEngine engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
             TerrainFullData data = null;
 
             int blockX = 1, blockZ = 1;
@@ -62,7 +62,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
             game.InitializeEvent += delegate
                 {
                     engine.Initialize();
-                    debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                    debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                     debugRenderer.Initialize(game);
 
                     data = taggedTerrain.GetFullData();
@@ -130,7 +130,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
 
 
             PhysicsEngine engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
 
             TheWizards.Client.ClientPhysicsQuadTreeNode root = ClientTest.CreateTestClientPhysicsQuadtree();
 
@@ -148,7 +148,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
             game.InitializeEvent += delegate
                 {
                     engine.Initialize();
-                    debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                    debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                     debugRenderer.Initialize(game);
 
                     TerrainFullData data = taggedTerrain.GetFullData();
@@ -226,7 +226,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
 
 
             PhysicsEngine engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
 
             TheWizards.Client.ClientPhysicsQuadTreeNode root;
             root = new ClientPhysicsQuadTreeNode(
@@ -253,7 +253,7 @@ namespace MHGameWork.TheWizards.Tests.Terrain
             game.InitializeEvent += delegate
                 {
                     engine.Initialize(game);
-                    debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                    debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                     debugRenderer.Initialize(game);
 
                     data = taggedTerrain.GetFullData();

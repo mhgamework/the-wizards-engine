@@ -27,7 +27,7 @@ namespace MHGameWork.TheWizards.Tests
         public ClientPhysicsQuadTreeNode PhysicsTreeRoot;
         public XNAGame Game;
         public PhysicsEngine PhysicsEngine;
-        public PhysicsDebugRenderer PhysicsDebugRenderer;
+        public PhysicsDebugRendererXNA PhysicsDebugRendererXna;
         public MeshPhysicsElementFactory PhysicsFactory;
 
 
@@ -41,9 +41,9 @@ namespace MHGameWork.TheWizards.Tests
 
             PhysicsEngine = new PhysicsEngine();
             PhysicsEngine.Initialize();
-            PhysicsDebugRenderer = new PhysicsDebugRenderer(Game, PhysicsEngine.Scene);
+            PhysicsDebugRendererXna = new PhysicsDebugRendererXNA(Game, PhysicsEngine.Scene);
             Game.AddXNAObject(PhysicsEngine);
-            Game.AddXNAObject(PhysicsDebugRenderer);
+            Game.AddXNAObject(PhysicsDebugRendererXna);
             PhysicsTreeRoot = new ClientPhysicsQuadTreeNode(new Microsoft.Xna.Framework.BoundingBox(new Vector3(-1024, -4000, -1024),
                                                                                          new Vector3(1024, 4000, 1024)));
             QuadTree.Split(PhysicsTreeRoot, 6);

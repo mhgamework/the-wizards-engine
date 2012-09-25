@@ -187,7 +187,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
             BoundingBox boundingBox = new BoundingBox();
 
             PhysicsEngine engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
 
             Matrix mirrorMatrix = Matrix.CreateScale(-1, 1, 1);
 
@@ -195,7 +195,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
             game.InitializeEvent += delegate
                                     {
                                         engine.Initialize();
-                                        debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                                        debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                                         debugRenderer.Initialize(game);
 
 
@@ -264,7 +264,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
             data.TriangleMesh = triangleMesh;
 
             PhysicsEngine engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
 
 
 
@@ -272,7 +272,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
             game.InitializeEvent += delegate
             {
                 engine.Initialize();
-                debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                 debugRenderer.Initialize(game);
 
                 var pool = new MeshPhysicsPool();
@@ -398,7 +398,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
             data.ConvexMeshes.Add(convex);
 
             PhysicsEngine engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
 
 
 
@@ -406,7 +406,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
             game.InitializeEvent += delegate
             {
                 engine.Initialize();
-                debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                 debugRenderer.Initialize(game);
 
                 var pool = new MeshPhysicsPool();
@@ -467,7 +467,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
 
 
             PhysicsEngine engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
 
             TheWizards.Client.ClientPhysicsQuadTreeNode root;
             root = new ClientPhysicsQuadTreeNode(
@@ -507,7 +507,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
             game.InitializeEvent += delegate
                 {
                     engine.Initialize();
-                    debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                    debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                     debugRenderer.Initialize(game);
 
                 };
@@ -591,7 +591,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
 
 
             PhysicsEngine engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
 
             ClientPhysicsQuadTreeNode root = CreatePhysicsQuadtree(16, 4);
 
@@ -608,7 +608,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
             game.InitializeEvent += delegate
             {
                 engine.Initialize();
-                debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                 debugRenderer.Initialize(game);
 
             };
@@ -717,7 +717,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
 
 
             PhysicsEngine engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
 
             TheWizards.Client.ClientPhysicsQuadTreeNode root;
             root = new ClientPhysicsQuadTreeNode(
@@ -743,7 +743,7 @@ namespace MHGameWork.TheWizards.Tests.Physics
             game.InitializeEvent += delegate
             {
                 engine.Initialize();
-                debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                 debugRenderer.Initialize(game);
 
             };

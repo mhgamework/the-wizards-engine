@@ -130,7 +130,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
         {
 
             PhysicsEngine engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
 
 
 
@@ -198,7 +198,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
             game.InitializeEvent += delegate
             {
                 engine.Initialize();
-                debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                 debugRenderer.Initialize(game);
 
 
@@ -261,7 +261,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
 
             var spheres = new List<ClientPhysicsTestSphere>();
             var engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
 
             var builder = new MeshPhysicsActorBuilder(new MeshPhysicsPool());
 
@@ -320,7 +320,7 @@ namespace MHGameWork.TheWizards.Tests.OBJParser
             game.InitializeEvent += delegate
                                     {
                                         engine.Initialize();
-                                        debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                                        debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                                         debugRenderer.Initialize(game);
                                         sphereMesh.Initialize(game);
 

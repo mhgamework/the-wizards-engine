@@ -11,7 +11,7 @@ using StillDesign.PhysX;
 
 namespace MHGameWork.TheWizards.Physics
 {
-    public class PhysicsDebugRenderer : IXNAObject
+    public class PhysicsDebugRendererXNA : IXNAObject
     {
         private IXNAGame game;
         private StillDesign.PhysX.Scene physXScene;
@@ -30,7 +30,7 @@ namespace MHGameWork.TheWizards.Physics
         }
 
 
-        public PhysicsDebugRenderer(IXNAGame _game, StillDesign.PhysX.Scene _physXScene)
+        public PhysicsDebugRendererXNA(IXNAGame _game, StillDesign.PhysX.Scene _physXScene)
         {
             game = _game;
             physXScene = _physXScene;

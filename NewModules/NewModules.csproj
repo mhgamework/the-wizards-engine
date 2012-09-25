@@ -464,7 +464,7 @@
     <Compile Include="OBJParser\OBJGroup.cs" />
     <Compile Include="OBJParser\OBJImporter.cs" />
     <Compile Include="OBJParser\OBJMaterial.cs" />
-    <Compile Include="Physics\PhysicsDebugRenderer.cs" />
+    <Compile Include="Physics\PhysicsDebugRendererXNA.cs" />
     <Compile Include="Physics\PhysicsEngine.cs" />
     <Compile Include="Physics\PhysicsHelper.cs" />
     <Compile Include="Physics\PhysicsService.cs" />

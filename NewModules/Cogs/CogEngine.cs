@@ -52,7 +52,7 @@ namespace MHGameWork.TheWizards.Cogs
         {
             Engine.Initialize();
 
-            PhysicsDebugRenderer debugRenderer = new PhysicsDebugRenderer(Game, Engine.Scene);
+            PhysicsDebugRendererXNA debugRenderer = new PhysicsDebugRendererXNA(Game, Engine.Scene);
 
             Game.AddXNAObject(debugRenderer);
 

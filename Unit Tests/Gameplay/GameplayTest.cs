@@ -100,7 +100,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             StillDesign.PhysX.Scene serverScene = null;
 
-            PhysicsDebugRenderer debugRendererServer;
+            PhysicsDebugRendererXNA debugRendererServer;
             var game = new XNAGame();
 
             EstablishDefaultScope(game);
@@ -123,7 +123,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 {
 
                     serverScene = ScriptLayer.Physics.CreateScene(ScriptLayer.Physics.Scene.Gravity, true);
-                    debugRendererServer = new PhysicsDebugRenderer(game, serverScene);
+                    debugRendererServer = new PhysicsDebugRendererXNA(game, serverScene);
                     game.AddXNAObject(debugRendererServer);
                     debugRendererServer.Initialize(game);
 
@@ -197,7 +197,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             StillDesign.PhysX.Scene serverScene = null;
 
-            PhysicsDebugRenderer debugRendererServer;
+            PhysicsDebugRendererXNA debugRendererServer;
             var game = new XNAGame();
             game.InputDisabled = true;
             EstablishDefaultScope(game);
@@ -220,7 +220,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 {
 
                     serverScene = ScriptLayer.Physics.CreateScene(ScriptLayer.Physics.Scene.Gravity, true);
-                    debugRendererServer = new PhysicsDebugRenderer(game, serverScene);
+                    debugRendererServer = new PhysicsDebugRendererXNA(game, serverScene);
                     game.AddXNAObject(debugRendererServer);
                     debugRendererServer.Initialize(game);
 
@@ -387,7 +387,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             StillDesign.PhysX.Scene serverScene = null;
 
-            PhysicsDebugRenderer debugRendererServer;
+            PhysicsDebugRendererXNA debugRendererServer;
             var game = new XNAGame();
 
             EstablishDefaultScope(game);
@@ -410,7 +410,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 {
 
                     serverScene = ScriptLayer.Physics.CreateScene(ScriptLayer.Physics.Scene.Gravity, true);
-                    debugRendererServer = new PhysicsDebugRenderer(game, serverScene);
+                    debugRendererServer = new PhysicsDebugRendererXNA(game, serverScene);
                     game.AddXNAObject(debugRendererServer);
                     debugRendererServer.Initialize(game);
 
@@ -706,8 +706,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                     engine.Initialize(game);
                     ScriptLayer.Scene = engine.Scene;
 
-                    PhysicsDebugRenderer debugRenderer =
-                        new PhysicsDebugRenderer(game, engine.Scene);
+                    PhysicsDebugRendererXNA debugRenderer =
+                        new PhysicsDebugRendererXNA(game, engine.Scene);
 
                     game.AddXNAObject(debugRenderer);
 

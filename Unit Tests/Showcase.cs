@@ -62,7 +62,7 @@ namespace MHGameWork.TheWizards.Tests
 
             var spheres = new List<ClientPhysicsTestSphere>();
             var engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
 
             var root = PhysicsMeshTest.CreatePhysicsQuadtree(20, 5);
 
@@ -114,7 +114,7 @@ namespace MHGameWork.TheWizards.Tests
             game.InitializeEvent += delegate
             {
                 engine.Initialize();
-                debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                 debugRenderer.Initialize(game);
                 sphereMesh.Initialize(game);
 
@@ -233,7 +233,7 @@ namespace MHGameWork.TheWizards.Tests
 
             var gameMeshes = new List<OBJParserTest.TestGameMesh>();
             var engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
 
             var root = PhysicsMeshTest.CreatePhysicsQuadtree(16, 4);
 
@@ -257,7 +257,7 @@ namespace MHGameWork.TheWizards.Tests
             game.InitializeEvent += delegate
             {
                 engine.Initialize();
-                debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                 debugRenderer.Initialize(game);
 
 
@@ -340,7 +340,7 @@ namespace MHGameWork.TheWizards.Tests
 
             var gameMeshes = new List<OBJParserTest.TestGameMesh>();
             var engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
 
             var root = PhysicsMeshTest.CreatePhysicsQuadtree(16, 4);
 
@@ -364,7 +364,7 @@ namespace MHGameWork.TheWizards.Tests
             game.InitializeEvent += delegate
             {
                 engine.Initialize();
-                debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                 debugRenderer.Initialize(game);
 
 

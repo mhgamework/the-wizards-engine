@@ -124,7 +124,7 @@ namespace MHGameWork.TheWizards.Tests.Entity
             BoundingBox boundingBox = new BoundingBox();
 
             PhysicsEngine engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
 
 
 
@@ -132,7 +132,7 @@ namespace MHGameWork.TheWizards.Tests.Entity
             game.InitializeEvent += delegate
                 {
                     engine.Initialize();
-                    debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                    debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                     debugRenderer.Initialize(game);
 
 
@@ -207,7 +207,7 @@ namespace MHGameWork.TheWizards.Tests.Entity
 
 
             PhysicsEngine engine = new PhysicsEngine();
-            PhysicsDebugRenderer debugRenderer = null;
+            PhysicsDebugRendererXNA debugRenderer = null;
 
             TheWizards.Client.ClientPhysicsQuadTreeNode root;
             root = new ClientPhysicsQuadTreeNode(
@@ -233,7 +233,7 @@ namespace MHGameWork.TheWizards.Tests.Entity
             game.InitializeEvent += delegate
                 {
                     engine.Initialize();
-                    debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                    debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
                     debugRenderer.Initialize(game);
 
                     EntityFullData entityData;

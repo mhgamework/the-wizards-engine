@@ -46,7 +46,7 @@ namespace MHGameWork.TheWizards.Tests.Player
              {
 
                  engine.Initialize(game);
-                 PhysicsDebugRenderer debugRenderer = new PhysicsDebugRenderer(game, engine.Scene);
+                 PhysicsDebugRendererXNA debugRenderer = new PhysicsDebugRendererXNA(game, engine.Scene);
 
                  game.AddXNAObject(debugRenderer);
 

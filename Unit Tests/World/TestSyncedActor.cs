@@ -30,8 +30,8 @@ namespace MHGameWork.TheWizards.Tests.World
             var physicsEngine = new PhysicsEngine();
             StillDesign.PhysX.Scene serverScene = null;
 
-            PhysicsDebugRenderer debugRenderer;
-            PhysicsDebugRenderer debugRendererServer;
+            PhysicsDebugRendererXNA debugRenderer;
+            PhysicsDebugRendererXNA debugRendererServer;
             var game = new XNAGame();
             float totalTime = 0;
             float timeSinceTick = 0;
@@ -46,9 +46,9 @@ namespace MHGameWork.TheWizards.Tests.World
                                         serverScene = physicsEngine.CreateScene(physicsEngine.Scene.Gravity, true);
 
 
-                                        debugRenderer = new PhysicsDebugRenderer(game, physicsEngine.Scene);
+                                        debugRenderer = new PhysicsDebugRendererXNA(game, physicsEngine.Scene);
                                         game.AddXNAObject(debugRenderer);
-                                        debugRendererServer = new PhysicsDebugRenderer(game, serverScene);
+                                        debugRendererServer = new PhysicsDebugRendererXNA(game, serverScene);
                                         game.AddXNAObject(debugRendererServer);
 
                                         ActorDescription actorDesc;
@@ -117,8 +117,8 @@ namespace MHGameWork.TheWizards.Tests.World
             var physicsEngine = new PhysicsEngine();
             StillDesign.PhysX.Scene serverScene = null;
 
-            PhysicsDebugRenderer debugRenderer;
-            PhysicsDebugRenderer debugRendererServer;
+            PhysicsDebugRendererXNA debugRenderer;
+            PhysicsDebugRendererXNA debugRendererServer;
             var game = new XNAGame();
             float totalTime = 0;
             float timeSinceTick = 0;
@@ -134,9 +134,9 @@ namespace MHGameWork.TheWizards.Tests.World
                                         serverScene = physicsEngine.CreateScene(physicsEngine.Scene.Gravity, true);
 
 
-                                        debugRenderer = new PhysicsDebugRenderer(game, physicsEngine.Scene);
+                                        debugRenderer = new PhysicsDebugRendererXNA(game, physicsEngine.Scene);
                                         game.AddXNAObject(debugRenderer);
-                                        debugRendererServer = new PhysicsDebugRenderer(game, serverScene);
+                                        debugRendererServer = new PhysicsDebugRendererXNA(game, serverScene);
                                         game.AddXNAObject(debugRendererServer);
 
                                         ActorDescription actorDesc;
@@ -203,8 +203,8 @@ namespace MHGameWork.TheWizards.Tests.World
             var physicsEngine = new PhysicsEngine();
             StillDesign.PhysX.Scene serverScene = null;
 
-            PhysicsDebugRenderer debugRenderer;
-            PhysicsDebugRenderer debugRendererServer;
+            PhysicsDebugRendererXNA debugRenderer;
+            PhysicsDebugRendererXNA debugRendererServer;
             var game = new XNAGame();
 
             game.InitializeEvent += delegate
@@ -213,9 +213,9 @@ namespace MHGameWork.TheWizards.Tests.World
                                         serverScene = physicsEngine.CreateScene(physicsEngine.Scene.Gravity, true);
 
 
-                                        debugRenderer = new PhysicsDebugRenderer(game, physicsEngine.Scene);
+                                        debugRenderer = new PhysicsDebugRendererXNA(game, physicsEngine.Scene);
                                         game.AddXNAObject(debugRenderer);
-                                        debugRendererServer = new PhysicsDebugRenderer(game, serverScene);
+                                        debugRendererServer = new PhysicsDebugRendererXNA(game, serverScene);
                                         game.AddXNAObject(debugRendererServer);
 
                                         ActorDescription actorDesc;
@@ -272,8 +272,8 @@ namespace MHGameWork.TheWizards.Tests.World
             var physicsEngine = new PhysicsEngine();
             StillDesign.PhysX.Scene serverScene = null;
 
-            PhysicsDebugRenderer debugRenderer;
-            PhysicsDebugRenderer debugRendererServer;
+            PhysicsDebugRendererXNA debugRenderer;
+            PhysicsDebugRendererXNA debugRendererServer;
             var game = new XNAGame();
             ServerSyncedActor server1 = null;
             game.InitializeEvent += delegate
@@ -282,9 +282,9 @@ namespace MHGameWork.TheWizards.Tests.World
                 serverScene = physicsEngine.CreateScene(physicsEngine.Scene.Gravity, true);
 
 
-                debugRenderer = new PhysicsDebugRenderer(game, physicsEngine.Scene);
+                debugRenderer = new PhysicsDebugRendererXNA(game, physicsEngine.Scene);
                 game.AddXNAObject(debugRenderer);
-                debugRendererServer = new PhysicsDebugRenderer(game, serverScene);
+                debugRendererServer = new PhysicsDebugRendererXNA(game, serverScene);
                 game.AddXNAObject(debugRendererServer);
 
                 ActorDescription actorDesc;
@@ -341,8 +341,8 @@ namespace MHGameWork.TheWizards.Tests.World
             var physicsEngine = new PhysicsEngine();
             StillDesign.PhysX.Scene serverScene = null;
 
-            PhysicsDebugRenderer debugRenderer;
-            PhysicsDebugRenderer debugRendererServer;
+            PhysicsDebugRendererXNA debugRenderer;
+            PhysicsDebugRendererXNA debugRendererServer;
             var game = new XNAGame();
 
             game.InitializeEvent += delegate
@@ -351,9 +351,9 @@ namespace MHGameWork.TheWizards.Tests.World
                 serverScene = physicsEngine.CreateScene(physicsEngine.Scene.Gravity, true);
 
 
-                debugRenderer = new PhysicsDebugRenderer(game, physicsEngine.Scene);
+                debugRenderer = new PhysicsDebugRendererXNA(game, physicsEngine.Scene);
                 game.AddXNAObject(debugRenderer);
-                debugRendererServer = new PhysicsDebugRenderer(game, serverScene);
+                debugRendererServer = new PhysicsDebugRendererXNA(game, serverScene);
                 game.AddXNAObject(debugRendererServer);
 
                 ActorDescription actorDesc;
