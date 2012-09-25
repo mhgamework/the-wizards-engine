@@ -12,7 +12,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
 {
     /// <summary>
     /// This is used by the XNAGame to render lines, or boxes, triangles, … as lines.
-    ///You add the lines every frame; add the end of the frame all the lines are removed.
+    /// You add the lines every frame; add the end of the frame all the lines are removed.
     /// Helper class for game for rendering lines.
     /// This class will collect all line calls, then build a new vertex buffer
     /// if any line has changed or the line number changed and finally will
@@ -105,8 +105,12 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         private LineManager3DLines lines;
 
 
+        public bool DrawGroundShadows
+        {
+            get { return lines.DrawGroundShadows; }
+            set { lines.DrawGroundShadows = value; }
+        }
 
-        public bool DrawGroundShadows = false;
         private int vertexStride;
         private InputLayout layout;
         private EffectPass pass;
@@ -150,7 +154,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
                     "XNA device is not initialized, can't init line manager." );*/
 
             lines = new LineManager3DLines(device);
-            lines.SetMaxLines(1024*16);
+            lines.SetMaxLines(1024 * 16);
 
             //shader = BasicShader.LoadFromFXFile( game, game.EngineFiles.LineRenderingShader );
 
@@ -173,13 +177,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             endPoint = Vector3.TransformCoordinate(endPoint, WorldMatrix);
             lines.AddLine(startPoint, startColor, endPoint, endColor);
 
-            if (DrawGroundShadows)
-            {
-                startPoint.Y = 0;
-                endPoint.Y = 0;
-                lines.AddLine(startPoint, endPoint, new Color4(255/255f, 30/255f, 30/255f, 30/255f));
-            }
-
+          
         } // AddLine(startPoint, startColor, endPoint)
 
         public void AddTriangle(Vector3 v1, Vector3 v2, Vector3 v3, Color4 color)
@@ -342,7 +340,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         /// <returns></returns>
         private Vector3 RayRayIntersection(Ray ray1, Ray ray2)
         {
-            
+
 
             //equation: a (V1 X V2) = (P2 - P1) X V2
             //          a p1 = p2
@@ -411,8 +409,8 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
 
         private void initialize()
         {
-            
-            var bytecode = ShaderBytecode.CompileFromFile(  CompiledShaderCache.Current.RootShaderPath + "LineRendering.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
+
+            var bytecode = ShaderBytecode.CompileFromFile(CompiledShaderCache.Current.RootShaderPath + "LineRendering.fx", "fx_5_0", ShaderFlags.None, EffectFlags.None);
             var effect = new Effect(device, bytecode);
             var technique = effect.GetTechniqueByName("LineRendering3D");
             pass = technique.GetPassByIndex(0);
@@ -433,7 +431,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         /// </summary>
         public void Render(LineManager3DLines nLines, ICamera cam)
         {
-            
+
             nLines.UpdateVertexBuffer(device);
             // Need to build vertex buffer?
 
@@ -459,24 +457,14 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
 
 
 
-                    //engine.ActiveCamera.CameraInfo.WorldMatrix = Matrix.Identity;
-                    //BaseGame.AlphaBlending = true;
-
-                    //game.GraphicsDevice.RenderState.AlphaBlendEnable = true;
-                    //game.GraphicsDevice.RenderState.DepthBufferEnable = true;
-                } // try
+                }
                 catch (Exception ex)
                 {
-                    /*Log.Write(
-                        "LineManager3D.Render failed. numOfPrimitives=" + numOfPrimitives +
-                        ", numOfLines=" + numOfLines + ". Error: " + ex.ToString() );*/
                     throw ex;
-                } // catch (ex)
-            } // if (numOfVertices)
+                }
 
-
-        } // Render()
-
+            }
+        }
 
     }
 }

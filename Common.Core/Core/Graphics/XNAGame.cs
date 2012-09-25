@@ -283,7 +283,7 @@ namespace MHGameWork.TheWizards.Graphics
             if (!System.IO.File.Exists(filename))
             {
 
-                Stream strm = EmbeddedFile.GetStream("MHGameWork.TheWizards.Graphics.Files.Calibri.xnb", "Calibri.xnb");
+                Stream strm = EmbeddedFile.GetStream("MHGameWork.TheWizards.Core.Graphics.Files.Calibri.xnb", "Calibri.xnb");
                 byte[] data = new byte[strm.Length];
                 strm.Read(data, 0, (int)strm.Length);
 

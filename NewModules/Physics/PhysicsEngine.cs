@@ -34,7 +34,7 @@ namespace MHGameWork.TheWizards.Physics
 
                     core.SetParameter(PhysicsParameter.VisualizationScale, 2.0f);
                     core.SetParameter(PhysicsParameter.VisualizeCollisionShapes, true);
-                    core.SetParameter(PhysicsParameter.VisualizeActorAxes, true);
+                    //core.SetParameter(PhysicsParameter.VisualizeActorAxes, true);
                     core.SetParameter(PhysicsParameter.VisualizeClothMesh, true);
                     core.SetParameter(PhysicsParameter.VisualizeJointLocalAxes, true);
                     core.SetParameter(PhysicsParameter.VisualizeJointLimits, true);
@@ -42,6 +42,7 @@ namespace MHGameWork.TheWizards.Physics
                     core.SetParameter(PhysicsParameter.VisualizeFluidEmitters, false); // Slows down rendering a bit to much
                     core.SetParameter(PhysicsParameter.VisualizeForceFields, true);
                     core.SetParameter(PhysicsParameter.VisualizeSoftBodyMesh, true);
+
 
 
 

@@ -198,6 +198,7 @@
     <Compile Include="Particles\ParticleSimulater.cs" />
     <Compile Include="Particles\SimpleParticleCreater.cs" />
     <Compile Include="Particles\SparkelParticleCreater.cs" />
+    <Compile Include="Physics\PhysicsDebugRenderer.cs" />
     <Compile Include="ProceduralTerrainGeneration\Grass\GrassMesh.cs" />
     <Compile Include="ProceduralTerrainGeneration\NoiseGenerater\PerlinNoiseGenerater.cs" />
     <Compile Include="ProceduralTerrainGeneration\NoiseGenerater\SimpleTerrain.cs" />

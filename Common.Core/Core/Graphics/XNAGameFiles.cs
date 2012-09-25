@@ -23,12 +23,12 @@ namespace MHGameWork.TheWizards.ServerClient
         public System.IO.Stream GetColladaModelShaderStream()
         {
             return EmbeddedFile.GetStreamFullPath( Assembly.GetExecutingAssembly(),
-                "MHGameWork.TheWizards.Graphics.Files.ColladaModel.fx"
+                "MHGameWork.TheWizards.Core.Graphics.Files.ColladaModel.fx"
                 , RootDirectory + "/DebugFiles/ColladaModel.fx" );
         }
         public System.IO.Stream GetLineRenderingShaderStream()
         {
-            return EmbeddedFile.GetStream( "MHGameWork.TheWizards.Graphics.Files.LineRendering.fx", "LineRendering.fx" );
+            return EmbeddedFile.GetStream("MHGameWork.TheWizards.Core.Graphics.Files.LineRendering.fx", "LineRendering.fx");
         }
 
         [Obsolete( "This now resides in EmbeddedFile" )]

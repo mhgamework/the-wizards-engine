@@ -27,6 +27,9 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             public const int SizeInBytes = 4 * 4 + 4 * 4;
         }
 
+
+        public bool DrawGroundShadows { get; set; }
+
         /// <summary>
         /// Number of lines used this frame, will be set to 0 when rendering.
         /// </summary>
@@ -126,12 +129,29 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         }
 
 
+        public void AddLine(
+          Vector3 startPoint, Color4 startColor,
+          Vector3 endPoint, Color4 endColor)
+        {
+            addLineInternal(startPoint, startColor, endPoint, endColor);
+            if (DrawGroundShadows)
+            {
+                startPoint.Y = 0;
+                endPoint.Y = 0;
+                var color4 = new Color4(255 / 255f, 30 / 255f, 30 / 255f, 30 / 255f);
+                addLineInternal(startPoint, color4, endPoint, color4);
+            }
+        }
+
+
+
+
         /// <summary>
         /// Add line
         /// </summary>
-        public void AddLine(
-            Vector3 startPoint, Color4 startColor,
-            Vector3 endPoint, Color4 endColor)
+        public void addLineInternal(
+          Vector3 startPoint, Color4 startColor,
+          Vector3 endPoint, Color4 endColor)
         {
             // Don't add new lines if limit is reached
             if (NumOfLines >= MaxNumOfLines)

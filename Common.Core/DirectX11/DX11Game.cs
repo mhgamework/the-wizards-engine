@@ -62,7 +62,7 @@ namespace MHGameWork.TheWizards.DirectX11
 
             SpectaterCamera.Update(Elapsed);
 
-            form.Device.ImmediateContext.ClearRenderTargetView(form.RenderTargetView, Color.Yellow);
+            form.Device.ImmediateContext.ClearRenderTargetView(form.RenderTargetView, new Color4(Color.DeepSkyBlue));
 
             updateBasicShaders();
 
