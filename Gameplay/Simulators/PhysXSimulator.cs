@@ -7,7 +7,7 @@ using SlimDX;
 namespace MHGameWork.TheWizards.Simulators
 {
     /// <summary>
-    /// This simulator pushes the changes from PhysX into the model
+    /// This simulator is responsible for setting and managing PhysX for Entity's
     /// </summary>
     public class PhysXSimulator : ISimulator
     {

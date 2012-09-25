@@ -11,6 +11,9 @@ using IDisposable = System.IDisposable;
 
 namespace MHGameWork.TheWizards.PhysX
 {
+    /// <summary>
+    /// Applies changes to all changed Entity's PhysX properties, and pulls changes from the physX back into dynamic objects
+    /// </summary>
     public class EntityPhysXUpdater
     {
         private MeshPhysicsElementFactory factory;
