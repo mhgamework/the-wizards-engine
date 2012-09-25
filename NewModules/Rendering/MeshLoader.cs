@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.OBJParser;
 namespace MHGameWork.TheWizards.Rendering
 {
     /// <summary>
+    /// TODO: merge with SimpleMeshFactory
     /// Probably mainly for testing
     /// </summary>
     public class MeshLoader

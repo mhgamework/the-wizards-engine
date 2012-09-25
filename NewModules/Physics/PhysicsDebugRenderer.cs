@@ -26,7 +26,10 @@ namespace MHGameWork.TheWizards.Physics
 
         public void Initialize()
         {
+
             lineManager = new LineManager3DLines(game.Device);
+            lineManager.SetMaxLines(64*1024);
+            lineManager.DrawGroundShadows = true;
 
 
 
@@ -81,9 +84,7 @@ namespace MHGameWork.TheWizards.Physics
                 }
             }
 
-            lineManager.DrawGroundShadows = true;
             game.LineManager3D.Render(lineManager, game.Camera);
-            lineManager.DrawGroundShadows = false;
         }
 
 

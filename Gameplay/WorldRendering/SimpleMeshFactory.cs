@@ -12,6 +12,7 @@ namespace MHGameWork.TheWizards.WorldRendering
     /// <summary>
     /// This class is a 'temporary/initial/skeleton' implementation for loading meshes into the wizards.
     /// Note: this should probably not be in the gameplay project.
+    /// TODO: see MeshLoader and merge
     /// </summary>
     public class SimpleMeshFactory : IMeshFactory
     {

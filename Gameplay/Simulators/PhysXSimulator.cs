@@ -17,20 +17,21 @@ namespace MHGameWork.TheWizards.Simulators
         private EntityPhysXUpdater entityUpdater;
 
 
-        private PhysicsDebugRenderer debugRenderer;
+        public PhysicsDebugRenderer DebugRenderer { get; private set; }
 
         public PhysXSimulator()
         {
             root = new ClientPhysicsQuadTreeNode(
                new BoundingBox(new Vector3(-1000, -1000, -1000), new Vector3(1000, 1000, 1000)).xna());
+            QuadTree.Split(root, 6);
             factory = new MeshPhysicsElementFactory(TW.PhysX, root);
 
             factory.Initialize();
 
             entityUpdater = new EntityPhysXUpdater(factory, root);
 
-            debugRenderer = new PhysicsDebugRenderer(TW.Game,TW.Scene);
-            debugRenderer.Initialize();
+            DebugRenderer = new PhysicsDebugRenderer(TW.Game,TW.Scene);
+            DebugRenderer.Initialize();
         }
 
         public void Simulate()
@@ -54,7 +55,7 @@ namespace MHGameWork.TheWizards.Simulators
                 }
             }
 
-            debugRenderer.Render();
+            DebugRenderer.Render();
         }
     }
 }
