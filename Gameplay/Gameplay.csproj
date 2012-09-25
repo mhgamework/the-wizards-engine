@@ -85,6 +85,7 @@
     <Compile Include="Assetbrowser\AssetBrowserCamera.cs" />
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
+    <Compile Include="PhysX\EntityPhysXUpdater.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Simulators\AssetbrowserSimulator.cs" />
     <Compile Include="Building\Block.cs" />
@@ -150,7 +151,7 @@
     <Compile Include="Tiling\TileRotation.cs" />
     <Compile Include="Synchronization\ChangePacket.cs" />
     <Compile Include="Simulators\NetworkSyncerSimulator.cs" />
-    <Compile Include="Simulators\PhysXUpdateSimulator.cs" />
+    <Compile Include="Simulators\PhysXSimulator.cs" />
     <Compile Include="Simulators\WorldRenderingSimulator.cs" />
     <Compile Include="Sphere.cs" />
     <Compile Include="Simulators\LocalPlayerSimulator.cs" />
@@ -214,9 +215,7 @@
     <Content Include="WorldRendering\_doc.txt" />
     <Content Include="_doc.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PhysX\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

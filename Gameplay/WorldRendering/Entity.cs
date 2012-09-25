@@ -22,6 +22,15 @@ namespace MHGameWork.TheWizards.WorldRendering
         public Matrix WorldMatrix { get; set; }
         public bool Visible { get; set; }
 
+        /// <summary>
+        /// Physics enabled or not
+        /// </summary>
+        public bool Solid { get; set; }
+        /// <summary>
+        /// Kinematic physics property
+        /// </summary>
+        public bool Kinematic { get; set; }
+
         public override string ToString()
         {
             return string.Format("Mesh: {0}, WorldMatrix: {1}", Mesh, WorldMatrix);
