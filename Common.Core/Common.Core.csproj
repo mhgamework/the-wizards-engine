@@ -107,7 +107,7 @@
     <Compile Include="Animation\AMCSample.cs" />
     <Compile Include="Animation\AMCSegment.cs" />
     <Compile Include="Animation\Animation.cs" />
-    <Compile Include="Animation\AnimationController.cs" />
+    <Compile Include="Animation\AnimationControllerSkeleton.cs" />
     <Compile Include="Animation\ASFJoint.cs" />
     <Compile Include="Animation\ASFParser.cs" />
     <Compile Include="Animation\Joint.cs" />

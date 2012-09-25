@@ -6,13 +6,13 @@ using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Animation
 {
-    public class AnimationController
+    public class AnimationControllerSkeleton
     {
         public Skeleton Skeleton { get; private set; }
         private List<Channel> channels = new List<Channel>();
 
 
-        public AnimationController(Skeleton skeleton)
+        public AnimationControllerSkeleton(Skeleton skeleton)
         {
             Skeleton = skeleton;
 

@@ -57,7 +57,7 @@ namespace MHGameWork.TheWizards
 
             engine.AddSimulator(new PickupSimulator(itemFactory, player));
 
-            engine.AddSimulator(new RenderingSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace MHGameWork.TheWizards
             engine.AddSimulator(new LocalPlayerSimulator(player));
             engine.AddSimulator(new ThirdPersonCameraSimulator());
 
-            engine.AddSimulator(new RenderingSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace MHGameWork.TheWizards
             engine.AddSimulator(new LocalPlayerSimulator(player));
             engine.AddSimulator(new ThirdPersonCameraSimulator());
 
-            engine.AddSimulator(new RenderingSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
 
         }
     
@@ -254,7 +254,7 @@ namespace MHGameWork.TheWizards
 
             engine.AddSimulator(animationSim);
 
-            engine.AddSimulator(new RenderingSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
 
 
             animationController.Play();
@@ -269,13 +269,20 @@ namespace MHGameWork.TheWizards
 
             var ent = new WorldRendering.Entity();
             ent.Mesh = MeshFactory.Load("Level01\\Level01");
+            ent.Solid = true;
 
-
+            var barrel = new WorldRendering.Entity();
+            barrel.Mesh = MeshFactory.Load("Core\\Barrel01");
+            barrel.WorldMatrix = Matrix.Translation(new Vector3(0, 30, 0));
+            barrel.Solid = true;
+            barrel.Static = false;
 
             engine.AddSimulator(new LocalPlayerSimulator(player));
             engine.AddSimulator(new ThirdPersonCameraSimulator());
-
-            engine.AddSimulator(new RenderingSimulator());
+            engine.AddSimulator(new Simulators.PhysXSimulator());
+            
+            engine.AddSimulator(new WorldRenderingSimulator());
+            //engine.AddSimulator(new Simulators.PhysXDebugRendererSimulator());
         }
     }
 }

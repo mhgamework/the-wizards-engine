@@ -229,7 +229,7 @@ namespace MHGameWork.TheWizards.Tests.Animation
         [RequiresThread(System.Threading.ApartmentState.STA)]
         public void TestPlayAnimation()
         {
-            var controller = new AnimationController(null);
+            var controller = new AnimationControllerSkeleton(null);
 
             Skeleton skeleton;
             TheWizards.Animation.Animation animation;
@@ -308,7 +308,7 @@ namespace MHGameWork.TheWizards.Tests.Animation
         public void TestInterpolateBoneRelativeMatrices()
         {
 
-               var controller = new AnimationController(null);
+               var controller = new AnimationControllerSkeleton(null);
 
             var p = new Vector3(4, 5, 4);
 
