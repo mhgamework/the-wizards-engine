@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Text;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Rendering.Text;
 using NUnit.Framework;
 using SlimDX;
@@ -35,28 +36,18 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             var game = new DX11Game();
             game.InitDirectX();
 
-            var tex = new Texture2D(game.Device, new Texture2DDescription
-            {
-                ArraySize = 1,
-                MipLevels = 1,
-                Format = Format.B8G8R8A8_UNorm,
-                Usage = ResourceUsage.Dynamic,
-                CpuAccessFlags = CpuAccessFlags.Write,
-                Width = bmp.Width,
-                Height = bmp.Height,
-                SampleDescription = new SampleDescription(1, 0),
-                BindFlags = BindFlags.ShaderResource
-            });
+            var tex = GPUTexture.CreateCPUWritable(game, bmp.Width, bmp.Height, Format.B8G8R8A8_UNorm);
+
 
             var convert = new DrawingToD3D11Conversion();
             convert.WriteBitmapToTexture(bmp, tex);
 
-            var view = new ShaderResourceView(game.Device, tex);
+            
 
 
             game.GameLoopEvent += delegate
             {
-                game.TextureRenderer.Draw(view, Vector2.Zero, new Vector2(100, 100));
+                game.TextureRenderer.Draw(tex.View, Vector2.Zero, new Vector2(100, 100));
             };
             game.Run();
 
@@ -100,7 +91,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
             txt.DrawText("The Wizards", new Vector2(0, 0), new Color4(0.3f, 0.3f, 0.3f));
 
             var tex = txt.UpdateTexture();
-            var view = new ShaderResourceView(game.Device, tex);
+            
 
 
        
@@ -122,7 +113,7 @@ namespace MHGameWork.TheWizards.Tests.Rendering
                                       game.Device.ImmediateContext.OutputMerger.BlendState =
                                           game.HelperStates.AlphaBlend;
 
-                                      game.TextureRenderer.Draw(view, new Vector2(0, 0),
+                                      game.TextureRenderer.Draw(tex.View, new Vector2(0, 0),
                                                                 new Vector2(100, 100));
 
                                       

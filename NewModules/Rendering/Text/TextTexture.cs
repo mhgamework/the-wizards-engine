@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.DirectX11.Graphics;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DXGI;
@@ -13,27 +14,19 @@ namespace MHGameWork.TheWizards.Rendering.Text
 {
     /// <summary>
     /// This class is responsible for building a Texture2D from provided text
+    /// This class uses a GDI bitmap for textrendering and then copies the bitmap to a Texture2D
     /// </summary>
     public class TextTexture
     {
         private DrawingToD3D11Conversion converter = new DrawingToD3D11Conversion();
 
+        private GPUTexture tex;
+
         public TextTexture(DX11Game game, int width, int height)
         {
             bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
 
-            tex = new Texture2D(game.Device, new Texture2DDescription
-            {
-                ArraySize = 1,
-                MipLevels = 1,
-                Format = Format.B8G8R8A8_UNorm,
-                Usage = ResourceUsage.Dynamic,
-                CpuAccessFlags = CpuAccessFlags.Write,
-                Width = bmp.Width,
-                Height = bmp.Height,
-                SampleDescription = new SampleDescription(1, 0),
-                BindFlags = BindFlags.ShaderResource
-            });
+            tex = GPUTexture.CreateCPUWritable(game, bmp.Width, bmp.Height, Format.B8G8R8A8_UNorm);
 
 
             SetFont("Verdana", 10);
@@ -58,7 +51,6 @@ namespace MHGameWork.TheWizards.Rendering.Text
 
 
         private Bitmap bmp;
-        private Texture2D tex;
         private System.Drawing.Graphics g;
 
         public void Clear()
@@ -86,7 +78,7 @@ namespace MHGameWork.TheWizards.Rendering.Text
         /// Updates the texture with what was drawn (ughj)
         /// Note that this returs the cached texture (read-only!!)
         /// </summary>
-        public Texture2D UpdateTexture()
+        public GPUTexture UpdateTexture()
         {
             converter.WriteBitmapToTexture(bmp, tex);
 

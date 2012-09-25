@@ -156,6 +156,7 @@
     <Compile Include="DirectX11\Graphics\CustomCamera.cs" />
     <Compile Include="DirectX11\Graphics\DX11Form.cs" />
     <Compile Include="DirectX11\Graphics\FullScreenQuad.cs" />
+    <Compile Include="DirectX11\Graphics\GPUTexture.cs" />
     <Compile Include="DirectX11\Graphics\ICamera.cs" />
     <Compile Include="DirectX11\Graphics\IGraphicsManager.cs" />
     <Compile Include="DirectX11\Graphics\LineManager3D.cs" />
