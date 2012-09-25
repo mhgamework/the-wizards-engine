@@ -11,12 +11,12 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
     /// <summary>
     /// Helper class for working with D3D11 texture resources;
     /// </summary>
-    public class GPUTexture
+    public class GPUTexture : IDisposable
     {
         public Texture2D Resource { get; private set; }
         public ShaderResourceView View { get; private set; }
 
-        private GPUTexture( DX11Game game, Texture2DDescription desc)
+        private GPUTexture(DX11Game game, Texture2DDescription desc)
         {
             Resource = new Texture2D(game.Device, desc);
             View = new ShaderResourceView(game.Device, Resource);
@@ -65,7 +65,18 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
                 SampleDescription = new SampleDescription(1, 0),
                 BindFlags = BindFlags.ShaderResource
             };
-            return new GPUTexture(game,desc);
+            return new GPUTexture(game, desc);
+        }
+
+        public void Dispose()
+        {
+            if (Resource != null)
+                Resource.Dispose();
+            Resource = null;
+            if (View != null)
+                View.Dispose();
+            View = null;
+
         }
     }
 }

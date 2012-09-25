@@ -13,6 +13,7 @@ namespace MHGameWork.TheWizards.Simulators
         private DeferredRenderer deferred;
         private WorldRenderer renderer;
         private CameraInfo info;
+        private TextareaUpdater textareaUpdater;
 
         public WorldRenderingSimulator()
         {
@@ -34,7 +35,9 @@ namespace MHGameWork.TheWizards.Simulators
 
             info = TW.Model.GetSingleton<CameraInfo>();
 
-            
+
+            textareaUpdater = new TextareaUpdater();
+
 
 
         }
@@ -44,6 +47,9 @@ namespace MHGameWork.TheWizards.Simulators
             TW.Game.Camera = info.ActiveCamera;
             renderer.ProcessWorldChanges();
             deferred.Draw();
+
+            textareaUpdater.Update();
+            textareaUpdater.Render();
 
         }
 

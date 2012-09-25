@@ -33,10 +33,19 @@ namespace MHGameWork.TheWizards.ModelContainer
 
         internal Dictionary<Type, object> attached;
 
+        /// <summary>
+        /// Utility function to attach objects to a modelobject. Only 1 instance per type can be attached to a modelobject.
+        /// Returns null when the type is not yet attached
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T get<T>() where T : class
         {
             if (attached == null) return null;
 
+            if (!attached.ContainsKey(typeof(T)))
+                return null;
+            
             return (T)attached[typeof(T)];
         }
 
@@ -50,7 +59,7 @@ namespace MHGameWork.TheWizards.ModelContainer
         {
             if (attached == null) attached = new Dictionary<Type, object>();
 
-            attached.Add(t, value);
+            attached[t] = value;
         }
         
     }

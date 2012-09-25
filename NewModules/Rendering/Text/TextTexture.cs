@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.Rendering.Text
     /// This class is responsible for building a Texture2D from provided text
     /// This class uses a GDI bitmap for textrendering and then copies the bitmap to a Texture2D
     /// </summary>
-    public class TextTexture
+    public class TextTexture : IDisposable
     {
         private DrawingToD3D11Conversion converter = new DrawingToD3D11Conversion();
 
@@ -26,7 +26,7 @@ namespace MHGameWork.TheWizards.Rendering.Text
         {
             bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
 
-            tex = GPUTexture.CreateCPUWritable(game, bmp.Width, bmp.Height, Format.B8G8R8A8_UNorm);
+            GPUTexture = GPUTexture.CreateCPUWritable(game, bmp.Width, bmp.Height, Format.B8G8R8A8_UNorm);
 
 
             SetFont("Verdana", 10);
@@ -39,6 +39,12 @@ namespace MHGameWork.TheWizards.Rendering.Text
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
             Clear();
+        }
+
+        public GPUTexture GPUTexture
+        {
+            get { return tex; }
+            set { tex = value; }
         }
 
         public void SetFont(string family, float emSize)
@@ -78,14 +84,18 @@ namespace MHGameWork.TheWizards.Rendering.Text
         /// Updates the texture with what was drawn (ughj)
         /// Note that this returs the cached texture (read-only!!)
         /// </summary>
-        public GPUTexture UpdateTexture()
+        public void UpdateTexture()
         {
-            converter.WriteBitmapToTexture(bmp, tex);
+            converter.WriteBitmapToTexture(bmp, GPUTexture);
 
-            return tex;
         }
 
 
-
+        public void Dispose()
+        {
+            if (GPUTexture != null)
+            GPUTexture.Dispose();
+            GPUTexture = null;
+        }
     }
 }

@@ -27,5 +27,27 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             game.Run();
         }
+
+        [Test]
+        public void TestTextarea()
+        {
+            var game = new LocalGame();
+
+            var a = new Textarea
+                        {
+                            Position = new Vector2(100, 100)
+                        };
+
+            game.AddSimulator(new BasicSimulator(delegate()
+                                                     {
+                                                         a.Text = TW.Game.FPS.ToString();
+                                                     }));
+
+            game.AddSimulator(new Simulators.WorldRenderingSimulator());
+
+
+            game.Run();
+
+        }
     }
 }
