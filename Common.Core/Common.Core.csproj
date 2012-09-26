@@ -380,15 +380,6 @@
     <Compile Include="Core\QuadTree.cs" />
     <Compile Include="Core\QuadTreeNodeData.cs" />
     <Compile Include="Core\QuadTreeVisualizerXNA.cs" />
-    <Compile Include="Core\Raycast\GeometryRaycastResult.cs" />
-    <Compile Include="Core\Raycast\IRaycastable.cs" />
-    <Compile Include="Core\Raycast\IRaycastResult.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Raycast\Raycaster.cs" />
-    <Compile Include="Core\Raycast\RaycastHelper.cs" />
-    <Compile Include="Core\Raycast\RaycastResult.cs" />
-    <Compile Include="Core\Raycast\SimpleRaycaster.cs" />
     <Compile Include="Core\Reflection\ReflectionHelper.cs" />
     <Compile Include="Core\Seeder.cs" />
     <Compile Include="Core\SlimDXConversion\SlimDXConversion.cs" />
@@ -492,7 +483,9 @@
       <Name>CommonVB</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Core\Raycast\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Shaders\Deferred\TODO\RandomNormals.png" />
   </ItemGroup>
