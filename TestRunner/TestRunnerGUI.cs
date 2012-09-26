@@ -79,6 +79,8 @@ namespace MHGameWork.TheWizards.TestRunner
             // The constructor of TestSelectionInterface needs to be called first because 
             //   it links the treeview to the testnodes :s
             loadState(getSaveFilePath());
+            if (data == null)
+                data = new SaveData();
 
             if (data.RunningTestsNodePath != null && data.RunAutomated)
                 resumeTestRun();
