@@ -52,16 +52,16 @@ namespace MHGameWork.TheWizards._XNA.Scene
 
         }
 
-        public void LoadScript(Entity entity, FileInfo scriptFile)
+        public void LoadScript(ScriptingEntity scriptingEntity, FileInfo scriptFile)
         {
             if (!scriptFile.Exists) throw new InvalidOperationException();
-            if (entity.Scene != scene) throw new InvalidOperationException();
+            if (scriptingEntity.Scene != scene) throw new InvalidOperationException();
 
             var s = findOrCreateScript(scriptFile);
             var instance = CreateScriptInstance(s);
 
 
-            var handle = entity.CreateEntityHandle(instance);
+            var handle = scriptingEntity.CreateEntityHandle(instance);
             instance.Init(handle);
 
             s.Handles.Add(handle);
@@ -181,14 +181,14 @@ namespace MHGameWork.TheWizards._XNA.Scene
 
                 // Destory old script
                 scene.ExecuteInScriptScope(handle, handle.Script.Destroy);
-                handle.Entity.DestroyEntityHandle(handle);
+                handle.ScriptingEntity.DestroyEntityHandle(handle);
 
 
                 // Load new script
                 var instance = CreateScriptInstance(s);
 
 
-                var newhandle = handle.Entity.CreateEntityHandle(instance);
+                var newhandle = handle.ScriptingEntity.CreateEntityHandle(instance);
                 scene.ExecuteInScriptScope(newhandle, () => instance.Init(newhandle));
                 s.Handles[i] = newhandle;
 

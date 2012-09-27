@@ -166,7 +166,7 @@
     <Compile Include="Player\XNATaskQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="_XNA\Scene\APIEntity.cs" />
-    <Compile Include="_XNA\Scene\Entity.cs" />
+    <Compile Include="_XNA\Scene\ScriptingEntity.cs" />
     <Compile Include="_XNA\Scene\EntityData.cs" />
     <Compile Include="_XNA\Scene\EntityScriptHandle.cs" />
     <Compile Include="_XNA\Scene\ISceneMeshProvider.cs" />

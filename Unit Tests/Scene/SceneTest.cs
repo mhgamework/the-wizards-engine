@@ -31,7 +31,7 @@ namespace MHGameWork.TheWizards.Tests.Scene
                                              var result = scene.RaycastEntityPhysX(new Ray(Vector3.Backward * 5, Vector3.Forward), o => true);
 
 
-                                             game.Game.LineManager3D.AddBox(result.Entity.BoundingBox, Color.Red);
+                                             game.Game.LineManager3D.AddBox(result.ScriptingEntity.BoundingBox, Color.Red);
 
 
                                          };

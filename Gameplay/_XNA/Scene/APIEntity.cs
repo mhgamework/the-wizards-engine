@@ -7,58 +7,58 @@ namespace MHGameWork.TheWizards._XNA.Scene
 {
     public class APIEntity : IEntity
     {
-        public Entity Entity { get; private set; }
+        public ScriptingEntity ScriptingEntity { get; private set; }
 
-        public APIEntity(Entity entity)
+        public APIEntity(ScriptingEntity scriptingEntity)
         {
-            Entity = entity;
+            ScriptingEntity = scriptingEntity;
         }
 
         public Vector3 Position
         {
-            get { return Entity.Transformation.Translation; }
+            get { return ScriptingEntity.Transformation.Translation; }
             set
             {
                 if (Static) throw new InvalidOperationException();
-                Entity.Transformation = new Graphics.Transformation(Entity.Transformation.Scaling, Entity.Transformation.Rotation, value);
+                ScriptingEntity.Transformation = new Graphics.Transformation(ScriptingEntity.Transformation.Scaling, ScriptingEntity.Transformation.Rotation, value);
             }
         }
         public Quaternion Rotation
         {
-            get { return Entity.Transformation.Rotation; }
+            get { return ScriptingEntity.Transformation.Rotation; }
             set
             {
                 if (Static) throw new InvalidOperationException();
-                Entity.Transformation = new Graphics.Transformation(Entity.Transformation.Scaling, value, Entity.Transformation.Translation);
+                ScriptingEntity.Transformation = new Graphics.Transformation(ScriptingEntity.Transformation.Scaling, value, ScriptingEntity.Transformation.Translation);
             }
         }
 
         public bool Visible
         {
-            get { return Entity.Visible; }
-            set { Entity.Visible = value; }
+            get { return ScriptingEntity.Visible; }
+            set { ScriptingEntity.Visible = value; }
         }
         public bool Solid
         {
-            get { return Entity.Solid; }
-            set { Entity.Solid = value; }
+            get { return ScriptingEntity.Solid; }
+            set { ScriptingEntity.Solid = value; }
         }
         public bool Static
         {
-            get { return Entity.Static; }
-            set { Entity.Static = value; }
+            get { return ScriptingEntity.Static; }
+            set { ScriptingEntity.Static = value; }
         }
         public bool Kinematic
         {
             get
             {
                 if (Static) throw new InvalidOperationException();
-                return Entity.Kinematic;
+                return ScriptingEntity.Kinematic;
             }
             set
             {
                 if (Static) throw new InvalidOperationException();
-                Entity.Kinematic = value;
+                ScriptingEntity.Kinematic = value;
             }
         }
 
@@ -66,24 +66,24 @@ namespace MHGameWork.TheWizards._XNA.Scene
         {
             get
             {
-                return Entity.Mesh;
+                return ScriptingEntity.Mesh;
             }
             set
             {
-                Entity.Mesh = value;
+                ScriptingEntity.Mesh = value;
             }
         }
 
 
         public void Destroy()
         {
-            if (Entity.PlayerUseHandler != null)
-                Entity.PlayerUseHandler = null;
+            if (ScriptingEntity.PlayerUseHandler != null)
+                ScriptingEntity.PlayerUseHandler = null;
         }
 
         public T GetAttachedScript<T>() where T : class, IScript
         {
-            var ret = Entity.GetAttachedScriptHandle<T>();
+            var ret = ScriptingEntity.GetAttachedScriptHandle<T>();
             if (ret == null) return null;
 
             return (T)ret.Script;
@@ -94,8 +94,8 @@ namespace MHGameWork.TheWizards._XNA.Scene
             //TODO: Currently CHEAAAAATTTTT!!!!
 
             T s = new T();
-            var handle = Entity.CreateEntityHandle(s);
-            Entity.Scene.ExecuteInScriptScope(handle, () => s.Init(handle));
+            var handle = ScriptingEntity.CreateEntityHandle(s);
+            ScriptingEntity.Scene.ExecuteInScriptScope(handle, () => s.Init(handle));
 
             return s;
         }

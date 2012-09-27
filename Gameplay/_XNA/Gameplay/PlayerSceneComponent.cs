@@ -44,7 +44,7 @@ namespace MHGameWork.TheWizards._XNA.Gameplay
         public void RaiseUseEvent(IEntity entity, IPlayer player)
         {
             var ent = (APIEntity)entity;
-            ent.Entity.RaisePlayerUse(player);
+            ent.ScriptingEntity.RaisePlayerUse(player);
 
         }
 

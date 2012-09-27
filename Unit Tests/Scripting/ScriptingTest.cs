@@ -113,7 +113,7 @@ namespace MHGameWork.TheWizards.Tests.Scripting
             var fi = new FileInfo(TWDir.Scripts + "/TestScript.cs");
 
 
-            var ent = new _XNA.Scene.Entity(scene);
+            var ent = new _XNA.Scene.ScriptingEntity(scene);
             ent.Mesh = twGame.BarrelMesh;
 
             loader.LoadScript(ent, fi);
@@ -180,7 +180,7 @@ namespace MHGameWork.TheWizards.Tests.Scripting
                                                    var result = scene.RaycastEntityPhysX(ray, o => true);
                                                    if (result != null)
                                                    {
-                                                       result.Entity.RaisePlayerUse(player);
+                                                       result.ScriptingEntity.RaisePlayerUse(player);
                                                    }
                                                }
                                            };
@@ -234,7 +234,7 @@ namespace MHGameWork.TheWizards.Tests.Scripting
                     var result = scene.RaycastEntityPhysX(ray, o => true);
                     if (result != null)
                     {
-                        result.Entity.RaisePlayerUse(player);
+                        result.ScriptingEntity.RaisePlayerUse(player);
                     }
                 }
             };

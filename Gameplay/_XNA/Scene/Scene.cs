@@ -20,8 +20,8 @@ namespace MHGameWork.TheWizards._XNA.Scene
     {
         private readonly SimpleMeshRenderer renderer;
         private readonly MeshPhysicsElementFactory physicsElementFactory;
-        private List<Entity> entities = new List<Entity>();
-        internal List<Entity> UpdateList = new List<Entity>();
+        private List<ScriptingEntity> entities = new List<ScriptingEntity>();
+        internal List<ScriptingEntity> UpdateList = new List<ScriptingEntity>();
 
         public Input Input { get; private set; }
 
@@ -54,9 +54,9 @@ namespace MHGameWork.TheWizards._XNA.Scene
             get { return physicsElementFactory; }
         }
 
-        public Entity CreateEntity()
+        public ScriptingEntity CreateEntity()
         {
-            var ent = new Entity(this);
+            var ent = new ScriptingEntity(this);
             entities.Add(ent);
 
             return ent;
@@ -71,10 +71,10 @@ namespace MHGameWork.TheWizards._XNA.Scene
 
         }
 
-        public Entity RaycastScene(Ray ray)
+        public ScriptingEntity RaycastScene(Ray ray)
         {
             float? closest = null;
-            Entity ret = null;
+            ScriptingEntity ret = null;
 
             for (int i = 0; i < entities.Count; i++)
             {
@@ -111,14 +111,14 @@ namespace MHGameWork.TheWizards._XNA.Scene
             processPhysXContacts();
         }
 
-        public void AssignScriptToEntity(Entity entity, FileInfo scriptFile)
+        public void AssignScriptToEntity(ScriptingEntity scriptingEntity, FileInfo scriptFile)
         {
-            scriptLoader.LoadScript(entity, scriptFile);
+            scriptLoader.LoadScript(scriptingEntity, scriptFile);
         }
 
-        private Entity resolveEntityFromPhysx(Actor actor)
+        private ScriptingEntity resolveEntityFromPhysx(Actor actor)
         {
-            if (actor.UserData is Entity) return (Entity)actor.UserData;
+            if (actor.UserData is ScriptingEntity) return (ScriptingEntity)actor.UserData;
             return null;
         }
 
@@ -295,11 +295,11 @@ namespace MHGameWork.TheWizards._XNA.Scene
             public Vector3 WorldImpact;
             public Vector3 WorldNormal;
 
-            public Entity Entity;
+            public ScriptingEntity ScriptingEntity;
 
-            public EntityRaycastHit(RaycastHit hit, Entity entity)
+            public EntityRaycastHit(RaycastHit hit, ScriptingEntity scriptingEntity)
             {
-                Entity = entity;
+                ScriptingEntity = scriptingEntity;
                 Distance = hit.Distance;
                 WorldImpact = hit.WorldImpact;
                 WorldNormal = hit.WorldNormal;
@@ -312,7 +312,7 @@ namespace MHGameWork.TheWizards._XNA.Scene
                 return new _XNA.Scripting.API.EntityRaycastHit
                 {
                     Distance = Distance,
-                    Entity = Entity.APIEntity,
+                    Entity = ScriptingEntity.APIEntity,
                     WorldImpact = WorldImpact,
                     WorldNormal = WorldNormal,
                     IsHit = true

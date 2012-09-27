@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards._XNA.Scene
     /// This is NOT a data class
     /// This represents a GamePlay-level entity.
     /// </summary>
-    public class Entity
+    public class ScriptingEntity
     {
 
         public Scene Scene { get; private set; }
@@ -106,7 +106,7 @@ namespace MHGameWork.TheWizards._XNA.Scene
             throw new NotImplementedException();
         }
 
-        public Entity(Scene scene)
+        public ScriptingEntity(Scene scene)
         {
             Scene = scene;
             _static = true;
