@@ -5,14 +5,14 @@ using System.Text;
 
 namespace MHGameWork.TheWizards.LevelBuilding
 {
-    public class LevelData
+    public class LevelBuildingData
     {
-        public void AddLevelBuildingObject(ILevelBuildingObject o)
+        public void AddLevelBuildingObject(Object o)
         {
             throw new NotImplementedException();
         }
 
-        public ILevelBuildingObject RemoveLevelBuildingObject(ILevelBuildingObject o)
+        public ILevelBuildingObjectType RemoveLevelBuildingObject(Object o)
         {
             throw new NotImplementedException();
         }
