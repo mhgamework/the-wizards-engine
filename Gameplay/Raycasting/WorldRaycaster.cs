@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.Raycasting
             foreach (var ent in TW.Model.Objects.Where(o => o is WorldRendering.Entity).Select(o => o as WorldRendering.Entity))
             {
                 raycastEntity(ent, ray, newResult);
-                if (newResult.IsCloser(closest)) closest = newResult;
+                if (newResult.IsCloser(closest)) newResult.CopyTo(closest);
             }
 
             return closest;

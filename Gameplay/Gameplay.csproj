@@ -124,6 +124,7 @@
     <Compile Include="Tiling\TileFaceExtensions.cs" />
     <Compile Include="Tiling\TileModel.cs" />
     <Compile Include="Tiling\TileRotationExtension.cs" />
+    <Compile Include="WorldRendering\World.cs" />
     <Compile Include="WorldRendering\MeshFactory.cs" />
     <Compile Include="WorldRendering\RenderingModel.cs" />
     <Compile Include="WorldRendering\SimpleAssetFactory.cs" />
