@@ -107,6 +107,10 @@
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
+    <Compile Include="LevelBuilding\ILevelBuildingObject.cs" />
+    <Compile Include="LevelBuilding\LevelBuildingController.cs" />
+    <Compile Include="LevelBuilding\LevelData.cs" />
+    <Compile Include="LevelBuilding\ScalableGrid.cs" />
     <Compile Include="Pickup\Inventory.cs" />
     <Compile Include="Pickup\ItemEntity.cs" />
     <Compile Include="Pickup\ItemEntityFactory.cs" />
@@ -143,7 +147,12 @@
     <Compile Include="Building\WallPlacer.cs" />
     <Compile Include="Building\WallType.cs" />
     <Compile Include="Simulators\AudioSimulator.cs" />
+<<<<<<< HEAD
     <Compile Include="Persistence\AutoSaveSimulator.cs" />
+=======
+    <Compile Include="Simulators\AutoSaveSimulator.cs" />
+    <Compile Include="Simulators\LevelBuildingSimulator.cs" />
+>>>>>>> a37fdc4... First implementation of levelbuilding-tool (not working)
     <Compile Include="Simulators\PickupSimulator.cs" />
     <Compile Include="Simulators\TriggerSimulator.cs" />
     <Compile Include="Simulators\DebugSimulator.cs" />
