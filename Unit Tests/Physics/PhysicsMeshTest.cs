@@ -10,7 +10,6 @@ using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 using Microsoft.Xna.Framework;
 using StillDesign.PhysX;
-using MHGameWork.TheWizards.Entities;
 
 namespace MHGameWork.TheWizards.Tests.Physics
 {
@@ -56,51 +55,6 @@ namespace MHGameWork.TheWizards.Tests.Physics
             return positions;
         }
 
-        private static EntityFullData CreatePyramidEntity(EntityManagerService ems, float size)
-        {
-            TaggedEntity ent = ems.CreateEntity();
-            TaggedObject obj = ems.CreateObject();
-
-            EntityFullData entityData = ent.GetTag<EntityFullData>();
-            entityData.TaggedObject = obj;
-
-            ModelFullData modelData = new ModelFullData();
-            modelData.Positions = CreatePyramidPositions();
-            modelData.ObjectMatrix = Matrix.CreateScale(size);
-            modelData.CalculateBoundingBox();
-            modelData.CalculateBoundingSphere();
-
-            entityData.ObjectFullData.Models.Add(modelData);
-
-            return entityData;
-        }
-        private static EntityFullData CreateTwoPyramidEntity(EntityManagerService ems, float size1, float size2)
-        {
-            TaggedEntity ent = ems.CreateEntity();
-            TaggedObject obj = ems.CreateObject();
-
-            EntityFullData entityData = ent.GetTag<EntityFullData>();
-            entityData.TaggedObject = obj;
-
-            ModelFullData modelData = new ModelFullData();
-            modelData.Positions = CreatePyramidPositions();
-            modelData.ObjectMatrix = Matrix.CreateScale(size1);
-            modelData.CalculateBoundingBox();
-            modelData.CalculateBoundingSphere();
-
-            entityData.ObjectFullData.Models.Add(modelData);
-
-            modelData = new ModelFullData();
-            modelData.Positions = CreatePyramidPositions();
-            modelData.ObjectMatrix = Matrix.CreateScale(size2);
-            modelData.CalculateBoundingBox();
-            modelData.CalculateBoundingSphere();
-
-            entityData.ObjectFullData.Models.Add(modelData);
-
-
-            return entityData;
-        }
 
         [Test]
         [RequiresThread(System.Threading.ApartmentState.STA)]

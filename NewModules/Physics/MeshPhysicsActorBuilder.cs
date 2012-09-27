@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MHGameWork.TheWizards.Entities;
 using MHGameWork.TheWizards.Physics;
 using Microsoft.Xna.Framework;
 using StillDesign.PhysX;

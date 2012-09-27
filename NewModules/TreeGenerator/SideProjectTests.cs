@@ -55,102 +55,102 @@ namespace TreeGenerator
                 };
             game.Run();
         }
-        [Test]
-        public  void TestEditorMeshPartRenderDataSimple()
-        {
-            EditorMesh eMesh = new EditorMesh();
-            ObjImporter objImporter = new ObjImporter();
+        //[Test]
+        //public  void TestEditorMeshPartRenderDataSimple()
+        //{
+        //    EditorMesh eMesh = new EditorMesh();
+        //    ObjImporter objImporter = new ObjImporter();
 
-            eMesh = objImporter.ImportObjFile(@"C:\The Wizards\TreeGenerater\TreeGenerator\bin\x86\Debug\testExportNoFlipNormals.obj");
-
-
-
-            XNAGame game = new XNAGame();
-            ColladaShader shader = null;
-            EditorMeshPartRenderData renderData = null;
+        //    eMesh = objImporter.ImportObjFile(@"C:\The Wizards\TreeGenerater\TreeGenerator\bin\x86\Debug\testExportNoFlipNormals.obj");
 
 
 
-            game.InitializeEvent +=
-                delegate
-                {
-                    renderData = new EditorMeshPartRenderData(eMesh.CoreData.Parts[0].MeshPart as EditorMeshPart);
-                    renderData.Initialize(game);
-
-                    shader = new ColladaShader(game, null);
-
-                    shader.DiffuseColor = Color.Red.ToVector4();
-                    shader.SpecularColor = Color.Green.ToVector4();
-                    shader.LightDirection = new Vector3(0, 0, -1);
-                    shader.Shininess = 1;
-                };
-
-            game.DrawEvent +=
-                delegate
-                {
-                    game.GraphicsDevice.RenderState.CullMode = Microsoft.Xna.Framework.Graphics.CullMode.None;
-                    shader.World = Matrix.Identity;
-                    shader.ViewInverse = game.Camera.ViewInverse;
-                    shader.ViewProjection = game.Camera.ViewProjection;
-
-                    shader.RenderPrimitiveSinglePass(renderData, Microsoft.Xna.Framework.Graphics.SaveStateMode.None);
-
-                };
-
-            game.Run();
-
-        }
-        [Test]
-        public  void TestEditorMeshPartRenderDataComplex()
-        {
-            EditorMesh eMesh = new EditorMesh();
-            ObjImporter objImporter = new ObjImporter();
-
-            eMesh = objImporter.ImportObjFile(@"C:\The Wizards\TreeGenerater\TreeGenerator\bin\x86\Debug\testExportNoFlipNormals.obj");
+        //    XNAGame game = new XNAGame();
+        //    ColladaShader shader = null;
+        //    EditorMeshPartRenderData renderData = null;
 
 
 
-            XNAGame game = new XNAGame();
-            game.SpectaterCamera.FarClip = 5000;
-            ColladaShader shader = null;
-            List<EditorMeshPartRenderData> renderData = new List<EditorMeshPartRenderData>();
+        //    game.InitializeEvent +=
+        //        delegate
+        //        {
+        //            renderData = new EditorMeshPartRenderData(eMesh.CoreData.Parts[0].MeshPart as EditorMeshPart);
+        //            renderData.Initialize(game);
 
-            game.InitializeEvent +=
-                delegate
-                {
-                    for (int i = 0; i < eMesh.CoreData.Parts.Count; i++)
-                    {
-                        renderData.Add(new EditorMeshPartRenderData(eMesh.CoreData.Parts[i].MeshPart as EditorMeshPart));
-                        renderData[i].Initialize(game);
+        //            shader = new ColladaShader(game, null);
 
-                    }
+        //            shader.DiffuseColor = Color.Red.ToVector4();
+        //            shader.SpecularColor = Color.Green.ToVector4();
+        //            shader.LightDirection = new Vector3(0, 0, -1);
+        //            shader.Shininess = 1;
+        //        };
+
+        //    game.DrawEvent +=
+        //        delegate
+        //        {
+        //            game.GraphicsDevice.RenderState.CullMode = Microsoft.Xna.Framework.Graphics.CullMode.None;
+        //            shader.World = Matrix.Identity;
+        //            shader.ViewInverse = game.Camera.ViewInverse;
+        //            shader.ViewProjection = game.Camera.ViewProjection;
+
+        //            shader.RenderPrimitiveSinglePass(renderData, Microsoft.Xna.Framework.Graphics.SaveStateMode.None);
+
+        //        };
+
+        //    game.Run();
+
+        //}
+        //[Test]
+        //public  void TestEditorMeshPartRenderDataComplex()
+        //{
+        //    EditorMesh eMesh = new EditorMesh();
+        //    ObjImporter objImporter = new ObjImporter();
+
+        //    eMesh = objImporter.ImportObjFile(@"C:\The Wizards\TreeGenerater\TreeGenerator\bin\x86\Debug\testExportNoFlipNormals.obj");
 
 
-                    shader = new ColladaShader(game, null);
 
-                    shader.DiffuseColor = Color.Red.ToVector4();
-                    shader.SpecularColor = Color.Green.ToVector4();
-                    shader.LightDirection = new Vector3(0, 0, -1);
-                    shader.Shininess = 1;
-                };
+        //    XNAGame game = new XNAGame();
+        //    game.SpectaterCamera.FarClip = 5000;
+        //    ColladaShader shader = null;
+        //    List<EditorMeshPartRenderData> renderData = new List<EditorMeshPartRenderData>();
 
-            game.DrawEvent +=
-                delegate
-                {
-                    game.GraphicsDevice.RenderState.CullMode = Microsoft.Xna.Framework.Graphics.CullMode.CullClockwiseFace;
-                    shader.World = Matrix.Identity;
-                    shader.ViewInverse = game.Camera.ViewInverse;
-                    shader.ViewProjection = game.Camera.ViewProjection;
-                    for (int i = 0; i < renderData.Count; i++)
-                    {
-                        shader.RenderPrimitiveSinglePass(renderData[i], Microsoft.Xna.Framework.Graphics.SaveStateMode.None);
+        //    game.InitializeEvent +=
+        //        delegate
+        //        {
+        //            for (int i = 0; i < eMesh.CoreData.Parts.Count; i++)
+        //            {
+        //                renderData.Add(new EditorMeshPartRenderData(eMesh.CoreData.Parts[i].MeshPart as EditorMeshPart));
+        //                renderData[i].Initialize(game);
 
-                    }
-                };
+        //            }
 
-            game.Run();
 
-        }
+        //            shader = new ColladaShader(game, null);
+
+        //            shader.DiffuseColor = Color.Red.ToVector4();
+        //            shader.SpecularColor = Color.Green.ToVector4();
+        //            shader.LightDirection = new Vector3(0, 0, -1);
+        //            shader.Shininess = 1;
+        //        };
+
+        //    game.DrawEvent +=
+        //        delegate
+        //        {
+        //            game.GraphicsDevice.RenderState.CullMode = Microsoft.Xna.Framework.Graphics.CullMode.CullClockwiseFace;
+        //            shader.World = Matrix.Identity;
+        //            shader.ViewInverse = game.Camera.ViewInverse;
+        //            shader.ViewProjection = game.Camera.ViewProjection;
+        //            for (int i = 0; i < renderData.Count; i++)
+        //            {
+        //                shader.RenderPrimitiveSinglePass(renderData[i], Microsoft.Xna.Framework.Graphics.SaveStateMode.None);
+
+        //            }
+        //        };
+
+        //    game.Run();
+
+        //}
         [Test]
         public  void TestMorphModel()
         {

@@ -158,8 +158,6 @@
     <Compile Include="Rendering\DeferredRenderingTest.cs" />
     <Compile Include="Rendering\MeshLoaderTest.cs" />
     <Compile Include="Rendering\SSAOTest.cs" />
-    <Compile Include="Entity\EntityClientTest.cs" />
-    <Compile Include="Entity\EntityTest.cs" />
     <Compile Include="Gameplay\GameplayTest.cs" />
     <Compile Include="Gameplay\HelperPlayerController.cs" />
     <Compile Include="Launcher\LauncherTest.cs" />

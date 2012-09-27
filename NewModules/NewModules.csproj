@@ -155,30 +155,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Entities\Editor\Rendering\EditorMaterial.cs" />
-    <Compile Include="Entity\Client\EntityClientPhysics.cs" />
-    <Compile Include="Entity\Client\EntityPhysicsActorBuilder.cs" />
-    <Compile Include="Entity\Editor\EditorMesh.cs" />
-    <Compile Include="Entity\Editor\EditorMeshPart.cs" />
-    <Compile Include="Entity\Editor\EditorMeshPartRenderData.cs" />
-    <Compile Include="Entity\IObject.cs" />
-    <Compile Include="Entity\IObjectData.cs" />
-    <Compile Include="Entity\IObjectDataRenderDataFactory.cs" />
-    <Compile Include="Entity\ModelGeometryData.cs" />
-    <Compile Include="Entity\ObjectCoreData.cs" />
-    <Compile Include="Entity\ObjectFullData.cs" />
-    <Compile Include="Entity\ObjectFullDataFactory.cs" />
-    <Compile Include="Entity\ObjectMeshData.cs" />
-    <Compile Include="Entity\ObjectRenderDataFactory.cs" />
-    <Compile Include="Entity\ObjectRenderElement.cs" />
-    <Compile Include="Entity\RAMMesh.cs" />
-    <Compile Include="Entity\RAMMeshPart.cs" />
-    <Compile Include="Entity\RAMObject.cs" />
-    <Compile Include="Entity\TangentSolver.cs" />
-    <Compile Include="Entity\TODO\EntityFullData.cs" />
-    <Compile Include="Entity\TODO\EntityManagerService.cs" />
-    <Compile Include="Entity\TODO\ModelFullData.cs" />
-    <Compile Include="Entity\TODO\TaggedEntity.cs" />
-    <Compile Include="Entity\TODO\TaggedObject.cs" />
+    <Compile Include="Entity\Editor\EditorMesh.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entity\Editor\EditorMeshPart.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entity\RAMMesh.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entity\RAMMeshPart.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ModelContainer\BaseModelObject.cs" />
     <Compile Include="ModelContainer\BasicSimulator.cs" />
     <Compile Include="ModelContainer\Engine.cs" />
@@ -247,7 +235,6 @@
     <Compile Include="Rendering\MeshPartAdditionalData.cs" />
     <Compile Include="Rendering\MeshPartGeometryData.cs" />
     <Compile Include="Rendering\MeshPartPool.cs" />
-    <Compile Include="Rendering\MeshRenderDataFactory.cs" />
     <Compile Include="Rendering\RAMTexture.cs" />
     <Compile Include="Rendering\RAMTextureFactory.cs" />
     <Compile Include="Rendering\SimpleMeshFactory.cs" />
