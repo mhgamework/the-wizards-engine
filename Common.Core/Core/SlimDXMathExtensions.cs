@@ -1,29 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using DirectX11;
+using SlimDX;
 
 namespace MHGameWork.TheWizards
 {
-    [Obsolete("Use SlimDX")]
-    public static class XnaMathExtensions
+    public static class SlimDXMathExtensions
     {
         public static BoundingBox MergeWith(this BoundingBox box1, BoundingBox box2)
         {
-            if (box1.Min == box1.Max)
+            if (box1.Minimum == box1.Maximum)
                 return box2;
-            if (box2.Min == box2.Max)
+            if (box2.Minimum == box2.Maximum)
                 return box1;
-            return BoundingBox.CreateMerged(box1, box2);
+            return BoundingBox.Merge(box1, box2);
         }
         public static BoundingBox Transform(this BoundingBox box, Matrix mat)
         {
             Vector3[] corners = box.GetCorners();
             Vector3[] ret = new Vector3[8];
-            Vector3.Transform(corners, ref mat, ret);
-            return BoundingBox.CreateFromPoints(ret);
+            Vector3.TransformCoordinate(corners, ref mat, ret);
+            return BoundingBox.FromPoints(ret);
 
             /*Vector3 min = Vector3.Transform(box.Min, mat);
             Vector3 max = Vector3.Transform(box.Max, mat);
@@ -37,7 +33,7 @@ namespace MHGameWork.TheWizards
                 up = Vector3.Right;
 
             Matrix ret = Matrix.CreateWorld(Vector3.Zero, direction, up);*/
-            var ret = CreateRotationMatrixMapDirection(Vector3.Forward, direction);
+            var ret = CreateRotationMatrixMapDirection(MathHelper.Forward, direction);
 
 
             return ret;
@@ -57,7 +53,7 @@ namespace MHGameWork.TheWizards
             cross = Vector3.Normalize(cross);
             //XNAGame.Get().LineManager3D.AddLine(Vector3.Zero, cross, Color.Black);
 
-            var ret = Matrix.CreateFromAxisAngle(cross, (float)Math.Acos(Vector3.Dot(sourceDir, targetDir)));
+            var ret = Matrix.RotationAxis(cross, (float)Math.Acos(Vector3.Dot(sourceDir, targetDir)));
 
             return ret;
         }
@@ -72,14 +68,10 @@ namespace MHGameWork.TheWizards
                 };
         }
 
-        public static Matrix CreateMatrixFromFloatArray(float[] mat, int offset)
-        {
-            return new Matrix(
-                mat[offset + 0], mat[offset + 1], mat[offset + 2], mat[offset + 3],
-                mat[offset + 4], mat[offset + 5], mat[offset + 6], mat[offset + 7],
-                mat[offset + 8], mat[offset + 9], mat[offset + 10], mat[offset + 11],
-                mat[offset + 12], mat[offset + 13], mat[offset + 14], mat[offset + 15]);
-        }
 
+        public static Ray Transform(this Ray ray, Matrix transformation)
+        {
+            return new Ray(Vector3.TransformCoordinate(ray.Position, transformation), Vector3.TransformNormal(ray.Direction, transformation));
+        }
     }
 }

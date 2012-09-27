@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.Graphics
     /// <summary>
     /// Represents a box that starts at 0,0,0 and extends in the axis directions with a length
     /// </summary>
-    public class BoxMesh : IXNAObject, Raycast.IRaycastable<BoxMesh, Raycast.RaycastResult<BoxMesh>>
+    public class BoxMesh : IXNAObject
     {
         private BoundingBox boundingBox;
         public BoundingBox BoundingBox
@@ -293,46 +293,7 @@ namespace MHGameWork.TheWizards.Graphics
             shader.World = calculateObjectWorldMatrix();
         }
 
-      
-
-        #region IRaycastable<BoxMesh,RaycastResult<BoxMesh>> Members
-
-        public Raycast.RaycastResult<BoxMesh> Raycast(Ray ray)
-        {
-            // Not test anymore!
-            Vector3 testpoint = ray.Position + ray.Direction;
-
-            Matrix mat = shader.World;
-            mat = Matrix.Invert(mat);
-            if (float.IsNaN(mat.M11) || float.IsInfinity(mat.M11))
-            {
-                // Inverse bestaat niet! Dit is dus een verkeerde transform matrix!!
-                // Dit komt doordat de een van de coords van de dimensions 0 is. Doe dan geen raycast
-                return new MHGameWork.TheWizards.Raycast.RaycastResult<BoxMesh>((float?)null, this);
-            }
-            ray.Position = Vector3.Transform(ray.Position, mat);
-
-            testpoint = Vector3.Transform(testpoint, mat);
-            Vector3 testDir = Vector3.Normalize(testpoint - ray.Position);
-            //TODO: check this
-            //EDIT: this doesnt work, now using testdir
-            ray.Direction = Vector3.Transform(ray.Direction, mat);
-            ray.Direction = Vector3.Normalize(ray.Direction);
-
-            ray.Direction = testDir;
-
-            BoundingBox bb = new BoundingBox(Vector3.Zero, Vector3.One);
-            float? dist = ray.Intersects(bb);
-
-            MHGameWork.TheWizards.Raycast.RaycastResult<BoxMesh> result;
-            result = new MHGameWork.TheWizards.Raycast.RaycastResult<BoxMesh>(dist, this);
-
-            return result;
-        }
-
-        #endregion
-
-
+     
 
 
     }

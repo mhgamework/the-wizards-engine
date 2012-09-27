@@ -134,6 +134,7 @@
     <Compile Include="CommonOld\Wereld\IQuadtreeNode.cs" />
     <Compile Include="CommonOld\Wereld\QuadtreeChildDirection.cs" />
     <Compile Include="CommonOld\Wereld\QuadTreeNode.cs" />
+    <Compile Include="Core\SlimDXMathExtensions.cs" />
     <Compile Include="Core\Database\Database.cs" />
     <Compile Include="Core\Database\IGameObject.cs" />
     <Compile Include="Core\Database\IGameService.cs" />

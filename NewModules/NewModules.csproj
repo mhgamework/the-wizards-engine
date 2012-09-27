@@ -207,13 +207,7 @@
     <Compile Include="Profiling\Profiler.cs" />
     <Compile Include="Profiling\ProfilingPoint.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Raycast\MainRaycaster.cs" />
-    <Compile Include="Raycast\Old\GeometryRaycastResult.cs" />
-    <Compile Include="Raycast\Old\IRaycastable.cs" />
-    <Compile Include="Raycast\Old\IRaycastResult.cs" />
-    <Compile Include="Raycast\Old\Raycaster.cs" />
-    <Compile Include="Raycast\Old\RaycastHelper.cs" />
-    <Compile Include="Raycast\Old\RaycastResult.cs" />
+    <Compile Include="Raycasting\MeshRaycaster.cs" />
     <Compile Include="Rendering\CullerNoCull.cs" />
     <Compile Include="Rendering\DebugVisualizer.cs" />
     <Compile Include="Rendering\DefaultModelMaterialTextured.cs" />
