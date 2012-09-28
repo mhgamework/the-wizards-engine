@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DirectX11;
+using MHGameWork.TheWizards.Audio;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering.Deferred;
@@ -34,6 +35,8 @@ namespace MHGameWork.TheWizards
             get { return ctx.Scene; }
         }
 
+        public static AudioEngine Audio { get { return ctx.Audio; } }
+
         public static DeferredRenderer AcquireRenderer()
         {
             return ctx.AcquireRenderer();
@@ -51,6 +54,7 @@ namespace MHGameWork.TheWizards
             public ModelContainer.ModelContainer Model { get; set; }
             public PhysicsEngine PhysX { get; set; }
             public StillDesign.PhysX.Scene Scene { get; set; }
+            public AudioEngine Audio { get; set; }
 
             private DeferredRenderer renderer;
 

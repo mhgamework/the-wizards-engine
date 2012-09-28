@@ -44,6 +44,7 @@ namespace MHGameWork.TheWizards.ModelContainer
             context.Model = container;
             context.PhysX = physX;
             context.Scene = physX.Scene;
+            context.Audio = new Audio.AudioEngine();
             TW.SetContext(context);
         }
 

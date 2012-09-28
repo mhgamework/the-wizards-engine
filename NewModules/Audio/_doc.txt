@@ -1,0 +1,3 @@
+﻿Currently using XAudio2 for playback and the X3DAudio extension to calcuate the parameters for sound positioning.
+
+ISound represents a audio fragment: explosion, ambient sounds, background music, ...
