@@ -1,5 +1,6 @@
 ﻿using System;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Raycasting;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Synchronization;
@@ -12,7 +13,7 @@ namespace MHGameWork.TheWizards.WorldRendering
     /// </summary>
     [NoSync]
     [ModelObjectChanged]
-    public class World : BaseModelObject
+    public class World : EngineModelObject
     {
         private WorldRaycaster raycaster = new WorldRaycaster();
         public World()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.WorldRendering;
 using NUnit.Framework;
@@ -21,18 +22,18 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         {
             var game = new LocalGame();
 
-            var world = TW.Model.GetSingleton<WorldRendering.World>();
+            var world = TW.Data.GetSingleton<WorldRendering.World>();
 
             game.AddSimulator(new BasicSimulator(delegate
                                                      {
 
-                                                         var rayPos = TW.Game.Camera.ViewInverse.xna().Translation.dx();
-                                                         var rayDir = TW.Game.Camera.ViewInverse.xna().Forward.dx();
+                                                         var rayPos = TW.Graphics.Camera.ViewInverse.xna().Translation.dx();
+                                                         var rayDir = TW.Graphics.Camera.ViewInverse.xna().Forward.dx();
                                                          var ray = new Ray(rayPos, rayDir);
                                                          var result = world.Raycast(ray);
                                                          if (result.IsHit)
                                                          {
-                                                             TW.Game.LineManager3D.AddTriangle(result.V1, result.V2,
+                                                             TW.Graphics.LineManager3D.AddTriangle(result.V1, result.V2,
                                                                                                result.V3,
                                                                                                new Color4(Color.Yellow));
                                                          }
