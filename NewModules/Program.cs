@@ -12,7 +12,7 @@ namespace MHGameWork.TheWizards
     {
         public static void Main()
         {
-            var eng = new ModelContainer.Engine();
+            var eng = new Engine.TWEngine();
             eng.GameplayDll = "../../Gameplay/bin/x86/Debug/Gameplay.dll";
             eng.Start();
         }

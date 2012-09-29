@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using MHGameWork.TheWizards.ModelContainer;
 
-namespace MHGameWork.TheWizards.ModelContainer
+namespace MHGameWork.TheWizards.Engine
 {
     public interface IModelObjectAddon<T> : IDisposable where T : IModelObject
     {

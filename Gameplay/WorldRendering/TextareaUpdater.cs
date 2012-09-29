@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Rendering.Text;
 using SlimDX;
 

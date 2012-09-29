@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.WorldRendering;
 using NUnit.Framework;

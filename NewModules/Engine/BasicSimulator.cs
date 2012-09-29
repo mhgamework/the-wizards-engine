@@ -1,7 +1,6 @@
 ﻿using System;
-using MHGameWork.TheWizards.ModelContainer;
 
-namespace MHGameWork.TheWizards.Simulators
+namespace MHGameWork.TheWizards.Engine
 {
     public class BasicSimulator : ISimulator
     {

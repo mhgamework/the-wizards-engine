@@ -176,7 +176,7 @@
     </Compile>
     <Compile Include="Engine\EngineModelObject.cs" />
     <Compile Include="Engine\BasicSimulator.cs" />
-    <Compile Include="Engine\Engine.cs" />
+    <Compile Include="Engine\TWEngine.cs" />
     <Compile Include="Engine\IGameplayPlugin.cs" />
     <Compile Include="ModelContainer\SimpleModelObject.cs" />
     <Compile Include="ModelContainer\IModelObject.cs" />

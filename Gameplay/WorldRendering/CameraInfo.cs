@@ -1,5 +1,6 @@
 ﻿using DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Synchronization;
 using SlimDX;

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11;
-using MHGameWork.TheWizards.Audio;
+﻿using MHGameWork.TheWizards.Audio;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Physics;

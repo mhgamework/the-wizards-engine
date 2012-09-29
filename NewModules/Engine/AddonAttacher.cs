@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using MHGameWork.TheWizards.ModelContainer;
 
-namespace MHGameWork.TheWizards.ModelContainer
+namespace MHGameWork.TheWizards.Engine
 {
     /// <summary>
     /// This class allows implementing some sort of multiple inheritance for ModelObjects

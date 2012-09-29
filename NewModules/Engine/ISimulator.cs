@@ -1,4 +1,4 @@
-﻿namespace MHGameWork.TheWizards.ModelContainer
+﻿namespace MHGameWork.TheWizards.Engine
 {
     public interface ISimulator
     {

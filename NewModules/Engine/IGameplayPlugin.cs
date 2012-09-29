@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MHGameWork.TheWizards.ModelContainer
+﻿namespace MHGameWork.TheWizards.Engine
 {
     public interface IGameplayPlugin
     {
-        void Initialize(Engine engine);
+        void Initialize(TWEngine engine);
     }
 }

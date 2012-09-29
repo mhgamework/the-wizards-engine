@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Reflection;
-using System.Linq;
 
-namespace MHGameWork.TheWizards.ModelContainer
+namespace MHGameWork.TheWizards.Engine
 {
     public class TypelessModel
     {
         private List<TypelessObject> objects = new List<TypelessObject>();
 
-        public void UpdateFromModel(ModelContainer model)
+        public void UpdateFromModel(ModelContainer.ModelContainer model)
         {
             var array = new List<IModelObject>();
             foreach (var el in model.Objects)
@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.ModelContainer
             }
         }
 
-        public void AddToModel(ModelContainer model, Assembly assembly)
+        public void AddToModel(ModelContainer.ModelContainer model, Assembly assembly)
         {
             foreach (var t in objects)
             {

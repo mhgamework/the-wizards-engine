@@ -1,4 +1,5 @@
 ﻿using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;

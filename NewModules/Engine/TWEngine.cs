@@ -1,19 +1,10 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using DirectX11;
-using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Networking;
-using MHGameWork.TheWizards.Physics;
-using MHGameWork.TheWizards.Simulators;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.ModelContainer
+namespace MHGameWork.TheWizards.Engine
 {
     /// <summary>
     /// This is a host for TW gameplay, it starts and manages the TW context resources, and hotloads the gameplay code
@@ -23,9 +14,9 @@ namespace MHGameWork.TheWizards.ModelContainer
     ///                                  The new dll is loaded, and the old types are mapped onto the new types, new objects are created and the links are re-established
     /// 
     /// </summary>
-    public class Engine
+    public class TWEngine
     {
-        public Engine()
+        public TWEngine()
         {
             GameplayDll = "../../Gameplay/bin/x86/Debug/Gameplay.dll";
         }

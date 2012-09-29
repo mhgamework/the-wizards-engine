@@ -1,4 +1,5 @@
 ﻿using DirectX11;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Entity.Client;
 using MHGameWork.TheWizards.Graphics;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.Assetbrowser;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;

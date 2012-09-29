@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using MHGameWork.TheWizards.ModelContainer;
 
-namespace MHGameWork.TheWizards.ModelContainer
+namespace MHGameWork.TheWizards.Engine
 {
     /// <summary>
     /// Base class for DataObjects in the Engine
@@ -26,8 +27,8 @@ namespace MHGameWork.TheWizards.ModelContainer
             DEBUG_ID = DEBUG_NEXTID++;
         }
 
-        public ModelContainer Container { get; private set; }
-        public void Initialize(ModelContainer container)
+        public ModelContainer.ModelContainer Container { get; private set; }
+        public void Initialize(ModelContainer.ModelContainer container)
         {
             Container = container;
         }
