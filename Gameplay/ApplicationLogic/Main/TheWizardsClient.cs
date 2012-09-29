@@ -21,6 +21,7 @@ using MHGameWork.TheWizards.WorldRendering;
 namespace MHGameWork.TheWizards.Main
 {
     /// <summary>
+    /// TODO: Implement using engine??
     /// This forms the starting point for the client for the wizards. Start this to start the full client.
     /// </summary>
     public class TheWizardsClient
@@ -62,15 +63,16 @@ namespace MHGameWork.TheWizards.Main
 
         private void setScriptLayerScope()
         {
-            var context = new TW.Context
-                              {
-                                  Game = xnaGame,
-                                  PhysX = physicsEngine,
-                                  Scene = physicsEngine.Scene,
-                                  Model = container
-                              };
+            throw new NotImplementedException();
+            //var context = new TW.Context
+            //                  {
+            //                      Graphics = xnaGame,
+            //                      Physics = physicsEngine,
+            //                      Scene = physicsEngine.Scene,
+            //                      Data = container
+            //                  };
 
-            TW.SetContext(context);
+            //TW.SetContext(context);
         }
 
         private void setUp()

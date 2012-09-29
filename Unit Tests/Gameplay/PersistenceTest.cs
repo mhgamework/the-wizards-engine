@@ -14,6 +14,9 @@ using Rhino.Mocks;
 
 namespace MHGameWork.TheWizards.Tests.Gameplay
 {
+    /// <summary>
+    /// These tests smear across layers and should be fixed
+    /// </summary>
     [TestFixture]
     public class PersistenceTest
     {
@@ -24,7 +27,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         [SetUp]
         public void SetUp()
         {
-            TW.SetContext(new TW.Context { Model = new ModelContainer.ModelContainer() });
+            SimpleModelObject.CurrentModelContainer = new ModelContainer.ModelContainer();
 
             object1 = new TestObject
                         {
@@ -120,7 +123,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             // For testing
             string serialized = getStringFromStream(strm);
 
-            TW.SetContext(new TW.Context { Model = deserialized });
+            SimpleModelObject.CurrentModelContainer = deserialized;
 
             s.Deserialize(deserialized, new StreamReader(strm));
 
@@ -154,7 +157,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             // For testing
             string serialized = getStringFromStream(strm);
 
-            TW.SetContext(new TW.Context { Model = deserialized });
+            SimpleModelObject.CurrentModelContainer = deserialized;
 
             s.Deserialize(deserialized, new StreamReader(strm));
 
@@ -182,7 +185,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         }
 
         [Persist]
-        private class TestObject : BaseModelObject
+        private class TestObject : SimpleModelObject
         {
             public int Getal { get; set; }
             public TestObject Object { get; set; }

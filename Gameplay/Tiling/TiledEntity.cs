@@ -12,7 +12,7 @@ namespace MHGameWork.TheWizards.Tiling
     /// Represents a 'tile' placed in the world. 
     /// </summary>
     [Persistence.Persist]
-    public class TiledEntity : BaseModelObject
+    public class TiledEntity : EngineModelObject
     {
         public static readonly Vector3 TileSize = new Vector3(3, 4, 3);
 

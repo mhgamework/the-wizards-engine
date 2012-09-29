@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.Physics;
 
@@ -12,21 +13,21 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
     public class LocalGame
     {
         private List<ISimulator> simulators;
-        private DX11Game game;
-        private PhysicsEngine physX;
+        private GraphicsWrapper game;
+        private PhysicsWrapper physX;
 
 
         public LocalGame()
         {
             simulators = new List<ISimulator>();
 
-            game = new DX11Game();
+            game = new GraphicsWrapper();
 
             game.InitDirectX();
 
-            var container = new ModelContainer.ModelContainer();
+            var container = new DataWrapper();
 
-            physX = new PhysicsEngine();
+            physX = new PhysicsWrapper();
             physX.Initialize();
             //PhysicsDebugRenderer debugRenderer =
             //    new PhysicsDebugRenderer(game, engine.Scene);
@@ -61,12 +62,12 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
         }
 
-        private void setTWGlobals(ModelContainer.ModelContainer container)
+        private void setTWGlobals(DataWrapper container)
         {
             var context = new TW.Context();
-            context.Game = game;
-            context.Model = container;
-            context.PhysX = physX;
+            context.Graphics = game;
+            context.Data = container;
+            context.Physics = physX;
             context.Scene = physX.Scene;
             TW.SetContext(context);
         }

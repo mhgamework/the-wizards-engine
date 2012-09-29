@@ -8,7 +8,7 @@ using SlimDX;
 namespace MHGameWork.TheWizards.WorldRendering
 {
     [ModelObjectChanged]
-    public class Textarea : BaseModelObject
+    public class Textarea : EngineModelObject
     {
 
         public string FontFamily { get; set; }

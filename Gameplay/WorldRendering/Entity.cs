@@ -11,7 +11,7 @@ namespace MHGameWork.TheWizards.WorldRendering
     /// </summary>
     [NoSync]
     [ModelObjectChanged]
-    public class Entity : BaseModelObject
+    public class Entity : EngineModelObject
     {
         public Entity()
         {

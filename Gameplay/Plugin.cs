@@ -8,7 +8,7 @@ namespace MHGameWork.TheWizards
 {
     public class Plugin : IGameplayPlugin
     {
-        public void Initialize(Engine engine)
+        public void Initialize(ModelContainer.Engine engine)
         {
             engine.AddSimulator(new Simulators.AssetbrowserSimulator());
             engine.AddSimulator(new Simulators.WorldRenderingSimulator());

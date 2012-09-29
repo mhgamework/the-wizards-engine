@@ -17,6 +17,8 @@ namespace MHGameWork.TheWizards.Simulators
     /// All changes from simulators that run after this simulator are NOT synced over network
     /// 
     /// The syncer sends broadcasts a dummy change to all the remotes, as a cheat to notify them of our existance
+    /// 
+    /// TODO: this needs splitting and redesign into NewModules + GamePlay structure. See in the GIT repo for working tests :)
     /// </summary>
     public class NetworkSyncerSimulator : ISimulator
     {

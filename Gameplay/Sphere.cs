@@ -8,7 +8,7 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.ModelContainer
 {
-    public class Sphere : BaseModelObject
+    public class Sphere : EngineModelObject
     {
         private WorldRendering.Entity ent;
         private MeshDynamicPhysicsElement dEl;

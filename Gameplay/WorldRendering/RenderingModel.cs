@@ -11,7 +11,7 @@ namespace MHGameWork.TheWizards.WorldRendering
     /// Contains data + states for WorldRendering in the model (singleton)
     /// </summary>
     [NoSync]
-    public class RenderingModel : BaseModelObject
+    public class RenderingModel : EngineModelObject
     {
         public RenderingModel()
         {

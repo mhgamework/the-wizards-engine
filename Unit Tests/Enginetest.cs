@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.Tests
         [Test]
         public void StartEngine()
         {
-            var eng = new Engine();
+            var eng = new ModelContainer.Engine();
             eng.Start();
         }
 

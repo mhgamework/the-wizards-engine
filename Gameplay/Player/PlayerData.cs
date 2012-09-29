@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.Player
     /// The Look dir for angle (0,0) is (0,0,-1) = forward. The horizontal angle is around the Y-axis and the vertical around the right axis.
     /// </summary>
     [ModelObjectChanged]
-    public class PlayerData : BaseModelObject
+    public class PlayerData : EngineModelObject
     {
 
         public PlayerData()

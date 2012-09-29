@@ -11,6 +11,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.Tests.Gameplay
 {
+    /// <summary>
+    /// TODO: these tests smear across layers and should be fixed
+    /// </summary>
     [TestFixture]
     public class ModelTest
     {
@@ -26,7 +29,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         public void TestChangeEntity()
         {
             var container = new ModelContainer.ModelContainer();
-            TW.SetContext(new TW.Context {Model = container});
+            SimpleModelObject.CurrentModelContainer = new ModelContainer.ModelContainer();
 
             var ent = new WorldRendering.Entity();
 

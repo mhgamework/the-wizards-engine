@@ -53,7 +53,7 @@ namespace MHGameWork.TheWizards.Simulators
 
         }
 
-        public class Data : BaseModelObject
+        public class Data : EngineModelObject
         {
             public bool LightCreated = false;
         }

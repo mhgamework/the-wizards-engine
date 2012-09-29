@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.WorldRendering
     /// Contains information about the camerastate used in rendering
     /// </summary>
     [NoSync]
-    public class CameraInfo : BaseModelObject
+    public class CameraInfo : EngineModelObject
     {
         public CameraInfo()
         {

@@ -5,6 +5,7 @@ using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Audio;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using StillDesign.PhysX;
@@ -17,17 +18,17 @@ namespace MHGameWork.TheWizards
 
         public static DX11Game Game
         {
-            get { return ctx.Game; }
+            get { return ctx.Graphics; }
         }
 
         public static ModelContainer.ModelContainer Model
         {
-            get { return ctx.Model; }
+            get { return ctx.Data; }
         }
 
         public static PhysicsEngine PhysX
         {
-            get { return ctx.PhysX; }
+            get { return ctx.Physics; }
         }
 
         public static Scene Scene
@@ -50,11 +51,11 @@ namespace MHGameWork.TheWizards
 
         public class Context
         {
-            public DX11Game Game { get; set; }
-            public ModelContainer.ModelContainer Model { get; set; }
-            public PhysicsEngine PhysX { get; set; }
+            public GraphicsWrapper Graphics { get; set; }
+            public DataWrapper Data { get; set; }
+            public PhysicsWrapper Physics { get; set; }
             public StillDesign.PhysX.Scene Scene { get; set; }
-            public AudioEngine Audio { get; set; }
+            public AudioWrapper Audio { get; set; }
 
             private DeferredRenderer renderer;
 

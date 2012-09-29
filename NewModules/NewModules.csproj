@@ -157,6 +157,10 @@
     <Compile Include="Editor\FromEditorProject\TODO\EditorTerrainAlphaMap.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Engine\AudioWrapper.cs" />
+    <Compile Include="Engine\DataWrapper.cs" />
+    <Compile Include="Engine\GraphicsWrapper.cs" />
+    <Compile Include="Engine\PhysicsWrapper.cs" />
     <Compile Include="Entities\Editor\Rendering\EditorMaterial.cs" />
     <Compile Include="Entity\Editor\EditorMesh.cs">
       <SubType>Code</SubType>
@@ -170,19 +174,20 @@
     <Compile Include="Entity\RAMMeshPart.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Engine\BaseModelObject.cs" />
+    <Compile Include="Engine\EngineModelObject.cs" />
     <Compile Include="Engine\BasicSimulator.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Engine\IGameplayPlugin.cs" />
+    <Compile Include="ModelContainer\SimpleModelObject.cs" />
     <Compile Include="ModelContainer\IModelObject.cs" />
-    <Compile Include="ModelContainer\IModelObjectAddon.cs" />
+    <Compile Include="Engine\IModelObjectAddon.cs" />
     <Compile Include="Engine\ISimulator.cs" />
     <Compile Include="ModelContainer\ModelChange.cs" />
     <Compile Include="ModelContainer\ModelContainer.cs" />
     <Compile Include="ModelContainer\ModelObjectChangedAttribute.cs" />
-    <Compile Include="ModelContainer\AddonAttacher.cs" />
+    <Compile Include="Engine\AddonAttacher.cs" />
     <Compile Include="Engine\TW.cs" />
-    <Compile Include="ModelContainer\TypelessModel.cs" />
+    <Compile Include="Engine\TypelessModel.cs" />
     <Compile Include="Particles\BallParticalCreater.cs" />
     <Compile Include="Particles\EmitterParameters.cs" />
     <Compile Include="Particles\FlameParticalCreater.cs" />
@@ -572,6 +577,7 @@
     <EmbeddedResource Include="Rendering\Deferred\Files\RandomNormals.png" />
     <EmbeddedResource Include="Rendering\Files\Checker.png" />
     <Content Include="Audio\_doc.txt" />
+    <Content Include="Engine\_doc.txt" />
     <Content Include="Physics\_doc.txt" />
     <Content Include="Rendering\Text\_doc.txt" />
     <Content Include="Rendering\_doc.txt" />

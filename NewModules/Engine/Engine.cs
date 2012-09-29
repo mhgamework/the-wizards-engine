@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Simulators;
@@ -32,19 +33,19 @@ namespace MHGameWork.TheWizards.ModelContainer
        
 
         private List<ISimulator> simulators;
-        private DX11Game game;
-        private PhysicsEngine physX;
+        private GraphicsWrapper game;
+        private PhysicsWrapper physX;
         public string GameplayDll { get; set; }
 
 
-        private void setTWGlobals(ModelContainer container)
+        private void setTWGlobals(DataWrapper container)
         {
             var context = new TW.Context();
-            context.Game = game;
-            context.Model = container;
-            context.PhysX = physX;
+            context.Graphics = game;
+            context.Data = container;
+            context.Physics = physX;
             context.Scene = physX.Scene;
-            context.Audio = new Audio.AudioEngine();
+            context.Audio = new AudioWrapper();
             TW.SetContext(context);
         }
 
@@ -68,13 +69,13 @@ namespace MHGameWork.TheWizards.ModelContainer
         {
             simulators = new List<ISimulator>();
 
-            game = new DX11Game();
+            game = new GraphicsWrapper();
 
             game.InitDirectX();
 
-            var container = new ModelContainer();
+            var container = new DataWrapper();
 
-            physX = new PhysicsEngine();
+            physX = new PhysicsWrapper();
             physX.Initialize();
 
             game.GameLoopEvent += delegate

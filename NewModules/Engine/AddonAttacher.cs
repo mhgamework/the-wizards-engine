@@ -12,7 +12,7 @@ namespace MHGameWork.TheWizards.ModelContainer
     public class AddonAttacher
     {
         public void EnsureAttachment<T, U>(Func<U> factory)
-            where T : BaseModelObject
+            where T : EngineModelObject
             where U : class, IModelObjectAddon<T>
         {
             foreach (var change in TW.Model.GetChangesOfType<T>())

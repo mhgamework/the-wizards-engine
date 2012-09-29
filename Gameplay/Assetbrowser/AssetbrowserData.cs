@@ -7,7 +7,7 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.Assetbrowser
 {
-    public class AssetbrowserData : BaseModelObject
+    public class AssetbrowserData : EngineModelObject
     {
         public Boolean BrowserEnabled { get; set; }
         public Vector3 CameraPosition { get; set; }

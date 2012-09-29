@@ -21,6 +21,7 @@ using MHGameWork.TheWizards.XML;
 namespace MHGameWork.TheWizards.Main
 {
     /// <summary>
+    /// TODO: Implement using engine??
     /// This class holds the functions to start and process the server, but does not hold an event loop (see TheWizardsServer)
     /// </summary>
     public class TheWizardsServerCore
@@ -152,13 +153,14 @@ namespace MHGameWork.TheWizards.Main
 
         private void setScriptLayerScope()
         {
-            var context = new TW.Context();
-            context.Game = null;
-            context.PhysX = PhysicsEngine;
-            context.Scene = PhysicsEngine.Scene;
-            context.Model = container;
+            throw new NotImplementedException();
+            //var context = new TW.Context();
+            //context.Graphics = null;
+            //context.Physics = PhysicsEngine;
+            //context.Scene = PhysicsEngine.Scene;
+            //context.Data = container;
 
-            TW.SetContext(context);
+            //TW.SetContext(context);
         }
 
 

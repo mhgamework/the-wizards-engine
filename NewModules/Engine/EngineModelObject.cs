@@ -4,21 +4,23 @@ using System.Collections.Generic;
 namespace MHGameWork.TheWizards.ModelContainer
 {
     /// <summary>
-    /// Basic implementation of the functionality that a modelobject is required to implement
+    /// Base class for DataObjects in the Engine
     /// 
     /// The attachment system is an implementation of a type safe dynamic object mechanism. You can ask if this object contains a specific type of data, and retrieve and set it.
     /// This means that it is never allowed to add a call like set("dataName",mydata)!! ==> this is not type safe
     /// Concrete: if you need to attach 2 objects of the same type to a single BaseModelObject, you have to make a seperate class for this, due to the type-safety restriction 
     ///             (This is of course the whole point of the type safe implementation of a dynamic object)
+    /// 
+    /// The AddonAttacher provides a way to use this for multiple inheritance
     /// </summary>
     [ModelObjectChanged]
-    public class BaseModelObject : IModelObject
+    public class EngineModelObject : IModelObject
     {
         private int DEBUG_ID;
 
         private static int DEBUG_NEXTID = 0;
 
-        public BaseModelObject()
+        public EngineModelObject()
         {
             TW.Model.AddObject(this);
             DEBUG_ID = DEBUG_NEXTID++;
@@ -60,6 +62,11 @@ namespace MHGameWork.TheWizards.ModelContainer
             if (attached == null) attached = new Dictionary<Type, object>();
 
             attached[t] = value;
+        }
+
+        public override string ToString()
+        {
+            return "ModelObject #" + DEBUG_ID;
         }
         
     }

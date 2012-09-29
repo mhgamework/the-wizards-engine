@@ -11,7 +11,7 @@ namespace MHGameWork.TheWizards.Tiling
     /// <summary>
     /// Provides access to all tile data in the model
     /// </summary>
-    public class TileModel : BaseModelObject
+    public class TileModel : EngineModelObject
     {
         public TileModel()
         {

@@ -11,7 +11,7 @@ namespace MHGameWork.TheWizards.Audio
     /// Responsible for representing a sound that can be placed in the world.
     /// </summary>
     [ModelObjectChanged]
-    public class SoundEmitter : BaseModelObject
+    public class SoundEmitter : EngineModelObject
     {
         public Vector3 Position { get; set; }
         public ISound Sound { get; set; }

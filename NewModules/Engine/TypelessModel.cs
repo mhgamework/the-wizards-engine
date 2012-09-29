@@ -30,9 +30,9 @@ namespace MHGameWork.TheWizards.ModelContainer
                     t.SetData(att.Name, att.GetData(obj));
                 }
 
-                if (obj is BaseModelObject)
+                if (obj is EngineModelObject)
                 {
-                    t.attached = ((BaseModelObject)obj).attached;
+                    t.attached = ((EngineModelObject)obj).attached;
                 }
 
                 objects.Add(t);
@@ -54,9 +54,9 @@ namespace MHGameWork.TheWizards.ModelContainer
                             att.SetData(obj, t.GetData(att.Name));
                     }
 
-                    if (obj is BaseModelObject)
+                    if (obj is EngineModelObject)
                     {
-                        var bmo = obj as BaseModelObject;
+                        var bmo = obj as EngineModelObject;
 
                         foreach (var entry in t.attached)
                         {
@@ -94,7 +94,7 @@ namespace MHGameWork.TheWizards.ModelContainer
             return ReflectionHelper.GetAllAttributes(t);
         }
 
-        private class TypelessObject : BaseModelObject
+        private class TypelessObject : EngineModelObject
         {
             public string Type;
 

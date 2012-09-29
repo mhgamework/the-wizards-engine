@@ -10,7 +10,7 @@ using SlimDX;
 namespace MHGameWork.TheWizards.WorldRendering
 {
     [NoSync]
-    public class WireframeBox : BaseModelObject
+    public class WireframeBox : EngineModelObject
     {
 
         public WireframeBox()
