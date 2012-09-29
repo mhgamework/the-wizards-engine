@@ -170,16 +170,18 @@
     <Compile Include="Entity\RAMMeshPart.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ModelContainer\BaseModelObject.cs" />
-    <Compile Include="ModelContainer\BasicSimulator.cs" />
-    <Compile Include="ModelContainer\Engine.cs" />
-    <Compile Include="ModelContainer\IGameplayPlugin.cs" />
+    <Compile Include="Engine\BaseModelObject.cs" />
+    <Compile Include="Engine\BasicSimulator.cs" />
+    <Compile Include="Engine\Engine.cs" />
+    <Compile Include="Engine\IGameplayPlugin.cs" />
     <Compile Include="ModelContainer\IModelObject.cs" />
-    <Compile Include="ModelContainer\ISimulator.cs" />
+    <Compile Include="ModelContainer\IModelObjectAddon.cs" />
+    <Compile Include="Engine\ISimulator.cs" />
     <Compile Include="ModelContainer\ModelChange.cs" />
     <Compile Include="ModelContainer\ModelContainer.cs" />
     <Compile Include="ModelContainer\ModelObjectChangedAttribute.cs" />
-    <Compile Include="ModelContainer\TW.cs" />
+    <Compile Include="ModelContainer\AddonAttacher.cs" />
+    <Compile Include="Engine\TW.cs" />
     <Compile Include="ModelContainer\TypelessModel.cs" />
     <Compile Include="Particles\BallParticalCreater.cs" />
     <Compile Include="Particles\EmitterParameters.cs" />

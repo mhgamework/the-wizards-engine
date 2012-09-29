@@ -1,4 +1,9 @@
-﻿This project contains all classes that use the TW-scoped information for doing their work.
+﻿The GamePlay project is contains all the code that works with The Wizards Engine. This includes the code defining the engine aswell as the code using the engine. 
+This module depends on the NewModules project which is an API of features that are present in The Wizards. The difference is that the NewModules layer provides features, 
+whereas the Engines purpose is to present these features in an easy to use way.
+
+
+This project contains all classes that use the TW-scoped information for doing their work.
 
 The TW class provides access to several key elements for the gameplay layer. The elements set in this class define the current 'scope' in which all code in the gameplaymodule is running.
 Changing the scope will change the behaviour of the gameplay classes.

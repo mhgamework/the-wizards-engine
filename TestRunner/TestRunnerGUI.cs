@@ -268,8 +268,7 @@ namespace MHGameWork.TheWizards.TestRunner
             var obj = new CallbackObject();
             obj.TypeFullQualifiedName = method.DeclaringType.AssemblyQualifiedName;
             obj.MethodName = method.Name;
-            var appDomain = AppDomain.CreateDomain("TestRunnerNew");
-            appDomain.Load(new AssemblyName(TestsAssembly.FullName));
+            
 
 
 
@@ -285,6 +284,32 @@ namespace MHGameWork.TheWizards.TestRunner
             }
 
 
+            Exception ex;
+
+            //ex = runSeperateAppdomain(obj);
+            ex = runCurrentAppdomain(obj);
+
+
+            GC.Collect();
+            GC.WaitForFullGCComplete();
+            GC.WaitForPendingFinalizers();
+
+            return TestResult.FromException(ex);
+            //obj.RunTest();
+
+        }
+
+        private Exception runCurrentAppdomain(CallbackObject callbackObject)
+        {
+            callbackObject.RunTest();
+            return callbackObject.ThrowedException;
+        }
+
+        private Exception runSeperateAppdomain(CallbackObject obj)
+        {
+            var appDomain = AppDomain.CreateDomain("TestRunnerNew");
+            appDomain.Load(new AssemblyName(TestsAssembly.FullName));
+
             appDomain.DoCallBack(obj.RunTest);
 
             var ex = (Exception)appDomain.GetData("TestException");
@@ -298,14 +323,7 @@ namespace MHGameWork.TheWizards.TestRunner
             {
                 Console.WriteLine(unloadEx);
             }
-
-            GC.Collect();
-            GC.WaitForFullGCComplete();
-            GC.WaitForPendingFinalizers();
-
-            return TestResult.FromException(ex);
-            //obj.RunTest();
-
+            return ex;
         }
 
 
@@ -466,6 +484,13 @@ namespace MHGameWork.TheWizards.TestRunner
 
             private TestRunner runner = new TestRunner();
 
+            public CallbackObject()
+            {
+                ThrowedException = null;
+            }
+
+            public Exception ThrowedException { get; private set; }
+
 
             public void RunTest()
             {
@@ -499,7 +524,6 @@ namespace MHGameWork.TheWizards.TestRunner
 
             private void runTestAutomated(object test, MethodInfo method)
             {
-                Exception ThrowedException = null;
                 var thread = new Thread(delegate()
                 {
                     ThrowedException = runner.RunTest(test, method);

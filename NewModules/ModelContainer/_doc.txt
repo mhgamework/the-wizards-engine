@@ -3,3 +3,5 @@
 Main idea is that all the data for the wizards gameplay is in 1 container.
 
 A testcase for the modelcontainer is implemented, where data can be 'attached' to a modelobject. This relation is currently just a runtime organization mechanism.
+
+The Addonattacher provides a mechanism for a multiple inheritance mechanism voor modelobjects :)

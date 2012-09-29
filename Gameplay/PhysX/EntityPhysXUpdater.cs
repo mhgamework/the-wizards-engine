@@ -29,6 +29,8 @@ namespace MHGameWork.TheWizards.PhysX
 
         public void Update()
         {
+            
+
             foreach (var change in TW.Model.GetChangesOfType<WorldRendering.Entity>())
             {
                 var ent = change.ModelObject as WorldRendering.Entity;
