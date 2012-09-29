@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.Audio;
+﻿using System;
+using MHGameWork.TheWizards.Audio;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Physics;
@@ -7,6 +8,9 @@ using StillDesign.PhysX;
 
 namespace MHGameWork.TheWizards
 {
+    /// <summary>
+    /// Provide easy access to the resources of the currently running TWEngine
+    /// </summary>
     public static class TW
     {
         private static Context ctx;
@@ -15,6 +19,11 @@ namespace MHGameWork.TheWizards
         public static DataWrapper Data { get { return ctx.Data; } }
         public static PhysicsWrapper Physics { get { return ctx.Physics; } }
         public static AudioEngine Audio { get { return ctx.Audio; } }
+
+        /// <summary>
+        /// TODO: probably add this, evaluate at later point in project
+        /// </summary>
+        public static object Assets { get { throw new NotImplementedException(); } }
 
 
 

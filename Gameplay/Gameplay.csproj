@@ -85,6 +85,7 @@
     <Compile Include="Assetbrowser\AssetBrowserCamera.cs" />
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
+    <Compile Include="Audio\SoundFactory.cs" />
     <Compile Include="Audio\SoundEmitter.cs" />
     <Compile Include="Audio\SoundEmitterUpdater.cs" />
     <Compile Include="PhysX\EntityPhysXUpdater.cs" />

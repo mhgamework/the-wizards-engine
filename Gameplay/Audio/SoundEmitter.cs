@@ -17,6 +17,7 @@ namespace MHGameWork.TheWizards.Audio
         public Vector3 Position { get; set; }
         public ISound Sound { get; set; }
         public bool Playing { get; set; }
+        public bool Loop { get; set; }
 
         /// <summary>
         /// Setting this to true will ignore the position of this emitter

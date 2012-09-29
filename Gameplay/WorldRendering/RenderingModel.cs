@@ -9,6 +9,7 @@ using MHGameWork.TheWizards.Synchronization;
 namespace MHGameWork.TheWizards.WorldRendering
 {
     /// <summary>
+    /// Should be moved to the Engine, so it is stored on hotloading
     /// Contains data + states for WorldRendering in the model (singleton)
     /// </summary>
     [NoSync]

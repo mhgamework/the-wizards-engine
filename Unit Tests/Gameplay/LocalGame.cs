@@ -68,6 +68,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             context.Graphics = game;
             context.Data = container;
             context.Physics = physX;
+            context.Audio = new AudioWrapper();
             TW.SetContext(context);
         }
 

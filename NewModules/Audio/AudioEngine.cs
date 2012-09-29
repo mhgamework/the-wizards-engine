@@ -12,12 +12,12 @@ namespace MHGameWork.TheWizards.Audio
     public class AudioEngine
     {
         public MasteringVoice MasteringVoice { get; private set; }
-        public XAudio2 XAudio2 { get; private set; }
+        public XAudio2 XAudio2Device { get; private set; }
 
         public AudioEngine()
         {
-            XAudio2 = new XAudio2();
-            MasteringVoice = new MasteringVoice(XAudio2);
+            XAudio2Device = new XAudio2();
+            MasteringVoice = new MasteringVoice(XAudio2Device);
         }
     }
 }

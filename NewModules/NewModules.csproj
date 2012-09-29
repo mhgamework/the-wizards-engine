@@ -136,7 +136,9 @@
     <Compile Include="Assets\ServerMeshAsset.cs" />
     <Compile Include="Audio\AudioEngine.cs" />
     <Compile Include="Audio\DiskSound.cs" />
+    <Compile Include="Audio\DiskSoundFactory.cs" />
     <Compile Include="Audio\ISound.cs" />
+    <Compile Include="Audio\ISoundFactory.cs" />
     <Compile Include="Client\ClientPhysicsQuadTreeNode.cs" />
     <Compile Include="Client\ClientPhysicsTestSphere.cs" />
     <Compile Include="Client\ClientXNAGameService.cs" />
