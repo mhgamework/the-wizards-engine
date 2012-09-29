@@ -86,6 +86,7 @@
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
     <Compile Include="Audio\SoundEmitter.cs" />
+    <Compile Include="Audio\SoundEmitterUpdater.cs" />
     <Compile Include="PhysX\EntityPhysXUpdater.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Raycasting\RaycastResult.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Building\PlayerController.cs" />
     <Compile Include="Building\WallPlacer.cs" />
     <Compile Include="Building\WallType.cs" />
+    <Compile Include="Simulators\AudioSimulator.cs" />
     <Compile Include="Simulators\AutoSaveSimulator.cs" />
     <Compile Include="Persistence\ModelSerializer.cs" />
     <Compile Include="Persistence\PersistAttribute.cs" />
