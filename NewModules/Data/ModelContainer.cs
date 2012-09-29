@@ -169,6 +169,16 @@ namespace MHGameWork.TheWizards.Data
             }
         }
 
+        public IEnumerable<T> GetChngedObjectsOfType<T>() where T : class, IModelObject
+        {
+            for (int i = 0; i < dirtyEntities.Count; i++)
+            {
+                var change = dirtyEntities[i];
+                if (change.ModelObject is T)
+                    yield return change.ModelObject as T;
+            }
+        }
+
 
 
 

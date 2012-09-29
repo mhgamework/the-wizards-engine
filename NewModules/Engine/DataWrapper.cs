@@ -14,9 +14,9 @@ namespace MHGameWork.TheWizards.Engine
     {
         private AddonAttacher attacher = new AddonAttacher();
 
-        public void EnsureAttachment<T, U>(Func<U> factory) where T : EngineModelObject where U : class, IModelObjectAddon<T>
+        public void EnsureAttachment<T, U>(Func<T,U> factory) where T : EngineModelObject where U : class, IModelObjectAddon<T>
         {
-            attacher.EnsureAttachment<T, U>(factory);
+            attacher.EnsureAttachment(factory);
         }
     }
 }

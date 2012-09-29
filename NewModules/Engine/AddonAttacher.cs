@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards.Engine
     /// </summary>
     public class AddonAttacher
     {
-        public void EnsureAttachment<T, U>(Func<U> factory)
+        public void EnsureAttachment<T, U>(Func<T,U> factory)
             where T : EngineModelObject
             where U : class, IModelObjectAddon<T>
         {
@@ -27,7 +27,7 @@ namespace MHGameWork.TheWizards.Engine
 
                 if (change.Change == ModelChange.Added)
                 {
-                    data = factory();
+                    data = factory(ent);
                     ent.set(data);
                 }
             }
