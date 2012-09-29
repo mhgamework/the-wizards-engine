@@ -1,5 +1,5 @@
 ﻿using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
@@ -19,10 +19,10 @@ namespace MHGameWork.TheWizards.Simulators
         public WorldRenderingSimulator()
         {
 
-            deferred = TW.AcquireRenderer();
-            renderer = new WorldRenderer(TW.Model, deferred);
+            deferred = TW.Graphics.AcquireRenderer();
+            renderer = new WorldRenderer(TW.Data, deferred);
 
-            var data = TW.Model.GetSingleton<Data>();
+            var data = TW.Data.GetSingleton<Data>();
 
             if (!data.LightCreated)
             {
@@ -34,7 +34,7 @@ namespace MHGameWork.TheWizards.Simulators
 
             
 
-            info = TW.Model.GetSingleton<CameraInfo>();
+            info = TW.Data.GetSingleton<CameraInfo>();
 
 
             textareaUpdater = new TextareaUpdater();
@@ -45,7 +45,7 @@ namespace MHGameWork.TheWizards.Simulators
 
         public void Simulate()
         {
-            TW.Game.Camera = info.ActiveCamera;
+            TW.Graphics.Camera = info.ActiveCamera;
             renderer.ProcessWorldChanges();
             deferred.Draw();
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Synchronization;
@@ -20,14 +20,14 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
     [TestFixture]
     public class PersistenceTest
     {
-        private ModelContainer.ModelContainer model;
+        private Data.ModelContainer model;
         private TestObject object1;
         private TestObject object2;
 
         [SetUp]
         public void SetUp()
         {
-            SimpleModelObject.CurrentModelContainer = new ModelContainer.ModelContainer();
+            SimpleModelObject.CurrentModelContainer = new Data.ModelContainer();
 
             object1 = new TestObject
                         {
@@ -114,7 +114,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             s.Serialize(model, writer);
 
 
-            var deserialized = new ModelContainer.ModelContainer();
+            var deserialized = new Data.ModelContainer();
 
             writer.Flush();
 
@@ -148,7 +148,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             s.Serialize(model, writer);
 
 
-            var deserialized = new ModelContainer.ModelContainer();
+            var deserialized = new Data.ModelContainer();
 
             writer.Flush();
 

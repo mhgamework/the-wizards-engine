@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
@@ -29,15 +29,15 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         [Test]
         public void TestChangeEntity()
         {
-            var container = new ModelContainer.ModelContainer();
-            SimpleModelObject.CurrentModelContainer = new ModelContainer.ModelContainer();
+            var container = new Data.ModelContainer();
+            SimpleModelObject.CurrentModelContainer = new Data.ModelContainer();
 
             var ent = new WorldRendering.Entity();
 
             ent.Mesh = new RAMMesh();
 
             int length;
-            ModelContainer.ModelContainer.ObjectChange[] array;
+            Data.ModelContainer.ObjectChange[] array;
             container.GetObjectChanges(out array, out length);
 
 
@@ -64,7 +64,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             game
                 .AddSimulator(new BasicSimulator(delegate
                                                  {
-                                                     time += TW.Game.Elapsed;
+                                                     time += TW.Graphics.Elapsed;
                                                      ent.Mesh = mesh;
                                                      ent.WorldMatrix = Matrix.Translation(Vector3.UnitX * time);
                                                  }))
@@ -109,8 +109,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 .AddSimulator(new WorldRenderingSimulator());
 
 
-            TW.Model.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
-            TW.Model.GetSingleton<CameraInfo>().FirstPersonCameraTarget = player.Entity;
+            TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
+            TW.Data.GetSingleton<CameraInfo>().FirstPersonCameraTarget = player.Entity;
 
             game.Run();
         }

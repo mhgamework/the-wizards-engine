@@ -32,18 +32,18 @@ namespace MHGameWork.TheWizards.PhysX
         {
             
 
-            foreach (var change in TW.Model.GetChangesOfType<WorldRendering.Entity>())
+            foreach (var change in TW.Data.GetChangesOfType<WorldRendering.Entity>())
             {
                 var ent = change.ModelObject as WorldRendering.Entity;
                 var data = ent.get<EntityPhysX>();
-                if (change.Change == ModelContainer.ModelChange.Removed)
+                if (change.Change == Data.ModelChange.Removed)
                 {
                     if (data != null)
                         data.Dispose();
                     continue;
                 }
 
-                if (change.Change == ModelContainer.ModelChange.Added)
+                if (change.Change == Data.ModelChange.Added)
                 {
 
                 }

@@ -7,7 +7,7 @@ using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Packets;
 using MHGameWork.TheWizards.Networking.Server;

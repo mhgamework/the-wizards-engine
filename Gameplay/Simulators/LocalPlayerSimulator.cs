@@ -1,7 +1,7 @@
 ﻿using MHGameWork.TheWizards._XNA.Gameplay;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX.DirectInput;
@@ -21,15 +21,15 @@ namespace MHGameWork.TheWizards.Simulators
         {
             this.player = player;
             controller = new PlayerController(player);
-            controller.Initialize(TW.Scene);
+            controller.Initialize(TW.Physics.Scene);
 
-            camInfo = TW.Model.GetSingleton<CameraInfo>();
+            camInfo = TW.Data.GetSingleton<CameraInfo>();
 
         }
 
         public void Simulate()
         {
-            var game = TW.Game;
+            var game = TW.Graphics;
 
 
             if (camInfo.ActiveCamera is ThirdPersonCamera)

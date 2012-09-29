@@ -12,7 +12,7 @@ namespace MHGameWork.TheWizards.Audio
     {
         public void Update()
         {
-            foreach(var change in TW.Model.GetChangesOfType<SoundEmitter>())
+            foreach(var change in TW.Data.GetChangesOfType<SoundEmitter>())
             {
 
             }

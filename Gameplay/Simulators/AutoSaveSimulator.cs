@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Persistence;
 
 namespace MHGameWork.TheWizards.Simulators
@@ -39,7 +39,7 @@ namespace MHGameWork.TheWizards.Simulators
 
             using (var fs = File.Open(file, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
             using (var writer = new StreamWriter(fs))
-                serializer.Serialize(TW.Model, writer);
+                serializer.Serialize(TW.Data, writer);
 
             lastSave = DateTime.Now;
 

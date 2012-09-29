@@ -1,4 +1,4 @@
-﻿namespace MHGameWork.TheWizards.ModelContainer
+﻿namespace MHGameWork.TheWizards.Data
 {
     /// <summary>
     /// Should have an empty constructor, if automatic synchronization is to be used.

@@ -2,7 +2,7 @@
 using DirectX11;
 using MHGameWork.TheWizards.Building;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
@@ -71,8 +71,8 @@ namespace MHGameWork.TheWizards.Tiling
         /// </summary>
         public void Delete()
         {
-            TW.Model.RemoveObject(entity);
-            TW.Model.RemoveObject(this);
+            TW.Data.RemoveObject(entity);
+            TW.Data.RemoveObject(this);
         }
 
 

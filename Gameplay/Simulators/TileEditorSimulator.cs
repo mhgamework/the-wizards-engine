@@ -1,7 +1,7 @@
 ﻿using System;
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Tiling;
 using MHGameWork.TheWizards.WorldRendering;
@@ -46,43 +46,43 @@ namespace MHGameWork.TheWizards.Simulators
                 ghostEntity.Visible = false;
             }
 
-            if (TW.Game.Keyboard.IsKeyPressed(Key.D1))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.D1))
             {
                 setCurrentMesh(meshes[0]);
             }
-            if (TW.Game.Keyboard.IsKeyPressed(Key.D2))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.D2))
             {
                 setCurrentMesh(meshes[1]);
             }
-            if (TW.Game.Keyboard.IsKeyPressed(Key.D3))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.D3))
             {
                 setCurrentMesh(meshes[2]);
             }
-            if (TW.Game.Keyboard.IsKeyPressed(Key.D4))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.D4))
             {
                 setCurrentMesh(meshes[3]);
             }
-            if (TW.Game.Keyboard.IsKeyPressed(Key.D5))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.D5))
             {
                 setCurrentMesh(meshes[4]);
             }
-            if (TW.Game.Keyboard.IsKeyPressed(Key.D6))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.D6))
             {
                 setCurrentMesh(meshes[5]);
             }
-            if (TW.Game.Keyboard.IsKeyPressed(Key.D7))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.D7))
             {
                 setCurrentMesh(meshes[6]);
             }
-            if (TW.Game.Keyboard.IsKeyPressed(Key.D8))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.D8))
             {
                 setCurrentMesh(meshes[7]);
             }
-            if (TW.Game.Mouse.RightMouseJustPressed)
+            if (TW.Graphics.Mouse.RightMouseJustPressed)
             {
                 ghostRotation = (TileRotation)(((int)ghostRotation + 1) % 4);
             }
-            if (TW.Game.Mouse.LeftMouseJustPressed)
+            if (TW.Graphics.Mouse.LeftMouseJustPressed)
             {
                 actionDo(cursorTilePosition);
              
@@ -98,7 +98,7 @@ namespace MHGameWork.TheWizards.Simulators
             {
                 // Remove tile
                 if (!cursorTilePosition.HasValue) return;
-                var tile = TW.Model.GetSingleton<TileModel>().GetTileAt(cursorTilePosition.Value);
+                var tile = TW.Data.GetSingleton<TileModel>().GetTileAt(cursorTilePosition.Value);
                 if (tile != null)
                     tile.Delete();
             }
@@ -117,7 +117,7 @@ namespace MHGameWork.TheWizards.Simulators
 
         private Point3? getCursorTilePosition()
         {
-            var ray = TW.Model.GetSingleton<CameraInfo>().GetCenterScreenRay();
+            var ray = TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay();
 
             var plane = new Plane(Vector3.UnitY, 0);
 
@@ -145,7 +145,7 @@ namespace MHGameWork.TheWizards.Simulators
         }
         private bool canPlaceTileAt(Point3 p)
         {
-            return TW.Model.GetSingleton<TileModel>().GetTileAt(p) == null;
+            return TW.Data.GetSingleton<TileModel>().GetTileAt(p) == null;
         }
 
         private void setCurrentMesh(IMesh mesh)

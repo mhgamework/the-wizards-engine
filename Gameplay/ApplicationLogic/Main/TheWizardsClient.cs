@@ -6,7 +6,7 @@ using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
 using MHGameWork.TheWizards.Networking.Server;
@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.Main
         //private PhysicsDebugRenderer physicsDebugRenderer;
 
         private ClientPacketManagerNetworked packetManager;
-        private ModelContainer.ModelContainer container;
+        private Data.ModelContainer container;
         private List<ISimulator> simulators = new List<ISimulator>();
 
         private ManualResetEvent runningEvent = new ManualResetEvent(false);
@@ -112,7 +112,7 @@ namespace MHGameWork.TheWizards.Main
 
 
 
-            container = new ModelContainer.ModelContainer();
+            container = new Data.ModelContainer();
             setScriptLayerScope();
 
             var player = new PlayerData(); // create a player
@@ -134,8 +134,8 @@ namespace MHGameWork.TheWizards.Main
                 .AddSimulator(new WorldRenderingSimulator());
 
 
-            TW.Model.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
-            TW.Model.GetSingleton<CameraInfo>().FirstPersonCameraTarget = player.Entity;
+            TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
+            TW.Data.GetSingleton<CameraInfo>().FirstPersonCameraTarget = player.Entity;
 
 
 

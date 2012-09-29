@@ -4,7 +4,7 @@ using PostSharp.Aspects;
 using PostSharp.Extensibility;
 using PostSharp.Reflection;
 
-namespace MHGameWork.TheWizards.ModelContainer
+namespace MHGameWork.TheWizards.Data
 {
     /// <summary>
     /// Applying this attribute to an IModelObject implementing class will make it notify the ModelContainer it holds of property changes.

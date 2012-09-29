@@ -1,5 +1,5 @@
 ﻿using System;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Networking;
 
 namespace MHGameWork.TheWizards.Synchronization

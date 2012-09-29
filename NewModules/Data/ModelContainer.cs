@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MHGameWork.TheWizards.Utilities;
 using MS.Win32;
 
-namespace MHGameWork.TheWizards.ModelContainer
+namespace MHGameWork.TheWizards.Data
 {
     /// <summary>
     /// Responsible for providing access to World Data.

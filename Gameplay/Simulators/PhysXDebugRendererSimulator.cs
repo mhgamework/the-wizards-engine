@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.PhysX;
 using SlimDX;
@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.Simulators
 
         public PhysXDebugRendererSimulator()
         {
-            debugRenderer = new PhysicsDebugRenderer(TW.Game,TW.Scene);
+            debugRenderer = new PhysicsDebugRenderer(TW.Graphics,TW.Physics.Scene);
             debugRenderer.Initialize();
         }
 

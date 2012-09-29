@@ -31,7 +31,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 .AddSimulator(new WorldRenderingSimulator());
 
 
-            TW.Model.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.Specator;
+            TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.Specator;
 
             game.Run();
         }

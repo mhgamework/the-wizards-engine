@@ -1,7 +1,7 @@
 ﻿using DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Synchronization;
 using SlimDX;
 
@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.WorldRendering
         public void ActivateSpecatorCamera()
         {
             Mode = CameraMode.Specator;
-            ActiveCamera = TW.Game.SpectaterCamera;
+            ActiveCamera = TW.Graphics.SpectaterCamera;
         }
 
         public enum CameraMode

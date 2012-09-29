@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.PhysX;
 using SlimDX;
@@ -25,13 +25,13 @@ namespace MHGameWork.TheWizards.Simulators
             root = new ClientPhysicsQuadTreeNode(
                new BoundingBox(new Vector3(-1000, -1000, -1000), new Vector3(1000, 1000, 1000)).xna());
             QuadTree.Split(root, 6);
-            factory = new MeshPhysicsElementFactory(TW.PhysX, root);
+            factory = new MeshPhysicsElementFactory(TW.Physics, root);
 
             factory.Initialize();
 
             entityUpdater = new EntityPhysXUpdater(factory, root);
 
-            DebugRenderer = new PhysicsDebugRenderer(TW.Game,TW.Scene);
+            DebugRenderer = new PhysicsDebugRenderer(TW.Graphics,TW.Physics.Scene);
             DebugRenderer.Initialize();
         }
 
@@ -44,8 +44,8 @@ namespace MHGameWork.TheWizards.Simulators
 
 
             int length;
-            ModelContainer.ModelContainer.ObjectChange[] array;
-            TW.Model.GetObjectChanges(out array, out length);
+            Data.ModelContainer.ObjectChange[] array;
+            TW.Data.GetObjectChanges(out array, out length);
 
             for (int i = 0; i < length; i++)
             {

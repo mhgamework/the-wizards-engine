@@ -1,4 +1,4 @@
-﻿namespace MHGameWork.TheWizards.ModelContainer
+﻿namespace MHGameWork.TheWizards.Data
 {
     public enum ModelChange
     {

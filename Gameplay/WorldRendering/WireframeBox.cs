@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Synchronization;
 using SlimDX;
 

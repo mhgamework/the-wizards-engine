@@ -32,9 +32,9 @@ namespace MHGameWork.TheWizards.Building
         private BuildSlot pillarh;
         private BuildSlot pillar;
 
-        private ModelContainer.ModelContainer container;
+        private Data.ModelContainer container;
 
-        public DynamicBlock(Point3 pos, DeferredRenderer renderer, ModelContainer.ModelContainer container)
+        public DynamicBlock(Point3 pos, DeferredRenderer renderer, Data.ModelContainer container)
         {
             Position = pos;
             this.renderer = renderer;

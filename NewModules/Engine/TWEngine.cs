@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.Engine
             GameplayDll = "../../Gameplay/bin/x86/Debug/Gameplay.dll";
         }
 
-       
+
 
         private List<ISimulator> simulators;
         private GraphicsWrapper game;
@@ -35,7 +35,6 @@ namespace MHGameWork.TheWizards.Engine
             context.Graphics = game;
             context.Data = container;
             context.Physics = physX;
-            context.Scene = physX.Scene;
             context.Audio = new AudioWrapper();
             TW.SetContext(context);
         }
@@ -89,7 +88,7 @@ namespace MHGameWork.TheWizards.Engine
                 container.ClearDirty();
                 physX.Update(game.Elapsed);
 
-               
+
 
             };
 
@@ -151,14 +150,14 @@ namespace MHGameWork.TheWizards.Engine
         private void reloadGameplayDll()
         {
             var typelessModel = new TypelessModel();
-            typelessModel.UpdateFromModel(TW.Model);
-            TW.Model.Objects.Clear();
+            typelessModel.UpdateFromModel(TW.Data);
+            TW.Data.Objects.Clear();
 
             updateActiveGameplayAssembly();
-            typelessModel.AddToModel(TW.Model, activeGameplayAssembly);
+            typelessModel.AddToModel(TW.Data, activeGameplayAssembly);
 
 
-            TW.AcquireRenderer().ClearAll();
+            TW.Graphics.AcquireRenderer().ClearAll();
             createSimulators();
         }
 

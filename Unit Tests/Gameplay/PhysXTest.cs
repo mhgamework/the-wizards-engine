@@ -26,7 +26,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             game.AddSimulator(new BasicSimulator(delegate()
                                                      {
-                                                         if (TW.Game.Keyboard.IsKeyPressed( SlimDX.DirectInput.Key.F))
+                                                         if (TW.Graphics.Keyboard.IsKeyPressed( SlimDX.DirectInput.Key.F))
                                                          {
                                                              var f = new WorldRendering.Entity
                                                              {

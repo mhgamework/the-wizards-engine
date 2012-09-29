@@ -1,6 +1,6 @@
 ﻿using System;
 using DirectX11;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
 
@@ -13,9 +13,9 @@ namespace MHGameWork.TheWizards.WorldRendering
     /// </summary>
     public class WorldRenderer
     {
-        private readonly ModelContainer.ModelContainer world;
+        private readonly Data.ModelContainer world;
         private readonly DeferredRenderer renderer;
-        public WorldRenderer(ModelContainer.ModelContainer world, DeferredRenderer renderer)
+        public WorldRenderer(Data.ModelContainer world, DeferredRenderer renderer)
         {
             this.world = world;
             this.renderer = renderer;
@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.WorldRendering
         public void ProcessWorldChanges()
         {
             int length;
-            ModelContainer.ModelContainer.ObjectChange[] objectChanges;
+            Data.ModelContainer.ObjectChange[] objectChanges;
             world.GetObjectChanges(out objectChanges, out length);
 
 
@@ -41,7 +41,7 @@ namespace MHGameWork.TheWizards.WorldRendering
 
         }
 
-        private void updateEntity(ModelContainer.ModelContainer.ObjectChange change)
+        private void updateEntity(Data.ModelContainer.ObjectChange change)
         {
             var ent = (WorldRendering.Entity)change.ModelObject;
 
@@ -70,7 +70,7 @@ namespace MHGameWork.TheWizards.WorldRendering
                 ent.set<EntityRenderData>(null);
             }
         }
-        private void updateWireframeBox(ModelContainer.ModelContainer.ObjectChange change)
+        private void updateWireframeBox(Data.ModelContainer.ObjectChange change)
         {
             var ent = (WireframeBox)change.ModelObject;
 

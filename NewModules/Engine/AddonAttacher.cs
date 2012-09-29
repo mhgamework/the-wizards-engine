@@ -1,5 +1,5 @@
 ﻿using System;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 
 namespace MHGameWork.TheWizards.Engine
 {
@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.Engine
             where T : EngineModelObject
             where U : class, IModelObjectAddon<T>
         {
-            foreach (var change in TW.Model.GetChangesOfType<T>())
+            foreach (var change in TW.Data.GetChangesOfType<T>())
             {
                 T ent = change.ModelObject as T;
 

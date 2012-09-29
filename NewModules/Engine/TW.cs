@@ -11,32 +11,12 @@ namespace MHGameWork.TheWizards
     {
         private static Context ctx;
 
-        public static DX11Game Game
-        {
-            get { return ctx.Graphics; }
-        }
-
-        public static ModelContainer.ModelContainer Model
-        {
-            get { return ctx.Data; }
-        }
-
-        public static PhysicsEngine PhysX
-        {
-            get { return ctx.Physics; }
-        }
-
-        public static Scene Scene
-        {
-            get { return ctx.Scene; }
-        }
-
+        public static GraphicsWrapper Graphics { get { return ctx.Graphics; } }
+        public static DataWrapper Data { get { return ctx.Data; } }
+        public static PhysicsWrapper Physics { get { return ctx.Physics; } }
         public static AudioEngine Audio { get { return ctx.Audio; } }
 
-        public static DeferredRenderer AcquireRenderer()
-        {
-            return ctx.AcquireRenderer();
-        }
+
 
 
         public static void SetContext(Context _ctx)
@@ -49,18 +29,9 @@ namespace MHGameWork.TheWizards
             public GraphicsWrapper Graphics { get; set; }
             public DataWrapper Data { get; set; }
             public PhysicsWrapper Physics { get; set; }
-            public StillDesign.PhysX.Scene Scene { get; set; }
             public AudioWrapper Audio { get; set; }
 
-            private DeferredRenderer renderer;
 
-            public DeferredRenderer AcquireRenderer()
-            {
-                if (renderer == null)
-                    renderer = new DeferredRenderer(TW.Game);
-
-                return renderer;
-            }
 
         }
     }

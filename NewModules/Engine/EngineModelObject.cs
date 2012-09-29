@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 
 namespace MHGameWork.TheWizards.Engine
 {
@@ -23,12 +23,12 @@ namespace MHGameWork.TheWizards.Engine
 
         public EngineModelObject()
         {
-            TW.Model.AddObject(this);
+            TW.Data.AddObject(this);
             DEBUG_ID = DEBUG_NEXTID++;
         }
 
-        public ModelContainer.ModelContainer Container { get; private set; }
-        public void Initialize(ModelContainer.ModelContainer container)
+        public Data.ModelContainer Container { get; private set; }
+        public void Initialize(Data.ModelContainer container)
         {
             Container = container;
         }

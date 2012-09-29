@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Collections;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Reflection;
 using MHGameWork.TheWizards.Synchronization;
 
@@ -119,7 +119,7 @@ namespace MHGameWork.TheWizards.Persistence
             return obj;
         }
 
-        public void Serialize(ModelContainer.ModelContainer model, StreamWriter strm)
+        public void Serialize(Data.ModelContainer model, StreamWriter strm)
         {
 
             // Filter only for objects with a Persist attribute
@@ -134,7 +134,7 @@ namespace MHGameWork.TheWizards.Persistence
             }
         }
 
-        public void Deserialize(ModelContainer.ModelContainer model, StreamReader strm)
+        public void Deserialize(Data.ModelContainer model, StreamReader strm)
         {
             var bindings = new List<ObjectBinding>();
 

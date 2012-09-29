@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
@@ -67,8 +67,8 @@ namespace MHGameWork.TheWizards.Building
             
         }
 
-        public ModelContainer.ModelContainer Container { get; private set; }
-        public void Initialize(ModelContainer.ModelContainer container)
+        public Data.ModelContainer Container { get; private set; }
+        public void Initialize(Data.ModelContainer container)
         {
             Container = container;
         }

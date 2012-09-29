@@ -2,7 +2,7 @@
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Physics;
 
 namespace MHGameWork.TheWizards.Tests.Gameplay
@@ -68,7 +68,6 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             context.Graphics = game;
             context.Data = container;
             context.Physics = physX;
-            context.Scene = physX.Scene;
             TW.SetContext(context);
         }
 

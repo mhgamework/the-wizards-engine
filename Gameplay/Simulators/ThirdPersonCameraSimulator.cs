@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 
@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.Simulators
         {
             cam = new ThirdPersonCamera();
 
-            info = TW.Model.GetSingleton<CameraInfo>();
+            info = TW.Data.GetSingleton<CameraInfo>();
         }
 
         public void Simulate()
@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.Simulators
                 return;
 
             cam.Target = Vector3.TransformCoordinate(new Vector3(), info.FirstPersonCameraTarget.WorldMatrix);
-            cam.Update(TW.Game);
+            cam.Update(TW.Graphics);
 
             info.ActiveCamera = cam;
 

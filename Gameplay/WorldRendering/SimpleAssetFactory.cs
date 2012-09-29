@@ -17,7 +17,7 @@ namespace MHGameWork.TheWizards.WorldRendering
         {
             // Problem with the type parameter! a guid is global anyway, why specify by type?
             //if (type == typeof(IMesh))
-                return TW.Model.GetSingleton<RenderingModel>().MeshFactory.GetMesh(guid);
+                return TW.Data.GetSingleton<RenderingModel>().MeshFactory.GetMesh(guid);
 
             //return null;
         }

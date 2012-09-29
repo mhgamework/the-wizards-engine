@@ -18,10 +18,10 @@ namespace MHGameWork.TheWizards.WorldRendering
 
         public void Update()
         {
-            foreach (var change in TW.Model.GetChangesOfType<Textarea>())
+            foreach (var change in TW.Data.GetChangesOfType<Textarea>())
             {
                 var area = change.ModelObject as Textarea;
-                if (change.Change == ModelContainer.ModelChange.Removed)
+                if (change.Change == TheWizards.Data.ModelChange.Removed)
                 {
                     areas.Remove(area);
                     area.get<TextTexture>().Dispose();
@@ -30,7 +30,7 @@ namespace MHGameWork.TheWizards.WorldRendering
                 }
 
 
-                if (change.Change == ModelContainer.ModelChange.Added)
+                if (change.Change == TheWizards.Data.ModelChange.Added)
                 {
                     areas.Add(area);
                     area.set(new Data());
@@ -46,7 +46,7 @@ namespace MHGameWork.TheWizards.WorldRendering
                     if (tex != null)
                         tex.Dispose();
 
-                    tex = new TextTexture(TW.Game, (int)area.Size.X, (int)area.Size.Y);
+                    tex = new TextTexture(TW.Graphics, (int)area.Size.X, (int)area.Size.Y);
                     area.set(tex);
                 }
 
@@ -61,12 +61,12 @@ namespace MHGameWork.TheWizards.WorldRendering
 
         public void Render()
         {
-            TW.Game.Device.ImmediateContext.OutputMerger.BlendState = TW.Game.HelperStates.AlphaBlend;
+            TW.Graphics.Device.ImmediateContext.OutputMerger.BlendState = TW.Graphics.HelperStates.AlphaBlend;
             foreach (var a in areas)
             {
                 if (!a.Visible) continue;
                 var data = a.get<TextTexture>();
-                TW.Game.TextureRenderer.Draw(data.GPUTexture.View, a.Position, a.Size);
+                TW.Graphics.TextureRenderer.Draw(data.GPUTexture.View, a.Position, a.Size);
             }
 
         }

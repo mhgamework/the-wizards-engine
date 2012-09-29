@@ -1,7 +1,7 @@
 using System.IO;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;

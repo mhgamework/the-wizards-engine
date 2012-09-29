@@ -178,13 +178,13 @@
     <Compile Include="Engine\BasicSimulator.cs" />
     <Compile Include="Engine\TWEngine.cs" />
     <Compile Include="Engine\IGameplayPlugin.cs" />
-    <Compile Include="ModelContainer\SimpleModelObject.cs" />
-    <Compile Include="ModelContainer\IModelObject.cs" />
+    <Compile Include="Data\SimpleModelObject.cs" />
+    <Compile Include="Data\IModelObject.cs" />
     <Compile Include="Engine\IModelObjectAddon.cs" />
     <Compile Include="Engine\ISimulator.cs" />
-    <Compile Include="ModelContainer\ModelChange.cs" />
-    <Compile Include="ModelContainer\ModelContainer.cs" />
-    <Compile Include="ModelContainer\ModelObjectChangedAttribute.cs" />
+    <Compile Include="Data\ModelChange.cs" />
+    <Compile Include="Data\ModelContainer.cs" />
+    <Compile Include="Data\ModelObjectChangedAttribute.cs" />
     <Compile Include="Engine\AddonAttacher.cs" />
     <Compile Include="Engine\TW.cs" />
     <Compile Include="Engine\TypelessModel.cs" />
@@ -655,7 +655,7 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ModelContainer\_doc.txt" />
+    <Content Include="Data\_doc.txt" />
     <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\densityValueTest.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

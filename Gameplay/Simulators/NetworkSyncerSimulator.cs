@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Collections;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.Reflection;
 using MHGameWork.TheWizards.Synchronization;
@@ -163,7 +163,7 @@ namespace MHGameWork.TheWizards.Simulators
                     break;
                 case ModelChange.Removed:
                     target = getObjectByGuid(p.Guid);
-                    TW.Model.RemoveObject(target);
+                    TW.Data.RemoveObject(target);
                     return true;
                 case ModelChange.None:
                     // do nothing! This should be a dummy packet to notify us of a remote's existance
@@ -223,8 +223,8 @@ namespace MHGameWork.TheWizards.Simulators
         private void sendLocalChanges()
         {
             int length;
-            ModelContainer.ModelContainer.ObjectChange[] array;
-            TW.Model.GetObjectChanges(out array, out length);
+            Data.ModelContainer.ObjectChange[] array;
+            TW.Data.GetObjectChanges(out array, out length);
 
 
             // Buffers
@@ -336,7 +336,7 @@ namespace MHGameWork.TheWizards.Simulators
             }
             if (typeof(IAsset).IsAssignableFrom(type))
             {
-                deserialized = TW.Model.GetSingleton<RenderingModel>().AssetFactory.GetAsset(type, Guid.Parse(value));
+                deserialized = TW.Data.GetSingleton<RenderingModel>().AssetFactory.GetAsset(type, Guid.Parse(value));
                 return true;
 
             }

@@ -7,7 +7,7 @@ using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.ModelContainer
+namespace MHGameWork.TheWizards.Data
 {
     public class Sphere : EngineModelObject
     {
@@ -39,7 +39,7 @@ namespace MHGameWork.TheWizards.ModelContainer
 
             dEl = new MeshDynamicPhysicsElement(ent.Mesh, Matrix.Identity.xna(), builder);
 
-            dEl.InitDynamic(TW.Scene);
+            dEl.InitDynamic(TW.Physics.Scene);
             dEl.Actor.LinearVelocity = game.SpectaterCamera.CameraDirection * 10;
 
 

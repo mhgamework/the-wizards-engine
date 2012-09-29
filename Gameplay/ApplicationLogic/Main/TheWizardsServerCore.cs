@@ -6,7 +6,7 @@ using System.Text;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.OBJParser;
@@ -39,7 +39,7 @@ namespace MHGameWork.TheWizards.Main
         private ServerPacketManagerNetworked packetManager;
         private ServerAssetSyncer assetSyncer;
 
-        private ModelContainer.ModelContainer container;
+        private Data.ModelContainer container;
 
         /// <summary>
         /// This method initializes the server, and starts the network connection
@@ -59,7 +59,7 @@ namespace MHGameWork.TheWizards.Main
 
 
             // Init scope
-            container = new ModelContainer.ModelContainer();
+            container = new Data.ModelContainer();
             setScriptLayerScope();
 
 
@@ -71,14 +71,14 @@ namespace MHGameWork.TheWizards.Main
             assetSyncer.Start();
 
             var modelSerializer = new ModelSerializer(StringSerializer.Create(),
-                                                      TW.Model.GetSingleton<RenderingModel>().AssetFactory);
+                                                      TW.Data.GetSingleton<RenderingModel>().AssetFactory);
 
             string saveFile = TWDir.GameData.CreateSubdirectory("ServerSave") + "\\model.txt";
             if (File.Exists(saveFile))
             {
                 using (var fs = File.Open(saveFile, FileMode.Open, FileAccess.Read, FileShare.None))
                 using (var reader = new StreamReader(fs))
-                    modelSerializer.Deserialize(TW.Model, reader);
+                    modelSerializer.Deserialize(TW.Data, reader);
             }
 
 

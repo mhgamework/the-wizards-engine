@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Raycasting
@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.Raycasting
         {
             var closest = new RaycastResult();
             var newResult = new RaycastResult();
-            foreach (var ent in TW.Model.Objects.Where(o => o is WorldRendering.Entity).Select(o => o as WorldRendering.Entity))
+            foreach (var ent in TW.Data.Objects.Where(o => o is WorldRendering.Entity).Select(o => o as WorldRendering.Entity))
             {
                 raycastEntity(ent, ray, newResult);
                 if (newResult.IsCloser(closest)) newResult.CopyTo(closest);

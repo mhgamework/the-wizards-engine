@@ -110,7 +110,7 @@ namespace MHGameWork.TheWizards._XNA.Gameplay
         public void Update(DX11Game _game)
         {
 
-            var game = TW.Game;
+            var game = TW.Graphics;
 
             if (movementDisabled) frameMovement = Vector3.Zero;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using MHGameWork.TheWizards.Engine;
 
-namespace MHGameWork.TheWizards.ModelContainer
+namespace MHGameWork.TheWizards.Data
 {
     /// <summary>
     /// Basic implementation of the functionality that a modelobject is required to implement.
@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.ModelContainer
 
         public SimpleModelObject()
         {
-            TW.Model.AddObject(this);
+            TW.Data.AddObject(this);
             DEBUG_ID = DEBUG_NEXTID++;
         }
 

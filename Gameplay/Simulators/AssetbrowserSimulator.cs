@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.Assetbrowser;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 
@@ -23,11 +23,11 @@ namespace MHGameWork.TheWizards.Simulators
 
         public AssetbrowserSimulator()
         {
-            data = TW.Model.GetSingleton<AssetbrowserData>();
+            data = TW.Data.GetSingleton<AssetbrowserData>();
             root = createRootItem();
             currentItem = root;
 
-            camInfo = TW.Model.GetSingleton<CameraInfo>();
+            camInfo = TW.Data.GetSingleton<CameraInfo>();
 
 
             //camera = new AssetBrowserCamera(TW.Game.Keyboard, TW.Game.Mouse);
@@ -59,7 +59,7 @@ namespace MHGameWork.TheWizards.Simulators
                 assetCamera.MovementSpeed = (int)speed;
                 assetCamera.VerticalMovementSpeed = 3 * (int)speed;
 
-                assetCamera.Update(TW.Game.Elapsed);
+                assetCamera.Update(TW.Graphics.Elapsed);
                 data.CameraPosition = assetCamera.CameraPosition;
                 data.CameraDirection = assetCamera.CameraDirection;
 
@@ -69,7 +69,7 @@ namespace MHGameWork.TheWizards.Simulators
 
             var factor = 0.9f;// * TW.Game.Elapsed;
 
-            TW.Game.SpectaterCamera.MovementSpeed = TW.Game.SpectaterCamera.MovementSpeed * (1 - factor) +
+            TW.Graphics.SpectaterCamera.MovementSpeed = TW.Graphics.SpectaterCamera.MovementSpeed * (1 - factor) +
                                                     targetSpeed * factor;
 
             
@@ -80,7 +80,7 @@ namespace MHGameWork.TheWizards.Simulators
             var t = browsing.Box;
             t.Minimum -= MathHelper.One * 0.01f;
             t.Maximum += MathHelper.One * 0.01f;
-            TW.Game.LineManager3D.AddBox(browsing.Box, new Color4(0, 1, 0));
+            TW.Graphics.LineManager3D.AddBox(browsing.Box, new Color4(0, 1, 0));
 
             var maxChildren = (int)Math.Ceiling(Math.Sqrt(browsing.Children.Count));
             if (maxChildren < 1) maxChildren = 1;
@@ -88,8 +88,8 @@ namespace MHGameWork.TheWizards.Simulators
 
             targetSpeed = v.X * 2;
 
-            TW.Game.SpectaterCamera.NearClip = v.X * 0.01f;
-            TW.Game.SpectaterCamera.FarClip = v.X * 400f;
+            TW.Graphics.SpectaterCamera.NearClip = v.X * 0.01f;
+            TW.Graphics.SpectaterCamera.FarClip = v.X * 400f;
 
             //data.CameraPosition = TW.Game.SpectaterCamera.CameraPosition;
             //data.CameraDirection = TW.Game.SpectaterCamera.CameraDirection;
@@ -151,7 +151,7 @@ namespace MHGameWork.TheWizards.Simulators
         /// <returns></returns>
         private AssetbrowserItem findBrowsingItem(AssetbrowserItem parent)
         {
-            var pos = TW.Game.Camera.ViewInverse.xna().Translation;
+            var pos = TW.Graphics.Camera.ViewInverse.xna().Translation;
             if (parent.Box.xna().Contains(pos) == Microsoft.Xna.Framework.ContainmentType.Disjoint)
                 return null;
             foreach (var child in parent.Children)

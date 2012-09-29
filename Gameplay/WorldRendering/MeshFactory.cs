@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.WorldRendering
         /// <returns></returns>
         public static IMesh Load(string relativeCorePath)
         {
-            return TW.Model.GetSingleton<RenderingModel>().MeshFactory.Load(relativeCorePath);
+            return TW.Data.GetSingleton<RenderingModel>().MeshFactory.Load(relativeCorePath);
         }
 
     }

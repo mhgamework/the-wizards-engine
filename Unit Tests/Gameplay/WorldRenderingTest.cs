@@ -63,7 +63,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             game.AddSimulator(new BasicSimulator(delegate()
                                                      {
-                                                         a.Text = TW.Game.FPS.ToString();
+                                                         a.Text = TW.Graphics.FPS.ToString();
                                                      }));
 
             game.AddSimulator(new Simulators.WorldRenderingSimulator());

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 
 namespace MHGameWork.TheWizards.Engine
 {
@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.Engine
     /// Responsible for providing access to the Gameplay Datastorage layer. Note this is Gameplay!!!! datastorage
     /// Incorrectly implemented for Consistency
     /// </summary>
-    public class DataWrapper : ModelContainer.ModelContainer
+    public class DataWrapper : Data.ModelContainer
     {
         private AddonAttacher attacher = new AddonAttacher();
 

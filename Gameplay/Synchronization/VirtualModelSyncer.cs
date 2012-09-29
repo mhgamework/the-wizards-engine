@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Utilities;
 
 namespace MHGameWork.TheWizards.Synchronization
@@ -13,12 +13,12 @@ namespace MHGameWork.TheWizards.Synchronization
     /// </summary>
     public class VirtualModelSyncer : IVirtualEndpoint
     {
-        private readonly ModelContainer.ModelContainer container;
+        private readonly Data.ModelContainer container;
         private readonly byte unqiueSyncerId;
         private IVirtualEndpoint remoteEndPoint;
 
 
-        public VirtualModelSyncer(ModelContainer.ModelContainer container, byte unqiueSyncerID)
+        public VirtualModelSyncer(Data.ModelContainer container, byte unqiueSyncerID)
         {
             this.container = container;
             unqiueSyncerId = unqiueSyncerID;
@@ -41,7 +41,7 @@ namespace MHGameWork.TheWizards.Synchronization
         {
             localChanges.Clear();
             int length;
-            ModelContainer.ModelContainer.ObjectChange[] array;
+            Data.ModelContainer.ObjectChange[] array;
             container.GetObjectChanges(out array, out length);
 
             for (int i = 0; i < length; i++)

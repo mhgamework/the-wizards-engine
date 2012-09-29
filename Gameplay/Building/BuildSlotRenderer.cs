@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.ServerClient.Entity.Rendering;
 using SlimDX;
@@ -11,10 +11,10 @@ namespace MHGameWork.TheWizards.Building
 {
     public class BuildSlotRenderer
     {
-        private readonly ModelContainer.ModelContainer world;
+        private readonly Data.ModelContainer world;
         private readonly DeferredRenderer renderer;
         private Dictionary<BuildSlot, DeferredMeshRenderElement> BuildSlotRenderDataMap = new Dictionary<BuildSlot, DeferredMeshRenderElement>();
-        public BuildSlotRenderer(ModelContainer.ModelContainer world, DeferredRenderer renderer)
+        public BuildSlotRenderer(Data.ModelContainer world, DeferredRenderer renderer)
         {
             this.world = world;
             this.renderer = renderer;
@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.Building
         public void ProcessWorldChanges()
         {
             int length;
-            ModelContainer.ModelContainer.ObjectChange[] objectChanges;
+            Data.ModelContainer.ObjectChange[] objectChanges;
             world.GetObjectChanges(out objectChanges, out length);
 
 
