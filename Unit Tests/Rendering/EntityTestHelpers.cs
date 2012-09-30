@@ -1,5 +1,6 @@
 ﻿using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Rendering.Default;
 
 namespace MHGameWork.TheWizards.Tests.Rendering
 {

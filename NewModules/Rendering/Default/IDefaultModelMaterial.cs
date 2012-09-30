@@ -1,4 +1,4 @@
-﻿namespace MHGameWork.TheWizards.Rendering
+﻿namespace MHGameWork.TheWizards.Rendering.Default
 {
     public interface IDefaultModelMaterial
     {

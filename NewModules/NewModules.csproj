@@ -210,12 +210,12 @@
     <Compile Include="Raycasting\MeshRaycaster.cs" />
     <Compile Include="Rendering\CullerNoCull.cs" />
     <Compile Include="Rendering\DebugVisualizer.cs" />
-    <Compile Include="Rendering\DefaultModelMaterialTextured.cs" />
-    <Compile Include="Rendering\DefaultModelRenderable.cs" />
-    <Compile Include="Rendering\DefaultModelRenderableShared.cs" />
-    <Compile Include="Rendering\DefaultModelShader.cs" />
-    <Compile Include="Rendering\DefaultRenderElement.cs" />
-    <Compile Include="Rendering\DefaultRenderer.cs" />
+    <Compile Include="Rendering\Default\DefaultModelMaterialTextured.cs" />
+    <Compile Include="Rendering\Default\DefaultModelRenderable.cs" />
+    <Compile Include="Rendering\Default\DefaultModelRenderableShared.cs" />
+    <Compile Include="Rendering\Default\DefaultModelShader.cs" />
+    <Compile Include="Rendering\Default\DefaultRenderElement.cs" />
+    <Compile Include="Rendering\Default\DefaultRenderer.cs" />
     <Compile Include="Rendering\Deferred\DeferredMeshRenderElement.cs" />
     <Compile Include="Rendering\Deferred\DeferredMeshRenderer.cs" />
     <Compile Include="Rendering\Deferred\DeferredMeshVertex.cs" />
@@ -230,8 +230,8 @@
     <Compile Include="Rendering\FrustumCullerSimple.cs" />
     <Compile Include="Rendering\FrustumCullerView.cs" />
     <Compile Include="Rendering\ICullable.cs" />
-    <Compile Include="Rendering\IDefaultModelMaterial.cs" />
-    <Compile Include="Rendering\IDefaultRenderable.cs" />
+    <Compile Include="Rendering\Default\IDefaultModelMaterial.cs" />
+    <Compile Include="Rendering\Default\IDefaultRenderable.cs" />
     <Compile Include="Rendering\IMesh.cs" />
     <Compile Include="Rendering\IMeshFactory.cs" />
     <Compile Include="Rendering\IMeshPart.cs" />
@@ -581,6 +581,7 @@
     <Content Include="Audio\_doc.txt" />
     <Content Include="Engine\_doc.txt" />
     <Content Include="Physics\_doc.txt" />
+    <Content Include="Rendering\Default\_doc.txt" />
     <Content Include="Rendering\Text\_doc.txt" />
     <Content Include="Rendering\_doc.txt" />
     <Content Include="TreeGenerator\Design tree generater.txt" />

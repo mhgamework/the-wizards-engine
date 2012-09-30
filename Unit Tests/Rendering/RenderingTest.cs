@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Rendering.Default;
 using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.Rendering
+namespace MHGameWork.TheWizards.Rendering.Default
 {
     /// <summary>
     /// This class is not obsolete, but it is not really part of the wizards, it is merely a helper class

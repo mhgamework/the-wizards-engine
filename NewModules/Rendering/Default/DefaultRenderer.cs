@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.Rendering
+namespace MHGameWork.TheWizards.Rendering.Default
 {
     /// <summary>
     /// WARNING: This is obsolete!!??

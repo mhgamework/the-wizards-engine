@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.ServerClient;
+﻿using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.Rendering
+namespace MHGameWork.TheWizards.Rendering.Default
 {
     public class DefaultModelRenderableShared : IXNAObject
     {

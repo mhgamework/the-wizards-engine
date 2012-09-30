@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Common.Core;
+﻿using MHGameWork.TheWizards.Common.Core;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.ServerClient;
 using MHGameWork.TheWizards.ServerClient.Entity.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.Rendering
+namespace MHGameWork.TheWizards.Rendering.Default
 {
     /// <summary>
     /// This class initializes on construction

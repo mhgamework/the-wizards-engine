@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.Rendering
+namespace MHGameWork.TheWizards.Rendering.Default
 {
     /// <summary>
     /// Represents a single Renderable element, that is used an manipulated as a whole. 

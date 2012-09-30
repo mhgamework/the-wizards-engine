@@ -1,0 +1,3 @@
+﻿This namespace is not obsolete! It uses XNA and implements a simple forward renderer that takes as input a list of vertices. 
+
+Currently this is not used, but it is functional
