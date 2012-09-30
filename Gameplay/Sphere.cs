@@ -16,11 +16,13 @@ namespace MHGameWork.TheWizards.Data
 
         public Sphere()
         {
+            
+
             ent = new WorldRendering.Entity();
 
-
-            ent.Mesh = CreateSphereMesh();
-
+            var mBuilder = new MeshBuilder();
+            mBuilder.AddSphere(12, 1);
+            ent.Mesh = mBuilder.CreateMesh();
 
 
 
@@ -70,34 +72,7 @@ namespace MHGameWork.TheWizards.Data
 
         }
 
-        public static RAMMesh CreateSphereMesh()
-        {
-            MeshPartGeometryData.Source source;
-
-
-            TangentVertex[] vertices;
-            short[] indices;
-            SphereMesh.CreateUnitSphereVerticesAndIndices(12, out vertices, out indices);
-
-
-            var mesh = new RAMMesh();
-            mesh.GetCoreData().Parts.Add(new MeshCoreData.Part());
-            var part = new RAMMeshPart();
-            mesh.GetCoreData().Parts[0].MeshPart = part;
-            mesh.GetCoreData().Parts[0].ObjectMatrix = Matrix.Identity.xna();
-
-
-            part.GetGeometryData().SetSourcesFromTangentVertices(indices, vertices);
-
-
-            mesh.GetCoreData().Parts[0].MeshMaterial = new MeshCoreData.Material
-                                                           {
-                                                                DiffuseColor = new Color4(1,0,1,0).xna(),
-                                                                DiffuseMap = null
-                                                           };
-
-            return mesh;
-        }
+      
 
         /// <summary>
         /// Applies simulated changes from PhysX to this sphere

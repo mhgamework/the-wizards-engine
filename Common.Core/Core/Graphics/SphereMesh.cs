@@ -151,6 +151,12 @@ namespace MHGameWork.TheWizards.Graphics
             return Matrix.CreateScale(radius) * worldMatrix;
         }
 
+        /// <summary>
+        /// This code is also in Meshbuilder...
+        /// </summary>
+        /// <param name="segments"></param>
+        /// <param name="vertices"></param>
+        /// <param name="indices"></param>
         public static void CreateUnitSphereVerticesAndIndices(int segments, out TangentVertex[] vertices, out short[] indices)
         {
             // Source: http://local.wasp.uwa.edu.au/~pbourke/miscellaneous/sphere_cylinder/

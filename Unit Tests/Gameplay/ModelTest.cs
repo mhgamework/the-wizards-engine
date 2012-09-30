@@ -55,8 +55,9 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             var ent = new WorldRendering.Entity();
 
-            mesh = Sphere.CreateSphereMesh();
-            ent.Mesh = mesh;
+            var mBuilder = new MeshBuilder();
+            mBuilder.AddSphere(12, 1);
+            ent.Mesh = mBuilder.CreateMesh();
 
             var time = 0f;
 
