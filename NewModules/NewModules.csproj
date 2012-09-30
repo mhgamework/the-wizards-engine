@@ -236,8 +236,8 @@
     <Compile Include="Rendering\IMeshFactory.cs" />
     <Compile Include="Rendering\IMeshPart.cs" />
     <Compile Include="Rendering\IMeshRenderElement.cs" />
-    <Compile Include="Rendering\ISimpleMeshRenderer.cs" />
-    <Compile Include="Rendering\ISimpleRenderable.cs" />
+    <Compile Include="Rendering\Simple\ISimpleMeshRenderer.cs" />
+    <Compile Include="Rendering\Simple\ISimpleRenderable.cs" />
     <Compile Include="Rendering\ITexture.cs" />
     <Compile Include="Rendering\ITextureFactory.cs" />
     <Compile Include="Rendering\MeshAdditionalData.cs" />
@@ -249,10 +249,10 @@
     <Compile Include="Rendering\MeshPartPool.cs" />
     <Compile Include="Rendering\RAMTexture.cs" />
     <Compile Include="Rendering\RAMTextureFactory.cs" />
-    <Compile Include="Rendering\SimpleMeshFactory.cs" />
-    <Compile Include="Rendering\SimpleMeshRenderElement.cs" />
-    <Compile Include="Rendering\SimpleMeshRenderer.cs" />
-    <Compile Include="Rendering\SimpleRenderer.cs" />
+    <Compile Include="Rendering\Simple\SimpleMeshFactory.cs" />
+    <Compile Include="Rendering\Simple\SimpleMeshRenderElement.cs" />
+    <Compile Include="Rendering\Simple\SimpleMeshRenderer.cs" />
+    <Compile Include="Rendering\Simple\SimpleRenderer.cs" />
     <Compile Include="Rendering\SSAO\HorizonSSAORenderer.cs" />
     <Compile Include="Rendering\TextureCoreData.cs" />
     <Compile Include="Rendering\TexturePool.cs" />
