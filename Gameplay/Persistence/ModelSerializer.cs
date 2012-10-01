@@ -25,16 +25,18 @@ namespace MHGameWork.TheWizards.Persistence
 
         private const string nullString = "{NULL}";
         private readonly StringSerializer stringSerializer;
-        private readonly IAssetFactory assetFactory;
         private TypeSerializer typeSerializer;
+
+        private StringBuilder builder = new StringBuilder();
 
         public ModelSerializer(StringSerializer stringSerializer, IAssetFactory assetFactory)
         {
             this.stringSerializer = stringSerializer;
             stringSerializer.AddConditional(new AssetSerializer(assetFactory));
             stringSerializer.AddConditional(new ModelObjectSerializer(this));
-            this.assetFactory = assetFactory;
+            stringSerializer.AddConditional(new ListSerializer());
             typeSerializer = TypeSerializer.Create();
+
         }
 
         public void SerializeAttributes(IModelObject obj, SectionedStreamWriter strm)
@@ -48,20 +50,34 @@ namespace MHGameWork.TheWizards.Persistence
             {
                 var value = att.GetData(obj);
 
-                if (value == null)
-                {
-                    // Write null (this is because the attribute count is already written)
-                    strm.WriteLine(nullString);
-                    strm.WriteLine(nullString);
-                    continue;
-                }
+                if (value == null) continue;
 
                 strm.WriteLine(att.Name);
 
                 var serialized = stringSerializer.Serialize(value);
                 if (serialized.Contains('\n'))
-                    throw new InvalidOperationException("Serialized value can't contain a newline character!!");
-                strm.WriteLine(serialized);
+                {
+                    var sublength = serialized.Length;
+                    if (serialized[serialized.Length - 1] == '\n')
+                        sublength--;
+                    else
+                        throw new InvalidOperationException(
+                            "Provided serialized data cannot be used since it doesnt end with \n");
+                    if (serialized[serialized.Length - 2] == '\r')
+                        sublength--;
+
+                        
+
+                    // Write section
+                    strm.EnterSection("AttributeData");
+                    strm.WriteLine(serialized.Substring(0,sublength));
+                    strm.ExitSection();
+                }
+                else
+                {
+                    strm.WriteLine(serialized);
+                }
+
 
             }
             strm.ExitSection();
@@ -72,12 +88,18 @@ namespace MHGameWork.TheWizards.Persistence
             while (strm.CurrentSection == "EntityAttributes")
             {
                 var name = strm.ReadLine();
-                var serialized = strm.ReadLine();
-
-                if (name == nullString) continue;
 
                 var att = ReflectionHelper.GetAttributeByName(obj.GetType(), name);
+                builder.Clear();
 
+                while (strm.CurrentSection == "AttributeData")
+                    builder.AppendLine(strm.ReadLine());
+
+                string serialized;
+                if (builder.Length == 0)
+                    serialized = strm.ReadLine();
+                else
+                    serialized = builder.ToString();
 
                 var deserialized = stringSerializer.Deserialize(serialized, att.Type);
                 att.SetData(obj, deserialized);

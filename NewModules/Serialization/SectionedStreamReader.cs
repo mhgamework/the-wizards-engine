@@ -11,6 +11,7 @@ namespace MHGameWork.TheWizards.Serialization
     /// Responsible for reading text files that are line based and divided into sections eg '[MySection]'
     /// WARNING: ONLY USE READLINE!!!!
     /// Should always contain a root section
+    /// TODO: write unit test?
     /// </summary>
     public class SectionedStreamReader
     {

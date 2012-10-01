@@ -107,6 +107,47 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             Assert.AreEqual(model.Objects[1].ToString(), deserialized.Objects[1].ToString());
 
         }
+
+        [Test]
+        public void TestSerializeArray()
+        {
+            var array = new TestObjectArray();
+            array.Objects = new List<TestObject>();
+            array.Objects.Add(object1);
+            array.Objects.Add(object2);
+
+
+
+            IAssetFactory assetFactory = mockAssetFactory();
+            var s = new ModelSerializer(StringSerializer.Create(), assetFactory);
+
+            var strm = new MemoryStream();
+
+            var writer = new StreamWriter(strm);
+            s.Serialize(model, writer);
+
+
+            var deserialized = new Data.ModelContainer();
+
+            writer.Flush();
+
+            strm.Position = 0;
+
+            // For testing
+            string serialized = getStringFromStream(strm);
+
+            SimpleModelObject.CurrentModelContainer = deserialized;
+            s = new ModelSerializer(StringSerializer.Create(), assetFactory);
+            s.Deserialize(deserialized, new StreamReader(strm));
+
+
+            Assert.AreEqual(model.Objects.Count, deserialized.Objects.Count);
+            Assert.AreEqual(model.Objects[0].ToString(), deserialized.Objects[0].ToString());
+            Assert.AreEqual(model.Objects[1].ToString(), deserialized.Objects[1].ToString());
+            Assert.AreEqual(model.Objects[2].ToString(), deserialized.Objects[2].ToString());
+
+        }
+
         [Test]
         public void TestPersistAttributeTypeScope()
         {
@@ -171,5 +212,17 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             }
         }
 
+        [Persist]
+        private class TestObjectArray : SimpleModelObject
+        {
+            public List<TestObject> Objects { get; set; }
+
+            public override string ToString()
+            {
+                return Objects.Select(o => o.ToString()).Aggregate((a, b) => a + b);
+            }
+        }
+
     }
 }
+
