@@ -1,1 +1,3 @@
 ﻿Provides generic serialization for the wizards. Currently it only contains a StringSerializer, which converts types to strings.
+
+Contains stream utility classes for writing sectioned, line-based textfiles

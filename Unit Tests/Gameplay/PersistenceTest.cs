@@ -24,6 +24,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         private Data.ModelContainer model;
         private TestObject object1;
         private TestObject object2;
+        private StreamWriter streamWriter;
 
         [SetUp]
         public void SetUp()
@@ -52,11 +53,12 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             var strm = new MemoryStream();
 
-            var writer = new StreamWriter(strm);
+            streamWriter = new StreamWriter(strm);
+            var writer = new SectionedStreamWriter(streamWriter);
 
             s.SerializeAttributes(object1, writer);
 
-            writer.Flush();
+            streamWriter.Flush();
 
             strm.Position = 0;
 
@@ -66,7 +68,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             var deserialized = new TestObject();
 
-            s.DeserializeAttributes(deserialized, new StreamReader(strm));
+            s.DeserializeAttributes(deserialized, new SectionedStreamReader(new StreamReader(strm)));
 
             Assert.AreEqual(object1.ToString(), deserialized.ToString());
 

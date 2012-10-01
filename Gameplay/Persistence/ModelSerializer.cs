@@ -20,8 +20,8 @@ namespace MHGameWork.TheWizards.Persistence
     /// </summary>
     public class ModelSerializer : ModelObjectSerializer.IIDResolver
     {
-        private const string ObjectsSection = "[Objects]";
-        private const string AttributesSection = "[Attributes]";
+        private const string ObjectsSection = "Objects";
+        private const string AttributesSection = "Attributes";
 
         private const string nullString = "{NULL}";
         private readonly StringSerializer stringSerializer;
@@ -37,12 +37,12 @@ namespace MHGameWork.TheWizards.Persistence
             typeSerializer = TypeSerializer.Create();
         }
 
-        public void SerializeAttributes(IModelObject obj, StreamWriter strm)
+        public void SerializeAttributes(IModelObject obj, SectionedStreamWriter strm)
         {
             var allAttributes = ReflectionHelper.GetAllAttributes(obj.GetType());
 
-            
-            strm.WriteLine(allAttributes.Count);
+
+            strm.EnterSection("EntityAttributes");
 
             foreach (var att in allAttributes)
             {
@@ -64,12 +64,12 @@ namespace MHGameWork.TheWizards.Persistence
                 strm.WriteLine(serialized);
 
             }
+            strm.ExitSection();
         }
 
-        public void DeserializeAttributes(IModelObject obj, StreamReader strm)
+        public void DeserializeAttributes(IModelObject obj, SectionedStreamReader strm)
         {
-            var attributesCount = int.Parse(strm.ReadLine());
-            for (int i = 0; i < attributesCount; i++)
+            while (strm.CurrentSection == "EntityAttributes")
             {
                 var name = strm.ReadLine();
                 var serialized = strm.ReadLine();
@@ -86,52 +86,53 @@ namespace MHGameWork.TheWizards.Persistence
 
         }
 
-        public void Serialize(Data.ModelContainer model, StreamWriter strm)
+        public void Serialize(Data.ModelContainer model, StreamWriter wr)
         {
+            var strm = new SectionedStreamWriter(wr);
+
 
             // Filter only for objects with a Persist attribute
             var list = model.Objects.Where(o => Attribute.GetCustomAttribute(o.GetType(), typeof(PersistAttribute)) != null);
 
 
             // Write all objects
-            strm.WriteLine(ObjectsSection);
+            strm.EnterSection(ObjectsSection);
             foreach (var obj in list)
             {
                 var id = getObjectID(obj);
-                strm.WriteLine(id);
+                strm.WriteLine(id.ToString());
                 strm.WriteLine(typeSerializer.Serialize(obj.GetType()));
             }
+            strm.ExitSection();
 
             // Write all attributes
-            strm.WriteLine(AttributesSection);
+            strm.EnterSection(AttributesSection);
             foreach (var obj in list)
             {
                 var id = getObjectID(obj);
-                strm.WriteLine(id);
+                strm.WriteLine(id.ToString());
                 SerializeAttributes(obj, strm);
             }
+            strm.ExitSection();
         }
 
-        public void Deserialize(Data.ModelContainer model, StreamReader strm)
+        public void Deserialize(Data.ModelContainer model, StreamReader reader)
         {
-            strm.ReadLine(); // ObjectsSection
-            while (!strm.EndOfStream)
+            var strm = new SectionedStreamReader(reader);
+            while (strm.CurrentSection == ObjectsSection)
             {
-                var line = strm.ReadLine();
-                if (line == AttributesSection) break;
-
-                var id = int.Parse(line);
+                var id = int.Parse(strm.ReadLine());
                 var type = typeSerializer.Deserialize(strm.ReadLine());
-                var obj = (IModelObject) Activator.CreateInstance(type);
+                var obj = (IModelObject)Activator.CreateInstance(type);
                 addObject(obj, id);
 
             }
 
-            while (!strm.EndOfStream)
+            while (strm.CurrentSection == AttributesSection)
             {
                 var id = int.Parse(strm.ReadLine());
                 var obj = getObjectByID(id);
-                DeserializeAttributes(obj,strm);
+                DeserializeAttributes(obj, strm);
             }
 
         }

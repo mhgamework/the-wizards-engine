@@ -269,6 +269,8 @@
     <Compile Include="Scripting\ScriptWrapper.cs" />
     <Compile Include="Serialization\EnumSerializer.cs" />
     <Compile Include="Serialization\IConditionalSerializer.cs" />
+    <Compile Include="Serialization\SectionedStreamReader.cs" />
+    <Compile Include="Serialization\SectionedStreamWriter.cs" />
     <Compile Include="Serialization\StringSerializer.cs" />
     <Compile Include="Serialization\TypeSerializer.cs" />
     <Compile Include="Serialization\ValueTypeSerializer.cs" />
