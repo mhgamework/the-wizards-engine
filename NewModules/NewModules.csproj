@@ -170,10 +170,10 @@
     <Compile Include="Entity\Editor\EditorMeshPart.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entity\RAMMesh.cs">
+    <Compile Include="Rendering\RAMMesh.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entity\RAMMeshPart.cs">
+    <Compile Include="Rendering\RAMMeshPart.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Engine\EngineModelObject.cs" />
@@ -208,7 +208,7 @@
     <Compile Include="Profiling\ProfilingPoint.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Raycasting\MeshRaycaster.cs" />
-    <Compile Include="Rendering\CullerNoCull.cs" />
+    <Compile Include="Rendering\Culling\CullerNoCull.cs" />
     <Compile Include="Rendering\DebugVisualizer.cs" />
     <Compile Include="Rendering\Default\DefaultModelMaterialTextured.cs" />
     <Compile Include="Rendering\Default\DefaultModelRenderable.cs" />
@@ -226,10 +226,10 @@
     <Compile Include="Rendering\Deferred\SpotLight.cs" />
     <Compile Include="Rendering\Deferred\TexturePool.cs" />
     <Compile Include="Rendering\DiskRenderingAssetFactory.cs" />
-    <Compile Include="Rendering\FrustumCuller.cs" />
-    <Compile Include="Rendering\FrustumCullerSimple.cs" />
-    <Compile Include="Rendering\FrustumCullerView.cs" />
-    <Compile Include="Rendering\ICullable.cs" />
+    <Compile Include="Rendering\Culling\FrustumCuller.cs" />
+    <Compile Include="Rendering\Culling\FrustumCullerSimple.cs" />
+    <Compile Include="Rendering\Culling\FrustumCullerView.cs" />
+    <Compile Include="Rendering\Culling\ICullable.cs" />
     <Compile Include="Rendering\Default\IDefaultModelMaterial.cs" />
     <Compile Include="Rendering\Default\IDefaultRenderable.cs" />
     <Compile Include="Rendering\IMesh.cs" />
@@ -254,6 +254,7 @@
     <Compile Include="Rendering\Simple\SimpleMeshRenderer.cs" />
     <Compile Include="Rendering\Simple\SimpleRenderer.cs" />
     <Compile Include="Rendering\SSAO\HorizonSSAORenderer.cs" />
+    <Compile Include="Rendering\TangentSolver.cs" />
     <Compile Include="Rendering\TextureCoreData.cs" />
     <Compile Include="Rendering\TexturePool.cs" />
     <Compile Include="Rendering\Text\TextTexture.cs" />

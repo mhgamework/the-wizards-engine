@@ -4,7 +4,6 @@ using System.Globalization;
 using MHGameWork.TheWizards.Entity;
 using System.IO;
 using Microsoft.Xna.Framework;
-using MHGameWork.TheWizards.Entity.Editor;
 using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,8 +14,8 @@ namespace MHGameWork.TheWizards.OBJParser
         public List<Vector3> Vertices { get; set; }
         public List<Vector3> Normals { get; set; }
         public List<Vector3> TexCoords { get; set; }
-        private EditorMesh mesh;
-        private EditorMeshPart meshPart;
+        private RAMMesh mesh;
+        private RAMMeshPart meshPart;
 
         public List<OBJGroup> Groups { get; set; }
         public List<OBJMaterial> Materials { get; set; }
@@ -58,9 +57,9 @@ namespace MHGameWork.TheWizards.OBJParser
             Vertices = new List<Vector3>();
             Normals = new List<Vector3>();
             TexCoords = new List<Vector3>();
-            mesh = new EditorMesh();
+            mesh = new RAMMesh();
 
-            meshPart = new EditorMeshPart();
+            meshPart = new RAMMeshPart();
             Groups = new List<OBJGroup>();
 
             Materials = new List<OBJMaterial>();
