@@ -30,6 +30,8 @@ namespace MHGameWork.TheWizards.Serialization
             ret.Add(o => o.ToString(), s => byte.Parse(s));
             ret.Add(o => o.ToString(), s => float.Parse(s));
             ret.Add(o => o.ToString(), s => double.Parse(s));
+            ret.Add(o => o.ToString(), s => Guid.Parse(s));
+
 
             ret.AddConditional(new EnumSerializer());
             ret.AddConditional(new ValueTypeSerializer());
@@ -54,9 +56,11 @@ namespace MHGameWork.TheWizards.Serialization
             foreach (var s in conditionalSerializers)
             {
                 if (!s.CanOperate(type)) continue;
-                var ret =  s.Serialize(obj, type, this);
+                var ret = s.Serialize(obj, type, this);
                 if (ret != Unknown) return ret; // Happens when serialization failed
             }
+
+
 
             if (logErrors)
                 Console.WriteLine("StringSerializer: no serializer for type {0}", type);
@@ -69,19 +73,22 @@ namespace MHGameWork.TheWizards.Serialization
             {
                 return deserializers[type](value);
             }
+
             foreach (var s in conditionalSerializers)
             {
                 if (!s.CanOperate(type)) continue;
-                var ret =  s.Deserialize(value, type, this);
+                var ret = s.Deserialize(value, type, this);
                 if (ret != null) return ret; // This happens when serialization failed
             }
 
-          
+
+
+
             if (logErrors)
                 Console.WriteLine("StringSerializer: no deserializer for type {0}", type);
             if (type.IsValueType)
                 return Activator.CreateInstance(type);
-            
+
             return null;
         }
 

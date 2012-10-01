@@ -44,35 +44,6 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         }
 
         [Test]
-        public void TestSerializeModelObjectInvalidDependency()
-        {
-            var s = new ModelSerializer(StringSerializer.Create(), mockAssetFactory());
-
-            var strm = new MemoryStream();
-
-            var writer = new StreamWriter(strm);
-            s.SerializeObject(object1, writer);
-
-            writer.Flush();
-
-            strm.Position = 0;
-
-            // For testing
-            string serialized = getStringFromStream(strm);
-
-
-            s = new ModelSerializer(StringSerializer.Create(), mockAssetFactory());
-
-            var list = new List<ModelSerializer.ObjectBinding>();
-
-            var obj = s.DeserializeObject(new StreamReader(strm), list);
-
-            Assert.AreEqual(1, list.Count);
-
-
-        }
-
-        [Test]
         public void TestSerializeModelObject()
         {
             var s = new ModelSerializer(StringSerializer.Create(), mockAssetFactory());
@@ -82,7 +53,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             var strm = new MemoryStream();
 
             var writer = new StreamWriter(strm);
-            s.SerializeObject(object1, writer);
+
+            s.SerializeAttributes(object1, writer);
 
             writer.Flush();
 
@@ -92,12 +64,10 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             string serialized = getStringFromStream(strm);
 
 
-            var objectBindings = new List<ModelSerializer.ObjectBinding>();
-            var deserialized = s.DeserializeObject(new StreamReader(strm), objectBindings);
+            var deserialized = new TestObject();
 
-            Assert.AreEqual(0, objectBindings.Count);
+            s.DeserializeAttributes(deserialized, new StreamReader(strm));
 
-            Assert.AreEqual(object1.GetType(), deserialized.GetType());
             Assert.AreEqual(object1.ToString(), deserialized.ToString());
 
 
@@ -126,7 +96,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             string serialized = getStringFromStream(strm);
 
             SimpleModelObject.CurrentModelContainer = deserialized;
-
+            s = new ModelSerializer(StringSerializer.Create(), assetFactory);
             s.Deserialize(deserialized, new StreamReader(strm));
 
 

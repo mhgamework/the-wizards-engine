@@ -18,8 +18,11 @@ namespace MHGameWork.TheWizards.Persistence
     /// Dependencies between modelobjects are solved by late binding => the unresolvable dependencies are cached
     /// and applied later. This way circular dependencies are possible (cfr NetworkSyncerSimulator)
     /// </summary>
-    public class ModelSerializer
+    public class ModelSerializer : ModelObjectSerializer.IIDResolver
     {
+        private const string ObjectsSection = "[Objects]";
+        private const string AttributesSection = "[Attributes]";
+
         private const string nullString = "{NULL}";
         private readonly StringSerializer stringSerializer;
         private readonly IAssetFactory assetFactory;
@@ -28,15 +31,17 @@ namespace MHGameWork.TheWizards.Persistence
         public ModelSerializer(StringSerializer stringSerializer, IAssetFactory assetFactory)
         {
             this.stringSerializer = stringSerializer;
+            stringSerializer.AddConditional(new AssetSerializer(assetFactory));
+            stringSerializer.AddConditional(new ModelObjectSerializer(this));
             this.assetFactory = assetFactory;
             typeSerializer = TypeSerializer.Create();
         }
 
-        public void SerializeObject(IModelObject obj, StreamWriter strm)
+        public void SerializeAttributes(IModelObject obj, StreamWriter strm)
         {
             var allAttributes = ReflectionHelper.GetAllAttributes(obj.GetType());
 
-            strm.WriteLine(typeSerializer.Serialize(obj.GetType()));
+            
             strm.WriteLine(allAttributes.Count);
 
             foreach (var att in allAttributes)
@@ -53,31 +58,16 @@ namespace MHGameWork.TheWizards.Persistence
 
                 strm.WriteLine(att.Name);
 
-                if (typeof(IModelObject).IsAssignableFrom(att.Type))
-                {
-                    var modelObject = (IModelObject)value;
+                var serialized = stringSerializer.Serialize(value);
+                if (serialized.Contains('\n'))
+                    throw new InvalidOperationException("Serialized value can't contain a newline character!!");
+                strm.WriteLine(serialized);
 
-                    strm.WriteLine(getObjectID(modelObject));
-                }
-                else if (typeof(IAsset).IsAssignableFrom(att.Type))
-                {
-                    var asset = (IAsset)value;
-                    strm.WriteLine(asset.Guid);
-                }
-                else
-                {
-                    var serialized = stringSerializer.Serialize(value);
-                    if (serialized.Contains('\n'))
-                        throw new InvalidOperationException("Serialized value can't contain a newline character!!");
-                    strm.WriteLine(serialized);
-                }
             }
         }
 
-        public IModelObject DeserializeObject(StreamReader strm, List<ObjectBinding> outBindings)
+        public void DeserializeAttributes(IModelObject obj, StreamReader strm)
         {
-            var obj = (IModelObject)Activator.CreateInstance(typeSerializer.Deserialize(strm.ReadLine()));
-
             var attributesCount = int.Parse(strm.ReadLine());
             for (int i = 0; i < attributesCount; i++)
             {
@@ -88,36 +78,12 @@ namespace MHGameWork.TheWizards.Persistence
 
                 var att = ReflectionHelper.GetAttributeByName(obj.GetType(), name);
 
-                if (typeof(IModelObject).IsAssignableFrom(att.Type))
-                {
-                    var objectID = int.Parse(serialized);
-                    var modelObject = getObjectByID(objectID);
-                    if (modelObject == null)
-                    {
-                        // add late binding
-                        outBindings.Add(new ObjectBinding()
-                                            {
-                                                Attribute = att,
-                                                ObjectID = objectID,
-                                                Target = obj
-                                            });
-                    }
-                    att.SetData(obj, modelObject);
-                }
-                else if (typeof(IAsset).IsAssignableFrom(att.Type))
-                {
-                    var guid = Guid.Parse(serialized);
-                    var asset = assetFactory.GetAsset(null, guid);
-                    att.SetData(obj, asset);
-                }
-                else
-                {
-                    var deserialized = stringSerializer.Deserialize(serialized, att.Type);
-                    att.SetData(obj, deserialized);
-                }
+
+                var deserialized = stringSerializer.Deserialize(serialized, att.Type);
+                att.SetData(obj, deserialized);
+
             }
 
-            return obj;
         }
 
         public void Serialize(Data.ModelContainer model, StreamWriter strm)
@@ -127,33 +93,47 @@ namespace MHGameWork.TheWizards.Persistence
             var list = model.Objects.Where(o => Attribute.GetCustomAttribute(o.GetType(), typeof(PersistAttribute)) != null);
 
 
-            strm.WriteLine(list.Count());
-
+            // Write all objects
+            strm.WriteLine(ObjectsSection);
             foreach (var obj in list)
             {
-                SerializeObject(obj, strm);
+                var id = getObjectID(obj);
+                strm.WriteLine(id);
+                strm.WriteLine(typeSerializer.Serialize(obj.GetType()));
+            }
+
+            // Write all attributes
+            strm.WriteLine(AttributesSection);
+            foreach (var obj in list)
+            {
+                var id = getObjectID(obj);
+                strm.WriteLine(id);
+                SerializeAttributes(obj, strm);
             }
         }
 
         public void Deserialize(Data.ModelContainer model, StreamReader strm)
         {
-            var bindings = new List<ObjectBinding>();
-
-            var count = int.Parse(strm.ReadLine());
-            for (int i = 0; i < count; i++)
+            strm.ReadLine(); // ObjectsSection
+            while (!strm.EndOfStream)
             {
-                var obj = DeserializeObject(strm, bindings);
-                // The object is auto added
+                var line = strm.ReadLine();
+                if (line == AttributesSection) break;
+
+                var id = int.Parse(line);
+                var type = typeSerializer.Deserialize(strm.ReadLine());
+                var obj = (IModelObject) Activator.CreateInstance(type);
+                addObject(obj, id);
+
             }
 
-            foreach (var b in bindings)
+            while (!strm.EndOfStream)
             {
-                var value = getObjectByID(b.ObjectID);
-                if (value == null)
-                    Console.WriteLine("Can't resolve modelobject dependency! ID: {0}", b.ObjectID);
-
-                b.Attribute.SetData(b.Target, value);
+                var id = int.Parse(strm.ReadLine());
+                var obj = getObjectByID(id);
+                DeserializeAttributes(obj,strm);
             }
+
         }
 
 
@@ -181,13 +161,20 @@ namespace MHGameWork.TheWizards.Persistence
 
             return objectDictionary[id];
         }
-
-
-        public struct ObjectBinding
+        private void addObject(IModelObject obj, int id)
         {
-            public IAttribute Attribute { get; set; }
-            public IModelObject Target { get; set; }
-            public int ObjectID { get; set; }
+            objectDictionary.Add(id, obj);
+        }
+
+
+        int ModelObjectSerializer.IIDResolver.GetObjectID(IModelObject obj)
+        {
+            return getObjectID(obj);
+        }
+
+        IModelObject ModelObjectSerializer.IIDResolver.GetObjectByID(int id)
+        {
+            return getObjectByID(id);
         }
     }
 }

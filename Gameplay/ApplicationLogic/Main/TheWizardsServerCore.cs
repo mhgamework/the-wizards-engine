@@ -19,6 +19,7 @@ using MHGameWork.TheWizards.Synchronization;
 using MHGameWork.TheWizards.Tiling;
 using MHGameWork.TheWizards.WorldRendering;
 using MHGameWork.TheWizards.XML;
+using AssetSerializer = MHGameWork.TheWizards.Assets.AssetSerializer;
 
 namespace MHGameWork.TheWizards.Main
 {
