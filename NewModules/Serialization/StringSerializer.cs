@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Reflection;
 
-namespace MHGameWork.TheWizards.Synchronization
+namespace MHGameWork.TheWizards.Serialization
 {
     /// <summary>
     /// This class serializes arbitrary value-types into a string format, and can deserialize them
-    /// TODO: Maybe move to better location
+    /// Behaviour can be added by creating new IConditionalSerializers and adding them to this stringserializer
     /// </summary>
     public class StringSerializer
     {
-        private StringBuilder builder = new StringBuilder();
+        /// <summary>
+        /// When an object can't be serialized, this is the string that is returned
+        /// </summary>
+        public const string Unknown = "UNKNOWN";
+
 
         private bool logErrors = false;
 
@@ -29,49 +31,36 @@ namespace MHGameWork.TheWizards.Synchronization
             ret.Add(o => o.ToString(), s => float.Parse(s));
             ret.Add(o => o.ToString(), s => double.Parse(s));
 
+            ret.AddConditional(new EnumSerializer());
+            ret.AddConditional(new ValueTypeSerializer());
+
             return ret;
 
         }
 
         public string Serialize(object obj)
         {
-            var type = obj.GetType();
+            return Serialize(obj, obj.GetType());
+        }
+
+        public string Serialize(object obj, Type type)
+        {
 
             if (serializers.ContainsKey(type))
             {
                 return serializers[obj.GetType()](obj);
             }
 
-            if (type.IsEnum)
+            foreach (var s in conditionalSerializers)
             {
-                return serializers[Enum.GetUnderlyingType(type)](obj);
+                if (!s.CanOperate(type)) continue;
+                var ret =  s.Serialize(obj, type, this);
+                if (ret != Unknown) return ret; // Happens when serialization failed
             }
-
-            if (type.IsValueType)
-            {
-                try
-                {
-                    // Only resolve single level structures on purpose!
-                    builder.Clear();
-                    foreach (var fi in type.GetFields())
-                    {
-                        if (builder.Length != 0)
-                            builder.Append(' ');
-                        builder.Append(fi.Name).Append(' ').Append(serializers[fi.FieldType](fi.GetValue(obj)));
-                    }
-                    return builder.ToString();
-                }
-                catch (Exception)
-                {
-
-                }
-
-            }
-
 
             if (logErrors)
                 Console.WriteLine("StringSerializer: no serializer for type {0}", type);
-            return "UNKNOWN";
+            return Unknown;
         }
 
         public object Deserialize(string value, Type type)
@@ -80,44 +69,20 @@ namespace MHGameWork.TheWizards.Synchronization
             {
                 return deserializers[type](value);
             }
-
-            if (type.IsEnum)
+            foreach (var s in conditionalSerializers)
             {
-                return Enum.ToObject(type, deserializers[Enum.GetUnderlyingType(type)](value));
+                if (!s.CanOperate(type)) continue;
+                var ret =  s.Deserialize(value, type, this);
+                if (ret != null) return ret; // This happens when serialization failed
             }
 
-
-            if (type.IsValueType)
-            {
-                try
-                {
-                    // Only resolve single level structures on purpose!
-
-                    var target = Activator.CreateInstance(type);
-
-                    var parts = value.Split(' ');
-                    for (int i = 0; i < parts.Length; i += 2)
-                    {
-                        var name = parts[i];
-                        var subValue = parts[i + 1];
-                        var fi = ReflectionHelper.GetAttributeByName(type, name);
-                        fi.SetData(target, deserializers[fi.Type](subValue));
-                    }
-                    return target;
-                }
-                catch (Exception)
-                {
-
-                }
-
-            }
-
+          
             if (logErrors)
                 Console.WriteLine("StringSerializer: no deserializer for type {0}", type);
             if (type.IsValueType)
                 return Activator.CreateInstance(type);
-            else
-                return null;
+            
+            return null;
         }
 
         public void Add<T>(Func<T, string> serializer, Func<string, T> deserializer)
@@ -127,10 +92,15 @@ namespace MHGameWork.TheWizards.Synchronization
             deserializers.Add(t, s => deserializer(s));
         }
 
+        public void AddConditional(IConditionalSerializer serializer)
+        {
+            conditionalSerializers.Add(serializer);
+        }
+
 
         Dictionary<Type, Func<object, string>> serializers = new Dictionary<Type, Func<object, string>>();
         Dictionary<Type, Func<string, object>> deserializers = new Dictionary<Type, Func<string, object>>();
 
-
+        private List<IConditionalSerializer> conditionalSerializers = new List<IConditionalSerializer>();
     }
 }

@@ -121,7 +121,6 @@
     <Compile Include="Persistence\ModelSerializer.cs" />
     <Compile Include="Persistence\PersistAttribute.cs" />
     <Compile Include="Simulators\PhysXDebugRendererSimulator.cs" />
-    <Compile Include="Synchronization\TypeSerializer.cs" />
     <Compile Include="Tiling\TileBoundary.cs" />
     <Compile Include="Tiling\TileBoundaryWinding.cs" />
     <Compile Include="Tiling\TileFace.cs" />
@@ -191,7 +190,6 @@
     <Compile Include="_XNA\Scripting\ScriptLayer.cs" />
     <Compile Include="_XNA\Scripting\ScriptRunner.cs" />
     <Compile Include="_XNA\Gameplay\ThrowMove.cs" />
-    <Compile Include="Synchronization\StringSerializer.cs" />
     <Compile Include="Simulators\ThirdPersonCameraSimulator.cs" />
     <Compile Include="Simulators\TileEditorSimulator.cs" />
     <Compile Include="_XNA\World\ClientWorldSector.cs" />

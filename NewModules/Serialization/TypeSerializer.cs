@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Reflection;
 
-namespace MHGameWork.TheWizards.Synchronization
+namespace MHGameWork.TheWizards.Serialization
 {
     /// <summary>
     /// This class provides a way to serialize a type to a string and back

@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.Reflection;
+using MHGameWork.TheWizards.Serialization;
 using MHGameWork.TheWizards.Synchronization;
 using MHGameWork.TheWizards.WorldRendering;
 

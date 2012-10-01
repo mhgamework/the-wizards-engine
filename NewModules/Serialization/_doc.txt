@@ -1,0 +1,1 @@
+﻿Provides generic serialization for the wizards. Currently it only contains a StringSerializer, which converts types to strings.

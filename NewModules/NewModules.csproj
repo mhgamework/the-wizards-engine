@@ -267,6 +267,11 @@
     <Compile Include="Rendering\VertexDeclarationPool.cs" />
     <Compile Include="Scripting\ScriptLoader.cs" />
     <Compile Include="Scripting\ScriptWrapper.cs" />
+    <Compile Include="Serialization\EnumSerializer.cs" />
+    <Compile Include="Serialization\IConditionalSerializer.cs" />
+    <Compile Include="Serialization\StringSerializer.cs" />
+    <Compile Include="Serialization\TypeSerializer.cs" />
+    <Compile Include="Serialization\ValueTypeSerializer.cs" />
     <Compile Include="ServerclientDeprecated\DiskLoaderService.cs" />
     <Compile Include="ServerclientDeprecated\DiskSerializerService.cs" />
     <Compile Include="ServerclientDeprecated\IDiskSerializer.cs" />
@@ -585,6 +590,7 @@
     <Content Include="Rendering\Default\_doc.txt" />
     <Content Include="Rendering\Text\_doc.txt" />
     <Content Include="Rendering\_doc.txt" />
+    <Content Include="Serialization\_doc.txt" />
     <Content Include="TreeGenerator\Design tree generater.txt" />
     <Content Include="TreeGenerator\Engine\Depth.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

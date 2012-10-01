@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Collections;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Reflection;
+using MHGameWork.TheWizards.Serialization;
 using MHGameWork.TheWizards.Synchronization;
 
 namespace MHGameWork.TheWizards.Persistence
@@ -130,7 +131,7 @@ namespace MHGameWork.TheWizards.Persistence
 
             foreach (var obj in list)
             {
-                SerializeObject((IModelObject)obj, strm);
+                SerializeObject(obj, strm);
             }
         }
 

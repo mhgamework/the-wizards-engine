@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Serialization;
 using MHGameWork.TheWizards.Synchronization;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -28,6 +29,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         public void SetUp()
         {
             SimpleModelObject.CurrentModelContainer = new Data.ModelContainer();
+            model = SimpleModelObject.CurrentModelContainer;
 
             object1 = new TestObject
                         {

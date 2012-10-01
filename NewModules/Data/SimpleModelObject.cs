@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.Data
 
         public SimpleModelObject()
         {
-            TW.Data.AddObject(this);
+            CurrentModelContainer.AddObject(this);
             DEBUG_ID = DEBUG_NEXTID++;
         }
 

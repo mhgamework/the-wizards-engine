@@ -13,6 +13,7 @@ using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Serialization;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.Synchronization;
 using MHGameWork.TheWizards.Tiling;
