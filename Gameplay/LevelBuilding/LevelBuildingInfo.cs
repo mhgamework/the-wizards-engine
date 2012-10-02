@@ -11,13 +11,16 @@ namespace MHGameWork.TheWizards.LevelBuilding
         public readonly CameraInfo Camera;
         public readonly ScalableGrid Grid;
         public Object SelectedObject;
-        public LevelBuildingData LevelBuildingData {get; private set;}
+        public Textarea Textarea;
 
         public LevelBuildingInfo(CameraInfo camera, ScalableGrid grid)
         {
             this.Camera = camera;
             this.Grid = grid;
-            LevelBuildingData = new LevelBuildingData();
+            Textarea = new Textarea();
+            Textarea.Color = new SlimDX.Color4(1, 1, 1);
+            Textarea.Position = new SlimDX.Vector2(10, 500);
+            Textarea.Size = new SlimDX.Vector2(500, 500);
         }
     }
 }

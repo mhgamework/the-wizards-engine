@@ -5,9 +5,18 @@ using System.Text;
 
 namespace MHGameWork.TheWizards.LevelBuilding
 {
+    /// <summary>
+    /// Responsible for LevelBuildingObject creation and deletion, as well as providing all possible LevelBuildingObjectTypes.
+    /// </summary>
     public class LevelBuildingObjectFactory
     {
         private List<ILevelBuildingObjectType> types = new List<ILevelBuildingObjectType>();
+        public LevelBuildingData LevelBuildingData { get; private set; }
+
+        public LevelBuildingObjectFactory()
+        {
+            LevelBuildingData = new LevelBuildingData();
+        }
 
         public void AddLevelBuildingObjectType(ILevelBuildingObjectType t)
         {
@@ -41,12 +50,20 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
         public Object CreateFromType(ILevelBuildingObjectType t)
         {
-            throw new NotImplementedException();
+            if (!types.Contains(t))
+                throw new Exception("Invalid LevelBuildingObjectType given!");
+
+            var created = t.GetNewObject();
+            LevelBuildingData.AddLevelBuildingObject(created, t);
+
+            return created;
         }
 
-        public ILevelBuildingObjectType GetTypeFromObject(object o)
+        public ILevelBuildingObjectType GetLevelBuildingTypeFromObject(object o)
         {
-            throw new NotImplementedException();
+            ILevelBuildingObjectType val;
+            LevelBuildingData.Data.TryGetValue(o, out val);
+            return val;
         }
     }
 }

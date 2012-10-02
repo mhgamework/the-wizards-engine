@@ -9,11 +9,10 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
     public interface ILevelBuildingObjectType
     {
-        void ProcessInput(LevelBuildingObjectFactory factory, LevelBuildingInfo info);
         /// <summary>
-        /// Returns the type that an object obtained by a raycast in the world on an object placed with this LevelBuildingObjectType should have.
+        /// When this method is called, there is an object in the world of this LBObjectType created, or a new one should be created.
         /// </summary>
-        /// <returns></returns>
-        Type GetMatchingObjectType();
+        void ProcessInput(LevelBuildingObjectFactory factory, LevelBuildingInfo info);
+        object GetNewObject();
     }
 }

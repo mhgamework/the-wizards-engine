@@ -1,0 +1,2 @@
+﻿Contains classes to place objects in the world, with a quickslot system. 
+The manner in which the objects are placed is specified in classes implementing ILevelBuildingObject.

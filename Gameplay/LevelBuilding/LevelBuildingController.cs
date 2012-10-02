@@ -15,7 +15,6 @@ namespace MHGameWork.TheWizards.LevelBuilding
     {
         private LevelBuildingInfo levelBuildingInfo;
         private readonly LevelBuildingObjectFactory levelBuildingFactory;
-        
 
         private Array quickslots;
         private Array quickslotKeys;
@@ -33,6 +32,9 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
         public void Update()
         {
+            updateText();
+            updateGrid();
+
             updateQuickSlots();
 
             if (activeObjectType != null)
@@ -49,8 +51,46 @@ namespace MHGameWork.TheWizards.LevelBuilding
                     activeObjectType = type;
                 }
             }
+
+            if (TW.Game.Keyboard.IsKeyPressed(Key.X))
+                activeObjectType = null;
         }
-        
+
+        private void updateText()
+        {
+            levelBuildingInfo.Textarea.Text = "CONTROLLER \nG + H: decrease grid spacing \nG + J: increase grid spacing \nG + '+/-': adjust grid height";
+        }
+
+        private void updateGrid()
+        {
+            float gridIncrease = 0.5f;
+
+            if(TW.Game.Keyboard.IsKeyDown(Key.G))
+            {
+                if(TW.Game.Keyboard.IsKeyPressed(Key.NumberPadPlus))
+                {
+                    levelBuildingInfo.Grid.AdjustHeight(true);
+                }
+                if (TW.Game.Keyboard.IsKeyPressed(Key.NumberPadMinus))
+                {
+                    levelBuildingInfo.Grid.AdjustHeight(false);
+                }
+                if (TW.Game.Keyboard.IsKeyPressed(Key.H))
+                {
+                    levelBuildingInfo.Grid.SetNodeXSize(levelBuildingInfo.Grid.NodeXSize - gridIncrease);
+                    levelBuildingInfo.Grid.SetNodeZSize(levelBuildingInfo.Grid.NodeZSize - gridIncrease);
+                }
+                if (TW.Game.Keyboard.IsKeyPressed(Key.J))
+                {
+                    levelBuildingInfo.Grid.SetNodeXSize(levelBuildingInfo.Grid.NodeXSize + gridIncrease);
+                    levelBuildingInfo.Grid.SetNodeZSize(levelBuildingInfo.Grid.NodeZSize + gridIncrease);
+                }
+            }
+
+            levelBuildingInfo.Grid.UpdateDraw(
+                levelBuildingInfo.Grid.GetSelectedPosition(levelBuildingInfo.Camera.GetCenterScreenRay()));
+        }
+
         /// <summary>
         /// BEHAVIOUR: 
         /// - When a quickslot key is pressed: 
@@ -83,11 +123,11 @@ namespace MHGameWork.TheWizards.LevelBuilding
                         }
                     }
 
-                    if(TW.Game.Keyboard.IsKeyDown(Key.NumberPadPlus) && !TW.Game.Keyboard.IsKeyPressed(Key.NumberPadPlus))
+                    if(TW.Game.Keyboard.IsKeyPressed(Key.NumberPadPlus))
                     {
                         quickslots.SetValue(levelBuildingFactory.GetNextType((ILevelBuildingObjectType)quickslots.GetValue(i)), i);
                     }
-                    if (TW.Game.Keyboard.IsKeyDown(Key.NumberPadMinus) && !TW.Game.Keyboard.IsKeyPressed(Key.NumberPadMinus))
+                    if (TW.Game.Keyboard.IsKeyPressed(Key.NumberPadMinus))
                     {
                         quickslots.SetValue(levelBuildingFactory.GetPreviousType((ILevelBuildingObjectType)quickslots.GetValue(i)), i);
                     }
@@ -95,40 +135,23 @@ namespace MHGameWork.TheWizards.LevelBuilding
                 else if(TW.Game.Keyboard.IsKeyReleased((Key)quickslotKeys.GetValue(i)))
                 {
                     activeObjectType = (ILevelBuildingObjectType)quickslots.GetValue(i);
+                    levelBuildingInfo.SelectedObject = null;
                     return;
                 }
             }
 
             if (TW.Game.Keyboard.IsKeyPressed(Key.D0))
+            {
                 activeObjectType = null;
+                levelBuildingInfo.SelectedObject = null;
+            }
         }
 
         private void getRaycastedObject(out ILevelBuildingObjectType type, out Object o)
         {
-            o = raycaster.Raycast(levelBuildingInfo.Camera.GetCenterScreenRay());
-            type = levelBuildingFactory.GetTypeFromObject(o);
+            o = raycaster.Raycast(levelBuildingInfo.Camera.GetCenterScreenRay()).Object;
+            type = levelBuildingFactory.GetLevelBuildingTypeFromObject(o);
         }
-
-        /* TODO: Move to something that implements ILevelBuildingObjectType
-         * Ray ray = camera.GetCenterScreenRay();
-            Vector3 cPos = grid.GetSelectedPosition(ray);
-
-            if (activeObjectType != null)
-            {
-                activeObjectType.Position = cPos;
-            }
-
-            if (TW.Game.Mouse.LeftMouseJustPressed && activeObjectType != null)
-            {
-                buildingData.AddLevelBuildingObject(activeObjectType);
-                activeObjectType = null;
-            }
-
-            if (TW.Game.Mouse.RightMouseJustPressed && activeObjectType != null)
-            {
-                activeObjectType.Rotation = activeObjectType.Rotation *
-                                        Quaternion.RotationAxis(Vector3.UnitY, (float)Math.PI * 0.5f);
-            }
-         */
+        
     }
 }

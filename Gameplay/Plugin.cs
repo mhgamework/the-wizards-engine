@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Animation;
 using MHGameWork.TheWizards.Entity;
+using MHGameWork.TheWizards.LevelBuilding;
 using MHGameWork.TheWizards.ModelContainer;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Pickup;
@@ -25,7 +26,8 @@ namespace MHGameWork.TheWizards
             //testTriggerSimulator(engine);
             //testWayPointTrigger(engine);
             //testWorldmatrixAnimation(engine);
-            testLoadLevel(engine);
+            //testLoadLevel(engine);
+            testLevelBuilding(engine);
         }
 
         /// <summary>
@@ -283,6 +285,27 @@ namespace MHGameWork.TheWizards
             
             engine.AddSimulator(new WorldRenderingSimulator());
             //engine.AddSimulator(new Simulators.PhysXDebugRendererSimulator());
+        }
+
+        private void testLevelBuilding(Engine engine)
+        {
+            var player = new PlayerData();
+            var cameraInfo = TW.Model.GetSingleton<CameraInfo>();
+            cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
+            cameraInfo.FirstPersonCameraTarget = player.Entity;
+
+            var factory = new LevelBuildingObjectFactory();
+
+            var type01 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Straight_01\\GreyBrick_Straight_01"));
+
+            factory.AddLevelBuildingObjectType(type01);
+
+            engine.AddSimulator(new LocalPlayerSimulator(player));
+            engine.AddSimulator(new ThirdPersonCameraSimulator());
+
+            engine.AddSimulator(new LevelBuildingSimulator(cameraInfo, factory));
+
+            engine.AddSimulator(new WorldRenderingSimulator());
         }
     }
 }
