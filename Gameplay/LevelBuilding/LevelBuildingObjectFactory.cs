@@ -43,5 +43,10 @@ namespace MHGameWork.TheWizards.LevelBuilding
         {
             throw new NotImplementedException();
         }
+
+        public ILevelBuildingObjectType GetTypeFromObject(object o)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

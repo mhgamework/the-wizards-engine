@@ -10,6 +10,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
     {
         public readonly CameraInfo Camera;
         public readonly ScalableGrid Grid;
+        public Object SelectedObject;
         public LevelBuildingData LevelBuildingData {get; private set;}
 
         public LevelBuildingInfo(CameraInfo camera, ScalableGrid grid)

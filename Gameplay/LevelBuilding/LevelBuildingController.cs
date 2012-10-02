@@ -37,9 +37,20 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
             if (activeObjectType != null)
                 activeObjectType.ProcessInput(levelBuildingFactory, levelBuildingInfo);
+            else if(TW.Game.Mouse.LeftMouseJustPressed)
+            {
+                Object o = null;
+                ILevelBuildingObjectType type = null;
+                getRaycastedObject(out type, out o);
 
+                if(type != null && o != null)
+                {
+                    levelBuildingInfo.SelectedObject = o;
+                    activeObjectType = type;
+                }
+            }
         }
-
+        
         /// <summary>
         /// BEHAVIOUR: 
         /// - When a quickslot key is pressed: 
@@ -60,16 +71,16 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
                     if(TW.Game.Mouse.LeftMouseJustPressed)
                     {
-                        ILevelBuildingObjectType selected = null;
-                        var rayCastResult = raycaster.Raycast(levelBuildingInfo.Camera.GetCenterScreenRay());
-                        if(rayCastResult is ILevelBuildingObjectType)
-                            selected = (ILevelBuildingObjectType) rayCastResult;
+                        ILevelBuildingObjectType selectedType = null;
+                        Object selectedObject = null;
+                        getRaycastedObject(out selectedType, out selectedObject);
 
-                        if (selected == null)
-                            return;
-
-                        quickslots.SetValue(selected, i);
-                        return; //Make sure no 2 keys are pressed and recorded at the same time
+                        if (selectedType != null && selectedObject != null)
+                        {
+                            quickslots.SetValue(selectedType, i);
+                            levelBuildingInfo.SelectedObject = selectedObject;
+                            return; //Make sure no 2 keys are pressed and recorded at the same time
+                        }
                     }
 
                     if(TW.Game.Keyboard.IsKeyDown(Key.NumberPadPlus) && !TW.Game.Keyboard.IsKeyPressed(Key.NumberPadPlus))
@@ -90,6 +101,12 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
             if (TW.Game.Keyboard.IsKeyPressed(Key.D0))
                 activeObjectType = null;
+        }
+
+        private void getRaycastedObject(out ILevelBuildingObjectType type, out Object o)
+        {
+            o = raycaster.Raycast(levelBuildingInfo.Camera.GetCenterScreenRay());
+            type = levelBuildingFactory.GetTypeFromObject(o);
         }
 
         /* TODO: Move to something that implements ILevelBuildingObjectType
