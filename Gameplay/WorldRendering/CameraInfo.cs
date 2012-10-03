@@ -16,6 +16,7 @@ namespace MHGameWork.TheWizards.WorldRendering
         public CameraInfo()
         {
             ActivateSpecatorCamera();
+            
         }
 
         public CameraMode Mode { get; set; }
@@ -30,14 +31,25 @@ namespace MHGameWork.TheWizards.WorldRendering
         {
             Mode = CameraMode.Specator;
             ActiveCamera = TW.Graphics.SpectaterCamera;
+            
+        }
+
+        public void ActivateCustomCamera(ICamera camera)
+        {
+            Mode = CameraMode.Custom;
+            ActiveCamera = camera;
+
         }
 
         public enum CameraMode
         {
             None,
             Specator,
-            ThirdPerson
+            ThirdPerson,
+            Custom
         }
+
+        
 
 
         public Ray GetCenterScreenRay()
