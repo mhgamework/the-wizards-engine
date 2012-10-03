@@ -133,14 +133,21 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
           Vector3 startPoint, Color4 startColor,
           Vector3 endPoint, Color4 endColor)
         {
-            addLineInternal(startPoint, startColor, endPoint, endColor);
+
+
             if (DrawGroundShadows)
             {
-                startPoint.Y = 0;
-                endPoint.Y = 0;
+                var tempStart = startPoint;
+                var tempEnd = endPoint;
+                tempStart.Y = 0;
+                tempEnd.Y = 0;
                 var color4 = new Color4(255 / 255f, 30 / 255f, 30 / 255f, 30 / 255f);
-                addLineInternal(startPoint, color4, endPoint, color4);
+                addLineInternal(tempStart, color4, tempEnd, color4);
             }
+
+            addLineInternal(startPoint, startColor, endPoint, endColor);
+          
+
         }
 
 
