@@ -105,9 +105,9 @@ namespace MHGameWork.TheWizards.LevelBuilding
                 pos = ray.Position + intersects.Value * ray.Direction;
             }
 
-            pos.X = pos.X - (pos.X % NodeXSize);
+            pos.X = (float)Math.Floor(pos.X / NodeXSize) * NodeXSize + NodeXSize / 2;
             pos.Y = heightPlane.D;
-            pos.Z = pos.Z - (pos.Z % NodeZSize);
+            pos.Z = (float)Math.Floor(pos.Z / NodeZSize) * NodeZSize + NodeZSize / 2;
 
             return pos;
         }

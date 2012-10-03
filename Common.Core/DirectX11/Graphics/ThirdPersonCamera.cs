@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         public float LookAngleVertical { get; private set; }
         public float LookAngleHorizontal { get; private set; }
         private float mouseSensitivity = 0.1f;
-        public Vector3 CameraOffset = new Vector3(0, 1, 0);
+        public Vector3 CameraOffset = new Vector3(0.2f, 0.5f, 0);
 
         public ThirdPersonCamera()
         {
@@ -79,7 +79,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
 
         private void createViewMatrix()
         {
-            var camPos = Target + CameraOffset;
+            var camPos = Target;
             Vector3 pos, lookDir, up;
 
             lookDir = MathHelper.Forward;
@@ -87,6 +87,9 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
                 lookDir,
                 Matrix.RotationX(LookAngleVertical) * Matrix.RotationY(LookAngleHorizontal)
                   );
+
+            var offset = Vector3.TransformCoordinate(CameraOffset, Matrix.RotationY(LookAngleHorizontal));
+            camPos += offset;
 
             lookDir.Normalize();
 
