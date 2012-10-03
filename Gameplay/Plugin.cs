@@ -300,11 +300,15 @@ namespace MHGameWork.TheWizards
             var factory = new LevelBuildingObjectFactory();
 
             var type01 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Straight_01\\GreyBrick_Straight_01"));
-            //var type02 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Straight_02\\GreyBrick_Straight_02"));
-            //var type03 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Pillar_01\\GreyBrick_Pillar_01"));
-            //var type04 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_PillarCap_01\\GreyBrick_PillarCap_01"));
-
-
+            var type02 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Straight_02\\GreyBrick_Straight_02"));
+            var type03 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Pillar_01\\GreyBrick_Pillar_01"));
+            var type04 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_PillarCap_01\\GreyBrick_PillarCap_01"));
+            var type05 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_RoofC_01\\GreyBrick_RoofC_01"));
+            var type06 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_RoofT_01\\GreyBrick_RoofT_01"));
+            var type07 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_RoofU_01\\GreyBrick_RoofU_01"));
+            var type08 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_RoofX_01\\GreyBrick_RoofX_01"));
+            var type09 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Stair_01\\GreyBrick_Stair_01"));
+            var type10 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\Floor_01\\Floor_01"));
 
 
             string file = TWDir.GameData + "\\Level.txt";
@@ -312,6 +316,7 @@ namespace MHGameWork.TheWizards
             stringSerializer.AddConditional(new FilebasedAssetSerializer());
             var modelSerializer = new Persistence.ModelSerializer(stringSerializer);
 
+            if(File.Exists(file))
             using (var fs = File.OpenRead(file))
                 modelSerializer.Deserialize(TW.Data, new StreamReader(fs));
 
@@ -319,15 +324,21 @@ namespace MHGameWork.TheWizards
 
 
             factory.AddLevelBuildingObjectType(type01);
-            //factory.AddLevelBuildingObjectType(type02);
-            //factory.AddLevelBuildingObjectType(type03);
-            //factory.AddLevelBuildingObjectType(type04);
+            factory.AddLevelBuildingObjectType(type02);
+            factory.AddLevelBuildingObjectType(type03);
+            factory.AddLevelBuildingObjectType(type04);
+            factory.AddLevelBuildingObjectType(type05);
+            factory.AddLevelBuildingObjectType(type06);
+            factory.AddLevelBuildingObjectType(type07);
+            factory.AddLevelBuildingObjectType(type08);
+            factory.AddLevelBuildingObjectType(type09);
+            factory.AddLevelBuildingObjectType(type10);
 
 
             engine.AddSimulator(new LocalPlayerSimulator(player));
             engine.AddSimulator(new ThirdPersonCameraSimulator());
 
-            engine.AddSimulator(new LevelBuildingSimulator(cameraInfo, factory));
+            engine.AddSimulator(new LevelBuildingSimulator(player, cameraInfo, factory));
 
             engine.AddSimulator(new WorldRenderingSimulator());
             
