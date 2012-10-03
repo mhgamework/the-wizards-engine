@@ -158,6 +158,7 @@
     <Compile Include="Simulators\LevelBuildingSimulator.cs" />
 >>>>>>> a37fdc4... First implementation of levelbuilding-tool (not working)
     <Compile Include="Simulators\PickupSimulator.cs" />
+    <Compile Include="Simulators\PlayerConditionSimulator.cs" />
     <Compile Include="Simulators\TriggerSimulator.cs" />
     <Compile Include="Simulators\DebugSimulator.cs" />
     <Compile Include="Debugging\ProfilerSimulator.cs" />

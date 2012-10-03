@@ -2,28 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Trigger
 {
-    public class PlayerPositionCondition : ICondition
+    [ModelObjectChanged]
+    public class PlayerPositionCondition : EngineModelObject, ICondition
     {
         private int type;
         private bool inverted;
 
         private readonly PlayerData player;
-        private readonly BoundingBox bb;
+        public BoundingBox BoundingBox { get; set; }
         private WireframeBox box;
 
         private bool isSatisfied;
         private bool hasBeenSatisfied;
 
+        public PlayerPositionCondition()
+        {
+            
+        }
         public PlayerPositionCondition(PlayerData player, BoundingBox bb)
         {
             this.player = player;
-            this.bb = bb;
+            this.BoundingBox = bb;
 
             box = new WireframeBox();
             box.Color = new Color4(1, 1, 1);
@@ -65,7 +72,7 @@ namespace MHGameWork.TheWizards.Trigger
         {
             var pPos = player.Position;
 
-            if (isInBetween(pPos.X, bb.Minimum.X, bb.Maximum.X) && isInBetween(pPos.Y, bb.Minimum.Y, bb.Maximum.Y) && isInBetween(pPos.Z, bb.Minimum.Z, bb.Maximum.Z))
+            if (isInBetween(pPos.X, BoundingBox.Minimum.X, BoundingBox.Maximum.X) && isInBetween(pPos.Y, BoundingBox.Minimum.Y, BoundingBox.Maximum.Y) && isInBetween(pPos.Z, BoundingBox.Minimum.Z, BoundingBox.Maximum.Z))
             {
                 isSatisfied = true;
                 hasBeenSatisfied = true;
