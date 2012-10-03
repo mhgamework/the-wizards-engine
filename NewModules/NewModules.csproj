@@ -170,6 +170,11 @@
     <Compile Include="Entity\Editor\EditorMeshPart.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Persistence\AssetSerializer.cs" />
+    <Compile Include="Persistence\ListSerializer.cs" />
+    <Compile Include="Persistence\ModelObjectSerializer.cs" />
+    <Compile Include="Persistence\ModelSerializer.cs" />
+    <Compile Include="Persistence\PersistAttribute.cs" />
     <Compile Include="Rendering\RAMMesh.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -588,6 +593,7 @@
     <EmbeddedResource Include="Rendering\Files\Checker.png" />
     <Content Include="Audio\_doc.txt" />
     <Content Include="Engine\_doc.txt" />
+    <Content Include="Persistence\_doc.txt" />
     <Content Include="Physics\_doc.txt" />
     <Content Include="Rendering\Default\_doc.txt" />
     <Content Include="Rendering\Text\_doc.txt" />

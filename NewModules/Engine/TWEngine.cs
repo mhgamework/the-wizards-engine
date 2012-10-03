@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using MHGameWork.TheWizards.Persistence;
+using MHGameWork.TheWizards.Serialization;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.Engine
@@ -72,7 +74,15 @@ namespace MHGameWork.TheWizards.Engine
             {
                 foreach (var sim in simulators)
                 {
-                    sim.Simulate();
+                    try
+                    {
+                        sim.Simulate();
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine("Error in simulator: {0}",sim.GetType().Name);
+                        Console.WriteLine(ex.ToString());
+                    }
                 }
 
                 if (game.Keyboard.IsKeyReleased(Key.R))
@@ -149,12 +159,19 @@ namespace MHGameWork.TheWizards.Engine
 
         private void reloadGameplayDll()
         {
-            var typelessModel = new TypelessModel();
-            typelessModel.UpdateFromModel(TW.Data);
+            var serializer = new ModelSerializer(StringSerializer.Create());
+
+            var mem = new MemoryStream();
+            var writer = new StreamWriter(mem);
+
+            serializer.Serialize(TW.Data, writer);
+            mem.Flush();
+
             TW.Data.Objects.Clear();
 
             updateActiveGameplayAssembly();
-            typelessModel.AddToModel(TW.Data, activeGameplayAssembly);
+
+            serializer.Deserialize(TW.Data, new StreamReader(mem));
 
 
             TW.Graphics.AcquireRenderer().ClearAll();

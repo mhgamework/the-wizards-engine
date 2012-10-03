@@ -8,7 +8,6 @@ using MHGameWork.TheWizards.Collections;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Reflection;
 using MHGameWork.TheWizards.Serialization;
-using MHGameWork.TheWizards.Synchronization;
 
 namespace MHGameWork.TheWizards.Persistence
 {
@@ -29,10 +28,9 @@ namespace MHGameWork.TheWizards.Persistence
 
         private StringBuilder builder = new StringBuilder();
 
-        public ModelSerializer(StringSerializer stringSerializer, IAssetFactory assetFactory)
+        public ModelSerializer(StringSerializer stringSerializer)
         {
             this.stringSerializer = stringSerializer;
-            stringSerializer.AddConditional(new AssetSerializer(assetFactory));
             stringSerializer.AddConditional(new ModelObjectSerializer(this));
             stringSerializer.AddConditional(new ListSerializer());
             typeSerializer = TypeSerializer.Create();

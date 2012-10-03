@@ -72,8 +72,10 @@ namespace MHGameWork.TheWizards.Main
             assetSyncer.LoadAssetInformation();
             assetSyncer.Start();
 
-            var modelSerializer = new ModelSerializer(StringSerializer.Create(),
-                                                      TW.Data.GetSingleton<RenderingModel>().AssetFactory);
+            var serializer = StringSerializer.Create();
+            serializer.AddConditional(new Persistence.AssetSerializer(TW.Data.GetSingleton<RenderingModel>().AssetFactory));
+            var modelSerializer = new ModelSerializer(serializer);
+            
 
             string saveFile = TWDir.GameData.CreateSubdirectory("ServerSave") + "\\model.txt";
             if (File.Exists(saveFile))

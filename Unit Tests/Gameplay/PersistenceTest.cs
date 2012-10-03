@@ -35,7 +35,6 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             object1 = new TestObject
                         {
                             Getal = 32,
-                            Mesh = new RAMMesh()
                         };
             object2 = new TestObject() { Getal = 2 };
             object1.Object = object2;
@@ -47,7 +46,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         [Test]
         public void TestSerializeModelObject()
         {
-            var s = new ModelSerializer(StringSerializer.Create(), mockAssetFactory());
+            var s = new ModelSerializer(StringSerializer.Create());
 
             object1.Object = null; // Remove unresolvable dependency
 
@@ -79,8 +78,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         [Test]
         public void TestSerializeModel()
         {
-            IAssetFactory assetFactory = mockAssetFactory();
-            var s = new ModelSerializer(StringSerializer.Create(), assetFactory);
+            var s = new ModelSerializer(StringSerializer.Create());
 
             var strm = new MemoryStream();
 
@@ -98,7 +96,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             string serialized = getStringFromStream(strm);
 
             SimpleModelObject.CurrentModelContainer = deserialized;
-            s = new ModelSerializer(StringSerializer.Create(), assetFactory);
+            s = new ModelSerializer(StringSerializer.Create());
             s.Deserialize(deserialized, new StreamReader(strm));
 
 
@@ -118,8 +116,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
 
 
-            IAssetFactory assetFactory = mockAssetFactory();
-            var s = new ModelSerializer(StringSerializer.Create(), assetFactory);
+            var s = new ModelSerializer(StringSerializer.Create());
 
             var strm = new MemoryStream();
 
@@ -137,7 +134,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             string serialized = getStringFromStream(strm);
 
             SimpleModelObject.CurrentModelContainer = deserialized;
-            s = new ModelSerializer(StringSerializer.Create(), assetFactory);
+            s = new ModelSerializer(StringSerializer.Create());
             s.Deserialize(deserialized, new StreamReader(strm));
 
 
@@ -151,8 +148,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         [Test]
         public void TestPersistAttributeTypeScope()
         {
-            IAssetFactory assetFactory = mockAssetFactory();
-            var s = new ModelSerializer(StringSerializer.Create(), assetFactory);
+            var s = new ModelSerializer(StringSerializer.Create());
 
             // Add a new entity to the original model, it should not be serialized!
             new WorldRendering.Entity();
@@ -192,23 +188,16 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             return Encoding.ASCII.GetString(buff);
         }
 
-        private IAssetFactory mockAssetFactory()
-        {
-            var assetFactory = MockRepository.GenerateStub<IAssetFactory>();
-            assetFactory.Stub(o => o.GetAsset(null, object1.Mesh.Guid)).Return(object1.Mesh);
-            return assetFactory;
-        }
 
         [Persist]
         private class TestObject : SimpleModelObject
         {
             public int Getal { get; set; }
             public TestObject Object { get; set; }
-            public IMesh Mesh { get; set; }
 
             public override string ToString()
             {
-                return String.Format("Getal: {0}, Object: {1}, Mesh: {2}", Getal, Object, Mesh);
+                return String.Format("Getal: {0}, Object: {1}", Getal, Object);
             }
         }
 
