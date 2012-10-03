@@ -48,15 +48,14 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
             if(TW.Game.Keyboard.IsKeyPressed(Key.X))
             {
-                factory.LevelBuildingData.RemoveLevelBuildingObject(selected);
-                selected.Mesh = null;
+                factory.DeleteObject(selected);
                 info.SelectedObject = null;
             }
         }
 
         private void updateText(Textarea t)
         {
-            t.Text = "ENTITY-TYPE \nLeftClick: place \nRightClick: rotate \nR: delete";
+            t.Text = "ENTITY-TYPE \nLeftClick: place \nRightClick: rotate \nX: delete";
         }
 
         public object GetNewObject()
@@ -65,6 +64,15 @@ namespace MHGameWork.TheWizards.LevelBuilding
             ent.Mesh = mesh;
             ent.Solid = true;
             return ent;
+        }
+
+        public void Delete(object o)
+        {
+            if (!(o is WorldRendering.Entity))
+                throw new Exception("Invalid argument!");
+
+            var m = (WorldRendering.Entity) o;
+            m.Mesh = null;
         }
 
         private WorldRendering.Entity getSelectedObject(LevelBuildingObjectFactory factory, LevelBuildingInfo info)

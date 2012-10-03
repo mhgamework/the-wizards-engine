@@ -297,8 +297,15 @@ namespace MHGameWork.TheWizards
             var factory = new LevelBuildingObjectFactory();
 
             var type01 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Straight_01\\GreyBrick_Straight_01"));
+            var type02 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Straight_02\\GreyBrick_Straight_02"));
+            var type03 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Pillar_01\\GreyBrick_Pillar_01"));
+            var type04 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_PillarCap_01\\GreyBrick_PillarCap_01"));
 
             factory.AddLevelBuildingObjectType(type01);
+            factory.AddLevelBuildingObjectType(type02);
+            factory.AddLevelBuildingObjectType(type03);
+            factory.AddLevelBuildingObjectType(type04);
+
 
             engine.AddSimulator(new LocalPlayerSimulator(player));
             engine.AddSimulator(new ThirdPersonCameraSimulator());

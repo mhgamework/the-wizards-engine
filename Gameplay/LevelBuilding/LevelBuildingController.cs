@@ -107,7 +107,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
             {
                 if (TW.Game.Keyboard.IsKeyDown((Key)quickslotKeys.GetValue(i)))
                 {
-                    activeObjectType = null;
+                    //activeObjectType = null;
 
                     if(TW.Game.Mouse.LeftMouseJustPressed)
                     {
@@ -126,13 +126,26 @@ namespace MHGameWork.TheWizards.LevelBuilding
                     if(TW.Game.Keyboard.IsKeyPressed(Key.NumberPadPlus))
                     {
                         quickslots.SetValue(levelBuildingFactory.GetNextType((ILevelBuildingObjectType)quickslots.GetValue(i)), i);
+
+                        if (levelBuildingInfo.SelectedObject != null)
+                            levelBuildingFactory.DeleteObject(levelBuildingInfo.SelectedObject);
+
+                        activeObjectType = (ILevelBuildingObjectType)quickslots.GetValue(i);
+                        return;
                     }
                     if (TW.Game.Keyboard.IsKeyPressed(Key.NumberPadMinus))
                     {
                         quickslots.SetValue(levelBuildingFactory.GetPreviousType((ILevelBuildingObjectType)quickslots.GetValue(i)), i);
+
+                        if (levelBuildingInfo.SelectedObject != null)
+                            levelBuildingFactory.DeleteObject(levelBuildingInfo.SelectedObject);
+
+                        activeObjectType = (ILevelBuildingObjectType)quickslots.GetValue(i);
+                        return;
                     }
                 }
-                else if(TW.Game.Keyboard.IsKeyReleased((Key)quickslotKeys.GetValue(i)))
+                
+                if(TW.Game.Keyboard.IsKeyPressed((Key)quickslotKeys.GetValue(i)))
                 {
                     activeObjectType = (ILevelBuildingObjectType)quickslots.GetValue(i);
                     levelBuildingInfo.SelectedObject = null;

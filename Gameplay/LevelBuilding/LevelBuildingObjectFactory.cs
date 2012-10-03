@@ -11,7 +11,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
     public class LevelBuildingObjectFactory
     {
         private List<ILevelBuildingObjectType> types = new List<ILevelBuildingObjectType>();
-        public LevelBuildingData LevelBuildingData { get; private set; }
+        private LevelBuildingData LevelBuildingData;
 
         public LevelBuildingObjectFactory()
         {
@@ -57,6 +57,14 @@ namespace MHGameWork.TheWizards.LevelBuilding
             LevelBuildingData.AddLevelBuildingObject(created, t);
 
             return created;
+        }
+
+        public void DeleteObject(Object o)
+        {
+            var type = GetLevelBuildingTypeFromObject(o);
+            LevelBuildingData.RemoveLevelBuildingObject(o);
+            type.Delete(o);
+
         }
 
         public ILevelBuildingObjectType GetLevelBuildingTypeFromObject(object o)
