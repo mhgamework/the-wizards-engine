@@ -16,6 +16,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
         private const float minNodeSize = 0.5f;
 
         private Textarea textarea;
+        public float Height { get; private set; }
 
         public ScalableGrid()
         {
@@ -40,17 +41,17 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
             for (int i = -size; i < size; i++)
             {
-                Vector3 start = new Vector3(center.X + NodeXSize * 0.5f + i * NodeXSize, heightPlane.D, center.Z - size * NodeZSize);
-                Vector3 end = new Vector3(center.X + NodeXSize * 0.5f + i * NodeXSize, heightPlane.D, center.Z + size * NodeZSize);
+                Vector3 start = new Vector3(center.X + NodeXSize * 0.5f + i * NodeXSize, Height, center.Z - size * NodeZSize);
+                Vector3 end = new Vector3(center.X + NodeXSize * 0.5f + i * NodeXSize, Height, center.Z + size * NodeZSize);
                 TW.Graphics.LineManager3D.AddLine(start, end, gridColor);
 
-                start = new Vector3(center.X - size * NodeXSize, heightPlane.D, center.Z + NodeZSize * 0.5f + i * NodeZSize);
-                end = new Vector3(center.X + size * NodeXSize, heightPlane.D, center.Z + NodeZSize * 0.5f + i * NodeZSize);
+                start = new Vector3(center.X - size * NodeXSize, Height, center.Z + NodeZSize * 0.5f + i * NodeZSize);
+                end = new Vector3(center.X + size * NodeXSize, Height, center.Z + NodeZSize * 0.5f + i * NodeZSize);
                 TW.Graphics.LineManager3D.AddLine(start, end, gridColor);
             }
 
             var selectionColor = new Color4(1, 0, 0);
-            Vector3 selectionStart = new Vector3(center.X - NodeXSize * 0.5f, heightPlane.D, center.Z - NodeZSize * 0.5f);
+            Vector3 selectionStart = new Vector3(center.X - NodeXSize * 0.5f, Height, center.Z - NodeZSize * 0.5f);
 
             TW.Graphics.LineManager3D.AddLine(selectionStart, selectionStart + new Vector3(NodeXSize, 0, 0),
                                           selectionColor);
@@ -62,8 +63,8 @@ namespace MHGameWork.TheWizards.LevelBuilding
                                           selectionColor);
 
             textarea.Text = "NodeXSize: " + NodeXSize + "\nNodeYSize: " + NodeYSize + "\nNodeZSize: " + NodeZSize +
-                        "\nHeigth: " + heightPlane.D;
-            textarea.Text += "\nPosition: (" + center.X + "| " + heightPlane.D + "| " + center.Z + ")";
+                        "\nHeigth: " + Height;
+            textarea.Text += "\nPosition: (" + center.X + "| " + Height + "| " + center.Z + ")";
         }
 
         public void SetNodeXSize(float amount)
@@ -89,10 +90,9 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
         public void AdjustHeight(bool increase)
         {
-            if (increase)
-                heightPlane.D += NodeYSize;
-            else
-                heightPlane.D -= NodeYSize;
+            Height += increase ? NodeYSize : -NodeYSize;
+
+            heightPlane.D = -Height;
         }
 
         public Vector3 GetSelectedPosition(Ray ray)
@@ -106,7 +106,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
             }
 
             pos.X = (float)Math.Floor(pos.X / NodeXSize) * NodeXSize + NodeXSize / 2;
-            pos.Y = heightPlane.D;
+            pos.Y = Height;
             pos.Z = (float)Math.Floor(pos.Z / NodeZSize) * NodeZSize + NodeZSize / 2;
 
             return pos;

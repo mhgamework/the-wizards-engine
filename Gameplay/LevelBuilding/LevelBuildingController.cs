@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Raycasting;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
@@ -12,20 +13,22 @@ namespace MHGameWork.TheWizards.LevelBuilding
     public class LevelBuildingController
     {
         private LevelBuildingInfo levelBuildingInfo;
+        private readonly PlayerData player;
         private readonly LevelBuildingObjectFactory levelBuildingFactory;
 
-        private Array quickslots;
-        private Array quickslotKeys;
+        private ILevelBuildingObjectType[] quickslots;
+        private Key[] quickslotKeys;
 
         private ILevelBuildingObjectType activeObjectType;
         private WorldRaycaster raycaster = new WorldRaycaster();
 
-        public LevelBuildingController(CameraInfo camera, LevelBuildingObjectFactory levelBuildingFactory)
+        public LevelBuildingController(PlayerData player, CameraInfo camera, LevelBuildingObjectFactory levelBuildingFactory)
         {
+            this.player = player;
             this.levelBuildingFactory = levelBuildingFactory;
             levelBuildingInfo = new LevelBuildingInfo(camera, new ScalableGrid());
             quickslots = new ILevelBuildingObjectType[9];
-            quickslotKeys = new Key[9] {Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9};
+            quickslotKeys = new Key[9] { Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9 };
         }
 
         public void Update()
@@ -37,13 +40,13 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
             if (activeObjectType != null)
                 activeObjectType.ProcessInput(levelBuildingFactory, levelBuildingInfo);
-            else if(TW.Graphics.Mouse.LeftMouseJustPressed)
+            else if (TW.Graphics.Mouse.LeftMouseJustPressed)
             {
                 Object o = null;
                 ILevelBuildingObjectType type = null;
                 getRaycastedObject(out type, out o);
 
-                if(type != null && o != null)
+                if (type != null && o != null)
                 {
                     levelBuildingInfo.SelectedObject = o;
                     activeObjectType = type;
@@ -63,26 +66,28 @@ namespace MHGameWork.TheWizards.LevelBuilding
         {
             float gridIncrease = 0.5f;
 
-            if(TW.Graphics.Keyboard.IsKeyDown(Key.G))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.NumberPadPlus))
             {
-                if(TW.Graphics.Keyboard.IsKeyPressed(Key.NumberPadPlus))
-                {
-                    levelBuildingInfo.Grid.AdjustHeight(true);
-                }
-                if (TW.Graphics.Keyboard.IsKeyPressed(Key.NumberPadMinus))
-                {
-                    levelBuildingInfo.Grid.AdjustHeight(false);
-                }
-                if (TW.Graphics.Keyboard.IsKeyPressed(Key.H))
-                {
-                    levelBuildingInfo.Grid.SetNodeXSize(levelBuildingInfo.Grid.NodeXSize - gridIncrease);
-                    levelBuildingInfo.Grid.SetNodeZSize(levelBuildingInfo.Grid.NodeZSize - gridIncrease);
-                }
-                if (TW.Graphics.Keyboard.IsKeyPressed(Key.J))
-                {
-                    levelBuildingInfo.Grid.SetNodeXSize(levelBuildingInfo.Grid.NodeXSize + gridIncrease);
-                    levelBuildingInfo.Grid.SetNodeZSize(levelBuildingInfo.Grid.NodeZSize + gridIncrease);
-                }
+                levelBuildingInfo.Grid.AdjustHeight(true);
+                //player.GroundHeight = levelBuildingInfo.Grid.Height;
+            }
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.NumberPadMinus))
+            {
+                levelBuildingInfo.Grid.AdjustHeight(false);
+            }
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.H))
+            {
+                levelBuildingInfo.Grid.SetNodeXSize(levelBuildingInfo.Grid.NodeXSize - gridIncrease);
+                levelBuildingInfo.Grid.SetNodeZSize(levelBuildingInfo.Grid.NodeZSize - gridIncrease);
+            }
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.J))
+            {
+                levelBuildingInfo.Grid.SetNodeXSize(levelBuildingInfo.Grid.NodeXSize + gridIncrease);
+                levelBuildingInfo.Grid.SetNodeZSize(levelBuildingInfo.Grid.NodeZSize + gridIncrease);
+            }
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.I))
+            {
+                //player.DisableGravity = !player.DisableGravity;
             }
 
             levelBuildingInfo.Grid.UpdateDraw(
@@ -107,7 +112,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
                 {
                     //activeObjectType = null;
 
-                    if(TW.Graphics.Mouse.LeftMouseJustPressed)
+                    if (TW.Graphics.Mouse.LeftMouseJustPressed)
                     {
                         ILevelBuildingObjectType selectedType = null;
                         Object selectedObject = null;
@@ -121,7 +126,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
                         }
                     }
 
-                    if(TW.Graphics.Keyboard.IsKeyPressed(Key.NumberPadPlus))
+                    if (TW.Graphics.Keyboard.IsKeyPressed(Key.NumberPadPlus))
                     {
                         quickslots.SetValue(levelBuildingFactory.GetNextType((ILevelBuildingObjectType)quickslots.GetValue(i)), i);
 
@@ -142,8 +147,8 @@ namespace MHGameWork.TheWizards.LevelBuilding
                         return;
                     }
                 }
-                
-                if(TW.Graphics.Keyboard.IsKeyPressed((Key)quickslotKeys.GetValue(i)))
+
+                if (TW.Graphics.Keyboard.IsKeyPressed((Key)quickslotKeys.GetValue(i)))
                 {
                     activeObjectType = (ILevelBuildingObjectType)quickslots.GetValue(i);
                     levelBuildingInfo.SelectedObject = null;
@@ -163,6 +168,6 @@ namespace MHGameWork.TheWizards.LevelBuilding
             o = raycaster.Raycast(levelBuildingInfo.Camera.GetCenterScreenRay()).Object;
             type = levelBuildingFactory.GetLevelBuildingTypeFromObject(o);
         }
-        
+
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.LevelBuilding;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.WorldRendering;
 using Microsoft.Xna.Framework.Input;
 using SlimDX;
@@ -17,9 +18,9 @@ namespace MHGameWork.TheWizards.Simulators
         private LevelBuildingController controller;
         private bool firstFrame;
 
-        public LevelBuildingSimulator(CameraInfo camera, LevelBuildingObjectFactory factory)
+        public LevelBuildingSimulator(PlayerData playerData, CameraInfo camera, LevelBuildingObjectFactory factory)
         {
-            controller = new LevelBuildingController(camera, factory);
+            controller = new LevelBuildingController(playerData, camera, factory);
             firstFrame = true;
         }
 
