@@ -15,7 +15,7 @@ namespace MHGameWork.TheWizards._XNA.Gameplay
     /// The outline of this class is not strictly enough defined, it handles some of the PhysX related stuff
     /// TODO: Fix the controllerhitreport stuff
     /// </summary>
-    public class PlayerController :  IWorldSyncActor
+    public class PlayerController : IWorldSyncActor
     {
 
         private PlayerData player;
@@ -155,7 +155,9 @@ namespace MHGameWork.TheWizards._XNA.Gameplay
 
             //Gravity
             var gravity = Vector3.Down * 10;
-            velocity += gravity * game.Elapsed;
+            if (!DisableGravity)
+                velocity += gravity * game.Elapsed;
+            
 
 
             frameMovement += velocity * game.Elapsed;
@@ -167,8 +169,8 @@ namespace MHGameWork.TheWizards._XNA.Gameplay
             frameMovement = Vector3.Zero;
             // Clamp to 0 for now
             Vector3 position = controller.Position;
-            if (position.Y < controller.Height)
-                controller.Position = position + Vector3.UnitY * (controller.Height - position.Y);
+            if (position.Y < controller.Height + GroundHeight)
+                controller.Position = position + Vector3.UnitY * (controller.Height - position.Y + GroundHeight);
 
             if (Math.Abs((controller.Position - oldPos).Y) < 0.001) velocity.Y = 0;
 
@@ -176,6 +178,10 @@ namespace MHGameWork.TheWizards._XNA.Gameplay
             player.Position = controller.Position.dx();
 
             //Console.WriteLine(velocity);
+
+
+            if (DisableGravity)
+                velocity = Vector3.Zero; // Apply infinite friction
         }
 
 
@@ -228,6 +234,22 @@ namespace MHGameWork.TheWizards._XNA.Gameplay
         {
             Vector3 dir = Vector3.Forward;
             dir = Vector3.Transform(dir, createMovementOrientationMatrix());
+
+            Vector3 displacement = dir * elapsed * movementSpeed;
+            frameMovement += displacement;
+
+        }
+        public void DoMoveUp(float elapsed)
+        {
+            Vector3 dir = Vector3.Up;
+
+            Vector3 displacement = dir * elapsed * movementSpeed;
+            frameMovement += displacement;
+
+        }
+        public void DoMoveDown(float elapsed)
+        {
+            Vector3 dir = Vector3.Down;
 
             Vector3 displacement = dir * elapsed * movementSpeed;
             frameMovement += displacement;
@@ -300,7 +322,8 @@ namespace MHGameWork.TheWizards._XNA.Gameplay
             set { controller.Actor.GlobalOrientation = value; }
         }
 
+        public float GroundHeight { get; set; }
 
-
+        public bool DisableGravity { get; set; }
     }
 }

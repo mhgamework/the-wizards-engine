@@ -50,6 +50,17 @@ namespace MHGameWork.TheWizards.Player
         public float LookAngleHorizontal;
         public float LookAngleVertical;
 
+        /// <summary>
+        /// The Y coordinate which is the absolute minimum for the players position
+        /// </summary>
+        public float GroundHeight { get; set; }
+
+        /// <summary>
+        /// Disables gravity
+        /// </summary>
+        public bool DisableGravity { get; set; }
+        
+
 
 
         public string Name;

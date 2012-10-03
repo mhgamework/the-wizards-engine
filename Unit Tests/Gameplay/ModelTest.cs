@@ -107,6 +107,9 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             var player = new PlayerData();
             player.Entity = ent;
 
+            player.GroundHeight = 5;
+            player.DisableGravity = true;
+
 
             game
                 .AddSimulator(new LocalPlayerSimulator(player))
