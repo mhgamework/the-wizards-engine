@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Building;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Pickup;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.WorldRendering;
@@ -36,7 +37,7 @@ namespace MHGameWork.TheWizards.Simulators
 
         public void Simulate()
         {
-            var game = TW.Game;
+            var game = TW.Graphics;
 
             if(game.Keyboard.IsKeyDown(Key.E) && !pickupChanged)
             {
@@ -91,7 +92,7 @@ namespace MHGameWork.TheWizards.Simulators
             ItemEntity selectedItem = null;
             float dist = 1000;
 
-            var game = TW.Game;
+            var game = TW.Graphics;
             var rayPos = game.Camera.ViewInverse.xna().Translation.dx();
             var rayDir = game.Camera.ViewInverse.xna().Forward.dx();
 

@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
             translation = getPlacePos(info);
 
-            if (TW.Game.Mouse.RightMouseJustPressed)
+            if (TW.Graphics.Mouse.RightMouseJustPressed)
             {
                 rotation = rotation * Quaternion.RotationAxis(Vector3.UnitY, (float)Math.PI * 0.5f);
             }
@@ -41,12 +41,12 @@ namespace MHGameWork.TheWizards.LevelBuilding
             selected.WorldMatrix = Matrix.Scaling(scale)*Matrix.RotationQuaternion(rotation)*
                                    Matrix.Translation(translation);
 
-            if (TW.Game.Mouse.LeftMouseJustPressed)
+            if (TW.Graphics.Mouse.LeftMouseJustPressed)
             {
                 info.SelectedObject = null;
             }
 
-            if(TW.Game.Keyboard.IsKeyPressed(Key.X))
+            if(TW.Graphics.Keyboard.IsKeyPressed(Key.X))
             {
                 factory.DeleteObject(selected);
                 info.SelectedObject = null;

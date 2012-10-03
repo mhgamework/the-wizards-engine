@@ -29,5 +29,15 @@ namespace MHGameWork.TheWizards.WorldRendering
             return TW.Data.GetSingleton<RenderingModel>().MeshFactory.Load(relativeCorePath);
         }
 
+        /// <summary>
+        /// Returns the path from which this mesh was loaded if it was loading using this meshfactory
+        /// </summary>
+        /// <param name="mesh"></param>
+        /// <returns></returns>
+        public static string GetLoadedPath(IMesh mesh)
+        {
+            return TW.Data.GetSingleton<RenderingModel>().MeshFactory.GetLoadedPath(mesh);
+        }
+
     }
 }

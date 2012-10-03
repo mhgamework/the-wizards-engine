@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.Animation
             if (!isPlaying)
                 return;
 
-            time += TW.Game.Elapsed;
+            time += TW.Graphics.Elapsed;
 
             bool animationCompleted = true;
 

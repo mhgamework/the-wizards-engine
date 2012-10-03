@@ -30,6 +30,7 @@ namespace MHGameWork.TheWizards.Serialization
             ret.Add(o => o.ToString(), s => byte.Parse(s));
             ret.Add(o => o.ToString(), s => float.Parse(s));
             ret.Add(o => o.ToString(), s => double.Parse(s));
+            ret.Add(o => o.ToString(), s => bool.Parse(s));
             ret.Add(o => o.ToString(), s => Guid.Parse(s));
 
 

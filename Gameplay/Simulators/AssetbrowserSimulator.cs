@@ -30,7 +30,7 @@ namespace MHGameWork.TheWizards.Simulators
             camInfo = TW.Data.GetSingleton<CameraInfo>();
 
 
-            //camera = new AssetBrowserCamera(TW.Game.Keyboard, TW.Game.Mouse);
+            //camera = new AssetBrowserCamera(TW.Graphics.Keyboard, TW.Graphics.Mouse);
 
 
         }
@@ -67,7 +67,7 @@ namespace MHGameWork.TheWizards.Simulators
 
 
 
-            var factor = 0.9f;// * TW.Game.Elapsed;
+            var factor = 0.9f;// * TW.Graphics.Elapsed;
 
             TW.Graphics.SpectaterCamera.MovementSpeed = TW.Graphics.SpectaterCamera.MovementSpeed * (1 - factor) +
                                                     targetSpeed * factor;
@@ -91,11 +91,11 @@ namespace MHGameWork.TheWizards.Simulators
             TW.Graphics.SpectaterCamera.NearClip = v.X * 0.01f;
             TW.Graphics.SpectaterCamera.FarClip = v.X * 400f;
 
-            //data.CameraPosition = TW.Game.SpectaterCamera.CameraPosition;
-            //data.CameraDirection = TW.Game.SpectaterCamera.CameraDirection;
-            //if (TW.Game.SpectaterCamera.CameraPosition.Y < 0)
-            //    TW.Game.SpectaterCamera.CameraPosition = new Vector3(TW.Game.SpectaterCamera.CameraPosition.X, 0,
-            //                                                         TW.Game.SpectaterCamera.CameraPosition.Z);
+            //data.CameraPosition = TW.Graphics.SpectaterCamera.CameraPosition;
+            //data.CameraDirection = TW.Graphics.SpectaterCamera.CameraDirection;
+            //if (TW.Graphics.SpectaterCamera.CameraPosition.Y < 0)
+            //    TW.Graphics.SpectaterCamera.CameraPosition = new Vector3(TW.Graphics.SpectaterCamera.CameraPosition.X, 0,
+            //                                                         TW.Graphics.SpectaterCamera.CameraPosition.Z);
 
             
 

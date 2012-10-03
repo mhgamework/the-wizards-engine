@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
@@ -66,7 +66,7 @@ namespace MHGameWork.TheWizards.Pickup
 
         public void Delete()
         {
-            TW.Model.RemoveObject(ent);
+            TW.Data.RemoveObject(ent);
         }
 
         private void calculateBoundingBox()

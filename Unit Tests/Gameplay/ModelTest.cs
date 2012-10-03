@@ -114,7 +114,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 .AddSimulator(new WorldRenderingSimulator());
 
 
-            TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
+            TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.ThirdPerson;
             TW.Data.GetSingleton<CameraInfo>().FirstPersonCameraTarget = player.Entity;
 
             game.Run();

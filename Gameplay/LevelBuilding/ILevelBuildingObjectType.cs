@@ -6,7 +6,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.LevelBuilding
 {
-
+    /// <summary>
+    /// Responsible for manipulating BuildingObjects in the world
+    /// </summary>
     public interface ILevelBuildingObjectType
     {
         /// <summary>

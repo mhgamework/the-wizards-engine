@@ -5,8 +5,7 @@ using MHGameWork.TheWizards.Serialization;
 namespace MHGameWork.TheWizards.Persistence
 {
     /// <summary>
-    /// Responsible for string-serializing Assets
-    /// Part of the ModelSerializer
+    /// Responsible for string-serializing Assets, using GUIDs
     /// </summary>
     public class AssetSerializer : IConditionalSerializer
     {

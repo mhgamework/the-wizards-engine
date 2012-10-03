@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Animation;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
 
 namespace MHGameWork.TheWizards.Simulators
 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Synchronization;
 using SlimDX;
@@ -10,7 +11,7 @@ namespace MHGameWork.TheWizards.WorldRendering
     /// <summary>
     /// Responsible for representing a independent object in the World. It is not part of any greater system, like the building/terrain/trees
     /// </summary>
-    [NoSync]
+    [Persist]
     [ModelObjectChanged]
     public class Entity : EngineModelObject
     {

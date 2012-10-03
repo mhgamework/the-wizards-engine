@@ -36,29 +36,29 @@ namespace MHGameWork.TheWizards.LevelBuilding
             int size = 5; //# lines to draw * 0.5
             var gridColor = new Color4(1, 1, 1);
 
-            TW.Game.LineManager3D.DrawGroundShadows = true;
+            TW.Graphics.LineManager3D.DrawGroundShadows = true;
 
             for (int i = -size; i < size; i++)
             {
                 Vector3 start = new Vector3(center.X + NodeXSize * 0.5f + i * NodeXSize, heightPlane.D, center.Z - size * NodeZSize);
                 Vector3 end = new Vector3(center.X + NodeXSize * 0.5f + i * NodeXSize, heightPlane.D, center.Z + size * NodeZSize);
-                TW.Game.LineManager3D.AddLine(start, end, gridColor);
+                TW.Graphics.LineManager3D.AddLine(start, end, gridColor);
 
                 start = new Vector3(center.X - size * NodeXSize, heightPlane.D, center.Z + NodeZSize * 0.5f + i * NodeZSize);
                 end = new Vector3(center.X + size * NodeXSize, heightPlane.D, center.Z + NodeZSize * 0.5f + i * NodeZSize);
-                TW.Game.LineManager3D.AddLine(start, end, gridColor);
+                TW.Graphics.LineManager3D.AddLine(start, end, gridColor);
             }
 
             var selectionColor = new Color4(1, 0, 0);
             Vector3 selectionStart = new Vector3(center.X - NodeXSize * 0.5f, heightPlane.D, center.Z - NodeZSize * 0.5f);
 
-            TW.Game.LineManager3D.AddLine(selectionStart, selectionStart + new Vector3(NodeXSize, 0, 0),
+            TW.Graphics.LineManager3D.AddLine(selectionStart, selectionStart + new Vector3(NodeXSize, 0, 0),
                                           selectionColor);
-            TW.Game.LineManager3D.AddLine(selectionStart + new Vector3(NodeXSize, 0, 0), selectionStart + new Vector3(NodeXSize, 0, NodeZSize),
+            TW.Graphics.LineManager3D.AddLine(selectionStart + new Vector3(NodeXSize, 0, 0), selectionStart + new Vector3(NodeXSize, 0, NodeZSize),
                                           selectionColor);
-            TW.Game.LineManager3D.AddLine(selectionStart + new Vector3(NodeXSize, 0, NodeZSize), selectionStart + new Vector3(0, 0, NodeZSize),
+            TW.Graphics.LineManager3D.AddLine(selectionStart + new Vector3(NodeXSize, 0, NodeZSize), selectionStart + new Vector3(0, 0, NodeZSize),
                                           selectionColor);
-            TW.Game.LineManager3D.AddLine(selectionStart + new Vector3(0, 0, NodeZSize), selectionStart,
+            TW.Graphics.LineManager3D.AddLine(selectionStart + new Vector3(0, 0, NodeZSize), selectionStart,
                                           selectionColor);
 
             textarea.Text = "NodeXSize: " + NodeXSize + "\nNodeYSize: " + NodeYSize + "\nNodeZSize: " + NodeZSize +

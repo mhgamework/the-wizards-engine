@@ -4,13 +4,16 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Animation;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.LevelBuilding;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.OBJParser;
+using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.Pickup;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Serialization;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.Trigger;
 using MHGameWork.TheWizards.WorldRendering;
@@ -20,7 +23,7 @@ namespace MHGameWork.TheWizards
 {
     public class Plugin : IGameplayPlugin
     {
-        public void Initialize(Engine engine)
+        public void Initialize(TWEngine engine)
         {
             //testPickupSimulator(engine);
             //testTriggerSimulator(engine);
@@ -34,10 +37,10 @@ namespace MHGameWork.TheWizards
         /// Tests inventory functionalities.
         /// </summary>
         /// <param name="engine"></param>
-        private void testPickupSimulator(Engine engine)
+        private void testPickupSimulator(TWEngine engine)
         {
             var player = new PlayerData();
-            var cameraInfo = TW.Model.GetSingleton<CameraInfo>();
+            var cameraInfo = TW.Data.GetSingleton<CameraInfo>();
             cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
             cameraInfo.FirstPersonCameraTarget = player.Entity;
 
@@ -66,10 +69,10 @@ namespace MHGameWork.TheWizards
         /// Tests some basic trigger setups.
         /// </summary>
         /// <param name="engine"></param>
-        private void testTriggerSimulator(Engine engine)
+        private void testTriggerSimulator(TWEngine engine)
         {
             var player = new PlayerData();
-            var cameraInfo = TW.Model.GetSingleton<CameraInfo>();
+            var cameraInfo = TW.Data.GetSingleton<CameraInfo>();
             cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
             cameraInfo.FirstPersonCameraTarget = player.Entity;
 
@@ -132,13 +135,13 @@ namespace MHGameWork.TheWizards
         /// Test a trigger construction resembling a waypoint system.
         /// </summary>
         /// <param name="engine"></param>
-        private void testWayPointTrigger(Engine engine)
+        private void testWayPointTrigger(TWEngine engine)
         {
             var player = new PlayerData();
-            var cameraInfo = TW.Model.GetSingleton<CameraInfo>();
+            var cameraInfo = TW.Data.GetSingleton<CameraInfo>();
             cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
             cameraInfo.FirstPersonCameraTarget = player.Entity;
-            
+
             var cond01 = new PlayerPositionCondition(player, BoundingBox.FromPoints(new[] { new Vector3(4, 0, 2), new Vector3(5, 2, 3) }));
             cond01.SetType(ConditionType.ONCE);
             var cond02 = new PlayerPositionCondition(player, BoundingBox.FromPoints(new[] { new Vector3(6, 0, 4), new Vector3(7, 2, 5) }));
@@ -188,11 +191,11 @@ namespace MHGameWork.TheWizards
             engine.AddSimulator(new WorldRenderingSimulator());
 
         }
-    
-        private void testWorldmatrixAnimation(Engine engine)
+
+        private void testWorldmatrixAnimation(TWEngine engine)
         {
             var player = new PlayerData();
-            var cameraInfo = TW.Model.GetSingleton<CameraInfo>();
+            var cameraInfo = TW.Data.GetSingleton<CameraInfo>();
             cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
             cameraInfo.FirstPersonCameraTarget = player.Entity;
 
@@ -202,10 +205,10 @@ namespace MHGameWork.TheWizards
             Vector3 p3 = new Vector3(1, 0, 10);
 
             Quaternion r0 = Quaternion.RotationMatrix(Matrix.RotationX(0));
-            Quaternion r1 = Quaternion.RotationMatrix(Matrix.RotationX((float) Math.PI));
+            Quaternion r1 = Quaternion.RotationMatrix(Matrix.RotationX((float)Math.PI));
             Quaternion r2 = Quaternion.RotationMatrix(Matrix.RotationZ((float)Math.PI));
             Quaternion r3 = Quaternion.RotationMatrix(Matrix.RotationY((float)Math.PI));
-            Quaternion r4 = Quaternion.RotationMatrix(Matrix.RotationX(-(float)Math.PI*0.5f));
+            Quaternion r4 = Quaternion.RotationMatrix(Matrix.RotationX(-(float)Math.PI * 0.5f));
             Quaternion r5 = Quaternion.RotationMatrix(Matrix.RotationY(-(float)Math.PI * 0.5f));
 
             Vector3 s0 = new Vector3(1, 1, 1);
@@ -261,11 +264,11 @@ namespace MHGameWork.TheWizards
 
             animationController.Play();
         }
-    
-        private void testLoadLevel(Engine engine)
+
+        private void testLoadLevel(TWEngine engine)
         {
             var player = new PlayerData();
-            var cameraInfo = TW.Model.GetSingleton<CameraInfo>();
+            var cameraInfo = TW.Data.GetSingleton<CameraInfo>();
             cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
             cameraInfo.FirstPersonCameraTarget = player.Entity;
 
@@ -282,29 +285,43 @@ namespace MHGameWork.TheWizards
             engine.AddSimulator(new LocalPlayerSimulator(player));
             engine.AddSimulator(new ThirdPersonCameraSimulator());
             engine.AddSimulator(new Simulators.PhysXSimulator());
-            
+
             engine.AddSimulator(new WorldRenderingSimulator());
             //engine.AddSimulator(new Simulators.PhysXDebugRendererSimulator());
         }
 
-        private void testLevelBuilding(Engine engine)
+        private void testLevelBuilding(TWEngine engine)
         {
             var player = new PlayerData();
-            var cameraInfo = TW.Model.GetSingleton<CameraInfo>();
+            var cameraInfo = TW.Data.GetSingleton<CameraInfo>();
             cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
             cameraInfo.FirstPersonCameraTarget = player.Entity;
 
             var factory = new LevelBuildingObjectFactory();
 
             var type01 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Straight_01\\GreyBrick_Straight_01"));
-            var type02 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Straight_02\\GreyBrick_Straight_02"));
-            var type03 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Pillar_01\\GreyBrick_Pillar_01"));
-            var type04 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_PillarCap_01\\GreyBrick_PillarCap_01"));
+            //var type02 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Straight_02\\GreyBrick_Straight_02"));
+            //var type03 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Pillar_01\\GreyBrick_Pillar_01"));
+            //var type04 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_PillarCap_01\\GreyBrick_PillarCap_01"));
+
+
+
+
+            string file = TWDir.GameData + "\\Level.txt";
+            var stringSerializer = StringSerializer.Create();
+            stringSerializer.AddConditional(new FilebasedAssetSerializer());
+            var modelSerializer = new Persistence.ModelSerializer(stringSerializer);
+
+            using (var fs = File.OpenRead(file))
+                modelSerializer.Deserialize(TW.Data, new StreamReader(fs));
+
+
+
 
             factory.AddLevelBuildingObjectType(type01);
-            factory.AddLevelBuildingObjectType(type02);
-            factory.AddLevelBuildingObjectType(type03);
-            factory.AddLevelBuildingObjectType(type04);
+            //factory.AddLevelBuildingObjectType(type02);
+            //factory.AddLevelBuildingObjectType(type03);
+            //factory.AddLevelBuildingObjectType(type04);
 
 
             engine.AddSimulator(new LocalPlayerSimulator(player));
@@ -313,6 +330,13 @@ namespace MHGameWork.TheWizards
             engine.AddSimulator(new LevelBuildingSimulator(cameraInfo, factory));
 
             engine.AddSimulator(new WorldRenderingSimulator());
+            
+
+            engine.AddSimulator(new AutoSaveSimulator(file, new TimeSpan(0, 0, 10), modelSerializer));
         }
     }
+
+
+
+    
 }

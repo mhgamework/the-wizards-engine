@@ -9,8 +9,6 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.LevelBuilding
 {
-
-
     public class LevelBuildingController
     {
         private LevelBuildingInfo levelBuildingInfo;
@@ -39,7 +37,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
             if (activeObjectType != null)
                 activeObjectType.ProcessInput(levelBuildingFactory, levelBuildingInfo);
-            else if(TW.Game.Mouse.LeftMouseJustPressed)
+            else if(TW.Graphics.Mouse.LeftMouseJustPressed)
             {
                 Object o = null;
                 ILevelBuildingObjectType type = null;
@@ -52,7 +50,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
                 }
             }
 
-            if (TW.Game.Keyboard.IsKeyPressed(Key.X))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.X))
                 activeObjectType = null;
         }
 
@@ -65,22 +63,22 @@ namespace MHGameWork.TheWizards.LevelBuilding
         {
             float gridIncrease = 0.5f;
 
-            if(TW.Game.Keyboard.IsKeyDown(Key.G))
+            if(TW.Graphics.Keyboard.IsKeyDown(Key.G))
             {
-                if(TW.Game.Keyboard.IsKeyPressed(Key.NumberPadPlus))
+                if(TW.Graphics.Keyboard.IsKeyPressed(Key.NumberPadPlus))
                 {
                     levelBuildingInfo.Grid.AdjustHeight(true);
                 }
-                if (TW.Game.Keyboard.IsKeyPressed(Key.NumberPadMinus))
+                if (TW.Graphics.Keyboard.IsKeyPressed(Key.NumberPadMinus))
                 {
                     levelBuildingInfo.Grid.AdjustHeight(false);
                 }
-                if (TW.Game.Keyboard.IsKeyPressed(Key.H))
+                if (TW.Graphics.Keyboard.IsKeyPressed(Key.H))
                 {
                     levelBuildingInfo.Grid.SetNodeXSize(levelBuildingInfo.Grid.NodeXSize - gridIncrease);
                     levelBuildingInfo.Grid.SetNodeZSize(levelBuildingInfo.Grid.NodeZSize - gridIncrease);
                 }
-                if (TW.Game.Keyboard.IsKeyPressed(Key.J))
+                if (TW.Graphics.Keyboard.IsKeyPressed(Key.J))
                 {
                     levelBuildingInfo.Grid.SetNodeXSize(levelBuildingInfo.Grid.NodeXSize + gridIncrease);
                     levelBuildingInfo.Grid.SetNodeZSize(levelBuildingInfo.Grid.NodeZSize + gridIncrease);
@@ -105,11 +103,11 @@ namespace MHGameWork.TheWizards.LevelBuilding
         {
             for (int i = 0; i < quickslotKeys.Length; i++)
             {
-                if (TW.Game.Keyboard.IsKeyDown((Key)quickslotKeys.GetValue(i)))
+                if (TW.Graphics.Keyboard.IsKeyDown((Key)quickslotKeys.GetValue(i)))
                 {
                     //activeObjectType = null;
 
-                    if(TW.Game.Mouse.LeftMouseJustPressed)
+                    if(TW.Graphics.Mouse.LeftMouseJustPressed)
                     {
                         ILevelBuildingObjectType selectedType = null;
                         Object selectedObject = null;
@@ -123,7 +121,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
                         }
                     }
 
-                    if(TW.Game.Keyboard.IsKeyPressed(Key.NumberPadPlus))
+                    if(TW.Graphics.Keyboard.IsKeyPressed(Key.NumberPadPlus))
                     {
                         quickslots.SetValue(levelBuildingFactory.GetNextType((ILevelBuildingObjectType)quickslots.GetValue(i)), i);
 
@@ -133,7 +131,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
                         activeObjectType = (ILevelBuildingObjectType)quickslots.GetValue(i);
                         return;
                     }
-                    if (TW.Game.Keyboard.IsKeyPressed(Key.NumberPadMinus))
+                    if (TW.Graphics.Keyboard.IsKeyPressed(Key.NumberPadMinus))
                     {
                         quickslots.SetValue(levelBuildingFactory.GetPreviousType((ILevelBuildingObjectType)quickslots.GetValue(i)), i);
 
@@ -145,7 +143,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
                     }
                 }
                 
-                if(TW.Game.Keyboard.IsKeyPressed((Key)quickslotKeys.GetValue(i)))
+                if(TW.Graphics.Keyboard.IsKeyPressed((Key)quickslotKeys.GetValue(i)))
                 {
                     activeObjectType = (ILevelBuildingObjectType)quickslots.GetValue(i);
                     levelBuildingInfo.SelectedObject = null;
@@ -153,7 +151,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
                 }
             }
 
-            if (TW.Game.Keyboard.IsKeyPressed(Key.D0))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.D0))
             {
                 activeObjectType = null;
                 levelBuildingInfo.SelectedObject = null;

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DirectX11;
-using MHGameWork.TheWizards.ModelContainer;
+using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Pickup
@@ -12,7 +13,8 @@ namespace MHGameWork.TheWizards.Pickup
     /// Responsible for keeping track of the items in the inventory and rendering them.
     /// Constraint: The index of the same item in the Items-List and entities-List MUST be the same.
     /// </summary>
-    public class Inventory : BaseModelObject
+    [ModelObjectChanged]
+    public class Inventory : EngineModelObject
     {
         public List<ItemEntity> Items = new List<ItemEntity>();
         public ItemEntity SelectedItem;
@@ -34,22 +36,22 @@ namespace MHGameWork.TheWizards.Pickup
                 ent.WorldMatrix = Matrix.Scaling(0.5f, 0.5f, 0.5f) * Matrix.Translation(0, 0, -9) *
                                   Matrix.PerspectiveFovRH(MathHelper.PiOver4, 4 / 3f, 0.1f, 10) *
                                   Matrix.Translation(xPos2D, yPos2D, 0) *
-                                  Matrix.Invert(TW.Game.Camera.ViewProjection);
+                                  Matrix.Invert(TW.Graphics.Camera.ViewProjection);
 
                 if (index == Items.IndexOf(SelectedItem) && visible)
                 {
-                    var oriMatrix = TW.Game.LineManager3D.WorldMatrix;
-                    TW.Game.LineManager3D.WorldMatrix = Matrix.Invert(TW.Game.Camera.ViewProjection);
+                    var oriMatrix = TW.Graphics.LineManager3D.WorldMatrix;
+                    TW.Graphics.LineManager3D.WorldMatrix = Matrix.Invert(TW.Graphics.Camera.ViewProjection);
 
                     Vector3 topLeft = new Vector3(xPos2D - boxWidth * 0.5f, yPos2D + boxHeigth * 0.5f, 0);
                     Vector3 bottomRight = new Vector3(topLeft.X + 0.2f, topLeft.Y - 0.25f, 0);
 
-                    TW.Game.LineManager3D.AddLine(topLeft, new Vector3(topLeft.X, bottomRight.Y, 0), new Color4(1, 1, 1));
-                    TW.Game.LineManager3D.AddLine(new Vector3(topLeft.X, bottomRight.Y, 0), bottomRight, new Color4(1, 1, 1));
-                    TW.Game.LineManager3D.AddLine(bottomRight, new Vector3(bottomRight.X, topLeft.Y, 0), new Color4(1, 1, 1));
-                    TW.Game.LineManager3D.AddLine(new Vector3(bottomRight.X, topLeft.Y, 0), topLeft, new Color4(1, 1, 1));
+                    TW.Graphics.LineManager3D.AddLine(topLeft, new Vector3(topLeft.X, bottomRight.Y, 0), new Color4(1, 1, 1));
+                    TW.Graphics.LineManager3D.AddLine(new Vector3(topLeft.X, bottomRight.Y, 0), bottomRight, new Color4(1, 1, 1));
+                    TW.Graphics.LineManager3D.AddLine(bottomRight, new Vector3(bottomRight.X, topLeft.Y, 0), new Color4(1, 1, 1));
+                    TW.Graphics.LineManager3D.AddLine(new Vector3(bottomRight.X, topLeft.Y, 0), topLeft, new Color4(1, 1, 1));
 
-                    TW.Game.LineManager3D.WorldMatrix = oriMatrix;
+                    TW.Graphics.LineManager3D.WorldMatrix = oriMatrix;
 
                 }
             }
