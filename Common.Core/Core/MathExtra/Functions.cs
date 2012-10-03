@@ -402,5 +402,37 @@ namespace MHGameWork.TheWizards.MathExtra
         {
             return new Ray { Position = viewInverse.Translation, Direction = viewInverse.Forward };
         }
+        /// <summary>
+        /// Determine whether a point P is inside the triangle ABC. Note, this function
+        /// assumes that P is coplanar with the triangle.
+        /// </summary>
+        /// <returns>True if the point is inside, false if it is not.</returns>
+        public static bool PointInTriangle(ref Vector3 A, ref Vector3 B, ref Vector3 C, ref Vector3 P)
+        {
+            // Prepare our barycentric variables
+            Vector3 u = B - A;
+            Vector3 v = C - A;
+            Vector3 w = P - A;
+            Vector3 vCrossW = Vector3.Cross(v, w);
+            Vector3 vCrossU = Vector3.Cross(v, u);
+
+            // Test sign of r
+            if (Vector3.Dot(vCrossW, vCrossU) < 0)
+                return false;
+
+            Vector3 uCrossW = Vector3.Cross(u, w);
+            Vector3 uCrossV = Vector3.Cross(u, v);
+
+            // Test sign of t
+            if (Vector3.Dot(uCrossW, uCrossV) < 0)
+                return false;
+
+            // At this piont, we know that r and t and both > 0
+            float denom = uCrossV.Length();
+            float r = vCrossW.Length() / denom;
+            float t = uCrossW.Length() / denom;
+
+            return (r <= 1 && t <= 1 && r + t <= 1);
+        }
     }
 }
