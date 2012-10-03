@@ -228,7 +228,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
             // TODO: currently cheat
-            //            context.OutputMerger.SetTargets(gBuffer.DepthStencilView, game.BackBufferRTV);
+                        context.OutputMerger.SetTargets(gBuffer.DepthStencilView, game.BackBufferRTV);
 
             //game.TextureRenderer.Draw(hdrImageRV, new Vector2(10, 10), new Vector2(100, 100));
             //drawLines();

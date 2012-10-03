@@ -135,7 +135,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         {
 
 
-            if (DrawGroundShadows)
+            if (DrawGroundShadows && Math.Abs(startPoint.Y) > 0.0001 && Math.Abs(endPoint.Y) > 0.0001)
             {
                 var tempStart = startPoint;
                 var tempEnd = endPoint;
