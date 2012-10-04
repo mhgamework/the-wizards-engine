@@ -18,10 +18,17 @@ namespace MHGameWork.TheWizards.Raycasting
 
         public RaycastResult Raycast(Ray ray)
         {
+            return Raycast(ray, o => true);
+        }
+
+        public RaycastResult Raycast(Ray ray, Func<object, bool> filter)
+        {
             var closest = new RaycastResult();
             var newResult = new RaycastResult();
             foreach (var ent in TW.Data.Objects.Where(o => o is WorldRendering.Entity).Select(o => o as WorldRendering.Entity))
             {
+                if (!filter(ent)) continue;
+
                 raycastEntity(ent, ray, newResult);
                 if (newResult.IsCloser(closest)) newResult.CopyTo(closest);
             }
