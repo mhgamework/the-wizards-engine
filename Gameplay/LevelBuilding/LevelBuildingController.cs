@@ -36,6 +36,11 @@ namespace MHGameWork.TheWizards.LevelBuilding
             updateText();
             updateGrid();
 
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.I))
+            {
+                //player.DisableGravity = !player.DisableGravity;
+            }
+
             updateQuickSlots();
 
             if (activeObjectType != null)
@@ -59,35 +64,31 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
         private void updateText()
         {
-            levelBuildingInfo.Textarea.Text = "CONTROLLER \nG + H: decrease grid spacing \nG + J: increase grid spacing \nG + '+/-': adjust grid height";
+            levelBuildingInfo.Textarea.Text = "CONTROLLER \nK: decrease grid spacing \nM: increase grid spacing \nO: increase grid height \nL: decrease grid height";
         }
 
         private void updateGrid()
         {
             float gridIncrease = 0.5f;
 
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.NumberPadPlus))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.O))
             {
                 levelBuildingInfo.Grid.AdjustHeight(true);
                 //player.GroundHeight = levelBuildingInfo.Grid.Height;
             }
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.NumberPadMinus))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.L))
             {
                 levelBuildingInfo.Grid.AdjustHeight(false);
             }
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.H))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.K))
             {
                 levelBuildingInfo.Grid.SetNodeXSize(levelBuildingInfo.Grid.NodeXSize - gridIncrease);
                 levelBuildingInfo.Grid.SetNodeZSize(levelBuildingInfo.Grid.NodeZSize - gridIncrease);
             }
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.J))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.Semicolon))
             {
                 levelBuildingInfo.Grid.SetNodeXSize(levelBuildingInfo.Grid.NodeXSize + gridIncrease);
                 levelBuildingInfo.Grid.SetNodeZSize(levelBuildingInfo.Grid.NodeZSize + gridIncrease);
-            }
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.I))
-            {
-                //player.DisableGravity = !player.DisableGravity;
             }
 
             levelBuildingInfo.Grid.UpdateDraw(
