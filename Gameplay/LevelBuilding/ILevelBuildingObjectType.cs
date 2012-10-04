@@ -17,5 +17,6 @@ namespace MHGameWork.TheWizards.LevelBuilding
         void ProcessInput(LevelBuildingObjectFactory factory, LevelBuildingInfo info);
         object GetNewObject();
         void Delete(object o);
+        bool CanHandleObject(object o);
     }
 }

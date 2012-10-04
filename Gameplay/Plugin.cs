@@ -287,7 +287,7 @@ namespace MHGameWork.TheWizards
             engine.AddSimulator(new Simulators.PhysXSimulator());
 
             engine.AddSimulator(new WorldRenderingSimulator());
-            //engine.AddSimulator(new Simulators.PhysXDebugRendererSimulator());
+            engine.AddSimulator(new Simulators.PhysXDebugRendererSimulator());
         }
 
         private void testLevelBuilding(TWEngine engine)
@@ -312,7 +312,7 @@ namespace MHGameWork.TheWizards
             var type10 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\Floor_01\\Floor_01"));
 
 
-            /*
+            
             string file = TWDir.GameData + "\\Level.txt";
             var stringSerializer = StringSerializer.Create();
             stringSerializer.AddConditional(new FilebasedAssetSerializer());
@@ -321,7 +321,7 @@ namespace MHGameWork.TheWizards
             if(File.Exists(file))
             using (var fs = File.OpenRead(file))
                 modelSerializer.Deserialize(TW.Data, new StreamReader(fs));
-            */
+            
 
 
 
@@ -345,7 +345,7 @@ namespace MHGameWork.TheWizards
             engine.AddSimulator(new WorldRenderingSimulator());
             
 
-            //engine.AddSimulator(new AutoSaveSimulator(file, new TimeSpan(0, 0, 10), modelSerializer));
+            engine.AddSimulator(new AutoSaveSimulator(file, new TimeSpan(0, 0, 10), modelSerializer));
         }
     }
 

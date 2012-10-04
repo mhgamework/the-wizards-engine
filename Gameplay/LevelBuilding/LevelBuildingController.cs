@@ -38,7 +38,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.I))
             {
-                //player.DisableGravity = !player.DisableGravity;
+                player.DisableGravity = !player.DisableGravity;
             }
 
             updateQuickSlots();
@@ -74,11 +74,12 @@ namespace MHGameWork.TheWizards.LevelBuilding
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.O))
             {
                 levelBuildingInfo.Grid.AdjustHeight(true);
-                //player.GroundHeight = levelBuildingInfo.Grid.Height;
+                player.GroundHeight = levelBuildingInfo.Grid.Height;
             }
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.L))
             {
                 levelBuildingInfo.Grid.AdjustHeight(false);
+                player.GroundHeight = levelBuildingInfo.Grid.Height;
             }
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.K))
             {

@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
                 throw new Exception("Invalid LevelBuildingObjectType given!");
 
             var created = t.GetNewObject();
-            LevelBuildingData.AddLevelBuildingObject(created, t);
+            LevelBuildingData.AddLevelBuildingObject(created);
 
             return created;
         }
@@ -69,9 +69,12 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
         public ILevelBuildingObjectType GetLevelBuildingTypeFromObject(object o)
         {
-            ILevelBuildingObjectType val;
-            LevelBuildingData.Data.TryGetValue(o, out val);
-            return val;
+            foreach(ILevelBuildingObjectType type in types)
+            {
+                if (type.CanHandleObject(o))
+                    return type;
+            }
+            return null;
         }
     }
 }

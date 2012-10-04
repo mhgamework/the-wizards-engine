@@ -7,16 +7,16 @@ namespace MHGameWork.TheWizards.LevelBuilding
 {
     public class LevelBuildingData
     {
-        public Dictionary<Object, ILevelBuildingObjectType> Data { get; private set; }
+        public List<Object> Data { get; private set; }
 
         public LevelBuildingData()
         {
-            Data = new Dictionary<object, ILevelBuildingObjectType>();
+            Data = new List<Object>();
         }
 
-        public void AddLevelBuildingObject(Object o, ILevelBuildingObjectType type)
+        public void AddLevelBuildingObject(Object o)
         {
-            Data.Add(o, type);
+            Data.Add(o);
         }
 
         public void RemoveLevelBuildingObject(Object o)

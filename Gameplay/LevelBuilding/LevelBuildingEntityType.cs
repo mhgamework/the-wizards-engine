@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
     {
         private IMesh mesh;
         private Quaternion rotation;
- 
+
         public LevelBuildingEntityType(IMesh mesh)
         {
             this.mesh = mesh;
@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
                 rotation = rotation * Quaternion.RotationAxis(Vector3.UnitY, (float)Math.PI * 0.5f);
             }
 
-            selected.WorldMatrix = Matrix.Scaling(scale)*Matrix.RotationQuaternion(rotation)*
+            selected.WorldMatrix = Matrix.Scaling(scale) * Matrix.RotationQuaternion(rotation) *
                                    Matrix.Translation(translation);
 
             if (TW.Graphics.Mouse.LeftMouseJustPressed)
@@ -48,7 +48,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
                 info.SelectedObject = null;
             }
 
-            if(TW.Graphics.Keyboard.IsKeyPressed(Key.X))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.X))
             {
                 factory.DeleteObject(selected);
                 info.SelectedObject = null;
@@ -73,8 +73,19 @@ namespace MHGameWork.TheWizards.LevelBuilding
             if (!(o is WorldRendering.Entity))
                 throw new Exception("Invalid argument!");
 
-            var m = (WorldRendering.Entity) o;
+            var m = (WorldRendering.Entity)o;
             m.Mesh = null;
+        }
+
+        public bool CanHandleObject(object o)
+        {
+            if (!(o is WorldRendering.Entity))
+                return false;
+
+            if (((WorldRendering.Entity)o).Mesh != mesh)
+                return false;
+
+            return true;
         }
 
         private WorldRendering.Entity getSelectedObject(LevelBuildingObjectFactory factory, LevelBuildingInfo info)
@@ -86,7 +97,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
                 info.SelectedObject = s;
             }
 
-            return (WorldRendering.Entity) s;
+            return (WorldRendering.Entity)s;
         }
 
         private Vector3 getPlacePos(LevelBuildingInfo info)
