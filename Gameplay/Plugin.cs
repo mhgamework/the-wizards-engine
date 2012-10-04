@@ -296,6 +296,7 @@ namespace MHGameWork.TheWizards
             var cameraInfo = TW.Data.GetSingleton<CameraInfo>();
             cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
             cameraInfo.FirstPersonCameraTarget = player.Entity;
+            
 
             var factory = new LevelBuildingObjectFactory();
 

@@ -15,10 +15,12 @@ namespace MHGameWork.TheWizards.LevelBuilding
     public class LevelBuildingEntityType : ILevelBuildingObjectType
     {
         private IMesh mesh;
+        private Quaternion rotation;
  
         public LevelBuildingEntityType(IMesh mesh)
         {
             this.mesh = mesh;
+            rotation = Quaternion.RotationAxis(Vector3.UnitY, 0);
         }
 
         public void ProcessInput(LevelBuildingObjectFactory factory, LevelBuildingInfo info)
@@ -27,9 +29,9 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
             var selected = getSelectedObject(factory, info);
             Vector3 scale;
-            Quaternion rotation;
             Vector3 translation;
-            selected.WorldMatrix.Decompose(out scale, out rotation, out translation);
+            Quaternion cRot;
+            selected.WorldMatrix.Decompose(out scale, out cRot, out translation);
 
             translation = getPlacePos(info);
 
