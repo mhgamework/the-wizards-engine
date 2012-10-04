@@ -12,28 +12,27 @@ namespace MHGameWork.TheWizards.Simulators
     {
         public void Simulate()
         {
-            foreach (var change in TW.Data.GetChangesOfType<PlayerPositionCondition>())
+            TW.Data.EnsureAttachment<PlayerPositionCondition, RenderData>(arg => new RenderData());
+            foreach (var obj in TW.Data.GetChngedObjectsOfType<PlayerPositionCondition>())
             {
-                var ppc = (PlayerPositionCondition)change.ModelObject;
-
-                if (change.Change == Data.ModelChange.Added)
-                {
-                    var newBox = new WireframeBox();
-                    ppc.set(newBox);
-                }
-                var box = ppc.get<WireframeBox>();
-
-                if (change.Change == Data.ModelChange.Removed)
-                {
-                    TW.Data.RemoveObject(box);
-                }
-
-                box.FromBoundingBox(ppc.BoundingBox);
-                box.Visible = true;
-
-
-
+                var data = obj.get<RenderData>();
+                data.box.FromBoundingBox(obj.BoundingBox);
+                data.box.Visible = true;
             }
         }
+
+       class RenderData : IModelObjectAddon<PlayerPositionCondition>
+       {
+           public WireframeBox box;
+           public RenderData()
+           {
+               box = new WireframeBox();
+           }
+
+           public void Dispose()
+           {
+               TW.Data.RemoveObject(box);
+           }
+       }
     }
 }
