@@ -14,21 +14,21 @@ namespace MHGameWork.TheWizards.Simulators
         {
             foreach (var change in TW.Data.GetChangesOfType<PlayerPositionCondition>())
             {
-                var pos = (PlayerPositionCondition)change.ModelObject;
+                var ppc = (PlayerPositionCondition)change.ModelObject;
 
                 if (change.Change == Data.ModelChange.Added)
                 {
                     var newBox = new WireframeBox();
-                    pos.set(newBox);
+                    ppc.set(newBox);
                 }
-                var box = pos.get<WireframeBox>();
+                var box = ppc.get<WireframeBox>();
 
                 if (change.Change == Data.ModelChange.Removed)
                 {
                     TW.Data.RemoveObject(box);
                 }
 
-                box.FromBoundingBox(pos.BoundingBox);
+                box.FromBoundingBox(ppc.BoundingBox);
                 box.Visible = true;
 
 
