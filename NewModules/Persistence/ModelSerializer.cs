@@ -144,7 +144,7 @@ namespace MHGameWork.TheWizards.Persistence
                 var id = int.Parse(strm.ReadLine());
                 var type = typeSerializer.Deserialize(strm.ReadLine());
                 var obj = (IModelObject)Activator.CreateInstance(type);
-                addObject(obj, id);
+                setObjectID(obj, id);
 
             }
 
@@ -182,9 +182,10 @@ namespace MHGameWork.TheWizards.Persistence
 
             return objectDictionary[id];
         }
-        private void addObject(IModelObject obj, int id)
+        private void setObjectID(IModelObject obj, int id)
         {
-            objectDictionary.Add(id, obj);
+            objectDictionary.set(id,obj);
+            nextObjectID = id + 1;
         }
 
 

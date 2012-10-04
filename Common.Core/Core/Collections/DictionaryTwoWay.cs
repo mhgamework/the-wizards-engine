@@ -43,5 +43,11 @@ namespace MHGameWork.TheWizards.Collections
 
         public T this[U u] { get { return tMap[u]; } }
         public U this[T t] { get { return uMap[t]; } }
+
+        public void set(T t, U u)
+        {
+            tMap[u] = t;
+            uMap[t] = u;
+        }
     }
 }
