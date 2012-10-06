@@ -141,6 +141,7 @@
     <Compile Include="Forms\ClassFormTest.cs" />
     <Compile Include="Gameplay\AssetBrowserTest.cs" />
     <Compile Include="Gameplay\AudioTest.cs" />
+    <Compile Include="Gameplay\DebugTest.cs" />
     <Compile Include="Gameplay\PhysXTest.cs" />
     <Compile Include="Gameplay\LocalGame.cs" />
     <Compile Include="Gameplay\ModelTest.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="ProceduralTerrainGeneration\NoiseTests.cs" />
     <Compile Include="ProceduralTerrainGeneration\TerrainConverter.cs" />
     <Compile Include="ProceduralTerrainGeneration\TerrainGenerationTests.cs" />
+    <Compile Include="Profiling\ProfilingTest.cs" />
     <Compile Include="Rendering\TextRenderingFunctionalityTest.cs" />
     <Compile Include="Rendering\CullingTest.cs" />
     <Compile Include="Rendering\DeferredRenderingTest.cs" />

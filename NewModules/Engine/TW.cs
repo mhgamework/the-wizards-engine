@@ -19,6 +19,7 @@ namespace MHGameWork.TheWizards
         public static DataWrapper Data { get { return ctx.Data; } }
         public static PhysicsWrapper Physics { get { return ctx.Physics; } }
         public static AudioEngine Audio { get { return ctx.Audio; } }
+        public static DebugWrapper Debug { get { return ctx.Debug; } }
 
         /// <summary>
         /// TODO: probably add this, evaluate at later point in project
@@ -35,10 +36,15 @@ namespace MHGameWork.TheWizards
 
         public class Context
         {
+            public Context()
+            {
+                Debug = new DebugWrapper();
+            }
             public GraphicsWrapper Graphics { get; set; }
             public DataWrapper Data { get; set; }
             public PhysicsWrapper Physics { get; set; }
             public AudioWrapper Audio { get; set; }
+            public DebugWrapper Debug { get; set; }
 
 
 

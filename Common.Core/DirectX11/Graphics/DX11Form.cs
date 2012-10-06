@@ -1,4 +1,5 @@
 ﻿using System;
+using MHGameWork.TheWizards.Data;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DXGI;
@@ -8,6 +9,9 @@ using Device = SlimDX.Direct3D11.Device;
 namespace MHGameWork.TheWizards.DirectX11.Graphics
 {
     //TODO: WARNING no depthbuffer has been initialized yet!!
+    /// <summary>
+    /// NOTE: this is getting partially AL?? same goes for DX11Game but even more
+    /// </summary>
     public class DX11Form
     {
         private SwapChain swapChain;
@@ -17,11 +21,14 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         private Device device;
         public event Action GameLoopEvent;
 
+        public Profiling.ProfilingPoint GameLoopProfilingPoint { get; private set; }
+
         public int FrameCount { get; private set; }
 
         public DX11Form()
         {
             //Configuration.EnableObjectTracking = true; // Logs stacktraces of COM object creation
+            GameLoopProfilingPoint = Profiling.Profiler.CreateElement("DX11Form.GameLoop");
         }
 
 
@@ -46,6 +53,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
 
         private void gameLoop()
         {
+            GameLoopProfilingPoint.Begin();
             //TODO: create depth buffer
             //device.ImmediateContext.ClearDepthStencilView(device.ImmediateContext.OutputMerger.GetDepthStencilView(),
             //                                              DepthStencilClearFlags.Depth, 1, 0);
@@ -55,8 +63,15 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
 
 
 
-            swapChain.Present(1, PresentFlags.None);
+            presentSwapChain();
             FrameCount++;
+            GameLoopProfilingPoint.End();
+        }
+
+        [TWProfile]
+        private void presentSwapChain()
+        {
+            swapChain.Present(1, PresentFlags.None);
         }
 
         public void Run()

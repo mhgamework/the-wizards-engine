@@ -161,6 +161,7 @@
     </Compile>
     <Compile Include="Engine\AudioWrapper.cs" />
     <Compile Include="Engine\DataWrapper.cs" />
+    <Compile Include="Engine\DebugWrapper.cs" />
     <Compile Include="Engine\GraphicsWrapper.cs" />
     <Compile Include="Engine\PhysicsWrapper.cs" />
     <Compile Include="Entities\Editor\Rendering\EditorMaterial.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="Persistence\ModelObjectSerializer.cs" />
     <Compile Include="Persistence\ModelSerializer.cs" />
     <Compile Include="Persistence\PersistAttribute.cs" />
+    <Compile Include="Raycasting\MeshRaycaster.cs" />
     <Compile Include="Rendering\RAMMesh.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -209,10 +211,7 @@
     <Compile Include="ProceduralTerrainGeneration\NoiseGenerater\SimpleTerrain.cs" />
     <Compile Include="ProceduralTerrainGeneration\TerrrainGeneration\HeigthMapGenerater.cs" />
     <Compile Include="ProceduralTerrainGeneration\TerrrainGeneration\ProceduralHeigthGenerater.cs" />
-    <Compile Include="Profiling\Profiler.cs" />
-    <Compile Include="Profiling\ProfilingPoint.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Raycasting\MeshRaycaster.cs" />
     <Compile Include="Rendering\Culling\CullerNoCull.cs" />
     <Compile Include="Rendering\DebugVisualizer.cs" />
     <Compile Include="Rendering\Default\DefaultModelMaterialTextured.cs" />

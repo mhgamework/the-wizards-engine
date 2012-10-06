@@ -118,6 +118,7 @@
     <Compile Include="Building\WallType.cs" />
     <Compile Include="Simulators\AudioSimulator.cs" />
     <Compile Include="Simulators\AutoSaveSimulator.cs" />
+    <Compile Include="Simulators\DebugSimulator.cs" />
     <Compile Include="Simulators\PhysXDebugRendererSimulator.cs" />
     <Compile Include="Tiling\TileBoundary.cs" />
     <Compile Include="Tiling\TileBoundaryWinding.cs" />

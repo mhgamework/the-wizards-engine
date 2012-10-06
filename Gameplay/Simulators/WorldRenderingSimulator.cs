@@ -4,6 +4,8 @@ using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 
+[assembly: TWProfile( TWProfileAttribute.NameType.Class, AttributeTargetTypes = "MHGameWork.TheWizards.Simulators.*", AttributeTargetMembers = "Simulate")]
+
 namespace MHGameWork.TheWizards.Simulators
 {
     /// <summary>

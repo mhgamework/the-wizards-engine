@@ -100,3 +100,6 @@ Thumbs.db
 /bin/CommandLine.xml
 /bin/TestRunner.exe
 /bin/TestRunner.pdb
+/bin/Launcher.pssym
+/bin/PostSharp.dll
+/bin/PostSharp.xml

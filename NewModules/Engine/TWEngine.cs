@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Persistence;
+using MHGameWork.TheWizards.Profiling;
 using MHGameWork.TheWizards.Serialization;
+using PostSharp.Extensibility;
 using SlimDX.DirectInput;
+
+
 
 namespace MHGameWork.TheWizards.Engine
 {
@@ -16,6 +21,7 @@ namespace MHGameWork.TheWizards.Engine
     ///                                  The new dll is loaded, and the old types are mapped onto the new types, new objects are created and the links are re-established
     /// 
     /// </summary>
+    
     public class TWEngine
     {
         public TWEngine()
@@ -29,6 +35,8 @@ namespace MHGameWork.TheWizards.Engine
         private GraphicsWrapper game;
         private PhysicsWrapper physX;
         public string GameplayDll { get; set; }
+
+        public bool DontLoadPlugin { get; set; }
 
 
         private void setTWGlobals(DataWrapper container)
@@ -59,6 +67,14 @@ namespace MHGameWork.TheWizards.Engine
 
         public void Start()
         {
+            if (game == null)
+                Initialize();
+
+            game.Run();
+        }
+
+        public void Initialize()
+        {
             simulators = new List<ISimulator>();
 
             game = new GraphicsWrapper();
@@ -71,52 +87,57 @@ namespace MHGameWork.TheWizards.Engine
             physX.Initialize();
 
             game.GameLoopEvent += delegate
-            {
-                foreach (var sim in simulators)
-                {
-                    try
-                    {
-                        sim.Simulate();
-                    }
-                    catch(Exception ex)
-                    {
-                        Console.WriteLine("Error in simulator: {0}",sim.GetType().Name);
-                        Console.WriteLine(ex.ToString());
-                    }
-                }
-
-                if (game.Keyboard.IsKeyReleased(Key.R))
-                {
-                    reloadGameplayDll();
-                }
-                if (needsReload)
-                {
-                    needsReload = false;
-                    reloadGameplayDll();
-                }
-
-                container.ClearDirty();
-                physX.Update(game.Elapsed);
-
-
-
-            };
-
+                                  {
+                                      TW.Debug.MainProfilingPoint.Begin();
+                                      gameLoopStep(container);
+                                      TW.Debug.MainProfilingPoint.End();
+                                  };
 
 
             setTWGlobals(container);
 
-
             startFilesystemWatcher();
-
-
 
             updateActiveGameplayAssembly();
             createSimulators();
+        }
 
+        [TWProfile("GameLoop")]
+        private void gameLoopStep(DataWrapper container)
+        {
+            foreach (var sim in simulators)
+            {
+                try
+                {
+                    sim.Simulate();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error in simulator: {0}", sim.GetType().Name);
+                    Console.WriteLine(ex.ToString());
+                }
+            }
 
-            game.Run();
+            if (game.Keyboard.IsKeyReleased(Key.R))
+                needsReload = true;
+            checkReload();
 
+            container.ClearDirty();
+            updatePhysics();
+        }
+
+        [TWProfile]
+        private void checkReload()
+        {
+            if (!needsReload) return;
+            needsReload = false;
+            reloadGameplayDll();
+        }
+
+        [TWProfile]
+        private void updatePhysics()
+        {
+            physX.Update(game.Elapsed);
         }
 
         private void createSimulators()
@@ -125,6 +146,15 @@ namespace MHGameWork.TheWizards.Engine
 
             // This is configurable code
 
+            loadPlugin();
+
+
+            // End configurable
+        }
+
+        private void loadPlugin()
+        {
+            if (DontLoadPlugin) return;
             try
             {
                 var plugin = (IGameplayPlugin)activeGameplayAssembly.CreateInstance("MHGameWork.TheWizards.Plugin");
@@ -135,11 +165,6 @@ namespace MHGameWork.TheWizards.Engine
             {
                 Console.WriteLine(ex);
             }
-            //tryLoadSimulator("MHGameWork.TheWizards.Simulators.RenderingSimulator", activeGameplayAssembly);
-
-
-            // End configurable
-
         }
 
         private void updateActiveGameplayAssembly()
@@ -195,19 +220,5 @@ namespace MHGameWork.TheWizards.Engine
                 needsReload = true;
         }
 
-        private void tryLoadSimulator(string renderingsimulator, Assembly gameplay)
-        {
-            ISimulator sim;
-            try
-            {
-                sim = (ISimulator)gameplay.CreateInstance(renderingsimulator);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return;
-            }
-            AddSimulator(sim);
-        }
     }
 }
