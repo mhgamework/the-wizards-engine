@@ -37,4 +37,6 @@ using MHGameWork.TheWizards.Data;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 
+#if PROFILE
 [assembly: TWProfile(AttributeTargetTypes = "MHGameWork.TheWizards.*", AttributeTargetMembers = "*")]
+#endif

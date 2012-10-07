@@ -38,4 +38,6 @@ using MHGameWork.TheWizards.Data;
 
 
 //[assembly: TWProfile( TWProfileAttribute.NameType.Class, AttributeTargetTypes = "MHGameWork.TheWizards.Simulators.*", AttributeTargetMembers = "Simulate")]
+#if PROFILE
 [assembly: TWProfile(AttributeTargetTypes = "MHGameWork.TheWizards.*", AttributeTargetMembers = "*")]
+#endif
