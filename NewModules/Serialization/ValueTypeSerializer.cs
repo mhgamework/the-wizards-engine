@@ -25,8 +25,9 @@ namespace MHGameWork.TheWizards.Serialization
                 }
                 return builder.ToString();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine("ValueTypeSerializer.Serialize exception!");
 
             }
             return StringSerializer.Unknown;
@@ -48,8 +49,9 @@ namespace MHGameWork.TheWizards.Serialization
                 }
                 return target;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine("ValueTypeSerializer.Deserialize exception!");
 
             }
             return null;
