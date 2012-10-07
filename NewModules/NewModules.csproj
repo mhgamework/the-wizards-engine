@@ -177,6 +177,11 @@
     <Compile Include="Persistence\ModelSerializer.cs" />
     <Compile Include="Persistence\PersistAttribute.cs" />
     <Compile Include="Raycasting\MeshRaycaster.cs" />
+    <Compile Include="Rendering\Deferred\Meshes\MeshRenderData.cs" />
+    <Compile Include="Rendering\Deferred\Meshes\MeshRenderDataFactory.cs" />
+    <Compile Include="Rendering\Deferred\Meshes\MeshRenderMaterial.cs" />
+    <Compile Include="Rendering\Deferred\Meshes\MeshRenderPart.cs" />
+    <Compile Include="Rendering\MeshOptimizer.cs" />
     <Compile Include="Rendering\RAMMesh.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -220,9 +225,9 @@
     <Compile Include="Rendering\Default\DefaultModelShader.cs" />
     <Compile Include="Rendering\Default\DefaultRenderElement.cs" />
     <Compile Include="Rendering\Default\DefaultRenderer.cs" />
-    <Compile Include="Rendering\Deferred\DeferredMeshRenderElement.cs" />
-    <Compile Include="Rendering\Deferred\DeferredMeshRenderer.cs" />
-    <Compile Include="Rendering\Deferred\DeferredMeshVertex.cs" />
+    <Compile Include="Rendering\Deferred\Meshes\DeferredMeshRenderElement.cs" />
+    <Compile Include="Rendering\Deferred\Meshes\DeferredMeshRenderer.cs" />
+    <Compile Include="Rendering\Deferred\Meshes\DeferredMeshVertex.cs" />
     <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
     <Compile Include="Rendering\Deferred\DeferredRendererOud.cs" />
     <Compile Include="Rendering\Deferred\DirectionalLight.cs" />

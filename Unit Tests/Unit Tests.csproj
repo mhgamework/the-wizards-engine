@@ -158,6 +158,7 @@
     <Compile Include="ProceduralTerrainGeneration\TerrainConverter.cs" />
     <Compile Include="ProceduralTerrainGeneration\TerrainGenerationTests.cs" />
     <Compile Include="Profiling\ProfilingTest.cs" />
+    <Compile Include="Rendering\MeshOptimizerTest.cs" />
     <Compile Include="Rendering\TextRenderingFunctionalityTest.cs" />
     <Compile Include="Rendering\CullingTest.cs" />
     <Compile Include="Rendering\DeferredRenderingTest.cs" />

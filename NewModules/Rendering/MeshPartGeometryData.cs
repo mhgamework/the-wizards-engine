@@ -48,6 +48,23 @@ namespace MHGameWork.TheWizards.Rendering
             }
             return null;
         }
+        public void SetSource(Semantic semantic, Vector3[] value)
+        {
+            removeSource(semantic);
+            Sources.Add(new Source { Semantic = semantic, Number = 0, DataVector3 = value });
+        }
+        public void SetSource(Semantic semantic, Vector2[] value)
+        {
+            removeSource(semantic);
+            Sources.Add(new Source { Semantic = semantic, Number = 0, DataVector2 = value });
+        }
+
+        private void removeSource(Semantic semantic)
+        {
+            var old = Sources.Find(o => o.Semantic == semantic);
+            if (old != null)
+                Sources.Remove(old);
+        }
 
         public enum Semantic
         {
@@ -159,12 +176,12 @@ namespace MHGameWork.TheWizards.Rendering
 
             texcoords.Semantic = Semantic.Texcoord;
             texcoords.DataVector2 = new Vector2[6];
-            texcoords.DataVector2[0] = new Vector2(0,0);
-            texcoords.DataVector2[1] = new Vector2(0,1);
-            texcoords.DataVector2[2] = new Vector2(1,1);
-            texcoords.DataVector2[3] = new Vector2(0,0);
-            texcoords.DataVector2[4] = new Vector2(1,1);
-            texcoords.DataVector2[5] = new Vector2(1,0);
+            texcoords.DataVector2[0] = new Vector2(0, 0);
+            texcoords.DataVector2[1] = new Vector2(0, 1);
+            texcoords.DataVector2[2] = new Vector2(1, 1);
+            texcoords.DataVector2[3] = new Vector2(0, 0);
+            texcoords.DataVector2[4] = new Vector2(1, 1);
+            texcoords.DataVector2[5] = new Vector2(1, 0);
 
             MeshPartGeometryData data = new MeshPartGeometryData();
 

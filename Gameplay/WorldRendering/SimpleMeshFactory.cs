@@ -11,6 +11,7 @@ namespace MHGameWork.TheWizards.WorldRendering
 {
     /// <summary>
     /// This class is a 'temporary/initial/skeleton' implementation for loading meshes into the wizards.
+    /// This also optimizes the loaded meshes
     /// Note: this should probably not be in the gameplay project.
     /// TODO: see MeshLoader and merge
     /// </summary>
@@ -24,42 +25,16 @@ namespace MHGameWork.TheWizards.WorldRendering
 
         private Dictionary<Guid, IMesh> meshes = new Dictionary<Guid, IMesh>();
 
+        private Dictionary<IMesh, string> meshLoadedPaths = new Dictionary<IMesh, string>();
+
+        private MeshOptimizer optimizer = new MeshOptimizer();
+
 
         public SimpleMeshFactory()
         {
             var textureFactory = new RAMTextureFactory();
             converter = new OBJToRAMMeshConverter(textureFactory);
 
-
-            var loadMeshes = new[]
-                                 {
-                                     "Core\\TileSet\\ts001sg001", "Core\\TileSet\\ts001icg001",
-                                     "Core\\TileSet\\ts001ocg001", "Core\\TileSet\\ts001g001"
-                                 };
-
-            var guids = new[]
-                            {
-                                new Guid("475123C4-A39B-4E6B-8CF6-2AC811A408AA"),
-                                new Guid("73AA3BE2-8DD1-4C8C-A5B4-1F79B42F8990"),
-                                new Guid("B45A4292-49EE-4747-A3D3-7676780FDA0A"),
-                                new Guid("88567E86-D97A-4CBA-B5E5-06A8C528AE65")
-                            };
-
-
-
-            for (int i = 0; i < loadMeshes.Length; i++)
-            {
-                var path = loadMeshes[i];
-
-
-                var mesh = (RAMMesh)Load(path);
-                mesh.Guid = guids[i];
-
-
-                cheatDictionary.Add(path, mesh);
-
-                meshes.Add(mesh.Guid, mesh);
-            }
         }
 
         /// <summary>
@@ -72,15 +47,34 @@ namespace MHGameWork.TheWizards.WorldRendering
             if (cheatDictionary.ContainsKey(relativeCorePath))
                 return cheatDictionary[relativeCorePath];
 
+
             var path = TWDir.GameData + "\\" + relativeCorePath;
             var obj = path + ".obj";
             var mtl = path + ".mtl";
 
-            return GetBarrelMesh(obj, mtl, FileHelper.ExtractFilename(mtl, false));
+            var mesh = loadMeshFromFile(obj, mtl, FileHelper.ExtractFilename(mtl, false));
+
+            cheatDictionary.Add(relativeCorePath, mesh);
+
+            meshLoadedPaths.Add(mesh, relativeCorePath);
+
+            return mesh;
         }
 
 
-        public RAMMesh GetBarrelMesh(string objFile, string matFile, string matName)
+        /// <summary>
+        /// Returns the path from which this mesh was loaded if it was loading using this meshfactory
+        /// </summary>
+        /// <param name="mesh"></param>
+        /// <returns></returns>
+        public string GetLoadedPath(IMesh mesh)
+        {
+            if (!meshLoadedPaths.ContainsKey(mesh)) return null;
+            return meshLoadedPaths[mesh];
+        }
+
+
+        public IMesh loadMeshFromFile(string objFile, string matFile, string matName)
         {
             var fsMat = new FileStream(matFile, FileMode.Open);
 
@@ -94,7 +88,7 @@ namespace MHGameWork.TheWizards.WorldRendering
 
             fsMat.Close();
 
-            return meshes;
+            return optimizer.CreateOptimized(meshes); // Optimize the mesh
         }
 
         public IMesh GetMesh(Guid guid)
