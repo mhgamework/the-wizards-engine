@@ -432,6 +432,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Core\Core.cd" />
     <EmbeddedResource Include="Core\Graphics\Files\Calibri.xnb" />
     <Compile Include="Core\Graphics\AverageFPSCalculater.cs" />

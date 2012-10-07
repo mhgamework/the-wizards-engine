@@ -60,7 +60,21 @@ namespace MHGameWork.TheWizards.Data
 
         public override bool CompileTimeValidate(System.Reflection.MethodBase method)
         {
-            Message.Write(SeverityType.Warning, "code", "Biebabeloeba");
+            // type.Namespace crashes the compiler!!??
+            //Message.Write(SeverityType.Warning, "Ignoring", method.DeclaringType.Name);
+
+            // This class uses following classes to work, so if the attribute is added to this classes we get some sort of ordering problem
+            //  More specific: im guessing CreateElement can't have a profilerattribute=> this is impossible
+            if (method.DeclaringType.Name == "Profiler"
+                || method.DeclaringType.Name == "TWProfileAttribute" // This happens automatically but anyways add it :P
+                || method.DeclaringType.Name == "ProfilingPoint")
+            {
+                Message.Write(SeverityType.Warning, "Ignoring", method.Name);
+                return false; // Dont profile this :P
+
+            }
+
+            //Message.Write(SeverityType.Warning, "code", "Biebabeloeba");
 
             //if (!typeof(IModelObject).IsAssignableFrom(locationInfo.DeclaringType))
             //{

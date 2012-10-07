@@ -206,7 +206,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             el.Lines.Dispose();
         }
 
-        [TWProfile("DeferredRendererDraw")]
         public void Draw()
         {
 
@@ -249,7 +248,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             context.ClearState();
         }
 
-        [TWProfile("Lines")]
         private void drawLines(GBuffer target)
         {
             context.ClearState();
@@ -288,13 +286,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         }
 
-        [TWProfile("SSAO")]
         private void updateSSAO()
         {
             ssao.OnFrameRender(gBuffer.DepthRV, gBuffer.NormalRV);
         }
 
-        [TWProfile("Lights")]
         private void drawLights(CombineFinalRenderer finalRenderer)
         {
             finalRenderer.ClearLightAccumulation();
@@ -375,7 +371,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             r.ShadowsEnabled = l.ShadowsEnabled;
         }
 
-        [TWProfile("GBuffer")]
         private void drawGBuffer(GBuffer buffer)
         {
             //gBuffer.Clear(Microsoft.Xna.Framework.Graphics.Color.SkyBlue.dx());

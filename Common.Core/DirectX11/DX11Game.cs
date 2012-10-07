@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DirectX11.Input;
+using MHGameWork.TheWizards.Profiling;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
@@ -18,6 +19,10 @@ namespace MHGameWork.TheWizards.DirectX11
     /// </summary>
     public class DX11Game : IGraphicsManager
     {
+        public ProfilingPoint GameLoopProfilingPoint
+        {
+            get { return form.GameLoopProfilingPoint; }
+        }
 
         public DX11Game()
         {

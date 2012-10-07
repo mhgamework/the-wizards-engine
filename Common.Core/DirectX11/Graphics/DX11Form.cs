@@ -68,7 +68,6 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             GameLoopProfilingPoint.End();
         }
 
-        [TWProfile]
         private void presentSwapChain()
         {
             swapChain.Present(1, PresentFlags.None);

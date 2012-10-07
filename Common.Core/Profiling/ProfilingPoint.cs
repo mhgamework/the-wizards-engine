@@ -61,7 +61,7 @@ namespace MHGameWork.TheWizards.Profiling
                 instanceCount = 0;
 
                 lastChildren.Clear();
-                
+
             }
 
             instanceCount++;
@@ -88,24 +88,44 @@ namespace MHGameWork.TheWizards.Profiling
             if (profiler.pointStack.Count == 0)
             {
                 profileCount++;
-// Completed a complete profile run, save results
-                profiler.lastResult = GenerateProfileString();
+
             }
+            if (hasCallback) // Performance trick
+                OnProfilingComplete();
+        }
+
+        private bool hasCallback = false;
+        private List<Action<ProfilingPoint>> callbacks = new List<Action<ProfilingPoint>>();
+        public void OnProfilingComplete()
+        {
+
+            callbacks.ForEach(c => c(this));
+        }
+
+        public void AddProfileCompleteCallback(Action<ProfilingPoint> callback)
+        {
+            hasCallback = true;
+            callbacks.Add(callback);
         }
 
 
+        public string GenerateProfileString()
+        {
+            return GenerateProfileString(p => true);
+        }
         /// <summary>
         /// Returns a string with recursive profiling information
         /// </summary>
         /// <returns></returns>
-        public string GenerateProfileString()
+        public string GenerateProfileString(Func<ProfilingPoint, bool> filter)
         {
             var builder = new StringBuilder();
-            generateProfileString(builder, "", calculateAverageMilliseconds());
+            generateProfileString(builder, "", calculateAverageMilliseconds(), filter);
             return builder.ToString();
         }
-        private void generateProfileString(StringBuilder builder, string prefix, float parentTime)
+        private void generateProfileString(StringBuilder builder, string prefix, float parentTime, Func<ProfilingPoint, bool> filter)
         {
+            if (!filter(this)) return;
             var ms = calculateAverageMilliseconds();
             appendOutputLine(builder, prefix, ms, parentTime, name, instanceCount);
 
@@ -113,7 +133,7 @@ namespace MHGameWork.TheWizards.Profiling
             var additionalPrefix = "| ";
             foreach (var child in lastChildren)
             {
-                child.generateProfileString(builder, prefix + additionalPrefix, ms);
+                child.generateProfileString(builder, prefix + additionalPrefix, ms, filter);
                 childrenTotal += child.calculateAverageMilliseconds();
             }
             var remainder = ms - childrenTotal;
@@ -126,6 +146,8 @@ namespace MHGameWork.TheWizards.Profiling
         {
             builder.Append(prefix).Append("|-").AppendFormat(" {0}: {1:#0.#}ms | {2:#0}%    {3} times", name, ms, ms / parentTime * 100, times).AppendLine();
         }
+
+
 
         private float calculateAverageMilliseconds()
         {

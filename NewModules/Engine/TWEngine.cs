@@ -102,7 +102,6 @@ namespace MHGameWork.TheWizards.Engine
             createSimulators();
         }
 
-        [TWProfile("GameLoop")]
         private void gameLoopStep(DataWrapper container)
         {
             foreach (var sim in simulators)
@@ -126,7 +125,6 @@ namespace MHGameWork.TheWizards.Engine
             updatePhysics();
         }
 
-        [TWProfile]
         private void checkReload()
         {
             if (!needsReload) return;
@@ -134,7 +132,6 @@ namespace MHGameWork.TheWizards.Engine
             reloadGameplayDll();
         }
 
-        [TWProfile]
         private void updatePhysics()
         {
             physX.Update(game.Elapsed);

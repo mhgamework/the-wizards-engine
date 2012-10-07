@@ -4,7 +4,7 @@ using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 
-[assembly: TWProfile( TWProfileAttribute.NameType.Class, AttributeTargetTypes = "MHGameWork.TheWizards.Simulators.*", AttributeTargetMembers = "Simulate")]
+
 
 namespace MHGameWork.TheWizards.Simulators
 {
@@ -31,10 +31,10 @@ namespace MHGameWork.TheWizards.Simulators
                 var light = deferred.CreateDirectionalLight();
                 light.LightDirection = Vector3.Normalize(new Vector3(1, -1, 1));
                 light.ShadowsEnabled = true;
-                data.LightCreated = true;    
+                data.LightCreated = true;
             }
 
-            
+
 
             info = TW.Data.GetSingleton<CameraInfo>();
 
