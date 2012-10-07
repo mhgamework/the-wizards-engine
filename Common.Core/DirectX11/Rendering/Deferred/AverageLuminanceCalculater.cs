@@ -5,6 +5,9 @@ using SlimDX.DXGI;
 namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
 {
     /// <summary>
+    /// Responsible for calculating the average luminance of a hdr image
+    /// Info:
+    /// http://mynameismjp.wordpress.com/category/directx/
     /// </summary>
     public class AverageLuminanceCalculater
     {
@@ -130,9 +133,14 @@ namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
             shader.Apply();
 
             //TODO: Do not use GenerateMips, generate the manually. This might solve the NAN problem
+            generateMips();
+
+
+        }
+
+        private void generateMips()
+        {
             context.GenerateMips(luminanceRV);
-
-
         }
 
         public void DrawUpdatedAdaptedLogLuminance()
