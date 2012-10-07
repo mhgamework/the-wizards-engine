@@ -52,7 +52,7 @@ namespace MHGameWork.TheWizards.Profiling
 
         public void Begin()
         {
-            if (started) throw new InvalidOperationException("This element has already been started!!");
+            if (started) return; //This could be a recursive call, allow this for now // throw new InvalidOperationException("This element has already been started!!");
             started = true;
             start = Configuration.Timer.Elapsed;
 
@@ -84,7 +84,9 @@ namespace MHGameWork.TheWizards.Profiling
             float factor = 1;
             average = AverageSeconds * (1 - factor) + duration * factor;
 
-            profiler.pointStack.Pop();
+            if (profiler.pointStack.Peek() == this) // Allow recursive calls , so multiple ends
+                profiler.pointStack.Pop();
+
             if (profiler.pointStack.Count == 0)
             {
                 profileCount++;
@@ -137,16 +139,34 @@ namespace MHGameWork.TheWizards.Profiling
                 childrenTotal += child.calculateAverageMilliseconds();
             }
             var remainder = ms - childrenTotal;
-            if (remainder > 0.5 && lastChildren.Count != 0)
+            if (remainder / ms > 0.1 && lastChildren.Count != 0)
                 appendOutputLine(builder, prefix + additionalPrefix, remainder, ms, "[...]", 1);
 
         }
 
         private void appendOutputLine(StringBuilder builder, string prefix, float ms, float parentTime, string name, int times)
         {
-            builder.Append(prefix).Append("|-").AppendFormat(" {0}: {1:#0.#}ms | {2:#0}%    {3} times", name, ms, ms / parentTime * 100, times).AppendLine();
+            builder.Append(prefix).Append("|-").AppendFormat(" {0}: {1:#0.00}ms | {2:#0}%    {3} times", name, ms, ms / parentTime * 100, times).AppendLine();
         }
 
+
+        /// <summary>
+        /// Returns the first point found with given name
+        /// </summary>
+        /// <returns></returns>
+        public ProfilingPoint FindByName(string name)
+        {
+            if (this.name == name) return this;
+            for (int i = 0; i < lastChildren.Count; i++)
+            {
+                var ret = lastChildren[i].FindByName(name);
+                if (ret == null) continue;
+
+                return ret;
+            }
+
+            return null;
+        }
 
 
         private float calculateAverageMilliseconds()
