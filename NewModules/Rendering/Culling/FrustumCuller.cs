@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.Rendering
             RootNode.NodeData = data;
 
             QuadTree.Split(RootNode, numberLevels - 1);
-            
+
             cullNodes = new CullNode[CompactQuadTree<bool>.CalculateNbNodes(numberLevels)];
             buildCullNodeArray(RootNode, new CompactQuadTree<bool>.Node(0));
 
@@ -109,8 +109,16 @@ namespace MHGameWork.TheWizards.Rendering
         public void UpdateCullable(ICullable cullable)
         {
             CullNode oldNode = cullableContainingNodes[cullable];
-            CullNode newNode = oldNode.FindEncapsulatingNodeUpwards(cullable);
-            newNode = newNode.FindContainingNode(cullable);
+            CullNode newNode;
+
+            //This check is cheatfix and this bug should be fixed
+            if (oldNode == null)
+                newNode = null;
+            else
+            {
+                newNode = oldNode.FindEncapsulatingNodeUpwards(cullable);
+                newNode = newNode.FindContainingNode(cullable);
+            }
 
             if (newNode == null) newNode = RootNode;
 
@@ -120,7 +128,9 @@ namespace MHGameWork.TheWizards.Rendering
 
             var item = cullableItemMap[cullable];
 
-            oldNode.RemoveCullable(item);
+            //This check is cheatfix and this bug should be fixed
+            if (oldNode != null)
+                oldNode.RemoveCullable(item);
             newNode.PlaceCullable(item);
         }
 

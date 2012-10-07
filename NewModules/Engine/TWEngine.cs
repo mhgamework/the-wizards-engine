@@ -106,15 +106,16 @@ namespace MHGameWork.TheWizards.Engine
         {
             foreach (var sim in simulators)
             {
-                try
-                {
+                //try
+                //{
                     sim.Simulate();
-                }
+                /*}
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error in simulator: {0}", sim.GetType().Name);
                     Console.WriteLine(ex.ToString());
-                }
+                    
+                }*/
             }
 
             if (game.Keyboard.IsKeyReleased(Key.R))

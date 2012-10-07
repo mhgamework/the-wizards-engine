@@ -17,21 +17,23 @@ namespace MHGameWork.TheWizards.WorldRendering
 
         public void UpdateRenderData()
         {
-            bool create = false;
+            createElement();
+            updateElement();
+        }
 
-            if (element == null || element.Mesh != entity.Mesh) create = true;
+        private void createElement()
+        {
+            if (element != null && element.Mesh == entity.Mesh) return; // already ok
+            RemoveRenderData();
+            if (entity.Mesh == null) return;
+            element = renderer.CreateMeshElement(entity.Mesh);
+        }
 
-            if (create)
-            {
-                RemoveRenderData();
-                if (entity.Mesh == null) return;
-                element = renderer.CreateMeshElement(entity.Mesh);
-            }
-
+        private void updateElement()
+        {
+            if (element == null) return;
             element.WorldMatrix = entity.WorldMatrix;
             element.Visible = entity.Visible;
-
-
         }
 
         public void RemoveRenderData()

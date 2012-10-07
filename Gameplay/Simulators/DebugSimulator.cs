@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.Simulators
 
         private void saveProfileDataToDisk(object sender, DoWorkEventArgs e)
         {
-            string[] results = (string[]) e.Argument;
+            string[] results = (string[])e.Argument;
 
             using (var fs = new StreamWriter(File.OpenWrite(profileFile)))
                 foreach (var str in results)
@@ -67,7 +67,11 @@ namespace MHGameWork.TheWizards.Simulators
             }
 
 
-            var str = obj.GenerateProfileString(p => p.AverageSeconds > 0.0001f);
+            var targetName = "DeferredMeshRenderer.Draw";
+            var targetPoint = obj.FindByName(targetName);
+            string str = "";
+            if (targetPoint != null)
+                str = targetPoint.GenerateProfileString(p => p.AverageSeconds > 0.00001f);
 
             profileCompletePoint.End();
 
@@ -79,6 +83,8 @@ namespace MHGameWork.TheWizards.Simulators
 
 
         }
+
+
 
         private float time;
         private string lastresult;

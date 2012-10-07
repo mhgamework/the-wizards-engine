@@ -243,5 +243,28 @@ namespace MHGameWork.TheWizards.Rendering
             return Microsoft.Xna.Framework.BoundingSphere.CreateFromPoints(positions).dx();
         }
 
+        /// <summary>
+        /// Appends the source mesh to the destination mesh, this is NOT a deep copy!!!
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="destination"></param>
+        /// <param name="worldMatrix"></param>
+        public static void AppendMeshTo(IMesh source, IMesh destination, Matrix worldMatrix)
+        {
+            //TODO: BUG!!! transform the collision data!!!!
+            //destination.GetCollisionData().Boxes.AddRange(source.GetCollisionData().Boxes);
+            //destination.GetCollisionData().ConvexMeshes.AddRange(source.GetCollisionData().ConvexMeshes);
+            //Triangles not supported atm!! destination.GetCollisionData().TriangleMesh. .AddRange(source.GetCollisionData().Boxes);
+            foreach (var part in source.GetCoreData().Parts)
+            {
+                destination.GetCoreData().Parts.Add(new MeshCoreData.Part
+                                                        {
+                                                            MeshMaterial = part.MeshMaterial,
+                                                            MeshPart = part.MeshPart,
+                                                            ObjectMatrix = worldMatrix.xna() * part.ObjectMatrix
+                                                        });
+            }
+        }
+
     }
 }
