@@ -129,6 +129,17 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             for (int j = 0; j < vertices.Length; j++)
             {
+
+                // Discretize vertex positions, to decrease rounding errors
+
+                var pos = positions[j].ToSlimDX();
+                pos.X = ((int)pos.X * 1000) * 0.001f;
+                pos.Y = ((int)pos.Y * 1000) * 0.001f;
+                pos.Z = ((int)pos.Z * 1000) * 0.001f;
+
+                vertices[j].Pos = new Vector4(pos, 1);
+
+
                 vertices[j].Pos = new Vector4(positions[j].ToSlimDX(), 1);
                 vertices[j].Normal = normals[j].ToSlimDX();
                 if (texcoords != null)

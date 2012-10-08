@@ -25,6 +25,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
     /// <summary>
     /// This class manages a number of IMesh elements and renders them to a GBuffer
     /// Note that this class does not share IMeshPart data, that is parts are not shared across meshes
+    /// Note: This class discretizes vertex positions!!
     /// </summary>
     public class DeferredMeshRenderer
     {
