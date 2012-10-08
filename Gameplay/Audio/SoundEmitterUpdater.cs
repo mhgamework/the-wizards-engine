@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.Audio
         {
             TW.Data.EnsureAttachment<SoundEmitter, XAudioEmitter>(o => new XAudioEmitter(o));
 
-            foreach (var emitter in TW.Data.GetChngedObjectsOfType<SoundEmitter>())
+            foreach (var emitter in TW.Data.GetChangedObjects<SoundEmitter>())
                 emitter.get<XAudioEmitter>().Update(factory);
         }
 

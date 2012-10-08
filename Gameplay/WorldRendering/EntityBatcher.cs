@@ -27,7 +27,7 @@ namespace MHGameWork.TheWizards.WorldRendering
 
             TW.Data.EnsureAttachment<Entity, BatchInfo>(e => new BatchInfo());
 
-            foreach (var ent in TW.Data.GetChngedObjectsOfType<Entity>())
+            foreach (var ent in TW.Data.GetChangedObjects<Entity>())
             {
                 ent.get<BatchInfo>().LastChange = time;
 

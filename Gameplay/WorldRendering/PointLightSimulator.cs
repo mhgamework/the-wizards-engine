@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.WorldRendering
         public void Simulate()
         {
             TW.Data.EnsureAttachment<PointLight, Data>(o => new Data());
-            foreach (var light in TW.Data.GetChngedObjectsOfType<PointLight>())
+            foreach (var light in TW.Data.GetChangedObjects<PointLight>())
             {
                 light.get<Data>().Update(light);
             }
