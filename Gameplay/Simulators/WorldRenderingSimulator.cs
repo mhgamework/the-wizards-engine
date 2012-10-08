@@ -9,20 +9,21 @@ using SlimDX;
 namespace MHGameWork.TheWizards.Simulators
 {
     /// <summary>
-    /// Responsible for rendering using a basic rendering system.
+    /// Responsible for rendering the world
     /// </summary>
     public class WorldRenderingSimulator : ISimulator
     {
         private DeferredRenderer deferred;
-        private WorldRenderer renderer;
         private CameraInfo info;
-        private TextareaUpdater textareaUpdater;
+        private TextareaUpdater textareaSimulator;
+        private WireframeBoxSimulator wireframeSimulator;
+        private EntitySimulator entitySimulator;
+        private PointLightSimulator pointLightSimulator;
 
         public WorldRenderingSimulator()
         {
 
             deferred = TW.Graphics.AcquireRenderer();
-            renderer = new WorldRenderer(TW.Data, deferred);
 
             var data = TW.Data.GetSingleton<Data>();
 
@@ -39,7 +40,11 @@ namespace MHGameWork.TheWizards.Simulators
             info = TW.Data.GetSingleton<CameraInfo>();
 
 
-            textareaUpdater = new TextareaUpdater();
+            textareaSimulator = new TextareaUpdater();
+
+            entitySimulator = new EntitySimulator();
+            wireframeSimulator = new WireframeBoxSimulator();
+            pointLightSimulator = new PointLightSimulator();
 
 
 
@@ -48,11 +53,15 @@ namespace MHGameWork.TheWizards.Simulators
         public void Simulate()
         {
             TW.Graphics.Camera = info.ActiveCamera;
-            renderer.ProcessWorldChanges();
             deferred.Draw();
 
-            textareaUpdater.Update();
-            textareaUpdater.Render();
+            entitySimulator.Simulate();
+            wireframeSimulator.Simulate();
+            pointLightSimulator.Simulate();
+
+            textareaSimulator.Update();
+            textareaSimulator.Render();
+
 
         }
 

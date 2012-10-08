@@ -75,8 +75,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                                                      light.Intensity = 2;
                                                  }));
 
-            game.AddSimulator(new PointLightSimulator());
-            game.AddSimulator(new Simulators.WorldRenderingSimulator());
+            game.AddSimulator(new EntitySimulator());
 
 
 

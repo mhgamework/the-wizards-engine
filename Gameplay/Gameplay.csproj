@@ -133,19 +133,21 @@
     <Compile Include="Building\WallPlacer.cs" />
     <Compile Include="Building\WallType.cs" />
     <Compile Include="Simulators\AudioSimulator.cs" />
-    <Compile Include="Simulators\AutoSaveSimulator.cs" />
+    <Compile Include="Persistence\AutoSaveSimulator.cs" />
     <Compile Include="Simulators\DebugSimulator.cs" />
-    <Compile Include="Simulators\ProfilerSimulator.cs" />
-    <Compile Include="Simulators\PhysXDebugRendererSimulator.cs" />
+    <Compile Include="Debugging\ProfilerSimulator.cs" />
+    <Compile Include="PhysX\PhysXDebugRendererSimulator.cs" />
     <Compile Include="Tiling\TileBoundary.cs" />
     <Compile Include="Tiling\TileBoundaryWinding.cs" />
     <Compile Include="Tiling\TileFace.cs" />
     <Compile Include="Tiling\TileFaceExtensions.cs" />
     <Compile Include="Tiling\TileModel.cs" />
     <Compile Include="Tiling\TileRotationExtension.cs" />
-    <Compile Include="WorldRendering\EntityBatcher.cs" />
+    <Compile Include="WorldRendering\EntityBatcherSimulator.cs" />
+    <Compile Include="WorldRendering\EntitySimulator.cs" />
     <Compile Include="WorldRendering\PointLight.cs" />
     <Compile Include="WorldRendering\PointLightSimulator.cs" />
+    <Compile Include="WorldRendering\WireframeBoxSimulator.cs" />
     <Compile Include="WorldRendering\World.cs" />
     <Compile Include="WorldRendering\MeshFactory.cs" />
     <Compile Include="WorldRendering\RenderingModel.cs" />
@@ -213,7 +215,6 @@
     <Compile Include="Simulators\TileEditorSimulator.cs" />
     <Compile Include="_XNA\World\ClientWorldSector.cs" />
     <Compile Include="WorldRendering\EntityRenderData.cs" />
-    <Compile Include="WorldRendering\WorldRenderer.cs" />
     <Compile Include="_XNA\World\ServerWorld.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -239,9 +240,7 @@
     <Content Include="WorldRendering\_doc.txt" />
     <Content Include="_doc.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Persistence\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
