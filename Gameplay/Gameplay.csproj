@@ -142,17 +142,7 @@
     <Compile Include="Tiling\TileFaceExtensions.cs" />
     <Compile Include="Tiling\TileModel.cs" />
     <Compile Include="Tiling\TileRotationExtension.cs" />
-<<<<<<< HEAD
-=======
-    <Compile Include="Trigger\ConditionType.cs" />
-    <Compile Include="Trigger\CreateTriggerAction.cs" />
-    <Compile Include="Trigger\IAction.cs" />
-    <Compile Include="Trigger\ICondition.cs" />
-    <Compile Include="Trigger\PlayerPositionCondition.cs" />
-    <Compile Include="Trigger\SpawnAction.cs" />
-    <Compile Include="Trigger\Trigger.cs" />
     <Compile Include="WorldRendering\EntityBatcher.cs" />
->>>>>>> 86b4d1f... Work on EntityBatcher.cs
     <Compile Include="WorldRendering\World.cs" />
     <Compile Include="WorldRendering\MeshFactory.cs" />
     <Compile Include="WorldRendering\RenderingModel.cs" />
