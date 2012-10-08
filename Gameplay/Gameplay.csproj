@@ -144,6 +144,8 @@
     <Compile Include="Tiling\TileModel.cs" />
     <Compile Include="Tiling\TileRotationExtension.cs" />
     <Compile Include="WorldRendering\EntityBatcher.cs" />
+    <Compile Include="WorldRendering\PointLight.cs" />
+    <Compile Include="WorldRendering\PointLightSimulator.cs" />
     <Compile Include="WorldRendering\World.cs" />
     <Compile Include="WorldRendering\MeshFactory.cs" />
     <Compile Include="WorldRendering\RenderingModel.cs" />
