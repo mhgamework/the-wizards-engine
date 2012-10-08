@@ -10,6 +10,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.WorldRendering
 {
+    /// <summary>
+    /// Responsible for ensuring Wireframebox is rendererd
+    /// </summary>
     public class WireframeBoxSimulator : ISimulator
     {
         public void Simulate()

@@ -8,6 +8,7 @@ using PostSharp.Reflection;
 namespace MHGameWork.TheWizards.Data
 {
     /// <summary>
+    /// Applying this attribute to a method will create a profiling point around the entire method.
     /// </summary>
     [MulticastAttributeUsage(MulticastTargets.Method)]
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Method, AllowMultiple = true)]

@@ -214,7 +214,6 @@
     <Compile Include="Simulators\ThirdPersonCameraSimulator.cs" />
     <Compile Include="Simulators\TileEditorSimulator.cs" />
     <Compile Include="_XNA\World\ClientWorldSector.cs" />
-    <Compile Include="WorldRendering\EntityRenderData.cs" />
     <Compile Include="_XNA\World\ServerWorld.cs" />
   </ItemGroup>
   <ItemGroup>

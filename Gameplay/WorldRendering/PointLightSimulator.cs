@@ -6,6 +6,9 @@ using MHGameWork.TheWizards.Engine;
 
 namespace MHGameWork.TheWizards.WorldRendering
 {
+    /// <summary>
+    /// Responsible for rendering PointLight's
+    /// </summary>
     public class PointLightSimulator : ISimulator
     {
         class Data : IModelObjectAddon<PointLight>

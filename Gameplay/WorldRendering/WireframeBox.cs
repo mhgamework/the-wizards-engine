@@ -10,6 +10,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.WorldRendering
 {
+    /// <summary>
+    /// Represents a WireframeBox in the world
+    /// </summary>
     [NoSync]
     public class WireframeBox : EngineModelObject
     {
