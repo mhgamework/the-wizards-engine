@@ -68,6 +68,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         public FrustumCuller Culler { get; set; }
 
+        public int DrawCalls
+        {
+            get { return drawCalls; }
+        }
+
         private Dictionary<IMesh, MeshRenderData> renderDataDict = new Dictionary<IMesh, MeshRenderData>();
         private List<MeshRenderData> renderDatas = new List<MeshRenderData>();
 
@@ -290,7 +295,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private void drawIndexed(MeshRenderPart part)
         {
             context.DrawIndexed(part.PrimitiveCount * 3, 0, 0);
-            drawCalls++;
+            drawCalls = DrawCalls + 1;
         }
 
         private void setInputAssembler(MeshRenderPart part)

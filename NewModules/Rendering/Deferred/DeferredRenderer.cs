@@ -52,6 +52,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private List<DeferredLinesElement> lineElements = new List<DeferredLinesElement>();
         private List<DeferredMeshRenderElement> meshElements = new List<DeferredMeshRenderElement>();
 
+        public int DrawCalls { get { return meshRenderer.DrawCalls; } }
+
         public DeferredRenderer(DX11Game game)
         {
             this.game = game;
@@ -226,7 +228,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
             // TODO: currently cheat
+<<<<<<< HEAD
             //            context.OutputMerger.SetTargets(gBuffer.DepthStencilView, game.BackBufferRTV);
+=======
+            context.OutputMerger.SetTargets(gBuffer.DepthStencilView, game.BackBufferRTV);
+>>>>>>> 71073fa... Implemented the EntityBatcher.cs
 
             //game.TextureRenderer.Draw(hdrImageRV, new Vector2(10, 10), new Vector2(100, 100));
             //drawLines();

@@ -40,6 +40,11 @@ namespace MHGameWork.TheWizards.WorldRendering
         /// </summary>
         public bool Static { get; set; }
 
+        /// <summary>
+        /// This is true when the entity is part of a batched group
+        /// </summary>
+        public bool Batched { get; set; }
+
         public override string ToString()
         {
             return string.Format("Mesh: {0}, WorldMatrix: {1}", Mesh, WorldMatrix);

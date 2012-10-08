@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             game.DontLoadPlugin = true;
             game.Initialize();
 
-            game.AddSimulator(new DebugSimulator());
+            game.AddSimulator(new ProfilerSimulator());
             game.AddSimulator(new WorldRenderingSimulator());
 
             game.Run();

@@ -5,6 +5,8 @@ using System.Text;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Rendering.Deferred;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.WorldRendering
 {
@@ -13,44 +15,162 @@ namespace MHGameWork.TheWizards.WorldRendering
     /// </summary>
     public class EntityBatcher : ISimulator
     {
-        private Entity superEntity;
+        private Batch superBatch;
 
-        bool temp = true;
+        private float time;
+        private float countdown = 0;
+        private bool first = true;
         public void Simulate()
         {
-            var changed = false;
+            time += TW.Graphics.Elapsed;
+            countdown -= TW.Graphics.Elapsed;
+
+            TW.Data.EnsureAttachment<Entity, BatchInfo>(e => new BatchInfo());
+
             foreach (var ent in TW.Data.GetChngedObjectsOfType<Entity>())
             {
-                if (ent == superEntity) continue;
-                changed = true;
-            }
+                ent.get<BatchInfo>().LastChange = time;
 
-            if (changed && temp)
-            {
-                temp = false;
-                IMesh superMesh = new RAMMesh();
-
-                foreach (var ent in TW.Data.Objects.Where(o => o is Entity).Select(o => (Entity)o))
+                // Batched object was changed, needs unbatch
+                if (ent.Batched)
                 {
-                    if (ent == superEntity) continue;
-                    if (ent.Mesh == null ) continue;
-                    if (!ent.Visible) continue;
+                    destroySuperBatch();
 
-                    MeshBuilder.AppendMeshTo(ent.Mesh, superMesh, ent.WorldMatrix);
-                    ent.Visible = false;
                 }
 
-                var optimizer = new MeshOptimizer();
-                superMesh = optimizer.CreateOptimized(superMesh);
+            }
 
-                if (superEntity == null) superEntity = new Entity();
-                superEntity.Mesh = superMesh;
-
-
+            if (countdown < 0 || superBatch == null)
+            {
+                countdown = 5;
+                scanForBatches();
             }
 
 
 
+            first = false;
+        }
+
+        private void scanForBatches()
+        {
+            // Adding batches changes the entity count, cache this list.
+            var buffer = TW.Data.Objects.Where(i => i is Entity).Select(o => (Entity)o).ToArray();
+            bool needsSuperbatchUpdate = false;
+            foreach (var ent in buffer)
+            {
+                if (!ent.get<BatchInfo>().ShouldBatch(time) || ent.get<BatchInfo>().Batch != null)
+                    continue;
+
+                needsSuperbatchUpdate = true;
+            }
+            if (needsSuperbatchUpdate)
+                updateSuperBatch();
+
+
+        }
+
+        private void updateSuperBatch()
+        {
+            int oldCount = 0;
+            if (superBatch != null) oldCount = superBatch.EntityCount;
+
+            var entities = new List<Entity>();
+
+            foreach (var ent in TW.Data.Objects.Where(o => o is Entity).Select(o => (Entity)o))
+            {
+                if (ent.Mesh == null) continue;
+                if (!ent.Visible) continue;
+                if (!ent.get<BatchInfo>().ShouldBatch(time)) continue;
+
+                entities.Add(ent);
+            }
+
+            if (entities.Count - oldCount <= 20) return;
+
+            destroySuperBatch();
+            superBatch = new Batch();
+            foreach (var ent in entities)
+                superBatch.AddEntity(ent);
+            superBatch.Build();
+
+        }
+
+        private void destroySuperBatch()
+        {
+            if (superBatch == null) return;
+
+            superBatch.Dispose();
+            superBatch = null;
+        }
+
+        private class Batch : IDisposable
+        {
+            private List<Entity> entities = new List<Entity>();
+            private DeferredMeshRenderElement element;
+            public int EntityCount { get { return entities.Count; } }
+
+            public Batch()
+            {
+
+            }
+
+            public void AddEntity(Entity ent)
+            {
+                entities.Add(ent);
+            }
+            public void RemoveEntity(Entity ent)
+            {
+                entities.Remove(ent);
+            }
+
+            public void Build()
+            {
+                IMesh mesh = new RAMMesh();
+
+                foreach (var ent in entities)
+                {
+                    MeshBuilder.AppendMeshTo(ent.Mesh, mesh, ent.WorldMatrix);
+                    ent.Batched = true;
+                    ent.get<BatchInfo>().Batch = this;
+                }
+                var optimizer = new MeshOptimizer();
+                mesh = optimizer.CreateOptimized(mesh);
+
+                element = TW.Graphics.AcquireRenderer().CreateMeshElement(mesh);
+
+            }
+
+            public void Dispose()
+            {
+                foreach (var ent in entities)
+                {
+                    ent.Batched = false;
+                    ent.get<BatchInfo>().Batch = null;
+                }
+                element.Delete();
+                element = null;
+            }
+        }
+
+        private class BatchInfo : IModelObjectAddon<Entity>
+        {
+
+            /// <summary>
+            /// The batch this entity is in
+            /// </summary>
+            public Batch Batch;
+
+
+            public float LastChange = float.MinValue;
+
+            public bool ShouldBatch(float time)
+            {
+                return time - LastChange > 5;
+            }
+
+            public void Dispose()
+            {
+            }
         }
     }
 }

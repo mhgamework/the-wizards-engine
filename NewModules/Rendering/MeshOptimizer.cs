@@ -41,30 +41,36 @@ namespace MHGameWork.TheWizards.Rendering
 
         private void addPartToPart(IMeshPart source, IMeshPart dest, Matrix sourceTransform)
         {
-            var positions = source.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position);
-            var normals = source.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Normal);
-            var texcoords = source.GetGeometryData().GetSourceVector2(MeshPartGeometryData.Semantic.Texcoord);
+            var sPositions = source.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position);
+            var sNormals = source.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Normal);
+            var sTexcoords = source.GetGeometryData().GetSourceVector2(MeshPartGeometryData.Semantic.Texcoord);
 
-            Vector3.Transform(positions, ref sourceTransform, positions);
-            Vector3.TransformNormal(normals, ref sourceTransform, normals);
-
-            var destPositions = dest.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position);
-            if (destPositions == null) destPositions = new Vector3[0];
-
-            positions = positions.Concat(destPositions).ToArray();
-
-            var destNormals = dest.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Normal);
-            if (destNormals == null) destNormals = new Vector3[0];
-            normals = normals.Concat(destNormals).ToArray();
-
-            var destTexcoords = dest.GetGeometryData().GetSourceVector2(MeshPartGeometryData.Semantic.Texcoord);
-            if (destTexcoords == null) destTexcoords = new Vector2[0];
-            texcoords = texcoords.Concat(destTexcoords).ToArray();
+            var dPositions = dest.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position);
+            if (dPositions == null) dPositions = new Vector3[0];
+            var dNormals = dest.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Normal);
+            if (dNormals == null) dNormals = new Vector3[0];
+            var dTexcoords = dest.GetGeometryData().GetSourceVector2(MeshPartGeometryData.Semantic.Texcoord);
+            if (dTexcoords == null) dTexcoords = new Vector2[0];
 
 
-            dest.GetGeometryData().SetSource(MeshPartGeometryData.Semantic.Position, positions);
-            dest.GetGeometryData().SetSource(MeshPartGeometryData.Semantic.Normal, normals);
-            dest.GetGeometryData().SetSource(MeshPartGeometryData.Semantic.Texcoord, texcoords);
+            var nPositions = new Vector3[sPositions.Length + dPositions.Length];
+            var nNormals = new Vector3[sNormals.Length + dNormals.Length];
+            var nTexcoords = new Vector2[sTexcoords.Length + dTexcoords.Length];
+
+
+            dPositions.CopyTo(nPositions, 0);
+            dNormals.CopyTo(nNormals, 0);
+            dTexcoords.CopyTo(nTexcoords, 0);
+
+
+            Vector3.Transform(sPositions, 0, ref sourceTransform, nPositions, dPositions.Length, sPositions.Length);
+            Vector3.TransformNormal(sNormals, 0, ref sourceTransform, nNormals, dNormals.Length, sNormals.Length);
+            sTexcoords.CopyTo(nTexcoords, dTexcoords.Length);
+
+
+            dest.GetGeometryData().SetSource(MeshPartGeometryData.Semantic.Position, nPositions);
+            dest.GetGeometryData().SetSource(MeshPartGeometryData.Semantic.Normal, nNormals);
+            dest.GetGeometryData().SetSource(MeshPartGeometryData.Semantic.Texcoord, nTexcoords);
         }
 
         private IMeshPart findOrCreatePart(MeshCoreData.Material original)

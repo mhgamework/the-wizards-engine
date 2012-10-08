@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.WorldRendering
         {
             if (element == null) return;
             element.WorldMatrix = entity.WorldMatrix;
-            element.Visible = entity.Visible;
+            element.Visible = entity.Visible && !entity.Batched;
         }
 
         public void RemoveRenderData()
