@@ -100,6 +100,10 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             var ent = new WorldRendering.Entity();
             ent.Mesh = mesh;
 
+            var ent2 = new WorldRendering.Entity();
+            ent2.Mesh = mesh;
+            ent2.WorldMatrix = Matrix.Translation(5, 0, 0);
+
             var player = new PlayerData();
             player.Entity = ent;
 

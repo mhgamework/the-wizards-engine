@@ -397,5 +397,10 @@ namespace MHGameWork.TheWizards.MathExtra
 
             result = rayDistance;
         }
+
+        public static Ray CreateRayFromViewInverse(Matrix viewInverse)
+        {
+            return new Ray { Position = viewInverse.Translation, Direction = viewInverse.Forward };
+        }
     }
 }

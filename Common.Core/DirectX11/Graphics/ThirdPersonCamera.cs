@@ -44,6 +44,11 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             set { cameraDistance = value; }
         }
 
+        /// <summary>
+        /// This is used to clamp CameraDistance when rendering
+        /// </summary>
+        public float MaxDistance { get; set; }
+
 
         private float scrollFactor;
         public float LookAngleVertical { get; private set; }
@@ -57,6 +62,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             enabled = true;
 
             cameraDistance = 10;
+            MaxDistance = 100000;
             nearClip = 0.1f;
             farClip = 400;
 
@@ -83,7 +89,11 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
                   );
 
             lookDir.Normalize();
-            pos = camPos - lookDir * cameraDistance;
+
+            var clampedDistance = cameraDistance;
+            if (cameraDistance > MaxDistance) clampedDistance = MaxDistance;
+
+            pos = camPos - lookDir * clampedDistance;
 
             up = MathHelper.Up;
 

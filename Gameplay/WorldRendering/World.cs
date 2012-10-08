@@ -26,10 +26,17 @@ namespace MHGameWork.TheWizards.WorldRendering
         /// Could be seen as a getter
         /// </summary>
         /// <returns></returns>
-        public RaycastResult Raycast(Ray ray, bool raycastInvisible = false)
+        public RaycastResult Raycast(Ray ray)
         {
-            raycaster.RaycastInvisible = raycastInvisible;
             return raycaster.Raycast(ray);
+        }
+        /// <summary>
+        /// Could be seen as a getter
+        /// </summary>
+        /// <returns></returns>
+        public RaycastResult Raycast(Ray ray, Func<object,bool> filter)
+        {
+            return raycaster.Raycast(ray,filter);
         }
 
     }
