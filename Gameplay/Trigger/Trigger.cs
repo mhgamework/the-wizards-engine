@@ -23,6 +23,16 @@ namespace MHGameWork.TheWizards.Trigger
             this.isOr = isOr;
         }
 
+        public bool IsOr()
+        {
+            return isOr;
+        }
+
+        public bool IsInverted()
+        {
+            return inverted;
+        }
+
         public void Update()
         {
             if (checkConditions())

@@ -107,6 +107,8 @@
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
+    <Compile Include="LevelBuilding\LevelBuildingTriggerObjectType.cs" />
+    <Compile Include="LevelBuilding\TriggerObject.cs" />
     <Compile Include="Persistence\FilebasedAssetSerializer.cs" />
     <Compile Include="LevelBuilding\ILevelBuildingObjectType.cs" />
     <Compile Include="LevelBuilding\LevelBuildingController.cs" />

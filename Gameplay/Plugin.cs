@@ -30,7 +30,27 @@ namespace MHGameWork.TheWizards
             //testWayPointTrigger(engine);
             //testWorldmatrixAnimation(engine);
             //testLoadLevel(engine);
-            testLevelBuilding(engine);
+            //testLevelBuilding(engine);
+
+            testAddStupidRedHelperMesh(engine);
+        }
+
+        private void testAddStupidRedHelperMesh(TWEngine engine)
+        {
+            var player = new PlayerData();
+            player.Entity.Visible = false;
+            var cameraInfo = TW.Data.GetSingleton<CameraInfo>();
+            cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
+            cameraInfo.FirstPersonCameraTarget = player.Entity;
+
+            WorldRendering.Entity e = new WorldRendering.Entity();
+            e.Mesh = MeshFactory.Load("Helpers\\RedHelperBIG\\RedHelperBIG"); //TODO: try to reconstruct bug
+
+            engine.AddSimulator(new LocalPlayerSimulator(player));
+            engine.AddSimulator(new ThirdPersonCameraSimulator());
+
+            engine.AddSimulator(new WorldRenderingSimulator());
+
         }
 
         /// <summary>
@@ -84,6 +104,7 @@ namespace MHGameWork.TheWizards
             var trig01 = new Trigger.Trigger();
             trig01.Conditions.Add(cond01);
             trig01.Actions.Add(act01);
+
 
             //Test Switch-type trigger
             var cond02 = new PlayerPositionCondition(player, new BoundingBox(new Vector3(0, 0, 10), new Vector3(5, 5, 15)));
@@ -312,6 +333,7 @@ namespace MHGameWork.TheWizards
             var type09 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\GreyBrick_Stair_01\\GreyBrick_Stair_01"));
             var type10 = new LevelBuildingEntityType(MeshFactory.Load("TileSet01\\Floor_01\\Floor_01"));
 
+            var triggerType = new LevelBuildingTriggerObjectType();
 
             
             string file = TWDir.GameData + "\\Level.txt";
@@ -337,6 +359,8 @@ namespace MHGameWork.TheWizards
             factory.AddLevelBuildingObjectType(type09);
             factory.AddLevelBuildingObjectType(type10);
 
+            factory.AddLevelBuildingObjectType(triggerType);
+
 
             engine.AddSimulator(new LocalPlayerSimulator(player));
             engine.AddSimulator(new ThirdPersonCameraSimulator());
@@ -346,7 +370,7 @@ namespace MHGameWork.TheWizards
             engine.AddSimulator(new WorldRenderingSimulator());
             
 
-            engine.AddSimulator(new AutoSaveSimulator(file, new TimeSpan(0, 0, 10), modelSerializer));
+            //engine.AddSimulator(new AutoSaveSimulator(file, new TimeSpan(0, 0, 10), modelSerializer));
         }
     }
 
