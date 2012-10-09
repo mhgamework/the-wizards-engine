@@ -151,12 +151,8 @@
     <Compile Include="Building\WallPlacer.cs" />
     <Compile Include="Building\WallType.cs" />
     <Compile Include="Simulators\AudioSimulator.cs" />
-<<<<<<< HEAD
     <Compile Include="Persistence\AutoSaveSimulator.cs" />
-=======
-    <Compile Include="Simulators\AutoSaveSimulator.cs" />
     <Compile Include="Simulators\LevelBuildingSimulator.cs" />
->>>>>>> a37fdc4... First implementation of levelbuilding-tool (not working)
     <Compile Include="Simulators\PickupSimulator.cs" />
     <Compile Include="Simulators\PlayerConditionSimulator.cs" />
     <Compile Include="Simulators\TriggerSimulator.cs" />
