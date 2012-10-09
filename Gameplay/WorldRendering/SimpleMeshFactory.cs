@@ -6,6 +6,8 @@ using System.Text;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.ServerClient.Water;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.WorldRendering
 {
@@ -22,10 +24,10 @@ namespace MHGameWork.TheWizards.WorldRendering
 
 
         private Dictionary<string, IMesh> cheatDictionary = new Dictionary<string, IMesh>();
-
         private Dictionary<Guid, IMesh> meshes = new Dictionary<Guid, IMesh>();
-
         private Dictionary<IMesh, string> meshLoadedPaths = new Dictionary<IMesh, string>();
+
+        private Dictionary<IMesh, BoundingBox> boundingBoxCache = new Dictionary<IMesh, BoundingBox>();
 
         private MeshOptimizer optimizer = new MeshOptimizer();
 
@@ -73,6 +75,19 @@ namespace MHGameWork.TheWizards.WorldRendering
             return meshLoadedPaths[mesh];
         }
 
+
+        public BoundingBox GetBoundingBox(IMesh mesh)
+        {
+            BoundingBox bb;
+            if (boundingBoxCache.TryGetValue(mesh, out bb))
+                return bb;
+
+            bb = MeshBuilder.CalculateBoundingBox(mesh);
+
+            boundingBoxCache.Add(mesh, bb);
+
+            return bb;
+        }
 
         public IMesh loadMeshFromFile(string objFile, string matFile, string matName)
         {

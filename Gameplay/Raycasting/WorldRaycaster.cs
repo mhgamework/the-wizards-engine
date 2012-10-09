@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Raycasting
@@ -47,11 +48,19 @@ namespace MHGameWork.TheWizards.Raycasting
                 return;
             }
 
+            var transformed = ray.Transform(Matrix.Invert(ent.WorldMatrix));
+
 
             //TODO: do course boundingbox check
+            var bb = MeshFactory.GetBoundingBox(ent.Mesh);
+            if (!transformed.xna().Intersects(bb.xna()).HasValue)
+            {
+                newResult.Set(null, ent);
+                return;
+            }
 
 
-            var transformed = ray.Transform(Matrix.Invert(ent.WorldMatrix));
+
             Vector3 v1, v2, v3;
             var distance = MeshRaycaster.RaycastMesh(ent.Mesh, transformed, out v1, out v2, out v3);
 

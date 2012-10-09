@@ -10,6 +10,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.WorldRendering
 {
@@ -37,6 +38,16 @@ namespace MHGameWork.TheWizards.WorldRendering
         public static string GetLoadedPath(IMesh mesh)
         {
             return TW.Data.GetSingleton<RenderingModel>().MeshFactory.GetLoadedPath(mesh);
+        }
+
+        /// <summary>
+        /// Returns a cached BoundingBox for given mesh.
+        /// </summary>
+        /// <param name="mesh"></param>
+        /// <returns></returns>
+        public static BoundingBox GetBoundingBox(IMesh mesh)
+        {
+            return TW.Data.GetSingleton<RenderingModel>().MeshFactory.GetBoundingBox(mesh);
         }
 
     }
