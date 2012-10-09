@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.WorldRendering
     /// <summary>
     /// Responsible for batching entities that are static into one big entity
     /// </summary>
-    public class EntityBatcher : ISimulator
+    public class EntityBatcherSimulator : ISimulator
     {
         private Batch superBatch;
 

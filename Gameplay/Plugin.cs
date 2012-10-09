@@ -367,7 +367,7 @@ namespace MHGameWork.TheWizards
 
             engine.AddSimulator(new LevelBuildingSimulator(player, cameraInfo, factory));
             engine.AddSimulator(new DebugSimulator());
-            engine.AddSimulator(new EntityBatcher());
+            engine.AddSimulator(new EntityBatcherSimulator());
 
             engine.AddSimulator(new WorldRenderingSimulator());
             
