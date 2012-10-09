@@ -16,6 +16,8 @@ namespace MHGameWork.TheWizards.WorldRendering
         public PointLight()
         {
             Enabled = true;
+            Size = 10;
+            Intensity = 1;
         }
 
         public Vector3 Position { get; set; }
