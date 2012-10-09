@@ -314,7 +314,7 @@ namespace MHGameWork.TheWizards
         private void testLevelBuilding(TWEngine engine)
         {
             var player = new PlayerData();
-            player.Entity.Visible = false;
+            //player.Entity.Visible = false;
             var cameraInfo = TW.Data.GetSingleton<CameraInfo>();
             cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
             cameraInfo.FirstPersonCameraTarget = player.Entity;

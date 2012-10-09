@@ -1,10 +1,12 @@
-﻿using MHGameWork.TheWizards._XNA.Gameplay;
+﻿using System.Drawing;
+using MHGameWork.TheWizards._XNA.Gameplay;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.WorldRendering;
+using SlimDX;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.Simulators
@@ -36,27 +38,7 @@ namespace MHGameWork.TheWizards.Simulators
             var game = TW.Graphics;
 
 
-            if (camInfo.ActiveCamera is ThirdPersonCamera)
-            {
-                var cam = ((ThirdPersonCamera)camInfo.ActiveCamera);
-                controller.HorizontalAngle = cam.LookAngleHorizontal;
-
-
-
-                var ray = Functions.CreateRayFromViewInverse(camInfo.ActiveCamera.ViewInverse.xna());
-
-                ray.Direction = -ray.Direction;
-                ray.Position = player.Position.xna();
-
-                var result = world.Raycast(ray.dx(), o => o != player.Entity);
-
-                cam.MaxDistance = 500;
-                if (result.IsHit)
-                    cam.MaxDistance = result.Distance - 0.001f;
-
-
-
-            }
+           
 
 
             if (game.Keyboard.IsKeyDown(Key.W))
@@ -82,6 +64,39 @@ namespace MHGameWork.TheWizards.Simulators
 
             controller.Update(game);
 
+
+            if (camInfo.ActiveCamera is ThirdPersonCamera)
+            {
+                var cam = ((ThirdPersonCamera)camInfo.ActiveCamera);
+                controller.HorizontalAngle = cam.LookAngleHorizontal;
+
+
+
+
+                var center = new Vector4(0f, 0f, 0, 1);
+                var centerScreenWorld = Vector4.Transform(center, Matrix.Invert(cam.ViewProjection));
+                centerScreenWorld *= (1 / centerScreenWorld.W);
+
+
+
+                //var ray = Functions.CreateRayFromViewInverse(camInfo.ActiveCamera.ViewInverse.xna());
+                var ray = new Ray();
+                ray.Position = cam.CalculatedLookTarget;
+                var worldfd = new Vector3(centerScreenWorld.X, centerScreenWorld.Y, centerScreenWorld.Z);
+                ray.Direction = Vector3.Normalize(worldfd - ray.Position);
+
+                game.LineManager3D.AddCenteredBox(worldfd, 0.01f, new Color4(Color.Red));
+                game.LineManager3D.AddCenteredBox(cam.CalculatedLookTarget, 0.01f, new Color4(Color.Green));
+
+                var result = world.Raycast(ray, o => o != player.Entity);
+
+                cam.MaxDistance = 500;
+                if (result.IsHit)
+                    cam.MaxDistance = result.Distance - 0.2f;
+
+
+
+            }
 
         }
     }

@@ -56,6 +56,8 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         private float mouseSensitivity = 0.1f;
         public Vector3 CameraOffset = new Vector3(0.2f, 0.5f, 0);
 
+        public Vector3 CalculatedLookTarget { get; private set; }
+
         public ThirdPersonCamera()
         {
             scrollFactor = 0.5f;
@@ -90,6 +92,8 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
 
             var offset = Vector3.TransformCoordinate(CameraOffset, Matrix.RotationY(LookAngleHorizontal));
             camPos += offset;
+
+            CalculatedLookTarget = camPos;
 
             lookDir.Normalize();
 
@@ -148,58 +152,53 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
 
         public void Update(DX11Game _game)
         {
-            if (enabled)
+            if (!enabled) return;
+            if (_game.Mouse.RelativeScrollWheel != 0)
             {
-                createViewMatrix();
-                updateMatrices();
+                float zoomSpeed = -1 / 10000f;
+
+                scrollFactor += _game.Mouse.RelativeScrollWheel * zoomSpeed;
+                scrollFactor = MathHelper.Clamp(scrollFactor, 0, 1);
+            }
+
+            if (_game.Mouse.RelativeX != 0)
+            {
+                //TODO: mouse sensitivity
+                LookAngleHorizontal += _game.Mouse.RelativeX * -mouseSensitivity;
+            }
+            if (_game.Mouse.RelativeY != 0)
+            {
+                LookAngleVertical += _game.Mouse.RelativeY * -mouseSensitivity;
+                if (LookAngleVertical < -MathHelper.PiOver2 * 0.95f) LookAngleVertical = -MathHelper.PiOver2 * 0.95f;
+                if (LookAngleVertical > MathHelper.PiOver2 * 0.95f) LookAngleVertical = MathHelper.PiOver2 * 0.95f;
+            }
+
+            // Gebruik 2degraadsvergl voor afstand: f(x) = ax^2 + bx + c
+            // We zeggen dat x=0 volledig ingezoomd en x=1 volledig uitgezoomd
+            // dus: minimum=p1->(0,minDist)    p->(1,maxDist)
+            // Invullen geeft:
+            //    []   maxDist = a + b + c
+            //    []   0 = -b/(2a)
+            //    []   minDist = c
+            // a = maxDist - c
+            // b = 0
+            // c = minDist
 
 
-                if (_game.Mouse.RelativeScrollWheel != 0)
-                {
-                    float zoomSpeed = -1 / 10000f;
-
-                    scrollFactor += _game.Mouse.RelativeScrollWheel * zoomSpeed;
-                    scrollFactor = MathHelper.Clamp(scrollFactor, 0, 1);
-                }
-
-                if (_game.Mouse.RelativeX != 0)
-                {
-                    //TODO: mouse sensitivity
-                    LookAngleHorizontal += _game.Mouse.RelativeX * -mouseSensitivity;
-                }
-                if (_game.Mouse.RelativeY != 0)
-                {
-                    LookAngleVertical += _game.Mouse.RelativeY * -mouseSensitivity;
-                    if (LookAngleVertical < -MathHelper.PiOver2 * 0.95f) LookAngleVertical = -MathHelper.PiOver2 * 0.95f;
-                    if (LookAngleVertical > MathHelper.PiOver2 * 0.95f) LookAngleVertical = MathHelper.PiOver2 * 0.95f;
-                }
-
-                // Gebruik 2degraadsvergl voor afstand: f(x) = ax^2 + bx + c
-                // We zeggen dat x=0 volledig ingezoomd en x=1 volledig uitgezoomd
-                // dus: minimum=p1->(0,minDist)    p->(1,maxDist)
-                // Invullen geeft:
-                //    []   maxDist = a + b + c
-                //    []   0 = -b/(2a)
-                //    []   minDist = c
-                // a = maxDist - c
-                // b = 0
-                // c = minDist
+            float minDist = 3;
+            float maxDist = 100;
 
 
-                float minDist = 3;
-                float maxDist = 100;
+            float c = minDist;
+            float b = 0;
+            float a = maxDist - c;
+
+            float x = scrollFactor;
+
+            cameraDistance = a * x * x + b * x + c;
 
 
-                float c = minDist;
-                float b = 0;
-                float a = maxDist - c;
-
-                float x = scrollFactor;
-
-                cameraDistance = a * x * x + b * x + c;
-
-
-                /*
+            /*
                 // 3degraadsvergl
                 // versnelling a, minimum=p1->(0,minDist)    p->(1,maxDist) 
                 // ax^3 + cx + d
@@ -220,7 +219,8 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
                 cameraDistance = a * x * x * x + c * x + d;
                 */
 
-            }
+            createViewMatrix();
+            updateMatrices();
         }
     }
 }
