@@ -39,7 +39,13 @@ namespace MHGameWork.TheWizards.WorldRendering
                 }
 
             }
-
+            if (first)
+            {
+                foreach (var ent in TW.Data.Objects.Where(t => t is Entity).Select(t => (Entity)t))
+                {
+                    ent.get<BatchInfo>().LastChange = -100;
+                }
+            }
             if (countdown < 0 || superBatch == null)
             {
                 countdown = 5;

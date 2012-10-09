@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.Simulators
         public void Simulate()
         {
             TW.Data.EnsureAttachment<PlayerPositionCondition, RenderData>(arg => new RenderData());
-            foreach (var obj in TW.Data.GetChngedObjectsOfType<PlayerPositionCondition>())
+            foreach (var obj in TW.Data.GetChangedObjects<PlayerPositionCondition>())
             {
                 var data = obj.get<RenderData>();
                 data.box.FromBoundingBox(obj.BoundingBox);

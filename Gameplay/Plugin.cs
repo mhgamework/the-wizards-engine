@@ -30,9 +30,9 @@ namespace MHGameWork.TheWizards
             //testWayPointTrigger(engine);
             //testWorldmatrixAnimation(engine);
             //testLoadLevel(engine);
-            //testLevelBuilding(engine);
+            testLevelBuilding(engine);
 
-            testAddStupidRedHelperMesh(engine);
+            //testAddStupidRedHelperMesh(engine);
         }
 
         private void testAddStupidRedHelperMesh(TWEngine engine)
@@ -366,6 +366,8 @@ namespace MHGameWork.TheWizards
             engine.AddSimulator(new ThirdPersonCameraSimulator());
 
             engine.AddSimulator(new LevelBuildingSimulator(player, cameraInfo, factory));
+            engine.AddSimulator(new DebugSimulator());
+            engine.AddSimulator(new EntityBatcher());
 
             engine.AddSimulator(new WorldRenderingSimulator());
             

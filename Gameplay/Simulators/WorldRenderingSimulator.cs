@@ -54,21 +54,18 @@ namespace MHGameWork.TheWizards.Simulators
         {
             TW.Graphics.Camera = info.ActiveCamera;
             deferred.Draw();
-<<<<<<< HEAD
 
             entitySimulator.Simulate();
             wireframeSimulator.Simulate();
             pointLightSimulator.Simulate();
 
-            textareaSimulator.Update();
-            textareaSimulator.Render();
+            
 
-=======
             TW.Graphics.LineManager3D.Render(TW.Graphics.Camera);
             TW.Graphics.SetBackbuffer();
-            textareaUpdater.Update();
-            textareaUpdater.Render();
->>>>>>> 5563823... Quickfixed depth of line-rendering.
+
+            textareaSimulator.Update();
+            textareaSimulator.Render();
 
         }
 
