@@ -1,10 +1,12 @@
 ﻿using System.Drawing;
 using DirectX11;
 using MHGameWork.TheWizards._XNA.Gameplay;
+using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.MathExtra;
+using MHGameWork.TheWizards.PhysX;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
@@ -14,6 +16,7 @@ namespace MHGameWork.TheWizards.Simulators
 {
     /// <summary>
     /// This class is responsible for simulating the local player input
+    /// TODO: split
     /// </summary>
     public class LocalPlayerSimulator : ISimulator
     {
@@ -23,6 +26,9 @@ namespace MHGameWork.TheWizards.Simulators
         private WorldRendering.World world;
 
         private PointLight light = new PointLight();
+
+        private PlayerClientPhysics clientPhysics;
+
 
         public LocalPlayerSimulator(PlayerData player)
         {
@@ -34,6 +40,10 @@ namespace MHGameWork.TheWizards.Simulators
 
             world = TW.Data.GetSingleton<WorldRendering.World>();
 
+            clientPhysics = new PlayerClientPhysics(controller);
+
+
+
         }
 
         public void Simulate()
@@ -44,6 +54,10 @@ namespace MHGameWork.TheWizards.Simulators
             processUserInput(game);
 
             controller.Update(game);
+
+            var root = TW.Data.GetSingleton<PhysXData>().RootNode;
+            if (root != null)
+                clientPhysics.Update(TW.Data.GetSingleton<PhysXData>().RootNode);
 
             light.Position = player.Position + MathHelper.Up * 2;
 

@@ -117,6 +117,7 @@
     <Compile Include="LevelBuilding\LevelBuildingData.cs" />
     <Compile Include="LevelBuilding\LevelBuildingObjectFactory.cs" />
     <Compile Include="LevelBuilding\ScalableGrid.cs" />
+    <Compile Include="PhysX\PhysXData.cs" />
     <Compile Include="Pickup\Inventory.cs" />
     <Compile Include="Pickup\ItemEntity.cs" />
     <Compile Include="Pickup\ItemEntityFactory.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Audio\SoundEmitter.cs" />
     <Compile Include="Audio\SoundEmitterUpdater.cs" />
     <Compile Include="PhysX\EntityPhysXUpdater.cs" />
+    <Compile Include="Player\PlayerClientPhysics.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Simulators\AnimationSimulator.cs" />
     <Compile Include="Raycasting\RaycastResult.cs" />
@@ -195,7 +197,7 @@
     <Compile Include="_XNA\Gameplay\IPlayer.cs" />
     <Compile Include="_XNA\Gameplay\IPlayerMove.cs" />
     <Compile Include="_XNA\Gameplay\Fortress\PlayerEntity.cs" />
-    <Compile Include="_XNA\Gameplay\PlayerController.cs" />
+    <Compile Include="Player\PlayerController.cs" />
     <Compile Include="_XNA\Gameplay\PlayerInputClient.cs" />
     <Compile Include="_XNA\Gameplay\PlayerInputPacket.cs" />
     <Compile Include="_XNA\Gameplay\PlayerInputServer.cs" />

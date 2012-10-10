@@ -361,15 +361,27 @@ namespace MHGameWork.TheWizards
 
             factory.AddLevelBuildingObjectType(triggerType);
 
+            foreach (var ent in TW.Data.Objects.Where(t=>t is WorldRendering.Entity).Select(t=> (WorldRendering.Entity)t))
+            {
+                if (ent == player.Entity) continue;
+                ent.Solid = true;
+                ent.Static = true;
+            }
+
+            engine.AddSimulator(new LevelBuildingSimulator(player, cameraInfo, factory));
 
             engine.AddSimulator(new LocalPlayerSimulator(player));
             engine.AddSimulator(new ThirdPersonCameraSimulator());
 
-            engine.AddSimulator(new LevelBuildingSimulator(player, cameraInfo, factory));
             engine.AddSimulator(new DebugSimulator());
             engine.AddSimulator(new EntityBatcherSimulator());
 
+            //engine.AddSimulator(new PhysXSimulator());
+
+            engine.AddSimulator(new ProfilerSimulator());
+
             engine.AddSimulator(new WorldRenderingSimulator());
+            //engine.AddSimulator(new PhysXDebugRendererSimulator());
             
 
             //engine.AddSimulator(new AutoSaveSimulator(file, new TimeSpan(0, 0, 10), modelSerializer));

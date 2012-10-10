@@ -19,11 +19,12 @@ namespace MHGameWork.TheWizards.WorldRendering
 
         private float time;
         private float countdown = 0;
-        private bool first = true;
+        private int count = 0;
         public void Simulate()
         {
             time += TW.Graphics.Elapsed;
             countdown -= TW.Graphics.Elapsed;
+            count++;
 
             TW.Data.EnsureAttachment<Entity, BatchInfo>(e => new BatchInfo());
 
@@ -39,7 +40,7 @@ namespace MHGameWork.TheWizards.WorldRendering
                 }
 
             }
-            if (first)
+            if (count == 10)
             {
                 foreach (var ent in TW.Data.Objects.Where(t => t is Entity).Select(t => (Entity)t))
                 {
@@ -53,8 +54,6 @@ namespace MHGameWork.TheWizards.WorldRendering
             }
 
 
-
-            first = false;
         }
 
         private void scanForBatches()
@@ -64,10 +63,10 @@ namespace MHGameWork.TheWizards.WorldRendering
             bool needsSuperbatchUpdate = false;
             foreach (var ent in buffer)
             {
-                if (!ent.get<BatchInfo>().ShouldBatch(time) || ent.get<BatchInfo>().Batch != null)
-                    continue;
+                if (!ent.get<BatchInfo>().ShouldBatch(time) || ent.get<BatchInfo>().Batch != null) continue;
 
                 needsSuperbatchUpdate = true;
+                break;
             }
             if (needsSuperbatchUpdate)
                 updateSuperBatch();

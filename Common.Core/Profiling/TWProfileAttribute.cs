@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using MHGameWork.TheWizards.Profiling;
 using PostSharp;
 using PostSharp.Aspects;
@@ -97,6 +98,7 @@ namespace MHGameWork.TheWizards.Data
             return base.CompileTimeValidate(method);
         }
 
+        [DebuggerStepThrough()]
         public override void OnInvoke(MethodInterceptionArgs args)
         {
             el.Begin();

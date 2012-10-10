@@ -20,11 +20,18 @@ namespace MHGameWork.TheWizards.Simulators
 
         public PhysicsDebugRenderer DebugRenderer { get; private set; }
 
+        private PhysXData data;
+
         public PhysXSimulator()
         {
+            data = TW.Data.GetSingleton<PhysXData>();
+
             root = new ClientPhysicsQuadTreeNode(
                new BoundingBox(new Vector3(-1000, -1000, -1000), new Vector3(1000, 1000, 1000)).xna());
             QuadTree.Split(root, 6);
+
+            data.RootNode = root;
+
             factory = new MeshPhysicsElementFactory(TW.Physics, root);
 
             factory.Initialize();

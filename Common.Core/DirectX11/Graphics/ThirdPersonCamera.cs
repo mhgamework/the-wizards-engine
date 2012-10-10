@@ -60,7 +60,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
 
         public ThirdPersonCamera()
         {
-            scrollFactor = 0.5f;
+            scrollFactor = 0.2f;
             enabled = true;
 
             cameraDistance = 10;

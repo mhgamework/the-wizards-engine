@@ -70,12 +70,15 @@ namespace MHGameWork.TheWizards.Simulators
             var targetName = "DeferredMeshRenderer.Draw";
             var targetPoint = obj.FindByName(targetName);
             targetPoint = null;
-            float minDuration = 0.00001f;
+            float minDuration = 0.0005f;
 
 
             string str = "";
             if (targetPoint == null)
                 targetPoint = obj;
+
+
+            minDuration = targetPoint.AverageSeconds/10f;
 
             str = targetPoint.GenerateProfileString(p => p.AverageSeconds > minDuration);
 

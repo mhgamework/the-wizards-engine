@@ -15,7 +15,6 @@ namespace MHGameWork.TheWizards.Simulators
         public ThirdPersonCameraSimulator()
         {
             cam = new ThirdPersonCamera();
-
             info = TW.Data.GetSingleton<CameraInfo>();
         }
 

@@ -16,8 +16,13 @@ namespace MHGameWork.TheWizards.WorldRendering
     {
         private List<Textarea> areas = new List<Textarea>();
 
+        //private List<Textarea> areasAwaitingUpdate = new List<Textarea>();
+
+        private float nextUpdate;
+
         public void Update()
         {
+            nextUpdate += TW.Graphics.Elapsed;
             foreach (var change in TW.Data.GetChangesOfType<Textarea>())
             {
                 var area = change.ModelObject as Textarea;
@@ -50,13 +55,35 @@ namespace MHGameWork.TheWizards.WorldRendering
                     area.set(tex);
                 }
 
+                //if (!areasAwaitingUpdate.Contains(area))
+                //    areasAwaitingUpdate.Add(area);
 
                 tex.SetFont(area.FontFamily, area.FontSize);
                 tex.Clear();
                 tex.DrawText(area.Text, new Vector2(), area.Color);
                 tex.UpdateTexture();
 
+
             }
+
+            // This should work no clue why it doesn't
+            //if (nextUpdate > 3f)
+            //{
+            //    nextUpdate = 0;
+            //    foreach (var area in areasAwaitingUpdate)
+            //    {
+            //        var tex = area.get<TextTexture>();
+
+            //        tex.SetFont(area.FontFamily, area.FontSize);
+            //        tex.Clear();
+            //        tex.DrawText(area.Text, new Vector2(), area.Color);
+            //        tex.UpdateTexture();
+            //    }
+
+            //    areasAwaitingUpdate.Clear();
+
+
+            //}
         }
 
         public void Render()
