@@ -22,7 +22,12 @@ namespace MHGameWork.TheWizards.ServerClient
         [STAThread]
         static void Main(string[] args)
         {
+            (new TWBootstrapper()).Run();
+            //runOldTestRunner(args);
+        }
 
+        private static void runOldTestRunner(string[] args)
+        {
             var fi = new FileInfo("Console.log");
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
