@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Reflection;
 using MHGameWork.TheWizards.Serialization;
 
 namespace MHGameWork.TheWizards.Persistence
@@ -18,7 +19,7 @@ namespace MHGameWork.TheWizards.Persistence
 
         public bool CanOperate(Type type)
         {
-            return typeof(IList).IsAssignableFrom(type) && type.GetInterfaces().Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IList<>)).Count() == 1;
+            return typeof(IList).IsAssignableFrom(type) && type.GetInterfaces().Where(i => ReflectionHelper.IsGenericType(i, typeof(IList<>))).Count() == 1;
         }
 
         public string Serialize(object obj, Type type, StringSerializer stringSerializer)
@@ -27,7 +28,7 @@ namespace MHGameWork.TheWizards.Persistence
             var list = (IList)obj;
 
             // find generic type
-            var elementType = getElementType(type);
+            var elementType = ReflectionHelper.GetGenericListType(type);
 
             if (CanOperate(elementType))
                 throw new InvalidOperationException("This serializer does not support nested arrays!!!");
@@ -40,17 +41,13 @@ namespace MHGameWork.TheWizards.Persistence
             return builder.ToString();
         }
 
-        private Type getElementType(Type type)
-        {
-            return type.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IList<>)).GetGenericArguments()[0];
-        }
 
         public object Deserialize(string value, Type type, StringSerializer stringSerializer)
         {
-            var list = (IList) Activator.CreateInstance(type);
+            var list = (IList)Activator.CreateInstance(type);
 
             var reader = new StringReader(value);
-            var elementType = getElementType(type);
+            var elementType = ReflectionHelper.GetGenericListType(type);
             while (reader.Peek() != -1)
             {
                 var el = reader.ReadLine();

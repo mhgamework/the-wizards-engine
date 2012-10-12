@@ -46,5 +46,15 @@ namespace MHGameWork.TheWizards.Reflection
             return null;
 
         }
+
+        public static bool IsGenericType(Type targetType, Type genericType)
+        {
+            return targetType.IsGenericType && targetType.GetGenericTypeDefinition() ==genericType;
+        }
+        public static Type GetGenericListType(Type type)
+        {
+            return type.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IList<>)).GetGenericArguments()[0];
+        }
+
     }
 }

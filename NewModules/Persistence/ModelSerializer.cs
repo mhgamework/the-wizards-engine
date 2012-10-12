@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -64,11 +65,11 @@ namespace MHGameWork.TheWizards.Persistence
                     if (serialized[serialized.Length - 2] == '\r')
                         sublength--;
 
-                        
+
 
                     // Write section
                     strm.EnterSection("AttributeData");
-                    strm.WriteLine(serialized.Substring(0,sublength));
+                    strm.WriteLine(serialized.Substring(0, sublength));
                     strm.ExitSection();
                 }
                 else
@@ -106,13 +107,74 @@ namespace MHGameWork.TheWizards.Persistence
 
         }
 
+        /// <summary>
+        /// Obsolete: entire model serialization is obsolete.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="wr"></param>
         public void Serialize(Data.ModelContainer model, StreamWriter wr)
         {
+            foreach (var obj in model.Objects)
+            {
+                QueueForSerialization((IModelObject)obj);
+            }
+
+            Serialize(wr);
+
+        }
+        /// <summary>
+        /// Serializes all queued objects to given stream. 
+        /// </summary>
+        /// <param name="wr"></param>
+        public void Serialize(StreamWriter wr)
+        {
+            serializeObjects(serializationQueue, wr);
+            serializationQueue.Clear();
+        }
+
+        private List<IModelObject> serializationQueue = new List<IModelObject>();
+        /// <summary>
+        /// Queues an object and all the recursively references modelobjects to the queue
+        /// </summary>
+        /// <param name="obj"></param>
+        public void QueueForSerialization(IModelObject obj)
+        {
+            if (serializationQueue.Contains(obj))
+                return;
+
+            serializationQueue.Add(obj);
+
+            var attributes = ReflectionHelper.GetAllAttributes(obj.GetType());
+            foreach (var att in attributes)
+            {
+                if (ReflectionHelper.IsGenericType(att.Type,typeof(List<>)))
+                {
+                    IList list = (IList) att.GetData(obj);
+                    var elementType = ReflectionHelper.GetGenericListType(list.GetType());
+                    if (!typeof(IModelObject).IsAssignableFrom(elementType))
+                        continue;
+                    foreach (var el in list)
+                    {
+                        QueueForSerialization((IModelObject) el);
+                    }
+                }
+                if (!typeof(IModelObject).IsAssignableFrom(att.Type))
+                    continue;
+                var subelement = (IModelObject)att.GetData(obj);
+                if (subelement == null)
+                    continue;
+
+                //TODO: support persist attribute?
+
+                
+                QueueForSerialization(subelement);
+
+            }
+        }
+
+        private void serializeObjects(List<IModelObject> list, StreamWriter wr)
+        {
             var strm = new SectionedStreamWriter(wr);
-
-
-            // Filter only for objects with a Persist attribute
-            var list = model.Objects.Where(o => Attribute.GetCustomAttribute(o.GetType(), typeof(PersistAttribute)) != null);
 
 
             // Write all objects
@@ -136,6 +198,11 @@ namespace MHGameWork.TheWizards.Persistence
             strm.ExitSection();
         }
 
+        /// <summary>
+        /// Adds the objects found in the stream to given model
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="reader"></param>
         public void Deserialize(Data.ModelContainer model, StreamReader reader)
         {
             var strm = new SectionedStreamReader(reader);
@@ -184,7 +251,7 @@ namespace MHGameWork.TheWizards.Persistence
         }
         private void setObjectID(IModelObject obj, int id)
         {
-            objectDictionary.set(id,obj);
+            objectDictionary.set(id, obj);
             nextObjectID = id + 1;
         }
 

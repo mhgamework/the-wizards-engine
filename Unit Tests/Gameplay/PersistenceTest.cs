@@ -180,6 +180,46 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         }
 
 
+        [Test]
+        public void TestSerializeObjectsTree()
+        {
+            var model = new ModelContainer();
+            SimpleModelObject.CurrentModelContainer = model;
+
+            var array1 = new TestObjectArray();
+            var array2 = new TestObjectArray();
+
+            var obj1 = new TestObject {Getal = 1};
+            var obj2 = new TestObject { Getal = 2 };
+            var obj3 = new TestObject { Getal = 3 };
+            var obj4 = new TestObject { Getal = 4 };
+            var obj5 = new TestObject { Getal = 5 };
+
+            array1.Objects.Add(obj1);
+            array2.Objects.Add(obj2);
+            array2.Objects.Add(obj3);
+            obj3.Object = obj4;
+            obj4.Object = obj4;
+            obj5.Object = obj5;
+
+
+            var strm = new MemoryStream();
+            var writer = new StreamWriter(strm);
+            var serializer = new ModelSerializer(StringSerializer.Create());
+
+            serializer.QueueForSerialization(array2);
+
+            serializer.Serialize(writer);
+            writer.Flush();
+
+            strm.Position = 0;
+
+            var str = getStringFromStream(strm);
+
+
+
+        }
+
         private string getStringFromStream(MemoryStream strm)
         {
             var buff = new byte[strm.Length];
@@ -204,6 +244,10 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         [Persist]
         private class TestObjectArray : SimpleModelObject
         {
+            public TestObjectArray()
+            {
+                Objects = new List<TestObject>();
+            }
             public List<TestObject> Objects { get; set; }
 
             public override string ToString()
