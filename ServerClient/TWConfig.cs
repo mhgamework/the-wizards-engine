@@ -15,6 +15,7 @@ namespace MHGameWork.TheWizards
         public bool TestMode;
         public string TestClass;
         public string TestMethod;
+        public bool RunTestUI;
 
         public TWConfig()
         {
@@ -31,7 +32,7 @@ namespace MHGameWork.TheWizards
                 return new TWConfig();
 
             var serializer = new XmlSerializer(typeof(TWConfig));
-            using (var fs = File.Create(Filename))
+            using (var fs = File.OpenRead(Filename))
                 return (TWConfig)serializer.Deserialize(fs);
 
         }

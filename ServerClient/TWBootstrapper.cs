@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.TestRunner;
 
 namespace MHGameWork.TheWizards
 {
@@ -30,24 +31,37 @@ namespace MHGameWork.TheWizards
         {
             config = TWConfig.Load();
             config.Save();
+            if (config.RunTestUI)
+            {
+                runWinformsTestrunner();
+                return;
+            }
             if (config.TestMode)
             {
                 var obj = createTestClass(config.TestClass);
                 runTestMethod(obj, config.TestMethod);
+                return;
             }
-            else
-            {
-                // Run engine!
-                var engine = new TWEngine();
-                engine.Run();
-            }
+            // Run engine!
+            var engine = new TWEngine();
+            engine.Run();
+        }
+
+        private void runWinformsTestrunner()
+        {
+
+            TestRunnerGUI runnerGui = new TestRunnerGUI();
+            runnerGui.TestsAssembly = Assembly.LoadFrom("Unit Tests.dll");
+            //runner.RunTestNewProcessPath = "\"" + Assembly.GetExecutingAssembly().Location + "\"" + " -test {0}";
+
+            runnerGui.Run();
         }
 
         private void runTestMethod(object testObject, string methodName)
         {
             try
             {
-                testObject.GetType().GetMethod(methodName).Invoke(testObject,null);
+                testObject.GetType().GetMethod(methodName).Invoke(testObject, null);
             }
             catch (Exception)
             {
