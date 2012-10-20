@@ -107,6 +107,9 @@
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
+    <Compile Include="CG\Math\PerspectiveCamera.cs" />
+    <Compile Include="CG\Math\Point2.cs" />
+    <Compile Include="CG\Math\SceneRaytracer.cs" />
     <Compile Include="LevelBuilding\LevelBuildingTriggerObjectType.cs" />
     <Compile Include="LevelBuilding\TriggerObject.cs" />
     <Compile Include="Persistence\FilebasedAssetSerializer.cs" />

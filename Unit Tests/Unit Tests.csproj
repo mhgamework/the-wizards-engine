@@ -144,6 +144,7 @@
     <Compile Include="Assets\SimpleAsset.cs" />
     <Compile Include="Assets\SimpleAssetFactory.cs" />
     <Compile Include="Building\BuildingTest.cs" />
+    <Compile Include="CG\PerspectiveCameraTest.cs" />
     <Compile Include="Client\ClientTest.cs" />
     <Compile Include="CoreTest.cs" />
     <Compile Include="DirectX11\XAudio2Test.cs" />
