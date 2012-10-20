@@ -30,14 +30,14 @@ namespace MHGameWork.TheWizards.Raycasting
             {
                 if (!filter(ent)) continue;
 
-                raycastEntity(ent, ray, newResult);
+                RaycastEntity(ent, ray, newResult);
                 if (newResult.IsCloser(closest)) newResult.CopyTo(closest);
             }
 
             return closest;
         }
 
-        private void raycastEntity(WorldRendering.Entity ent, Ray ray, RaycastResult newResult)
+        public void RaycastEntity(WorldRendering.Entity ent, Ray ray, RaycastResult newResult)
         {
             bool abort = false;
             if (!ent.Visible && !RaycastInvisible) abort = true;

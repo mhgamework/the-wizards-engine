@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <TWConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <RunTestUI>true</RunTestUI>
+  <RunTestUI>false</RunTestUI>
   <TestMode>true</TestMode>
-  <TestClass>MHGameWork.TheWizards.Tests.CoreTest</TestClass>
-  <TestMethod>TestQuadtreeVisualizer</TestMethod>
+  <TestClass>MHGameWork.TheWizards.Tests.CG.CGCoreTest</TestClass>
+  <TestMethod>TestSceneRaycaster</TestMethod>
 </TWConfig>
