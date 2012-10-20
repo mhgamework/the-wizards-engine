@@ -107,9 +107,10 @@
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
-    <Compile Include="CG\Math\PerspectiveCamera.cs" />
+    <Compile Include="CG\CameraVisualizer.cs" />
+    <Compile Include="CG\PerspectiveCamera.cs" />
     <Compile Include="CG\Math\Point2.cs" />
-    <Compile Include="CG\Math\SceneRaytracer.cs" />
+    <Compile Include="CG\SceneRaytracer.cs" />
     <Compile Include="LevelBuilding\LevelBuildingTriggerObjectType.cs" />
     <Compile Include="LevelBuilding\TriggerObject.cs" />
     <Compile Include="Persistence\FilebasedAssetSerializer.cs" />
@@ -276,7 +277,9 @@
     <Content Include="WorldRendering\_doc.txt" />
     <Content Include="_doc.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="CG\Visualization\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

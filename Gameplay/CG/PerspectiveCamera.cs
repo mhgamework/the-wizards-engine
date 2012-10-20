@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ComputerGraphics.Math;
+using MHGameWork.TheWizards.CG;
 using MHGameWork.TheWizards.DirectX11;
 using SlimDX;
 using SlimDX.Direct3D11;
@@ -132,17 +133,15 @@ namespace ComputerGraphics
 
             var cam = new PerspectiveCamera();
 
+            var visualizer = new CameraVisualizer(game);
+
             game.GameLoopEvent += delegate
                                       {
                                           game.LineManager3D.AddRectangle(cam.Position + cam.Direction * cam.ProjectionPlaneDistance,
                                                                           new Vector2(cam.right - cam.left,
                                                                                       cam.top - cam.bottom), cam.rightAxis, cam.Up, new Color4(0, 1, 0));
 
-                                          for (int x = 0; x < cam.Resolution.X; x++)
-                                              for (int y = 0; y < cam.Resolution.Y; y++)
-                                              {
-                                                  game.LineManager3D.AddRay(cam.CalculateRay(new Point2(x, y)), new Color4(1, 0, 0));
-                                              }
+                                          visualizer.RenderRays(cam, cam.Resolution);
 
 
                                       };
