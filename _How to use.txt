@@ -23,6 +23,7 @@ Nvidia PhysX
 XNA 2.0 Redist 
 SlimDX SDK for development or Redist (Not Tested)
 DevExpress 10.1.5.0 (research patched version by Danny Su)
+DirectX SDK (apparently)
 
 Visual C++ 2008 redistributable package (NOT SP1)
 
