@@ -34,6 +34,15 @@ namespace MHGameWork.TheWizards.Raycasting
         public Vector3 V3 { get; set; }
 
 
+        /// <summary>
+        /// Ray.direction has to be normalized
+        /// </summary>
+        /// <param name="ray"></param>
+        /// <returns></returns>
+        public Vector3 CalculateHitPoint(Ray ray)
+        {
+            return ray.Direction * Distance + ray.Position;
+        }
 
         /// <summary>
         /// Returns true if there was a hit, otherwise false.

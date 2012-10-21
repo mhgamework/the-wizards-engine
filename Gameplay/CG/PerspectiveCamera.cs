@@ -35,7 +35,7 @@ namespace ComputerGraphics
         private Vector3 up;
         private Vector3 direction;
         private Vector3 position;
-        private int projectionPlaneDistance;
+        private float projectionPlaneDistance;
 
         public Vector3 Position
         {
@@ -57,7 +57,7 @@ namespace ComputerGraphics
             }
         }
 
-        public int ProjectionPlaneDistance
+        public float ProjectionPlaneDistance
         {
             get { return projectionPlaneDistance; }
             set { projectionPlaneDistance = value; }
@@ -120,7 +120,7 @@ namespace ComputerGraphics
             var u = (float)(left + (right - left) * (point.X + 0.5) / resolution.X);
             var v = (float)(bottom + (top - bottom) * (point.Y + 0.5) / resolution.Y);
             var ret = new Ray { Direction = ProjectionPlaneDistance * Direction + u * rightAxis + v * Up, Position = Position };
-
+            ret.Direction = Vector3.Normalize(ret.Direction); // TODO: Slowpoke, but for simplicity
             return ret;
         }
 
