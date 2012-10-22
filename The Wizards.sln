@@ -100,6 +100,7 @@ Global
 		{0FB8E59C-0E9B-4AD9-A4D4-F145D45351AD}.DocumentationHelper|x86.ActiveCfg = DebugUnmanaged|x86
 		{0FB8E59C-0E9B-4AD9-A4D4-F145D45351AD}.DocumentationHelper|x86.Build.0 = DebugUnmanaged|x86
 		{0FB8E59C-0E9B-4AD9-A4D4-F145D45351AD}.Gameplay|Any CPU.ActiveCfg = Debug|x86
+		{0FB8E59C-0E9B-4AD9-A4D4-F145D45351AD}.Gameplay|Any CPU.Build.0 = Debug|x86
 		{0FB8E59C-0E9B-4AD9-A4D4-F145D45351AD}.Gameplay|Mixed Platforms.ActiveCfg = Release|x86
 		{0FB8E59C-0E9B-4AD9-A4D4-F145D45351AD}.Gameplay|Win32.ActiveCfg = Release|x86
 		{0FB8E59C-0E9B-4AD9-A4D4-F145D45351AD}.Gameplay|x86.ActiveCfg = Release|x86
@@ -164,7 +165,7 @@ Global
 		{372FF145-4B2D-40A4-B171-CFFF159E4C91}.DocumentationHelper|Win32.ActiveCfg = Debug|x86
 		{372FF145-4B2D-40A4-B171-CFFF159E4C91}.DocumentationHelper|x86.ActiveCfg = Debug|x86
 		{372FF145-4B2D-40A4-B171-CFFF159E4C91}.DocumentationHelper|x86.Build.0 = Debug|x86
-		{372FF145-4B2D-40A4-B171-CFFF159E4C91}.Gameplay|Any CPU.ActiveCfg = Release|x86
+		{372FF145-4B2D-40A4-B171-CFFF159E4C91}.Gameplay|Any CPU.ActiveCfg = Debug|x86
 		{372FF145-4B2D-40A4-B171-CFFF159E4C91}.Gameplay|Mixed Platforms.ActiveCfg = Release|x86
 		{372FF145-4B2D-40A4-B171-CFFF159E4C91}.Gameplay|Win32.ActiveCfg = Release|x86
 		{372FF145-4B2D-40A4-B171-CFFF159E4C91}.Gameplay|x86.ActiveCfg = Release|x86
@@ -230,6 +231,7 @@ Global
 		{C79FDAC0-960D-4E13-981D-7A9D2CA3B6A8}.DocumentationHelper|x86.ActiveCfg = Debug|x86
 		{C79FDAC0-960D-4E13-981D-7A9D2CA3B6A8}.DocumentationHelper|x86.Build.0 = Debug|x86
 		{C79FDAC0-960D-4E13-981D-7A9D2CA3B6A8}.Gameplay|Any CPU.ActiveCfg = Debug|x86
+		{C79FDAC0-960D-4E13-981D-7A9D2CA3B6A8}.Gameplay|Any CPU.Build.0 = Debug|x86
 		{C79FDAC0-960D-4E13-981D-7A9D2CA3B6A8}.Gameplay|Mixed Platforms.ActiveCfg = Debug|x86
 		{C79FDAC0-960D-4E13-981D-7A9D2CA3B6A8}.Gameplay|Win32.ActiveCfg = Debug|x86
 		{C79FDAC0-960D-4E13-981D-7A9D2CA3B6A8}.Gameplay|x86.ActiveCfg = Debug|x86
@@ -425,7 +427,7 @@ Global
 		{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}.DocumentationHelper|Win32.ActiveCfg = Debug|x86
 		{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}.DocumentationHelper|x86.ActiveCfg = Debug|x86
 		{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}.DocumentationHelper|x86.Build.0 = Debug|x86
-		{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}.Gameplay|Any CPU.ActiveCfg = Release|x86
+		{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}.Gameplay|Any CPU.ActiveCfg = Debug|x86
 		{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}.Gameplay|Mixed Platforms.ActiveCfg = Release|x86
 		{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}.Gameplay|Win32.ActiveCfg = Release|x86
 		{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}.Gameplay|x86.ActiveCfg = Release|x86
@@ -486,7 +488,7 @@ Global
 		{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}.DocumentationHelper|Mixed Platforms.Build.0 = Debug|Any CPU
 		{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}.DocumentationHelper|Win32.ActiveCfg = Debug|Any CPU
 		{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}.DocumentationHelper|x86.ActiveCfg = Debug|Any CPU
-		{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}.Gameplay|Any CPU.ActiveCfg = Release|Any CPU
+		{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}.Gameplay|Any CPU.ActiveCfg = Debug|Any CPU
 		{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}.Gameplay|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}.Gameplay|Win32.ActiveCfg = Release|Any CPU
 		{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}.Gameplay|x86.ActiveCfg = Release|Any CPU

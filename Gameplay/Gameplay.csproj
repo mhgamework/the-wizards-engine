@@ -70,6 +70,8 @@
     <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
     <Reference Include="PostSharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="SlimDX, Version=0.0.0.0, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -79,11 +81,13 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\AnimationController.cs" />
@@ -107,7 +111,10 @@
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
-    <Compile Include="CG\MaterialProperties.cs" />
+    <Compile Include="CG\FragmentInput.cs" />
+    <Compile Include="CG\GraphicalRayTracer.cs" />
+    <Compile Include="CG\IRayTracer.cs" />
+    <Compile Include="CG\PointLight.cs" />
     <Compile Include="CG\RetardShader.cs" />
     <Compile Include="CG\Visualization\CameraVisualizer.cs" />
     <Compile Include="CG\PerspectiveCamera.cs" />

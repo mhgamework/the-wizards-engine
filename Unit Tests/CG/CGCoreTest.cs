@@ -70,6 +70,13 @@ namespace MHGameWork.TheWizards.Tests.CG
 
         }
 
+        [Test]
+        public void TestGraphicalRayTracer()
+        {
+            var gui = new GraphicalRayTracer();
+            
+        }
+
         private WorldRendering.Entity createEntity()
         {
             var ret = new WorldRendering.Entity();
