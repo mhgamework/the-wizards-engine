@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ComputerGraphics;
 using DirectX11;
 using MHGameWork.TheWizards.Raycasting;
 using SlimDX;
@@ -12,14 +11,20 @@ namespace MHGameWork.TheWizards.CG
 {
     public class RetardShader
     {
-        private SceneRaytracer tracer = new SceneRaytracer();
+        private IFragmentTracer tracer;
+        private readonly ICamera cam;
+
+        public RetardShader(IFragmentTracer tracer, ICamera cam)
+        {
+            this.tracer = tracer;
+            this.cam = cam;
+        }
 
         Color4 ambientColor;
 
-        public Color4 CalculateRayColor(Ray r, float min, float max)
+        public Color4 CalculateRayColor(RayTrace trace)
         {
-            var result = new RaycastResult();
-            var f = tracer.TraceFragment(r, min, max, result);
+            var f = tracer.TraceFragment(trace);
             if (f == null)
                 return new Color4(0.2f, 0.2f, 1f);
 
@@ -52,7 +57,7 @@ namespace MHGameWork.TheWizards.CG
                 //camera-to-surface vector
                 Vector3 directionToCamera = Vector3.Normalize(getCameraPosition() - f.Position);
                 //compute specular light
-                float specularLight = specularIntensity * (float)Math.Pow(MathHelper.Clamp(Vector3.Dot(reflectionVector, directionToCamera), 0, 1), specularPower);
+                float specularLight = specularIntensity * (float)System.Math.Pow(MathHelper.Clamp(Vector3.Dot(reflectionVector, directionToCamera), 0, 1), specularPower);
                 //return t(saturate(dot(reflectionVector, directionToCamera)));
 
                 //ret += attenuation * light.Intensity * new Vector4((diffuseLight.rgb, specularLight) * shadowTerm;
@@ -72,12 +77,14 @@ namespace MHGameWork.TheWizards.CG
 
         private IEnumerable<PointLight> getLights()
         {
-            throw new NotImplementedException();
+            var ret = new List<PointLight>
+                          {new PointLight {Position = new Vector3(5, 2, -5), Radius = 10, Intensity = 10}};
+            return ret; 
         }
 
         private Vector3 getCameraPosition()
         {
-            throw new NotImplementedException();
+            return cam.Position;
         }
     }
 }

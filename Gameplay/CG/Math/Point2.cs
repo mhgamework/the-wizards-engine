@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ComputerGraphics.Math
+﻿namespace MHGameWork.TheWizards.CG.Math
 {
     public struct Point2
     {

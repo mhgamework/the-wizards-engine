@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ComputerGraphics.Math;
-using MHGameWork.TheWizards.CG;
+﻿using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.Visualization;
 using MHGameWork.TheWizards.DirectX11;
 using SlimDX;
-using SlimDX.Direct3D11;
 
-namespace ComputerGraphics
+namespace MHGameWork.TheWizards.CG
 {
-    public interface ICamera
-    {
-        Ray CalculateRay(Point2 point);
-    }
-
     /// <summary>
     /// 
     /// </summary>
@@ -24,13 +14,12 @@ namespace ComputerGraphics
         private float right;
         private float bottom;
         private float top;
-        private Point2 resolution;
         /// <summary>
         /// Projection plane size in worldspace
         /// </summary>
         private Vector2 screenSize;
-        
-       
+
+
         private Vector3 rightAxis;
         private Vector3 up;
         private Vector3 direction;
@@ -69,11 +58,6 @@ namespace ComputerGraphics
             set { up = value; updateRight(); }
         }
 
-        public Point2 Resolution
-        {
-            get { return resolution; }
-            set { resolution = value; }
-        }
 
         /// <summary>
         /// Projection plane size in worldspace
@@ -81,14 +65,16 @@ namespace ComputerGraphics
         public Vector2 ScreenSize
         {
             get { return screenSize; }
-            set { screenSize = value;
+            set
+            {
+                screenSize = value;
                 updateScreenBounds();
             }
         }
 
         private void updateScreenBounds()
         {
-            left = -screenSize.X/2;
+            left = -screenSize.X / 2;
             right = screenSize.X / 2;
             bottom = -screenSize.Y / 2;
             top = screenSize.Y / 2;
@@ -106,7 +92,6 @@ namespace ComputerGraphics
             ProjectionPlaneDistance = 3;
 
             ScreenSize = new Vector2(1, 1);
-            Resolution = new Point2(8, 8);
 
             Up = new Vector3(0, 1, 0);
             Direction = new Vector3(0, 0, -1);
@@ -114,11 +99,11 @@ namespace ComputerGraphics
 
         }
 
-        public Ray CalculateRay(Point2 point)
+        public Ray CalculateRay(Vector2 point)
         {
             // TODO optimize division.
-            var u = (float)(left + (right - left) * (point.X + 0.5) / resolution.X);
-            var v = (float)(bottom + (top - bottom) * (point.Y + 0.5) / resolution.Y);
+            var u = (float)(left + (right - left) * point.X);
+            var v = (float)(bottom + (top - bottom) * point.Y);
             var ret = new Ray { Direction = ProjectionPlaneDistance * Direction + u * rightAxis + v * Up, Position = Position };
             ret.Direction = Vector3.Normalize(ret.Direction); // TODO: Slowpoke, but for simplicity
             return ret;
@@ -141,7 +126,7 @@ namespace ComputerGraphics
                                                                           new Vector2(cam.right - cam.left,
                                                                                       cam.top - cam.bottom), cam.rightAxis, cam.Up, new Color4(0, 1, 0));
 
-                                          visualizer.RenderRays(cam, cam.Resolution);
+                                          visualizer.RenderRays(cam, new Point2(8, 8));
 
 
                                       };

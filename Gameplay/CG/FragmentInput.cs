@@ -1,6 +1,6 @@
 ﻿using SlimDX;
 
-namespace ComputerGraphics
+namespace MHGameWork.TheWizards.CG
 {
     public class FragmentInput
     {

@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards;
+﻿using System.Collections.Generic;
 using MHGameWork.TheWizards.Raycasting;
-using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 
-namespace ComputerGraphics
+namespace MHGameWork.TheWizards.CG
 {
     public class SceneRaytracer
     {
-        private List<Entity> entities = new List<Entity>();
+        private List<WorldRendering.Entity> entities = new List<WorldRendering.Entity>();
 
         private WorldRaycaster worldCaster = new WorldRaycaster();
 
-        public void AddEntity(Entity ent)
+        public void AddEntity(WorldRendering.Entity ent)
         {
             entities.Add(ent);
         }
@@ -38,14 +33,6 @@ namespace ComputerGraphics
             return result;
         }
 
-        public FragmentInput TraceFragment(Ray ray, float min, float max, RaycastResult result)
-        {
-            var ret = new FragmentInput();
-            ret.Position = result.CalculateHitPoint(ray);
-            ret.Diffuse = new Color4(1, 0, 0);
-            ret.Normal = new Vector3(0, 0, 1);
-
-            return ret;
-        }
+        
     }
 }

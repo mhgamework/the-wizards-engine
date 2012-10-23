@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ComputerGraphics;
-using ComputerGraphics.Math;
+using System.Threading;
 using MHGameWork.TheWizards.CG;
+using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.Visualization;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Rendering;
@@ -32,7 +33,7 @@ namespace MHGameWork.TheWizards.Tests.CG
             engine.Initialize();
 
             var cam = new PerspectiveCamera();
-            cam.Resolution = new Point2(8, 8);
+            var resolution = new Point2(8, 8);
             cam.ProjectionPlaneDistance = 1.3f;
 
             var raycaster = new SceneRaytracer();
@@ -48,16 +49,16 @@ namespace MHGameWork.TheWizards.Tests.CG
 
             engine.AddSimulator(new BasicSimulator(delegate
                                                        {
-                                                           visualizer.RenderRays(cam, cam.Resolution);
-                                                           for (int x = 0; x < cam.Resolution.X; x++)
-                                                               for (int y = 0; y < cam.Resolution.Y; y++)
+                                                           visualizer.RenderRays(cam, resolution);
+                                                           for (int x = 0; x < resolution.X; x++)
+                                                               for (int y = 0; y < resolution.Y; y++)
                                                                {
-                                                                   Ray calculateRay = cam.CalculateRay(new Point2(x, y));
+                                                                   Ray calculateRay = cam.CalculateRay(new Vector2((x + 0.5f) / resolution.X, (y + 0.5f) / resolution.Y));
                                                                    var res = raycaster.Raycast(calculateRay);
                                                                    if (!res.IsHit) continue;
                                                                    var point =
                                                                        calculateRay.Position =
-                                                                       calculateRay.Direction*res.Distance;
+                                                                       calculateRay.Direction * res.Distance;
                                                                    TW.Graphics.LineManager3D.AddCenteredBox(point, 0.1f,
                                                                                                             new Color4(
                                                                                                                 0, 1, 0));
@@ -73,14 +74,18 @@ namespace MHGameWork.TheWizards.Tests.CG
         [Test]
         public void TestGraphicalRayTracer()
         {
-            var gui = new GraphicalRayTracer();
+            var gui = new GraphicalRayTracer(new DummyTracer());
+
             
+
         }
+
+        
 
         private WorldRendering.Entity createEntity()
         {
             var ret = new WorldRendering.Entity();
-            
+
             ret.Mesh =
                 OBJParser.OBJParserTest.GetBarrelMesh(
                     new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
@@ -88,6 +93,20 @@ namespace MHGameWork.TheWizards.Tests.CG
 
             return ret;
 
+        }
+
+        private class DummyTracer : IRayTracer
+        {
+            private Seeder seeder = new Seeder(123456789);
+
+            public Color4 GetPixel(Vector2 pos)
+            {
+                /*for (int i = 0; i < 10000; i++)
+                {
+                    var a = Math.Pow(456, 456856.695465);
+                }*/
+                return new Color4(pos.X, pos.Y, 0);
+            }
         }
     }
 }
