@@ -101,10 +101,10 @@ namespace MHGameWork.TheWizards.Tests.CG
 
             public Color4 GetPixel(Vector2 pos)
             {
-                /*for (int i = 0; i < 10000; i++)
+                for (int i = 0; i < 1000; i++)
                 {
                     var a = Math.Pow(456, 456856.695465);
-                }*/
+                }
                 return new Color4(pos.X, pos.Y, 0);
             }
         }

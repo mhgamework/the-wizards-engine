@@ -69,7 +69,7 @@ namespace MHGameWork.TheWizards.CG
             var rect = new Int32Rect(0, 0, windowSize, windowSize);
 
             var list = new List<Int32Rect>();
-            int size = 8;
+            int size = 16;
             var y = 0;
             var x = 0;
             for (; y < rect.Width - size; y += size)
@@ -88,11 +88,17 @@ namespace MHGameWork.TheWizards.CG
             }
             list.Add(new Int32Rect(x, y, rect.Width - x, rect.Height - y));
 
+            for (int i = 0; i < list.Count; i++)
+            {
+                tasks.Enqueue(list[i]);
+
+            }
+
             var numThreads = 4;
             for (int iThread = 0; iThread < numThreads; iThread++)
             {
                 int thread = iThread;
-                queueThread(list.Where((r, i) => (i % numThreads == thread)));
+                queueThread();
             }
 
 
@@ -102,11 +108,11 @@ namespace MHGameWork.TheWizards.CG
 
         }
 
-        private void queueThread(IEnumerable<Int32Rect> list)
+        private void queueThread()
         {
             ThreadPool.QueueUserWorkItem(delegate
                                              {
-                                                 tracerJob(tracer, list);
+                                                 tracerJob(tracer);
                                              });
         }
 
@@ -138,18 +144,20 @@ namespace MHGameWork.TheWizards.CG
         private static int _stride = _wb.PixelWidth * _bytesPerPixel;
 
 
+        private ConcurrentQueue<Int32Rect> tasks = new ConcurrentQueue<Int32Rect>();
         private ConcurrentQueue<TracerResult> results = new ConcurrentQueue<TracerResult>();
 
-        private void tracerJob(IRayTracer tracer, IEnumerable<Int32Rect> rectangles)
+        private void tracerJob(IRayTracer tracer)
         {
-            foreach (var rect in rectangles)
+            Int32Rect rect;
+            while (tasks.TryDequeue(out rect))
             {
                 var resolution = new Point2(windowSize, windowSize);
 
                 byte[] data = new byte[rect.Width * rect.Height * 4];
                 int iData = 0;
                 for (int y = rect.Y; y < rect.Y + rect.Height; y++)
-                for (int x = rect.X; x < rect.X + rect.Width; x++)
+                    for (int x = rect.X; x < rect.X + rect.Width; x++)
                     {
                         var color = tracer.GetPixel(new Vector2((x + 0.5f) / resolution.X, (y + 0.5f) / resolution.Y));
                         data[iData + 0] = (byte)(color.Blue * 255);
