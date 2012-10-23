@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.CG
 {
     public class GraphicalRayTracer
     {
-        private static int windowSize = 500;
+        private static int windowSize = 300;
 
         private readonly IRayTracer tracer;
 
@@ -37,15 +37,15 @@ namespace MHGameWork.TheWizards.CG
             mainWindow.Width = windowSize;
 
             // Define the Image element
-            _random.Stretch = Stretch.None;
+            _random.Stretch = Stretch.Fill;
             //_random.Margin = new Thickness(20);
 
             // Define a StackPanel to host Controls
             StackPanel myStackPanel = new StackPanel();
             myStackPanel.Orientation = Orientation.Vertical;
-            myStackPanel.Height = windowSize;
             myStackPanel.VerticalAlignment = VerticalAlignment.Top;
             myStackPanel.HorizontalAlignment = HorizontalAlignment.Center;
+            
 
             // Add the Image to the parent StackPanel
             myStackPanel.Children.Add(_random);
@@ -91,7 +91,6 @@ namespace MHGameWork.TheWizards.CG
             for (int i = 0; i < list.Count; i++)
             {
                 tasks.Enqueue(list[i]);
-
             }
 
             var numThreads = 4;

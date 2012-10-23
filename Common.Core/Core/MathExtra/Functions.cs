@@ -250,11 +250,15 @@ namespace MHGameWork.TheWizards.MathExtra
         /// versions. This method can be called very frequently in a tight inner loop,
         /// however, so in this particular case the performance benefits from passing
         /// everything by reference outweigh the loss of readability.
+        /// 
+        /// 
+        /// 
+        /// TODO: add offscreenpoint logic
         /// </summary>
         public static void RayIntersectsTriangle(ref Ray ray,
                                           ref Vector3 vertex1,
                                           ref Vector3 vertex2,
-                                          ref Vector3 vertex3, out float? result)
+                                          ref Vector3 vertex3, out float? result, out float triangleU, out float triangleV)
         {
             // Compute vectors along two edges of the triangle.
             Vector3 edge1, edge2;
@@ -273,6 +277,8 @@ namespace MHGameWork.TheWizards.MathExtra
             if (determinant > -float.Epsilon && determinant < float.Epsilon)
             {
                 result = null;
+                triangleU = 0;
+                triangleV = 0;
                 return;
             }
 
@@ -282,7 +288,6 @@ namespace MHGameWork.TheWizards.MathExtra
             Vector3 distanceVector;
             Vector3.Subtract(ref ray.Position, ref vertex1, out distanceVector);
 
-            float triangleU;
             Vector3.Dot(ref distanceVector, ref directionCrossEdge2, out triangleU);
             triangleU *= inverseDeterminant;
 
@@ -290,6 +295,7 @@ namespace MHGameWork.TheWizards.MathExtra
             if (triangleU < 0 || triangleU > 1)
             {
                 result = null;
+                triangleV = 0;
                 return;
             }
 
@@ -297,7 +303,6 @@ namespace MHGameWork.TheWizards.MathExtra
             Vector3 distanceCrossEdge1;
             Vector3.Cross(ref distanceVector, ref edge1, out distanceCrossEdge1);
 
-            float triangleV;
             Vector3.Dot(ref ray.Direction, ref distanceCrossEdge1, out triangleV);
             triangleV *= inverseDeterminant;
 

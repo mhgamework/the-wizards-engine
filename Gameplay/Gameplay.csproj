@@ -115,15 +115,17 @@
     <Compile Include="CG\GraphicalRayTracer.cs" />
     <Compile Include="CG\ICamera.cs" />
     <Compile Include="CG\IFragmentTracer.cs" />
+    <Compile Include="CG\IMeshFragmentInputBuilder.cs" />
     <Compile Include="CG\IRayTracer.cs" />
+    <Compile Include="CG\MeshFragmentTracer.cs" />
     <Compile Include="CG\PointLight.cs" />
     <Compile Include="CG\RayTrace.cs" />
     <Compile Include="CG\RetardShader.cs" />
     <Compile Include="CG\SimpleFragmentTracer.cs" />
+    <Compile Include="CG\SimpleMeshFragmentInputBuilder.cs" />
     <Compile Include="CG\Visualization\CameraVisualizer.cs" />
     <Compile Include="CG\PerspectiveCamera.cs" />
     <Compile Include="CG\Math\Point2.cs" />
-    <Compile Include="CG\SceneRaytracer.cs" />
     <Compile Include="LevelBuilding\LevelBuildingTriggerObjectType.cs" />
     <Compile Include="LevelBuilding\TriggerObject.cs" />
     <Compile Include="Persistence\FilebasedAssetSerializer.cs" />
@@ -144,6 +146,7 @@
     <Compile Include="PhysX\EntityPhysXUpdater.cs" />
     <Compile Include="Player\PlayerClientPhysics.cs" />
     <Compile Include="Plugin.cs" />
+    <Compile Include="Raycasting\VertexPositionNormalTexture.cs" />
     <Compile Include="Simulators\AnimationSimulator.cs" />
     <Compile Include="Raycasting\RaycastResult.cs" />
     <Compile Include="Raycasting\WorldRaycaster.cs" />

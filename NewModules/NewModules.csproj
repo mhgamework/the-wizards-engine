@@ -208,6 +208,8 @@
     <Compile Include="Persistence\ModelSerializer.cs" />
     <Compile Include="Persistence\PersistAttribute.cs" />
     <Compile Include="Raycasting\MeshRaycaster.cs" />
+    <Compile Include="Raycasting\MeshRaycastResult.cs" />
+    <Compile Include="Raycasting\VertexPositionNormalTexture.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderData.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderDataFactory.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderMaterial.cs" />

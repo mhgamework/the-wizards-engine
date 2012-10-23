@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.CG
         public Color4 CalculateRayColor(RayTrace trace)
         {
             var f = tracer.TraceFragment(trace);
-            if (f == null)
+            if (f.Clip)
                 return new Color4(0.2f, 0.2f, 1f);
 
             Vector3 normal = f.Normal;

@@ -1,5 +1,6 @@
 ﻿using System;
 using MHGameWork.TheWizards.Audio;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Physics;
@@ -25,6 +26,11 @@ namespace MHGameWork.TheWizards
         /// TODO: probably add this, evaluate at later point in project
         /// </summary>
         public static object Assets { get { throw new NotImplementedException(); } }
+
+        static TW()
+        {
+            SetContext(new Context {Data = new DataWrapper()});
+        }
 
 
 

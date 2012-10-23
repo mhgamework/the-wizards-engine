@@ -16,6 +16,10 @@ namespace MHGameWork.TheWizards
         {
             return new Microsoft.Xna.Framework.BoundingSphere(v.Center.xna(), v.Radius);
         }
+        public static Microsoft.Xna.Framework.Vector2 xna(this SlimDX.Vector2 v)
+        {
+            return new Microsoft.Xna.Framework.Vector2(v.X, v.Y);
+        }
         public static Microsoft.Xna.Framework.Vector3 xna(this SlimDX.Vector3 v)
         {
             return new Microsoft.Xna.Framework.Vector3(v.X, v.Y, v.Z);
@@ -52,6 +56,10 @@ namespace MHGameWork.TheWizards
         public static SlimDX.BoundingSphere dx(this Microsoft.Xna.Framework.BoundingSphere v)
         {
             return new SlimDX.BoundingSphere(v.Center.dx(), v.Radius);
+        }
+        public static SlimDX.Vector2 dx(this Microsoft.Xna.Framework.Vector2 v)
+        {
+            return new SlimDX.Vector2(v.X, v.Y);
         }
         public static SlimDX.Vector3 dx(this Microsoft.Xna.Framework.Vector3 v)
         {

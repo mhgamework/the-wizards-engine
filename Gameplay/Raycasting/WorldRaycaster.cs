@@ -61,14 +61,16 @@ namespace MHGameWork.TheWizards.Raycasting
 
 
 
-            Vector3 v1, v2, v3;
-            var distance = MeshRaycaster.RaycastMesh(ent.Mesh, transformed, out v1, out v2, out v3);
+            //Vector3 v1, v2, v3;
+            MeshRaycastResult result;
+            var distance = MeshRaycaster.RaycastMesh(ent.Mesh, transformed, out result);
 
 
             newResult.Set(distance, ent);
-            newResult.V1 = Vector3.TransformCoordinate(v1, ent.WorldMatrix);
-            newResult.V2 = Vector3.TransformCoordinate(v2, ent.WorldMatrix);
-            newResult.V3 = Vector3.TransformCoordinate(v3, ent.WorldMatrix);
+            //TODO: 
+            //newResult.V1 = Vector3.TransformCoordinate(v1, ent.WorldMatrix);
+            //newResult.V2 = Vector3.TransformCoordinate(v2, ent.WorldMatrix);
+            //newResult.V3 = Vector3.TransformCoordinate(v3, ent.WorldMatrix);
 
         }
     }

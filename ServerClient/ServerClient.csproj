@@ -176,6 +176,7 @@
     <Content Include="GameThumbnail.png" />
     <Content Include="TWConfig.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="App.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -3,5 +3,6 @@
   <RunTestUI>false</RunTestUI>
   <TestMode>true</TestMode>
   <TestClass>MHGameWork.TheWizards.Tests.CG.CGCoreTest</TestClass>
-  <TestMethod>TestGraphicalRayTracer</TestMethod>
+  <TestMethod>TestRaycastTriangle</TestMethod>
+  
 </TWConfig>

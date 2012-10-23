@@ -505,9 +505,7 @@
       <Name>CommonVB</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Raycast\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Shaders\Deferred\TODO\RandomNormals.png" />
   </ItemGroup>

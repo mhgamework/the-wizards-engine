@@ -9,9 +9,9 @@ namespace MHGameWork.TheWizards.Raycasting
     /// </summary>
     public class MeshRaycaster
     {
-        public static float? RaycastMesh(IMesh mesh, Ray ray, out Vector3 vertex1, out Vector3 vertex2, out Vector3 vertex3)
+        public static float? RaycastMesh(IMesh mesh, Ray ray, out  MeshRaycastResult result)
         {
-            vertex1 = vertex2 = vertex3 = Vector3.Zero;
+            result = new MeshRaycastResult();
 
             // Keep track of the closest triangle we found so far,
             // so we can always return the closest one.
@@ -30,8 +30,8 @@ namespace MHGameWork.TheWizards.Raycasting
                 Vector3 v1, v2, v3;
                 var intersection =
                     RaycastMeshPart(
-                        part.MeshPart.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position),
-                        partRay, out v1, out v2, out v3);
+                        part,
+                        partRay, out result);
 
                 // Does the ray intersect this triangle?
                 if (intersection == null) continue;
@@ -41,19 +41,26 @@ namespace MHGameWork.TheWizards.Raycasting
                 // Store the distance to this triangle.
                 closestIntersection = intersection;
 
+
                 // Transform the three vertex positions into world space,
                 // and store them into the output vertex parameters.
-                Vector3.TransformCoordinate(ref v1,ref original, out vertex1);
-                Vector3.TransformCoordinate(ref v2, ref original, out vertex2);
-                Vector3.TransformCoordinate(ref v3, ref original, out vertex3);
+                //TODO: transform normals!!
+                Vector3.TransformCoordinate(ref result.Vertex1.Position, ref original, out result.Vertex1.Position);
+                Vector3.TransformCoordinate(ref result.Vertex2.Position, ref original, out result.Vertex2.Position);
+                Vector3.TransformCoordinate(ref result.Vertex2.Position, ref original, out result.Vertex3.Position);
             }
 
             return closestIntersection;
         }
 
-        public static float? RaycastMeshPart(Microsoft.Xna.Framework.Vector3[] vertices, Ray ray, out Vector3 vertex1, out Vector3 vertex2, out Vector3 vertex3)
+        public static float? RaycastMeshPart(MeshCoreData.Part part, Ray ray, out MeshRaycastResult result)
         {
-            vertex1 = vertex2 = vertex3 = Vector3.Zero;
+
+            Microsoft.Xna.Framework.Vector3[] vertices = part.MeshPart.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position);
+            Microsoft.Xna.Framework.Vector3[] normals = part.MeshPart.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Normal);
+            Microsoft.Xna.Framework.Vector2[] texcoords = part.MeshPart.GetGeometryData().GetSourceVector2(MeshPartGeometryData.Semantic.Texcoord);
+
+            result = new MeshRaycastResult();
 
             float? closestIntersection = null;
 
@@ -64,7 +71,9 @@ namespace MHGameWork.TheWizards.Raycasting
                 // Perform a ray to triangle intersection test.
                 float? intersection;
 
-                Functions.RayIntersectsTriangle(ref xnaRay, ref vertices[i], ref vertices[i + 1], ref vertices[i + 2], out intersection);
+                float u;
+                float v;
+                Functions.RayIntersectsTriangle(ref xnaRay, ref vertices[i], ref vertices[i + 1], ref vertices[i + 2], out intersection, out result.U, out result.V);
 
 
                 // Does the ray intersect this triangle?
@@ -75,9 +84,25 @@ namespace MHGameWork.TheWizards.Raycasting
 
                 // Store the distance to this triangle.
                 closestIntersection = intersection;
-                vertex1 = vertices[i].dx();
-                vertex2 = vertices[i + 1].dx();
-                vertex3 = vertices[i + 2].dx();
+                result.Vertex1 = new VertexPositionNormalTexture
+                {
+                    Position = vertices[i].dx(),
+                    Normal = normals[i].dx(),
+                    Texcoord = texcoords[i].dx()
+                };
+                result.Vertex2 = new VertexPositionNormalTexture
+                {
+                    Position = vertices[i + 1].dx(),
+                    Normal = normals[i + 1].dx(),
+                    Texcoord = texcoords[i + 1].dx()
+                };
+                result.Vertex3 = new VertexPositionNormalTexture
+                {
+                    Position = vertices[i + 2].dx(),
+                    Normal = normals[i + 2].dx(),
+                    Texcoord = texcoords[i + 2].dx()
+                };
+
 
 
             }
