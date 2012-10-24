@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -45,7 +46,7 @@ namespace MHGameWork.TheWizards.CG
             myStackPanel.Orientation = Orientation.Vertical;
             myStackPanel.VerticalAlignment = VerticalAlignment.Top;
             myStackPanel.HorizontalAlignment = HorizontalAlignment.Center;
-            
+
 
             // Add the Image to the parent StackPanel
             myStackPanel.Children.Add(_random);
@@ -93,7 +94,7 @@ namespace MHGameWork.TheWizards.CG
                 tasks.Enqueue(list[i]);
             }
 
-            var numThreads = 4;
+            var numThreads = 1;
             for (int iThread = 0; iThread < numThreads; iThread++)
             {
                 int thread = iThread;
@@ -159,6 +160,16 @@ namespace MHGameWork.TheWizards.CG
                     for (int x = rect.X; x < rect.X + rect.Width; x++)
                     {
                         var color = tracer.GetPixel(new Vector2((x + 0.5f) / resolution.X, (y + 0.5f) / resolution.Y));
+                        if (color.Blue < 0) color.Blue = 0;
+                        if (color.Blue > 1) color.Blue = 1;
+                        if (color.Green < 0) color.Green = 0;
+                        if (color.Green > 1) color.Green = 1;
+                        if (color.Red < 0) color.Red = 0;
+                        if (color.Red > 1) color.Red = 1;
+                        if (color.Alpha < 0) color.Alpha = 0;
+                        if (color.Alpha > 1) color.Alpha = 1;
+
+
                         data[iData + 0] = (byte)(color.Blue * 255);
                         data[iData + 1] = (byte)(color.Green * 255);
                         data[iData + 2] = (byte)(color.Red * 255);

@@ -23,6 +23,7 @@ namespace MHGameWork.TheWizards.Rendering
     {
         private List<Microsoft.Xna.Framework.Vector3> positions = new List<Microsoft.Xna.Framework.Vector3>();
         private List<Microsoft.Xna.Framework.Vector3> normals = new List<Microsoft.Xna.Framework.Vector3>();
+        private List<Microsoft.Xna.Framework.Vector2> texcoords = new List<Microsoft.Xna.Framework.Vector2>();
 
         public void AddBox(Vector3 min, Vector3 max)
         {
@@ -167,6 +168,7 @@ namespace MHGameWork.TheWizards.Rendering
             {
                 this.positions.Add(vertices[index].pos * radius);
                 this.normals.Add(vertices[index].normal);
+                this.texcoords.Add(new Vector2(0,0).xna());
             }
 
         }
@@ -185,6 +187,13 @@ namespace MHGameWork.TheWizards.Rendering
                 DataVector3 = normals.ToArray(),
                 Number = 0,
                 Semantic = MeshPartGeometryData.Semantic.Normal
+            });
+
+            geom.Sources.Add(new MeshPartGeometryData.Source
+            {
+                DataVector2 = texcoords.ToArray(),
+                Number = 0,
+                Semantic = MeshPartGeometryData.Semantic.Texcoord
             });
 
 

@@ -135,6 +135,48 @@ namespace MHGameWork.TheWizards.Tests.CG
 
         }
 
+        [Test]
+        public void TestRetardShader()
+        {
+
+            var cam = new PerspectiveCamera();
+            cam.ProjectionPlaneDistance = 1.3f;
+
+            var raycaster = new MeshFragmentTracer();
+
+            var ent1 = createSphereEntity();
+            ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -3));
+
+            raycaster.AddEntity(ent1);
+
+            var window = new GraphicalRayTracer(new RetardTracer(raycaster, cam));
+
+
+        }
+
+        [Test]
+        public void TestRetardShaderShadows()
+        {
+
+            var cam = new PerspectiveCamera();
+            cam.ProjectionPlaneDistance = 1.3f;
+
+            var raycaster = new MeshFragmentTracer();
+
+            var ent1 = createSphereEntity();
+            ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -3));
+
+            var ent2 = createSphereEntity();
+            ent2.WorldMatrix = Matrix.Translation(new Vector3(0, 1, -2));
+
+            raycaster.AddEntity(ent1);
+            raycaster.AddEntity(ent2);
+
+            var window = new GraphicalRayTracer(new RetardTracer(raycaster, cam));
+
+
+        }
+
 
         [Test]
         public void TestGraphicalRayTracer()
@@ -143,6 +185,25 @@ namespace MHGameWork.TheWizards.Tests.CG
 
         }
 
+
+
+        public class RetardTracer : IRayTracer
+        {
+            private ICamera camera;
+            private RetardShader shader;
+
+            public RetardTracer(IFragmentTracer fragmentTracer, ICamera camera)
+            {
+                this.camera = camera;
+                shader = new RetardShader(fragmentTracer, camera);
+            }
+
+            public Color4 GetPixel(Vector2 pos)
+            {
+                var rayTrace = new RayTrace(camera.CalculateRay(pos), 0, int.MaxValue);
+                return shader.CalculateRayColor(rayTrace);
+            }
+        }
 
         public class Tracer : IRayTracer
         {
@@ -171,6 +232,20 @@ namespace MHGameWork.TheWizards.Tests.CG
         }
 
 
+
+        private WorldRendering.Entity createSphereEntity()
+        {
+            var ret = new WorldRendering.Entity();
+
+            var builder = new MeshBuilder();
+            builder.AddSphere(12, 1);
+            var mesh = builder.CreateMesh();
+
+            ret.Mesh = mesh;
+
+            return ret;
+
+        }
 
         private WorldRendering.Entity createTriangleEntity()
         {

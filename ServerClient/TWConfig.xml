@@ -3,6 +3,6 @@
   <RunTestUI>false</RunTestUI>
   <TestMode>true</TestMode>
   <TestClass>MHGameWork.TheWizards.Tests.CG.CGCoreTest</TestClass>
-  <TestMethod>TestRaycastTriangle</TestMethod>
+  <TestMethod>TestRetardShaderShadows</TestMethod>
   
 </TWConfig>

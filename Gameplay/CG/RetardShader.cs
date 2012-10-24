@@ -29,10 +29,11 @@ namespace MHGameWork.TheWizards.CG
                 return new Color4(0.2f, 0.2f, 1f);
 
             Vector3 normal = f.Normal;
+            //return new Color4((f.Normal + MathHelper.One) * 0.5f);
             float specularPower = f.SpecularPower;
             float specularIntensity = f.SpecularIntensity;
 
-            
+
 
             var ret = new Color4();
 
@@ -40,8 +41,18 @@ namespace MHGameWork.TheWizards.CG
 
             foreach (var light in getLights())
             {
+
+
                 //surface-to-light vector
                 Vector3 lightVector = light.Position - f.Position;
+
+                var result = tracer.TraceFragment(new RayTrace(new Ray(f.Position, Vector3.Normalize(lightVector)), 0.001f, lightVector.Length())); // TODO: mat.sqrt
+                if (!result.Clip)
+                {
+                    //ret += new Color4(1, 0, 0);
+                    continue;
+                }
+
                 //compute attenuation based on distance - linear attenuation
                 float attenuation = MathHelper.Clamp((1.0f - lightVector.Length() / light.Radius), 0, 1);
 
@@ -77,9 +88,8 @@ namespace MHGameWork.TheWizards.CG
 
         private IEnumerable<PointLight> getLights()
         {
-            var ret = new List<PointLight>
-                          {new PointLight {Position = new Vector3(5, 2, -5), Radius = 10, Intensity = 10}};
-            return ret; 
+            var ret = new List<PointLight> { new PointLight { Position = new Vector3(-2, 2, -2), Radius = 100, Intensity = 10000 } };
+            return ret;
         }
 
         private Vector3 getCameraPosition()

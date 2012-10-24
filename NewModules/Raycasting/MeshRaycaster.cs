@@ -12,6 +12,7 @@ namespace MHGameWork.TheWizards.Raycasting
         public static float? RaycastMesh(IMesh mesh, Ray ray, out  MeshRaycastResult result)
         {
             result = new MeshRaycastResult();
+            var tempResult = new MeshRaycastResult();
 
             // Keep track of the closest triangle we found so far,
             // so we can always return the closest one.
@@ -27,11 +28,12 @@ namespace MHGameWork.TheWizards.Raycasting
                 var partRay = new Ray(Vector3.TransformCoordinate(ray.Position, invert),
                                       Vector3.TransformNormal(ray.Direction, invert));
 
+
                 Vector3 v1, v2, v3;
                 var intersection =
                     RaycastMeshPart(
                         part,
-                        partRay, out result);
+                        partRay, out tempResult);
 
                 // Does the ray intersect this triangle?
                 if (intersection == null) continue;
@@ -40,7 +42,7 @@ namespace MHGameWork.TheWizards.Raycasting
 
                 // Store the distance to this triangle.
                 closestIntersection = intersection;
-
+                result = tempResult;
 
                 // Transform the three vertex positions into world space,
                 // and store them into the output vertex parameters.
@@ -61,6 +63,7 @@ namespace MHGameWork.TheWizards.Raycasting
             Microsoft.Xna.Framework.Vector2[] texcoords = part.MeshPart.GetGeometryData().GetSourceVector2(MeshPartGeometryData.Semantic.Texcoord);
 
             result = new MeshRaycastResult();
+            
 
             float? closestIntersection = null;
 
@@ -73,7 +76,7 @@ namespace MHGameWork.TheWizards.Raycasting
 
                 float u;
                 float v;
-                Functions.RayIntersectsTriangle(ref xnaRay, ref vertices[i], ref vertices[i + 1], ref vertices[i + 2], out intersection, out result.U, out result.V);
+                Functions.RayIntersectsTriangle(ref xnaRay, ref vertices[i], ref vertices[i + 1], ref vertices[i + 2], out intersection, out u, out v);
 
 
                 // Does the ray intersect this triangle?
@@ -102,6 +105,9 @@ namespace MHGameWork.TheWizards.Raycasting
                     Normal = normals[i + 2].dx(),
                     Texcoord = texcoords[i + 2].dx()
                 };
+
+                result.U = u;
+                result.V = v;
 
 
 

@@ -102,8 +102,8 @@ namespace MHGameWork.TheWizards.CG
         public Ray CalculateRay(Vector2 point)
         {
             // TODO optimize division.
-            var u = (float)(left + (right - left) * point.X);
-            var v = (float)(bottom + (top - bottom) * point.Y);
+            var u = (float)(left + (right - left) * (1-point.X)); //TODO: fix this stuff
+            var v = (float)(bottom + (top - bottom) * (1-point.Y)); // Invert y!!
             var ret = new Ray { Direction = ProjectionPlaneDistance * Direction + u * rightAxis + v * Up, Position = Position };
             ret.Direction = Vector3.Normalize(ret.Direction); // TODO: Slowpoke, but for simplicity
             return ret;

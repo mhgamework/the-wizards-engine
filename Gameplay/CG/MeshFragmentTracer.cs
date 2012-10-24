@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Raycasting;
@@ -33,6 +34,7 @@ namespace MHGameWork.TheWizards.CG
 
             foreach (var ent in entities)
             {
+                
                 var transformed = rayTrace.Ray.Transform(Matrix.Invert(ent.WorldMatrix));
 
                 MeshRaycastResult meshRaycastResult;
@@ -43,9 +45,14 @@ namespace MHGameWork.TheWizards.CG
 
                 if (temp.IsCloser(result))
                 {
+                    if (meshRaycastResult.U > 1 || meshRaycastResult.U < 0) Debugger.Break();
+                    if (meshRaycastResult.V > 1 || meshRaycastResult.V < 0) Debugger.Break();
                     temp.CopyTo(result);
                     rEnt = ent;
                     rResult = meshRaycastResult;
+
+                    
+                    
                 }
             }
             if (rEnt == null) return new FragmentInput { Clip = true };
