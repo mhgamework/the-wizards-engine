@@ -17,13 +17,27 @@ namespace MHGameWork.TheWizards.CG
 {
     public class GraphicalRayTracer
     {
-        private static int windowSize = 1024;
 
         private readonly IRayTracer tracer;
 
+        private Point2 windowSize;
+
         public GraphicalRayTracer(IRayTracer tracer)
         {
-            this.tracer = new CachedTracer(new Point2(windowSize, windowSize), tracer);
+            
+
+            windowSize = new Point2(1280, 720);
+            this.tracer = new CachedTracer(windowSize, tracer);
+            
+
+            _wb = new WriteableBitmap(windowSize.X, windowSize.Y, 96, 96, PixelFormats.Bgra32, null);
+
+            
+            _rect = new Int32Rect(0, 0, _wb.PixelWidth, _wb.PixelHeight);
+            _bytesPerPixel = (_wb.Format.BitsPerPixel + 7) / 8;
+            _stride = _wb.PixelWidth * _bytesPerPixel;
+
+
             CreateAndShowMainWindow();
         }
 
@@ -34,8 +48,11 @@ namespace MHGameWork.TheWizards.CG
             // Create the application's main window
             mainWindow = new Window();
             mainWindow.Title = "Writeable Bitmap";
-            mainWindow.Height = windowSize;
-            mainWindow.Width = windowSize;
+            mainWindow.Height = windowSize.Y;
+            mainWindow.Width = windowSize.X;
+
+            mainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
 
             // Define the Image element
             _random.Stretch = Stretch.Fill;
@@ -62,12 +79,12 @@ namespace MHGameWork.TheWizards.CG
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.IsEnabled = true;
-            dispatcherTimer.Interval = TimeSpan.FromMilliseconds(windowSize);
+            dispatcherTimer.Interval = TimeSpan.FromMilliseconds(100);
             dispatcherTimer.Start();
 
 
-
             var t = new Thread(fillThreadJob);
+            t.IsBackground = true;
             t.Start();
 
 
@@ -97,10 +114,10 @@ namespace MHGameWork.TheWizards.CG
 
         private void fillThreadJob()
         {
-            var rect = new Int32Rect(0, 0, windowSize, windowSize);
+            var rect = new Int32Rect(0, 0, windowSize.X, windowSize.Y);
 
             int currentResolution = 1;
-            while (currentResolution * 2 < windowSize)
+            while (currentResolution * 2 < windowSize.X && currentResolution * 2 < windowSize.Y)
                 currentResolution *= 2;
 
             var pixelsPerRectangle = 8;
@@ -110,7 +127,10 @@ namespace MHGameWork.TheWizards.CG
             while (currentResolution > 0)
             {
                 foreach (var task in buildSubRectangles(rect, currentResolution * pixelsPerRectangle).Select(r => new Task(r, currentResolution)))
+                {
                     tasks.Enqueue(task);
+                    if (task.Rectangle.Height < 0) Debugger.Break();
+                }
                 currentResolution /= 2;
 
 
@@ -122,17 +142,17 @@ namespace MHGameWork.TheWizards.CG
         {
             var y = 0;
             var x = 0;
-            for (; y < sourceRect.Width - size; y += size)
+            for (; y < sourceRect.Height - size; y += size)
             {
                 x = 0;
-                for (; x < sourceRect.Height - size; x += size)
+                for (; x < sourceRect.Width - size; x += size)
                 {
                     yield return new Int32Rect(x, y, size, size);
                 }
                 yield return new Int32Rect(x, y, sourceRect.Width - x, size);
             }
             x = 0;
-            for (; x < sourceRect.Height - size; x += size)
+            for (; x < sourceRect.Width - size; x += size)
             {
                 yield return new Int32Rect(x, y, size, sourceRect.Height - y);
             }
@@ -169,15 +189,15 @@ namespace MHGameWork.TheWizards.CG
 
         private Image _random = new Image();
         // Create the writeable bitmap will be used to write and update.
-        private static WriteableBitmap _wb =
-            new WriteableBitmap(windowSize, windowSize, 96, 96, PixelFormats.Bgra32, null);
+        private WriteableBitmap _wb;
+
         // Define the rectangle of the writeable image we will modify. 
         // The size is that of the writeable bitmap.
-        private static Int32Rect _rect = new Int32Rect(0, 0, _wb.PixelWidth, _wb.PixelHeight);
-        private static int _bytesPerPixel = (_wb.Format.BitsPerPixel + 7) / 8;
+        private Int32Rect _rect;
+        private int _bytesPerPixel;
         // Stride is bytes per pixel times the number of pixels.
         // Stride is the byte width of a single rectangle row.
-        private static int _stride = _wb.PixelWidth * _bytesPerPixel;
+        private int _stride;
 
 
         private ConcurrentQueue<Task> tasks = new ConcurrentQueue<Task>();
@@ -193,7 +213,7 @@ namespace MHGameWork.TheWizards.CG
 
                 Int32Rect rect = task.Rectangle;
 
-                var resolution = new Point2(windowSize, windowSize);
+                var resolution = windowSize;
 
                 byte[] data = new byte[rect.Width * rect.Height * 4];
                 int iData = 0;

@@ -46,7 +46,7 @@ namespace MHGameWork.TheWizards.CG
                 //surface-to-light vector
                 Vector3 lightVector = light.Position - f.Position;
 
-                var result = tracer.TraceFragment(new RayTrace(new Ray(f.Position, Vector3.Normalize(lightVector)), 0.001f, lightVector.Length())); // TODO: mat.sqrt
+                var result = tracer.TraceFragment(new RayTrace(new Ray(f.Position, Vector3.Normalize(lightVector)), 0.1f, lightVector.Length())); // TODO: mat.sqrt
                 if (!result.Clip)
                 {
                     //ret += new Color4(1, 0, 0);

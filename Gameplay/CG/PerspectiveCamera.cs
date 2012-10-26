@@ -91,7 +91,7 @@ namespace MHGameWork.TheWizards.CG
             Position = new Vector3(0, 0, 0);
             ProjectionPlaneDistance = 3;
 
-            ScreenSize = new Vector2(1, 1);
+            ScreenSize = new Vector2(16/9f, 1);
 
             Up = new Vector3(0, 1, 0);
             Direction = new Vector3(0, 0, -1);
