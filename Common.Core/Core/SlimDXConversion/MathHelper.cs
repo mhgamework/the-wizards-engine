@@ -151,6 +151,25 @@ namespace DirectX11
             mat.Decompose(out scale, out rotation, out translation);
             return translation;
         }
+
+
+
+        //MHGW
+
+        /// <summary>
+        /// Performs a modulo operation that returns a value in 0 .. m-1
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public static float Modulo(float x, float m)
+        {
+            return (x % m + m) % m;
+        }
+        public static int Modulo(int x, int m)
+        {
+            return (x % m + m) % m;
+        }
     }
 
 

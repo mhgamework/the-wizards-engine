@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.CG.Texturing;
 using MHGameWork.TheWizards.Raycasting;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
@@ -13,6 +14,13 @@ namespace MHGameWork.TheWizards.CG
     /// </summary>
     public class SimpleMeshFragmentInputBuilder : IMeshFragmentInputBuilder
     {
+        private SimpleTexture2DLoader cache;
+
+        public SimpleMeshFragmentInputBuilder()
+        {
+            cache = new SimpleTexture2DLoader();
+        }
+
         public FragmentInput CalculateInput(IMesh mesh, Matrix world, MeshRaycastResult raycast)
         {
             var input = new FragmentInput();
@@ -25,8 +33,8 @@ namespace MHGameWork.TheWizards.CG
 
             //input.Normal = raycast.Vertex1.Normal;
             input.Normal = Vector3.Normalize(input.Normal); // Renormalize!
-            input.Texcoord = raycast.Vertex1.Texcoord * raycast.U + raycast.Vertex2.Texcoord * raycast.V +
-                           raycast.Vertex3.Texcoord * (1 - raycast.U - raycast.V);
+            input.Texcoord = raycast.Vertex2.Texcoord * raycast.U + raycast.Vertex3.Texcoord * raycast.V +
+                           raycast.Vertex1.Texcoord * (1 - raycast.U - raycast.V);
             //TODO: perspective correction
 
             //input.Normal = raycast.Vertex2.Normal;
@@ -40,6 +48,14 @@ namespace MHGameWork.TheWizards.CG
 
             input.U = raycast.U;
             input.V = raycast.V;
+
+            var tex = cache.Load(raycast.Material.DiffuseMap);
+            var sampler = new Texture2DSampler();
+            input.Diffuse = sampler.SampleBilinear(tex, input.Texcoord);
+
+
+
+
 
             return input;
         }

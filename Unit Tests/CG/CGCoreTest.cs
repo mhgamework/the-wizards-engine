@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using MHGameWork.TheWizards.CG;
 using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.Texturing;
 using MHGameWork.TheWizards.CG.Visualization;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
@@ -186,6 +187,32 @@ namespace MHGameWork.TheWizards.Tests.CG
         }
 
 
+        public void TestTextureSampler()
+        {
+            var cache = new SimpleTexture2DLoader();
+            var tex = cache.Load(createEntity().Mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap);
+            var sampler = new Texture2DSampler();
+
+            var ui = new GraphicalRayTracer(new SamplerTracer(tex, sampler));
+        }
+
+        private class SamplerTracer : IRayTracer
+        {
+            private Texture2D tex;
+            private Texture2DSampler sampler;
+
+            public SamplerTracer(Texture2D tex, Texture2DSampler sampler)
+            {
+                this.tex = tex;
+                this.sampler = sampler;
+            }
+
+            public Color4 GetPixel(Vector2 pos)
+            {
+                return sampler.SampleBilinear(tex, pos);
+            }
+        }
+
 
         public class RetardTracer : IRayTracer
         {
@@ -224,10 +251,10 @@ namespace MHGameWork.TheWizards.Tests.CG
                 if (input.Position.X > 0 && input.Normal.X != 0)
                 {
                     int asfds = 8;
-                    
+
                 }
 
-                return new Color4((input.Normal.X+1)*0.5f, (input.Normal.Y+1)*0.5f,0);
+                return new Color4((input.Normal.X + 1) * 0.5f, (input.Normal.Y + 1) * 0.5f, 0);
             }
         }
 

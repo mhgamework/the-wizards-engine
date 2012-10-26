@@ -18,23 +18,27 @@ namespace MHGameWork.TheWizards.CG
         private Dictionary<ITexture, Texture2D> cache = new Dictionary<ITexture, Texture2D>();
         public Texture2D Load(ITexture texture)
         {
-            if (cache.ContainsKey(texture)) return cache[texture];
+            lock (this)
+            {
+                if (cache.ContainsKey(texture)) return cache[texture];
 
-            var bitmap = new BitmapImage(new Uri(texture.GetCoreData().DiskFilePath));
-            int offset;
-            if (bitmap.Format != PixelFormats.Bgr32)
-                throw new InvalidOperationException("Unsupported texture!");
-            
-            int bytesPerPixel = (bitmap.Format.BitsPerPixel / 8);
-            int stride = bitmap.PixelWidth * bytesPerPixel;
-            byte[] pixels = new byte[bitmap.PixelWidth * bitmap.PixelHeight * bytesPerPixel];
-            bitmap.CopyPixels(pixels, stride, 0);
+                var bitmap = new BitmapImage(new Uri(texture.GetCoreData().DiskFilePath));
+                int offset;
+                if (bitmap.Format != PixelFormats.Bgr32)
+                    throw new InvalidOperationException("Unsupported texture!");
 
-            var tex = new Texture2D(bitmap.PixelWidth,bitmap.PixelHeight, pixels);
+                int bytesPerPixel = (bitmap.Format.BitsPerPixel / 8);
+                int stride = bitmap.PixelWidth * bytesPerPixel;
+                byte[] pixels = new byte[bitmap.PixelWidth * bitmap.PixelHeight * bytesPerPixel];
+                bitmap.CopyPixels(pixels, stride, 0);
 
-            cache[texture] = tex;
+                var tex = new Texture2D(bitmap.PixelWidth, bitmap.PixelHeight, pixels);
 
-            return tex;
+                cache[texture] = tex;
+
+                return tex;
+            }
+
 
         }
     }

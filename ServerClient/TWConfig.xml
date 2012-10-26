@@ -4,5 +4,4 @@
   <TestMode>true</TestMode>
   <TestClass>MHGameWork.TheWizards.Tests.CG.CGCoreTest</TestClass>
   <TestMethod>TestRetardShaderShadows</TestMethod>
-  
 </TWConfig>

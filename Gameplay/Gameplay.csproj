@@ -112,6 +112,7 @@
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="CG\Raytracing\FragmentInput.cs" />
+    <Compile Include="CG\Texturing\Texture2DSampler.cs" />
     <Compile Include="CG\UI\GraphicalRayTracer.cs" />
     <Compile Include="CG\Cameras\ICamera.cs" />
     <Compile Include="CG\Raytracing\IFragmentTracer.cs" />
