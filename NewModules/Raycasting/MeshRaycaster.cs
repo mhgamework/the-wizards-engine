@@ -43,6 +43,7 @@ namespace MHGameWork.TheWizards.Raycasting
                 // Store the distance to this triangle.
                 closestIntersection = intersection;
                 result = tempResult;
+                result.Material = part.MeshMaterial;
 
                 // Transform the three vertex positions into world space,
                 // and store them into the output vertex parameters.

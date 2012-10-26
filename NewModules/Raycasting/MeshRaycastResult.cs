@@ -14,5 +14,6 @@ namespace MHGameWork.TheWizards.Raycasting
         public VertexPositionNormalTexture Vertex3;
         public float U;
         public float V;
+        public MeshCoreData.Material Material;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
@@ -21,12 +22,19 @@ namespace MHGameWork.TheWizards.CG
 
             var bitmap = new BitmapImage(new Uri(texture.GetCoreData().DiskFilePath));
             int offset;
+            if (bitmap.Format != PixelFormats.Bgr32)
+                throw new InvalidOperationException("Unsupported texture!");
             
             int bytesPerPixel = (bitmap.Format.BitsPerPixel / 8);
             int stride = bitmap.PixelWidth * bytesPerPixel;
-            Color4[] pixels = new Color4[bitmap.PixelWidth * bitmap.PixelHeight * bytesPerPixel];
+            byte[] pixels = new byte[bitmap.PixelWidth * bitmap.PixelHeight * bytesPerPixel];
             bitmap.CopyPixels(pixels, stride, 0);
 
+            var tex = new Texture2D(bitmap.PixelWidth,bitmap.PixelHeight, pixels);
+
+            cache[texture] = tex;
+
+            return tex;
 
         }
     }
