@@ -15,5 +15,8 @@ namespace MHGameWork.TheWizards.CG
         public float SpecularIntensity;
         public Color4 Diffuse;
         public Color4 SpecularColor;
+
+        public float U;
+        public float V;
     }
 }

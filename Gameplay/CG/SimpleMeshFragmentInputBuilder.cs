@@ -37,7 +37,10 @@ namespace MHGameWork.TheWizards.CG
             input.SpecularPower = 15;
             input.SpecularIntensity = 2;
             //input.Diffuse = new Color4(raycast.U, raycast.V, 0);
-            
+
+            input.U = raycast.U;
+            input.V = raycast.V;
+
             return input;
         }
     }
