@@ -163,14 +163,14 @@ namespace MHGameWork.TheWizards.Tests.CG
 
             var raycaster = new MeshFragmentTracer();
 
-            var ent1 = createSphereEntity();
+            var ent1 = createEntity();
             ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -3));
 
             var ent2 = createSphereEntity();
             ent2.WorldMatrix = Matrix.Translation(new Vector3(0, 1, -2));
 
             raycaster.AddEntity(ent1);
-            raycaster.AddEntity(ent2);
+            //raycaster.AddEntity(ent2);
 
             var window = new GraphicalRayTracer(new RetardTracer(raycaster, cam));
 

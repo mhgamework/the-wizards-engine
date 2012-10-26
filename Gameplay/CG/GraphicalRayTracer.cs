@@ -17,13 +17,13 @@ namespace MHGameWork.TheWizards.CG
 {
     public class GraphicalRayTracer
     {
-        private static int windowSize = 300;
+        private static int windowSize = 1024;
 
         private readonly IRayTracer tracer;
 
         public GraphicalRayTracer(IRayTracer tracer)
         {
-            this.tracer = tracer;
+            this.tracer = new CachedTracer(new Point2(windowSize, windowSize), tracer);
             CreateAndShowMainWindow();
         }
 
@@ -67,39 +67,9 @@ namespace MHGameWork.TheWizards.CG
 
 
 
-            var rect = new Int32Rect(0, 0, windowSize, windowSize);
+            var t = new Thread(fillThreadJob);
+            t.Start();
 
-            var list = new List<Int32Rect>();
-            int size = 16;
-            var y = 0;
-            var x = 0;
-            for (; y < rect.Width - size; y += size)
-            {
-                x = 0;
-                for (; x < rect.Height - size; x += size)
-                {
-                    list.Add(new Int32Rect(x, y, size, size));
-                }
-                list.Add(new Int32Rect(x, y, rect.Width - x, size));
-            }
-            x = 0;
-            for (; x < rect.Height - size; x += size)
-            {
-                list.Add(new Int32Rect(x, y, size, rect.Height - y));
-            }
-            list.Add(new Int32Rect(x, y, rect.Width - x, rect.Height - y));
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                tasks.Enqueue(list[i]);
-            }
-
-            var numThreads = 1;
-            for (int iThread = 0; iThread < numThreads; iThread++)
-            {
-                int thread = iThread;
-                queueThread();
-            }
 
 
             var app = new Application();
@@ -108,12 +78,78 @@ namespace MHGameWork.TheWizards.CG
 
         }
 
+        private void processTasks()
+        {
+            if (workersRunning != 0)
+                throw new InvalidOperationException();
+            var numThreads = 4;
+            workersRunning = numThreads;
+
+            for (int iThread = 0; iThread < numThreads; iThread++)
+            {
+                int thread = iThread;
+                queueThread();
+            }
+
+            lock (this)
+                while (workersRunning > 0) Monitor.Wait(this);
+        }
+
+        private void fillThreadJob()
+        {
+            var rect = new Int32Rect(0, 0, windowSize, windowSize);
+
+            int currentResolution = 1;
+            while (currentResolution * 2 < windowSize)
+                currentResolution *= 2;
+
+            var pixelsPerRectangle = 8;
+
+            currentResolution /= 8;
+
+            while (currentResolution > 0)
+            {
+                foreach (var task in buildSubRectangles(rect, currentResolution * pixelsPerRectangle).Select(r => new Task(r, currentResolution)))
+                    tasks.Enqueue(task);
+                currentResolution /= 2;
+
+
+                processTasks();
+            }
+        }
+
+        private IEnumerable<Int32Rect> buildSubRectangles(Int32Rect sourceRect, int size)
+        {
+            var y = 0;
+            var x = 0;
+            for (; y < sourceRect.Width - size; y += size)
+            {
+                x = 0;
+                for (; x < sourceRect.Height - size; x += size)
+                {
+                    yield return new Int32Rect(x, y, size, size);
+                }
+                yield return new Int32Rect(x, y, sourceRect.Width - x, size);
+            }
+            x = 0;
+            for (; x < sourceRect.Height - size; x += size)
+            {
+                yield return new Int32Rect(x, y, size, sourceRect.Height - y);
+            }
+            yield return new Int32Rect(x, y, sourceRect.Width - x, sourceRect.Height - y);
+        }
+
+        private volatile int workersRunning;
+
         private void queueThread()
         {
             ThreadPool.QueueUserWorkItem(delegate
                                              {
                                                  tracerJob(tracer);
+                                                 workersRunning--;
+                                                 lock (this) Monitor.PulseAll(this);
                                              });
+
         }
 
         //  System.Windows.Threading.DispatcherTimer.Tick handler
@@ -144,22 +180,29 @@ namespace MHGameWork.TheWizards.CG
         private static int _stride = _wb.PixelWidth * _bytesPerPixel;
 
 
-        private ConcurrentQueue<Int32Rect> tasks = new ConcurrentQueue<Int32Rect>();
+        private ConcurrentQueue<Task> tasks = new ConcurrentQueue<Task>();
         private ConcurrentQueue<TracerResult> results = new ConcurrentQueue<TracerResult>();
+
+        private object tasksLock = new object();
 
         private void tracerJob(IRayTracer tracer)
         {
-            Int32Rect rect;
-            while (tasks.TryDequeue(out rect))
+            Task task;
+            while (tasks.TryDequeue(out task))
             {
+
+                Int32Rect rect = task.Rectangle;
+
                 var resolution = new Point2(windowSize, windowSize);
 
                 byte[] data = new byte[rect.Width * rect.Height * 4];
                 int iData = 0;
-                for (int y = rect.Y; y < rect.Y + rect.Height; y++)
-                    for (int x = rect.X; x < rect.X + rect.Width; x++)
+                for (int y = rect.Y; y < rect.Y + rect.Height; y += 1)
+                    for (int x = rect.X; x < rect.X + rect.Width; x += 1)
                     {
-                        var color = tracer.GetPixel(new Vector2((x + 0.5f) / resolution.X, (y + 0.5f) / resolution.Y));
+                        int tempX = x - (x % task.Resolution) + (task.Resolution / 2);
+                        int tempY = y - (y % task.Resolution) + (task.Resolution / 2);
+                        var color = tracer.GetPixel(new Vector2((tempX + 0.5f) / resolution.X, (tempY + 0.5f) / resolution.Y));
                         if (color.Blue < 0) color.Blue = 0;
                         if (color.Blue > 1) color.Blue = 1;
                         if (color.Green < 0) color.Green = 0;
@@ -177,14 +220,67 @@ namespace MHGameWork.TheWizards.CG
                         iData += 4;
                     }
 
-                results.Enqueue(new TracerResult { Rectangle = rect, ColorArray = data });
+                results.Enqueue(new TracerResult { Rectangle = rect, ColorArray = data, Resolution = task.Resolution });
             }
         }
+
+        struct Task
+        {
+            public Int32Rect Rectangle;
+            public int Resolution;
+
+            public Task(Int32Rect rectangle, int resolution)
+            {
+                Rectangle = rectangle;
+                Resolution = resolution;
+            }
+
+            public override string ToString()
+            {
+                return string.Format("Rectangle: {0}, Resolution: {1}", Rectangle, Resolution);
+            }
+        }
+
 
         class TracerResult
         {
             public Int32Rect Rectangle;
             public byte[] ColorArray;
+            public int Resolution;
+        }
+
+        class CachedTracer : IRayTracer
+        {
+            private readonly Point2 _size;
+            private readonly IRayTracer _tracer;
+
+            private Color4[,] cache;
+            private bool[,] cached;
+
+            public CachedTracer(Point2 size, IRayTracer tracer)
+            {
+                _size = size;
+                _tracer = tracer;
+                cache = new Color4[size.X * 2, size.Y * 2];
+                cached = new bool[size.X * 2, size.Y * 2];
+            }
+
+            public Color4 GetPixel(Vector2 pos)
+            {
+                var x = (int)(pos.X * _size.X);
+                var y = (int)(pos.Y * _size.Y);
+
+                if (cached[x, y])
+                    return cache[x, y];
+
+
+                var ret = _tracer.GetPixel(pos);
+                cache[x, y] = ret;
+                cached[x, y] = true;
+
+                return ret;
+
+            }
         }
 
     }
