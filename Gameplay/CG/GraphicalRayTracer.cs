@@ -24,15 +24,15 @@ namespace MHGameWork.TheWizards.CG
 
         public GraphicalRayTracer(IRayTracer tracer)
         {
-            
+            originalTracer = tracer;
 
             windowSize = new Point2(1280, 720);
             this.tracer = new CachedTracer(windowSize, tracer);
-            
+
 
             _wb = new WriteableBitmap(windowSize.X, windowSize.Y, 96, 96, PixelFormats.Bgra32, null);
 
-            
+
             _rect = new Int32Rect(0, 0, _wb.PixelWidth, _wb.PixelHeight);
             _bytesPerPixel = (_wb.Format.BitsPerPixel + 7) / 8;
             _stride = _wb.PixelWidth * _bytesPerPixel;
@@ -55,7 +55,8 @@ namespace MHGameWork.TheWizards.CG
 
 
             // Define the Image element
-            _random.Stretch = Stretch.Fill;
+            image.Stretch = Stretch.Fill;
+            image.MouseLeftButtonDown += new System.Windows.Input.MouseButtonEventHandler(image_MouseLeftButtonDown);
             //_random.Margin = new Thickness(20);
 
             // Define a StackPanel to host Controls
@@ -66,7 +67,7 @@ namespace MHGameWork.TheWizards.CG
 
 
             // Add the Image to the parent StackPanel
-            myStackPanel.Children.Add(_random);
+            myStackPanel.Children.Add(image);
 
             // Add the StackPanel as the Content of the Parent Window Object
             mainWindow.Content = myStackPanel;
@@ -93,6 +94,19 @@ namespace MHGameWork.TheWizards.CG
             app.Run(mainWindow);
 
 
+        }
+
+        void image_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var pos = e.GetPosition(image);
+            var screenPos = new Vector2((float)(pos.X + 0.5f) / windowSize.X, (float)(pos.Y + 0.5f) / windowSize.Y);
+            originalTracer.GetPixel(screenPos);
+            results.Enqueue(new TracerResult
+                                {
+                                    ColorArray = new byte[] { 0, 0, 255, 255 },
+                                    Rectangle = new Int32Rect((int)pos.X, (int)pos.Y, 1, 1),
+                                    Resolution = 1
+                                });
         }
 
         private void processTasks()
@@ -183,11 +197,11 @@ namespace MHGameWork.TheWizards.CG
                 //Update writeable bitmap with the colorArray to the image.
                 _wb.WritePixels(new Int32Rect(0, 0, result.Rectangle.Width, result.Rectangle.Height), result.ColorArray, _bytesPerPixel * result.Rectangle.Width, result.Rectangle.X, result.Rectangle.Y);
             }
-            _random.Source = _wb;
+            image.Source = _wb;
 
         }
 
-        private Image _random = new Image();
+        private Image image = new Image();
         // Create the writeable bitmap will be used to write and update.
         private WriteableBitmap _wb;
 
@@ -204,6 +218,7 @@ namespace MHGameWork.TheWizards.CG
         private ConcurrentQueue<TracerResult> results = new ConcurrentQueue<TracerResult>();
 
         private object tasksLock = new object();
+        private IRayTracer originalTracer;
 
         private void tracerJob(IRayTracer tracer)
         {
