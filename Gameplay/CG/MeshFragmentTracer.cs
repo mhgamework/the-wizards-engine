@@ -16,11 +16,15 @@ namespace MHGameWork.TheWizards.CG
     {
         private List<WorldRendering.Entity> entities = new List<WorldRendering.Entity>();
 
+        private Dictionary<WorldRendering.Entity, BoundingBox> boxes =
+            new Dictionary<WorldRendering.Entity, BoundingBox>();
+
         private WorldRaycaster worldCaster = new WorldRaycaster();
 
         public void AddEntity(WorldRendering.Entity ent)
         {
             entities.Add(ent);
+            boxes.Add(ent, MeshBuilder.CalculateBoundingBox(ent.Mesh));
         }
         private IMeshFragmentInputBuilder builder = new SimpleMeshFragmentInputBuilder();
 
@@ -34,8 +38,11 @@ namespace MHGameWork.TheWizards.CG
 
             foreach (var ent in entities)
             {
-                
+
                 var transformed = rayTrace.Ray.Transform(Matrix.Invert(ent.WorldMatrix));
+
+                if (!transformed.xna().Intersects(boxes[ent].xna()).HasValue)
+                    continue;
 
                 MeshRaycastResult meshRaycastResult;
                 var dist = MeshRaycaster.RaycastMesh(ent.Mesh, transformed, out meshRaycastResult);
@@ -51,12 +58,12 @@ namespace MHGameWork.TheWizards.CG
                     rEnt = ent;
                     rResult = meshRaycastResult;
 
-                    
-                    
+
+
                 }
             }
             if (rEnt == null) return new FragmentInput { Clip = true };
-            var ret =  builder.CalculateInput(rEnt.Mesh, rEnt.WorldMatrix, rResult);
+            var ret = builder.CalculateInput(rEnt.Mesh, rEnt.WorldMatrix, rResult);
             ret.Position = result.CalculateHitPoint(rayTrace.Ray);
 
             return ret;
