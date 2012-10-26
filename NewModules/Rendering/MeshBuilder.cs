@@ -226,7 +226,7 @@ namespace MHGameWork.TheWizards.Rendering
 
                 //TODO: check this!
                 XnaVector3.Transform(positions, ref part.ObjectMatrix, positions);
-                ret.MergeWith(XnaBoundingBox.CreateFromPoints(positions));
+                ret = ret.MergeWith(XnaBoundingBox.CreateFromPoints(positions));
 
             }
             return ret.dx();
