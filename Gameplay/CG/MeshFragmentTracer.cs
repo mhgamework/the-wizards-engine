@@ -40,13 +40,13 @@ namespace MHGameWork.TheWizards.CG
             {
 
                 var transformed = rayTrace.Ray.Transform(Matrix.Invert(ent.WorldMatrix));
-
+                transformed.Position += transformed.Direction*rayTrace.Start;
                 if (!transformed.xna().Intersects(boxes[ent].xna()).HasValue)
                     continue;
 
                 MeshRaycastResult meshRaycastResult;
                 var dist = MeshRaycaster.RaycastMesh(ent.Mesh, transformed, out meshRaycastResult);
-                if (dist < rayTrace.Start || dist > rayTrace.End) continue;
+                if (dist > (rayTrace.End - rayTrace.Start)) continue;
 
                 temp.Set(dist, ent);
 
