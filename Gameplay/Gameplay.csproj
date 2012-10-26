@@ -111,23 +111,23 @@
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
-    <Compile Include="CG\FragmentInput.cs" />
-    <Compile Include="CG\GraphicalRayTracer.cs" />
-    <Compile Include="CG\ICamera.cs" />
-    <Compile Include="CG\IFragmentTracer.cs" />
-    <Compile Include="CG\IMeshFragmentInputBuilder.cs" />
-    <Compile Include="CG\IRayTracer.cs" />
-    <Compile Include="CG\ITexture2DLoader.cs" />
-    <Compile Include="CG\MeshFragmentTracer.cs" />
-    <Compile Include="CG\PointLight.cs" />
-    <Compile Include="CG\RayTrace.cs" />
-    <Compile Include="CG\RetardShader.cs" />
-    <Compile Include="CG\SimpleFragmentTracer.cs" />
-    <Compile Include="CG\SimpleMeshFragmentInputBuilder.cs" />
-    <Compile Include="CG\SimpleTexture2DLoader.cs" />
-    <Compile Include="CG\Texture2D.cs" />
+    <Compile Include="CG\Raytracing\FragmentInput.cs" />
+    <Compile Include="CG\UI\GraphicalRayTracer.cs" />
+    <Compile Include="CG\Cameras\ICamera.cs" />
+    <Compile Include="CG\Raytracing\IFragmentTracer.cs" />
+    <Compile Include="CG\Raytracing\IMeshFragmentInputBuilder.cs" />
+    <Compile Include="CG\Raytracing\IRayTracer.cs" />
+    <Compile Include="CG\Texturing\ITexture2DLoader.cs" />
+    <Compile Include="CG\Raytracing\MeshFragmentTracer.cs" />
+    <Compile Include="CG\Shading\PointLight.cs" />
+    <Compile Include="CG\Raytracing\RayTrace.cs" />
+    <Compile Include="CG\Shading\RetardShader.cs" />
+    <Compile Include="CG\Raytracing\SimpleFragmentTracer.cs" />
+    <Compile Include="CG\Raytracing\SimpleMeshFragmentInputBuilder.cs" />
+    <Compile Include="CG\Shading\SimpleTexture2DLoader.cs" />
+    <Compile Include="CG\Texturing\Texture2D.cs" />
     <Compile Include="CG\Visualization\CameraVisualizer.cs" />
-    <Compile Include="CG\PerspectiveCamera.cs" />
+    <Compile Include="CG\Cameras\PerspectiveCamera.cs" />
     <Compile Include="CG\Math\Point2.cs" />
     <Compile Include="LevelBuilding\LevelBuildingTriggerObjectType.cs" />
     <Compile Include="LevelBuilding\TriggerObject.cs" />
@@ -296,9 +296,7 @@
     <Content Include="WorldRendering\_doc.txt" />
     <Content Include="_doc.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CG\UI\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
