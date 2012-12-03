@@ -112,6 +112,13 @@
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="CG\Raytracing\FragmentInput.cs" />
+    <Compile Include="CG\Spatial\BoundingBoxCalculator.cs" />
+    <Compile Include="CG\Spatial\CompactGrid.cs" />
+    <Compile Include="CG\Spatial\GridTraverser.cs" />
+    <Compile Include="CG\Spatial\IBoundingBoxCalculator.cs" />
+    <Compile Include="CG\Spatial\ISurface.cs" />
+    <Compile Include="CG\Spatial\MeshToTriangleConverter.cs" />
+    <Compile Include="CG\Spatial\Triangle.cs" />
     <Compile Include="CG\Texturing\Texture2DSampler.cs" />
     <Compile Include="CG\UI\GraphicalRayTracer.cs" />
     <Compile Include="CG\Cameras\ICamera.cs" />

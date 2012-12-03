@@ -450,7 +450,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
                                                                                 (nLines.VertexBuffer,
                                                                                  vertexStride, 0));
 
-                    worldViewProjParam.SetMatrix(cam.ViewProjection);
+                    worldViewProjParam.SetMatrix(WorldMatrix * cam.ViewProjection);
 
                     pass.Apply(device.ImmediateContext);
                     device.ImmediateContext.Draw(nLines.NumOfPrimitives * 2, 0);

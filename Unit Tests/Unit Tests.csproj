@@ -145,6 +145,7 @@
     <Compile Include="Assets\SimpleAssetFactory.cs" />
     <Compile Include="Building\BuildingTest.cs" />
     <Compile Include="CG\CGCoreTest.cs" />
+    <Compile Include="CG\CompactGridTest.cs" />
     <Compile Include="Client\ClientTest.cs" />
     <Compile Include="CoreTest.cs" />
     <Compile Include="DirectX11\XAudio2Test.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Gameplay\RaycastingTest.cs" />
     <Compile Include="Gameplay\TilingTest.cs" />
     <Compile Include="Gameplay\WorldRenderingTest.cs" />
+    <Compile Include="NavMeshing\TestNavMesh.cs" />
     <Compile Include="Particles\ParticleTests.cs" />
     <Compile Include="Gameplay\FortressTest.cs" />
     <Compile Include="Physics\MeshPhysicsFactoryXNA.cs" />

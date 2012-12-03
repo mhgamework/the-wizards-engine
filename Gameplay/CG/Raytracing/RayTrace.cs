@@ -18,6 +18,7 @@ namespace MHGameWork.TheWizards.CG
         public Ray Ray
         {
             get { return ray; }
+            set { ray = value; }
         }
 
         public float Start

@@ -202,6 +202,11 @@
     <Compile Include="Entity\Editor\EditorMeshPart.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="NavMeshing\NavMesh.cs" />
+    <Compile Include="NavMeshing\NavMeshBuilder.cs" />
+    <Compile Include="NavMeshing\NavMeshNode.cs" />
+    <Compile Include="NavMeshing\NavMeshVisualizer.cs" />
+    <Compile Include="NavMeshing\Polygon.cs" />
     <Compile Include="Persistence\AssetSerializer.cs" />
     <Compile Include="Persistence\ListSerializer.cs" />
     <Compile Include="Persistence\ModelObjectSerializer.cs" />
@@ -364,6 +369,7 @@
     <Compile Include="Physics\MeshPhysicsActorBuilder.cs" />
     <Compile Include="Physics\MeshCollisionData.cs" />
     <Compile Include="Physics\MeshPhysicsElementFactory.cs" />
+    <Compile Include="Testing\TestDataValidator.cs" />
     <Compile Include="TreeGenerator\AtlasTool\TextureAtlasCreater.cs" />
     <Compile Include="TreeGenerator\AtlasTool\TextureForm.cs">
       <SubType>Form</SubType>

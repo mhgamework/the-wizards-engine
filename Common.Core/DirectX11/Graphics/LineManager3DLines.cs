@@ -146,7 +146,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             }
 
             addLineInternal(startPoint, startColor, endPoint, endColor);
-          
+
 
         }
 
@@ -392,6 +392,15 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         public void Dispose()
         {
             vertexBuffer.Dispose();
+        }
+
+        public void AddPolygon(Vector3[] polygon, Color4 color)
+        {
+            for (int i = 0; i < polygon.Length - 1; i++)
+            {
+                AddLine(polygon[i], polygon[i + 1], color);
+            }
+            AddLine(polygon[polygon.Length - 1], polygon[0], color);
         }
     }
 }
