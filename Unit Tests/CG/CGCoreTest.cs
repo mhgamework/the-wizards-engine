@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using MHGameWork.TheWizards.CG;
 using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.Raytracing;
 using MHGameWork.TheWizards.CG.Texturing;
 using MHGameWork.TheWizards.CG.Visualization;
 using MHGameWork.TheWizards.DirectX11;
@@ -39,7 +40,7 @@ namespace MHGameWork.TheWizards.Tests.CG
             var resolution = new Point2(8, 8);
             cam.ProjectionPlaneDistance = 1.3f;
 
-            var raycaster = new MeshFragmentTracer();
+            var raycaster = new MeshTraceableScene();
 
             var visualizer = new CameraVisualizer(TW.Graphics);
 
@@ -57,15 +58,17 @@ namespace MHGameWork.TheWizards.Tests.CG
                     for (int y = 0; y < resolution.Y; y++)
                     {
                         Ray calculateRay = cam.CalculateRay(new Vector2((x + 0.5f) / resolution.X, (y + 0.5f) / resolution.Y));
-                        var res = raycaster.TraceFragment(new RayTrace(calculateRay, 0, float.MaxValue));
-                        if (res.Clip) continue;
-                        var point = res.Position;
-                        TW.Graphics.LineManager3D.AddCenteredBox(point, 0.1f,
-                                                                 new Color4(
-                                                                     0, 1, 0));
-                        TW.Graphics.LineManager3D.AddLine(point,
-                                                          point + res.Normal,
-                                                          new Color4(1, 1, 0));
+                        IShadeCommand cmd;
+                        var res = raycaster.Intersect(new RayTrace(calculateRay, 0, float.MaxValue), out cmd, true);
+                        if (!res) continue;
+                        throw new NotImplementedException();
+                        //var point = res.Position;
+                        //TW.Graphics.LineManager3D.AddCenteredBox(point, 0.1f,
+                        //                                         new Color4(
+                        //                                             0, 1, 0));
+                        //TW.Graphics.LineManager3D.AddLine(point,
+                        //                                  point + res.Normal,
+                        //                                  new Color4(1, 1, 0));
                     }
             }));
 
@@ -84,7 +87,7 @@ namespace MHGameWork.TheWizards.Tests.CG
             var resolution = new Point2(64, 64);
             cam.ProjectionPlaneDistance = 1.3f;
 
-            var raycaster = new MeshFragmentTracer();
+            var raycaster = new MeshTraceableScene();
 
             var visualizer = new CameraVisualizer(TW.Graphics);
 
@@ -99,14 +102,15 @@ namespace MHGameWork.TheWizards.Tests.CG
                                                            for (int x = 0; x < resolution.X; x++)
                                                                for (int y = 0; y < resolution.Y; y++)
                                                                {
-                                                                   Ray calculateRay = cam.CalculateRay(new Vector2((x + 0.5f) / resolution.X, (y + 0.5f) / resolution.Y));
-                                                                   var res = raycaster.TraceFragment(new RayTrace(calculateRay, 0, float.MaxValue));
-                                                                   if (res.Clip) continue;
-                                                                   var point = res.Position;
-                                                                   TW.Graphics.LineManager3D.AddCenteredBox(point, 0.03f, res.Diffuse);
-                                                                   TW.Graphics.LineManager3D.AddLine(point,
-                                                                                                     point + res.Normal,
-                                                                                                     new Color4(1, 1, 0));
+                                                                   throw new NotImplementedException();
+                                                                   //Ray calculateRay = cam.CalculateRay(new Vector2((x + 0.5f) / resolution.X, (y + 0.5f) / resolution.Y));
+                                                                   //var res = raycaster.TraceFragment(new RayTrace(calculateRay, 0, float.MaxValue));
+                                                                   //if (res.Clip) continue;
+                                                                   //var point = res.Position;
+                                                                   //TW.Graphics.LineManager3D.AddCenteredBox(point, 0.03f, res.Diffuse);
+                                                                   //TW.Graphics.LineManager3D.AddLine(point,
+                                                                   //                                  point + res.Normal,
+                                                                   //                                  new Color4(1, 1, 0));
                                                                }
                                                        }));
 
@@ -124,7 +128,7 @@ namespace MHGameWork.TheWizards.Tests.CG
             var cam = new PerspectiveCamera();
             cam.ProjectionPlaneDistance = 1.3f;
 
-            var raycaster = new MeshFragmentTracer();
+            var raycaster = new MeshTraceableScene();
 
             var ent1 = createTriangleEntity();
             ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -4));
@@ -143,7 +147,7 @@ namespace MHGameWork.TheWizards.Tests.CG
             var cam = new PerspectiveCamera();
             cam.ProjectionPlaneDistance = 1.3f;
 
-            var raycaster = new MeshFragmentTracer();
+            var raycaster = new MeshTraceableScene();
 
             var ent1 = createSphereEntity();
             ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -3));
@@ -162,7 +166,7 @@ namespace MHGameWork.TheWizards.Tests.CG
             var cam = new PerspectiveCamera();
             cam.ProjectionPlaneDistance = 1.3f;
 
-            var raycaster = new MeshFragmentTracer();
+            var raycaster = new MeshTraceableScene();
 
             var ent1 = createEntity();
             ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -3));
@@ -193,15 +197,18 @@ namespace MHGameWork.TheWizards.Tests.CG
             var tex = cache.Load(createEntity().Mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap);
             var sampler = new Texture2DSampler();
 
-            var ui = new GraphicalRayTracer(new SamplerTracer(tex, sampler));
+            var ui = new GraphicalRayTracer(new TextureSamplerImage(tex, sampler));
         }
 
-        private class SamplerTracer : IRayTracer
+        /// <summary>
+        /// Generates an image from a Texture2D using a Texture2DSampler 
+        /// </summary>
+        private class TextureSamplerImage : IRenderedImage
         {
             private Texture2D tex;
             private Texture2DSampler sampler;
 
-            public SamplerTracer(Texture2D tex, Texture2DSampler sampler)
+            public TextureSamplerImage(Texture2D tex, Texture2DSampler sampler)
             {
                 this.tex = tex;
                 this.sampler = sampler;
@@ -214,47 +221,49 @@ namespace MHGameWork.TheWizards.Tests.CG
         }
 
 
-        public class RetardTracer : IRayTracer
+        public class RetardTracer : IRenderedImage
         {
             private ICamera camera;
-            private RetardShader shader;
+            private PhongShader shader;
 
-            public RetardTracer(IFragmentTracer fragmentTracer, ICamera camera)
+            public RetardTracer(ITraceableScene traceableScene, ICamera camera)
             {
                 this.camera = camera;
-                shader = new RetardShader(fragmentTracer, camera);
+                shader = new PhongShader(traceableScene, camera);
             }
 
             public Color4 GetPixel(Vector2 pos)
             {
-                var rayTrace = new RayTrace(camera.CalculateRay(pos), 0, int.MaxValue);
-                return shader.CalculateRayColor(rayTrace);
+                //var rayTrace = new RayTrace(camera.CalculateRay(pos), 0, int.MaxValue);
+                //return shader.Shade(rayTrace);
+                throw new NotImplementedException();
             }
         }
 
-        public class Tracer : IRayTracer
+        public class Tracer : IRenderedImage
         {
-            private IFragmentTracer fragmentTracer;
+            private ITraceableScene traceableScene;
             private ICamera camera;
 
-            public Tracer(IFragmentTracer fragmentTracer, ICamera camera)
+            public Tracer(ITraceableScene traceableScene, ICamera camera)
             {
-                this.fragmentTracer = fragmentTracer;
+                this.traceableScene = traceableScene;
                 this.camera = camera;
             }
 
             public Color4 GetPixel(Vector2 pos)
             {
                 //return new Color4(pos.X, pos.Y,0);
-                var input = fragmentTracer.TraceFragment(new RayTrace(camera.CalculateRay(pos), 0, int.MaxValue));
+                //var input = traceableScene.TraceFragment(new RayTrace(camera.CalculateRay(pos), 0, int.MaxValue));
 
-                if (input.Position.X > 0 && input.Normal.X != 0)
-                {
-                    int asfds = 8;
+                //if (input.Position.X > 0 && input.Normal.X != 0)
+                //{
+                //    int asfds = 8;
 
-                }
+                //}
 
-                return new Color4((input.Normal.X + 1) * 0.5f, (input.Normal.Y + 1) * 0.5f, 0);
+                //return new Color4((input.Normal.X + 1) * 0.5f, (input.Normal.Y + 1) * 0.5f, 0);
+                throw new NotImplementedException();
             }
         }
 
@@ -315,7 +324,7 @@ namespace MHGameWork.TheWizards.Tests.CG
 
         }
 
-        private class DummyTracer : IRayTracer
+        private class DummyTracer : IRenderedImage
         {
             private Seeder seeder = new Seeder(123456789);
 

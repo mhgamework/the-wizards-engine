@@ -39,11 +39,11 @@ namespace MHGameWork.TheWizards.Tests.NavMeshing
             left = new NavMeshNode(new[] {a, b, c});
             right = new NavMeshNode(new[] {a, d, e});
 
-            rootNode.SetConnected(0) = left;
-            left.Connected(2) = rootNode;
+            //rootNode.SetConnected(0) = left;
+            //left.Connected(2) = rootNode;
 
-            rootNode.Connected[1] = right;
-            right.Connected[0] = rootNode;
+            //rootNode.Connected[1] = right;
+            //right.Connected[0] = rootNode;
 
             return new NavMesh(rootNode);
         }
@@ -93,7 +93,7 @@ namespace MHGameWork.TheWizards.Tests.NavMeshing
             init();
             var builder = new NavMeshBuilder();
             NavMeshNode newNode;
-            builder.SplitNode(rootNode, 0, new Vector3(0, 0, -0.4f), out newNode);
+            //builder.SplitNode(rootNode, 0, new Vector3(0, 0, -0.4f), out newNode);
 
             validator.ValidateFields(rootNode);
 

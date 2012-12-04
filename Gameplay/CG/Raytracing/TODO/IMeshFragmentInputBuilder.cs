@@ -10,6 +10,6 @@ namespace MHGameWork.TheWizards.CG
 {
     public interface IMeshFragmentInputBuilder
     {
-        FragmentInput CalculateInput(IMesh mesh, Matrix world, MeshRaycastResult raycast);
+        GeometryInput CalculateInput(IMesh mesh, Matrix world, MeshRaycastResult raycast);
     }
 }

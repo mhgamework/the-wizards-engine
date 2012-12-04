@@ -6,7 +6,7 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.CG
 {
-    public interface IRayTracer
+    public interface IRenderedImage
     {
         Color4 GetPixel(Vector2 pos);
     }

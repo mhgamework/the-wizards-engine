@@ -3,10 +3,12 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -18,25 +20,37 @@ namespace MHGameWork.TheWizards.CG
     public class GraphicalRayTracer
     {
 
-        private readonly IRayTracer tracer;
+        private readonly IRenderedImage tracer;
 
         private Point2 windowSize;
 
-        public GraphicalRayTracer(IRayTracer tracer)
+        public GraphicalRayTracer(IRenderedImage tracer, int numThreads = 4)
         {
+            this.numThreads = numThreads;
             originalTracer = tracer;
 
             windowSize = new Point2(1280, 720);
+            //windowSize = new Point2(600, 400);
             this.tracer = new CachedTracer(windowSize, tracer);
+            MinResolution = 4;
 
+            Run();
+        }
 
+        public int MinResolution
+        {
+            get { return minResolution; }
+            set { minResolution = value; }
+        }
+
+        private void Run()
+        {
             _wb = new WriteableBitmap(windowSize.X, windowSize.Y, 96, 96, PixelFormats.Bgra32, null);
 
 
             _rect = new Int32Rect(0, 0, _wb.PixelWidth, _wb.PixelHeight);
             _bytesPerPixel = (_wb.Format.BitsPerPixel + 7) / 8;
             _stride = _wb.PixelWidth * _bytesPerPixel;
-
 
             CreateAndShowMainWindow();
         }
@@ -48,14 +62,14 @@ namespace MHGameWork.TheWizards.CG
             // Create the application's main window
             mainWindow = new Window();
             mainWindow.Title = "Writeable Bitmap";
-            mainWindow.Height = windowSize.Y;
-            mainWindow.Width = windowSize.X;
 
             mainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
 
             // Define the Image element
-            image.Stretch = Stretch.Fill;
+            image.Stretch = Stretch.None;
+            image.Width = windowSize.X;
+            image.Height = windowSize.Y;
             image.MouseLeftButtonDown += new System.Windows.Input.MouseButtonEventHandler(image_MouseLeftButtonDown);
             //_random.Margin = new Thickness(20);
 
@@ -99,6 +113,7 @@ namespace MHGameWork.TheWizards.CG
         void image_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var pos = e.GetPosition(image);
+            //var pos = GetMousePosition();
             var screenPos = new Vector2((float)(pos.X + 0.5f) / windowSize.X, (float)(pos.Y + 0.5f) / windowSize.Y);
             originalTracer.GetPixel(screenPos);
             results.Enqueue(new TracerResult
@@ -109,11 +124,29 @@ namespace MHGameWork.TheWizards.CG
                                 });
         }
 
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetCursorPos(ref Win32Point pt);
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Win32Point
+        {
+            public Int32 X;
+            public Int32 Y;
+        };
+        public static Point GetMousePosition()
+        {
+            Win32Point w32Mouse = new Win32Point();
+            GetCursorPos(ref w32Mouse);
+            return new Point(w32Mouse.X, w32Mouse.Y);
+        }
+
+
         private void processTasks()
         {
             if (workersRunning != 0)
                 throw new InvalidOperationException();
-            var numThreads = 4;
             workersRunning = numThreads;
 
             for (int iThread = 0; iThread < numThreads; iThread++)
@@ -138,7 +171,8 @@ namespace MHGameWork.TheWizards.CG
 
             currentResolution /= 8;
 
-            while (currentResolution > 0)
+            
+            while (currentResolution > MinResolution)
             {
                 foreach (var task in buildSubRectangles(rect, currentResolution * pixelsPerRectangle).Select(r => new Task(r, currentResolution)))
                 {
@@ -218,9 +252,11 @@ namespace MHGameWork.TheWizards.CG
         private ConcurrentQueue<TracerResult> results = new ConcurrentQueue<TracerResult>();
 
         private object tasksLock = new object();
-        private IRayTracer originalTracer;
+        private IRenderedImage originalTracer;
+        private int numThreads;
+        private int minResolution;
 
-        private void tracerJob(IRayTracer tracer)
+        private void tracerJob(IRenderedImage tracer)
         {
             Task task;
             while (tasks.TryDequeue(out task))
@@ -284,15 +320,15 @@ namespace MHGameWork.TheWizards.CG
             public int Resolution;
         }
 
-        class CachedTracer : IRayTracer
+        class CachedTracer : IRenderedImage
         {
             private readonly Point2 _size;
-            private readonly IRayTracer _tracer;
+            private readonly IRenderedImage _tracer;
 
             private Color4[,] cache;
             private bool[,] cached;
 
-            public CachedTracer(Point2 size, IRayTracer tracer)
+            public CachedTracer(Point2 size, IRenderedImage tracer)
             {
                 _size = size;
                 _tracer = tracer;
@@ -315,8 +351,16 @@ namespace MHGameWork.TheWizards.CG
 
                 return ret;
 
+
             }
+
+
+       
         }
 
+
     }
+
+
 }
+

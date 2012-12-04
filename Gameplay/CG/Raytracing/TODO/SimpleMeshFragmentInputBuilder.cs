@@ -21,9 +21,9 @@ namespace MHGameWork.TheWizards.CG
             cache = new SimpleTexture2DLoader();
         }
 
-        public FragmentInput CalculateInput(IMesh mesh, Matrix world, MeshRaycastResult raycast)
+        public GeometryInput CalculateInput(IMesh mesh, Matrix world, MeshRaycastResult raycast)
         {
-            var input = new FragmentInput();
+            var input = new GeometryInput();
             input.Normal = raycast.Vertex2.Normal * raycast.U + raycast.Vertex3.Normal * raycast.V +
                            raycast.Vertex1.Normal * (1 - raycast.U - raycast.V);
 
@@ -40,22 +40,22 @@ namespace MHGameWork.TheWizards.CG
             //input.Normal = raycast.Vertex2.Normal;
 
             //input.Diffuse = new Color4(0.2f, 0.8f, 0.3f);
-            input.Diffuse = new Color4(0.8f, 0.8f, 0.8f);
-            input.SpecularColor = new Color4(1, 1, 1);
-            input.SpecularPower = 15;
-            input.SpecularIntensity = 2;
+            //input.Diffuse = new Color4(0.8f, 0.8f, 0.8f);
+            //input.SpecularColor = new Color4(1, 1, 1);
+            //input.SpecularPower = 15;
+            //input.SpecularIntensity = 2;
             //input.Diffuse = new Color4(raycast.U, raycast.V, 0);
 
             input.U = raycast.U;
             input.V = raycast.V;
 
-            var tex = cache.Load(raycast.Material.DiffuseMap);
-            var sampler = new Texture2DSampler();
-            input.Diffuse = sampler.SampleBilinear(tex, input.Texcoord);
-
-
-
-
+            //if (raycast.Material.DiffuseMap != null)
+            //{
+            //    var tex = cache.Load(raycast.Material.DiffuseMap);
+            //    var sampler = new Texture2DSampler();
+            //    //input.Diffuse = sampler.SampleBilinear(tex, input.Texcoord);
+            //}
+            
 
             return input;
         }
