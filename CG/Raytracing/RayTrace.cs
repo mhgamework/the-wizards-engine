@@ -1,6 +1,6 @@
-﻿using SlimDX;
+﻿using MHGameWork.TheWizards.CG.Math;
 
-namespace MHGameWork.TheWizards.CG
+namespace MHGameWork.TheWizards.CG.Raytracing
 {
     public class RayTrace
     {

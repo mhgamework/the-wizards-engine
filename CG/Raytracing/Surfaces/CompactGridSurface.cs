@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DirectX11;
+using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Spatial;
-using SlimDX;
 
 namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
 {

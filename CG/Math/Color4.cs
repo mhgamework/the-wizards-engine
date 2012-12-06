@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
-namespace SlimDX
+namespace MHGameWork.TheWizards.CG.Math
 {
     [Serializable]
     public struct Color4

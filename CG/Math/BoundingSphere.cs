@@ -3,11 +3,10 @@
 // Assembly location: C:\Windows\Microsoft.NET\assembly\GAC_32\SlimDX\v4.0_4.0.13.43__b1b0c32fd1ffe4f9\SlimDX.dll
 
 using System;
-using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
-namespace SlimDX
+namespace MHGameWork.TheWizards.CG.Math
 {
     [Serializable]
     public struct BoundingSphere : IEquatable<BoundingSphere>
@@ -72,8 +71,8 @@ namespace SlimDX
                     return sphere2;
             }
             Vector3 vector3_2 = vector3_1 * (1f / num1);
-            float num3 = Math.Min(-val1, num1 - num2);
-            float num4 = (float)(((double)Math.Max(val1, num2 + num1) - (double)num3) * 0.5);
+            float num3 = System.Math.Min(-val1, num1 - num2);
+            float num4 = (float)(((double)System.Math.Max(val1, num2 + num1) - (double)num3) * 0.5);
             double num5 = (double)(num4 + num3);
             Vector3 vector3_3 = vector3_2 * (float)num5;
             Vector3 vector3_4 = sphere1.Center + vector3_3;

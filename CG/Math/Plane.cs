@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using SlimDX;
 
-namespace SlimDX
+namespace MHGameWork.TheWizards.CG.Math
 {
 
   [Serializable]

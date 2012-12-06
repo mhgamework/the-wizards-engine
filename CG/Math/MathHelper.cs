@@ -2,10 +2,7 @@
 // Assembly: Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d
 // Assembly location: C:\Windows\assembly\GAC_32\Microsoft.Xna.Framework\2.0.0.0__6d5c3888ef60e27d\Microsoft.Xna.Framework.dll
 
-using System;
-using SlimDX;
-
-namespace Microsoft.Xna.Framework
+namespace MHGameWork.TheWizards.CG.Math
 {
     public static class MathHelper
     {
@@ -40,7 +37,7 @@ namespace Microsoft.Xna.Framework
 
         public static float Distance(float value1, float value2)
         {
-            return Math.Abs((float)(value1 - value2));
+            return System.Math.Abs((float)(value1 - value2));
         }
 
         public static float Hermite(float value1, float tangent1, float value2, float tangent2, float amount)
@@ -62,12 +59,12 @@ namespace Microsoft.Xna.Framework
 
         public static float Max(float value1, float value2)
         {
-            return Math.Max(value1, value2);
+            return System.Math.Max(value1, value2);
         }
 
         public static float Min(float value1, float value2)
         {
-            return Math.Min(value1, value2);
+            return System.Math.Min(value1, value2);
         }
 
         public static float SmoothStep(float value1, float value2, float amount)

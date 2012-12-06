@@ -3,11 +3,10 @@
 // Assembly location: C:\Windows\Microsoft.NET\assembly\GAC_32\SlimDX\v4.0_4.0.13.43__b1b0c32fd1ffe4f9\SlimDX.dll
 
 using System;
-using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
-namespace SlimDX
+namespace MHGameWork.TheWizards.CG.Math
 {
   [Serializable]
   public struct Ray : IEquatable<Ray>

@@ -3,11 +3,10 @@
 // Assembly location: C:\Windows\Microsoft.NET\assembly\GAC_32\SlimDX\v4.0_4.0.13.43__b1b0c32fd1ffe4f9\SlimDX.dll
 
 using System;
-using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
-namespace SlimDX
+namespace MHGameWork.TheWizards.CG.Math
 {
     [Serializable]
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
@@ -184,7 +183,7 @@ namespace SlimDX
             double num8 = num5 + num7;
             double num9 = num3;
             double num10 = num9 * num9;
-            return (float)Math.Sqrt(num8 + num10);
+            return (float)System.Math.Sqrt(num8 + num10);
         }
 
         public float LengthSquared()
@@ -512,7 +511,7 @@ namespace SlimDX
             double num11 = num8 + num10;
             double num12 = num6;
             double num13 = num12 * num12;
-            return (float)Math.Sqrt(num11 + num13);
+            return (float)System.Math.Sqrt(num11 + num13);
         }
 
         public static float DistanceSquared(Vector3 value1, Vector3 value2)

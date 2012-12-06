@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11;
+﻿using System.Collections.Generic;
+using MHGameWork.TheWizards.CG.Cameras;
+using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Raytracing;
-using MHGameWork.TheWizards.CG.Shading;
-using Microsoft.Xna.Framework;
-using SlimDX;
 
-namespace MHGameWork.TheWizards.CG
+namespace MHGameWork.TheWizards.CG.Shading
 {
     public class PhongShader : IShader
     {

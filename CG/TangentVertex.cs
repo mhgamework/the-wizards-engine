@@ -8,12 +8,11 @@
 
 #region Using directives
 
-using System;
-using SlimDX;
+using MHGameWork.TheWizards.CG.Math;
 
 #endregion
 
-namespace MHGameWork.TheWizards.Graphics
+namespace MHGameWork.TheWizards.CG
 {
     /// <summary>
     /// TangentVertex, extracted from Abi.Graphic engine for NormalMapCompressor.
@@ -158,8 +157,8 @@ namespace MHGameWork.TheWizards.Graphics
             return a.pos == b.pos &&
                 // Ignore blend indices and blend weights, they are the same
                 // anyway, because they are calculated from the bone distances.
-                Math.Abs( a.uv.X - b.uv.X ) < 0.001f &&
-                Math.Abs( a.uv.Y - b.uv.Y ) < 0.001f &&
+                System.Math.Abs( a.uv.X - b.uv.X ) < 0.001f &&
+                System.Math.Abs( a.uv.Y - b.uv.Y ) < 0.001f &&
                 // Normals and tangents do not have to be very close, we can't see
                 // any difference between small variations here, but by optimizing
                 // similar vertices we can improve the overall rendering performance.

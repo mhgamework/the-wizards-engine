@@ -1,9 +1,6 @@
-using System;
-using System.Diagnostics;
-using Microsoft.Xna.Framework;
-using SlimDX;
+using MHGameWork.TheWizards.CG.Math;
 
-namespace MHGameWork.TheWizards.MathExtra
+namespace MHGameWork.TheWizards.CG
 {
     /// <summary>
     /// Doubtfull whether this namespace should exist, it is not clearly a module.
@@ -14,9 +11,9 @@ namespace MHGameWork.TheWizards.MathExtra
         private static bool VectorsEqual(Vector3 v1, Vector3 v2)
         {
             Vector3 diff = v1 - v2;
-            if (Math.Abs(diff.X) > 0.01) return false;
-            if (Math.Abs(diff.Y) > 0.01) return false;
-            if (Math.Abs(diff.Z) > 0.01) return false;
+            if (System.Math.Abs(diff.X) > 0.01) return false;
+            if (System.Math.Abs(diff.Y) > 0.01) return false;
+            if (System.Math.Abs(diff.Z) > 0.01) return false;
 
             return true;
         }
@@ -78,12 +75,12 @@ namespace MHGameWork.TheWizards.MathExtra
             p43.X = p4.X - p3.X;
             p43.Y = p4.Y - p3.Y;
             p43.Z = p4.Z - p3.Z;
-            if (Math.Abs(p43.X) < epsilon && Math.Abs(p43.Y) < epsilon && Math.Abs(p43.Z) < epsilon)
+            if (System.Math.Abs(p43.X) < epsilon && System.Math.Abs(p43.Y) < epsilon && System.Math.Abs(p43.Z) < epsilon)
                 return (false);
             p21.X = p2.X - p1.X;
             p21.Y = p2.Y - p1.Y;
             p21.Z = p2.Z - p1.Z;
-            if (Math.Abs(p21.X) < epsilon && Math.Abs(p21.Y) < epsilon && Math.Abs(p21.Z) < epsilon)
+            if (System.Math.Abs(p21.X) < epsilon && System.Math.Abs(p21.Y) < epsilon && System.Math.Abs(p21.Z) < epsilon)
                 return (false);
 
             d1343 = p13.X * p43.X + p13.Y * p43.Y + p13.Z * p43.Z;
@@ -93,7 +90,7 @@ namespace MHGameWork.TheWizards.MathExtra
             d2121 = p21.X * p21.X + p21.Y * p21.Y + p21.Z * p21.Z;
 
             denom = d2121 * d4343 - d4321 * d4321;
-            if (Math.Abs(denom) < epsilon)
+            if (System.Math.Abs(denom) < epsilon)
                 return (false);
             numer = d1343 * d4321 - d1321 * d4343;
 

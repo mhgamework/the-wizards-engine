@@ -1,7 +1,6 @@
 ﻿using System;
-using SlimDX;
 
-namespace DirectX11
+namespace MHGameWork.TheWizards.CG.Math
 {
     /// <summary>
     /// This struct represents a discrete vector
@@ -27,9 +26,9 @@ namespace DirectX11
         /// <param name="v"></param>
         public Point3(Vector3 v)
         {
-            X = (int)Math.Round(v.X);
-            Y = (int)Math.Round(v.Y);
-            Z = (int)Math.Round(v.Z);
+            X = (int)System.Math.Round(v.X);
+            Y = (int)System.Math.Round(v.Y);
+            Z = (int)System.Math.Round(v.Z);
         }
 
         public Vector3 ToVector3()

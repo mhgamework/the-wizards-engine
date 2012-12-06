@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.CG.Math;
 
 namespace MHGameWork.TheWizards.CG.Raytracing
 {
@@ -13,7 +14,7 @@ namespace MHGameWork.TheWizards.CG.Raytracing
     {
         private List<IGenericSurface> entities = new List<IGenericSurface>();
 
-        private SolidShadeCommand shadeCommand = new SolidShadeCommand(new SlimDX.Color4(Color.SkyBlue));
+        private SolidShadeCommand shadeCommand = new SolidShadeCommand(new Color4(Color.SkyBlue));
 
         public void AddGenericSurface(IGenericSurface surface)
         {

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using Microsoft.Xna.Framework;
-using SlimDX;
 
-namespace SlimDX
+namespace MHGameWork.TheWizards.CG.Math
 {
     [Serializable]
     public struct BoundingBox : IEquatable<BoundingBox>
@@ -211,7 +206,7 @@ namespace SlimDX
             result = new float?();
             float num1 = 0.0f;
             float num2 = float.MaxValue;
-            if ((double)Math.Abs(ray.Direction.X) < 9.99999997475243E-07)
+            if ((double)System.Math.Abs(ray.Direction.X) < 9.99999997475243E-07)
             {
                 if ((double)ray.Position.X < (double)this.Minimum.X || (double)ray.Position.X > (double)this.Maximum.X)
                     return;
@@ -232,7 +227,7 @@ namespace SlimDX
                 if ((double)num1 > (double)num2)
                     return;
             }
-            if ((double)Math.Abs(ray.Direction.Y) < 9.99999997475243E-07)
+            if ((double)System.Math.Abs(ray.Direction.Y) < 9.99999997475243E-07)
             {
                 if ((double)ray.Position.Y < (double)this.Minimum.Y || (double)ray.Position.Y > (double)this.Maximum.Y)
                     return;
@@ -253,7 +248,7 @@ namespace SlimDX
                 if ((double)num1 > (double)num2)
                     return;
             }
-            if ((double)Math.Abs(ray.Direction.Z) < 9.99999997475243E-07)
+            if ((double)System.Math.Abs(ray.Direction.Z) < 9.99999997475243E-07)
             {
                 if ((double)ray.Position.Z < (double)this.Minimum.Z || (double)ray.Position.Z > (double)this.Maximum.Z)
                     return;

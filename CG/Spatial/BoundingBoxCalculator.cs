@@ -1,5 +1,5 @@
 ﻿using System;
-using SlimDX;
+using MHGameWork.TheWizards.CG.Math;
 
 namespace MHGameWork.TheWizards.CG.Spatial
 {

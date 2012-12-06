@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Shading;
 using MHGameWork.TheWizards.CG.Spatial;
-using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.MathExtra;
-using SlimDX;
 
 namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
 {
