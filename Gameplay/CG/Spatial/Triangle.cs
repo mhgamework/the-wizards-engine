@@ -22,11 +22,6 @@ namespace MHGameWork.TheWizards.CG.Spatial
             return positions[vertexIndex];
         }
 
-        public float? Intersects(RayTrace trace)
-        {
-            return 0;
-        }
-
         public BoundingBox GetBoundingBox(IBoundingBoxCalculator calc)
         {
             return calc.GetBoundingBox(this);

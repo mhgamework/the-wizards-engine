@@ -24,6 +24,7 @@ namespace MHGameWork.TheWizards.CG.Spatial
 
         /// <summary>
         /// Trace should be in map coordinates
+        /// Trace is aborted when nodeCallback is true.
         /// </summary>
         /// <param name="trace"></param>
         /// <returns></returns>

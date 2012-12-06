@@ -14,12 +14,12 @@ namespace MHGameWork.TheWizards.OBJParser
         public OBJGroup()
         {
             SubObjects = new List<SubObject>();
+            DefaultSubObject = new SubObject();
 
         }
 
-        public OBJGroup(string name)
+        public OBJGroup(string name) :this()
         {
-            SubObjects = new List<SubObject>();
             Name = name;
         }
 

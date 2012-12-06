@@ -62,7 +62,7 @@ namespace MHGameWork.TheWizards.CG.Raytracing
                     return;
                 float root = (float)System.Math.Sqrt((double)radiusSquare - (double)diff);
                 result = new float?(dot - root);
-                if (result < 0)
+                if (result < 0.001)
                     result =  dot + root;
             }
         }

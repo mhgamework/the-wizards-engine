@@ -114,6 +114,7 @@
     <Compile Include="CG\MultisampledImage.cs" />
     <Compile Include="CG\Raytracing\ShadowsSettings.cs" />
     <Compile Include="CG\Raytracing\SolidShadeCommand.cs" />
+    <Compile Include="CG\Raytracing\Surfaces\CompactGridSurface.cs" />
     <Compile Include="CG\Raytracing\Surfaces\PlaneSurface.cs" />
     <Compile Include="CG\Raytracing\GeometryInput.cs" />
     <Compile Include="CG\Raytracing\GenericScene.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="CG\Raytracing\IGenericSurface.cs" />
     <Compile Include="CG\Raytracing\IShadeCommand.cs" />
     <Compile Include="CG\Raytracing\Surfaces\SphereSurface.cs" />
+    <Compile Include="CG\Raytracing\Surfaces\TriangleSurface.cs" />
     <Compile Include="CG\Sampling\JitteredSampler.cs" />
     <Compile Include="CG\Shading\IShader.cs" />
     <Compile Include="CG\Shading\RefractionShader.cs" />

@@ -10,7 +10,5 @@ namespace MHGameWork.TheWizards.CG
         public Vector3 Position;
         public Vector2 Texcoord;
         public Vector3 Normal;
-        public float U;
-        public float V;
     }
 }

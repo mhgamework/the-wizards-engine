@@ -46,8 +46,8 @@ namespace MHGameWork.TheWizards.CG
             //input.SpecularIntensity = 2;
             //input.Diffuse = new Color4(raycast.U, raycast.V, 0);
 
-            input.U = raycast.U;
-            input.V = raycast.V;
+            //input.U = raycast.U;
+            //input.V = raycast.V;
 
             //if (raycast.Material.DiffuseMap != null)
             //{

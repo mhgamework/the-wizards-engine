@@ -145,6 +145,8 @@
     <Compile Include="Assets\SimpleAssetFactory.cs" />
     <Compile Include="Building\BuildingTest.cs" />
     <Compile Include="CG\CGCoreTest.cs" />
+    <Compile Include="CG\CGFactory.cs" />
+    <Compile Include="CG\CGShowCase.cs" />
     <Compile Include="CG\CompactGridTest.cs" />
     <Compile Include="CG\MultisamplingTest.cs" />
     <Compile Include="CG\GenericTraceableSceneTest.cs" />

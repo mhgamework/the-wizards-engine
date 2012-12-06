@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.CG.Shading
         {
             this.scene = scene;
             refractiveN = 1;
-            refractiveNt = 1.0f;
+            refractiveNt = 1.15f;
             refractiveNtInverse = 1 / refractiveNt;
             r0 = calculateR0(refractiveNt);
 

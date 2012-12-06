@@ -33,33 +33,36 @@ namespace MHGameWork.TheWizards.CG.Raytracing
                 IShadeCommand newCommand;
                 ent.Intersects(ref rayTrace, out temp, out newCommand, generateShadeCommand);
 
-                bool closer = false;
-
-                if (!temp.HasValue)
-                    closer = false;
-                else if (!closest.HasValue)
-                    closer = true;
-                else if (closest.Value > temp.Value)
-                    closer = true;
-
-                if (closer)
+                changeWhenCloser(ref closest, ref command, ref temp, ref newCommand);
+                if (!generateShadeCommand && closest.HasValue)
                 {
-                    closest = temp;
-                    command = newCommand;
-
-                    if (temp.HasValue)
-                    {
-                        if (!generateShadeCommand)
-                        {
-                            //Dont wait for generating shading commands since we dont need, just return hit
-                            return true;
-                        }
-                    }
+                    //Dont wait for generating shading commands since we dont need, just return hit
+                    return true;
                 }
             }
 
             return false;
 
+        }
+
+        public static void changeWhenCloser(ref float? closestHit, ref IShadeCommand closestCommand, ref float? newHit, ref IShadeCommand newCommand)
+        {
+            bool closer = false;
+
+            if (!newHit.HasValue)
+                closer = false;
+            else if (!closestHit.HasValue)
+                closer = true;
+            else if (closestHit.Value > newHit.Value)
+                closer = true;
+
+            if (closer)
+            {
+                closestHit = newHit;
+                closestCommand = newCommand;
+
+
+            }
         }
     }
 }

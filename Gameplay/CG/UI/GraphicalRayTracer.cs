@@ -20,32 +20,51 @@ namespace MHGameWork.TheWizards.CG
     public class GraphicalRayTracer
     {
 
-        private readonly IRenderedImage tracer;
+        private IRenderedImage tracer;
 
         private Point2 windowSize;
 
         public GraphicalRayTracer(IRenderedImage tracer, int numThreads = 4)
         {
-            this.numThreads = numThreads;
-            originalTracer = tracer;
-
-            windowSize = new Point2(1280, 720);
+            WindowSize = new Point2(1800, 1000);
             //windowSize = new Point2(600, 400);
-            this.tracer = new CachedTracer(windowSize, tracer);
-            MinResolution = 4;
+            MinResolution = 1;
 
-            Run();
+            Run(tracer, numThreads);
+
+        }
+        public GraphicalRayTracer()
+        {
+            WindowSize = new Point2(1800, 1000);
+            //windowSize = new Point2(600, 400);
+            MinResolution = 1;
+
+
         }
 
+
+        /// <summary>
+        /// Must be power of two!!!
+        /// </summary>
         public int MinResolution
         {
             get { return minResolution; }
             set { minResolution = value; }
         }
 
-        private void Run()
+        public Point2 WindowSize
         {
-            _wb = new WriteableBitmap(windowSize.X, windowSize.Y, 96, 96, PixelFormats.Bgra32, null);
+            get { return windowSize; }
+            set { windowSize = value; }
+        }
+
+        public void Run(IRenderedImage tracer, int numThreads = 4)
+        {
+            this.numThreads = numThreads;
+            originalTracer = tracer;
+            this.tracer = new CachedTracer(WindowSize, tracer);
+
+            _wb = new WriteableBitmap(WindowSize.X, WindowSize.Y, 96, 96, PixelFormats.Bgra32, null);
 
 
             _rect = new Int32Rect(0, 0, _wb.PixelWidth, _wb.PixelHeight);
@@ -63,14 +82,22 @@ namespace MHGameWork.TheWizards.CG
             mainWindow = new Window();
             mainWindow.Title = "Writeable Bitmap";
 
-            mainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            mainWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+
+            mainWindow.Background = Brushes.Red;
+            mainWindow.Left = 1920;
+            mainWindow.Top = 0;
+            mainWindow.Width = 1920;
+            mainWindow.Height = 1080;
+
 
 
             // Define the Image element
             image.Stretch = Stretch.None;
-            image.Width = windowSize.X;
-            image.Height = windowSize.Y;
+            image.Width = WindowSize.X;
+            image.Height = WindowSize.Y;
             image.MouseLeftButtonDown += new System.Windows.Input.MouseButtonEventHandler(image_MouseLeftButtonDown);
+            image.MouseMove += new MouseEventHandler(image_MouseMove);
             //_random.Margin = new Thickness(20);
 
             // Define a StackPanel to host Controls
@@ -110,18 +137,26 @@ namespace MHGameWork.TheWizards.CG
 
         }
 
+        void image_MouseMove(object sender, MouseEventArgs e)
+        {
+            var pos = e.GetPosition(image);
+            var screenPos = CalculateTracerPixelPos((int)pos.X, (int)pos.Y, MinResolution);
+            Color4 col = tracer.GetPixel(screenPos);
+            mainWindow.Background = new SolidColorBrush(Color.FromRgb((byte)(col.Red * 255), (byte)(col.Green * 255), (byte)(col.Blue * 255)));
+
+        }
+
         void image_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var pos = e.GetPosition(image);
-            //var pos = GetMousePosition();
-            var screenPos = new Vector2((float)(pos.X + 0.5f) / windowSize.X, (float)(pos.Y + 0.5f) / windowSize.Y);
+            var screenPos = CalculateTracerPixelPos((int)pos.X, (int)pos.Y, MinResolution);
             originalTracer.GetPixel(screenPos);
-            results.Enqueue(new TracerResult
+            /*results.Enqueue(new TracerResult
                                 {
                                     ColorArray = new byte[] { 0, 0, 255, 255 },
                                     Rectangle = new Int32Rect((int)pos.X, (int)pos.Y, 1, 1),
                                     Resolution = 1
-                                });
+                                });*/
         }
 
 
@@ -161,25 +196,25 @@ namespace MHGameWork.TheWizards.CG
 
         private void fillThreadJob()
         {
-            var rect = new Int32Rect(0, 0, windowSize.X, windowSize.Y);
+            var rect = new Int32Rect(0, 0, WindowSize.X, WindowSize.Y);
 
             int currentResolution = 1;
-            while (currentResolution * 2 < windowSize.X && currentResolution * 2 < windowSize.Y)
+            while (currentResolution * 2 < WindowSize.X && currentResolution * 2 < WindowSize.Y)
                 currentResolution *= 2;
 
             var pixelsPerRectangle = 8;
 
-            currentResolution /= 8;
+            currentResolution /= pixelsPerRectangle;
 
-            
-            while (currentResolution > MinResolution)
+
+            while (currentResolution >= MinResolution)
             {
                 foreach (var task in buildSubRectangles(rect, currentResolution * pixelsPerRectangle).Select(r => new Task(r, currentResolution)))
                 {
                     tasks.Enqueue(task);
                     if (task.Rectangle.Height < 0) Debugger.Break();
                 }
-                currentResolution /= 2;
+                currentResolution = currentResolution >> 2;
 
 
                 processTasks();
@@ -264,16 +299,13 @@ namespace MHGameWork.TheWizards.CG
 
                 Int32Rect rect = task.Rectangle;
 
-                var resolution = windowSize;
-
                 byte[] data = new byte[rect.Width * rect.Height * 4];
                 int iData = 0;
                 for (int y = rect.Y; y < rect.Y + rect.Height; y += 1)
                     for (int x = rect.X; x < rect.X + rect.Width; x += 1)
                     {
-                        int tempX = x - (x % task.Resolution) + (task.Resolution / 2);
-                        int tempY = y - (y % task.Resolution) + (task.Resolution / 2);
-                        var color = tracer.GetPixel(new Vector2((tempX + 0.5f) / resolution.X, (tempY + 0.5f) / resolution.Y));
+                        Vector2 pos = CalculateTracerPixelPos(x, y, task.Resolution);
+                        var color = tracer.GetPixel(pos);
                         if (color.Blue < 0) color.Blue = 0;
                         if (color.Blue > 1) color.Blue = 1;
                         if (color.Green < 0) color.Green = 0;
@@ -293,6 +325,13 @@ namespace MHGameWork.TheWizards.CG
 
                 results.Enqueue(new TracerResult { Rectangle = rect, ColorArray = data, Resolution = task.Resolution });
             }
+        }
+
+        private Vector2 CalculateTracerPixelPos(int x, int y, int resolution)
+        {
+            int tempX = x - (x % resolution) + (resolution / 2);
+            int tempY = y - (y % resolution) + (resolution / 2);
+            return new Vector2((tempX + 0.5f) / WindowSize.X, (tempY + 0.5f) / WindowSize.Y);
         }
 
         struct Task
@@ -355,7 +394,7 @@ namespace MHGameWork.TheWizards.CG
             }
 
 
-       
+
         }
 
 

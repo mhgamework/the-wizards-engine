@@ -39,7 +39,7 @@ namespace MHGameWork.TheWizards.CG.Spatial
             get { return M; }
         }
 
-        public int getCIndex(Point3 pos)
+        public int getCellIndex(Point3 pos)
         {
             return (((NodeCount.Y * pos.Z) + pos.Y) * NodeCount.X) + pos.X;
         }
@@ -154,7 +154,7 @@ namespace MHGameWork.TheWizards.CG.Spatial
             for (int x = (int)bb.Minimum.X; x <= (int)bb.Maximum.X; x++)
                 for (int y = (int)bb.Minimum.Y; y <= (int)bb.Maximum.Y; y++)
                     for (int z = (int)bb.Minimum.Z; z <= (int)bb.Maximum.Z; z++)
-                        callback(getCIndex(new Point3(x, y, z)));
+                        callback(getCellIndex(new Point3(x, y, z)));
 
         }
 

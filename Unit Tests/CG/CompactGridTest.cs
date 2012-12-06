@@ -143,6 +143,7 @@ namespace MHGameWork.TheWizards.Tests.CG
 
         }
 
+        [Test]
         public void TestRaytraceGrid()
         {
             var game = new DX11Game();
@@ -184,7 +185,7 @@ namespace MHGameWork.TheWizards.Tests.CG
                                                                                                        new Color4(1, 0,
                                                                                                                   0));
 
-                                                                            int cell = grid.getCIndex(arg);
+                                                                            int cell = grid.getCellIndex(arg);
 
                                                                             for (int i = 0; i < grid.GetNumberObjects(cell); i++)
                                                                             {

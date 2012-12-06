@@ -315,6 +315,7 @@ namespace MHGameWork.TheWizards.OBJParser
             string[] facePiece = vertexText.Split('/');
             FaceVertex fv = new FaceVertex();
             fv.Position = int.Parse(facePiece[0]);
+            if (facePiece.Length == 1) return fv;
             if (facePiece[1] != "")
             {
                 fv.TextureCoordinate = int.Parse(facePiece[1]);
@@ -322,7 +323,8 @@ namespace MHGameWork.TheWizards.OBJParser
             }
             else
             {
-                fv.Normal = int.Parse(facePiece[1]);//TODO: This might need to bee texcoords
+                //fv.Normal = int.Parse(facePiece[1]);  Inconsistency between formats...
+                fv.Normal = int.Parse(facePiece[2]);//TODO: This might need to bee texcoords
             }
                 
             return fv;
