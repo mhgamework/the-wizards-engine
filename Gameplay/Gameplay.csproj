@@ -111,7 +111,6 @@
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
-    <Compile Include="CG\MeshToTriangleConverter.cs" />
     <Compile Include="CG\CGConversion.cs" />
     <Compile Include="CG\Texturing\ITexture2DLoader.cs" />
     <Compile Include="CG\Texturing\SimpleTexture2DLoader.cs" />

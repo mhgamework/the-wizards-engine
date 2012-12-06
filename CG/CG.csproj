@@ -58,6 +58,13 @@
     <Compile Include="Math\Point2.cs" />
     <Compile Include="Math\Point3.cs" />
     <Compile Include="Math\Ray.cs" />
+    <Compile Include="OBJParser\Face.cs" />
+    <Compile Include="OBJParser\FaceVertex.cs" />
+    <Compile Include="OBJParser\MeshToTriangleConverter.cs" />
+    <Compile Include="OBJParser\OBJGroup.cs" />
+    <Compile Include="OBJParser\OBJImporter.cs" />
+    <Compile Include="OBJParser\OBJMaterial.cs" />
+    <Compile Include="OBJParser\OBJToRAMMeshConverter.cs" />
     <Compile Include="TangentVertex.cs" />
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Math\Vector3.cs" />

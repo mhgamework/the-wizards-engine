@@ -21,9 +21,10 @@ namespace MHGameWork.TheWizards.Tests.CG
         [Test]
         public void TestDragon()
         {
+            var f = new CGFactory();
             var ui = new GraphicalRayTracer();
 
-            var mesh = OBJParserTest.GetBarrelMesh(new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
+            var mesh =  OBJParserTest.GetBarrelMesh(new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
             var grid = new CompactGrid();
 
             var converter = new MeshToTriangleConverter();

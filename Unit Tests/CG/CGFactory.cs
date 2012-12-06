@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.CG;
 using MHGameWork.TheWizards.CG.Cameras;
 using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.OBJParser;
 using MHGameWork.TheWizards.CG.Raytracing;
 using MHGameWork.TheWizards.CG.Shading;
 using MHGameWork.TheWizards.CG.UI;
@@ -84,5 +86,39 @@ namespace MHGameWork.TheWizards.Tests.CG
 
             return ret;
         }
+
+
+        /// <summary>
+        /// Loads a mesh from an obj file, and the similarly name mat file.
+        /// Textures are loaded in the texturefactory
+        /// </summary>
+        public RAMMesh CreateMesh(FileInfo objFile)
+        {
+            var converter = new OBJToRAMMeshConverter();
+            var importer = new ObjImporter(); //TODO: Garbage Collector fancyness
+
+            var materialFilePath = objFile.FullName.Substring(0, objFile.FullName.Length - objFile.Extension.Length) + ".mtl";
+            var materialFileName = objFile.Name.Substring(0, objFile.Name.Length - objFile.Extension.Length) + ".mtl";
+            FileStream materialFileStream = null;
+            try
+            {
+                if (File.Exists(materialFilePath))
+                {
+                    materialFileStream = File.Open(materialFilePath, FileMode.Open, FileAccess.Read);
+                    importer.AddMaterialFileStream(materialFileName, materialFileStream);
+                }
+                importer.ImportObjFile(objFile.FullName);
+                return converter.CreateMesh(importer);
+            }
+            finally
+            {
+                if (materialFileStream != null) materialFileStream.Close();
+                materialFileStream = null;
+            }
+
+
+
+        }
+
     }
 }
