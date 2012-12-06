@@ -152,7 +152,6 @@
     <Compile Include="CG\GenericTraceableSceneTest.cs" />
     <Compile Include="CG\ComplexTestScene.cs" />
     <Compile Include="CG\TestRefractionShader.cs" />
-    <Compile Include="CG\TracedSceneImage.cs" />
     <Compile Include="Client\ClientTest.cs" />
     <Compile Include="CoreTest.cs" />
     <Compile Include="DirectX11\XAudio2Test.cs" />

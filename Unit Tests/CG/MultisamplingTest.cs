@@ -2,9 +2,13 @@
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.CG;
+using MHGameWork.TheWizards.CG.Cameras;
+using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Raytracing;
+using MHGameWork.TheWizards.CG.Raytracing.Surfaces;
+using MHGameWork.TheWizards.CG.Shading;
+using MHGameWork.TheWizards.CG.UI;
 using NUnit.Framework;
-using SlimDX;
 
 namespace MHGameWork.TheWizards.Tests.CG
 {

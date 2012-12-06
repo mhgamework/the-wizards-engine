@@ -4,14 +4,17 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.CG;
+using MHGameWork.TheWizards.CG.Cameras;
+using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Raytracing;
 using MHGameWork.TheWizards.CG.Raytracing.Surfaces;
+using MHGameWork.TheWizards.CG.Shading;
 using MHGameWork.TheWizards.CG.Spatial;
+using MHGameWork.TheWizards.CG.UI;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Tests.OBJParser;
 using NUnit.Framework;
-using SlimDX;
 
 namespace MHGameWork.TheWizards.Tests.CG
 {
@@ -87,7 +90,7 @@ namespace MHGameWork.TheWizards.Tests.CG
                 scene.AddGenericSurface(tri);
             }
 
-            f.CreatePerspectiveCamera(new SlimDX.Vector3(0, 5, 5), new Vector3());
+            f.CreatePerspectiveCamera(new Vector3(0, 5, 5), new Vector3());
             f.Run(1);
 
 
@@ -114,7 +117,7 @@ namespace MHGameWork.TheWizards.Tests.CG
             grid.buildGrid(triangles.Select(o => (ISurface)o).ToList());
             scene.AddGenericSurface(new CompactGridSurface(grid));
 
-            f.CreatePerspectiveCamera(new SlimDX.Vector3(-4, 1, 0), new Vector3(0,0,0));
+            f.CreatePerspectiveCamera(new Vector3(-4, 1, 0), new Vector3(0,0,0));
             f.Run(1);
 
 

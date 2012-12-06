@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.CG;
+using MHGameWork.TheWizards.CG.Cameras;
+using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Raytracing;
-using SlimDX;
+using MHGameWork.TheWizards.CG.Raytracing.Surfaces;
+using MHGameWork.TheWizards.CG.Shading;
 
 namespace MHGameWork.TheWizards.Tests.CG
 {

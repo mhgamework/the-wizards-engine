@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.CG;
+using MHGameWork.TheWizards.CG.Cameras;
+using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Raytracing;
 using MHGameWork.TheWizards.CG.Raytracing.Surfaces;
 using MHGameWork.TheWizards.CG.Spatial;
+using MHGameWork.TheWizards.CG.UI;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Tests.OBJParser;
 using NUnit.Framework;
@@ -33,7 +36,7 @@ namespace MHGameWork.TheWizards.Tests.CG
             scene.AddGenericSurface(new CompactGridSurface(grid));
 
             var cam = new PerspectiveCamera();
-            cam.Position = new SlimDX.Vector3(0, 5, 30);
+            cam.Position = new Vector3(0, 5, 30);
             ui.Run(new TracedSceneImage(scene, cam));
 
 

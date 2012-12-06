@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Raytracing.Surfaces;
 using MHGameWork.TheWizards.CG.Shading;
-using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
-using SlimDX;
 
 namespace MHGameWork.TheWizards.CG.Spatial
 {
@@ -24,7 +23,7 @@ namespace MHGameWork.TheWizards.CG.Spatial
                 var normals = part.MeshPart.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Normal);
                 var texcoords = part.MeshPart.GetGeometryData().GetSourceVector2(MeshPartGeometryData.Semantic.Texcoord);
 
-                var vertices = positions.Select((p, i) => new TangentVertex(positions[i], texcoords[i], normals[i], new Vector3().xna())).ToArray();
+                var vertices = positions.Select((p, i) => new TangentVertex(positions[i].dx().cg(), texcoords[i].dx().cg(), normals[i].dx().cg(), new Vector3())).ToArray();
 
                 Microsoft.Xna.Framework.Vector3.Transform(positions, ref part.ObjectMatrix, positions);
                 for (int i = 0; i < positions.Length/3; i ++)
@@ -44,7 +43,7 @@ namespace MHGameWork.TheWizards.CG.Spatial
                 Microsoft.Xna.Framework.Vector3.Transform(positions, ref part.ObjectMatrix, positions);
                 for (int i = 0; i < positions.Length; i+=3)
                 {
-                    ret.Add(new Triangle(positions[i].dx(), positions[i + 1].dx(), positions[i + 2].dx()));
+                    ret.Add(new Triangle(positions[i].dx().cg(), positions[i + 1].dx().cg(), positions[i + 2].dx().cg()));
                 }
             }
             return ret;

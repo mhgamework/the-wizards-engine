@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using DirectX11;
 using MHGameWork.TheWizards.CG;
+using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.Raytracing;
 using MHGameWork.TheWizards.CG.Spatial;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Tests.OBJParser;
 using NUnit.Framework;
-using SlimDX;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.Tests.CG
@@ -45,8 +45,8 @@ namespace MHGameWork.TheWizards.Tests.CG
                 grid.GetNodeBoundingBox(i, out bb);
                 var factor = grid.GetNumberObjects(i) / (float)max;
                 if (grid.GetNumberObjects(i) == 0) continue;
-                lines.AddAABB(bb, Matrix.Identity,
-                    new Color4(1 - factor, factor, 0));
+                lines.AddAABB(bb.dx(), Matrix.Identity.dx(),
+                    new Color4(1 - factor, factor, 0).dx());
             }
 
             game.GameLoopEvent += delegate
@@ -81,11 +81,11 @@ namespace MHGameWork.TheWizards.Tests.CG
             traverser.NodeSize = 0.5f;
 
 
-            RayTrace trace = new RayTrace(new Ray(game.SpectaterCamera.CameraPosition, game.SpectaterCamera.CameraDirection), 0, float.MaxValue);
+            RayTrace trace = new RayTrace(new Ray(game.SpectaterCamera.CameraPosition.cg(), game.SpectaterCamera.CameraDirection.cg()), 0, float.MaxValue);
 
             AutoResetEvent ev = new AutoResetEvent(false);
 
-            var points = new List<Point3>();
+            var points = new List<TheWizards.CG.Math.Point3>();
 
             Thread t = null;
 
@@ -101,7 +101,7 @@ namespace MHGameWork.TheWizards.Tests.CG
                                               points.Clear();
                                               t = new Thread(delegate()
                                                            {
-                                                               traverser.Traverse(trace, delegate(Point3 arg)
+                                                               traverser.Traverse(trace, delegate(TheWizards.CG.Math.Point3 arg)
                                                                {
                                                                    lock (this)
                                                                        points.Add(arg);
@@ -120,7 +120,7 @@ namespace MHGameWork.TheWizards.Tests.CG
                                           {
                                               ev.Set();
                                           }
-                                          game.LineManager3D.AddRay(trace.Ray, new Color4(0, 1, 0));
+                                          game.LineManager3D.AddRay(trace.Ray.dx(), new Color4(0, 1, 0).dx());
                                           lock (this)
                                               foreach (var point in points)
                                               {
@@ -132,10 +132,9 @@ namespace MHGameWork.TheWizards.Tests.CG
                                                                new Vector3(
                                                                    traverser.NodeSize);
 
-                                                  game.LineManager3D.AddAABB(bb,
-                                                                             Matrix.Identity,
-                                                                             new Color4(1, 0,
-                                                                                        0));
+                                                  game.LineManager3D.AddAABB(bb.dx(),
+                                                                             Matrix.Identity.dx(),
+                                                                             new Color4(1, 0, 0).dx());
                                               }
                                       };
 
@@ -161,10 +160,10 @@ namespace MHGameWork.TheWizards.Tests.CG
 
                                           if (game.Keyboard.IsKeyPressed(Key.C))
                                           {
-                                              trace = new RayTrace(new Ray(game.SpectaterCamera.CameraPosition, game.SpectaterCamera.CameraDirection), 0, 20);
+                                              trace = new RayTrace(new Ray(game.SpectaterCamera.CameraPosition.cg(), game.SpectaterCamera.CameraDirection.cg()), 0, 20);
                                           }
                                           game.LineManager3D.DrawGroundShadows = true;
-                                          game.LineManager3D.AddRay(trace.Ray, new Color4(1, 0, 0));
+                                          game.LineManager3D.AddRay(trace.Ray.dx(), new Color4(1, 0, 0).dx());
                                           game.LineManager3D.Render(lines, game.Camera);
                                           traverser.GridOffset = grid.GridOffset;
                                           traverser.NodeSize = grid.NodeSize;
@@ -180,10 +179,10 @@ namespace MHGameWork.TheWizards.Tests.CG
                                                                                          new Vector3(
                                                                                              traverser.NodeSize);
 
-                                                                            game.LineManager3D.AddAABB(bb,
-                                                                                                       Matrix.Identity,
+                                                                            game.LineManager3D.AddAABB(bb.dx(),
+                                                                                                       Matrix.Identity.dx(),
                                                                                                        new Color4(1, 0,
-                                                                                                                  0));
+                                                                                                                  0).dx());
 
                                                                             int cell = grid.getCellIndex(arg);
 
@@ -192,9 +191,9 @@ namespace MHGameWork.TheWizards.Tests.CG
                                                                                 var o = grid.getCellObject(cell, i);
                                                                                 var t = (Triangle)o;
                                                                                 game.LineManager3D.AddTriangle(
-                                                                                    t.getPosition(0), t.getPosition(1),
-                                                                                    t.getPosition(2),
-                                                                                    new Color4(1, 1, 0));
+                                                                                    t.getPosition(0).dx(), t.getPosition(1).dx(),
+                                                                                    t.getPosition(2).dx(),
+                                                                                    new Color4(1, 1, 0).dx());
                                                                             }
 
                                                                             return false;

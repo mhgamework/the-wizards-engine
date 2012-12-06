@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using MHGameWork.TheWizards.CG;
+using MHGameWork.TheWizards.CG.Cameras;
 using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Raytracing;
+using MHGameWork.TheWizards.CG.Shading;
 using MHGameWork.TheWizards.CG.Texturing;
+using MHGameWork.TheWizards.CG.UI;
 using MHGameWork.TheWizards.CG.Visualization;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
@@ -15,8 +18,7 @@ using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Simulators;
 using NUnit.Framework;
-using SlimDX;
-using TreeGenerator.EngineSynchronisation;
+using TangentVertex = MHGameWork.TheWizards.Graphics.TangentVertex;
 
 namespace MHGameWork.TheWizards.Tests.CG
 {
@@ -26,114 +28,114 @@ namespace MHGameWork.TheWizards.Tests.CG
         [Test]
         public void TestGenerateRays()
         {
-            var game = new DX11Game();
-            game.InitDirectX();
+            //var game = new DX11Game();
+            //game.InitDirectX();
 
-            var cam = new PerspectiveCamera();
+            //var cam = new PerspectiveCamera();
 
-            var visualizer = new CameraVisualizer(game);
+            //var visualizer = new CameraVisualizer(game);
 
-            game.GameLoopEvent += delegate
-                                      {
-                                          game.LineManager3D.AddRectangle(cam.Position + cam.Direction * cam.ProjectionPlaneDistance,
-                                                                          new Vector2(cam.right - cam.left,
-                                                                                      cam.top - cam.bottom), cam.rightAxis, cam.Up, new Color4(0, 1, 0));
+            //game.GameLoopEvent += delegate
+            //                          {
+            //                              game.LineManager3D.AddRectangle(cam.Position + cam.Direction * cam.ProjectionPlaneDistance,
+            //                                                              new Vector2(cam.right - cam.left,
+            //                                                                          cam.top - cam.bottom), cam.rightAxis, cam.Up, new Color4(0, 1, 0));
 
-                                          visualizer.RenderRays(cam, new Point2(8, 8));
+            //                              visualizer.RenderRays(cam, new Point2(8, 8));
 
 
-                                      };
-            game.Run();
+            //                          };
+            //game.Run();
         }
 
         [Test]
         public void TestBarrelRaycast()
         {
-            var engine = new TWEngine();
-            engine.DontLoadPlugin = true;
-            engine.Initialize();
+            //var engine = new TWEngine();
+            //engine.DontLoadPlugin = true;
+            //engine.Initialize();
 
-            var cam = new PerspectiveCamera();
-            var resolution = new Point2(8, 8);
-            cam.ProjectionPlaneDistance = 1.3f;
+            //var cam = new PerspectiveCamera();
+            //var resolution = new Point2(8, 8);
+            //cam.ProjectionPlaneDistance = 1.3f;
 
-            var raycaster = new MeshTraceableScene();
+            //var raycaster = new MeshTraceableScene();
 
-            var visualizer = new CameraVisualizer(TW.Graphics);
+            //var visualizer = new CameraVisualizer(TW.Graphics);
 
-            var ent1 = createEntity();
-            ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -4));
-            var ent2 = createEntity();
+            //var ent1 = createEntity();
+            //ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -4));
+            //var ent2 = createEntity();
 
-            engine.AddSimulator(new BasicSimulator(delegate
-            {
-                visualizer.RenderRays(cam, resolution);
+            //engine.AddSimulator(new BasicSimulator(delegate
+            //{
+            //    visualizer.RenderRays(cam, resolution);
 
-                var lines = new LineManager3DLines();
+            //    var lines = new LineManager3DLines();
 
-                for (int x = 0; x < resolution.X; x++)
-                    for (int y = 0; y < resolution.Y; y++)
-                    {
-                        Ray calculateRay = cam.CalculateRay(new Vector2((x + 0.5f) / resolution.X, (y + 0.5f) / resolution.Y));
-                        IShadeCommand cmd;
-                        var res = raycaster.Intersect(new RayTrace(calculateRay, 0, float.MaxValue), out cmd, true);
-                        if (!res) continue;
-                        throw new NotImplementedException();
-                        //var point = res.Position;
-                        //TW.Graphics.LineManager3D.AddCenteredBox(point, 0.1f,
-                        //                                         new Color4(
-                        //                                             0, 1, 0));
-                        //TW.Graphics.LineManager3D.AddLine(point,
-                        //                                  point + res.Normal,
-                        //                                  new Color4(1, 1, 0));
-                    }
-            }));
+            //    for (int x = 0; x < resolution.X; x++)
+            //        for (int y = 0; y < resolution.Y; y++)
+            //        {
+            //            Ray calculateRay = cam.CalculateRay(new Vector2((x + 0.5f) / resolution.X, (y + 0.5f) / resolution.Y));
+            //            IShadeCommand cmd;
+            //            var res = raycaster.Intersect(new RayTrace(calculateRay, 0, float.MaxValue), out cmd, true);
+            //            if (!res) continue;
+            //            throw new NotImplementedException();
+            //            //var point = res.Position;
+            //            //TW.Graphics.LineManager3D.AddCenteredBox(point, 0.1f,
+            //            //                                         new Color4(
+            //            //                                             0, 1, 0));
+            //            //TW.Graphics.LineManager3D.AddLine(point,
+            //            //                                  point + res.Normal,
+            //            //                                  new Color4(1, 1, 0));
+            //        }
+            //}));
 
-            engine.AddSimulator(new WorldRenderingSimulator());
-            engine.Run();
+            //engine.AddSimulator(new WorldRenderingSimulator());
+            //engine.Run();
         }
 
         [Test]
         public void TestTriangleRaycast()
         {
-            var engine = new TWEngine();
-            engine.DontLoadPlugin = true;
-            engine.Initialize();
+            //var engine = new TWEngine();
+            //engine.DontLoadPlugin = true;
+            //engine.Initialize();
 
-            var cam = new PerspectiveCamera();
-            var resolution = new Point2(64, 64);
-            cam.ProjectionPlaneDistance = 1.3f;
+            //var cam = new PerspectiveCamera();
+            //var resolution = new Point2(64, 64);
+            //cam.ProjectionPlaneDistance = 1.3f;
 
-            var raycaster = new MeshTraceableScene();
+            //var raycaster = new MeshTraceableScene();
 
-            var visualizer = new CameraVisualizer(TW.Graphics);
+            //var visualizer = new CameraVisualizer(TW.Graphics);
 
-            var ent1 = createTriangleEntity();
-            ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -4));
+            //var ent1 = createTriangleEntity();
+            //ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -4));
 
-            raycaster.AddEntity(ent1);
+            //raycaster.AddEntity(ent1);
 
-            engine.AddSimulator(new BasicSimulator(delegate
-                                                       {
-                                                           //visualizer.RenderRays(cam, resolution);
-                                                           for (int x = 0; x < resolution.X; x++)
-                                                               for (int y = 0; y < resolution.Y; y++)
-                                                               {
-                                                                   throw new NotImplementedException();
-                                                                   //Ray calculateRay = cam.CalculateRay(new Vector2((x + 0.5f) / resolution.X, (y + 0.5f) / resolution.Y));
-                                                                   //var res = raycaster.TraceFragment(new RayTrace(calculateRay, 0, float.MaxValue));
-                                                                   //if (res.Clip) continue;
-                                                                   //var point = res.Position;
-                                                                   //TW.Graphics.LineManager3D.AddCenteredBox(point, 0.03f, res.Diffuse);
-                                                                   //TW.Graphics.LineManager3D.AddLine(point,
-                                                                   //                                  point + res.Normal,
-                                                                   //                                  new Color4(1, 1, 0));
-                                                               }
-                                                       }));
+            //engine.AddSimulator(new BasicSimulator(delegate
+            //                                           {
+            //                                               //visualizer.RenderRays(cam, resolution);
+            //                                               for (int x = 0; x < resolution.X; x++)
+            //                                                   for (int y = 0; y < resolution.Y; y++)
+            //                                                   {
+            //                                                       throw new NotImplementedException();
+            //                                                       //Ray calculateRay = cam.CalculateRay(new Vector2((x + 0.5f) / resolution.X, (y + 0.5f) / resolution.Y));
+            //                                                       //var res = raycaster.TraceFragment(new RayTrace(calculateRay, 0, float.MaxValue));
+            //                                                       //if (res.Clip) continue;
+            //                                                       //var point = res.Position;
+            //                                                       //TW.Graphics.LineManager3D.AddCenteredBox(point, 0.03f, res.Diffuse);
+            //                                                       //TW.Graphics.LineManager3D.AddLine(point,
+            //                                                       //                                  point + res.Normal,
+            //                                                       //                                  new Color4(1, 1, 0));
+            //                                                   }
+            //                                           }));
 
-            engine.AddSimulator(new WorldRenderingSimulator());
+            //engine.AddSimulator(new WorldRenderingSimulator());
 
-            engine.Run();
+            //engine.Run();
 
         }
 
@@ -142,17 +144,17 @@ namespace MHGameWork.TheWizards.Tests.CG
         public void TestRaycastTriangle()
         {
 
-            var cam = new PerspectiveCamera();
-            cam.ProjectionPlaneDistance = 1.3f;
+            //var cam = new PerspectiveCamera();
+            //cam.ProjectionPlaneDistance = 1.3f;
 
-            var raycaster = new MeshTraceableScene();
+            //var raycaster = new MeshTraceableScene();
 
-            var ent1 = createTriangleEntity();
-            ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -4));
+            //var ent1 = createTriangleEntity();
+            //ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -4));
 
-            raycaster.AddEntity(ent1);
+            //raycaster.AddEntity(ent1);
 
-            var window = new GraphicalRayTracer(new Tracer(raycaster, cam));
+            //var window = new GraphicalRayTracer(new Tracer(raycaster, cam));
 
 
         }
@@ -161,17 +163,17 @@ namespace MHGameWork.TheWizards.Tests.CG
         public void TestRetardShader()
         {
 
-            var cam = new PerspectiveCamera();
-            cam.ProjectionPlaneDistance = 1.3f;
+            //var cam = new PerspectiveCamera();
+            //cam.ProjectionPlaneDistance = 1.3f;
 
-            var raycaster = new MeshTraceableScene();
+            //var raycaster = new MeshTraceableScene();
 
-            var ent1 = createSphereEntity();
-            ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -3));
+            //var ent1 = createSphereEntity();
+            //ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -3));
 
-            raycaster.AddEntity(ent1);
+            //raycaster.AddEntity(ent1);
 
-            var window = new GraphicalRayTracer(new RetardTracer(raycaster, cam));
+            //var window = new GraphicalRayTracer(new RetardTracer(raycaster, cam));
 
 
         }
@@ -180,21 +182,21 @@ namespace MHGameWork.TheWizards.Tests.CG
         public void TestRetardShaderShadows()
         {
 
-            var cam = new PerspectiveCamera();
-            cam.ProjectionPlaneDistance = 1.3f;
+            //var cam = new PerspectiveCamera();
+            //cam.ProjectionPlaneDistance = 1.3f;
 
-            var raycaster = new MeshTraceableScene();
+            //var raycaster = new MeshTraceableScene();
 
-            var ent1 = createEntity();
-            ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -3));
+            //var ent1 = createEntity();
+            //ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -3));
 
-            var ent2 = createSphereEntity();
-            ent2.WorldMatrix = Matrix.Translation(new Vector3(0, 1, -2));
+            //var ent2 = createSphereEntity();
+            //ent2.WorldMatrix = Matrix.Translation(new Vector3(0, 1, -2));
 
-            raycaster.AddEntity(ent1);
-            //raycaster.AddEntity(ent2);
+            //raycaster.AddEntity(ent1);
+            ////raycaster.AddEntity(ent2);
 
-            var window = new GraphicalRayTracer(new RetardTracer(raycaster, cam));
+            //var window = new GraphicalRayTracer(new RetardTracer(raycaster, cam));
 
 
         }
@@ -305,21 +307,21 @@ namespace MHGameWork.TheWizards.Tests.CG
             var ret = new WorldRendering.Entity();
 
 
-            TangentVertex[] vertices = new TangentVertex[3];
+            //TangentVertex[] vertices = new TangentVertex[3];
 
 
-            vertices[0] = new TangentVertex(new Vector3(-1, 0, 0).xna(), new Vector2(0, 0).xna(), Vector3.Normalize(new Vector3(-1, -1, 1)).xna(), Vector3.Zero.xna());
-            vertices[1] = new TangentVertex(new Vector3(1, 0, 0).xna(), new Vector2(1, 0).xna(), Vector3.Normalize(new Vector3(1, -1, 1)).xna(), Vector3.Zero.xna());
-            vertices[2] = new TangentVertex(new Vector3(0, 1, 0).xna(), new Vector2(0.5f, 1).xna(), Vector3.Normalize(new Vector3(0, 1, 1)).xna(), Vector3.Zero.xna());
+            //vertices[0] = new TangentVertex(new Vector3(-1, 0, 0).xna(), new Vector2(0, 0).xna(), Vector3.Normalize(new Vector3(-1, -1, 1)).xna(), Vector3.Zero.xna());
+            //vertices[1] = new TangentVertex(new Vector3(1, 0, 0).xna(), new Vector2(1, 0).xna(), Vector3.Normalize(new Vector3(1, -1, 1)).xna(), Vector3.Zero.xna());
+            //vertices[2] = new TangentVertex(new Vector3(0, 1, 0).xna(), new Vector2(0.5f, 1).xna(), Vector3.Normalize(new Vector3(0, 1, 1)).xna(), Vector3.Zero.xna());
 
 
 
-            var part = new RAMMeshPart();
-            part.GetGeometryData().SetSourcesFromTangentVertices(new short[] { 0, 1, 2 }, vertices);
+            //var part = new RAMMeshPart();
+            //part.GetGeometryData().SetSourcesFromTangentVertices(new short[] { 0, 1, 2 }, vertices);
 
             var mesh = new RAMMesh();
 
-            mesh.GetCoreData().Parts.Add(new MeshCoreData.Part { MeshPart = part, ObjectMatrix = Matrix.Translation(0, 0, 0).xna(), MeshMaterial = new MeshCoreData.Material { DiffuseColor = new Color4(0, 1, 0).xna() } });
+            //mesh.GetCoreData().Parts.Add(new MeshCoreData.Part { MeshPart = part, ObjectMatrix = Matrix.Translation(0, 0, 0).xna(), MeshMaterial = new MeshCoreData.Material { DiffuseColor = new Color4(0, 1, 0).xna() } });
 
 
             ret.Mesh = mesh;
