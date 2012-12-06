@@ -286,8 +286,8 @@ namespace MHGameWork.TheWizards.TestRunner
 
             Exception ex;
 
-            //ex = runSeperateAppdomain(obj);
-            ex = runCurrentAppdomain(obj);
+            ex = runSeperateAppdomain(obj);
+            //ex = runCurrentAppdomain(obj);
 
 
             GC.Collect();

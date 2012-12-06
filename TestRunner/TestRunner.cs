@@ -102,7 +102,7 @@ namespace MHGameWork.TheWizards.TestRunner
                 var setupDeleg = (TestDelegate)Delegate.CreateDelegate(typeof(TestDelegate), test, setupMethod);
                 setupDeleg();
             }
-
+            
 
 
             var testDeleg = (TestDelegate)Delegate.CreateDelegate(typeof(TestDelegate), test, method);
