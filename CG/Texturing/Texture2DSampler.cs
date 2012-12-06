@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DirectX11;
-using MHGameWork.TheWizards.CG.Math;
+using Microsoft.Xna.Framework;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.CG.Texturing

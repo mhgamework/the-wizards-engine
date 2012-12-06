@@ -26,7 +26,24 @@ namespace MHGameWork.TheWizards.Tests.CG
         [Test]
         public void TestGenerateRays()
         {
-            PerspectiveCamera.Test();
+            var game = new DX11Game();
+            game.InitDirectX();
+
+            var cam = new PerspectiveCamera();
+
+            var visualizer = new CameraVisualizer(game);
+
+            game.GameLoopEvent += delegate
+                                      {
+                                          game.LineManager3D.AddRectangle(cam.Position + cam.Direction * cam.ProjectionPlaneDistance,
+                                                                          new Vector2(cam.right - cam.left,
+                                                                                      cam.top - cam.bottom), cam.rightAxis, cam.Up, new Color4(0, 1, 0));
+
+                                          visualizer.RenderRays(cam, new Point2(8, 8));
+
+
+                                      };
+            game.Run();
         }
 
         [Test]

@@ -1,5 +1,4 @@
-﻿using MHGameWork.TheWizards.CG.Math;
-using MHGameWork.TheWizards.DirectX11;
+﻿using MHGameWork.TheWizards.DirectX11;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.CG.Visualization

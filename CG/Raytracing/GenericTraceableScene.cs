@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.Raycasting;
 
 namespace MHGameWork.TheWizards.CG.Raytracing
 {

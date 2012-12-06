@@ -6,7 +6,7 @@ using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.CG.Raytracing;
 using MHGameWork.TheWizards.CG.Shading;
-using MHGameWork.TheWizards.Raycasting;
+using Microsoft.Xna.Framework;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.CG

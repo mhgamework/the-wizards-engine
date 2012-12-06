@@ -1,4 +1,4 @@
-﻿namespace MHGameWork.TheWizards.CG.Math
+﻿namespace SlimDX
 {
     public struct Point2
     {

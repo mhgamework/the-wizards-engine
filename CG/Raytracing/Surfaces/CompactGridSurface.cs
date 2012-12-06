@@ -30,7 +30,8 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
 
         public void Intersects(ref RayTrace trace, out float? result, out IShadeCommand shadeCommand, bool generateShadeCommand)
         {
-            var boxDist = trace.Ray.xna().Intersects(gridBounding.xna());
+            float? boxDist;
+            trace.Ray.Intersects(ref gridBounding, out boxDist);
             if (!boxDist.HasValue || boxDist.Value < trace.Start)
             {
                 result = null;

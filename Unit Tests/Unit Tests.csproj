@@ -253,6 +253,10 @@
     <Compile Include="ZipTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CG\CG.csproj">
+      <Project>{C5BCD416-DA11-469D-BFF8-26BD2962739B}</Project>
+      <Name>CG</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>

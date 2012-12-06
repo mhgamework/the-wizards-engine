@@ -6,7 +6,6 @@ using MHGameWork.TheWizards.CG.Shading;
 using MHGameWork.TheWizards.CG.Spatial;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.MathExtra;
-using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
@@ -30,9 +29,9 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
             return
                 BoundingBox.FromPoints(new[]
                                            {
-                                               vertices[startVertexIndex].pos.dx(),
-                                               vertices[startVertexIndex+1].pos.dx(),
-                                               vertices[startVertexIndex+2].pos.dx()
+                                               vertices[startVertexIndex].pos,
+                                               vertices[startVertexIndex+1].pos,
+                                               vertices[startVertexIndex+2].pos
                                            });
         }
 
@@ -42,7 +41,7 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
             var v2 = vertices[startVertexIndex+1].pos;
             var v3 = vertices[startVertexIndex+2].pos;
 
-            var ray = trace.Ray.xna();
+            var ray = trace.Ray;
 
             float v;
             float u;
@@ -82,7 +81,7 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
 
                 var input = new GeometryInput();
                 input.Position = hitPoint;
-                input.Normal = (Vertex2.normal * U + Vertex3.normal * V + Vertex1.normal * (1 - U - V)).dx();
+                input.Normal = (Vertex2.normal * U + Vertex3.normal * V + Vertex1.normal * (1 - U - V));
 
                 //input.Normal =
                 //    Vector3.Normalize(-Vector3.Cross((raycast.Vertex1.Position - raycast.Vertex2.Position),
@@ -90,7 +89,7 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
 
                 //input.Normal = raycast.Vertex1.Normal;
                 input.Normal = Vector3.Normalize(input.Normal); // Renormalize!
-                input.Texcoord = (Vertex2.uv * U + Vertex3.uv * V + Vertex1.uv * (1 - U - V)).dx();
+                input.Texcoord = (Vertex2.uv * U + Vertex3.uv * V + Vertex1.uv * (1 - U - V));
                 //TODO: perspective correction
 
                 //input.Normal = raycast.Vertex2.Normal;
