@@ -30,6 +30,10 @@ namespace MHGameWork.TheWizards.Tests.CG
         {
             return new PhongShader(GetScene(), GetCamera());
         }
+        public RefractionShader CreateRefraction()
+        {
+            return new RefractionShader(GetScene());
+        }
 
         public PerspectiveCamera CreatePerspectiveCamera(Vector3 position, Vector3 lookAt)
         {

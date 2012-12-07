@@ -60,7 +60,8 @@ namespace MHGameWork.TheWizards.Tests.CG
 
         private CompactGrid createGrid()
         {
-            var mesh = OBJParserTest.GetBarrelMesh(new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
+            var f = new CGFactory();
+            var mesh = f.CreateMesh(new System.IO.FileInfo(TestFiles.BarrelObj));
             var grid = new CompactGrid();
 
             var converter = new MeshToTriangleConverter();

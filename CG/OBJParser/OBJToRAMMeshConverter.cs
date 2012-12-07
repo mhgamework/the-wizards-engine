@@ -15,7 +15,6 @@ namespace MHGameWork.TheWizards.CG.OBJParser
     /// </summary>
     public class OBJToRAMMeshConverter
     {
-        //private readonly ITextureFactory textureFactory;
 
         private string materialNamePhysicsBox = "TW_Physics_Box";
         private string materialNameTriangleMesh = "TW_Physics_TriangleMesh";
@@ -23,7 +22,7 @@ namespace MHGameWork.TheWizards.CG.OBJParser
 
         public OBJToRAMMeshConverter()//ITextureFactory _textureFactory)
         {
-            //textureFactory = _textureFactory;
+            textureFactory = new TextureFactory();
         }
 
         private List<ResolvePath> resolvePaths = new List<ResolvePath>();
@@ -232,12 +231,12 @@ namespace MHGameWork.TheWizards.CG.OBJParser
     {
         public ITexture FindTexture(Func<ITexture, bool> func)
         {
-            throw new NotImplementedException();
+            //TODO
+            return null;
         }
 
         public void AddTexture(RAMTexture ret)
         {
-            throw new NotImplementedException();
         }
     }
 
@@ -259,14 +258,15 @@ namespace MHGameWork.TheWizards.CG.OBJParser
 
     public class RAMMesh
     {
+        private List<Part> parts = new List<Part>();
         public void AddPart(Part part)
         {
-            throw new NotImplementedException();
+            parts.Add(part);
         }
 
         public IEnumerable<Part> GetParts()
         {
-            throw new NotImplementedException();
+            return parts;
         }
     }
 }

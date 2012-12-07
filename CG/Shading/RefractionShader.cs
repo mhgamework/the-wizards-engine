@@ -19,39 +19,38 @@ namespace MHGameWork.TheWizards.CG.Shading
         {
             this.scene = scene;
             refractiveN = 1;
-            refractiveNt = 1.15f;
+            refractiveNt = 1.01f;
             refractiveNtInverse = 1 / refractiveNt;
             r0 = calculateR0(refractiveNt);
 
         }
 
-        public static int recurseDepth = 0;
 
-        public static float contribution = 1;
 
         public Color4 Shade(GeometryInput f, RayTrace trace)
         {
-            float oldContribution = contribution;
+
+            float oldContribution = trace.contribution;
             
-            recurseDepth++;
+            trace.recurseDepth++;
             var ret = shadeInternal(f, trace);
-            recurseDepth--;
-            contribution = oldContribution;
+            trace.recurseDepth--;
+            trace.contribution = oldContribution;
 
             return ret;
         }
         private Color4 shadeInternal(GeometryInput f, RayTrace trace)
         {
-            if (recurseDepth > 30)
+            if (trace.recurseDepth > 30)
                 return new Color4();
-            if (contribution < 0.01f)
+            if (trace.contribution < 0.01f)
                 return new Color4();
 
             var d = trace.Ray.Direction;
             var n = f.Normal;
 
             Color4 k;
-            Color4 a = new Color4((float)System.Math.Log(2f), (float)System.Math.Log(1f), (float)System.Math.Log(2f));
+            Color4 a = new Color4((float)System.Math.Log(2.8f), (float)System.Math.Log(2f), (float)System.Math.Log(3f));
             IShadeCommand cmd;
 
             Vector3 t;
@@ -76,7 +75,12 @@ namespace MHGameWork.TheWizards.CG.Shading
                 }
                 else
                 {
-                    scene.Intersect(new RayTrace(new Ray(f.Position, r), 0.001f, float.PositiveInfinity), out cmd, true); //smallt?
+                    trace.Ray = new Ray(f.Position, r);
+                    trace.Start = 0.001f;
+                    trace.End = float.PositiveInfinity;
+                    //TODO: trace.contribution = oldContrib * (1 - R);
+
+                    scene.Intersect(trace, out cmd, true); //smallt?
                     return Color4.Modulate(k, cmd.CalculateColor());
                 }
             }
@@ -84,17 +88,24 @@ namespace MHGameWork.TheWizards.CG.Shading
             var oneMinusC = 1 - c;
             var R = r0 + (1 - r0) * oneMinusC * oneMinusC * oneMinusC * oneMinusC * oneMinusC;
 
+            float oldContrib = trace.contribution;
+
             Color4 ret = new Color4();
+            trace.Ray = new Ray(f.Position, r);
+            trace.Start = 0.001f;
+            trace.End = float.PositiveInfinity;
+            trace.contribution = oldContrib * R;
+            scene.Intersect(trace, out cmd, true); //smallt?
 
-            scene.Intersect(new RayTrace(new Ray(f.Position, r), 0.001f, float.PositiveInfinity), out cmd, true); //smallt?
-
-            float oldContrib = contribution;
-            contribution =oldContrib* R;
 
             ret += R * cmd.CalculateColor();
 
-            scene.Intersect(new RayTrace(new Ray(f.Position, t), 0.001f, float.PositiveInfinity), out cmd, true);//smallt?
-            contribution = oldContrib * (1-R);
+            trace.Ray = new Ray(f.Position, t);
+            trace.Start = 0.001f;
+            trace.End = float.PositiveInfinity;
+                        trace.contribution = oldContrib * (1-R);
+            scene.Intersect(trace, out cmd, true);//smallt?
+
             ret += (1 - R) * cmd.CalculateColor();
 
             return Color4.Modulate(k, ret);

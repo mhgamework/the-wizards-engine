@@ -62,10 +62,8 @@ namespace MHGameWork.TheWizards.CG.Shading
 
         private Color4 calcPhongLight(Vector3 lightVector, Vector3 normal, Vector3 position)
         {
-            ShadowsSettings.ShadowsMode = true;
             IShadeCommand cmd;
-            var hit = tracer.Intersect(new RayTrace(new Ray(position, Vector3.Normalize(lightVector)), 0.0001f, lightVector.Length()), out cmd, false); // TODO: mat.sqrt
-            ShadowsSettings.ShadowsMode = false;
+            var hit = tracer.Intersect(new RayTrace(new Ray(position, Vector3.Normalize(lightVector)), 0.0001f, lightVector.Length()){ IsShadowRay = true}, out cmd, false); // TODO: mat.sqrt
             if (hit)
             {
                 //ret += new Color4(1, 0, 0);

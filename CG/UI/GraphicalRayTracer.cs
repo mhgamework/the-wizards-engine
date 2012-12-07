@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.WinAPI;
 
 namespace MHGameWork.TheWizards.CG.UI
 {
@@ -83,7 +84,9 @@ namespace MHGameWork.TheWizards.CG.UI
             mainWindow.WindowStartupLocation = WindowStartupLocation.Manual;
 
             mainWindow.Background = Brushes.Red;
-            mainWindow.Left = 1920;
+            mainWindow.Left = 0;
+            if (Win32.GetSystemMetrics(SystemMetric.SM_CMONITORS) == 2)
+                mainWindow.Left = 1920;
             mainWindow.Top = 0;
             mainWindow.Width = 1920;
             mainWindow.Height = 1080;
@@ -270,6 +273,7 @@ namespace MHGameWork.TheWizards.CG.UI
 
         private Image image = new Image();
         // Create the writeable bitmap will be used to write and update.
+
         private WriteableBitmap _wb;
 
         // Define the rectangle of the writeable image we will modify. 

@@ -6,14 +6,12 @@ using System.Text;
 using MHGameWork.TheWizards.CG;
 using MHGameWork.TheWizards.CG.Cameras;
 using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.OBJParser;
 using MHGameWork.TheWizards.CG.Raytracing;
 using MHGameWork.TheWizards.CG.Raytracing.Surfaces;
 using MHGameWork.TheWizards.CG.Shading;
 using MHGameWork.TheWizards.CG.Spatial;
 using MHGameWork.TheWizards.CG.UI;
-using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Tests.OBJParser;
 using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.Tests.CG
@@ -34,7 +32,7 @@ namespace MHGameWork.TheWizards.Tests.CG
             scene.AddGenericSurface(new SphereSurface(shader, new BoundingSphere(new Vector3(0, 0, 0 - 3), 1f)));
 
 
-            var window = new GraphicalRayTracer(new TracedSceneImage(scene, cam), 1);
+            var window = new GraphicalRayTracer(new TracedSceneImage(scene, cam));
 
 
         }
@@ -62,7 +60,7 @@ namespace MHGameWork.TheWizards.Tests.CG
 
             scene.AddGenericSurface(new PlaneSurface(shader, new Plane(Vector3.UnitY, 0)));
 
-            var window = new GraphicalRayTracer(new TracedSceneImage(scene, cam), 1);
+            var window = new GraphicalRayTracer(new TracedSceneImage(scene, cam));
 
 
         }
@@ -71,7 +69,7 @@ namespace MHGameWork.TheWizards.Tests.CG
         public void TestComplex()
         {
             var scene = new ComplexTestScene();
-            var window = new GraphicalRayTracer(new TracedSceneImage(scene.Scene, scene.Camera), 1);
+            var window = new GraphicalRayTracer(new TracedSceneImage(scene.Scene, scene.Camera));
         }
 
 
@@ -83,7 +81,7 @@ namespace MHGameWork.TheWizards.Tests.CG
             var scene = f.CreateGenericTraceableScene();
             var shader = f.CreatePhong();
 
-            List<TriangleSurface> triangles = getTriangles(shader, MeshLoader.LoadMeshFromObj(new FileInfo(TestFiles.BarrelObj)));
+            List<TriangleSurface> triangles = getTriangles(shader, f.CreateMesh(new FileInfo(TestFiles.BarrelObj)));
 
             foreach (var tri in triangles)
             {
@@ -91,13 +89,13 @@ namespace MHGameWork.TheWizards.Tests.CG
             }
 
             f.CreatePerspectiveCamera(new Vector3(0, 5, 5), new Vector3());
-            f.Run(1);
+            f.Run();
 
 
 
         }
 
-        private List<TriangleSurface> getTriangles(PhongShader shader, IMesh mesh)
+        private List<TriangleSurface> getTriangles(PhongShader shader, RAMMesh mesh)
         {
             var converter = new MeshToTriangleConverter();
             return converter.GetTriangles(mesh, shader);
@@ -111,14 +109,14 @@ namespace MHGameWork.TheWizards.Tests.CG
             var scene = f.CreateGenericTraceableScene();
             var shader = f.CreatePhong();
 
-            List<TriangleSurface> triangles = getTriangles(shader, MeshLoader.LoadMeshFromObj(new FileInfo(TWDir.GameData + "\\Core\\Dragon\\dragon.obj")));
+            List<TriangleSurface> triangles = getTriangles(shader, f.CreateMesh(new FileInfo(TWDir.GameData + "\\Core\\Dragon\\dragon.obj")));
 
             var grid = new CompactGrid();
             grid.buildGrid(triangles.Select(o => (ISurface)o).ToList());
             scene.AddGenericSurface(new CompactGridSurface(grid));
 
             f.CreatePerspectiveCamera(new Vector3(-4, 1, 0), new Vector3(0,0,0));
-            f.Run(1);
+            f.Run();
 
 
 

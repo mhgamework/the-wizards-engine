@@ -4,28 +4,22 @@ namespace MHGameWork.TheWizards.CG.Raytracing
 {
     public class RayTrace
     {
+        public int recurseDepth = 0;
+        public float contribution = 1;
+        public bool IsShadowRay = false;
+
         public Ray Ray;
-        private float start;
-        private float end;
+        public float Start;
+        public float End;
 
         public RayTrace(Ray ray, float start, float end)
         {
             this.Ray = ray;
-            this.start = start;
-            this.end = end;
+            this.Start = start;
+            this.End = end;
         }
 
        
-        public float Start
-        {
-            get { return start; }
-        }
-
-        public float End
-        {
-            get { return end; }
-        }
-
         /// <summary>
         /// Utility function that sets the distance to null when it is not in range of this raytrace
         /// </summary>
@@ -35,8 +29,8 @@ namespace MHGameWork.TheWizards.CG.Raytracing
         {
             if (distance == null) return;
 
-            if (distance < start) distance = null;
-            if (distance > end) distance = null;
+            if (distance < Start) distance = null;
+            if (distance > End) distance = null;
         }
     }
 }

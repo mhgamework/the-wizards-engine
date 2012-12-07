@@ -17,7 +17,7 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
 
         public void Intersects(ref RayTrace trace, out float? result, out IShadeCommand shadeCommand, bool generateShadeCommand)
         {
-            if (!DrawsShadows && ShadowsSettings.ShadowsMode)
+            if (!DrawsShadows && trace.IsShadowRay)
             {
                 result = null;
                 shadeCommand = null;

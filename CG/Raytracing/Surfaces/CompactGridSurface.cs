@@ -25,10 +25,19 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
             var maximum = minimum + grid.NodeCount.ToVector3() * grid.NodeSize;
 
             gridBounding = new BoundingBox(minimum, maximum);
+            CastsShadows = false;
         }
+
+        public bool CastsShadows { get; set; }
 
         public void Intersects(ref RayTrace trace, out float? result, out IShadeCommand shadeCommand, bool generateShadeCommand)
         {
+            if (trace.IsShadowRay && ! CastsShadows)
+            {
+                result = null;
+                shadeCommand = null;
+                return;
+            }
             float? boxDist;
             trace.Ray.Intersects(ref gridBounding, out boxDist);
             if (!boxDist.HasValue || boxDist.Value < trace.Start)
@@ -43,7 +52,7 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
 
 
 
-            var tr = new RayTrace(trace.Ray, boxDist.Value+0.001f, trace.End);
+            var tr = new RayTrace(trace.Ray, boxDist.Value + 0.001f, trace.End);
             float? res = null;
             IShadeCommand cmd = null;
             traverser.Traverse(tr, delegate(Point3 arg)

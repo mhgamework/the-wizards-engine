@@ -32,7 +32,7 @@ namespace MHGameWork.TheWizards.Tests.CG
 
             
 
-            var window = new GraphicalRayTracer( new TracedSceneImage(scene.Scene, scene.Camera), 1);
+            var window = new GraphicalRayTracer( new TracedSceneImage(scene.Scene, scene.Camera));
         }
 
         [Test]
