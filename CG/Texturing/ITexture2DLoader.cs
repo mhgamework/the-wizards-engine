@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.CG.OBJParser;
 using MHGameWork.TheWizards.CG.Texturing;
-using MHGameWork.TheWizards.Rendering;
 
 namespace MHGameWork.TheWizards.CG
 {

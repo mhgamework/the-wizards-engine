@@ -27,10 +27,15 @@ namespace MHGameWork.TheWizards.CG.Raytracing
         /// <returns></returns>
         public void SetNullWhenNotInRange( ref float? distance)
         {
-            if (distance == null) return;
-
-            if (distance < Start) distance = null;
-            if (distance > End) distance = null;
+            if (!IsInRange(ref distance)) distance = null;
+            
+        }
+        public bool IsInRange(ref float? distance)
+        {
+            if (distance == null) return false;
+            if (distance < Start) return false;
+            if (distance > End) return true;
+            return true;
         }
     }
 }

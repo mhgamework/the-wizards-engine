@@ -1,0 +1,162 @@
+
+<!ELEMENT Sdl (Cameras,Lights,Geometry,Textures?,Materials?,Scene)>
+<!ATTLIST Sdl>
+
+<!ELEMENT Cameras (Camera+)>
+<!ATTLIST Cameras>
+
+<!ELEMENT Camera EMPTY>
+<!ATTLIST Camera
+	position					CDATA			#REQUIRED
+	direction					CDATA			#REQUIRED
+	up							CDATA			#REQUIRED
+	fovy						CDATA			#REQUIRED	
+	name						ID				#REQUIRED
+>
+
+<!ELEMENT Lights ((DirectionalLight|PointLight|SpotLight)+)>
+<!ATTLIST Lights>
+
+<!ELEMENT DirectionalLight EMPTY>
+<!ATTLIST DirectionalLight
+	direction					CDATA			#REQUIRED
+	intensity					CDATA			"1"			
+	color						CDATA			"1 1 1"
+	name						ID				#REQUIRED
+>
+
+<!ELEMENT PointLight EMPTY>
+<!ATTLIST PointLight
+	position					CDATA			#REQUIRED
+	intensity					CDATA			"1"			
+	color						CDATA			"1 1 1"
+	name						ID				#REQUIRED
+>
+
+<!ELEMENT SpotLight EMPTY>
+<!ATTLIST SpotLight
+	position					CDATA			#REQUIRED
+	direction					CDATA			#REQUIRED
+	angle						CDATA			#REQUIRED
+	intensity					CDATA			"1"			
+	color						CDATA			"1 1 1"
+	name						ID				#REQUIRED
+>
+
+<!ELEMENT Geometry ((Sphere|Cylinder|Cone|Torus|Teapot|IndexedTriangleSet)+)>
+<!ATTLIST Geometry>
+
+<!ELEMENT Sphere EMPTY>
+<!ATTLIST Sphere
+	radius						CDATA			#REQUIRED
+	name						ID				#REQUIRED
+>
+
+<!ELEMENT Cylinder EMPTY>
+<!ATTLIST Cylinder
+	radius						CDATA			#REQUIRED
+	height						CDATA			#REQUIRED
+	capped						(true|false)	"true"
+	name						ID				#REQUIRED
+>
+
+<!ELEMENT Cone EMPTY>
+<!ATTLIST Cone
+	radius						CDATA			#REQUIRED
+	height						CDATA			#REQUIRED
+	capped						(true|false)	"true"
+	name						ID				#REQUIRED
+>
+
+<!ELEMENT Torus EMPTY>
+<!ATTLIST Torus
+	innerRadius					CDATA			#REQUIRED
+	outerRadius					CDATA			#REQUIRED
+	name						ID				#REQUIRED
+>
+
+<!ELEMENT Teapot EMPTY>
+<!ATTLIST Teapot
+	size						CDATA			#REQUIRED
+	name						ID				#REQUIRED
+>
+
+<!ELEMENT IndexedTriangleSet EMPTY>
+<!ATTLIST IndexedTriangleSet
+	coordinates					CDATA			#REQUIRED
+	normals						CDATA			#IMPLIED
+	textureCoordinates			CDATA			#IMPLIED	
+	coordinateIndices			CDATA			#REQUIRED
+	normalIndices				CDATA			#IMPLIED
+	textureCoordinateIndices	CDATA			#IMPLIED
+	name						ID				#REQUIRED
+>
+
+<!ELEMENT Textures (Texture*)>
+<!ATTLIST Textures>
+
+<!ELEMENT Texture EMPTY>
+<!ATTLIST Texture
+	src							CDATA			#REQUIRED
+	name						ID				#REQUIRED
+>
+
+
+<!ELEMENT Materials ((DiffuseMaterial|PhongMaterial|LinearCombinedMaterial)*)>
+<!ATTLIST Materials>
+
+<!ELEMENT DiffuseMaterial EMPTY>
+<!ATTLIST DiffuseMaterial
+	color						CDATA			#REQUIRED
+	name						ID				#REQUIRED
+>
+
+<!ELEMENT PhongMaterial EMPTY>
+<!ATTLIST PhongMaterial
+	color						CDATA			#REQUIRED
+	shininess					CDATA			#REQUIRED
+	name						ID				#REQUIRED
+>
+
+<!ELEMENT LinearCombinedMaterial EMPTY>
+<!ATTLIST LinearCombinedMaterial
+	material1					IDREF			#REQUIRED
+	weight1						CDATA			"0.5"
+	material2					IDREF			#REQUIRED
+	weight2						CDATA			"0.5"
+	name						ID				#REQUIRED	
+>
+
+<!ELEMENT Scene ((Shape|Rotate|Translate|Scale)+)>
+<!ATTLIST Scene
+	camera						IDREF			#REQUIRED
+	lights						CDATA			#REQUIRED
+	background					CDATA			"0 0 0"
+>
+
+<!ELEMENT Shape EMPTY>
+<!ATTLIST Shape
+	geometry					IDREF			#REQUIRED
+	material					IDREF			#IMPLIED
+	texture						IDREF			#IMPLIED
+>
+
+<!ELEMENT Rotate ((Shape|Rotate|Translate|Scale)+)>
+<!ATTLIST Rotate
+	axis						CDATA			#REQUIRED
+	angle						CDATA			#REQUIRED
+>
+
+<!ELEMENT Translate ((Shape|Rotate|Translate|Scale)+)>
+<!ATTLIST Translate
+	vector						CDATA			#REQUIRED
+>
+
+<!ELEMENT Scale ((Shape|Rotate|Translate|Scale)+)>
+<!ATTLIST Scale
+	scale						CDATA			#REQUIRED
+>
+
+
+
+

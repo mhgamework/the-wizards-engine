@@ -112,8 +112,6 @@
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="CG\CGConversion.cs" />
-    <Compile Include="CG\Texturing\ITexture2DLoader.cs" />
-    <Compile Include="CG\Texturing\SimpleTexture2DLoader.cs" />
     <Compile Include="CG\Visualization\CameraVisualizer.cs" />
     <Compile Include="LevelBuilding\LevelBuildingTriggerObjectType.cs" />
     <Compile Include="LevelBuilding\TriggerObject.cs" />

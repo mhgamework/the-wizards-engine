@@ -3,7 +3,7 @@ using MHGameWork.TheWizards.CG.Shading;
 
 namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
 {
-    public class PlaneSurface : IGenericSurface
+    public class PlaneSurface : ISurface
     {
         private IShader shader;
         private Plane plane;

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<xs:schema xmlns="http://tempuri.org/sdl" elementFormDefault="qualified" targetNamespace="http://tempuri.org/sdl" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Sdl">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Cameras" />
+        <xs:element ref="Lights" />
+        <xs:element ref="Geometry" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Textures" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Materials" />
+        <xs:element ref="Scene" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Cameras">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" ref="Camera" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Camera">
+    <xs:complexType>
+      <xs:attribute name="position" type="xs:string" use="required" />
+      <xs:attribute name="direction" type="xs:string" use="required" />
+      <xs:attribute name="up" type="xs:string" use="required" />
+      <xs:attribute name="fovy" type="xs:string" use="required" />
+      <xs:attribute name="name" type="xs:ID" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Lights">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+          <xs:element ref="DirectionalLight" />
+          <xs:element ref="PointLight" />
+          <xs:element ref="SpotLight" />
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DirectionalLight">
+    <xs:complexType>
+      <xs:attribute name="direction" type="xs:string" use="required" />
+      <xs:attribute default="1" name="intensity" type="xs:string" />
+      <xs:attribute default="1 1 1" name="color" type="xs:string" />
+      <xs:attribute name="name" type="xs:ID" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PointLight">
+    <xs:complexType>
+      <xs:attribute name="position" type="xs:string" use="required" />
+      <xs:attribute default="1" name="intensity" type="xs:string" />
+      <xs:attribute default="1 1 1" name="color" type="xs:string" />
+      <xs:attribute name="name" type="xs:ID" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SpotLight">
+    <xs:complexType>
+      <xs:attribute name="position" type="xs:string" use="required" />
+      <xs:attribute name="direction" type="xs:string" use="required" />
+      <xs:attribute name="angle" type="xs:string" use="required" />
+      <xs:attribute default="1" name="intensity" type="xs:string" />
+      <xs:attribute default="1 1 1" name="color" type="xs:string" />
+      <xs:attribute name="name" type="xs:ID" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Geometry">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+          <xs:element ref="Sphere" />
+          <xs:element ref="Cylinder" />
+          <xs:element ref="Cone" />
+          <xs:element ref="Torus" />
+          <xs:element ref="Teapot" />
+          <xs:element ref="IndexedTriangleSet" />
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Sphere">
+    <xs:complexType>
+      <xs:attribute name="radius" type="xs:string" use="required" />
+      <xs:attribute name="name" type="xs:ID" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Cylinder">
+    <xs:complexType>
+      <xs:attribute name="radius" type="xs:string" use="required" />
+      <xs:attribute name="height" type="xs:string" use="required" />
+      <xs:attribute default="true" name="capped">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="name" type="xs:ID" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Cone">
+    <xs:complexType>
+      <xs:attribute name="radius" type="xs:string" use="required" />
+      <xs:attribute name="height" type="xs:string" use="required" />
+      <xs:attribute default="true" name="capped">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="name" type="xs:ID" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Torus">
+    <xs:complexType>
+      <xs:attribute name="innerRadius" type="xs:string" use="required" />
+      <xs:attribute name="outerRadius" type="xs:string" use="required" />
+      <xs:attribute name="name" type="xs:ID" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Teapot">
+    <xs:complexType>
+      <xs:attribute name="size" type="xs:string" use="required" />
+      <xs:attribute name="name" type="xs:ID" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IndexedTriangleSet">
+    <xs:complexType>
+      <xs:attribute name="coordinates" type="xs:string" use="required" />
+      <xs:attribute name="normals" type="xs:string" />
+      <xs:attribute name="textureCoordinates" type="xs:string" />
+      <xs:attribute name="coordinateIndices" type="xs:string" use="required" />
+      <xs:attribute name="normalIndices" type="xs:string" />
+      <xs:attribute name="textureCoordinateIndices" type="xs:string" />
+      <xs:attribute name="name" type="xs:ID" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Textures">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Texture" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Texture">
+    <xs:complexType>
+      <xs:attribute name="src" type="xs:string" use="required" />
+      <xs:attribute name="name" type="xs:ID" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Materials">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="DiffuseMaterial" />
+          <xs:element ref="PhongMaterial" />
+          <xs:element ref="LinearCombinedMaterial" />
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DiffuseMaterial">
+    <xs:complexType>
+      <xs:attribute name="color" type="xs:string" use="required" />
+      <xs:attribute name="name" type="xs:ID" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PhongMaterial">
+    <xs:complexType>
+      <xs:attribute name="color" type="xs:string" use="required" />
+      <xs:attribute name="shininess" type="xs:string" use="required" />
+      <xs:attribute name="name" type="xs:ID" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LinearCombinedMaterial">
+    <xs:complexType>
+      <xs:attribute name="material1" type="xs:IDREF" use="required" />
+      <xs:attribute default="0.5" name="weight1" type="xs:string" />
+      <xs:attribute name="material2" type="xs:IDREF" use="required" />
+      <xs:attribute default="0.5" name="weight2" type="xs:string" />
+      <xs:attribute name="name" type="xs:ID" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Scene">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+          <xs:element ref="Shape" />
+          <xs:element ref="Rotate" />
+          <xs:element ref="Translate" />
+          <xs:element ref="Scale" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="camera" type="xs:IDREF" use="required" />
+      <xs:attribute name="lights" type="xs:string" use="required" />
+      <xs:attribute default="0 0 0" name="background" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Shape">
+    <xs:complexType>
+      <xs:attribute name="geometry" type="xs:IDREF" use="required" />
+      <xs:attribute name="material" type="xs:IDREF" />
+      <xs:attribute name="texture" type="xs:IDREF" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Rotate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+          <xs:element ref="Shape" />
+          <xs:element ref="Rotate" />
+          <xs:element ref="Translate" />
+          <xs:element ref="Scale" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="axis" type="xs:string" use="required" />
+      <xs:attribute name="angle" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Translate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+          <xs:element ref="Shape" />
+          <xs:element ref="Rotate" />
+          <xs:element ref="Translate" />
+          <xs:element ref="Scale" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="vector" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Scale">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+          <xs:element ref="Shape" />
+          <xs:element ref="Rotate" />
+          <xs:element ref="Translate" />
+          <xs:element ref="Scale" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="scale" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

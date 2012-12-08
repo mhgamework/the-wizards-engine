@@ -309,6 +309,7 @@ namespace MHGameWork.TheWizards.TestRunner
         {
             var appDomain = AppDomain.CreateDomain("TestRunnerNew");
             appDomain.Load(new AssemblyName(TestsAssembly.FullName));
+            appDomain.Load(new AssemblyName(Assembly.GetExecutingAssembly().FullName));
 
             appDomain.DoCallBack(obj.RunTest);
 

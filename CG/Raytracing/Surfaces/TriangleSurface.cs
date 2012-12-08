@@ -8,7 +8,7 @@ using MHGameWork.TheWizards.CG.Spatial;
 
 namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
 {
-    public class TriangleSurface : IGenericSurface, ISurface
+    public class TriangleSurface : ISurface, ISurface
     {
         private readonly TangentVertex[] vertices;
         private readonly int startVertexIndex;

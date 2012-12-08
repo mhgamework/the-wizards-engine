@@ -213,7 +213,7 @@ namespace MHGameWork.TheWizards.Tests.CG
         public void TestTextureSampler()
         {
             var cache = new SimpleTexture2DLoader();
-            var tex = cache.Load(createEntity().Mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap);
+            var tex = cache.Load( new MHGameWork.TheWizards.CG.OBJParser.RAMTexture{ DiskFilePath = createEntity().Mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap.GetCoreData().DiskFilePath});
             var sampler = new Texture2DSampler();
 
             var ui = new GraphicalRayTracer(new TextureSamplerImage(tex, sampler));

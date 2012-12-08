@@ -5,9 +5,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using MHGameWork.TheWizards.CG.OBJParser;
 using MHGameWork.TheWizards.CG.Texturing;
-using MHGameWork.TheWizards.Rendering;
-using SlimDX;
 
 namespace MHGameWork.TheWizards.CG
 {
@@ -23,7 +22,7 @@ namespace MHGameWork.TheWizards.CG
             {
                 if (cache.ContainsKey(texture)) return cache[texture];
 
-                var bitmap = new BitmapImage(new Uri(texture.GetCoreData().DiskFilePath));
+                var bitmap = new BitmapImage(new Uri(texture.DiskFilePath));
                 int offset;
                 if (bitmap.Format != PixelFormats.Bgr32)
                     throw new InvalidOperationException("Unsupported texture!");

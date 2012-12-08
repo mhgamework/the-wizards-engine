@@ -3,7 +3,7 @@ using MHGameWork.TheWizards.CG.Shading;
 
 namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
 {
-    public class SphereSurface : IGenericSurface
+    public class SphereSurface : ISurface
     {
         private IShader shader;
         private BoundingSphere sphere;

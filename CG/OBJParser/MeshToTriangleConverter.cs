@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.OBJParser;
 using MHGameWork.TheWizards.CG.Raytracing.Surfaces;
 using MHGameWork.TheWizards.CG.Shading;
+using MHGameWork.TheWizards.CG.Texturing;
 
 namespace MHGameWork.TheWizards.CG.Spatial
 {
@@ -14,6 +15,37 @@ namespace MHGameWork.TheWizards.CG.Spatial
     /// </summary>
     public class MeshToTriangleConverter
     {
+
+        private SimpleTexture2DLoader loader = new SimpleTexture2DLoader();
+        public List<TriangleSurface> GetTrianglesWithPhong(RAMMesh mesh, Func<PhongShader> phongFactory)
+        {
+            var ret = new List<TriangleSurface>();
+            foreach (var part in mesh.GetParts())
+            {
+                var shader = phongFactory();
+
+                if (part.MeshMaterial.DiffuseMap != null)
+                {
+                    shader.Diffuse = new Texture2DGeometrySampler(new Texture2DSampler(), loader.Load(part.MeshMaterial.DiffuseMap));
+                }
+                else
+                    continue;
+
+                var positions = part.Positions;
+                var normals = part.Normals;
+                var texcoords = part.Texcoords;
+
+                var vertices = positions.Select((p, i) => new TangentVertex(positions[i], texcoords[i], normals[i], new Vector3())).ToArray();
+
+                //Microsoft.Xna.Framework.Vector3.Transform(positions, ref part.ObjectMatrix, positions);
+                for (int i = 0; i < positions.Length / 3; i++)
+                {
+                    ret.Add(new TriangleSurface(vertices, i, shader));
+                }
+            }
+            return ret;
+        }
+
         public List<TriangleSurface> GetTriangles(RAMMesh mesh, IShader shader)
         {
             var ret = new List<TriangleSurface>();

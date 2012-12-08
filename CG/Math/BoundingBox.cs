@@ -191,6 +191,19 @@ namespace MHGameWork.TheWizards.CG.Math
         //    return false;
         //}
 
+        public BoundingBox MergeWith(BoundingBox box2 )
+        {
+            BoundingBox merged;
+            if (this.Minimum == this.Maximum)
+                merged = box2;
+            else if (box2.Minimum == box2.Maximum)
+                merged = this;
+            else
+                merged = BoundingBox.Merge(this, box2);
+
+            return merged;
+        }
+
         public static void MergeWith(ref BoundingBox box1, ref BoundingBox box2, ref BoundingBox merged)
         {
             if (box1.Minimum == box1.Maximum)

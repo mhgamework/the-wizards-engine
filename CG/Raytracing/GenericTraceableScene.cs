@@ -12,11 +12,11 @@ namespace MHGameWork.TheWizards.CG.Raytracing
     /// </summary>
     public class GenericTraceableScene : ITraceableScene
     {
-        private List<IGenericSurface> entities = new List<IGenericSurface>();
+        private List<ISurface> entities = new List<ISurface>();
 
         private SolidShadeCommand shadeCommand = new SolidShadeCommand(new Color4(Color.SkyBlue));
 
-        public void AddGenericSurface(IGenericSurface surface)
+        public void AddGenericSurface(ISurface surface)
         {
             entities.Add(surface);
         }

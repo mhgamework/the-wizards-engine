@@ -7,11 +7,17 @@ using MHGameWork.TheWizards.CG.Spatial;
 
 namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
 {
-    public class CompactGridSurface : IGenericSurface
+    public class CompactGridSurface : ISurface
     {
         private CompactGrid grid;
         private GridTraverser traverser;
         private BoundingBox gridBounding;
+
+        public BoundingBox GetBoundingBox(IBoundingBoxCalculator calc)
+        {
+            return gridBounding;
+        }
+
 
         public CompactGridSurface(CompactGrid grid)
         {
@@ -66,7 +72,7 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
 
                                               for (int i = 0; i < count; i++)
                                               {
-                                                  var surface = (IGenericSurface)grid.getCellObject(cellIndex, i);
+                                                  var surface = (ISurface)grid.getCellObject(cellIndex, i);
                                                   surface.Intersects(ref tr, out temp, out iCmd,
                                                                      generateShadeCommand);
 
