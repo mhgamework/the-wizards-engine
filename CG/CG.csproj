@@ -89,7 +89,9 @@
     <Compile Include="Cameras\ICamera.cs" />
     <Compile Include="Cameras\PerspectiveCamera.cs" />
     <Compile Include="Functions.cs" />
+    <Compile Include="GeometricSurfaces\MeshGeometry.cs" />
     <Compile Include="IRenderedImage.cs" />
+    <Compile Include="Lighting\MultipleLightProvider.cs" />
     <Compile Include="Math\BoundingBox.cs" />
     <Compile Include="Math\BoundingSphere.cs" />
     <Compile Include="Math\Color4.cs" />

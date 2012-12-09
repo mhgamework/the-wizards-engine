@@ -5,7 +5,7 @@ namespace MHGameWork.TheWizards.CG.GeometricSurfaces
 {
     public class TriangleGeometry : IGeometry
     {
-        private readonly TangentVertex[] vertices;
+        private  TangentVertex[] vertices;
         private readonly int startVertexIndex;
 
         public TriangleGeometry(TangentVertex[] vertices, int triangleIndex)
@@ -43,11 +43,11 @@ namespace MHGameWork.TheWizards.CG.GeometricSurfaces
 
             result.Distance = dist;
 
-            CalculateColor(ref trace, ref u, ref v, ref result);
+            SetGeometryInfoOnResult(ref vertices,startVertexIndex, ref trace, ref u, ref v, ref result);
 
         }
 
-        public void CalculateColor(ref RayTrace trace, ref float U, ref float V, ref TraceResult input)
+        public static void SetGeometryInfoOnResult(ref TangentVertex[] vertices,int startVertexIndex, ref RayTrace trace, ref float U, ref float V, ref TraceResult input)
         {
             var Vertex1 = vertices[startVertexIndex];
             var Vertex2 = vertices[startVertexIndex + 1];
