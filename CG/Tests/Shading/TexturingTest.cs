@@ -1,6 +1,7 @@
-﻿using NUnit.Framework;
+﻿using MHGameWork.TheWizards.CG.Tests.Other;
+using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.CG.Tests
+namespace MHGameWork.TheWizards.CG.Tests.Shading
 {
     [TestFixture]
     public class TexturingTest

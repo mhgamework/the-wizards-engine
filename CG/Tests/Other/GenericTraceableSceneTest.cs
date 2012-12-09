@@ -12,7 +12,7 @@ using MHGameWork.TheWizards.CG.Spatial;
 using MHGameWork.TheWizards.CG.UI;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.CG.Tests
+namespace MHGameWork.TheWizards.CG.Tests.Other
 {
     [TestFixture]
     public class GenericTraceableSceneTest

@@ -12,7 +12,7 @@ using MHGameWork.TheWizards.CG.Shading;
 using MHGameWork.TheWizards.CG.Spatial;
 using MHGameWork.TheWizards.CG.UI;
 
-namespace MHGameWork.TheWizards.CG.Tests
+namespace MHGameWork.TheWizards.CG.Tests.Other
 {
     public class CGFactory
     {

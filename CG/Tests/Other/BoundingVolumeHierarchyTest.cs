@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.CG.Spatial;
+﻿using MHGameWork.TheWizards.CG.Spatial;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.CG.Tests
+namespace MHGameWork.TheWizards.CG.Tests.Other
 {
     [TestFixture]
     public class BoundingVolumeHierarchyTest

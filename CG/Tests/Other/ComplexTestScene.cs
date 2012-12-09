@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.CG.Cameras;
 
-namespace MHGameWork.TheWizards.CG.Tests
+namespace MHGameWork.TheWizards.CG.Tests.Other
 {
     public class ComplexTestScene
     {

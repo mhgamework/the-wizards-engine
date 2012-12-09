@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Raytracing;
 using MHGameWork.TheWizards.CG.SceneObjects;
 using MHGameWork.TheWizards.CG.Shading;
+using MHGameWork.TheWizards.CG.Tests.Other;
 using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.CG.Tests

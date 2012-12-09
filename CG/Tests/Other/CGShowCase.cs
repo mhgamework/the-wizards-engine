@@ -4,7 +4,7 @@ using MHGameWork.TheWizards.CG.OBJParser;
 using MHGameWork.TheWizards.CG.Shading;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.CG.Tests
+namespace MHGameWork.TheWizards.CG.Tests.Other
 {
     [TestFixture]
     public class CGShowCase

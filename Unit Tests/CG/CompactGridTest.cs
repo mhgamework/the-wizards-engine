@@ -11,6 +11,7 @@ using MHGameWork.TheWizards.CG.Raytracing;
 using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 using MHGameWork.TheWizards.CG.Spatial;
 using MHGameWork.TheWizards.CG.Tests;
+using MHGameWork.TheWizards.CG.Tests.Other;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Rendering;

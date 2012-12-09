@@ -4,10 +4,11 @@ using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Raytracing;
 using MHGameWork.TheWizards.CG.SceneObjects;
 using MHGameWork.TheWizards.CG.Shading;
+using MHGameWork.TheWizards.CG.Tests.Other;
 using MHGameWork.TheWizards.CG.UI;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.CG.Tests
+namespace MHGameWork.TheWizards.CG.Tests.Shading
 {
     [TestFixture]
     public class RefractionShaderTest
