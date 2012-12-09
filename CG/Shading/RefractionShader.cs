@@ -31,7 +31,7 @@ namespace MHGameWork.TheWizards.CG.Shading
         {
 
             float oldContribution = trace.contribution;
-            
+
             trace.recurseDepth++;
             var ret = shadeInternal(f, trace);
             trace.recurseDepth--;
@@ -51,7 +51,7 @@ namespace MHGameWork.TheWizards.CG.Shading
 
             Color4 k;
             Color4 a = new Color4((float)System.Math.Log(2.8f), (float)System.Math.Log(2f), (float)System.Math.Log(3f));
-            IShadeCommand cmd;
+            TraceResult result;
 
             Vector3 t;
             var r = Vector3.Reflect(d, n);
@@ -80,8 +80,9 @@ namespace MHGameWork.TheWizards.CG.Shading
                     trace.End = float.PositiveInfinity;
                     //TODO: trace.contribution = oldContrib * (1 - R);
 
-                    scene.Intersect(trace, out cmd, true); //smallt?
-                    return Color4.Modulate(k, cmd.CalculateColor());
+
+                    scene.Intersect(trace, out result); //smallt?
+                    return Color4.Modulate(k, result.ShadeDelegate());
                 }
             }
 
@@ -95,18 +96,18 @@ namespace MHGameWork.TheWizards.CG.Shading
             trace.Start = 0.001f;
             trace.End = float.PositiveInfinity;
             trace.contribution = oldContrib * R;
-            scene.Intersect(trace, out cmd, true); //smallt?
+            scene.Intersect(trace, out result); //smallt?
 
 
-            ret += R * cmd.CalculateColor();
+            ret += R * result.ShadeDelegate();
 
             trace.Ray = new Ray(f.Position, t);
             trace.Start = 0.001f;
             trace.End = float.PositiveInfinity;
-                        trace.contribution = oldContrib * (1-R);
-            scene.Intersect(trace, out cmd, true);//smallt?
+            trace.contribution = oldContrib * (1 - R);
+            scene.Intersect(trace, out result);//smallt?
 
-            ret += (1 - R) * cmd.CalculateColor();
+            ret += (1 - R) * result.ShadeDelegate();
 
             return Color4.Modulate(k, ret);
 

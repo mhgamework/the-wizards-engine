@@ -28,19 +28,19 @@ namespace MHGameWork.TheWizards.Tests.CG
             PhongShader shader;
 
             shader = new PhongShader(Scene, Camera);
-            Scene.AddGenericSurface(new PlaneSurface(shader, new Plane(Vector3.UnitY, 0)));
+            Scene.AddGenericSurface(new PlaneGeometricSurface(shader, new Plane(Vector3.UnitY, 0)));
 
             shader = new PhongShader(Scene, Camera);
             shader.Diffuse = new Color4(1, 0, 0);
-            var sphere1 = new SphereSurface(shader, new BoundingSphere(new Vector3(1.5f, 1, 1.5f - 15f), 1f));
+            var sphere1 = new SphereGeometricSurface(shader, new BoundingSphere(new Vector3(1.5f, 1, 1.5f - 15f), 1f));
 
             shader = new PhongShader(Scene, Camera);
             shader.Diffuse = new Color4(0, 0.8f, 0);
-            var sphere2 = new SphereSurface(shader, new BoundingSphere(new Vector3(0, 1, 0 - 15f), 1f));
+            var sphere2 = new SphereGeometricSurface(shader, new BoundingSphere(new Vector3(0, 1, 0 - 15f), 1f));
 
 
             shader = new PhongShader(Scene, Camera);
-            var sphere3 = new SphereSurface(shader, new BoundingSphere(new Vector3(-2, 1, 1 - 15f), 1f));
+            var sphere3 = new SphereGeometricSurface(shader, new BoundingSphere(new Vector3(-2, 1, 1 - 15f), 1f));
 
 
             Scene.AddGenericSurface(sphere3);

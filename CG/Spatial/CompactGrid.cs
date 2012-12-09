@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.Raytracing;
 
 namespace MHGameWork.TheWizards.CG.Spatial
 {
@@ -19,7 +20,7 @@ namespace MHGameWork.TheWizards.CG.Spatial
     {
         private int[] C;
         private Point3 M;
-        private List<ISurface> objects;
+        private List<ISceneObject> objects;
         private BoundingBoxCalculator bbCalc;
         public float NodeSize { get; private set; }
         private int[] L;
@@ -76,7 +77,7 @@ namespace MHGameWork.TheWizards.CG.Spatial
         /// Uses given set of objects to build this grid. This overrides the old data
         /// </summary>
         /// <param name="objects"></param>
-        public void buildGrid(List<ISurface> objects)
+        public void buildGrid(List<ISceneObject> objects)
         {
             this.objects = objects;
 
@@ -100,7 +101,7 @@ namespace MHGameWork.TheWizards.CG.Spatial
             for (int i = N - 1; i >= 0; --i)
             {
                 var o = objects[i];
-                var bb = o.GetBoundingBox(bbCalc);
+                var bb = o.BoundingBox;
 
 
                 int i1 = i;
@@ -138,7 +139,7 @@ namespace MHGameWork.TheWizards.CG.Spatial
 
             foreach (var o in objects)
             {
-                var bb = o.GetBoundingBox(bbCalc);
+                var bb = o.BoundingBox;
                 doForeachCellInBoundingBox(bb, i => C[i]++);
 
             }
@@ -190,7 +191,7 @@ namespace MHGameWork.TheWizards.CG.Spatial
             var ret = new BoundingBox();
             foreach (var o in objects)
             {
-                var add = o.GetBoundingBox(bbCalc);
+                var add = o.BoundingBox;
                 //TODO: check if this works!!! (double ret)
                 BoundingBox.MergeWith(ref ret, ref add, ref ret);
             }
@@ -202,7 +203,7 @@ namespace MHGameWork.TheWizards.CG.Spatial
             return C[cell + 1] - C[cell];
         }
 
-        public ISurface getCellObject(int cell, int objectIndex)
+        public ISceneObject getCellObject(int cell, int objectIndex)
         {
             return objects[L[C[cell] + objectIndex]];
         }

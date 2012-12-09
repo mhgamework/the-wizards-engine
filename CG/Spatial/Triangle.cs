@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.Raytracing;
 
 namespace MHGameWork.TheWizards.CG.Spatial
 {
-    public class Triangle : ISurface
+    public class Triangle : IGeometricSurface
     {
         private Vector3[] positions = new Vector3[3];
 
@@ -22,14 +23,19 @@ namespace MHGameWork.TheWizards.CG.Spatial
             return positions[vertexIndex];
         }
 
-        public BoundingBox GetBoundingBox(IBoundingBoxCalculator calc)
-        {
-            return calc.GetBoundingBox(this);
-        }
-
         public Vector3[] getPositions()
         {
             return positions;
+        }
+
+        public BoundingBox CalculateBoundingBox()
+        {
+            return BoundingBox.FromPoints(getPositions());
+        }
+
+        public void Intersects(ref RayTrace trace, out float? result, out IShadeCommand shadeCommand, bool generateShadeCommand)
+        {
+            throw new NotImplementedException();
         }
     }
 }

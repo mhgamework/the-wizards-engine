@@ -67,8 +67,8 @@ namespace MHGameWork.TheWizards.Tests.CG
         public void Run(int numThreads = 4)
         {
             if (ui == null) CreateUI();
-            ui.Run(GetRenderedImage(),numThreads);
-            
+            ui.Run(GetRenderedImage(), numThreads);
+
         }
 
         public IRenderedImage GetRenderedImage()
@@ -135,11 +135,11 @@ namespace MHGameWork.TheWizards.Tests.CG
 
             var converter = new MeshToTriangleConverter();
 
-            List<TriangleSurface> triangles = converter.GetTrianglesWithPhong(mesh,CreatePhong);
+            List<TriangleGeometricSurface> triangles = converter.GetTrianglesWithPhong(mesh, CreatePhong);
 
             var grid = new CompactGrid();
-            grid.buildGrid(triangles.Select(o => (ISurface)o).ToList());
-            GetScene() .AddGenericSurface(new CompactGridSurface(grid));
+            grid.buildGrid(triangles.Select(o => (ISceneObject)new GeometrySceneObject { Shader = shader, GeometricSurface = o }).ToList());
+            GetScene().AddSceneObject(new CompactGridGeometricSurface(grid));
 
         }
     }

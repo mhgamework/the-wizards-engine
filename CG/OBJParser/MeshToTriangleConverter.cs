@@ -17,9 +17,9 @@ namespace MHGameWork.TheWizards.CG.Spatial
     {
 
         private SimpleTexture2DLoader loader = new SimpleTexture2DLoader();
-        public List<TriangleSurface> GetTrianglesWithPhong(RAMMesh mesh, Func<PhongShader> phongFactory)
+        public List<TriangleGeometricSurface> GetTrianglesWithPhong(RAMMesh mesh, Func<PhongShader> phongFactory)
         {
-            var ret = new List<TriangleSurface>();
+            var ret = new List<TriangleGeometricSurface>();
             foreach (var part in mesh.GetParts())
             {
                 var shader = phongFactory();
@@ -40,15 +40,15 @@ namespace MHGameWork.TheWizards.CG.Spatial
                 //Microsoft.Xna.Framework.Vector3.Transform(positions, ref part.ObjectMatrix, positions);
                 for (int i = 0; i < positions.Length / 3; i++)
                 {
-                    ret.Add(new TriangleSurface(vertices, i, shader));
+                    ret.Add(new TriangleGeometricSurface(vertices, i, shader));
                 }
             }
             return ret;
         }
 
-        public List<TriangleSurface> GetTriangles(RAMMesh mesh, IShader shader)
+        public List<TriangleGeometricSurface> GetTriangles(RAMMesh mesh, IShader shader)
         {
-            var ret = new List<TriangleSurface>();
+            var ret = new List<TriangleGeometricSurface>();
             foreach (var part in mesh.GetParts())
             {
                 var positions = part.Positions; 
@@ -60,7 +60,7 @@ namespace MHGameWork.TheWizards.CG.Spatial
                 //Microsoft.Xna.Framework.Vector3.Transform(positions, ref part.ObjectMatrix, positions);
                 for (int i = 0; i < positions.Length/3; i ++)
                 {
-                    ret.Add(new TriangleSurface(vertices, i, shader));
+                    ret.Add(new TriangleGeometricSurface(vertices, i, shader));
                 }
             }
             return ret;

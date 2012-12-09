@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.Tests.CG
 
             var shader = new PhongShader(scene, cam);
 
-            scene.AddGenericSurface(new SphereSurface(shader, new BoundingSphere(new Vector3(0, 0, 0 - 3), 1f)));
+            scene.AddGenericSurface(new SphereGeometricSurface(shader, new BoundingSphere(new Vector3(0, 0, 0 - 3), 1f)));
 
 
             var window = new GraphicalRayTracer(new TracedSceneImage(scene, cam));
@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.Tests.CG
         [Test]
         public void TestRaycastGenericSphere()
         {
-            var s = new SphereSurface(null, new BoundingSphere(new Vector3(0, 0, 0), 1f));
+            var s = new SphereGeometricSurface(null, new BoundingSphere(new Vector3(0, 0, 0), 1f));
             Ray ray = new Ray(new Vector3(-0.8f, 0, 0), new Vector3(1, 0, 0));
             float? result;
             s.IntersectsSphere(ref ray, out result);
@@ -58,7 +58,7 @@ namespace MHGameWork.TheWizards.Tests.CG
 
             var shader = new PhongShader(scene, cam);
 
-            scene.AddGenericSurface(new PlaneSurface(shader, new Plane(Vector3.UnitY, 0)));
+            scene.AddGenericSurface(new PlaneGeometricSurface(shader, new Plane(Vector3.UnitY, 0)));
 
             var window = new GraphicalRayTracer(new TracedSceneImage(scene, cam));
 
@@ -81,7 +81,7 @@ namespace MHGameWork.TheWizards.Tests.CG
             var scene = f.CreateGenericTraceableScene();
             var shader = f.CreatePhong();
 
-            List<TriangleSurface> triangles = getTriangles(shader, f.CreateMesh(new FileInfo(TWDir.GameData + "\\Core\\barrel.obj")));
+            List<TriangleGeometricSurface> triangles = getTriangles(shader, f.CreateMesh(new FileInfo(TWDir.GameData + "\\Core\\barrel.obj")));
 
             foreach (var tri in triangles)
             {
@@ -95,25 +95,27 @@ namespace MHGameWork.TheWizards.Tests.CG
 
         }
 
-        private List<TriangleSurface> getTriangles(PhongShader shader, RAMMesh mesh)
+        private List<TriangleGeometricSurface> getTriangles(PhongShader shader, RAMMesh mesh)
         {
             var converter = new MeshToTriangleConverter();
             return converter.GetTriangles(mesh, shader);
         }
 
         [Test]
-        public void TestCompactGridSurface()
+        public void TestCompactGridSceneObject()
         {
             var f = new CGFactory();
 
             var scene = f.CreateGenericTraceableScene();
             var shader = f.CreatePhong();
 
-            List<TriangleSurface> triangles = getTriangles(shader, f.CreateMesh(new FileInfo(TWDir.GameData + "\\Core\\Dragon\\dragon.obj")));
+            List<TriangleGeometricSurface> triangles = getTriangles(shader, f.CreateMesh(new FileInfo(TWDir.GameData + "\\Core\\Dragon\\dragon.obj")));
 
             var grid = new CompactGrid();
-            grid.buildGrid(triangles.Select(o => (ISurface)o).ToList());
-            scene.AddGenericSurface(new CompactGridSurface(grid));
+            grid.buildGrid(
+                triangles.Select(
+                    o => (ISceneObject)new GeometrySceneObject { GeometricSurface = o, Shader = shader }).ToList());
+            scene.AddSceneObject(new CompactGridGeometricSurface(grid));
 
             f.CreatePerspectiveCamera(new Vector3(-4, 1, 0), new Vector3(0, 0, 0));
             f.Run();
@@ -123,29 +125,5 @@ namespace MHGameWork.TheWizards.Tests.CG
 
         }
 
-        /// <summary>
-        /// Creates an image from a traceablescene and a camera
-        /// </summary>
-        private class TracedSceneImage : IRenderedImage
-        {
-            private readonly ITraceableScene scene;
-            private readonly ICamera camera;
-
-            public TracedSceneImage(ITraceableScene scene, ICamera camera)
-            {
-                this.scene = scene;
-                this.camera = camera;
-            }
-
-            public Color4 GetPixel(Vector2 pos)
-            {
-                var rayTrace = new RayTrace(camera.CalculateRay(pos), 0, int.MaxValue);
-                IShadeCommand cmd;
-                scene.Intersect(rayTrace, out cmd, true);
-                if (cmd == null) return new Color4();
-                return cmd.CalculateColor();
-
-            }
-        }
     }
 }

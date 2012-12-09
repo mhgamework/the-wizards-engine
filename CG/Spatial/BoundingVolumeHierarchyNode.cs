@@ -7,13 +7,13 @@ using MHGameWork.TheWizards.CG.Raytracing;
 
 namespace MHGameWork.TheWizards.CG.Spatial
 {
-    public class BoundingVolumeHierarchyNode : ISurface, ISurface
+    public class BoundingVolumeHierarchyNode : ISceneObject
     {
         private BoundingBox boundingBox;
-        private ISurface left;
-        private ISurface right;
+        private ISceneObject left;
+        private ISceneObject right;
 
-        public BoundingVolumeHierarchyNode(BoundingBox boundingBox, ISurface left, ISurface right)
+        public BoundingVolumeHierarchyNode(BoundingBox boundingBox, ISceneObject left, ISceneObject right)
         {
             this.boundingBox = boundingBox;
             this.left = left;
@@ -25,43 +25,29 @@ namespace MHGameWork.TheWizards.CG.Spatial
             return boundingBox;
         }
 
-        public void Intersects(ref RayTrace trace, out float? result, out IShadeCommand shadeCommand, bool generateShadeCommand)
+        public void Intersects(ref RayTrace trace, ref TraceResult result)
         {
-            boundingBox.Intersects(ref trace.Ray, out result);
-            if (!trace.IsInRange(ref result))
-            {
-                result = null;
-                shadeCommand = null;
+            float? dist;
+            boundingBox.Intersects(ref trace.Ray, out dist);
+            if (!trace.IsInRange(ref dist))
                 return;
-            }
-            float? hitLeft=null, hitRight=null;
-            IShadeCommand cmdLeft=null, cmdRight=null;
-            if (left != null)
-                left.Intersects(ref trace, out hitLeft, out cmdLeft, generateShadeCommand);
-            if (left != null)
-                left.Intersects(ref trace, out hitRight, out cmdRight, generateShadeCommand);
 
-            if (hitRight.HasValue &&  hitLeft.HasValue)
-            {
-                GenericTraceableScene.changeWhenCloser(ref hitLeft, ref cmdLeft, ref hitRight, ref cmdRight);
-                result = hitLeft;
-                shadeCommand = cmdLeft;
-                return;
-            }
-            if (hitLeft.HasValue)
-            {
-                result = hitLeft;
-                shadeCommand = cmdLeft;
-                return;
-            }
-            if (hitRight.HasValue)
-            {
-                result = hitRight;
-                shadeCommand = cmdRight;
-                return;
-            }
-            result = null;
-            shadeCommand = null;
+            var hitLeft = new TraceResult();
+            var hitRight = new TraceResult();
+
+            if (left != null)
+                left.Intersects(ref trace, ref hitLeft);
+            if (left != null)
+                left.Intersects(ref trace, ref hitRight);
+
+            result.AddResult(ref hitLeft);
+            result.AddResult(ref hitRight);
         }
+
+        public BoundingBox BoundingBox
+        {
+            get { return boundingBox; }
+        }
+
     }
 }

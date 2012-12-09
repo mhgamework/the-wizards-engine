@@ -5,6 +5,6 @@
     /// </summary>
     public interface ITraceableScene
     {
-        bool Intersect(RayTrace rayTrace, out IShadeCommand command, bool generateShadeCommand);
+        void Intersect(RayTrace rayTrace, out TraceResult result);
     }
 }

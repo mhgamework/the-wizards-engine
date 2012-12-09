@@ -16,14 +16,6 @@ namespace MHGameWork.TheWizards.CG.Math
         public float Y;
         public float Z;
 
-        public static int SizeInBytes
-        {
-            get
-            {
-                return Marshal.SizeOf(typeof(Vector3));
-            }
-        }
-
         public static Vector3 UnitZ
         {
             get
@@ -65,7 +57,7 @@ namespace MHGameWork.TheWizards.CG.Math
                 if (index == 1)
                     return this.Y;
                 if (index != 2)
-                    throw new ArgumentOutOfRangeException("index", "Indices for Vector3 run from 0 to 2, inclusive.");
+                    throw new ArgumentOutOfRangeException();
                 else
                     return this.Z;
             }
@@ -76,7 +68,7 @@ namespace MHGameWork.TheWizards.CG.Math
                     if (index != 1)
                     {
                         if (index != 2)
-                            throw new ArgumentOutOfRangeException("index", "Indices for Vector3 run from 0 to 2, inclusive.");
+                            throw new ArgumentOutOfRangeException();
                         this.Z = value;
                     }
                     else
@@ -119,13 +111,10 @@ namespace MHGameWork.TheWizards.CG.Math
 
         public static Vector3 operator -(Vector3 value)
         {
-            float num1 = -value.X;
-            float num2 = -value.Y;
-            float num3 = -value.Z;
             Vector3 vector3;
-            vector3.X = num1;
-            vector3.Y = num2;
-            vector3.Z = num3;
+            vector3.X = -value.X;
+            vector3.Y = -value.Y;
+            vector3.Z = -value.Z;
             return vector3;
         }
 
@@ -154,11 +143,7 @@ namespace MHGameWork.TheWizards.CG.Math
 
         public static Vector3 operator /(Vector3 vector, float scale)
         {
-            Vector3 vector3;
-            vector3.X = vector.X / scale;
-            vector3.Y = vector.Y / scale;
-            vector3.Z = vector.Z / scale;
-            return vector3;
+            return vector * (1 / scale);
         }
 
         public static bool operator ==(Vector3 left, Vector3 right)
@@ -173,32 +158,12 @@ namespace MHGameWork.TheWizards.CG.Math
 
         public float Length()
         {
-            double num1 = (double)this.Y;
-            double num2 = (double)this.X;
-            double num3 = (double)this.Z;
-            double num4 = num2;
-            double num5 = num4 * num4;
-            double num6 = num1;
-            double num7 = num6 * num6;
-            double num8 = num5 + num7;
-            double num9 = num3;
-            double num10 = num9 * num9;
-            return (float)System.Math.Sqrt(num8 + num10);
+            return (float)System.Math.Sqrt(LengthSquared());
         }
 
         public float LengthSquared()
         {
-            double num1 = (double)this.Y;
-            double num2 = (double)this.X;
-            double num3 = (double)this.Z;
-            double num4 = num2;
-            double num5 = num4 * num4;
-            double num6 = num1;
-            double num7 = num6 * num6;
-            double num8 = num5 + num7;
-            double num9 = num3;
-            double num10 = num9 * num9;
-            return (float)(num8 + num10);
+            return (float)((double)this.X * (double)this.X + (double)this.Y * (double)this.Y + (double)this.Z * (double)this.Z);
         }
 
         public static void Normalize(ref Vector3 vector, out Vector3 result)
@@ -216,31 +181,13 @@ namespace MHGameWork.TheWizards.CG.Math
 
         public void Normalize()
         {
-            float num1 = this.Length();
-            if ((double)num1 == 0.0)
+            float len = this.Length();
+            if ((double)len == 0.0)
                 return;
-            float num2 = 1f / num1;
-            this.X *= num2;
-            this.Y *= num2;
-            this.Z *= num2;
-        }
-
-        public static void Add(ref Vector3 left, ref Vector3 right, out Vector3 result)
-        {
-            Vector3 vector3;
-            vector3.X = left.X + right.X;
-            vector3.Y = left.Y + right.Y;
-            vector3.Z = left.Z + right.Z;
-            result = vector3;
-        }
-
-        public static Vector3 Add(Vector3 left, Vector3 right)
-        {
-            Vector3 vector3;
-            vector3.X = left.X + right.X;
-            vector3.Y = left.Y + right.Y;
-            vector3.Z = left.Z + right.Z;
-            return vector3;
+            float oneOverLen = 1f / len;
+            this.X *= oneOverLen;
+            this.Y *= oneOverLen;
+            this.Z *= oneOverLen;
         }
 
         public static void Subtract(ref Vector3 left, ref Vector3 right, out Vector3 result)
@@ -250,33 +197,6 @@ namespace MHGameWork.TheWizards.CG.Math
             vector3.Y = left.Y - right.Y;
             vector3.Z = left.Z - right.Z;
             result = vector3;
-        }
-
-        public static Vector3 Subtract(Vector3 left, Vector3 right)
-        {
-            Vector3 vector3;
-            vector3.X = left.X - right.X;
-            vector3.Y = left.Y - right.Y;
-            vector3.Z = left.Z - right.Z;
-            return vector3;
-        }
-
-        public static void Multiply(ref Vector3 vector, float scale, out Vector3 result)
-        {
-            Vector3 vector3;
-            vector3.X = vector.X * scale;
-            vector3.Y = vector.Y * scale;
-            vector3.Z = vector.Z * scale;
-            result = vector3;
-        }
-
-        public static Vector3 Multiply(Vector3 value, float scale)
-        {
-            Vector3 vector3;
-            vector3.X = value.X * scale;
-            vector3.Y = value.Y * scale;
-            vector3.Z = value.Z * scale;
-            return vector3;
         }
 
         public static void Modulate(ref Vector3 left, ref Vector3 right, out Vector3 result)
@@ -297,91 +217,7 @@ namespace MHGameWork.TheWizards.CG.Math
             return vector3;
         }
 
-        public static void Divide(ref Vector3 vector, float scale, out Vector3 result)
-        {
-            Vector3 vector3;
-            vector3.X = vector.X / scale;
-            vector3.Y = vector.Y / scale;
-            vector3.Z = vector.Z / scale;
-            result = vector3;
-        }
 
-        public static Vector3 Divide(Vector3 value, float scale)
-        {
-            Vector3 vector3;
-            vector3.X = value.X / scale;
-            vector3.Y = value.Y / scale;
-            vector3.Z = value.Z / scale;
-            return vector3;
-        }
-
-        public static void Negate(ref Vector3 value, out Vector3 result)
-        {
-            float num1 = -value.X;
-            float num2 = -value.Y;
-            float num3 = -value.Z;
-            Vector3 vector3;
-            vector3.X = num1;
-            vector3.Y = num2;
-            vector3.Z = num3;
-            result = vector3;
-        }
-
-        public static Vector3 Negate(Vector3 value)
-        {
-            float num1 = -value.X;
-            float num2 = -value.Y;
-            float num3 = -value.Z;
-            Vector3 vector3;
-            vector3.X = num1;
-            vector3.Y = num2;
-            vector3.Z = num3;
-            return vector3;
-        }
-
-        public static void Barycentric(ref Vector3 value1, ref Vector3 value2, ref Vector3 value3, float amount1, float amount2, out Vector3 result)
-        {
-            Vector3 vector3;
-            vector3.X = (float)(((double)value2.X - (double)value1.X) * (double)amount1 + (double)value1.X + ((double)value3.X - (double)value1.X) * (double)amount2);
-            vector3.Y = (float)(((double)value2.Y - (double)value1.Y) * (double)amount1 + (double)value1.Y + ((double)value3.Y - (double)value1.Y) * (double)amount2);
-            vector3.Z = (float)(((double)value2.Z - (double)value1.Z) * (double)amount1 + (double)value1.Z + ((double)value3.Z - (double)value1.Z) * (double)amount2);
-            result = vector3;
-        }
-
-        public static Vector3 Barycentric(Vector3 value1, Vector3 value2, Vector3 value3, float amount1, float amount2)
-        {
-            return new Vector3()
-            {
-                X = (float)(((double)value2.X - (double)value1.X) * (double)amount1 + (double)value1.X + ((double)value3.X - (double)value1.X) * (double)amount2),
-                Y = (float)(((double)value2.Y - (double)value1.Y) * (double)amount1 + (double)value1.Y + ((double)value3.Y - (double)value1.Y) * (double)amount2),
-                Z = (float)(((double)value2.Z - (double)value1.Z) * (double)amount1 + (double)value1.Z + ((double)value3.Z - (double)value1.Z) * (double)amount2)
-            };
-        }
-
-        public static void CatmullRom(ref Vector3 value1, ref Vector3 value2, ref Vector3 value3, ref Vector3 value4, float amount, out Vector3 result)
-        {
-            double num1 = (double)amount;
-            float num2 = (float)(num1 * num1);
-            float num3 = num2 * amount;
-            result = new Vector3()
-            {
-                X = (float)((((double)value1.X * 2.0 - (double)value2.X * 5.0 + (double)value3.X * 4.0 - (double)value4.X) * (double)num2 + (((double)value3.X - (double)value1.X) * (double)amount + (double)value2.X * 2.0) + ((double)value2.X * 3.0 - (double)value1.X - (double)value3.X * 3.0 + (double)value4.X) * (double)num3) * 0.5),
-                Y = (float)((((double)value1.Y * 2.0 - (double)value2.Y * 5.0 + (double)value3.Y * 4.0 - (double)value4.Y) * (double)num2 + (((double)value3.Y - (double)value1.Y) * (double)amount + (double)value2.Y * 2.0) + ((double)value2.Y * 3.0 - (double)value1.Y - (double)value3.Y * 3.0 + (double)value4.Y) * (double)num3) * 0.5),
-                Z = (float)((((double)value1.Z * 2.0 - (double)value2.Z * 5.0 + (double)value3.Z * 4.0 - (double)value4.Z) * (double)num2 + (((double)value3.Z - (double)value1.Z) * (double)amount + (double)value2.Z * 2.0) + ((double)value2.Z * 3.0 - (double)value1.Z - (double)value3.Z * 3.0 + (double)value4.Z) * (double)num3) * 0.5)
-            };
-        }
-
-        public static Vector3 CatmullRom(Vector3 value1, Vector3 value2, Vector3 value3, Vector3 value4, float amount)
-        {
-            Vector3 vector3 = new Vector3();
-            double num1 = (double)amount;
-            float num2 = (float)(num1 * num1);
-            float num3 = num2 * amount;
-            vector3.X = (float)((((double)value1.X * 2.0 - (double)value2.X * 5.0 + (double)value3.X * 4.0 - (double)value4.X) * (double)num2 + (((double)value3.X - (double)value1.X) * (double)amount + (double)value2.X * 2.0) + ((double)value2.X * 3.0 - (double)value1.X - (double)value3.X * 3.0 + (double)value4.X) * (double)num3) * 0.5);
-            vector3.Y = (float)((((double)value1.Y * 2.0 - (double)value2.Y * 5.0 + (double)value3.Y * 4.0 - (double)value4.Y) * (double)num2 + (((double)value3.Y - (double)value1.Y) * (double)amount + (double)value2.Y * 2.0) + ((double)value2.Y * 3.0 - (double)value1.Y - (double)value3.Y * 3.0 + (double)value4.Y) * (double)num3) * 0.5);
-            vector3.Z = (float)((((double)value1.Z * 2.0 - (double)value2.Z * 5.0 + (double)value3.Z * 4.0 - (double)value4.Z) * (double)num2 + (((double)value3.Z - (double)value1.Z) * (double)amount + (double)value2.Z * 2.0) + ((double)value2.Z * 3.0 - (double)value1.Z - (double)value3.Z * 3.0 + (double)value4.Z) * (double)num3) * 0.5);
-            return vector3;
-        }
 
         public static void Clamp(ref Vector3 value, ref Vector3 min, ref Vector3 max, out Vector3 result)
         {
@@ -419,38 +255,6 @@ namespace MHGameWork.TheWizards.CG.Math
             return vector3;
         }
 
-        public static void Hermite(ref Vector3 value1, ref Vector3 tangent1, ref Vector3 value2, ref Vector3 tangent2, float amount, out Vector3 result)
-        {
-            double num1 = (double)amount;
-            float num2 = (float)(num1 * num1);
-            float num3 = num2 * amount;
-            double num4 = (double)num2 * 3.0;
-            float num5 = (float)((double)num3 * 2.0 - num4 + 1.0);
-            float num6 = (float)((double)num3 * -2.0 + num4);
-            float num7 = num3 - num2 * 2f + amount;
-            float num8 = num3 - num2;
-            result.X = (float)((double)value2.X * (double)num6 + (double)value1.X * (double)num5 + (double)tangent1.X * (double)num7 + (double)tangent2.X * (double)num8);
-            result.Y = (float)((double)value2.Y * (double)num6 + (double)value1.Y * (double)num5 + (double)tangent1.Y * (double)num7 + (double)tangent2.Y * (double)num8);
-            result.Z = (float)((double)value2.Z * (double)num6 + (double)value1.Z * (double)num5 + (double)tangent1.Z * (double)num7 + (double)tangent2.Z * (double)num8);
-        }
-
-        public static Vector3 Hermite(Vector3 value1, Vector3 tangent1, Vector3 value2, Vector3 tangent2, float amount)
-        {
-            Vector3 vector3 = new Vector3();
-            double num1 = (double)amount;
-            float num2 = (float)(num1 * num1);
-            float num3 = num2 * amount;
-            double num4 = (double)num2 * 3.0;
-            float num5 = (float)((double)num3 * 2.0 - num4 + 1.0);
-            float num6 = (float)((double)num3 * -2.0 + num4);
-            float num7 = num3 - num2 * 2f + amount;
-            float num8 = num3 - num2;
-            vector3.X = (float)((double)value2.X * (double)num6 + (double)value1.X * (double)num5 + (double)tangent1.X * (double)num7 + (double)tangent2.X * (double)num8);
-            vector3.Y = (float)((double)value2.Y * (double)num6 + (double)value1.Y * (double)num5 + (double)tangent1.Y * (double)num7 + (double)tangent2.Y * (double)num8);
-            vector3.Z = (float)((double)value2.Z * (double)num6 + (double)value1.Z * (double)num5 + (double)tangent1.Z * (double)num7 + (double)tangent2.Z * (double)num8);
-            return vector3;
-        }
-
         public static void Lerp(ref Vector3 start, ref Vector3 end, float amount, out Vector3 result)
         {
             result.X = (end.X - start.X) * amount + start.X;
@@ -466,70 +270,6 @@ namespace MHGameWork.TheWizards.CG.Math
                 Y = (end.Y - start.Y) * amount + start.Y,
                 Z = (end.Z - start.Z) * amount + start.Z
             };
-        }
-
-        public static void SmoothStep(ref Vector3 start, ref Vector3 end, float amount, out Vector3 result)
-        {
-            float num1 = (double)amount <= 1.0 ? ((double)amount >= 0.0 ? amount : 0.0f) : 1f;
-            double num2 = (double)num1;
-            double num3 = 3.0 - (double)num1 * 2.0;
-            double num4 = num2;
-            double num5 = num4 * num4;
-            amount = (float)(num3 * num5);
-            result.X = (end.X - start.X) * amount + start.X;
-            result.Y = (end.Y - start.Y) * amount + start.Y;
-            result.Z = (end.Z - start.Z) * amount + start.Z;
-        }
-
-        public static Vector3 SmoothStep(Vector3 start, Vector3 end, float amount)
-        {
-            Vector3 vector3 = new Vector3();
-            float num1 = (double)amount <= 1.0 ? ((double)amount >= 0.0 ? amount : 0.0f) : 1f;
-            double num2 = (double)num1;
-            double num3 = 3.0 - (double)num1 * 2.0;
-            double num4 = num2;
-            double num5 = num4 * num4;
-            amount = (float)(num3 * num5);
-            vector3.X = (end.X - start.X) * amount + start.X;
-            vector3.Y = (end.Y - start.Y) * amount + start.Y;
-            vector3.Z = (end.Z - start.Z) * amount + start.Z;
-            return vector3;
-        }
-
-        public static float Distance(Vector3 value1, Vector3 value2)
-        {
-            float num1 = value1.X - value2.X;
-            float num2 = value1.Y - value2.Y;
-            float num3 = value1.Z - value2.Z;
-            double num4 = (double)num2;
-            double num5 = (double)num1;
-            double num6 = (double)num3;
-            double num7 = num5;
-            double num8 = num7 * num7;
-            double num9 = num4;
-            double num10 = num9 * num9;
-            double num11 = num8 + num10;
-            double num12 = num6;
-            double num13 = num12 * num12;
-            return (float)System.Math.Sqrt(num11 + num13);
-        }
-
-        public static float DistanceSquared(Vector3 value1, Vector3 value2)
-        {
-            float num1 = value1.X - value2.X;
-            float num2 = value1.Y - value2.Y;
-            float num3 = value1.Z - value2.Z;
-            double num4 = (double)num2;
-            double num5 = (double)num1;
-            double num6 = (double)num3;
-            double num7 = num5;
-            double num8 = num7 * num7;
-            double num9 = num4;
-            double num10 = num9 * num9;
-            double num11 = num8 + num10;
-            double num12 = num6;
-            double num13 = num12 * num12;
-            return (float)(num11 + num13);
         }
 
         public static float Dot(Vector3 left, Vector3 right)
@@ -691,51 +431,6 @@ namespace MHGameWork.TheWizards.CG.Math
             };
         }
 
-        public static void Project(ref Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, ref Matrix worldViewProjection, out Vector3 result)
-        {
-            Vector3 result1 = new Vector3();
-            Vector3.TransformCoordinate(ref vector, ref worldViewProjection, out result1);
-            Vector3 vector3;
-            vector3.X = (float)(((double)result1.X + 1.0) * 0.5) * width + x;
-            vector3.Y = (float)((1.0 - (double)result1.Y) * 0.5) * height + y;
-            vector3.Z = result1.Z * (maxZ - minZ) + minZ;
-            result = vector3;
-        }
-
-        public static Vector3 Project(Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix worldViewProjection)
-        {
-            Vector3.TransformCoordinate(ref vector, ref worldViewProjection, out vector);
-            Vector3 vector3;
-            vector3.X = (float)(((double)vector.X + 1.0) * 0.5) * width + x;
-            vector3.Y = (float)((1.0 - (double)vector.Y) * 0.5) * height + y;
-            vector3.Z = vector.Z * (maxZ - minZ) + minZ;
-            return vector3;
-        }
-
-        public static void Unproject(ref Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, ref Matrix worldViewProjection, out Vector3 result)
-        {
-            Vector3 result1 = new Vector3();
-            Matrix result2 = new Matrix();
-            Matrix.Invert(ref worldViewProjection, out result2);
-            result1.X = (float)(((double)vector.X - (double)x) / (double)width * 2.0 - 1.0);
-            result1.Y = (float)-(((double)vector.Y - (double)y) / (double)height * 2.0 - 1.0);
-            result1.Z = (float)(((double)vector.Z - (double)minZ) / ((double)maxZ - (double)minZ));
-            Vector3.TransformCoordinate(ref result1, ref result2, out result1);
-            result = result1;
-        }
-
-        public static Vector3 Unproject(Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix worldViewProjection)
-        {
-            Vector3 result1 = new Vector3();
-            Matrix result2 = new Matrix();
-            Matrix.Invert(ref worldViewProjection, out result2);
-            result1.X = (float)(((double)vector.X - (double)x) / (double)width * 2.0 - 1.0);
-            result1.Y = (float)-(((double)vector.Y - (double)y) / (double)height * 2.0 - 1.0);
-            result1.Z = (float)(((double)vector.Z - (double)minZ) / ((double)maxZ - (double)minZ));
-            Vector3.TransformCoordinate(ref result1, ref result2, out result1);
-            return result1;
-        }
-
         public static void Minimize(ref Vector3 value1, ref Vector3 value2, out Vector3 result)
         {
             float num1 = (double)value1.X >= (double)value2.X ? value2.X : value1.X;
@@ -816,6 +511,63 @@ namespace MHGameWork.TheWizards.CG.Math
                 return false;
             else
                 return this.Equals((Vector3)obj);
+        }
+
+
+        private static Vector3 up;
+        private static Vector3 down;
+        private static Vector3 left;
+        private static Vector3 right;
+        private static Vector3 forward;
+        private static Vector3 backward;
+        private static Vector3 one;
+
+
+        public static Vector3 Up
+        {
+            get { return up; }
+        }
+
+        public static Vector3 Down
+        {
+            get { return down; }
+        }
+
+        public static Vector3 Left
+        {
+            get { return left; }
+        }
+
+        public static Vector3 Right
+        {
+            get { return right; }
+        }
+
+        public static Vector3 Forward
+        {
+            get { return forward; }
+        }
+
+        public static Vector3 Backward
+        {
+            get { return backward; }
+        }
+
+        public static Vector3 One
+        {
+            get { return one; }
+        }
+
+
+        static Vector3()
+        {
+            up = new Vector3(0, 1, 0);
+            down = new Vector3(0, -1, 0);
+            left = new Vector3(-1, 0, 0);
+            right = new Vector3(1, 0, 0);
+            forward = new Vector3(0, 0, -1);
+            backward = new Vector3(0, 0, 1);
+            one = new Vector3(1, 1, 1);
         }
     }
 }

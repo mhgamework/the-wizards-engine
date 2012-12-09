@@ -26,8 +26,8 @@ namespace MHGameWork.TheWizards.Tests.CG
 
             var shader = new PhongShader(scene, cam);
 
-            scene.AddGenericSurface(new PlaneSurface(shader, new Plane(Vector3.UnitY, 0)));
-            scene.AddGenericSurface(new SphereSurface(shader, new BoundingSphere(new Vector3(0, 1, 0 -5f), 1f)));
+            scene.AddGenericSurface(new PlaneGeometricSurface(shader, new Plane(Vector3.UnitY, 0)));
+            scene.AddGenericSurface(new SphereGeometricSurface(shader, new BoundingSphere(new Vector3(0, 1, 0 -5f), 1f)));
 
             var tracedSceneImage = new TracedSceneImage(scene, cam);
 

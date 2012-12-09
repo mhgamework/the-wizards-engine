@@ -17,7 +17,7 @@ namespace MHGameWork.TheWizards.CG.SDL
         private GenericTraceableScene scene;
         private Dictionary<string, Shading.PointLight> lights = new Dictionary<string, Shading.PointLight>();
         private Dictionary<string, ICamera> cameras = new Dictionary<string, ICamera>();
-        private Dictionary<string, ISurface> geometries = new Dictionary<string, ISurface>();
+        private Dictionary<string, IGeometricSurface> geometries = new Dictionary<string, IGeometricSurface>();
         private Dictionary<string, RAMTexture> textures = new Dictionary<string, RAMTexture>();
         private Dictionary<string, Material> materials = new Dictionary<string, Material>();
         private Sdl data;
@@ -81,7 +81,7 @@ namespace MHGameWork.TheWizards.CG.SDL
         }
         private void loadGeometry(Sphere gData)
         {
-            var sphere = new SphereSurface(null, new BoundingSphere(Vector3.Zero, parseFloat(gData.radius)));
+            var sphere = new SphereGeometricSurface(null, new BoundingSphere(Vector3.Zero, parseFloat(gData.radius)));
         }
         private void loadGeometry(Teapot gData)
         {
@@ -134,11 +134,13 @@ namespace MHGameWork.TheWizards.CG.SDL
 
         private Vector3 parseVector3(String data)
         {
-
+            var input = data.Split().Select(str => float.Parse(str));
+            return new Vector3(input.ElementAt(0), input.ElementAt(1), input.ElementAt(2));
         }
         private Color4 parseColor(String data)
         {
-
+            var input = data.Split().Select(str => float.Parse(str));
+            return new Color4(input.ElementAt(0), input.ElementAt(1), input.ElementAt(2));
         }
         private float parseFloat(String data)
         {

@@ -107,28 +107,34 @@
     <Compile Include="OBJParser\OBJMaterial.cs" />
     <Compile Include="OBJParser\OBJToRAMMeshConverter.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="SceneObjects\CompoundSceneObject.cs" />
+    <Compile Include="SceneObjects\GeometrySceneObject.cs" />
+    <Compile Include="Raytracing\Core\TraceResult.cs" />
+    <Compile Include="Raytracing\ISceneObject.cs" />
+    <Compile Include="Raytracing\Core\ShadeDelegate.cs" />
+    <Compile Include="SceneObjects\TransformedSceneObject.cs" />
     <Compile Include="SDL\SDLSceneLoader.cs" />
     <Compile Include="Shading\ILightProvider.cs" />
     <Compile Include="Shading\SimpleLightProvider.cs" />
     <Compile Include="Spatial\BoundingVolumeHierarchyBuilder.cs" />
     <Compile Include="Spatial\BoundingVolumeHierarchyNode.cs" />
+    <Compile Include="Spatial\Triangle.cs" />
     <Compile Include="TangentVertex.cs" />
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
     <Compile Include="MultisampledImage.cs" />
-    <Compile Include="Raytracing\GenericScene.cs" />
-    <Compile Include="Raytracing\GenericTraceableScene.cs" />
-    <Compile Include="Raytracing\GeometryInput.cs" />
-    <Compile Include="Raytracing\ISurface.cs" />
+    <Compile Include="GenericTraceableScene.cs" />
+    <Compile Include="Raytracing\Core\GeometryInput.cs" />
+    <Compile Include="Raytracing\Core\IGeometricSurface.cs" />
     <Compile Include="Raytracing\IShadeCommand.cs" />
     <Compile Include="Raytracing\ITraceableScene.cs" />
-    <Compile Include="Raytracing\RayTrace.cs" />
+    <Compile Include="Raytracing\Core\RayTrace.cs" />
     <Compile Include="Raytracing\SolidShadeCommand.cs" />
-    <Compile Include="Raytracing\Surfaces\CompactGridSurface.cs" />
-    <Compile Include="Raytracing\Surfaces\PlaneSurface.cs" />
-    <Compile Include="Raytracing\Surfaces\SphereSurface.cs" />
-    <Compile Include="Raytracing\Surfaces\TriangleSurface.cs" />
+    <Compile Include="SceneObjects\CompactGridGeometricSurface.cs" />
+    <Compile Include="GeometricSurfaces\PlaneGeometricSurface.cs" />
+    <Compile Include="GeometricSurfaces\SphereGeometricSurface.cs" />
+    <Compile Include="GeometricSurfaces\TriangleGeometricSurface.cs" />
     <Compile Include="Sampling\JitteredSampler.cs" />
     <Compile Include="Shading\IShader.cs" />
     <Compile Include="Shading\PhongShader.cs" />
@@ -138,7 +144,7 @@
     <Compile Include="Spatial\CompactGrid.cs" />
     <Compile Include="Spatial\GridTraverser.cs" />
     <Compile Include="Spatial\IBoundingBoxCalculator.cs" />
-    <Compile Include="Spatial\Triangle.cs" />
+    <Compile Include="Tests\BoundingVolumeHierarchyTest.cs" />
     <Compile Include="Tests\CG\CGFactory.cs" />
     <Compile Include="Tests\CG\CGShowCase.cs" />
     <Compile Include="Tests\CG\ComplexTestScene.cs" />
@@ -174,6 +180,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

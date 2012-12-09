@@ -22,10 +22,9 @@ namespace MHGameWork.TheWizards.CG
         public Color4 GetPixel(Vector2 pos)
         {
             var rayTrace = new RayTrace(camera.CalculateRay(pos), 0, Int32.MaxValue);
-            IShadeCommand cmd;
-            scene.Intersect(rayTrace, out cmd, true);
-            if (cmd == null) return new Color4();
-            return cmd.CalculateColor();
+            TraceResult result;
+            scene.Intersect(rayTrace, out result);//TODO: shadecommand true);
+            return result.ShadeDelegate();
 
         }
     }

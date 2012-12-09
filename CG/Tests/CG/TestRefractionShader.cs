@@ -22,11 +22,11 @@ namespace MHGameWork.TheWizards.Tests.CG
             var scene = new ComplexTestScene();
 
             var shader = new RefractionShader(scene.Scene);
-            var sphere2 = new SphereSurface(shader, new BoundingSphere(new Vector3(0, 1, 0 - 12f), 1f));
+            var sphere2 = new SphereGeometricSurface(shader, new BoundingSphere(new Vector3(0, 1, 0 - 12f), 1f));
             sphere2.DrawsShadows = false;
             scene.Scene.AddGenericSurface(sphere2);
 
-            var sphere3 = new SphereSurface(shader, new BoundingSphere(new Vector3(-4, 1, 0 - 14f), 1f));
+            var sphere3 = new SphereGeometricSurface(shader, new BoundingSphere(new Vector3(-4, 1, 0 - 14f), 1f));
             sphere3.DrawsShadows = false;
             scene.Scene.AddGenericSurface(sphere3);
 
@@ -48,10 +48,10 @@ namespace MHGameWork.TheWizards.Tests.CG
             PhongShader p;
 
             p = new PhongShader(scene, Camera);
-            scene.AddGenericSurface(new PlaneSurface(p, new Plane(Vector3.UnitY, 0)));
+            scene.AddGenericSurface(new PlaneGeometricSurface(p, new Plane(Vector3.UnitY, 0)));
 
             var shader = new RefractionShader(scene);
-            var sphere2 = new SphereSurface(shader, new BoundingSphere(new Vector3(0, 1, 0 - 12f), 1f));
+            var sphere2 = new SphereGeometricSurface(shader, new BoundingSphere(new Vector3(0, 1, 0 - 12f), 1f));
             sphere2.DrawsShadows = false;
             scene.AddGenericSurface(sphere2);
 
