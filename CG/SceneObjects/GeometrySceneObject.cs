@@ -1,4 +1,5 @@
 ﻿using System;
+using MHGameWork.TheWizards.CG.Lighting;
 using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Raytracing;
 using MHGameWork.TheWizards.CG.Raytracing.Pipeline;

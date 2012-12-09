@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.CG.Raytracing;
+﻿using System.Collections.Generic;
 using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 
-namespace MHGameWork.TheWizards.CG.Shading
+namespace MHGameWork.TheWizards.CG.Lighting
 {
     public interface ILightProvider
     {

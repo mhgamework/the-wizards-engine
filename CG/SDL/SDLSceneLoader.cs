@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.CG.SDL
     public class SDLSceneLoader
     {
         private GenericTraceableScene scene;
-        private Dictionary<string, Shading.PointLight> lights = new Dictionary<string, Shading.PointLight>();
+        private Dictionary<string, Lighting.PointLight> lights = new Dictionary<string, Lighting.PointLight>();
         private Dictionary<string, ICamera> cameras = new Dictionary<string, ICamera>();
         private Dictionary<string, IGeometry> geometries = new Dictionary<string, IGeometry>();
         private Dictionary<string, RAMTexture> textures = new Dictionary<string, RAMTexture>();
@@ -112,7 +112,7 @@ namespace MHGameWork.TheWizards.CG.SDL
         }
         private void loadLight(PointLight lightData)
         {
-            var light = new Shading.PointLight();
+            var light = new Lighting.PointLight();
             light.Position = parseVector3(((PointLight)lightData).position);
             light.Position = parseVector3(((PointLight)lightData).color);
             light.Position = parseVector3(((PointLight)lightData).intensity);

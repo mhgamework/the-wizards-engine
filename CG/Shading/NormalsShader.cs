@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MHGameWork.TheWizards.CG.Cameras;
+using MHGameWork.TheWizards.CG.Lighting;
 using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Raytracing;
 using MHGameWork.TheWizards.CG.Raytracing.Pipeline;

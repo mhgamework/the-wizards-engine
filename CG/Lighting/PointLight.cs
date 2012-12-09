@@ -1,7 +1,7 @@
 ﻿using System;
 using MHGameWork.TheWizards.CG.Math;
 
-namespace MHGameWork.TheWizards.CG.Shading
+namespace MHGameWork.TheWizards.CG.Lighting
 {
     public class PointLight
     {

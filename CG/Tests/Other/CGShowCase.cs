@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MHGameWork.TheWizards.CG.GeometricSurfaces;
+using MHGameWork.TheWizards.CG.Lighting;
 using MHGameWork.TheWizards.CG.OBJParser;
 using MHGameWork.TheWizards.CG.Shading;
 using NUnit.Framework;

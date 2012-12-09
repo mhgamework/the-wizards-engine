@@ -115,8 +115,8 @@
     <Compile Include="SceneObjects\TransformedSceneObject.cs" />
     <Compile Include="SDL\SDLSceneLoader.cs" />
     <Compile Include="Shading\NormalsShader.cs" />
-    <Compile Include="Shading\ILightProvider.cs" />
-    <Compile Include="Shading\SimpleLightProvider.cs" />
+    <Compile Include="Lighting\ILightProvider.cs" />
+    <Compile Include="Lighting\SimpleLightProvider.cs" />
     <Compile Include="Spatial\BoundingVolumeHierarchyBuilder.cs" />
     <Compile Include="Spatial\BoundingVolumeHierarchyNode.cs" />
     <Compile Include="Spatial\Triangle.cs" />
@@ -137,9 +137,9 @@
     <Compile Include="GeometricSurfaces\SphereGeometry.cs" />
     <Compile Include="GeometricSurfaces\TriangleGeometry.cs" />
     <Compile Include="Sampling\JitteredSampler.cs" />
-    <Compile Include="Shading\IShader.cs" />
+    <Compile Include="Lighting\IShader.cs" />
     <Compile Include="Shading\PhongShader.cs" />
-    <Compile Include="Shading\PointLight.cs" />
+    <Compile Include="Lighting\PointLight.cs" />
     <Compile Include="Shading\RefractionShader.cs" />
     <Compile Include="Spatial\BoundingBoxCalculator.cs" />
     <Compile Include="Spatial\CompactGrid.cs" />
