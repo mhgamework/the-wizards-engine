@@ -26,8 +26,6 @@ namespace MHGameWork.TheWizards.CG.Tests
         [Test]
         public void TestTransformedSphereTranslationScaling()
         {
-
-
             var transformation = Matrix.Scaling(2, 1, 1) * Matrix.Translation(0, 2, 0);
             var f = new CGFactory();
 
@@ -90,6 +88,32 @@ namespace MHGameWork.TheWizards.CG.Tests
 
 
             var mesh = f.CreateMesh(new FileInfo(TWDir.GameData + "\\Core\\Barrel01.obj"));
+
+            var shader = f.CreatePhong();
+
+            var converter = new MeshToTriangleConverter();
+
+            List<TriangleGeometry> triangles = converter.GetTrianglesWithPhong(mesh, f.CreatePhong);
+
+            var grid = new CompactGrid();
+            grid.buildGrid(triangles.Select(o => (ISceneObject)new GeometrySceneObject(o, shader)).ToList());
+            f.GetScene().AddSceneObject(new CompactGridGeometricSurface(grid));
+
+
+            f.Run();
+        }
+
+        [Test]
+        public void TestDragon()
+        {
+            var f = new CGFactory();
+
+            f.CreatePerspectiveCamera(new Vector3(-4, 2, 0), new Vector3(0, 0, 0));
+            //f.AddGroundPlane(-5);
+
+
+
+            var mesh = f.CreateMesh(new FileInfo(TWDir.GameData + "\\Core\\dragon\\Dragon.obj"));
 
             var shader = f.CreatePhong();
 

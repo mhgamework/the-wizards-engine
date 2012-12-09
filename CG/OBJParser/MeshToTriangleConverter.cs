@@ -28,8 +28,8 @@ namespace MHGameWork.TheWizards.CG.OBJParser
                 {
                     shader.Diffuse = new Texture2DGeometrySampler(new Texture2DSampler(), loader.Load(part.MeshMaterial.DiffuseMap));
                 }
-                else
-                    continue;
+                //else
+                //    continue;
 
                 var positions = part.Positions;
                 var normals = part.Normals;

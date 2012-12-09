@@ -38,25 +38,7 @@ namespace MHGameWork.TheWizards.CG.Tests.Shading
             return ret;
         }
 
-        [Test]
-        public void TestSingle()
-        {
-            var f = new CGFactory();
-            var Camera = f.CreatePerspectiveCamera(new Vector3(0, 4, -10), new Vector3(0, 1, 0));
-            Camera.ProjectionPlaneDistance = 1.3f;
+      
 
-            var scene = f.GetScene();
-
-            f.AddGroundPlane(-1);
-
-            var shader = new RefractionShader(scene);
-            var sphere2 = new GeometrySceneObject(new SphereGeometry(1),shader);
-            sphere2.CastsShadows = false;
-            scene.AddSceneObject(new TransformedSceneObject( sphere2){Transformation = Matrix.Translation(0,1,-1)});
-
-
-
-            var window = new GraphicalRayTracer(new TracedSceneImage(scene, Camera));
-        }
     }
 }

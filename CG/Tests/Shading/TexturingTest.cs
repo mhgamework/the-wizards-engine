@@ -11,7 +11,7 @@ namespace MHGameWork.TheWizards.CG.Tests.Shading
         {
             var f = new CGFactory();
 
-            f.CreateMeshWithGridSurface(TWDir.GameData + "\\Core\\barrel.obj");
+            f.CreateMeshWithGridSurface(TWDir.GameData + "\\Core\\barrel01.obj");
 
             f.Run();
 

@@ -114,6 +114,9 @@
     <Compile Include="Raytracing\Pipeline\ShadeDelegate.cs" />
     <Compile Include="SceneObjects\TransformedSceneObject.cs" />
     <Compile Include="SDL\SDLSceneLoader.cs" />
+    <Compile Include="Shading\SpecularShader.cs" />
+    <Compile Include="Tests\Shading\BaseShaderTest.cs" />
+    <Compile Include="Shading\DiffuseShader.cs" />
     <Compile Include="Shading\NormalsShader.cs" />
     <Compile Include="Lighting\ILightProvider.cs" />
     <Compile Include="Lighting\SimpleLightProvider.cs" />
