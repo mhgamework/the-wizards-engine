@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.CG.Math;
+﻿using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.Raytracing;
+using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 using MHGameWork.TheWizards.CG.Spatial;
 
-namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
+namespace MHGameWork.TheWizards.CG.SceneObjects
 {
     public class CompactGridGeometricSurface : ISceneObject
     {

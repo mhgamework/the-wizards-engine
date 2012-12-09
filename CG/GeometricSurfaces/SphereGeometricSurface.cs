@@ -1,18 +1,14 @@
-﻿using System;
-using MHGameWork.TheWizards.CG.Math;
-using MHGameWork.TheWizards.CG.Shading;
+﻿using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 
-namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
+namespace MHGameWork.TheWizards.CG.GeometricSurfaces
 {
     public class SphereGeometricSurface : IGeometricSurface
     {
-        private IShader shader;
         private readonly float radius;
-        public bool DrawsShadows = true;
 
-        public SphereGeometricSurface(IShader shader, float radius)
+        public SphereGeometricSurface(float radius)
         {
-            this.shader = shader;
             this.radius = radius;
         }
 
@@ -21,25 +17,19 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
             return new BoundingBox(Vector3.One * -radius, Vector3.One * radius);
         }
 
-        public void Intersects(ref RayTrace trace, out float? result, out IShadeCommand shadeCommand, bool generateShadeCommand)
+        public void Intersects(ref RayTrace trace, ref TraceResult result)
         {
-            if (!DrawsShadows && trace.IsShadowRay)
-            {
-                result = null;
-                shadeCommand = null;
-                return;
-            }
-            IntersectsSphere(ref trace.Ray, out result);
-            trace.SetNullWhenNotInRange(ref result);
+            float? dist;
+            IntersectsSphere(ref trace.Ray, out dist);
+            trace.SetNullWhenNotInRange(ref dist);
 
-            if (!generateShadeCommand || !result.HasValue)
-            {
-                shadeCommand = null;
+            if (!dist.HasValue)
                 return;
-            }
-            shadeCommand = new SphereShadeCommand(shader, trace.Ray.Position + trace.Ray.Direction * result.Value, this, trace);
-            //shadeCommand = new SolidShadeCommand();
 
+            result.Distance = dist;
+
+            result.GeometryInput.Position = trace.Ray.Position + trace.Ray.Direction * dist.Value;
+            result.GeometryInput.Normal = Vector3.Normalize(result.GeometryInput.Position);
         }
 
         public void IntersectsSphere(ref Ray ray, out float? result)
@@ -69,30 +59,6 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
             }
         }
 
-        private class SphereShadeCommand : IShadeCommand
-        {
-            private IShader shader;
-            private Vector3 hitPoint;
-            private SphereGeometricSurface sphere;
-            private readonly RayTrace trace;
 
-            public SphereShadeCommand(IShader shader, Vector3 hitPoint, SphereGeometricSurface sphere, RayTrace trace)
-            {
-                this.shader = shader;
-                this.hitPoint = hitPoint;
-                this.sphere = sphere;
-                this.trace = trace;
-            }
-
-
-            public Color4 CalculateColor()
-            {
-                var input = new GeometryInput();
-                input.Position = hitPoint;
-                input.Normal = Vector3.Normalize(hitPoint - sphere.sphere.Center);
-
-                return shader.Shade(input, trace);
-            }
-        }
     }
 }

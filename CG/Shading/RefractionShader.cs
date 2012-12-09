@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Raytracing;
+using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 
 namespace MHGameWork.TheWizards.CG.Shading
 {
@@ -82,7 +83,7 @@ namespace MHGameWork.TheWizards.CG.Shading
 
 
                     scene.Intersect(trace, out result); //smallt?
-                    return Color4.Modulate(k, result.ShadeDelegate());
+                    return Color4.Modulate(k, result.Shade(ref trace));
                 }
             }
 
@@ -99,7 +100,7 @@ namespace MHGameWork.TheWizards.CG.Shading
             scene.Intersect(trace, out result); //smallt?
 
 
-            ret += R * result.ShadeDelegate();
+            ret += R * result.Shade(ref trace);
 
             trace.Ray = new Ray(f.Position, t);
             trace.Start = 0.001f;
@@ -107,7 +108,7 @@ namespace MHGameWork.TheWizards.CG.Shading
             trace.contribution = oldContrib * (1 - R);
             scene.Intersect(trace, out result);//smallt?
 
-            ret += (1 - R) * result.ShadeDelegate();
+            ret += (1 - R) * result.Shade(ref trace);
 
             return Color4.Modulate(k, ret);
 

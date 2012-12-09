@@ -9,6 +9,7 @@ using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.WorldRendering;
 using NUnit.Framework;
 using SlimDX;
+using Sphere = MHGameWork.TheWizards.CG.SDL.Sphere;
 
 namespace MHGameWork.TheWizards.Tests.Gameplay
 {

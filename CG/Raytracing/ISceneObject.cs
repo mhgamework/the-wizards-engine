@@ -1,4 +1,5 @@
 ﻿using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 
 namespace MHGameWork.TheWizards.CG.Raytracing
 {

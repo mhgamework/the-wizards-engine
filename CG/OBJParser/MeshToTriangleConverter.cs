@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using MHGameWork.TheWizards.CG.GeometricSurfaces;
 using MHGameWork.TheWizards.CG.Math;
-using MHGameWork.TheWizards.CG.OBJParser;
-using MHGameWork.TheWizards.CG.Raytracing.Surfaces;
 using MHGameWork.TheWizards.CG.Shading;
+using MHGameWork.TheWizards.CG.Spatial;
 using MHGameWork.TheWizards.CG.Texturing;
 
-namespace MHGameWork.TheWizards.CG.Spatial
+namespace MHGameWork.TheWizards.CG.OBJParser
 {
     /// <summary>
     /// Responsible for creating triangle objects from IMesh objects
@@ -40,7 +39,7 @@ namespace MHGameWork.TheWizards.CG.Spatial
                 //Microsoft.Xna.Framework.Vector3.Transform(positions, ref part.ObjectMatrix, positions);
                 for (int i = 0; i < positions.Length / 3; i++)
                 {
-                    ret.Add(new TriangleGeometricSurface(vertices, i, shader));
+                    ret.Add(new TriangleGeometricSurface(vertices, i));
                 }
             }
             return ret;
@@ -60,7 +59,7 @@ namespace MHGameWork.TheWizards.CG.Spatial
                 //Microsoft.Xna.Framework.Vector3.Transform(positions, ref part.ObjectMatrix, positions);
                 for (int i = 0; i < positions.Length/3; i ++)
                 {
-                    ret.Add(new TriangleGeometricSurface(vertices, i, shader));
+                    ret.Add(new TriangleGeometricSurface(vertices, i));
                 }
             }
             return ret;

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.Raytracing;
+using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 
-namespace MHGameWork.TheWizards.CG.Raytracing
+namespace MHGameWork.TheWizards.CG
 {
     /// <summary>
     /// Responsible for rendering Generic surfaces
@@ -21,19 +20,10 @@ namespace MHGameWork.TheWizards.CG.Raytracing
         {
             entities.Add(obj);
         }
-        public GeometrySceneObject AddGenericSurface(IGeometricSurface geometricSurface)
-        {
-            var ret = new GeometrySceneObject();
-            ret.GeometricSurface = geometricSurface;
-            AddSceneObject(ret);
-
-            return ret;
-        }
-
         public void Intersect(RayTrace rayTrace, out TraceResult result)
         {
             result = new TraceResult();
-            result.ShadeDelegate = () => backgroundColor;
+            result.ShadeDelegate = delegate { return backgroundColor; };
             foreach (var ent in entities)
             {
                 var newResult = new TraceResult();

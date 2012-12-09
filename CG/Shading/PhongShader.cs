@@ -2,6 +2,7 @@
 using MHGameWork.TheWizards.CG.Cameras;
 using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Raytracing;
+using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 using MHGameWork.TheWizards.CG.Texturing;
 
 namespace MHGameWork.TheWizards.CG.Shading

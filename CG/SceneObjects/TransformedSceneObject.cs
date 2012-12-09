@@ -1,7 +1,9 @@
 ﻿using System;
 using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.Raytracing;
+using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 
-namespace MHGameWork.TheWizards.CG.Raytracing
+namespace MHGameWork.TheWizards.CG.SceneObjects
 {
     public class TransformedSceneObject : ISceneObject
     {

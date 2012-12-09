@@ -4,6 +4,7 @@ using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.PhysX;
 using SlimDX;
+using Sphere = MHGameWork.TheWizards.CG.SDL.Sphere;
 
 namespace MHGameWork.TheWizards.Simulators
 {

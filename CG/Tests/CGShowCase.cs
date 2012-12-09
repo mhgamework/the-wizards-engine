@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.CG;
-using MHGameWork.TheWizards.CG.Cameras;
-using MHGameWork.TheWizards.CG.Math;
+﻿using System.Collections.Generic;
+using MHGameWork.TheWizards.CG.GeometricSurfaces;
 using MHGameWork.TheWizards.CG.OBJParser;
-using MHGameWork.TheWizards.CG.Raytracing;
-using MHGameWork.TheWizards.CG.Raytracing.Surfaces;
 using MHGameWork.TheWizards.CG.Shading;
-using MHGameWork.TheWizards.CG.Spatial;
-using MHGameWork.TheWizards.CG.UI;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.CG
+namespace MHGameWork.TheWizards.CG.Tests
 {
     [TestFixture]
     public class CGShowCase

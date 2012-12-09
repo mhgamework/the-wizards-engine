@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using MHGameWork.TheWizards.CG.Math;
+using MHGameWork.TheWizards.CG.Raytracing;
+using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 
-namespace MHGameWork.TheWizards.CG.Raytracing
+namespace MHGameWork.TheWizards.CG.SceneObjects
 {
     public class CompoundSceneObject : ISceneObject
     {

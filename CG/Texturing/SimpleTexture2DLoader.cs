@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MHGameWork.TheWizards.CG.OBJParser;
-using MHGameWork.TheWizards.CG.Texturing;
 
-namespace MHGameWork.TheWizards.CG
+namespace MHGameWork.TheWizards.CG.Texturing
 {
     /// <summary>
     /// 

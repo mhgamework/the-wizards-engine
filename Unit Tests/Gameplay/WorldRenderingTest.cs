@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.WorldRendering;
 using NUnit.Framework;
 using SlimDX;
+using PointLight = MHGameWork.TheWizards.CG.SDL.PointLight;
 
 namespace MHGameWork.TheWizards.Tests.Gameplay
 {

@@ -1,17 +1,15 @@
 ﻿using System;
 using MHGameWork.TheWizards.CG.Math;
-using MHGameWork.TheWizards.CG.Shading;
+using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 
-namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
+namespace MHGameWork.TheWizards.CG.GeometricSurfaces
 {
     public class PlaneGeometricSurface : IGeometricSurface
     {
-        private IShader shader;
         private Plane plane;
 
-        public PlaneGeometricSurface(IShader shader, Plane plane)
+        public PlaneGeometricSurface(Plane plane)
         {
-            this.shader = shader;
             this.plane = plane;
         }
 
@@ -20,19 +18,19 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
             throw new NotImplementedException("It is not recommended to calculate a plane's bounding box since this will never be useful?");
         }
 
-        public void Intersects(ref RayTrace trace, out float? result, out IShadeCommand shadeCommand, bool generateShadeCommand)
+        public void Intersects(ref RayTrace trace, ref TraceResult result)
         {
-            IntersectsPlane(ref trace.Ray, out result);
-            trace.SetNullWhenNotInRange(ref result);
+            float? dist;
+            IntersectsPlane(ref trace.Ray, out dist);
+            trace.SetNullWhenNotInRange(ref dist);
 
-            if (!generateShadeCommand || !result.HasValue)
-            {
-                shadeCommand = null;
+            if ( !dist.HasValue)
                 return;
-            }
-            shadeCommand = new PlaneShadeCommand(shader, trace.Ray.Position + trace.Ray.Direction * result.Value, this, trace);
-            //shadeCommand = new SolidShadeCommand();
 
+            result.Distance = dist;
+
+            result.GeometryInput.Position = trace.Ray.Position + trace.Ray.Direction* dist.Value;
+            result.GeometryInput.Normal = plane.Normal;
         }
 
         //TODO:
@@ -61,32 +59,6 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Surfaces
             }
         }
 
-        private class PlaneShadeCommand : IShadeCommand
-        {
-            private IShader shader;
-            private Vector3 hitPoint;
-            private PlaneGeometricSurface geometricSurface;
-            private readonly RayTrace trace;
-
-            public PlaneShadeCommand(IShader shader, Vector3 hitPoint, PlaneGeometricSurface geometricSurface, RayTrace trace)
-            {
-                this.shader = shader;
-                this.hitPoint = hitPoint;
-                this.geometricSurface = geometricSurface;
-                this.trace = trace;
-            }
-
-
-            public Color4 CalculateColor()
-            {
-                var input = new GeometryInput();
-
-
-                input.Position = hitPoint;
-                input.Normal = geometricSurface.plane.Normal;
-
-                return shader.Shade(input, trace);
-            }
-        }
+  
     }
 }

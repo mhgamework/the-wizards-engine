@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.CG.OBJParser;
-using MHGameWork.TheWizards.CG.Texturing;
+﻿using MHGameWork.TheWizards.CG.OBJParser;
 
-namespace MHGameWork.TheWizards.CG
+namespace MHGameWork.TheWizards.CG.Texturing
 {
     /// <summary>
     /// Responsible for creating/caching CG.Texture2D's from ITexture objects

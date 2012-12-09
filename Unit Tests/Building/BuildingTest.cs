@@ -14,6 +14,8 @@ using NUnit.Framework;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
+using DirectionalLight = MHGameWork.TheWizards.CG.SDL.DirectionalLight;
+using PointLight = MHGameWork.TheWizards.CG.SDL.PointLight;
 
 namespace MHGameWork.TheWizards.Tests.Building
 {

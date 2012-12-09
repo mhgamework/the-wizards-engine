@@ -2,6 +2,7 @@
 using MHGameWork.TheWizards.CG.Cameras;
 using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Raytracing;
+using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 
 namespace MHGameWork.TheWizards.CG
 {
@@ -24,7 +25,7 @@ namespace MHGameWork.TheWizards.CG
             var rayTrace = new RayTrace(camera.CalculateRay(pos), 0, Int32.MaxValue);
             TraceResult result;
             scene.Intersect(rayTrace, out result);//TODO: shadecommand true);
-            return result.ShadeDelegate();
+            return result.Shade(ref rayTrace);
 
         }
     }

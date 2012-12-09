@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.Raytracing;
+using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 
 namespace MHGameWork.TheWizards.CG.Spatial
 {
@@ -33,9 +34,10 @@ namespace MHGameWork.TheWizards.CG.Spatial
             return BoundingBox.FromPoints(getPositions());
         }
 
-        public void Intersects(ref RayTrace trace, out float? result, out IShadeCommand shadeCommand, bool generateShadeCommand)
+        public void Intersects(ref RayTrace trace, ref TraceResult result)
         {
             throw new NotImplementedException();
         }
+
     }
 }

@@ -11,6 +11,7 @@ using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 using SlimDX.DirectInput;
+using PointLight = MHGameWork.TheWizards.CG.SDL.PointLight;
 
 namespace MHGameWork.TheWizards.Simulators
 {

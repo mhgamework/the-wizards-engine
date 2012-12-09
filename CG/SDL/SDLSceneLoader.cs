@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using MHGameWork.TheWizards.CG.Cameras;
+using MHGameWork.TheWizards.CG.GeometricSurfaces;
 using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.OBJParser;
 using MHGameWork.TheWizards.CG.Raytracing;
-using MHGameWork.TheWizards.CG.Raytracing.Surfaces;
+using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 
 namespace MHGameWork.TheWizards.CG.SDL
 {
@@ -81,7 +82,7 @@ namespace MHGameWork.TheWizards.CG.SDL
         }
         private void loadGeometry(Sphere gData)
         {
-            var sphere = new SphereGeometricSurface(null, new BoundingSphere(Vector3.Zero, parseFloat(gData.radius)));
+            var sphere = new SphereGeometricSurface(parseFloat(gData.radius));
         }
         private void loadGeometry(Teapot gData)
         {

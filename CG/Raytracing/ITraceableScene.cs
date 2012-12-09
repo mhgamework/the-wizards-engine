@@ -1,4 +1,6 @@
-﻿namespace MHGameWork.TheWizards.CG.Raytracing
+﻿using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
+
+namespace MHGameWork.TheWizards.CG.Raytracing
 {
     /// <summary>
     /// Responsible for tracing the world and returning fragment input

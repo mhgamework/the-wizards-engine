@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.CG.Math;
 
-namespace MHGameWork.TheWizards.CG.Raytracing
+namespace MHGameWork.TheWizards.CG.Raytracing.Pipeline
 {
     public class RayTrace
     {
