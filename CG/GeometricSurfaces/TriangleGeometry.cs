@@ -3,12 +3,12 @@ using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 
 namespace MHGameWork.TheWizards.CG.GeometricSurfaces
 {
-    public class TriangleGeometricSurface : IGeometricSurface
+    public class TriangleGeometry : IGeometry
     {
         private readonly TangentVertex[] vertices;
         private readonly int startVertexIndex;
 
-        public TriangleGeometricSurface(TangentVertex[] vertices, int triangleIndex)
+        public TriangleGeometry(TangentVertex[] vertices, int triangleIndex)
         {
             this.vertices = vertices;
             this.startVertexIndex = triangleIndex * 3;
@@ -43,17 +43,16 @@ namespace MHGameWork.TheWizards.CG.GeometricSurfaces
 
             result.Distance = dist;
 
-            CalculateColor(ref trace, ref u, ref v, ref result.GeometryInput,ref dist);
+            CalculateColor(ref trace, ref u, ref v, ref result);
 
         }
 
-        public void CalculateColor(ref RayTrace trace, ref float U, ref float V, ref GeometryInput input, ref float? dist )
+        public void CalculateColor(ref RayTrace trace, ref float U, ref float V, ref TraceResult input)
         {
             var Vertex1 = vertices[startVertexIndex];
             var Vertex2 = vertices[startVertexIndex + 1];
             var Vertex3 = vertices[startVertexIndex + 2];
 
-            input.Position = trace.Ray.Position + trace.Ray.Direction * dist.Value;
             input.Normal = (Vertex2.normal * U + Vertex3.normal * V + Vertex1.normal * (1 - U - V));
 
             //input.Normal =

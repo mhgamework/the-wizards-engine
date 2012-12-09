@@ -71,7 +71,7 @@ namespace MHGameWork.TheWizards.Tests.CG
             var converter = new MeshToTriangleConverter();
             var triangles = converter.GetTriangles(mesh);
 
-            grid.buildGrid(triangles.Select(o => (IGeometricSurface)o).ToList());
+            grid.buildGrid(triangles.Select(o => (IGeometry)o).ToList());
             return grid;
         }
 

@@ -14,9 +14,9 @@ namespace MHGameWork.TheWizards.CG.Shading
 
         public SimpleLightProvider()
         {
-            pointLight = new PointLight { Position = new Vector3(-5, 7, -10), Radius = 100, Intensity = 10000 };
+            pointLight = new PointLight { Position = new Vector3(-5, 7, 10), Radius = 100, Intensity = 10000 };
         }
-        public IEnumerable<PointLight> GetApplicableLights(GeometryInput input, RayTrace trace)
+        public IEnumerable<PointLight> GetApplicableLights(TraceResult input, RayTrace trace)
         {
             yield return pointLight;
         }

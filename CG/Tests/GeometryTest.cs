@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.CG.Tests
             var scene = f.GetScene();
             var cam = f.CreatePerspectiveCamera(new Math.Vector3(0, 3, -10), new Math.Vector3());
 
-            var surface = new SphereGeometricSurface(1);
+            var surface = new SphereGeometry(1);
 
             scene.AddSceneObject(new GeometrySceneObject(surface, f.CreatePhong()));
 
@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.CG.Tests
             var scene = f.GetScene();
             var cam = f.CreatePerspectiveCamera(new Math.Vector3(0, 3, -10), new Math.Vector3());
 
-            var surface = new SphereGeometricSurface(1);
+            var surface = new SphereGeometry(1);
 
             scene.AddSceneObject(new GeometrySceneObject(surface,new NormalsShader()));
 
@@ -50,7 +50,7 @@ namespace MHGameWork.TheWizards.CG.Tests
             var scene = f.GetScene();
             var cam = f.CreatePerspectiveCamera(new Math.Vector3(0, 3, -10), new Math.Vector3());
 
-            var surface = new PlaneGeometricSurface(new Plane(Vector3.Up, 0));
+            var surface = new PlaneGeometry(new Plane(Vector3.Up, 0));
 
             scene.AddSceneObject(new GeometrySceneObject(surface, f.CreatePhong()));
 
@@ -71,7 +71,7 @@ namespace MHGameWork.TheWizards.CG.Tests
             vertices[0].normal = Vector3.Up;
             vertices[1].normal = Vector3.Up;
             vertices[2].normal = Vector3.Up;
-            var surface = new TriangleGeometricSurface(vertices,0);
+            var surface = new TriangleGeometry(vertices,0);
 
             scene.AddSceneObject(new GeometrySceneObject(surface, f.CreatePhong()));
 

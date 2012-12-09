@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards.CG.Shading
 {
     public class NormalsShader : IShader
     {
-        public Color4 Shade(GeometryInput f, RayTrace trace)
+        public Color4 Shade(TraceResult f, RayTrace trace)
         {
             return new Color4(f.Normal * 0.5f + Vector3.One * 0.5f);
         }

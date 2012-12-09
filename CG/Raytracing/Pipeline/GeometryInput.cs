@@ -7,8 +7,6 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Pipeline
     /// </summary>
     public struct GeometryInput
     {
-        public Vector3 Position;
-        public Vector2 Texcoord;
-        public Vector3 Normal;
+   
     }
 }

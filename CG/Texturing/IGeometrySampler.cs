@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.CG.Texturing
 {
     public abstract class IGeometrySampler<T>
     {
-         public abstract T Sample(GeometryInput input);
+        public abstract T Sample(TraceResult input);
 
          public static implicit operator IGeometrySampler<T>(T val)
          {

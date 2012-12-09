@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.CG.Texturing
             this.texture = texture;
         }
 
-        public override Color4 Sample(GeometryInput input)
+        public override Color4 Sample(TraceResult input)
         {
             return sampler.SampleBilinear(texture, input.Texcoord);
         }

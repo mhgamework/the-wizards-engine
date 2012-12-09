@@ -162,70 +162,70 @@ namespace MHGameWork.TheWizards.CG.Math
 
     
 
-    public static Plane[] Transform(Plane[] planes, ref Matrix transformation)
-    {
-      if (planes == null)
-        throw new ArgumentNullException("planes");
-      int length = planes.Length;
-      Plane[] planeArray = new Plane[length];
-      Matrix matrix = Matrix.Invert(transformation);
-      int index = 0;
-      if (0 < length)
-      {
-        do
-        {
-          float num1 = planes[index].Normal.X;
-          float num2 = planes[index].Normal.Y;
-          float num3 = planes[index].Normal.Z;
-          float num4 = planes[index].D;
-          planeArray[index] = new Plane()
-          {
-            Normal = {
-              X = (float) ((double) matrix.M12 * (double) num2 + (double) matrix.M11 * (double) num1 + (double) matrix.M13 * (double) num3 + (double) matrix.M14 * (double) num4),
-              Y = (float) ((double) matrix.M22 * (double) num2 + (double) matrix.M21 * (double) num1 + (double) matrix.M23 * (double) num3 + (double) matrix.M24 * (double) num4),
-              Z = (float) ((double) matrix.M32 * (double) num2 + (double) matrix.M31 * (double) num1 + (double) matrix.M33 * (double) num3 + (double) matrix.M34 * (double) num4)
-            },
-            D = (float) ((double) matrix.M42 * (double) num2 + (double) matrix.M41 * (double) num1 + (double) matrix.M43 * (double) num3 + (double) matrix.M44 * (double) num4)
-          };
-          ++index;
-        }
-        while (index < length);
-      }
-      return planeArray;
-    }
+    //public static Plane[] Transform(Plane[] planes, ref Matrix transformation)
+    //{
+    //  if (planes == null)
+    //    throw new ArgumentNullException("planes");
+    //  int length = planes.Length;
+    //  Plane[] planeArray = new Plane[length];
+    //  Matrix matrix = Matrix.Invert(transformation);
+    //  int index = 0;
+    //  if (0 < length)
+    //  {
+    //    do
+    //    {
+    //      float num1 = planes[index].Normal.X;
+    //      float num2 = planes[index].Normal.Y;
+    //      float num3 = planes[index].Normal.Z;
+    //      float num4 = planes[index].D;
+    //      planeArray[index] = new Plane()
+    //      {
+    //        Normal = {
+    //          X = (float) ((double) matrix.M12 * (double) num2 + (double) matrix.M11 * (double) num1 + (double) matrix.M13 * (double) num3 + (double) matrix.M14 * (double) num4),
+    //          Y = (float) ((double) matrix.M22 * (double) num2 + (double) matrix.M21 * (double) num1 + (double) matrix.M23 * (double) num3 + (double) matrix.M24 * (double) num4),
+    //          Z = (float) ((double) matrix.M32 * (double) num2 + (double) matrix.M31 * (double) num1 + (double) matrix.M33 * (double) num3 + (double) matrix.M34 * (double) num4)
+    //        },
+    //        D = (float) ((double) matrix.M42 * (double) num2 + (double) matrix.M41 * (double) num1 + (double) matrix.M43 * (double) num3 + (double) matrix.M44 * (double) num4)
+    //      };
+    //      ++index;
+    //    }
+    //    while (index < length);
+    //  }
+    //  return planeArray;
+    //}
 
-    public static void Transform(ref Plane plane, ref Matrix transformation, out Plane result)
-    {
-      float num1 = plane.Normal.X;
-      float num2 = plane.Normal.Y;
-      float num3 = plane.Normal.Z;
-      float num4 = plane.D;
-      Matrix matrix = Matrix.Invert(transformation);
-      result = new Plane()
-      {
-        Normal = {
-          X = (float) ((double) matrix.M12 * (double) num2 + (double) matrix.M11 * (double) num1 + (double) matrix.M13 * (double) num3 + (double) matrix.M14 * (double) num4),
-          Y = (float) ((double) matrix.M22 * (double) num2 + (double) matrix.M21 * (double) num1 + (double) matrix.M23 * (double) num3 + (double) matrix.M24 * (double) num4),
-          Z = (float) ((double) matrix.M32 * (double) num2 + (double) matrix.M31 * (double) num1 + (double) matrix.M33 * (double) num3 + (double) matrix.M34 * (double) num4)
-        },
-        D = (float) ((double) matrix.M42 * (double) num2 + (double) matrix.M41 * (double) num1 + (double) matrix.M43 * (double) num3 + (double) matrix.M44 * (double) num4)
-      };
-    }
+    //public static void Transform(ref Plane plane, ref Matrix transformation, out Plane result)
+    //{
+    //  float num1 = plane.Normal.X;
+    //  float num2 = plane.Normal.Y;
+    //  float num3 = plane.Normal.Z;
+    //  float num4 = plane.D;
+    //  Matrix matrix = Matrix.Invert(transformation);
+    //  result = new Plane()
+    //  {
+    //    Normal = {
+    //      X = (float) ((double) matrix.M12 * (double) num2 + (double) matrix.M11 * (double) num1 + (double) matrix.M13 * (double) num3 + (double) matrix.M14 * (double) num4),
+    //      Y = (float) ((double) matrix.M22 * (double) num2 + (double) matrix.M21 * (double) num1 + (double) matrix.M23 * (double) num3 + (double) matrix.M24 * (double) num4),
+    //      Z = (float) ((double) matrix.M32 * (double) num2 + (double) matrix.M31 * (double) num1 + (double) matrix.M33 * (double) num3 + (double) matrix.M34 * (double) num4)
+    //    },
+    //    D = (float) ((double) matrix.M42 * (double) num2 + (double) matrix.M41 * (double) num1 + (double) matrix.M43 * (double) num3 + (double) matrix.M44 * (double) num4)
+    //  };
+    //}
 
-    public static Plane Transform(Plane plane, Matrix transformation)
-    {
-      Plane plane1 = new Plane();
-      float num1 = plane.Normal.X;
-      float num2 = plane.Normal.Y;
-      float num3 = plane.Normal.Z;
-      float num4 = plane.D;
-      transformation.Invert();
-      plane1.Normal.X = (float) ((double) transformation.M12 * (double) num2 + (double) transformation.M11 * (double) num1 + (double) transformation.M13 * (double) num3 + (double) transformation.M14 * (double) num4);
-      plane1.Normal.Y = (float) ((double) transformation.M22 * (double) num2 + (double) transformation.M21 * (double) num1 + (double) transformation.M23 * (double) num3 + (double) transformation.M24 * (double) num4);
-      plane1.Normal.Z = (float) ((double) transformation.M32 * (double) num2 + (double) transformation.M31 * (double) num1 + (double) transformation.M33 * (double) num3 + (double) transformation.M34 * (double) num4);
-      plane1.D = (float) ((double) transformation.M42 * (double) num2 + (double) transformation.M41 * (double) num1 + (double) transformation.M43 * (double) num3 + (double) transformation.M44 * (double) num4);
-      return plane1;
-    }
+    //public static Plane Transform(Plane plane, Matrix transformation)
+    //{
+    //  Plane plane1 = new Plane();
+    //  float num1 = plane.Normal.X;
+    //  float num2 = plane.Normal.Y;
+    //  float num3 = plane.Normal.Z;
+    //  float num4 = plane.D;
+    //  transformation.Invert();
+    //  plane1.Normal.X = (float) ((double) transformation.M12 * (double) num2 + (double) transformation.M11 * (double) num1 + (double) transformation.M13 * (double) num3 + (double) transformation.M14 * (double) num4);
+    //  plane1.Normal.Y = (float) ((double) transformation.M22 * (double) num2 + (double) transformation.M21 * (double) num1 + (double) transformation.M23 * (double) num3 + (double) transformation.M24 * (double) num4);
+    //  plane1.Normal.Z = (float) ((double) transformation.M32 * (double) num2 + (double) transformation.M31 * (double) num1 + (double) transformation.M33 * (double) num3 + (double) transformation.M34 * (double) num4);
+    //  plane1.D = (float) ((double) transformation.M42 * (double) num2 + (double) transformation.M41 * (double) num1 + (double) transformation.M43 * (double) num3 + (double) transformation.M44 * (double) num4);
+    //  return plane1;
+    //}
 
    
 

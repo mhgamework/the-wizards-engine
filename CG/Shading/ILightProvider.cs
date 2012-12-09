@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards.CG.Shading
 {
     public interface ILightProvider
     {
-        IEnumerable<PointLight> GetApplicableLights(GeometryInput input, RayTrace trace);
+        IEnumerable<PointLight> GetApplicableLights(TraceResult input, RayTrace trace);
     }
 
     }

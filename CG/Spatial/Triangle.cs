@@ -8,7 +8,7 @@ using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 
 namespace MHGameWork.TheWizards.CG.Spatial
 {
-    public class Triangle : IGeometricSurface
+    public class Triangle : IGeometry
     {
         private Vector3[] positions = new Vector3[3];
 

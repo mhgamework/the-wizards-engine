@@ -400,20 +400,8 @@ namespace MHGameWork.TheWizards.CG.Math
             return vector3;
         }
 
-        public static Vector3[] TransformNormal(Vector3[] normals, ref Matrix transformation)
-        {
-            if (normals == null)
-                throw new ArgumentNullException("normals");
-            Vector3[] normalsOut = new Vector3[normals.Length];
-            throw new NotImplementedException(); //  Vector3.TransformNormal(normals, ref transformation, normalsOut, 0, 0);
-            return normalsOut;
-        }
-
-        public static void TransformNormal(Vector3[] normalsIn, ref Matrix transformation, Vector3[] normalsOut)
-        {
-            throw new NotImplementedException(); // Vector3.TransformNormal(normalsIn, ref transformation, normalsOut, 0, 0);
-        }
-
+      
+     
         public static void TransformNormal(ref Vector3 normal, ref Matrix transformation, out Vector3 result)
         {
             result.X = (float)((double)normal.Y * (double)transformation.M21 + (double)normal.X * (double)transformation.M11 + (double)normal.Z * (double)transformation.M31);

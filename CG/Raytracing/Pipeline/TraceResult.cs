@@ -6,7 +6,9 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Pipeline
     {
         public float? Distance;
         public ShadeDelegate ShadeDelegate;
-        public GeometryInput GeometryInput;
+
+        public Vector2 Texcoord;
+        public Vector3 Normal;
 
         public bool IsHit
         {
@@ -46,12 +48,13 @@ namespace MHGameWork.TheWizards.CG.Raytracing.Pipeline
         {
             Distance = result.Distance;
             ShadeDelegate = result.ShadeDelegate;
-            GeometryInput = result.GeometryInput;
+            Texcoord = result.Texcoord;
+            Normal = result.Normal;
         }
 
         public Color4 Shade(ref RayTrace trace)
         {
-            return ShadeDelegate(ref GeometryInput,ref trace);
+            return ShadeDelegate(ref this,ref trace);
         }
     
     }

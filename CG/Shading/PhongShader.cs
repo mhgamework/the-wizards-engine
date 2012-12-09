@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.CG.Shading
         }
 
 
-        public Color4 Shade(GeometryInput f, RayTrace trace)
+        public Color4 Shade(TraceResult f, RayTrace trace)
         {
             //if (f.Clip)
             //    return new Color4(0.2f, 0.2f, 1f);
@@ -48,15 +48,19 @@ namespace MHGameWork.TheWizards.CG.Shading
 
             ret = AmbientColor.Sample(f);
 
+
+            var hit = trace.Ray.Position + f.Distance.Value * trace.Ray.Direction;
+
+
             foreach (var light in lightProvider.GetApplicableLights(f, trace))
             {
                 Color4 lightResult = new Color4();
                 for (int i = 0; i < light.NumSamples; i++)
                 {
                     //surface-to-light vector
-                    Vector3 lightVector = light.SamplePosition() - f.Position;
+                    Vector3 lightVector = light.SamplePosition() - hit;
 
-                    lightResult += calcPhongLight(lightVector, normal, f.Position, Diffuse.Sample(f), Specular.Sample(f), SpecularPower.Sample(f), SpecularIntensity.Sample(f));
+                    lightResult += calcPhongLight(lightVector, normal, hit, Diffuse.Sample(f), Specular.Sample(f), SpecularPower.Sample(f), SpecularIntensity.Sample(f));
                 }
                 ret += lightResult * (1f / light.NumSamples);
 
@@ -70,7 +74,9 @@ namespace MHGameWork.TheWizards.CG.Shading
         private Color4 calcPhongLight(Vector3 lightVector, Vector3 normal, Vector3 position, Color4 diffuse, Color4 specular, float specularPower, float specularIntensity)
         {
             TraceResult result;
-            tracer.Intersect(new RayTrace(new Ray(position, Vector3.Normalize(lightVector)), 0.0001f, lightVector.Length()) { IsShadowRay = true, FirstHit = true }, out result); // TODO: mat.sqrt
+            var rayTrace = new RayTrace(new Ray(position, Vector3.Normalize(lightVector)), 0.001f, lightVector.Length()) { IsShadowRay = true, FirstHit = true };
+            //rayTrace.End = float.MaxValue;
+            tracer.Intersect(rayTrace, out result); // TODO: mat.sqrt
             if (result.IsHit)
             {
                 //ret += new Color4(1, 0, 0);

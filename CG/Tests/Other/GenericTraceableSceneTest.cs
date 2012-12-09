@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.CG.GeometricSurfaces;
 using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.OBJParser;
 using MHGameWork.TheWizards.CG.Raytracing;
+using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 using MHGameWork.TheWizards.CG.SceneObjects;
 using MHGameWork.TheWizards.CG.Shading;
 using MHGameWork.TheWizards.CG.Spatial;
@@ -27,7 +28,7 @@ namespace MHGameWork.TheWizards.CG.Tests.Other
 
             var shader = new PhongShader(scene, cam);
 
-            var surface = new SphereGeometricSurface(1f);
+            var surface = new SphereGeometry(1f);
 
             var obj = new TransformedSceneObject(new GeometrySceneObject (surface,shader)) { Transformation = Matrix.Translation(0, 0, -3) };
 
@@ -42,10 +43,11 @@ namespace MHGameWork.TheWizards.CG.Tests.Other
         [Test]
         public void TestRaycastGenericSphere()
         {
-            var s = new SphereGeometricSurface(1f);
+            var s = new SphereGeometry(1f);
             Ray ray = new Ray(new Vector3(-0.8f, 0, 0), new Vector3(1, 0, 0));
+            var trace = new RayTrace(ray, 0, float.MaxValue);
             float? result;
-            s.IntersectsSphere(ref ray, out result);
+            s.IntersectsSphere(ref trace, out result);
 
         }
 
@@ -61,7 +63,7 @@ namespace MHGameWork.TheWizards.CG.Tests.Other
 
        
 
-        private List<TriangleGeometricSurface> getTriangles(PhongShader shader, RAMMesh mesh)
+        private List<TriangleGeometry> getTriangles(PhongShader shader, RAMMesh mesh)
         {
             var converter = new MeshToTriangleConverter();
             return converter.GetTriangles(mesh, shader);
@@ -75,7 +77,7 @@ namespace MHGameWork.TheWizards.CG.Tests.Other
             var scene = f.CreateGenericTraceableScene();
             var shader = f.CreatePhong();
 
-            List<TriangleGeometricSurface> triangles = getTriangles(shader, f.CreateMesh(new FileInfo(TWDir.GameData + "\\Core\\Dragon\\dragon.obj")));
+            List<TriangleGeometry> triangles = getTriangles(shader, f.CreateMesh(new FileInfo(TWDir.GameData + "\\Core\\Dragon\\dragon.obj")));
 
             var grid = new CompactGrid();
             grid.buildGrid(

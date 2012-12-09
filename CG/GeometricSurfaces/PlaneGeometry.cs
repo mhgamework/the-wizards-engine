@@ -4,18 +4,19 @@ using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 
 namespace MHGameWork.TheWizards.CG.GeometricSurfaces
 {
-    public class PlaneGeometricSurface : IGeometricSurface
+    public class PlaneGeometry : IGeometry
     {
         private Plane plane;
 
-        public PlaneGeometricSurface(Plane plane)
+        public PlaneGeometry(Plane plane)
         {
             this.plane = plane;
         }
 
         public BoundingBox CalculateBoundingBox()
         {
-            throw new NotImplementedException("It is not recommended to calculate a plane's bounding box since this will never be useful?");
+            //TODO: what is zis?
+            return new BoundingBox(Vector3.One*float.MinValue, Vector3.One*float.MaxValue);
         }
 
         public void Intersects(ref RayTrace trace, ref TraceResult result)
@@ -29,8 +30,7 @@ namespace MHGameWork.TheWizards.CG.GeometricSurfaces
 
             result.Distance = dist;
 
-            result.GeometryInput.Position = trace.Ray.Position + trace.Ray.Direction* dist.Value;
-            result.GeometryInput.Normal = plane.Normal;
+            result.Normal = plane.Normal;
         }
 
         //TODO:

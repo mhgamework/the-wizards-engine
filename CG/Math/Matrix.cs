@@ -1054,20 +1054,47 @@ namespace MHGameWork.TheWizards.CG.Math
         }
 
 
-        public void Invert()
+        public static void Invert(ref Matrix matrix, out Matrix result)
         {
-            //TODO:
-            throw new NotImplementedException();
-        }
-        public static Matrix Invert(Matrix mat)
-        {
-            //TODO:
-            throw new NotImplementedException();
-        }
-        public static Matrix Invert(ref Matrix mat, out Matrix outMat)
-        {
-            //TODO:
-            throw new NotImplementedException();
+            float num17 = (float)((double)matrix.M33 * (double)matrix.M44 - (double)matrix.M34 * (double)matrix.M43);
+            float num18 = (float)((double)matrix.M32 * (double)matrix.M44 - (double)matrix.M34 * (double)matrix.M42);
+            float num19 = (float)((double)matrix.M32 * (double)matrix.M43 - (double)matrix.M33 * (double)matrix.M42);
+            float num20 = (float)((double)matrix.M31 * (double)matrix.M44 - (double)matrix.M34 * (double)matrix.M41);
+            float num21 = (float)((double)matrix.M31 * (double)matrix.M43 - (double)matrix.M33 * (double)matrix.M41);
+            float num22 = (float)((double)matrix.M31 * (double)matrix.M42 - (double)matrix.M32 * (double)matrix.M41);
+            float num23 = (float)((double)matrix.M22 * (double)num17 - (double)matrix.M23 * (double)num18 + (double)matrix.M24 * (double)num19);
+            float num24 = (float)-((double)matrix.M21 * (double)num17 - (double)matrix.M23 * (double)num20 + (double)matrix.M24 * (double)num21);
+            float num25 = (float)((double)matrix.M21 * (double)num18 - (double)matrix.M22 * (double)num20 + (double)matrix.M24 * (double)num22);
+            float num26 = (float)-((double)matrix.M21 * (double)num19 - (double)matrix.M22 * (double)num21 + (double)matrix.M23 * (double)num22);
+            float num27 = (float)(1.0 / ((double)matrix.M11 * (double)num23 + (double)matrix.M12 * (double)num24 + (double)matrix.M13 * (double)num25 + (double)matrix.M14 * (double)num26));
+            result.M11 = num23 * num27;
+            result.M21 = num24 * num27;
+            result.M31 = num25 * num27;
+            result.M41 = num26 * num27;
+            result.M12 = (float)-((double)matrix.M12 * (double)num17 - (double)matrix.M13 * (double)num18 + (double)matrix.M14 * (double)num19) * num27;
+            result.M22 = (float)((double)matrix.M11 * (double)num17 - (double)matrix.M13 * (double)num20 + (double)matrix.M14 * (double)num21) * num27;
+            result.M32 = (float)-((double)matrix.M11 * (double)num18 - (double)matrix.M12 * (double)num20 + (double)matrix.M14 * (double)num22) * num27;
+            result.M42 = (float)((double)matrix.M11 * (double)num19 - (double)matrix.M12 * (double)num21 + (double)matrix.M13 * (double)num22) * num27;
+            float num28 = (float)((double)matrix.M23 * (double)matrix.M44 - (double)matrix.M24 * (double)matrix.M43);
+            float num29 = (float)((double)matrix.M22 * (double)matrix.M44 - (double)matrix.M24 * (double)matrix.M42);
+            float num30 = (float)((double)matrix.M22 * (double)matrix.M43 - (double)matrix.M23 * (double)matrix.M42);
+            float num31 = (float)((double)matrix.M21 * (double)matrix.M44 - (double)matrix.M24 * (double)matrix.M41);
+            float num32 = (float)((double)matrix.M21 * (double)matrix.M43 - (double)matrix.M23 * (double)matrix.M41);
+            float num33 = (float)((double)matrix.M21 * (double)matrix.M42 - (double)matrix.M22 * (double)matrix.M41);
+            result.M13 = (float)((double)matrix.M12 * (double)num28 - (double)matrix.M13 * (double)num29 + (double)matrix.M14 * (double)num30) * num27;
+            result.M23 = (float)-((double)matrix.M11 * (double)num28 - (double)matrix.M13 * (double)num31 + (double)matrix.M14 * (double)num32) * num27;
+            result.M33 = (float)((double)matrix.M11 * (double)num29 - (double)matrix.M12 * (double)num31 + (double)matrix.M14 * (double)num33) * num27;
+            result.M43 = (float)-((double)matrix.M11 * (double)num30 - (double)matrix.M12 * (double)num32 + (double)matrix.M13 * (double)num33) * num27;
+            float num34 = (float)((double)matrix.M23 * (double)matrix.M34 - (double)matrix.M24 * (double)matrix.M33);
+            float num35 = (float)((double)matrix.M22 * (double)matrix.M34 - (double)matrix.M24 * (double)matrix.M32);
+            float num36 = (float)((double)matrix.M22 * (double)matrix.M33 - (double)matrix.M23 * (double)matrix.M32);
+            float num37 = (float)((double)matrix.M21 * (double)matrix.M34 - (double)matrix.M24 * (double)matrix.M31);
+            float num38 = (float)((double)matrix.M21 * (double)matrix.M33 - (double)matrix.M23 * (double)matrix.M31);
+            float num39 = (float)((double)matrix.M21 * (double)matrix.M32 - (double)matrix.M22 * (double)matrix.M31);
+            result.M14 = (float)-((double)matrix.M12 * (double)num34 - (double)matrix.M13 * (double)num35 + (double)matrix.M14 * (double)num36) * num27;
+            result.M24 = (float)((double)matrix.M11 * (double)num34 - (double)matrix.M13 * (double)num37 + (double)matrix.M14 * (double)num38) * num27;
+            result.M34 = (float)-((double)matrix.M11 * (double)num35 - (double)matrix.M12 * (double)num37 + (double)matrix.M14 * (double)num39) * num27;
+            result.M44 = (float)((double)matrix.M11 * (double)num36 - (double)matrix.M12 * (double)num38 + (double)matrix.M13 * (double)num39) * num27;
         }
 
 

@@ -28,12 +28,18 @@ namespace MHGameWork.TheWizards.CG.SceneObjects
 
         public void Intersects(ref RayTrace trace, ref TraceResult result)
         {
+            Matrix inverse;
+            Matrix.Invert(ref transformation, out inverse);
+
             var oriRay = trace.Ray;
             Vector3 pos = (trace.Ray.Position + trace.Ray.Direction * trace.Start);
-            Vector3.TransformCoordinate(ref pos, ref transformation, out trace.Ray.Position);
-            Vector3.TransformNormal(ref trace.Ray.Direction, ref transformation, out trace.Ray.Direction);
+            Vector3.TransformCoordinate(ref pos, ref inverse, out trace.Ray.Position);
+            Vector3.TransformNormal(ref trace.Ray.Direction, ref  inverse, out trace.Ray.Direction);
+
+            Object.Intersects(ref trace, ref result);
 
             trace.Ray = oriRay;
+            result.Normal = Vector3.TransformNormal(result.Normal, transformation);
 
         }
     }

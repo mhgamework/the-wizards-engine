@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.CG.GeometricSurfaces;
 using MHGameWork.TheWizards.CG.Math;
 using MHGameWork.TheWizards.CG.OBJParser;
 using MHGameWork.TheWizards.CG.Raytracing;
+using MHGameWork.TheWizards.CG.Raytracing.Pipeline;
 using MHGameWork.TheWizards.CG.SceneObjects;
 using MHGameWork.TheWizards.CG.Shading;
 using MHGameWork.TheWizards.CG.Spatial;
@@ -133,12 +134,23 @@ namespace MHGameWork.TheWizards.CG.Tests.Other
 
             var converter = new MeshToTriangleConverter();
 
-            List<TriangleGeometricSurface> triangles = converter.GetTrianglesWithPhong(mesh, CreatePhong);
+            List<TriangleGeometry> triangles = converter.GetTrianglesWithPhong(mesh, CreatePhong);
 
             var grid = new CompactGrid();
             grid.buildGrid(triangles.Select(o => (ISceneObject)new GeometrySceneObject(o, shader)).ToList());
             GetScene().AddSceneObject(new CompactGridGeometricSurface(grid));
 
+        }
+
+        public ISceneObject CreateSceneObject(IGeometry geom)
+        {
+            var sceneObject = new GeometrySceneObject(geom, CreatePhong());
+            return sceneObject;
+        }
+
+        public void AddGroundPlane(float height = 0)
+        {
+            GetScene().AddSceneObject(CreateSceneObject(new PlaneGeometry(new Plane(Vector3.Up,- height))));
         }
     }
 }

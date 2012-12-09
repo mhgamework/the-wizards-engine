@@ -10,6 +10,6 @@ namespace MHGameWork.TheWizards.CG.Shading
 {
     public interface IShader
     {
-        Color4 Shade(GeometryInput f,RayTrace trace);
+        Color4 Shade(TraceResult f,RayTrace trace);
     }
 }

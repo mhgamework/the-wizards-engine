@@ -127,15 +127,15 @@
     <Compile Include="MultisampledImage.cs" />
     <Compile Include="GenericTraceableScene.cs" />
     <Compile Include="Raytracing\Pipeline\GeometryInput.cs" />
-    <Compile Include="Raytracing\Pipeline\IGeometricSurface.cs" />
+    <Compile Include="Raytracing\Pipeline\IGeometry.cs" />
     <Compile Include="Raytracing\IShadeCommand.cs" />
     <Compile Include="Raytracing\ITraceableScene.cs" />
     <Compile Include="Raytracing\Pipeline\RayTrace.cs" />
     <Compile Include="Raytracing\SolidShadeCommand.cs" />
     <Compile Include="SceneObjects\CompactGridGeometricSurface.cs" />
-    <Compile Include="GeometricSurfaces\PlaneGeometricSurface.cs" />
-    <Compile Include="GeometricSurfaces\SphereGeometricSurface.cs" />
-    <Compile Include="GeometricSurfaces\TriangleGeometricSurface.cs" />
+    <Compile Include="GeometricSurfaces\PlaneGeometry.cs" />
+    <Compile Include="GeometricSurfaces\SphereGeometry.cs" />
+    <Compile Include="GeometricSurfaces\TriangleGeometry.cs" />
     <Compile Include="Sampling\JitteredSampler.cs" />
     <Compile Include="Shading\IShader.cs" />
     <Compile Include="Shading\PhongShader.cs" />
@@ -152,6 +152,7 @@
     <Compile Include="Tests\Other\GenericTraceableSceneTest.cs" />
     <Compile Include="Tests\GeometryTest.cs" />
     <Compile Include="Tests\Other\MultisamplingTest.cs" />
+    <Compile Include="Tests\SceneObjectsTest.cs" />
     <Compile Include="Tests\Shading\RefractionShaderTest.cs" />
     <Compile Include="Tests\Shading\TexturingTest.cs" />
     <Compile Include="SDL\sdl.cs" />

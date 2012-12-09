@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.CG.Texturing
         }
 
 
-        public override T Sample(GeometryInput input)
+        public override T Sample(TraceResult input)
         {
             return color;
         }

@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.CG.Tests.Other
             //PhongShader shader;
 
             //shader = new PhongShader(Scene, Camera);
-            //Scene.AddGenericSurface(new PlaneGeometricSurface(new Plane(Vector3.UnitY, 0)));
+            //Scene.AddGenericSurface(new PlaneGeometry(new Plane(Vector3.UnitY, 0)));
 
             //shader = new PhongShader(Scene, Camera);
             //shader.Diffuse = new Color4(1, 0, 0);
@@ -41,8 +41,8 @@ namespace MHGameWork.TheWizards.CG.Tests.Other
 
         //private ISceneObject createSphereObject(IShader shader, BoundingSphere p1, bool castsShadows = true)
         //{
-        //    var surface = new SphereGeometricSurface(p1.Radius);
-        //    var ret = new TransformedSceneObject(new GeometrySceneObject { Shader = shader, GeometricSurface = surface }) { Transformation = Matrix.Translation(p1.Center) };
+        //    var surface = new SphereGeometry(p1.Radius);
+        //    var ret = new TransformedSceneObject(new GeometrySceneObject { Shader = shader, geometry = surface }) { Transformation = Matrix.Translation(p1.Center) };
         //    return ret;
         //}
     }

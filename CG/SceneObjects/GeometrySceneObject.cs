@@ -8,35 +8,44 @@ namespace MHGameWork.TheWizards.CG.SceneObjects
 {
     public class GeometrySceneObject : ISceneObject
     {
-        public GeometrySceneObject(IGeometricSurface geometricSurface, IShader shader)
+        public GeometrySceneObject(IGeometry geometry, IShader shader)
         {
-            GeometricSurface = geometricSurface;
+            Geometry = geometry;
             Shader = shader;
             CastsShadows = true;
 
         }
 
-        public IGeometricSurface GeometricSurface { get; set; }
+        private IGeometry geometry;
+        public IGeometry Geometry
+        {
+            get { return geometry; }
+            set
+            {
+                geometry = value;
+                bb = geometry.CalculateBoundingBox();
+            }
+        }
+
         public IShader Shader { get; set; }
         public bool CastsShadows { get; set; }
 
+        private BoundingBox bb;
+
         public BoundingBox BoundingBox
         {
-            get { throw new NotImplementedException(); }
+            get { return bb; }
         }
 
         public void Intersects(ref RayTrace trace, ref TraceResult result)
         {
             if (trace.IsShadowRay && !CastsShadows) return;
+            Geometry.Intersects(ref trace, ref result); //TODO: shade command
 
-            IShadeCommand cmd;
-            GeometricSurface.Intersects(ref trace, ref result); //TODO: shade command
-
-            
             result.ShadeDelegate = shade;
         }
 
-        private Color4 shade(ref GeometryInput input,ref RayTrace trace)
+        private Color4 shade(ref TraceResult input, ref RayTrace trace)
         {
             return Shader.Shade(input, trace);
         }

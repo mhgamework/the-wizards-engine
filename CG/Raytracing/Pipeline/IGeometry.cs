@@ -2,7 +2,7 @@
 
 namespace MHGameWork.TheWizards.CG.Raytracing.Pipeline
 {
-    public interface IGeometricSurface
+    public interface IGeometry
     {
         BoundingBox CalculateBoundingBox();
         void Intersects(ref RayTrace trace, ref TraceResult result);

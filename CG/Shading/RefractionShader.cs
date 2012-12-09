@@ -21,6 +21,7 @@ namespace MHGameWork.TheWizards.CG.Shading
             this.scene = scene;
             refractiveN = 1;
             refractiveNt = 1.01f;
+            //refractiveNt = 2.0f;
             refractiveNtInverse = 1 / refractiveNt;
             r0 = calculateR0(refractiveNt);
 
@@ -28,7 +29,7 @@ namespace MHGameWork.TheWizards.CG.Shading
 
 
 
-        public Color4 Shade(GeometryInput f, RayTrace trace)
+        public Color4 Shade(TraceResult f, RayTrace trace)
         {
 
             float oldContribution = trace.contribution;
@@ -40,12 +41,15 @@ namespace MHGameWork.TheWizards.CG.Shading
 
             return ret;
         }
-        private Color4 shadeInternal(GeometryInput f, RayTrace trace)
+        private Color4 shadeInternal(TraceResult f, RayTrace trace)
         {
             if (trace.recurseDepth > 30)
                 return new Color4();
             if (trace.contribution < 0.01f)
                 return new Color4();
+
+
+            var hit = trace.Ray.Position + f.Distance.Value*trace.Ray.Direction;
 
             var d = trace.Ray.Direction;
             var n = f.Normal;
@@ -64,7 +68,7 @@ namespace MHGameWork.TheWizards.CG.Shading
             }
             else
             {
-                var smallt = ((trace.Ray.Position + trace.Ray.Direction * trace.Start) - f.Position).Length();
+                var smallt = ((trace.Ray.Position + trace.Ray.Direction * trace.Start) - hit).Length();
 
                 k.Red = (float)System.Math.Exp(-a.Red * smallt);
                 k.Green = (float)System.Math.Exp(-a.Green * smallt);
@@ -76,7 +80,7 @@ namespace MHGameWork.TheWizards.CG.Shading
                 }
                 else
                 {
-                    trace.Ray = new Ray(f.Position, r);
+                    trace.Ray = new Ray(hit, r);
                     trace.Start = 0.001f;
                     trace.End = float.PositiveInfinity;
                     //TODO: trace.contribution = oldContrib * (1 - R);
@@ -93,7 +97,7 @@ namespace MHGameWork.TheWizards.CG.Shading
             float oldContrib = trace.contribution;
 
             Color4 ret = new Color4();
-            trace.Ray = new Ray(f.Position, r);
+            trace.Ray = new Ray(hit, r);
             trace.Start = 0.001f;
             trace.End = float.PositiveInfinity;
             trace.contribution = oldContrib * R;
@@ -102,7 +106,7 @@ namespace MHGameWork.TheWizards.CG.Shading
 
             ret += R * result.Shade(ref trace);
 
-            trace.Ray = new Ray(f.Position, t);
+            trace.Ray = new Ray(hit, t);
             trace.Start = 0.001f;
             trace.End = float.PositiveInfinity;
             trace.contribution = oldContrib * (1 - R);
