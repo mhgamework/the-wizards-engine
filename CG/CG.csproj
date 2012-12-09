@@ -93,7 +93,6 @@
     <Compile Include="IRenderedImage.cs" />
     <Compile Include="Lighting\MultipleLightProvider.cs" />
     <Compile Include="Math\BoundingBox.cs" />
-    <Compile Include="Math\BoundingSphere.cs" />
     <Compile Include="Math\Color4.cs" />
     <Compile Include="Math\MathHelper.cs" />
     <Compile Include="Math\Matrix.cs" />
@@ -150,7 +149,7 @@
     <Compile Include="Spatial\CompactGrid.cs" />
     <Compile Include="Spatial\GridTraverser.cs" />
     <Compile Include="Spatial\IBoundingBoxCalculator.cs" />
-    <Compile Include="Tests\Other\BoundingVolumeHierarchyTest.cs" />
+    <Compile Include="Tests\Spatial\BoundingVolumeHierarchyTest.cs" />
     <Compile Include="Tests\Other\CGFactory.cs" />
     <Compile Include="Tests\Other\CGShowCase.cs" />
     <Compile Include="Tests\Other\ComplexTestScene.cs" />

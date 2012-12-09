@@ -12,6 +12,8 @@ namespace MHGameWork.TheWizards.CG.Spatial
     {
         public BoundingVolumeHierarchyNode CreateNode(IEnumerable<ISceneObject> surfaces, int axis)
         {
+
+
             if (surfaces.Count() == 1)
             {
                 return new BoundingVolumeHierarchyNode(surfaces.First().BoundingBox, surfaces.First(), null);
@@ -21,21 +23,42 @@ namespace MHGameWork.TheWizards.CG.Spatial
                 return new BoundingVolumeHierarchyNode(BoundingBox.Merge(surfaces.First().BoundingBox, surfaces.ElementAt(1).BoundingBox), surfaces.First(), surfaces.ElementAt(1));
             }
 
-            BoundingBox bb = surfaces.Aggregate(new BoundingBox(),
-                                                (acc, surface) => acc.MergeWith(surface.BoundingBox));
+            /*float midPoint = (bb.Maximum[axis] + bb.Minimum[axis]) * 0.5f;
 
-            float midPoint = bb.Maximum[axis] - bb.Maximum[axis];
+            var leftSurfaces = surfaces.Where(s => s.BoundingBox.Minimum[axis] < midPoint).ToArray();
+            var rightSurfaces = surfaces.Where(s => s.BoundingBox.Maximum[axis] > midPoint).ToArray();*/
+            var ordered = surfaces.OrderBy(o => o.BoundingBox.Minimum[axis]);
 
-            var leftSurfaces = surfaces.Where(s => s.BoundingBox.Maximum[axis] < midPoint).ToArray();
-            var rightSurfaces = surfaces.Where(s => s.BoundingBox.Minimum[axis] > midPoint).ToArray();
+            int leftCount = surfaces.Count() / 2;
+            int rightCount = surfaces.Count() - leftCount;
+            var leftSurfaces = ordered.Take(leftCount);
+            var rightSurfaces = ordered.Reverse().Take(rightCount);
 
-            var left = CreateNode(leftSurfaces, (axis + 1) % 3);
-            var right = CreateNode(rightSurfaces, (axis + 1) % 3);
+            int newAxis = GetNewAxis(surfaces);
+
+            var left = CreateNode(leftSurfaces.ToArray(), GetNewAxis(leftSurfaces));
+            var right = CreateNode(rightSurfaces.ToArray(), GetNewAxis(rightSurfaces));
 
             return new BoundingVolumeHierarchyNode(BoundingBox.Merge(left.GetBoundingBox(null), right.GetBoundingBox(null)), left, right);
 
         }
 
-
+        private int GetNewAxis(IEnumerable<ISceneObject> surfaces)
+        {
+            BoundingBox bb = surfaces.Aggregate(new BoundingBox(),
+                                                (acc, surface) => acc.MergeWith(surface.BoundingBox));
+            var diff = bb.Maximum - bb.Minimum;
+            int newAxis = 0;
+            float longest = float.MinValue;
+            for (int i = 0; i < 3; i++)
+            {
+                if (diff[i] > longest)
+                {
+                    newAxis = i;
+                    longest = diff[i];
+                }
+            }
+            return newAxis;
+        }
     }
 }

@@ -14,29 +14,29 @@ namespace MHGameWork.TheWizards.CG.Tests.Shading
     public class RefractionShaderTest
     {
 
-        [Test]
-        public void TestComplex()
-        {
-            var scene = new ComplexTestScene();
+        //[Test]
+        //public void TestComplex()
+        //{
+        //    var scene = new ComplexTestScene();
 
-            var shader = new RefractionShader(scene.Scene);
-            var sphere2 = createSphereObject(shader, new BoundingSphere(new Vector3(0, 1, 0 - 12f), 1f), false);
-            scene.Scene.AddSceneObject(sphere2);
+        //    var shader = new RefractionShader(scene.Scene);
+        //    var sphere2 = createSphereObject(shader, new BoundingSphere(new Vector3(0, 1, 0 - 12f), 1f), false);
+        //    scene.Scene.AddSceneObject(sphere2);
 
-            var sphere3 = createSphereObject(shader, new BoundingSphere(new Vector3(-4, 1, 0 - 14f), 1f), false);
-            scene.Scene.AddSceneObject(sphere3);
+        //    var sphere3 = createSphereObject(shader, new BoundingSphere(new Vector3(-4, 1, 0 - 14f), 1f), false);
+        //    scene.Scene.AddSceneObject(sphere3);
 
 
 
-            var window = new GraphicalRayTracer(new TracedSceneImage(scene.Scene, scene.Camera));
-        }
+        //    var window = new GraphicalRayTracer(new TracedSceneImage(scene.Scene, scene.Camera));
+        //}
 
-        private ISceneObject createSphereObject(RefractionShader shader, BoundingSphere p1, bool castsShadows = true)
-        {
-            var surface = new SphereGeometry(p1.Radius);
-            var ret = new TransformedSceneObject(new GeometrySceneObject(surface, shader) { CastsShadows = castsShadows }) { Transformation = Matrix.Translation(p1.Center) };
-            return ret;
-        }
+        //private ISceneObject createSphereObject(RefractionShader shader, BoundingSphere p1, bool castsShadows = true)
+        //{
+        //    var surface = new SphereGeometry(p1.Radius);
+        //    var ret = new TransformedSceneObject(new GeometrySceneObject(surface, shader) { CastsShadows = castsShadows }) { Transformation = Matrix.Translation(p1.Center) };
+        //    return ret;
+        //}
 
       
 

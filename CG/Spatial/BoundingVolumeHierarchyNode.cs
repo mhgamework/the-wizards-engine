@@ -38,8 +38,8 @@ namespace MHGameWork.TheWizards.CG.Spatial
 
             if (left != null)
                 left.Intersects(ref trace, ref hitLeft);
-            if (left != null)
-                left.Intersects(ref trace, ref hitRight);
+            if (right != null)
+                right.Intersects(ref trace, ref hitRight);
 
             result.AddResult(ref hitLeft);
             result.AddResult(ref hitRight);
