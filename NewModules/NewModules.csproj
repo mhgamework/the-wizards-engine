@@ -202,6 +202,9 @@
     <Compile Include="Entity\Editor\EditorMeshPart.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Pathing\IAI.cs" />
+    <Compile Include="Pathing\IAIMover.cs" />
+    <Compile Include="Pathing\SimpleAIMover.cs" />
     <Compile Include="Persistence\AssetSerializer.cs" />
     <Compile Include="Persistence\ListSerializer.cs" />
     <Compile Include="Persistence\ModelObjectSerializer.cs" />

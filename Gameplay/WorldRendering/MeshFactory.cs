@@ -27,6 +27,8 @@ namespace MHGameWork.TheWizards.WorldRendering
         /// <returns></returns>
         public static IMesh Load(string relativeCorePath)
         {
+            if (Path.GetExtension(relativeCorePath) == null)
+                throw new ArgumentException("relativeCorePath");
             return TW.Data.GetSingleton<RenderingModel>().MeshFactory.Load(relativeCorePath);
         }
 
