@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.PhysX;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.WorldRendering;
 using NUnit.Framework;
@@ -70,6 +71,27 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 WorldMatrix = Matrix.Translation(0, 20, 0)
             };
 
+
+            game.Run();
+        }
+
+        /// <summary>
+        /// 1 dyanmic barrel, one static physx object and an entity without physx
+        /// 
+        /// Press f to drop barrel
+        /// </summary>
+        [Test]
+        public void TestBarrelShooterSimulator()
+        {
+            var game = new TWEngine();
+            game.DontLoadPlugin = true;
+            game.Initialize();
+
+
+            game.AddSimulator(new BarrelShooterSimulator());
+            game.AddSimulator(new PhysXSimulator());
+            game.AddSimulator(new WorldRenderingSimulator());
+            game.AddSimulator(new PhysXDebugRendererSimulator());
 
             game.Run();
         }

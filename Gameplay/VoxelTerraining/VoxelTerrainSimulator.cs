@@ -19,7 +19,6 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                 if (terrain.get<RenderData>() == null)
                     terrain.set(new RenderData(terrain));
 
-
                 terrain.get<RenderData>().Update();
             }
         }
@@ -39,6 +38,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
 
             private bool[, ,] visited;
             private List<VoxelBlock> visibleBlocks = new List<VoxelBlock>();
+            
 
             private MeshBuilder _builder;
 
@@ -66,7 +66,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
 
                         if (block.Filled)
                         {
-                            makeBlockVisible(neighbourPos, block);
+                            makeBlockVisible(block);
                         }
                         else
                         {
@@ -77,19 +77,13 @@ namespace MHGameWork.TheWizards.VoxelTerraining
 
             }
 
-            private void makeBlockVisible(Point3 pos, VoxelBlock block)
+            private void makeBlockVisible(VoxelBlock block)
             {
                 if (block.Visible) return;
 
                 block.Visible = true;
                 visibleBlocks.Add(block);
 
-                var scale = 0.95f;
-                _builder.AddBox(-MathHelper.One * 0.5f * scale + pos.ToVector3(), MathHelper.One * 0.5f * scale + pos.ToVector3());
-                //boxMesh.GetCollisionData().Boxes.Add(new MeshCollisionData.Box { Dimensions = MathHelper.One.xna() ,Orientation = Matrix.Translation(pos).xna() });
-
-
-                //entities.Add(pos,ent);
             }
 
 
@@ -97,14 +91,71 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             {
                 _builder = new MeshBuilder();
 
+                clearVisible();
+
                 floodFill();
 
-                var boxMesh = _builder.CreateMesh();
+                var boxMesh = createMesh();
 
-                boxMesh.GetCoreData().Parts[0].MeshMaterial = new MeshCoreData.Material() { DiffuseMap = TW.Assets.LoadTexture("Core\\checker.png") };
 
                 _ent.WorldMatrix = Matrix.Identity;
                 _ent.Mesh = boxMesh;
+                _ent.Solid = true;
+                _ent.Static = true;
+
+
+
+            }
+
+            private IMesh createMesh()
+            {
+                var relativeCorePath = "Core\\checker.png";
+                relativeCorePath = "GrassGreenTexture0006.jpg";
+                
+                
+                foreach (var block in visibleBlocks)
+                {
+                    var border = new Vector3(1, 1, 1) * 0.05f;
+                    border = new Vector3();
+
+                    var pos = block.Position;
+                    _builder.AddBox(pos.ToVector3() + border, MathHelper.One + pos.ToVector3() - border);    
+                }
+
+
+
+                
+
+
+                //entities.Add(pos,ent);
+
+                var boxMesh = _builder.CreateMesh();
+
+                boxMesh.GetCoreData().Parts[0].MeshMaterial = new MeshCoreData.Material()
+                {
+                    DiffuseMap = TW.Assets.LoadTexture(relativeCorePath)
+                };
+
+                var boxes = new List<MeshCollisionData.Box>();
+
+                foreach (var block in visibleBlocks)
+                {
+                    var pos = block.Position;
+                    boxes.Add(new MeshCollisionData.Box { Dimensions = MathHelper.One.xna(), Orientation = Matrix.Translation(pos+ MathHelper.One * 0.5f).xna() });
+                }
+
+                boxMesh.GetCollisionData().Boxes.AddRange(boxes);
+
+                return boxMesh;
+            }
+
+            private void clearVisible()
+            {
+                foreach (var b in visibleBlocks)
+                {
+                    b.Visible = false;
+                }
+                visibleBlocks.Clear();
             }
         }
     }

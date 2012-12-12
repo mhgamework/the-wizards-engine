@@ -72,5 +72,15 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             public bool Visible;
             public bool Filled;
         }
+
+        public bool InGrid(Point3 point3)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (point3[i] < 0) return false;
+                if (point3[i] >= Size[i]) return false;
+            }
+            return true;
+        }
     }
 }

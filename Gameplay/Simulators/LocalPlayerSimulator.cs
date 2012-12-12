@@ -109,8 +109,8 @@ namespace MHGameWork.TheWizards.Simulators
             var worldfd = new Vector3(centerScreenWorld.X, centerScreenWorld.Y, centerScreenWorld.Z);
             ray.Direction = Vector3.Normalize(worldfd - ray.Position);
 
-            game.LineManager3D.AddCenteredBox(worldfd, 0.01f, new Color4(Color.Red));
-            game.LineManager3D.AddCenteredBox(cam.CalculatedLookTarget, 0.01f, new Color4(Color.Green));
+            //game.LineManager3D.AddCenteredBox(worldfd, 0.01f, new Color4(Color.Red));
+            //game.LineManager3D.AddCenteredBox(cam.CalculatedLookTarget, 0.01f, new Color4(Color.Green));
 
             var result = world.Raycast(ray, o => o != player.Entity);
 

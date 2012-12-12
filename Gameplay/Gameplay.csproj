@@ -117,6 +117,7 @@
     <Compile Include="LevelBuilding\LevelBuildingData.cs" />
     <Compile Include="LevelBuilding\LevelBuildingObjectFactory.cs" />
     <Compile Include="LevelBuilding\ScalableGrid.cs" />
+    <Compile Include="PhysX\BarrelShooterSimulator.cs" />
     <Compile Include="PhysX\PhysXData.cs" />
     <Compile Include="Pickup\Inventory.cs" />
     <Compile Include="Pickup\ItemEntity.cs" />
@@ -178,9 +179,9 @@
     <Compile Include="Trigger\PlayerPositionCondition.cs" />
     <Compile Include="Trigger\SpawnAction.cs" />
     <Compile Include="Trigger\Trigger.cs" />
+    <Compile Include="VoxelTerraining\FlashlightSimulator.cs" />
     <Compile Include="VoxelTerraining\TerrainEditorSimulator.cs" />
     <Compile Include="VoxelTerraining\VoxelBlock.cs" />
-    <Compile Include="VoxelTerraining\VoxelBlock2.cs" />
     <Compile Include="VoxelTerraining\VoxelTerrain.cs" />
     <Compile Include="VoxelTerraining\VoxelTerrainSimulator.cs" />
     <Compile Include="WorldRendering\EntityBatcherSimulator.cs" />

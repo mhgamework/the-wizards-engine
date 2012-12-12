@@ -327,6 +327,7 @@
     <Compile Include="ServerclientDeprecated\QuadTree.cs" />
     <Compile Include="ServerclientDeprecated\QuadTreeNode.cs" />
     <Compile Include="Server\Launcher\LauncherServer.cs" />
+    <Compile Include="Spatial\GridTraverser.cs" />
     <Compile Include="Terrain\Editor\TerrainRaiseTool.cs" />
     <Compile Include="Terrain\Geomipmap\HeightmapNormalCalculator.cs" />
     <Compile Include="Terrain\Geomipmap\IndexBufferBuilder.cs" />

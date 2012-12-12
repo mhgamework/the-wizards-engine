@@ -12,7 +12,7 @@ namespace DirectX11
         public int Y;
         public int Z;
 
-      
+
 
         public Point3(int x, int y, int z)
         {
@@ -32,9 +32,44 @@ namespace DirectX11
             Z = (int)Math.Round(v.Z);
         }
 
+        public int this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0:
+                        return X;
+                    case 1:
+                        return Y;
+                    case 2:
+                        return Z;
+                    default:
+                        throw new ArgumentException("index");
+                }
+            }
+            set
+            {
+                switch (index)
+                {
+                    case 0:
+                        X = value;
+                        break;
+                    case 1:
+                        Y = value;
+                        break;
+                    case 2:
+                        Z = value;
+                        break;
+                    default:
+                        throw new ArgumentException("index");
+                }
+            }
+        }
+
         public Vector3 ToVector3()
         {
-            return new Vector3(X,Y,Z);
+            return new Vector3(X, Y, Z);
         }
         public static implicit operator Vector3(Point3 p)
         {
@@ -94,8 +129,8 @@ namespace DirectX11
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            if (obj.GetType() != typeof (Point3)) return false;
-            return Equals((Point3) obj);
+            if (obj.GetType() != typeof(Point3)) return false;
+            return Equals((Point3)obj);
         }
 
         public override int GetHashCode()
@@ -103,11 +138,10 @@ namespace DirectX11
             unchecked
             {
                 int result = X;
-                result = (result*397) ^ Y;
-                result = (result*397) ^ Z;
+                result = (result * 397) ^ Y;
+                result = (result * 397) ^ Z;
                 return result;
             }
         }
-    }               
-}                   
-                    
+    }
+}
