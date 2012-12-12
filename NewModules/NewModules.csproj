@@ -190,9 +190,12 @@
     <Compile Include="Editor\FromEditorProject\TODO\EditorTerrainAlphaMap.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Engine\AssetsWrapper.cs" />
     <Compile Include="Engine\AudioWrapper.cs" />
     <Compile Include="Engine\DataWrapper.cs" />
     <Compile Include="Engine\DebugWrapper.cs" />
+    <Compile Include="Engine\EngineAssetFactory.cs" />
+    <Compile Include="Engine\EngineMeshFactory.cs" />
     <Compile Include="Engine\GraphicsWrapper.cs" />
     <Compile Include="Engine\PhysicsWrapper.cs" />
     <Compile Include="Entities\Editor\Rendering\EditorMaterial.cs" />

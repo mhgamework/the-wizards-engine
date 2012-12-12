@@ -337,7 +337,7 @@ namespace MHGameWork.TheWizards.Simulators
             }
             if (typeof(IAsset).IsAssignableFrom(type))
             {
-                deserialized = TW.Data.GetSingleton<RenderingModel>().AssetFactory.GetAsset(type, Guid.Parse(value));
+                deserialized = TW.Assets.GetAssetFactory().GetAsset(type, Guid.Parse(value));
                 return true;
 
             }

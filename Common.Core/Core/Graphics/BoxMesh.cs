@@ -155,9 +155,9 @@ namespace MHGameWork.TheWizards.Graphics
             vertices[i].pos = new Vector3(0, 0, 1); i++;
             vertices[i].pos = new Vector3(1, 0, 1); i++;
             i -= 4;
-            vertices[i].uv = new Vector2(0, 0); i++;
             vertices[i].uv = new Vector2(0, 1); i++;
             vertices[i].uv = new Vector2(1, 1); i++;
+            vertices[i].uv = new Vector2(0, 0); i++;
             vertices[i].uv = new Vector2(1, 0); i++;
 
             for (int j = i - 4; j < i; j++)
@@ -172,10 +172,10 @@ namespace MHGameWork.TheWizards.Graphics
             vertices[i].pos = new Vector3(1, 0, 0); i++;
             vertices[i].pos = new Vector3(0, 0, 0); i++;
             i -= 4;
-            vertices[i].uv = new Vector2(0, 0); i++;
-            vertices[i].uv = new Vector2(0, 1); i++;
             vertices[i].uv = new Vector2(1, 1); i++;
+            vertices[i].uv = new Vector2(0, 1); i++;
             vertices[i].uv = new Vector2(1, 0); i++;
+            vertices[i].uv = new Vector2(0, 0); i++;
 
             for (int j = i - 4; j < i; j++)
             {
@@ -190,10 +190,10 @@ namespace MHGameWork.TheWizards.Graphics
             vertices[i].pos = new Vector3(0, 0, 0); i++;
             vertices[i].pos = new Vector3(0, 0, 1); i++;
             i -= 4;
+            vertices[i].uv = new Vector2(1, 0); i++;
+            vertices[i].uv = new Vector2(1, 1); i++;
             vertices[i].uv = new Vector2(0, 0); i++;
             vertices[i].uv = new Vector2(0, 1); i++;
-            vertices[i].uv = new Vector2(1, 1); i++;
-            vertices[i].uv = new Vector2(1, 0); i++;
 
             for (int j = i - 4; j < i; j++)
             {
@@ -207,10 +207,10 @@ namespace MHGameWork.TheWizards.Graphics
             vertices[i].pos = new Vector3(1, 0, 1); i++;
             vertices[i].pos = new Vector3(1, 0, 0); i++;
             i -= 4;
-            vertices[i].uv = new Vector2(0, 0); i++;
-            vertices[i].uv = new Vector2(0, 1); i++;
             vertices[i].uv = new Vector2(1, 1); i++;
             vertices[i].uv = new Vector2(1, 0); i++;
+            vertices[i].uv = new Vector2(0, 1); i++;
+            vertices[i].uv = new Vector2(0, 0); i++;
 
             for (int j = i - 4; j < i; j++)
             {
@@ -225,9 +225,9 @@ namespace MHGameWork.TheWizards.Graphics
             vertices[i].pos = new Vector3(1, 1, 1); i++;
             i -= 4;
             vertices[i].uv = new Vector2(0, 0); i++;
+            vertices[i].uv = new Vector2(1, 0); i++;
             vertices[i].uv = new Vector2(0, 1); i++;
             vertices[i].uv = new Vector2(1, 1); i++;
-            vertices[i].uv = new Vector2(1, 0); i++;
 
             for (int j = i - 4; j < i; j++)
             {
@@ -241,9 +241,9 @@ namespace MHGameWork.TheWizards.Graphics
             vertices[i].pos = new Vector3(0, 0, 0); i++;
             vertices[i].pos = new Vector3(1, 0, 0); i++;
             i -= 4;
-            vertices[i].uv = new Vector2(0, 0); i++;
             vertices[i].uv = new Vector2(0, 1); i++;
             vertices[i].uv = new Vector2(1, 1); i++;
+            vertices[i].uv = new Vector2(0, 0); i++;
             vertices[i].uv = new Vector2(1, 0); i++;
 
             for (int j = i - 4; j < i; j++)

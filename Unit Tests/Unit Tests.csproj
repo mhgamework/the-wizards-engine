@@ -164,6 +164,7 @@
     <Compile Include="Gameplay\PersistenceTest.cs" />
     <Compile Include="Gameplay\RaycastingTest.cs" />
     <Compile Include="Gameplay\TilingTest.cs" />
+    <Compile Include="Gameplay\VoxelTerrainTest.cs" />
     <Compile Include="Gameplay\WorldRenderingTest.cs" />
     <Compile Include="Particles\ParticleTests.cs" />
     <Compile Include="Gameplay\FortressTest.cs" />

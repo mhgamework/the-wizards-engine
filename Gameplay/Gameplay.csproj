@@ -178,6 +178,11 @@
     <Compile Include="Trigger\PlayerPositionCondition.cs" />
     <Compile Include="Trigger\SpawnAction.cs" />
     <Compile Include="Trigger\Trigger.cs" />
+    <Compile Include="VoxelTerraining\TerrainEditorSimulator.cs" />
+    <Compile Include="VoxelTerraining\VoxelBlock.cs" />
+    <Compile Include="VoxelTerraining\VoxelBlock2.cs" />
+    <Compile Include="VoxelTerraining\VoxelTerrain.cs" />
+    <Compile Include="VoxelTerraining\VoxelTerrainSimulator.cs" />
     <Compile Include="WorldRendering\EntityBatcherSimulator.cs" />
     <Compile Include="WorldRendering\EntitySimulator.cs" />
     <Compile Include="WorldRendering\PointLight.cs" />
@@ -186,8 +191,6 @@
     <Compile Include="WorldRendering\World.cs" />
     <Compile Include="WorldRendering\MeshFactory.cs" />
     <Compile Include="WorldRendering\RenderingModel.cs" />
-    <Compile Include="WorldRendering\SimpleAssetFactory.cs" />
-    <Compile Include="WorldRendering\SimpleMeshFactory.cs" />
     <Compile Include="WorldRendering\Textarea.cs" />
     <Compile Include="WorldRendering\TextareaUpdater.cs" />
     <Compile Include="WorldRendering\WireframeBox.cs" />

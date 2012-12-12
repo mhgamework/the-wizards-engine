@@ -18,6 +18,7 @@ namespace MHGameWork.TheWizards.WorldRendering
     /// This class provides static access point for loading meshes. It is TW scoped, meaning that it is linked to the TW state. 
     /// This is done by storing the data in the TW.Model
     /// </summary>
+    [Obsolete]
     public class MeshFactory
     {
         /// <summary>
@@ -27,9 +28,7 @@ namespace MHGameWork.TheWizards.WorldRendering
         /// <returns></returns>
         public static IMesh Load(string relativeCorePath)
         {
-            if (Path.GetExtension(relativeCorePath) == null)
-                throw new ArgumentException("relativeCorePath");
-            return TW.Data.GetSingleton<RenderingModel>().MeshFactory.Load(relativeCorePath);
+            return TW.Assets.LoadMesh(relativeCorePath);
         }
 
         /// <summary>
@@ -39,7 +38,7 @@ namespace MHGameWork.TheWizards.WorldRendering
         /// <returns></returns>
         public static string GetLoadedPath(IMesh mesh)
         {
-            return TW.Data.GetSingleton<RenderingModel>().MeshFactory.GetLoadedPath(mesh);
+            return TW.Assets.GetLoadedPath(mesh);
         }
 
         /// <summary>
@@ -49,7 +48,7 @@ namespace MHGameWork.TheWizards.WorldRendering
         /// <returns></returns>
         public static BoundingBox GetBoundingBox(IMesh mesh)
         {
-            return TW.Data.GetSingleton<RenderingModel>().MeshFactory.GetBoundingBox(mesh);
+            return TW.Assets.GetBoundingBox(mesh);
         }
 
     }

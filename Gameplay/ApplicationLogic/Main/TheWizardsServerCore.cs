@@ -73,7 +73,7 @@ namespace MHGameWork.TheWizards.Main
             assetSyncer.Start();
 
             var serializer = StringSerializer.Create();
-            serializer.AddConditional(new Persistence.AssetSerializer(TW.Data.GetSingleton<RenderingModel>().AssetFactory));
+            serializer.AddConditional(new Persistence.AssetSerializer(TW.Assets.GetAssetFactory()));
             var modelSerializer = new ModelSerializer(serializer);
             
 

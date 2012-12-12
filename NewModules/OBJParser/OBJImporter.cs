@@ -14,8 +14,6 @@ namespace MHGameWork.TheWizards.OBJParser
         public List<Vector3> Vertices { get; set; }
         public List<Vector3> Normals { get; set; }
         public List<Vector3> TexCoords { get; set; }
-        private RAMMesh mesh;
-        private RAMMeshPart meshPart;
 
         public List<OBJGroup> Groups { get; set; }
         public List<OBJMaterial> Materials { get; set; }
@@ -57,9 +55,6 @@ namespace MHGameWork.TheWizards.OBJParser
             Vertices = new List<Vector3>();
             Normals = new List<Vector3>();
             TexCoords = new List<Vector3>();
-            mesh = new RAMMesh();
-
-            meshPart = new RAMMeshPart();
             Groups = new List<OBJGroup>();
 
             Materials = new List<OBJMaterial>();

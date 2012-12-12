@@ -46,6 +46,7 @@ namespace MHGameWork.TheWizards.Engine
             context.Data = container;
             context.Physics = physX;
             context.Audio = new AudioWrapper();
+            context.Assets = new AssetsWrapper();
             TW.SetContext(context);
         }
 
@@ -56,6 +57,9 @@ namespace MHGameWork.TheWizards.Engine
 
         public void Run()
         {
+            if (game == null)
+                Initialize();
+
             game.Run();
         }
         public void Exit()
@@ -64,7 +68,7 @@ namespace MHGameWork.TheWizards.Engine
         }
 
 
-
+        [Obsolete]
         public void Start()
         {
             if (game == null)

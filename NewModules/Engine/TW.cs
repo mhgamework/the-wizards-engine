@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards
         /// <summary>
         /// TODO: probably add this, evaluate at later point in project
         /// </summary>
-        public static object Assets { get { throw new NotImplementedException(); } }
+        public static AssetsWrapper Assets { get { return ctx.Assets; } }
 
 
 
@@ -45,6 +45,7 @@ namespace MHGameWork.TheWizards
             public PhysicsWrapper Physics { get; set; }
             public AudioWrapper Audio { get; set; }
             public DebugWrapper Debug { get; set; }
+            public AssetsWrapper Assets { get; set; }
 
 
 
