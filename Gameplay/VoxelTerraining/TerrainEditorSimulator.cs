@@ -32,8 +32,8 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                 var boundingBox = new BoundingBox();
                 boundingBox.Minimum = targetedBlock.Position.ToVector3();
                 boundingBox.Maximum = targetedBlock.Position.ToVector3() + MathHelper.One;
-                boundingBox.Minimum = boundingBox.Minimum * targetedBlock.Terrain.NodeSize + targetedBlock.Terrain.WorldPosition;
-                boundingBox.Maximum = boundingBox.Maximum * targetedBlock.Terrain.NodeSize + targetedBlock.Terrain.WorldPosition;
+                boundingBox.Minimum = boundingBox.Minimum * targetedBlock.TerrainChunk.NodeSize + targetedBlock.TerrainChunk.WorldPosition;
+                boundingBox.Maximum = boundingBox.Maximum * targetedBlock.TerrainChunk.NodeSize + targetedBlock.TerrainChunk.WorldPosition;
                 TW.Graphics.LineManager3D.AddBox(boundingBox, new Color4());
             }
 
@@ -67,7 +67,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             float? closest = null;
 
 
-            foreach (VoxelTerrain terr in TW.Data.Objects.Where(o => o is VoxelTerrain))
+            foreach (VoxelTerrainChunk terr in TW.Data.Objects.Where(o => o is VoxelTerrainChunk))
             {
                 var trace = new RayTrace();
                 trace.Ray = cameraInfo.GetCenterScreenRay();
@@ -90,7 +90,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                 var hit = false;
 
 
-                VoxelTerrain terr1 = terr;
+                VoxelTerrainChunk terr1 = terr;
                 traverser.Traverse(trace, delegate(Point3 arg)
                     {
                         if (!terr1.InGrid(arg)) return true;

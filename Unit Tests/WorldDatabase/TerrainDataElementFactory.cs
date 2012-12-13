@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.Tests.WorldDatabase
 
         private string getDataElementFilename(DataItemIdentifier item, DataRevisionIdentifier revision)
         {
-            string dir = database.GetRevisionDataElementFolder(revision) + "\\Terrain";
+            string dir = database.GetRevisionDataElementFolder(revision) + "\\TerrainChunk";
             System.IO.Directory.CreateDirectory(dir);
             string filename =
                dir + "\\TerrainDataElement" + item.Id.ToString() + ".xml";

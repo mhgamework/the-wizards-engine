@@ -35,9 +35,9 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             engine.Run();
         }
 
-        private static VoxelTerrain createTerrain()
+        private static VoxelTerrainChunk createTerrain()
         {
-            var terr = new VoxelTerrain();
+            var terr = new VoxelTerrainChunk();
             terr.Size = new Point3(10, 10, 10);
             terr.Create();
 
@@ -67,9 +67,9 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             engine.Run();
         }
 
-        private static VoxelTerrain createBlob()
+        private static VoxelTerrainChunk createBlob()
         {
-            var terr = new VoxelTerrain();
+            var terr = new VoxelTerrainChunk();
             terr.Size = new Point3(20, 20, 20);
             terr.Create();
 
@@ -93,7 +93,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             engine.DontLoadPlugin = true;
             engine.Initialize();
 
-            var terr = new VoxelTerrain();
+            var terr = new VoxelTerrainChunk();
             int i = 300;
             terr.Size = new Point3(i, 30, i);
             terr.Create();
@@ -200,14 +200,14 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             engine.AddSimulator(new FlashlightSimulator());
             engine.AddSimulator(new BarrelShooterSimulator());
             var playerData = new PlayerData();
-            //engine.AddSimulator(new LocalPlayerSimulator(playerData));
-            //engine.AddSimulator(new ThirdPersonCameraSimulator());
+            engine.AddSimulator(new LocalPlayerSimulator(playerData));
+            engine.AddSimulator(new ThirdPersonCameraSimulator());
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
-            engine.AddSimulator(new PhysXDebugRendererSimulator());
+            //engine.AddSimulator(new PhysXDebugRendererSimulator());
 
-            //TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.ThirdPerson;
-            //TW.Data.GetSingleton<CameraInfo>().FirstPersonCameraTarget = playerData.Entity;
+            TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.ThirdPerson;
+            TW.Data.GetSingleton<CameraInfo>().FirstPersonCameraTarget = playerData.Entity;
 
 
             engine.Run();
@@ -219,7 +219,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             {
                 for (int y = -3; y < 3; y++)
                 {
-                    var terr = new VoxelTerrain();
+                    var terr = new VoxelTerrainChunk();
                     terr.Size = new Point3(16, 30, 16);
                     //terr.Size = new Point3(5, 5, 5);
                     terr.WorldPosition = Vector3.Modulate(terr.Size.ToVector3()*terr.NodeSize, new Vector3(x, 0, y));
@@ -293,7 +293,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 {
                     positions.Add(new Vector3(i, heightDataErrosion[i, j], j));
                     colors.Add(new Color(new Microsoft.Xna.Framework.Vector3(positions[i * width + j].Y - positionsbase[i * width + j].Y, 50, 50)));
-                    //positionsbaseDifference.Add(new Vector3(i, positions[i * width + j].Y - positionsbase[i * width + j].Y, j));
+                    //positionsbaseDifference.Add(new Vector3(i, positions[i * width + j].Y - positionsbase[i * width + j].Y, j));(
                 }
             }
 
@@ -302,7 +302,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             {
                 for (int y = 0; y < 10; y++)
                 {
-                    var terr = new VoxelTerrain();
+                    var terr = new VoxelTerrainChunk();
                     terr.Size = new Point3(16, 64, 16);
                     //terr.Size = new Point3(5, 5, 5);
                     terr.WorldPosition = Vector3.Modulate(terr.Size.ToVector3() * terr.NodeSize, new Vector3(x, 0, y));

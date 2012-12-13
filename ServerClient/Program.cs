@@ -139,8 +139,8 @@ namespace MHGameWork.TheWizards.ServerClient
             //Wereld.QuadTree.TestRender();
             //TestServerQuadtree();
 
-            //XNAGeoMipMap.Terrain.TestSaveTerrain();
-            //XNAGeoMipMap.Terrain.TestLoadTerrain();
+            //XNAGeoMipMap.TerrainChunk.TestSaveTerrain();
+            //XNAGeoMipMap.TerrainChunk.TestLoadTerrain();
             //TestServerEntities001();
             //TestTerrainCollision001();
             //TestOcean001();
@@ -151,9 +151,9 @@ namespace MHGameWork.TheWizards.ServerClient
             //XNAGeoMipMap.Skydome.TestRenderSkydome();
             //TestWaterSkyCollision001();
             //TestTerrainCollision002(); 
-            //XNAGeoMipMap.Terrain.TestCreateTerrain();
-            //XNAGeoMipMap.Terrain.TestMultipleTerrains();
-            //XNAGeoMipMap.Terrain.TestCalculateErrors();
+            //XNAGeoMipMap.TerrainChunk.TestCreateTerrain();
+            //XNAGeoMipMap.TerrainChunk.TestMultipleTerrains();
+            //XNAGeoMipMap.TerrainChunk.TestCalculateErrors();
 
             //TestServerClientNetwork001();
             //TestWorld001();
@@ -225,7 +225,7 @@ namespace MHGameWork.TheWizards.ServerClient
             //Water.WaterTest.RunTest();
             //UnitTest.Run<TestShadowsScattering>();
             //UnitTest.Run<TestWaterShadowsScattering>();
-            //TheWizards.Terrain.Editor.TerainEditorPlugin.TestTerrainEditor();
+            //TheWizards.TerrainChunk.Editor.TerainEditorPlugin.TestTerrainEditor();
 
             //ColladaShader.TestLoadShader();
             //ColladaModel.TestLoadColladaModel();

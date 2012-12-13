@@ -9,7 +9,7 @@ using SlimDX;
 namespace MHGameWork.TheWizards.WorldRendering
 {
     /// <summary>
-    /// Responsible for representing a independent object in the World. It is not part of any greater system, like the building/terrain/trees
+    /// Responsible for representing a independent object in the World. It is not part of any greater system, like the building/TerrainChunk/trees
     /// </summary>
     [Persist]
     [ModelObjectChanged]

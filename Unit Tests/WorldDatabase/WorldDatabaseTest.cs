@@ -93,7 +93,7 @@ namespace MHGameWork.TheWizards.Tests.WorldDatabase
 
             rev = new DataRevision(new DataRevisionIdentifier(14));
 
-            item = new DataItem(db, db.FindOrCreateDataItemType("Terrain"), 45, rev.Identifier);
+            item = new DataItem(db, db.FindOrCreateDataItemType("TerrainChunk"), 45, rev.Identifier);
             rev.AddDataItem(item);
 
             item = new DataItem(db, db.FindOrCreateDataItemType("Entity"), 30, rev.Identifier);
@@ -130,8 +130,8 @@ namespace MHGameWork.TheWizards.Tests.WorldDatabase
 
             db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("Entity"));
             db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("Script"));
-            item1 = db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("Terrain"));
-            db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("Terrain"));
+            item1 = db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("TerrainChunk"));
+            db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("TerrainChunk"));
             item2 = db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("Entity"));
             item3 = db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("Rommel"));
 
@@ -180,7 +180,7 @@ namespace MHGameWork.TheWizards.Tests.WorldDatabase
             db.AddDataElementFactory(new TerrainData2ElementFactory(db), true);
 
             db.WorkingCopy.RemoveDataItem(db.WorkingCopy.Revision.DataItems[1]);
-            DataItem item2 = db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("Terrain"));
+            DataItem item2 = db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("TerrainChunk"));
             DataItem item3 = db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("Entity"));
 
 
@@ -228,7 +228,7 @@ namespace MHGameWork.TheWizards.Tests.WorldDatabase
             db.AddDataElementFactory(new TerrainData2ElementFactory(db), true);
 
             db.WorkingCopy.RemoveDataItem(db.WorkingCopy.Revision.DataItems[1]);
-            DataItem item2 = db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("Terrain"));
+            DataItem item2 = db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("TerrainChunk"));
             DataItem item3 = db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("Entity"));
 
 
@@ -253,8 +253,8 @@ namespace MHGameWork.TheWizards.Tests.WorldDatabase
             db = new TheWizards.WorldDatabase.WorldDatabase(dataDir);
 
 
-            DataItem item1 = db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("Terrain"));
-            db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("Terrain"));
+            DataItem item1 = db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("TerrainChunk"));
+            db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("TerrainChunk"));
 
             db.WorkingCopy.RemoveDataItem(item1);
 
@@ -275,7 +275,7 @@ namespace MHGameWork.TheWizards.Tests.WorldDatabase
             db.RegisterDataElementType(typeof(TerrainDataElement), "WorldDatabaseTest.TerrainDataElement");
             db.AddDataElementFactory(new TerrainDataElementFactory(db), true);
 
-            DataItem item2 = db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("Terrain"));
+            DataItem item2 = db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("TerrainChunk"));
             DataItem item3 = db.WorkingCopy.CreateNewDataItem(db.FindOrCreateDataItemType("Entity"));
 
 
@@ -310,7 +310,7 @@ namespace MHGameWork.TheWizards.Tests.WorldDatabase
             db.AddDataElementFactory( new TerrainData2ElementFactory( db ), true );
 
             db.WorkingCopy.RemoveDataItem( db.WorkingCopy.Revision.DataItems[ 1 ] );
-            DataItem item2 = db.WorkingCopy.CreateNewDataItem( db.FindOrCreateDataItemType( "Terrain" ) );
+            DataItem item2 = db.WorkingCopy.CreateNewDataItem( db.FindOrCreateDataItemType( "TerrainChunk" ) );
             DataItem item3 = db.WorkingCopy.CreateNewDataItem( db.FindOrCreateDataItemType( "Entity" ) );
 
 

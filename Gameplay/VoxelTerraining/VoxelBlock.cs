@@ -27,20 +27,20 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                 if (block.Filled == value)
                     return;
                 block.Filled = value;
-                TW.Data.NotifyObjectModified(Terrain);
+                TW.Data.NotifyObjectModified(TerrainChunk);
             }
         }
 
         public Point3 Position { get; private set; }
 
-        public VoxelTerrain Terrain { get; private set; }
+        public VoxelTerrainChunk TerrainChunk { get; private set; }
 
-        private VoxelTerrain.Voxel block;
+        private VoxelTerrainChunk.Voxel block;
 
-        public VoxelBlock(Point3 position, VoxelTerrain terrain, VoxelTerrain.Voxel block)
+        public VoxelBlock(Point3 position, VoxelTerrainChunk terrainChunk, VoxelTerrainChunk.Voxel block)
         {
             this.Position = position;
-            this.Terrain = terrain;
+            this.TerrainChunk = terrainChunk;
             this.block = block;
         }
     }

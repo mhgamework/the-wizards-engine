@@ -183,6 +183,7 @@
     <Compile Include="VoxelTerraining\TerrainEditorSimulator.cs" />
     <Compile Include="VoxelTerraining\VoxelBlock.cs" />
     <Compile Include="VoxelTerraining\VoxelTerrain.cs" />
+    <Compile Include="VoxelTerraining\VoxelTerrainChunk.cs" />
     <Compile Include="VoxelTerraining\VoxelTerrainSimulator.cs" />
     <Compile Include="WorldRendering\EntityBatcherSimulator.cs" />
     <Compile Include="WorldRendering\EntitySimulator.cs" />

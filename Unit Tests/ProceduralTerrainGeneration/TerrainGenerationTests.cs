@@ -562,7 +562,7 @@ namespace TreeGenerator.TerrrainGeneration
             gen.NewWaterSimulation(heightData);
 
 
-            //terrain setup + coloring
+            //TerrainChunk setup + coloring
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
@@ -687,7 +687,7 @@ namespace TreeGenerator.TerrrainGeneration
             gen.newWaterSystem(heightData, 1, 1f, 0.8f, 1, 0.001f);
 
 
-            //terrain setup + coloring
+            //TerrainChunk setup + coloring
 
             for (int i = 0; i < width; i++)
             {
@@ -883,7 +883,7 @@ namespace TreeGenerator.TerrrainGeneration
             gen.newWaterSystem(heightData, 1, 1f, 0.8f, 1, 0.001f);
 
 
-            //terrain setup + coloring
+            //TerrainChunk setup + coloring
 
             for (int i = 0; i < width; i++)
             {
@@ -1229,7 +1229,7 @@ namespace TreeGenerator.TerrrainGeneration
                     //    heighest = heightDataFinal[i, j];
                 }
             }
-            // now i have the none erroted terrain
+            // now i have the none erroted TerrainChunk
             heightDataFinal = gen.GenerateHydrolicErrosion(heightDataFinal,500*width, width, height);
             
             for (int i = 0; i < width; i++)
