@@ -128,6 +128,7 @@
     <Compile Include="PhysX\EntityPhysXUpdater.cs" />
     <Compile Include="Player\PlayerClientPhysics.cs" />
     <Compile Include="Plugin.cs" />
+    <Compile Include="RTS\Goblin.cs" />
     <Compile Include="RTS\GoblinSimulator.cs" />
     <Compile Include="RTS\GoblinSpawner.cs" />
     <Compile Include="Simulators\AnimationSimulator.cs" />

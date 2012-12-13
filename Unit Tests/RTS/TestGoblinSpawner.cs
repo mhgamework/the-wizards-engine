@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Engine;
+﻿using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.RTS;
 using MHGameWork.TheWizards.Simulators;
 using NUnit.Framework;
@@ -16,22 +12,14 @@ namespace MHGameWork.TheWizards.Tests.RTS
         [Test]
         public void TestRenderSpawner()
         {
-            var engine = new TWEngine();
-            engine.DontLoadPlugin = true;
-            engine.Initialize();
+            var engine = new TWEngine {DontLoadPlugin = true};
 
-            var spawner = new GoblinSpawner() { Position = new Vector3(0, 0, 0) };
-
-            //engine.AddSimulator(new BasicSimulator(delegate
-            //{
-            //    spawner.Position += new Vector3(0.01f, 0, 0);
-            //}));
-
+            engine.Initialize();    
+            new GoblinSpawner() { Position = new Vector3(0, 0, 0) };
             engine.AddSimulator(new GoblinSimulator());
-            engine.AddSimulator(new PhysXSimulator());
+            //engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
-            engine.AddSimulator(new PhysXDebugRendererSimulator());
-
+            //engine.AddSimulator(new PhysXDebugRendererSimulator());
             
 
             engine.Run();

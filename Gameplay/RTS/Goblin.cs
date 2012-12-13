@@ -9,9 +9,10 @@ using SlimDX;
 namespace MHGameWork.TheWizards.RTS
 {
     [ModelObjectChanged]
-    public class GoblinSpawner : EngineModelObject
+    public class Goblin : EngineModelObject
+
     {
-        public Vector3 Position { get; set; }
-        public float remainingSpawnTime { get; set; }
+        public Vector3 MoveDirection { get; set; }
+        public Vector3 Position { get; set;}
     }
 }
