@@ -157,6 +157,7 @@
     <Compile Include="Gameplay\AssetBrowserTest.cs" />
     <Compile Include="Gameplay\AudioTest.cs" />
     <Compile Include="Gameplay\DebugTest.cs" />
+    <Compile Include="Gameplay\NavigationTest.cs" />
     <Compile Include="Gameplay\PhysXTest.cs" />
     <Compile Include="Gameplay\LocalGame.cs" />
     <Compile Include="Gameplay\ModelTest.cs" />

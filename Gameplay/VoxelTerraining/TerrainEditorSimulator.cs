@@ -44,6 +44,11 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                 placeBlock();
         }
 
+        private void raycastBlock()
+        {
+            targetedBlock= TW.Data.GetSingleton<VoxelTerrain>().Raycast(cameraInfo.GetCenterScreenRay(), out emptyTargetedBlock);
+        }
+
         private void placeBlock()
         {
             if (emptyTargetedBlock == null) return;
@@ -57,66 +62,6 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             targetedBlock.Filled = false;
         }
 
-        private void raycastBlock()
-        {
-            VoxelBlock last = null;
-            VoxelBlock ret = null;
-            var traverser = new GridTraverser();
 
-
-            float? closest = null;
-
-
-            foreach (VoxelTerrainChunk terr in TW.Data.Objects.Where(o => o is VoxelTerrainChunk))
-            {
-                var trace = new RayTrace();
-                trace.Ray = cameraInfo.GetCenterScreenRay();
-
-                float? dist = trace.Ray.xna().Intersects(terr.GetBoundingBox().xna());
-                if (!dist.HasValue) continue;
-                if (closest.HasValue && closest.Value < dist.Value)
-                    continue;
-
-                trace.Start = dist.Value + 0.001f;
-
-
-
-                traverser.NodeSize = terr.NodeSize;
-                traverser.GridOffset = terr.WorldPosition;
-
-                //TODO: fix multiple terrains 
-
-
-                var hit = false;
-
-
-                VoxelTerrainChunk terr1 = terr;
-                traverser.Traverse(trace, delegate(Point3 arg)
-                    {
-                        if (!terr1.InGrid(arg)) return true;
-
-                        var voxelBlock = terr1.GetVoxel(arg);
-                        if (voxelBlock == null) return false;
-                        if (voxelBlock.Filled)
-                        {
-                            hit = true;
-                            ret = voxelBlock;
-                            return true;
-                        }
-                        last = voxelBlock;
-                        return false;
-                    });
-
-
-                if (hit)
-                {
-                    closest = dist;
-                }
-
-
-            }
-            emptyTargetedBlock = last;
-            targetedBlock = ret;
-        }
     }
 }

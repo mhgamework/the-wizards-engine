@@ -192,7 +192,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             engine.Initialize();
 
             //generateFlat();
-            generateTerrain();
+            generateTerrain(10, 10);
 
 
             engine.AddSimulator(new TerrainEditorSimulator());
@@ -239,7 +239,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             }
         }
 
-        public void generateTerrain()
+        public static void generateTerrain(int chunksX, int chunksY)
         {
 
 
@@ -298,9 +298,9 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             }
 
 
-            for (int x = 0; x < 10; x++)
+            for (int x = 0; x < chunksX; x++)
             {
-                for (int y = 0; y < 10; y++)
+                for (int y = 0; y < chunksY; y++)
                 {
                     var terr = new VoxelTerrainChunk();
                     terr.Size = new Point3(16, 64, 16);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +12,12 @@ namespace MHGameWork.TheWizards.RTS
     public class Goblin : EngineModelObject
 
     {
-        public Vector3 MoveDirection { get; set; }
         public Vector3 Position { get; set;}
+        public Goblin BestFriend { get; set; }
+
+        public void MoveTo(Vector3 position)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
