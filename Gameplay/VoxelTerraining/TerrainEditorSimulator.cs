@@ -28,7 +28,14 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             raycastBlock();
 
             if (targetedBlock != null)
-                TW.Graphics.LineManager3D.AddBox(new BoundingBox(targetedBlock.Position.ToVector3(), targetedBlock.Position.ToVector3() + MathHelper.One), new Color4());
+            {
+                var boundingBox = new BoundingBox();
+                boundingBox.Minimum = targetedBlock.Position.ToVector3();
+                boundingBox.Maximum = targetedBlock.Position.ToVector3() + MathHelper.One;
+                boundingBox.Minimum = boundingBox.Minimum * targetedBlock.Terrain.NodeSize + targetedBlock.Terrain.WorldPosition;
+                boundingBox.Maximum = boundingBox.Maximum * targetedBlock.Terrain.NodeSize + targetedBlock.Terrain.WorldPosition;
+                TW.Graphics.LineManager3D.AddBox(boundingBox, new Color4());
+            }
 
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.F))
                 removeBlock();
@@ -57,19 +64,32 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             var traverser = new GridTraverser();
 
 
+            float? closest = null;
 
 
             foreach (VoxelTerrain terr in TW.Data.Objects.Where(o => o is VoxelTerrain))
             {
-                traverser.NodeSize = 1;
-                traverser.GridOffset = new Vector3();
+                var trace = new RayTrace();
+                trace.Ray = cameraInfo.GetCenterScreenRay();
+
+                float? dist = trace.Ray.xna().Intersects(terr.GetBoundingBox().xna());
+                if (!dist.HasValue) continue;
+                if (closest.HasValue && closest.Value < dist.Value)
+                    continue;
+
+                trace.Start = dist.Value + 0.001f;
+
+
+
+                traverser.NodeSize = terr.NodeSize;
+                traverser.GridOffset = terr.WorldPosition;
 
                 //TODO: fix multiple terrains 
 
 
+                var hit = false;
 
-                var trace = new RayTrace();
-                trace.Ray = cameraInfo.GetCenterScreenRay();
+
                 VoxelTerrain terr1 = terr;
                 traverser.Traverse(trace, delegate(Point3 arg)
                     {
@@ -79,7 +99,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                         if (voxelBlock == null) return false;
                         if (voxelBlock.Filled)
                         {
-
+                            hit = true;
                             ret = voxelBlock;
                             return true;
                         }
@@ -87,7 +107,12 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                         return false;
                     });
 
-                break;
+
+                if (hit)
+                {
+                    closest = dist;
+                }
+
 
             }
             emptyTargetedBlock = last;

@@ -6,6 +6,7 @@ using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.VoxelTerraining
 {
@@ -20,6 +21,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
         public float NodeSize { get; set; }
         public Voxel[, ,] Voxels { get; set; }
         public Point3 Size { get; set; }
+        public Vector3 WorldPosition { get; set; }
 
         public void Create()
         {
@@ -81,6 +83,12 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                 if (point3[i] >= Size[i]) return false;
             }
             return true;
+        }
+
+
+        public BoundingBox GetBoundingBox()
+        {
+            return new BoundingBox(WorldPosition, WorldPosition + Size.ToVector3() * NodeSize);
         }
     }
 }

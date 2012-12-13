@@ -38,7 +38,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
 
             private bool[, ,] visited;
             private List<VoxelBlock> visibleBlocks = new List<VoxelBlock>();
-            
+
 
             private MeshBuilder _builder;
 
@@ -46,10 +46,29 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             {
                 visited = new bool[Terrain.Size.X, Terrain.Size.Y, Terrain.Size.Z];
 
+                for (int x = 0; x < Terrain.Size.X; x++)
+                {
+                    for (int y = 0; y < Terrain.Size.Y; y++)
+                    {
+                        for (int z = 0; z < Terrain.Size.Z; z++)
+                        {
+                            var pos = new Point3(x, y, z);
+                            var node = Terrain.GetVoxel(pos);
+                            if (node.Filled) continue;
+                            if (visited[x, y, z]) continue;
+                            floodFillFromNode(pos);
 
+
+                        }
+                    }
+                }
+            }
+
+            private void floodFillFromNode(Point3 point3)
+            {
                 var queue = new Queue<Point3>();
 
-                queue.Enqueue(new Point3());
+                queue.Enqueue(point3);
 
                 while (queue.Count > 0)
                 {
@@ -74,7 +93,6 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                         }
                     }
                 }
-
             }
 
             private void makeBlockVisible(VoxelBlock block)
@@ -85,7 +103,24 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                 visibleBlocks.Add(block);
 
             }
-
+            private void makeSidesVisible()
+            {
+                for (int x = 0; x < Terrain.Size.X; x++)
+                {
+                    for (int y = 0; y < Terrain.Size.Y; y++)
+                    {
+                        for (int z = 0; z < Terrain.Size.Z; z++)
+                        {
+                            if (x != 0 && x != Terrain.Size.X - 1
+                                //&& y != 0 && y != Terrain.Size.Y - 1
+                                && z != 0 && z != Terrain.Size.Z - 1) continue;
+                            var voxelBlock = Terrain.GetVoxel(new Point3(x, y, z));
+                            if (voxelBlock.Filled)
+                                makeBlockVisible(voxelBlock);
+                        }
+                    }
+                }
+            }
 
             public void Update()
             {
@@ -93,15 +128,17 @@ namespace MHGameWork.TheWizards.VoxelTerraining
 
                 clearVisible();
 
+                //makeSidesVisible(); //This is epic cheat :))))
                 floodFill();
 
                 var boxMesh = createMesh();
 
 
-                _ent.WorldMatrix = Matrix.Identity;
+                _ent.WorldMatrix = Matrix.Translation(Terrain.WorldPosition);
                 _ent.Mesh = boxMesh;
                 _ent.Solid = true;
                 _ent.Static = true;
+
 
 
 
@@ -111,20 +148,20 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             {
                 var relativeCorePath = "Core\\checker.png";
                 relativeCorePath = "GrassGreenTexture0006.jpg";
-                
-                
+
+
                 foreach (var block in visibleBlocks)
                 {
                     var border = new Vector3(1, 1, 1) * 0.05f;
                     border = new Vector3();
 
                     var pos = block.Position;
-                    _builder.AddBox(pos.ToVector3() + border, MathHelper.One + pos.ToVector3() - border);    
+                    _builder.AddBox(pos.ToVector3() * Terrain.NodeSize + border, (MathHelper.One + pos.ToVector3()) * Terrain.NodeSize - border);
                 }
 
 
 
-                
+
 
 
                 //entities.Add(pos,ent);
@@ -141,7 +178,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                 foreach (var block in visibleBlocks)
                 {
                     var pos = block.Position;
-                    boxes.Add(new MeshCollisionData.Box { Dimensions = MathHelper.One.xna(), Orientation = Matrix.Translation(pos+ MathHelper.One * 0.5f).xna() });
+                    boxes.Add(new MeshCollisionData.Box { Dimensions = MathHelper.One.xna() * Terrain.NodeSize, Orientation = Matrix.Translation((pos + MathHelper.One * 0.5f) * Terrain.NodeSize).xna() });
                 }
 
                 boxMesh.GetCollisionData().Boxes.AddRange(boxes);

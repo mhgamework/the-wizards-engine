@@ -9,7 +9,11 @@ using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.VoxelTerraining;
 using MHGameWork.TheWizards.WorldRendering;
+using Microsoft.Xna.Framework.Graphics;
+using SlimDX;
 using NUnit.Framework;
+using TreeGenerator.NoiseGenerater;
+using TreeGenerator.TerrrainGeneration;
 
 namespace MHGameWork.TheWizards.Tests.Gameplay
 {
@@ -124,8 +128,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             engine.AddSimulator(new VoxelTerrainSimulator());
             engine.AddSimulator(new BarrelShooterSimulator());
             engine.AddSimulator(new PhysXSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
             engine.AddSimulator(new PhysXDebugRendererSimulator());
-            //engine.AddSimulator(new WorldRenderingSimulator());
 
             engine.Run();
         }
@@ -151,11 +155,177 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.ThirdPerson;
             TW.Data.GetSingleton<CameraInfo>().FirstPersonCameraTarget = playerData.Entity;
-            
+
 
             engine.Run();
         }
 
+        [Test]
+        public void TestTranslatedVoxelTerrain()
+        {
+            var engine = new TWEngine();
+            engine.DontLoadPlugin = true;
+            engine.Initialize();
+
+            var terr = createBlob();
+            terr.WorldPosition = new Vector3(30, 0, 0);
+
+            terr = createBlob();
+
+            terr.NodeSize = 5;
+            terr.WorldPosition = new Vector3(0, 0, 100);
+
+            engine.AddSimulator(new VoxelTerrainSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
+
+            engine.Run();
+
+
+        }
+
+
+        [Test]
+        public void TestVoxelEditorBig()
+        {
+            var engine = new TWEngine();
+            engine.DontLoadPlugin = true;
+            engine.Initialize();
+
+            //generateFlat();
+            generateTerrain();
+
+
+            engine.AddSimulator(new TerrainEditorSimulator());
+            engine.AddSimulator(new VoxelTerrainSimulator());
+            engine.AddSimulator(new FlashlightSimulator());
+            engine.AddSimulator(new BarrelShooterSimulator());
+            var playerData = new PlayerData();
+            //engine.AddSimulator(new LocalPlayerSimulator(playerData));
+            //engine.AddSimulator(new ThirdPersonCameraSimulator());
+            engine.AddSimulator(new PhysXSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
+            engine.AddSimulator(new PhysXDebugRendererSimulator());
+
+            //TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.ThirdPerson;
+            //TW.Data.GetSingleton<CameraInfo>().FirstPersonCameraTarget = playerData.Entity;
+
+
+            engine.Run();
+        }
+
+        private static void generateFlat()
+        {
+            for (int x = -3; x < 3; x++)
+            {
+                for (int y = -3; y < 3; y++)
+                {
+                    var terr = new VoxelTerrain();
+                    terr.Size = new Point3(16, 30, 16);
+                    //terr.Size = new Point3(5, 5, 5);
+                    terr.WorldPosition = Vector3.Modulate(terr.Size.ToVector3()*terr.NodeSize, new Vector3(x, 0, y));
+                    terr.Create();
+
+                    for (int tx = 0; tx < terr.Size.X; tx++)
+                    {
+                        for (int ty = 0; ty < terr.Size.Y/2; ty++)
+                        {
+                            for (int tz = 0; tz < terr.Size.Z; tz++)
+                            {
+                                terr.GetVoxel(new Point3(tx, ty, tz)).Filled = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public void generateTerrain()
+        {
+
+
+            PerlinNoiseGenerater noise;
+            noise = new PerlinNoiseGenerater();
+            float factor = 0.1f;
+            float scale = 1f;
+            List<Vector3> positions = new List<Vector3>();
+            List<Vector3> positionsbase = new List<Vector3>();
+            List<Vector3> positionsbaseDifference = new List<Vector3>();
+
+            List<Color> colors = new List<Color>();
+            List<Color> colorsbase = new List<Color>();
+
+            int width = 100;
+            int height = 100;
+            SimpleTerrain terrain;
+            SimpleTerrain terrainbase;
+            SimpleTerrain terrainbaseDiffernce;
+
+
+            ProceduralHeigthGenerater gen = new ProceduralHeigthGenerater(8, 0.7f);
+            float[,] heightData = new float[width, height];
+            float[,] heightDataErrosion = new float[width, height];
+            //float[,] heightDataErrosionDiffernce = new float[width, height];
+
+
+
+            for (int i = 0; i < (int)(width); i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    heightData[i, j] = (noise.GetPerlineNoise(i, j, 8, 0.1f, 0.8f, 0.8f) * 0.8f + noise.GetPerlineNoise(noise.Perturb(i, j, 0.1f, 30).X, noise.Perturb(i, j, 0.1f, 30).Y, 4, 0.2f, 0.5f, 0.5f) * 0.25f) * 70;
+
+                }
+            }
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    positionsbase.Add(new Vector3(i, heightData[i, j], j));
+                    colorsbase.Add(Color.White);
+                }
+            }
+            //heightDataErrosionDiffernce = heightData
+            heightDataErrosion = gen.GenerateHydrolicErrosion(heightData, 50 * width * height, width, height);
+
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    positions.Add(new Vector3(i, heightDataErrosion[i, j], j));
+                    colors.Add(new Color(new Microsoft.Xna.Framework.Vector3(positions[i * width + j].Y - positionsbase[i * width + j].Y, 50, 50)));
+                    //positionsbaseDifference.Add(new Vector3(i, positions[i * width + j].Y - positionsbase[i * width + j].Y, j));
+                }
+            }
+
+
+            for (int x = 0; x < 10; x++)
+            {
+                for (int y = 0; y < 10; y++)
+                {
+                    var terr = new VoxelTerrain();
+                    terr.Size = new Point3(16, 64, 16);
+                    //terr.Size = new Point3(5, 5, 5);
+                    terr.WorldPosition = Vector3.Modulate(terr.Size.ToVector3() * terr.NodeSize, new Vector3(x, 0, y));
+                    terr.Create();
+
+                    for (int tx = 0; tx < terr.Size.X; tx++)
+                    {
+                        for (int ty = 0; ty < terr.Size.Y / 2; ty++)
+                        {
+                            for (int tz = 0; tz < terr.Size.Z; tz++)
+                            {
+                                var heightMapX = tx + (int) terr.WorldPosition.X;
+                                var heightMapZ = tz + (int) terr.WorldPosition.Z;
+                                if (heightMapX >= width || heightMapZ >= height) continue;
+                                if (ty < heightDataErrosion[heightMapX, heightMapZ]/2f)
+                                    terr.GetVoxel(new Point3(tx, ty, tz)).Filled = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
 
     }
 }

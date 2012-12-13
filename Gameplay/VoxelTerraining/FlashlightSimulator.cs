@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             cameraInfo = TW.Data.GetSingleton<CameraInfo>();
 
             pointLight = TW.Graphics.AcquireRenderer().CreatePointLight();
-            pointLight.LightRadius = 8;
+            pointLight.LightRadius = 20;
         }
 
         public void Simulate()
