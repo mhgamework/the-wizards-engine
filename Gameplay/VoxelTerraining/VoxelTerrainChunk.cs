@@ -90,5 +90,30 @@ namespace MHGameWork.TheWizards.VoxelTerraining
         {
             return new BoundingBox(WorldPosition, WorldPosition + Size.ToVector3() * NodeSize);
         }
+
+
+        protected bool Equals(VoxelTerrainChunk other)
+        {
+            return Size.Equals(other.Size) && WorldPosition.Equals(other.WorldPosition) && NodeSize.Equals(other.NodeSize);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((VoxelTerrainChunk) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = Size.GetHashCode();
+                hashCode = (hashCode*397) ^ WorldPosition.GetHashCode();
+                hashCode = (hashCode*397) ^ NodeSize.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 }

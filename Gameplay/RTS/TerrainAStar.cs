@@ -34,7 +34,7 @@ namespace MHGameWork.TheWizards.RTS
             while (openset.Count > 0)
             {
                 var current = openset.OrderBy(o => f_score[o]).First(); // the node in openset having the lowest f_score[] value
-                if (current == goal)
+                if (current.Equals(goal))
                     return reconstruct_path(came_from, goal);
 
                 openset.Remove(current); //remove current from openset
@@ -78,9 +78,9 @@ namespace MHGameWork.TheWizards.RTS
                 var n1 = terrain.GetVoxelAt(terrain.GetPositionOf(current) + axis);
                 var n2 = terrain.GetVoxelAt(terrain.GetPositionOf(current) - axis);
 
-                if (!n1.Filled)
+                if (n1 != null && !n1.Filled)
                     yield return n1;
-                if (!n2.Filled)
+                if (n2 != null && !n2.Filled)
                     yield return n2;
 
             }
@@ -98,20 +98,13 @@ namespace MHGameWork.TheWizards.RTS
         {
             var ret = new List<VoxelBlock>();
 
-            //for (int i = 0; i < 200; i++)
-            //{
-            //    if (came_from.ContainsKey(current_node))
-            //    {
-            //        var p = reconstruct_path(came_from, came_from[current_node]);
-
-            //        return p.Concat(current_node_array);
-            //    }
-            //    else
-            //    {
-            //        ret.Add(current_node);
-
-            //    }
-            //}
+            for (int i = 0; i < 200; i++)
+            {
+                ret.Add(current_node);
+                if (!came_from.ContainsKey(current_node))
+                    break;
+                    current_node = came_from[current_node];
+            }
 
             return ret;
             //if came_from[current_node] in set

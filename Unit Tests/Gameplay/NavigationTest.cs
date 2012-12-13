@@ -6,8 +6,10 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.RTS;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.VoxelTerraining;
+using MHGameWork.TheWizards.WorldRendering;
 using NUnit.Framework;
 using SlimDX;
+using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.Tests.Gameplay
 {
@@ -36,13 +38,32 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             var terrain = TW.Data.GetSingleton<VoxelTerrain>();
 
+
+            var start = new Vector3(1, 40, 1);
+            var end = new Vector3(5, 40, 5);
+
             VoxelTerrainTest.generateTerrain(1, 1);
             engine.AddSimulator(new BasicSimulator(delegate
                 {
-                    var star = new TerrainAStar();
-                    var path = star.findPath(terrain.GetVoxelAt(new Vector3(1, 40, 1)), terrain.GetVoxelAt(new Vector3(5, 40, 5)));
+                    List<VoxelBlock> path = null;
+                    if (TW.Graphics.Keyboard.IsKeyPressed(Key.T))
+                    {
+                        start = terrain.GetPositionOf(terrain.Raycast(TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay()));
+                        var star = new TerrainAStar();
+                        
+                        path = star.findPath(terrain.GetVoxelAt(start), terrain.GetVoxelAt(end));
+                    }
+                    if (TW.Graphics.Keyboard.IsKeyPressed(Key.Y))
+                    {
+                        end = terrain.GetPositionOf(terrain.Raycast(TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay()));
+                        var star = new TerrainAStar();
+                        path = star.findPath(terrain.GetVoxelAt(start), terrain.GetVoxelAt(end));
+                    }
 
-                    drawPath(path.Select(voxel => terrain.GetPositionOf(voxel)).ToArray());
+
+                    
+                    if (path != null)
+                        drawPath(path.Select(voxel => terrain.GetPositionOf(voxel)).ToArray());
                 }));
             engine.AddSimulator(new VoxelTerrainSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());

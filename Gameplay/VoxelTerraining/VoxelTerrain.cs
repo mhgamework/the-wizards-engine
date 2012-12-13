@@ -15,11 +15,21 @@ namespace MHGameWork.TheWizards.VoxelTerraining
     {
         public VoxelBlock GetVoxelAt(Vector3 pos)
         {
-            throw new NotImplementedException();
+            foreach (VoxelTerrainChunk chunk in TW.Data.Objects.Where(o=>o is VoxelTerrainChunk))
+            {
+                var relative = pos - chunk.WorldPosition;
+                relative *= 1 / (chunk.NodeSize);
+                var point = new Point3(relative);
+                if (chunk.InGrid(point))
+                    return chunk.GetVoxel(point);
+            }
+
+            return null;
         }
         public Vector3 GetPositionOf(VoxelBlock block)
         {
-            throw new NotImplementedException();
+            return block.Position.ToVector3() * block.TerrainChunk.NodeSize + block.TerrainChunk.WorldPosition;
+            
         }
 
 

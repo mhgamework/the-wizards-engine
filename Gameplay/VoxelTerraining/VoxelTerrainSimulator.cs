@@ -148,7 +148,8 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             private IMesh createMesh()
             {
                 var relativeCorePath = "Core\\checker.png";
-                relativeCorePath = "GrassGreenTexture0006.jpg";
+                //relativeCorePath = "GrassGreenTexture0006.jpg";
+                relativeCorePath = "dryvalley.jpg";
 
 
                 foreach (var block in visibleBlocks)

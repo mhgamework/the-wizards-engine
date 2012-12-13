@@ -199,15 +199,15 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             engine.AddSimulator(new VoxelTerrainSimulator());
             engine.AddSimulator(new FlashlightSimulator());
             engine.AddSimulator(new BarrelShooterSimulator());
-            var playerData = new PlayerData();
-            engine.AddSimulator(new LocalPlayerSimulator(playerData));
-            engine.AddSimulator(new ThirdPersonCameraSimulator());
+            //var playerData = new PlayerData();
+            //engine.AddSimulator(new LocalPlayerSimulator(playerData));
+            //engine.AddSimulator(new ThirdPersonCameraSimulator());
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
             //engine.AddSimulator(new PhysXDebugRendererSimulator());
 
-            TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.ThirdPerson;
-            TW.Data.GetSingleton<CameraInfo>().FirstPersonCameraTarget = playerData.Entity;
+            //TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.ThirdPerson;
+            //TW.Data.GetSingleton<CameraInfo>().FirstPersonCameraTarget = playerData.Entity;
 
 
             engine.Run();

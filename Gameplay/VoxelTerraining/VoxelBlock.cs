@@ -43,5 +43,28 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             this.TerrainChunk = terrainChunk;
             this.block = block;
         }
+
+        protected bool Equals(VoxelBlock other)
+        {
+            return Equals(block, other.block) && Position.Equals(other.Position) && Equals(TerrainChunk, other.TerrainChunk);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((VoxelBlock) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = Position.GetHashCode();
+                hashCode = (hashCode*397) ^ (TerrainChunk != null ? TerrainChunk.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
     }
 }
