@@ -43,7 +43,7 @@ obj/
 
 
 # Visual studio user data
-*.user
+# *.user should contain debug settings and are meant to be synced
 *.suo
 
 # Various application junk

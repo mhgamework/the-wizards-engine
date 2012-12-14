@@ -1,0 +1,159 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="MeshLoader`0" priority="0" />
+      <Item value="FileInfo" priority="0" />
+      <Item value="IMesh" priority="2" />
+      <Item value="Matrix" priority="3" />
+      <Item value="Assembly" priority="1" />
+      <Item value="TestRunner" priority="0" />
+      <Item value="BinaryFormatter" priority="0" />
+      <Item value="TextWriter" priority="0" />
+      <Item value="XmlSerializer" priority="0" />
+      <Item value="PlayerData" priority="1" />
+      <Item value="PlayerController" priority="0" />
+      <Item value="DX11Game" priority="4" />
+      <Item value="ModelContainer" priority="0" />
+      <Item value="ISimulater" priority="1" />
+      <Item value="LocalPlayer" priority="0" />
+      <Item value="ISimulator" priority="2" />
+      <Item value="Entity" priority="5" />
+      <Item value="PhysicsEngine" priority="0" />
+      <Item value="Scene" priority="2" />
+      <Item value="ICamera" priority="1" />
+      <Item value="PlayerThirdPersonCamera" priority="0" />
+      <Item value="MathHelper" priority="1" />
+      <Item value="ThirdPersonCamera" priority="1" />
+      <Item value="NotImplementedException" priority="0" />
+      <Item value="Vector3" priority="4" />
+      <Item value="ThirdPersonCameraSimulator" priority="0" />
+      <Item value="FileSystemWatcher" priority="0" />
+      <Item value="ConcurrentQueue" priority="0" />
+      <Item value="TextTexture" priority="0" />
+      <Item value="GPUTexture" priority="0" />
+      <Item value="MeshPhysicsElementFactory" priority="1" />
+      <Item value="ClientPhysicsQuadTreeNode" priority="0" />
+      <Item value="BoundingBox" priority="0" />
+      <Item value="EntityPhysXUpdater" priority="0" />
+      <Item value="IXNAObject" priority="0" />
+      <Item value="MeshPhysicsFactoryXNA" priority="0" />
+      <Item value="LineManager3DLines" priority="0" />
+      <Item value="Ray" priority="0" />
+      <Item value="RaycastResult" priority="0" />
+      <Item value="TestFixture" priority="3" />
+      <Item value="BasicSimulator" priority="0" />
+      <Item value="World" priority="0" />
+      <Item value="XAudio2Test" priority="0" />
+      <Item value="Textarea" priority="0" />
+      <Item value="DeferredMeshRenderElement" priority="0" />
+      <Item value="RAMMesh" priority="1" />
+      <Item value="GeometrySceneObject" priority="1" />
+      <Item value="TraceResult" priority="0" />
+      <Item value="Color4" priority="0" />
+      <Item value="TransformedSceneObject" priority="1" />
+      <Item value="CGFactory" priority="1" />
+      <Item value="SphereGeometricSurface" priority="0" />
+      <Item value="Plane" priority="1" />
+      <Item value="NormalsShader" priority="1" />
+      <Item value="SphereGeometry" priority="0" />
+      <Item value="IGeometry" priority="0" />
+      <Item value="RayTrace" priority="0" />
+      <Item value="IShader" priority="1" />
+      <Item value="DiffuseShader" priority="0" />
+      <Item value="SimpleLightProvider" priority="0" />
+      <Item value="SpecularShader" priority="0" />
+      <Item value="CompactGridGeometricSurface" priority="1" />
+      <Item value="ISceneObject" priority="0" />
+      <Item value="RAMTexture" priority="0" />
+      <Item value="PhongShader" priority="0" />
+      <Item value="List" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@MHGameWork.TheWizards.Rendering.MeshLoader">
+      <Item value="LoadMeshFromObj`0" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Shading/f:DiffuseShader.cs" caret="417" fromTop="12" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Tests/d:Shading/f:TexturingTest.cs" caret="0" fromTop="0" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Tests/d:Shading/f:BaseShaderTest.cs" caret="1030" fromTop="24" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Shading/f:SpecularShader.cs" caret="1900" fromTop="29" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Shading/f:PhongShader.cs" caret="1721" fromTop="17" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:GeometricSurfaces/f:TriangleGeometry.cs" caret="1734" fromTop="24" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:GeometricSurfaces/f:MeshGeometry.cs" caret="1466" fromTop="37" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Raytracing/d:Pipeline/f:RayTrace.cs" caret="575" fromTop="19" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Lighting/f:SimpleLightProvider.cs" caret="0" fromTop="0" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:SDL/f:SDLSceneLoader.cs" caret="3319" fromTop="0" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Lighting/f:MultipleLightProvider.cs" caret="637" fromTop="22" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Tests/d:Other/f:CGFactory.cs" caret="4574" fromTop="16" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Tests/d:Shading/f:RefractionShaderTest.cs" caret="1543" fromTop="37" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:BoundingBox.cs" caret="341" fromTop="11" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Color4.cs" caret="12318" fromTop="22" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:MathHelper.cs" caret="1171" fromTop="25" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Matrix.cs" caret="53957" fromTop="0" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Plane.cs" caret="3662" fromTop="3" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Point2.cs" caret="0" fromTop="0" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Point3.cs" caret="262" fromTop="0" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Ray.cs" caret="1044" fromTop="8" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector2.cs" caret="8477" fromTop="1" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Shading/f:RefractionShader.cs" caret="1849" fromTop="26" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector3.cs" caret="12469" fromTop="0" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector4.cs" caret="8955" fromTop="0" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Spatial/f:BoundingVolumeHierarchyNode.cs" caret="913" fromTop="17" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Spatial/f:BoundingVolumeHierarchyBuilder.cs" caret="1478" fromTop="25" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Tests/f:SceneObjectsTest.cs" caret="3588" fromTop="21" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Tests/d:Other/f:CGShowCase.cs" caret="284" fromTop="3" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Tests/d:Spatial/f:BoundingVolumeHierarchyTest.cs" caret="1224" fromTop="29" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector2.cs" caret="8292" fromTop="0" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector2.cs" caret="8477" fromTop="1" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector3.cs" caret="21548" fromTop="617" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector3.cs" caret="20160" fromTop="23" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector3.cs" caret="20160" fromTop="16" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector3.cs" caret="20160" fromTop="16" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector3.cs" caret="20160" fromTop="20" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector3.cs" caret="20160" fromTop="22" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector3.cs" caret="20160" fromTop="18" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector3.cs" caret="20160" fromTop="0" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector3.cs" caret="12469" fromTop="0" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector4.cs" caret="18769" fromTop="25" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector4.cs" caret="18769" fromTop="22" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector4.cs" caret="18769" fromTop="831" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector4.cs" caret="18743" fromTop="11" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Math/f:Vector4.cs" caret="8955" fromTop="0" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Spatial/f:BoundingVolumeHierarchyNode.cs" caret="1275" fromTop="28" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Spatial/f:BoundingVolumeHierarchyBuilder.cs" caret="938" fromTop="26" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Spatial/f:BoundingVolumeHierarchyBuilder.cs" caret="869" fromTop="24" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Spatial/f:BoundingVolumeHierarchyBuilder.cs" caret="869" fromTop="27" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Spatial/f:BoundingVolumeHierarchyBuilder.cs" caret="869" fromTop="18" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Spatial/f:BoundingVolumeHierarchyBuilder.cs" caret="1492" fromTop="29" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Spatial/f:BoundingVolumeHierarchyBuilder.cs" caret="448" fromTop="10" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Spatial/f:BoundingVolumeHierarchyBuilder.cs" caret="2425" fromTop="32" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Spatial/f:BoundingVolumeHierarchyBuilder.cs" caret="2235" fromTop="23" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Spatial/f:BoundingVolumeHierarchyBuilder.cs" caret="1474" fromTop="15" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Spatial/f:BoundingVolumeHierarchyBuilder.cs" caret="1675" fromTop="29" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Tests/d:Spatial/f:BoundingVolumeHierarchyTest.cs" caret="1903" fromTop="37" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Tests/d:Spatial/f:BoundingVolumeHierarchyTest.cs" caret="2032" fromTop="53" />
+      <File id="C5BCD416-DA11-469D-BFF8-26BD2962739B/d:Tests/d:Spatial/f:BoundingVolumeHierarchyTest.cs" caret="1407" fromTop="36" />
+    </RecentEdits>
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir IsNull="False">
+    </NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+</Configuration>
