@@ -116,7 +116,8 @@ namespace MHGameWork.TheWizards.Persistence
         {
             foreach (var obj in model.Objects)
             {
-                QueueForSerialization((IModelObject)obj);
+                if (obj.GetType().GetCustomAttributes(false).Contains(typeof( PersistAttribute)))
+                    QueueForSerialization((IModelObject)obj);
             }
 
             Serialize(wr);

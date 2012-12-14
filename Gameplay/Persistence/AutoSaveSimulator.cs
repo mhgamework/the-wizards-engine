@@ -8,6 +8,7 @@ namespace MHGameWork.TheWizards.Simulators
 {
     /// <summary>
     /// This class saves the model every interval
+    /// TODO: fix zis
     /// </summary>
     public class AutoSaveSimulator : ISimulator
     {

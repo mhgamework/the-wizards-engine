@@ -79,6 +79,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -109,6 +110,7 @@
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="LevelBuilding\LevelBuildingTriggerObjectType.cs" />
     <Compile Include="LevelBuilding\TriggerObject.cs" />
+    <Compile Include="Persistence\Datastore.cs" />
     <Compile Include="Persistence\FilebasedAssetSerializer.cs" />
     <Compile Include="LevelBuilding\ILevelBuildingObjectType.cs" />
     <Compile Include="LevelBuilding\LevelBuildingController.cs" />
@@ -202,8 +204,6 @@
     <Compile Include="WorldRendering\WireframeBox.cs" />
     <Compile Include="_XNA\Gameplay\FireMove.cs" />
     <Compile Include="_XNA\Gameplay\EnergyOrb.cs" />
-    <Compile Include="_XNA\Gameplay\Fortress\Minion.cs" />
-    <Compile Include="_XNA\Gameplay\Fortress\Tower.cs" />
     <Compile Include="_XNA\Gameplay\Horse.cs" />
     <Compile Include="_XNA\Gameplay\IPlayer.cs" />
     <Compile Include="_XNA\Gameplay\IPlayerMove.cs" />
