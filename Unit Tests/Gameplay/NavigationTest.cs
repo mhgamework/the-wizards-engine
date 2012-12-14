@@ -41,30 +41,31 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
 
             var start = new Vector3(1, 40, 1);
             var end = new Vector3(5, 40, 5);
+            List<VoxelBlock> path = null;
 
             VoxelTerrainTest.generateTerrain(1, 1);
             engine.AddSimulator(new BasicSimulator(delegate
                 {
-                    List<VoxelBlock> path = null;
                     if (TW.Graphics.Keyboard.IsKeyPressed(Key.T))
                     {
-                        start = terrain.GetPositionOf(terrain.Raycast(TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay()));
-                        var star = new TerrainAStar();
-                        
-                        path = star.findPath(terrain.GetVoxelAt(start), terrain.GetVoxelAt(end));
+                        VoxelBlock last;
+                        terrain.Raycast(TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay(), out last);
+
+                        start = terrain.GetPositionOf(last);
                     }
                     if (TW.Graphics.Keyboard.IsKeyPressed(Key.Y))
                     {
-                        end = terrain.GetPositionOf(terrain.Raycast(TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay()));
-                        var star = new TerrainAStar();
-                        path = star.findPath(terrain.GetVoxelAt(start), terrain.GetVoxelAt(end));
+                        VoxelBlock last;
+                        terrain.Raycast(TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay(),out last);
+                        end = terrain.GetPositionOf(last);
+                        
                     }
-
-
-                    
+                    var star = new TerrainAStar();
+                    path = star.findPath(terrain.GetVoxelAt(start), terrain.GetVoxelAt(end));
                     if (path != null)
-                        drawPath(path.Select(voxel => terrain.GetPositionOf(voxel)).ToArray());
+                        drawPath(path.Select(voxel => terrain.GetPositionOf(voxel) + new Vector3(0.5f)).ToArray());
                 }));
+            engine.AddSimulator(new TerrainEditorSimulator());
             engine.AddSimulator(new VoxelTerrainSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.Run();

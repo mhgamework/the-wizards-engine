@@ -154,7 +154,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
                     "XNA device is not initialized, can't init line manager." );*/
 
             lines = new LineManager3DLines(device);
-            lines.SetMaxLines(1024 * 16);
+            lines.SetMaxLines(1024 * 32);
 
             //shader = BasicShader.LoadFromFXFile( game, game.EngineFiles.LineRenderingShader );
 
