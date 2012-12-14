@@ -82,7 +82,7 @@ namespace MHGameWork.TheWizards.Main
             {
                 using (var fs = File.Open(saveFile, FileMode.Open, FileAccess.Read, FileShare.None))
                 using (var reader = new StreamReader(fs))
-                    modelSerializer.Deserialize(TW.Data, reader);
+                    modelSerializer.Deserialize(reader);
             }
 
 

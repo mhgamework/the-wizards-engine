@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.WorldRendering;
@@ -27,7 +28,7 @@ namespace MHGameWork.TheWizards.PhysX
             if (!TW.Graphics.Keyboard.IsKeyPressed(Key.B))
                 return;
 
-            new WorldRendering.Entity
+            var ent = new WorldRendering.Entity
                 {
                     WorldMatrix =
                         Matrix.Translation(TW.Data.GetSingleton<CameraInfo>().ActiveCamera.ViewInverse.GetTranslation()),
@@ -36,6 +37,8 @@ namespace MHGameWork.TheWizards.PhysX
                     Static = false
                 };
 
+
+            TW.Data.GetSingleton<Datastore>().Persist(ent);
 
 
         }

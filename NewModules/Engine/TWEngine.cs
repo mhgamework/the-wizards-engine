@@ -198,7 +198,7 @@ namespace MHGameWork.TheWizards.Engine
 
             updateActiveGameplayAssembly();
 
-            serializer.Deserialize(TW.Data, new StreamReader(mem));
+            serializer.Deserialize(new StreamReader(mem));
 
 
             TW.Graphics.AcquireRenderer().ClearAll();

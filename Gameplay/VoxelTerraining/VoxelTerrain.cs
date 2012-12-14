@@ -10,6 +10,10 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.VoxelTerraining
 {
+    /// <summary>
+    /// Responsible for storing data for the voxel terrain for the entire world
+    /// Uses chunks to store and access data
+    /// </summary>
     [ModelObjectChanged]
     public class VoxelTerrain : EngineModelObject
     {

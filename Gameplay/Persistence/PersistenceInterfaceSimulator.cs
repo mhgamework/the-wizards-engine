@@ -18,9 +18,9 @@ namespace MHGameWork.TheWizards.Persistence
     public class PersistenceInterfaceSimulator : ISimulator
     {
         private Textarea area;
-        private int selected;
         private List<SaveEntry> saves;
-        private ModelSerializer modelSerializer;
+        private Menu<Action> menu;
+
         private string saveDirectory;
 
         public PersistenceInterfaceSimulator()
@@ -29,14 +29,11 @@ namespace MHGameWork.TheWizards.Persistence
             area.Position = new Vector2(0, 0);
             area.Size = new Vector2(200, 600);
 
+            menu = new Menu<Action>();
+
             saves = new List<SaveEntry>();
 
-          
 
-
-            var stringSerializer = StringSerializer.Create();
-            stringSerializer.AddConditional(new FilebasedAssetSerializer());
-            modelSerializer = new Persistence.ModelSerializer(stringSerializer);
             saveDirectory = TWDir.GameData + "\\Saves";
 
             Directory.CreateDirectory(saveDirectory);
@@ -46,23 +43,22 @@ namespace MHGameWork.TheWizards.Persistence
         public void Simulate()
         {
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.DownArrow))
-                selected++;
+                menu.MoveDown();
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.UpArrow))
-                selected--;
-            selected = (int)MathHelper.Clamp(selected, 0, getSaves().Count());
+                menu.MoveUp();
+
+
+
 
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.Return))
-                if (selected == getSaves().Count())
-                    save();
-                else
-                    loadSave();
+                if (menu.SelectedItem != null) menu.SelectedItem();
 
-
-            area.Text = generateText();
+            area.Text = menu.generateText();
 
         }
 
-        private void save()
+
+        public void CreateNewSave()
         {
             var name = InputBox.ShowInputBox("Name?", "Save world");
             TW.Data.GetSingleton<Datastore>().SaveToFile(new FileInfo(saveDirectory + "\\" + name + ".xml"));
@@ -73,62 +69,92 @@ namespace MHGameWork.TheWizards.Persistence
         private void updateSavesList()
         {
             saves.Clear();
-            foreach (var filename in  Directory.EnumerateFiles(saveDirectory))
+            menu.Items.Clear();
+            foreach (var filename in Directory.EnumerateFiles(saveDirectory))
             {
-                saves.Add(new SaveEntry {Name = Path.GetFileName(filename), File = new FileInfo(filename)});
+                var saveEntry = new SaveEntry { Name = Path.GetFileName(filename), File = new FileInfo(filename) };
+                saves.Add(saveEntry);
+                menu.Items.Add(new MenuItem<Action> { Label = saveEntry.Name, Data = () => saveEntry.LoadSave() });
             }
-        }
-
-        private void loadSave()
-        {
-            var save = getSaves()[selected];
-
-           TW.Data.GetSingleton<Datastore>().LoadFromFile(save.File);
-
-        }
-
-        private string generateText()
-        {
-            var ret = "\n\n\n";
-            string prefix = "      ";
-            string selectedPrefixArrow = "-> ";
-            string notSelectedPrefix = "   ";
-            foreach (var save in getSaves())
-            {
-                var selectedPrefix = notSelectedPrefix;
-                if (save == getSelected())
-                {
-                    selectedPrefix = selectedPrefixArrow;
-                }
-                ret += prefix + selectedPrefix + save.Name;
-                ret += "\n";
-            }
-            ret += "\n";
-            var pre = prefix + notSelectedPrefix;
-            if (selected == getSaves().Count)
-                pre = prefix + selectedPrefixArrow;
-            ret += pre + "[New Save]";
-            return ret;
-        }
-
-        private SaveEntry getSelected()
-        {
-            if (selected < 0)
-                return null;
-            if ( selected >= getSaves().Count)
-                return null;
-            return getSaves()[selected];
-        }
-
-        private List<SaveEntry> getSaves()
-        {
-            return saves;
+            menu.Items.Add(new MenuItem<Action> { Label = "[New Save]", Data = () => CreateNewSave() });
         }
 
         private class SaveEntry
         {
             public string Name;
             public FileInfo File;
+
+            public void LoadSave()
+            {
+                TW.Data.GetSingleton<Datastore>().LoadFromFile(File);
+            }
+
+
+
+        }
+
+        private class Menu<T> where T : class
+        {
+            public List<MenuItem<T>> Items = new List<MenuItem<T>>();
+            private int selected;
+
+
+            public void MoveDown()
+            {
+                selected++;
+                normalizeSelected();
+            }
+
+            private void normalizeSelected()
+            {
+                selected = (int)MathHelper.Clamp(selected, 0, Items.Count);
+            }
+
+            public void MoveUp()
+            {
+                selected--;
+                normalizeSelected();
+            }
+
+            public T SelectedItem
+            {
+                get
+                {
+                    if (selected < 0)
+                        return null;
+                    if (selected >= Items.Count)
+                        return null;
+                    return Items[selected].Data;
+                }
+            }
+
+
+            public string generateText()
+            {
+                normalizeSelected();
+                var ret = "\n\n\n";
+                string prefix = "      ";
+                string selectedPrefixArrow = "-> ";
+                string notSelectedPrefix = "   ";
+                for (int i = 0; i < Items.Count; i++)
+                {
+                    var save = Items[i];
+                    var selectedPrefix = notSelectedPrefix;
+                    if (selected == i)
+                        selectedPrefix = selectedPrefixArrow;
+
+                    ret += prefix + selectedPrefix + save.Label;
+                    ret += "\n";
+                }
+                return ret;
+            }
+
+        }
+
+        private class MenuItem<T>
+        {
+            public String Label;
+            public T Data;
         }
     }
 }

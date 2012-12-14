@@ -92,7 +92,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
 
             SimpleModelObject.CurrentModelContainer = deserialized;
             s = new ModelSerializer(StringSerializer.Create());
-            s.Deserialize(deserialized, new StreamReader(strm));
+            s.Deserialize(new StreamReader(strm));
 
 
             Assert.AreEqual(model.Objects.Count, deserialized.Objects.Count);
@@ -130,7 +130,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
 
             SimpleModelObject.CurrentModelContainer = deserialized;
             s = new ModelSerializer(StringSerializer.Create());
-            s.Deserialize(deserialized, new StreamReader(strm));
+            s.Deserialize(new StreamReader(strm));
 
 
             Assert.AreEqual(model.Objects.Count, deserialized.Objects.Count);
@@ -165,7 +165,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
 
             SimpleModelObject.CurrentModelContainer = deserialized;
 
-            s.Deserialize(deserialized, new StreamReader(strm));
+            s.Deserialize(new StreamReader(strm));
 
 
             Assert.AreNotEqual(model.Objects.Count, deserialized.Objects.Count);
@@ -215,6 +215,32 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
 
         }
 
+        [Test]
+        public void TestSerializeCustomStringSerializerAttribute()
+        {
+            var model = new ModelContainer();
+            SimpleModelObject.CurrentModelContainer = model;
+
+            var obj = new TestCustomObject();
+            obj.Text = "Hello ";
+
+            var strm = new MemoryStream();
+            var writer = new StreamWriter(strm);
+            var serializer = new ModelSerializer(StringSerializer.Create());
+
+            serializer.QueueForSerialization(obj);
+
+            serializer.Serialize(writer);
+            writer.Flush();
+
+            strm.Position = 0;
+
+            var str = getStringFromStream(strm);
+
+
+
+        }
+
         private string getStringFromStream(MemoryStream strm)
         {
             var buff = new byte[strm.Length];
@@ -223,6 +249,30 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
             return Encoding.ASCII.GetString(buff);
         }
 
+
+        private class TestCustomObject : SimpleModelObject
+        {
+            [CustomStringSerializer(typeof(MyCustomSerializer))]
+            public string Text { get; set; }
+
+            public class MyCustomSerializer : IConditionalSerializer
+            {
+                public bool CanOperate(Type type)
+                {
+                    return true;
+                }
+
+                public string Serialize(object obj, Type type, StringSerializer stringSerializer)
+                {
+                    return (string) obj + "boe";
+                }
+
+                public object Deserialize(string value, Type type, StringSerializer stringSerializer)
+                {
+                    return value.Substring(0, value.Length - 3);
+                }
+            }
+        }
 
         [Persist]
         private class TestObject : SimpleModelObject

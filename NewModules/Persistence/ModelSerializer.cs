@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.Persistence
     /// Dependencies between modelobjects are solved by late binding => the unresolvable dependencies are cached
     /// and applied later. This way circular dependencies are possible (cfr NetworkSyncerSimulator)
     /// </summary>
-    public class ModelSerializer : ModelObjectSerializer.IIDResolver
+    public class ModelSerializer 
     {
         private const string ObjectsSection = "Objects";
         private const string AttributesSection = "Attributes";
@@ -32,10 +32,12 @@ namespace MHGameWork.TheWizards.Persistence
         public ModelSerializer(StringSerializer stringSerializer)
         {
             this.stringSerializer = stringSerializer;
-            stringSerializer.AddConditional(new ModelObjectSerializer(this));
+            myObjectDictionary = new MyObjectDictionary();
+
+
+            stringSerializer.AddConditional(new ModelObjectSerializer(myObjectDictionary));
             stringSerializer.AddConditional(new ListSerializer());
             typeSerializer = TypeSerializer.Create();
-
         }
 
         public void SerializeAttributes(IModelObject obj, SectionedStreamWriter strm)
@@ -109,9 +111,11 @@ namespace MHGameWork.TheWizards.Persistence
 
         /// <summary>
         /// Obsolete: entire model serialization is obsolete.
+        /// Note: Broken???
         /// </summary>
         /// <param name="model"></param>
         /// <param name="wr"></param>
+        [Obsolete]
         public void Serialize(Data.ModelContainer model, StreamWriter wr)
         {
             foreach (var obj in model.Objects)
@@ -182,7 +186,7 @@ namespace MHGameWork.TheWizards.Persistence
             strm.EnterSection(ObjectsSection);
             foreach (var obj in list)
             {
-                var id = getObjectID(obj);
+                var id = myObjectDictionary.getObjectID(obj);
                 strm.WriteLine(id.ToString());
                 strm.WriteLine(typeSerializer.Serialize(obj.GetType()));
             }
@@ -192,7 +196,7 @@ namespace MHGameWork.TheWizards.Persistence
             strm.EnterSection(AttributesSection);
             foreach (var obj in list)
             {
-                var id = getObjectID(obj);
+                var id = myObjectDictionary.getObjectID(obj);
                 strm.WriteLine(id.ToString());
                 SerializeAttributes(obj, strm);
             }
@@ -202,69 +206,32 @@ namespace MHGameWork.TheWizards.Persistence
         /// <summary>
         /// Adds the objects found in the stream to given model
         /// </summary>
-        /// <param name="model"></param>
         /// <param name="reader"></param>
-        public void Deserialize(Data.ModelContainer model, StreamReader reader)
+        public List<IModelObject> Deserialize(StreamReader reader)
         {
+            var ret = new List<IModelObject>();
             var strm = new SectionedStreamReader(reader);
             while (strm.CurrentSection == ObjectsSection)
             {
                 var id = int.Parse(strm.ReadLine());
                 var type = typeSerializer.Deserialize(strm.ReadLine());
                 var obj = (IModelObject)Activator.CreateInstance(type);
-                setObjectID(obj, id);
+                myObjectDictionary.setObjectID(obj, id);
 
+                ret.Add(obj);
             }
 
             while (strm.CurrentSection == AttributesSection)
             {
                 var id = int.Parse(strm.ReadLine());
-                var obj = getObjectByID(id);
+                var obj = myObjectDictionary.getObjectByID(id);
                 DeserializeAttributes(obj, strm);
             }
+            return ret;
 
         }
 
 
-        private DictionaryTwoWay<int, IModelObject> objectDictionary = new DictionaryTwoWay<int, IModelObject>();
-        private int nextObjectID = 1;
-
-        private int getObjectID(IModelObject obj)
-        {
-            if (!objectDictionary.Contains(obj))
-            {
-                objectDictionary.Add(getNewObjectID(), obj);
-            }
-            return objectDictionary[obj];
-        }
-
-        private int getNewObjectID()
-        {
-            return nextObjectID++;
-        }
-
-        private IModelObject getObjectByID(int id)
-        {
-            if (!objectDictionary.Contains(id))
-                return null;
-
-            return objectDictionary[id];
-        }
-        private void setObjectID(IModelObject obj, int id)
-        {
-            objectDictionary.set(id, obj);
-            nextObjectID = id + 1;
-        }
-
-
-        int ModelObjectSerializer.IIDResolver.GetObjectID(IModelObject obj)
-        {
-            return getObjectID(obj);
-        }
-
-        IModelObject ModelObjectSerializer.IIDResolver.GetObjectByID(int id)
-        {
-            return getObjectByID(id);
-        }
+        private readonly MyObjectDictionary myObjectDictionary;
     }
 }

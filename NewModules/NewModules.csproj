@@ -212,6 +212,7 @@
     <Compile Include="Persistence\ListSerializer.cs" />
     <Compile Include="Persistence\ModelObjectSerializer.cs" />
     <Compile Include="Persistence\ModelSerializer.cs" />
+    <Compile Include="Persistence\MyObjectDictionary.cs" />
     <Compile Include="Persistence\PersistAttribute.cs" />
     <Compile Include="Raycasting\MeshRaycaster.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderData.cs" />
@@ -313,6 +314,7 @@
     <Compile Include="Rendering\VertexDeclarationPool.cs" />
     <Compile Include="Scripting\ScriptLoader.cs" />
     <Compile Include="Scripting\ScriptWrapper.cs" />
+    <Compile Include="Serialization\CustomStringSerializerAttribute.cs" />
     <Compile Include="Serialization\EnumSerializer.cs" />
     <Compile Include="Serialization\IConditionalSerializer.cs" />
     <Compile Include="Serialization\SectionedStreamReader.cs" />

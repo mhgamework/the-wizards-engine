@@ -92,7 +92,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                             
 
                                 makeBlockVisible(block, neighbourPos); // dont recurse, do make visible*/
-
+                            continue;
                         }
 
                         if (block.Filled)
@@ -160,8 +160,8 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             private IMesh createMesh()
             {
                 var relativeCorePath = "Core\\checker.png";
-                //relativeCorePath = "GrassGreenTexture0006.jpg";
-                relativeCorePath = "dryvalley.jpg";
+                relativeCorePath = "GrassGreenTexture0006.jpg";
+                //relativeCorePath = "dryvalley.jpg";
 
 
                 foreach (var block in visibleBlocks)

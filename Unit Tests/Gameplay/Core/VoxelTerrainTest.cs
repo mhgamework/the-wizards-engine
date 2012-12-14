@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.PhysX;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Simulators;
@@ -179,6 +180,30 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
             engine.Run();
 
 
+        }
+
+        [Test]
+        public void TestPersistence()
+        {
+            var engine = new TWEngine();
+            engine.DontLoadPlugin = true;
+            engine.Initialize();
+
+            var terr = createBlob();
+            terr.WorldPosition = new Vector3(30, 0, 0);
+
+            terr = createBlob();
+
+            terr.NodeSize = 5;
+            terr.WorldPosition = new Vector3(0, 0, 100);
+
+            TW.Data.GetSingleton<Datastore>().Persist(terr);
+
+            engine.AddSimulator(new PersistenceInterfaceSimulator());
+            engine.AddSimulator(new VoxelTerrainSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
+            
+            engine.Run();
         }
 
 

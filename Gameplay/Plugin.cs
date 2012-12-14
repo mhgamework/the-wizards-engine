@@ -343,7 +343,7 @@ namespace MHGameWork.TheWizards
 
             if(File.Exists(file))
             using (var fs = File.OpenRead(file))
-                modelSerializer.Deserialize(TW.Data, new StreamReader(fs));
+                modelSerializer.Deserialize(new StreamReader(fs));
             
 
 

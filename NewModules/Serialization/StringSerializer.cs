@@ -23,15 +23,15 @@ namespace MHGameWork.TheWizards.Serialization
 
             ret.Add(o => o, s => s); // string :P
 
-            ret.Add(o => o.ToString(), s => int.Parse(s));
-            ret.Add(o => o.ToString(), s => uint.Parse(s));
-            ret.Add(o => o.ToString(), s => short.Parse(s));
-            ret.Add(o => o.ToString(), s => ushort.Parse(s));
-            ret.Add(o => o.ToString(), s => byte.Parse(s));
-            ret.Add(o => o.ToString(), s => float.Parse(s));
-            ret.Add(o => o.ToString(), s => double.Parse(s));
-            ret.Add(o => o.ToString(), s => bool.Parse(s));
-            ret.Add(o => o.ToString(), s => Guid.Parse(s));
+            ret.Add(o => o.ToString(), int.Parse);
+            ret.Add(o => o.ToString(), uint.Parse);
+            ret.Add(o => o.ToString(), short.Parse);
+            ret.Add(o => o.ToString(), ushort.Parse);
+            ret.Add(o => o.ToString(), byte.Parse);
+            ret.Add(o => o.ToString(), float.Parse);
+            ret.Add(o => o.ToString(), double.Parse);
+            ret.Add(o => o.ToString(), bool.Parse);
+            ret.Add(o => o.ToString(), Guid.Parse);
 
 
             ret.AddConditional(new EnumSerializer());
@@ -81,9 +81,6 @@ namespace MHGameWork.TheWizards.Serialization
                 var ret = s.Deserialize(value, type, this);
                 if (ret != null) return ret; // This happens when serialization failed
             }
-
-
-
 
             if (logErrors)
                 Console.WriteLine("StringSerializer: no deserializer for type {0}", type);

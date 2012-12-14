@@ -6,10 +6,14 @@ using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Serialization;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.VoxelTerraining
 {
+    /// <summary>
+    /// Responsible for storing a part of the voxel terrain in a chunk
+    /// </summary>
     [ModelObjectChanged]
     public class VoxelTerrainChunk : EngineModelObject
     {
@@ -19,6 +23,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
         }
 
         public float NodeSize { get; set; }
+        [CustomStringSerializer(typeof(VoxelStringSerializer))]
         public Voxel[, ,] Voxels { get; set; }
         public Point3 Size { get; set; }
         public Vector3 WorldPosition { get; set; }
@@ -105,6 +110,25 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                 hashCode = (hashCode * 397) ^ WorldPosition.GetHashCode();
                 hashCode = (hashCode * 397) ^ NodeSize.GetHashCode();
                 return hashCode;
+            }
+        }
+
+
+        public class VoxelStringSerializer : IConditionalSerializer
+        {
+            public bool CanOperate(Type type)
+            {
+                return type == typeof(Voxel[, ,]);
+            }
+
+            public string Serialize(object obj, Type type, StringSerializer stringSerializer)
+            {
+                return "VOXELSSS!";
+            }
+
+            public object Deserialize(string value, Type type, StringSerializer stringSerializer)
+            {
+                return new Voxel[1,1,1];
             }
         }
     }

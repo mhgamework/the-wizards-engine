@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.Persistence
 
             var stringSerializer = StringSerializer.Create();
             stringSerializer.AddConditional(new FilebasedAssetSerializer());
-            modelSerializer = new Persistence.ModelSerializer(stringSerializer);
+            modelSerializer = new ModelSerializer(stringSerializer);
         }
 
         /// <summary>
@@ -42,17 +42,31 @@ namespace MHGameWork.TheWizards.Persistence
         {
             Clear();
 
-            Datastore obj;
+            
+            List<IModelObject> ret;
             using (var fs = file.OpenRead())
             using (var wr = new StreamReader(fs))
-                modelSerializer.DeserializeAttributes(this, new SectionedStreamReader(wr));
+                ret = modelSerializer.Deserialize(wr);
+
+            var copyStore = ((Datastore) ret[0]);
+            Objects = copyStore.Objects;
+            TW.Data.Objects.Remove(copyStore);
         }
 
         public void SaveToFile(FileInfo file)
         {
+            modelSerializer.QueueForSerialization(this);
             using (var fs = file.OpenWrite())
             using (var wr = new StreamWriter(fs))
-                modelSerializer.Serialize(TW.Data, wr);
+                modelSerializer.Serialize(wr);
+
+        }
+
+        public void Persist(IModelObject ent)
+        {
+            if (Objects.Contains(ent))
+                return;
+            Objects.Add(ent);
         }
     }
 }
