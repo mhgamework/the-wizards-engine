@@ -13,23 +13,39 @@ namespace MHGameWork.TheWizards.VoxelTerraining
     [ModelObjectChanged]
     public class VoxelTerrain : EngineModelObject
     {
+        /// <summary>
+        /// This creates a new wrapper VoxelBlock object!!!
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         public VoxelBlock GetVoxelAt(Vector3 pos)
         {
-            foreach (VoxelTerrainChunk chunk in TW.Data.Objects.Where(o=>o is VoxelTerrainChunk))
+            foreach (VoxelTerrainChunk chunk in TW.Data.Objects.Where(o => o is VoxelTerrainChunk))
             {
                 var relative = pos - chunk.WorldPosition;
                 relative *= 1 / (chunk.NodeSize);
                 var point = new Point3(relative);
                 if (chunk.InGrid(point))
-                    return chunk.GetVoxel(point);
+                {
+                    return getChunkVoxelWrapper(chunk, point);
+                }
             }
 
             return null;
         }
+
+        private static VoxelBlock getChunkVoxelWrapper(VoxelTerrainChunk chunk, Point3 point)
+        {
+            var voxelInternal = chunk.GetVoxelInternal(point);
+            if (voxelInternal == null)
+                return null;
+            return new VoxelBlock(point, chunk, voxelInternal);
+        }
+
         public Vector3 GetPositionOf(VoxelBlock block)
         {
             return block.Position.ToVector3() * block.TerrainChunk.NodeSize + block.TerrainChunk.WorldPosition;
-            
+
         }
 
 
@@ -39,7 +55,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             return Raycast(ray, out dmqklj);
         }
 
-        public  VoxelBlock Raycast(Ray ray, out VoxelBlock emptyTargetedBlock)
+        public VoxelBlock Raycast(Ray ray, out VoxelBlock emptyTargetedBlock)
         {
             VoxelBlock last = null;
             VoxelBlock ret = null;
@@ -77,15 +93,15 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                 {
                     if (!terr1.InGrid(arg)) return true;
 
-                    var voxelBlock = terr1.GetVoxel(arg);
+                    var voxelBlock = terr1.GetVoxelInternal(arg);
                     if (voxelBlock == null) return false;
                     if (voxelBlock.Filled)
                     {
                         hit = true;
-                        ret = voxelBlock;
+                        ret = getChunkVoxelWrapper(terr1,arg);
                         return true;
                     }
-                    last = voxelBlock;
+                    last = getChunkVoxelWrapper(terr1, arg);
                     return false;
                 });
 

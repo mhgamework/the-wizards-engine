@@ -38,7 +38,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             }
 
             private bool[, ,] visited;
-            private List<VoxelBlock> visibleBlocks = new List<VoxelBlock>();
+            private List<Point3> visibleBlocks = new List<Point3>();
 
 
             private MeshBuilder _builder;
@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                         for (int z = 0; z < TerrainChunk.Size.Z; z++)
                         {
                             var pos = new Point3(x, y, z);
-                            var node = TerrainChunk.GetVoxel(pos);
+                            var node = TerrainChunk.GetVoxelInternal(pos);
                             if (node.Filled) continue;
                             if (visited[x, y, z]) continue;
                             floodFillFromNode(pos);
@@ -80,13 +80,24 @@ namespace MHGameWork.TheWizards.VoxelTerraining
 
                     foreach (var neighbourPos in TerrainChunk.GetNeighbourPositions(curr))
                     {
-                        var block = TerrainChunk.GetVoxel(neighbourPos);
+                        var block = TerrainChunk.GetVoxelInternal(neighbourPos);
                         if (block == null)
-                            continue;
+                        {
+                            /*// we have reached the sides!!
+                            var otherBlock = TW.Data.GetSingleton<VoxelTerrain>()
+                              .GetVoxelAt(TerrainChunk.GetVoxelWorldCenter(neighbourPos));
+
+                            if (otherBlock == null) continue; // end of all teraain!
+
+                            
+
+                                makeBlockVisible(block, neighbourPos); // dont recurse, do make visible*/
+
+                        }
 
                         if (block.Filled)
                         {
-                            makeBlockVisible(block);
+                            makeBlockVisible(block, neighbourPos);
                         }
                         else
                         {
@@ -96,12 +107,12 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                 }
             }
 
-            private void makeBlockVisible(VoxelBlock block)
+            private void makeBlockVisible(VoxelTerrainChunk.Voxel block, Point3 pos)
             {
                 if (block.Visible) return;
 
                 block.Visible = true;
-                visibleBlocks.Add(block);
+                visibleBlocks.Add(pos);
 
             }
             private void makeSidesVisible()
@@ -115,9 +126,10 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                             if (x != 0 && x != TerrainChunk.Size.X - 1
                                 //&& y != 0 && y != TerrainChunk.Size.Y - 1
                                 && z != 0 && z != TerrainChunk.Size.Z - 1) continue;
-                            var voxelBlock = TerrainChunk.GetVoxel(new Point3(x, y, z));
+                            var pos = new Point3(x, y, z);
+                            var voxelBlock = TerrainChunk.GetVoxelInternal(pos);
                             if (voxelBlock.Filled)
-                                makeBlockVisible(voxelBlock);
+                                makeBlockVisible(voxelBlock, pos);
                         }
                     }
                 }
@@ -157,7 +169,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                     var border = new Vector3(1, 1, 1) * 0.05f;
                     border = new Vector3();
 
-                    var pos = block.Position;
+                    var pos = block;
                     _builder.AddBox(pos.ToVector3() * TerrainChunk.NodeSize + border, (MathHelper.One + pos.ToVector3()) * TerrainChunk.NodeSize - border);
                 }
 
@@ -179,7 +191,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
 
                 foreach (var block in visibleBlocks)
                 {
-                    var pos = block.Position;
+                    var pos = block;
                     boxes.Add(new MeshCollisionData.Box { Dimensions = MathHelper.One.xna() * TerrainChunk.NodeSize, Orientation = Matrix.Translation((pos + MathHelper.One * 0.5f) * TerrainChunk.NodeSize).xna() });
                 }
 
@@ -191,9 +203,8 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             private void clearVisible()
             {
                 foreach (var b in visibleBlocks)
-                {
-                    b.Visible = false;
-                }
+                    TerrainChunk.GetVoxelInternal(b).Visible = false;
+
                 visibleBlocks.Clear();
             }
         }

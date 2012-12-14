@@ -44,10 +44,10 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             var random = new Random();
             for (int i = 0; i < 30; i++)
             {
-                terr.GetVoxel(new Point3(random.Next(9), random.Next(9), random.Next(9))).Filled = true;
+                terr.GetVoxelInternal(new Point3(random.Next(9), random.Next(9), random.Next(9))).Filled = true;
             }
 
-            terr.GetVoxel(new Point3(1, 1, 1)).Filled = true;
+            terr.GetVoxelInternal(new Point3(1, 1, 1)).Filled = true;
             return terr;
         }
 
@@ -79,7 +79,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 {
                     for (int z = 1; z < 10; z++)
                     {
-                        terr.GetVoxel(new Point3(x, y, z)).Filled = true;
+                        terr.GetVoxelInternal(new Point3(x, y, z)).Filled = true;
                     }
                 }
             }
@@ -104,7 +104,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                 {
                     for (int z = 1; z < i; z++)
                     {
-                        terr.GetVoxel(new Point3(x, y, z)).Filled = true;
+                        terr.GetVoxelInternal(new Point3(x, y, z)).Filled = true;
                     }
                 }
             }
@@ -231,7 +231,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                         {
                             for (int tz = 0; tz < terr.Size.Z; tz++)
                             {
-                                terr.GetVoxel(new Point3(tx, ty, tz)).Filled = true;
+                                terr.GetVoxelInternal(new Point3(tx, ty, tz)).Filled = true;
                             }
                         }
                     }
@@ -318,7 +318,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                                 var heightMapZ = tz + (int) terr.WorldPosition.Z;
                                 if (heightMapX >= width || heightMapZ >= height) continue;
                                 if (ty < heightDataErrosion[heightMapX, heightMapZ]/2f)
-                                    terr.GetVoxel(new Point3(tx, ty, tz)).Filled = true;
+                                    terr.GetVoxelInternal(new Point3(tx, ty, tz)).Filled = true;
                             }
                         }
                     }

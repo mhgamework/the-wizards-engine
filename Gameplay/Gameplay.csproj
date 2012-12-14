@@ -133,10 +133,10 @@
     <Compile Include="RTS\GoblinSimulator.cs" />
     <Compile Include="RTS\GoblinSpawner.cs" />
     <Compile Include="RTS\TerrainAStar.cs" />
-    <Compile Include="Simulators\AnimationSimulator.cs" />
+    <Compile Include="Animation\AnimationSimulator.cs" />
     <Compile Include="Raycasting\RaycastResult.cs" />
     <Compile Include="Raycasting\WorldRaycaster.cs" />
-    <Compile Include="Simulators\AssetbrowserSimulator.cs" />
+    <Compile Include="Assetbrowser\AssetbrowserSimulator.cs" />
     <Compile Include="Building\Block.cs" />
     <Compile Include="Building\BlockFactory.cs" />
     <Compile Include="Building\BlockLayout.cs" />
@@ -160,12 +160,12 @@
     <Compile Include="Building\PlayerController.cs" />
     <Compile Include="Building\WallPlacer.cs" />
     <Compile Include="Building\WallType.cs" />
-    <Compile Include="Simulators\AudioSimulator.cs" />
+    <Compile Include="Audio\AudioSimulator.cs" />
     <Compile Include="Persistence\AutoSaveSimulator.cs" />
-    <Compile Include="Simulators\LevelBuildingSimulator.cs" />
-    <Compile Include="Simulators\PickupSimulator.cs" />
+    <Compile Include="LevelBuilding\LevelBuildingSimulator.cs" />
+    <Compile Include="Pickup\PickupSimulator.cs" />
     <Compile Include="Simulators\PlayerConditionSimulator.cs" />
-    <Compile Include="Simulators\TriggerSimulator.cs" />
+    <Compile Include="Trigger\TriggerSimulator.cs" />
     <Compile Include="Simulators\DebugSimulator.cs" />
     <Compile Include="Debugging\ProfilerSimulator.cs" />
     <Compile Include="PhysX\PhysXDebugRendererSimulator.cs" />
@@ -222,10 +222,10 @@
     <Compile Include="Tiling\TileRotation.cs" />
     <Compile Include="Synchronization\ChangePacket.cs" />
     <Compile Include="Simulators\NetworkSyncerSimulator.cs" />
-    <Compile Include="Simulators\PhysXSimulator.cs" />
-    <Compile Include="Simulators\WorldRenderingSimulator.cs" />
+    <Compile Include="PhysX\PhysXSimulator.cs" />
+    <Compile Include="WorldRendering\WorldRenderingSimulator.cs" />
     <Compile Include="Sphere.cs" />
-    <Compile Include="Simulators\LocalPlayerSimulator.cs" />
+    <Compile Include="Player\LocalPlayerSimulator.cs" />
     <Compile Include="Synchronization\IVirtualEndpoint.cs" />
     <Compile Include="Synchronization\VirtualModelSyncer.cs" />
     <Compile Include="Synchronization\VirtualMultiEndpoint.cs" />
@@ -255,7 +255,7 @@
     <Compile Include="_XNA\Scripting\ScriptRunner.cs" />
     <Compile Include="_XNA\Gameplay\ThrowMove.cs" />
     <Compile Include="Simulators\ThirdPersonCameraSimulator.cs" />
-    <Compile Include="Simulators\TileEditorSimulator.cs" />
+    <Compile Include="Tiling\TileEditorSimulator.cs" />
     <Compile Include="_XNA\World\ClientWorldSector.cs" />
     <Compile Include="_XNA\World\ServerWorld.cs" />
   </ItemGroup>

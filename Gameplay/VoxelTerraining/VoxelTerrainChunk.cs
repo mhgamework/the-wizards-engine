@@ -34,20 +34,12 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                     }
         }
 
-        /// <summary>
-        /// This creates a new wrapper VoxelBlock object!!!
-        /// </summary>
-        /// <param name="pos"></param>
-        /// <returns></returns>
-        public VoxelBlock GetVoxel(Point3 pos)
+        public Vector3 GetVoxelWorldCenter(Point3 pos)
         {
-            var voxelInternal = GetVoxelInternal(pos);
-            if (voxelInternal == null)
-                return null;
-            return new VoxelBlock(pos, this, voxelInternal);
+            return pos.ToVector3() * NodeSize + WorldPosition;
         }
 
-        private Voxel GetVoxelInternal(Point3 pos)
+        public Voxel GetVoxelInternal(Point3 pos)
         {
             if (pos.X >= Size.X) return null;
             if (pos.Y >= Size.Y) return null;
@@ -102,7 +94,7 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((VoxelTerrainChunk) obj);
+            return Equals((VoxelTerrainChunk)obj);
         }
 
         public override int GetHashCode()
@@ -110,8 +102,8 @@ namespace MHGameWork.TheWizards.VoxelTerraining
             unchecked
             {
                 int hashCode = Size.GetHashCode();
-                hashCode = (hashCode*397) ^ WorldPosition.GetHashCode();
-                hashCode = (hashCode*397) ^ NodeSize.GetHashCode();
+                hashCode = (hashCode * 397) ^ WorldPosition.GetHashCode();
+                hashCode = (hashCode * 397) ^ NodeSize.GetHashCode();
                 return hashCode;
             }
         }
