@@ -139,21 +139,21 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Animation\AnimationTest.cs" />
-    <Compile Include="Assets\AssetsSynchronizationTest.cs" />
-    <Compile Include="Assets\SimpleAsset.cs" />
-    <Compile Include="Assets\SimpleAssetFactory.cs" />
-    <Compile Include="Building\BuildingTest.cs" />
-    <Compile Include="Client\ClientTest.cs" />
-    <Compile Include="CoreTest.cs" />
-    <Compile Include="DirectX11\XAudio2Test.cs" />
-    <Compile Include="DirectX11\DeferredTest.cs" />
-    <Compile Include="DirectX11\SharpDXTest.cs" />
-    <Compile Include="DirectX11\DirectX11Test.cs" />
-    <Compile Include="DirectX11\TessellationTest.cs" />
-    <Compile Include="Enginetest.cs" />
-    <Compile Include="FileHelperTest.cs" />
-    <Compile Include="Forms\ClassFormTest.cs" />
+    <Compile Include="Features\Simulation\Animation\AnimationTest.cs" />
+    <Compile Include="Features\Data\Assets\AssetsSynchronizationTest.cs" />
+    <Compile Include="Features\Data\Assets\SimpleAsset.cs" />
+    <Compile Include="Features\Data\Assets\SimpleAssetFactory.cs" />
+    <Compile Include="Features\Various\Building\BuildingTest.cs" />
+    <Compile Include="Features\Various\Client\ClientTest.cs" />
+    <Compile Include="Features\Data\CoreTest.cs" />
+    <Compile Include="Features\Rendering\DirectX11\XAudio2Test.cs" />
+    <Compile Include="Features\Rendering\DirectX11\DeferredTest.cs" />
+    <Compile Include="Features\Rendering\DirectX11\SharpDXTest.cs" />
+    <Compile Include="Features\Rendering\DirectX11\DirectX11Test.cs" />
+    <Compile Include="Features\Rendering\DirectX11\TessellationTest.cs" />
+    <Compile Include="Features\Various\Enginetest.cs" />
+    <Compile Include="Features\Various\FileHelperTest.cs" />
+    <Compile Include="Features\Data\Forms\ClassFormTest.cs" />
     <Compile Include="Gameplay\AssetBrowserTest.cs" />
     <Compile Include="Gameplay\AudioTest.cs" />
     <Compile Include="Gameplay\DebugTest.cs" />
@@ -167,83 +167,83 @@
     <Compile Include="Gameplay\TilingTest.cs" />
     <Compile Include="Gameplay\VoxelTerrainTest.cs" />
     <Compile Include="Gameplay\WorldRenderingTest.cs" />
-    <Compile Include="Particles\ParticleTests.cs" />
+    <Compile Include="Features\Rendering\Particles\ParticleTests.cs" />
     <Compile Include="Gameplay\FortressTest.cs" />
-    <Compile Include="Physics\MeshPhysicsFactoryXNA.cs" />
-    <Compile Include="Physics\TestSphereShooter.cs" />
-    <Compile Include="ProceduralTerrainGeneration\NoiseTests.cs" />
-    <Compile Include="ProceduralTerrainGeneration\TerrainConverter.cs" />
-    <Compile Include="ProceduralTerrainGeneration\TerrainGenerationTests.cs" />
-    <Compile Include="Profiling\ProfilingTest.cs" />
-    <Compile Include="Rendering\MeshOptimizerTest.cs" />
-    <Compile Include="Rendering\TextRenderingFunctionalityTest.cs" />
-    <Compile Include="Rendering\CullingTest.cs" />
-    <Compile Include="Rendering\DeferredRenderingTest.cs" />
-    <Compile Include="Rendering\MeshLoaderTest.cs" />
-    <Compile Include="Rendering\SSAOTest.cs" />
+    <Compile Include="Features\Simulation\Physics\MeshPhysicsFactoryXNA.cs" />
+    <Compile Include="Features\Simulation\Physics\TestSphereShooter.cs" />
+    <Compile Include="Features\Generation\ProceduralTerrainGeneration\NoiseTests.cs" />
+    <Compile Include="Features\Generation\ProceduralTerrainGeneration\TerrainConverter.cs" />
+    <Compile Include="Features\Generation\ProceduralTerrainGeneration\TerrainGenerationTests.cs" />
+    <Compile Include="Features\Core\Profiling\ProfilingTest.cs" />
+    <Compile Include="Features\Rendering\MeshOptimizerTest.cs" />
+    <Compile Include="Features\Rendering\TextRenderingFunctionalityTest.cs" />
+    <Compile Include="Features\Rendering\CullingTest.cs" />
+    <Compile Include="Features\Rendering\DeferredRenderingTest.cs" />
+    <Compile Include="Features\Rendering\MeshLoaderTest.cs" />
+    <Compile Include="Features\Rendering\SSAOTest.cs" />
     <Compile Include="Gameplay\GameplayTest.cs" />
     <Compile Include="Gameplay\HelperPlayerController.cs" />
-    <Compile Include="Launcher\LauncherTest.cs" />
+    <Compile Include="Features\Various\Launcher\LauncherTest.cs" />
     <Compile Include="MainTest.cs" />
-    <Compile Include="Networking\NetworkingFilesTest.cs" />
-    <Compile Include="Networking\NetworkingServerTest.cs" />
-    <Compile Include="Networking\SimpleClientPacketManager.cs" />
-    <Compile Include="Networking\SimpleClientPacketTransporter.cs" />
-    <Compile Include="Networking\SimpleServerPacketManager.cs" />
-    <Compile Include="Physics\CogTest.cs" />
-    <Compile Include="Physics\PhysicsMeshTest.cs" />
-    <Compile Include="Rendering\DeferredRenderingOudTest.cs" />
-    <Compile Include="Rendering\EntityTestHelpers.cs" />
-    <Compile Include="Graphics\Curve3DTester.cs" />
-    <Compile Include="Graphics\GraphicsTest.cs" />
-    <Compile Include="Networking\DataPacket.cs" />
-    <Compile Include="Networking\DataPacketFactory.cs" />
-    <Compile Include="Networking\ErrorPacket.cs" />
-    <Compile Include="Networking\ErrorPacketFactory.cs" />
-    <Compile Include="Networking\NetworkingClientTest.cs" />
-    <Compile Include="Networking\NetworkingTest.cs" />
-    <Compile Include="OBJParser\OBJParserTest.cs" />
-    <Compile Include="Physics\PhysicsTest.cs" />
-    <Compile Include="Player\PlayerTest.cs" />
+    <Compile Include="Features\Core\Networking\NetworkingFilesTest.cs" />
+    <Compile Include="Features\Core\Networking\NetworkingServerTest.cs" />
+    <Compile Include="Features\Core\Networking\SimpleClientPacketManager.cs" />
+    <Compile Include="Features\Core\Networking\SimpleClientPacketTransporter.cs" />
+    <Compile Include="Features\Core\Networking\SimpleServerPacketManager.cs" />
+    <Compile Include="Features\Simulation\Physics\CogTest.cs" />
+    <Compile Include="Features\Simulation\Physics\PhysicsMeshTest.cs" />
+    <Compile Include="Features\Rendering\DeferredRenderingOudTest.cs" />
+    <Compile Include="Features\Rendering\EntityTestHelpers.cs" />
+    <Compile Include="Features\Rendering\Graphics\Curve3DTester.cs" />
+    <Compile Include="Features\Rendering\Graphics\GraphicsTest.cs" />
+    <Compile Include="Features\Core\Networking\DataPacket.cs" />
+    <Compile Include="Features\Core\Networking\DataPacketFactory.cs" />
+    <Compile Include="Features\Core\Networking\ErrorPacket.cs" />
+    <Compile Include="Features\Core\Networking\ErrorPacketFactory.cs" />
+    <Compile Include="Features\Core\Networking\NetworkingClientTest.cs" />
+    <Compile Include="Features\Core\Networking\NetworkingTest.cs" />
+    <Compile Include="Features\Data\OBJParser\OBJParserTest.cs" />
+    <Compile Include="Features\Simulation\Physics\PhysicsTest.cs" />
+    <Compile Include="Features\Simulation\Player\PlayerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rendering\RenderingTest.cs" />
-    <Compile Include="Rendering\TextRenderingTest.cs" />
-    <Compile Include="RTS\TestGoblinSpawner.cs" />
-    <Compile Include="Scene\SceneTest.cs" />
-    <Compile Include="Scripting\ScriptingTest.cs" />
-    <Compile Include="Scripting\SimpleScriptDatabinding.cs" />
-    <Compile Include="Scripting\SimpleStateScript.cs" />
-    <Compile Include="Scripting\TestScriptImplementation.cs" />
-    <Compile Include="Scripting\TestScriptWrapper.cs" />
-    <Compile Include="Server\LauncherServerTest.cs" />
-    <Compile Include="Showcase.cs" />
-    <Compile Include="Terrain\SimpleTerrain.cs" />
-    <Compile Include="Terrain\SimpleTerrainBlock.cs" />
-    <Compile Include="Terrain\TerrainClientTest.cs" />
-    <Compile Include="Terrain\TerrainRenderingTest.cs" />
+    <Compile Include="Features\Rendering\RenderingTest.cs" />
+    <Compile Include="Features\Rendering\TextRenderingTest.cs" />
+    <Compile Include="Features\Rendering\Graphics\RTS\TestGoblinSpawner.cs" />
+    <Compile Include="Features\Various\Scene\SceneTest.cs" />
+    <Compile Include="Features\Core\Scripting\ScriptingTest.cs" />
+    <Compile Include="Features\Core\Scripting\SimpleScriptDatabinding.cs" />
+    <Compile Include="Features\Core\Scripting\SimpleStateScript.cs" />
+    <Compile Include="Features\Core\Scripting\TestScriptImplementation.cs" />
+    <Compile Include="Features\Core\Scripting\TestScriptWrapper.cs" />
+    <Compile Include="Features\Various\Server\LauncherServerTest.cs" />
+    <Compile Include="Features\Various\Showcase.cs" />
+    <Compile Include="Features\Rendering\Terrain\SimpleTerrain.cs" />
+    <Compile Include="Features\Rendering\Terrain\SimpleTerrainBlock.cs" />
+    <Compile Include="Features\Rendering\Terrain\TerrainClientTest.cs" />
+    <Compile Include="Features\Rendering\Terrain\TerrainRenderingTest.cs" />
     <Compile Include="TestFiles.cs" />
-    <Compile Include="Treegenerater\Tests.cs" />
+    <Compile Include="Features\Generation\Treegenerater\Tests.cs" />
     <Compile Include="TestTWGame.cs" />
-    <Compile Include="Treegenerater\TreeSynchronisationTest.cs" />
-    <Compile Include="Utilities\UtilitiesTest.cs" />
-    <Compile Include="Versioning\VersioningTest.cs" />
-    <Compile Include="Voxelization\VoxelizerTest.cs" />
-    <Compile Include="WorldDatabase\WorldDatabaseTest.cs" />
-    <Compile Include="WorldDatabase\TerrainData2Element.cs" />
-    <Compile Include="WorldDatabase\TerrainData2ElementFactory.cs" />
-    <Compile Include="WorldDatabase\TerrainData3Element.cs" />
-    <Compile Include="WorldDatabase\TerrainDataElement.cs" />
-    <Compile Include="WorldDatabase\TerrainDataElementFactory.cs" />
-    <Compile Include="Player\XNATaskQueueTester.cs" />
-    <Compile Include="WorldSimulation\WorldSimulationTests.cs" />
-    <Compile Include="World\Static\SimpleStaticWorldObject.cs" />
-    <Compile Include="World\Static\SimpleStaticWorldObjectFactory.cs" />
-    <Compile Include="World\SimpleWorldEntity.cs" />
-    <Compile Include="World\Static\StaticWorldSyncerTest.cs" />
-    <Compile Include="World\TestSyncedActor.cs" />
-    <Compile Include="World\WorldTest.cs" />
-    <Compile Include="Xml\XmlTest.cs" />
-    <Compile Include="ZipTest.cs" />
+    <Compile Include="Features\Generation\Treegenerater\TreeSynchronisationTest.cs" />
+    <Compile Include="Features\Various\Utilities\UtilitiesTest.cs" />
+    <Compile Include="Features\Various\Versioning\VersioningTest.cs" />
+    <Compile Include="Features\Generation\Voxelization\VoxelizerTest.cs" />
+    <Compile Include="Features\Various\WorldDatabase\WorldDatabaseTest.cs" />
+    <Compile Include="Features\Various\WorldDatabase\TerrainData2Element.cs" />
+    <Compile Include="Features\Various\WorldDatabase\TerrainData2ElementFactory.cs" />
+    <Compile Include="Features\Various\WorldDatabase\TerrainData3Element.cs" />
+    <Compile Include="Features\Various\WorldDatabase\TerrainDataElement.cs" />
+    <Compile Include="Features\Various\WorldDatabase\TerrainDataElementFactory.cs" />
+    <Compile Include="Features\Simulation\Player\XNATaskQueueTester.cs" />
+    <Compile Include="Features\Simulation\WorldSimulation\WorldSimulationTests.cs" />
+    <Compile Include="Features\Various\World\Static\SimpleStaticWorldObject.cs" />
+    <Compile Include="Features\Various\World\Static\SimpleStaticWorldObjectFactory.cs" />
+    <Compile Include="Features\Various\World\SimpleWorldEntity.cs" />
+    <Compile Include="Features\Various\World\Static\StaticWorldSyncerTest.cs" />
+    <Compile Include="Features\Various\World\TestSyncedActor.cs" />
+    <Compile Include="Features\Various\World\WorldTest.cs" />
+    <Compile Include="Features\Data\Xml\XmlTest.cs" />
+    <Compile Include="Features\Various\ZipTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
@@ -268,38 +268,38 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Physics\Files\Cog16.obj" />
+    <EmbeddedResource Include="Features\Simulation\Physics\Files\Cog16.obj" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Physics\Files\CollisionModelBoxes001.mtl" />
-    <EmbeddedResource Include="Physics\Files\CollisionModelBoxes001.obj" />
+    <EmbeddedResource Include="Features\Simulation\Physics\Files\CollisionModelBoxes001.mtl" />
+    <EmbeddedResource Include="Features\Simulation\Physics\Files\CollisionModelBoxes001.obj" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Graphics\Files\TestShader.fx" />
+    <EmbeddedResource Include="Features\Rendering\Graphics\Files\TestShader.fx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Animation\Files\TestSkeleton02.asf" />
+    <EmbeddedResource Include="Features\Simulation\Animation\Files\TestSkeleton02.asf" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Animation\Files\TestAnimation02.amc" />
+    <EmbeddedResource Include="Features\Simulation\Animation\Files\TestAnimation02.amc" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Animation\Files\TestSkeleton01.asf" />
+    <EmbeddedResource Include="Features\Simulation\Animation\Files\TestSkeleton01.asf" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Animation\Files\TestAnimation01.amc" />
+    <EmbeddedResource Include="Features\Simulation\Animation\Files\TestAnimation01.amc" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Graphics\Files\TestShaderInclude.fx" />
+    <EmbeddedResource Include="Features\Rendering\Graphics\Files\TestShaderInclude.fx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DirectX11\MiniTri.fx" />
+    <EmbeddedResource Include="Features\Rendering\DirectX11\MiniTri.fx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Voxelization\_doc.txt" />
+    <Content Include="Features\Generation\Voxelization\_doc.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
