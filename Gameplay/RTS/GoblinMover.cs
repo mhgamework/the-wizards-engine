@@ -16,10 +16,13 @@ namespace MHGameWork.TheWizards.RTS
         public GoblinMover(Goblin goblin)
         {
             this.goblin = goblin;
+            terrain = TW.Data.GetSingleton<VoxelTerrain>();
         }
 
         private Vector3[] path;
         private float position;
+        private VoxelTerrain terrain;
+
         public void Update()
         {
             position += TW.Graphics.Elapsed;
@@ -38,10 +41,13 @@ namespace MHGameWork.TheWizards.RTS
         public void MoveTo(Vector3 pos)
         {
             // find goblin pos in terrain
-            //var startVoxel = TW.Data.GetSingleton<VoxelTerrain>().GetVoxelAt(goblin.Position);
-            //var endVoxel = TW.Data.GetSingleton<VoxelTerrain>().GetVoxelAt(pos);
-            path = new[] {goblin.Position, pos};
-            //var path = findPath(startVoxel, endVoxel);
+            var startVoxel = terrain.GetVoxelAt(goblin.Position);
+            var endVoxel = terrain.GetVoxelAt(pos);
+            //path = new[] {goblin.Position, pos};
+            path = null;
+            if (startVoxel == null || endVoxel == null) return;
+            var star =new TerrainAStar();
+            path = star.findPath(startVoxel, endVoxel).Select(o=>terrain.GetPositionOf(o)).ToArray();
 
         }
 

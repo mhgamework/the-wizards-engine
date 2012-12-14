@@ -34,6 +34,7 @@ namespace MHGameWork.TheWizards.RTS
 
             while (openset.Count > 0)
             {
+                //openset.Sort((a, b) => f_score[a] < f_score[b] ? -1 : f_score[a] > f_score[b] ? 1 : 0);
                 var current = openset.OrderBy(o => f_score[o]).First(); // the node in openset having the lowest f_score[] value
                 if (current.Equals(goal))
                     return reconstruct_path(came_from, goal);
@@ -43,7 +44,7 @@ namespace MHGameWork.TheWizards.RTS
 
                 foreach (var neighbor in connected_nodes(current))
                 {
-                    TW.Graphics.LineManager3D.AddCenteredBox(neighbor.Position + MathHelper.One*0.5f,0.5f, new Color4(0,0,1));
+                    //TW.Graphics.LineManager3D.AddCenteredBox(neighbor.Position + MathHelper.One*0.5f,0.5f, new Color4(0,0,1));
                     if (closedset.Contains(neighbor))
                         continue;
                     var tentative_g_score = g_score[current] + dist_between(current, neighbor);
@@ -65,6 +66,44 @@ namespace MHGameWork.TheWizards.RTS
 
         }
 
+
+        private class CustomList<T>
+        {
+            private HashSet<T> set = new HashSet<T>();
+            private List<T> list = new List<T>();
+
+            public int Count
+            {
+                get { return list.Count; }
+            }
+
+            public void Add(T start)
+            {
+                list.Add(start);
+                set.Add(start);
+            }
+
+            public void Sort(Comparison<T> compare)
+            {
+                list.Sort(compare);
+            }
+
+            public bool Contains(T neighbor)
+            {
+                return set.Contains(neighbor);
+            }
+
+            public T this[int i]
+            {
+                get { return list[i]; }
+            }
+
+            public void Remove(T current)
+            {
+                set.Remove(current);
+                list.Remove(current);
+            }
+        }
         private float dist_between(VoxelBlock current, VoxelBlock neighbor)
         {
             return 1;
@@ -72,14 +111,16 @@ namespace MHGameWork.TheWizards.RTS
 
         private IEnumerable<VoxelBlock> connected_nodes(VoxelBlock current)
         {
+            bool inAir = !getBelow(current).Filled;
+
             // give neighbours with soil under
             foreach (var n in neighbor_nodes(current).Where(n => !n.Filled))
             {
-                if (n.Position.Y != current.Position.Y )
+                if (n.Position.Y != current.Position.Y)
                     continue; // no vertical movement
                 VoxelBlock it = n;
                 int fallDepth = 3; //TODO fix staying in air when once in air
-                
+                if (inAir) fallDepth = 1;
                 for (int i = 0; i < fallDepth; i++)
                 {
                     it = getBelow(it);
@@ -88,7 +129,7 @@ namespace MHGameWork.TheWizards.RTS
                 }
             }
 
-            if (getBelow(current).Filled)
+            if (!inAir)
             {
                 var up = getUp(current);
                 if (up != null) yield return up;
@@ -97,7 +138,7 @@ namespace MHGameWork.TheWizards.RTS
             {
                 yield return getBelow(current);
             }
-            
+
         }
         private IEnumerable<VoxelBlock> neighbor_nodes(VoxelBlock current)
         {
