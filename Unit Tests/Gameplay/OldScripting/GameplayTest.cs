@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using MHGameWork.TheWizards.Tests.Features.Core.Networking;
 using MHGameWork.TheWizards._XNA.Gameplay;
@@ -12,7 +10,6 @@ using MHGameWork.TheWizards.Networking.Client;
 using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Player;
-using MHGameWork.TheWizards.Scripting;
 using MHGameWork.TheWizards.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,9 +17,8 @@ using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
 using StillDesign.PhysX;
 using DataPacket = MHGameWork.TheWizards.Networking.Packets.DataPacket;
-using PlayerController = MHGameWork.TheWizards._XNA.Gameplay.PlayerController;
 
-namespace MHGameWork.TheWizards.Tests.Gameplay
+namespace MHGameWork.TheWizards.Tests.Gameplay.OldScripting
 {
     [TestFixture]
     public class GameplayTest

@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using MHGameWork.TheWizards.Tests.Features.Rendering;
+using MHGameWork.TheWizards.Tests.Gameplay.OldScripting;
 using MHGameWork.TheWizards._XNA.Gameplay;
 using MHGameWork.TheWizards._XNA.Scene;
 using MHGameWork.TheWizards._XNA.Scripting;

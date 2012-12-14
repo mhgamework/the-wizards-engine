@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards._XNA.Gameplay;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Player;
-using PlayerController = MHGameWork.TheWizards._XNA.Gameplay.PlayerController;
 
-namespace MHGameWork.TheWizards.Tests.Gameplay
+namespace MHGameWork.TheWizards.Tests.Gameplay.OldScripting
 {
     /// <summary>
     /// This is a TEST object. Used to easy testing code

@@ -1,8 +1,6 @@
-﻿using System.IO;
-using MHGameWork.TheWizards.Engine;
+﻿using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Simulators;
@@ -11,7 +9,7 @@ using MHGameWork.TheWizards.WorldRendering;
 using NUnit.Framework;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Tests.Gameplay
+namespace MHGameWork.TheWizards.Tests.Gameplay.Various
 {
     /// <summary>
     /// TODO: these tests smear across layers and should be fixed

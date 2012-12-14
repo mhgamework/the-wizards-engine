@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
-using DirectX11;
-using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Physics;
 
-namespace MHGameWork.TheWizards.Tests.Gameplay
+namespace MHGameWork.TheWizards.Tests.Gameplay.Various
 {
     /// <summary>
     /// This is a base class that simulates TW game in offline mode, by running the server alongside in the same thread.

@@ -1,19 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Networking;
-using MHGameWork.TheWizards.Networking.Client;
-using MHGameWork.TheWizards.Networking.Server;
-using MHGameWork.TheWizards.Simulators;
-using MHGameWork.TheWizards.Synchronization;
-using NUnit.Framework;
-using SlimDX;
+﻿using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Gameplay
+namespace MHGameWork.TheWizards.Tests.Gameplay.Core
 {
     /// <summary>
     /// TODO: reimplement

@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Simulators;
+using MHGameWork.TheWizards.Tests.Gameplay.Various;
 using MHGameWork.TheWizards.Tiling;
 using MHGameWork.TheWizards.Voxelization;
 using MHGameWork.TheWizards.WorldRendering;

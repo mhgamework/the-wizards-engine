@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Engine;
+﻿using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Simulators;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Gameplay
+namespace MHGameWork.TheWizards.Tests.Gameplay.Core
 {
     [TestFixture]
     public class DebugTest

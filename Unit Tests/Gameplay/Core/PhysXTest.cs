@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Engine;
+﻿using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.PhysX;
 using MHGameWork.TheWizards.Simulators;
+using MHGameWork.TheWizards.Tests.Gameplay.Various;
 using MHGameWork.TheWizards.WorldRendering;
 using NUnit.Framework;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Tests.Gameplay
+namespace MHGameWork.TheWizards.Tests.Gameplay.Core
 {
     [TestFixture]
     public class PhysXTest

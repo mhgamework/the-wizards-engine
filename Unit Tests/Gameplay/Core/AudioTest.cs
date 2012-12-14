@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Audio;
-using MHGameWork.TheWizards.Engine;
+﻿using MHGameWork.TheWizards.Audio;
 using MHGameWork.TheWizards.Simulators;
+using MHGameWork.TheWizards.Tests.Gameplay.Various;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Gameplay
+namespace MHGameWork.TheWizards.Tests.Gameplay.Core
 {
     [TestFixture]
     public class AudioTest

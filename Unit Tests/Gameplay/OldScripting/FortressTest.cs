@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards._XNA.Gameplay;
+﻿using MHGameWork.TheWizards._XNA.Gameplay;
 using MHGameWork.TheWizards._XNA.Gameplay.Fortress;
 using MHGameWork.TheWizards._XNA.Scene;
 using MHGameWork.TheWizards.Rendering;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Gameplay
+namespace MHGameWork.TheWizards.Tests.Gameplay.OldScripting
 {
     [TestFixture]
     public class FortressTest

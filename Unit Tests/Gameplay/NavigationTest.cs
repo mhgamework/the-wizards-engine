@@ -5,6 +5,7 @@ using System.Text;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.RTS;
 using MHGameWork.TheWizards.Simulators;
+using MHGameWork.TheWizards.Tests.Gameplay.Core;
 using MHGameWork.TheWizards.VoxelTerraining;
 using MHGameWork.TheWizards.WorldRendering;
 using NUnit.Framework;
@@ -24,11 +25,6 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
             engine = new TWEngine();
             engine.DontLoadPlugin = true;
             engine.Initialize();
-
-
-
-
-
 
         }
         [Test]

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.PhysX;
@@ -15,7 +13,7 @@ using NUnit.Framework;
 using TreeGenerator.NoiseGenerater;
 using TreeGenerator.TerrrainGeneration;
 
-namespace MHGameWork.TheWizards.Tests.Gameplay
+namespace MHGameWork.TheWizards.Tests.Gameplay.Core
 {
     [TestFixture]
     public class VoxelTerrainTest

@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.Assets;
-using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Persistence;
-using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Serialization;
-using MHGameWork.TheWizards.Synchronization;
 using NUnit.Framework;
-using Rhino.Mocks;
 
-namespace MHGameWork.TheWizards.Tests.Gameplay
+namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
 {
     /// <summary>
     /// These tests smear across layers and should be fixed
