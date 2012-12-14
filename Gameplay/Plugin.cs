@@ -30,7 +30,7 @@ namespace MHGameWork.TheWizards
             //testWayPointTrigger(engine);
             //testWorldmatrixAnimation(engine);
             //testLoadLevel(engine);
-            testLevelBuilding(engine);
+            //testLevelBuilding(engine);
 
             //testAddStupidRedHelperMesh(engine);
         }

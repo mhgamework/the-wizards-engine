@@ -117,6 +117,7 @@
     <Compile Include="LevelBuilding\LevelBuildingData.cs" />
     <Compile Include="LevelBuilding\LevelBuildingObjectFactory.cs" />
     <Compile Include="LevelBuilding\ScalableGrid.cs" />
+    <Compile Include="Persistence\PersistenceInterfaceSimulator.cs" />
     <Compile Include="PhysX\BarrelShooterSimulator.cs" />
     <Compile Include="PhysX\PhysXData.cs" />
     <Compile Include="Pickup\Inventory.cs" />
