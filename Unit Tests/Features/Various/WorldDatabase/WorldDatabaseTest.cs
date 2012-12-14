@@ -2,7 +2,7 @@ using System;
 using MHGameWork.TheWizards.WorldDatabase;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.WorldDatabase
+namespace MHGameWork.TheWizards.Tests.Features.Various.WorldDatabase
 {
     [TestFixture]
     public class WorldDatabaseTest

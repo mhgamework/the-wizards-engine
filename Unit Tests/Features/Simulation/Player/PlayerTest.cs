@@ -1,18 +1,15 @@
 using System;
+using MHGameWork.TheWizards.Tests.Features.Various.Client;
 using MHGameWork.TheWizards._XNA.Gameplay;
 using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Player.Client;
-using MHGameWork.TheWizards.Tests.Client;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
-using Microsoft.Xna.Framework;
-using StillDesign.PhysX;
-using Microsoft.Xna.Framework.Input;
 
-namespace MHGameWork.TheWizards.Tests.Player
+namespace MHGameWork.TheWizards.Tests.Features.Simulation.Player
 {
     [TestFixture]
     public class PlayerTest

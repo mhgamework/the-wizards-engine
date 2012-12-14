@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Tests.Features.Data.OBJParser;
+using MHGameWork.TheWizards.Tests.Features.Rendering;
+using MHGameWork.TheWizards.Tests.Features.Simulation.Physics;
 using MHGameWork.TheWizards._XNA.Scripting;
 using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Entity;
@@ -10,8 +13,6 @@ using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scripting;
-using MHGameWork.TheWizards.Tests.OBJParser;
-using MHGameWork.TheWizards.Tests.Physics;
 using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Tests
@@ -52,7 +53,7 @@ namespace MHGameWork.TheWizards.Tests
             PhysicsFactory = xnafact.Factory;
             Game.AddXNAObject(xnafact);
 
-            Renderer = Rendering.RenderingTest.InitDefaultMeshRenderer(Game);
+            Renderer = RenderingTest.InitDefaultMeshRenderer(Game);
 
             TextureFactory = new RAMTextureFactory();
             var converter = new OBJToRAMMeshConverter(TextureFactory);

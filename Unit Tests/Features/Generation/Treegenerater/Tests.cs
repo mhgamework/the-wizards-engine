@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using TreeGenerator;
 using TreeGenerator.help;
 using TreeGenerator.TreeEngine;
 using TreeGenerator.Editor;
 
-namespace TreeGenerator
+namespace MHGameWork.TheWizards.Tests.Features.Generation.Treegenerater
 {
     [TestFixture]
     public class Tests
@@ -35,7 +32,7 @@ namespace TreeGenerator
            [Test]
          public void TestEditorOld()
          {
-        Editor.TreeTypeEditor.TestEditor();
+        TreeGenerator.Editor.TreeTypeEditor.TestEditor();
            }
    [Test]
            public void TestLeaf()

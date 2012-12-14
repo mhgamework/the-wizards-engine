@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Graphics
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.Graphics
 {
     [TestFixture]
     public class GraphicsTest

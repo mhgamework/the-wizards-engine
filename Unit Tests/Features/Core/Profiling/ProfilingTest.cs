@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using MHGameWork.TheWizards.Profiling;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Profiling
+namespace MHGameWork.TheWizards.Tests.Features.Core.Profiling
 {
     [TestFixture]
     public class ProfilingTest

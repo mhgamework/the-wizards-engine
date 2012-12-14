@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Client
+namespace MHGameWork.TheWizards.Tests.Features.Various.Client
 {
     [TestFixture]
     public class ClientTest

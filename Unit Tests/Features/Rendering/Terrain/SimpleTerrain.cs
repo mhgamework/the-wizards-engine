@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Documents;
-using MHGameWork.TheWizards.Graphics;
+﻿using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.ServerClient.Terrain.Rendering;
 using MHGameWork.TheWizards.ServerClient.TWXNAEngine;
 using MHGameWork.TheWizards.Terrain;
 using MHGameWork.TheWizards.Terrain.Geomipmap;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using TreeGenerator.NoiseGenerater;
 
-namespace MHGameWork.TheWizards.Tests.Terrain
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.Terrain
 {
     public class SimpleTerrain
     {

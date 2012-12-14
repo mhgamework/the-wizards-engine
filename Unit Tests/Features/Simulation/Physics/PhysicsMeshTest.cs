@@ -5,13 +5,13 @@ using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Entity.Client;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Physics;
-using MHGameWork.TheWizards.Tests.Client;
+using MHGameWork.TheWizards.Tests.Features.Various.Client;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 using Microsoft.Xna.Framework;
 using StillDesign.PhysX;
 
-namespace MHGameWork.TheWizards.Tests.Physics
+namespace MHGameWork.TheWizards.Tests.Features.Simulation.Physics
 {
     [TestFixture]
     public class PhysicsMeshTest

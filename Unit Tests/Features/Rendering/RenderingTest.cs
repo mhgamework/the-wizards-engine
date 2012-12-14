@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Threading;
-using MHGameWork.TheWizards.Common.Core;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.OBJParser;
@@ -14,9 +12,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
-using TangentVertex = MHGameWork.TheWizards.Graphics.TangentVertex;
 
-namespace MHGameWork.TheWizards.Tests.Rendering
+namespace MHGameWork.TheWizards.Tests.Features.Rendering
 {
     [TestFixture]
     public class RenderingTest

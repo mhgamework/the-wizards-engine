@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards.Versioning;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Versioning
+namespace MHGameWork.TheWizards.Tests.Features.Various.Versioning
 {
     [TestFixture]
     public class VersioningTest

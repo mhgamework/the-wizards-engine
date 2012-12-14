@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Common.GeoMipMap;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.ServerClient.Terrain.Rendering;
 using MHGameWork.TheWizards.ServerClient.TWXNAEngine;
@@ -14,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
 using TreeGenerator.NoiseGenerater;
 
-namespace MHGameWork.TheWizards.Tests.Terrain
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.Terrain
 {
     [TestFixture]
     public class TerrainRenderingTest

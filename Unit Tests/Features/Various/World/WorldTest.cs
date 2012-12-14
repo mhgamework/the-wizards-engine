@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.World
+namespace MHGameWork.TheWizards.Tests.Features.Various.World
 {
     [TestFixture]
     public class WorldTest

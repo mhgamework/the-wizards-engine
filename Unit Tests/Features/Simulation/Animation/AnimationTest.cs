@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Animation;
+﻿using MHGameWork.TheWizards.Animation;
 using MHGameWork.TheWizards.Common.Core;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Animation
+namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
 {
     [TestFixture]
     public class AnimationTest

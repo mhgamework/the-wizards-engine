@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Simulators;
+using MHGameWork.TheWizards.Tests.Features.Data.OBJParser;
 using MHGameWork.TheWizards.WorldRendering;
 using NUnit.Framework;
 using SlimDX;
@@ -23,7 +24,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
         [SetUp]
         public void Setup()
         {
-            mesh = OBJParser.OBJParserTest.GetBarrelMesh(new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
+            mesh = OBJParserTest.GetBarrelMesh(new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
         }
 
         [Test]

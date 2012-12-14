@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using TreeGenerator.NoiseGenerater;
 using NUnit.Framework;
+using TreeGenerator.NoiseGenerater;
+using TreeGenerator.TerrrainGeneration;
 
-namespace TreeGenerator.TerrrainGeneration
+namespace MHGameWork.TheWizards.Tests.Features.Generation.ProceduralTerrainGeneration
 {
     [TestFixture]
     public class TerrainGenerationTests

@@ -1,29 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards;
-using MHGameWork.TheWizards.Main;
 using MHGameWork.TheWizards.Networking.Client;
 using MHGameWork.TheWizards.Networking.Server;
-using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Tests.Networking;
-using MHGameWork.TheWizards.Utilities;
+using MHGameWork.TheWizards.Tests.Features.Core.Networking;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
-using TreeGenerator.help;
+using TreeGenerator;
+using TreeGenerator.EngineSynchronisation;
 using TreeGenerator.LodEngine;
 using TreeGenerator.TreeEngine;
-using Seeder = MHGameWork.TheWizards.Seeder;
 
-namespace TreeGenerator.EngineSynchronisation
+namespace MHGameWork.TheWizards.Tests.Features.Generation.Treegenerater
 {
     [TestFixture]
     public class TreeSynchronisationTest

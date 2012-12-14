@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-using System.Threading;
 using DirectX11;
-using MHGameWork.TheWizards.Common.Core;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
@@ -12,8 +9,7 @@ using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.Tests.DirectX11;
+using MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.Direct3D11;
@@ -21,9 +17,8 @@ using SlimDX.DirectInput;
 using Buffer = SlimDX.Direct3D11.Buffer;
 using DataStream = SlimDX.DataStream;
 using SpectaterCamera = MHGameWork.TheWizards.DirectX11.Graphics.SpectaterCamera;
-using TexturePool = MHGameWork.TheWizards.Rendering.TexturePool;
 
-namespace MHGameWork.TheWizards.Tests.Rendering
+namespace MHGameWork.TheWizards.Tests.Features.Rendering
 {
     [TestFixture]
     public class DeferredRenderingTest

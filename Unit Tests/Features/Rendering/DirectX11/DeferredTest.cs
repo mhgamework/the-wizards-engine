@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DirectX11.Rendering.CSM;
@@ -20,7 +17,7 @@ using Buffer = SlimDX.Direct3D11.Buffer;
 using Device = SlimDX.Direct3D11.Device;
 using Resource = SlimDX.Direct3D11.Resource;
 
-namespace MHGameWork.TheWizards.Tests.DirectX11
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
 {
     [TestFixture]
     public class DeferredTest

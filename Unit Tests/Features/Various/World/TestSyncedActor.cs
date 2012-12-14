@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
 using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.Physics;
-using MHGameWork.TheWizards.Tests.Networking;
+using MHGameWork.TheWizards.Tests.Features.Core.Networking;
 using MHGameWork.TheWizards.World;
 using MHGameWork.TheWizards.World.Packets;
 using Microsoft.Xna.Framework;
@@ -16,7 +12,7 @@ using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
 using StillDesign.PhysX;
 
-namespace MHGameWork.TheWizards.Tests.World
+namespace MHGameWork.TheWizards.Tests.Features.Various.World
 {
     [TestFixture]
     public class TestSyncedActor

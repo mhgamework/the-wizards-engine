@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using Launcher;
+﻿using System.IO;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests
+namespace MHGameWork.TheWizards.Tests.Features.Various
 {
     [TestFixture]
     public class FileHelperTest

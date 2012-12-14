@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 using MHGameWork.TheWizards.Forms;
@@ -10,7 +6,7 @@ using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Wpf;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Forms
+namespace MHGameWork.TheWizards.Tests.Features.Data.Forms
 {
     [TestFixture]
     public class ClassFormTest

@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11;
+﻿using System.Collections.Generic;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.WorldSimulation;
 using MHGameWork.TheWizards.WorldSimulation.Actions;
-using MHGameWork.TheWizards.WorldSimulation.Priorities;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.Tests.WorldSimulation
+namespace MHGameWork.TheWizards.Tests.Features.Simulation.WorldSimulation
 {
     [TestFixture]
     public class WorldSimulationTests

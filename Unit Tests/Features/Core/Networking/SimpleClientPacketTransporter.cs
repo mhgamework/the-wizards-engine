@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
 
-namespace MHGameWork.TheWizards.Tests.Networking
+namespace MHGameWork.TheWizards.Tests.Features.Core.Networking
 {
     /// <summary>
     /// Warning: This is not a full duplex class. You cannot send and receive at the same time at the same end of the connection

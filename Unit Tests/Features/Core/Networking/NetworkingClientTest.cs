@@ -4,7 +4,7 @@ using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Networking
+namespace MHGameWork.TheWizards.Tests.Features.Core.Networking
 {
     [TestFixture]
     public class NetworkingClientTest

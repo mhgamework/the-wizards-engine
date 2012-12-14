@@ -7,7 +7,7 @@ using MHGameWork.TheWizards.ServerClient.Terrain;
 using MHGameWork.TheWizards.Terrain;
 using MHGameWork.TheWizards.Terrain.Client;
 using MHGameWork.TheWizards.Terrain.Editor;
-using MHGameWork.TheWizards.Tests.Client;
+using MHGameWork.TheWizards.Tests.Features.Various.Client;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 using MHGameWork.TheWizards.ServerClient.Terrain.Rendering;
@@ -15,7 +15,7 @@ using MHGameWork.TheWizards.ServerClient.Database;
 using Microsoft.Xna.Framework;
 using StillDesign.PhysX;
 
-namespace MHGameWork.TheWizards.Tests.Terrain
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.Terrain
 {
     [TestFixture]
     public class TerrainClientTest

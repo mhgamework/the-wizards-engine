@@ -1,25 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Rendering.Text;
 using NUnit.Framework;
 using SlimDX;
-using SlimDX.Direct3D11;
-using SlimDX.DirectWrite;
 using SlimDX.DXGI;
-using SpriteTextRenderer;
-using Font = System.Drawing.Font;
-using FontStyle = SlimDX.DirectWrite.FontStyle;
 
-namespace MHGameWork.TheWizards.Tests.Rendering
+namespace MHGameWork.TheWizards.Tests.Features.Rendering
 {
     [TestFixture]
     public class TextRenderingTest

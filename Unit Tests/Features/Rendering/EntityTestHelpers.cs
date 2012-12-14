@@ -1,8 +1,7 @@
 ﻿using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Default;
 
-namespace MHGameWork.TheWizards.Tests.Rendering
+namespace MHGameWork.TheWizards.Tests.Features.Rendering
 {
     public static class RenderingTestExtensions
     {

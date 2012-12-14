@@ -1,32 +1,23 @@
 ﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
+using MHGameWork.TheWizards.Tests.Features.Rendering;
 using MHGameWork.TheWizards._XNA.Gameplay;
 using MHGameWork.TheWizards._XNA.Scene;
 using MHGameWork.TheWizards._XNA.Scripting;
 using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.OBJParser;
-using MHGameWork.TheWizards.Physics;
-using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scripting;
 using MHGameWork.TheWizards.Tests.Gameplay;
-using MHGameWork.TheWizards.Tests.OBJParser;
-using MHGameWork.TheWizards.Tests.Rendering;
-using Microsoft.CSharp;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Scripting
+namespace MHGameWork.TheWizards.Tests.Features.Core.Scripting
 {
     [TestFixture]
     public class ScriptingTest

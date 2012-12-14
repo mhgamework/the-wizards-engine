@@ -1,16 +1,11 @@
 //using MHGameWork.TheWizards.DirectX10;
-using System;
-using System.IO;
-using System.Reflection;
+
 using System.Threading;
-using System.Windows.Forms;
-using DirectX11;
 using NUnit.Framework;
-using SlimDX;
 using SlimDX.Multimedia;
 using SlimDX.XAudio2;
 
-namespace MHGameWork.TheWizards.Tests.DirectX11
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
 {
     [TestFixture]
     public class XAudio2Test

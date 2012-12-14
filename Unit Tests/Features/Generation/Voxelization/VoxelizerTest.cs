@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11;
+﻿using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.Tests.OBJParser;
+using MHGameWork.TheWizards.Tests.Features.Data.OBJParser;
 using MHGameWork.TheWizards.Voxelization;
 using NUnit.Framework;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Tests.Voxelization
+namespace MHGameWork.TheWizards.Tests.Features.Generation.Voxelization
 {
     [TestFixture]
     public class VoxelizerTest

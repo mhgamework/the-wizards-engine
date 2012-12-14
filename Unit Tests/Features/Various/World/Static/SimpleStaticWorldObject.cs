@@ -1,10 +1,8 @@
-﻿using System;
-using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.World;
+﻿using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.World.Static;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.Tests.World.Static
+namespace MHGameWork.TheWizards.Tests.Features.Various.World.Static
 {
     public class SimpleStaticWorldObject : IStaticWorldObject
     {

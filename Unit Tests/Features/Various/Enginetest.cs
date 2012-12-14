@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Data;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests
+namespace MHGameWork.TheWizards.Tests.Features.Various
 {
     [TestFixture]
     public class EngineTest

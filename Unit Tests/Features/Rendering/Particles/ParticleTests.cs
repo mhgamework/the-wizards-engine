@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11;
-using MHGameWork.TheWizards.DirectX11;
+﻿using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Particles;
 using MHGameWork.TheWizards.Rendering;
-//using MHGameWork.TheWizards.Tests.Graphics;
-using MHGameWork.TheWizards.Tests.Graphics;
+using MHGameWork.TheWizards.Tests.Features.Rendering.Graphics;
 using NUnit.Framework;
 using SlimDX;
 using TexturePool = MHGameWork.TheWizards.Rendering.Deferred.TexturePool;
+//using MHGameWork.TheWizards.Tests.Graphics;
 
-namespace MHGameWork.TheWizards.Tests.Particles
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.Particles
 {
     [TestFixture]
     public class ParticleTests

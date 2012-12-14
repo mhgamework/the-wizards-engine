@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
@@ -10,11 +6,11 @@ using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.Rendering.SSAO;
-using MHGameWork.TheWizards.Tests.DirectX11;
+using MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11;
 using NUnit.Framework;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.Tests.Rendering
+namespace MHGameWork.TheWizards.Tests.Features.Rendering
 {
     [TestFixture]
     public class SSAOTest

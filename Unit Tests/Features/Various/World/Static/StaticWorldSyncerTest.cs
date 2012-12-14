@@ -1,12 +1,13 @@
 ﻿using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Tests.Networking;
+using MHGameWork.TheWizards.Tests.Features.Core.Networking;
+using MHGameWork.TheWizards.Tests.Features.Rendering;
 using MHGameWork.TheWizards.Tests.Rendering;
 using MHGameWork.TheWizards.World.Static;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.World.Static
+namespace MHGameWork.TheWizards.Tests.Features.Various.World.Static
 {
     [TestFixture]
     public class StaticWorldSyncerTest

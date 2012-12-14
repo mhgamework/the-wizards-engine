@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using MHGameWork.TheWizards.Client;
-using MHGameWork.TheWizards.Common.Core;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.OBJParser;
@@ -10,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 using StillDesign.PhysX;
 
-namespace MHGameWork.TheWizards.Tests.Physics
+namespace MHGameWork.TheWizards.Tests.Features.Simulation.Physics
 {
     [TestFixture()]
     public class PhysicsTest

@@ -7,11 +7,8 @@ using System.Linq;
 using MHGameWork.TheWizards.Common.Networking;
 using MHGameWork.TheWizards.Networking;
 using NUnit.Framework;
-using TCPConnection = MHGameWork.TheWizards.Networking.TCPConnection;
-using TCPConnectionListener = MHGameWork.TheWizards.Networking.TCPConnectionListener;
-using TCPPacketBuilder = MHGameWork.TheWizards.Networking.TCPPacketBuilder;
 
-namespace MHGameWork.TheWizards.Tests.Networking
+namespace MHGameWork.TheWizards.Tests.Features.Core.Networking
 {
     [TestFixture]
     public class NetworkingTest

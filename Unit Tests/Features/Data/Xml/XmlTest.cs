@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.Tests.Rendering;
+using MHGameWork.TheWizards.Tests.Features.Rendering;
 using MHGameWork.TheWizards.Xml;
 using MHGameWork.TheWizards.XML;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Xml
+namespace MHGameWork.TheWizards.Tests.Features.Data.Xml
 {
     [TestFixture]
     public class XmlTest

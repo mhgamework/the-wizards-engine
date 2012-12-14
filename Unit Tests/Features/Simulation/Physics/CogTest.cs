@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Cogs;
-using MHGameWork.TheWizards.Common.Core;
+﻿using MHGameWork.TheWizards.Cogs;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
 using StillDesign.PhysX;
-using Ray = StillDesign.PhysX.Ray;
 
-namespace MHGameWork.TheWizards.Tests.Physics
+namespace MHGameWork.TheWizards.Tests.Features.Simulation.Physics
 {
     [TestFixture]
     public class CogTest

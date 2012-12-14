@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
+﻿using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Rendering
+namespace MHGameWork.TheWizards.Tests.Features.Rendering
 {
     [TestFixture]
     public class DeferredRenderingOudTest

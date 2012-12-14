@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using DirectX11;
 using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
@@ -15,9 +11,9 @@ using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.Tests.DirectX11;
-using MHGameWork.TheWizards.Tests.OBJParser;
-using MHGameWork.TheWizards.Tests.Physics;
+using MHGameWork.TheWizards.Tests.Features.Data.OBJParser;
+using MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11;
+using MHGameWork.TheWizards.Tests.Features.Simulation.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -29,7 +25,7 @@ using Matrix = Microsoft.Xna.Framework.Matrix;
 using TexturePool = MHGameWork.TheWizards.Rendering.TexturePool;
 using Vector3 = Microsoft.Xna.Framework.Vector3;
 
-namespace MHGameWork.TheWizards.Tests
+namespace MHGameWork.TheWizards.Tests.Features.Various
 {
     [TestFixture]
     public class Showcase

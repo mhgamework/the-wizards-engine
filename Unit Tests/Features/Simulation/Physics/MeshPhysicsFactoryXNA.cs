@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Client;
+﻿using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Physics;
 
-namespace MHGameWork.TheWizards.Tests.Physics
+namespace MHGameWork.TheWizards.Tests.Features.Simulation.Physics
 {
     public class MeshPhysicsFactoryXNA : IXNAObject
     {

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests
+namespace MHGameWork.TheWizards.Tests.Features.Data
 {
     [TestFixture]
     public class CoreTest

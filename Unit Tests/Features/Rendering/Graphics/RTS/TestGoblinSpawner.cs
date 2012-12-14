@@ -4,7 +4,7 @@ using MHGameWork.TheWizards.Simulators;
 using NUnit.Framework;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Tests.RTS
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.Graphics.RTS
 {
     [TestFixture]
     public class TestGoblinSpawner

@@ -1,22 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
-using System.Windows;
 using ICSharpCode.SharpZipLib.Zip;
 using Launcher;
 using MHGameWork.TheWizards.Common.Networking;
+using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Server.Launcher;
-using MHGameWork.TheWizards.Tests.Launcher;
-using Microsoft.Xna.Framework.Graphics;
+using MHGameWork.TheWizards.Tests.Features.Various.Launcher;
 using NUnit.Framework;
-using TCPConnection = MHGameWork.TheWizards.Networking.TCPConnection;
-using TCPPacketBuilder = MHGameWork.TheWizards.Networking.TCPPacketBuilder;
 
-namespace MHGameWork.TheWizards.Tests.Server
+namespace MHGameWork.TheWizards.Tests.Features.Various.Server
 {
     /// <summary>
     /// This tests the launcher server using dummy launcher code

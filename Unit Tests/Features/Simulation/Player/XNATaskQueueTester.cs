@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.Tests.Player
+namespace MHGameWork.TheWizards.Tests.Features.Simulation.Player
 {
     [TestFixture]
     public class XNATaskQueueTester

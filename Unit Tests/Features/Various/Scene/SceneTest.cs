@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards.Client;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Scene
+namespace MHGameWork.TheWizards.Tests.Features.Various.Scene
 {
     [TestFixture]
     public class SceneTest

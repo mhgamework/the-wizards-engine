@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards._XNA.Scripting;
-using MHGameWork.TheWizards.Scripting;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.Tests.Scripting
+namespace MHGameWork.TheWizards.Tests.Features.Core.Scripting
 {
     public class SimpleStateScript : IStateScript
     {

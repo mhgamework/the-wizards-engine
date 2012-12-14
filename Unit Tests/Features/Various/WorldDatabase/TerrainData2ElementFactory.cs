@@ -2,7 +2,7 @@ using System;
 using MHGameWork.TheWizards.ServerClient;
 using MHGameWork.TheWizards.WorldDatabase;
 
-namespace MHGameWork.TheWizards.Tests.WorldDatabase
+namespace MHGameWork.TheWizards.Tests.Features.Various.WorldDatabase
 {
     public class TerrainData2ElementFactory : IDataElementFactory<TerrainData2Element>
     {

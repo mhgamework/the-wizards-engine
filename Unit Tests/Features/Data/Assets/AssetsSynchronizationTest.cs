@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Tests.Networking;
-using MHGameWork.TheWizards.Tests.Rendering;
-using MHGameWork.TheWizards.Tests.World.Static;
-using MHGameWork.TheWizards.Tests.Xml;
+using MHGameWork.TheWizards.Tests.Features.Core.Networking;
+using MHGameWork.TheWizards.Tests.Features.Rendering;
 using MHGameWork.TheWizards.World.Static;
 using MHGameWork.TheWizards.XML;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Assets
+namespace MHGameWork.TheWizards.Tests.Features.Data.Assets
 {
     [TestFixture]
     public class AssetsSynchronizationTest

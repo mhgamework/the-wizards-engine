@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
+using TreeGenerator.NoiseGenerater;
 
-namespace TreeGenerator.NoiseGenerater
+namespace MHGameWork.TheWizards.Tests.Features.Generation.ProceduralTerrainGeneration
 {
     [TestFixture]
     public class NoiseTests

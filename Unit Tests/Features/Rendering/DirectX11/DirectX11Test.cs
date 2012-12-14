@@ -1,8 +1,7 @@
 //using MHGameWork.TheWizards.DirectX10;
+
 using System;
 using System.IO;
-using System.Reflection;
-using System.Threading;
 using System.Windows.Forms;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
@@ -14,11 +13,10 @@ using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
 using SlimDX.DXGI;
-using SlimDX.RawInput;
 using Effect = SlimDX.Direct3D11.Effect;
 using EffectFlags = SlimDX.D3DCompiler.EffectFlags;
 
-namespace MHGameWork.TheWizards.Tests.DirectX11
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
 {
     [TestFixture]
     public class DirectX11Test

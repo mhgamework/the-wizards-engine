@@ -1,7 +1,6 @@
-﻿using System;
-using MHGameWork.TheWizards.Scripting;
+﻿using MHGameWork.TheWizards.Scripting;
 
-namespace MHGameWork.TheWizards.Tests.Scripting
+namespace MHGameWork.TheWizards.Tests.Features.Core.Scripting
 {
     /// <summary>
     /// MHGameWork.TheWizards.Tests.Scripting.TestScriptWrapper

@@ -1,7 +1,7 @@
 using System;
 using MHGameWork.TheWizards.WorldDatabase;
 
-namespace MHGameWork.TheWizards.Tests.WorldDatabase
+namespace MHGameWork.TheWizards.Tests.Features.Various.WorldDatabase
 {
     /// <summary>
     /// THIS IS A TEST CLASS! IT IS NOT USED IN ANY WAY IN THE APPLICATION AND IS NOT LINKED IN ANY WAY TO THE TERRAIN MODULE

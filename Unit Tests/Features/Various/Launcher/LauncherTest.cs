@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using Launcher;
@@ -10,7 +6,7 @@ using MHGameWork.TheWizards.Launcher;
 using MHGameWork.TheWizards.Server.Launcher;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Launcher
+namespace MHGameWork.TheWizards.Tests.Features.Various.Launcher
 {
     [TestFixture]
     public class LauncherTest

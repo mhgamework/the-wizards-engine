@@ -1,10 +1,9 @@
 //using MHGameWork.TheWizards.DirectX10;
+
 using System;
-using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using DirectX11;
 using NUnit.Framework;
 using SharpDX;
 using SharpDX.D3DCompiler;
@@ -19,9 +18,8 @@ using SharpDX.XAudio2.Fx;
 using Buffer = SharpDX.Direct3D11.Buffer;
 using BufferFlags = SharpDX.XAudio2.BufferFlags;
 using Device = SharpDX.Direct3D11.Device;
-using PlayFlags = SharpDX.XAudio2.PlayFlags;
 
-namespace MHGameWork.TheWizards.Tests.DirectX11
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
 {
     [TestFixture]
     public class SharpDXTest

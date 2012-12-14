@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using MHGameWork.TheWizards.Networking.Files;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Networking
+namespace MHGameWork.TheWizards.Tests.Features.Core.Networking
 {
     [TestFixture]
     public class NetworkingFilesTest

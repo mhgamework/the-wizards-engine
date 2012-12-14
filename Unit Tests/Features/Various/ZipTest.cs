@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using ICSharpCode.SharpZipLib.Zip;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests
+namespace MHGameWork.TheWizards.Tests.Features.Various
 {
     [TestFixture]
     public class ZipTest

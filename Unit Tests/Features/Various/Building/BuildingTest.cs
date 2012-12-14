@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Building;
 using MHGameWork.TheWizards.DirectX11;
@@ -9,18 +6,17 @@ using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.Tests.Rendering;
+using MHGameWork.TheWizards.Tests.Features.Rendering;
 using NUnit.Framework;
 using SlimDX;
-using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.Tests.Building
+namespace MHGameWork.TheWizards.Tests.Features.Various.Building
 {
     [TestFixture]
     public class BuildingTest
     {
-        private Data.ModelContainer container;
+        private TheWizards.Data.ModelContainer container;
         private DynamicBlockFactory dynBlockFactory;
         private DX11Game game;
         private DeferredRenderer renderer;
@@ -33,7 +29,7 @@ namespace MHGameWork.TheWizards.Tests.Building
         [SetUp]
         public void Init()
         {
-            container = new Data.ModelContainer();
+            container = new TheWizards.Data.ModelContainer();
             game = new DX11Game();
             game.InitDirectX();
             renderer = new DeferredRenderer(game);

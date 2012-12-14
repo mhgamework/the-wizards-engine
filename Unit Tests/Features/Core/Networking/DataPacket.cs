@@ -1,6 +1,6 @@
 using MHGameWork.TheWizards.Networking;
 
-namespace MHGameWork.TheWizards.Tests.Networking
+namespace MHGameWork.TheWizards.Tests.Features.Core.Networking
 {
     public struct DataPacket : INetworkPacket
     {

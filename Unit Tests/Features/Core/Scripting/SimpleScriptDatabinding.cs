@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards._XNA.Scripting.API;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Scripting
+namespace MHGameWork.TheWizards.Tests.Features.Core.Scripting
 {
     public class SimpleScriptDatabinding : IScript
     {
