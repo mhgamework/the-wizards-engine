@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.VoxelTerraining
+namespace MHGameWork.TheWizards.Engine.VoxelTerraining
 {
     /// <summary>
     /// Renders all VoxelTerrainChunks

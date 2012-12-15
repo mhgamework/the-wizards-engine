@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.WorldRendering;
+using MHGameWork.TheWizards.Raycasting;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Raycasting
+namespace MHGameWork.TheWizards.Engine.Raycasting
 {
     /// <summary>
     /// Responsible for raycasting the GamePlay world

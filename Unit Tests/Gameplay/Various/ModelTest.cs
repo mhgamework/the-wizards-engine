@@ -1,4 +1,6 @@
 ﻿using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.PhysX;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Player;
@@ -31,7 +33,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Various
             var container = new Data.ModelContainer();
             SimpleModelObject.CurrentModelContainer = new Data.ModelContainer();
 
-            var ent = new WorldRendering.Entity();
+            var ent = new Engine.WorldRendering.Entity();
 
             ent.Mesh = new RAMMesh();
 
@@ -52,7 +54,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Various
 
             var game = new LocalGame();
 
-            var ent = new WorldRendering.Entity();
+            var ent = new Engine.WorldRendering.Entity();
 
             var mBuilder = new MeshBuilder();
             mBuilder.AddSphere(12, 1);
@@ -82,7 +84,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Various
 
             var game = new LocalGame();
 
-            new WorldRendering.Entity();
+            new Engine.WorldRendering.Entity();
 
             game
                 .AddSimulator(new WorldRenderingSimulator());
@@ -96,10 +98,10 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Various
         {
             var game = new LocalGame();
 
-            var ent = new WorldRendering.Entity();
+            var ent = new Engine.WorldRendering.Entity();
             ent.Mesh = mesh;
 
-            var ent2 = new WorldRendering.Entity();
+            var ent2 = new Engine.WorldRendering.Entity();
             ent2.Mesh = mesh;
             ent2.WorldMatrix = Matrix.Translation(5, 0, 0);
 

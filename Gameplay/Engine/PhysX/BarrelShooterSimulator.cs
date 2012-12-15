@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Persistence;
-using MHGameWork.TheWizards.Physics;
+﻿using DirectX11;
+using MHGameWork.TheWizards.Engine.Persistence;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.PhysX
+namespace MHGameWork.TheWizards.Engine.PhysX
 {
     public class BarrelShooterSimulator : ISimulator
     {

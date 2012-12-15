@@ -1,4 +1,4 @@
-﻿namespace MHGameWork.TheWizards.Synchronization
+﻿namespace MHGameWork.TheWizards.Engine.Synchronization
 {
     /// <summary>
     /// TODO: finish this

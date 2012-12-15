@@ -8,7 +8,7 @@ namespace MHGameWork.TheWizards.Animation
 {
     public class EntityRotationAnimatable : IAnimatable
     {
-        public WorldRendering.Entity Entity;
+        public Engine.WorldRendering.Entity Entity;
 
         public void Set(Keyframe prev, Keyframe next, float percent)
         {

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Synchronization;
+﻿using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine.Synchronization;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.WorldRendering
+namespace MHGameWork.TheWizards.Engine.WorldRendering
 {
     /// <summary>
     /// Represents a WireframeBox in the world

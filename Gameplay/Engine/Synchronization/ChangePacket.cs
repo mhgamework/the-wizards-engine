@@ -2,7 +2,7 @@
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Networking;
 
-namespace MHGameWork.TheWizards.Synchronization
+namespace MHGameWork.TheWizards.Engine.Synchronization
 {
     /// <summary>
     /// This packet contains the change information for 1 IModelObject

@@ -17,7 +17,7 @@ namespace MHGameWork.TheWizards.Tiling
     {
         public static readonly Vector3 TileSize = new Vector3(3, 4, 3);
 
-        private WorldRendering.Entity entity;
+        private Engine.WorldRendering.Entity entity;
 
         private Point3 position;
         public Point3 Position
@@ -62,7 +62,7 @@ namespace MHGameWork.TheWizards.Tiling
 
         public TiledEntity()
         {
-            entity = new WorldRendering.Entity();
+            entity = new Engine.WorldRendering.Entity();
 
         }
 

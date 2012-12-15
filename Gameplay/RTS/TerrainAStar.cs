@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DirectX11;
-using MHGameWork.TheWizards.VoxelTerraining;
+using MHGameWork.TheWizards.Engine.VoxelTerraining;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTS

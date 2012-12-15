@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Serialization;
 
-namespace MHGameWork.TheWizards.Persistence
+namespace MHGameWork.TheWizards.Engine.Persistence
 {
     /// <summary>
     /// Responsible for storing and accessing persistent data in the wizards (Database)

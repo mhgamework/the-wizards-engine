@@ -4,6 +4,7 @@ using DirectX11;
 using MHGameWork.TheWizards.Assetbrowser;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 

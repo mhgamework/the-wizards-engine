@@ -1,12 +1,13 @@
 ﻿using System.Drawing;
 using DirectX11;
+using MHGameWork.TheWizards.Engine.PhysX;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards._XNA.Gameplay;
 using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.MathExtra;
-using MHGameWork.TheWizards.PhysX;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
@@ -23,7 +24,7 @@ namespace MHGameWork.TheWizards.Simulators
         private readonly PlayerData player;
         private PlayerController controller;
         private CameraInfo camInfo;
-        private WorldRendering.World world;
+        private Engine.WorldRendering.World world;
 
         private PointLight light = new PointLight();
 
@@ -38,7 +39,7 @@ namespace MHGameWork.TheWizards.Simulators
 
             camInfo = TW.Data.GetSingleton<CameraInfo>();
 
-            world = TW.Data.GetSingleton<WorldRendering.World>();
+            world = TW.Data.GetSingleton<Engine.WorldRendering.World>();
 
             clientPhysics = new PlayerClientPhysics(controller);
 

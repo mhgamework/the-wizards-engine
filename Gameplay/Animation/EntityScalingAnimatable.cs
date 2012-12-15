@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards
 {
     public class EntityScalingAnimatable : IAnimatable
     {
-        public WorldRendering.Entity Entity;
+        public Engine.WorldRendering.Entity Entity;
 
         public void Set(Keyframe prev, Keyframe next, float percent)
         {

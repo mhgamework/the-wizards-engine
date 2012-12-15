@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Profiling;
-using MHGameWork.TheWizards.WorldRendering;
 
-namespace MHGameWork.TheWizards.Simulators
+namespace MHGameWork.TheWizards.Engine.Debugging
 {
     /// <summary>
     /// Responsible for processing Profiler information in the engine

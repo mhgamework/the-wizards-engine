@@ -11,13 +11,13 @@ namespace MHGameWork.TheWizards.Pickup
 {
     public class ItemEntity
     {
-        private WorldRendering.Entity ent;
+        private Engine.WorldRendering.Entity ent;
         public bool RayTraceable;
         public BoundingBox BB;
 
         public ItemEntity()
         {
-            ent = new WorldRendering.Entity();
+            ent = new Engine.WorldRendering.Entity();
             ent.Visible = true;
             BB = new BoundingBox();
         }

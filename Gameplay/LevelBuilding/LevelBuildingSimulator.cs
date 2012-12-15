@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.LevelBuilding;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Player;

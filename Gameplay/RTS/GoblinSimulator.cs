@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
@@ -25,7 +26,7 @@ namespace MHGameWork.TheWizards.RTS
             foreach (var goblin in TW.Data.GetChangedObjects<Goblin>())
             {
                 setBasicEntities(goblin);
-                var ent = goblin.get<WorldRendering.Entity>();
+                var ent = goblin.get<Engine.WorldRendering.Entity>();
                 fixRendering(goblin, ent);
             }
 
@@ -38,7 +39,7 @@ namespace MHGameWork.TheWizards.RTS
                 ((Goblin) goblin).get<GoblinMover>().Update();
             }
         }
-        private static void fixRendering(Goblin goblin, WorldRendering.Entity ent)
+        private static void fixRendering(Goblin goblin, Engine.WorldRendering.Entity ent)
         {
             var renderData = goblin.get<GoblinRenderData>();
             if ((renderData.LastPosition - goblin.Position).Length() > 0.001f)
@@ -63,8 +64,8 @@ namespace MHGameWork.TheWizards.RTS
             if (goblin.BestFriend == null)
                 goblin.BestFriend = goblin;
             goblin.get<GoblinMover>().MoveTo(goblin.BestFriend.Position);
-            if (goblin.get<WorldRendering.Entity>() == null)
-                goblin.set(new WorldRendering.Entity());
+            if (goblin.get<Engine.WorldRendering.Entity>() == null)
+                goblin.set(new Engine.WorldRendering.Entity());
             if (goblin.get<GoblinRenderData>() == null)
                 goblin.set(new GoblinRenderData {LookDirection = new Vector3(0, 0, 1)});
         }
@@ -91,10 +92,10 @@ namespace MHGameWork.TheWizards.RTS
             }
             foreach (var spawner in TW.Data.GetChangedObjects<GoblinSpawner>())
             {
-                if (spawner.get<WorldRendering.Entity>() == null)
-                    spawner.set(new WorldRendering.Entity());
+                if (spawner.get<Engine.WorldRendering.Entity>() == null)
+                    spawner.set(new Engine.WorldRendering.Entity());
 
-                var ent = spawner.get<WorldRendering.Entity>();
+                var ent = spawner.get<Engine.WorldRendering.Entity>();
 
                 ent.WorldMatrix = Matrix.Scaling(0.01f, 0.01f, 0.01f) * Matrix.Translation(spawner.Position);
                 ent.Mesh = MeshFactory.Load("Goblin\\GoblinLowRes");

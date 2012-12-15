@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.Player
 
         public PlayerData()
         {
-            Entity = new WorldRendering.Entity();
+            Entity = new Engine.WorldRendering.Entity();
 
             Entity.Mesh = GetBarrelMesh(new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
         }
@@ -34,8 +34,8 @@ namespace MHGameWork.TheWizards.Player
             }
         }
 
-        private WorldRendering.Entity entity;
-        public WorldRendering.Entity Entity
+        private Engine.WorldRendering.Entity entity;
+        public Engine.WorldRendering.Entity Entity
         {
             get { return entity; }
             set

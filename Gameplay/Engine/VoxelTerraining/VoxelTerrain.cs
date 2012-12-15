@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using DirectX11;
 using MHGameWork.TheWizards.CG.Spatial;
 using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Engine;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.VoxelTerraining
+namespace MHGameWork.TheWizards.Engine.VoxelTerraining
 {
     /// <summary>
     /// Responsible for storing data for the voxel terrain for the entire world

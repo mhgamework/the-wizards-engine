@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Data;
+﻿using MHGameWork.TheWizards.Data;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.WorldRendering
+namespace MHGameWork.TheWizards.Engine.WorldRendering
 {
     [ModelObjectChanged]
     public class Textarea : EngineModelObject

@@ -1,5 +1,6 @@
 ﻿using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.PhysX;
+using MHGameWork.TheWizards.Engine.PhysX;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.Tests.Gameplay.Various;
 using MHGameWork.TheWizards.WorldRendering;
@@ -26,7 +27,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
                                                      {
                                                          if (TW.Graphics.Keyboard.IsKeyPressed( SlimDX.DirectInput.Key.F))
                                                          {
-                                                             var f = new WorldRendering.Entity
+                                                             var f = new Engine.WorldRendering.Entity
                                                              {
                                                                  Mesh = MeshFactory.Load("Core\\Barrel01"),
                                                                  Visible = true,
@@ -43,7 +44,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
             game.AddSimulator(new PhysXDebugRendererSimulator());
 
 
-            var e = new WorldRendering.Entity
+            var e = new Engine.WorldRendering.Entity
                         {
                             Mesh = MeshFactory.Load("Core\\TileSet\\ts001sg001"),
                             Visible = true,
@@ -51,7 +52,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
                             WorldMatrix = Matrix.Translation(0, 5, 0)
                         };
 
-            e = new WorldRendering.Entity
+            e = new Engine.WorldRendering.Entity
                     {
                         Mesh = MeshFactory.Load("Core\\TileSet\\ts001sg001"),
                         Visible = true,
@@ -59,7 +60,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
                         WorldMatrix = Matrix.Translation(0, 10, 0)
                     };
 
-            e = new WorldRendering.Entity
+            e = new Engine.WorldRendering.Entity
             {
                 Mesh = MeshFactory.Load("Core\\Barrel01"),
                 Visible = true,

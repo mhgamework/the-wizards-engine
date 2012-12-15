@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.DirectX11.Graphics;
-using MHGameWork.TheWizards.Engine;
+﻿using System.Collections.Generic;
 using MHGameWork.TheWizards.Rendering.Text;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.WorldRendering
+namespace MHGameWork.TheWizards.Engine.WorldRendering
 {
     /// <summary>
     /// Responsible for processing changes to a textarea

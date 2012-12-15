@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Persistence;
+using MHGameWork.TheWizards.Engine.PhysX;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Persistence;
-using MHGameWork.TheWizards.PhysX;
 using MHGameWork.TheWizards.Simulators;
 using NUnit.Framework;
 

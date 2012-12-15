@@ -1,5 +1,6 @@
 ﻿using System;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Tests.Gameplay.Various;
 using MHGameWork.TheWizards.WorldRendering;
 using NUnit.Framework;
@@ -15,7 +16,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
         {
             var game = new LocalGame();
 
-            game.AddSimulator(new Simulators.WorldRenderingSimulator());
+            game.AddSimulator(new WorldRenderingSimulator());
 
             var b = new WireframeBox()
                         {
@@ -30,9 +31,9 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
         {
             var game = new LocalGame();
 
-            game.AddSimulator(new Simulators.WorldRenderingSimulator());
+            game.AddSimulator(new WorldRenderingSimulator());
 
-            var e = new WorldRendering.Entity()
+            var e = new Engine.WorldRendering.Entity()
                         {
                             Mesh = MeshFactory.Load("Core\\TileSet\\ts001sg001"),
                             Visible = false
@@ -54,7 +55,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
             var game = new LocalGame();
 
 
-            var e = new WorldRendering.Entity()
+            var e = new Engine.WorldRendering.Entity()
             {
                 Mesh = MeshFactory.Load("Core\\TileSet\\ts001sg001")
             };
@@ -95,7 +96,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
                                                          a.Text = TW.Graphics.FPS.ToString();
                                                      }));
 
-            game.AddSimulator(new Simulators.WorldRenderingSimulator());
+            game.AddSimulator(new WorldRenderingSimulator());
 
 
             game.Run();

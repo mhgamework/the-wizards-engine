@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MHGameWork.TheWizards.Synchronization
+namespace MHGameWork.TheWizards.Engine.Synchronization
 {
     /// <summary>
     /// endpoint that forwards to multiple endpoints

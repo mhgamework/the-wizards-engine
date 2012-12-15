@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
-using SlimDX;
 
-namespace MHGameWork.TheWizards.WorldRendering
+namespace MHGameWork.TheWizards.Engine.WorldRendering
 {
     /// <summary>
     /// This class provides static access point for loading meshes. It is TW scoped, meaning that it is linked to the TW state. 

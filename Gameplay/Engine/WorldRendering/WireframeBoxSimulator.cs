@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11;
+﻿using DirectX11;
 using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.WorldRendering
+namespace MHGameWork.TheWizards.Engine.WorldRendering
 {
     /// <summary>
     /// Responsible for ensuring Wireframebox is rendererd

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11;
-using MHGameWork.TheWizards.CG.Spatial;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.WorldRendering;
+﻿using DirectX11;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using SlimDX;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.VoxelTerraining
+namespace MHGameWork.TheWizards.Engine.VoxelTerraining
 {
     public class TerrainEditorSimulator : ISimulator
     {

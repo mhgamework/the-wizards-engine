@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.WorldRendering;
+﻿using MHGameWork.TheWizards.Engine.WorldRendering;
 using PointLight = MHGameWork.TheWizards.Rendering.Deferred.PointLight;
 
-namespace MHGameWork.TheWizards.VoxelTerraining
+namespace MHGameWork.TheWizards.Engine.VoxelTerraining
 {
     public class FlashlightSimulator : ISimulator
     {

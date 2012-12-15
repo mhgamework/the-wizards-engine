@@ -1,12 +1,7 @@
-﻿using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.WorldRendering;
+﻿using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
 
-
-
-namespace MHGameWork.TheWizards.Simulators
+namespace MHGameWork.TheWizards.Engine.WorldRendering
 {
     /// <summary>
     /// Responsible for rendering the world

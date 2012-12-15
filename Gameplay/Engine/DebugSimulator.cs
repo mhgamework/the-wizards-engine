@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.WorldRendering;
+﻿using MHGameWork.TheWizards.Engine.WorldRendering;
 
-namespace MHGameWork.TheWizards.Simulators
+namespace MHGameWork.TheWizards.Engine
 {
     /// <summary>
     /// Responsible for showing debug information

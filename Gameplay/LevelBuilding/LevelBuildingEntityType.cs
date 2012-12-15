@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
@@ -62,7 +63,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
         public object GetNewObject()
         {
-            var ent = new WorldRendering.Entity();
+            var ent = new Engine.WorldRendering.Entity();
             ent.Mesh = mesh;
             ent.Solid = true;
             return ent;
@@ -70,25 +71,25 @@ namespace MHGameWork.TheWizards.LevelBuilding
 
         public void Delete(object o)
         {
-            if (!(o is WorldRendering.Entity))
+            if (!(o is Engine.WorldRendering.Entity))
                 throw new Exception("Invalid argument!");
 
-            var m = (WorldRendering.Entity)o;
+            var m = (Engine.WorldRendering.Entity)o;
             m.Mesh = null;
         }
 
         public bool CanHandleObject(object o)
         {
-            if (!(o is WorldRendering.Entity))
+            if (!(o is Engine.WorldRendering.Entity))
                 return false;
 
-            if (((WorldRendering.Entity)o).Mesh != mesh)
+            if (((Engine.WorldRendering.Entity)o).Mesh != mesh)
                 return false;
 
             return true;
         }
 
-        private WorldRendering.Entity getSelectedObject(LevelBuildingObjectFactory factory, LevelBuildingInfo info)
+        private Engine.WorldRendering.Entity getSelectedObject(LevelBuildingObjectFactory factory, LevelBuildingInfo info)
         {
             var s = info.SelectedObject;
             if (s == null || (factory.GetLevelBuildingTypeFromObject(s) != this))
@@ -97,7 +98,7 @@ namespace MHGameWork.TheWizards.LevelBuilding
                 info.SelectedObject = s;
             }
 
-            return (WorldRendering.Entity)s;
+            return (Engine.WorldRendering.Entity)s;
         }
 
         private Vector3 getPlacePos(LevelBuildingInfo info)

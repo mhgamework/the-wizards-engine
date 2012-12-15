@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Rendering.Deferred;
 
-namespace MHGameWork.TheWizards.WorldRendering
+namespace MHGameWork.TheWizards.Engine.WorldRendering
 {
     /// <summary>
     /// Responsible for updating the renderer with information from Entity
@@ -22,7 +18,7 @@ namespace MHGameWork.TheWizards.WorldRendering
         }
         private void updateEntity(Data.ModelContainer.ObjectChange change)
         {
-            var ent = (WorldRendering.Entity)change.ModelObject;
+            var ent = (Entity)change.ModelObject;
 
             if (change.Change == ModelChange.Added)
             {
@@ -51,12 +47,12 @@ namespace MHGameWork.TheWizards.WorldRendering
         }
         public class EntityRenderData
         {
-            private readonly WorldRendering.Entity entity;
+            private readonly Entity entity;
             private readonly DeferredRenderer renderer;
 
             private DeferredMeshRenderElement element;
 
-            public EntityRenderData(WorldRendering.Entity entity, DeferredRenderer renderer)
+            public EntityRenderData(Entity entity, DeferredRenderer renderer)
             {
                 this.entity = entity;
                 this.renderer = renderer;

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11;
+﻿using DirectX11;
 
-namespace MHGameWork.TheWizards.VoxelTerraining
+namespace MHGameWork.TheWizards.Engine.VoxelTerraining
 {
     public class VoxelBlock
     {

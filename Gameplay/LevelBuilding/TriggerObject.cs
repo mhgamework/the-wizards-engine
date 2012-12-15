@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 
@@ -13,11 +14,11 @@ namespace MHGameWork.TheWizards.LevelBuilding
     public class TriggerObject
     {
         public Trigger.Trigger Trigger { get; set; }
-        public WorldRendering.Entity Entity {get; set;}
+        public Engine.WorldRendering.Entity Entity {get; set;}
 
         public TriggerObject()
         {
-            Entity = new WorldRendering.Entity();
+            Entity = new Engine.WorldRendering.Entity();
             Entity.Mesh = MeshFactory.Load("Helpers\\RedHelper\\RedHelper");
             Trigger = new Trigger.Trigger();
         }

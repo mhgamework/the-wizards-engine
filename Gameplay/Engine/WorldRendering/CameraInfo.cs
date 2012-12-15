@@ -1,11 +1,9 @@
 ﻿using DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Synchronization;
+using MHGameWork.TheWizards.Engine.Synchronization;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.WorldRendering
+namespace MHGameWork.TheWizards.Engine.WorldRendering
 {
     /// <summary>
     /// Contains information about the camerastate used in rendering

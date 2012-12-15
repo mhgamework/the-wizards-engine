@@ -5,6 +5,11 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Animation;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Debugging;
+using MHGameWork.TheWizards.Engine.Persistence;
+using MHGameWork.TheWizards.Engine.PhysX;
+using MHGameWork.TheWizards.Engine.VoxelTerraining;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.LevelBuilding;
 using MHGameWork.TheWizards.Data;
@@ -16,7 +21,6 @@ using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Serialization;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.Trigger;
-using MHGameWork.TheWizards.VoxelTerraining;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 
@@ -55,7 +59,7 @@ namespace MHGameWork.TheWizards
             cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
             cameraInfo.FirstPersonCameraTarget = player.Entity;
 
-            WorldRendering.Entity e = new WorldRendering.Entity();
+            Engine.WorldRendering.Entity e = new Engine.WorldRendering.Entity();
             e.Mesh = MeshFactory.Load("Helpers\\RedHelperBIG\\RedHelperBIG"); //TODO: try to reconstruct bug
 
             engine.AddSimulator(new LocalPlayerSimulator(player));
@@ -248,7 +252,7 @@ namespace MHGameWork.TheWizards
             Vector3 s1 = new Vector3(2, 2, 2);
             Vector3 s2 = new Vector3(0.25f, 0.25f, 0.25f);
 
-            var ent = new WorldRendering.Entity();
+            var ent = new Engine.WorldRendering.Entity();
             ent.Mesh = MeshFactory.Load("Core\\Crate01");
             ent.WorldMatrix = Matrix.Translation(p0);
 
@@ -305,11 +309,11 @@ namespace MHGameWork.TheWizards
             cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
             cameraInfo.FirstPersonCameraTarget = player.Entity;
 
-            var ent = new WorldRendering.Entity();
+            var ent = new Engine.WorldRendering.Entity();
             ent.Mesh = MeshFactory.Load("Level01\\Level01");
             ent.Solid = true;
 
-            var barrel = new WorldRendering.Entity();
+            var barrel = new Engine.WorldRendering.Entity();
             barrel.Mesh = MeshFactory.Load("Core\\Barrel01");
             barrel.WorldMatrix = Matrix.Translation(new Vector3(0, 30, 0));
             barrel.Solid = true;
@@ -317,10 +321,10 @@ namespace MHGameWork.TheWizards
 
             engine.AddSimulator(new LocalPlayerSimulator(player));
             engine.AddSimulator(new ThirdPersonCameraSimulator());
-            engine.AddSimulator(new Simulators.PhysXSimulator());
+            engine.AddSimulator(new PhysXSimulator());
 
             engine.AddSimulator(new WorldRenderingSimulator());
-            engine.AddSimulator(new Simulators.PhysXDebugRendererSimulator());
+            engine.AddSimulator(new PhysXDebugRendererSimulator());
         }
 
         private void testLevelBuilding(TWEngine engine)
@@ -372,7 +376,7 @@ namespace MHGameWork.TheWizards
 
             factory.AddLevelBuildingObjectType(triggerType);
 
-            foreach (var ent in TW.Data.Objects.Where(t => t is WorldRendering.Entity).Select(t => (WorldRendering.Entity)t))
+            foreach (var ent in TW.Data.Objects.Where(t => t is Engine.WorldRendering.Entity).Select(t => (Engine.WorldRendering.Entity)t))
             {
                 if (ent == player.Entity) continue;
                 ent.Solid = true;

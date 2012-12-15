@@ -1,11 +1,9 @@
 ﻿using MHGameWork.TheWizards.Client;
-using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Physics;
-using MHGameWork.TheWizards.PhysX;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Simulators
+namespace MHGameWork.TheWizards.Engine.PhysX
 {
     /// <summary>
     /// This simulator is responsible for setting and managing PhysX for Entity's

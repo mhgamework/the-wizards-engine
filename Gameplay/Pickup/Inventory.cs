@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.Pickup
         public ItemEntity SelectedItem;
         private bool visible;
 
-        private List<WorldRendering.Entity> entities = new List<WorldRendering.Entity>();
+        private List<Engine.WorldRendering.Entity> entities = new List<Engine.WorldRendering.Entity>();
 
         public void Update()
         {
@@ -32,7 +32,7 @@ namespace MHGameWork.TheWizards.Pickup
                 float xPos2D = -0.8f + boxWidth * (index % nbBoxesPerRow);
                 float yPos2D = 0.8f - boxHeigth * (float)Math.Floor(index / nbBoxesPerRow);
 
-                WorldRendering.Entity ent = entities[index];
+                Engine.WorldRendering.Entity ent = entities[index];
                 ent.WorldMatrix = Matrix.Scaling(0.5f, 0.5f, 0.5f) * Matrix.Translation(0, 0, -9) *
                                   Matrix.PerspectiveFovRH(MathHelper.PiOver4, 4 / 3f, 0.1f, 10) *
                                   Matrix.Translation(xPos2D, yPos2D, 0) *
@@ -61,7 +61,7 @@ namespace MHGameWork.TheWizards.Pickup
         {
             Items.Add(i);
 
-            var ent = new WorldRendering.Entity();
+            var ent = new Engine.WorldRendering.Entity();
             ent.Mesh = i.GetMesh();
             ent.Visible = visible;
             entities.Add(ent);
@@ -111,7 +111,7 @@ namespace MHGameWork.TheWizards.Pickup
         {
             visible = isVisible;
 
-            foreach (WorldRendering.Entity ent in entities)
+            foreach (Engine.WorldRendering.Entity ent in entities)
             {
                 ent.Visible = visible;
             }

@@ -1,12 +1,9 @@
-﻿using System;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Data;
+﻿using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Synchronization;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.WorldRendering
+namespace MHGameWork.TheWizards.Engine.WorldRendering
 {
     /// <summary>
     /// Responsible for representing a independent object in the World. It is not part of any greater system, like the building/TerrainChunk/trees

@@ -5,6 +5,7 @@ using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.Tests.Gameplay.Various;
@@ -67,13 +68,13 @@ namespace MHGameWork.TheWizards.Tests.Gameplay
                         builder.AddBox(new Vector3(i, j, 2), new Vector3(i + 1, j + 1, 3));
                 }
 
-            new WorldRendering.Entity() { Mesh = builder.CreateMesh(), WorldMatrix = Matrix.Identity };
+            new Engine.WorldRendering.Entity() { Mesh = builder.CreateMesh(), WorldMatrix = Matrix.Identity };
 
-            new WorldRendering.Entity() { Mesh = Voxelizer.CreateVoxelMesh(voxels1), WorldMatrix = Matrix.Scaling(MathHelper.One * TileBoundary.SurfaceResolution) * Matrix.Translation(-10, 0, 0) };
-            new WorldRendering.Entity() { Mesh = mesh1, WorldMatrix =Matrix.Translation(-10, 0, 0) };
+            new Engine.WorldRendering.Entity() { Mesh = Voxelizer.CreateVoxelMesh(voxels1), WorldMatrix = Matrix.Scaling(MathHelper.One * TileBoundary.SurfaceResolution) * Matrix.Translation(-10, 0, 0) };
+            new Engine.WorldRendering.Entity() { Mesh = mesh1, WorldMatrix =Matrix.Translation(-10, 0, 0) };
 
-            new WorldRendering.Entity() { Mesh = Voxelizer.CreateVoxelMesh(voxels2), WorldMatrix = Matrix.Scaling(MathHelper.One * TileBoundary.SurfaceResolution) * Matrix.Translation(-10, 0, 6) };
-            new WorldRendering.Entity() { Mesh = mesh2, WorldMatrix = Matrix.Translation(-10, 0, 6) };
+            new Engine.WorldRendering.Entity() { Mesh = Voxelizer.CreateVoxelMesh(voxels2), WorldMatrix = Matrix.Scaling(MathHelper.One * TileBoundary.SurfaceResolution) * Matrix.Translation(-10, 0, 6) };
+            new Engine.WorldRendering.Entity() { Mesh = mesh2, WorldMatrix = Matrix.Translation(-10, 0, 6) };
 
 
             game

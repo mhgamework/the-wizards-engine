@@ -1,12 +1,10 @@
 ﻿using System;
 using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Raycasting;
-using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Synchronization;
+using MHGameWork.TheWizards.Engine.Raycasting;
+using MHGameWork.TheWizards.Engine.Synchronization;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.WorldRendering
+namespace MHGameWork.TheWizards.Engine.WorldRendering
 {
     /// <summary>
     /// Represents the World, should be singleton

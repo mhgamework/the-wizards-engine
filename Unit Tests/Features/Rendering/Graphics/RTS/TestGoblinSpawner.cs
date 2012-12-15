@@ -1,4 +1,5 @@
 ﻿using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTS;
 using MHGameWork.TheWizards.Simulators;
 using NUnit.Framework;

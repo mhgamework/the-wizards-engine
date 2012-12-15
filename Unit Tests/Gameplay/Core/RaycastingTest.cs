@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.Tests.Gameplay.Various;
 using MHGameWork.TheWizards.WorldRendering;
@@ -21,7 +22,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
             game.DontLoadPlugin = true;
             game.Initialize();
 
-            var world = TW.Data.GetSingleton<WorldRendering.World>();
+            var world = TW.Data.GetSingleton<Engine.WorldRendering.World>();
 
             game.AddSimulator(new BasicSimulator(delegate
                                                      {
@@ -40,7 +41,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
 
             game.AddSimulator(new WorldRenderingSimulator());
 
-            new WorldRendering.Entity
+            new Engine.WorldRendering.Entity
                {
                    Mesh = MeshFactory.Load("Core\\Barrel01"),
                    Visible = true,
@@ -48,7 +49,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
                    Static = false,
                    WorldMatrix = Matrix.Translation(0, 0.5f, 0)
                };
-            new WorldRendering.Entity
+            new Engine.WorldRendering.Entity
                 {
                     Mesh = MeshFactory.Load("Core\\Barrel01"),
                     Visible = true,

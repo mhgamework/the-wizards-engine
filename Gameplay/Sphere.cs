@@ -11,14 +11,14 @@ namespace MHGameWork.TheWizards.Data
 {
     public class Sphere : EngineModelObject
     {
-        private WorldRendering.Entity ent;
+        private Engine.WorldRendering.Entity ent;
         private MeshDynamicPhysicsElement dEl;
 
         public Sphere()
         {
             
 
-            ent = new WorldRendering.Entity();
+            ent = new Engine.WorldRendering.Entity();
 
             var mBuilder = new MeshBuilder();
             mBuilder.AddSphere(12, 1);

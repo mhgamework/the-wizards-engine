@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using MHGameWork.TheWizards.Client;
-using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
-using SlimDX;
 using StillDesign.PhysX;
 using IDisposable = System.IDisposable;
 
-namespace MHGameWork.TheWizards.PhysX
+namespace MHGameWork.TheWizards.Engine.PhysX
 {
     /// <summary>
     /// Applies changes to all changed Entity's PhysX properties, and pulls changes from the physX back into dynamic objects

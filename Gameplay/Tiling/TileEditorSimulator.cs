@@ -2,6 +2,7 @@
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Tiling;
 using MHGameWork.TheWizards.WorldRendering;
@@ -17,7 +18,7 @@ namespace MHGameWork.TheWizards.Simulators
     {
         private IMesh[] meshes;
 
-        private WorldRendering.Entity ghostEntity;
+        private Engine.WorldRendering.Entity ghostEntity;
         private TileRotation ghostRotation;
 
         public TileEditorSimulator()
@@ -29,7 +30,7 @@ namespace MHGameWork.TheWizards.Simulators
             meshes[3] = MeshFactory.Load("Core\\TileSet\\ts001ocg001");
             meshes[4] = MeshFactory.Load("Core\\TileSet\\ts001g001");
 
-            ghostEntity = new WorldRendering.Entity();
+            ghostEntity = new Engine.WorldRendering.Entity();
 
         }
         public void Simulate()

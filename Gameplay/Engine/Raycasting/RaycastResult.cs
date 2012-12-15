@@ -1,7 +1,7 @@
 using System;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Raycasting
+namespace MHGameWork.TheWizards.Engine.Raycasting
 {
     /// <summary>
     /// Represents a result of a raycast. The object raycasted is stored, along with some optional data about the raycast

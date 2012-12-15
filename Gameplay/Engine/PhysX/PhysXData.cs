@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Client;
+﻿using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Engine;
 
-namespace MHGameWork.TheWizards.PhysX
+namespace MHGameWork.TheWizards.Engine.PhysX
 {
     [ModelObjectChanged]
     public class PhysXData : EngineModelObject

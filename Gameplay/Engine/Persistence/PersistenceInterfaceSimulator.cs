@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using DirectX11;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Serialization;
-using MHGameWork.TheWizards.WorldRendering;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using SlimDX;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.Persistence
+namespace MHGameWork.TheWizards.Engine.Persistence
 {
     /// <summary>
     /// Responsible for simulating the

@@ -146,7 +146,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
             var s = new ModelSerializer(StringSerializer.Create(), new LoadedTypeSerializer());
 
             // Add a new entity to the original model, it should not be serialized!
-            new WorldRendering.Entity();
+            new Engine.WorldRendering.Entity();
 
             var strm = new MemoryStream();
 

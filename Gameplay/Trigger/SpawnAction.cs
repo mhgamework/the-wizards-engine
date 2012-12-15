@@ -9,11 +9,11 @@ namespace MHGameWork.TheWizards.Trigger
 {
     public class SpawnAction : IAction
     {
-        private WorldRendering.Entity ent;
+        private Engine.WorldRendering.Entity ent;
 
         public SpawnAction(Matrix matrix, IMesh mesh)
         {
-            ent = new WorldRendering.Entity();
+            ent = new Engine.WorldRendering.Entity();
             ent.Mesh = mesh;
             ent.WorldMatrix = matrix;
             ent.Visible = false;

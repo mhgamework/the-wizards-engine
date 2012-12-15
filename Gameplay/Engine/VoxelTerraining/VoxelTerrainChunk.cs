@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Serialization;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.VoxelTerraining
+namespace MHGameWork.TheWizards.Engine.VoxelTerraining
 {
     /// <summary>
     /// Responsible for storing a part of the voxel terrain in a chunk

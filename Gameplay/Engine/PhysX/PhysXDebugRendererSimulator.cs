@@ -1,11 +1,6 @@
-﻿using MHGameWork.TheWizards.Client;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Physics;
-using MHGameWork.TheWizards.PhysX;
-using SlimDX;
+﻿using MHGameWork.TheWizards.Physics;
 
-namespace MHGameWork.TheWizards.Simulators
+namespace MHGameWork.TheWizards.Engine.PhysX
 {
     /// <summary>
     /// Renders PhysX debug information

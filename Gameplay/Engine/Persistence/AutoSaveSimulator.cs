@@ -1,10 +1,8 @@
 ﻿using System;
 using System.IO;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Persistence;
 
-namespace MHGameWork.TheWizards.Simulators
+namespace MHGameWork.TheWizards.Engine.Persistence
 {
     /// <summary>
     /// This class saves the model every interval

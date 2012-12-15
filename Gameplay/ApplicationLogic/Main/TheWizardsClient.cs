@@ -5,6 +5,8 @@ using System.Threading;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Synchronization;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Entity;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Networking;
@@ -15,7 +17,6 @@ using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Simulators;
-using MHGameWork.TheWizards.Synchronization;
 using MHGameWork.TheWizards.Tiling;
 using MHGameWork.TheWizards.WorldRendering;
 
