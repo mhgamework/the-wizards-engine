@@ -20,14 +20,18 @@ namespace MHGameWork.TheWizards.Data
         {
             Objects = new EventList<IModelObject>(delegate(IModelObject obj)
                                              {
-                                                 var change = dirtyEntities.Add();
-                                                 change.ModelObject = obj;
-                                                 change.Change = ModelChange.Added;
+                                                 //TODO: this was massive boooobooo but a genius idea :)))
+                                                 // Listen on this list but do it correct this time
+                                                 //var change = dirtyEntities.Add();
+                                                 //change.ModelObject = obj;
+                                                 //change.Change = ModelChange.Added;
+                                                 flagChanged(obj, ModelChange.Added);
                                              }, delegate(IModelObject obj)
                                                 {
-                                                    var change = dirtyEntities.Add();
-                                                    change.ModelObject = obj;
-                                                    change.Change = ModelChange.Removed;
+                                                    //var change = dirtyEntities.Add();
+                                                    //change.ModelObject = obj;
+                                                    //change.Change = ModelChange.Removed;
+                                                    flagChanged(obj, ModelChange.Removed);
                                                 });
 
             dirtyEntities = new PrefilledList<ObjectChange>(() => new ObjectChange());
@@ -52,7 +56,7 @@ namespace MHGameWork.TheWizards.Data
 
             obj.Initialize(this);
 
-            flagChanged(obj, ModelChange.Added);
+            //flagChanged(obj, ModelChange.Added);
         }
         /// <summary>
         /// TODO: this should be called automatically using a weak references system
@@ -62,7 +66,7 @@ namespace MHGameWork.TheWizards.Data
         {
             if (!Objects.Contains(obj)) throw new InvalidOperationException("Object not in list");
             Objects.Remove(obj);
-            flagChanged(obj, ModelChange.Removed);
+            //flagChanged(obj, ModelChange.Removed);
         }
 
 
@@ -164,6 +168,7 @@ namespace MHGameWork.TheWizards.Data
             for (int i = 0; i < dirtyEntities.Count; i++)
             {
                 var change = dirtyEntities[i];
+                if (change.Change == ModelChange.None) continue;
                 if (change.ModelObject is T)
                     yield return change;
             }
@@ -174,6 +179,7 @@ namespace MHGameWork.TheWizards.Data
             for (int i = 0; i < dirtyEntities.Count; i++)
             {
                 var change = dirtyEntities[i];
+                if (change.Change == ModelChange.None) continue;
                 if (change.ModelObject is T)
                     yield return change.ModelObject as T;
             }
