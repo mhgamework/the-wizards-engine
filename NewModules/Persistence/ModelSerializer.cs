@@ -25,19 +25,19 @@ namespace MHGameWork.TheWizards.Persistence
 
         private const string nullString = "{NULL}";
         private readonly StringSerializer stringSerializer;
-        private TypeSerializer typeSerializer;
+        private readonly ITypeSerializer typeSerializer;
 
         private StringBuilder builder = new StringBuilder();
 
-        public ModelSerializer(StringSerializer stringSerializer)
+        public ModelSerializer(StringSerializer stringSerializer,ITypeSerializer typeSerializer)
         {
             this.stringSerializer = stringSerializer;
+            this.typeSerializer = typeSerializer;
             myObjectDictionary = new MyObjectDictionary();
 
 
             stringSerializer.AddConditional(new ModelObjectSerializer(myObjectDictionary));
             stringSerializer.AddConditional(new ListSerializer());
-            typeSerializer = TypeSerializer.Create();
         }
 
         public void SerializeAttributes(IModelObject obj, SectionedStreamWriter strm)

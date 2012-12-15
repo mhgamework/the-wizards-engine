@@ -85,6 +85,9 @@ namespace MHGameWork.TheWizards.Engine
 
             game.InitDirectX();
 
+
+            typeSerializer = new TypeSerializer(this);
+            
             var container = new DataWrapper();
 
             physX = new PhysicsWrapper();
@@ -104,6 +107,13 @@ namespace MHGameWork.TheWizards.Engine
 
             updateActiveGameplayAssembly();
             createSimulators();
+
+            var stringSerializer = StringSerializer.Create();
+            stringSerializer.AddConditional(new FilebasedAssetSerializer());
+
+            TW.Data.ModelSerializer = new ModelSerializer(stringSerializer, typeSerializer);
+            TW.Data.TypeSerializer = typeSerializer;
+
         }
 
         private void gameLoopStep(DataWrapper container)
@@ -177,6 +187,8 @@ namespace MHGameWork.TheWizards.Engine
 
                 File.Copy(GameplayDll, tempFile, true);
                 activeGameplayAssembly = Assembly.LoadFile(tempFile);
+
+
             }
             catch (Exception ex)
             {
@@ -186,7 +198,7 @@ namespace MHGameWork.TheWizards.Engine
 
         private void reloadGameplayDll()
         {
-            var serializer = new ModelSerializer(StringSerializer.Create());
+            var serializer = new ModelSerializer(StringSerializer.Create(),typeSerializer);
 
             var mem = new MemoryStream();
             var writer = new StreamWriter(mem);
@@ -215,6 +227,7 @@ namespace MHGameWork.TheWizards.Engine
 
         private volatile bool needsReload = false;
         private Assembly activeGameplayAssembly;
+        private TypeSerializer typeSerializer;
 
         void watcher_Changed(object sender, FileSystemEventArgs e)
         {
@@ -222,5 +235,9 @@ namespace MHGameWork.TheWizards.Engine
                 needsReload = true;
         }
 
+        public Assembly GetLoadedGameplayAssembly()
+        {
+            return activeGameplayAssembly;
+        }
     }
 }

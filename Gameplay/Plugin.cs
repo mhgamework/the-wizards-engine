@@ -16,6 +16,7 @@ using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Serialization;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.Trigger;
+using MHGameWork.TheWizards.VoxelTerraining;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 
@@ -33,6 +34,17 @@ namespace MHGameWork.TheWizards
             //testLevelBuilding(engine);
 
             //testAddStupidRedHelperMesh(engine);
+            testPlay(engine);
+        }
+
+        private void testPlay(TWEngine engine)
+        {
+            engine.AddSimulator(new PersistenceInterfaceSimulator());
+            engine.AddSimulator(new TerrainEditorSimulator());
+            engine.AddSimulator(new VoxelTerrainSimulator());
+            engine.AddSimulator(new PhysXSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
+
         }
 
         private void testAddStupidRedHelperMesh(TWEngine engine)
@@ -318,7 +330,7 @@ namespace MHGameWork.TheWizards
             var cameraInfo = TW.Data.GetSingleton<CameraInfo>();
             cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
             cameraInfo.FirstPersonCameraTarget = player.Entity;
-            
+
 
             var factory = new LevelBuildingObjectFactory();
 
@@ -335,16 +347,15 @@ namespace MHGameWork.TheWizards
 
             var triggerType = new LevelBuildingTriggerObjectType();
 
-            
+
             string file = TWDir.GameData + "\\Level.txt";
             var stringSerializer = StringSerializer.Create();
             stringSerializer.AddConditional(new FilebasedAssetSerializer());
-            var modelSerializer = new Persistence.ModelSerializer(stringSerializer);
 
-            if(File.Exists(file))
-            using (var fs = File.OpenRead(file))
-                modelSerializer.Deserialize(new StreamReader(fs));
-            
+            if (File.Exists(file))
+                using (var fs = File.OpenRead(file))
+                    TW.Data.ModelSerializer.Deserialize(new StreamReader(fs));
+
 
 
 
@@ -361,7 +372,7 @@ namespace MHGameWork.TheWizards
 
             factory.AddLevelBuildingObjectType(triggerType);
 
-            foreach (var ent in TW.Data.Objects.Where(t=>t is WorldRendering.Entity).Select(t=> (WorldRendering.Entity)t))
+            foreach (var ent in TW.Data.Objects.Where(t => t is WorldRendering.Entity).Select(t => (WorldRendering.Entity)t))
             {
                 if (ent == player.Entity) continue;
                 ent.Solid = true;
@@ -382,7 +393,7 @@ namespace MHGameWork.TheWizards
 
             engine.AddSimulator(new WorldRenderingSimulator());
             //engine.AddSimulator(new PhysXDebugRendererSimulator());
-            
+
 
             //engine.AddSimulator(new AutoSaveSimulator(file, new TimeSpan(0, 0, 10), modelSerializer));
         }
@@ -390,5 +401,5 @@ namespace MHGameWork.TheWizards
 
 
 
-    
+
 }

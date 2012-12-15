@@ -33,7 +33,6 @@ namespace MHGameWork.TheWizards.Simulators
         {
             this.transporter = transporter;
             transporter.EnableReceiveMode();
-            typeSerializer = TypeSerializer.Create();
         }
 
         bool firstSimulate = true;
@@ -138,7 +137,7 @@ namespace MHGameWork.TheWizards.Simulators
             {
                 case ModelChange.Added:
 
-                    var type = typeSerializer.Deserialize(p.TypeFullName);
+                    var type = TW.Data.TypeSerializer .Deserialize(p.TypeFullName);
 
                     if (!deserializeValues(type, p, out deserialized))
                         return false;
@@ -268,7 +267,7 @@ namespace MHGameWork.TheWizards.Simulators
 
             p.Change = change;
             p.Guid = getObjectGuid(obj);
-            p.TypeFullName = typeSerializer.Serialize(obj.GetType());
+            p.TypeFullName = TW.Data.TypeSerializer.Serialize(obj.GetType());
 
             foreach (var att in ReflectionHelper.GetAllAttributes(obj.GetType()))
             {
@@ -364,7 +363,6 @@ namespace MHGameWork.TheWizards.Simulators
         private DictionaryTwoWay<IModelObject, Guid> guidMap = new DictionaryTwoWay<IModelObject, Guid>();
         private List<string> values = new List<string>();
         private List<string> keys = new List<string>();
-        private TypeSerializer typeSerializer;
 
         private void setObjectGuid(IModelObject obj, Guid guid)
         {

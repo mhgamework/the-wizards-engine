@@ -111,7 +111,6 @@
     <Compile Include="LevelBuilding\LevelBuildingTriggerObjectType.cs" />
     <Compile Include="LevelBuilding\TriggerObject.cs" />
     <Compile Include="Persistence\Datastore.cs" />
-    <Compile Include="Persistence\FilebasedAssetSerializer.cs" />
     <Compile Include="LevelBuilding\ILevelBuildingObjectType.cs" />
     <Compile Include="LevelBuilding\LevelBuildingController.cs" />
     <Compile Include="LevelBuilding\LevelBuildingEntityType.cs" />

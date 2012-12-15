@@ -41,7 +41,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
         [Test]
         public void TestSerializeModelObject()
         {
-            var s = new ModelSerializer(StringSerializer.Create());
+            var s = new ModelSerializer(StringSerializer.Create(), new LoadedTypeSerializer());
 
             object1.Object = null; // Remove unresolvable dependency
 
@@ -111,7 +111,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
 
 
 
-            var s = new ModelSerializer(StringSerializer.Create());
+            var s = new ModelSerializer(StringSerializer.Create(),new LoadedTypeSerializer());
 
             var strm = new MemoryStream();
 
@@ -129,7 +129,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
             string serialized = getStringFromStream(strm);
 
             SimpleModelObject.CurrentModelContainer = deserialized;
-            s = new ModelSerializer(StringSerializer.Create());
+            s = new ModelSerializer(StringSerializer.Create(), new LoadedTypeSerializer());
             s.Deserialize(new StreamReader(strm));
 
 
@@ -143,7 +143,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
         [Test]
         public void TestPersistAttributeTypeScope()
         {
-            var s = new ModelSerializer(StringSerializer.Create());
+            var s = new ModelSerializer(StringSerializer.Create(), new LoadedTypeSerializer());
 
             // Add a new entity to the original model, it should not be serialized!
             new WorldRendering.Entity();
@@ -200,7 +200,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
 
             var strm = new MemoryStream();
             var writer = new StreamWriter(strm);
-            var serializer = new ModelSerializer(StringSerializer.Create());
+            var serializer = new ModelSerializer(StringSerializer.Create(), new LoadedTypeSerializer());
 
             serializer.QueueForSerialization(array2);
 
@@ -226,7 +226,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
 
             var strm = new MemoryStream();
             var writer = new StreamWriter(strm);
-            var serializer = new ModelSerializer(StringSerializer.Create());
+            var serializer = new ModelSerializer(StringSerializer.Create(), new LoadedTypeSerializer());
 
             serializer.QueueForSerialization(obj);
 

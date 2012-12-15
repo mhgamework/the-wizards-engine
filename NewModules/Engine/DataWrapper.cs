@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Persistence;
+using MHGameWork.TheWizards.Serialization;
 
 namespace MHGameWork.TheWizards.Engine
 {
@@ -14,9 +16,28 @@ namespace MHGameWork.TheWizards.Engine
     {
         private AddonAttacher attacher = new AddonAttacher();
 
-        public void EnsureAttachment<T, U>(Func<T,U> factory) where T : EngineModelObject where U : class, IModelObjectAddon<T>
+
+
+        public DataWrapper()
+        {
+        }
+
+
+        public void EnsureAttachment<T, U>(Func<T, U> factory)
+            where T : EngineModelObject
+            where U : class, IModelObjectAddon<T>
         {
             attacher.EnsureAttachment(factory);
         }
+
+        /// <summary>
+        /// Type serialization for gameplay code objects (gameplay.dll)
+        /// </summary>
+        /// <returns></returns>
+        public ITypeSerializer TypeSerializer { get; set; }
+        public ModelSerializer ModelSerializer { get; set; }
+
+
+
     }
 }

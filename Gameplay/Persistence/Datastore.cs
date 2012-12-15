@@ -15,17 +15,11 @@ namespace MHGameWork.TheWizards.Persistence
     [ModelObjectChanged]
     public class Datastore : EngineModelObject
     {
-        private ModelSerializer modelSerializer;
         public List<IModelObject> Objects { get; set; }
 
         public Datastore()
         {
             Objects = new List<IModelObject>();
-
-
-            var stringSerializer = StringSerializer.Create();
-            stringSerializer.AddConditional(new FilebasedAssetSerializer());
-            modelSerializer = new ModelSerializer(stringSerializer);
         }
 
         /// <summary>
@@ -46,7 +40,7 @@ namespace MHGameWork.TheWizards.Persistence
             List<IModelObject> ret;
             using (var fs = file.OpenRead())
             using (var wr = new StreamReader(fs))
-                ret = modelSerializer.Deserialize(wr);
+                ret = TW.Data.ModelSerializer .Deserialize(wr);
 
             var copyStore = ((Datastore) ret[0]);
             Objects = copyStore.Objects;
@@ -55,10 +49,10 @@ namespace MHGameWork.TheWizards.Persistence
 
         public void SaveToFile(FileInfo file)
         {
-            modelSerializer.QueueForSerialization(this);
+            TW.Data.ModelSerializer.QueueForSerialization(this);
             using (var fs = file.OpenWrite())
             using (var wr = new StreamWriter(fs))
-                modelSerializer.Serialize(wr);
+                TW.Data.ModelSerializer.Serialize(wr);
 
         }
 

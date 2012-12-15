@@ -6,6 +6,7 @@ namespace MHGameWork.TheWizards.Engine
     /// <summary>
     /// This class allows implementing some sort of multiple inheritance for ModelObjects
     /// It Provides a help function to automatically attach a 'subtype'=addon object to new ModelObjects, and takes care of disposal
+    /// TODO: simplify generics?
     /// </summary>
     public class AddonAttacher
     {
