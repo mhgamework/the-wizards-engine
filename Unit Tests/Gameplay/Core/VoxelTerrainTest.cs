@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Persistence;
@@ -192,17 +193,18 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
             var terr = createBlob();
             terr.WorldPosition = new Vector3(30, 0, 0);
 
-            terr = createBlob();
-
-            terr.NodeSize = 5;
-            terr.WorldPosition = new Vector3(0, 0, 100);
+            var file = new FileInfo( TWDir.Test + "\\VoxelTerrainTest_Persistance.txt");
+            if (file.Exists) file.Delete();
 
             TW.Data.GetSingleton<Datastore>().Persist(terr);
+            TW.Data.GetSingleton<Datastore>().SaveToFile(file);
+            TW.Data.GetSingleton<Datastore>().LoadFromFile(file);
 
             engine.AddSimulator(new PersistenceInterfaceSimulator());
+            engine.AddSimulator(new TerrainEditorSimulator());
             engine.AddSimulator(new VoxelTerrainSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
-            
+
             engine.Run();
         }
 

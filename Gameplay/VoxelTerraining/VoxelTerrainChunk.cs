@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using DirectX11;
@@ -123,12 +124,64 @@ namespace MHGameWork.TheWizards.VoxelTerraining
 
             public string Serialize(object obj, Type type, StringSerializer stringSerializer)
             {
-                return "VOXELSSS!";
+                var builder = new StringBuilder();
+
+                var grid = (Voxel[, ,])obj;
+                for (int x = 0; x <= grid.GetUpperBound(0); x++)
+                {
+                    builder.AppendLine("Slice");
+                    for (int y = 0; y <= grid.GetUpperBound(1); y++)
+                    {
+                        for (int z = 0; z <= grid.GetUpperBound(2); z++)
+                        {
+                            builder.Append(stringSerializer.Serialize(grid[x, y, z].Filled ? 1 : 0, typeof(int)));
+                        }
+                        builder.AppendLine();
+                    }
+                }
+
+
+
+                return builder.ToString();
             }
 
             public object Deserialize(string value, Type type, StringSerializer stringSerializer)
             {
-                return new Voxel[1,1,1];
+                var reader = new StringReader(value);
+                int x = -1;
+                int y = 0;
+                List<List<String>> slices = new List<List<string>>();
+
+                List<string> currentSlice = null;
+                while (reader.Peek() != -1)
+                {
+                    var line = reader.ReadLine();
+                    if (line == "Slice")
+                    {
+                        x++;
+                        currentSlice = new List<string>();
+                        slices.Add(currentSlice);
+                        continue;
+                    }
+
+                    currentSlice.Add(line);
+                }
+
+                var grid = new Voxel[slices.Count, slices[0].Count, slices[0][0].Length];
+                for (x = 0; x <= grid.GetUpperBound(0); x++)
+                    for (y = 0; y <= grid.GetUpperBound(1); y++)
+                    {
+                        var line = slices[x][y];
+                        for (int z = 0; z <= grid.GetUpperBound(2); z++)
+                        {
+
+                            var filled = (int)stringSerializer.Deserialize(line.Substring(z, 1), typeof(int)) == 1;
+                            grid[x, y, z] = new Voxel { Filled = filled };
+
+                        }
+                    }
+                return grid;
+
             }
         }
     }

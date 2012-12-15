@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DirectX11;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
@@ -14,10 +15,21 @@ namespace MHGameWork.TheWizards.VoxelTerraining
     {
         public void Simulate()
         {
-            foreach (var terrain in TW.Data.GetChangedObjects<VoxelTerrainChunk>())
+            foreach (var change in TW.Data.GetChangesOfType<VoxelTerrainChunk>())
             {
+                var terrain = (VoxelTerrainChunk)change.ModelObject;
+
+                if (change.Change == ModelChange.Removed)
+                {
+                    if (terrain.get<RenderData>() != null)
+                        terrain.get<RenderData>().Dispose();
+                    continue;
+                }
                 if (terrain.get<RenderData>() == null)
                     terrain.set(new RenderData(terrain));
+                
+
+
 
                 terrain.get<RenderData>().Update();
 
@@ -206,6 +218,12 @@ namespace MHGameWork.TheWizards.VoxelTerraining
                     TerrainChunk.GetVoxelInternal(b).Visible = false;
 
                 visibleBlocks.Clear();
+            }
+
+            public void Dispose()
+            {
+                if (_ent != null)
+                    TW.Data.RemoveObject(_ent);
             }
         }
     }
