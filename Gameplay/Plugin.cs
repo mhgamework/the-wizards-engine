@@ -43,7 +43,7 @@ namespace MHGameWork.TheWizards
 
         private void testPlay(TWEngine engine)
         {
-            engine.AddSimulator(new PersistenceInterfaceSimulator());
+            engine.AddSimulator(new EngineUISimulator());
             engine.AddSimulator(new TerrainEditorSimulator());
             engine.AddSimulator(new VoxelTerrainSimulator());
             engine.AddSimulator(new PhysXSimulator());

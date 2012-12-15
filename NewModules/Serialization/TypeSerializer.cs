@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using MHGameWork.TheWizards.Engine;
 
@@ -56,7 +57,13 @@ namespace MHGameWork.TheWizards.Serialization
             //if (cache.TryGetValue(value, out ret))
             //    return ret;
 
-            ret = engine.GetLoadedGameplayAssembly().GetTypes().First(o => o.FullName == value);
+            ret = engine.GetLoadedGameplayAssembly().GetTypes().FirstOrDefault(o => o.FullName == value);
+            if (ret == null)
+            {
+                Console.WriteLine("Type '{0}' not found in gameplay assembly, trying to resolve by name");
+                var name = value.Substring(value.LastIndexOf('.')+1);
+                ret = engine.GetLoadedGameplayAssembly().GetTypes().FirstOrDefault(o => o.Name == name); // Try load anything with this name
+            }
 
             //if (ret != null)
             //    cache.Add(value, ret);

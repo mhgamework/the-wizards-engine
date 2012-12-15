@@ -189,7 +189,6 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
         public void TestPersistence()
         {
             var engine = new TWEngine();
-            engine.DontLoadPlugin = true;
             engine.Initialize();
 
             var terr = createBlob();
@@ -202,7 +201,6 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
             TW.Data.GetSingleton<Datastore>().SaveToFile(file);
             TW.Data.GetSingleton<Datastore>().LoadFromFile(file);
 
-            engine.AddSimulator(new PersistenceInterfaceSimulator());
             engine.AddSimulator(new TerrainEditorSimulator());
             engine.AddSimulator(new VoxelTerrainSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());

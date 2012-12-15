@@ -122,14 +122,11 @@
     <Compile Include="LevelBuilding\LevelBuildingData.cs" />
     <Compile Include="LevelBuilding\LevelBuildingObjectFactory.cs" />
     <Compile Include="LevelBuilding\ScalableGrid.cs" />
-    <Compile Include="Engine\Persistence\PersistenceInterfaceSimulator.cs" />
+    <Compile Include="Engine\Persistence\PersistenceUI.cs" />
     <Compile Include="Engine\PhysX\BarrelShooterSimulator.cs" />
     <Compile Include="Engine\PhysX\PhysXData.cs" />
-    <Compile Include="Persistence\PersistenceInterfaceSimulator.cs" />
     <Compile Include="_Features\TextMenu.cs" />
     <Compile Include="_Features\TextMenuItem.cs" />
-    <Compile Include="PhysX\BarrelShooterSimulator.cs" />
-    <Compile Include="PhysX\PhysXData.cs" />
     <Compile Include="Pickup\Inventory.cs" />
     <Compile Include="Pickup\ItemEntity.cs" />
     <Compile Include="Pickup\ItemEntityFactory.cs" />

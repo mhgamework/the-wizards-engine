@@ -2,28 +2,24 @@
 using System.Collections.Generic;
 using System.IO;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Persistence;
 using SlimDX;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.Engine.Persistence
 {
     /// <summary>
-    /// Responsible for simulating the
+    /// Part of the EngineUI
     /// </summary>
-    public class PersistenceInterfaceSimulator : ISimulator
+    public class PersistenceUI
     {
-        private Textarea area;
         private List<SaveEntry> saves;
         private TextMenu<Action> menu;
 
         private string saveDirectory;
 
-        public PersistenceInterfaceSimulator()
+        public PersistenceUI()
         {
-            area = new Textarea();
-            area.Position = new Vector2(0, 0);
-            area.Size = new Vector2(200, 600);
-
             menu = new TextMenu<Action>();
 
             saves = new List<SaveEntry>();
@@ -35,23 +31,6 @@ namespace MHGameWork.TheWizards.Engine.Persistence
             updateSavesList();
 
         }
-        public void Simulate()
-        {
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.DownArrow))
-                menu.MoveDown();
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.UpArrow))
-                menu.MoveUp();
-
-
-
-
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.Return))
-                if (menu.SelectedItem != null) menu.SelectedItem();
-
-            area.Text = menu.generateText();
-
-        }
-
 
         public void CreateNewSave()
         {
@@ -74,6 +53,11 @@ namespace MHGameWork.TheWizards.Engine.Persistence
             menu.Items.Add(new TextMenuItem<Action> { Label = "[New Save]", Data = () => CreateNewSave() });
         }
 
+        public TextMenu<Action> CreateMenu()
+        {
+            return menu;
+        }
+
         private class SaveEntry
         {
             public string Name;
@@ -87,5 +71,5 @@ namespace MHGameWork.TheWizards.Engine.Persistence
 
 
         }
-            }
-            }
+    }
+}

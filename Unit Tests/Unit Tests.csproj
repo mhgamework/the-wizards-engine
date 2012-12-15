@@ -158,7 +158,7 @@
     <Compile Include="Gameplay\AssetBrowserTest.cs" />
     <Compile Include="Gameplay\Core\AudioTest.cs" />
     <Compile Include="Gameplay\Core\DebugTest.cs" />
-    <Compile Include="Gameplay\Core\Persistence\PersistenceInterfaceTest.cs" />
+    <Compile Include="Gameplay\Core\EngineUITest.cs" />
     <Compile Include="Features\Various\TestVSIntegration.cs" />
     <Compile Include="Gameplay\NavigationTest.cs" />
     <Compile Include="Gameplay\Core\PhysXTest.cs" />

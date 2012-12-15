@@ -59,5 +59,11 @@ namespace MHGameWork.TheWizards.Persistence
             return ret;
         }
 
+        public TextMenuItem<T> AddItem(string label ,T data)
+        {
+            var ret = new TextMenuItem<T> {Label = label, Data = data};
+            Items.Add(ret);
+            return ret;
+        }
     }
 }
