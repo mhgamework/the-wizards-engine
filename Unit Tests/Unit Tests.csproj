@@ -184,6 +184,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Features\Rendering\RenderingTest.cs" />
     <Compile Include="Features\Rendering\TextRenderingTest.cs" />
+    <Compile Include="Gameplay\RTS\TestGoblinSpawner.cs" />
+    <Compile Include="Features\Various\Scene\SceneTest.cs" />
+    <Compile Include="Features\Core\Scripting\ScriptingTest.cs" />
+    <Compile Include="Features\Core\Scripting\SimpleScriptDatabinding.cs" />
+    <Compile Include="Features\Core\Scripting\SimpleStateScript.cs" />
+    <Compile Include="Features\Core\Scripting\TestScriptImplementation.cs" />
+    <Compile Include="Features\Core\Scripting\TestScriptWrapper.cs" />
     <Compile Include="Features\Various\Server\LauncherServerTest.cs" />
     <Compile Include="Features\Various\Showcase.cs" />
     <Compile Include="Features\Rendering\Terrain\SimpleTerrain.cs" />
