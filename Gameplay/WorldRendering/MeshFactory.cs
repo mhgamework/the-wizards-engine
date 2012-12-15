@@ -31,25 +31,5 @@ namespace MHGameWork.TheWizards.WorldRendering
             return TW.Assets.LoadMesh(relativeCorePath);
         }
 
-        /// <summary>
-        /// Returns the path from which this mesh was loaded if it was loading using this meshfactory
-        /// </summary>
-        /// <param name="mesh"></param>
-        /// <returns></returns>
-        public static string GetLoadedPath(IMesh mesh)
-        {
-            return TW.Assets.GetLoadedPath(mesh);
-        }
-
-        /// <summary>
-        /// Returns a cached BoundingBox for given mesh.
-        /// </summary>
-        /// <param name="mesh"></param>
-        /// <returns></returns>
-        public static BoundingBox GetBoundingBox(IMesh mesh)
-        {
-            return TW.Assets.GetBoundingBox(mesh);
-        }
-
     }
 }

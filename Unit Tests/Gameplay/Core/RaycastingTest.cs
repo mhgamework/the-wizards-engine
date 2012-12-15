@@ -17,7 +17,9 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
         [Test]
         public void TestRaycastEntity()
         {
-            var game = new LocalGame();
+            var game = new TWEngine();
+            game.DontLoadPlugin = true;
+            game.Initialize();
 
             var world = TW.Data.GetSingleton<WorldRendering.World>();
 

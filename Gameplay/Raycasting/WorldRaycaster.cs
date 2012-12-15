@@ -52,7 +52,7 @@ namespace MHGameWork.TheWizards.Raycasting
 
 
             //TODO: do course boundingbox check
-            var bb = MeshFactory.GetBoundingBox(ent.Mesh);
+            var bb = TW.Assets.GetBoundingBox(ent.Mesh);
             if (!transformed.xna().Intersects(bb.xna()).HasValue)
             {
                 newResult.Set(null, ent);
