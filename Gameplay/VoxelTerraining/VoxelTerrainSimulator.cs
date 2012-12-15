@@ -11,6 +11,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.VoxelTerraining
 {
+    /// <summary>
+    /// Renders all VoxelTerrainChunks
+    /// </summary>
     public class VoxelTerrainSimulator : ISimulator
     {
         public void Simulate()

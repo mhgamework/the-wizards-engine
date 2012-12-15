@@ -2,10 +2,19 @@
 This module depends on the NewModules project which is an API of features that are present in The Wizards. The difference is that the NewModules layer provides features, 
 whereas the Engines purpose is to present these features in an easy to use way.
 
-
 This project contains all classes that use the TW-scoped information for doing their work.
 
 The TW class provides access to several key elements for the gameplay layer. The elements set in this class define the current 'scope' in which all code in the gameplaymodule is running.
 Changing the scope will change the behaviour of the gameplay classes.
 
-TODO: or a 'scope' object should be declared, or all data should go to the ModelContainer, so that the current scope is entirely defined by which ModelContainer is used.
+
+The core design splits Data and Logic apart. Data is stored in EngineModelObject's, logic in ISimulator's. But can access the global TW context.
+An EngineModelObject must have all public properties (no fields or other data), setting or getting data NEVER executes any code directly!!! (make data independent this way)
+
+A simulator looks at changes form the data (stored in TW.Data) and corrects errors in the Data. It should always only do this for Changed objects! 
+A simulator should contain mostly (only?) invariants. (eg => If an object is at position x, then its render mesh should also be at position x)
+
+TODO: add generic extension mechanism for the model objects 
+--- add the ability to add IDisposable's ?
+--- Do more advanced garbage collection => each 'extension object' and modelobject has an owner, which when destroyed destroys all child objects.
+      The datastore is then an object that assumes ownership of the objects added to it.
