@@ -172,6 +172,7 @@ namespace MHGameWork.TheWizards.Physics
         public void EnablePhysics()
         {
             if (kinematic) return; // This object is forced to kinematic
+            if (actor == null) return; //TODO: added without really knowing what im doing
 
             if (!sleeping) return;
             actor.BodyFlags.Kinematic = false;
@@ -180,7 +181,7 @@ namespace MHGameWork.TheWizards.Physics
 
         public void DisablePhysics()
         {
-
+            if (actor == null) return; //TODO: added without really knowing what im doing
             if (!sleeping) return;
             actor.BodyFlags.Kinematic = true;
         }

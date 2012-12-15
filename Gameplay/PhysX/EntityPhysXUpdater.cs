@@ -30,7 +30,7 @@ namespace MHGameWork.TheWizards.PhysX
 
         public void Update()
         {
-            
+
 
             foreach (var change in TW.Data.GetChangesOfType<WorldRendering.Entity>())
             {
@@ -60,7 +60,7 @@ namespace MHGameWork.TheWizards.PhysX
 
                 if (data == null)
                 {
-                    data = new EntityPhysX(ent,factory);
+                    data = new EntityPhysX(ent, factory);
                     ent.set(data);
                 }
                 data.OnEntityChanged();
@@ -187,13 +187,10 @@ namespace MHGameWork.TheWizards.PhysX
             /// </summary>
             public void FetchUpdatesFromPhysX()
             {
-                if (Mesh != null)
-                {
-                    if (!Static)
-                    {
-                        Entity.WorldMatrix = dynamicPhysicsElement.Actor.GlobalPose.dx();
-                    }
-                }
+                if (Mesh == null) return;
+                if (Static) return;
+                if (dynamicPhysicsElement != null)
+                    Entity.WorldMatrix = dynamicPhysicsElement.Actor.GlobalPose.dx();
             }
 
             /// <summary>

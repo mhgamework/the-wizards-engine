@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using MHGameWork.TheWizards.Data;
@@ -21,7 +22,7 @@ namespace MHGameWork.TheWizards.Engine
     ///                                  The new dll is loaded, and the old types are mapped onto the new types, new objects are created and the links are re-established
     /// 
     /// </summary>
-    
+
     public class TWEngine
     {
         public TWEngine()
@@ -87,7 +88,7 @@ namespace MHGameWork.TheWizards.Engine
 
 
             typeSerializer = new TypeSerializer(this);
-            
+
             var container = new DataWrapper();
 
             physX = new PhysicsWrapper();
@@ -120,16 +121,7 @@ namespace MHGameWork.TheWizards.Engine
         {
             foreach (var sim in simulators)
             {
-                //try
-                //{
-                    sim.Simulate();
-                /*}
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error in simulator: {0}", sim.GetType().Name);
-                    Console.WriteLine(ex.ToString());
-                    
-                }*/
+                simulateSave(sim);
             }
 
             if (game.Keyboard.IsKeyReleased(Key.R))
@@ -138,6 +130,20 @@ namespace MHGameWork.TheWizards.Engine
 
             container.ClearDirty();
             updatePhysics();
+        }
+
+        private void simulateSave(ISimulator sim)
+        {
+            try
+            {
+                sim.Simulate();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in simulator: {0}", sim.GetType().Name);
+                Console.WriteLine(ex.ToString());
+
+            }
         }
 
         private void checkReload()
@@ -198,7 +204,7 @@ namespace MHGameWork.TheWizards.Engine
 
         private void reloadGameplayDll()
         {
-            var serializer = new ModelSerializer(StringSerializer.Create(),typeSerializer);
+            var serializer = new ModelSerializer(StringSerializer.Create(), typeSerializer);
 
             var mem = new MemoryStream();
             var writer = new StreamWriter(mem);
