@@ -23,5 +23,10 @@ namespace MHGameWork.TheWizards.Reflection
         {
             fi.SetValue(obj, value);
         }
+
+        public object[] GetCustomAttributes()
+        {
+            return fi.GetCustomAttributes(false);
+        }
     }
 }

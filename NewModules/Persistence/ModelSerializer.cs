@@ -50,63 +50,122 @@ namespace MHGameWork.TheWizards.Persistence
             foreach (var att in allAttributes)
             {
                 var value = att.GetData(obj);
-
                 if (value == null) continue;
 
-                strm.WriteLine(att.Name);
-
-                var serialized = stringSerializer.Serialize(value);
-                if (serialized.Contains('\n'))
-                {
-                    var sublength = serialized.Length;
-                    if (serialized[serialized.Length - 1] == '\n')
-                        sublength--;
-                    else
-                        throw new InvalidOperationException(
-                            "Provided serialized data cannot be used since it doesnt end with \n");
-                    if (serialized[serialized.Length - 2] == '\r')
-                        sublength--;
-
-
-
-                    // Write section
-                    strm.EnterSection("AttributeData");
-                    strm.WriteLine(serialized.Substring(0, sublength));
-                    strm.ExitSection();
-                }
-                else
-                {
-                    strm.WriteLine(serialized);
-                }
-
-
+                writeAttribute(strm, att, value);
             }
             strm.ExitSection();
         }
 
+        /// <summary>
+        /// Writes an entire attribute
+        /// </summary>
+        private void writeAttribute(SectionedStreamWriter strm, IAttribute att, object value)
+        {
+            strm.WriteLine(att.Name);
+            var serialized = serializeAttribute(att,value);
+            writeAttributeData(strm, serialized);
+        }
+
+        /// <summary>
+        /// Serializes an attributes value
+        /// </summary>
+        private string serializeAttribute(IAttribute att, object value)
+        {
+            if (att.GetCustomAttributes().Count(o => o is CustomStringSerializerAttribute) > 0)
+            {
+                // found custom atttribute!
+                var custom =  (CustomStringSerializerAttribute) att.GetCustomAttributes().First(o => o is CustomStringSerializerAttribute);
+                var serializer =(IConditionalSerializer) Activator.CreateInstance(custom.Type);
+                return serializer.Serialize(value, att.Type, stringSerializer);
+            }
+            return stringSerializer.Serialize(value);
+        }
+
+        /// <summary>
+        /// Writes a string serialized attribute value to the stream
+        /// </summary>
+        /// <param name="strm"></param>
+        /// <param name="serialized"></param>
+        private static void writeAttributeData(SectionedStreamWriter strm, string serialized)
+        {
+            if (serialized.Contains('\n'))
+            {
+                var sublength = serialized.Length;
+                if (serialized[serialized.Length - 1] == '\n')
+                    sublength--;
+                else
+                    throw new InvalidOperationException(
+                        "Provided serialized data cannot be used since it doesnt end with \n");
+                if (serialized[serialized.Length - 2] == '\r')
+                    sublength--;
+
+
+                // Write section
+                strm.EnterSection("AttributeData");
+                strm.WriteLine(serialized.Substring(0, sublength));
+                strm.ExitSection();
+            }
+            else
+            {
+                strm.WriteLine(serialized);
+            }
+        }
+
+        /// <summary>
+        /// Deserializes all attributes for given object from the stream
+        /// </summary>
         public void DeserializeAttributes(IModelObject obj, SectionedStreamReader strm)
         {
             while (strm.CurrentSection == "EntityAttributes")
             {
-                var name = strm.ReadLine();
+                readAttribute(obj, strm);
+            }
+        }
 
-                var att = ReflectionHelper.GetAttributeByName(obj.GetType(), name);
-                builder.Clear();
+        /// <summary>
+        /// Reads and applies a single attribute
+        /// </summary>
+        private void readAttribute(IModelObject obj, SectionedStreamReader strm)
+        {
+            var name = strm.ReadLine();
+            var att = ReflectionHelper.GetAttributeByName(obj.GetType(), name);
+            var serialized = readAttributeValue(strm);
 
-                while (strm.CurrentSection == "AttributeData")
-                    builder.AppendLine(strm.ReadLine());
+            var deserialized = deserializeAttributeValue(serialized, att);
+            att.SetData(obj, deserialized);
+        }
 
-                string serialized;
-                if (builder.Length == 0)
-                    serialized = strm.ReadLine();
-                else
-                    serialized = builder.ToString();
+        /// <summary>
+        /// Reads an attributes value
+        /// </summary>
+        private string readAttributeValue(SectionedStreamReader strm)
+        {
+            builder.Clear();
 
-                var deserialized = stringSerializer.Deserialize(serialized, att.Type);
-                att.SetData(obj, deserialized);
+            while (strm.CurrentSection == "AttributeData")
+                builder.AppendLine(strm.ReadLine());
 
+            string serialized;
+            if (builder.Length == 0)
+                serialized = strm.ReadLine();
+            else
+                serialized = builder.ToString();
+            return serialized;
+        }
+
+        private object deserializeAttributeValue(string serialized, IAttribute att)
+        {
+            if (att.GetCustomAttributes().Count(o => o is CustomStringSerializerAttribute) > 0)
+            {
+                // found custom atttribute!
+                var custom = (CustomStringSerializerAttribute)att.GetCustomAttributes().First(o => o is CustomStringSerializerAttribute);
+                var serializer = (IConditionalSerializer)Activator.CreateInstance(custom.Type);
+                return serializer.Deserialize(serialized, att.Type, stringSerializer);
             }
 
+            var deserialized = stringSerializer.Deserialize(serialized, att.Type);
+            return deserialized;
         }
 
         /// <summary>

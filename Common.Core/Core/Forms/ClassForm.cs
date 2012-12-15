@@ -211,6 +211,11 @@ namespace MHGameWork.TheWizards.Forms
             {
                 throw new InvalidOperationException();
             }
+
+            public object[] GetCustomAttributes()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 

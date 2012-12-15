@@ -70,36 +70,36 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
 
         }
 
-        [Test]
-        public void TestSerializeModel()
-        {
-            var s = new ModelSerializer(StringSerializer.Create());
+        //[Test]
+        //public void TestSerializeModel()
+        //{
+        //    var s = new ModelSerializer(StringSerializer.Create());
 
-            var strm = new MemoryStream();
+        //    var strm = new MemoryStream();
 
-            var writer = new StreamWriter(strm);
-            s.Serialize(model, writer);
-
-
-            var deserialized = new Data.ModelContainer();
-
-            writer.Flush();
-
-            strm.Position = 0;
-
-            // For testing
-            string serialized = getStringFromStream(strm);
-
-            SimpleModelObject.CurrentModelContainer = deserialized;
-            s = new ModelSerializer(StringSerializer.Create());
-            s.Deserialize(new StreamReader(strm));
+        //    var writer = new StreamWriter(strm);
+        //    s.Serialize(model, writer);
 
 
-            Assert.AreEqual(model.Objects.Count, deserialized.Objects.Count);
-            Assert.AreEqual(model.Objects[0].ToString(), deserialized.Objects[0].ToString());
-            Assert.AreEqual(model.Objects[1].ToString(), deserialized.Objects[1].ToString());
+        //    var deserialized = new Data.ModelContainer();
 
-        }
+        //    writer.Flush();
+
+        //    strm.Position = 0;
+
+        //    // For testing
+        //    string serialized = getStringFromStream(strm);
+
+        //    SimpleModelObject.CurrentModelContainer = deserialized;
+        //    s = new ModelSerializer(StringSerializer.Create());
+        //    s.Deserialize(new StreamReader(strm));
+
+
+        //    Assert.AreEqual(model.Objects.Count, deserialized.Objects.Count);
+        //    Assert.AreEqual(model.Objects[0].ToString(), deserialized.Objects[0].ToString());
+        //    Assert.AreEqual(model.Objects[1].ToString(), deserialized.Objects[1].ToString());
+
+        //}
 
         [Test]
         public void TestSerializeArray()
@@ -238,7 +238,9 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
             var str = getStringFromStream(strm);
 
 
+            var objects = serializer.Deserialize(new StreamReader(strm));
 
+            Assert.AreEqual(obj, objects[0]);
         }
 
         private string getStringFromStream(MemoryStream strm)
@@ -254,6 +256,24 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core.Persistence
         {
             [CustomStringSerializer(typeof(MyCustomSerializer))]
             public string Text { get; set; }
+
+            protected bool Equals(TestCustomObject other)
+            {
+                return string.Equals(Text, other.Text);
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj)) return false;
+                if (ReferenceEquals(this, obj)) return true;
+                if (obj.GetType() != this.GetType()) return false;
+                return Equals((TestCustomObject) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                return (Text != null ? Text.GetHashCode() : 0);
+            }
 
             public class MyCustomSerializer : IConditionalSerializer
             {

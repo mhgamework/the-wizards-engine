@@ -3,6 +3,12 @@ using MHGameWork.TheWizards.Data;
 
 namespace MHGameWork.TheWizards.Persistence
 {
+    /// <summary>
+    /// Implements a helper class ussed in the ModelSerializer
+    /// It maps IModelObjects to IDs
+    /// 
+    /// TODO: maybe make this more generic?
+    /// </summary>
     public class MyObjectDictionary : ModelObjectSerializer.IIDResolver
     {
         private DictionaryTwoWay<int, IModelObject> objectDictionary = new DictionaryTwoWay<int, IModelObject>();

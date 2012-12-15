@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace MHGameWork.TheWizards.Reflection
@@ -25,5 +26,9 @@ namespace MHGameWork.TheWizards.Reflection
             fi.GetSetMethod().Invoke(obj, new[] { value });
         }
 
+        public object[] GetCustomAttributes()
+        {
+            return fi.GetCustomAttributes(false);
+        }
     }
 }

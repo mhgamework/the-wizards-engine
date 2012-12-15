@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace MHGameWork.TheWizards.Reflection
 {
@@ -8,5 +10,7 @@ namespace MHGameWork.TheWizards.Reflection
         Type Type { get; }
         object GetData(object obj);
         void SetData(object obj, object value);
+
+        object[] GetCustomAttributes();
     }
 }
