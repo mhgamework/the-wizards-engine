@@ -197,7 +197,6 @@
     <Compile Include="WorldRendering\WireframeBoxSimulator.cs" />
     <Compile Include="WorldRendering\World.cs" />
     <Compile Include="WorldRendering\MeshFactory.cs" />
-    <Compile Include="WorldRendering\RenderingModel.cs" />
     <Compile Include="WorldRendering\Textarea.cs" />
     <Compile Include="WorldRendering\TextareaUpdater.cs" />
     <Compile Include="WorldRendering\WireframeBox.cs" />

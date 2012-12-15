@@ -111,6 +111,9 @@
     <Reference Include="Dotway.WPF.Controls">
       <HintPath>..\_Libraries\Dotway.WPFLibraries\Dotway.WPF\Dotway.WPF.Controls.dll</HintPath>
     </Reference>
+    <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_Libraries\SharpZipLib_0860_Bin\net-20\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -465,6 +468,7 @@
     <Compile Include="Versioning\VersioningSystem.cs" />
     <Compile Include="Voxelization\VoxelGrid.cs" />
     <Compile Include="Voxelization\Voxelizer.cs" />
+    <Compile Include="VSIntegration\VSDebugAttacher.cs" />
     <Compile Include="WorldSimulation\Actions\AtHome.cs" />
     <Compile Include="WorldSimulation\Actions\Breed.cs" />
     <Compile Include="WorldSimulation\Actions\BuildingBluePrints.cs" />
@@ -771,6 +775,7 @@
     <Content Include="TreeGenerator\todo.txt" />
     <Content Include="TreeGenerator\TODO\help\TreeEngineDesign.txt" />
     <Content Include="Voxelization\_doc.txt" />
+    <Content Include="VSIntegration\_doc.txt" />
     <Content Include="_doc.txt" />
   </ItemGroup>
   <ItemGroup>
