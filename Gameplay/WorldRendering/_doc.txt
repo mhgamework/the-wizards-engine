@@ -1,7 +1,0 @@
-﻿This should probably be restructured or renamed to Rendering or smth$
-
-This namespace enables rendering. Currently supporting Entity, WireframeBox and Textarea.
-
-Use the MeshFactory for loading meshes into the engine
-
-Camera to be cleaned up?
