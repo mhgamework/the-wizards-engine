@@ -67,7 +67,7 @@ namespace MHGameWork.TheWizards.Engine
 
         public override string ToString()
         {
-            return "ModelObject #" + DEBUG_ID;
+            return "ModelObject #" + DEBUG_ID + " " + GetType().Name;
         }
         
     }
