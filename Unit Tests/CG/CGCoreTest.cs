@@ -28,24 +28,24 @@ namespace MHGameWork.TheWizards.Tests.CG
         [Test]
         public void TestGenerateRays()
         {
-            //var game = new DX11Game();
-            //game.InitDirectX();
+            var game = new DX11Game();
+            game.InitDirectX();
 
-            //var cam = new PerspectiveCamera();
+            var cam = new PerspectiveCamera();
 
-            //var visualizer = new CameraVisualizer(game);
+            var visualizer = new CameraVisualizer(game);
 
-            //game.GameLoopEvent += delegate
-            //                          {
-            //                              game.LineManager3D.AddRectangle(cam.Position + cam.Direction * cam.ProjectionPlaneDistance,
-            //                                                              new Vector2(cam.right - cam.left,
-            //                                                                          cam.top - cam.bottom), cam.rightAxis, cam.Up, new Color4(0, 1, 0));
+            game.GameLoopEvent += delegate
+                                      {
+                                          game.LineManager3D.AddRectangle(cam.Position.dx() + cam.Direction.dx() * cam.ProjectionPlaneDistance,
+                                                                          new Vector2(cam.right - cam.left,
+                                                                                      cam.top - cam.bottom).dx(), cam.rightAxis.dx(), cam.Up.dx(), new Color4(0, 1, 0).dx());
 
-            //                              visualizer.RenderRays(cam, new Point2(8, 8));
+                                          visualizer.RenderRays(cam, new Point2(8, 8));
 
 
-            //                          };
-            //game.Run();
+                                      };
+            game.Run();
         }
 
         [Test]
@@ -213,7 +213,7 @@ namespace MHGameWork.TheWizards.Tests.CG
         public void TestTextureSampler()
         {
             var cache = new SimpleTexture2DLoader();
-            var tex = cache.Load( new MHGameWork.TheWizards.CG.OBJParser.RAMTexture{ DiskFilePath = createEntity().Mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap.GetCoreData().DiskFilePath});
+            var tex = cache.Load(new MHGameWork.TheWizards.CG.OBJParser.RAMTexture { DiskFilePath = createEntity().Mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap.GetCoreData().DiskFilePath });
             var sampler = new Texture2DSampler();
 
             var ui = new GraphicalRayTracer(new TextureSamplerImage(tex, sampler));

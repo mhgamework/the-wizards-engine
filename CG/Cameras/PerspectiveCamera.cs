@@ -5,19 +5,19 @@ namespace MHGameWork.TheWizards.CG.Cameras
     /// <summary>
     /// 
     /// </summary>
-    public class PerspectiveCamera :ICamera
+    public class PerspectiveCamera : ICamera
     {
-        private float left;
-        private float right;
-        private float bottom;
-        private float top;
+        public float left;
+        public float right;
+        public float bottom;
+        public float top;
         /// <summary>
         /// Projection plane size in worldspace
         /// </summary>
         private Vector2 screenSize;
 
 
-        private Vector3 rightAxis;
+        public Vector3 rightAxis;
         private Vector3 up;
         private Vector3 direction;
         private Vector3 position;
@@ -88,7 +88,7 @@ namespace MHGameWork.TheWizards.CG.Cameras
             Position = new Vector3(0, 0, 0);
             ProjectionPlaneDistance = 3;
 
-            ScreenSize = new Vector2(16/9f, 1);
+            ScreenSize = new Vector2(16 / 9f, 1);
 
             Up = new Vector3(0, 1, 0);
             Direction = new Vector3(0, 0, -1);
@@ -99,8 +99,8 @@ namespace MHGameWork.TheWizards.CG.Cameras
         public Ray CalculateRay(Vector2 point)
         {
             // TODO optimize division.
-            var u = (float)(left + (right - left) * (1-point.X)); //TODO: fix this stuff
-            var v = (float)(bottom + (top - bottom) * (1-point.Y)); // Invert y!!
+            var u = (float)(left + (right - left) * (1 - point.X)); //TODO: fix this stuff
+            var v = (float)(bottom + (top - bottom) * (1 - point.Y)); // Invert y!!
             var ret = new Ray { Direction = ProjectionPlaneDistance * Direction + u * rightAxis + v * Up, Position = Position };
             ret.Direction = Vector3.Normalize(ret.Direction); // TODO: Slowpoke, but for simplicity
             return ret;
@@ -108,6 +108,6 @@ namespace MHGameWork.TheWizards.CG.Cameras
 
 
 
-     
+
     }
 }

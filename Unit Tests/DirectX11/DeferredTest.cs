@@ -18,7 +18,6 @@ using SlimDX.DXGI;
 using BasicShader = MHGameWork.TheWizards.DirectX11.Graphics.BasicShader;
 using Buffer = SlimDX.Direct3D11.Buffer;
 using Device = SlimDX.Direct3D11.Device;
-using DirectionalLight = MHGameWork.TheWizards.CG.SDL.DirectionalLight;
 using Resource = SlimDX.Direct3D11.Resource;
 
 namespace MHGameWork.TheWizards.Tests.DirectX11

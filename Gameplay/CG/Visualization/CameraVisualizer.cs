@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.CG.Visualization
             for (int x = 0; x < resolution.X; x++)
                 for (int y = 0; y < resolution.Y; y++)
                 {
-                    //game.LineManager3D.AddRay(cam.CalculateRay(new Vector2((x + 0.5f) / resolution.X, (y + 0.5f) / resolution.Y)), new Color4(1, 0, 0));
+                    game.LineManager3D.AddRay(cam.CalculateRay(new Vector2((x + 0.5f) / resolution.X, (y + 0.5f) / resolution.Y)).dx(), new Color4(1, 0, 0).dx());
                 }
         }
 

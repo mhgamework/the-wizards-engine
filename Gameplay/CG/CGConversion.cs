@@ -9,10 +9,6 @@ namespace MHGameWork.TheWizards.CG
         {
             return new MHGameWork.TheWizards.CG.Math.BoundingBox(v.Minimum.cg(), v.Maximum.cg());
         }
-        public static MHGameWork.TheWizards.CG.Math.BoundingSphere cg(this SlimDX.BoundingSphere v)
-        {
-            return new MHGameWork.TheWizards.CG.Math.BoundingSphere(v.Center.cg(), v.Radius);
-        }
         public static MHGameWork.TheWizards.CG.Math.Vector2 cg(this SlimDX.Vector2 v)
         {
             return new MHGameWork.TheWizards.CG.Math.Vector2(v.X, v.Y);
@@ -64,10 +60,6 @@ namespace MHGameWork.TheWizards.CG
         public static SlimDX.BoundingBox dx(this MHGameWork.TheWizards.CG.Math.BoundingBox v)
         {
             return new SlimDX.BoundingBox(v.Minimum.dx(), v.Maximum.dx());
-        }
-        public static SlimDX.BoundingSphere dx(this MHGameWork.TheWizards.CG.Math.BoundingSphere v)
-        {
-            return new SlimDX.BoundingSphere(v.Center.dx(), v.Radius);
         }
         public static SlimDX.Vector2 dx(this MHGameWork.TheWizards.CG.Math.Vector2 v)
         {

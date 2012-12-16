@@ -14,8 +14,6 @@ using NUnit.Framework;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
-using DirectionalLight = MHGameWork.TheWizards.CG.SDL.DirectionalLight;
-using PointLight = MHGameWork.TheWizards.CG.SDL.PointLight;
 
 namespace MHGameWork.TheWizards.Tests.Building
 {
@@ -1469,7 +1467,7 @@ namespace MHGameWork.TheWizards.Tests.Building
         [Test]
         public void TestPaintFloorsDynamic()
         {
-            
+
 
             placeTool.PlaceMode = DynamicPlaceMode.FloorMode;
 
@@ -1499,7 +1497,7 @@ namespace MHGameWork.TheWizards.Tests.Building
         [Test]
         public void TestPlaceStraightWallsPointToPoint()
         {
-           
+
             //Note that exactly one coordinate from these vectors should be 0.5 +- n!! 
             wallPlacer.PlaceStraightWallsPointToPoint(new Vector3(0, 0, -0.5f), new Vector3(0, 0, 3.5f), dynTypeFactory.WallTypes[0]);
             wallPlacer.PlaceStraightWallsPointToPoint(new Vector3(2.5f, 0, 0), new Vector3(8, 0, 3.5f), dynTypeFactory.WallTypes[0]);
@@ -1531,7 +1529,7 @@ namespace MHGameWork.TheWizards.Tests.Building
         [Test]
         public void TestPlaceSkewWallsPointToPoint()
         {
-            
+
 
             //Note that exactly one coordinate from these vectors should be 0.5 +- n!! 
             wallPlacer.PlaceSkewWallsPointToPoint(new Vector3(2.5f, 0, 0), new Vector3(0, 0, 2.5f), dynTypeFactory.WallTypes[0]);
@@ -1575,7 +1573,7 @@ namespace MHGameWork.TheWizards.Tests.Building
         [Test]
         public void TestWallFloorDynamicPLAY()
         {
-            
+
 
             placeTool.PlaceMode = DynamicPlaceMode.StraightWallMode;
 
@@ -1631,7 +1629,7 @@ namespace MHGameWork.TheWizards.Tests.Building
         [Test]
         public void TestPlayerPTP()
         {
-           
+
 
             Vector3 pos1 = new Vector3(0, 0, 0.6f);
             Assert.GreaterOrEqual(0.5f, -1 * placeTool.snapToFaceMids(pos1).Z);
