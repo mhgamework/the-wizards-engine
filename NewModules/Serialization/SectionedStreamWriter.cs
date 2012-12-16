@@ -37,9 +37,12 @@ namespace MHGameWork.TheWizards.Serialization
 
         public void WriteLine(string line)
         {
-            strm.WriteLine(line);
+            strm.WriteLine(Escape(line));
         }
 
-
+        public static string Escape(string line)
+        {
+            return line.Replace("[","[[").Replace("]","]]");
+        }
     }
 }

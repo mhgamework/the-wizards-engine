@@ -139,6 +139,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\Data\SectionedStreamTest.cs" />
     <Compile Include="Features\Simulation\Animation\AnimationTest.cs" />
     <Compile Include="Features\Data\Assets\AssetsSynchronizationTest.cs" />
     <Compile Include="Features\Data\Assets\SimpleAsset.cs" />
@@ -151,7 +152,7 @@
     <Compile Include="Features\Rendering\DirectX11\SharpDXTest.cs" />
     <Compile Include="Features\Rendering\DirectX11\DirectX11Test.cs" />
     <Compile Include="Features\Rendering\DirectX11\TessellationTest.cs" />
-    <Compile Include="Features\Various\Enginetest.cs" />
+    <Compile Include="Gameplay\Enginetest.cs" />
     <Compile Include="Features\Various\FileHelperTest.cs" />
     <Compile Include="Features\Data\Forms\ClassFormTest.cs" />
     <Compile Include="Features\Various\TestRootObjectTable.cs" />

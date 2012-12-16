@@ -132,6 +132,7 @@ namespace MHGameWork.TheWizards.Persistence
             var att = ReflectionHelper.GetAttributeByName(obj.GetType(), name);
             var serialized = readAttributeValue(strm);
 
+            if (serialized == StringSerializer.Unknown) return; //TODO: print zis shit
             var deserialized = deserializeAttributeValue(serialized, att);
             att.SetData(obj, deserialized);
         }
@@ -239,7 +240,7 @@ namespace MHGameWork.TheWizards.Persistence
         private void serializeObjects(List<IModelObject> list, StreamWriter wr)
         {
             var strm = new SectionedStreamWriter(wr);
-
+            myObjectDictionary.Clear();
 
             // Write all objects
             strm.EnterSection(ObjectsSection);

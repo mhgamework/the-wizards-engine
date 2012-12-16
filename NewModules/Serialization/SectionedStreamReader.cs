@@ -11,7 +11,8 @@ namespace MHGameWork.TheWizards.Serialization
     /// Responsible for reading text files that are line based and divided into sections eg '[MySection]'
     /// WARNING: ONLY USE READLINE!!!!
     /// Should always contain a root section
-    /// TODO: write unit test?
+    /// Escapes brackets '[[' -> '['
+    /// TODO: write unit test
     /// </summary>
     public class SectionedStreamReader
     {
@@ -32,7 +33,12 @@ namespace MHGameWork.TheWizards.Serialization
         {
             var line = readLineInternal();
             scanForSections();
-            return line;
+            return Unescape(line);
+        }
+
+        private static string Unescape(string line)
+        {
+            return line.Replace("[[", "[").Replace("]]", "]");
         }
 
         private string nextLine = null;
@@ -88,16 +94,16 @@ namespace MHGameWork.TheWizards.Serialization
 
 
         private string lastSectionMatched = null;
-        private bool isStartSection(string line)
+        public bool isStartSection(string line)
         {
-            var match = Regex.Match(line, @"\[([^\]\\]*)\]");
+            var match = Regex.Match(line, @"^\[([^\]\[\\]*)\]");
             if (match.Success)
                 lastSectionMatched = match.Groups[1].Value;
             return match.Success;
         }
-        private bool isEndSection(string line)
+        public bool isEndSection(string line)
         {
-            var match = Regex.Match(line, @"\[\\([^\]]*)\]");
+            var match = Regex.Match(line, @"^\[\\([^\]\[]*)\]");
             if (match.Success)
                 lastSectionMatched = match.Groups[1].Value;
             return match.Success;

@@ -11,6 +11,8 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
     [NoSync]
     public class CameraInfo : EngineModelObject
     {
+        private ICamera activeCamera;
+
         public CameraInfo()
         {
             ActivateSpecatorCamera();
@@ -23,7 +25,11 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         /// <summary>
         /// WARNING: this might be a layer leak
         /// </summary>
-        public ICamera ActiveCamera { get; set; }
+        public ICamera ActiveCamera
+        {
+            get { return activeCamera; }
+            set { activeCamera = value; }
+        }
 
         public void ActivateSpecatorCamera()
         {

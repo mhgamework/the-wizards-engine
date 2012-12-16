@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 using MHGameWork.TheWizards.DirectX11.Graphics;
@@ -352,10 +353,11 @@ namespace MHGameWork.TheWizards.DirectX11
             Running = true;
 
             var t = new Thread(gameLoop);
+            t.SetApartmentState(ApartmentState.STA);
+            
             t.Name = "DX11Game:GameLoop";
             t.IsBackground = true;
             t.Start();
-
 
             Form.Run();
 

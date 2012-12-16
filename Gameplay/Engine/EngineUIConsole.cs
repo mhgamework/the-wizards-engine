@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -13,7 +14,26 @@ namespace MHGameWork.TheWizards.Engine
 
         public EngineUIConsole()
         {
-            createOutputWindow();
+            var ev = new AutoResetEvent(false);
+            //TODO: move this to the engine!!!!
+            if (Application.Current == null)
+            {
+                
+                var t = new Thread(delegate()
+                    {
+                        var app = new Application();
+                        app.Dispatcher.BeginInvoke(() => ev.Set());
+                        app.Run();
+                    });
+                t.IsBackground = true;
+                t.SetApartmentState(ApartmentState.STA);
+                t.Start();
+
+                ev.WaitOne();
+
+                
+            }
+            Application.Current.Dispatcher.BeginInvoke(createOutputWindow);
         }
 
         private void createOutputWindow()
@@ -22,7 +42,12 @@ namespace MHGameWork.TheWizards.Engine
             window.WindowStyle = WindowStyle.None;
 
             window.Height = 200;
-            TW.Graphics.Form.Form.Move += (o, args) => updatePositionAndSize();
+            TW.Graphics.Form.Form.Move += 
+                delegate { window.Dispatcher.BeginInvoke(updatePositionAndSize); };
+            TW.Graphics.Form.Form.GotFocus +=
+                delegate { window.Dispatcher.BeginInvoke(delegate { window.Topmost = true; }); };
+            TW.Graphics.Form.Form.LostFocus +=
+                delegate { window.Dispatcher.BeginInvoke(delegate { window.Topmost = false; }); };
 
 
             var panel = new DockPanel();
@@ -40,6 +65,8 @@ namespace MHGameWork.TheWizards.Engine
 
 
             Console.WriteLine("Console attached!");
+            //while (true)
+            //    Thread.Sleep(2000);
         }
 
         private void updatePositionAndSize()
@@ -54,6 +81,8 @@ namespace MHGameWork.TheWizards.Engine
             private readonly ListBox box;
             private readonly TextWriter originalWriter;
 
+            private string remainders;
+
             public Writer(ListBox box, TextWriter originalWriter)
             {
                 this.box = box;
@@ -63,8 +92,17 @@ namespace MHGameWork.TheWizards.Engine
             public override void Write(char[] buffer, int index, int count)
             {
                 base.Write(buffer, index, count);
-                originalWriter.Write(buffer,index,count);
-                box.Dispatcher.BeginInvoke(() => box.Items.Add(new String(buffer)));
+                originalWriter.Write(buffer, index, count);
+                var newStr = new String(buffer);
+                remainders += newStr;
+                while (remainders.Contains("\r\n"))
+                {
+                    var line = remainders.Substring(0, remainders.IndexOf("\r\n"));
+                    remainders = remainders.Substring(remainders.IndexOf("\r\n") + 2);
+
+                    box.Dispatcher.BeginInvoke(() => box.Items.Add(line));
+
+                }
 
             }
 

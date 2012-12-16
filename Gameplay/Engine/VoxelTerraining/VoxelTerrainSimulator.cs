@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Physics;
@@ -173,7 +174,7 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
                 var relativeCorePath = "Core\\checker.png";
                 relativeCorePath = "GrassGreenTexture0006.jpg";
                 //relativeCorePath = "dryvalley.jpg";
-
+                //throw new NullReferenceException();
 
                 foreach (var block in visibleBlocks)
                 {

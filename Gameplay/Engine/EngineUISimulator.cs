@@ -73,7 +73,7 @@ namespace MHGameWork.TheWizards.Engine
         private TextMenu<Action> createMainMenu()
         {
             var ret = new TextMenu<Action>();
-            ret.AddItem("Debug", delegate { new VSDebugAttacher().AttachToVisualStudio(); });
+            ret.AddItem("Debudsfg", delegate { new VSDebugAttacher().AttachToVisualStudio(); });
             ret.AddItem("Load/Save", showPersistence);
             ret.AddItem("Exit", delegate { TW.Graphics.Exit(); });
 

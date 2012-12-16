@@ -28,6 +28,12 @@ namespace MHGameWork.TheWizards.Persistence
             return getObjectByID(id);
         }
 
+        public void Clear()
+        {
+            nextObjectID = 1;
+            objectDictionary.Clear();
+        }
+
         public int getObjectID(IModelObject obj)
         {
             if (!objectDictionary.Contains(obj))

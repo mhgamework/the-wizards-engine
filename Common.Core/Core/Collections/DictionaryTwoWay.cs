@@ -49,5 +49,11 @@ namespace MHGameWork.TheWizards.Collections
             tMap[u] = t;
             uMap[t] = u;
         }
+
+        public void Clear()
+        {
+            tMap.Clear();
+            uMap.Clear();
+        }
     }
 }

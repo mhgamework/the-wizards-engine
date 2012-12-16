@@ -38,6 +38,7 @@ namespace MHGameWork.TheWizards.Engine
         public string GameplayDll { get; set; }
 
         public bool DontLoadPlugin { get; set; }
+        public bool HotloadingEnabled { get; set; }
 
 
         private void setTWGlobals(DataWrapper container)
@@ -94,6 +95,7 @@ namespace MHGameWork.TheWizards.Engine
             physX = new PhysicsWrapper();
             physX.Initialize();
 
+            needsReload = true;
             game.GameLoopEvent += delegate
                                   {
                                       TW.Debug.MainProfilingPoint.Begin();
@@ -106,8 +108,8 @@ namespace MHGameWork.TheWizards.Engine
 
             startFilesystemWatcher();
 
-            updateActiveGameplayAssembly();
-            createSimulators();
+            //updateActiveGameplayAssembly();
+            //createSimulators();
 
             var stringSerializer = StringSerializer.Create();
             stringSerializer.AddConditional(new FilebasedAssetSerializer());
@@ -119,15 +121,15 @@ namespace MHGameWork.TheWizards.Engine
 
         private void gameLoopStep(DataWrapper container)
         {
+            if (game.Keyboard.IsKeyReleased(Key.R))
+                needsReload = true;
+            checkReload();
+
             foreach (var sim in simulators)
             {
                 //sim.Simulate();
                 simulateSave(sim);
             }
-
-            if (game.Keyboard.IsKeyReleased(Key.R))
-                needsReload = true;
-            checkReload();
 
             container.ClearDirty();
             updatePhysics();
@@ -149,6 +151,7 @@ namespace MHGameWork.TheWizards.Engine
 
         private void checkReload()
         {
+            if (!HotloadingEnabled) return;
             if (!needsReload) return;
             needsReload = false;
             reloadGameplayDll();
@@ -205,23 +208,38 @@ namespace MHGameWork.TheWizards.Engine
 
         private void reloadGameplayDll()
         {
-            var serializer = new ModelSerializer(StringSerializer.Create(), typeSerializer);
-
-            var mem = new MemoryStream();
-            var writer = new StreamWriter(mem);
-
-            serializer.Serialize(TW.Data, writer);
-            mem.Flush();
-
+            var mem = serializeData();
+            File.WriteAllBytes("temp.txt",mem.ToArray());
             TW.Data.Objects.Clear();
 
             updateActiveGameplayAssembly();
 
-            serializer.Deserialize(new StreamReader(mem));
-
+            var objects = deserializeData(mem);
+            // The deserialized objects are added to TW.Data automatically
+            //foreach (var obj in objects)
+            //    TW.Data.AddObject(obj);
 
             TW.Graphics.AcquireRenderer().ClearAll();
             createSimulators();
+        }
+        private MemoryStream serializeData()
+        {
+
+            var mem = new MemoryStream(1024*1024*64);
+            var writer = new StreamWriter(mem);
+            foreach (IModelObject obj in TW.Data.Objects)
+            {
+                TW.Data.ModelSerializer.QueueForSerialization(obj);
+            }
+            TW.Data.ModelSerializer.Serialize(writer);
+            writer.Flush();
+            mem.Flush();
+            mem.Position = 0;
+            return mem;
+        }
+        private List<IModelObject> deserializeData(MemoryStream memoryStream)
+        {
+            return TW.Data.ModelSerializer.Deserialize(new StreamReader(memoryStream));
         }
 
         private void startFilesystemWatcher()
