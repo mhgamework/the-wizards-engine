@@ -21,13 +21,13 @@ namespace MHGameWork.TheWizards.DirectX11
     {
         public ProfilingPoint GameLoopProfilingPoint
         {
-            get { return form.GameLoopProfilingPoint; }
+            get { return Form.GameLoopProfilingPoint; }
         }
 
         public DX11Game()
         {
             form = new DX11Form();
-            form.GameLoopEvent += messageLoop;
+            Form.GameLoopEvent += messageLoop;
             RenderAxis = true;
             basicShaders = new List<BasicShader>();
 
@@ -67,7 +67,7 @@ namespace MHGameWork.TheWizards.DirectX11
 
             SpectaterCamera.Update(Elapsed);
 
-            form.Device.ImmediateContext.ClearRenderTargetView(form.RenderTargetView, new Color4(Color.DeepSkyBlue));
+            Form.Device.ImmediateContext.ClearRenderTargetView(Form.RenderTargetView, new Color4(Color.DeepSkyBlue));
 
             updateBasicShaders();
 
@@ -85,7 +85,7 @@ namespace MHGameWork.TheWizards.DirectX11
             gameloopIdle.WaitOne(); // wait for gameloop to finish
             gameloopIdle.Reset(); // Event handled?
 
-            if (!form.Active)
+            if (!Form.Active)
                 Thread.Sleep(500);
 
             updateInput();
@@ -97,7 +97,7 @@ namespace MHGameWork.TheWizards.DirectX11
                     return;
 
                 // shutdown!
-                form.Exit();
+                Form.Exit();
 
                 diKeyboard.Dispose();
                 diMouse.Dispose();
@@ -244,12 +244,12 @@ namespace MHGameWork.TheWizards.DirectX11
                 diMouse.Unacquire();
                 if (mouse.CursorEnabled)
                 {
-                    diMouse.SetCooperativeLevel(form.Form, CooperativeLevel.Nonexclusive | CooperativeLevel.Foreground);
+                    diMouse.SetCooperativeLevel(Form.Form, CooperativeLevel.Nonexclusive | CooperativeLevel.Foreground);
                 }
                 else
                 {
 
-                    diMouse.SetCooperativeLevel(form.Form, CooperativeLevel.Exclusive | CooperativeLevel.Foreground);
+                    diMouse.SetCooperativeLevel(Form.Form, CooperativeLevel.Exclusive | CooperativeLevel.Foreground);
                 }
 
                 isMouseExclusive = !mouse.CursorEnabled;
@@ -296,7 +296,7 @@ namespace MHGameWork.TheWizards.DirectX11
 
         }
 
-        public Device Device { get { return form.Device; } }
+        public Device Device { get { return Form.Device; } }
         public event Action<DX11Game> GameLoopEvent;
         private TimeSpan lastFrameTime;
         private TWKeyboard keyboard;
@@ -309,16 +309,16 @@ namespace MHGameWork.TheWizards.DirectX11
         public TextureRenderer TextureRenderer { get; private set; }
         public float Elapsed { get; private set; }
         public float TotalRunTime { get; private set; }
-        public bool IsDirectXInitialized { get { return form.IsDirectXInitialized; } }
+        public bool IsDirectXInitialized { get { return Form.IsDirectXInitialized; } }
 
         public RenderTargetView BackBufferRTV
         {
-            get { return form.RenderTargetView; }
+            get { return Form.RenderTargetView; }
         }
 
         public void InitDirectX()
         {
-            form.InitDirectX();
+            Form.InitDirectX();
 
 
             keyboard = new TWKeyboard();
@@ -326,22 +326,22 @@ namespace MHGameWork.TheWizards.DirectX11
 
             diDevice = new SlimDX.DirectInput.DirectInput();
             diKeyboard = new SlimDX.DirectInput.Keyboard(diDevice);
-            diKeyboard.SetCooperativeLevel(form.Form, CooperativeLevel.Nonexclusive | CooperativeLevel.Foreground);
+            diKeyboard.SetCooperativeLevel(Form.Form, CooperativeLevel.Nonexclusive | CooperativeLevel.Foreground);
             diKeyboard.Acquire();
 
 
             mouse = new TWMouse();
             diMouse = new SlimDX.DirectInput.Mouse(new DirectInput());
-            diMouse.SetCooperativeLevel(form.Form, CooperativeLevel.Exclusive | CooperativeLevel.Foreground);
+            diMouse.SetCooperativeLevel(Form.Form, CooperativeLevel.Exclusive | CooperativeLevel.Foreground);
 
             SpectaterCamera = new SpectaterCamera(keyboard, mouse);
             Camera = SpectaterCamera;
 
 
 
-            LineManager3D = new LineManager3D(form.Device);
-            TextureRenderer = new TextureRenderer(form.Device);
-            HelperStates = new HelperStatesContainer(form.Device);
+            LineManager3D = new LineManager3D(Form.Device);
+            TextureRenderer = new TextureRenderer(Form.Device);
+            HelperStates = new HelperStatesContainer(Form.Device);
 
         }
         public void Run()
@@ -357,7 +357,7 @@ namespace MHGameWork.TheWizards.DirectX11
             t.Start();
 
 
-            form.Run();
+            Form.Run();
 
         }
         public void Exit()
@@ -395,6 +395,11 @@ namespace MHGameWork.TheWizards.DirectX11
             get { return mouse; }
         }
 
+        public DX11Form Form
+        {
+            get { return form; }
+        }
+
         void IGraphicsManager.AddBasicShader(BasicShader shader)
         {
             basicShaders.Add(shader);
@@ -402,11 +407,11 @@ namespace MHGameWork.TheWizards.DirectX11
 
         public void AddToWindowTitle(string text)
         {
-            form.Form.BeginInvoke(new Action(delegate { form.Form.Text += text; }));
+            Form.Form.BeginInvoke(new Action(delegate { Form.Form.Text += text; }));
         }
         public void ResetWindowTitle()
         {
-            form.Form.BeginInvoke(new Action(delegate { form.Form.Text = ""; }));
+            Form.Form.BeginInvoke(new Action(delegate { Form.Form.Text = ""; }));
         }
 
         /// <summary>
@@ -414,7 +419,7 @@ namespace MHGameWork.TheWizards.DirectX11
         /// </summary>
         public void SetBackbuffer()
         {
-            form.SetBackbuffer();
+            Form.SetBackbuffer();
         }
 
         public class HelperStatesContainer

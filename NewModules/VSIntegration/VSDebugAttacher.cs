@@ -13,6 +13,7 @@ namespace MHGameWork.TheWizards.VSIntegration
     {
         public void AttachToVisualStudio()
         {
+            Console.WriteLine("Attempting to attach to debugger");
             //// Reference Visual Studio core
             DTE dte;
             try
@@ -21,11 +22,13 @@ namespace MHGameWork.TheWizards.VSIntegration
             }
             catch (COMException)
             {
-                Debug.WriteLine(String.Format(@"Visual studio not found."));
+                Console.WriteLine(String.Format(@"Visual studio not found."));
                 return;
             }
 
             // Try loop - Visual Studio may not respond the first time.
+            
+            Debug.WriteLine("Debug test");
             int tryCount = 5;
             while (tryCount-- > 0)
             {
@@ -34,18 +37,19 @@ namespace MHGameWork.TheWizards.VSIntegration
                     Processes processes = dte.Debugger.LocalProcesses;
                     foreach (Process proc in processes.Cast<Process>())
                     {
-                        Console.WriteLine(proc.Name);
+                        //Console.WriteLine(proc.Name);
                         if (!proc.Name.Contains("NewModules")) continue;
                         proc.Attach();
-                        Debug.WriteLine(String.Format
+                        Console.WriteLine(String.Format
                         ("Attached to process {0} successfully.", proc.Name));
                         tryCount = 0;
                         break;
                     }
                     break;
                 }
-                catch (COMException)
+                catch (COMException e)
                 {
+                    Console.WriteLine(e.ToString());
                     System.Threading.Thread.Sleep(1000);
                 }
             }

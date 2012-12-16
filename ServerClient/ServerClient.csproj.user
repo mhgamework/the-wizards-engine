@@ -13,6 +13,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <StartAction>Project</StartAction>
+    <StartProgram>C:\_MHData\1 - Projecten\The Wizards\_Source\bin\Binaries\NewModules.exe</StartProgram>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugUnmanaged|x86'">
     <EnableUnmanagedDebugging>true</EnableUnmanagedDebugging>

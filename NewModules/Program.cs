@@ -10,6 +10,7 @@ namespace MHGameWork.TheWizards
 {
     public static class Program
     {
+        [STAThread]
         public static void Main()
         {
             var eng = new Engine.TWEngine();

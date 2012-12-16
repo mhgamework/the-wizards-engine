@@ -121,6 +121,7 @@ namespace MHGameWork.TheWizards.Engine
         {
             foreach (var sim in simulators)
             {
+                //sim.Simulate();
                 simulateSave(sim);
             }
 

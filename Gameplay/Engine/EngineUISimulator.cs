@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows;
 using MHGameWork.TheWizards.Engine.Persistence;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Persistence;
@@ -21,6 +22,8 @@ namespace MHGameWork.TheWizards.Engine
 
 
         private PersistenceUI persistence = new PersistenceUI();
+        private readonly EngineUIConsole engineUiConsole;
+
         public EngineUISimulator()
         {
             area = new Textarea();
@@ -28,7 +31,12 @@ namespace MHGameWork.TheWizards.Engine
             area.Size = new Vector2(200, 600);
 
             mainMenu = createMainMenu();
+
+
+            engineUiConsole = new EngineUIConsole();
         }
+
+
         public void Simulate()
         {
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.Backspace))
