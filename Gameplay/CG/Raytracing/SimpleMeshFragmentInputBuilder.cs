@@ -49,9 +49,13 @@ namespace MHGameWork.TheWizards.CG
             input.U = raycast.U;
             input.V = raycast.V;
 
-            var tex = cache.Load(raycast.Material.DiffuseMap);
-            var sampler = new Texture2DSampler();
-            input.Diffuse = sampler.SampleBilinear(tex, input.Texcoord);
+            if (raycast.Material.DiffuseMap != null)
+            {
+                var tex = cache.Load(raycast.Material.DiffuseMap);
+                var sampler = new Texture2DSampler();
+                input.Diffuse = sampler.SampleBilinear(tex, input.Texcoord);
+            }
+
 
 
 

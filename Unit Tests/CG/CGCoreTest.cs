@@ -45,7 +45,7 @@ namespace MHGameWork.TheWizards.Tests.CG
 
             var ent1 = createEntity();
             ent1.WorldMatrix = Matrix.Translation(new Vector3(0, 0, -4));
-            var ent2 = createEntity();
+            raycaster.AddEntity(ent1);
 
             engine.AddSimulator(new BasicSimulator(delegate
             {
