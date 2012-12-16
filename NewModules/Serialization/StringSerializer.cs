@@ -51,7 +51,7 @@ namespace MHGameWork.TheWizards.Serialization
 
             if (serializers.ContainsKey(type))
             {
-                return serializers[obj.GetType()](obj);
+                return serializers[type](obj);
             }
 
             foreach (var s in conditionalSerializers)
