@@ -50,6 +50,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
             None,
             Specator,
             ThirdPerson,
+            FirstPerson,
             Custom
         }
 

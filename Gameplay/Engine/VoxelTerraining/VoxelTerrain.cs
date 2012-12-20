@@ -24,6 +24,9 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
             {
                 var relative = pos - chunk.WorldPosition;
                 relative *= 1 / (chunk.NodeSize);
+                for (int i = 0; i < 3; i++)
+                    relative[i] = (int)relative[i];
+                    
                 var point = new Point3(relative);
                 if (chunk.InGrid(point))
                 {

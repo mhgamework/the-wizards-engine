@@ -115,6 +115,8 @@
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="Engine\EngineUIConsole.cs" />
     <Compile Include="Engine\EngineUISimulator.cs" />
+    <Compile Include="Engine\WorldRendering\FirstPersonCamera.cs" />
+    <Compile Include="Engine\WorldRendering\FirstPersonCameraSimulator.cs" />
     <Compile Include="LevelBuilding\LevelBuildingTriggerObjectType.cs" />
     <Compile Include="LevelBuilding\TriggerObject.cs" />
     <Compile Include="Engine\Persistence\Datastore.cs" />

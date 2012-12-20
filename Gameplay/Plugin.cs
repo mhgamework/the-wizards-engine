@@ -38,7 +38,20 @@ namespace MHGameWork.TheWizards
             //testLevelBuilding(engine);
 
             //testAddStupidRedHelperMesh(engine);
-            testPlay(engine);
+            testFirstPersonCamera(engine);
+        }
+
+        private void testFirstPersonCamera(TWEngine engine)
+        {
+            TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
+
+            engine.AddSimulator(new EngineUISimulator());
+            engine.AddSimulator(new TerrainEditorSimulator());
+            engine.AddSimulator(new VoxelTerrainSimulator());
+            engine.AddSimulator(new PhysXSimulator());
+            engine.AddSimulator(new FirstPersonCameraSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
+
         }
 
         private void testPlay(TWEngine engine)

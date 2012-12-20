@@ -228,7 +228,10 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
             //engine.AddSimulator(new LocalPlayerSimulator(playerData));
             //engine.AddSimulator(new ThirdPersonCameraSimulator());
             engine.AddSimulator(new PhysXSimulator());
+            engine.AddSimulator(new EngineUISimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
+            
+
             //engine.AddSimulator(new PhysXDebugRendererSimulator());
 
             //TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.ThirdPerson;
