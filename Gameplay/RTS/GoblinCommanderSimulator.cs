@@ -6,8 +6,8 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.VoxelTerraining;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Raycasting;
-using MHGameWork.TheWizards.VoxelTerraining;
 using MHGameWork.TheWizards.WorldRendering;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using SlimDX.DirectInput;
 using MHGameWork.TheWizards;
 using System.Drawing;
@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.RTS
         public void Simulate()
         {
             var terrain = TW.Data.GetSingleton<VoxelTerrain>();
-            var world = TW.Data.GetSingleton<WorldRendering.World>();
+            var world = TW.Data.GetSingleton<Engine.WorldRendering.World>();
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.T))
             {
                 selectGoblin(world);
@@ -62,19 +62,23 @@ namespace MHGameWork.TheWizards.RTS
             goblinMover.MoveTo(start);
         }
 
-        private void selectGoblin(WorldRendering.World world)
+        private void selectGoblin(Engine.WorldRendering.World world)
         {
             var ray = TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay();
             var result = world.Raycast(ray);
             if (!result.IsHit)
                 return;
-            if (!(result.Object is Goblin))
+            if (!(result.Object is Engine.WorldRendering.Entity))
                 return;
-                currentSelectedGoblin = (Goblin) result.Object;
-        
+            var mesh = ((Engine.WorldRendering.Entity)result.Object).Mesh;
+              foreach (var goblin in TW.Data.Objects.Where(o=> o is Goblin).Where(goblin => ((Goblin) goblin).get<Engine.WorldRendering.Entity>().Mesh == mesh))
+              {
+                  currentSelectedGoblin = (Goblin) goblin;
+                  return;
+              }
+        }
         
         
         
         }
     }
-}

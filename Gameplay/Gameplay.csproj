@@ -200,6 +200,7 @@
     <Compile Include="Engine\Persistence\PersistenceUI.cs" />
     <Compile Include="Engine\PhysX\BarrelShooterSimulator.cs" />
     <Compile Include="Engine\PhysX\PhysXData.cs" />
+    <Compile Include="RTS\GoblinMovementSimulator.cs" />
     <Compile Include="_Features\TextMenu.cs" />
     <Compile Include="_Features\TextMenuItem.cs" />
     <Compile Include="Pickup\Inventory.cs" />

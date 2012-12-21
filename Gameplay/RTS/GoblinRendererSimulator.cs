@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
@@ -17,7 +18,7 @@ namespace MHGameWork.TheWizards.RTS
             {
                 if (goblin.get<GoblinRenderData>() == null)
                     goblin.set(new GoblinRenderData { LookDirection = new Vector3(0, 0, 1) });
-                var ent = goblin.get<WorldRendering.Entity>();
+                var ent = goblin.get<Engine.WorldRendering.Entity>();
                 fixRendering(goblin);
             }
 
@@ -25,9 +26,9 @@ namespace MHGameWork.TheWizards.RTS
         }   
         private static void fixRendering(Goblin goblin)
         {
-            if(goblin.get<WorldRendering.Entity>()== null)
-                goblin.set(new WorldRendering.Entity());
-            var ent = goblin.get<WorldRendering.Entity>();
+            if (goblin.get<Engine.WorldRendering.Entity>() == null)
+                goblin.set(new Engine.WorldRendering.Entity());
+            var ent = goblin.get<Engine.WorldRendering.Entity>();
                 
             var renderData = goblin.get<GoblinRenderData>();
             if ((renderData.LastPosition - goblin.Position).Length() > 0.001f)

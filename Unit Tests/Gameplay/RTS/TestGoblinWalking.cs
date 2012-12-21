@@ -2,13 +2,15 @@
 using System.Drawing;
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.VoxelTerraining;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTS;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.Tests.Gameplay.Core;
-using MHGameWork.TheWizards.VoxelTerraining;
 using MHGameWork.TheWizards.WorldRendering;
 using NUnit.Framework;
 using SlimDX;
+using MHGameWork.TheWizards.Engine;
 
 namespace MHGameWork.TheWizards.Tests.Gameplay.RTS
 {
@@ -21,10 +23,11 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.RTS
             var engine = new TWEngine { DontLoadPlugin = true };
             engine.Initialize();
             VoxelTerrainTest.generateTerrain(1, 1);
-            var world = TW.Data.GetSingleton<WorldRendering.World>();
+            var world = TW.Data.GetSingleton<Engine.WorldRendering.World>();
             var TestGoblin = new Goblin();
             engine.AddSimulator(new VoxelTerrainSimulator());
             engine.AddSimulator(new GoblinCommanderSimulator());
+            engine.AddSimulator(new GoblinMovementSimulator());
             engine.AddSimulator(new GoblinRendererSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.Run();
