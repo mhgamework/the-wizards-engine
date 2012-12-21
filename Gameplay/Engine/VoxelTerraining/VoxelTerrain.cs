@@ -39,7 +39,7 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
 
         private static VoxelBlock getChunkVoxelWrapper(VoxelTerrainChunk chunk, Point3 point)
         {
-            var voxelInternal = chunk.GetVoxelInternal(point);
+            var voxelInternal = chunk.GetVoxelInternal(ref point);
             if (voxelInternal == null)
                 return null;
             return new VoxelBlock(point, chunk, voxelInternal);
@@ -96,7 +96,7 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
                 {
                     if (!terr1.InGrid(arg)) return true;
 
-                    var voxelBlock = terr1.GetVoxelInternal(arg);
+                    var voxelBlock = terr1.GetVoxelInternal(ref arg);
                     if (voxelBlock == null) return false;
                     if (voxelBlock.Filled)
                     {

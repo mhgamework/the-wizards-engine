@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.Engine.VoxelTerraining
 {
@@ -13,6 +15,10 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
     /// </summary>
     public class VoxelTerrainSimulator : ISimulator
     {
+        private List<RenderData> chunksToUpdate = new List<RenderData>();
+
+        private List<RenderData> renderDatas = new List<RenderData>();
+
         public void Simulate()
         {
             foreach (var change in TW.Data.GetChangesOfType<VoxelTerrainChunk>())
@@ -21,19 +27,39 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
 
                 if (change.Change == ModelChange.Removed)
                 {
+                    
                     if (terrain.get<RenderData>() != null)
+                    {
+                        chunksToUpdate.Remove(terrain.get<RenderData>());
+                        renderDatas.Remove(terrain.get<RenderData>());
                         terrain.get<RenderData>().Dispose();
+
+                    }
                     continue;
                 }
+
                 if (terrain.get<RenderData>() == null)
+                {
                     terrain.set(new RenderData(terrain));
-                
+                    renderDatas.Add(terrain.get<RenderData>());
+                }
 
-
-
-                terrain.get<RenderData>().Update();
-
+                if (!chunksToUpdate.Contains(terrain.get<RenderData>()))
+                    chunksToUpdate.Add(terrain.get<RenderData>());
             }
+            foreach (var data in renderDatas)
+            {
+                data.UpdateVisibility();
+            }
+            var sorted = chunksToUpdate.OrderBy(t => t.camDistance);
+            for (int i = 0; i < 1; i++)
+            {
+                if (!sorted.Any()) break;
+                var first = sorted.First();
+                chunksToUpdate.Remove(first);
+                first.Update();
+            }
+
         }
 
         public class RenderData
@@ -54,6 +80,7 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
 
 
             private MeshBuilder _builder;
+            public float camDistance;
 
             private void floodFill()
             {
@@ -66,7 +93,7 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
                         for (int z = 0; z < TerrainChunk.Size.Z; z++)
                         {
                             var pos = new Point3(x, y, z);
-                            var node = TerrainChunk.GetVoxelInternal(pos);
+                            var node = TerrainChunk.GetVoxelInternal(ref pos);
                             if (node.Filled) continue;
                             if (visited[x, y, z]) continue;
                             floodFillFromNode(pos);
@@ -90,9 +117,11 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
                         continue;
                     visited[curr.X, curr.Y, curr.Z] = true;
 
-                    foreach (var neighbourPos in TerrainChunk.GetNeighbourPositions(curr))
+
+                    foreach (Point3 neighbourPos in TerrainChunk.GetNeighbourPositions(curr))
                     {
-                        var block = TerrainChunk.GetVoxelInternal(neighbourPos);
+                        var copy = neighbourPos;
+                        var block = TerrainChunk.GetVoxelInternal(ref copy);
                         if (block == null)
                         {
                             /*// we have reached the sides!!
@@ -139,7 +168,7 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
                                 //&& y != 0 && y != TerrainChunk.Size.Y - 1
                                 && z != 0 && z != TerrainChunk.Size.Z - 1) continue;
                             var pos = new Point3(x, y, z);
-                            var voxelBlock = TerrainChunk.GetVoxelInternal(pos);
+                            var voxelBlock = TerrainChunk.GetVoxelInternal(ref pos);
                             if (voxelBlock.Filled)
                                 makeBlockVisible(voxelBlock, pos);
                         }
@@ -172,9 +201,37 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
             private IMesh createMesh()
             {
                 var relativeCorePath = "Core\\checker.png";
-                //relativeCorePath = "GrassGreenTexture0006.jpg";
+                relativeCorePath = "GrassGreenTexture0006.jpg";
                 //relativeCorePath = "dryvalley.jpg";
-                
+
+
+                var dirs = new List<Vector3>();
+                var ups = new List<Vector3>();
+                var rights = new List<Vector3>();
+                dirs.Add(Vector3.UnitX);
+                dirs.Add(Vector3.UnitY);
+                dirs.Add(Vector3.UnitZ);
+                dirs.Add(-Vector3.UnitX);
+                dirs.Add(-Vector3.UnitY);
+                dirs.Add(-Vector3.UnitZ);
+
+                ups.Add(Vector3.UnitY);
+                ups.Add(Vector3.UnitX);
+                ups.Add(Vector3.UnitY);
+                ups.Add(Vector3.UnitY);
+                ups.Add(Vector3.UnitX);
+                ups.Add(Vector3.UnitY);
+
+
+                for (int i = 0; i < dirs.Count; i++)
+                {
+                    rights.Add(Vector3.Cross(ups[i], dirs[i]));
+                }
+
+
+                var nPos = new Vector3[6];
+                var nNormals = new Vector3[6];
+                var nUvs = new Vector2[6];
 
                 foreach (var block in visibleBlocks)
                 {
@@ -182,7 +239,61 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
                     border = new Vector3();
 
                     var pos = block;
-                    _builder.AddBox(pos.ToVector3() * TerrainChunk.NodeSize + border, (MathHelper.One + pos.ToVector3()) * TerrainChunk.NodeSize - border);
+                    for (int i = 0; i < dirs.Count; i++)
+                    {
+                        var dir = dirs[i];
+                        var point3 = block + new Point3(dir);
+                        var neighbour = TerrainChunk.GetVoxelInternal(ref point3);
+                        if (neighbour != null && neighbour.Filled)
+                            continue; // face not visible
+
+                        var halfSize = TerrainChunk.NodeSize * 0.5f;
+
+                        {
+                            var center = block.ToVector3() + halfSize * MathHelper.One;
+                            dir *= halfSize;
+                            var right = rights[i] * halfSize;
+                            var up = ups[i] * halfSize;
+
+                            var j = 0;
+
+                            nPos[j] = center + dir + up + right;
+                            j++;
+                            nPos[j] = center + dir + up - right;
+                            j++;
+                            nPos[j] = center + dir - up - right;
+                            j++;
+
+                            nPos[j] = center + dir - up - right;
+                            j++;
+                            nPos[j] = center + dir - up + right;
+                            j++;
+                            nPos[j] = center + dir + up + right;
+                            j++;
+                        }
+
+
+                        {
+                            var j = 0;
+                            var center = new Vector2(0.5f, 0.5f);
+                            var up = new Vector2(0.5f, 0);
+                            var right = new Vector2(0, 0.5f);
+                            nUvs[j] = center + up + right; j++;
+                            nUvs[j] = center + up - right; j++;
+                            nUvs[j] = center - up - right; j++;
+
+                            nUvs[j] = center - up - right; j++;
+                            nUvs[j] = center - up + right; j++;
+                            nUvs[j] = center + up + right; j++;
+                        }
+                        for (int k = 0; k < dirs.Count; k++)
+                        {
+                            nNormals[k] = dirs[i];
+                        }
+
+                        _builder.AddCustom(nPos, nNormals, nUvs);
+                    }
+                    //_builder.AddBox(pos.ToVector3() * TerrainChunk.NodeSize + border, (MathHelper.One + pos.ToVector3()) * TerrainChunk.NodeSize - border);
                 }
 
 
@@ -214,8 +325,11 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
 
             private void clearVisible()
             {
-                foreach (var b in visibleBlocks)
-                    TerrainChunk.GetVoxelInternal(b).Visible = false;
+                for (int index = 0; index < visibleBlocks.Count; index++)
+                {
+                    var b = visibleBlocks[index];
+                    TerrainChunk.GetVoxelInternal(ref b).Visible = false;
+                }
 
                 visibleBlocks.Clear();
             }
@@ -224,6 +338,14 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
             {
                 if (_ent != null)
                     TW.Data.RemoveObject(_ent);
+            }
+
+            public void UpdateVisibility()
+            {
+                camDistance = Vector3.DistanceSquared(TerrainChunk.WorldPosition,
+                                                      TW.Data.GetSingleton<CameraInfo>()
+                                                        .ActiveCamera.ViewInverse.xna()
+                                                        .Translation.dx());
             }
         }
     }

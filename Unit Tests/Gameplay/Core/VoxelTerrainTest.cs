@@ -217,9 +217,11 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
             engine.Initialize();
 
             //generateFlat();
-            generateTerrain(10, 10);
+            generateTerrain(5, 30);
 
+            TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
 
+            engine.AddSimulator(new FirstPersonCameraSimulator());
             engine.AddSimulator(new TerrainEditorSimulator());
             engine.AddSimulator(new VoxelTerrainSimulator());
             engine.AddSimulator(new FlashlightSimulator());
@@ -229,6 +231,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
             //engine.AddSimulator(new ThirdPersonCameraSimulator());
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new EngineUISimulator());
+            
             engine.AddSimulator(new WorldRenderingSimulator());
             
 
@@ -282,8 +285,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
             List<Color> colors = new List<Color>();
             List<Color> colorsbase = new List<Color>();
 
-            int width = 100;
-            int height = 100;
+            int width = chunksX*16;
+            int height = chunksY*16;
             SimpleTerrain terrain;
             SimpleTerrain terrainbase;
             SimpleTerrain terrainbaseDiffernce;

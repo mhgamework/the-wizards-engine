@@ -46,6 +46,16 @@ namespace MHGameWork.TheWizards.Rendering
 
             }
         }
+        
+        public void AddCustom(Vector3[] nPositions, Vector3[] nNormals, Vector2[] nTexcoords)
+        {
+            if (nPositions.Length != nNormals.Length) throw new ArgumentException();
+            if (nPositions.Length != nTexcoords.Length) throw new ArgumentException();
+            positions.AddRange(nPositions.Select(v=>v.xna()));
+            normals.AddRange(nNormals.Select(v=>v.xna()));
+            
+            texcoords.AddRange(nTexcoords.Select(t=>new Microsoft.Xna.Framework.Vector2(t.X,t.Y)));
+        }
 
         public void AddSphere(int segments, float radius)
         {

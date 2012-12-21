@@ -15,6 +15,8 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
     [ModelObjectChanged]
     public class VoxelTerrainChunk : EngineModelObject
     {
+        private Point3 size;
+
         public VoxelTerrainChunk()
         {
             NodeSize = 1;
@@ -23,7 +25,12 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
         public float NodeSize { get; set; }
         [CustomStringSerializer(typeof(VoxelStringSerializer))]
         public Voxel[, ,] Voxels { get; set; }
-        public Point3 Size { get; set; }
+        public Point3 Size
+        {
+            get { return size; }
+            set { size = value; }
+        }
+
         public Vector3 WorldPosition { get; set; }
 
         public void Create()
@@ -44,9 +51,13 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
 
         public Voxel GetVoxelInternal(Point3 pos)
         {
-            if (pos.X >= Size.X) return null;
-            if (pos.Y >= Size.Y) return null;
-            if (pos.Z >= Size.Z) return null;
+            return GetVoxelInternal(ref pos);
+        }
+        public Voxel GetVoxelInternal(ref Point3 pos)
+        {
+            if (pos.X >= size.X) return null;
+            if (pos.Y >= size.Y) return null;
+            if (pos.Z >= size.Z) return null;
 
             if (pos.X < 0) return null;
             if (pos.Y < 0) return null;

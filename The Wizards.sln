@@ -594,6 +594,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{35A4FAF6-A439-4BC9-B47D-3CEE167A8926} = {9D7264F6-202E-4B86-BC73-088F18A7099F}
 	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
 		Manager = AnkhSVN - Subversion Support for Visual Studio

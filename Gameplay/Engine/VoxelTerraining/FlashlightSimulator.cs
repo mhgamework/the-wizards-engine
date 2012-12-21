@@ -1,4 +1,7 @@
-﻿using MHGameWork.TheWizards.Engine.WorldRendering;
+﻿using DirectX11;
+using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Rendering.Deferred;
+using SlimDX;
 using PointLight = MHGameWork.TheWizards.Rendering.Deferred.PointLight;
 
 namespace MHGameWork.TheWizards.Engine.VoxelTerraining
@@ -13,12 +16,18 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
             cameraInfo = TW.Data.GetSingleton<CameraInfo>();
 
             pointLight = TW.Graphics.AcquireRenderer().CreatePointLight();
+            //pointLight = TW.Graphics.AcquireRenderer().CreateSpotLight();
             pointLight.LightRadius = 20;
         }
 
         public void Simulate()
         {
-            pointLight.LightPosition = cameraInfo.ActiveCamera.ViewInverse.xna().Translation.dx();
+            var pos = cameraInfo.ActiveCamera.ViewInverse.xna().Translation.dx() - cameraInfo.ActiveCamera.ViewInverse.xna().Right.dx()*0.2f;
+            //var lookat = cameraInfo.ActiveCamera.ViewInverse.xna().Translation.dx() + cameraInfo.ActiveCamera.ViewInverse.xna().Forward.dx() * 10;
+            pointLight.LightPosition = pos;
+            //pointLight.SpotDirection = Vector3.Normalize(lookat - pos);
+            //pointLight.SpotLightAngle = MathHelper.ToRadians(20);
+            ////pointLight.SpotDecayExponent = 100;
         }
     }
 }

@@ -44,12 +44,14 @@ namespace MHGameWork.TheWizards
         private void testFirstPersonCamera(TWEngine engine)
         {
             TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
+            //TW.Data.GetSingleton<CameraInfo>().ActivateSpecatorCamera();
 
             engine.AddSimulator(new EngineUISimulator());
             engine.AddSimulator(new TerrainEditorSimulator());
             engine.AddSimulator(new VoxelTerrainSimulator());
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new FirstPersonCameraSimulator());
+            engine.AddSimulator(new FlashlightSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
 
         }
