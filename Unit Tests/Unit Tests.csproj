@@ -152,6 +152,17 @@
     <Compile Include="Features\Data\Forms\ClassFormTest.cs" />
     <Compile Include="Features\Various\TestRootObjectTable.cs" />
     <Compile Include="Features\Various\TestVSIntegration.cs" />
+    <Compile Include="Gameplay\NavigationTest.cs" />
+    <Compile Include="Gameplay\Core\PhysXTest.cs" />
+    <Compile Include="Gameplay\RTS\TestGoblinWalking.cs" />
+    <Compile Include="Gameplay\Various\LocalGame.cs" />
+    <Compile Include="Gameplay\Various\ModelTest.cs" />
+    <Compile Include="Gameplay\Core\NetworkSyncerTest.cs" />
+    <Compile Include="Gameplay\Core\Persistence\PersistenceTest.cs" />
+    <Compile Include="Gameplay\Core\RaycastingTest.cs" />
+    <Compile Include="Gameplay\TilingTest.cs" />
+    <Compile Include="Gameplay\Core\VoxelTerrainTest.cs" />
+    <Compile Include="Gameplay\Core\WorldRenderingTest.cs" />
     <Compile Include="Features\Rendering\Particles\ParticleTests.cs" />
     <Compile Include="Features\Simulation\Physics\TestSphereShooter.cs" />
     <Compile Include="Features\Generation\ProceduralTerrainGeneration\NoiseTests.cs" />

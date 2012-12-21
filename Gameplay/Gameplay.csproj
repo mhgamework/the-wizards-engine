@@ -212,7 +212,9 @@
     <Compile Include="Player\PlayerClientPhysics.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="RTS\Goblin.cs" />
+    <Compile Include="RTS\GoblinCommanderSimulator.cs" />
     <Compile Include="RTS\GoblinMover.cs" />
+    <Compile Include="RTS\GoblinRendererSimulator.cs" />
     <Compile Include="RTS\GoblinSimulator.cs" />
     <Compile Include="RTS\GoblinSpawner.cs" />
     <Compile Include="RTS\TerrainAStar.cs" />
