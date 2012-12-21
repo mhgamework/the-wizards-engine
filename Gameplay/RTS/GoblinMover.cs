@@ -32,13 +32,13 @@ namespace MHGameWork.TheWizards.RTS
                 position = path.Length-1;
             var partOfPath = (int)position;
             var nextPart = partOfPath + 1;
-            if (nextPart > path.Length)
+            if (nextPart >= path.Length)
             {
-                goblin.Position = path[partOfPath];
+                goblin.Position = path[partOfPath] + MathHelper.One * 0.5f;
                 finished = true;
                 return;
             }
-            goblin.Position = Vector3.Lerp(path[partOfPath], path[nextPart], position - (int)position);
+            goblin.Position = Vector3.Lerp(path[partOfPath], path[nextPart], position - (int)position) + MathHelper.One * 0.5f;
         }
 
         public void MoveTo(Vector3 pos)
@@ -52,6 +52,7 @@ namespace MHGameWork.TheWizards.RTS
             var star =new TerrainAStar();
             path = star.findPath(endVoxel, startVoxel).Select(o => terrain.GetPositionOf(o)).ToArray();
             finished = false;
+            position = 0;
         }
 
 
