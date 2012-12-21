@@ -1,0 +1,84 @@
+﻿using System;
+using System.Linq;
+using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.MathExtra;
+using MHGameWork.TheWizards.WorldRendering;
+using SlimDX;
+
+namespace MHGameWork.TheWizards.RTS
+{
+    public class GoblinSimulator :ISimulator
+    {
+        public void Simulate()
+        {
+            var elapsedTime = TW.Graphics.Elapsed;
+            SimulateSpawner(elapsedTime);
+            SimulateGoblins(elapsedTime);
+        }
+        private Random a = new Random();
+
+        public void SimulateGoblins(float elapsedTime) {
+            IModelObject[] goblins = TW.Data.Objects.Where(gob => gob is Goblin).ToArray();
+            getNextFriend(goblins);
+
+            foreach (var goblin in TW.Data.GetChangedObjects<Goblin>())
+            {
+                setBasicEntities(goblin);
+                
+            }
+            updateAllGoblins(goblins);
+    
+        }
+        private void updateAllGoblins(IModelObject[] goblins)
+        {
+            foreach (var goblin in goblins)
+            {
+                ((Goblin) goblin).get<GoblinMover>().Update();
+            }
+        }
+        
+        private static void setBasicEntities(Goblin goblin)
+        {
+            if (goblin.get<GoblinMover>() == null)
+                goblin.set(new GoblinMover(goblin));
+            if (goblin.BestFriend == null)
+                goblin.BestFriend = goblin;
+            goblin.get<GoblinMover>().MoveTo(goblin.BestFriend.Position);
+            if (goblin.get<WorldRendering.Entity>() == null)
+                goblin.set(new WorldRendering.Entity());
+        }
+        private void getNextFriend(IModelObject[] goblins)
+        {
+            foreach (Goblin goblin in goblins.Cast<Goblin>().Where(goblin => a.Next(200) == 0))
+            {
+                goblin.BestFriend = (Goblin) goblins[a.Next(goblins.Length)];
+            }
+        }
+
+        public void SimulateSpawner(float elapsedTime)
+        {
+            foreach (GoblinSpawner spawner in TW.Data.Objects.Where(o => o is GoblinSpawner).ToArray())
+            {
+                spawner.remainingSpawnTime -= elapsedTime;
+                if (!(spawner.remainingSpawnTime < 0)) continue;
+                spawner.remainingSpawnTime += 2;
+                var a = new Random();
+                var spawnedGoblin = new Goblin() { Position = spawner.Position + new Vector3(a.Next(20), a.Next(20), a.Next(20)) };
+            }
+            foreach (var spawner in TW.Data.GetChangedObjects<GoblinSpawner>())
+            {
+                if (spawner.get<WorldRendering.Entity>() == null)
+                    spawner.set(new WorldRendering.Entity());
+
+                var ent = spawner.get<WorldRendering.Entity>();
+
+                ent.WorldMatrix = Matrix.Scaling(0.01f, 0.01f, 0.01f) * Matrix.Translation(spawner.Position);
+                ent.Mesh = MeshFactory.Load("Goblin\\GoblinLowRes");
+                ent.Solid = true;
+                ent.Static = false;
+            }
+        }    
+   
+    }
+}
