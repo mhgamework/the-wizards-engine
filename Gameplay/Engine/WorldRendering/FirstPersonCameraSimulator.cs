@@ -117,9 +117,9 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
                 }
             }
 
-            if (newPos.Y < 0)
+            if (newPos.Y < 1.5f)
             {
-                newPos.Y = 0;
+                newPos.Y = 1.5f;
                 camData.JumpVelocity = 0;
             }
 

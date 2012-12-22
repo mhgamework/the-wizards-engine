@@ -217,7 +217,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
             engine.Initialize();
 
             //generateFlat();
-            generateTerrain(5, 30);
+            generateTerrain(30, 30);
 
             TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
 
