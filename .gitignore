@@ -103,3 +103,5 @@ Thumbs.db
 /bin/Launcher.pssym
 /bin/PostSharp.dll
 /bin/PostSharp.xml
+*.vspx
+*.psess
