@@ -43,6 +43,7 @@ namespace MHGameWork.TheWizards
 
         private void testFirstPersonCamera(TWEngine engine)
         {
+            TW.Graphics.EscapeExists = false;
             TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
             //TW.Data.GetSingleton<CameraInfo>().ActivateSpecatorCamera();
 

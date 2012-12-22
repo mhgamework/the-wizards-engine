@@ -35,6 +35,7 @@ namespace MHGameWork.TheWizards.DirectX11
             AllowF3InputToggle = true;
             InputDisabled = false;
 
+            EscapeExists = true;
         }
 
         void gameLoop()
@@ -190,6 +191,8 @@ namespace MHGameWork.TheWizards.DirectX11
 
         protected bool RenderAxis { get; set; }
 
+        public bool EscapeExists { get; set; }
+
         private bool lastMouseEnabledState;
         private bool lastIsMouseVisible;
         private bool inputDisabled;
@@ -278,7 +281,7 @@ namespace MHGameWork.TheWizards.DirectX11
                 mouse.UpdateMouseState(diMouse.GetCurrentState());
 
             // Allows the game to exit
-            if (keyboard.IsKeyDown(Key.Escape))
+            if (EscapeExists && keyboard.IsKeyDown(Key.Escape))
                 Exit();
         }
 
