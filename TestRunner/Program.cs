@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.TestRunner
 
 
             var runner = new TestRunner();
-            var result = runner.RunTest(options.AssemblyName, options.TypeFullQualifiedName, options.MethodName);
+            var result = runner.RunAutomated(options.AssemblyName, options.TypeFullQualifiedName, options.MethodName);
 
             var testResult = TestResult.FromException(result);
 

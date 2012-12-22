@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace MHGameWork.TheWizards.TestRunner
 {
     [Serializable]
-    public class TestRunner
+    public class TestRunner : ITestRunner
     {
         public static bool IsRunningAutomated { get; private set; }
 
@@ -16,13 +16,13 @@ namespace MHGameWork.TheWizards.TestRunner
         /// <param name="test"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        public Exception RunTest(object test, MethodInfo method)
+        public Exception RunAutomated(object test, MethodInfo method)
         {
             Exception throwedException = null;
             try
             {
                 enableAutomatedTesting();
-                PerformTestJob(test, method);
+                RunNormal(test, method);
             }
             catch (Exception ex)
             {
@@ -61,7 +61,7 @@ namespace MHGameWork.TheWizards.TestRunner
         /// <param name="test"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        public Exception RunTest(string assemblyLocation, string className, string methodName)
+        public Exception RunAutomated(string assemblyLocation, string className, string methodName)
         {
             var ass = Assembly.LoadFrom(assemblyLocation);
             var type = ass.GetType(className);
@@ -71,7 +71,7 @@ namespace MHGameWork.TheWizards.TestRunner
             var method = type.GetMethod(methodName);
 
 
-            return RunTest(test, method);
+            return RunAutomated(test, method);
         }
 
 
@@ -93,7 +93,7 @@ namespace MHGameWork.TheWizards.TestRunner
         /// </summary>
         /// <param name="test"></param>
         /// <param name="method"></param>
-        public void PerformTestJob(object test, MethodInfo method)
+        public void RunNormal(object test, MethodInfo method)
         {
             var setupMethod = FindSingleMethodWithAttribute(test.GetType(),
                                                             typeof(NUnit.Framework.SetUpAttribute));

@@ -40,8 +40,10 @@ namespace MHGameWork.TheWizards.TestRunner
         public Assembly TestsAssembly
         { get; set; }
 
-
-
+        public TestRunnerGUI()
+        {
+            TestRunner = new TestRunner();
+        }
 
 
         public void Run()
@@ -265,7 +267,7 @@ namespace MHGameWork.TheWizards.TestRunner
             if (data.RunAutomated)
                 return RunTestInOtherProcess(method.DeclaringType.Assembly, method.DeclaringType.FullName, method.Name);
 
-            var obj = new CallbackObject();
+            var obj = new CallbackObject(TestRunner);
             obj.TypeFullQualifiedName = method.DeclaringType.AssemblyQualifiedName;
             obj.MethodName = method.Name;
             
@@ -295,9 +297,11 @@ namespace MHGameWork.TheWizards.TestRunner
             GC.WaitForPendingFinalizers();
 
             return TestResult.FromException(ex);
-            //obj.RunTest();
+            //obj.RunAutomated();
 
         }
+
+        protected ITestRunner TestRunner { get; set; }
 
         private Exception runCurrentAppdomain(CallbackObject callbackObject)
         {
@@ -482,10 +486,11 @@ namespace MHGameWork.TheWizards.TestRunner
             public bool DebugMode;
 
 
-            private TestRunner runner = new TestRunner();
+            private ITestRunner runner;
 
-            public CallbackObject()
+            public CallbackObject(ITestRunner runner)
             {
+                this.runner = runner;
                 ThrowedException = null;
             }
 
@@ -511,7 +516,7 @@ namespace MHGameWork.TheWizards.TestRunner
             {
                 var thread = new Thread(delegate()
                 {
-                    runner.PerformTestJob(test, method);
+                    runner.RunNormal(test, method);
 
                 });
 
@@ -526,7 +531,7 @@ namespace MHGameWork.TheWizards.TestRunner
             {
                 var thread = new Thread(delegate()
                 {
-                    ThrowedException = runner.RunTest(test, method);
+                    ThrowedException = runner.RunAutomated(test, method);
 
                 });
 

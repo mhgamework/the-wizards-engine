@@ -220,9 +220,9 @@ namespace MHGameWork.TheWizards.ServerClient
             //Editor.XNAGameControl.TestCreateDispose();
 
 
-            //CascadedShadowMaps.CSMTest.RunTest();
-            //Sky.SkyTest.RunTest();
-            //Water.WaterTest.RunTest();
+            //CascadedShadowMaps.CSMTest.RunAutomated();
+            //Sky.SkyTest.RunAutomated();
+            //Water.WaterTest.RunAutomated();
             //UnitTest.Run<TestShadowsScattering>();
             //UnitTest.Run<TestWaterShadowsScattering>();
             //TheWizards.TerrainChunk.Editor.TerainEditorPlugin.TestTerrainEditor();

@@ -294,6 +294,9 @@
     <Content Include="_doc.txt" />
     <Content Include="_Features\_doc.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Engine\Testing\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
