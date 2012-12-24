@@ -59,6 +59,8 @@ namespace MHGameWork.TheWizards.Engine
 
         public void Run()
         {
+            if (game.Running) return;
+
             if (game == null)
                 Initialize();
 
@@ -81,6 +83,8 @@ namespace MHGameWork.TheWizards.Engine
 
         public void Initialize()
         {
+            if (game != null) return;
+
             simulators = new List<ISimulator>();
 
             game = new GraphicsWrapper();
@@ -123,7 +127,11 @@ namespace MHGameWork.TheWizards.Engine
         {
             if (game.Keyboard.IsKeyReleased(Key.R))
                 needsReload = true;
+            if (TW.Debug.NeedsReload)
+                needsReload = true;
             checkReload();
+
+            TW.Debug.NeedsReload = false;
 
             foreach (var sim in simulators)
             {
@@ -197,6 +205,7 @@ namespace MHGameWork.TheWizards.Engine
 
                 File.Copy(GameplayDll, tempFile, true);
                 activeGameplayAssembly = Assembly.LoadFile(tempFile);
+                TW.Data.GameplayAssembly = activeGameplayAssembly;
 
 
             }

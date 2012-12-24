@@ -37,21 +37,27 @@ namespace MHGameWork.TheWizards.TestRunner
         private TestNode rootNode;
         SaveData data;
 
-        public Assembly TestsAssembly
-        { get; set; }
 
-        public TestRunnerGUI()
+        public TestRunnerGUI(Assembly TestsAssembly)
         {
-            TestRunner = new TestRunner();
+            var builder = new NunitTestsTreeBuilder();
+
+            rootNode = builder.CreateTestsTree(TestsAssembly);
+
+            TestRunner = new NUnitTestRunner();
+
+        }
+        public TestRunnerGUI( TestNode rootNode)
+        {
+            this.rootNode = rootNode;
+            TestRunner = new NUnitTestRunner();
         }
 
 
         public void Run()
         {
 
-            var builder = new TestsTreeBuilder();
-
-            rootNode = builder.CreateTestsTree(TestsAssembly);
+            
             rootNode.SortRecursive();
 
             var sel = new TestSelectionInterface(rootNode);
@@ -105,12 +111,15 @@ namespace MHGameWork.TheWizards.TestRunner
 
         public void RunTestByName(string name)
         {
-            var builder = new TestsTreeBuilder();
-            rootNode = builder.CreateTestsTree(TestsAssembly);
+            throw new NotImplementedException();
+            var builder = new NunitTestsTreeBuilder();
+            //rootNode = builder.CreateTestsTree(TestsAssembly);
             var node = rootNode.FindByPath(name);
             if (node == null)
                 throw new Exception("Test with name: (" + name + ") was not found!");
-            runTestMethod(node.TestMethod);
+
+            TestRunner.Run(node.Test);
+            //runTestMethod(node.TestMethod); TODO: fix automated testing
         }
 
 
@@ -187,10 +196,11 @@ namespace MHGameWork.TheWizards.TestRunner
 
                 data.LastTestRunPath = node.GetPath();
 
-                Console.WriteLine("Running Test: " + node.TestMethod.DeclaringType.FullName + "." + node.TestMethod.Name);
+                //Console.WriteLine("Running Test: " + node.TestMethod.DeclaringType.FullName + "." + node.TestMethod.Name);
 
                 node.State = TestState.Failed;
-                var testResult = runTestMethod(node.TestMethod);
+                TestRunner.Run(node.Test);
+                //var testResult = runTestMethod(node.TestMethod);
 
 
                 ClearScopedVariables();
@@ -201,11 +211,11 @@ namespace MHGameWork.TheWizards.TestRunner
 
 
 
-                if (!testResult.Success)
-                    if (testResult.ErrorType == typeof(NotImplementedException).FullName)
-                        node.State = TestState.NotImplemented;
-                    else
-                        node.State = TestState.Failed;
+                //if (!testResult.Success)
+                    //if (testResult.ErrorType == typeof(NotImplementedException).FullName)
+                        //node.State = TestState.NotImplemented;
+                    //else
+                        //node.State = TestState.Failed;
 
                 updateNodeInTreeView(node);
 
@@ -227,7 +237,7 @@ namespace MHGameWork.TheWizards.TestRunner
             // Run in new process
 
             var args = String.Format("-a \"{0}\" -c \"{1}\" -m \"{2}\"", assembly.Location, className, method);
-            var info = new ProcessStartInfo("TestRunner.exe", args);
+            var info = new ProcessStartInfo("NUnitTestRunner.exe", args);
             info.UseShellExecute = false;
             info.RedirectStandardOutput = true;
 
@@ -262,12 +272,16 @@ namespace MHGameWork.TheWizards.TestRunner
             return (TestResult)s.Deserialize(new StringReader(xml));
         }
 
-        private TestResult runTestMethod(MethodInfo method)
+        ///
+        /// TODO:fix automated testing
+        /// 
+        
+        /*private TestResult runTestMethod(MethodInfo method)
         {
             if (data.RunAutomated)
                 return RunTestInOtherProcess(method.DeclaringType.Assembly, method.DeclaringType.FullName, method.Name);
 
-            var obj = new CallbackObject(TestRunner);
+            var obj = new CallbackObject(NUnitTestRunner);
             obj.TypeFullQualifiedName = method.DeclaringType.AssemblyQualifiedName;
             obj.MethodName = method.Name;
             
@@ -299,7 +313,7 @@ namespace MHGameWork.TheWizards.TestRunner
             return TestResult.FromException(ex);
             //obj.RunAutomated();
 
-        }
+        }*/
 
         protected ITestRunner TestRunner { get; set; }
 
@@ -312,7 +326,7 @@ namespace MHGameWork.TheWizards.TestRunner
         private Exception runSeperateAppdomain(CallbackObject obj)
         {
             var appDomain = AppDomain.CreateDomain("TestRunnerNew");
-            appDomain.Load(new AssemblyName(TestsAssembly.FullName));
+            //appDomain.Load(new AssemblyName(TestsAssembly.FullName));
 
             appDomain.DoCallBack(obj.RunTest);
 
@@ -433,7 +447,7 @@ namespace MHGameWork.TheWizards.TestRunner
             //TODO:
             if (status != "")
                 status = " - " + status;
-            //mainForm.Text = "TestRunner" + status;
+            //mainForm.Text = "NUnitTestRunner" + status;
         }
 
         private void loadState(string path)
@@ -516,7 +530,7 @@ namespace MHGameWork.TheWizards.TestRunner
             {
                 var thread = new Thread(delegate()
                 {
-                    runner.RunNormal(test, method);
+                    //runner.RunNormal(test, method);
 
                 });
 
@@ -531,7 +545,7 @@ namespace MHGameWork.TheWizards.TestRunner
             {
                 var thread = new Thread(delegate()
                 {
-                    ThrowedException = runner.RunAutomated(test, method);
+                    //ThrowedException = runner.RunAutomated(test, method);
 
                 });
 

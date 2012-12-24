@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.TestRunner
             }
 
 
-            var runner = new TestRunner();
+            var runner = new NUnitTestRunner();
             var result = runner.RunAutomated(options.AssemblyName, options.TypeFullQualifiedName, options.MethodName);
 
             var testResult = TestResult.FromException(result);

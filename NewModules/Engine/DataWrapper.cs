@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Persistence;
@@ -36,6 +37,8 @@ namespace MHGameWork.TheWizards.Engine
         /// <returns></returns>
         public ITypeSerializer TypeSerializer { get; set; }
         public ModelSerializer ModelSerializer { get; set; }
+
+        public Assembly GameplayAssembly { get; set; }
 
 
 

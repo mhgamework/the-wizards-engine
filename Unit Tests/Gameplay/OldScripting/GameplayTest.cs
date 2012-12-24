@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using MHGameWork.TheWizards.Tests.Features.Core.Networking;
 using MHGameWork.TheWizards._XNA.Gameplay;
 using MHGameWork.TheWizards._XNA.Scripting;
 using MHGameWork.TheWizards.Graphics;
@@ -77,6 +76,19 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.OldScripting
 
         }
 
+        public static TCPConnection ConnectTCP(int port, string ip)
+        {
+            AutoResetEvent ev = new AutoResetEvent(false);
+
+            var conn = new TCPConnection();
+            conn.ConnectedToServer += delegate { ev.Set(); };
+
+            conn.Connect(ip, port);
+            if (!ev.WaitOne(5000)) throw new Exception("Connection timed out!");
+
+            return conn;
+        }
+
         [Test]
         public void TestPlayerSyncOnline()
         {
@@ -135,7 +147,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.OldScripting
                 }
                 else if (game.FrameNumber == 2)
                 {
-                    var conn = NetworkingClientTest.ConnectTCP(10045, "127.0.0.1");
+                    var conn = ConnectTCP(10045, "127.0.0.1");
                     conn.Receiving = true;
                     client = new ClientPacketManagerNetworked(conn);
 
@@ -312,7 +324,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.OldScripting
                 else if (game.FrameNumber == 2)
                 {
                     //var conn = NetworkingClientTest.ConnectTCP(10045, "127.0.0.1");
-                    var conn = NetworkingClientTest.ConnectTCP(10045, "5.149.17.16");
+                    var conn = ConnectTCP(10045, "5.149.17.16");
                     conn.Receiving = true;
                     client = new ClientPacketManagerNetworked(conn);
 
@@ -423,7 +435,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.OldScripting
                 }
                 else if (game.FrameNumber == 2)
                 {
-                    var conn = NetworkingClientTest.ConnectTCP(10045, "127.0.0.1");
+                    var conn = ConnectTCP(10045, "127.0.0.1");
                     conn.Receiving = true;
                     client = new ClientPacketManagerNetworked(conn);
 

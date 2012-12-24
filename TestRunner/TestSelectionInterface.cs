@@ -65,10 +65,14 @@ namespace MHGameWork.TheWizards.TestRunner
 
             
         }
-
+        public void ShowDialog()
+        {
+            mainForm.chkAutomated.Checked = Data.RunAutomated;
+            mainForm.chkDontRerun.Checked = Data.DontRerun;
+            mainForm.ShowDialog();
+        }
         public void ShowSelectTestDialog()
         {
-
 
             mainForm.chkAutomated.Checked = Data.RunAutomated;
             mainForm.chkDontRerun.Checked = Data.DontRerun;

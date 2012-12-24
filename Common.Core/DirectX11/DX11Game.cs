@@ -55,9 +55,9 @@ namespace MHGameWork.TheWizards.DirectX11
 
         void gameLoopStep()
         {
-            
+            if (!Running) return;
 
-            if (TotalRunTime > 3 && TestRunner.TestRunner.IsRunningAutomated)
+            if (TotalRunTime > 3 && TestRunner.NUnitTestRunner.IsRunningAutomated)
             {
                 Exit();
                 return;
@@ -88,7 +88,7 @@ namespace MHGameWork.TheWizards.DirectX11
             gameloopIdle.Reset(); // Event handled?
 
             if (!Form.Active)
-                Thread.Sleep(500);
+                Thread.Sleep(100);
 
             updateInput();
 

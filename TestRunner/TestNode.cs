@@ -16,9 +16,7 @@ namespace MHGameWork.TheWizards.TestRunner
         public List<TestNode> Children = new List<TestNode>();
 
         [XmlIgnore]
-        public MethodInfo TestMethod;
-        [XmlIgnore]
-        public Type TestClass;
+        public ITest Test { get; set; }
 
         public TestRunnerGUI.TestState State;
 
@@ -94,24 +92,10 @@ namespace MHGameWork.TheWizards.TestRunner
             }
         }
 
-        public TestNode AddTestMethod(MethodInfo method)
-        {
-            var c = CreateChild(method.Name);
-            c.TestClass = this.TestClass;
-            c.TestMethod = method;
+        
 
-            return c;
-        }
-        public TestNode AddTestClass(Type type)
-        {
-            var c = CreateChild(type.Name);
-            c.TestClass = type;
-
-            return c;
-        }
-
-        public bool IsTestClass { get { return TestClass != null && TestMethod == null; } }
-        public bool IsTestMethod { get { return TestMethod != null; } }
-        public bool IsNamespace { get { return TestClass == null; } }
+        //public bool IsTestClass { get { return TestClass != null && TestMethod == null; } }
+        public bool IsTestMethod { get { return Test != null; } }
+        //public bool IsNamespace { get { return TestClass == null; } }
     }
 }

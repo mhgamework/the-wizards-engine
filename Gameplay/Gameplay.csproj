@@ -15,7 +15,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
+    <OutputPath>..\bin\Binaries\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -30,6 +30,7 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
     <PostSharpHost>Managed</PostSharpHost>
+    <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -67,8 +68,27 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\Binaries\Common.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CommonVB, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\Binaries\CommonVB.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
+    <Reference Include="NewModules, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\Binaries\NewModules.exe</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.7.10213, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\Binaries\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="PostSharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -89,6 +109,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TestRunner, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\Binaries\TestRunner.exe</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -115,8 +139,34 @@
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="Engine\EngineUIConsole.cs" />
     <Compile Include="Engine\EngineUISimulator.cs" />
+    <Compile Include="Engine\Testing\EngineTest.cs" />
+    <Compile Include="Engine\Testing\EngineTestPicker.cs" />
+    <Compile Include="Engine\Testing\EngineTestRunner.cs" />
+    <Compile Include="Engine\Testing\ITestSerializer.cs" />
+    <Compile Include="Engine\Testing\OtherAppdomainTestRunner.cs" />
+    <Compile Include="Engine\Testing\TestingData.cs" />
+    <Compile Include="Engine\Testing\TestUISimulator.cs" />
+    <Compile Include="Engine\Tests\PhysX\BarrelSimulatorTest.cs" />
+    <Compile Include="Engine\Testing\ITestSimulator.cs" />
+    <Compile Include="Engine\Tests\PhysX\SimpleEntityPhysicsTest.cs" />
+    <Compile Include="Engine\UISimulator.cs" />
     <Compile Include="Engine\WorldRendering\FirstPersonCamera.cs" />
     <Compile Include="Engine\WorldRendering\FirstPersonCameraSimulator.cs" />
+    <Compile Include="Gameplay\AssetBrowserTest.cs" />
+    <Compile Include="Gameplay\EngineFactory.cs" />
+    <Compile Include="Gameplay\Core\AudioTest.cs" />
+    <Compile Include="Gameplay\Core\DebugTest.cs" />
+    <Compile Include="Gameplay\Core\EngineUITest.cs" />
+    <Compile Include="Gameplay\Core\NetworkSyncerTest.cs" />
+    <Compile Include="Gameplay\Core\Persistence\PersistenceTest.cs" />
+    <Compile Include="Gameplay\Core\RaycastingTest.cs" />
+    <Compile Include="Gameplay\Core\VoxelTerrainTest.cs" />
+    <Compile Include="Gameplay\Core\WorldRenderingTest.cs" />
+    <Compile Include="Gameplay\Enginetest.cs" />
+    <Compile Include="Gameplay\NavigationTest.cs" />
+    <Compile Include="Gameplay\TilingTest.cs" />
+    <Compile Include="Gameplay\Various\LocalGame.cs" />
+    <Compile Include="Gameplay\Various\ModelTest.cs" />
     <Compile Include="LevelBuilding\LevelBuildingTriggerObjectType.cs" />
     <Compile Include="LevelBuilding\TriggerObject.cs" />
     <Compile Include="Engine\Persistence\Datastore.cs" />
@@ -270,20 +320,6 @@
     <Compile Include="_XNA\World\ServerWorld.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.Core\Common.Core.csproj">
-      <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
-      <Name>Common.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Deprecated\CommonVB\CommonVB.vbproj">
-      <Project>{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}</Project>
-      <Name>CommonVB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NewModules\NewModules.csproj">
-      <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
-      <Name>NewModules</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
@@ -295,7 +331,7 @@
     <Content Include="_Features\_doc.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Engine\Testing\" />
+    <Folder Include="Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

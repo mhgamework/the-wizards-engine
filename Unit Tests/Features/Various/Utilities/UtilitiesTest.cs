@@ -17,8 +17,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various.Utilities
         public void TestTestRunner()
         {
             throw new NotImplementedException(); // This causes problems with automated testing
-            TestRunnerGUI runnerGui = new TestRunnerGUI();
-            runnerGui.TestsAssembly = Assembly.GetExecutingAssembly();
+            TestRunnerGUI runnerGui = new TestRunnerGUI(Assembly.GetExecutingAssembly());
             runnerGui.Run();
         }
 
@@ -46,9 +45,9 @@ namespace MHGameWork.TheWizards.Tests.Features.Various.Utilities
             p.StartInfo.ErrorDialog = false;
 
             /* StringBuilder sb = new StringBuilder("/COVERAGE ");
-             sb.Append("TestRunner.exe");*/
+             sb.Append("NUnitTestRunner.exe");*/
             //p.StartInfo.FileName = "vsinstr.exe";
-            p.StartInfo.FileName = "TestRunner.exe";
+            p.StartInfo.FileName = "NUnitTestRunner.exe";
             p.StartInfo.Arguments = "-test Exception";
             p.Start();
 
@@ -71,8 +70,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various.Utilities
         [Test]
         public void TestRunTestByName()
         {
-            TestRunnerGUI runnerGui = new TestRunnerGUI();
-            runnerGui.TestsAssembly = Assembly.GetExecutingAssembly();
+            TestRunnerGUI runnerGui = new TestRunnerGUI(Assembly.GetExecutingAssembly());
             runnerGui.RunTestByName("MHGameWork.TheWizards.Tests.Utilities.UtilitiesTest.TestSimpleTest");
 
         }

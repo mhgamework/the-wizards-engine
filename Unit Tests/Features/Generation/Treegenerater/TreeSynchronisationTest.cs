@@ -271,7 +271,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Generation.Treegenerater
             //{
             //        System.Threading.Thread.Sleep(3000);
 
-            //    p = TestRunner.RunTestInOtherProcess("TreeGenerator.EngineSynchronisation.TreeSynchronisationTest.TestClientSynchronisation");
+            //    p = NUnitTestRunner.RunTestInOtherProcess("TreeGenerator.EngineSynchronisation.TreeSynchronisationTest.TestClientSynchronisation");
             //});
 
             //TestServerSynchronisation();

@@ -14,7 +14,7 @@ namespace MHGameWork.TheWizards
         public static void Main()
         {
             var eng = new Engine.TWEngine();
-            eng.GameplayDll = "../../Gameplay/bin/x86/Debug/Gameplay.dll";
+            eng.GameplayDll = "Gameplay.dll";
             eng.HotloadingEnabled = true;
             eng.Start();
         }

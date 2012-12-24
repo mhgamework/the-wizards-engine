@@ -42,8 +42,7 @@ namespace MHGameWork.TheWizards.ServerClient
                 redir.WriteLine("--------------------Start Logging!");
                 Console.SetOut(redir);
 
-                TestRunnerGUI runnerGui = new TestRunnerGUI();
-                runnerGui.TestsAssembly = Assembly.LoadFrom("Unit Tests.dll");
+                TestRunnerGUI runnerGui = new TestRunnerGUI(Assembly.LoadFrom("Unit Tests.dll"));
                 //runner.RunTestNewProcessPath = "\"" + Assembly.GetExecutingAssembly().Location + "\"" + " -test {0}";
 
 

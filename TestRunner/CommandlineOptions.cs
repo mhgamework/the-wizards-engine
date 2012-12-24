@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.TestRunner
         public string GetUsage()
         {
             var usage = new StringBuilder();
-            usage.AppendLine("The Wizards TestRunner.");
+            usage.AppendLine("The Wizards NUnitTestRunner.");
             return usage.ToString();
         }
     }

@@ -5,12 +5,13 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 {
     /// <summary>
     /// Responsible for rendering the world
+    /// NOTE: UI simulation was moved the UISimualtor
     /// </summary>
     public class WorldRenderingSimulator : ISimulator
     {
         private DeferredRenderer deferred;
         private CameraInfo info;
-        private TextareaUpdater textareaSimulator;
+        
         private WireframeBoxSimulator wireframeSimulator;
         private EntitySimulator entitySimulator;
         private PointLightSimulator pointLightSimulator;
@@ -35,7 +36,6 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
             info = TW.Data.GetSingleton<CameraInfo>();
 
 
-            textareaSimulator = new TextareaUpdater();
 
             entitySimulator = new EntitySimulator();
             wireframeSimulator = new WireframeBoxSimulator();
@@ -59,8 +59,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
             TW.Graphics.LineManager3D.Render(TW.Graphics.Camera);
             TW.Graphics.SetBackbuffer();
 
-            textareaSimulator.Update();
-            textareaSimulator.Render();
+            
 
         }
 

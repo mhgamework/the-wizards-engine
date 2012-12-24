@@ -15,7 +15,8 @@ namespace MHGameWork.TheWizards.Engine
         {
             MainProfilingPoint = Profiler.CreateElement("[THE WIZARDS ENGINE]");
         }
-        public ProfilingPoint MainProfilingPoint { get; private set; }
 
+        public ProfilingPoint MainProfilingPoint { get; private set; }
+        public bool NeedsReload { get; set; }
     }
 }

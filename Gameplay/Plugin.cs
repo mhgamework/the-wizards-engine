@@ -8,6 +8,8 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Debugging;
 using MHGameWork.TheWizards.Engine.Persistence;
 using MHGameWork.TheWizards.Engine.PhysX;
+using MHGameWork.TheWizards.Engine.Testing;
+using MHGameWork.TheWizards.Engine.Tests.PhysX;
 using MHGameWork.TheWizards.Engine.VoxelTerraining;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Entity;
@@ -20,6 +22,7 @@ using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Serialization;
 using MHGameWork.TheWizards.Simulators;
+using MHGameWork.TheWizards.TestRunner;
 using MHGameWork.TheWizards.Trigger;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
@@ -38,7 +41,8 @@ namespace MHGameWork.TheWizards
             //testLevelBuilding(engine);
 
             //testAddStupidRedHelperMesh(engine);
-            testFirstPersonCamera(engine);
+            //testFirstPersonCamera(engine);
+            testPlay(engine);
         }
 
         private void testFirstPersonCamera(TWEngine engine)
@@ -59,14 +63,52 @@ namespace MHGameWork.TheWizards
 
         private void testPlay(TWEngine engine)
         {
-            engine.AddSimulator(new EngineUISimulator());
-            engine.AddSimulator(new TerrainEditorSimulator());
-            engine.AddSimulator(new VoxelTerrainSimulator());
-            engine.AddSimulator(new PhysXSimulator());
-            engine.AddSimulator(new WorldRenderingSimulator());
+            var testingData = TW.Data.GetSingleton<TestingData>();
+            if (testingData.ActiveTestClass != null)
+            {
+                var type = TW.Data.TypeSerializer.Deserialize(testingData.ActiveTestClass);
+                var method = type.GetMethod(testingData.ActiveTestMethod);
+                var test = new NUnitTest(method, type);
 
+                var runner = new EngineTestRunner();
+                runner.RunTest(engine,test);
+
+                //var simulator = (ITestSimulator) Activator.CreateInstance(type);
+
+                //engine.AddSimulator(simulator);
+                //simulator.Initialize(engine);
+
+
+                ////TODO: somewhat haxor
+                //if (type.Namespace.Contains("MHGameWork.TheWizards.Engine"))
+                //    loadBare(engine);
+                //else
+                //    loadEngine(engine);
+                loadBare(engine);
+            }
+            else
+            {
+                loadEngine(engine);
+            }
+            
         }
 
+        private void loadBare(TWEngine engine)
+        {
+            engine.AddSimulator(new TestUISimulator());
+            engine.AddSimulator(new UISimulator());
+        }
+        private void loadEngine(TWEngine engine)
+        {
+            engine.AddSimulator(new EngineUISimulator());
+            engine.AddSimulator(new VoxelTerrainSimulator());
+            engine.AddSimulator(new PhysXSimulator());
+            engine.AddSimulator(new FirstPersonCameraSimulator());
+            engine.AddSimulator(new FlashlightSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
+            engine.AddSimulator(new TestUISimulator());
+            engine.AddSimulator(new UISimulator());
+        }
         private void testAddStupidRedHelperMesh(TWEngine engine)
         {
             var player = new PlayerData();
