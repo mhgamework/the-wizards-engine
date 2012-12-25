@@ -56,29 +56,7 @@ namespace MHGameWork.TheWizards.Engine.Testing
             return builder.RootNode;
 
         }
-        private TestNode createSimulatorsTree(TestsTreeBuilder builder)
-        {
-            rootNode = new TestNode();
-            rootNode.Text = "_ROOT_";
-
-            var types = TW.Data.GameplayAssembly.GetExportedTypes()
-                .Where(t => typeof(ITestSimulator).IsAssignableFrom(t)).ToArray();
-
-
-            for (int i = 0; i < types.Length; i++)
-            {
-                var type = types[i];
-
-
-                var parentNamespace = builder.GetOrCreateParentNode(type);
-                var testClass = parentNamespace.CreateChild(type.Name);
-
-                testClass.Test = new EngineTest{ SimulatorType =  type};
-
-            }
-            return rootNode;
-
-        }
+      
 
     }
 }

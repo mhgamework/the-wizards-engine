@@ -17,22 +17,9 @@ namespace MHGameWork.TheWizards.Engine.Testing
         public void RunTest(TWEngine engine, NUnitTest test)
         {
 
-            var other = new OtherAppdomainTestRunner(new NUnitTestRunner());
+            var other = new NUnitTestRunner();
+            other.Run(test);
 
-            var appDomain = AppDomain.CreateDomain("TestRunnerNew");
-            //appDomain.Load(new AssemblyName(TestsAssembly.FullName));
-
-           
-
-            try
-            {
-                AppDomain.Unload(appDomain);// this causes crashes in character controllers?
-
-            }
-            catch (Exception unloadEx)
-            {
-                Console.WriteLine(unloadEx);
-            }
 
             //var oldContext = EngineFactory.Instance;
             //EngineFactory.Instance = new TWEngineContext(engine);
@@ -48,7 +35,7 @@ namespace MHGameWork.TheWizards.Engine.Testing
 
         }
 
-     
+
         private class TWEngineContext : EngineFactory.EngineFactoryContext
         {
             private TWEngine engine;

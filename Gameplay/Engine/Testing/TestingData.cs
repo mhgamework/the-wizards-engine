@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.Engine.Testing
     public class TestingData : EngineModelObject
     {
         public String ActiveTestClass { get; set; }
-
         public string ActiveTestMethod { get; set; }
+        public byte[] SerializedTest { get; set; }
     }
 }

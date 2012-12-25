@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using MHGameWork.TheWizards.Animation;
 using MHGameWork.TheWizards.Engine;
@@ -66,9 +67,9 @@ namespace MHGameWork.TheWizards
             var testingData = TW.Data.GetSingleton<TestingData>();
             if (testingData.ActiveTestClass != null)
             {
-                var type = TW.Data.TypeSerializer.Deserialize(testingData.ActiveTestClass);
-                var method = type.GetMethod(testingData.ActiveTestMethod);
-                var test = new NUnitTest(method, type);
+                var mem = new MemoryStream(testingData.SerializedTest);
+                var f = new BinaryFormatter();
+                var test = (NUnitTest) f.Deserialize(mem);
 
                 var runner = new EngineTestRunner();
                 runner.RunTest(engine,test);

@@ -53,7 +53,7 @@ namespace MHGameWork.TheWizards.Reflection
         }
         public static Type GetGenericListType(Type type)
         {
-            return type.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IList<>)).GetGenericArguments()[0];
+           return type.GetInterfaces().First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IList<>)).GetGenericArguments()[0];
         }
 
     }

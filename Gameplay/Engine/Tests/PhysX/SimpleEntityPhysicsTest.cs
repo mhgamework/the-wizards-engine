@@ -8,7 +8,7 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.Engine.Tests.PhysX
 {
-    public class SimpleEntityPhysicsTest : ITestSimulator
+    public class SimpleEntityPhysicsTest 
     {
 
         /// <summary>

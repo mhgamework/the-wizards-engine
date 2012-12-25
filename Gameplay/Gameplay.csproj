@@ -139,15 +139,13 @@
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="Engine\EngineUIConsole.cs" />
     <Compile Include="Engine\EngineUISimulator.cs" />
-    <Compile Include="Engine\Testing\EngineTest.cs" />
     <Compile Include="Engine\Testing\EngineTestPicker.cs" />
     <Compile Include="Engine\Testing\EngineTestRunner.cs" />
-    <Compile Include="Engine\Testing\ITestSerializer.cs" />
-    <Compile Include="Engine\Testing\OtherAppdomainTestRunner.cs" />
+    <Compile Include="Engine\Features\Testing\ITestSerializer.cs" />
+    <Compile Include="Engine\Features\Testing\OtherAppdomainTestRunner.cs" />
     <Compile Include="Engine\Testing\TestingData.cs" />
     <Compile Include="Engine\Testing\TestUISimulator.cs" />
     <Compile Include="Engine\Tests\PhysX\BarrelSimulatorTest.cs" />
-    <Compile Include="Engine\Testing\ITestSimulator.cs" />
     <Compile Include="Engine\Tests\PhysX\SimpleEntityPhysicsTest.cs" />
     <Compile Include="Engine\UISimulator.cs" />
     <Compile Include="Engine\WorldRendering\FirstPersonCamera.cs" />

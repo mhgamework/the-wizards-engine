@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using MHGameWork.TheWizards.Common;
 
 namespace MHGameWork.TheWizards.Serialization
 {
@@ -32,6 +34,7 @@ namespace MHGameWork.TheWizards.Serialization
             ret.Add(o => o.ToString(), double.Parse);
             ret.Add(o => o.ToString(), bool.Parse);
             ret.Add(o => o.ToString(), Guid.Parse);
+            ret.Add(Convert.ToBase64String,Convert.FromBase64String);
 
 
             ret.AddConditional(new EnumSerializer());

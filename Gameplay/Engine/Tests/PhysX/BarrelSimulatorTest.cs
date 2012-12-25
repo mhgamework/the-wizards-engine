@@ -7,7 +7,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 
 namespace MHGameWork.TheWizards.Engine.Tests.PhysX
 {
-    public class BarrelSimulatorTest : ITestSimulator
+    public class BarrelSimulatorTest 
     {
         public void Simulate()
         {
