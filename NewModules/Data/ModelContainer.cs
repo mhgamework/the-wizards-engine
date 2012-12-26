@@ -77,7 +77,11 @@ namespace MHGameWork.TheWizards.Data
 
         public void NotifyObjectModified(IModelObject obj)
         {
-            if (!Objects.Contains(obj)) throw new InvalidOperationException("Object not in this container!");
+            if (!Objects.Contains(obj))
+            {
+                //throw new InvalidOperationException("Object not in this container!");
+                return;
+            }
             flagChanged(obj, ModelChange.Modified);
         }
 

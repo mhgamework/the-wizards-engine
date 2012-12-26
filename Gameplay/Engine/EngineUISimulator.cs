@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using MHGameWork.TheWizards.Engine.Persistence;
+using MHGameWork.TheWizards.Engine.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.VSIntegration;
@@ -75,10 +76,26 @@ namespace MHGameWork.TheWizards.Engine
             var ret = new TextMenu<Action>();
             ret.AddItem("Debug", delegate { new VSDebugAttacher().AttachToVisualStudio(); });
             ret.AddItem("Load/Save", showPersistence);
-            ret.AddItem("Exit", delegate { TW.Graphics.Exit(); });
+            ret.AddItem("Clean", cleanData);
+            ret.AddItem("Reset", resetData);
+            ret.AddItem("Select test [Press F5]", delegate { });
+            ret.AddItem("Exit DONT PRESS", delegate { TW.Graphics.Exit(); });
 
             return ret;
 
+        }
+
+        private void cleanData()
+        {
+            var test = TW.Data.GetSingleton<TestingData>();
+            resetData();
+            TW.Data.Objects.Add(test);
+        }
+
+        private void resetData()
+        {
+            TW.Data.Objects.Clear();
+            TW.Debug.NeedsReload = true;
         }
 
         private void showPersistence()
