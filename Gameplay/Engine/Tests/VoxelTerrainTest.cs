@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.Persistence;
 using MHGameWork.TheWizards.Engine.PhysX;
 using MHGameWork.TheWizards.Engine.VoxelTerraining;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.Player;
 using MHGameWork.TheWizards.Simulators;
@@ -20,13 +22,13 @@ using TreeGenerator.TerrrainGeneration;
 namespace MHGameWork.TheWizards.Tests.Gameplay.Core
 {
     [TestFixture]
+    [EngineTest]
     public class VoxelTerrainTest
     {
         [Test]
         public void TestSimpleVoxelTerrain()
         {
-            var engine = new TWEngine();
-            engine.DontLoadPlugin = true;
+            var engine = EngineFactory.CreateEngine();
             engine.Initialize();
 
             var terr = createTerrain();
@@ -56,8 +58,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
         [Test]
         public void TestBlob()
         {
-            var engine = new TWEngine();
-            engine.DontLoadPlugin = true;
+            var engine = EngineFactory.CreateEngine();
             engine.Initialize();
 
             var terr = createBlob();
@@ -91,8 +92,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
         [Test]
         public void TestPlanetSurface()
         {
-            var engine = new TWEngine();
-            engine.DontLoadPlugin = true;
+            var engine = EngineFactory.CreateEngine();
             engine.Initialize();
 
             var terr = new VoxelTerrainChunk();
@@ -121,8 +121,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
         [Test]
         public void TestTerrainPhysX()
         {
-            var engine = new TWEngine();
-            engine.DontLoadPlugin = true;
+            var engine = EngineFactory.CreateEngine();
             engine.Initialize();
 
             var terr = createBlob();
@@ -139,8 +138,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
         [Test]
         public void TestVoxelEditor()
         {
-            var engine = new TWEngine();
-            engine.DontLoadPlugin = true;
+            var engine = EngineFactory.CreateEngine();
             engine.Initialize();
 
             createBlob();
@@ -165,8 +163,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
         [Test]
         public void TestTranslatedVoxelTerrain()
         {
-            var engine = new TWEngine();
-            engine.DontLoadPlugin = true;
+            var engine = EngineFactory.CreateEngine();
             engine.Initialize();
 
             var terr = createBlob();
@@ -188,7 +185,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
         [Test]
         public void TestPersistence()
         {
-            var engine = new TWEngine();
+            var engine = EngineFactory.CreateEngine();
             engine.Initialize();
 
             var terr = createBlob();
@@ -212,12 +209,11 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
         [Test]
         public void TestVoxelEditorBig()
         {
-            var engine = new TWEngine();
-            engine.DontLoadPlugin = true;
+            var engine = EngineFactory.CreateEngine();
             engine.Initialize();
 
             //generateFlat();
-            generateTerrain(30, 30);
+            generateTerrain(5, 5);
 
             TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
 
@@ -345,10 +341,10 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
                         {
                             for (int tz = 0; tz < terr.Size.Z; tz++)
                             {
-                                var heightMapX = tx + (int) terr.WorldPosition.X;
-                                var heightMapZ = tz + (int) terr.WorldPosition.Z;
+                                var heightMapX = tx + (int)terr.WorldPosition.X;
+                                var heightMapZ = tz + (int)terr.WorldPosition.Z;
                                 if (heightMapX >= width || heightMapZ >= height) continue;
-                                if (ty < heightDataErrosion[heightMapX, heightMapZ]/2f)
+                                if (ty < heightDataErrosion[heightMapX, heightMapZ] / 2f)
                                     terr.GetVoxelInternal(new Point3(tx, ty, tz)).Filled = true;
                             }
                         }
