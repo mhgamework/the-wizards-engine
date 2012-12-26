@@ -203,8 +203,13 @@ namespace MHGameWork.TheWizards.Engine
             {
                 var tempFile = Path.GetTempFileName();
 
-                File.Copy(GameplayDll, tempFile, true);
-                activeGameplayAssembly = Assembly.LoadFile(tempFile);
+                File.Copy(GameplayDll, tempFile + ".dll", true);
+                File.Copy(Path.ChangeExtension(GameplayDll, "pdb"), tempFile + ".pdb", true);
+                //File.Delete(GameplayDll);
+                //File.Delete(Path.ChangeExtension(GameplayDll,"pdb"));
+                //File.Delete(Path.ChangeExtension(GameplayDll, "pssym"));
+                //File.Delete(Path.ChangeExtension(GameplayDll, "dll.config"));
+                activeGameplayAssembly = Assembly.LoadFile(tempFile + ".dll");
                 TW.Data.GameplayAssembly = activeGameplayAssembly;
 
 

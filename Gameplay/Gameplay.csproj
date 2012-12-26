@@ -139,9 +139,9 @@
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="Engine\EngineUIConsole.cs" />
     <Compile Include="Engine\EngineUISimulator.cs" />
+    <Compile Include="Engine\Features\Testing\EngineTestAttribute.cs" />
     <Compile Include="Engine\Testing\EngineTestPicker.cs" />
     <Compile Include="Engine\Testing\EngineTestRunner.cs" />
-    <Compile Include="Engine\Features\Testing\ITestSerializer.cs" />
     <Compile Include="Engine\Features\Testing\OtherAppdomainTestRunner.cs" />
     <Compile Include="Engine\Testing\TestingData.cs" />
     <Compile Include="Engine\Testing\TestUISimulator.cs" />
@@ -151,6 +151,10 @@
     <Compile Include="Engine\WorldRendering\FirstPersonCamera.cs" />
     <Compile Include="Engine\WorldRendering\FirstPersonCameraSimulator.cs" />
     <Compile Include="Gameplay\AssetBrowserTest.cs" />
+    <Compile Include="Gameplay\Assets\AssetsSynchronizationTest.cs" />
+    <Compile Include="Gameplay\Assets\SimpleAsset.cs" />
+    <Compile Include="Gameplay\Assets\SimpleAssetFactory.cs" />
+    <Compile Include="Gameplay\Building\BuildingTest.cs" />
     <Compile Include="Gameplay\EngineFactory.cs" />
     <Compile Include="Gameplay\Core\AudioTest.cs" />
     <Compile Include="Gameplay\Core\DebugTest.cs" />
@@ -161,7 +165,20 @@
     <Compile Include="Gameplay\Core\VoxelTerrainTest.cs" />
     <Compile Include="Gameplay\Core\WorldRenderingTest.cs" />
     <Compile Include="Gameplay\Enginetest.cs" />
+    <Compile Include="Gameplay\MainTest.cs" />
     <Compile Include="Gameplay\NavigationTest.cs" />
+    <Compile Include="Gameplay\OldScripting\FortressTest.cs" />
+    <Compile Include="Gameplay\OldScripting\GameplayTest.cs" />
+    <Compile Include="Gameplay\OldScripting\HelperPlayerController.cs" />
+    <Compile Include="Gameplay\OldScripting\Player\PlayerTest.cs" />
+    <Compile Include="Gameplay\OldScripting\Player\XNATaskQueueTester.cs" />
+    <Compile Include="Gameplay\OldScripting\Scene\SceneTest.cs" />
+    <Compile Include="Gameplay\OldScripting\Scripting\ScriptingTest.cs" />
+    <Compile Include="Gameplay\OldScripting\Scripting\SimpleScriptDatabinding.cs" />
+    <Compile Include="Gameplay\OldScripting\Scripting\SimpleStateScript.cs" />
+    <Compile Include="Gameplay\OldScripting\Scripting\TestScriptImplementation.cs" />
+    <Compile Include="Gameplay\OldScripting\Scripting\TestScriptWrapper.cs" />
+    <Compile Include="Gameplay\OldScripting\TestTWGame.cs" />
     <Compile Include="Gameplay\TilingTest.cs" />
     <Compile Include="Gameplay\Various\LocalGame.cs" />
     <Compile Include="Gameplay\Various\ModelTest.cs" />
@@ -318,9 +335,6 @@
     <Compile Include="_XNA\World\ServerWorld.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Building\_doc.txt" />
     <Content Include="LevelBuilding\_doc.txt" />
     <Content Include="Tiling\_doc.txt" />
@@ -330,6 +344,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Launcher\Launcher.csproj">
+      <Project>{4f8cd191-ece8-4a05-9721-1ebcf03a31b6}</Project>
+      <Name>Launcher</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

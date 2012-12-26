@@ -212,6 +212,9 @@
     <Compile Include="Entity\Editor\EditorMeshPart.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Networking\SimpleClientPacketManager.cs" />
+    <Compile Include="Networking\SimpleClientPacketTransporter.cs" />
+    <Compile Include="Networking\SimpleServerPacketManager.cs" />
     <Compile Include="Pathing\IAI.cs" />
     <Compile Include="Pathing\IAIMover.cs" />
     <Compile Include="Pathing\SimpleAIMover.cs" />
@@ -221,6 +224,7 @@
     <Compile Include="Persistence\ModelSerializer.cs" />
     <Compile Include="Persistence\MyObjectDictionary.cs" />
     <Compile Include="Persistence\PersistAttribute.cs" />
+    <Compile Include="Physics\MeshPhysicsFactoryXNA.cs" />
     <Compile Include="Raycasting\MeshRaycaster.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderData.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderDataFactory.cs" />
@@ -378,6 +382,7 @@
     <Compile Include="Physics\MeshPhysicsActorBuilder.cs" />
     <Compile Include="Physics\MeshCollisionData.cs" />
     <Compile Include="Physics\MeshPhysicsElementFactory.cs" />
+    <Compile Include="TestFiles.cs" />
     <Compile Include="TreeGenerator\AtlasTool\TextureAtlasCreater.cs" />
     <Compile Include="TreeGenerator\AtlasTool\TextureForm.cs">
       <SubType>Form</SubType>

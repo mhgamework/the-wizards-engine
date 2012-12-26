@@ -20,18 +20,10 @@ namespace MHGameWork.TheWizards.Engine.Testing
             if (test == null)
                 return;
 
-            TW.Data.GetSingleton<TestingData>().ActiveTestClass = TW.Data.TypeSerializer.Serialize(test.TestClass);
-            TW.Data.GetSingleton<TestingData>().ActiveTestMethod = test.TestMethod.Name;
+            var runner = new EngineTestRunner();
+            runner.RunTest(test);
 
-
-            var mem = new MemoryStream();
-            var f = new BinaryFormatter();
-            f.Serialize(mem,test);
-
-            TW.Data.GetSingleton<TestingData>().SerializedTest = mem.ToArray();
-
-
-            TW.Debug.NeedsReload = true;
+        
         }
     }
 }

@@ -23,10 +23,12 @@ namespace MHGameWork.TheWizards.TestRunner
 
         public TestNode CreateTestsTree(Assembly assembly)
         {
-
-            
-            var types = assembly.GetExportedTypes()
-                .Where(t => t.GetCustomAttributes(typeof(NUnit.Framework.TestFixtureAttribute), false).Length > 0).ToArray();
+            List<Type> list = new List<Type>();
+            foreach (Type t in assembly.GetExportedTypes())
+            {
+                if (t.GetCustomAttributes(typeof (NUnit.Framework.TestFixtureAttribute), false).Length > 0) list.Add(t);
+            }
+            var types = list.ToArray();
 
 
             for (int i = 0; i < types.Length; i++)

@@ -1,5 +1,6 @@
 ﻿using System;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Tests.Gameplay.Various;
@@ -10,12 +11,14 @@ using SlimDX;
 namespace MHGameWork.TheWizards.Tests.Gameplay.Core
 {
     [TestFixture]
+    [EngineTest]
     public class WorldRenderingTest
     {
         [Test]
         public void TestWireframebox()
         {
             var game = EngineFactory.CreateEngine();
+            game.Initialize();
 
             game.AddSimulator(new WorldRenderingSimulator());
 
@@ -30,7 +33,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
         [Test]
         public void TestEntityVisible()
         {
-            var game = new LocalGame();
+            var game = EngineFactory.CreateEngine();
+            game.Initialize();
 
             game.AddSimulator(new WorldRenderingSimulator());
 
@@ -53,8 +57,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
         [Test]
         public void TestPointLight()
         {
-            var game = new LocalGame();
-
+            var game = EngineFactory.CreateEngine();
+            game.Initialize();
 
             var e = new Engine.WorldRendering.Entity()
             {
@@ -65,7 +69,9 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
                             {
                                 Position = new Vector3(-1, 0, 0)
                             };
-            var time = 0f;
+            var time = 2f;
+
+
             game.AddSimulator(new BasicSimulator(delegate
                                                  {
                                                      time += TW.Graphics.Elapsed;
@@ -74,7 +80,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
                                                      light.Intensity = 2;
                                                  }));
 
-            game.AddSimulator(new EntitySimulator());
+            
+            game.AddSimulator(new WorldRenderingSimulator());
 
 
 
@@ -85,7 +92,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
         [Test]
         public void TestTextarea()
         {
-            var game = new LocalGame();
+            var game = EngineFactory.CreateEngine();
+            game.Initialize();
 
             var a = new Textarea
                         {

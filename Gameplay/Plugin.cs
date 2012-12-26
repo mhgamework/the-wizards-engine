@@ -67,12 +67,8 @@ namespace MHGameWork.TheWizards
             var testingData = TW.Data.GetSingleton<TestingData>();
             if (testingData.ActiveTestClass != null)
             {
-                var mem = new MemoryStream(testingData.SerializedTest);
-                var f = new BinaryFormatter();
-                var test = (NUnitTest) f.Deserialize(mem);
-
                 var runner = new EngineTestRunner();
-                runner.RunTest(engine,test);
+                runner.RunTestDataTest(engine);
 
                 //var simulator = (ITestSimulator) Activator.CreateInstance(type);
 

@@ -9,19 +9,26 @@ using System.Xml.Serialization;
 
 namespace MHGameWork.TheWizards.TestRunner
 {
-    public class OtherProcessTestRunner
+    public class OtherProcessTestRunner : ITestRunner
     {
-        public TestResult RunTestInOtherProcess(Assembly assembly, string className, string method)
+        private readonly ITestRunner otherRunner;
+
+        public OtherProcessTestRunner(ITestRunner otherRunner)
         {
+            this.otherRunner = otherRunner;
+        }
+
+        public TestResult RunTestInOtherProcess(TestCommand command)
+        {
+
             // Run in new process
 
-            var args = String.Format("-a \"{0}\" -c \"{1}\" -m \"{2}\"", assembly.Location, className, method);
-            var info = new ProcessStartInfo( Assembly.GetExecutingAssembly().Location, args);
+            var info = new ProcessStartInfo( Assembly.GetExecutingAssembly().Location, "-s " + TestCommand.ToString(command));
             info.UseShellExecute = false;
             info.RedirectStandardOutput = true;
 
             var p = Process.Start(info);
-            p.WaitForExit(7000);
+            p.WaitForExit(); // 7000
             if (!p.HasExited)
             {
                 p.Kill();
@@ -47,8 +54,16 @@ namespace MHGameWork.TheWizards.TestRunner
                 xml += line;
             }
 
-            if (xml == null) throw new InvalidOperationException();
-            return (TestResult)s.Deserialize(new StringReader(xml));
+            //if (xml == null) throw new InvalidOperationException();
+            return null;
+            //return (TestResult)s.Deserialize(new StringReader(xml));
+        }
+
+        public void Run(ITest test)
+        {
+            var cmd = TestCommand.Create(otherRunner, test);
+
+            RunTestInOtherProcess(cmd);
         }
     }
 }

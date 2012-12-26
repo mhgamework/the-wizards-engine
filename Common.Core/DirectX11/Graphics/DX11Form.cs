@@ -215,5 +215,14 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             Context.OutputMerger.SetTargets(BackBufferRTV);
             Context.Rasterizer.SetViewports(new Viewport(0, 0, Form.ClientSize.Width, Form.ClientSize.Height, 0.0f, 1.0f));*/
         }
+
+        public void Hide()
+        {
+            form.Invoke(new Action(() => form.Hide()));
+        }
+        public void Show()
+        {
+            form.Invoke(new Action(() => form.Show()));
+        }
     }
 }

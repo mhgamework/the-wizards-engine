@@ -13,6 +13,8 @@ namespace MHGameWork.TheWizards.TestRunner
         [Option("a", "assembly", Required = true, HelpText = "Path to the assembly containing the test.")]
         public string AssemblyName;
 
+        [Option("s", "serialized", Required = true, HelpText = "Serialized TestCommand.")]
+        public string SerializedCommand;
 
         [HelpOption(HelpText = "Display this help screen.")]
         public string GetUsage()

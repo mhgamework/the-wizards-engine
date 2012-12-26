@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <StartArguments>-a "Unit Tests.dll" -c "MHGameWork.TheWizards.Tests.Graphics.GraphicsTest" -m "TestRunXNAGame"</StartArguments>
+    <StartArguments>-s AAEAAAD/////AQAAAAAAAAAMAgAAAEFUZXN0UnVubmVyLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAALE1IR2FtZVdvcmsuVGhlV2l6YXJkcy5UZXN0UnVubmVyLlRlc3RDb21tYW5kAgAAAApydW5uZXJEYXRhCHRlc3REYXRhBwcCAgIAAAAJAwAAAAkEAAAADwMAAACXAAAAAgABAAAA/////wEAAAAAAAAADAIAAABBVGVzdFJ1bm5lciwgVmVyc2lvbj0xLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwFAQAAADBNSEdhbWVXb3JrLlRoZVdpemFyZHMuVGVzdFJ1bm5lci5OVW5pdFRlc3RSdW5uZXIAAAAAAgAAAAsPBAAAADIBAAACAAEAAAD/////AQAAAAAAAAAMAgAAAEFUZXN0UnVubmVyLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAKk1IR2FtZVdvcmsuVGhlV2l6YXJkcy5UZXN0UnVubmVyLk5Vbml0VGVzdAMAAAAIYXNzZW1ibHkFY2xhc3MGbWV0aG9kAQEBAgAAAAYDAAAAMUM6XFVzZXJzXE1IR2FtZVdvcmtcQXBwRGF0YVxMb2NhbFxUZW1wXHRtcDQzRC50bXAGBAAAADVNSEdhbWVXb3JrLlRoZVdpemFyZHMuVGVzdHMuR2FtZXBsYXkuQXNzZXRCcm93c2VyVGVzdAYFAAAAEFRlc3RBc3NldEJyb3dzZXILCw==</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Profile|x86'">
     <StartArguments>-a "Unit Tests.dll" -c "MHGameWork.TheWizards.Tests.Graphics.GraphicsTest" -m "TestRunXNAGame"</StartArguments>

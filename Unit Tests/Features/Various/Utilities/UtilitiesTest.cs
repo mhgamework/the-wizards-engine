@@ -82,8 +82,10 @@ namespace MHGameWork.TheWizards.Tests.Features.Various.Utilities
         [Test]
         public void TestRunNestedTestNewProcess()
         {
-            var other = new OtherProcessTestRunner();
-            other.RunTestInOtherProcess(typeof(UtilitiesTest).Assembly, "MHGameWork.TheWizards.Tests.Utilities.UtilitiesTest", "TestSimpleTest");
+            var other = new OtherProcessTestRunner(new NUnitTestRunner());
+            var cls = typeof(UtilitiesTest);
+            var test = new NUnitTest(cls.GetMethod("TestSimpleTest"), cls);
+            other.Run(test);
 
         }
     }
