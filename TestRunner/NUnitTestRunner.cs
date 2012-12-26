@@ -63,7 +63,14 @@ namespace MHGameWork.TheWizards.TestRunner
 
             var thread = new Thread(delegate()
             {
-                RunNormal(instance, unit.TestMethod);
+                try
+                {
+                    RunNormal(instance, unit.TestMethod);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
 
             });
 
