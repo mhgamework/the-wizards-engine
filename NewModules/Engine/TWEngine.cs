@@ -59,10 +59,10 @@ namespace MHGameWork.TheWizards.Engine
 
         public void Run()
         {
-            if (game.Running) return;
-
             if (game == null)
                 Initialize();
+
+            if (game.Running) return;
 
             game.Run();
         }
