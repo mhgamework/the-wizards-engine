@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         static CompiledShaderCache()
         {
             Current = new CompiledShaderCache();
-            //Current.disableCache = true; TODO: test this with autoreloading...
+            Current.disableCache = true; //TODO: test this with autoreloading...
         }
         public static CompiledShaderCache Current { get; private set; }
 

@@ -216,7 +216,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             drawGBuffer(gBuffer);
             drawLines(gBuffer);
             drawLights(combineFinalRenderer);
-            //updateSSAO();
+            updateSSAO();
 
             drawCombinedHdrImage(hdrImageRtv, gBuffer, combineFinalRenderer, skyColorRV, ssao.MSsaoBuffer.pSRV);
             updateTonemapLuminance(calculater);
