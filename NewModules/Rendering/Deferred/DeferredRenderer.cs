@@ -489,8 +489,12 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         /// </summary>
         public void ClearAll()
         {
+            directionalLights.Clear();
+            pointLights.Clear();
+            spotLights.Clear();
+
             while (lineElements.Count > 0) lineElements[0].Delete();
-            //TODO:
+            
             foreach (var mesh in meshElements)
             {
                 if (!mesh.IsDeleted)
