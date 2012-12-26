@@ -55,6 +55,7 @@ namespace MHGameWork.TheWizards.Engine.Testing
             //TW.Graphics.Form.Hide();
 
             var runner = new NUnitTestRunner();
+            //TODO: runner.Timeout = 10000;
             runner.Run(test);
 
             //TW.Graphics.Form.Show();
