@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.RTS
             engine.AddSimulator(new GoblinCommanderSimulator());
             engine.AddSimulator(new GoblinMovementSimulator());
             engine.AddSimulator(new GoblinRendererSimulator());
-            engine.AddSimulator(new WorldRenderingSimulator())
+            engine.AddSimulator(new WorldRenderingSimulator());
             engine.Run();
         }
         private static VoxelTerrainChunk createTerrain()
