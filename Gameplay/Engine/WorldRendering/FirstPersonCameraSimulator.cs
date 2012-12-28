@@ -109,11 +109,11 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
                     }
 
                     newPos += axisDelta * dir;
-                    TW.Graphics.LineManager3D.AddCenteredBox(newPos + dir, 0.1f, new Color4(Color.Green));
+                    //TW.Graphics.LineManager3D.AddCenteredBox(newPos + dir, 0.1f, new Color4(Color.Green));
                 }
                 else
                 {
-                    TW.Graphics.LineManager3D.AddCenteredBox(newPos + dir, 0.1f, new Color4(Color.Red));
+                    //TW.Graphics.LineManager3D.AddCenteredBox(newPos + dir, 0.1f, new Color4(Color.Red));
                 }
             }
 
@@ -124,7 +124,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
             }
 
 
-            if (Math.Abs(newPos.Y - camData.Position.Y ) < 0.001f)
+            if (Math.Abs(newPos.Y - camData.Position.Y ) < 0.000001f)
             {
                 camData.JumpVelocity = 0;
             }

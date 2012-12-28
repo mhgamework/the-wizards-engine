@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
             var data = TW.Data.GetSingleton<Data>();
 
-            if (!data.LightCreated)
+            //if (!data.LightCreated)
             {
                 var light = deferred.CreateDirectionalLight();
                 light.LightDirection = Vector3.Normalize(new Vector3(1, -1, 1));

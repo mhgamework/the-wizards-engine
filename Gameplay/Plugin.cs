@@ -64,14 +64,16 @@ namespace MHGameWork.TheWizards
 
         private void testPlay(TWEngine engine)
         {
-            TW.Graphics.AcquireRenderer().ClearAll();
 
             TW.Graphics.EscapeExists = false;
             var testingData = TW.Data.GetSingleton<TestingData>();
             if (testingData.ActiveTestClass != null)
             {
-                TW.Data.Objects.Clear();
-                TW.Data.Objects.Add(testingData);
+                engine.AddSimulator(new EngineUISimulator());
+
+
+                //TW.Data.Objects.Clear();
+                //TW.Data.Objects.Add(testingData);
                 try
                 {
                     var runner = new EngineTestRunner();
@@ -83,18 +85,6 @@ namespace MHGameWork.TheWizards
                     Console.WriteLine(ex);
                 }
                 
-
-                //var simulator = (ITestSimulator) Activator.CreateInstance(type);
-
-                //engine.AddSimulator(simulator);
-                //simulator.Initialize(engine);
-
-
-                ////TODO: somewhat haxor
-                //if (type.Namespace.Contains("MHGameWork.TheWizards.Engine"))
-                //    loadBare(engine);
-                //else
-                //    loadEngine(engine);
                 loadBare(engine);
             }
             else
@@ -106,7 +96,6 @@ namespace MHGameWork.TheWizards
 
         private void loadBare(TWEngine engine)
         {
-            engine.AddSimulator(new EngineUISimulator());
             engine.AddSimulator(new TestUISimulator());
             engine.AddSimulator(new UISimulator());
         }
