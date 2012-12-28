@@ -124,7 +124,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
             }
 
 
-            if (Math.Abs(newPos.Y - camData.Position.Y ) < 0.001f)
+            if (Math.Abs(newPos.Y - camData.Position.Y ) < 0.000001f)
             {
                 camData.JumpVelocity = 0;
             }

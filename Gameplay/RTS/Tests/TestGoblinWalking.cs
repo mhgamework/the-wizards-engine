@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Drawing;
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
@@ -25,9 +26,20 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.RTS
         {
             var engine = EngineFactory.CreateEngine();
             engine.Initialize();
-            VoxelTerrainTest.generateTerrain(1, 1);
-            var world = TW.Data.GetSingleton<Engine.WorldRendering.World>();
-            var TestGoblin = new Goblin();
+            if (TW.Data.GetSingleton<VoxelTerrain>().NumChunks == 0)
+            {
+                VoxelTerrainTest.generateTerrain(1, 1);
+                var world = TW.Data.GetSingleton<Engine.WorldRendering.World>();    
+            }
+            if (TW.Data.Objects.Count(o => o is Goblin) == 0)
+            {
+                var TestGoblin = new Goblin();
+                
+            }
+
+            TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
+            engine.AddSimulator(new FirstPersonCameraSimulator());
+            engine.AddSimulator(new TerrainEditorSimulator());
             engine.AddSimulator(new VoxelTerrainSimulator());
             engine.AddSimulator(new GoblinCommanderSimulator());
             engine.AddSimulator(new GoblinMovementSimulator());

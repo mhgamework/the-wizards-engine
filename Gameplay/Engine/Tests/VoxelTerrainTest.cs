@@ -335,6 +335,8 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
                     terr.WorldPosition = Vector3.Modulate(terr.Size.ToVector3() * terr.NodeSize, new Vector3(x, 0, y));
                     terr.Create();
 
+                    TW.Data.GetSingleton<Datastore>().Persist(terr);
+
                     for (int tx = 0; tx < terr.Size.X; tx++)
                     {
                         for (int ty = 0; ty < terr.Size.Y / 2; ty++)

@@ -119,5 +119,10 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
             emptyTargetedBlock = last;
             return ret;
         }
+
+        public int NumChunks
+        {
+            get { return TW.Data.Objects.Count(o => o is VoxelTerrainChunk); }
+        }
     }
 }

@@ -39,15 +39,15 @@ namespace MHGameWork.TheWizards.Engine
         private void createOutputWindow()
         {
             window = new Window();
-            window.WindowStyle = WindowStyle.None;
+            //window.WindowStyle = WindowStyle.None;
 
             window.Height = 200;
-            TW.Graphics.Form.Form.Move +=
-                delegate { window.Dispatcher.BeginInvoke(updatePositionAndSize); };
-            TW.Graphics.Form.Form.GotFocus +=
-                delegate { window.Dispatcher.BeginInvoke(delegate { window.Topmost = true; }); };
-            TW.Graphics.Form.Form.LostFocus +=
-                delegate { window.Dispatcher.BeginInvoke(delegate { window.Topmost = false; }); };
+            //TW.Graphics.Form.Form.Move += 
+            //    delegate { window.Dispatcher.BeginInvoke(updatePositionAndSize); };
+            //TW.Graphics.Form.Form.GotFocus +=
+            //    delegate { window.Dispatcher.BeginInvoke(delegate { window.Topmost = true; }); };
+            //TW.Graphics.Form.Form.LostFocus +=
+            //    delegate { window.Dispatcher.BeginInvoke(delegate { window.Topmost = false; }); };
 
 
             var panel = new DockPanel();
@@ -57,7 +57,9 @@ namespace MHGameWork.TheWizards.Engine
             panel.Children.Add(list);
 
             window.Content = panel;
-            updatePositionAndSize();
+            //updatePositionAndSize();
+            window.Width = 600;
+            window.Height = 400;
             window.Show();
 
 
