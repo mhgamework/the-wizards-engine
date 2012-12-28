@@ -36,7 +36,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 	float4 ambientOcclusion = ambientOcclusionMap.Sample(samLinear,input.TexCoord).x;
     float3 diffuseLight = light.rgb *2;
     float specularLight = light.a;
-	float3 ambient=float3(1,1,1)*2;
+	float3 ambient=float3(1,1,1)*0.5f;
 
 	//ambientOcclusion = 0;
 
