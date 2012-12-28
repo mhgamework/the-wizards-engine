@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.RTS
             {
                 selectGoblin(world);
             }
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.Y))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.O))
             {
                 moveGoblin(terrain);
             }

@@ -201,6 +201,8 @@
     <Compile Include="Engine\PhysX\BarrelShooterSimulator.cs" />
     <Compile Include="Engine\PhysX\PhysXData.cs" />
     <Compile Include="RTS\GoblinMovementSimulator.cs" />
+    <Compile Include="RTS\Tests\TestGoblinSpawner.cs" />
+    <Compile Include="RTS\Tests\TestGoblinWalking.cs" />
     <Compile Include="_Features\TextMenu.cs" />
     <Compile Include="_Features\TextMenuItem.cs" />
     <Compile Include="Pickup\Inventory.cs" />
