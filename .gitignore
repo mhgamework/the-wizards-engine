@@ -48,8 +48,7 @@ obj/
 
 # Various application junk
 /Ankh.Load
-_ReSharper.The Wizards/
-/The Wizards Tools/_ReSharper.The Wizards Tools/*
+*_ReSharper*
 /The Wizards.4.0.resharper
 /~$e Wizards Design.docx
 /The Wizards.ncb
