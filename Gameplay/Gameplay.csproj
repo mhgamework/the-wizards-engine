@@ -159,10 +159,11 @@
     <Compile Include="Engine\Debugging\AttachDebuggerOnStartupSimulator.cs" />
     <Compile Include="Engine\EngineUIConsole.cs" />
     <Compile Include="Engine\EngineUISimulator.cs" />
-    <Compile Include="Engine\Features\Testing\EngineTestAttribute.cs" />
+    <Compile Include="Engine\Testing\EngineTestAttribute.cs" />
+    <Compile Include="Engine\Persistence\EngineStatePersistor.cs" />
     <Compile Include="Engine\Testing\EngineTestPicker.cs" />
     <Compile Include="Engine\Testing\EngineTestRunner.cs" />
-    <Compile Include="Engine\Features\Testing\OtherAppdomainTestRunner.cs" />
+    <Compile Include="Engine\Testing\OtherAppdomainTestRunner.cs" />
     <Compile Include="Engine\Testing\TestingData.cs" />
     <Compile Include="Engine\Testing\TestUISimulator.cs" />
     <Compile Include="Engine\Tests\PhysX\BarrelSimulatorTest.cs" />
