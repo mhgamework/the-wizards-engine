@@ -94,8 +94,10 @@ namespace MHGameWork.TheWizards.Engine
         private void cleanData()
         {
             var test = TW.Data.GetSingleton<TestingData>();
+            var engine = TW.Data.GetSingleton<EngineData>();
             resetData();
             TW.Data.Objects.Add(test);
+            TW.Data.Objects.Add(engine);
         }
 
         private void resetData()

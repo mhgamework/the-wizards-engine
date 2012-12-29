@@ -30,6 +30,7 @@ namespace MHGameWork.TheWizards.Engine.Persistence
         }
         public void LoadEngineState()
         {
+
             if (!File.Exists(filename)) return;
             using (var fs = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.None))
             using (var r = new StreamReader(fs))

@@ -26,7 +26,7 @@ namespace MHGameWork.TheWizards.RTS.Various
                 if (last != null)
                 {
                     var p = new PointLight();
-                    p.Position = last.Position + MathHelper.One * 0.5f;
+                    p.Position = last.RelativePosition + last.TerrainChunk.WorldPosition + MathHelper.One * 0.5f;
 
                     updateEntity(p);
 

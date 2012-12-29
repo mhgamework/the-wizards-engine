@@ -204,7 +204,11 @@
     <Compile Include="Engine\Persistence\PersistenceUI.cs" />
     <Compile Include="Engine\PhysX\BarrelShooterSimulator.cs" />
     <Compile Include="Engine\PhysX\PhysXData.cs" />
+    <Compile Include="RTS\EvilGoblinSpawner.cs" />
+    <Compile Include="RTS\GoblinCombatBuilderSimulator.cs" />
+    <Compile Include="RTS\GoblinEnemySimulator.cs" />
     <Compile Include="RTS\GoblinMovementSimulator.cs" />
+    <Compile Include="RTS\SimpleCombatTest.cs" />
     <Compile Include="RTS\Tests\TestGoblinSpawner.cs" />
     <Compile Include="RTS\Tests\TestGoblinWalking.cs" />
     <Compile Include="RTS\Various\LightPlacementSimulator.cs" />

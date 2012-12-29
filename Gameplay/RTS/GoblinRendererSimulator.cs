@@ -5,6 +5,7 @@ using System.Text;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.MathExtra;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 
@@ -22,14 +23,41 @@ namespace MHGameWork.TheWizards.RTS
                 fixRendering(goblin);
             }
 
+            foreach (var evilSpawner in TW.Data.GetChangedObjects<EvilGoblinSpawner>())
+            {
+                var ent = evilSpawner.get<Engine.WorldRendering.Entity>();
+                if (ent == null)
+                {
+                    ent = new Engine.WorldRendering.Entity();
+                    evilSpawner.set(ent);
+                }
 
-        }   
+                if (evilSpawner.Enemy)
+                    ent.Mesh = getEvilSpawnerMesh();
+                else
+                    ent.Mesh = getGoodSpawnerMesh();
+                ent.WorldMatrix = Matrix.Translation(evilSpawner.Position);
+            }
+
+
+        }
+
+        private IMesh getEvilSpawnerMesh()
+        {
+            return MeshFactory.Load("Core\\Barrel01");
+        }
+
+        private IMesh getGoodSpawnerMesh()
+        {
+            return MeshFactory.Load("Core\\Barrel01");
+        }
+
         private static void fixRendering(Goblin goblin)
         {
             if (goblin.get<Engine.WorldRendering.Entity>() == null)
                 goblin.set(new Engine.WorldRendering.Entity());
             var ent = goblin.get<Engine.WorldRendering.Entity>();
-                
+
             var renderData = goblin.get<GoblinRenderData>();
             if ((renderData.LastPosition - goblin.Position).Length() > 0.001f)
             {
