@@ -21,6 +21,11 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
             deferred = TW.Graphics.AcquireRenderer();
 
+            deferred.SSAO.MNumDirs = 8;
+            deferred.SSAO.MNumSteps = 2;
+            deferred.SSAO.MContrast = 2;
+            deferred.SSAO.MRadiusMultiplier = 2;
+
             var data = TW.Data.GetSingleton<Data>();
 
             //if (!data.LightCreated)

@@ -54,6 +54,12 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         public int DrawCalls { get { return meshRenderer.DrawCalls; } }
 
+        public HorizonSSAORenderer SSAO
+        {
+            get { return ssao; }
+            set { ssao = value; }
+        }
+
         public DeferredRenderer(DX11Game game)
         {
             this.game = game;

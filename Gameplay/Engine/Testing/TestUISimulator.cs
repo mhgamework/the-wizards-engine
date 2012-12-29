@@ -15,6 +15,8 @@ namespace MHGameWork.TheWizards.Engine.Testing
         {
             if (!TW.Graphics.Keyboard.IsKeyPressed(Key.F5)) return;
 
+            //TW.Graphics.InputDisabled = true;
+
             var picker = new EngineTestPicker();
             var test = picker.SelectTest();
             if (test == null)

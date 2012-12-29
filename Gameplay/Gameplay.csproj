@@ -346,6 +346,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Building\_doc.txt" />
+    <Content Include="Engine\engine_architecture-1.jpg" />
+    <Content Include="Engine\_doc.html" />
     <Content Include="LevelBuilding\_doc.txt" />
     <Content Include="Tiling\_doc.txt" />
     <Content Include="Engine\WorldRendering\_doc.txt" />

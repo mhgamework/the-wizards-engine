@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Threading;
-using MHGameWork.TheWizards.Main;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.ServerClientMain;
 using MHGameWork.TheWizards.TestRunner;
@@ -74,8 +73,8 @@ namespace MHGameWork.TheWizards.ServerClient
 
             if (args.Length > 0 && args[0].Equals("-server"))
             {
-                TheWizardsServer server = new TheWizardsServer();
-                server.Start();
+                //TheWizardsServer server = new TheWizardsServer();
+                //server.Start();
 
             }
             else if (args.Length > 0 && args[0].Equals("-serverclient"))
@@ -96,8 +95,8 @@ namespace MHGameWork.TheWizards.ServerClient
             }
             else
             {
-                TheWizardsClient client = new TheWizardsClient();
-                client.Run();
+                //TheWizardsClient client = new TheWizardsClient();
+                //client.Run();
                 //RunGame();
             }
         }
