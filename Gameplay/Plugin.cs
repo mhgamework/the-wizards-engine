@@ -43,73 +43,11 @@ namespace MHGameWork.TheWizards
 
             //testAddStupidRedHelperMesh(engine);
             //testFirstPersonCamera(engine);
-            testPlay(engine);
+            var initializer = new EngineInitializer();
+
+            initializer.SetupEngine(engine);
         }
 
-        private void testFirstPersonCamera(TWEngine engine)
-        {
-            TW.Graphics.EscapeExists = false;
-            TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
-            //TW.Data.GetSingleton<CameraInfo>().ActivateSpecatorCamera();
-
-            engine.AddSimulator(new EngineUISimulator());
-            engine.AddSimulator(new TerrainEditorSimulator());
-            engine.AddSimulator(new VoxelTerrainSimulator());
-            engine.AddSimulator(new PhysXSimulator());
-            engine.AddSimulator(new FirstPersonCameraSimulator());
-            engine.AddSimulator(new FlashlightSimulator());
-            engine.AddSimulator(new WorldRenderingSimulator());
-
-        }
-
-        private void testPlay(TWEngine engine)
-        {
-
-            TW.Graphics.EscapeExists = false;
-            var testingData = TW.Data.GetSingleton<TestingData>();
-            if (testingData.ActiveTestClass != null)
-            {
-                engine.AddSimulator(new EngineUISimulator());
-
-
-                //TW.Data.Objects.Clear();
-                //TW.Data.Objects.Add(testingData);
-                try
-                {
-                    var runner = new EngineTestRunner();
-                    runner.RunTestDataTest(engine);
-                }
-                catch (Exception ex)
-                {
-                    
-                    Console.WriteLine(ex);
-                }
-                
-                loadBare(engine);
-            }
-            else
-            {
-                loadEngine(engine);
-            }
-            
-        }
-
-        private void loadBare(TWEngine engine)
-        {
-            engine.AddSimulator(new TestUISimulator());
-            engine.AddSimulator(new UISimulator());
-        }
-        private void loadEngine(TWEngine engine)
-        {
-            engine.AddSimulator(new EngineUISimulator());
-            engine.AddSimulator(new VoxelTerrainSimulator());
-            engine.AddSimulator(new PhysXSimulator());
-            engine.AddSimulator(new FirstPersonCameraSimulator());
-            engine.AddSimulator(new FlashlightSimulator());
-            engine.AddSimulator(new WorldRenderingSimulator());
-            engine.AddSimulator(new TestUISimulator());
-            engine.AddSimulator(new UISimulator());
-        }
         private void testAddStupidRedHelperMesh(TWEngine engine)
         {
             var player = new PlayerData();

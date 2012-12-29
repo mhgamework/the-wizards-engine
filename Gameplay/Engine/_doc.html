@@ -13,12 +13,21 @@
         NUnit Tests can be run integrated into the engine by adding a EngineTestAttribute to the class. You should create an engine in the unit tests by using the EngineFactory.</p>
     
     <p>
-        The goald workflow is: 
+        The goal workflow is: 
     </p>
     <ul>
         <li>Start NewModules.exe. This is The Wizards Engine IDE. Keep this running at all times. (to be renamed)</li>
         <li>Open the solution for the hotloadable module you want to edit. There can be multiple modules for different gameplay features and they can have dependencies to eachother.</li>
         <li>Make changes in visual studio, then build. The engine will reload your code. Modules which are not reloaded keep their data in the system.</li>
+    </ul>
+    <p>
+        Missing engine features:</p>
+    <ul>
+        <li>Loopback of engine data back into the source code (test setups, lvls, etc)</li>
+        <li>Hotload everything. What is hotloading exactly?</li>
+        <li>Store state on engine shutdown and load</li>
+        <li>Simulator ordering ==&gt; Add simulator groups (rendering, simulation, physx, loading, ...)</li>
+        <li>Dont create new console on hotloading!!</li>
     </ul>
     <p><img src="engine_architecture-1.jpg" style="margin-right: 0px; margin-bottom: 0px" /></p>
 </body>

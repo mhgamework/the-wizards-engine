@@ -79,10 +79,16 @@ namespace MHGameWork.TheWizards.Engine
             ret.AddItem("Clean", cleanData);
             ret.AddItem("Reset", resetData);
             ret.AddItem("Select test [Press F5]", delegate { });
-            ret.AddItem("Exit DONT PRESS", delegate { TW.Graphics.Exit(); });
+            ret.AddItem("Exit DONT PRESS", OnExit);
 
             return ret;
 
+        }
+
+        private static void OnExit()
+        {
+            DI.Get<Persistence.EngineStatePersistor>().SaveEngineState();
+            TW.Graphics.Exit();
         }
 
         private void cleanData()
