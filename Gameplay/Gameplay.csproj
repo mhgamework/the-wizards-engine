@@ -157,8 +157,11 @@
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="BugTests.cs" />
     <Compile Include="Engine\Debugging\AttachDebuggerOnStartupSimulator.cs" />
+    <Compile Include="Engine\EngineData.cs" />
+    <Compile Include="Engine\EngineInitializer.cs" />
     <Compile Include="Engine\EngineUIConsole.cs" />
     <Compile Include="Engine\EngineUISimulator.cs" />
+    <Compile Include="Engine\Injection\DI.cs" />
     <Compile Include="Engine\Testing\EngineTestAttribute.cs" />
     <Compile Include="Engine\Persistence\EngineStatePersistor.cs" />
     <Compile Include="Engine\Testing\EngineTestPicker.cs" />
