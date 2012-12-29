@@ -17,6 +17,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
             WorldMatrix = Matrix.Identity;
             Visible = true;
             Static = true;
+            CastsShadows = true;
         }
 
 
@@ -47,6 +48,8 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         /// TODO: this can be removed/changed in many ways (multiple inheritance, removing responsibilities from entity,...)
         /// </summary>
         public object Tag { get; set; }
+
+        public bool CastsShadows { get; set; }
 
         public override string ToString()
         {

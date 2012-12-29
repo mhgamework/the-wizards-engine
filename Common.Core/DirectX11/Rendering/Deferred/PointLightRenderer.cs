@@ -24,6 +24,9 @@ namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
         private FullScreenQuad quad;
         private InputLayout layout;
 
+        public int NextShadowUpdate { get; set; }
+        public int ShadowUpdateInterval { get; set; }
+
         public Vector3 Color
         {
             get { return color; }
@@ -187,7 +190,7 @@ namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
             //else
             //    GraphicsDevice.RenderState.CullMode = CullMode.CullCounterClockwiseFace;
 
-            
+
             gBuffer.SetToShader(shader);
 
             shader.Apply();
@@ -207,6 +210,9 @@ namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
         public delegate void ShadowMapRenderDelegate(CustomCamera lightCamera);
         public void UpdateShadowMap(ShadowMapRenderDelegate renderScene)
         {
+
+            
+
             //shadowMapProjection = Matrix.PerspectiveFovLH(MathHelper.PiOver2, 1, 1f, LightRadius + 1);
             shadowMapProjection = CreateShadowMapProjection(LightRadius);
             for (int i = 0; i < 6; i++)

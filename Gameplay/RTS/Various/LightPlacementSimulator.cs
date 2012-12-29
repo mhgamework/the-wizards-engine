@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Persistence;
 using MHGameWork.TheWizards.Engine.VoxelTerraining;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Rendering;
@@ -27,14 +28,32 @@ namespace MHGameWork.TheWizards.RTS.Various
                     var p = new PointLight();
                     p.Position = last.Position + MathHelper.One * 0.5f;
 
-                    var ent = new Engine.WorldRendering.Entity();
-                    ent.WorldMatrix = Matrix.Translation(p.Position);
+                    updateEntity(p);
 
-                    var builder = new MeshBuilder();
-                    builder.AddSphere(12,1);
-                    ent.Mesh = builder.CreateMesh();
+                    TW.Data.GetSingleton<Datastore>().Persist(p);
                 }
             }
+
+
+
+            foreach (var light in TW.Data.GetChangedObjects<PointLight>())
+                updateEntity(light);
+        }
+
+        private static void updateEntity(PointLight light)
+        {
+            if (light.get<Engine.WorldRendering.Entity>() == null)
+                light.set(new Engine.WorldRendering.Entity());
+
+            var ent = light.get<Engine.WorldRendering.Entity>();
+
+            ent.WorldMatrix = Matrix.Scaling(0.05f, 0.05f, 0.05f) * Matrix.Translation(light.Position);
+            ent.CastsShadows = false;
+
+            var builder = new MeshBuilder();
+            builder.AddSphere(12, 1);
+            ent.Mesh = builder.CreateMesh();
+
         }
     }
 }

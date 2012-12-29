@@ -77,6 +77,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
                 if (element == null) return;
                 element.WorldMatrix = entity.WorldMatrix;
                 element.Visible = entity.Visible && !entity.Batched;
+                element.CastsShadows = entity.CastsShadows;
             }
 
             public void RemoveRenderData()

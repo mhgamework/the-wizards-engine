@@ -13,7 +13,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         public float LightRadius { get; set; }
         public Vector3 Color { get; set; }
         public bool ShadowsEnabled { get; set; }
-
+        
+        
+            
         public FrustumCullerView[] Views { get; private set; }
 
         public PointLight(FrustumCuller culler)
@@ -21,7 +23,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             LightPosition = new Vector3(0, 6, 0);
             LightRadius = 6;
             LightIntensity = 1;
-
 
             Color = new Vector3(1, 1, 0.9f);
 
