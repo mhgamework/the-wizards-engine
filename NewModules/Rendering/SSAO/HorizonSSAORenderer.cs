@@ -27,7 +27,7 @@ namespace MHGameWork.TheWizards.Rendering.SSAO
 
 
         // Buffer sizes
-// ReSharper disable InconsistentNaming
+        // ReSharper disable InconsistentNaming
 
         int m_BBWidth;
         int m_BBHeight;
@@ -77,6 +77,48 @@ namespace MHGameWork.TheWizards.Rendering.SSAO
         private Vector2 m_Resolution;
         byte m_QualityMode;
 
+        public int MNumSteps
+        {
+            get { return m_NumSteps; }
+            set { m_NumSteps = value; updateShaderState(); }
+        }
+
+        public int MNumDirs
+        {
+            get { return m_NumDirs; }
+            set { m_NumDirs = value; updateShaderState(); }
+        }
+
+        public float MRadiusMultiplier
+        {
+            get { return m_RadiusMultiplier; }
+            set { m_RadiusMultiplier = value; updateShaderState(); }
+        }
+
+        public float MAngleBias
+        {
+            get { return m_AngleBias; }
+            set { m_AngleBias = value; updateShaderState(); }
+        }
+
+        public float MAttenuation
+        {
+            get { return m_Attenuation; }
+            set { m_Attenuation = value; updateShaderState(); }
+        }
+
+        public float MContrast
+        {
+            get { return m_Contrast; }
+            set { m_Contrast = value; updateShaderState(); }
+        }
+
+        public byte MQualityMode
+        {
+            get { return m_QualityMode; }
+            set { m_QualityMode = value; updateShaderState(); }
+        }
+
         ShaderResourceView m_DepthBuffer;
 
         Texture2D m_pRndTexture;
@@ -124,8 +166,8 @@ namespace MHGameWork.TheWizards.Rendering.SSAO
         {
 
             // Recalculate buffer sizes
-            m_BBWidth = width/2;
-            m_BBHeight = height/2;
+            m_BBWidth = width / 2;
+            m_BBHeight = height / 2;
 
 
             RecompileShader();
@@ -370,6 +412,11 @@ namespace MHGameWork.TheWizards.Rendering.SSAO
             m_pResolution = m_Effect.GetVariableByName("g_Resolution").AsVector();
 
             // Set Defaults
+            updateShaderState();
+        }
+
+        private void updateShaderState()
+        {
             UpdateDirs();
             UpdateRadius();
             UpdateAngleBias();
