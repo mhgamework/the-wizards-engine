@@ -25,6 +25,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
             deferred.SSAO.MNumSteps = 2;
             deferred.SSAO.MContrast = 2;
             deferred.SSAO.MRadiusMultiplier = 2;
+            deferred.PointLightRenderer.ShadowUpdateInterval = 240;
 
             var data = TW.Data.GetSingleton<Data>();
 

@@ -17,6 +17,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
             WorldMatrix = Matrix.Identity;
             Visible = true;
             Static = true;
+            CastsShadows = true;
         }
 
 
@@ -42,6 +43,8 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         /// This is true when the entity is part of a batched group
         /// </summary>
         public bool Batched { get; set; }
+
+        public bool CastsShadows { get; set; }
 
         public override string ToString()
         {

@@ -57,7 +57,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         public HorizonSSAORenderer SSAO
         {
             get { return ssao; }
-            set { ssao = value; }
+        }
+
+        public PointLightRenderer PointLightRenderer
+        {
+            get { return pointLightRenderer; }
         }
 
         public DeferredRenderer(DX11Game game)
@@ -234,7 +238,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
             // TODO: currently cheat
-                        context.OutputMerger.SetTargets(gBuffer.DepthStencilView, game.BackBufferRTV);
+            context.OutputMerger.SetTargets(gBuffer.DepthStencilView, game.BackBufferRTV);
 
             //game.TextureRenderer.Draw(hdrImageRV, new Vector2(10, 10), new Vector2(100, 100));
             //drawLines();
@@ -320,19 +324,28 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 r.Draw();
             }
 
+
+            pointLightRenderer.NextShadowUpdate--;
+
+
+
             for (int i = 0; i < pointLights.Count; i++)
             {
                 var l = pointLights[i];
                 var r = pointLightRenderer;
                 setPointLightToRenderer(r, l);
 
-                if (l.ShadowsEnabled)
-                    updatePointShadows(r, l.Views);
+
+                if (pointLightRenderer.NextShadowUpdate <= 0)
+                    if (l.ShadowsEnabled)
+                        updatePointShadows(r, l.Views);
 
                 finalRenderer.SetLightAccumulationStates();
 
                 r.Draw();
             }
+            if (pointLightRenderer.NextShadowUpdate <= 0)
+                pointLightRenderer.NextShadowUpdate = pointLightRenderer.ShadowUpdateInterval;
 
             for (int i = 0; i < spotLights.Count; i++)
             {
@@ -500,7 +513,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             spotLights.Clear();
 
             while (lineElements.Count > 0) lineElements[0].Delete();
-            
+
             foreach (var mesh in meshElements)
             {
                 if (!mesh.IsDeleted)
