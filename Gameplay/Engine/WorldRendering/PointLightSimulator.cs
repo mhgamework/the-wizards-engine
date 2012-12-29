@@ -26,6 +26,7 @@
                 el.LightPosition = light.Position;
                 el.LightRadius = light.Size;
                 el.LightIntensity = light.Intensity;
+                //el.ShadowsEnabled = true;
             }
 
 

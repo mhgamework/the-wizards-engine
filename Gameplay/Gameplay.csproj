@@ -265,6 +265,8 @@
     <Compile Include="RTS\Tests\TestGoblinSpawner.cs" />
     <Compile Include="RTS\Tests\TestGoblinWalking.cs" />
     <Compile Include="RTS\Thing.cs" />
+    <Compile Include="RTS\Various\LightPlacementSimulator.cs" />
+    <Compile Include="RTS\Various\LightPlacementSimulatorTest.cs" />
     <Compile Include="_Features\TextMenu.cs" />
     <Compile Include="_Features\TextMenuItem.cs" />
     <Compile Include="Pickup\Inventory.cs" />
