@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DirectX11;
+using MHGameWork.TheWizards.Engine.Persistence;
 using MHGameWork.TheWizards.Engine.VoxelTerraining;
 using SlimDX;
 
@@ -31,6 +32,8 @@ namespace MHGameWork.TheWizards.Generation
                     //terr.Size = new Point3(5, 5, 5);
                     terr.WorldPosition = Vector3.Modulate(terr.Size.ToVector3() * terr.NodeSize, new Vector3(x, 0, y));
                     terr.Create();
+
+                    TW.Data.GetSingleton<Datastore>().Persist(terr);
 
                     for (int tx = 0; tx < terr.Size.X; tx++)
                     {

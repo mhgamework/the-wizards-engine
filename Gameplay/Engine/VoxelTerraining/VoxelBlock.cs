@@ -27,7 +27,7 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
             }
         }
 
-        public Point3 Position { get; private set; }
+        public Point3 RelativePosition { get; private set; }
 
         public VoxelTerrainChunk TerrainChunk { get; private set; }
 
@@ -35,14 +35,14 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
 
         public VoxelBlock(Point3 position, VoxelTerrainChunk terrainChunk, VoxelTerrainChunk.Voxel block)
         {
-            this.Position = position;
+            this.RelativePosition = position;
             this.TerrainChunk = terrainChunk;
             this.block = block;
         }
 
         protected bool Equals(VoxelBlock other)
         {
-            return Equals(block, other.block) && Position.Equals(other.Position) && Equals(TerrainChunk, other.TerrainChunk);
+            return Equals(block, other.block) && RelativePosition.Equals(other.RelativePosition) && Equals(TerrainChunk, other.TerrainChunk);
         }
 
         public override bool Equals(object obj)
@@ -57,7 +57,7 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
         {
             unchecked
             {
-                int hashCode = Position.GetHashCode();
+                int hashCode = RelativePosition.GetHashCode();
                 hashCode = (hashCode*397) ^ (TerrainChunk != null ? TerrainChunk.GetHashCode() : 0);
                 return hashCode;
             }

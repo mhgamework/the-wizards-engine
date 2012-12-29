@@ -47,7 +47,7 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
 
         public Vector3 GetPositionOf(VoxelBlock block)
         {
-            return block.Position.ToVector3() * block.TerrainChunk.NodeSize + block.TerrainChunk.WorldPosition;
+            return block.RelativePosition.ToVector3() * block.TerrainChunk.NodeSize + block.TerrainChunk.WorldPosition;
 
         }
 

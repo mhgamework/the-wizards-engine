@@ -24,8 +24,8 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
             if (targetedBlock != null)
             {
                 var boundingBox = new BoundingBox();
-                boundingBox.Minimum = targetedBlock.Position.ToVector3();
-                boundingBox.Maximum = targetedBlock.Position.ToVector3() + MathHelper.One;
+                boundingBox.Minimum = targetedBlock.RelativePosition.ToVector3();
+                boundingBox.Maximum = targetedBlock.RelativePosition.ToVector3() + MathHelper.One;
                 boundingBox.Minimum = boundingBox.Minimum * targetedBlock.TerrainChunk.NodeSize + targetedBlock.TerrainChunk.WorldPosition;
                 boundingBox.Maximum = boundingBox.Maximum * targetedBlock.TerrainChunk.NodeSize + targetedBlock.TerrainChunk.WorldPosition;
                 TW.Graphics.LineManager3D.AddBox(boundingBox, new Color4());

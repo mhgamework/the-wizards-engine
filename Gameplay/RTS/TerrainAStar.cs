@@ -120,7 +120,7 @@ namespace MHGameWork.TheWizards.RTS
             // give neighbours with soil under
             foreach (var n in neighbor_nodes(current).Where(n => !n.Filled))
             {
-                if (n.Position.Y != current.Position.Y)
+                if (n.RelativePosition.Y != current.RelativePosition.Y)
                     continue; // no vertical movement
                 VoxelBlock it = n;
                 int fallDepth = 3; //TODO fix staying in air when once in air
