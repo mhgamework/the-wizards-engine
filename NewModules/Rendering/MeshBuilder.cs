@@ -178,6 +178,7 @@ namespace MHGameWork.TheWizards.Rendering
             {
                 this.positions.Add(vertices[index].pos * radius);
                 this.normals.Add(vertices[index].normal);
+                this.texcoords.Add(new Microsoft.Xna.Framework.Vector2());
             }
 
         }
