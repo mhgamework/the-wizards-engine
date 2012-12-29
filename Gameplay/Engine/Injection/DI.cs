@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MHGameWork.TheWizards.Engine.Injection
+namespace MHGameWork.TheWizards
 {
     /// <summary>
     /// Responsible for resolving dependencies!
