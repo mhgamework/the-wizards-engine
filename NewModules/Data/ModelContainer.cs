@@ -141,12 +141,24 @@ namespace MHGameWork.TheWizards.Data
         }
 
 
+
         /// <summary>
         /// Returns or creates a unique instance of the modelobject of given type T
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
+        [Obsolete]
         public T GetSingleton<T>() where T : class, IModelObject, new()
+        {
+            return Get<T>();
+        }
+
+        /// <summary>
+        /// Returns or creates a unique instance of the modelobject of given type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T Get<T>() where T : class, IModelObject, new()
         {
             foreach (var obj in Objects)
             {
