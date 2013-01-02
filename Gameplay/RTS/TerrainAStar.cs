@@ -36,8 +36,13 @@ namespace MHGameWork.TheWizards.RTS
             // Estimated total cost from start to goal through y.
             f_score[start] = g_score[start] + heuristic_cost_estimate(start, goal);
 
+            int numIts = 100;
+
             while (openset.Count > 0)
             {
+                numIts--;
+                if (numIts < 0)
+                    return null;
                 //openset.Sort((a, b) => f_score[a] < f_score[b] ? -1 : f_score[a] > f_score[b] ? 1 : 0);
                 var current = openset.OrderBy(o => f_score[o]).First(); // the node in openset having the lowest f_score[] value
                 if (current.Equals(goal))

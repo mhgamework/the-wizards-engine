@@ -1,4 +1,5 @@
 ﻿using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTS;
@@ -9,6 +10,7 @@ using SlimDX;
 namespace MHGameWork.TheWizards.Tests.Gameplay.RTS
 {
     [TestFixture]
+    [EngineTest]
     public class TestGoblinSpawner
     {
         [Test]
