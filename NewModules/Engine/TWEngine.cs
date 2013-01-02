@@ -223,7 +223,7 @@ namespace MHGameWork.TheWizards.Engine
         private void reloadGameplayDll()
         {
             var mem = serializeData();
-            File.WriteAllBytes("temp.txt",mem.ToArray());
+            File.WriteAllBytes("temp.txt", mem.ToArray());
             TW.Data.Objects.Clear();
 
             updateActiveGameplayAssembly();
@@ -239,10 +239,11 @@ namespace MHGameWork.TheWizards.Engine
         private MemoryStream serializeData()
         {
 
-            var mem = new MemoryStream(1024*1024*64);
+            var mem = new MemoryStream(1024 * 1024 * 64);
             var writer = new StreamWriter(mem);
             foreach (IModelObject obj in TW.Data.Objects)
             {
+                if (obj == null) continue; //TODO: fix this this should be impossible
                 TW.Data.ModelSerializer.QueueForSerialization(obj);
             }
             TW.Data.ModelSerializer.Serialize(writer);
