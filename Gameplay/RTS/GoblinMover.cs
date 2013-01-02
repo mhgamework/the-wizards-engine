@@ -27,18 +27,19 @@ namespace MHGameWork.TheWizards.RTS
         {
             if (finished)
                 return;
+            if (path == null) return;
             position += TW.Graphics.Elapsed;
-            if (position > path.Length-1)
-                position = path.Length-1;
+            if (position > path.Length - 1)
+                position = path.Length - 1;
             var partOfPath = (int)position;
             var nextPart = partOfPath + 1;
             if (nextPart >= path.Length)
             {
-                goblin.Position = path[partOfPath] + MathHelper.One * 0.5f;
+                goblin.Position = path[partOfPath];
                 finished = true;
                 return;
             }
-            goblin.Position = Vector3.Lerp(path[partOfPath], path[nextPart], position - (int)position) + MathHelper.One * 0.5f;
+            goblin.Position = Vector3.Lerp(path[partOfPath], path[nextPart], position - (int)position);
         }
 
         public void MoveTo(Vector3 pos)
@@ -49,8 +50,23 @@ namespace MHGameWork.TheWizards.RTS
             //path = new[] {goblin.Position, pos};
             path = null;
             if (startVoxel == null || endVoxel == null) return;
-            var star =new TerrainAStar();
-            path = star.findPath(endVoxel, startVoxel).Select(o => terrain.GetPositionOf(o)).ToArray();
+            if (endVoxel.Filled) return;
+            var star = new TerrainAStar();
+            var tempPath = star.findPath(startVoxel,endVoxel);
+            if (tempPath != null)
+            {
+                path = tempPath.Reverse<VoxelBlock>().Select(o => terrain.GetPositionOf(o) + MathHelper.One * 0.5f).ToArray();
+                path[0] = goblin.Position;
+
+                foreach (var voxelBlock in tempPath)
+                {
+                    if (voxelBlock.Filled ) throw new InvalidOperationException();
+                }
+
+            }
+
+
+
             finished = false;
             position = 0;
         }
