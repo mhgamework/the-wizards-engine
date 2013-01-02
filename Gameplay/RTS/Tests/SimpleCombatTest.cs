@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
+using MHGameWork.TheWizards.Engine.Persistence;
 using MHGameWork.TheWizards.Engine.VoxelTerraining;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
@@ -35,7 +37,12 @@ namespace MHGameWork.TheWizards.RTS
         [Test]
         public void TestBattle()
         {
+            TW.Data.Get<Datastore>().LoadFromFile(new FileInfo(TWDir.GameData + "\\Saves\\Battleground.xml"));
+
             var engine = EngineFactory.CreateEngine();
+            TW.Data.Get<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
+            engine.AddSimulator(new FirstPersonCameraSimulator());
+            engine.AddSimulator(new GoblinSimulator());
             engine.AddSimulator(new TerrainEditorSimulator());
             loadRenderers(engine);
         }

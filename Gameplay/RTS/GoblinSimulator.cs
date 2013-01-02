@@ -9,23 +9,52 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.RTS
 {
-    public class GoblinSimulator :ISimulator
+    public class GoblinSimulator : ISimulator
     {
         public void Simulate()
         {
             var elapsedTime = TW.Graphics.Elapsed;
+            SimulateEvilSpawners();
             SimulateSpawner(elapsedTime);
             SimulateGoblins(elapsedTime);
         }
+
+        private void SimulateEvilSpawners()
+        {
+            if (TW.Data.Objects.Where(o => o is Goblin).Count() > 10) return;
+            TW.Data.EnsureAttachment<EvilGoblinSpawner, EvilGoblinSpawnerData>(e => new EvilGoblinSpawnerData());
+            var copy = TW.Data.Objects.Where(o => o is EvilGoblinSpawner).Cast<EvilGoblinSpawner>().ToArray();
+            foreach (var spawner in copy)
+            {
+                if (TW.Graphics.TotalRunTime > spawner.get<EvilGoblinSpawnerData>().NextSpawn)
+                {
+                    new Goblin() { Position = spawner.Position };
+                    spawner.get<EvilGoblinSpawnerData>().NextSpawn = TW.Graphics.TotalRunTime + 4;
+                }
+            }
+        }
+
         private Random a = new Random();
 
-        public void SimulateGoblins(float elapsedTime) {
+        public void SimulateGoblins(float elapsedTime)
+        {
+
             IModelObject[] goblins = TW.Data.Objects.Where(gob => gob is Goblin).ToArray();
-            getNextFriend(goblins);
+            if (goblins.Length > 30)
+                goblins = goblins.Skip(goblins.Length - 30).ToArray();
+            //getNextFriend(goblins);
 
             foreach (var goblin in TW.Data.GetChangedObjects<Goblin>())
             {
-                setBasicEntities(goblin);
+                if (goblin.get<GoblinMover>() == null)
+                    goblin.set(new GoblinMover(goblin));
+                if (goblin.get<Engine.WorldRendering.Entity>() == null)
+                    goblin.set(new Engine.WorldRendering.Entity());
+                if (goblin.get<GoblinRenderData>() == null)
+                    goblin.set(new GoblinRenderData { LookDirection = new Vector3(0, 0, 1) });
+
+
+                //setBasicEntities(goblin);
                 var ent = goblin.get<Engine.WorldRendering.Entity>();
                 fixRendering(goblin, ent);
             }
@@ -34,9 +63,12 @@ namespace MHGameWork.TheWizards.RTS
         }
         private void updateAllGoblins(IModelObject[] goblins)
         {
-            foreach (var goblin in goblins)
+            var attack = new GoblinAttackPlayerBehaviour();
+
+            foreach (Goblin goblin in goblins)
             {
-                ((Goblin) goblin).get<GoblinMover>().Update();
+                goblin.get<GoblinMover>().Update();
+                attack.TryAttack(goblin);
             }
         }
         private static void fixRendering(Goblin goblin, Engine.WorldRendering.Entity ent)
@@ -48,7 +80,7 @@ namespace MHGameWork.TheWizards.RTS
             }
             renderData.LastPosition = goblin.Position;
             var quat = Functions.CreateFromLookDir(-Vector3.Normalize(renderData.LookDirection).xna());
-            ent.WorldMatrix = Microsoft.Xna.Framework.Matrix.CreateFromQuaternion(quat).dx()*Matrix.Scaling(0.01f, 0.01f, 0.01f)*
+            ent.WorldMatrix = Microsoft.Xna.Framework.Matrix.CreateFromQuaternion(quat).dx() * Matrix.Scaling(0.01f, 0.01f, 0.01f) *
                               Matrix.Translation(goblin.Position);
 
             renderData.LastPosition = goblin.Position;
@@ -59,15 +91,12 @@ namespace MHGameWork.TheWizards.RTS
 
         private static void setBasicEntities(Goblin goblin)
         {
-            if (goblin.get<GoblinMover>() == null)
-                goblin.set(new GoblinMover(goblin));
+
             if (goblin.BestFriend == null)
                 goblin.BestFriend = goblin;
+
             goblin.get<GoblinMover>().MoveTo(goblin.BestFriend.Position);
-            if (goblin.get<Engine.WorldRendering.Entity>() == null)
-                goblin.set(new Engine.WorldRendering.Entity());
-            if (goblin.get<GoblinRenderData>() == null)
-                goblin.set(new GoblinRenderData {LookDirection = new Vector3(0, 0, 1)});
+
         }
 
         private void getNextFriend(IModelObject[] goblins)
@@ -76,7 +105,7 @@ namespace MHGameWork.TheWizards.RTS
             {
                 if (a.Next(3) == 0)
                     goblin.Position = new Vector3(a.Next(40), a.Next(40), a.Next(40));
-                goblin.BestFriend = (Goblin) goblins[a.Next(goblins.Length)];
+                goblin.BestFriend = (Goblin)goblins[a.Next(goblins.Length)];
             }
         }
 
@@ -88,7 +117,7 @@ namespace MHGameWork.TheWizards.RTS
                 if (!(spawner.remainingSpawnTime < 0)) continue;
                 spawner.remainingSpawnTime += 2;
                 var a = new Random();
-                var spawnedGoblin = new Goblin() { Position = spawner.Position};
+                var spawnedGoblin = new Goblin() { Position = spawner.Position };
             }
             foreach (var spawner in TW.Data.GetChangedObjects<GoblinSpawner>())
             {
@@ -102,11 +131,19 @@ namespace MHGameWork.TheWizards.RTS
                 ent.Solid = true;
                 ent.Static = false;
             }
-        }    
-    private class GoblinRenderData
-    {
-        public Vector3 LastPosition {get; set;}
-        public Vector3 LookDirection {get; set; }
-    }
+        }
+        private class GoblinRenderData
+        {
+            public Vector3 LastPosition { get; set; }
+            public Vector3 LookDirection { get; set; }
+        }
+        private class EvilGoblinSpawnerData : IModelObjectAddon<EvilGoblinSpawner>
+        {
+            public float NextSpawn = 0;
+            public void Dispose()
+            {
+
+            }
+        }
     }
 }
