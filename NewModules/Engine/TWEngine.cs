@@ -295,6 +295,7 @@ namespace MHGameWork.TheWizards.Engine
             foreach (IModelObject obj in TW.Data.Objects)
             {
                 if (!TW.Data.PersistentModelObjects.Contains(obj)) continue;
+                //if (obj == null) continue; //TODO: fix this this should be impossible
                 TW.Data.ModelSerializer.QueueForSerialization(obj);
             }
             TW.Data.ModelSerializer.Serialize(writer);
