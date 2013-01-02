@@ -129,17 +129,26 @@ namespace MHGameWork.TheWizards.RTS
                 {
                     it = getBelow(it);
                     if (it != null && it.Filled)
+                    {
+                        if (n.Filled) throw new InvalidOperationException();
                         yield return n;
+                    }
+                        
                 }
             }
 
             if (!inAir)
             {
                 var up = getUp(current);
-                if (up != null) yield return up;
+                if (up != null && !up.Filled)
+                {
+                    if (up.Filled) throw new InvalidOperationException();
+                    yield return up;
+                }
             }
             else
             {
+                if (getBelow(current).Filled) throw new InvalidOperationException();
                 yield return getBelow(current);
             }
 
