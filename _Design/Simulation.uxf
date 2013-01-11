@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.5.1">
+  <help_text/>
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>460</x>
+      <y>80</y>
+      <w>580</w>
+      <h>500</h>
+    </coordinates>
+    <panel_attributes>SimulationContext
+
+--
++GetDependency&lt;T&gt;() : Object //This is for non-facade access
++EnsureAttachment&lt;TTarget,TAttachment&gt;() //Attaches to a EngineObject
++GetObjectsOfType()
++GetChangesOfType()
++GetObjects()
++GetChanges()
++CreateEngineObject&lt;T&gt;()
++DestroyEngineObject&lt;T&gt;()
++SetActiveCamera(EngineCamera cam)
++CursorEnabled : bool
+--
+Responsibilities
+Provides access to all the engine
+features a Simulator is entitled to.
+
+This is a facade class</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>80</x>
+      <y>60</y>
+      <w>220</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>ISimulator
+
+--
++Initialize(SimulationContext ctx)
+--
+Responsibilities
+This class is responsible 
+updating the engine state 
+using the current state of the 
+data and by monitoring changes</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>270</x>
+      <y>100</y>
+      <w>210</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>190;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>90</x>
+      <y>280</y>
+      <w>270</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>TODO responsibilities
+
+Get Mouse input
+Get Keyboard input
+Add sound
+render particles
+compose objects
+create and play animations
+Create lights
+Manipulate renderer?
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
