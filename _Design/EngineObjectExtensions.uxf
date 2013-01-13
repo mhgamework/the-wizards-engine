@@ -57,8 +57,8 @@ Are these elements part of the engine facade?</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>60</x>
-      <y>710</y>
+      <x>50</x>
+      <y>660</y>
       <w>820</w>
       <h>150</h>
     </coordinates>
@@ -77,13 +77,13 @@ Are these elements part of the engine facade?</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>90</x>
-      <y>340</y>
+      <y>300</y>
       <w>240</w>
-      <h>110</h>
+      <h>130</h>
     </coordinates>
-    <panel_attributes>MeshElement
+    <panel_attributes>MeshElement (ModelElement?)
 --
-+Mesh : IMesh
++Mesh : IModel?
 +Visible : bool
 +Solid : bool
 +Static : bool
@@ -97,10 +97,10 @@ Attaches a shape to this object</panel_attributes>
       <x>170</x>
       <y>170</y>
       <w>50</w>
-      <h>190</h>
+      <h>150</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>30;30;30;170</additional_attributes>
+    <additional_attributes>30;30;30;130</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -132,32 +132,32 @@ customization.</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>850</x>
+      <x>840</x>
       <y>540</y>
-      <w>100</w>
-      <h>230</h>
+      <w>110</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>lt=-
 </panel_attributes>
-    <additional_attributes>30;210;80;30</additional_attributes>
+    <additional_attributes>30;160;90;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>970</x>
-      <y>420</y>
+      <x>460</x>
+      <y>340</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
-    <panel_attributes>/IMesh/
+    <panel_attributes>/IModel/
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>380</x>
-      <y>560</y>
+      <x>60</x>
+      <y>500</y>
       <w>370</w>
       <h>100</h>
     </coordinates>
@@ -173,11 +173,11 @@ One way to raycast is by getting the mesh information</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>180</x>
-      <y>420</y>
-      <w>220</w>
-      <h>190</h>
+      <y>400</y>
+      <w>90</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>30;30;200;170</additional_attributes>
+    <additional_attributes>30;30;70;100</additional_attributes>
   </element>
 </diagram>

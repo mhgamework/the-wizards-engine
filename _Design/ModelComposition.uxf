@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.5.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>110</x>
+      <y>200</y>
+      <w>320</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>IModel
+--
++ Orientation : Matrix
++ Children : List&lt;IModel&gt;
+--
++ AddChild(IModel m)
++ AddPointLight() : IPointLight
++ AddDirectionalLight() : IDirectionalLight
++ AddSpotLight() : ISpotLight
++ AddParticleEffect() : IParticleEffect
++ AddAnimatable() : IAnimatable
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>770</x>
+      <y>80</y>
+      <w>250</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>IPointLight
+--
++ Position
++ Color
++ Intensity</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>520</x>
+      <y>420</y>
+      <w>250</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>IDirectionalLight
+--
++ Direction
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>810</x>
+      <y>350</y>
+      <w>250</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>IParticleEffect
+--
++ AddEmittor
++ AddAttractor</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>550</x>
+      <y>70</y>
+      <w>190</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>ISpotLight
+--
++ Position
++ Direction
++ Angle
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>70</x>
+      <y>500</y>
+      <w>410</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>IAnimatable
+--
++ ContainedModel : IModel
+--
+Methods fro configuring keyframes
+for orientation (or more?)
+--
+Should use the animatable wrapper, 
+or simply make all properties in this structure animatable,
+or provide a generic animation framework (using delegates)
+or using EngineModelObjects's?
+or using reflection?</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>230</x>
+      <y>370</y>
+      <w>60</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>40;30;30;130</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>400</x>
+      <y>100</y>
+      <w>170</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;190;150;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>400</x>
+      <y>260</y>
+      <w>260</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;240;160</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>400</x>
+      <y>260</y>
+      <w>570</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;550;90</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>400</x>
+      <y>210</y>
+      <w>510</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;80;490;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>750</x>
+      <y>720</y>
+      <w>140</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Preliminary</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

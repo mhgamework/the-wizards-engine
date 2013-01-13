@@ -6,7 +6,7 @@
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>460</x>
-      <y>80</y>
+      <y>70</y>
       <w>580</w>
       <h>500</h>
     </coordinates>
@@ -35,7 +35,7 @@ This is a facade class</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>80</x>
-      <y>60</y>
+      <y>50</y>
       <w>220</w>
       <h>140</h>
     </coordinates>
@@ -55,7 +55,7 @@ data and by monitoring changes</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>270</x>
-      <y>100</y>
+      <y>90</y>
       <w>210</w>
       <h>50</h>
     </coordinates>
@@ -66,7 +66,7 @@ data and by monitoring changes</panel_attributes>
     <type>com.umlet.element.Note</type>
     <coordinates>
       <x>90</x>
-      <y>280</y>
+      <y>270</y>
       <w>270</w>
       <h>220</h>
     </coordinates>
@@ -75,11 +75,10 @@ data and by monitoring changes</panel_attributes>
 Get Mouse input
 Get Keyboard input
 Add sound
-render particles
-compose objects
 create and play animations
-Create lights
 Manipulate renderer?
+GUI = text+images in containers
+GUI click regions
 </panel_attributes>
     <additional_attributes/>
   </element>
