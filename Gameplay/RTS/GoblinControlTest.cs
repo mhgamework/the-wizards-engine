@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTS.Commands;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Scripting;
 using NUnit.Framework;
 using SlimDX;
 
@@ -28,6 +29,8 @@ namespace MHGameWork.TheWizards.RTS
         private void setupBasic()
         {
             TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
+            engine.AddSimulator(new PlayerPickupSimulator());
+
             engine.AddSimulator(new FirstPersonCameraSimulator());
             engine.AddSimulator(new GoblinRendererSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
@@ -58,17 +61,12 @@ namespace MHGameWork.TheWizards.RTS
 
         private ISimulator createFetchSimulator()
         {
-            var cmd = new GoblinFollowCommand();
-            return createGoblinSimulator(cmd);
-        }
-
-        private static ISimulator createGoblinSimulator(IGoblinCommand cmd)
-        {
+            var cmd = new GoblinFollowUpdater();
             return new BasicSimulator(delegate
-                {
-                    foreach (Goblin g in TW.Data.Objects.Where(o => o is Goblin))
-                        cmd.Update(g);
-                });
+            {
+                foreach (Goblin g in TW.Data.Objects.Where(o => o is Goblin))
+                    cmd.Update(g);
+            });
         }
 
         [Test]
@@ -100,7 +98,7 @@ namespace MHGameWork.TheWizards.RTS
         [Test]
         public void TestFetchCommand()
         {
-            var cmd = new GoblinFetchCommand();
+            var cmd = new GoblinFetchUpdater();
             var type = new ResourceType();
             var thing = new Thing() { Type = type };
             var droppedThing = new DroppedThing() { Position = new Vector3(-5, 0.5f, 3), Thing = thing };
@@ -122,7 +120,7 @@ namespace MHGameWork.TheWizards.RTS
         [Test]
         public void TestStealingGoblins()
         {
-            var cmd = new GoblinFetchCommand();
+            var cmd = new GoblinFetchUpdater();
             var type = new ResourceType();
             var thing = new Thing() { Type = type };
             var droppedThing = new DroppedThing() { Position = new Vector3(-5, 0.5f, 3), Thing = thing };
@@ -131,24 +129,104 @@ namespace MHGameWork.TheWizards.RTS
             thing = new Thing() { Type = type };
             for (int i = 0; i < 20; i++)
             {
-                droppedThing = new DroppedThing() { Position = new Vector3(-20, 0.5f, 3+i), Thing = thing };
-                
+                droppedThing = new DroppedThing() { Position = new Vector3(-20, 0.5f, 3 + i), Thing = thing };
+
             }
 
 
-            new Goblin() {Position = new Vector3(-10, 0.5f, 7)};
+            new Goblin() { Position = new Vector3(-10, 0.5f, 7) };
 
             engine.AddSimulator(new BasicSimulator(delegate
                 {
                     var i = 0;
-                foreach (Goblin g in TW.Data.Objects.Where(o => o is Goblin))
-                {
-                    cmd.Update(g, new Vector3(-5-i*10, 0.5f, -3), type);
-                    i++;
+                    foreach (Goblin g in TW.Data.Objects.Where(o => o is Goblin))
+                    {
+                        cmd.Update(g, new Vector3(-5 - i * 10, 0.5f, -3), type);
+                        i++;
 
-                }
-            }));
+                    }
+                }));
             engine.AddSimulator(new GoblinMovementSimulatorSimple());
+
+            setupBasic();
+        }
+
+        [Test]
+        public void TestFactory()
+        {
+            var input = new ResourceType();
+            var output = new ResourceType();
+
+            var factory = new Factory() { Position = new Vector3(), InputType = input, OutputType = output };
+            var area = factory.GetInputArea();
+            var pos = (area.Minimum + area.Maximum) * 0.5f;
+
+            for (int i = 0; i < 2; i++)
+            {
+                var thing = new Thing() { Type = input };
+                var dropped = new DroppedThing() { Thing = thing, Position = pos };
+            }
+
+            engine.AddSimulator(new FactorySimulator());
+
+            setupBasic();
+        }
+
+        [Test]
+        public void TestPlayerPickup()
+        {
+            var input = new ResourceType();
+
+            var thing = new Thing() { Type = input };
+            var dropped = new DroppedThing() { Thing = thing, Position = new Vector3(2, 0.5f, 2) };
+
+            setupBasic();
+        }
+
+
+
+        [Test]
+        public void TestCommands()
+        {
+
+            var goblin2 = new Goblin() { Position = new Vector3(-10, 1, 0) };
+
+            var input = new ResourceType();
+
+            var thing = new Thing() { Type = input };
+            var dropped = new DroppedThing() { Thing = thing, Position = new Vector3(2, 0.5f, 2) };
+
+            engine.AddSimulator(new GoblinCommandSimulator());
+            engine.AddSimulator(new GoblinMovementSimulatorSimple());
+
+            bool first = true; // hack because of problems with data mode, commands should be data
+            engine.AddSimulator(new BasicSimulator(delegate
+                {
+                    if (!first) return;
+                    first = false;
+                    goblin.get<GoblinCommandState>().CurrentCommand = new GoblinFollowCommand(new GoblinFollowUpdater());
+                    goblin2.get<GoblinCommandState>().CurrentCommand = new GoblinFetchCommand(new GoblinFetchUpdater()) { ResourceType = input, TargetPosition = new Vector3(-5, 1, -2) };
+
+                }));
+
+
+            setupBasic();
+
+
+        }
+
+        [Test]
+        public void TestCommunicate()
+        {
+            var input = new ResourceType();
+
+            var thing = new Thing() { Type = input };
+            var dropped = new DroppedThing() { Thing = thing, Position = new Vector3(2, 0.5f, 2) };
+
+            engine.AddSimulator(new GoblinCommunicationSimulator());
+            engine.AddSimulator(new GoblinCommandSimulator());
+            engine.AddSimulator(new GoblinMovementSimulatorSimple());
+
 
             setupBasic();
         }

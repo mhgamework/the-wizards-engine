@@ -1,19 +1,24 @@
-﻿using MHGameWork.TheWizards.Engine.WorldRendering;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace MHGameWork.TheWizards.RTS.Commands
 {
     public class GoblinFollowCommand : IGoblinCommand
     {
+        private GoblinFollowUpdater updater;
+
+        public GoblinFollowCommand(GoblinFollowUpdater updater)
+        {
+            this.updater = updater;
+        }
+
         public void Update(Goblin goblin)
         {
-            var playerPos = TW.Data.GetSingleton<CameraInfo>().ActiveCamera.ViewInverse.xna().Translation.dx();
-            var toPlayer = goblin.Position - playerPos;
-            var minDistance = 5;
-            var goal = playerPos;
-            if (toPlayer.Length() < minDistance)
-                goal = goblin.Position;
-            goal.Y = 0.85f / 2;
-            goblin.MoveTo(goal);
+            updater.Update(goblin);
         }
+
+        public string Description { get { return "following my master."; } }
     }
 }

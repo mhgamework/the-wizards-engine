@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.RTS.Commands;
@@ -17,6 +18,7 @@ namespace MHGameWork.TheWizards.RTS
         public Vector3 Goal { get; set; }
         public Goblin BestFriend { get; set; }
         public Thing Holding { get; set; }
+
 
         public void MoveTo(Vector3 position)
         {
@@ -35,5 +37,6 @@ namespace MHGameWork.TheWizards.RTS
             if (Holding == null) return false;
             return Holding.Type == type;
         }
+
     }
 }

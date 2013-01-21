@@ -1,66 +1,29 @@
 ﻿using System;
-using SlimDX;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using SlimDX;
+
 namespace MHGameWork.TheWizards.RTS.Commands
 {
-    public class GoblinFetchCommand
+    public class GoblinFetchCommand : IGoblinCommand
     {
-        private Vector3 targetPosition;
-        private ResourceType resourceType;
-        private Goblin goblin;
-        private float dropAreaRange = 0.1f;
+        private GoblinFetchUpdater updater;
 
-        public void Update(Goblin goblin, Vector3 targetPosition, ResourceType resourceType)
+        public GoblinFetchCommand(GoblinFetchUpdater updater)
         {
-            this.goblin = goblin;
-            this.resourceType = resourceType;
-            this.targetPosition = targetPosition;
-            if (this.goblin.IsHoldingResource(this.resourceType))
-            {
-                goblin.MoveTo(targetPosition);
-                if (reachedTarget(targetPosition))
-                {
-                    this.goblin.DropHolding();
-                }
-            }
-            else
-            {
-                var res = findClosestResource(dropAreaRange);
-                if (res == null) return;
-
-                var closest = res.Position;
-
-                goblin.MoveTo(closest);
-                if (reachedTarget(closest))
-                {
-                    pickupResource(this.goblin);
-                }
-            }
+            this.updater = updater;
         }
 
-        private void pickupResource(Goblin goblin)
+        public void Update(Goblin goblin)
         {
-            var res = findClosestResource(0);
-            if (res == null) return;
-            TW.Data.Objects.Remove(res);
-            goblin.Holding = res.Thing;
+            updater.Update(goblin, TargetPosition, ResourceType);
         }
 
-        private DroppedThing findClosestResource(float minDist)
-        {
-            var closest = TW.Data.Objects.Where(o => o is DroppedThing)
-              .Cast<DroppedThing>().Where(o => o.Thing.Type == resourceType)
-              .Where(o => Vector3.DistanceSquared(o.Position , targetPosition) >minDist*minDist)
-              .OrderBy(o => (o.Position - goblin.Position).LengthSquared())
-              .FirstOrDefault();
+        public string Description { get { return "collecting, because thats what barrels do."; } }
 
-            return closest;
+        public Vector3 TargetPosition { get; set; }
 
-        }
-
-        private bool reachedTarget(Vector3 target)
-        {
-            return (goblin.Position - target).Length() < dropAreaRange;
-        }
+        public ResourceType ResourceType { get; set; }
     }
 }

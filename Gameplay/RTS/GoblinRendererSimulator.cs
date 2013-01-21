@@ -27,6 +27,22 @@ namespace MHGameWork.TheWizards.RTS
                 fixRendering(goblin);
             }
 
+            UpdateDroppedThings();
+            UpdateFactories();
+
+        }
+
+        private void UpdateFactories()
+        {
+            TW.Data.EnsureAttachment<Factory, FactoryRenderData>(o => new FactoryRenderData(o));
+            foreach (var f in TW.Data.GetChangedObjects<Factory>())
+            {
+                f.get<FactoryRenderData>().Update();
+            }
+        }
+
+        private static void UpdateDroppedThings()
+        {
             foreach (var c in TW.Data.GetChangesOfType<DroppedThing>())
             {
                 var t = c.ModelObject as DroppedThing;
@@ -54,12 +70,12 @@ namespace MHGameWork.TheWizards.RTS
                     var builder = new MeshBuilder();
                     builder.AddBox(MathHelper.One * -0.2f, MathHelper.One * 0.2f);
                     ent.Mesh = builder.CreateMesh();
-
                 }
 
                 ent.WorldMatrix = Matrix.Translation(t.Position + Vector3.UnitY * 0.2f);
             }
         }
+
         private static void fixRendering(Goblin goblin)
         {
             if (goblin.get<Engine.WorldRendering.Entity>() == null)
@@ -131,6 +147,50 @@ namespace MHGameWork.TheWizards.RTS
                 return Microsoft.Xna.Framework.Matrix.CreateFromQuaternion(quat).dx() * /*Matrix.Scaling(0.01f, 0.01f, 0.01f) **/
                        Matrix.Translation(goblin.Position);
             }
+        }
+    }
+
+    public class FactoryRenderData : IModelObjectAddon<Factory>
+    {
+        private readonly Factory factory;
+        private Engine.WorldRendering.Entity main;
+        private Engine.WorldRendering.Entity input;
+        private Engine.WorldRendering.Entity output;
+        public FactoryRenderData(Factory factory)
+        {
+            this.factory = factory;
+            main = new Engine.WorldRendering.Entity();
+            var builder = new MeshBuilder();
+            builder.AddBox(new Vector3(-1, 0, -1), new Vector3(1, 3, 1));
+            main.Mesh = builder.CreateMesh();
+
+
+            input = new Engine.WorldRendering.Entity();
+            builder = new MeshBuilder();
+            var bb = factory.GetInputArea();
+            bb.Maximum += Vector3.UnitY * (-bb.Maximum.Y + 0.03f);
+            builder.AddBox(bb.Minimum,bb.Maximum);
+            input.Mesh = builder.CreateMesh();
+
+
+            output = new Engine.WorldRendering.Entity();
+            builder = new MeshBuilder();
+            bb = factory.GetOutputArea();
+            bb.Maximum += Vector3.UnitY*(-bb.Maximum.Y + 0.03f);
+            builder.AddBox(bb.Minimum,bb.Maximum);
+            output.Mesh = builder.CreateMesh();
+
+            
+        }
+
+        public void Dispose()
+        {
+            TW.Data.Objects.Remove(main);
+        }
+
+        public void Update()
+        {
+            main.WorldMatrix = Matrix.Translation(factory.Position);
         }
     }
 }
