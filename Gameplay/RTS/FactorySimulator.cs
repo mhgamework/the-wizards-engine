@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.RTS
     {
         private readonly Factory factory;
 
-        private float nextUpdate ;
+        private float nextUpdate;
 
         public FactoryBuilder(Factory factory)
         {
@@ -41,10 +41,9 @@ namespace MHGameWork.TheWizards.RTS
 
         private void buildSingle()
         {
-            var dropped = TW.Data.Objects.Where(o => o is DroppedThing)
-              .Cast<DroppedThing>()
-              .Where(o=>o.Thing.Type == factory.InputType)
-              .FirstOrDefault(o => factory.GetInputArea().xna().Contains(o.Position.xna()) == ContainmentType.Contains);
+            var droppedInputs = TW.Data.Objects.Where(o => o is DroppedThing).Cast<DroppedThing>().Where(o => o.Thing.Type == factory.InputType).ToArray();
+            Console.Write(droppedInputs);
+            var dropped = droppedInputs.FirstOrDefault(o => factory.GetInputArea().xna().Contains(o.InitialPosition.xna()) == ContainmentType.Contains);
             if (dropped == null) return;
 
             TW.Data.RemoveObject(dropped);
@@ -52,7 +51,7 @@ namespace MHGameWork.TheWizards.RTS
             var thing = new Thing() { Type = factory.OutputType };
             var area = factory.GetOutputArea();
             var pos = (area.Maximum + area.Minimum) * 0.5f;
-            new DroppedThing() { Position = pos, Thing = thing };
+            new DroppedThing() { InitialPosition = pos, Thing = thing };
         }
 
         public void Dispose()

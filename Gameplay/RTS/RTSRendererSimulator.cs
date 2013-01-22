@@ -15,21 +15,24 @@ using Quaternion = Microsoft.Xna.Framework.Quaternion;
 
 namespace MHGameWork.TheWizards.RTS
 {
-    public class GoblinRendererSimulator : ISimulator
+    public class RTSRendererSimulator : ISimulator
     {
         public void Simulate()
+        {
+            updateGoblins();
+            UpdateDroppedThings();
+            UpdateFactories();
+        }
+
+        private static void updateGoblins()
         {
             foreach (var goblin in TW.Data.GetChangedObjects<Goblin>())
             {
                 if (goblin.get<GoblinRenderData>() == null)
-                    goblin.set(new GoblinRenderData { LookDirection = new Vector3(0, 0, 1) });
-                var ent = goblin.get<Engine.WorldRendering.Entity>();
+                    goblin.set(new GoblinRenderData {LookDirection = new Vector3(0, 0, 1)});
+
                 fixRendering(goblin);
             }
-
-            UpdateDroppedThings();
-            UpdateFactories();
-
         }
 
         private void UpdateFactories()
@@ -58,22 +61,23 @@ namespace MHGameWork.TheWizards.RTS
                     t.set<Engine.WorldRendering.Entity>(null);
                     continue;
                 }
+                
 
                 if (ent == null)
                 {
                     ent = new Engine.WorldRendering.Entity();
+                    ent.Solid = true;
+                    ent.Static = false;
+                    ent.Kinematic = false;
                     ent.Tag = t;
                     t.set(ent);
                 }
 
                 if (ent.Mesh == null)
-                {
-                    var builder = new MeshBuilder();
-                    builder.AddBox(MathHelper.One * -0.2f, MathHelper.One * 0.2f);
-                    ent.Mesh = builder.CreateMesh();
-                }
+                    ent.Mesh = t.Thing.CreateMesh();
 
-                ent.WorldMatrix = Matrix.Translation(t.Position + Vector3.UnitY * 0.2f);
+                //t.InitialPosition = ent.WorldMatrix.xna().Translation.dx();
+                ent.WorldMatrix = Matrix.Translation(t.InitialPosition);
             }
         }
 
@@ -82,7 +86,6 @@ namespace MHGameWork.TheWizards.RTS
             if (goblin.get<Engine.WorldRendering.Entity>() == null)
                 goblin.set(new Engine.WorldRendering.Entity());
             var ent = goblin.get<Engine.WorldRendering.Entity>();
-
             ent.Tag = goblin;
 
             var renderData = goblin.get<GoblinRenderData>();
@@ -99,6 +102,7 @@ namespace MHGameWork.TheWizards.RTS
             ent.Mesh = MeshFactory.Load("Core\\Barrel01");//Load("Goblin\\GoblinLowRes");
             ent.Solid = true;
             ent.Static = false;
+            ent.Solid = false;
 
             renderData.updateHolding(goblin);
         }
@@ -121,7 +125,8 @@ namespace MHGameWork.TheWizards.RTS
                 else
                 {
                     createHoldingEntity();
-                    HoldingEntity.WorldMatrix = Matrix.Scaling(0.4f, 0.4f, 0.4f) * Matrix.Translation(Vector3.UnitZ * 0.5f) * calcGoblinMatrix(g);
+                    HoldingEntity.WorldMatrix = Matrix.Translation(Vector3.UnitZ * 0.5f) * calcGoblinMatrix(g);
+                    HoldingEntity.Mesh = g.Holding.CreateMesh();
                 }
             }
 
@@ -129,9 +134,6 @@ namespace MHGameWork.TheWizards.RTS
             {
                 if (HoldingEntity != null) return;
                 HoldingEntity = new Engine.WorldRendering.Entity();
-                var builder = new MeshBuilder();
-                builder.AddBox(MathHelper.One * -0.5f, MathHelper.One * 0.5f);
-                HoldingEntity.Mesh = builder.CreateMesh();
 
             }
 
@@ -172,18 +174,20 @@ namespace MHGameWork.TheWizards.RTS
             builder = new MeshBuilder();
             var bb = factory.GetInputArea();
             bb.Maximum += Vector3.UnitY * (-bb.Maximum.Y + 0.03f);
-            builder.AddBox(bb.Minimum,bb.Maximum);
+            builder.AddBox(bb.Minimum, bb.Maximum);
             input.Mesh = builder.CreateMesh();
+            input.Mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap = factory.InputType.Texture;
 
 
             output = new Engine.WorldRendering.Entity();
             builder = new MeshBuilder();
             bb = factory.GetOutputArea();
-            bb.Maximum += Vector3.UnitY*(-bb.Maximum.Y + 0.03f);
-            builder.AddBox(bb.Minimum,bb.Maximum);
+            bb.Maximum += Vector3.UnitY * (-bb.Maximum.Y + 0.03f);
+            builder.AddBox(bb.Minimum, bb.Maximum);
             output.Mesh = builder.CreateMesh();
+            output.Mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap = factory.OutputType.Texture;
 
-            
+
         }
 
         public void Dispose()

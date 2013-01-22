@@ -8,7 +8,7 @@ namespace MHGameWork.TheWizards.RTS.Commands
         private Vector3 targetPosition;
         private ResourceType resourceType;
         private Goblin goblin;
-        private float dropAreaRange = 0.1f;
+        private float dropAreaRange = 1f;
 
         public void Update(Goblin goblin, Vector3 targetPosition, ResourceType resourceType)
         {
@@ -25,10 +25,10 @@ namespace MHGameWork.TheWizards.RTS.Commands
             }
             else
             {
-                var res = findClosestResource(dropAreaRange);
+                var res = findClosestResource(allowedToPickup);
                 if (res == null) return;
 
-                var closest = res.Position;
+                var closest = res.get<Engine.WorldRendering.Entity>().WorldMatrix.xna().Translation.dx();
 
                 goblin.MoveTo(closest);
                 if (reachedTarget(closest))
@@ -40,27 +40,41 @@ namespace MHGameWork.TheWizards.RTS.Commands
 
         private void pickupResource(Goblin goblin)
         {
-            var res = findClosestResource(0);
+            var res = findClosestResource(o => true);
             if (res == null) return;
             TW.Data.Objects.Remove(res);
             goblin.Holding = res.Thing;
         }
 
-        private DroppedThing findClosestResource(float minDist)
+        private DroppedThing findClosestResource(Func<DroppedThing, bool> toPickup)
         {
             var closest = TW.Data.Objects.Where(o => o is DroppedThing)
               .Cast<DroppedThing>().Where(o => o.Thing.Type == resourceType)
-              .Where(o => Vector3.DistanceSquared(o.Position , targetPosition) >minDist*minDist)
-              .OrderBy(o => (o.Position - goblin.Position).LengthSquared())
+              .Where(toPickup)
+              .OrderBy(t => getDistanceSqToDrop(goblin.Position, t))
               .FirstOrDefault();
 
             return closest;
 
         }
 
+        private bool allowedToPickup(DroppedThing drop)
+        {
+            return getDistanceSqToDrop(targetPosition, drop) > dropAreaRange * dropAreaRange;
+        }
+
+        private float getDistanceSqToDrop(Vector3 pos, DroppedThing drop)
+        {
+            var droppos = drop.get<Engine.WorldRendering.Entity>().WorldMatrix.xna().Translation.dx();
+            var target = pos;
+            droppos.Y = 0;
+            target.Y = 0;
+            return Vector3.DistanceSquared(droppos, target);
+        }
+
         private bool reachedTarget(Vector3 target)
         {
-            return (goblin.Position - target).Length() < dropAreaRange;
+            return (goblin.Position - target).Length() < 0.01f;
         }
     }
 }

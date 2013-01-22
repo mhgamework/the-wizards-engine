@@ -12,9 +12,8 @@ namespace MHGameWork.TheWizards.RTS
 {
     [ModelObjectChanged]
     public class Goblin : EngineModelObject
-
     {
-        public Vector3 Position { get; set;}
+        public Vector3 Position { get; set; }
         public Vector3 Goal { get; set; }
         public Goblin BestFriend { get; set; }
         public Thing Holding { get; set; }
@@ -27,7 +26,9 @@ namespace MHGameWork.TheWizards.RTS
 
         public void DropHolding()
         {
-            new DroppedThing() { Thing = Holding, Position = Position  };
+            var pos = Position;
+            pos.Y = 0.5f;
+            new DroppedThing() { Thing = Holding, InitialPosition = pos };
 
             Holding = null;
         }

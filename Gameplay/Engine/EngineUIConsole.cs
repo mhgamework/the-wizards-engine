@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.Engine
             //TODO: move this to the engine!!!!
             if (Application.Current == null)
             {
-                
+
                 var t = new Thread(delegate()
                     {
                         var app = new Application();
@@ -31,7 +31,7 @@ namespace MHGameWork.TheWizards.Engine
 
                 ev.WaitOne();
 
-                
+
             }
             Application.Current.Dispatcher.BeginInvoke(createOutputWindow);
         }
@@ -42,7 +42,7 @@ namespace MHGameWork.TheWizards.Engine
             window.WindowStyle = WindowStyle.None;
 
             window.Height = 200;
-            TW.Graphics.Form.Form.Move += 
+            TW.Graphics.Form.Form.Move +=
                 delegate { window.Dispatcher.BeginInvoke(updatePositionAndSize); };
             TW.Graphics.Form.Form.GotFocus +=
                 delegate { window.Dispatcher.BeginInvoke(delegate { window.Topmost = true; }); };
@@ -101,6 +101,7 @@ namespace MHGameWork.TheWizards.Engine
                     remainders = remainders.Substring(remainders.IndexOf("\r\n") + 2);
 
                     box.Dispatcher.BeginInvoke(() => box.Items.Add(line));
+                    box.Dispatcher.BeginInvoke(() => box.SelectedIndex = box.Items.Count - 1);
 
                 }
 

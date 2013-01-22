@@ -68,7 +68,7 @@ namespace MHGameWork.TheWizards.RTS
             data.Textarea.Text += "\n\n";
             data.Textarea.Text += "1. Idle\n";
             data.Textarea.Text += "2. Follow\n";
-            data.Textarea.Text += "3. Fetch items of the type you are holding\n";
+            data.Textarea.Text += "3. Fetch items of the type I am holding to my position\n";
 
             checkKeyIdle();
             checkKeyFollow();
@@ -92,10 +92,12 @@ namespace MHGameWork.TheWizards.RTS
         {
             if (!TW.Graphics.Keyboard.IsKeyPressed(Key.D3)) return;
             if (player.Holding == null) return;
+            var target = TW.Data.GetSingleton<CameraInfo>().ActiveCamera.ViewInverse.xna().Translation.dx();
+            target.Y = 0.3f;
             command = new GoblinFetchCommand(new GoblinFetchUpdater())
                 {
                     ResourceType = player.Holding.Type,
-                    TargetPosition = goblin.Position
+                    TargetPosition = target
                 };
         }
 

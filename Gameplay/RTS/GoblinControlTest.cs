@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
+using MHGameWork.TheWizards.Engine.PhysX;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTS.Commands;
@@ -33,10 +34,11 @@ namespace MHGameWork.TheWizards.RTS
             engine.AddSimulator(new PlayerPickupSimulator());
 
             engine.AddSimulator(new FirstPersonCameraSimulator());
-            engine.AddSimulator(new GoblinRendererSimulator());
-            engine.AddSimulator(new EntityBatcherSimulator());
+            engine.AddSimulator(new RTSRendererSimulator());
+            //engine.AddSimulator(new EntityBatcherSimulator());
+            engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
-
+            //engine.AddSimulator(new PhysXDebugRendererSimulator());
 
             createGroundPlane();
 
@@ -49,6 +51,7 @@ namespace MHGameWork.TheWizards.RTS
             var builder = new MeshBuilder();
             builder.AddBox(new Vector3(-1000, 0, -1000), new Vector3(1000, -1, 1000));
             var mesh = builder.CreateMesh();
+            mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap = TW.Assets.LoadTexture("RTS\\groundplane.png");
 
             var ent = new Engine.WorldRendering.Entity { Mesh = mesh };
         }
@@ -103,11 +106,11 @@ namespace MHGameWork.TheWizards.RTS
             var cmd = new GoblinFetchUpdater();
             var type = new ResourceType();
             var thing = new Thing() { Type = type };
-            var droppedThing = new DroppedThing() { Position = new Vector3(-5, 0.5f, 3), Thing = thing };
+            var droppedThing = new DroppedThing() { InitialPosition = new Vector3(-5, 0.5f, 3), Thing = thing };
 
 
             thing = new Thing() { Type = type };
-            droppedThing = new DroppedThing() { Position = new Vector3(-20, 0.5f, 3), Thing = thing };
+            droppedThing = new DroppedThing() { InitialPosition = new Vector3(-20, 0.5f, 3), Thing = thing };
 
             engine.AddSimulator(new BasicSimulator(delegate
                 {
@@ -125,13 +128,13 @@ namespace MHGameWork.TheWizards.RTS
             var cmd = new GoblinFetchUpdater();
             var type = new ResourceType();
             var thing = new Thing() { Type = type };
-            var droppedThing = new DroppedThing() { Position = new Vector3(-5, 0.5f, 3), Thing = thing };
+            var droppedThing = new DroppedThing() { InitialPosition = new Vector3(-5, 0.5f, 3), Thing = thing };
 
 
             thing = new Thing() { Type = type };
             for (int i = 0; i < 20; i++)
             {
-                droppedThing = new DroppedThing() { Position = new Vector3(-20, 0.5f, 3 + i), Thing = thing };
+                droppedThing = new DroppedThing() { InitialPosition = new Vector3(-20, 0.5f, 3 + i), Thing = thing };
 
             }
 
@@ -166,7 +169,7 @@ namespace MHGameWork.TheWizards.RTS
             for (int i = 0; i < 2; i++)
             {
                 var thing = new Thing() { Type = input };
-                var dropped = new DroppedThing() { Thing = thing, Position = pos };
+                var dropped = new DroppedThing() { Thing = thing, InitialPosition = pos };
             }
 
             engine.AddSimulator(new FactorySimulator());
@@ -180,7 +183,7 @@ namespace MHGameWork.TheWizards.RTS
             var input = new ResourceType();
 
             var thing = new Thing() { Type = input };
-            var dropped = new DroppedThing() { Thing = thing, Position = new Vector3(2, 0.5f, 2) };
+            var dropped = new DroppedThing() { Thing = thing, InitialPosition = new Vector3(2, 0.5f, 2) };
 
             setupBasic();
         }
@@ -196,7 +199,7 @@ namespace MHGameWork.TheWizards.RTS
             var input = new ResourceType();
 
             var thing = new Thing() { Type = input };
-            var dropped = new DroppedThing() { Thing = thing, Position = new Vector3(2, 0.5f, 2) };
+            var dropped = new DroppedThing() { Thing = thing, InitialPosition = new Vector3(2, 0.5f, 2) };
 
             engine.AddSimulator(new GoblinCommandSimulator());
             engine.AddSimulator(new GoblinMovementSimulatorSimple());
@@ -213,7 +216,6 @@ namespace MHGameWork.TheWizards.RTS
 
 
             setupBasic();
-
 
         }
 
@@ -235,34 +237,55 @@ namespace MHGameWork.TheWizards.RTS
         private static void placeItem(ResourceType input, Vector3 position)
         {
             var thing = new Thing() { Type = input };
-            var dropped = new DroppedThing() { Thing = thing, Position = position };
+            var dropped = new DroppedThing() { Thing = thing, InitialPosition = position };
         }
 
         [Test]
         public void TestCommunicateBig()
         {
-            var wood = new ResourceType();
-            var barrel = new ResourceType();
-            var plank = new ResourceType();
+            var wood = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS\\bark.jpg") };
+            var barrel = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS\\barrel.jpg") };
+            var plank = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS\\plank-diffuse-seamless.jpg") };
 
-            for (int i = 0; i < 100; i++)
+            var size = 20;
+            for (int i = 0; i < 200; i++)
             {
-                placeItem(wood, nextVector(new Vector3(-100, 0.5f, -100), new Vector3(100, 0.5f, 100)));
+                placeItem(wood, nextVector(new Vector3(-size, 0.5f, -size), new Vector3(size, 0.5f, size)));
             }
 
             for (int i = 0; i < 20; i++)
             {
-                placeItem(wood, nextVector(new Vector3(2, 0.5f, 10), new Vector3(2, 0.5f, 10)));
+                var g = new Goblin() { Position = nextVector(new Vector3(-5, 0.5f, -5), new Vector3(-2, 0.5f, -2)) };
+                g.Goal = new Vector3(-3, 0.5f, -3);
             }
 
+            var factories = new List<Factory>();
+            factories.Add(new Factory() { BuildInterval = 4, InputType = wood, OutputType = plank });
+            factories.Add(new Factory() { BuildInterval = 4, InputType = wood, OutputType = plank });
+            factories.Add(new Factory() { BuildInterval = 4, InputType = wood, OutputType = plank });
+
+            factories.Add(new Factory() { BuildInterval = 10, InputType = plank, OutputType = barrel });
+            factories.Add(new Factory() { BuildInterval = 10, InputType = plank, OutputType = barrel });
+
+            foreach (var fact in factories)
+            {
+                fact.Position = nextVector(new Vector3(-size, 0.1f, -size), new Vector3(size, 0, size));
+            }
 
             engine.AddSimulator(new GoblinCommunicationSimulator());
             engine.AddSimulator(new GoblinCommandSimulator());
+            engine.AddSimulator(new GoblinSimpleCrowdControlSimulator());
             engine.AddSimulator(new GoblinMovementSimulatorSimple());
+
+            engine.AddSimulator(new FactorySimulator());
+
             
 
 
+
             setupBasic();
+            goblin.Goal = new Vector3(-3, 0.5f, -3);
+
         }
 
         private Vector3 nextVector(Vector3 min, Vector3 max)
@@ -278,6 +301,6 @@ namespace MHGameWork.TheWizards.RTS
         }
 
 
-        
+
     }
 }

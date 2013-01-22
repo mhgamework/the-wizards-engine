@@ -47,8 +47,8 @@ namespace MHGameWork.TheWizards.RTS
         private void tryDrop()
         {
             var dropped = new DroppedThing();
-            dropped.Position = calculateHoldPosition();
-            if (dropped.Position.Y < 0.2f) dropped.Position = new Vector3(dropped.Position.X, 0.2f, dropped.Position.Z);
+            dropped.InitialPosition = calculateHoldPosition();
+            if (dropped.InitialPosition.Y < 0.2f) dropped.InitialPosition = new Vector3(dropped.InitialPosition.X, 0.2f, dropped.InitialPosition.Z);
 
             dropped.Thing = player.Holding;
             player.Holding = null;
@@ -77,7 +77,7 @@ namespace MHGameWork.TheWizards.RTS
             player.Holding = found.Thing;
             TW.Data.Objects.Remove(found);
 
-            pickupEntity.Mesh = found.get<Engine.WorldRendering.Entity>().Mesh;
+            pickupEntity.Mesh = found.Thing.CreateMesh();
 
         }
     }

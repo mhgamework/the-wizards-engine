@@ -31,7 +31,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.RTS
             engine.AddSimulator(new VoxelTerrainSimulator());
             engine.AddSimulator(new GoblinCommanderSimulator());
             engine.AddSimulator(new GoblinMovementSimulator());
-            engine.AddSimulator(new GoblinRendererSimulator());
+            engine.AddSimulator(new RTSRendererSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.Run();
         }

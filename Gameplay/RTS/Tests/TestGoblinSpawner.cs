@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.RTS
             new GoblinSpawner() { Position = new Vector3(0, 0, 0) };
             engine.AddSimulator(new GoblinSimulator());
             //engine.AddSimulator(new PhysXSimulator());
-            engine.AddSimulator(new GoblinRendererSimulator());
+            engine.AddSimulator(new RTSRendererSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
             //engine.AddSimulator(new PhysXDebugRendererSimulator());
             engine.Run();
