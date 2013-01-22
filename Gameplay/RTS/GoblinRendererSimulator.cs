@@ -62,6 +62,7 @@ namespace MHGameWork.TheWizards.RTS
                 if (ent == null)
                 {
                     ent = new Engine.WorldRendering.Entity();
+                    ent.Tag = t;
                     t.set(ent);
                 }
 

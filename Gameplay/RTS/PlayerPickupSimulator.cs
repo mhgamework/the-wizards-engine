@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards.RTS
             player.Holding = null;
 
 
-        } 
+        }
 
         private Vector3 calculateHoldPosition()
         {
@@ -65,14 +65,13 @@ namespace MHGameWork.TheWizards.RTS
         private void tryPickup()
         {
             var obj = TW.Data.GetSingleton<Engine.WorldRendering.World>()
-                        .Raycast(TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay(),
-                        e => TW.Data.Objects.Where(o => o is DroppedThing).Cast<DroppedThing>().Count(o => o.get<Engine.WorldRendering.Entity>() == e)> 0 );
+                        .Raycast(TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay(), e => e.Tag is DroppedThing);
             if (!obj.IsHit) return;
             if (obj.Distance > 5) return;
-            if (!(obj.Object is Engine.WorldRendering.Entity)) return;
+            if (obj.Object == null) return;
 
-            var ent = obj.Object as Engine.WorldRendering.Entity;
-            DroppedThing found = TW.Data.Objects.Where(o => o is DroppedThing).Cast<DroppedThing>().FirstOrDefault(o => o.get<Engine.WorldRendering.Entity>() == ent);
+            var ent = obj.Object;
+            var found = ent.Tag as DroppedThing;
             if (found == null) return;
 
             player.Holding = found.Thing;

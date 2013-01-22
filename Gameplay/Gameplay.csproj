@@ -137,6 +137,7 @@
     <Compile Include="Assetbrowser\AssetbrowserData.cs" />
     <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
+    <Compile Include="BugTests.cs" />
     <Compile Include="Engine\EngineUIConsole.cs" />
     <Compile Include="Engine\EngineUISimulator.cs" />
     <Compile Include="Engine\Features\Testing\EngineTestAttribute.cs" />

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Engine;
@@ -33,6 +34,7 @@ namespace MHGameWork.TheWizards.RTS
 
             engine.AddSimulator(new FirstPersonCameraSimulator());
             engine.AddSimulator(new GoblinRendererSimulator());
+            engine.AddSimulator(new EntityBatcherSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
 
 
@@ -220,8 +222,7 @@ namespace MHGameWork.TheWizards.RTS
         {
             var input = new ResourceType();
 
-            var thing = new Thing() { Type = input };
-            var dropped = new DroppedThing() { Thing = thing, Position = new Vector3(2, 0.5f, 2) };
+            placeItem(input, new Vector3(2, 0.5f, 2));
 
             engine.AddSimulator(new GoblinCommunicationSimulator());
             engine.AddSimulator(new GoblinCommandSimulator());
@@ -230,5 +231,53 @@ namespace MHGameWork.TheWizards.RTS
 
             setupBasic();
         }
+
+        private static void placeItem(ResourceType input, Vector3 position)
+        {
+            var thing = new Thing() { Type = input };
+            var dropped = new DroppedThing() { Thing = thing, Position = position };
+        }
+
+        [Test]
+        public void TestCommunicateBig()
+        {
+            var wood = new ResourceType();
+            var barrel = new ResourceType();
+            var plank = new ResourceType();
+
+            for (int i = 0; i < 100; i++)
+            {
+                placeItem(wood, nextVector(new Vector3(-100, 0.5f, -100), new Vector3(100, 0.5f, 100)));
+            }
+
+            for (int i = 0; i < 20; i++)
+            {
+                placeItem(wood, nextVector(new Vector3(2, 0.5f, 10), new Vector3(2, 0.5f, 10)));
+            }
+
+
+            engine.AddSimulator(new GoblinCommunicationSimulator());
+            engine.AddSimulator(new GoblinCommandSimulator());
+            engine.AddSimulator(new GoblinMovementSimulatorSimple());
+            
+
+
+            setupBasic();
+        }
+
+        private Vector3 nextVector(Vector3 min, Vector3 max)
+        {
+            return new Vector3(nextFloat(min.X, max.X), nextFloat(min.Y, max.Y), nextFloat(min.Z, max.Z));
+        }
+
+        Random r = new Random(789645);
+
+        private float nextFloat(float min, float max)
+        {
+            return (float)(r.NextDouble() * (max - min) + min);
+        }
+
+
+        
     }
 }
