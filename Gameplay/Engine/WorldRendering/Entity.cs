@@ -43,6 +43,11 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         /// </summary>
         public bool Batched { get; set; }
 
+        /// <summary>
+        /// TODO: this can be removed/changed in many ways (multiple inheritance, removing responsibilities from entity,...)
+        /// </summary>
+        public object Tag { get; set; }
+
         public override string ToString()
         {
             return string.Format("Mesh: {0}, WorldMatrix: {1}", Mesh, WorldMatrix);

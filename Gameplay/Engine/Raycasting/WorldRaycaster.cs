@@ -18,11 +18,11 @@ namespace MHGameWork.TheWizards.Engine.Raycasting
             return Raycast(ray, o => true);
         }
 
-        public RaycastResult Raycast(Ray ray, Func<object, bool> filter)
+        public RaycastResult Raycast(Ray ray, Func<WorldRendering.Entity, bool> filter)
         {
             var closest = new RaycastResult();
             var newResult = new RaycastResult();
-            foreach (var ent in TW.Data.Objects.Where(o => o is WorldRendering.Entity).Select(o => o as WorldRendering.Entity))
+            foreach (var ent in TW.Data.Objects.OfType<WorldRendering.Entity>())
             {
                 if (!filter(ent)) continue;
 
@@ -35,8 +35,8 @@ namespace MHGameWork.TheWizards.Engine.Raycasting
 
         private void raycastEntity(WorldRendering.Entity ent, Ray ray, RaycastResult newResult)
         {
-            bool abort = false;
-            if (!ent.Visible && !RaycastInvisible) abort = true;
+            bool abort = !ent.Visible && !RaycastInvisible;
+
             if (ent.Mesh == null) abort = true;
             if (abort)
             {

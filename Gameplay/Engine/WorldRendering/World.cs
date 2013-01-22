@@ -32,7 +32,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         /// Could be seen as a getter
         /// </summary>
         /// <returns></returns>
-        public RaycastResult Raycast(Ray ray, Func<object,bool> filter)
+        public RaycastResult Raycast(Ray ray, Func<WorldRendering.Entity, bool> filter)
         {
             return raycaster.Raycast(ray,filter);
         }

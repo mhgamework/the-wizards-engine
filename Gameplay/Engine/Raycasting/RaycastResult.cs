@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.Engine.Raycasting
             }
         }
 
-        public void Set(float? distance, object obj)
+        public void Set(float? distance, WorldRendering.Entity obj)
         {
             this.distance = distance;
             Object = obj;
@@ -27,7 +27,7 @@ namespace MHGameWork.TheWizards.Engine.Raycasting
         /// <summary>
         /// The target of the raycast
         /// </summary>
-        public object Object { get; private set; }
+        public WorldRendering.Entity Object { get; private set; }
 
         public Vector3 V1 { get; set; }
         public Vector3 V2 { get; set; }

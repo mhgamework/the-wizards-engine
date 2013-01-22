@@ -82,6 +82,8 @@ namespace MHGameWork.TheWizards.RTS
                 goblin.set(new Engine.WorldRendering.Entity());
             var ent = goblin.get<Engine.WorldRendering.Entity>();
 
+            ent.Tag = goblin;
+
             var renderData = goblin.get<GoblinRenderData>();
             var diff = (renderData.LastPosition - goblin.Position);
             diff.Y = 0;

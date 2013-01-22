@@ -107,19 +107,17 @@ namespace MHGameWork.TheWizards.RTS
         private void trySelectGoblin()
         {
             var obj = TW.Data.GetSingleton<Engine.WorldRendering.World>()
-                        .Raycast(TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay(),
-                                 e => listGoblinsWithEntity(e).Any());
+                        .Raycast(TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay(),e => e.Tag is Goblin);
 
             if (!obj.IsHit) return;
             if (obj.Distance > 5) return;
-            if (!(obj.Object is Engine.WorldRendering.Entity)) return;
+            if (obj.Object == null) return;
 
-            var ent = obj.Object as Engine.WorldRendering.Entity;
+            var ent = obj.Object;
             Goblin found = listGoblinsWithEntity(ent).FirstOrDefault();
             if (found == null) return;
 
-            command = found.get<GoblinCommandState>().CurrentCommand;
-            if (command == null) command = new GoblinIdleCommand();
+            command = found.get<GoblinCommandState>().CurrentCommand ?? new GoblinIdleCommand();
             found.get<GoblinCommandState>().CurrentCommand = new TalkingCommand();
             goblin = found;
         }
