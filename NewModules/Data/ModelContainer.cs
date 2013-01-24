@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MHGameWork.TheWizards.Utilities;
 using MS.Win32;
 
@@ -169,6 +170,11 @@ namespace MHGameWork.TheWizards.Data
 
         public IEnumerable<ObjectChange> GetChangesOfType<T>() where T : IModelObject
         {
+            return getChangesOfTypeEnumerable<T>().ToArray();
+        }
+
+        private IEnumerable<ObjectChange> getChangesOfTypeEnumerable<T>() where T : IModelObject
+        {
             for (int i = 0; i < dirtyEntities.Count; i++)
             {
                 var change = dirtyEntities[i];
@@ -180,6 +186,11 @@ namespace MHGameWork.TheWizards.Data
 
         public IEnumerable<T> GetChangedObjects<T>() where T : class, IModelObject
         {
+            return getChangedObjectsEnumerable<T>().ToArray();
+        }
+
+        private IEnumerable<T> getChangedObjectsEnumerable<T>() where T : class, IModelObject
+        {
             for (int i = 0; i < dirtyEntities.Count; i++)
             {
                 var change = dirtyEntities[i];
@@ -188,10 +199,6 @@ namespace MHGameWork.TheWizards.Data
                     yield return change.ModelObject as T;
             }
         }
-
-
-
-
     }
 }
 

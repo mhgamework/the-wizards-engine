@@ -11,6 +11,9 @@ namespace MHGameWork.TheWizards.Engine
     /// </summary>
     public class PhysicsWrapper : PhysicsEngine
     {
-
+        public void ClearAll()
+        {
+            ResetScene();
+        }
     }
 }

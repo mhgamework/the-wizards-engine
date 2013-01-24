@@ -21,10 +21,15 @@ namespace MHGameWork.TheWizards.Engine
 
         private static int DEBUG_NEXTID = 0;
 
+        public string DEBUG_CREATEDBY { get; set; }
         public EngineModelObject()
         {
             TW.Data.AddObject(this);
             DEBUG_ID = DEBUG_NEXTID++;
+            if (TW.Data.RunningSimulator == null)
+                DEBUG_CREATEDBY = "[[[NOT BY SIMLATOR!]]]";
+            else
+                DEBUG_CREATEDBY = TW.Data.RunningSimulator.GetType().FullName;
         }
 
         public Data.ModelContainer Container { get; private set; }
@@ -48,16 +53,16 @@ namespace MHGameWork.TheWizards.Engine
 
             if (!attached.ContainsKey(typeof(T)))
                 return null;
-            
+
             return (T)attached[typeof(T)];
         }
 
-        public void set<T>(T value) where T:class
+        public void set<T>(T value) where T : class
         {
-            set(typeof (T), value);
+            set(typeof(T), value);
 
         }
-         
+
         internal void set(Type t, object value)
         {
             if (attached == null) attached = new Dictionary<Type, object>();
@@ -69,7 +74,7 @@ namespace MHGameWork.TheWizards.Engine
         {
             return "ModelObject #" + DEBUG_ID + " " + GetType().Name;
         }
-        
+
     }
 }
 

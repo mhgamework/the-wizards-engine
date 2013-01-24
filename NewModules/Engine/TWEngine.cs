@@ -149,8 +149,10 @@ namespace MHGameWork.TheWizards.Engine
 
         private void simulateSave(ISimulator sim)
         {
+            TW.Data.RunningSimulator = sim;
             try
             {
+                
                 sim.Simulate();
             }
             catch (Exception ex)
@@ -159,6 +161,8 @@ namespace MHGameWork.TheWizards.Engine
                 Console.WriteLine(ex.ToString());
 
             }
+            TW.Data.RunningSimulator = null;
+
         }
 
         private void checkReload()
@@ -281,6 +285,7 @@ namespace MHGameWork.TheWizards.Engine
             //    TW.Data.AddObject(obj);
 
             TW.Graphics.AcquireRenderer().ClearAll();
+            TW.Physics.ClearAll();
         }
         private MemoryStream serializeData()
         {

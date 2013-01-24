@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using MHGameWork.TheWizards.Graphics;
@@ -81,28 +82,25 @@ namespace MHGameWork.TheWizards.Physics
             if (Scene != null) return;
 
 
-
-
-
-          
-
-
-
-            SceneDescription sceneDesc = new SceneDescription();
-            //SimulationType = SimulationType.Hardware,
-            sceneDesc.Gravity = new Vector3(0.0f, -9.81f, 0.0f);
-            sceneDesc.GroundPlaneEnabled = true;
-            sceneDesc.UserContactReport = new CustomContactReport(this);
-
-            this.Scene = Core.CreateScene(sceneDesc);
-
-
+            var scene = CreateDefaultScene();
+            this.Scene = scene;
 
 
             HardwareVersion ver = Core.HardwareVersion;
             SimulationType simType = this.Scene.SimulationType;
 
 
+        }
+
+        public Scene CreateDefaultScene()
+        {
+            SceneDescription sceneDesc = new SceneDescription();
+            //SimulationType = SimulationType.Hardware,
+            sceneDesc.Gravity = new Vector3(0.0f, -9.81f, 0.0f);
+            sceneDesc.GroundPlaneEnabled = true;
+            //sceneDesc.UserContactReport = new CustomContactReport(this);
+            var scene = Core.CreateScene(sceneDesc);
+            return scene;
         }
 
 
@@ -183,6 +181,24 @@ namespace MHGameWork.TheWizards.Physics
         public Scene CreateScene(Vector3 gravity, bool b)
         {
             return Core.CreateScene(gravity, b);
+        }
+
+        public void ResetScene()
+        {
+            Scene.FlushStream();
+            Scene.FlushCaches();
+            Scene.FetchResults(SimulationStatus.RigidBodyFinished, true);
+            Scene.FlushStream();
+            Scene.FlushCaches();
+            foreach (var a in Scene.Actors.ToArray())
+                a.Dispose();
+
+            var desc = new PlaneShapeDescription(0, 1, 0, 0);
+
+            var aDesc = new ActorDescription(desc);
+            Scene.CreateActor(aDesc);
+            //Scene.Dispose();
+            //Scene = CreateDefaultScene();
         }
     }
 }

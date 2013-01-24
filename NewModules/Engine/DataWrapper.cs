@@ -41,6 +41,6 @@ namespace MHGameWork.TheWizards.Engine
         public Assembly GameplayAssembly { get; set; }
 
 
-
+        public ISimulator RunningSimulator { get; set; }
     }
 }

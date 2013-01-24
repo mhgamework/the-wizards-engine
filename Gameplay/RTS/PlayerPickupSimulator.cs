@@ -32,7 +32,8 @@ namespace MHGameWork.TheWizards.RTS
         {
             pickupEntity.Visible = player.Holding != null;
             pickupEntity.WorldMatrix = Matrix.Translation(calculateHoldPosition());
-            pickupEntity.Mesh = player.Holding.CreateMesh();
+            if (player.Holding != null)
+                pickupEntity.Mesh = player.Holding.CreateMesh();
 
         }
 

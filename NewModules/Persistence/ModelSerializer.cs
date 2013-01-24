@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Collections;
@@ -242,6 +243,12 @@ namespace MHGameWork.TheWizards.Persistence
 
         private void serializeObjects(List<IModelObject> list, StreamWriter wr)
         {
+                //       // TODO: Haxor for debug info!!!
+                //strm.WriteLine((string)obj.GetType().GetField("DEBUG_CREATEDBY", BindingFlags.NonPublic| BindingFlags.Instance).GetValue(obj));
+                //(string)obj.GetType().GetField("DEBUG_CREATEDBY", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(obj,reader.ReadLine());
+                //// TODO: Haxor for debug info!!!
+                //strm.WriteLine(.GetValue(obj));
+
             var strm = new SectionedStreamWriter(wr);
             myObjectDictionary.Clear();
 
@@ -288,6 +295,7 @@ namespace MHGameWork.TheWizards.Persistence
             {
                 var id = int.Parse(strm.ReadLine());
                 var obj = myObjectDictionary.getObjectByID(id);
+        
                 DeserializeAttributes(obj, strm);
             }
             return ret;

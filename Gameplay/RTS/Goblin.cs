@@ -39,5 +39,10 @@ namespace MHGameWork.TheWizards.RTS
             return Holding.Type == type;
         }
 
+
+
+        public Engine.WorldRendering.Entity GoblinEntity { get; set; }
+        public Engine.WorldRendering.Entity HoldingEntity { get; set; }
+
     }
 }

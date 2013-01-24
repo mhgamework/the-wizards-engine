@@ -26,13 +26,9 @@ namespace MHGameWork.TheWizards.RTS
 
         private static void updateGoblins()
         {
+            TW.Data.EnsureAttachment<Goblin, GoblinRenderData>(g => new GoblinRenderData(g));
             foreach (var goblin in TW.Data.GetChangedObjects<Goblin>())
-            {
-                if (goblin.get<GoblinRenderData>() == null)
-                    goblin.set(new GoblinRenderData {LookDirection = new Vector3(0, 0, 1)});
-
-                fixRendering(goblin);
-            }
+                goblin.get<GoblinRenderData>().fixRendering();
         }
 
         private void UpdateFactories()
@@ -61,7 +57,7 @@ namespace MHGameWork.TheWizards.RTS
                     t.set<Engine.WorldRendering.Entity>(null);
                     continue;
                 }
-                
+
 
                 if (ent == null)
                 {
@@ -81,43 +77,26 @@ namespace MHGameWork.TheWizards.RTS
             }
         }
 
-        private static void fixRendering(Goblin goblin)
-        {
-            if (goblin.get<Engine.WorldRendering.Entity>() == null)
-                goblin.set(new Engine.WorldRendering.Entity());
-            var ent = goblin.get<Engine.WorldRendering.Entity>();
-            ent.Tag = goblin;
 
-            var renderData = goblin.get<GoblinRenderData>();
-            var diff = (renderData.LastPosition - goblin.Position);
-            diff.Y = 0;
-            if (diff.Length() > 0.01f)
+
+
+
+        private class GoblinRenderData : IModelObjectAddon<Goblin> //: WorldRendering.Entity
+        {
+            private readonly Goblin goblin;
+
+            public GoblinRenderData(Goblin goblin)
             {
-                renderData.LookDirection = -diff;
+                this.goblin = goblin;
             }
-            renderData.LastPosition = goblin.Position;
-            ent.WorldMatrix = renderData.calcGoblinMatrix(goblin);
 
-            renderData.LastPosition = goblin.Position;
-            ent.Mesh = MeshFactory.Load("Core\\Barrel01");//Load("Goblin\\GoblinLowRes");
-            ent.Solid = true;
-            ent.Static = false;
-            ent.Solid = false;
-
-            renderData.updateHolding(goblin);
-        }
-
-
-
-        private class GoblinRenderData//: WorldRendering.Entity
-        {
             public Vector3 LastPosition { get; set; }
             public Vector3 LookDirection { get; set; }
 
-            public Engine.WorldRendering.Entity HoldingEntity { get; set; }
 
-            internal void updateHolding(Goblin g)
+            internal void updateHolding()
             {
+                var g = goblin;
                 if (g.Holding == null)
                 {
                     disposeHoldingEntity();
@@ -125,32 +104,65 @@ namespace MHGameWork.TheWizards.RTS
                 else
                 {
                     createHoldingEntity();
-                    HoldingEntity.WorldMatrix = Matrix.Translation(Vector3.UnitZ * 0.5f) * calcGoblinMatrix(g);
-                    HoldingEntity.Mesh = g.Holding.CreateMesh();
+                  goblin.  HoldingEntity.WorldMatrix = Matrix.Translation(Vector3.UnitZ * 0.5f) * calcGoblinMatrix();
+                  goblin.HoldingEntity.Mesh = g.Holding.CreateMesh();
                 }
             }
 
             private void createHoldingEntity()
             {
-                if (HoldingEntity != null) return;
-                HoldingEntity = new Engine.WorldRendering.Entity();
+                if (goblin.HoldingEntity != null) return;
+                goblin.HoldingEntity = new Engine.WorldRendering.Entity();
 
             }
 
             private void disposeHoldingEntity()
             {
-                if (HoldingEntity == null) return;
-                TW.Data.Objects.Remove(HoldingEntity);
-                HoldingEntity.Visible = false;
-                HoldingEntity = null;
+                if (goblin.HoldingEntity == null) return;
+                TW.Data.Objects.Remove(goblin.HoldingEntity);
+                goblin.HoldingEntity.Visible = false;
+                goblin.HoldingEntity = null;
             }
 
-            public Matrix calcGoblinMatrix(Goblin goblin)
+            public Matrix calcGoblinMatrix()
             {
                 var quat = Functions.CreateFromLookDir(-Vector3.Normalize(LookDirection).xna());
 
                 return Microsoft.Xna.Framework.Matrix.CreateFromQuaternion(quat).dx() * /*Matrix.Scaling(0.01f, 0.01f, 0.01f) **/
                        Matrix.Translation(goblin.Position);
+            }
+
+            public void fixRendering()
+            {
+                if (goblin.get<Engine.WorldRendering.Entity>() == null)
+                {
+                    if (goblin.GoblinEntity == null)
+                        goblin.GoblinEntity = new Engine.WorldRendering.Entity();
+                    goblin.set(goblin.GoblinEntity);
+                }
+                var ent = goblin.GoblinEntity;
+                ent.Tag = goblin;
+
+                var diff = (LastPosition - goblin.Position);
+                diff.Y = 0;
+                if (diff.Length() > 0.01f)
+                {
+                    LookDirection = -diff;
+                }
+                LastPosition = goblin.Position;
+                ent.WorldMatrix = calcGoblinMatrix();
+
+                LastPosition = goblin.Position;
+                ent.Mesh = TW.Assets.LoadMesh("Core\\Barrel01");//Load("Goblin\\GoblinLowRes");
+                ent.Solid = true;
+                ent.Static = false;
+                ent.Solid = false;
+
+                updateHolding();
+            }
+
+            public void Dispose()
+            {
             }
         }
     }
