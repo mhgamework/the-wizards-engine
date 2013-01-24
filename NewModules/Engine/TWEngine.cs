@@ -152,7 +152,7 @@ namespace MHGameWork.TheWizards.Engine
             TW.Data.RunningSimulator = sim;
             try
             {
-                
+
                 sim.Simulate();
             }
             catch (Exception ex)
@@ -294,6 +294,7 @@ namespace MHGameWork.TheWizards.Engine
             var writer = new StreamWriter(mem);
             foreach (IModelObject obj in TW.Data.Objects)
             {
+                if (!TW.Data.PersistentModelObjects.Contains(obj)) continue;
                 TW.Data.ModelSerializer.QueueForSerialization(obj);
             }
             TW.Data.ModelSerializer.Serialize(writer);
@@ -304,7 +305,14 @@ namespace MHGameWork.TheWizards.Engine
         }
         private List<IModelObject> deserializeData(MemoryStream memoryStream)
         {
-            return TW.Data.ModelSerializer.Deserialize(new StreamReader(memoryStream));
+            TW.Data.PersistentModelObjects.Clear();
+            TW.Data.InPersistenceScope = true;
+
+            var ret =  TW.Data.ModelSerializer.Deserialize(new StreamReader(memoryStream));
+
+            TW.Data.InPersistenceScope = false;
+
+            return ret;
         }
 
         private void startFilesystemWatcher()
@@ -330,5 +338,7 @@ namespace MHGameWork.TheWizards.Engine
         {
             return activeGameplayAssembly;
         }
+
+
     }
 }

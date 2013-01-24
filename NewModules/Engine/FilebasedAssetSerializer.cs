@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Serialization;
@@ -29,6 +30,11 @@ namespace MHGameWork.TheWizards.Persistence
                 var ret =  TW.Assets.GetLoadedPath(mesh);
                 if (ret != null) return ret;
             }
+            if (typeof (RAMTexture).IsAssignableFrom(type))
+            {
+                var tex = (RAMTexture) obj;
+                return tex.GetCoreData().DiskFilePath.Replace(TWDir.GameData.FullName + "\\","");
+            }
             return StringSerializer.Unknown;
         }
 
@@ -38,6 +44,10 @@ namespace MHGameWork.TheWizards.Persistence
             if (typeof(IMesh).IsAssignableFrom(type))
             {
                 return TW.Assets.LoadMesh(value);
+            }
+            if (typeof (ITexture).IsAssignableFrom(type))
+            {
+                return TW.Assets.LoadTexture(value);
             }
             return null;
         }

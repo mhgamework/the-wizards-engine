@@ -42,5 +42,20 @@ namespace MHGameWork.TheWizards.Engine
 
 
         public ISimulator RunningSimulator { get; set; }
+
+        /// <summary>
+        /// When in persistence scope, new modelobjects are added to the set of persistent modelobjects
+        /// Singleton data objects are automatically added to the persistence scope
+        /// </summary>
+        public bool InPersistenceScope { get; set; }
+        public HashSet<IModelObject> PersistentModelObjects = new HashSet<IModelObject>();
+        public override T GetSingleton<T>()
+        {
+            InPersistenceScope = true;
+            var ret =  base.GetSingleton<T>();
+            InPersistenceScope = false;
+            return ret;
+        }
+
     }
 }

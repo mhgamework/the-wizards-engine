@@ -204,6 +204,7 @@
     <Compile Include="Engine\EngineMeshFactory.cs" />
     <Compile Include="Engine\FilebasedAssetSerializer.cs" />
     <Compile Include="Engine\GraphicsWrapper.cs" />
+    <Compile Include="Engine\PersistanceScopeAttribute.cs" />
     <Compile Include="Engine\PhysicsWrapper.cs" />
     <Compile Include="Entities\Editor\Rendering\EditorMaterial.cs" />
     <Compile Include="Entity\Editor\EditorMesh.cs">

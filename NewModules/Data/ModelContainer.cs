@@ -147,7 +147,7 @@ namespace MHGameWork.TheWizards.Data
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetSingleton<T>() where T : class, IModelObject, new()
+        public virtual T GetSingleton<T>() where T : class, IModelObject, new()
         {
             foreach (var obj in Objects)
             {

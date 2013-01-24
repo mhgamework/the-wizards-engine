@@ -30,6 +30,8 @@ namespace MHGameWork.TheWizards.Engine
                 DEBUG_CREATEDBY = "[[[NOT BY SIMLATOR!]]]";
             else
                 DEBUG_CREATEDBY = TW.Data.RunningSimulator.GetType().FullName;
+            if (TW.Data.InPersistenceScope)
+                TW.Data.PersistentModelObjects.Add(this);
         }
 
         public Data.ModelContainer Container { get; private set; }
