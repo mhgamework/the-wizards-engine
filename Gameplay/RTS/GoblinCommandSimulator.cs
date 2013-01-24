@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.RTS.Commands;
 
 namespace MHGameWork.TheWizards.RTS
 {
+    [PersistanceScope]
     public class GoblinCommandSimulator : ISimulator
     {
         public void Simulate()
         {
-            TW.Data.EnsureAttachment<Goblin,GoblinCommandState>(g => new GoblinCommandState(g));
+            TW.Data.EnsureAttachment<Goblin, GoblinCommandState>(g => new GoblinCommandState(g));
             foreach (Goblin g in TW.Data.Objects.Where(o => o is Goblin))
-                g.get<GoblinCommandState>(). Update();
+                g.get<GoblinCommandState>().Update();
         }
     }
 
@@ -22,7 +24,7 @@ namespace MHGameWork.TheWizards.RTS
     {
         private readonly Goblin goblin;
 
-        public IGoblinCommand CurrentCommand { get; set; }
+        public IGoblinCommand CurrentCommand { get { return goblin.CurrentCommand; } set { goblin.CurrentCommand = value; } }
 
         public GoblinCommandState(Goblin goblin)
         {

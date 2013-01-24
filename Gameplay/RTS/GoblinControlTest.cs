@@ -209,8 +209,8 @@ namespace MHGameWork.TheWizards.RTS
                 {
                     if (!first) return;
                     first = false;
-                    goblin.get<GoblinCommandState>().CurrentCommand = new GoblinFollowCommand(new GoblinFollowUpdater());
-                    goblin2.get<GoblinCommandState>().CurrentCommand = new GoblinFetchCommand(new GoblinFetchUpdater()) { ResourceType = input, TargetPosition = new Vector3(-5, 1, -2) };
+                    goblin.get<GoblinCommandState>().CurrentCommand = new GoblinFollowCommand();
+                    goblin2.get<GoblinCommandState>().CurrentCommand = new GoblinFetchCommand { ResourceType = input, TargetPosition = new Vector3(-5, 1, -2) };
 
                 }));
 

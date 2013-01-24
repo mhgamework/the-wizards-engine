@@ -17,8 +17,8 @@ namespace MHGameWork.TheWizards.RTS.Commands
             this.targetPosition = targetPosition;
             if (this.goblin.IsHoldingResource(this.resourceType))
             {
-                goblin.MoveTo(targetPosition);
-                if (reachedTarget(targetPosition))
+                goblin.MoveTo(calculateCorrectDropPosition());
+                if (Math.Abs( Vector3.Dot( goblin.HoldingEntity.WorldMatrix.xna().Translation.dx()-targetPosition ,new Vector3(1,0,1))) < 0.1f)
                 {
                     this.goblin.DropHolding();
                 }
@@ -36,6 +36,14 @@ namespace MHGameWork.TheWizards.RTS.Commands
                     pickupResource(this.goblin);
                 }
             }
+        }
+
+        private Vector3 calculateCorrectDropPosition()
+        {
+            var dir = targetPosition - goblin.Position;
+            var armLength = Vector3.Dot(goblin.CalculateHoldingResourcePosition() - goblin.Position,
+                                        new Vector3(1, 0, 1));
+            return targetPosition - dir*armLength;
         }
 
         private void pickupResource(Goblin goblin)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTS.Commands;
@@ -10,6 +11,7 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.RTS
 {
+    [PersistanceScope]
     public class PlayerPickupSimulator : ISimulator
     {
         private PlayerRTS player = TW.Data.GetSingleton<PlayerRTS>();
@@ -32,6 +34,8 @@ namespace MHGameWork.TheWizards.RTS
         {
             pickupEntity.Visible = player.Holding != null;
             pickupEntity.WorldMatrix = Matrix.Translation(calculateHoldPosition());
+            pickupEntity.Kinematic = true;
+            pickupEntity.Solid = true;
             if (player.Holding != null)
                 pickupEntity.Mesh = player.Holding.CreateMesh();
 

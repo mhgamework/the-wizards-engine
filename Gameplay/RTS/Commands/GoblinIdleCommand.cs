@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
 
 namespace MHGameWork.TheWizards.RTS.Commands
 {
-    public class GoblinIdleCommand : IGoblinCommand
+    [ModelObjectChanged]
+    public class GoblinIdleCommand : EngineModelObject,IGoblinCommand
     {
         public void Update(Goblin goblin)
         {

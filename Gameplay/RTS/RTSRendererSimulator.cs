@@ -91,7 +91,7 @@ namespace MHGameWork.TheWizards.RTS
             }
 
             public Vector3 LastPosition { get; set; }
-            public Vector3 LookDirection { get; set; }
+            public Vector3 LookDirection { get { return goblin.LookDirection; } set { goblin.LookDirection = value; } }
 
 
             internal void updateHolding()
@@ -104,8 +104,10 @@ namespace MHGameWork.TheWizards.RTS
                 else
                 {
                     createHoldingEntity();
-                  goblin.  HoldingEntity.WorldMatrix = Matrix.Translation(Vector3.UnitZ * 0.5f) * calcGoblinMatrix();
-                  goblin.HoldingEntity.Mesh = g.Holding.CreateMesh();
+                    goblin.HoldingEntity.WorldMatrix = goblin.CalculateHoldingMatrix();
+                    goblin.HoldingEntity.Mesh = g.Holding.CreateMesh();
+                    goblin.HoldingEntity.Kinematic = true;
+                    goblin.HoldingEntity.Solid = true;
                 }
             }
 
@@ -124,13 +126,7 @@ namespace MHGameWork.TheWizards.RTS
                 goblin.HoldingEntity = null;
             }
 
-            public Matrix calcGoblinMatrix()
-            {
-                var quat = Functions.CreateFromLookDir(-Vector3.Normalize(LookDirection).xna());
-
-                return Microsoft.Xna.Framework.Matrix.CreateFromQuaternion(quat).dx() * /*Matrix.Scaling(0.01f, 0.01f, 0.01f) **/
-                       Matrix.Translation(goblin.Position);
-            }
+         
 
             public void fixRendering()
             {
@@ -150,7 +146,7 @@ namespace MHGameWork.TheWizards.RTS
                     LookDirection = -diff;
                 }
                 LastPosition = goblin.Position;
-                ent.WorldMatrix = calcGoblinMatrix();
+                ent.WorldMatrix = goblin.calcGoblinMatrix();
 
                 LastPosition = goblin.Position;
                 ent.Mesh = TW.Assets.LoadMesh("Core\\Barrel01");//Load("Goblin\\GoblinLowRes");

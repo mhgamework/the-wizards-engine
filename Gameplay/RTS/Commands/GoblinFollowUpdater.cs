@@ -1,8 +1,10 @@
-﻿using MHGameWork.TheWizards.Engine.WorldRendering;
+﻿using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 
 namespace MHGameWork.TheWizards.RTS.Commands
 {
-    public class GoblinFollowUpdater 
+    public class GoblinFollowUpdater
     {
         public void Update(Goblin goblin)
         {

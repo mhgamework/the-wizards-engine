@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.RTS.Commands;
 using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.RTS
 {
+    [PersistanceScope]
     public class FactorySimulator : ISimulator
     {
         public void Simulate()
         {
             TW.Data.EnsureAttachment<Factory, FactoryBuilder>(o => new FactoryBuilder(o));
-            foreach (Factory f in TW.Data.Objects.Where(o => o is Factory))
+            foreach (Factory f in TW.Data.Objects.Where(o => o is Factory).ToArray())
                 f.get<FactoryBuilder>().Update();
         }
     }
@@ -42,7 +44,6 @@ namespace MHGameWork.TheWizards.RTS
         private void buildSingle()
         {
             var droppedInputs = TW.Data.Objects.Where(o => o is DroppedThing).Cast<DroppedThing>().Where(o => o.Thing.Type == factory.InputType).ToArray();
-            Console.Write(droppedInputs);
             var dropped = droppedInputs.FirstOrDefault(o => factory.GetInputArea().xna().Contains(o.InitialPosition.xna()) == ContainmentType.Contains);
             if (dropped == null) return;
 

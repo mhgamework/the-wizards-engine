@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Reflection;
@@ -47,6 +48,7 @@ namespace MHGameWork.TheWizards.Engine.Testing
             RunTestInEngine(engine,new NUnitTest(method,f));
 
         }
+        [PersistanceScope] // Data created when starting a test should persist!
         public void RunTestInEngine(TWEngine engine,NUnitTest test)
         {
             var oldContext = EngineFactory.Instance;

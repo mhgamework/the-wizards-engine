@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
 
 namespace MHGameWork.TheWizards.RTS.Commands
 {
-    public class GoblinFollowCommand : IGoblinCommand
+    [ModelObjectChanged]
+    public class GoblinFollowCommand : EngineModelObject, IGoblinCommand
     {
-        private GoblinFollowUpdater updater;
-
-        public GoblinFollowCommand(GoblinFollowUpdater updater)
-        {
-            this.updater = updater;
-        }
+        private GoblinFollowUpdater updater = new GoblinFollowUpdater();
 
         public void Update(Goblin goblin)
         {

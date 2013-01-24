@@ -11,6 +11,7 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.RTS
 {
+    [PersistanceScope]
     public class GoblinCommunicationSimulator : ISimulator
     {
         private Goblin goblin = null;
@@ -86,7 +87,7 @@ namespace MHGameWork.TheWizards.RTS
         private void checkKeyFollow()
         {
             if (!TW.Graphics.Keyboard.IsKeyPressed(Key.D2)) return;
-            command = new GoblinFollowCommand(new GoblinFollowUpdater());
+            command = new GoblinFollowCommand();
         }
         private void checkKeyFetch()
         {
@@ -94,7 +95,7 @@ namespace MHGameWork.TheWizards.RTS
             if (player.Holding == null) return;
             var target = TW.Data.GetSingleton<CameraInfo>().ActiveCamera.ViewInverse.xna().Translation.dx();
             target.Y = 0.3f;
-            command = new GoblinFetchCommand(new GoblinFetchUpdater())
+            command = new GoblinFetchCommand()
                 {
                     ResourceType = player.Holding.Type,
                     TargetPosition = target

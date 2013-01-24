@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTS.Commands
 {
-    public class GoblinFetchCommand : IGoblinCommand
+    [ModelObjectChanged]
+    public class GoblinFetchCommand : EngineModelObject, IGoblinCommand
     {
-        private GoblinFetchUpdater updater;
+        private GoblinFetchUpdater updater = new GoblinFetchUpdater();
 
-        public GoblinFetchCommand(GoblinFetchUpdater updater)
+        public GoblinFetchCommand()
         {
-            this.updater = updater;
         }
 
         public void Update(Goblin goblin)
