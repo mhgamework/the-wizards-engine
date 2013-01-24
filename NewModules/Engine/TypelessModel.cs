@@ -6,6 +6,9 @@ using MHGameWork.TheWizards.Reflection;
 
 namespace MHGameWork.TheWizards.Engine
 {
+    /// <summary>
+    /// TODO currently unused, maybe reintroduce for hotloading??
+    /// </summary>
     public class TypelessModel
     {
         private List<TypelessObject> objects = new List<TypelessObject>();

@@ -38,6 +38,7 @@ namespace MHGameWork.TheWizards.Persistence
 
             stringSerializer.AddConditional(new ModelObjectSerializer(myObjectDictionary));
             stringSerializer.AddConditional(new ListSerializer());
+            //stringSerializer.AddConditional(new FallbackSerializer());
         }
 
         public void SerializeAttributes(IModelObject obj, SectionedStreamWriter strm)
@@ -64,6 +65,8 @@ namespace MHGameWork.TheWizards.Persistence
         {
             strm.WriteLine(att.Name);
             var serialized = serializeAttribute(att,value);
+            if (serialized == StringSerializer.Unknown)
+                Console.WriteLine("Cannot serialize type: {0}",value.GetType().FullName);
             writeAttributeData(strm, serialized);
         }
 

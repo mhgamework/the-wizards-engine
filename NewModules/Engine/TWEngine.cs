@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Persistence;
@@ -54,6 +55,8 @@ namespace MHGameWork.TheWizards.Engine
 
         public void AddSimulator(ISimulator sim)
         {
+            if (sim.GetType().GetConstructor(new Type[] { }) == null)
+                Console.WriteLine("Simulator found without empty constructor, hotloading will fail! " + sim.GetType().FullName);
             simulators.Add(sim);
         }
 
@@ -125,11 +128,12 @@ namespace MHGameWork.TheWizards.Engine
 
         private void gameLoopStep(DataWrapper container)
         {
-            if (game.Keyboard.IsKeyReleased(Key.R))
-                needsReload = true;
+            if (game.Keyboard.IsKeyReleased(Key.R)) needsReload = true;
+            if (game.Keyboard.IsKeyReleased(Key.H)) needsHotload = true;
             if (TW.Debug.NeedsReload)
                 needsReload = true;
             checkReload();
+            checkHotload();
 
             TW.Debug.NeedsReload = false;
 
@@ -159,10 +163,53 @@ namespace MHGameWork.TheWizards.Engine
 
         private void checkReload()
         {
-            if (!HotloadingEnabled) return;
             if (!needsReload) return;
             needsReload = false;
             reloadGameplayDll();
+            createSimulators(); // reinitialize!
+
+        }
+
+        private void checkHotload()
+        {
+            if (!HotloadingEnabled) return;
+            if (!needsHotload) return;
+            try
+            {
+                needsHotload = false;
+                var simList = serializeSimulatorList();
+                reloadGameplayDll();
+                deserializeSimulatorList(simList);
+            }
+            catch (Exception party)
+            {
+                Console.WriteLine("Hotload failed");
+                Console.Write(party);
+            }
+
+
+        }
+
+        private void deserializeSimulatorList(string[] simList)
+        {
+            simulators.Clear();
+            foreach (var name in simList)
+            {
+                var type = TW.Data.TypeSerializer.Deserialize(name);
+                if (type == null)
+                {
+                    Console.Write("Unable to hotload simulator: " + name);
+                    continue;
+                }
+
+                var sim = (ISimulator)Activator.CreateInstance(type);
+                simulators.Add(sim);
+            }
+        }
+
+        private string[] serializeSimulatorList()
+        {
+            return simulators.Select(s => s.GetType()).Select(TW.Data.TypeSerializer.Serialize).ToArray();
         }
 
         private void updatePhysics()
@@ -223,7 +270,7 @@ namespace MHGameWork.TheWizards.Engine
         private void reloadGameplayDll()
         {
             var mem = serializeData();
-            File.WriteAllBytes("temp.txt",mem.ToArray());
+            File.WriteAllBytes("temp.txt", mem.ToArray());
             TW.Data.Objects.Clear();
 
             updateActiveGameplayAssembly();
@@ -234,12 +281,11 @@ namespace MHGameWork.TheWizards.Engine
             //    TW.Data.AddObject(obj);
 
             TW.Graphics.AcquireRenderer().ClearAll();
-            createSimulators();
         }
         private MemoryStream serializeData()
         {
 
-            var mem = new MemoryStream(1024*1024*64);
+            var mem = new MemoryStream(1024 * 1024 * 64);
             var writer = new StreamWriter(mem);
             foreach (IModelObject obj in TW.Data.Objects)
             {
@@ -267,11 +313,12 @@ namespace MHGameWork.TheWizards.Engine
         private volatile bool needsReload = false;
         private Assembly activeGameplayAssembly;
         private TypeSerializer typeSerializer;
+        private bool needsHotload = true;
 
         void watcher_Changed(object sender, FileSystemEventArgs e)
         {
             if (e.FullPath == new FileInfo(GameplayDll).FullName)
-                needsReload = true;
+                needsHotload = true;
         }
 
         public Assembly GetLoadedGameplayAssembly()

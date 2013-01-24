@@ -48,7 +48,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         public void Simulate()
         {
             TW.Graphics.Camera = info.ActiveCamera;
-            deferred.Draw();
+            deferred.Draw(); // TODO: fixthis : LOL draw first ? is this correct?
 
             entitySimulator.Simulate();
             wireframeSimulator.Simulate();

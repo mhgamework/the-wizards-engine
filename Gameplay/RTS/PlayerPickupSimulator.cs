@@ -32,6 +32,8 @@ namespace MHGameWork.TheWizards.RTS
         {
             pickupEntity.Visible = player.Holding != null;
             pickupEntity.WorldMatrix = Matrix.Translation(calculateHoldPosition());
+            pickupEntity.Mesh = player.Holding.CreateMesh();
+
         }
 
         private void simulateKeyE()
@@ -77,7 +79,6 @@ namespace MHGameWork.TheWizards.RTS
             player.Holding = found.Thing;
             TW.Data.Objects.Remove(found);
 
-            pickupEntity.Mesh = found.Thing.CreateMesh();
 
         }
     }

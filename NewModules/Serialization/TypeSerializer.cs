@@ -60,7 +60,7 @@ namespace MHGameWork.TheWizards.Serialization
             ret = engine.GetLoadedGameplayAssembly().GetTypes().FirstOrDefault(o => o.FullName == value);
             if (ret == null)
             {
-                Console.WriteLine("Type '{0}' not found in gameplay assembly, trying to resolve by name");
+                Console.WriteLine("Type '{0}' not found in gameplay assembly, trying to resolve by name", value);
                 var name = value.Substring(value.LastIndexOf('.')+1);
                 ret = engine.GetLoadedGameplayAssembly().GetTypes().FirstOrDefault(o => o.Name == name); // Try load anything with this name
             }
