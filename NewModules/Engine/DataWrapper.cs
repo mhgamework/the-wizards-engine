@@ -47,8 +47,16 @@ namespace MHGameWork.TheWizards.Engine
         /// When in persistence scope, new modelobjects are added to the set of persistent modelobjects
         /// Singleton data objects are automatically added to the persistence scope
         /// </summary>
-        public bool InPersistenceScope { get; set; }
+        public bool InPersistenceScope
+        {
+            get { return inPersistenceScope; }
+            set { inPersistenceScope = value; }
+        }
+
         public HashSet<IModelObject> PersistentModelObjects = new HashSet<IModelObject>();
+        private bool inPersistenceScope;
+
+        [PersistanceScope]
         public override T GetSingleton<T>()
         {
             InPersistenceScope = true;

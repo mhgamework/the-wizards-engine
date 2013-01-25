@@ -201,6 +201,11 @@
     <Compile Include="Engine\Persistence\PersistenceUI.cs" />
     <Compile Include="Engine\PhysX\BarrelShooterSimulator.cs" />
     <Compile Include="Engine\PhysX\PhysXData.cs" />
+    <Compile Include="Navigation2D\NavigableGrid2D.cs" />
+    <Compile Include="Navigation2D\NavigableGrid2DData.cs" />
+    <Compile Include="Navigation2D\NavigableGrid2DVizualizationSimulator.cs" />
+    <Compile Include="Navigation2D\NavigableGrid3DEntitySimulator.cs" />
+    <Compile Include="Navigation2D\Navigation2DTest.cs" />
     <Compile Include="RTS\Commands\GoblinFetchCommand.cs" />
     <Compile Include="RTS\Commands\DroppedThing.cs" />
     <Compile Include="RTS\Commands\GoblinFetchUpdater.cs" />
