@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
+using QuickGraph;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Navigation2D
@@ -13,6 +14,14 @@ namespace MHGameWork.TheWizards.Navigation2D
 
         public void Simulate()
         {
+            if (data.Grid == null)
+            {
+                data.Grid = new NavigableGrid2D();
+                data.Grid.Create(data.NodeSize, (int)(data.Size / data.NodeSize), (int)(data.Size / data.NodeSize));
+
+            }
+
+
             foreach (var change in TW.Data.GetChangesOfType<Engine.WorldRendering.Entity>())
             {
                 var ent = change.ModelObject as Engine.WorldRendering.Entity;
@@ -28,6 +37,7 @@ namespace MHGameWork.TheWizards.Navigation2D
                 }
 
             }
+
         }
 
         /// <summary>

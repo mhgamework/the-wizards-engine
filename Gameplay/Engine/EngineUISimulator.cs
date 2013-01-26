@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine.Persistence;
 using MHGameWork.TheWizards.Engine.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
@@ -23,7 +24,8 @@ namespace MHGameWork.TheWizards.Engine
 
 
         private PersistenceUI persistence = new PersistenceUI();
-        private readonly EngineUIConsole engineUiConsole;
+
+        private Data data = TW.Data.GetSingleton<Data>();
 
         public EngineUISimulator()
         {
@@ -33,8 +35,9 @@ namespace MHGameWork.TheWizards.Engine
 
             mainMenu = createMainMenu();
 
-
-            engineUiConsole = new EngineUIConsole();
+            if (!data.ConsoleCreated)
+                new EngineUIConsole();
+            data.ConsoleCreated = true;
         }
 
 
@@ -101,6 +104,12 @@ namespace MHGameWork.TheWizards.Engine
         private void showPersistence()
         {
             menuStack.Push(persistence.CreateMenu());
+        }
+
+        [ModelObjectChanged]
+        public class Data : EngineModelObject
+        {
+            public bool ConsoleCreated { get; set; }
         }
     }
 }

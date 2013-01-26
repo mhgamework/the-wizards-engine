@@ -12,12 +12,14 @@ namespace MHGameWork.TheWizards.Navigation2D
     {
         public NavigableGrid2DData()
         {
-            Grid = new NavigableGrid2D();
-            Grid.Create(0.1f,100,100);
+            Size = 10;
+            NodeSize = 0.1f;
         }
         /// <summary>
         /// Dont persist?!!
         /// </summary>
         public NavigableGrid2D Grid { get; set; }
+        public int Size { get; set; }
+        public float NodeSize { get; set; }
     }
 }

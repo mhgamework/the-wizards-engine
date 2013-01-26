@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Profiling;
 
@@ -13,13 +14,12 @@ namespace MHGameWork.TheWizards.Engine.Debugging
     {
         private Textarea profilerText;
 
+        private Data data = TW.Data.GetSingleton<Data>();
 
 
         public ProfilerSimulator()
         {
-            profilerText = new Textarea();
-            profilerText.Position = new SlimDX.Vector2(20, 20);
-            profilerText.Size = new SlimDX.Vector2(700, 500);
+
 
             TW.Graphics.GameLoopProfilingPoint.AddProfileCompleteCallback(onProfileComplete);
 
@@ -72,7 +72,8 @@ namespace MHGameWork.TheWizards.Engine.Debugging
                 targetPoint = obj;
 
 
-            minDuration = targetPoint.AverageSeconds/10f;
+            minDuration = targetPoint.AverageSeconds / 10f;
+            minDuration = 0.0001f;
 
             str = targetPoint.GenerateProfileString(p => p.AverageSeconds > minDuration);
 
@@ -97,6 +98,16 @@ namespace MHGameWork.TheWizards.Engine.Debugging
 
         public void Simulate()
         {
+
+            if (data.Textarea == null)
+            {
+                profilerText = new Textarea();
+                profilerText.Position = new SlimDX.Vector2(20, 20);
+                profilerText.Size = new SlimDX.Vector2(700, 500);
+                data.Textarea = profilerText;
+            }
+            profilerText = data.Textarea;
+
             time += TW.Graphics.Elapsed;
             updateProfilerText();
         }
@@ -108,7 +119,13 @@ namespace MHGameWork.TheWizards.Engine.Debugging
 
             time = 0;
 
-            profilerText.Text = lastresult;
+            //profilerText.Text = lastresult;
+        }
+
+        [ModelObjectChanged]
+        public class Data : EngineModelObject
+        {
+            public Textarea Textarea { get; set; }
         }
     }
 }

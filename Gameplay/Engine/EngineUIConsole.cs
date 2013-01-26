@@ -101,11 +101,13 @@ namespace MHGameWork.TheWizards.Engine
                     remainders = remainders.Substring(remainders.IndexOf("\r\n") + 2);
 
                     box.Dispatcher.BeginInvoke(() => box.Items.Add(line));
-                    box.Dispatcher.BeginInvoke(() => box.SelectedIndex = box.Items.Count - 1);
+                    box.Dispatcher.BeginInvoke(() => box.ScrollIntoView(line));
+
 
                 }
 
             }
+
 
 
             public override Encoding Encoding
