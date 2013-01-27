@@ -133,7 +133,7 @@ namespace MHGameWork.TheWizards.Navigation2D
 
             TW.Data.GetSingleton<NavigableGrid2DData>().NodeSize = 0.25f;
             TW.Data.GetSingleton<NavigableGrid2DData>().Size = 100;
-            
+
             //engine.AddSimulator(new ProfilerSimulator());
 
 
@@ -195,18 +195,23 @@ namespace MHGameWork.TheWizards.Navigation2D
             {
                 if (!first) return;
                 //first = false;
-                var p = new PathFinder2D();
-                p.Grid = TW.Data.GetSingleton<NavigableGrid2DData>().Grid;
-                End = new SlimDX.Vector2(99 / p.Grid.NodeSize, 99 / p.Grid.NodeSize);
-                var path = p.FindPath(new SlimDX.Vector2(1, 1) / p.Grid.NodeSize, End);
+                var grid = TW.Data.GetSingleton<NavigableGrid2DData>().Grid;
+                var p = new PathFinder2D<Vertex2D>();
+                var gridConnectionProvider = new GridConnectionProvider() { Grid = grid };
+                p.ConnectionProvider = gridConnectionProvider;
+                End = new SlimDX.Vector2(9 / grid.NodeSize, 9 / grid.NodeSize);
+                var start = gridConnectionProvider.GetVertex(new SlimDX.Vector2(1, 1)/grid.NodeSize);
+                var goal = gridConnectionProvider.GetVertex(End);
+
+                var path = p.FindPath(start, goal);
                 Vertex2D prev = null;
                 if (path != null)
                     foreach (var node in path)
                     {
                         if (prev != null)
                             TW.Graphics.LineManager3D.AddLine(
-                                new Vector3(prev.Position.X + 0.5f, 0, prev.Position.Y + 0.5f) * p.Grid.NodeSize,
-                                new Vector3(node.Position.X + 0.5f, 0, node.Position.Y + 0.5f) * p.Grid.NodeSize,
+                                new Vector3(prev.Position.X + 0.5f, 0, prev.Position.Y + 0.5f) * grid.NodeSize,
+                                new Vector3(node.Position.X + 0.5f, 0, node.Position.Y + 0.5f) * grid.NodeSize,
                                 new Color4(1, 0, 0));
                         prev = node;
                     }

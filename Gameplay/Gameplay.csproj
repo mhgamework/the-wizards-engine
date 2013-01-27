@@ -216,6 +216,8 @@
     <Compile Include="Engine\Persistence\PersistenceUI.cs" />
     <Compile Include="Engine\PhysX\BarrelShooterSimulator.cs" />
     <Compile Include="Engine\PhysX\PhysXData.cs" />
+    <Compile Include="Navigation2D\GridConnectionProvider.cs" />
+    <Compile Include="Navigation2D\IConnectionProvider.cs" />
     <Compile Include="Navigation2D\ExplorationData.cs" />
     <Compile Include="Navigation2D\NavigableGrid2D.cs" />
     <Compile Include="Navigation2D\NavigableGrid2DData.cs" />
