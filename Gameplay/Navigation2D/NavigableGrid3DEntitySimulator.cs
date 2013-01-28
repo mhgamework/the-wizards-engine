@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
-using QuickGraph;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Navigation2D

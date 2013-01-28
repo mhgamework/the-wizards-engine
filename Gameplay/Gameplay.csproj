@@ -220,6 +220,12 @@
     <Compile Include="Engine\Persistence\PersistenceUI.cs" />
     <Compile Include="Engine\PhysX\BarrelShooterSimulator.cs" />
     <Compile Include="Engine\PhysX\PhysXData.cs" />
+    <Compile Include="Math\IterateExtensions.cs" />
+    <Compile Include="Math\UtilityExtensions.cs" />
+    <Compile Include="Navigation2D\TestUtilities.cs" />
+    <Compile Include="Navigation2D\Vertex2D.cs" />
+    <Compile Include="Navigation2D\Waypoint.cs" />
+    <Compile Include="Navigation2D\WaypointConnectionProvider.cs" />
     <Compile Include="Navigation2D\WaypointEngineTest.cs" />
     <Compile Include="Navigation2D\GridConnectionProvider.cs" />
     <Compile Include="Navigation2D\IConnectionProvider.cs" />
@@ -231,6 +237,9 @@
     <Compile Include="Navigation2D\Navigation2DTest.cs" />
     <Compile Include="Navigation2D\PathFinder2D.cs" />
     <Compile Include="Navigation2D\WaypointEngine.cs" />
+    <Compile Include="Navigation2D\WaypointVisualizer.cs" />
+    <Compile Include="RTS\Cannon.cs" />
+    <Compile Include="RTS\CannonSimulator.cs" />
     <Compile Include="RTS\Commands\GoblinFetchCommand.cs" />
     <Compile Include="RTS\Commands\DroppedThing.cs" />
     <Compile Include="RTS\Commands\GoblinFetchUpdater.cs" />
@@ -240,6 +249,7 @@
     <Compile Include="RTS\Commands\TalkingCommand.cs" />
     <Compile Include="RTS\Factory.cs" />
     <Compile Include="RTS\FactorySimulator.cs" />
+    <Compile Include="RTS\GoblinCombatTest.cs" />
     <Compile Include="RTS\GoblinCommandSimulator.cs" />
     <Compile Include="RTS\GoblinCommunicationSimulator.cs" />
     <Compile Include="RTS\GoblinMovementSimulatorSimple.cs" />

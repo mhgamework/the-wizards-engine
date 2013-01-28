@@ -14,14 +14,13 @@ namespace MHGameWork.TheWizards.RTS
     {
         public void Simulate()
         {
-
             IModelObject[] goblins = TW.Data.Objects.Where(gob => gob is Goblin).ToArray();
 
             foreach (Goblin goblin in goblins.Where(gob => gob is Goblin))
             {
                 Vector3 toGoal = (goblin.Goal - goblin.Position);
                 //goblin.Position = goblin.Goal;
-                var distance = TW.Graphics.Elapsed * 3;
+                var distance = TW.Graphics.Elapsed * 30;
                 if (distance < toGoal.Length())
                 {
                     toGoal.Normalize();

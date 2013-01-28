@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Navigation2D
@@ -7,7 +8,7 @@ namespace MHGameWork.TheWizards.Navigation2D
     {
         public NavigableGrid2D Grid { get; set; }
         public int Size { get; set; }
-
+        public Func<Vertex2D, Vertex2D, float> Heuristic { get; set; }
 
 
         private Vector2[] neighbours = new Vector2[] { new Vector2(1, 0), new Vector2(0, 1), new Vector2(-1, 0), new Vector2(0, -1) };
@@ -15,7 +16,9 @@ namespace MHGameWork.TheWizards.Navigation2D
 
         public GridConnectionProvider()
         {
-            Size = 3;
+            Size = 1;
+
+            Heuristic = (start, goal) => Vector2.Distance(start.Position, goal.Position) * 1.001f;
 
         }
 
@@ -45,7 +48,7 @@ namespace MHGameWork.TheWizards.Navigation2D
 
         public Vertex2D GetVertex(Vector2 v)
         {
-            return GetVertex((int) v.X, (int) v.Y);
+            return GetVertex((int)v.X, (int)v.Y);
         }
         public Vertex2D GetVertex(int x, int y)
         {
@@ -119,8 +122,8 @@ namespace MHGameWork.TheWizards.Navigation2D
 
         public float GetHeuristicCostEstimate(Vertex2D start, Vertex2D goal)
         {
-            return Vector2.Distance(start.Position, goal.Position) * 2f;
+            return Heuristic(start, goal);
         }
-       
+
     }
 }

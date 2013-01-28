@@ -5,7 +5,7 @@ using System.IO;
 using DirectX11;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.Entity;
+
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Networking;

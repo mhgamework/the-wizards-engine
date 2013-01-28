@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -26,6 +27,9 @@ namespace MHGameWork.TheWizards.Audio
             TW.Data.EnsureAttachment<SoundEmitter, XAudioEmitter>(o => new XAudioEmitter(o));
 
             foreach (var emitter in TW.Data.GetChangedObjects<SoundEmitter>())
+                emitter.get<XAudioEmitter>().UpdateChange(factory);
+
+            foreach (SoundEmitter emitter in TW.Data.Objects.Where(o => o is SoundEmitter))
                 emitter.get<XAudioEmitter>().Update(factory);
         }
 
@@ -40,12 +44,14 @@ namespace MHGameWork.TheWizards.Audio
 
             private ISound currentSound;
 
+            private bool oldPlaying = false;
+
             public XAudioEmitter(SoundEmitter emitter)
             {
                 this.emitter = emitter;
             }
 
-            public void Update(ISoundFactory factory)
+            public void UpdateChange(ISoundFactory factory)
             {
                 if (currentSound != emitter.Sound)
                 {
@@ -60,16 +66,31 @@ namespace MHGameWork.TheWizards.Audio
                     currentSound = emitter.Sound;
                 }
 
-                if (emitter.Playing)
+                if (emitter.Playing && !oldPlaying)
+                {
+                    loadSound(factory);
+                    sourceVoice.SubmitSourceBuffer(buffer);
                     sourceVoice.Start();
-                else
+                }
+                else if (!emitter.Playing && oldPlaying)
+                {
                     sourceVoice.Stop();
+                    sourceVoice.FlushSourceBuffers();
+                }
 
-                if (sourceVoice.State.BuffersQueued == 0)
-                    emitter.Playing = false;
 
 
             }
+            public void Update(ISoundFactory factory)
+            {
+                if (sourceVoice != null && sourceVoice.State.BuffersQueued == 0)
+                {
+                    emitter.Playing = false;
+                    sourceVoice.Stop();
+                    sourceVoice.FlushSourceBuffers();
+                }
+            }
+
 
             private void loadSound(ISoundFactory factory)
             {

@@ -22,9 +22,13 @@ namespace MHGameWork.TheWizards.Navigation2D
     /// </summary>
     public class PathFinder2D<T> where T : class
     {
+        private Dictionary<T, float> gScore;
+        private Dictionary<T, float> fScore;
+        public Func<T, bool> StopCondition { get; set; }
+
         public PathFinder2D()
         {
-            MaxGScore = 100;
+            StopCondition = x => true;
         }
 
         public List<T> FindPath(T start, T goal)
@@ -32,20 +36,20 @@ namespace MHGameWork.TheWizards.Navigation2D
             if (start == null) return null;
             if (goal == null) return null;
 
-            var g_score = new Dictionary<T, float>();
-            var f_score = new Dictionary<T, float>();
+            gScore = new Dictionary<T, float>();
+            fScore = new Dictionary<T, float>();
 
 
             //var openset = new HashSet<T>();
-            var openset = new FibonacciQueue<T, float>(d => f_score[d]);
+            var openset = new FibonacciQueue<T, float>(d => fScore[d]);
             var closedset = new HashSet<T>();
             var came_from = new Dictionary<T, T>();
 
             //came_from := the empty map    // The map of navigated nodes.
 
-            g_score[start] = 0;    // Cost from start along best known path.
+            gScore[start] = 0;    // Cost from start along best known path.
             // Estimated total cost from start to goal through y.
-            f_score[start] = g_score[start] + ConnectionProvider.GetHeuristicCostEstimate(start, goal);
+            fScore[start] = gScore[start] + ConnectionProvider.GetHeuristicCostEstimate(start, goal);
 
 
             openset.Enqueue(start);
@@ -54,7 +58,7 @@ namespace MHGameWork.TheWizards.Navigation2D
             {
                 var current = openset.Dequeue();
 
-                if (g_score[current] > MaxGScore)
+                if (StopCondition(current))
                     return reconstruct_reverse_path(came_from, current).Reverse().ToList();
 
                 if (current.Equals(goal))
@@ -66,12 +70,12 @@ namespace MHGameWork.TheWizards.Navigation2D
                 {
                     if (closedset.Contains(neighbor)) continue;
 
-                    var tentative_g_score = g_score[current] + ConnectionProvider.GetCost(current, neighbor);
-                    if (openset.Contains(neighbor) && !(tentative_g_score <= g_score[neighbor])) continue;
+                    var tentative_g_score = gScore[current] + ConnectionProvider.GetCost(current, neighbor);
+                    if (openset.Contains(neighbor) && !(tentative_g_score <= gScore[neighbor])) continue;
 
                     came_from[neighbor] = current;
-                    g_score[neighbor] = tentative_g_score;
-                    f_score[neighbor] = g_score[neighbor] + ConnectionProvider.GetHeuristicCostEstimate(neighbor, goal);
+                    gScore[neighbor] = tentative_g_score;
+                    fScore[neighbor] = gScore[neighbor] + ConnectionProvider.GetHeuristicCostEstimate(neighbor, goal);
 
                     if (openset.Contains(neighbor)) continue;
 
@@ -83,7 +87,6 @@ namespace MHGameWork.TheWizards.Navigation2D
 
         }
 
-        protected float MaxGScore { get; set; }
 
         public Func<T, bool> NodeFilter { get; set; }
 
@@ -104,5 +107,9 @@ namespace MHGameWork.TheWizards.Navigation2D
 
         public IConnectionProvider<T> ConnectionProvider { get; set; }
 
+        public float GetCurrentCost(T vertex2D)
+        {
+            return gScore[vertex2D];
+        }
     }
 }

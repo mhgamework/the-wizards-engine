@@ -6,7 +6,7 @@ using System.Text;
 using MHGameWork.TheWizards.Tests.Features.Simulation.Physics;
 using MHGameWork.TheWizards._XNA.Scripting;
 using MHGameWork.TheWizards.Client;
-using MHGameWork.TheWizards.Entity;
+
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;

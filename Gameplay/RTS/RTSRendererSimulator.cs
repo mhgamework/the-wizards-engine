@@ -22,6 +22,16 @@ namespace MHGameWork.TheWizards.RTS
             updateGoblins();
             UpdateDroppedThings();
             UpdateFactories();
+            updateCannons();
+        }
+
+        private void updateCannons()
+        {
+            TW.Data.EnsureAttachment<Cannon, CannonRenderData>(o => new CannonRenderData(o));
+            foreach (var f in TW.Data.GetChangedObjects<Cannon>())
+            {
+                f.get<CannonRenderData>().Update();
+            }
         }
 
         private static void updateGoblins()
@@ -126,7 +136,7 @@ namespace MHGameWork.TheWizards.RTS
                 goblin.HoldingEntity = null;
             }
 
-         
+
 
             public void fixRendering()
             {
@@ -159,7 +169,32 @@ namespace MHGameWork.TheWizards.RTS
 
             public void Dispose()
             {
+                TW.Data.Objects.Remove(goblin.GoblinEntity);
             }
+        }
+    }
+
+    public class CannonRenderData : IModelObjectAddon<Cannon>
+    {
+        private readonly Cannon cannon;
+
+        private Entity ent = new Entity();
+
+        public CannonRenderData(Cannon cannon)
+        {
+            this.cannon = cannon;
+            ent = new Entity();
+        }
+
+        public void Update()
+        {
+            ent.WorldMatrix = Matrix.RotationY(cannon.Angle)*Matrix.Translation(cannon.Position);
+            ent.Mesh = TW.Assets.LoadMesh("RTS\\Cannon");
+        }
+
+        public void Dispose()
+        {
+            TW.Data.RemoveObject(ent);
         }
     }
 

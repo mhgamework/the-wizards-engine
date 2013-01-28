@@ -96,7 +96,8 @@ namespace MHGameWork.TheWizards.Navigation2D
         {
 
             //engine.AddSimulator(new AttachDebuggerOnStartupSimulator());
-            engine.AddSimulator(new TempSim());
+            engine.AddSimulator(new BarrelPlacerSimulator());
+            engine.AddSimulator(new PathRendererSimulator());
 
             engine.AddSimulator(new NavigableGrid3DEntitySimulator());
             engine.AddSimulator(new NavigableGrid2DVizualizationSimulator());
@@ -125,7 +126,8 @@ namespace MHGameWork.TheWizards.Navigation2D
         {
 
             //engine.AddSimulator(new AttachDebuggerOnStartupSimulator());
-            engine.AddSimulator(new TempSim());
+            engine.AddSimulator(new BarrelPlacerSimulator());
+            engine.AddSimulator(new PathRendererSimulator());
 
             engine.AddSimulator(new NavigableGrid3DEntitySimulator());
             engine.AddSimulator(new NavigableGrid2DVizualizationSimulator());
@@ -133,6 +135,8 @@ namespace MHGameWork.TheWizards.Navigation2D
 
             TW.Data.GetSingleton<NavigableGrid2DData>().NodeSize = 0.25f;
             TW.Data.GetSingleton<NavigableGrid2DData>().Size = 100;
+
+            TW.Data.GetSingleton<PathRendererSimulator.MyData>().End = new Vector2(99, 99);
 
             //engine.AddSimulator(new ProfilerSimulator());
 
@@ -183,39 +187,74 @@ namespace MHGameWork.TheWizards.Navigation2D
             }
         }
 
-
-        [PersistanceScope]
-        public class TempSim : ISimulator
+        /// <summary>
+        /// TODO: design flaw ==> dont make simulators reusable, put the reusable featuers in a seperate class!!
+        /// </summary>
+        public class PathRendererSimulator : ISimulator
         {
-
+            public MyData Data { get; private set; }
             private bool first = true;
             public Vector2 End;
 
+
+            public PathRendererSimulator()
+            {
+                Data = TW.Data.GetSingleton<MyData>();
+            }
             public void Simulate()
             {
                 if (!first) return;
                 //first = false;
                 var grid = TW.Data.GetSingleton<NavigableGrid2DData>().Grid;
+                if (grid == null) return;
                 var p = new PathFinder2D<Vertex2D>();
                 var gridConnectionProvider = new GridConnectionProvider() { Grid = grid };
                 p.ConnectionProvider = gridConnectionProvider;
-                End = new SlimDX.Vector2(9 / grid.NodeSize, 9 / grid.NodeSize);
-                var start = gridConnectionProvider.GetVertex(new SlimDX.Vector2(1, 1)/grid.NodeSize);
-                var goal = gridConnectionProvider.GetVertex(End);
+
+
+                var start = gridConnectionProvider.GetVertex(Data.Start / grid.NodeSize);
+                var goal = gridConnectionProvider.GetVertex(Data.End / grid.NodeSize);
+
+
+                TW.Graphics.LineManager3D.AddCenteredBox(new Vector3(start.Position.X+0.5f,0,start.Position.Y+0.5f)*grid.NodeSize, grid.NodeSize * 0.5f, new Color4(0, 1, 0));
+                TW.Graphics.LineManager3D.AddCenteredBox(new Vector3(goal.Position.X+0.5f, 0, goal.Position.Y+0.5f) * grid.NodeSize, grid.NodeSize * 0.5f, new Color4(1, 0, 0));
+
 
                 var path = p.FindPath(start, goal);
                 Vertex2D prev = null;
-                if (path != null)
-                    foreach (var node in path)
-                    {
-                        if (prev != null)
-                            TW.Graphics.LineManager3D.AddLine(
-                                new Vector3(prev.Position.X + 0.5f, 0, prev.Position.Y + 0.5f) * grid.NodeSize,
-                                new Vector3(node.Position.X + 0.5f, 0, node.Position.Y + 0.5f) * grid.NodeSize,
-                                new Color4(1, 0, 0));
-                        prev = node;
-                    }
+                if (path == null) return;
 
+                foreach (var node in path)
+                {
+                    if (prev != null)
+                        TW.Graphics.LineManager3D.AddLine(
+                            new Vector3(prev.Position.X + 0.5f, 0, prev.Position.Y + 0.5f) * grid.NodeSize,
+                            new Vector3(node.Position.X + 0.5f, 0, node.Position.Y + 0.5f) * grid.NodeSize,
+                            new Color4(1, 0, 0));
+                    prev = node;
+                }
+            }
+
+            [ModelObjectChanged]
+            public class MyData : EngineModelObject
+            {
+                public MyData()
+                {
+                    Start = new Vector2(1, 1);
+                    End = new Vector2(9, 9);
+                }
+                public Vector2 Start { get; set; }
+                public Vector2 End { get; set; }
+            }
+        }
+        /// <summary>
+        /// TODO: design flaw ==> dont make simulators reusable, put the reusable featuers in a seperate class!!
+        /// </summary>
+        [PersistanceScope]
+        public class BarrelPlacerSimulator : ISimulator
+        {
+            public void Simulate()
+            {
                 var ray = TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay();
 
                 if (TW.Graphics.Keyboard.IsKeyDown(Key.F))
@@ -224,11 +263,11 @@ namespace MHGameWork.TheWizards.Navigation2D
                     var dist = ray.xna().Intersects(plane.xna());
                     if (dist.HasValue)
                         new Engine.WorldRendering.Entity
-                            {
-                                WorldMatrix = Matrix.Translation(ray.Position + ray.Direction * dist.Value),
-                                Solid = true,
-                                Mesh = TW.Assets.LoadMesh("Core\\Barrel01")
-                            };
+                        {
+                            WorldMatrix = Matrix.Translation(ray.Position + ray.Direction * dist.Value),
+                            Solid = true,
+                            Mesh = TW.Assets.LoadMesh("Core\\Barrel01")
+                        };
                 }
                 if (TW.Graphics.Keyboard.IsKeyDown(Key.G))
                 {

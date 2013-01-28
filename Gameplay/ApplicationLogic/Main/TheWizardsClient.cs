@@ -7,7 +7,7 @@ using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Synchronization;
 using MHGameWork.TheWizards.Engine.WorldRendering;
-using MHGameWork.TheWizards.Entity;
+
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;

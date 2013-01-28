@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.PhysX;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.RTS.Commands;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scripting;
@@ -40,20 +41,10 @@ namespace MHGameWork.TheWizards.RTS
             engine.AddSimulator(new WorldRenderingSimulator());
             //engine.AddSimulator(new PhysXDebugRendererSimulator());
 
-            createGroundPlane();
+            TestUtilities.CreateGroundPlane();
 
             goblin = new Goblin();
             goblin.Position = new Vector3(-2, 1, 2);
-        }
-
-        private void createGroundPlane()
-        {
-            var builder = new MeshBuilder();
-            builder.AddBox(new Vector3(-1000, 0, -1000), new Vector3(1000, -1, 1000));
-            var mesh = builder.CreateMesh();
-            mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap = TW.Assets.LoadTexture("RTS\\groundplane.png");
-
-            var ent = new Engine.WorldRendering.Entity { Mesh = mesh };
         }
 
         [Test]

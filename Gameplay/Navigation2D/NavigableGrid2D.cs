@@ -50,8 +50,8 @@ namespace MHGameWork.TheWizards.Navigation2D
             var max = new int[3];
             for (int i = 0; i < 3; i++)
             {
-                min[i] = (int)Math.Floor(bb.Minimum[i]);
-                max[i] = (int)Math.Ceiling(bb.Maximum[i]);
+                min[i] = (int)Math.Floor(bb.Minimum[i] + 0.001f);
+                max[i] = (int)Math.Ceiling(bb.Maximum[i] - 0.001f);
             }
             for (int x = min[0]; x < max[0]; x++)
                 for (int z = min[2]; z < max[2]; z++)
@@ -72,8 +72,8 @@ namespace MHGameWork.TheWizards.Navigation2D
             foreachInBB(bb, (x, z) =>
                 {
                     if (!InGrid(x, z)) return;
-                free[x, z]--;
-            });
+                    free[x, z]--;
+                });
         }
 
 

@@ -3,7 +3,7 @@ using System.IO;
 using DirectX11;
 using MHGameWork.TheWizards.Building;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.Entity;
+
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;

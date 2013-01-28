@@ -7,7 +7,7 @@ using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Persistence;
 using MHGameWork.TheWizards.Engine.Synchronization;
-using MHGameWork.TheWizards.Entity;
+
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Server;

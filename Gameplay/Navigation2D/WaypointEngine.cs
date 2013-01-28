@@ -8,14 +8,20 @@ namespace MHGameWork.TheWizards.Navigation2D
 {
     public class WaypointEngine
     {
-        private GridConnectionProvider gridConnectionProvider = new GridConnectionProvider();
-        private WaypointConnectionProvider waypointConnectionProvider = new WaypointConnectionProvider();
-
+        private GridConnectionProvider gridConnectionProvider;
+        private WaypointConnectionProvider waypointConnectionProvider;
+        private IEnumerable<Waypoint> waypoints;
         public float WaypointRange { get; set; }
-        public WaypointEngine()
+
+
+        public WaypointEngine(GridConnectionProvider gridConnectionProvider, WaypointConnectionProvider waypointConnectionProvider, IEnumerable<Waypoint> waypoints, float waypointRange)
         {
-            WaypointRange = 10;
+            this.gridConnectionProvider = gridConnectionProvider;
+            this.waypointConnectionProvider = waypointConnectionProvider;
+            this.waypoints = waypoints;
+            WaypointRange = waypointRange;
         }
+
 
         public List<Vertex2D> findPath(Vector2 vStart, Vector2 vEnd)
         {
@@ -39,14 +45,22 @@ namespace MHGameWork.TheWizards.Navigation2D
 
         private bool isNodeWithinPathRange(Vertex2D vertex2D, List<Waypoint> wPath, float range)
         {
-            // gwn afstand berekenen?
-            throw new NotImplementedException();
+            foreach (var p in wPath)
+            {
+                if (Vector2.Distance(p.Position, vertex2D.Position) < range)
+                    return true;
+            }
+            return false;
         }
 
         private Waypoint findClosestWaypoint(Vertex2D end)
         {
-            // Dees kunde doen das aster gebruiken zoals hierbove
-            throw new NotImplementedException();
+            return getWaypoints().OrderBy(w => Vector2.Distance(w.Position, end.Position)).FirstOrDefault();
+        }
+
+        private IEnumerable<Waypoint> getWaypoints()
+        {
+            return waypoints;
         }
 
         public List<Waypoint> findPathWaypoints(Waypoint start, Waypoint end)
@@ -57,47 +71,8 @@ namespace MHGameWork.TheWizards.Navigation2D
         }
 
         private PathFinder2D<T> createPathFinder<T>() where T : class
-            {
+        {
             return new PathFinder2D<T>();
         }
-    }
-
-    internal class WaypointConnectionProvider : IConnectionProvider<Waypoint>
-    {
-        public IEnumerable<Waypoint> GetConnectedNodes(Waypoint current)
-        {
-            throw new NotImplementedException();
-        }
-
-        public float GetCost(Waypoint current, Waypoint neighbor)
-        {
-            throw new NotImplementedException();
-        }
-
-        public float GetHeuristicCostEstimate(Waypoint start, Waypoint goal)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class Waypoint
-    {
-    }
-    public class Vertex2D
-    {
-        public Vertex2D()
-        {
-            MinDistance = -1;
-        }
-
-        public Vertex2D(Vector2 position)
-            : this()
-        {
-            Position = position;
-
-        }
-
-        public Vector2 Position { get; set; }
-        public int MinDistance { get; set; }
     }
 }

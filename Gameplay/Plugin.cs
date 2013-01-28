@@ -13,7 +13,7 @@ using MHGameWork.TheWizards.Engine.Testing;
 using MHGameWork.TheWizards.Engine.Tests.PhysX;
 using MHGameWork.TheWizards.Engine.VoxelTerraining;
 using MHGameWork.TheWizards.Engine.WorldRendering;
-using MHGameWork.TheWizards.Entity;
+
 using MHGameWork.TheWizards.LevelBuilding;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.OBJParser;

@@ -21,6 +21,11 @@ namespace MHGameWork.TheWizards.RTS
         public Vector3 LookDirection { get; set; }
 
 
+        public bool IsMoving
+        {
+            get { return (Goal - Position).LengthSquared() > 0.00001f; }
+            set { }
+        }
         public void MoveTo(Vector3 position)
         {
             Goal = position;
@@ -58,7 +63,7 @@ namespace MHGameWork.TheWizards.RTS
 
         public Matrix CalculateHoldingMatrix()
         {
-            return Matrix.Translation(Vector3.UnitZ*0.5f + Vector3.UnitY*0.4f)*calcGoblinMatrix();
+            return Matrix.Translation(Vector3.UnitZ * 0.5f + Vector3.UnitY * 0.4f) * calcGoblinMatrix();
         }
         public Vector3 CalculateHoldingResourcePosition()
         {
