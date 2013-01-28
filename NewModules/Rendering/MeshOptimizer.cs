@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MHGameWork.TheWizards.Entity;
 using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Rendering

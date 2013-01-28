@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using MHGameWork.TheWizards.Client;
-using MHGameWork.TheWizards.Entity.Client;
 using MHGameWork.TheWizards.Rendering;
 using Microsoft.Xna.Framework;
 using StillDesign.PhysX;

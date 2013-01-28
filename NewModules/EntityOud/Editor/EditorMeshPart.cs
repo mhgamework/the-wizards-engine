@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.WorldDatabase;
 
-namespace MHGameWork.TheWizards.Entity.Editor
+namespace MHGameWork.TheWizards.EntityOud.Editor
 {
     public class EditorMeshPart : IMeshPart
     {

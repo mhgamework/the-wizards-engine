@@ -2,8 +2,7 @@ using System.IO;
 using System.Threading;
 using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Common.Core;
-using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.Entity.Client;
+
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;

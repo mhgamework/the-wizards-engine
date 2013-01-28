@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using MHGameWork.TheWizards.Entity;
 using System.IO;
 using Microsoft.Xna.Framework;
 using MHGameWork.TheWizards.Graphics;

@@ -3,7 +3,7 @@ using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.World.Static;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.Entity
+namespace MHGameWork.TheWizards.ApplicationLogic.EntityOud
 {
     public class SimpleAssetStaticWorldObject : IStaticWorldObject
     {

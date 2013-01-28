@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MHGameWork.TheWizards.Entity;
 using System.IO;
+using MHGameWork.TheWizards.EntityOud.Editor;
 using Microsoft.Xna.Framework;
-using MHGameWork.TheWizards.Entity.Editor;
 using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 using MHGameWork.TheWizards.Rendering;

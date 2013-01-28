@@ -94,16 +94,20 @@
     <Reference Include="PostSharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="QuickGraph">
+    <Reference Include="QuickGraph, Version=3.6.61114.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\The Wizards Gameplay\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.dll</HintPath>
     </Reference>
-    <Reference Include="QuickGraph.Data">
+    <Reference Include="QuickGraph.Data, Version=3.6.61114.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\The Wizards Gameplay\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Data.dll</HintPath>
     </Reference>
-    <Reference Include="QuickGraph.Graphviz">
+    <Reference Include="QuickGraph.Graphviz, Version=3.6.61114.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\The Wizards Gameplay\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Graphviz.dll</HintPath>
     </Reference>
-    <Reference Include="QuickGraph.Serialization">
+    <Reference Include="QuickGraph.Serialization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\The Wizards Gameplay\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="SlimDX, Version=0.0.0.0, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
@@ -135,10 +139,10 @@
     <Compile Include="Animation\EntityTranslationAnimatable.cs" />
     <Compile Include="Animation\IAnimatable.cs" />
     <Compile Include="Animation\Keyframe.cs" />
-    <Compile Include="ApplicationLogic\Entity\SimpleAssetStaticWorldObject.cs" />
-    <Compile Include="ApplicationLogic\Entity\SimpleAssetStaticWorldObjectFactory.cs" />
-    <Compile Include="ApplicationLogic\Entity\StaticEntity.cs" />
-    <Compile Include="ApplicationLogic\Entity\StaticEntityContainer.cs" />
+    <Compile Include="ApplicationLogic\EntityOud\SimpleAssetStaticWorldObject.cs" />
+    <Compile Include="ApplicationLogic\EntityOud\SimpleAssetStaticWorldObjectFactory.cs" />
+    <Compile Include="ApplicationLogic\EntityOud\StaticEntity.cs" />
+    <Compile Include="ApplicationLogic\EntityOud\StaticEntityContainer.cs" />
     <Compile Include="ApplicationLogic\Main\TheWizardsClient.cs" />
     <Compile Include="ApplicationLogic\Main\TheWizardsServer.cs" />
     <Compile Include="ApplicationLogic\Main\TheWizardsServerCore.cs" />
@@ -216,6 +220,7 @@
     <Compile Include="Engine\Persistence\PersistenceUI.cs" />
     <Compile Include="Engine\PhysX\BarrelShooterSimulator.cs" />
     <Compile Include="Engine\PhysX\PhysXData.cs" />
+    <Compile Include="Navigation2D\WaypointEngineTest.cs" />
     <Compile Include="Navigation2D\GridConnectionProvider.cs" />
     <Compile Include="Navigation2D\IConnectionProvider.cs" />
     <Compile Include="Navigation2D\ExplorationData.cs" />

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards.EntityOud.Editor;
 using Microsoft.Xna.Framework;
-using MHGameWork.TheWizards.Entity.Editor;
 using TreeGenerator.help;
-using MHGameWork.TheWizards.Entity;
+
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
 

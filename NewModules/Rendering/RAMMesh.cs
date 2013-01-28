@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using MHGameWork.TheWizards.Physics;
-using MHGameWork.TheWizards.Rendering;
 
-namespace MHGameWork.TheWizards.Entity
+namespace MHGameWork.TheWizards.Rendering
 {
     /// <summary>
     /// This class is a RAM (no caching, network or database type implementation) of the IMesh

@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.WorldDatabase;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.Entity.Editor
+namespace MHGameWork.TheWizards.EntityOud.Editor
 {
     public class EditorMesh : IMesh
     {

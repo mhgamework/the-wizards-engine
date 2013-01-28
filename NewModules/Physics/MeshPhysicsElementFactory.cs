@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Client;
-using MHGameWork.TheWizards.Entity;
-using MHGameWork.TheWizards.Entity.Client;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using Microsoft.Xna.Framework;

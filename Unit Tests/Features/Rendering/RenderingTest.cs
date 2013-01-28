@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using MHGameWork.TheWizards.Entity;
+
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;

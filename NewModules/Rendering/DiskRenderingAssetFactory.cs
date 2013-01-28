@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using MHGameWork.TheWizards.Assets;
-using MHGameWork.TheWizards.Entity;
+
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.XML;
 

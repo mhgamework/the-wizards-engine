@@ -207,10 +207,10 @@
     <Compile Include="Engine\PersistanceScopeAttribute.cs" />
     <Compile Include="Engine\PhysicsWrapper.cs" />
     <Compile Include="Entities\Editor\Rendering\EditorMaterial.cs" />
-    <Compile Include="Entity\Editor\EditorMesh.cs">
+    <Compile Include="EntityOud\Editor\EditorMesh.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entity\Editor\EditorMeshPart.cs">
+    <Compile Include="EntityOud\Editor\EditorMeshPart.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Networking\SimpleClientPacketManager.cs" />

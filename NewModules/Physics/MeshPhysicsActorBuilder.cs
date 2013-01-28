@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Physics;
 using Microsoft.Xna.Framework;
 using StillDesign.PhysX;
 
-namespace MHGameWork.TheWizards.Entity.Client
+namespace MHGameWork.TheWizards.Physics
 {
     public class MeshPhysicsActorBuilder
     {

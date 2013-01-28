@@ -5,7 +5,7 @@ using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
-using MHGameWork.TheWizards.Entity;
+
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;
