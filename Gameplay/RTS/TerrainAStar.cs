@@ -8,6 +8,10 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.RTS
 {
+    /// <summary>
+    /// TODO: remove, a dedicated pathfinder exists in PathFinder2D class, to be refactored
+    /// </summary>
+    [Obsolete]
     public class TerrainAStar
     {
         private VoxelTerrain terrain;

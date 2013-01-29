@@ -19,8 +19,9 @@ namespace MHGameWork.TheWizards.RTS
             foreach (Goblin goblin in goblins.Where(gob => gob is Goblin))
             {
                 Vector3 toGoal = (goblin.Goal - goblin.Position);
+                toGoal.Y = 0;
                 //goblin.Position = goblin.Goal;
-                var distance = TW.Graphics.Elapsed * 30;
+                var distance = TW.Graphics.Elapsed * 3;
                 if (distance < toGoal.Length())
                 {
                     toGoal.Normalize();
@@ -31,6 +32,8 @@ namespace MHGameWork.TheWizards.RTS
                 {
                     goblin.Position = goblin.Goal;
                 }
+                goblin.Position = new Vector3(goblin.Position.X, 0, goblin.Position.Z);
+
             }
         }
     }

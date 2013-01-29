@@ -247,6 +247,7 @@
     <Compile Include="RTS\Commands\GoblinIdleCommand.cs" />
     <Compile Include="RTS\Commands\ResourceType.cs" />
     <Compile Include="RTS\Commands\TalkingCommand.cs" />
+    <Compile Include="RTS\EnemyAISimulator.cs" />
     <Compile Include="RTS\Factory.cs" />
     <Compile Include="RTS\FactorySimulator.cs" />
     <Compile Include="RTS\GoblinCombatTest.cs" />

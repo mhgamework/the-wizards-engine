@@ -19,6 +19,12 @@ namespace MHGameWork.TheWizards.RTS
         public Goblin BestFriend { get; set; }
         public Thing Holding { get; set; }
         public Vector3 LookDirection { get; set; }
+        public bool IsFriendly { get; set; }
+
+        public Goblin()
+        {
+            IsFriendly = true;
+        }
 
 
         public bool IsMoving

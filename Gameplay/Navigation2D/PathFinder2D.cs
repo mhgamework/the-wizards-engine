@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.Navigation2D
 
         public PathFinder2D()
         {
-            StopCondition = x => true;
+            StopCondition = x => false;
         }
 
         public List<T> FindPath(T start, T goal)
