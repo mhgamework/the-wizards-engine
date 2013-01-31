@@ -3,9 +3,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.Navigation2D
 {
-    public interface IConnectionProvider<T>
+    public interface IConnectionProvider<T> where T:class 
     {
-        IEnumerable<T> GetConnectedNodes(T current);
+        IEnumerable<T> GetConnectedNodes(PathFinder2D<T> finder, T current);
 
         float GetCost(T current, T neighbor);
 

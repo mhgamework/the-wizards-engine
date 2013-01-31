@@ -65,6 +65,7 @@ namespace MHGameWork.TheWizards.RTS
 
             var provider = new GridConnectionProvider();
             provider.Grid = TW.Data.GetSingleton<NavigableGrid2DData>().Grid;
+            provider.Size = 2;
             if (provider.Grid == null) return;
 
             var s = provider.GetVertex((goblin.Position.TakeXZ() - new Vector2(0.0f)) / provider.Grid.NodeSize);

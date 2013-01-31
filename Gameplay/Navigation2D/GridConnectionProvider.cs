@@ -22,7 +22,32 @@ namespace MHGameWork.TheWizards.Navigation2D
 
         }
 
-        public IEnumerable<Vertex2D> GetConnectedNodes(Vertex2D current)
+        public IEnumerable<Vertex2D> GetConnectedNodes(PathFinder2D<Vertex2D> finder, Vertex2D current)
+        {
+            return getConnectionsLeaped(finder.GetCameFrom(current), current);
+            //return getConnectionsAll(current);
+        }
+
+        private IEnumerable<Vertex2D> getConnectionsLeaped(Vertex2D getCameFrom, Vertex2D current)
+        {
+            var dir = current.Position - getCameFrom.Position;
+            var right = Vector3.Cross(Vector3.UnitZ, dir.ToXZ()).TakeXZ();
+            if (!canWalkOn(GetVertex(current.Position + right)))
+            {
+                yield return 
+            }
+            if (!canWalkOn(GetVertex(current.Position - right)))
+            {
+                // Jump!
+            }
+
+            return getConnectionsLeaped(current, GetVertex(current.Position + dir));
+
+
+
+        }
+
+        private IEnumerable<Vertex2D> getConnectionsAll(Vertex2D current)
         {
             for (int i = 0; i < neighbours.Length; i++)
             {
@@ -35,10 +60,15 @@ namespace MHGameWork.TheWizards.Navigation2D
                 if (ret == null) continue;
 
 
-
-                if (getMinDist(ret) < Size) continue;
+                if (canWalkOn(ret)) continue;
                 yield return ret;
             }
+        }
+
+        private bool canWalkOn(Vertex2D ret)
+        {
+            if (ret == null) return false;
+            return getMinDist(ret) < Size;
         }
 
         public float GetCost(Vertex2D current, Vertex2D neighbor)

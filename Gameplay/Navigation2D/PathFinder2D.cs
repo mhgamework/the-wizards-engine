@@ -24,6 +24,7 @@ namespace MHGameWork.TheWizards.Navigation2D
     {
         private Dictionary<T, float> gScore;
         private Dictionary<T, float> fScore;
+        private Dictionary<T, T> cameFrom;
         public Func<T, bool> StopCondition { get; set; }
 
         public PathFinder2D()
@@ -43,7 +44,7 @@ namespace MHGameWork.TheWizards.Navigation2D
             //var openset = new HashSet<T>();
             var openset = new FibonacciQueue<T, float>(d => fScore[d]);
             var closedset = new HashSet<T>();
-            var came_from = new Dictionary<T, T>();
+            cameFrom = new Dictionary<T, T>();
 
             //came_from := the empty map    // The map of navigated nodes.
 
@@ -59,21 +60,21 @@ namespace MHGameWork.TheWizards.Navigation2D
                 var current = openset.Dequeue();
 
                 if (StopCondition(current))
-                    return reconstruct_reverse_path(came_from, current).Reverse().ToList();
+                    return reconstruct_reverse_path(cameFrom, current).Reverse().ToList();
 
                 if (current.Equals(goal))
-                    return reconstruct_reverse_path(came_from, goal).Reverse().ToList();
+                    return reconstruct_reverse_path(cameFrom, goal).Reverse().ToList();
 
                 closedset.Add(current); //add current to closedset
 
-                foreach (var neighbor in ConnectionProvider.GetConnectedNodes(current))
+                foreach (var neighbor in ConnectionProvider.GetConnectedNodes(this, current))
                 {
                     if (closedset.Contains(neighbor)) continue;
 
                     var tentative_g_score = gScore[current] + ConnectionProvider.GetCost(current, neighbor);
                     if (openset.Contains(neighbor) && !(tentative_g_score <= gScore[neighbor])) continue;
 
-                    came_from[neighbor] = current;
+                    cameFrom[neighbor] = current;
                     gScore[neighbor] = tentative_g_score;
                     fScore[neighbor] = gScore[neighbor] + ConnectionProvider.GetHeuristicCostEstimate(neighbor, goal);
 
@@ -110,6 +111,10 @@ namespace MHGameWork.TheWizards.Navigation2D
         public float GetCurrentCost(T vertex2D)
         {
             return gScore[vertex2D];
+        }
+        public T GetCameFrom(T vertex2D)
+        {
+            return cameFrom[vertex2D];
         }
     }
 }
