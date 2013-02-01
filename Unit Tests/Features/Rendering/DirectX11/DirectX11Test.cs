@@ -595,7 +595,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
 
             Application.Idle += delegate
             {
-                while (true)
+                for (int i = 0; i < 100; i++)
                 {
                     var state = m.GetCurrentState();
                     mouse.UpdateMouseState(state);
@@ -603,12 +603,49 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
                     if (mouse.RightMouseJustReleased) break;
                     Application.DoEvents();
                 }
+
+                mouse.CursorEnabled = true;
+
+                for (int i = 0; i < 100; i++)
+                {
+                    var state = m.GetCurrentState();
+                    mouse.UpdateMouseState(state);
+                    if (state.X != 0) Console.WriteLine(mouse.RelativeX);
+                    if (mouse.RightMouseJustReleased) break;
+                    Application.DoEvents();
+                }
+
+                mouse.CursorEnabled = false;
+
+                for (int i = 0; i < 100; i++)
+                {
+                    var state = m.GetCurrentState();
+                    mouse.UpdateMouseState(state);
+                    if (state.X != 0) Console.WriteLine(mouse.RelativeX);
+                    if (mouse.RightMouseJustReleased) break;
+                    Application.DoEvents();
+                }
+
                 Application.Exit();
             };
             Application.Run();
 
             m.Dispose();
             dev.Dispose();
+        }
+
+        [Test]
+        public void TestMouseCursor()
+        {
+            var game = new DX11Game();
+            game.GameLoopEvent += delegate(DX11Game dx11Game)
+                {
+                    if (game.Keyboard.IsKeyPressed(Key.F))
+                        game.Mouse.CursorEnabled = !game.Mouse.CursorEnabled;
+                    if (game.Mouse.CursorEnabled)
+                        game.AddToWindowTitle(game.Mouse.CursorPosition.ToString());
+                };
+            game.Run();
         }
 
 
