@@ -6,7 +6,7 @@ using StillDesign.PhysX;
 
 namespace MHGameWork.TheWizards._XNA.Gameplay
 {
-    public class Horse : IStateScript
+    public partial class Horse : IStateScript
     {
         public Vector3 Position;
 

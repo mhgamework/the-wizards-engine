@@ -16,5 +16,16 @@ namespace MHGameWork.TheWizards
         {
             return new Vector2(v.X, v.Z);
         }
+        public static Vector2 TakeXY(this Vector3 v)
+        {
+            return new Vector2(v.X, v.Y);
+        }
+
+
+
+        public static Vector3 TakeXYZ(this Vector4 v)
+        {
+            return new Vector3(v.X,v.Y,v.Z);
+        }
     }
 }

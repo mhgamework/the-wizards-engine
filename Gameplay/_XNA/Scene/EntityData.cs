@@ -4,7 +4,7 @@ using MHGameWork.TheWizards._XNA.Scripting.API;
 
 namespace MHGameWork.TheWizards._XNA.Scene
 {
-    public class EntityData
+    public partial class EntityData
     {
         private Dictionary<string, object> dataElements = new Dictionary<string, object>();
 

@@ -2,7 +2,7 @@
 
 namespace MHGameWork.TheWizards._XNA.Scene
 {
-    public class SimpleDataElement<T> : IDataElement<T>
+    public partial class SimpleDataElement<T> : IDataElement<T>
     {
         private T value;
         public T Get()

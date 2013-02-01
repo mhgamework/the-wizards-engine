@@ -8,7 +8,7 @@ namespace MHGameWork.TheWizards._XNA.Gameplay.Fortress
     /// <summary>
     /// This represents the Current Player, not any player in the fortress map
     /// </summary>
-    public class PlayerEntity : IScript, IUpdateHandler
+    public partial class PlayerEntity : IScript, IUpdateHandler
     {
         private PlayerSceneComponent psc;
         private PlayerController controller;

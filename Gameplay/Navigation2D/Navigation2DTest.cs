@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Debugging;
 using MHGameWork.TheWizards.Engine.Features.Testing;
@@ -195,19 +196,38 @@ namespace MHGameWork.TheWizards.Navigation2D
             public MyData Data { get; private set; }
             private bool first = true;
             public Vector2 End;
+            private PathFinder2D<Vertex2D> p;
+            private PathfinderVisualizer<Vertex2D> viz;
+            private NavigableGrid2D grid;
 
 
             public PathRendererSimulator()
             {
                 Data = TW.Data.GetSingleton<MyData>();
+                p = new PathFinder2D<Vertex2D>();
+
+                viz = new PathfinderVisualizer<Vertex2D>(TW.Graphics, p,
+                                                         delegate(LineManager3DLines lines, Vertex2D d, Color4 c)
+                                                         {
+                                                             TW.Graphics.LineManager3D.AddCenteredBox(
+                                                                 (d.Position.ToXZ() + new Vector3(0.5f, 0, 0.5f)) *
+                                                                 grid.NodeSize,
+                                                                 grid.NodeSize * 0.6f, c);
+                                                             if (p.GetCameFrom(d) != null)
+                                                                 TW.Graphics.LineManager3D.AddLine((p.GetCameFrom(d).Position.ToXZ() + new Vector3(0.5f, 0, 0.5f)) *
+                                                                     grid.NodeSize, (d.Position.ToXZ() + new Vector3(0.5f, 0, 0.5f)) *
+                                                                     grid.NodeSize, c);
+                                                         });
             }
             public void Simulate()
             {
                 if (!first) return;
                 //first = false;
-                var grid = TW.Data.GetSingleton<NavigableGrid2DData>().Grid;
+                grid = TW.Data.GetSingleton<NavigableGrid2DData>().Grid;
                 if (grid == null) return;
-                var p = new PathFinder2D<Vertex2D>();
+
+
+
                 var gridConnectionProvider = new GridConnectionProvider() { Grid = grid };
                 p.ConnectionProvider = gridConnectionProvider;
 
@@ -216,14 +236,15 @@ namespace MHGameWork.TheWizards.Navigation2D
                 var goal = gridConnectionProvider.GetVertex(Data.End / grid.NodeSize);
 
 
-                TW.Graphics.LineManager3D.AddCenteredBox(new Vector3(start.Position.X+0.5f,0,start.Position.Y+0.5f)*grid.NodeSize, grid.NodeSize * 0.5f, new Color4(0, 1, 0));
-                TW.Graphics.LineManager3D.AddCenteredBox(new Vector3(goal.Position.X+0.5f, 0, goal.Position.Y+0.5f) * grid.NodeSize, grid.NodeSize * 0.5f, new Color4(1, 0, 0));
+                TW.Graphics.LineManager3D.AddCenteredBox(new Vector3(start.Position.X + 0.5f, 0, start.Position.Y + 0.5f) * grid.NodeSize, grid.NodeSize * 0.5f, new Color4(0, 1, 0));
+                TW.Graphics.LineManager3D.AddCenteredBox(new Vector3(goal.Position.X + 0.5f, 0, goal.Position.Y + 0.5f) * grid.NodeSize, grid.NodeSize * 0.5f, new Color4(1, 0, 0));
 
 
                 var path = p.FindPath(start, goal);
                 Vertex2D prev = null;
-                if (path == null) return;
+                viz.Render();
 
+                if (path == null) return;
                 foreach (var node in path)
                 {
                     if (prev != null)

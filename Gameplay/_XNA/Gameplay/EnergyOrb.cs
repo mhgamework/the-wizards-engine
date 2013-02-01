@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MHGameWork.TheWizards._XNA.Gameplay
 {
-    public class EnergyOrb : IStateScript, IScript
+    public partial class EnergyOrb : IStateScript, IScript
     {
         private bool _chargeMode;
         public bool ChargeModeEnabled

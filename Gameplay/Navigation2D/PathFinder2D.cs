@@ -12,7 +12,6 @@ using QuickGraph.Algorithms.Observers;
 using QuickGraph.Collections;
 using SlimDX;
 using QuickGraph.Algorithms;
-using Debugger = System.Diagnostics.Debugger;
 
 namespace MHGameWork.TheWizards.Navigation2D
 {
@@ -25,7 +24,12 @@ namespace MHGameWork.TheWizards.Navigation2D
         private Dictionary<T, float> gScore;
         private Dictionary<T, float> fScore;
         private Dictionary<T, T> cameFrom;
+        public T Goal { get; private set; }
         public Func<T, bool> StopCondition { get; set; }
+
+        public event Action Begin;
+        public event Action<T> SelectNode;
+        public event Action<T> EnqueueNode;
 
         public PathFinder2D()
         {
@@ -36,7 +40,7 @@ namespace MHGameWork.TheWizards.Navigation2D
         {
             if (start == null) return null;
             if (goal == null) return null;
-
+            this.Goal = goal;
             gScore = new Dictionary<T, float>();
             fScore = new Dictionary<T, float>();
 
@@ -54,10 +58,12 @@ namespace MHGameWork.TheWizards.Navigation2D
 
 
             openset.Enqueue(start);
-
+            onBegin();
             while (openset.Count > 0)
             {
                 var current = openset.Dequeue();
+
+                onSelectNode(current);
 
                 if (StopCondition(current))
                     return reconstruct_reverse_path(cameFrom, current).Reverse().ToList();
@@ -81,11 +87,27 @@ namespace MHGameWork.TheWizards.Navigation2D
                     if (openset.Contains(neighbor)) continue;
 
                     openset.Enqueue(neighbor);
+                    onEnqueueNode(neighbor);
                 }
 
             }
             return null;
 
+        }
+
+        private void onEnqueueNode(T neighbor)
+        {
+            if (EnqueueNode != null) EnqueueNode.Invoke(neighbor);
+        }
+
+        private void onSelectNode(T node)
+        {
+            if (SelectNode != null) SelectNode.Invoke(node);
+        }
+
+        private void onBegin()
+        {
+            if (Begin != null) Begin.Invoke();
         }
 
 
@@ -114,6 +136,7 @@ namespace MHGameWork.TheWizards.Navigation2D
         }
         public T GetCameFrom(T vertex2D)
         {
+            if (!cameFrom.ContainsKey(vertex2D)) return null;
             return cameFrom[vertex2D];
         }
     }

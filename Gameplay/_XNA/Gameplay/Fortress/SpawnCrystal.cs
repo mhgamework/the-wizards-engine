@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards._XNA.Gameplay.Fortress
 {
-    public class SpawnCrystal : IScript, IUpdateHandler
+    public partial class SpawnCrystal : IScript, IUpdateHandler
     {
         private float sinceSpawn;
         private IEntityHandle handle;
