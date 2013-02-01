@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.DirectX11
         public DX11Game()
         {
             form = new DX11Form();
-            Form.GameLoopEvent += messageLoop;
+            Form.GameLoopEvent += gameLoopStep;
             RenderAxis = true;
             basicShaders = new List<BasicShader>();
 
@@ -38,24 +38,32 @@ namespace MHGameWork.TheWizards.DirectX11
             EscapeExists = true;
         }
 
-        void gameLoop()
-        {
-            while (running)
-            {
-                messageloopIdle.WaitOne(); // Wait for messageloop to become idle
-                messageloopIdle.Reset(); // Event handled?
-
-
-                gameLoopStep();
-
-                gameloopIdle.Set(); // Done!    
-            }
-
-        }
+        public bool CustomGameLoopDisabled { get; set; }
 
         void gameLoopStep()
         {
-            if (!Running) return;
+            if (!running)
+            {
+                if (diDevice == null)
+                    return;
+
+                // shutdown!
+                Form.Exit();
+
+                diKeyboard.Dispose();
+                diMouse.Dispose();
+                diDevice.Dispose();
+
+                diKeyboard = null;
+                diMouse = null;
+                diDevice = null;
+                return;
+            }
+
+            if (!Form.Active)
+                Thread.Sleep(100);
+
+            updateInput();
 
             if (TotalRunTime > 3 && TestRunner.NUnitTestRunner.IsRunningAutomated)
             {
@@ -81,88 +89,9 @@ namespace MHGameWork.TheWizards.DirectX11
         }
 
 
-        private void messageLoop()
-        {
-            messageloopIdle.Set(); // Idle
-            gameloopIdle.WaitOne(); // wait for gameloop to finish
-            gameloopIdle.Reset(); // Event handled?
-
-            if (!Form.Active)
-                Thread.Sleep(100);
-
-            updateInput();
-
-            if (!Running)
-            {
-
-                if (diDevice == null)
-                    return;
-
-                // shutdown!
-                Form.Exit();
-
-                diKeyboard.Dispose();
-                diMouse.Dispose();
-                diDevice.Dispose();
-
-                diKeyboard = null;
-                diMouse = null;
-                diDevice = null;
-
-                return;
-            }
-
-
-            lock (pauseLock)
-            {
-                if (paused)
-                {
-                    // Check if we need to unpause
-                    if (Keyboard.IsKeyReleased(Key.Space) || keyboard.IsKeyReleased(Key.Return))
-                    {
-                        paused = false;
-                        
-                    }
-
-                    Monitor.Pulse(pauseLock); // This causes the gameloop to say its idle :P careful!
-
-                }
-                else
-                {
-                    // Not paused, run normally
-
-                    // Nothing to do! ==> idle
-
-                }
-            }
-        }
-
-        private ManualResetEvent messageloopIdle = new ManualResetEvent(false);
-        private ManualResetEvent gameloopIdle = new ManualResetEvent(false);
-
-        private object pauseLock = new object();
-
-        private bool paused;
-
-        /// <summary>
-        /// This pauses the gameloop, but keeps the messageloop responsive
-        /// To be called from within the gameloop!!!
-        /// </summary>
-        public void Pause()
-        {
-            lock (pauseLock)
-            {
-                paused = true;
-                while (paused)
-                {
-                    gameloopIdle.Set();
-                    Monitor.Wait(pauseLock);
-                }
-            }
-        }
-
         private void doGameLoopEvent()
         {
+            if (CustomGameLoopDisabled) return;
             Performance.BeginEvent(new Color4(1, 1, 0), "GameLoop");
             if (GameLoopEvent != null) GameLoopEvent(this);
             Performance.EndEvent();
@@ -294,7 +223,7 @@ namespace MHGameWork.TheWizards.DirectX11
 
             fpsCalculater.AddFrame(Elapsed);
 
-            AddToWindowTitle( FPS.ToString());
+            AddToWindowTitle(FPS.ToString());
 
             if (Elapsed > 1 / 30f) Elapsed = 1 / 30f;
 
@@ -354,14 +283,6 @@ namespace MHGameWork.TheWizards.DirectX11
                 InitDirectX();
 
             Running = true;
-
-            var t = new Thread(gameLoop);
-            t.SetApartmentState(ApartmentState.STA);
-            
-            t.Name = "DX11Game:GameLoop";
-            t.IsBackground = true;
-            t.Start();
-
             Form.Run();
 
         }
@@ -386,8 +307,8 @@ namespace MHGameWork.TheWizards.DirectX11
         private bool running;
         public bool Running
         {
-            get { lock(this) return running; }
-            private set { lock(this) running = value; }
+            get { lock (this) return running; }
+            private set { lock (this) running = value; }
         }
 
         public TWKeyboard Keyboard

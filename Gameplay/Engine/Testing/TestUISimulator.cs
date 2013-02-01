@@ -11,19 +11,26 @@ namespace MHGameWork.TheWizards.Engine.Testing
 {
     public class TestUISimulator : ISimulator
     {
+        private EngineTestPicker picker;
+
+        public TestUISimulator()
+        {
+            picker = new EngineTestPicker();
+            
+        }
+
         public void Simulate()
         {
+            if (picker.PickCompleted)
+            {
+                var runner = new EngineTestRunner();
+                runner.RunTest(picker.GetPickedTest());
+            }
+
             if (!TW.Graphics.Keyboard.IsKeyPressed(Key.F5)) return;
 
-            var picker = new EngineTestPicker();
-            var test = picker.SelectTest();
-            if (test == null)
-                return;
-
-            var runner = new EngineTestRunner();
-            runner.RunTest(test);
-
-        
+            //TODO: disable all user input for simulators?
+            picker.ShowTestPicker();
         }
     }
 }

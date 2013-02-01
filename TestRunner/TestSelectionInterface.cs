@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace MHGameWork.TheWizards.TestRunner
@@ -63,14 +64,9 @@ namespace MHGameWork.TheWizards.TestRunner
 
 
 
-            
+
         }
-        public void ShowDialog()
-        {
-            mainForm.chkAutomated.Checked = Data.RunAutomated;
-            mainForm.chkDontRerun.Checked = Data.DontRerun;
-            mainForm.ShowDialog();
-        }
+       
         public void ShowSelectTestDialog()
         {
 
@@ -78,7 +74,7 @@ namespace MHGameWork.TheWizards.TestRunner
             mainForm.chkDontRerun.Checked = Data.DontRerun;
 
             mainForm.Show();
-            
+
 
             Application.Run(mainForm);
 
@@ -109,7 +105,7 @@ namespace MHGameWork.TheWizards.TestRunner
             mainForm.Width = mainForm.treeView.Width;
             settingsPanelVisible = false;
         }
-    
+
 
         private void buildTreeView(TestNode dataNode, TreeNode node)
         {
@@ -193,6 +189,8 @@ namespace MHGameWork.TheWizards.TestRunner
         }
         public void Show()
         {
+            mainForm.chkAutomated.Checked = Data.RunAutomated;
+            mainForm.chkDontRerun.Checked = Data.DontRerun;
             mainForm.Show();
         }
     }

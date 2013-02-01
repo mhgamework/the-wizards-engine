@@ -144,41 +144,6 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
         }
 
         [Test]
-        public void TestDirectX11GamePause()
-        {
-            var game = new DX11Game();
-            game.InitDirectX();
-
-            game.GameLoopEvent += delegate
-                                  {
-                                      if (game.Keyboard.IsKeyReleased(Key.Return))
-                                      {
-                                          game.LineManager3D.AddLine(new Vector3(1, 0, 1), new Vector3(1, 1, 1),
-                                                                     new Color4(1, 0, 0));
-                                          game.LineManager3D.Render(game.Camera);
-
-                                          game.Pause();
-
-                                          game.LineManager3D.AddLine(new Vector3(1, 0, 1), new Vector3(1, 1, 1),
-                                                                     new Color4(0, 1, 0));
-                                          game.LineManager3D.Render(game.Camera);
-
-                                          game.Pause();
-
-                                          game.LineManager3D.AddLine(new Vector3(1, 0, 1), new Vector3(1, 1, 1),
-                                                                     new Color4(0, 0, 1));
-                                          game.LineManager3D.Render(game.Camera);
-
-                                          game.Pause();
-
-                                          game.Exit();
-                                      }
-
-                                  };
-            game.Run();
-        }
-
-        [Test]
         public void TestDirectX11SimpleShader()
         {
             var game = new DX11Form();
