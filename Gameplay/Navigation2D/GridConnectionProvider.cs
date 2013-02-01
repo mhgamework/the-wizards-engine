@@ -19,6 +19,9 @@ namespace MHGameWork.TheWizards.Navigation2D
             Size = 1;
 
             Heuristic = (start, goal) => Vector2.Distance(start.Position, goal.Position) * 1.001f;
+            Heuristic =
+                (start, goal) =>
+                Math.Abs(start.Position.X - goal.Position.X) + Math.Abs(start.Position.Y - goal.Position.Y);
 
         }
 
@@ -26,23 +29,19 @@ namespace MHGameWork.TheWizards.Navigation2D
         public IEnumerable<Vertex2D> GetConnectedNodes(PathFinder2D<Vertex2D> finder, Vertex2D current)
         {
             count++;
-            var cameFrom = finder.GetCameFrom(current);
-            if (cameFrom == null) return getConnectionsAll(current);
-            return getConnectionsLeaped(finder, cameFrom, current);
+            //var cameFrom = finder.GetCameFrom(current);
+            //if (cameFrom == null) return getConnectionsAll(current);
+            return getConnectionsLeaped(finder, null, current);
             //return getConnectionsAll(current);
         }
 
         private IEnumerable<Vertex2D> getConnectionsLeaped(PathFinder2D<Vertex2D> finder, Vertex2D getCameFrom, Vertex2D current)
         {
             //if (count > 20) yield break;
-
             this.activeFinder = finder;
-            var dir = current.Position - getCameFrom.Position;
-            dir.Normalize();
-            if (dir.X > 0.001 && dir.Y > 0.001) throw new InvalidOperationException();
-            var right = Vector3.Cross(Vector3.UnitZ, new Vector3(dir, 0)).TakeXY();
 
-            Vertex2D ret;
+            var dir = new Vector2(1, 0);
+            var right = new Vector2(0, 1);
 
             Vertex2D nRight;
             Vertex2D nLeft;
@@ -53,20 +52,31 @@ namespace MHGameWork.TheWizards.Navigation2D
             if (nRight != null) yield return nRight;
             if (nLeft != null) yield return nLeft;
 
+            var top = findHorizontalJump(current, dir, right);
+            var bottom = findHorizontalJump(current, dir, right);
+
+            if (top != null) yield return top;
+            if (bottom != null) yield return bottom;
+        }
+
+        private Vertex2D findHorizontalJump(Vertex2D current, Vector2 dir, Vector2 right)
+        {
+            Vertex2D nRight;
+            Vertex2D nLeft;
+             
             // Get right and left neighbours
             do
             {
                 current = GetVertex(current.Position + dir);
-
+                if (!canWalkOn(current)) return null;
+                if (current == activeFinder.Goal) return current;
+                if (current == null) return null;
                 nRight = doJump(current, right, dir);
                 nLeft = doJump(current, -right, dir);
 
-                if (nRight != null || nLeft != null)
-                    break; // Found an interesting point
-            } while (current != null);
+            } while (nRight == null && nLeft == null);
 
-
-            if (current != null) yield return current;
+            return current;
 
         }
 
@@ -78,7 +88,7 @@ namespace MHGameWork.TheWizards.Navigation2D
             {
                 if (n == activeFinder.Goal) return n;
                 n = GetVertex(n.Position + dir);
-                if (n == null) return null;    
+                if (n == null) return null;
                 if (!canWalkOn(n)) return null;
             } while (!isJumpPoint(n, ref dir, ref right));
             return n;
@@ -86,8 +96,8 @@ namespace MHGameWork.TheWizards.Navigation2D
 
         private bool isJumpPoint(Vertex2D pos, ref Vector2 dir, ref Vector2 right)
         {
-            return (!canWalkOn(GetVertex(pos.Position + right -dir)) && canWalkOn(GetVertex(pos.Position + right)))
-                   || (!canWalkOn(GetVertex(pos.Position - right -dir)) && canWalkOn(GetVertex(pos.Position - right)));
+            return (!canWalkOn(GetVertex(pos.Position + right - dir)) && canWalkOn(GetVertex(pos.Position + right)))
+                   || (!canWalkOn(GetVertex(pos.Position - right - dir)) && canWalkOn(GetVertex(pos.Position - right)));
         }
 
         private IEnumerable<Vertex2D> getConnectionsAll(Vertex2D current)
@@ -135,7 +145,7 @@ namespace MHGameWork.TheWizards.Navigation2D
 
         private int getMinDist(Vertex2D current)
         {
-            if (current.MinDistance >0)
+            if (current.MinDistance > 0)
                 return current.MinDistance;
             var ret = getMinDist2(current);
             current.MinDistance = ret;
