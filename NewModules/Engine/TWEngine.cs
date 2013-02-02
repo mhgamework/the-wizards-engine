@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.Profiling;
 using MHGameWork.TheWizards.Serialization;
@@ -33,25 +34,17 @@ namespace MHGameWork.TheWizards.Engine
 
 
 
-        private List<ISimulator> simulators;
-        private GraphicsWrapper game;
-        private PhysicsWrapper physX;
+        private List<ISimulator> simulators = new List<ISimulator>();
+
+        private SimulationRunner simulationRunner = new SimulationRunner();
+        private AssemblyHotloader GameplayAssemblyHotloader;
+        public EngineTWContext twcontext;
         public string GameplayDll { get; set; }
 
         public bool DontLoadPlugin { get; set; }
         public bool HotloadingEnabled { get; set; }
 
 
-        private void setTWGlobals(DataWrapper container)
-        {
-            var context = new TW.Context();
-            context.Graphics = game;
-            context.Data = container;
-            context.Physics = physX;
-            context.Audio = new AudioWrapper();
-            context.Assets = new AssetsWrapper();
-            TW.SetContext(context);
-        }
 
         public void AddSimulator(ISimulator sim)
         {
@@ -62,74 +55,52 @@ namespace MHGameWork.TheWizards.Engine
 
         public void Run()
         {
-            if (game == null)
+            if (twcontext == null)
                 Initialize();
 
-            if (game.Running) return;
+            if (TW.Graphics.Running) return;
 
-            game.Run();
+            TW.Graphics.Run();
         }
         public void Exit()
         {
-            game.Exit();
+            TW.Graphics.Exit();
         }
 
 
         [Obsolete]
         public void Start()
         {
-            if (game == null)
+            if (twcontext == null)
                 Initialize();
 
-            game.Run();
+            TW.Graphics.Run();
         }
 
         public void Initialize()
         {
-            if (game != null) return;
+            if (twcontext != null) return;
 
-            simulators = new List<ISimulator>();
-
-            game = new GraphicsWrapper();
-
-            game.InitDirectX();
-
-
-            typeSerializer = new TypeSerializer(this);
-
-            var container = new DataWrapper();
-
-            physX = new PhysicsWrapper();
-            physX.Initialize();
+            twcontext = new EngineTWContext(this);
 
             needsReload = true;
-            game.GameLoopEvent += delegate
-                                  {
-                                      TW.Debug.MainProfilingPoint.Begin();
-                                      gameLoopStep(container);
-                                      TW.Debug.MainProfilingPoint.End();
-                                  };
-
-
-            setTWGlobals(container);
-
-            startFilesystemWatcher();
-
-            //updateActiveGameplayAssembly();
-            //createSimulators();
-
-            var stringSerializer = StringSerializer.Create();
-            stringSerializer.AddConditional(new FilebasedAssetSerializer());
-
-            TW.Data.ModelSerializer = new ModelSerializer(stringSerializer, typeSerializer);
-            TW.Data.TypeSerializer = typeSerializer;
+            TW.Graphics.GameLoopEvent += gameLoopProfiled;
+            GameplayAssemblyHotloader = new AssemblyHotloader(new FileInfo(GameplayDll));
 
         }
 
-        private void gameLoopStep(DataWrapper container)
+        private void gameLoopProfiled(DX11Game dx11Game)
         {
-            if (game.Keyboard.IsKeyReleased(Key.R)) needsReload = true;
-            if (game.Keyboard.IsKeyReleased(Key.H)) needsHotload = true;
+            TW.Debug.MainProfilingPoint.Begin();
+            gameLoopStep();
+            TW.Debug.MainProfilingPoint.End();
+        }
+
+
+        private void gameLoopStep()
+        {
+            if (TW.Graphics.Keyboard.IsKeyReleased(Key.R)) needsReload = true;
+            if (TW.Graphics.Keyboard.IsKeyReleased(Key.H)) needsHotload = true;
             if (TW.Debug.NeedsReload)
                 needsReload = true;
             checkReload();
@@ -137,50 +108,42 @@ namespace MHGameWork.TheWizards.Engine
 
             TW.Debug.NeedsReload = false;
 
-            foreach (var sim in simulators)
-            {
-                //sim.Simulate();
-                simulateSave(sim);
-            }
+            simulationRunner.simulateStep(simulators);
 
-            container.ClearDirty();
+            TW.Data.ClearDirty();
             updatePhysics();
         }
 
-        private void simulateSave(ISimulator sim)
-        {
-            TW.Data.RunningSimulator = sim;
-            try
-            {
 
-                sim.Simulate();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error in simulator: {0}", sim.GetType().Name);
-                Console.WriteLine(ex.ToString());
-
-            }
-            TW.Data.RunningSimulator = null;
-
-        }
 
         private void checkReload()
         {
             if (!needsReload) return;
             needsReload = false;
+            reload();
+        }
+
+        private void reload()
+        {
             reloadGameplayDll();
             createSimulators(); // reinitialize!
-
         }
 
         private void checkHotload()
         {
             if (!HotloadingEnabled) return;
             if (!needsHotload) return;
+            needsHotload = false;
+
+            hotload();
+
+
+        }
+
+        private void hotload()
+        {
             try
             {
-                needsHotload = false;
                 var simList = serializeSimulatorList();
                 reloadGameplayDll();
                 deserializeSimulatorList(simList);
@@ -190,8 +153,6 @@ namespace MHGameWork.TheWizards.Engine
                 Console.WriteLine("Hotload failed");
                 Console.Write(party);
             }
-
-
         }
 
         private void deserializeSimulatorList(string[] simList)
@@ -218,64 +179,38 @@ namespace MHGameWork.TheWizards.Engine
 
         private void updatePhysics()
         {
-            physX.Update(game.Elapsed);
+            TW.Physics.Update(TW.Graphics.Elapsed);
         }
 
         private void createSimulators()
         {
             simulators.Clear();
-
-            // This is configurable code
-
             loadPlugin();
-
-
-            // End configurable
         }
 
+        [CatchExceptions]
         private void loadPlugin()
         {
             if (DontLoadPlugin) return;
-            try
-            {
-                var plugin = (IGameplayPlugin)activeGameplayAssembly.CreateInstance("MHGameWork.TheWizards.Plugin");
-                plugin.Initialize(this);
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
+            var plugin = (IGameplayPlugin)activeGameplayAssembly.CreateInstance("MHGameWork.TheWizards.Plugin");
+            plugin.Initialize(this);
         }
 
+        [CatchExceptions]
         private void updateActiveGameplayAssembly()
         {
-            try
-            {
-                var tempFile = Path.GetTempFileName();
-
-                File.Copy(GameplayDll, tempFile + ".dll", true);
-                File.Copy(Path.ChangeExtension(GameplayDll, "pdb"), tempFile + ".pdb", true);
-                //File.Delete(GameplayDll);
-                //File.Delete(Path.ChangeExtension(GameplayDll,"pdb"));
-                //File.Delete(Path.ChangeExtension(GameplayDll, "pssym"));
-                //File.Delete(Path.ChangeExtension(GameplayDll, "dll.config"));
-                activeGameplayAssembly = Assembly.LoadFile(tempFile + ".dll");
-                TW.Data.GameplayAssembly = activeGameplayAssembly;
-
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
+            activeGameplayAssembly = GameplayAssemblyHotloader.LoadCopied();
+            TW.Data.GameplayAssembly = activeGameplayAssembly;
         }
 
         private void reloadGameplayDll()
         {
-            var mem = serializeData();
+            var persistentModels = TW.Data.Objects.Where(o => TW.Data.PersistentModelObjects.Contains(o));
+            var mem = TW.Data.ModelSerializer.SerializeToStream(persistentModels);
             File.WriteAllBytes("temp.txt", mem.ToArray());
+
             TW.Data.Objects.Clear();
+            TW.Data.PersistentModelObjects.Clear();
 
             updateActiveGameplayAssembly();
 
@@ -287,53 +222,26 @@ namespace MHGameWork.TheWizards.Engine
             TW.Graphics.AcquireRenderer().ClearAll();
             TW.Physics.ClearAll();
         }
-        private MemoryStream serializeData()
-        {
 
-            var mem = new MemoryStream(1024 * 1024 * 64);
-            var writer = new StreamWriter(mem);
-            foreach (IModelObject obj in TW.Data.Objects)
-            {
-                if (!TW.Data.PersistentModelObjects.Contains(obj)) continue;
-                //if (obj == null) continue; //TODO: fix this this should be impossible
-                TW.Data.ModelSerializer.QueueForSerialization(obj);
-            }
-            TW.Data.ModelSerializer.Serialize(writer);
-            writer.Flush();
-            mem.Flush();
-            mem.Position = 0;
-            return mem;
-        }
+        [PersistanceScope]
         private List<IModelObject> deserializeData(MemoryStream memoryStream)
         {
-            TW.Data.PersistentModelObjects.Clear();
             TW.Data.InPersistenceScope = true;
 
-            var ret =  TW.Data.ModelSerializer.Deserialize(new StreamReader(memoryStream));
+            var ret = TW.Data.ModelSerializer.Deserialize(new StreamReader(memoryStream));
 
             TW.Data.InPersistenceScope = false;
 
             return ret;
         }
 
-        private void startFilesystemWatcher()
-        {
-            var watcher = new FileSystemWatcher(new FileInfo(GameplayDll).Directory.FullName);
-            watcher.Changed += new FileSystemEventHandler(watcher_Changed);
 
-            watcher.EnableRaisingEvents = true;
-        }
 
-        private volatile bool needsReload = false;
+        private volatile bool needsReload;
         private Assembly activeGameplayAssembly;
-        private TypeSerializer typeSerializer;
         private bool needsHotload = true;
 
-        void watcher_Changed(object sender, FileSystemEventArgs e)
-        {
-            if (e.FullPath == new FileInfo(GameplayDll).FullName)
-                needsHotload = true;
-        }
+
 
         public Assembly GetLoadedGameplayAssembly()
         {

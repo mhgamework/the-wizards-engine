@@ -304,5 +304,26 @@ namespace MHGameWork.TheWizards.Persistence
 
 
         private readonly MyObjectDictionary myObjectDictionary;
+
+
+        public MemoryStream SerializeToStream(IEnumerable<IModelObject> objects)
+        {
+            var mem = new MemoryStream(1024 * 1024 * 64);
+            var writer = new StreamWriter(mem);
+
+            foreach (var obj in objects)
+                TW.Data.ModelSerializer.QueueForSerialization(obj);
+
+            TW.Data.ModelSerializer.Serialize(writer);
+
+            writer.Flush();
+            mem.Flush();
+            mem.Position = 0;
+
+            return mem;
+        }
+       
+
     }
+
 }
