@@ -37,7 +37,7 @@ namespace MHGameWork.TheWizards.RTS.Tests
             TW.Data.Get<CameraInfo>().Mode = CameraInfo.CameraMode.FirstPerson;
             engine.AddSimulator(new FirstPersonCameraSimulator());
             engine.AddSimulator(new GoblinMovementSimulator());
-            engine.AddSimulator(new GoblinRendererSimulator());
+            engine.AddSimulator(new RTSRendererSimulator());
             engine.AddSimulator(new VoxelTerrainSimulator());
             engine.AddSimulator(new FirstPersonCameraSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());

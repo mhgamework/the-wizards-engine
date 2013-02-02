@@ -270,7 +270,6 @@
     <Compile Include="RTS\Editing\GoblinCombatBuilderSimulator.cs" />
     <Compile Include="RTS\GoblinAttackPlayerBehaviour.cs" />
     <Compile Include="RTS\GoblinEnemySimulator.cs" />
-    <Compile Include="RTS\GoblinMovementSimulator.cs" />
     <Compile Include="RTS\Tests\GoblinsTest.cs" />
     <Compile Include="RTS\Tests\SimpleCombatTest.cs" />
     <Compile Include="RTS\Tests\TestGoblinSpawner.cs" />

@@ -56,13 +56,15 @@ namespace MHGameWork.TheWizards.Engine
         public HashSet<IModelObject> PersistentModelObjects = new HashSet<IModelObject>();
         private bool inPersistenceScope;
 
+        [Obsolete]
         [PersistanceScope]
         public override T GetSingleton<T>()
         {
-            InPersistenceScope = true;
-            var ret =  base.GetSingleton<T>();
-            InPersistenceScope = false;
-            return ret;
+            return base.GetSingleton<T>();
+        }
+        public T Get<T>() where T : class, IModelObject, new()
+        {
+            return GetSingleton<T>();
         }
 
     }

@@ -51,7 +51,7 @@ namespace MHGameWork.TheWizards.RTS
 
         private void loadRenderers(TWEngine engine)
         {
-            engine.AddSimulator(new GoblinRendererSimulator());
+            engine.AddSimulator(new RTSRendererSimulator());
             engine.AddSimulator(new VoxelTerrainSimulator());
             engine.AddSimulator(new PointLightSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
