@@ -202,6 +202,12 @@
     <Compile Include="Engine\CatchExceptionsAttribute.cs" />
     <Compile Include="Engine\DataWrapper.cs" />
     <Compile Include="Engine\DebugWrapper.cs" />
+    <Compile Include="Engine\Diagnostics\DiagnosticsController.cs" />
+    <Compile Include="Engine\Diagnostics\EngineDataComponent.cs" />
+    <Compile Include="Engine\Diagnostics\GPUResourcesComponent.cs" />
+    <Compile Include="Engine\Diagnostics\IDiagnosticsComponent.cs" />
+    <Compile Include="Engine\Diagnostics\OutputComponent.cs" />
+    <Compile Include="Engine\Diagnostics\ProfilerComponent.cs" />
     <Compile Include="Engine\Diagnostics\ProfilerDisplay.xaml.cs">
       <DependentUpon>ProfilerDisplay.xaml</DependentUpon>
     </Compile>
