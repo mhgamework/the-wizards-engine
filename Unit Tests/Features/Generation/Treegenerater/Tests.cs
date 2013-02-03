@@ -2,7 +2,6 @@
 using TreeGenerator;
 using TreeGenerator.help;
 using TreeGenerator.TreeEngine;
-using TreeGenerator.Editor;
 
 namespace MHGameWork.TheWizards.Tests.Features.Generation.Treegenerater
 {
@@ -14,68 +13,68 @@ namespace MHGameWork.TheWizards.Tests.Features.Generation.Treegenerater
         {
             TreestructureGenerator.TestGenerator();
         }
-           [Test]
+        [Test]
         public void TestTreeStructureOld()
         {
-        Tree.TestTreeStructure();
+            Tree.TestTreeStructure();
         }
-         [Test]
+        [Test]
         public void TestRenderTree()
         {
-        Tree.TestRenderTree();
-         }
-         [Test]
-         public void Testleaves()
-         {
-             Leaf.Testleaves();
-         }
-           [Test]
-         public void TestEditorOld()
-         {
-        TreeGenerator.Editor.TreeTypeEditor.TestEditor();
-           }
-   [Test]
-           public void TestLeaf()
-         {
-       TreeLeafType.TestLeaf();
-   }
-   
-   //public void TestGenerater()
-   //      {
-   //     TreeStructureGenerater.TestGenerater();
-   //}
-   //[Test]
-   //public void TestDirectionsFromAngles()
-   //      {
-   //     Directions.TestDirectionsFromAngles();
-   //}
-   //[Test]
-   //public void TestRenderLines()
-   //      {
-   //     MHGameWork.TheWizards.ServerClient.LineManager3D.TestRenderLines();
-   //}
-   //             [Test]
-   //public void TestCreateVertices()
-   //      {
-   //     EditorTreeRenderDataGenerater.TestCreateVertices();
-   //             }
-   //             [Test]
-   //             public void TestCreateAllVertices()
-   //      {
-   //     EditorTreeRenderDataGenerater.TestCreateAllVertices();
-   //             }
-   //[Test]
-   //             public void TestCreateForest()
-   //      {
-   //     EditorTreeRenderDataGenerater.TestCreateForest();// using the imposters
-   //}
-   [Test]
-   public void TestEngineRenderdataOld()
-         {
-        EngineTreeRenderDataImp.TestEngineRenderdata();
-   }
-  
-   
+            Tree.TestRenderTree();
+        }
+        [Test]
+        public void Testleaves()
+        {
+            Leaf.Testleaves();
+        }
+        [Test]
+        public void TestEditorOld()
+        {
+            //TreeGenerator.Editor.TreeTypeEditor.TestEditor();
+        }
+        [Test]
+        public void TestLeaf()
+        {
+            TreeLeafType.TestLeaf();
+        }
+
+        //public void TestGenerater()
+        //      {
+        //     TreeStructureGenerater.TestGenerater();
+        //}
+        //[Test]
+        //public void TestDirectionsFromAngles()
+        //      {
+        //     Directions.TestDirectionsFromAngles();
+        //}
+        //[Test]
+        //public void TestRenderLines()
+        //      {
+        //     MHGameWork.TheWizards.ServerClient.LineManager3D.TestRenderLines();
+        //}
+        //             [Test]
+        //public void TestCreateVertices()
+        //      {
+        //     EditorTreeRenderDataGenerater.TestCreateVertices();
+        //             }
+        //             [Test]
+        //             public void TestCreateAllVertices()
+        //      {
+        //     EditorTreeRenderDataGenerater.TestCreateAllVertices();
+        //             }
+        //[Test]
+        //             public void TestCreateForest()
+        //      {
+        //     EditorTreeRenderDataGenerater.TestCreateForest();// using the imposters
+        //}
+        [Test]
+        public void TestEngineRenderdataOld()
+        {
+            EngineTreeRenderDataImp.TestEngineRenderdata();
+        }
+
+
         //TreeEngine.TreeEngine.TestEngine();
         //TreeEngine.TreeEngine.TestEnginePlusGrass();
         //Imposter.ImposterEngine.TestImposterEngine();
@@ -85,10 +84,10 @@ namespace MHGameWork.TheWizards.Tests.Features.Generation.Treegenerater
 
         //////////////cleanup of treegenenrator tests//////////////////
         [Test]
-   public void TestTreeStructure()
-   {
-       TreeStructure.TestTreeStructure();
-   }
+        public void TestTreeStructure()
+        {
+            TreeStructure.TestTreeStructure();
+        }
         [Test]
         public void TestEngineRenderdata()
         {
@@ -97,7 +96,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Generation.Treegenerater
         [Test]
         public void TestEditor()
         {
-            TreeTypeEditor.TestEditor();
+            //TreeTypeEditor.TestEditor();
         }
         [Test]
         public void TestPointSpriteLeaves()

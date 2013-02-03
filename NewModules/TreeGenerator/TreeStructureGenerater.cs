@@ -4,7 +4,6 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using TreeGenerator.help;
 using MHGameWork.TheWizards.ServerClient.Editor;
-using TreeGenerator.Editor;
 using MHGameWork.TheWizards.Graphics;
 
 namespace TreeGenerator

@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using TreeGenerator.Clouds;
 using TreeGenerator.help;
 using Microsoft.Xna.Framework.Graphics;
-using TreeGenerator.Editor;
 using TreeGenerator.TreeEngine;
 using TreeGenerator.AtlasTool;
 using MHGameWork.TheWizards.Utilities;
