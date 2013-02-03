@@ -15,7 +15,7 @@ namespace MHGameWork.TheWizards.Profiling
     public class ProfilingPoint
     {
         private readonly Profiler profiler;
-        private readonly string name;
+        public string Name { get; private set; }
 
         private List<ProfilingPoint> lastChildren = new List<ProfilingPoint>();
         private float average = -1;
@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.Profiling
         public ProfilingPoint(Profiler profiler, string name)
         {
             this.profiler = profiler;
-            this.name = name;
+            this.Name = name;
         }
 
         private bool started = false;
@@ -129,7 +129,7 @@ namespace MHGameWork.TheWizards.Profiling
         {
             if (!filter(this)) return;
             var ms = calculateAverageMilliseconds();
-            appendOutputLine(builder, prefix, ms, parentTime, name, instanceCount);
+            appendOutputLine(builder, prefix, ms, parentTime, Name, instanceCount);
 
             float childrenTotal = 0;
             var additionalPrefix = "| ";
@@ -156,7 +156,7 @@ namespace MHGameWork.TheWizards.Profiling
         /// <returns></returns>
         public ProfilingPoint FindByName(string name)
         {
-            if (this.name == name) return this;
+            if (this.Name == name) return this;
             for (int i = 0; i < lastChildren.Count; i++)
             {
                 var ret = lastChildren[i].FindByName(name);

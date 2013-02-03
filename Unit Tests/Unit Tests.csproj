@@ -139,6 +139,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\Core\Diagnostics\ProfilerComponentTest.cs" />
     <Compile Include="Features\Data\SectionedStreamTest.cs" />
     <Compile Include="Features\Simulation\Animation\AnimationTest.cs" />
     <Compile Include="Features\Various\Client\ClientTest.cs" />
@@ -227,6 +228,10 @@
     <ProjectReference Include="..\NewModules\NewModules.csproj">
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
       <Name>NewModules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WPF\WPF.csproj">
+      <Project>{8a52d3e0-5362-4d9f-a29e-32e24ad65eaf}</Project>
+      <Name>WPF</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

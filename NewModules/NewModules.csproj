@@ -184,10 +184,7 @@
     <Compile Include="Engine\Diagnostics\GPUResourcesComponent.cs" />
     <Compile Include="Engine\Diagnostics\IDiagnosticsComponent.cs" />
     <Compile Include="Engine\Diagnostics\OutputComponent.cs" />
-    <Compile Include="Engine\Diagnostics\ProfilerComponent.cs" />
-    <Compile Include="Engine\Diagnostics\ProfilerDisplay.xaml.cs">
-      <DependentUpon>ProfilerDisplay.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Engine\Diagnostics\Profiling\ProfilerComponent.cs" />
     <Compile Include="Engine\EngineAssetFactory.cs" />
     <Compile Include="Engine\EngineMeshFactory.cs" />
     <Compile Include="Engine\EngineTWContext.cs" />
@@ -705,6 +702,10 @@
       <Project>{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}</Project>
       <Name>Launcher</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WPF\WPF.csproj">
+      <Project>{8A52D3E0-5362-4D9F-A29E-32E24AD65EAF}</Project>
+      <Name>WPF</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
@@ -787,12 +788,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Engine\Diagnostics\ProfilerDisplay.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
