@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Controls;
 using MHGameWork.TheWizards.Profiling;
 
@@ -15,14 +17,45 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
             display = new ProfilerDisplay();
         }
 
+        /// <summary>
+        /// Runs in a different thread!
+        /// </summary>
+        /// <param name="rootPoint"></param>
         public void Update(ProfilingPoint rootPoint)
         {
-            var node = getOrCreateNode(rootPoint);
+            if (Thread.CurrentThread != display.Dispatcher.Thread)
+            {
+                display.Dispatcher.Invoke(new Action(() => Update(rootPoint)));
+                return;
+            }
+
+
+            resetAll();
+            updateRecursive(rootPoint);
+            if (display.ViewModel.BaseLevel[0] != nodes[rootPoint])
+                display.ViewModel.SetRoot(nodes[rootPoint]);
+
+
+        }
+
+        private void resetAll()
+        {
+            foreach (var node in nodes.Values)
+                node.Duration = 0;
+        }
+
+        private void updateRecursive(ProfilingPoint p)
+        {
+            var node = getOrCreateNode(p);
             node.Children.Clear();
-            foreach (var child in rootPoint.LastChildren)
+            foreach (var child in p.LastChildren)
             {
                 var cNode = getOrCreateNode(child);
-                node.Children.Add(cNode);
+                cNode.Duration += p.AverageSeconds;
+
+                if (!node.Children.Contains(cNode))
+                    node.Children.Add(cNode);
+                updateRecursive(child);
             }
         }
 
@@ -31,7 +64,7 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
             if (nodes.ContainsKey(rootPoint)) return nodes[rootPoint];
             var node = new ProfilingNode();
             node.Name = rootPoint.Name;
-            nodes.Add(rootPoint,node);
+            nodes.Add(rootPoint, node);
             return node;
         }
 

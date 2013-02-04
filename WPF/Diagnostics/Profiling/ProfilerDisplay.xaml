@@ -25,7 +25,15 @@
 
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                    <TextBlock Text="{Binding Name}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="column1"/>
+                            <ColumnDefinition SharedSizeGroup="column2"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                        <TextBlock Grid.Column="1" Text="{Binding Duration}" />
+                    </Grid>
+                    
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>

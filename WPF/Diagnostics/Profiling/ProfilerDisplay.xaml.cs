@@ -7,6 +7,8 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
     /// </summary>
     public partial class ProfilerDisplay : UserControl
     {
+        public ProfilerDisplayModel ViewModel { get; private set; }
+
         public ProfilerDisplay()
         {
             InitializeComponent();
@@ -17,10 +19,10 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
             // Create UI-friendly wrappers around the 
             // raw data objects (i.e. the view-model).
 
-            var model = new ProfilerDisplayModel();
+            ViewModel = new ProfilerDisplayModel();
 
             // Let the UI bind to the view-model.
-            base.DataContext = model;
+            base.DataContext = ViewModel;
         }
     }
 }
