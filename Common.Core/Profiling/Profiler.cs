@@ -12,25 +12,49 @@ namespace MHGameWork.TheWizards.Profiling
     {
         private static Profiler instance = new Profiler();
 
-        public Stack<ProfilingPoint> pointStack = new Stack<ProfilingPoint>();
 
-        
+        public ProfilingPoint ProfilingRoot { get; set; }
+        /// <summary>
+        /// The id of the current Profile task
+        /// </summary>
+        public int ProfileNumber { get; set; }
+
+        public bool Enabled { get; set; }
+
 
         public Profiler()
         {
-            
+            Enabled = true;
+
         }
 
 
         public static ProfilingPoint CreateElement(string name)
         {
             var el = new ProfilingPoint(instance, name);
-            
+
             return el;
         }
 
-        
+        /// <summary>
+        /// Resets all measured data
+        /// </summary>
+        public static void ResetAll()
+        {
+            instance.ProfileNumber++;
+        }
 
-       
+        /// <summary>
+        /// Problems when changing this in-profile!
+        /// </summary>
+        /// <param name="value"></param>
+        public static void SetProfilingEnabled(bool value)
+        {
+            instance.Enabled = value;
+        }
+
+
+
+
     }
 }

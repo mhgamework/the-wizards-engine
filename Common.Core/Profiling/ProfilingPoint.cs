@@ -9,144 +9,147 @@ namespace MHGameWork.TheWizards.Profiling
 {
     /// <summary>
     /// Responsible for representing a code unit that gets profiled.
-    /// TODO: add support for profiling the same part of code twice sequentially (now old results get overwritten with no visible feedback)
+    /// This class implements a profiling point that tracks the total time spend in a method, including recursive calls.
+    /// Recursive calls to the same area are ignored(but are counted in the total for the root of the recursive call).
+    /// Each area contains a list of the direct subpoints that were accessed. Note that execution path is not considered anywhere, 
+    /// so the sum of the total time of the children can be greater than the total time of the parent, since children can also be called on
+    /// other execution paths.
+    /// 
+    /// This profiling point should be used to examine the total time spend. 
+    /// 
+    /// A root point can be provided, all profiling not inside the bounds of this root point are ignored.
+    /// 
+    /// NOTE: if another type of profiling area is to be added, don't change this class but use the profiler abstract factory to change behaviour
     /// </summary>
     [Serializable]
     public class ProfilingPoint
     {
+
+        /// <summary>
+        /// Static data for traversal
+        /// </summary>
+        private static Stack<ProfilingPoint> pointStack = new Stack<ProfilingPoint>();
+        private static bool hasEnteredRoot = false;
+
+        /// <summary>
+        /// Instance data
+        /// </summary>
         private readonly Profiler profiler;
         public string Name { get; private set; }
 
-        private List<ProfilingPoint> lastChildren = new List<ProfilingPoint>();
-        private float average = -1;
+        private TimeSpan start;
+        private bool isRoot = false;
+        private int depth;
+        private int currentProfileNumber = -1;
+
+        public float TotalTime { get; private set; }
+        public HashSet<ProfilingPoint> NonRecursiveChildren { get; private set; }
+        public int TimesEnteredNonRecursive { get; private set; }
 
         public ProfilingPoint(Profiler profiler, string name)
         {
+            NonRecursiveChildren = new HashSet<ProfilingPoint>();
+            TotalTime = -1;
             this.profiler = profiler;
             this.Name = name;
         }
 
-        private bool started = false;
-        private TimeSpan start;
 
-        public List<ProfilingPoint> LastChildren
-        {
-            get { return lastChildren; }
-        }
 
-        public float AverageSeconds
-        {
-            get { return average; }
-        }
-
-        private static int profileCount = 0;
-
-        private int currentProfileCount = -1;
-
-        private int instanceCount = 0;
-
-        private void addChild(ProfilingPoint child)
-        {
-            lastChildren.Add(child);
-        }
 
         public void Begin()
         {
-            if (started) return; //This could be a recursive call, allow this for now // throw new InvalidOperationException("This element has already been started!!");
-            started = true;
-            start = Configuration.Timer.Elapsed;
+            if (shouldSkip()) return;
 
-            if (currentProfileCount != profileCount)
-            {
-                instanceCount = 0;
+            ProfilingPoint prev = null;
+            if (pointStack.Count != 0) prev = pointStack.Peek();
+            pointStack.Push(this);
 
-                lastChildren.Clear();
+            checkNeedsReset(); // Check if the data needs a reset
 
-            }
+            depth++;
 
-            instanceCount++;
-
-
-            if (profiler.pointStack.Count > 0)
-                profiler.pointStack.Peek().addChild(this);
-            profiler.pointStack.Push(this);
-
-
+            if (depth != 1) return;
+            startProfiling();
+            if (prev != null) prev.NonRecursiveChildren.Add(this);
 
         }
+
+
+
         public void End()
         {
-            started = false;
+            if (shouldSkip()) return;
 
-            var duration = (float)(Configuration.Timer.Elapsed - start).TotalSeconds;
-            if (AverageSeconds < 0)
-                average = duration;
-            float factor = 1;
-            average = AverageSeconds * (1 - factor) + duration * factor;
+            if (pointStack.Peek() != this) throw new InvalidOperationException(); // Bug in algo!
+            pointStack.Pop();
+            depth--;
 
-            if (profiler.pointStack.Peek() == this) // Allow recursive calls , so multiple ends
-                profiler.pointStack.Pop();
-
-            if (profiler.pointStack.Count == 0)
-            {
-                profileCount++;
-
-            }
-            if (hasCallback) // Performance trick
-                OnProfilingComplete();
-        }
-
-        private bool hasCallback = false;
-        private List<Action<ProfilingPoint>> callbacks = new List<Action<ProfilingPoint>>();
-        public void OnProfilingComplete()
-        {
-
-            callbacks.ForEach(c => c(this));
-        }
-
-        public void AddProfileCompleteCallback(Action<ProfilingPoint> callback)
-        {
-            hasCallback = true;
-            callbacks.Add(callback);
+            if (depth == 0) endProfiling();
         }
 
 
-        public string GenerateProfileString()
+        private void startProfiling()
         {
-            return GenerateProfileString(p => true);
-        }
-        /// <summary>
-        /// Returns a string with recursive profiling information
-        /// </summary>
-        /// <returns></returns>
-        public string GenerateProfileString(Func<ProfilingPoint, bool> filter)
-        {
-            var builder = new StringBuilder();
-            generateProfileString(builder, "", calculateAverageMilliseconds(), filter);
-            return builder.ToString();
-        }
-        private void generateProfileString(StringBuilder builder, string prefix, float parentTime, Func<ProfilingPoint, bool> filter)
-        {
-            if (!filter(this)) return;
-            var ms = calculateAverageMilliseconds();
-            appendOutputLine(builder, prefix, ms, parentTime, Name, instanceCount);
+            tryEnterRoot();
 
-            float childrenTotal = 0;
-            var additionalPrefix = "| ";
-            foreach (var child in lastChildren)
-            {
-                child.generateProfileString(builder, prefix + additionalPrefix, ms, filter);
-                childrenTotal += child.calculateAverageMilliseconds();
-            }
-            var remainder = ms - childrenTotal;
-            if (remainder / ms > 0.1 && lastChildren.Count != 0)
-                appendOutputLine(builder, prefix + additionalPrefix, remainder, ms, "[...]", 1);
+            start = Configuration.Timer.Elapsed; // Only set start on entry
+        }
+        private void endProfiling()
+        {
+            // Now we are not inside another execution of this profiling area, store the elapsed
+            tryExitRoot();
 
+            storeMeasurements();
         }
 
-        private void appendOutputLine(StringBuilder builder, string prefix, float ms, float parentTime, string name, int times)
+        private void storeMeasurements()
         {
-            builder.Append(prefix).Append("|-").AppendFormat(" {0}: {1:#0.00}ms | {2:#0}%    {3} times", name, ms, ms / parentTime * 100, times).AppendLine();
+            var duration = (float)(Configuration.Timer.Elapsed - start).TotalSeconds; // calculate duration
+
+
+            TotalTime += duration;
+            TimesEnteredNonRecursive++;
+        }
+
+
+        private void tryEnterRoot()
+        {
+            if (this != profiler.ProfilingRoot) return;
+
+            hasEnteredRoot = true;
+            isRoot = true;
+        }
+        private void tryExitRoot()
+        {
+            if (!isRoot) return;
+
+            hasEnteredRoot = false;
+            isRoot = false;
+        }
+
+
+
+        private void checkNeedsReset()
+        {
+            if (currentProfileNumber == profiler.ProfileNumber) return;
+            currentProfileNumber = profiler.ProfileNumber;
+
+            TotalTime = 0;
+            NonRecursiveChildren.Clear();
+            TimesEnteredNonRecursive = 0;
+
+
+        }
+
+        private bool shouldSkip()
+        {
+            if (!profiler.Enabled) return true;
+            if (hasEnteredRoot) return false;
+            if (profiler.ProfilingRoot == null) return false;
+            if (profiler.ProfilingRoot == this) return false;
+
+            return true;
         }
 
 
@@ -157,21 +160,16 @@ namespace MHGameWork.TheWizards.Profiling
         public ProfilingPoint FindByName(string name)
         {
             if (this.Name == name) return this;
-            for (int i = 0; i < lastChildren.Count; i++)
+            foreach (var child in NonRecursiveChildren)
             {
-                var ret = lastChildren[i].FindByName(name);
+                var ret = child.FindByName(name);
                 if (ret == null) continue;
 
                 return ret;
             }
-
             return null;
         }
 
 
-        private float calculateAverageMilliseconds()
-        {
-            return AverageSeconds * 1000;
-        }
     }
 }

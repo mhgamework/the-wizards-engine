@@ -396,6 +396,7 @@
     <Compile Include="Core\MathExtra\SolvePolynomial.cs" />
     <Compile Include="Profiling\Profiler.cs" />
     <Compile Include="Profiling\ProfilingPoint.cs" />
+    <Compile Include="Profiling\ProfilingStringGenerator.cs" />
     <Compile Include="Profiling\TWProfileAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\QuadTree.cs" />

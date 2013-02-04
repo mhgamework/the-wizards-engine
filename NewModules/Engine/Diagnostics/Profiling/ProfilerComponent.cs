@@ -48,10 +48,10 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
         {
             var node = getOrCreateNode(p);
             node.Children.Clear();
-            foreach (var child in p.LastChildren)
+            foreach (var child in p.NonRecursiveChildren)
             {
                 var cNode = getOrCreateNode(child);
-                cNode.Duration += p.AverageSeconds;
+                cNode.Duration += p.TotalTime;
 
                 if (!node.Children.Contains(cNode))
                     node.Children.Add(cNode);

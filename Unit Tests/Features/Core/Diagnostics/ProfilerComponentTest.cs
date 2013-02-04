@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.Diagnostics
 {
-    [TestFixture]
+    [TestFixture, RequiresSTA]
     public class ProfilerComponentTest
     {
         [Test]
