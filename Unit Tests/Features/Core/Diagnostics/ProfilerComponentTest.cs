@@ -7,13 +7,21 @@ using System.Windows;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Diagnostics.Profiling;
 using MHGameWork.TheWizards.Profiling;
+using MHGameWork.TheWizards.Tests.Features.Core.Profiling;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace MHGameWork.TheWizards.Diagnostics
 {
     [TestFixture, RequiresSTA]
     public class ProfilerComponentTest
     {
+        [SetUp]
+        public void Setup()
+        {
+            component = new ProfilerComponent();
+        }
+
         [Test]
         public void TestUserControl()
         {
@@ -26,7 +34,6 @@ namespace MHGameWork.TheWizards.Diagnostics
         [Test]
         public void TestProfilerComponent()
         {
-            var comp = new ProfilerComponent();
 
             var root = Profiler.CreateElement("TestProfilerComponent.Loop");
 
@@ -37,7 +44,7 @@ namespace MHGameWork.TheWizards.Diagnostics
                         root.Begin();
                         stupidFunc();
                         root.End();
-                        comp.Update(root);
+                        component.Update(root);
                         Thread.Sleep(3000);
                     }
                 });
@@ -45,10 +52,87 @@ namespace MHGameWork.TheWizards.Diagnostics
             t.Start();
 
             var app = new Application();
-            app.Run(new Window { Content = comp.GetView() });
+            app.Run(new Window { Content = component.GetView() });
         }
 
+        [Test]
+        public void TestSetViewData()
+        {
+            var t = new ProfilingTest();
+            t.TestProfiling();
+            component.ShowResultsFrom(t.Root);
+
+        }
+        [Test]
+        public void TestStartEndMeasurement()
+        {
+            var t = new ProfilingTest();
+            component.SetMeasurementPoint(t.Root);
+            component.StartMeasurement();
+
+            t.TestProfiling();
+
+            component.EndMeasurement();
+
+
+        }
+        [Test]
+        public void TestTakeSnapshot()
+        {
+            //TODO: Maybe use engine integration for this feature?
+            var t = new ProfilingTest();
+            component.SetMeasurementPoint(t.Root);
+            component.TakeSnapshot(); // Should wait until a single execution is completed
+            
+            t.TestProfiling();
+            
+
+
+        }
+        [Test]
+        public void TestEnableDisableProfiling()
+        {
+            var t = new ProfilingTest();
+            component.DisableProfiling();
+            t.TestProfiling();
+            component.ShowResultsFrom(t.Root);
+            Thread.Sleep(1000);
+            component.EnableProfiling();
+            t.TestProfiling();
+            component.ShowResultsFrom(t.Root);
+
+        }
+
+        [Test]
+        public void TestResetToRoot()
+        {
+            var p1 = MockRepository.GenerateStub<ProfilingPoint>();
+            var p2 = MockRepository.GenerateStub<ProfilingPoint>();
+            component.SetRootPoint(p1);
+            component.SetMeasurementPoint(p2);
+            component.ResetMeasurementPoint();
+
+
+            Assert.AreEqual(p1,component.MeasurementPoint);
+
+        }
+
+        public void TestSetMeasurementPoint()
+        {
+            var p1 = MockRepository.GenerateStub<ProfilingPoint>();
+            
+            component.SetMeasurementPoint(p1);
+
+            Assert.AreEqual(p1, component.MeasurementPoint);
+
+        }
+
+
+
+
         Random r = new Random();
+        private ProfilerComponent component;
+
         [TWProfile]
         private void stupidFunc(int depth)
         {

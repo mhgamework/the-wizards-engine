@@ -10,21 +10,21 @@ namespace MHGameWork.TheWizards.Tests.Features.Core.Profiling
     [TestFixture]
     public class ProfilingTest
     {
-        private ProfilingPoint root;
+        public ProfilingPoint Root;
 
         [SetUp]
         public void Setup()
         {
-            root = Profiler.CreateElement("[ROOT]");
+            Root = Profiler.CreateElement("[ROOT]");
             Profiler.SetProfilingEnabled(true);
         }
 
         [Test]
         public void TestProfiling()
         {
-            root.Begin();
+            Root.Begin();
             for (int i = 0; i < 100; i++) { main(); }
-            root.End();
+            Root.End();
             printRootResult(9);
 
         }
@@ -41,10 +41,10 @@ namespace MHGameWork.TheWizards.Tests.Features.Core.Profiling
         public void TestRecursive()
         {
             var time = SlimDX.Configuration.Timer.Elapsed;
-            root.Begin();
+            Root.Begin();
             for (int i = 0; i < 100; i++) { recursive(5); }
 
-            root.End();
+            Root.End();
 
             var diff = SlimDX.Configuration.Timer.Elapsed - time;
             Console.WriteLine(diff);
@@ -108,7 +108,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Core.Profiling
 
         private void printRootResult(int expectedLines)
         {
-            var result = ProfilingStringGenerator.GenerateProfileString(root);
+            var result = ProfilingStringGenerator.GenerateProfileString(Root);
             Console.WriteLine(result);
             Assert.AreEqual(expectedLines, result.Count(c => c == '\n'));
         }

@@ -7,12 +7,23 @@
              x:Class="MHGameWork.TheWizards.Diagnostics.Profiling.ProfilerDisplay" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400">
-    <UserControl.DataContext><profiling:ProfilerDisplayModel/></UserControl.DataContext>
+    <UserControl.DataContext>
+        <profiling:ProfilerDisplayModel/>
+    </UserControl.DataContext>
     <Grid>
-        <TreeView ItemsSource="{Binding BaseLevel}">
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="{x:Type TreeViewItem}">
-                    <!--Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+
+            <ListBox ItemsSource="{Binding Buttons}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding Name}" Command="{Binding}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <TreeView ItemsSource="{Binding BaseLevel}">
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <!--Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                     <Setter Property="FontWeight" Value="Normal" />
                     <Style.Triggers>
@@ -20,22 +31,23 @@
                             <Setter Property="FontWeight" Value="Bold" />
                         </Trigger>
                     </Style.Triggers-->
-                </Style>
-            </TreeView.ItemContainerStyle>
+                    </Style>
+                </TreeView.ItemContainerStyle>
 
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition SharedSizeGroup="column1"/>
-                            <ColumnDefinition SharedSizeGroup="column2"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding Name}" />
-                        <TextBlock Grid.Column="1" Text="{Binding Duration}" />
-                    </Grid>
-                    
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition SharedSizeGroup="column1"/>
+                                <ColumnDefinition SharedSizeGroup="column2"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                            <TextBlock Grid.Column="1" Text="{Binding Duration}" />
+                        </Grid>
+
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </StackPanel>
     </Grid>
 </UserControl>

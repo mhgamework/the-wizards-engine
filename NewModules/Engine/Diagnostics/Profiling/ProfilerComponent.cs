@@ -6,6 +6,9 @@ using MHGameWork.TheWizards.Profiling;
 
 namespace MHGameWork.TheWizards.Diagnostics.Profiling
 {
+    /// <summary>
+    /// Responsible for providing a pluggable diagnostics component for engine debugging
+    /// </summary>
     public class ProfilerComponent : IDiagnosticsComponent
     {
         private ProfilerDisplay display;
@@ -15,7 +18,11 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
         public ProfilerComponent()
         {
             display = new ProfilerDisplay();
+            // add some buttons
+
         }
+
+        public object MeasurementPoint { get; private set; }
 
         /// <summary>
         /// Runs in a different thread!
@@ -71,6 +78,51 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
         public Control GetView()
         {
             return display;
+        }
+
+        public void ShowResultsFrom(ProfilingPoint root)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetMeasurementPoint(ProfilingPoint p)
+        {
+        throw new NotImplementedException();
+        }
+
+        public void StartMeasurement()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EndMeasurement()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TakeSnapshot()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DisableProfiling()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EnableProfiling()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetRootPoint(ProfilingPoint p1)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ResetMeasurementPoint()
+        {
+            throw new NotImplementedException();
         }
     }
 }
