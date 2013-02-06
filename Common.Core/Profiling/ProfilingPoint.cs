@@ -46,6 +46,9 @@ namespace MHGameWork.TheWizards.Profiling
         public HashSet<ProfilingPoint> NonRecursiveChildren { get; private set; }
         public int TimesEnteredNonRecursive { get; private set; }
 
+        public event Action Started;
+        public event Action Ended;
+
         public ProfilingPoint(Profiler profiler, string name)
         {
             NonRecursiveChildren = new HashSet<ProfilingPoint>();
@@ -94,6 +97,7 @@ namespace MHGameWork.TheWizards.Profiling
             tryEnterRoot();
 
             start = Configuration.Timer.Elapsed; // Only set start on entry
+            if (Started != null) Started();
         }
         private void endProfiling()
         {
@@ -101,6 +105,8 @@ namespace MHGameWork.TheWizards.Profiling
             tryExitRoot();
 
             storeMeasurements();
+            if (Ended != null) Ended();
+
         }
 
         private void storeMeasurements()

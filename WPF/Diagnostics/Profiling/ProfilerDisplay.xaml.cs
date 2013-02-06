@@ -23,6 +23,13 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
 
             // Let the UI bind to the view-model.
             base.DataContext = ViewModel;
+
+            treeview.SelectedItemChanged += treeview_SelectedItemChanged;
+        }
+
+        void treeview_SelectedItemChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
+        {
+            ViewModel.SelectedItem = (ProfilingNode)e.NewValue;
         }
     }
 }

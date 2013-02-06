@@ -9,8 +9,10 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
     public class ProfilerDisplayModel : INotifyPropertyChanged
     {
         private ObservableCollection<ProfilerCommand> buttons;
+        private ProfilingNode selectedNode;
         private ProfilingNode Root { get; set; }
         public ReadOnlyCollection<ProfilingNode> BaseLevel { get; set; }
+       
 
         public ObservableCollection<ProfilerCommand> Buttons
         {
@@ -22,6 +24,8 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
                 OnPropertyChanged("Buttons");
             }
         }
+
+        public ProfilingNode SelectedItem { get; internal set; }
 
 
         public ProfilerDisplayModel()
@@ -101,6 +105,7 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
     public class ProfilingNode : INotifyPropertyChanged
     {
         private float duration;
+        private bool isSelected;
 
         public ProfilingNode()
         {
@@ -109,6 +114,17 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
             duration = 10;
         }
         public ObservableCollection<ProfilingNode> Children { get; private set; }
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                if (value.Equals(isSelected)) return;
+                isSelected = value;
+                OnPropertyChanged("IsSelected");
+            }
+        }
+
         public override string ToString()
         {
             return Name;
@@ -125,6 +141,8 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
                 OnPropertyChanged("Duration");
             }
         }
+
+        public object ProfilingPoint { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

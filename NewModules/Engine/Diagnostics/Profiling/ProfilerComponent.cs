@@ -14,15 +14,41 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
         private ProfilerDisplay display;
 
         private Dictionary<ProfilingPoint, ProfilingNode> nodes = new Dictionary<ProfilingPoint, ProfilingNode>();
+        private ProfilingPoint rootPoint;
 
         public ProfilerComponent()
         {
             display = new ProfilerDisplay();
             // add some buttons
+            addDisplayButtons();
 
         }
 
-        public object MeasurementPoint { get; private set; }
+        private void addDisplayButtons()
+        {
+            display.ViewModel.Buttons.Clear();
+
+            display.ViewModel.Buttons.Add(new ProfilerDisplayModel.ProfilerCommand("Start", o => StartMeasurement()));
+            display.ViewModel.Buttons.Add(new ProfilerDisplayModel.ProfilerCommand("End", o => EndMeasurement()));
+            var snapshotCommand = new ProfilerDisplayModel.ProfilerCommand("Snapshot", delegate
+            {
+                try { TakeSnapshot(); }
+                catch (Exception e) { Console.WriteLine(e); }
+            });
+            display.ViewModel.Buttons.Add(snapshotCommand);
+            display.ViewModel.Buttons.Add(new ProfilerDisplayModel.ProfilerCommand("Enable", o => EnableProfiling()));
+            display.ViewModel.Buttons.Add(new ProfilerDisplayModel.ProfilerCommand("Disable", o => DisableProfiling()));
+            display.ViewModel.Buttons.Add(new ProfilerDisplayModel.ProfilerCommand("Select",
+                                                                                   delegate
+                                                                                   {
+                                                                                    if (display.ViewModel.SelectedItem == null)
+                                                                                           return;
+                                                                                       SetMeasurementPoint(display.ViewModel.SelectedItem.ProfilingPoint as ProfilingPoint);
+                                                                                   }));
+            display.ViewModel.Buttons.Add(new ProfilerDisplayModel.ProfilerCommand("Reset", o => ResetMeasurementPoint()));
+        }
+
+        public ProfilingPoint MeasurementPoint { get; private set; }
 
         /// <summary>
         /// Runs in a different thread!
@@ -55,6 +81,13 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
         {
             var node = getOrCreateNode(p);
             node.Children.Clear();
+
+            node.Duration = p.TotalTime;
+            node.Name = p.Name;
+            node.ProfilingPoint = p;
+
+
+
             foreach (var child in p.NonRecursiveChildren)
             {
                 var cNode = getOrCreateNode(child);
@@ -82,47 +115,67 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
 
         public void ShowResultsFrom(ProfilingPoint root)
         {
-            throw new NotImplementedException();
+            Update(root);
         }
 
         public void SetMeasurementPoint(ProfilingPoint p)
         {
-        throw new NotImplementedException();
+            MeasurementPoint = p;
         }
 
         public void StartMeasurement()
         {
-            throw new NotImplementedException();
+            Profiler.ResetAll();
         }
 
         public void EndMeasurement()
         {
-            throw new NotImplementedException();
+            ShowResultsFrom(MeasurementPoint);
         }
 
+        private bool inSnapshot;
+        private bool waitingForEnd = false;
+        private ProfilingPoint snapshotPoint;
         public void TakeSnapshot()
         {
-            throw new NotImplementedException();
+            if (inSnapshot) throw new InvalidOperationException();
+            inSnapshot = true;
+            waitingForEnd = true;
+            snapshotPoint = MeasurementPoint;
+            snapshotPoint.Ended += onSnapshotEnded;
+        }
+        private void onSnapshotEnded()
+        {
+            if (waitingForEnd)
+            {
+                waitingForEnd = false;
+                Profiler.ResetAll();
+                return;
+            }
+            snapshotPoint.Ended -= onSnapshotEnded;
+            ShowResultsFrom(snapshotPoint);
+            inSnapshot = false;
         }
 
         public void DisableProfiling()
         {
-            throw new NotImplementedException();
+            Profiler.SetProfilingEnabled(false);
         }
 
         public void EnableProfiling()
         {
-            throw new NotImplementedException();
+            Profiler.SetProfilingEnabled(true);
         }
 
         public void SetRootPoint(ProfilingPoint p1)
         {
-            throw new NotImplementedException();
+            rootPoint = p1;
+            SetMeasurementPoint(p1);
         }
 
         public void ResetMeasurementPoint()
         {
-            throw new NotImplementedException();
+            SetMeasurementPoint(rootPoint);
         }
     }
 }

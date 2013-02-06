@@ -11,16 +11,25 @@
         <profiling:ProfilerDisplayModel/>
     </UserControl.DataContext>
     <Grid>
-        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
-
-            <ListBox ItemsSource="{Binding Buttons}">
+        <DockPanel>
+            <ListBox ItemsSource="{Binding Buttons}" DockPanel.Dock="Top">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" IsItemsHost="True" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Button Content="{Binding Name}" Command="{Binding}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <TreeView ItemsSource="{Binding BaseLevel}">
+            <TreeView x:Name="treeview" ItemsSource="{Binding BaseLevel}">
+                <TreeView.Resources>
+                    <Style TargetType="TreeViewItem">
+                        <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+                    </Style>
+                </TreeView.Resources>
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="{x:Type TreeViewItem}">
                         <!--Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
@@ -48,6 +57,6 @@
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
             </TreeView>
-        </StackPanel>
+        </DockPanel>
     </Grid>
 </UserControl>

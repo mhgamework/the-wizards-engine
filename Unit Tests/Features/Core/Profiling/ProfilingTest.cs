@@ -22,12 +22,11 @@ namespace MHGameWork.TheWizards.Tests.Features.Core.Profiling
         [Test]
         public void TestProfiling()
         {
-            Root.Begin();
-            for (int i = 0; i < 100; i++) { main(); }
-            Root.End();
+            Execute100Mains();
             printRootResult(9);
-
         }
+
+        
 
         [Test]
         public void TestProfilingMultiple()
@@ -65,7 +64,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Core.Profiling
         }
 
         [TWProfile("Main")]
-        private void main()
+        public void main()
         {
             Thread.Sleep(1);
             rendering();
@@ -113,6 +112,16 @@ namespace MHGameWork.TheWizards.Tests.Features.Core.Profiling
             Assert.AreEqual(expectedLines, result.Count(c => c == '\n'));
         }
 
+
+        public void Execute100Mains()
+        {
+            Root.Begin();
+            for (int i = 0; i < 100; i++)
+            {
+                main();
+            }
+            Root.End();
+        }
 
     }
 }

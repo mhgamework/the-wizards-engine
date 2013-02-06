@@ -37,15 +37,18 @@ namespace MHGameWork.TheWizards.Diagnostics
 
             var root = Profiler.CreateElement("TestProfilerComponent.Loop");
 
+            component.SetRootPoint(root);
+
             var t = new Thread(delegate()
                 {
+                    var test = createProfilingTest();
                     while (Thread.CurrentThread.IsAlive)
                     {
                         root.Begin();
                         stupidFunc();
+                        test.main();
                         root.End();
-                        component.Update(root);
-                        Thread.Sleep(3000);
+
                     }
                 });
             t.IsBackground = true;
@@ -58,19 +61,19 @@ namespace MHGameWork.TheWizards.Diagnostics
         [Test]
         public void TestSetViewData()
         {
-            var t = new ProfilingTest();
-            t.TestProfiling();
+            var t = createProfilingTest();
+            t.Execute100Mains();
             component.ShowResultsFrom(t.Root);
 
         }
         [Test]
         public void TestStartEndMeasurement()
         {
-            var t = new ProfilingTest();
+            var t = createProfilingTest();
             component.SetMeasurementPoint(t.Root);
             component.StartMeasurement();
 
-            t.TestProfiling();
+            t.Execute100Mains();
 
             component.EndMeasurement();
 
@@ -79,26 +82,63 @@ namespace MHGameWork.TheWizards.Diagnostics
         [Test]
         public void TestTakeSnapshot()
         {
-            //TODO: Maybe use engine integration for this feature?
-            var t = new ProfilingTest();
-            component.SetMeasurementPoint(t.Root);
-            component.TakeSnapshot(); // Should wait until a single execution is completed
-            
-            t.TestProfiling();
-            
 
+            var t = createProfilingTest();
+            component.SetMeasurementPoint(t.Root);
+            component.TakeSnapshot(); // Should show results once a single execution is completed
+
+            t.Execute100Mains();
+        }
+
+        [Test]
+        public void TestTakeSnapshotTwice()
+        {
+            var ev = new AutoResetEvent(false);
+
+            var t = createProfilingTest();
+            component.SetMeasurementPoint(t.Root);
+            component.TakeSnapshot(); // Should show results once a single execution is completed
+
+            t.Root.Ended += delegate { ev.Set(); };
+
+            t.Execute100Mains();
+            ev.WaitOne();
+
+            component.TakeSnapshot();
 
         }
+
+        [Test, ExpectedException(typeof(InvalidOperationException))]
+        public void TestSingleSnapshot()
+        {
+            //TODO: Maybe use engine integration for this feature?
+            var t = createProfilingTest();
+            component.SetMeasurementPoint(t.Root);
+            component.TakeSnapshot();
+            component.TakeSnapshot();
+
+            t.Execute100Mains();
+        }
+
+        private static ProfilingTest createProfilingTest()
+        {
+            var ret = new ProfilingTest();
+            ret.Setup();
+            return ret;
+
+        }
+
         [Test]
         public void TestEnableDisableProfiling()
         {
             var t = new ProfilingTest();
+            t.Setup();
             component.DisableProfiling();
-            t.TestProfiling();
+            t.Execute100Mains();
             component.ShowResultsFrom(t.Root);
             Thread.Sleep(1000);
             component.EnableProfiling();
-            t.TestProfiling();
+            t.Execute100Mains();
             component.ShowResultsFrom(t.Root);
 
         }
@@ -106,21 +146,27 @@ namespace MHGameWork.TheWizards.Diagnostics
         [Test]
         public void TestResetToRoot()
         {
-            var p1 = MockRepository.GenerateStub<ProfilingPoint>();
-            var p2 = MockRepository.GenerateStub<ProfilingPoint>();
+            var p1 = createProfilingPoint();
+            var p2 = createProfilingPoint();
             component.SetRootPoint(p1);
             component.SetMeasurementPoint(p2);
             component.ResetMeasurementPoint();
 
 
-            Assert.AreEqual(p1,component.MeasurementPoint);
+            Assert.AreEqual(p1, component.MeasurementPoint);
 
         }
 
+        private ProfilingPoint createProfilingPoint()
+        {
+            return new ProfilingPoint(null, "qmsldkfj");
+        }
+
+        [Test]
         public void TestSetMeasurementPoint()
         {
-            var p1 = MockRepository.GenerateStub<ProfilingPoint>();
-            
+            var p1 = createProfilingPoint();
+
             component.SetMeasurementPoint(p1);
 
             Assert.AreEqual(p1, component.MeasurementPoint);
@@ -160,12 +206,12 @@ namespace MHGameWork.TheWizards.Diagnostics
         }
 
         [TWProfile]
-        private  int blabla(int a)
+        private int blabla(int a)
         {
             for (int i = 0; i < 200; i++)
             {
                 a++;
-                
+
             }
             return a;
         }
