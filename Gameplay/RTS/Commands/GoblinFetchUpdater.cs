@@ -10,7 +10,12 @@ namespace MHGameWork.TheWizards.RTS.Commands
         private Goblin goblin;
         private float dropAreaRange = 1f;
 
-        public void Update(Goblin goblin, Vector3 targetPosition, ResourceType resourceType)
+        public void Update(Goblin goblin, Vector3 targetPosition,ResourceType resourceType)
+        {
+            Update(goblin,targetPosition,10000000f,targetPosition,resourceType);
+        }
+
+        public void Update(Goblin goblin, Vector3 sourcePosition, float sourceRangeSquared, Vector3 targetPosition, ResourceType resourceType)
         {
             this.goblin = goblin;
             this.resourceType = resourceType;
@@ -25,7 +30,7 @@ namespace MHGameWork.TheWizards.RTS.Commands
             }
             else
             {
-                var res = findClosestResource(allowedToPickup);
+                var res = findClosestResource(allowedToPickup,sourceRangeSquared,sourcePosition);
                 if (res == null) return;
 
                 var closest = res.get<Engine.WorldRendering.Entity>().WorldMatrix.xna().Translation.dx();
@@ -38,7 +43,7 @@ namespace MHGameWork.TheWizards.RTS.Commands
             }
         }
 
-        private Vector3 calculateCorrectDropPosition()
+        public Vector3 calculateCorrectDropPosition()
         {
             var dir = targetPosition - goblin.Position;
             var armLength = Vector3.Dot(goblin.CalculateHoldingResourcePosition() - goblin.Position,
@@ -46,19 +51,19 @@ namespace MHGameWork.TheWizards.RTS.Commands
             return targetPosition - dir*armLength;
         }
 
-        private void pickupResource(Goblin goblin)
+        public void pickupResource(Goblin goblin)
         {
-            var res = findClosestResource(o => true);
+            var res = findClosestResource(o => true,float.MaxValue,goblin.Position);
             if (res == null) return;
             TW.Data.Objects.Remove(res);
             goblin.Holding = res.Thing;
         }
 
-        private DroppedThing findClosestResource(Func<DroppedThing, bool> toPickup)
+        public DroppedThing findClosestResource(Func<DroppedThing, bool> toPickup,float rangeSquared,Vector3 sourcePosition)
         {
             var closest = TW.Data.Objects.Where(o => o is DroppedThing)
               .Cast<DroppedThing>().Where(o => o.Thing.Type == resourceType)
-              .Where(toPickup)
+              .Where(toPickup).Where(t => getDistanceSqToDrop(sourcePosition,t) < rangeSquared)
               .OrderBy(t => getDistanceSqToDrop(goblin.Position, t))
               .FirstOrDefault();
 
@@ -66,12 +71,12 @@ namespace MHGameWork.TheWizards.RTS.Commands
 
         }
 
-        private bool allowedToPickup(DroppedThing drop)
+        public bool allowedToPickup(DroppedThing drop)
         {
             return getDistanceSqToDrop(targetPosition, drop) > dropAreaRange * dropAreaRange;
         }
 
-        private float getDistanceSqToDrop(Vector3 pos, DroppedThing drop)
+        public float getDistanceSqToDrop(Vector3 pos, DroppedThing drop)
         {
             var droppos = drop.get<Engine.WorldRendering.Entity>().WorldMatrix.xna().Translation.dx();
             var target = pos;
@@ -80,7 +85,7 @@ namespace MHGameWork.TheWizards.RTS.Commands
             return Vector3.DistanceSquared(droppos, target);
         }
 
-        private bool reachedTarget(Vector3 target)
+        public bool reachedTarget(Vector3 target)
         {
             return (goblin.Position - target).Length() < 0.01f;
         }

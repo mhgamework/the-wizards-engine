@@ -10,6 +10,7 @@ using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Navigation2D;
+using MHGameWork.TheWizards.RTS.Commands;
 using MHGameWork.TheWizards.Simulators;
 using NUnit.Framework;
 using SlimDX;
@@ -22,6 +23,31 @@ namespace MHGameWork.TheWizards.RTS
     public class GoblinCombatTest
     {
         private TWEngine engine = EngineFactory.CreateEngine();
+
+        [Test]
+        public void TestRocketCannon()
+        {
+            new Cannon() { Angle = MathHelper.Pi, Position = new Vector3(2, 0, 2) };
+            for (int i = 0; i < 10; i++)
+            {
+                new Goblin() { Position = new Vector3(i, 0, 1) };
+                
+            }
+            for (int i = 0; i < 8; i++)
+            {
+                var daThing = new Thing() { Type = TW.Data.GetSingleton<RTSData>().RocketResourceType };
+                new DroppedThing() { Thing = daThing, InitialPosition = new Vector3(i, 0, 2.5f) };
+                
+            }
+            
+            
+            engine.AddSimulator(new CannonSimulator());
+            engine.AddSimulator(new RTSRendererSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
+            engine.AddSimulator(new AudioSimulator());
+
+        }
+
 
         [Test]
         public void TestCannon()
@@ -46,14 +72,14 @@ namespace MHGameWork.TheWizards.RTS
         {
             //new Cannon() { Angle = MathHelper.Pi, Position = new Vector3(2, 0, 2) };
             //new Cannon() { Angle = 0, Position = new Vector3(-2, 0, 2) };
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 1; i++)
             {
                 new Goblin() { Position = new Vector3(5, 0, 7 + i) };
             }
 
             //new SoundEmitter() { Ambient = true, Loop = true, Sound = SoundFactory.Load("RTS\\thunderstorm.wav"), Playing = true};
 
-            TW.Data.GetSingleton<NavigableGrid2DData>().Size = 100;
+            TW.Data.GetSingleton<NavigableGrid2DData>().Size = 10;
             TW.Data.GetSingleton<NavigableGrid2DData>().NodeSize = 0.5f;
 
 

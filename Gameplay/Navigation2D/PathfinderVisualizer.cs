@@ -25,8 +25,8 @@ namespace MHGameWork.TheWizards.Navigation2D
             finder.SelectNode += finder_SelectNode;
             finder.EnqueueNode += finder_EnqueueNode;
 
-            lines = new LineManager3DLines(game.Device);
-            lines.SetMaxLines(1024 * 64);
+            //lines = new LineManager3DLines(game.Device);
+            //lines.SetMaxLines(1024 * 64);
         }
 
         void finder_EnqueueNode(T obj)
@@ -47,7 +47,7 @@ namespace MHGameWork.TheWizards.Navigation2D
         {
             selected.Clear();
             enqueued.Clear();
-            lines.ClearAllLines();
+            //lines.ClearAllLines();
         }
 
         public void Render()
@@ -59,7 +59,7 @@ namespace MHGameWork.TheWizards.Navigation2D
             {
                 renderFunction(lines, e, new Color4(0, 0, 1));
             }
-            game.LineManager3D.Render(lines, game.Camera);
+            //game.LineManager3D.Render(lines, game.Camera);
         }
     }
 }

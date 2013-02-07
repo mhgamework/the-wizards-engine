@@ -71,6 +71,7 @@ namespace MHGameWork.TheWizards.RTS
 
             var s = provider.GetVertex((goblin.Position.TakeXZ() - new Vector2(0.0f)) / provider.Grid.NodeSize);
             var e = provider.GetVertex((goblin.Goal.TakeXZ() - new Vector2(0.0f)) / provider.Grid.NodeSize);
+            if (s == null || e == null) return;
             if (s.Position == e.Position)
             {
                 path = new[] { goblin.Goal, goblin.Goal };

@@ -28,4 +28,6 @@ namespace MHGameWork.TheWizards.RTS.Commands
 
         public ResourceType ResourceType { get; set; }
     }
+
+
 }

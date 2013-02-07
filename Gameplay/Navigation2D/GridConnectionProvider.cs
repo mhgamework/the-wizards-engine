@@ -31,8 +31,8 @@ namespace MHGameWork.TheWizards.Navigation2D
             count++;
             //var cameFrom = finder.GetCameFrom(current);
             //if (cameFrom == null) return getConnectionsAll(current);
-            return getConnectionsLeaped(finder, null, current);
-            //return getConnectionsAll(current);
+            //return getConnectionsLeaped(finder, null, current);
+            return getConnectionsAll(current);
         }
 
         private IEnumerable<Vertex2D> getConnectionsLeaped(PathFinder2D<Vertex2D> finder, Vertex2D getCameFrom, Vertex2D current)
@@ -115,7 +115,6 @@ namespace MHGameWork.TheWizards.Navigation2D
 
                 if (!canWalkOn(ret)) continue;
                 yield return ret;
-                break;
             }
         }
 

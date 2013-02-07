@@ -66,14 +66,15 @@ namespace MHGameWork.TheWizards.RTS
         {
             data.Textarea.Visible = true;
             data.Textarea.Text = String.Format("Hey! I'm currently {0}!", command.Description);
-            data.Textarea.Text += "\n\n";
+            data.Textarea.Text += "\n\n";//Hier zou hij altijd moeten komen
             data.Textarea.Text += "1. Idle\n";
             data.Textarea.Text += "2. Follow\n";
             data.Textarea.Text += "3. Fetch items of the type I am holding to my position\n";
-
+            data.Textarea.Text += "4. Fetch items of the type I am holding from my position\n";
             checkKeyIdle();
             checkKeyFollow();
-            checkKeyFetch();
+            checkKeyAdvancedFetchTo();
+            checkKeyAdvancedFetchFrom();
         }
 
 
@@ -89,7 +90,7 @@ namespace MHGameWork.TheWizards.RTS
             if (!TW.Graphics.Keyboard.IsKeyPressed(Key.D2)) return;
             command = new GoblinFollowCommand();
         }
-        private void checkKeyFetch()
+        /*private void checkKeyFetch()
         {
             if (!TW.Graphics.Keyboard.IsKeyPressed(Key.D3)) return;
             if (player.Holding == null) return;
@@ -100,6 +101,50 @@ namespace MHGameWork.TheWizards.RTS
                     ResourceType = player.Holding.Type,
                     TargetPosition = target
                 };
+        }*/
+
+        private Goblin lastFetchTo;
+        private Vector3 fetchToPosition;
+        private Goblin lastFetchFrom;
+        private Vector3 fetchFromPosition;
+
+        private void checkKeyAdvancedFetchTo()
+        {
+            if (!TW.Graphics.Keyboard.IsKeyPressed(Key.D3)) return;
+            if (player.Holding == null) return;
+            var target = TW.Data.GetSingleton<CameraInfo>().ActiveCamera.ViewInverse.xna().Translation.dx();
+            target.Y = 0.3f;
+            if (lastFetchFrom == goblin)
+            {    command = new GoblinAdvancedFetchCommand()
+                              {
+                                  ResourceType = player.Holding.Type,
+                                  TargetPosition = target,
+                                  SourcePosition = fetchFromPosition
+                              };
+                return;
+            }
+            fetchToPosition = target;
+            lastFetchTo = goblin;
+        }
+        private void checkKeyAdvancedFetchFrom()
+        {
+            if (!TW.Graphics.Keyboard.IsKeyPressed(Key.D4)) return;
+            if (player.Holding == null) return;
+            var target = TW.Data.GetSingleton<CameraInfo>().ActiveCamera.ViewInverse.xna().Translation.dx();
+            target.Y = 0.3f;
+
+            if (lastFetchTo == goblin)
+            {
+                command = new GoblinAdvancedFetchCommand()
+                {
+                    ResourceType = player.Holding.Type,
+                    TargetPosition = fetchToPosition,
+                    SourcePosition = target
+                };
+                return;
+            }
+            fetchToPosition = target;
+            lastFetchFrom = goblin;
         }
 
         private void clearTalkScreen()
@@ -110,7 +155,7 @@ namespace MHGameWork.TheWizards.RTS
         private void trySelectGoblin()
         {
             var obj = TW.Data.GetSingleton<Engine.WorldRendering.World>()
-                        .Raycast(TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay(),e => e.Tag is Goblin);
+                        .Raycast(TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay(), e => e.Tag is Goblin);
 
             if (!obj.IsHit) return;
             if (obj.Distance > 5) return;
