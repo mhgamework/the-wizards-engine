@@ -239,12 +239,12 @@ namespace MHGameWork.TheWizards.RTS
             var plank = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS\\plank-diffuse-seamless.jpg") };
 
             var size = 20;
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 30; i++)
             {
                 placeItem(wood, nextVector(new Vector3(-size, 0.5f, -size), new Vector3(size, 0.5f, size)));
             }
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 5; i++)
             {
                 var g = new Goblin() { Position = nextVector(new Vector3(-5, 0.5f, -5), new Vector3(-2, 0.5f, -2)) };
                 g.Goal = new Vector3(-3, 0.5f, -3);
@@ -253,9 +253,7 @@ namespace MHGameWork.TheWizards.RTS
             var factories = new List<Factory>();
             factories.Add(new Factory() { BuildInterval = 4, InputType = wood, OutputType = plank });
             factories.Add(new Factory() { BuildInterval = 4, InputType = wood, OutputType = plank });
-            factories.Add(new Factory() { BuildInterval = 4, InputType = wood, OutputType = plank });
 
-            factories.Add(new Factory() { BuildInterval = 10, InputType = plank, OutputType = barrel });
             factories.Add(new Factory() { BuildInterval = 10, InputType = plank, OutputType = barrel });
 
             foreach (var fact in factories)

@@ -37,7 +37,7 @@ namespace MHGameWork.TheWizards.RTS
             if (goblin != null)
                 if (Vector3.Distance(goblin.Position, TW.Data.GetSingleton<CameraInfo>().ActiveCamera.ViewInverse.xna().Translation.dx()) > 8)
                     deselectGoblin();
-
+            //TODO: optimize, this changes the text every frame
             if (goblin == null)
                 clearTalkScreen();
             else
