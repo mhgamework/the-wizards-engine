@@ -92,6 +92,7 @@ namespace MHGameWork.TheWizards.Engine
             codeLoader.setNeedsReload();
             TW.Graphics.GameLoopEvent += gameLoopProfiled;
             gameplayAssemblyHotloader = new AssemblyHotloader(new FileInfo(GameplayDll));
+            gameplayAssemblyHotloader.Changed += () => codeLoader.setNeedsHotload();
             debugTools = new EngineDebugTools(TW.Graphics.Form.GameLoopProfilingPoint);
 
         }

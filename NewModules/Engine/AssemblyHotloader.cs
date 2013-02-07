@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.Engine
     public class AssemblyHotloader
     {
         private readonly FileInfo file;
-        private bool changed;
+        public event Action Changed;
 
         public AssemblyHotloader(FileInfo file)
         {
@@ -32,7 +32,7 @@ namespace MHGameWork.TheWizards.Engine
         void watcher_Changed(object sender, FileSystemEventArgs e)
         {
             if (e.FullPath == file.FullName)
-                changed = true;
+                Changed();
         }
 
         /// <summary>
