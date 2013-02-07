@@ -40,12 +40,14 @@ namespace MHGameWork.TheWizards.Graphics
             timeCount += elapsed;
             frameCount++;
 
-            if (timeCount >= refreshInterval)
-            {
-                averageFPS = frameCount/timeCount;
-                frameCount = 0;
-                timeCount = 0;
-            }
+            if (timeCount < refreshInterval) return;
+
+            averageFPS = frameCount / timeCount;
+            frameCount = 0;
+            timeCount = 0;
+            if (DataAvailable != null) DataAvailable(averageFPS);
         }
+
+        public event Action<float> DataAvailable;
     }
 }

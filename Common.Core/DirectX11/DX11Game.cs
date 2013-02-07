@@ -37,6 +37,45 @@ namespace MHGameWork.TheWizards.DirectX11
             InputDisabled = false;
 
             EscapeExists = true;
+
+            var viz = new FPSVizualizer(this);
+            form.GameLoopEvent += viz.Update;
+        }
+
+        public class FPSVizualizer
+        {
+            private MHGameWork.TheWizards.Graphics.AverageFPSCalculater fpsCalculater;
+            private DX11Game game;
+
+            public FPSVizualizer(DX11Game game)
+            {
+                this.game = game;
+                fpsCalculater = new MHGameWork.TheWizards.Graphics.AverageFPSCalculater();
+                fpsCalculater.DataAvailable += fpsCalculater_DataAvailable;
+            }
+
+            void fpsCalculater_DataAvailable(float obj)
+            {
+                game.Form.Form.BeginInvoke(new Action(() => Target(obj)));
+            }
+
+            private void Target(float obj)
+            {
+                try
+                {
+                    game.Form.Form.Text = obj.ToString();
+
+                }
+                catch (Exception party)
+                {
+                    Console.WriteLine(party);
+                }
+            }
+
+            public void Update()
+            {
+                fpsCalculater.AddFrame(game.Elapsed);
+            }
         }
 
         public bool CustomGameLoopDisabled { get; set; }
@@ -54,8 +93,6 @@ namespace MHGameWork.TheWizards.DirectX11
                 Thread.Sleep(100);
 
             updateInput();
-
-            ResetWindowTitle();
 
             updateElapsed();
 
@@ -223,10 +260,6 @@ namespace MHGameWork.TheWizards.DirectX11
             lastFrameTime = nextFrameTime;
             TotalRunTime += Elapsed;
 
-            fpsCalculater.AddFrame(Elapsed);
-
-            AddToWindowTitle(FPS.ToString());
-
             if (Elapsed > 1 / 30f) Elapsed = 1 / 30f;
 
         }
@@ -303,8 +336,6 @@ namespace MHGameWork.TheWizards.DirectX11
         /// Contains some pipeline states for easy use.
         /// </summary>
         public HelperStatesContainer HelperStates { get; private set; }
-        public float FPS { get { return fpsCalculater.AverageFps; } }
-        private MHGameWork.TheWizards.Graphics.AverageFPSCalculater fpsCalculater = new MHGameWork.TheWizards.Graphics.AverageFPSCalculater();
 
         private bool running;
         public bool Running
@@ -333,11 +364,13 @@ namespace MHGameWork.TheWizards.DirectX11
             basicShaders.Add(shader);
         }
 
+        [Obsolete]
         public void AddToWindowTitle(string text)
         {
             //TODO: remake? this is verrry slow?
             //Form.Form.BeginInvoke(new Action(delegate { Form.Form.Text += text; }));
         }
+        [Obsolete]
         public void ResetWindowTitle()
         {
             //TODO: remake? this seems slow
