@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Text;
 using System.Threading;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.DirectX11.Graphics;
@@ -47,6 +48,8 @@ namespace MHGameWork.TheWizards.DirectX11
             private MHGameWork.TheWizards.Graphics.AverageFPSCalculater fpsCalculater;
             private DX11Game game;
 
+            private StringBuilder builder = new StringBuilder();
+
             public FPSVizualizer(DX11Game game)
             {
                 this.game = game;
@@ -63,7 +66,11 @@ namespace MHGameWork.TheWizards.DirectX11
             {
                 try
                 {
-                    game.Form.Form.Text = obj.ToString();
+                    builder.Clear();
+                    builder.Append(obj);
+                    builder.Append(" - ");
+                    builder.Append(1/obj);
+                    game.Form.Form.Text = builder.ToString();
 
                 }
                 catch (Exception party)
@@ -74,7 +81,7 @@ namespace MHGameWork.TheWizards.DirectX11
 
             public void Update()
             {
-                fpsCalculater.AddFrame(game.Elapsed);
+                fpsCalculater.AddFrame(game.RealElapsed);
             }
         }
 
@@ -260,9 +267,11 @@ namespace MHGameWork.TheWizards.DirectX11
             lastFrameTime = nextFrameTime;
             TotalRunTime += Elapsed;
 
+            RealElapsed = Elapsed;
             if (Elapsed > 1 / 30f) Elapsed = 1 / 30f;
 
         }
+
 
         public Device Device { get { return Form.Device; } }
         public event Action<DX11Game> GameLoopEvent;
@@ -276,6 +285,8 @@ namespace MHGameWork.TheWizards.DirectX11
         private List<BasicShader> basicShaders;
         public TextureRenderer TextureRenderer { get; private set; }
         public float Elapsed { get; private set; }
+        protected float RealElapsed { get; private set; }
+
         public float TotalRunTime { get; private set; }
         public bool IsDirectXInitialized { get { return Form.IsDirectXInitialized; } }
 

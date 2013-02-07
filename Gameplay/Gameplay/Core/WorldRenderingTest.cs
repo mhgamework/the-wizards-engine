@@ -101,9 +101,9 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
                         };
 
             game.AddSimulator(new BasicSimulator(delegate()
-                                                     {
-                                                         a.Text = TW.Graphics.FPS.ToString();
-                                                     }));
+                {
+                    a.Text = "hello";
+                }));
 
             game.AddSimulator(new WorldRenderingSimulator());
 
