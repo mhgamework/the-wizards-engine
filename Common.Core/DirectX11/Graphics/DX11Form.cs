@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.InteropServices;
+using System.Security.Permissions;
 using MHGameWork.TheWizards.Data;
 using SlimDX;
 using SlimDX.Direct3D11;
@@ -78,9 +80,25 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         {
             if (!IsDirectXInitialized) InitDirectX();
 
+            //setThreadAffinity();
+
             MessagePump.Run(form, gameLoop);
 
             disposeResources();
+        }
+
+        //GetCurrentThread() returns only a pseudo handle. No need for a SafeHandle here.
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr GetCurrentThread();
+
+        [HostProtection(SelfAffectingThreading = true)]
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern UIntPtr SetThreadAffinityMask(IntPtr handle, UIntPtr mask);
+
+        private void setThreadAffinity()
+        {
+            var t = GetCurrentThread();
+            SetThreadAffinityMask(t, (UIntPtr) 1);
         }
 
         public bool IsDirectXInitialized
