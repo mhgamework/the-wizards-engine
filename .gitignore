@@ -104,3 +104,4 @@ Thumbs.db
 /bin/PostSharp.xml
 *.vspx
 *.psess
+*ncrunch*
