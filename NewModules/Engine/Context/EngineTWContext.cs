@@ -12,10 +12,13 @@ namespace MHGameWork.TheWizards.Engine
         private GraphicsWrapper game;
         private PhysicsWrapper physX;
         private TypeSerializer typeSerializer;
+        public TW.Context Context { get; private set; }
 
 
         public EngineTWContext(TWEngine engine)
         {
+            Context = new TW.Context();
+
             game = new GraphicsWrapper();
 
             game.InitDirectX();
@@ -47,13 +50,12 @@ namespace MHGameWork.TheWizards.Engine
 
         private void setTWGlobals(DataWrapper container)
         {
-            var context = new TW.Context();
-            context.Graphics = game;
-            context.Data = container;
-            context.Physics = physX;
-            context.Audio = new AudioWrapper();
-            context.Assets = new AssetsWrapper();
-            TW.SetContext(context);
+            Context.Graphics = game;
+            Context.Data = container;
+            Context.Physics = physX;
+            Context.Audio = new AudioWrapper();
+            Context.Assets = new AssetsWrapper();
+            TW.SetContext(Context);
         }
 
     }

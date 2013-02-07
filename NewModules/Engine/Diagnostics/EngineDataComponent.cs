@@ -1,6 +1,15 @@
-﻿namespace MHGameWork.TheWizards.Diagnostics
+﻿using System.Windows.Controls;
+
+namespace MHGameWork.TheWizards.Diagnostics
 {
-    class EngineDataComponent
+    /// <summary>
+    /// Responsible for vizualizing the engine data objects
+    /// </summary>
+    public class EngineDataComponent :IDiagnosticsComponent
     {
+        public Control GetView()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

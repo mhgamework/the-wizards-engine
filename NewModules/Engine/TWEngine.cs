@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.Engine.Services;
 using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.Profiling;
 using MHGameWork.TheWizards.Serialization;
@@ -39,6 +40,7 @@ namespace MHGameWork.TheWizards.Engine
         private List<ISimulator> simulators = new List<ISimulator>();
 
         private SimulationRunner simulationRunner = new SimulationRunner();
+        
         private AssemblyHotloader gameplayAssemblyHotloader;
         public EngineTWContext twcontext;
         public string GameplayDll { get; set; }
@@ -85,9 +87,12 @@ namespace MHGameWork.TheWizards.Engine
 
             twcontext = new EngineTWContext(this);
 
+            twcontext.Context.SetService<WPFApplicationService>(new WPFApplicationService());
+
             codeLoader.setNeedsReload();
             TW.Graphics.GameLoopEvent += gameLoopProfiled;
             gameplayAssemblyHotloader = new AssemblyHotloader(new FileInfo(GameplayDll));
+            debugTools = new EngineDebugTools(TW.Graphics.Form.GameLoopProfilingPoint);
 
         }
 
@@ -103,6 +108,7 @@ namespace MHGameWork.TheWizards.Engine
         {
             if (TW.Graphics.Keyboard.IsKeyReleased(Key.R)) codeLoader.setNeedsReload();
             if (TW.Graphics.Keyboard.IsKeyReleased(Key.H)) codeLoader.setNeedsHotload();
+            if (TW.Graphics.Keyboard.IsKeyReleased(Key.P)) debugTools.Show();
             if (TW.Debug.NeedsReload) codeLoader.setNeedsReload();
             codeLoader.checkReload();
             codeLoader.checkHotload();
@@ -126,7 +132,6 @@ namespace MHGameWork.TheWizards.Engine
             simulators.Clear();
             loadPlugin();
         }
-
         [CatchExceptions]
         private void loadPlugin()
         {
@@ -145,6 +150,7 @@ namespace MHGameWork.TheWizards.Engine
 
         private Assembly activeGameplayAssembly;
         private readonly CodeLoader codeLoader;
+        private EngineDebugTools debugTools;
 
 
         public Assembly GetLoadedGameplayAssembly()

@@ -11,15 +11,9 @@ namespace MHGameWork.TheWizards.Engine
     public class SimulationRunner
     {
         public void simulateStep(IEnumerable<ISimulator> simulators)
-        {
-            foreach (var sim in simulators)
-            {
-                //sim.Simulate();
-                simulateSave(sim);
-            }
-        }
+        { foreach (var sim in simulators) { simulateSafe(sim); } }
 
-        private void simulateSave(ISimulator sim)
+        private void simulateSafe(ISimulator sim)
         {
             TW.Data.RunningSimulator = sim;
             try

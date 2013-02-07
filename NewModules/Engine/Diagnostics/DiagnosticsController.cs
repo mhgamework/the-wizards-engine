@@ -2,6 +2,9 @@
 
 namespace MHGameWork.TheWizards.Diagnostics
 {
+    /// <summary>
+    /// Responsible for displaying a set of IDiagnosticsComponent in a single window
+    /// </summary>
     public class DiagnosticsController
     {
         public void AddComponent(IDiagnosticsComponent c)

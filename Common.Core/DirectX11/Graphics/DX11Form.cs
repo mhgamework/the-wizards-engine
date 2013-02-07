@@ -77,8 +77,6 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         {
             if (!IsDirectXInitialized) InitDirectX();
 
-            
-
             MessagePump.Run(form, gameLoop);
 
             disposeResources();

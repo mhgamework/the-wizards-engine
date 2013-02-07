@@ -174,24 +174,26 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Engine\AssemblyHotloader.cs" />
-    <Compile Include="Engine\AssetsWrapper.cs" />
-    <Compile Include="Engine\AudioWrapper.cs" />
+    <Compile Include="Engine\Context\AssetsWrapper.cs" />
+    <Compile Include="Engine\Context\AudioWrapper.cs" />
     <Compile Include="Engine\CatchExceptionsAttribute.cs" />
-    <Compile Include="Engine\DataWrapper.cs" />
-    <Compile Include="Engine\DebugWrapper.cs" />
+    <Compile Include="Engine\Context\DataWrapper.cs" />
+    <Compile Include="Engine\Context\DebugWrapper.cs" />
     <Compile Include="Engine\Diagnostics\DiagnosticsController.cs" />
     <Compile Include="Engine\Diagnostics\EngineDataComponent.cs" />
     <Compile Include="Engine\Diagnostics\GPUResourcesComponent.cs" />
     <Compile Include="Engine\Diagnostics\IDiagnosticsComponent.cs" />
     <Compile Include="Engine\Diagnostics\OutputComponent.cs" />
     <Compile Include="Engine\Diagnostics\Profiling\ProfilerComponent.cs" />
-    <Compile Include="Engine\EngineAssetFactory.cs" />
-    <Compile Include="Engine\EngineMeshFactory.cs" />
-    <Compile Include="Engine\EngineTWContext.cs" />
-    <Compile Include="Engine\FilebasedAssetSerializer.cs" />
-    <Compile Include="Engine\GraphicsWrapper.cs" />
-    <Compile Include="Engine\PersistanceScopeAttribute.cs" />
-    <Compile Include="Engine\PhysicsWrapper.cs" />
+    <Compile Include="Engine\Context\EngineAssetFactory.cs" />
+    <Compile Include="Engine\Context\EngineMeshFactory.cs" />
+    <Compile Include="Engine\Context\EngineTWContext.cs" />
+    <Compile Include="Engine\EngineDebugTools.cs" />
+    <Compile Include="Engine\Serialization\FilebasedAssetSerializer.cs" />
+    <Compile Include="Engine\Context\GraphicsWrapper.cs" />
+    <Compile Include="Engine\Data\PersistanceScopeAttribute.cs" />
+    <Compile Include="Engine\Context\PhysicsWrapper.cs" />
+    <Compile Include="Engine\Services\WPFApplicationService.cs" />
     <Compile Include="Engine\SimulationRunner.cs" />
     <Compile Include="Entities\Editor\Rendering\EditorMaterial.cs" />
     <Compile Include="EntityOud\Editor\EditorMesh.cs">
@@ -225,20 +227,20 @@
     <Compile Include="Rendering\RAMMeshPart.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Engine\EngineModelObject.cs" />
+    <Compile Include="Engine\Data\EngineModelObject.cs" />
     <Compile Include="Engine\BasicSimulator.cs" />
     <Compile Include="Engine\TWEngine.cs" />
     <Compile Include="Engine\IGameplayPlugin.cs" />
     <Compile Include="Data\SimpleModelObject.cs" />
     <Compile Include="Data\IModelObject.cs" />
-    <Compile Include="Engine\IModelObjectAddon.cs" />
+    <Compile Include="Engine\Data\IModelObjectAddon.cs" />
     <Compile Include="Engine\ISimulator.cs" />
     <Compile Include="Data\ModelChange.cs" />
     <Compile Include="Data\ModelContainer.cs" />
     <Compile Include="Data\ModelObjectChangedAttribute.cs" />
-    <Compile Include="Engine\AddonAttacher.cs" />
+    <Compile Include="Engine\Data\AddonAttacher.cs" />
     <Compile Include="Engine\TW.cs" />
-    <Compile Include="Engine\TypelessModel.cs" />
+    <Compile Include="Engine\Data\TypelessModel.cs" />
     <Compile Include="Particles\BallParticalCreater.cs" />
     <Compile Include="Particles\EmitterParameters.cs" />
     <Compile Include="Particles\FlameParticalCreater.cs" />
