@@ -68,9 +68,10 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             GameLoopProfilingPoint.End();
         }
 
+        [TWProfile]
         private void presentSwapChain()
         {
-            swapChain.Present(1, PresentFlags.None);
+            swapChain.Present(0, PresentFlags.None);
         }
 
         public void Run()
@@ -99,7 +100,8 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
                            {
 
                                BufferCount = 3, // Set to 3 here for triple buffering?
-                               ModeDescription = new ModeDescription(form.ClientSize.Width, form.ClientSize.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm),
+                               //ModeDescription = new ModeDescription(form.ClientSize.Width, form.ClientSize.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm),
+                               ModeDescription = new ModeDescription(form.ClientSize.Width, form.ClientSize.Height, new Rational(0, 1), Format.R8G8B8A8_UNorm),
                                IsWindowed = true,
                                OutputHandle = form.Handle,
                                SampleDescription = new SampleDescription(1, 0), // No multisampling!
