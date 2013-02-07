@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.Engine.Debugging
         {
 
 
-            TW.Graphics.GameLoopProfilingPoint.AddProfileCompleteCallback(onProfileComplete);
+            TW.Graphics.GameLoopProfilingPoint.Ended += () => onProfileComplete(TW.Graphics.GameLoopProfilingPoint);
 
             profileCompletePoint = Profiler.CreateElement("ProfilerSimulator.onProfileComplete");
 
@@ -72,15 +72,15 @@ namespace MHGameWork.TheWizards.Engine.Debugging
                 targetPoint = obj;
 
 
-            minDuration = targetPoint.AverageSeconds / 10f;
+            //minDuration = targetPoint.AverageSeconds / 10f;
             minDuration = 0.0001f;
 
-            str = targetPoint.GenerateProfileString(p => p.AverageSeconds > minDuration);
+            //str = targetPoint.GenerateProfileString(p => p.AverageSeconds > minDuration);
 
             profileCompletePoint.End();
 
-            var overhead = profileCompletePoint.AverageSeconds * 1000;
-            str += overhead.ToString("#0.#ms");
+            //var overhead = profileCompletePoint.AverageSeconds * 1000;
+            //str += overhead.ToString("#0.#ms");
 
             lastresult = str;
             cachedResults.Add(str);
