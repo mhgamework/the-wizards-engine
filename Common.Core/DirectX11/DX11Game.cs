@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DirectX11.Input;
 using MHGameWork.TheWizards.Profiling;
@@ -40,23 +41,12 @@ namespace MHGameWork.TheWizards.DirectX11
 
         public bool CustomGameLoopDisabled { get; set; }
 
+        [TWProfile]
         void gameLoopStep()
         {
             if (!running)
             {
-                if (diDevice == null)
-                    return;
-
-                // shutdown!
-                Form.Exit();
-
-                diKeyboard.Dispose();
-                diMouse.Dispose();
-                diDevice.Dispose();
-
-                diKeyboard = null;
-                diMouse = null;
-                diDevice = null;
+                if (exitAndCleanup()) return;
                 return;
             }
 
@@ -64,12 +54,6 @@ namespace MHGameWork.TheWizards.DirectX11
                 Thread.Sleep(100);
 
             updateInput();
-
-            if (TotalRunTime > 3 && TestRunner.NUnitTestRunner.IsRunningAutomated)
-            {
-                Exit();
-                return;
-            }
 
             ResetWindowTitle();
 
@@ -86,6 +70,24 @@ namespace MHGameWork.TheWizards.DirectX11
             renderAxisLines();
 
             LineManager3D.Render(Camera);
+        }
+
+        private bool exitAndCleanup()
+        {
+            if (diDevice == null)
+                return true;
+
+            // shutdown!
+            Form.Exit();
+
+            diKeyboard.Dispose();
+            diMouse.Dispose();
+            diDevice.Dispose();
+
+            diKeyboard = null;
+            diMouse = null;
+            diDevice = null;
+            return false;
         }
 
 
@@ -333,11 +335,13 @@ namespace MHGameWork.TheWizards.DirectX11
 
         public void AddToWindowTitle(string text)
         {
-            Form.Form.BeginInvoke(new Action(delegate { Form.Form.Text += text; }));
+            //TODO: remake? this is verrry slow?
+            //Form.Form.BeginInvoke(new Action(delegate { Form.Form.Text += text; }));
         }
         public void ResetWindowTitle()
         {
-            Form.Form.BeginInvoke(new Action(delegate { Form.Form.Text = ""; }));
+            //TODO: remake? this seems slow
+            //Form.Form.BeginInvoke(new Action(delegate { Form.Form.Text = ""; }));
         }
 
         /// <summary>
