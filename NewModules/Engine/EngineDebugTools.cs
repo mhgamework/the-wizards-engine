@@ -10,15 +10,15 @@ namespace MHGameWork.TheWizards.Engine
 {
     public class EngineDebugTools
     {
-        private ProfilerComponent profiler;
+        public ProfilerComponent Profiler { get; private set; }
         private Window window;
 
         public EngineDebugTools(ProfilingPoint rootPoint)
         {
             //TODO: use diagnosticscomponent
-            profiler = new ProfilerComponent();
-            profiler.SetRootPoint(rootPoint);
-            window = new Window() { Content = profiler.GetView() };
+            Profiler = new ProfilerComponent();
+            Profiler.SetRootPoint(rootPoint);
+            window = new Window() { Content = Profiler.GetView() };
             window.Width = 400;
             window.Height = 300;
         }

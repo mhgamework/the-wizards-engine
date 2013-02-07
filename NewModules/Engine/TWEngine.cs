@@ -109,6 +109,7 @@ namespace MHGameWork.TheWizards.Engine
             if (TW.Graphics.Keyboard.IsKeyReleased(Key.R)) codeLoader.setNeedsReload();
             if (TW.Graphics.Keyboard.IsKeyReleased(Key.H)) codeLoader.setNeedsHotload();
             if (TW.Graphics.Keyboard.IsKeyReleased(Key.P)) debugTools.Show();
+            if (TW.Graphics.Keyboard.IsKeyReleased(Key.M)) debugTools.Profiler.TakeSnapshot();
             if (TW.Debug.NeedsReload) codeLoader.setNeedsReload();
             codeLoader.checkReload();
             codeLoader.checkHotload();
