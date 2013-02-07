@@ -14,6 +14,8 @@ using Device = SlimDX.Direct3D11.Device;
 using MapFlags = SlimDX.DXGI.MapFlags;
 using Resource = SlimDX.Direct3D11.Resource;
 
+//[assembly: TWProfile(TWProfileAttribute.NameType.Method, AttributeTargetTypes = "MHGameWork.TheWizards.DirectX11.*", AttributeTargetMembers = "*")]
+//[assembly: TWProfile(TWProfileAttribute.NameType.Method, AttributeTargetTypes = "MHGameWork.TheWizards.Rendering.*", AttributeTargetMembers = "*")]
 namespace MHGameWork.TheWizards.Rendering.Deferred
 {
     /// <summary>

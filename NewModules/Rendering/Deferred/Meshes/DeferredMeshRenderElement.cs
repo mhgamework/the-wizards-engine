@@ -44,6 +44,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private void updateBoundingBox()
         {
 
+            //TODO: optimize!
             //Lol!
             // EDIT: MOAR LOL!
             boundingBox = Mesh.GetCoreData().Parts.Select(part => (part.MeshPart.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position).Length == 0 ? new Microsoft.Xna.Framework.BoundingBox() :
