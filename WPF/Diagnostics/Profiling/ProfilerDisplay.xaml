@@ -6,7 +6,7 @@
              xmlns:profiling="clr-namespace:MHGameWork.TheWizards.Diagnostics.Profiling"
              x:Class="MHGameWork.TheWizards.Diagnostics.Profiling.ProfilerDisplay" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="400">
+             d:DesignHeight="300" d:DesignWidth="800">
     <UserControl.DataContext>
         <profiling:ProfilerDisplayModel/>
     </UserControl.DataContext>
@@ -45,13 +45,15 @@
 
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                        <Grid>
+                        <Grid >
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="column1"/>
-                                <ColumnDefinition SharedSizeGroup="column2"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding Name}" />
-                            <TextBlock Grid.Column="1" Text="{Binding Duration}" />
+                            <TextBlock Grid.Column="0" Text="{Binding Name}" Width="500"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Duration}" Width="40"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Percentage}" Width="40"/>
                         </Grid>
 
                     </HierarchicalDataTemplate>

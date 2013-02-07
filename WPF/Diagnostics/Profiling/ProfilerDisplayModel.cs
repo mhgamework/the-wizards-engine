@@ -106,6 +106,7 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
     {
         private float duration;
         private bool isSelected;
+        private float percentage;
 
         public ProfilingNode()
         {
@@ -143,6 +144,17 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
         }
 
         public object ProfilingPoint { get; set; }
+
+        public float Percentage
+        {
+            get { return percentage; }
+            set
+            {
+                if (value.Equals(percentage)) return;
+                percentage = value;
+                OnPropertyChanged("Percentage");
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

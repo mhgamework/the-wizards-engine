@@ -41,7 +41,7 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
             display.ViewModel.Buttons.Add(new ProfilerDisplayModel.ProfilerCommand("Select",
                                                                                    delegate
                                                                                    {
-                                                                                    if (display.ViewModel.SelectedItem == null)
+                                                                                       if (display.ViewModel.SelectedItem == null)
                                                                                            return;
                                                                                        SetMeasurementPoint(display.ViewModel.SelectedItem.ProfilingPoint as ProfilingPoint);
                                                                                    }));
@@ -82,7 +82,8 @@ namespace MHGameWork.TheWizards.Diagnostics.Profiling
             var node = getOrCreateNode(p);
             node.Children.Clear();
 
-            node.Duration = p.TotalTime;
+            node.Duration = (float)Math.Round(p.TotalTime * 1000, 1);
+            node.Percentage = (float)Math.Round(p.TotalTime / MeasurementPoint.TotalTime * 100, 1);
             node.Name = p.Name;
             node.ProfilingPoint = p;
 
