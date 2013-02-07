@@ -169,6 +169,7 @@
     <Compile Include="Core\Forms\ClassForm.cs" />
     <Compile Include="Core\Forms\ColorElement.cs" />
     <Compile Include="DirectX11\DX11Game.cs" />
+    <Compile Include="DirectX11\Filters\GaussianBlurFilter.cs" />
     <Compile Include="DirectX11\Graphics\BasicShader.cs" />
     <Compile Include="DirectX11\Graphics\CompiledShaderCache.cs" />
     <Compile Include="DirectX11\Graphics\CustomCamera.cs" />
@@ -511,6 +512,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Shaders\Deferred\TODO\RandomNormals.png" />
+    <Content Include="Shaders\Filters\GaussianBlurCS.hlsl" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

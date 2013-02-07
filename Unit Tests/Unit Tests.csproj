@@ -31,6 +31,7 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
     <PostSharpHost>Managed</PostSharpHost>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -142,6 +143,7 @@
     <Compile Include="Features\Core\Diagnostics\ProfilerComponentTest.cs" />
     <Compile Include="Features\Data\SectionedStreamTest.cs" />
     <Compile Include="Features\Rendering\DirectX11\DX11PerformanceTest.cs" />
+    <Compile Include="Features\Rendering\FiltersTest.cs" />
     <Compile Include="Features\Simulation\Animation\AnimationTest.cs" />
     <Compile Include="Features\Various\Client\ClientTest.cs" />
     <Compile Include="Features\Data\CoreTest.cs" />

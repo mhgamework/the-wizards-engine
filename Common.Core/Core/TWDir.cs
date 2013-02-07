@@ -36,9 +36,9 @@ namespace MHGameWork.TheWizards
 
         static TWDir()
         {
-            var fi = new FileInfo(Assembly.GetExecutingAssembly().Location);
+            var fi = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
 
-            rootDirectory = fi.Directory.Parent;
+            rootDirectory = fi.Parent;
 
             initDirectories();
         }

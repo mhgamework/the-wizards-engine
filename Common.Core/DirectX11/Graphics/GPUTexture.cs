@@ -13,13 +13,39 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
     /// </summary>
     public class GPUTexture : IDisposable
     {
+        private UnorderedAccessView unorderedAccessView;
         public Texture2D Resource { get; private set; }
         public ShaderResourceView View { get; private set; }
+        public UnorderedAccessView UnorderedAccessView
+        {
+            get
+            {
+                if (unorderedAccessView == null)
+                    CreateUnorderedAccessView();
+                return unorderedAccessView;
+            }
+        }
+
+
 
         private GPUTexture(DX11Game game, Texture2DDescription desc)
         {
-            Resource = new Texture2D(game.Device, desc);
-            View = new ShaderResourceView(game.Device, Resource);
+            initialize(new Texture2D(game.Device, desc));
+        }
+        private GPUTexture(Texture2D resource)
+        {
+            initialize(resource);
+        }
+
+        private void initialize(Texture2D resource)
+        {
+            Resource = resource;
+            View = new ShaderResourceView(resource.Device, Resource);
+        }
+
+        private void CreateUnorderedAccessView()
+        {
+            unorderedAccessView = new UnorderedAccessView(Resource.Device, Resource);
         }
 
 
@@ -66,6 +92,28 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
                 BindFlags = BindFlags.ShaderResource
             };
             return new GPUTexture(game, desc);
+        }
+        public static GPUTexture CreateUAV(DX11Game game, int width, int height, Format format)
+        {
+            var desc = new Texture2DDescription
+            {
+                ArraySize = 1,
+                MipLevels = 1,
+                Format = format,
+                Usage = ResourceUsage.Default, // Read and write on gpu
+                CpuAccessFlags = CpuAccessFlags.None,
+                Width = width,
+                Height = height,
+                SampleDescription = new SampleDescription(1, 0),
+                BindFlags = BindFlags.ShaderResource | BindFlags.UnorderedAccess
+            };
+            return new GPUTexture(game, desc);
+        }
+
+        public static GPUTexture FromFile(DX11Game game, string path)
+        {
+            var tex = Texture2D.FromFile(game.Device, path);
+            return new GPUTexture(tex);
         }
 
         public void Dispose()
