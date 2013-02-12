@@ -12,15 +12,22 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Items
     {
         public ResourceType Type;
 
+        public static float GetRadius()
+        {
+            return 0.2f;
+        }
+
         public IMesh CreateMesh()
         {
             var builder = new MeshBuilder();
-            builder.AddBox(MathHelper.One * -0.2f, MathHelper.One * 0.2f);
+            builder.AddBox(MathHelper.One * -GetRadius(), MathHelper.One * GetRadius());
             var mesh = builder.CreateMesh();
 
-            mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap = Type.Texture;
+            if (Type != null)
+                mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap = Type.Texture;
 
-            mesh.GetCollisionData().Boxes.Add(new MeshCollisionData.Box(){ Dimensions = new Vector3(0.4f,0.4f,0.4f), Orientation = Matrix.Identity});
+            var skin = 0.02f;
+            mesh.GetCollisionData().Boxes.Add(new MeshCollisionData.Box() { Dimensions = new Vector3(GetRadius() * 2 + skin, GetRadius() * 2 + skin, GetRadius() * 2 + skin), Orientation = Matrix.Identity });
 
             return mesh;
         }

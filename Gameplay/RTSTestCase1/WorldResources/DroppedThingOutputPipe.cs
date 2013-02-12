@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DirectX11;
+using MHGameWork.TheWizards.Engine.PhysX;
+using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.RTS;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
+using MHGameWork.TheWizards.Rendering;
 using SlimDX;
+using StillDesign.PhysX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources
 {
@@ -16,21 +22,56 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources
     {
         private readonly Vector3 spawnPosition;
         private readonly Vector3 moveDirection;
+        private DroppedThing drop;
 
         public DroppedThingOutputPipe(Vector3 spawnPosition, Vector3 moveDirection)
         {
             this.spawnPosition = spawnPosition;
             this.moveDirection = moveDirection;
 
+            var tubeEntity = new Entity();
+
+            var mesh = new RAMMesh();
+            var f = 0.3f;
+            var radius = Thing.GetRadius() + 0.05f;
+
+            for (float angle = 0; angle < MathHelper.TwoPi; angle += MathHelper.PiOver2)
+            {
+                mesh.GetCollisionData().Boxes.Add(new MeshCollisionData.Box() { Dimensions = new Vector3(radius * 2, f, radius * 2).xna(), Orientation = Matrix.Translation(0, -f * 0.5f - radius, 0).xna() * Matrix.RotationAxis(moveDirection, angle).xna() });
+            }
+            mesh.GetCollisionData().Boxes.Add(new MeshCollisionData.Box() { Dimensions = new Vector3(f, radius * 2, radius * 2).xna(), Orientation = Matrix.Translation(-f * 0.5f - radius, 0, 0).xna() });
+            //mesh.GetCollisionData().ConvexMeshes.Add(new MeshCollisionData.Convex());
+            tubeEntity.Mesh = mesh;
+            tubeEntity.Solid = true;
+            tubeEntity.Static = false;
+            tubeEntity.Kinematic = true;
+            tubeEntity.WorldMatrix = Matrix.Translation(spawnPosition);
+
         }
 
         public void Update()
         {
-            
+            var a = getActor(drop);
+            if (a == null) return;
+            if (a.LinearVelocity.Length() < 1)
+                a.AddForce(moveDirection.xna() * 10, ForceMode.Impulse);
+
+            if (Vector3.Dot(moveDirection, a.GlobalPosition.dx() - spawnPosition) > Thing.GetRadius() * 2.01f)
+                SpawnItem(drop.Thing);
+
+        }
+        private Actor getActor(DroppedThing drop)
+        {
+            if (drop == null) return null;
+
+            if (drop.get<Entity>() == null) return null;
+            if (drop.get<Entity>().get<EntityPhysXUpdater.EntityPhysX>() == null) return null;
+            if (drop.get<Entity>().get<EntityPhysXUpdater.EntityPhysX>().getCurrentActor() == null) return null;
+            return drop.get<Entity>().get<EntityPhysXUpdater.EntityPhysX>().getCurrentActor();
         }
         public void SpawnItem(Thing thing)
         {
-            
+            drop = new DroppedThing() { InitialPosition = spawnPosition, Thing = thing };
         }
     }
 }

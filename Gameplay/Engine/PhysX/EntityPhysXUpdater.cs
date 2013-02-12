@@ -88,7 +88,7 @@ namespace MHGameWork.TheWizards.Engine.PhysX
         }
 
 
-        class EntityPhysX : IDisposable
+        public class EntityPhysX : IDisposable
         {
 
 
@@ -151,7 +151,7 @@ namespace MHGameWork.TheWizards.Engine.PhysX
 
             }
 
-            private Actor getCurrentActor()
+            public Actor getCurrentActor()
             {
                 if (staticPhysicsElement != null && staticPhysicsElement.Actor != null)
                     return staticPhysicsElement.Actor;

@@ -101,7 +101,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
         private static void createDroppedThing()
         {
-            var type = new ResourceType() { Texture = TW.Assets.LoadTexture("Core\\bark.jpg") };
+            var type = new ResourceType() { Texture = TestUtilities.LoadWoodTexture() };
 
             new DroppedThing() { InitialPosition = new Vector3(2, 5, 2), Thing = new Thing { Type = type } };
         }

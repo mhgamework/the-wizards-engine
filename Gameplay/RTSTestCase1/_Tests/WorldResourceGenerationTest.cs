@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.PhysX;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
@@ -17,6 +18,7 @@ using SlimDX;
 namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 {
     [TestFixture]
+    [EngineTest]
     public class WorldResourceGenerationTest
     {
 
@@ -67,13 +69,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         [Test]
         public void TestOutputPipe()
         {
+            engine.AddSimulator(new TestOutputPipeSimulator());
 
-
-
-            engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new RTSRendererSimulator());
+            engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
-            engine.AddSimulator(new PhysXDebugRendererSimulator());
+            //engine.AddSimulator(new PhysXDebugRendererSimulator());
         }
 
         public class TestOutputPipeSimulator : ISimulator
@@ -82,13 +83,16 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
             public TestOutputPipeSimulator()
             {
-                pipe = new DroppedThingOutputPipe(new Vector3(0, 0, 0), Vector3.UnitX);
-                pipe.SpawnItem(new Thing());
+                var type = new ResourceType() { Texture = TestUtilities.LoadWoodTexture() };
+
+                pipe = new DroppedThingOutputPipe(new Vector3(2, 1, 2), Vector3.UnitX);
+                pipe.SpawnItem(new Thing() { Type = type });
             }
 
             public void Simulate()
             {
-                pipe.Update();
+                pipe.Update();      
+                
             }
         }
     }
