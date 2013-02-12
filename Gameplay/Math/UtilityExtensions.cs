@@ -1,4 +1,6 @@
-﻿using SlimDX;
+﻿using System;
+using DirectX11;
+using SlimDX;
 
 namespace MHGameWork.TheWizards
 {
@@ -26,6 +28,11 @@ namespace MHGameWork.TheWizards
         public static Vector3 TakeXYZ(this Vector4 v)
         {
             return new Vector3(v.X,v.Y,v.Z);
+        }
+
+        public static Point3 ToPoint3Rounded(this Vector3 v)
+        {
+            return new Point3(((int)Math.Round(v.X)), ((int)Math.Round(v.Y)), ((int)Math.Round(v.Z)));
         }
     }
 }

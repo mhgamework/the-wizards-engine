@@ -110,6 +110,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\The Wizards Gameplay\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Serialization.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\_Libraries\Rhino.Mocks-3.6-Build-21\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="SlimDX, Version=0.0.0.0, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -299,6 +302,10 @@
     <Compile Include="RTS\TerrainAStar.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="RTSTestCase1\Shaping\IShape.cs" />
+    <Compile Include="RTSTestCase1\Shaping\IShapeElement.cs" />
+    <Compile Include="RTSTestCase1\Shaping\ShapeDetector.cs" />
+    <Compile Include="RTSTestCase1\_Tests\ShapeDetectorTest.cs" />
     <Compile Include="RTS\Cannon.cs" />
     <Compile Include="RTS\CannonSimulator.cs" />
     <Compile Include="RTS\Commands\GoblinAdvancedFetchCommand.cs" />
