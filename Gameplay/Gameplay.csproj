@@ -243,6 +243,9 @@
     <Compile Include="Navigation2D\PathFinder2D.cs" />
     <Compile Include="Navigation2D\WaypointEngine.cs" />
     <Compile Include="Navigation2D\WaypointVisualizer.cs" />
+    <Compile Include="RTSTestCase1\Cannons\Cannon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="RTSTestCase1\Goblins\Goblin.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -258,6 +261,9 @@
     <Compile Include="RTSTestCase1\Items\Thing.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="RTSTestCase1\Rendering\CannonRenderData.cs" />
+    <Compile Include="RTSTestCase1\Rendering\DroppedThingRenderData.cs" />
+    <Compile Include="RTSTestCase1\Rendering\GoblinRenderData.cs" />
     <Compile Include="RTSTestCase1\Rendering\RockRenderData.cs" />
     <Compile Include="RTSTestCase1\Rendering\RTSRendererSimulator.cs" />
     <Compile Include="RTSTestCase1\Rendering\TreeRenderData.cs" />

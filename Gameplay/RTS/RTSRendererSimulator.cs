@@ -54,36 +54,7 @@ namespace MHGameWork.TheWizards.RTS
         {
             foreach (var c in TW.Data.GetChangesOfType<DroppedThing>())
             {
-                var t = c.ModelObject as DroppedThing;
-                var ent = t.get<Engine.WorldRendering.Entity>();
-
-                if (c.Change == ModelChange.Removed)
-                {
-                    if (ent != null)
-                    {
-                        ent.Visible = false;
-                        TW.Data.RemoveObject(ent);
-                    }
-                    t.set<Engine.WorldRendering.Entity>(null);
-                    continue;
-                }
-
-
-                if (ent == null)
-                {
-                    ent = new Engine.WorldRendering.Entity();
-                    ent.Solid = true;
-                    ent.Static = false;
-                    ent.Kinematic = false;
-                    ent.Tag = t;
-                    t.set(ent);
-                }
-
-                if (ent.Mesh == null)
-                    ent.Mesh = t.Thing.CreateMesh();
-
-                //t.InitialPosition = ent.WorldMatrix.xna().Translation.dx();
-                ent.WorldMatrix = Matrix.Translation(t.InitialPosition);
+                
             }
         }
 
@@ -91,112 +62,8 @@ namespace MHGameWork.TheWizards.RTS
 
 
 
-        private class GoblinRenderData : IModelObjectAddon<Goblin> //: WorldRendering.Entity
-        {
-            private readonly Goblin goblin;
 
-            public GoblinRenderData(Goblin goblin)
-            {
-                this.goblin = goblin;
-            }
-
-            public Vector3 LastPosition { get; set; }
-            public Vector3 LookDirection { get { return goblin.LookDirection; } set { goblin.LookDirection = value; } }
-
-
-            internal void updateHolding()
-            {
-                var g = goblin;
-                if (g.Holding == null)
-                {
-                    disposeHoldingEntity();
-                }
-                else
-                {
-                    createHoldingEntity();
-                    goblin.HoldingEntity.WorldMatrix = goblin.CalculateHoldingMatrix();
-                    goblin.HoldingEntity.Mesh = g.Holding.CreateMesh();
-                    goblin.HoldingEntity.Kinematic = true;
-                    goblin.HoldingEntity.Solid = true;
-                }
-            }
-
-            private void createHoldingEntity()
-            {
-                if (goblin.HoldingEntity != null) return;
-                goblin.HoldingEntity = new Engine.WorldRendering.Entity();
-
-            }
-
-            private void disposeHoldingEntity()
-            {
-                if (goblin.HoldingEntity == null) return;
-                TW.Data.Objects.Remove(goblin.HoldingEntity);
-                goblin.HoldingEntity.Visible = false;
-                goblin.HoldingEntity = null;
-            }
-
-
-
-            public void fixRendering()
-            {
-                if (goblin.get<Engine.WorldRendering.Entity>() == null)
-                {
-                    if (goblin.GoblinEntity == null)
-                        goblin.GoblinEntity = new Engine.WorldRendering.Entity();
-                    goblin.set(goblin.GoblinEntity);
-                }
-                var ent = goblin.GoblinEntity;
-                ent.Tag = goblin;
-
-                var diff = (LastPosition - goblin.Position);
-                diff.Y = 0;
-                if (diff.Length() > 0.01f)
-                {
-                    LookDirection = -diff;
-                }
-                LastPosition = goblin.Position;
-                ent.WorldMatrix = goblin.calcGoblinMatrix();
-
-                LastPosition = goblin.Position;
-                ent.Mesh = TW.Assets.LoadMesh("Core\\Barrel01");//Load("Goblin\\GoblinLowRes");
-                ent.Solid = true;
-                ent.Static = false;
-                ent.Solid = false;
-
-                updateHolding();
-            }
-
-            public void Dispose()
-            {
-                TW.Data.Objects.Remove(goblin.GoblinEntity);
-            }
-        }
-    }
-
-    public class CannonRenderData : IModelObjectAddon<Cannon>
-    {
-        private readonly Cannon cannon;
-
-        private Entity ent = new Entity();
-
-        public CannonRenderData(Cannon cannon)
-        {
-            this.cannon = cannon;
-            ent = new Entity();
-        }
-
-        public void Update()
-        {
-            ent.WorldMatrix = Matrix.RotationY(cannon.Angle)*Matrix.Translation(cannon.Position);
-            ent.Mesh = TW.Assets.LoadMesh("RTS\\Cannon");
-        }
-
-        public void Dispose()
-        {
-            TW.Data.RemoveObject(ent);
-        }
-    }
+    
 
     public class FactoryRenderData : IModelObjectAddon<Factory>
     {

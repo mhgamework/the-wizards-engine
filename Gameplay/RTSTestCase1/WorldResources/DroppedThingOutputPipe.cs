@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.RTS;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources
@@ -26,7 +27,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources
         {
             
         }
-        public void SpawnItem()
+        public void SpawnItem(Thing thing)
         {
             
         }
