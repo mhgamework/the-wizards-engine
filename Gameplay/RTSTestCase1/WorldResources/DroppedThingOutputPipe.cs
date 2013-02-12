@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.RTS;
+using MHGameWork.TheWizards.RTSTestCase1.Items;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources

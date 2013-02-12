@@ -5,6 +5,7 @@ using System.Text;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTS

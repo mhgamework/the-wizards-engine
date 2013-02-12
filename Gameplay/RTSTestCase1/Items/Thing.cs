@@ -1,12 +1,11 @@
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Physics;
-using MHGameWork.TheWizards.RTS.Commands;
 using MHGameWork.TheWizards.Rendering;
 using Microsoft.Xna.Framework;
 using MathHelper = DirectX11.MathHelper;
 
-namespace MHGameWork.TheWizards.RTS
+namespace MHGameWork.TheWizards.RTSTestCase1.Items
 {
     [ModelObjectChanged]
     public class Thing : EngineModelObject

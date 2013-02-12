@@ -6,6 +6,7 @@ using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.Engine.VoxelTerraining;
 using MHGameWork.TheWizards.Navigation2D;
+using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTS

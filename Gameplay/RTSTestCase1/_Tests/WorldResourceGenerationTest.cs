@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.RTS;
+using MHGameWork.TheWizards.RTSTestCase1.Items;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
 using MHGameWork.TheWizards.RTSTestCase1.WorldResources;
 using NUnit.Framework;

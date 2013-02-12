@@ -2,7 +2,7 @@ using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.RTS.Commands
+namespace MHGameWork.TheWizards.RTSTestCase1.Items
 {
     [ModelObjectChanged]
     public class DroppedThing : EngineModelObject

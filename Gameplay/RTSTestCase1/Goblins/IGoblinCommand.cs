@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.Data;
 
-namespace MHGameWork.TheWizards.RTS.Commands
+namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 {
     public interface IGoblinCommand :IModelObject
     {

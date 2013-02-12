@@ -1,4 +1,4 @@
-﻿using MHGameWork.TheWizards.RTS.Commands;
+﻿using MHGameWork.TheWizards.RTSTestCase1.Items;
 
 namespace MHGameWork.TheWizards.RTSTestCase1
 {

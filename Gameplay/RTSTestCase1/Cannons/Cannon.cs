@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using DirectX11;
 using MHGameWork.TheWizards.Audio;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Engine.WorldRendering;
-using MHGameWork.TheWizards.ServerClient.Water;
-using NUnit.Framework;
+using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.RTS
+namespace MHGameWork.TheWizards.RTSTestCase1.Cannons
 {
     [ModelObjectChanged]
     public class Cannon : EngineModelObject

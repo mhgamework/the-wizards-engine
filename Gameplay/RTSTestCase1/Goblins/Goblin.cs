@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Input;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.MathExtra;
-using MHGameWork.TheWizards.RTS.Commands;
+using MHGameWork.TheWizards.RTSTestCase1.Items;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.RTS
+namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 {
     [ModelObjectChanged]
     public class Goblin : EngineModelObject

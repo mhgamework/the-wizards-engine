@@ -1,5 +1,6 @@
 ﻿using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.RTS;
+using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Rendering

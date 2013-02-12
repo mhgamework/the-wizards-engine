@@ -1,6 +1,7 @@
 ﻿using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTS;
+using MHGameWork.TheWizards.RTSTestCase1.Cannons;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
