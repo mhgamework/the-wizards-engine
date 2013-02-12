@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1.WorldResources;
@@ -20,9 +21,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
             entity = new Entity();
         }
 
+        
         public void Update()
         {
             entity.Mesh = TW.Assets.LoadMesh("RTS\\Rock");
+            entity.Solid = true;
+            entity.Static = true;
             var size = 5;
 
             float height = -size;

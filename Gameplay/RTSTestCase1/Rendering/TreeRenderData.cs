@@ -22,8 +22,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
 
         public void Update()
         {
+            entity.Solid = true;
+            entity.Static = true;
             entity.Mesh = TW.Assets.LoadMesh("RTS\\Tree");
-            entity.WorldMatrix = Matrix.Scaling(1 + tree.Size, 1 + tree.Size*0.7f, 1 + tree.Size) * Matrix.Scaling(0.2f,1,0.2f)* Matrix.Translation(tree.Position);
+            entity.WorldMatrix = Matrix.Scaling(1 + tree.Size*0.1f, 1 + tree.Size*0.1f, 1 + tree.Size*0.1f) * Matrix.Scaling(1f,3,1f)* Matrix.Translation(tree.Position);
         }
         public void Dispose()
         {
