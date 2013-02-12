@@ -25,7 +25,8 @@ namespace MHGameWork.TheWizards
         [Test]
         public void TestRenderingBug()
         {
-          new GoblinControlTest().TestCommunicateBig();
+            throw new NotImplementedException("ReEnable!");
+          //new GoblinControlTest().TestCommunicateBig();
         }
     
     }
