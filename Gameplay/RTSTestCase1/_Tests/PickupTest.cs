@@ -72,6 +72,20 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                 Holding = null;
             }
         }
+
+        public class CircleMover : ISimulator
+        {
+            private float angle = 0;
+            public void Simulate()
+            {
+                angle += TW.Graphics.Elapsed;
+
+                var obj = TW.Data.Get<SimplePickupObject>();
+
+                //TODO
+
+            }
+        }
     }
 
 }

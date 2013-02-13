@@ -25,7 +25,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Pickupping
         {
             var diff = pickupObject.GetHoldingPosition() - actor.GlobalPosition.dx();
 
-            //if (actor.LinearVelocity.Length() < 0.5)
             actor.AddForce(diff.xna() * TW.Graphics.Elapsed * 500, ForceMode.Impulse);
             actor.AddForce(-actor.LinearVelocity*10, ForceMode.Force);
 
