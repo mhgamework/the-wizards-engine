@@ -74,25 +74,53 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             engine.AddSimulator(new RTSRendererSimulator());
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
-            //engine.AddSimulator(new PhysXDebugRendererSimulator());
+            engine.AddSimulator(new PhysXDebugRendererSimulator());
+        }
+        [Test]
+        public void TestOutputPipe2()
+        {
+            engine.AddSimulator(new TestOutputPipeSimulator());
+            engine.AddSimulator(new TestOutputPipeSimulator());
+
+            engine.AddSimulator(new RTSRendererSimulator());
+            engine.AddSimulator(new PhysXSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
+            engine.AddSimulator(new PhysXDebugRendererSimulator());
         }
 
         public class TestOutputPipeSimulator : ISimulator
         {
             private DroppedThingOutputPipe pipe;
 
+            private static int Num = 0;
+            private ResourceType type;
+
             public TestOutputPipeSimulator()
             {
-                var type = new ResourceType() { Texture = TestUtilities.LoadWoodTexture() };
+                Num++;
+                type = new ResourceType() { Texture = TestUtilities.LoadWoodTexture() };
 
-                pipe = new DroppedThingOutputPipe(new Vector3(2, 1, 2), Vector3.UnitX);
-                pipe.SpawnItem(new Thing() { Type = type });
+
+                switch (Num)
+                {
+                    case 1:
+                        pipe = new DroppedThingOutputPipe(new Vector3(0, 1, 2), Vector3.Normalize(new Vector3(1, 0, 0)));
+                        break;
+                    case 2:
+                        pipe = new DroppedThingOutputPipe(new Vector3(2, 1, 0), Vector3.Normalize(new Vector3(0, 0, 1)));
+                        break;
+                }
+
+
             }
 
             public void Simulate()
             {
-                pipe.Update();      
-                
+                if (pipe.IsFree)
+                    pipe.SpawnItem(new Thing() { Type = type });
+
+                pipe.Update();
+
             }
         }
     }

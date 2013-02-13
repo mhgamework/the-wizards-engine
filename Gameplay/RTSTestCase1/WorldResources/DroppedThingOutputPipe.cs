@@ -23,11 +23,24 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources
         private readonly Vector3 spawnPosition;
         private readonly Vector3 moveDirection;
         private DroppedThing drop;
+        public float OutputStrength { get; set; }
+
+        public bool IsFree
+        {
+            get
+            {
+                var a = getActor(drop);
+                if (a == null) return drop == null;
+                return Vector3.Dot(moveDirection, getActor(drop).GlobalPosition.dx() - spawnPosition) > Thing.GetRadius() * 2.01f;
+            }
+        }
 
         public DroppedThingOutputPipe(Vector3 spawnPosition, Vector3 moveDirection)
         {
             this.spawnPosition = spawnPosition;
             this.moveDirection = moveDirection;
+
+            OutputStrength = 10;
 
             var tubeEntity = new Entity();
 
@@ -37,7 +50,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources
 
             for (float angle = 0; angle < MathHelper.TwoPi; angle += MathHelper.PiOver2)
             {
-                mesh.GetCollisionData().Boxes.Add(new MeshCollisionData.Box() { Dimensions = new Vector3(radius * 2, f, radius * 2).xna(), Orientation = Matrix.Translation(0, -f * 0.5f - radius, 0).xna() * Matrix.RotationAxis(moveDirection, angle).xna() });
+                mesh.GetCollisionData().Boxes.Add(new MeshCollisionData.Box() { Dimensions = new Vector3(radius * 2, f, radius * 2).xna(), Orientation = Matrix.Translation(0, -f * 0.5f - radius, 0).xna() * Matrix.RotationAxis(Vector3.UnitX, angle).xna() });
             }
             mesh.GetCollisionData().Boxes.Add(new MeshCollisionData.Box() { Dimensions = new Vector3(f, radius * 2, radius * 2).xna(), Orientation = Matrix.Translation(-f * 0.5f - radius, 0, 0).xna() });
             //mesh.GetCollisionData().ConvexMeshes.Add(new MeshCollisionData.Convex());
@@ -45,7 +58,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources
             tubeEntity.Solid = true;
             tubeEntity.Static = false;
             tubeEntity.Kinematic = true;
-            tubeEntity.WorldMatrix = Matrix.Translation(spawnPosition);
+            tubeEntity.WorldMatrix = Matrix.RotationY(MathHelper.PiOver2) * Matrix.Invert(Matrix.LookAtRH(spawnPosition, spawnPosition + moveDirection, Vector3.UnitY));
 
         }
 
@@ -54,11 +67,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources
             var a = getActor(drop);
             if (a == null) return;
             if (a.LinearVelocity.Length() < 1)
-                a.AddForce(moveDirection.xna() * 10, ForceMode.Impulse);
-
-            if (Vector3.Dot(moveDirection, a.GlobalPosition.dx() - spawnPosition) > Thing.GetRadius() * 2.01f)
-                SpawnItem(drop.Thing);
-
+                a.AddForce(moveDirection.xna() * OutputStrength, ForceMode.Impulse);
         }
         private Actor getActor(DroppedThing drop)
         {
