@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1.Characters;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
+using MHGameWork.TheWizards.RTSTestCase1.Pickupping;
 using SlimDX;
 using SlimDX.DirectInput;
 
@@ -83,9 +84,7 @@ namespace MHGameWork.TheWizards.RTS
             if (found == null) return;
 
 
-            var pickupper = new ItemPickupper();
-            pickupper.Pickup(null,found);
-
+            //TODO: player.Holding = found;
 
 
         }
