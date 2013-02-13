@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using MHGameWork.TheWizards.Engine;
 
-namespace MHGameWork.TheWizards.RTS
+namespace MHGameWork.TheWizards.RTSTestCase1.Cannons
 {
     public class CannonSimulator :ISimulator
     {

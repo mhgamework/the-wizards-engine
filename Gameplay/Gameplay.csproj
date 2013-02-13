@@ -228,6 +228,7 @@
     <Compile Include="Math\IterateExtensions.cs" />
     <Compile Include="Math\UtilityExtensions.cs" />
     <Compile Include="Navigation2D\PathfinderVisualizer.cs" />
+    <Compile Include="RTSTestCase1\Cannons\CannonSimulator.cs" />
     <Compile Include="RTSTestCase1\Characters\IRTSCharacter.cs" />
     <Compile Include="RTSTestCase1\Characters\ItemPickupper.cs" />
     <Compile Include="RTSTestCase1\Characters\SimpleRTSCharacter.cs" />
