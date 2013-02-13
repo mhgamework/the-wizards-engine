@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="11.5.1">
-  <zoom_level>9</zoom_level>
+  <zoom_level>8</zoom_level>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1116</x>
-      <y>630</y>
-      <w>144</w>
-      <h>54</h>
+      <x>1112</x>
+      <y>600</y>
+      <w>128</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>ResourceType
 --
@@ -17,10 +17,10 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1116</x>
-      <y>693</y>
-      <w>144</w>
-      <h>54</h>
+      <x>1112</x>
+      <y>656</y>
+      <w>128</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>Thing
 --
@@ -30,10 +30,10 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1692</x>
-      <y>918</y>
-      <w>225</w>
-      <h>63</h>
+      <x>1624</x>
+      <y>856</y>
+      <w>200</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>DroppedThing
 --
@@ -44,10 +44,10 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>846</x>
-      <y>567</y>
-      <w>243</w>
-      <h>81</h>
+      <x>872</x>
+      <y>544</y>
+      <w>216</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>Goblin
 &lt;&lt;IRTSCharacter&gt;&gt;
@@ -59,10 +59,10 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1692</x>
-      <y>1359</y>
-      <w>225</w>
-      <h>45</h>
+      <x>1624</x>
+      <y>1248</y>
+      <w>200</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>Cannon
 --
@@ -73,10 +73,10 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1692</x>
-      <y>774</y>
-      <w>225</w>
-      <h>126</h>
+      <x>1624</x>
+      <y>728</y>
+      <w>200</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>ResourceFactory
 --
@@ -91,10 +91,10 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>585</x>
-      <y>459</y>
-      <w>225</w>
-      <h>81</h>
+      <x>640</x>
+      <y>448</y>
+      <w>200</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>Cart
 &lt;&lt;IThingContainer&gt;&gt;
@@ -106,10 +106,10 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>864</x>
-      <y>144</y>
-      <w>243</w>
-      <h>99</h>
+      <x>896</x>
+      <y>184</y>
+      <w>216</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>IRTSCharacter
 --
@@ -125,10 +125,10 @@ Responsible for item pickup/drop
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>207</x>
-      <y>117</y>
-      <w>234</w>
-      <h>36</h>
+      <x>304</x>
+      <y>144</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>PlayerPickupSimulator
 &lt;&lt;ISimulator&gt;&gt;
@@ -138,10 +138,10 @@ Responsible for item pickup/drop
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>594</x>
-      <y>576</y>
-      <w>207</w>
-      <h>72</h>
+      <x>648</x>
+      <y>552</y>
+      <w>184</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>IGoblinCommand
 --
@@ -151,10 +151,10 @@ Responsible for item pickup/drop
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>576</x>
-      <y>693</y>
-      <w>243</w>
-      <h>54</h>
+      <x>632</x>
+      <y>656</y>
+      <w>216</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>BuildingCrystalHolder
 --
@@ -164,10 +164,10 @@ Responsible for item pickup/drop
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>540</x>
-      <y>783</y>
-      <w>432</w>
-      <h>63</h>
+      <x>600</x>
+      <y>736</y>
+      <w>384</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>ShapeDetector
 --
@@ -178,10 +178,10 @@ Responsible for item pickup/drop
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>603</x>
-      <y>153</y>
-      <w>207</w>
-      <h>72</h>
+      <x>656</x>
+      <y>176</y>
+      <w>184</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>UserPlayer
 &lt;&lt;IRTSCharacter&gt;&gt;
@@ -193,33 +193,33 @@ Responsible for item pickup/drop
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>774</x>
-      <y>585</y>
-      <w>81</w>
-      <h>36</h>
+      <x>808</x>
+      <y>560</y>
+      <w>80</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 </panel_attributes>
-    <additional_attributes>72;27;27;27</additional_attributes>
+    <additional_attributes>64;24;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>945</x>
-      <y>216</y>
-      <w>36</w>
-      <h>360</h>
+      <x>960</x>
+      <y>256</y>
+      <w>48</w>
+      <h>304</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>27;27;27;351</additional_attributes>
+    <additional_attributes>32;24;24;288</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>567</x>
-      <y>1089</y>
-      <w>225</w>
-      <h>72</h>
+      <x>624</x>
+      <y>1008</y>
+      <w>200</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>UserPlayerController
 --
@@ -231,10 +231,10 @@ Responsible for item pickup/drop
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>909</x>
-      <y>1116</y>
-      <w>207</w>
-      <h>72</h>
+      <x>928</x>
+      <y>1032</y>
+      <w>184</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>UserButtonEvent
 --
@@ -246,21 +246,21 @@ Responsible for item pickup/drop
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>783</x>
-      <y>162</y>
-      <w>90</w>
-      <h>45</h>
+      <x>816</x>
+      <y>184</y>
+      <w>96</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>81;36;27;27</additional_attributes>
+    <additional_attributes>80;48;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>909</x>
-      <y>999</y>
-      <w>207</w>
-      <h>108</h>
+      <x>928</x>
+      <y>928</y>
+      <w>184</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>UserPlayerMover
 --
@@ -274,10 +274,10 @@ Responsible for item pickup/drop
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1692</x>
-      <y>1188</y>
-      <w>225</w>
-      <h>72</h>
+      <x>1624</x>
+      <y>1096</y>
+      <w>200</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>Tree
 &lt;&lt;IWorldResource&gt;&gt;
@@ -289,33 +289,33 @@ Responsible for item pickup/drop
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>765</x>
-      <y>1026</y>
-      <w>161</w>
-      <h>116</h>
+      <x>800</x>
+      <y>952</y>
+      <w>144</w>
+      <h>104</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>144;27;27;99</additional_attributes>
+    <additional_attributes>128;24;24;88</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>765</x>
-      <y>1116</y>
-      <w>161</w>
-      <h>62</h>
+      <x>800</x>
+      <y>1032</y>
+      <w>144</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 </panel_attributes>
-    <additional_attributes>27;27;144;45</additional_attributes>
+    <additional_attributes>24;24;128;40</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>855</x>
-      <y>1539</y>
-      <w>252</w>
-      <h>72</h>
+      <x>880</x>
+      <y>1408</y>
+      <w>224</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>SpatialStructure
 --
@@ -326,10 +326,10 @@ access</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>603</x>
-      <y>1791</y>
-      <w>234</w>
-      <h>117</h>
+      <x>656</x>
+      <y>1632</y>
+      <w>208</w>
+      <h>104</h>
     </coordinates>
     <panel_attributes>IWorldResource
 &lt;&lt;IModelObject&gt;&gt;
@@ -344,21 +344,21 @@ access</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>432</x>
-      <y>1773</y>
-      <w>188</w>
-      <h>89</h>
+      <x>504</x>
+      <y>1616</y>
+      <w>160</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>171;72;27;27</additional_attributes>
+    <additional_attributes>152;64;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>855</x>
-      <y>1404</y>
-      <w>252</w>
-      <h>99</h>
+      <x>880</x>
+      <y>1288</y>
+      <w>224</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes>FieldDensityCalculator
 --
@@ -371,10 +371,10 @@ to allow slow calculation</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1692</x>
-      <y>1278</y>
-      <w>225</w>
-      <h>72</h>
+      <x>1624</x>
+      <y>1176</y>
+      <w>200</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>Rock
 &lt;&lt;IWorldResource&gt;&gt;
@@ -386,10 +386,10 @@ to allow slow calculation</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>576</x>
-      <y>1242</y>
-      <w>252</w>
-      <h>63</h>
+      <x>632</x>
+      <y>1144</y>
+      <w>224</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>CrystalSpawner
 --
@@ -400,10 +400,10 @@ to allow slow calculation</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>594</x>
-      <y>891</y>
-      <w>207</w>
-      <h>72</h>
+      <x>648</x>
+      <y>832</y>
+      <w>184</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>EvilGoblinSpawner
 --
@@ -413,10 +413,10 @@ to allow slow calculation</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>576</x>
-      <y>1350</y>
-      <w>252</w>
-      <h>81</h>
+      <x>632</x>
+      <y>1240</y>
+      <w>224</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>CrystalExploder
 --
@@ -429,10 +429,10 @@ Responsible for exploding crystals
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1134</x>
-      <y>1422</y>
-      <w>207</w>
-      <h>54</h>
+      <x>1128</x>
+      <y>1304</y>
+      <w>184</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>IFieldElement
 --
@@ -442,10 +442,10 @@ Responsible for exploding crystals
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1692</x>
-      <y>1098</y>
-      <w>225</w>
-      <h>72</h>
+      <x>1624</x>
+      <y>1016</y>
+      <w>200</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>Crystal
 &lt;&lt;ICrystal&gt;&gt;
@@ -456,10 +456,10 @@ Responsible for exploding crystals
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>576</x>
-      <y>1485</y>
-      <w>252</w>
-      <h>63</h>
+      <x>632</x>
+      <y>1360</y>
+      <w>224</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>CrystalAverager
 --
@@ -469,10 +469,10 @@ Responsible for exploding crystals
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>603</x>
-      <y>234</y>
-      <w>207</w>
-      <h>72</h>
+      <x>656</x>
+      <y>248</y>
+      <w>184</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>Command3DInterface
 --
@@ -483,10 +483,10 @@ Responsible for exploding crystals
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1143</x>
-      <y>1494</y>
-      <w>207</w>
-      <h>72</h>
+      <x>1136</x>
+      <y>1368</y>
+      <w>184</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>ICrystal
 --
@@ -498,10 +498,10 @@ Responsible for exploding crystals
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1692</x>
-      <y>1413</y>
-      <w>225</w>
-      <h>54</h>
+      <x>1624</x>
+      <y>1296</y>
+      <w>200</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>CannonProjectile
 --
@@ -511,10 +511,10 @@ Responsible for exploding crystals
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>585</x>
-      <y>342</y>
-      <w>261</w>
-      <h>72</h>
+      <x>640</x>
+      <y>344</y>
+      <w>232</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>ICommand
 --
@@ -525,21 +525,21 @@ Responsible for exploding crystals
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>675</x>
-      <y>279</y>
-      <w>45</w>
+      <x>720</x>
+      <y>288</y>
+      <w>48</w>
       <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>27;27;36;63</additional_attributes>
+    <additional_attributes>24;24;32;56</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>576</x>
-      <y>1593</y>
-      <w>252</w>
-      <h>72</h>
+      <x>632</x>
+      <y>1456</y>
+      <w>224</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>AmbientEnergyCharger
 --
@@ -551,10 +551,10 @@ Charges all crystals with ambient energy
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1710</x>
-      <y>171</y>
-      <w>225</w>
-      <h>72</h>
+      <x>1640</x>
+      <y>192</y>
+      <w>200</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>IThingContainer
 --
@@ -566,10 +566,10 @@ Charges all crystals with ambient energy
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1692</x>
-      <y>999</y>
-      <w>225</w>
-      <h>81</h>
+      <x>1624</x>
+      <y>928</y>
+      <w>200</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>Crate
 &lt;&lt;IThingContainer&gt;&gt;
@@ -580,10 +580,10 @@ Charges all crystals with ambient energy
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>216</x>
-      <y>261</y>
-      <w>234</w>
-      <h>36</h>
+      <x>312</x>
+      <y>272</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>GoblinTalkSimulator
 &lt;&lt;ISimulator&gt;&gt;
@@ -593,10 +593,10 @@ Charges all crystals with ambient energy
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>216</x>
-      <y>441</y>
-      <w>234</w>
-      <h>36</h>
+      <x>312</x>
+      <y>432</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>CartSimulator
 &lt;&lt;ISimulator&gt;&gt;
@@ -606,10 +606,10 @@ Charges all crystals with ambient energy
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>216</x>
-      <y>558</y>
-      <w>234</w>
-      <h>36</h>
+      <x>312</x>
+      <y>536</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>GoblinCommandSimulator
 &lt;&lt;ISimulator&gt;&gt;
@@ -619,10 +619,10 @@ Charges all crystals with ambient energy
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>216</x>
-      <y>675</y>
-      <w>234</w>
-      <h>36</h>
+      <x>312</x>
+      <y>640</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>BuildingHolderSimulator
 &lt;&lt;ISimulator&gt;&gt;
@@ -632,54 +632,54 @@ Charges all crystals with ambient energy
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>414</x>
-      <y>108</y>
-      <w>198</w>
-      <h>90</h>
+      <x>488</x>
+      <y>136</y>
+      <w>184</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>189;81;27;27</additional_attributes>
+    <additional_attributes>168;72;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>423</x>
-      <y>252</y>
-      <w>189</w>
-      <h>36</h>
+      <x>496</x>
+      <y>264</y>
+      <w>176</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>180;27;27;27</additional_attributes>
+    <additional_attributes>160;24;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>423</x>
-      <y>432</y>
-      <w>171</w>
+      <x>496</x>
+      <y>424</y>
+      <w>160</w>
       <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>162;63;27;27</additional_attributes>
+    <additional_attributes>144;56;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>423</x>
-      <y>549</y>
-      <w>180</w>
+      <x>496</x>
+      <y>528</y>
+      <w>168</w>
       <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>171;63;27;27</additional_attributes>
+    <additional_attributes>152;56;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>216</x>
-      <y>774</y>
-      <w>234</w>
-      <h>36</h>
+      <x>312</x>
+      <y>728</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>CrystalBuildingSimulator
 &lt;&lt;ISimulator&gt;&gt;
@@ -689,32 +689,32 @@ Charges all crystals with ambient energy
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>423</x>
-      <y>666</y>
-      <w>170</w>
-      <h>80</h>
+      <x>496</x>
+      <y>632</y>
+      <w>152</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>153;63;27;27</additional_attributes>
+    <additional_attributes>136;56;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>423</x>
-      <y>765</y>
-      <w>134</w>
-      <h>62</h>
+      <x>496</x>
+      <y>720</y>
+      <w>120</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>117;45;27;27</additional_attributes>
+    <additional_attributes>104;40;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>207</x>
-      <y>0</y>
-      <w>234</w>
-      <h>36</h>
+      <x>304</x>
+      <y>40</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>EnemyGoblinSimulator (AI)
 &lt;&lt;ISimulator&gt;&gt;
@@ -724,10 +724,10 @@ Charges all crystals with ambient energy
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>216</x>
-      <y>909</y>
-      <w>234</w>
-      <h>36</h>
+      <x>312</x>
+      <y>848</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>EvilGoblinSpawnerSimulator
 &lt;&lt;ISimulator&gt;&gt;
@@ -737,10 +737,10 @@ Charges all crystals with ambient energy
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>225</x>
-      <y>1386</y>
-      <w>234</w>
-      <h>36</h>
+      <x>320</x>
+      <y>1272</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>MagicSimulator
 &lt;&lt;ISimulator&gt;&gt;
@@ -750,32 +750,32 @@ Charges all crystals with ambient energy
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>423</x>
-      <y>900</y>
-      <w>188</w>
-      <h>44</h>
+      <x>496</x>
+      <y>840</y>
+      <w>168</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>171;27;27;27</additional_attributes>
+    <additional_attributes>152;24;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>423</x>
-      <y>1080</y>
-      <w>161</w>
-      <h>62</h>
+      <x>496</x>
+      <y>1000</y>
+      <w>144</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>144;45;27;27</additional_attributes>
+    <additional_attributes>128;40;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>216</x>
-      <y>1017</y>
-      <w>234</w>
-      <h>36</h>
+      <x>312</x>
+      <y>944</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>CannonSimulator
 &lt;&lt;ISimulator&gt;&gt;
@@ -785,10 +785,10 @@ Charges all crystals with ambient energy
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>216</x>
-      <y>1089</y>
-      <w>234</w>
-      <h>36</h>
+      <x>312</x>
+      <y>1008</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>PlayerMovementSimulator
 &lt;&lt;ISimulator&gt;&gt;
@@ -798,10 +798,10 @@ Charges all crystals with ambient energy
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>207</x>
-      <y>63</y>
-      <w>234</w>
-      <h>36</h>
+      <x>304</x>
+      <y>96</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>PlayerUseSimulator
 &lt;&lt;ISimulator&gt;&gt;
@@ -811,65 +811,65 @@ Charges all crystals with ambient energy
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>414</x>
-      <y>45</y>
-      <w>288</w>
-      <h>117</h>
+      <x>488</x>
+      <y>80</y>
+      <w>264</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>279;108;27;27</additional_attributes>
+    <additional_attributes>248;96;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>432</x>
-      <y>1377</y>
-      <w>161</w>
-      <h>152</h>
+      <x>504</x>
+      <y>1264</y>
+      <w>136</w>
+      <h>128</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>144;135;27;27;27;27</additional_attributes>
+    <additional_attributes>128;120;24;24;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>432</x>
-      <y>1377</y>
-      <w>161</w>
-      <h>269</h>
+      <x>504</x>
+      <y>1264</y>
+      <w>136</w>
+      <h>232</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>144;252;27;27</additional_attributes>
+    <additional_attributes>128;224;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>432</x>
-      <y>1368</y>
-      <w>161</w>
-      <h>53</h>
+      <x>504</x>
+      <y>1256</y>
+      <w>136</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>144;27;27;36</additional_attributes>
+    <additional_attributes>128;24;24;32</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>432</x>
-      <y>1242</y>
-      <w>161</w>
-      <h>179</h>
+      <x>504</x>
+      <y>1144</y>
+      <w>144</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>144;27;27;162</additional_attributes>
+    <additional_attributes>128;24;24;144</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>225</x>
-      <y>1926</y>
-      <w>234</w>
-      <h>36</h>
+      <x>320</x>
+      <y>1752</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>RTSEntitySimulator
 &lt;&lt;ISimulator&gt;&gt;
@@ -879,54 +879,54 @@ Charges all crystals with ambient energy
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>432</x>
-      <y>1377</y>
-      <w>440</w>
-      <h>215</h>
+      <x>504</x>
+      <y>1264</y>
+      <w>384</w>
+      <h>184</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>423;198;135;198;27;27</additional_attributes>
+    <additional_attributes>376;176;120;176;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>441</x>
-      <y>1386</y>
-      <w>431</w>
-      <h>98</h>
+      <x>512</x>
+      <y>1272</y>
+      <w>376</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>414;81;135;81;27;27</additional_attributes>
+    <additional_attributes>368;72;120;72;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>1080</x>
-      <y>1422</y>
-      <w>71</w>
-      <h>53</h>
+      <y>1304</y>
+      <w>56</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>54;27;27;36</additional_attributes>
+    <additional_attributes>48;24;24;32</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>801</x>
-      <y>1494</y>
-      <w>359</w>
-      <h>44</h>
+      <x>832</x>
+      <y>1368</y>
+      <w>312</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>342;27;27;27</additional_attributes>
+    <additional_attributes>304;24;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>225</x>
-      <y>1710</y>
-      <w>234</w>
-      <h>126</h>
+      <x>320</x>
+      <y>1560</y>
+      <w>208</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>WorldResourceGenerationSimulator
 &lt;&lt;ISimulator&gt;&gt;
@@ -940,10 +940,10 @@ moving them from generation to output point
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1449</x>
-      <y>135</y>
-      <w>198</w>
-      <h>63</h>
+      <x>1408</x>
+      <y>160</y>
+      <w>176</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>FollowCommand
 &lt;&lt;IGoblinCommand&gt;&gt;
@@ -954,10 +954,10 @@ moving them from generation to output point
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1449</x>
-      <y>216</y>
-      <w>198</w>
-      <h>90</h>
+      <x>1408</x>
+      <y>232</y>
+      <w>176</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>MoveCommand
 &lt;&lt;IGoblinCommand&gt;&gt;
@@ -970,10 +970,10 @@ moving them from generation to output point
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1449</x>
-      <y>315</y>
-      <w>198</w>
-      <h>90</h>
+      <x>1408</x>
+      <y>320</y>
+      <w>176</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>FetchCommand
 &lt;&lt;IGoblinCommand&gt;&gt;
@@ -986,21 +986,21 @@ moving them from generation to output point
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>1620</x>
-      <y>189</y>
-      <w>99</w>
+      <x>1560</x>
+      <y>208</y>
+      <w>96</w>
       <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>27;63;90;27</additional_attributes>
+    <additional_attributes>24;56;80;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1449</x>
-      <y>414</y>
-      <w>198</w>
-      <h>72</h>
+      <x>1408</x>
+      <y>408</y>
+      <w>176</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>BuildCopyCommand
 &lt;&lt;IGoblinCommand&gt;&gt;
@@ -1013,10 +1013,10 @@ moving them from generation to output point
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1017</x>
-      <y>792</y>
-      <w>90</w>
-      <h>27</h>
+      <x>1024</x>
+      <y>744</y>
+      <w>80</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>IShapeElement</panel_attributes>
     <additional_attributes/>
@@ -1024,10 +1024,10 @@ moving them from generation to output point
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>900</x>
-      <y>873</y>
-      <w>297</w>
-      <h>45</h>
+      <x>920</x>
+      <y>816</y>
+      <w>264</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>IShape
 --
@@ -1037,32 +1037,32 @@ moving them from generation to output point
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>945</x>
-      <y>774</y>
-      <w>89</w>
-      <h>62</h>
+      <x>960</x>
+      <y>728</y>
+      <w>80</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>72;27;27;45</additional_attributes>
+    <additional_attributes>64;24;24;40</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>909</x>
-      <y>819</y>
-      <w>125</w>
-      <h>71</h>
+      <x>928</x>
+      <y>768</y>
+      <w>112</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>108;54;27;27</additional_attributes>
+    <additional_attributes>96;48;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1449</x>
-      <y>495</y>
-      <w>198</w>
-      <h>72</h>
+      <x>1408</x>
+      <y>480</y>
+      <w>176</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>DefendCommand
 &lt;&lt;IGoblinCommand&gt;&gt;
@@ -1075,10 +1075,10 @@ moving them from generation to output point
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1449</x>
-      <y>576</y>
-      <w>198</w>
-      <h>72</h>
+      <x>1408</x>
+      <y>552</y>
+      <w>176</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>AttackMoveCommand
 &lt;&lt;IGoblinCommand&gt;&gt;
@@ -1091,10 +1091,10 @@ moving them from generation to output point
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>225</x>
-      <y>1980</y>
-      <w>234</w>
-      <h>36</h>
+      <x>320</x>
+      <y>1800</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>GoblinAttackSimulator
 &lt;&lt;ISimulator&gt;&gt;
@@ -1104,10 +1104,10 @@ moving them from generation to output point
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>603</x>
-      <y>1674</y>
-      <w>234</w>
-      <h>108</h>
+      <x>656</x>
+      <y>1528</y>
+      <w>208</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>DroppedThingOutputPipe
 --
@@ -1119,24 +1119,38 @@ moving them from generation to output point
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>432</x>
-      <y>1701</y>
-      <w>188</w>
-      <h>80</h>
+      <x>504</x>
+      <y>1552</y>
+      <w>160</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>171;27;27;63</additional_attributes>
+    <additional_attributes>152;24;24;56</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>1602</x>
-      <y>738</y>
-      <w>432</w>
-      <h>765</h>
+      <x>1544</x>
+      <y>696</y>
+      <w>384</w>
+      <h>680</h>
     </coordinates>
     <panel_attributes>&lt;&lt;IModelObject&gt;&gt;
 bg=#AAAAFF</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>968</x>
+      <y>16</y>
+      <w>264</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>ItemPickupper
+--
++ Pickup(IRTSCharacter,DroppedThing)
++ Drop(IRTSCharacter)</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

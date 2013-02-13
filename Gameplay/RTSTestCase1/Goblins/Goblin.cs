@@ -1,19 +1,26 @@
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.MathExtra;
+using MHGameWork.TheWizards.RTSTestCase1.Characters;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 {
     [ModelObjectChanged]
-    public class Goblin : EngineModelObject
+    public class Goblin : EngineModelObject ,IRTSCharacter
     {
+        public Entity Attacked { get; set; }
         public Vector3 Position { get; set; }
         public Vector3 Goal { get; set; }
         public Goblin BestFriend { get; set; }
         public Thing Holding { get; set; }
+        public Entity Used { get; set; }
         public Vector3 LookDirection { get; set; }
+        /// <summary>
+        /// IsEvil
+        /// </summary>
         public bool IsFriendly { get; set; }
 
         public Goblin()

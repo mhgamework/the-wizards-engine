@@ -228,6 +228,13 @@
     <Compile Include="Math\IterateExtensions.cs" />
     <Compile Include="Math\UtilityExtensions.cs" />
     <Compile Include="Navigation2D\PathfinderVisualizer.cs" />
+    <Compile Include="RTSTestCase1\Characters\IRTSCharacter.cs" />
+    <Compile Include="RTSTestCase1\Characters\ItemPickupper.cs" />
+    <Compile Include="RTSTestCase1\Characters\SimpleRTSCharacter.cs" />
+    <Compile Include="RTSTestCase1\Players\PlayerPickupSimulator.cs" />
+    <Compile Include="RTSTestCase1\Players\PlayerUseSimulator.cs" />
+    <Compile Include="RTSTestCase1\Players\UserPlayer.cs" />
+    <Compile Include="RTSTestCase1\_Tests\PlayerPickupTest.cs" />
     <Compile Include="RTS\TestUtilities.cs" />
     <Compile Include="Navigation2D\Vertex2D.cs" />
     <Compile Include="Navigation2D\Waypoint.cs" />

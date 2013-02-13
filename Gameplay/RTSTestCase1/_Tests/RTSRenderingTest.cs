@@ -16,6 +16,7 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 {
+
     [TestFixture]
     [EngineTest]
     public class RTSRenderingTest
@@ -61,10 +62,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         {
             createRocks();
             engine.AddSimulator(new BasicSimulator(delegate
-                {
-                    TW.Data.EnsureAttachment<Rock, RockRenderData>(o => new RockRenderData(o));
-                    foreach (Rock t in TW.Data.GetChangedObjects<Rock>()) t.get<RockRenderData>().Update();
-                }));
+            {
+                TW.Data.EnsureAttachment<Rock, RockRenderData>(o => new RockRenderData(o));
+                foreach (Rock t in TW.Data.GetChangedObjects<Rock>()) t.get<RockRenderData>().Update();
+            }));
             engine.AddSimulator(new WorldRenderingSimulator());
         }
 
