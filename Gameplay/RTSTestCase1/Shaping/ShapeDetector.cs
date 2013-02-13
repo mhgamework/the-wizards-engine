@@ -32,6 +32,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Shaping
         public void AddConstruction(IShape shape, Dictionary<Point3, IShapeElement> blocks)
         {   
             constructions.Add(shape,blocks);
+            Matrix rot;
+            keys.Add(GetBestUniqueShapeKey(blocks, out rot),shape);
         }
 
 
