@@ -33,45 +33,61 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         [Test]
         public void TestRockGeneration()
         {
-            new Tree { Position = new Vector3(3, 0, 3), Size = 5 };
+            createRock();
             engine.AddSimulator(new WorldResourceGenerationSimulator());
-            engine.AddSimulator(new RTSRendererSimulator());
+            engine.AddSimulator(new RTSEntitySimulator());
+            engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
+            engine.AddSimulator(new PhysXDebugRendererSimulator());
         }
+
+        
 
         [Test]
         public void TestTreeGeneration()
         {
-            new Tree { Position = new Vector3(3, 0, 3), Size = 5 };
+            createTree();
             engine.AddSimulator(new WorldResourceGenerationSimulator());
-            engine.AddSimulator(new RTSRendererSimulator());
+            engine.AddSimulator(new RTSEntitySimulator());
+            engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
+            engine.AddSimulator(new PhysXDebugRendererSimulator());
         }
+
 
         [Test]
         public void TestResourceGeneration()
         {
-            new Tree { Position = new Vector3(3, 0, 3), Size = 5 };
+            createTree();
+            createRock();
             engine.AddSimulator(new WorldResourceGenerationSimulator());
-            engine.AddSimulator(new RTSRendererSimulator());
+            engine.AddSimulator(new RTSEntitySimulator());
+            engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
+            engine.AddSimulator(new PhysXDebugRendererSimulator());
         }
 
         [Test]
         public void TestResourceGrowth()
         {
-            new Tree { Position = new Vector3(3, 0, 3), Size = 5 };
+            createTree();
+            createRock();
             engine.AddSimulator(new WorldResourceGenerationSimulator());
-            engine.AddSimulator(new RTSRendererSimulator());
+            engine.AddSimulator(new RTSEntitySimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
         }
+
+
+        private static void createRock() { new Rock { Position = new Vector3(0, 0, 3), Height = 5 }; }
+        private static void createTree() { new Tree { Position = new Vector3(3, 0, 0), Size = 5 }; }
+
 
         [Test]
         public void TestOutputPipe()
         {
             engine.AddSimulator(new TestOutputPipeSimulator());
 
-            engine.AddSimulator(new RTSRendererSimulator());
+            engine.AddSimulator(new RTSEntitySimulator());
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.AddSimulator(new PhysXDebugRendererSimulator());
@@ -82,7 +98,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             engine.AddSimulator(new TestOutputPipeSimulator());
             engine.AddSimulator(new TestOutputPipeSimulator());
 
-            engine.AddSimulator(new RTSRendererSimulator());
+            engine.AddSimulator(new RTSEntitySimulator());
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.AddSimulator(new PhysXDebugRendererSimulator());

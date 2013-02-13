@@ -64,6 +64,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources
 
         public void Update()
         {
+            if (IsFree) drop = null;
             var a = getActor(drop);
             if (a == null) return;
             if (a.LinearVelocity.Length() < 1)

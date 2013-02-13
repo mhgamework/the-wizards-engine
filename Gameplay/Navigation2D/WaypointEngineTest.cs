@@ -124,7 +124,7 @@ namespace MHGameWork.TheWizards.Navigation2D
             engine.AddSimulator(new NavigableGrid2DVizualizationSimulator());
 
             engine.AddSimulator(new GoblinMovementSimulatorSimple());
-            engine.AddSimulator(new RTSRendererSimulator());
+            engine.AddSimulator(new RTSEntitySimulator());
             engine.AddSimulator(new WaypointVisualizer());
 
             //engine.AddSimulator(new EntityBatcherSimulator());
@@ -149,7 +149,7 @@ namespace MHGameWork.TheWizards.Navigation2D
             engine.AddSimulator(new NavigableGrid2DVizualizationSimulator());
 
             engine.AddSimulator(new GoblinMovementSimulatorSimple());
-            engine.AddSimulator(new RTSRendererSimulator());
+            engine.AddSimulator(new RTSEntitySimulator());
             engine.AddSimulator(new WaypointVisualizer());
 
             //engine.AddSimulator(new EntityBatcherSimulator());

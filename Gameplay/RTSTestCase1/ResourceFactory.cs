@@ -1,13 +1,24 @@
-﻿using MHGameWork.TheWizards.RTSTestCase1.Items;
+﻿using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.RTSTestCase1.Items;
 
 namespace MHGameWork.TheWizards.RTSTestCase1
 {
-    public class ResourceFactory
+    [ModelObjectChanged]
+    public class ResourceFactory : EngineModelObject
     {
-        public static ResourceType Stone { get; set; }
-        public static ResourceType Wood { get; set; }
-        public static ResourceType Barrel { get; set; }
-        public static ResourceType Crystal { get; set; }
-        public static ResourceType Cannonball { get; set; }
+        public ResourceFactory()
+        {
+            Stone = new ResourceType(){Texture = TW.Assets.LoadTexture("RTS//bark.jpg")};
+            Wood = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS//bark.jpg") };
+            Barrel = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS//bark.jpg") };
+            Crystal = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS//bark.jpg") };
+            Cannonball = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS//bark.jpg") };
+        }
+        public ResourceType Stone { get; private set; }
+        public ResourceType Wood { get; private set; }
+        public ResourceType Barrel { get; private set; }
+        public ResourceType Crystal { get; private set; }
+        public ResourceType Cannonball { get; private set; }
     }
 }

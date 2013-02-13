@@ -35,7 +35,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             createRocks();
             createDroppedThing();
 
-            engine.AddSimulator(new RTSRendererSimulator());
+            engine.AddSimulator(new RTSEntitySimulator());
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.AddSimulator(new PhysXDebugRendererSimulator());
