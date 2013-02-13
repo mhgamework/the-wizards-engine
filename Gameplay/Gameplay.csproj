@@ -290,12 +290,6 @@
     <Compile Include="RTSTestCase1\_Tests\WorldResourceGenerationTest.cs" />
     <Compile Include="RTSTestCase1\WorldResources\IWorldResource.cs" />
     <Compile Include="RTSTestCase1\WorldResources\WorldResourceGenerator.cs" />
-    <Compile Include="RTS\GoblinMovementSimulator.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RTS\GoblinMovementSimulatorSimple.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="RTS\GoblinMover.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -306,46 +300,8 @@
     <Compile Include="RTSTestCase1\Shaping\IShapeElement.cs" />
     <Compile Include="RTSTestCase1\Shaping\ShapeDetector.cs" />
     <Compile Include="RTSTestCase1\_Tests\ShapeDetectorTest.cs" />
-    <Compile Include="RTS\Cannon.cs" />
-    <Compile Include="RTS\CannonSimulator.cs" />
-    <Compile Include="RTS\Commands\GoblinAdvancedFetchCommand.cs" />
-    <Compile Include="RTS\Commands\GoblinFetchCommand.cs" />
-    <Compile Include="RTS\Commands\DroppedThing.cs" />
-    <Compile Include="RTS\Commands\GoblinFetchUpdater.cs" />
-    <Compile Include="RTS\Commands\GoblinFollowCommand.cs" />
-    <Compile Include="RTS\Commands\GoblinIdleCommand.cs" />
-    <Compile Include="RTS\Commands\ResourceType.cs" />
-    <Compile Include="RTS\Commands\TalkingCommand.cs" />
-    <Compile Include="RTS\EnemyAISimulator.cs" />
-    <Compile Include="RTS\Factory.cs" />
-    <Compile Include="RTS\FactorySimulator.cs" />
-    <Compile Include="RTS\Fighting\GoblinFighter.cs" />
-    <Compile Include="RTS\Fighting\GoblinFigthingSimulator.cs" />
-    <Compile Include="RTS\GoblinCombatTest.cs" />
-    <Compile Include="RTS\GoblinCommandSimulator.cs" />
-    <Compile Include="RTS\GoblinCommunicationSimulator.cs" />
     <Compile Include="RTS\GoblinMovementSimulatorSimple.cs" />
-    <Compile Include="RTS\GoblinControlTest.cs" />
-    <Compile Include="RTS\Commands\GoblinFollowUpdater.cs" />
     <Compile Include="RTS\GoblinMovementSimulator.cs" />
-    <Compile Include="RTS\GoblinSimpleCrowdControlSimulator.cs" />
-    <Compile Include="RTS\Commands\IGoblinCommand.cs" />
-    <Compile Include="RTS\Movement\GoblinMovementSimulator.cs" />
-    <Compile Include="RTS\Movement\GoblinMover.cs" />
-    <Compile Include="RTS\PlayerPickupSimulator.cs" />
-    <Compile Include="RTS\PlayerRTS.cs" />
-    <Compile Include="RTS\EvilGoblinSpawner.cs" />
-    <Compile Include="RTS\Editing\GoblinCombatBuilderSimulator.cs" />
-    <Compile Include="RTS\GoblinAttackPlayerBehaviour.cs" />
-    <Compile Include="RTS\GoblinEnemySimulator.cs" />
-    <Compile Include="RTS\RTSData.cs" />
-    <Compile Include="RTS\Tests\GoblinsTest.cs" />
-    <Compile Include="RTS\Tests\SimpleCombatTest.cs" />
-    <Compile Include="RTS\Tests\TestGoblinSpawner.cs" />
-    <Compile Include="RTS\Tests\TestGoblinWalking.cs" />
-    <Compile Include="RTS\Thing.cs" />
-    <Compile Include="RTS\Various\LightPlacementSimulator.cs" />
-    <Compile Include="RTS\Various\LightPlacementSimulatorTest.cs" />
     <Compile Include="_Features\TextMenu.cs" />
     <Compile Include="_Features\TextMenuItem.cs" />
     <Compile Include="Pickup\Inventory.cs" />
