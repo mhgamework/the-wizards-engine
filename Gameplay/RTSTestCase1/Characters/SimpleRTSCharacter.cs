@@ -5,6 +5,7 @@ using System.Text;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
 using SlimDX;
+using StillDesign.PhysX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Characters
 {
@@ -14,5 +15,19 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Characters
         public Entity Used { get; set; }
         public Entity Attacked { get; set; }
         public Vector3 Position { get; set; }
+        public Actor GetHoldingActor()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Vector3 GetHoldingPosition()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DropHolding()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

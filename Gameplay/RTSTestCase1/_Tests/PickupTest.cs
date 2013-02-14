@@ -39,9 +39,32 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                     Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Wood },
                     InitialPosition = new Vector3(1, 1, 1)
                 };
+            var obj = TW.Data.Get<SimplePickupObject>();
+            obj.Position = new Vector3(1.5f, 1, 1);
+            obj.Holding = drop;
 
-            var obj = new SimplePickupObject() { Position = new Vector3(1.5f, 1, 1), Holding = drop };
+            engine.AddSimulator(new PickupSimulator());
 
+            engine.AddSimulator(new RTSEntitySimulator());
+
+            engine.AddSimulator(new PhysXSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
+            engine.AddSimulator(new PhysXDebugRendererSimulator());
+        }
+
+        [Test]
+        public void TestPickupMoving()
+        {
+            var drop = new DroppedThing()
+            {
+                Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Wood },
+                InitialPosition = new Vector3(1, 1, 1)
+            };
+            var obj = TW.Data.Get<SimplePickupObject>();
+            obj.Position = new Vector3(1.5f, 1, 1);
+            obj.Holding = drop;
+
+            engine.AddSimulator(new CircleMover());
             engine.AddSimulator(new PickupSimulator());
 
             engine.AddSimulator(new RTSEntitySimulator());
@@ -78,11 +101,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             private float angle = 0;
             public void Simulate()
             {
-                angle += TW.Graphics.Elapsed;
+                angle += TW.Graphics.Elapsed*5;
 
                 var obj = TW.Data.Get<SimplePickupObject>();
 
-                //TODO
+                obj.Position = new Vector3((float)Math.Sin(angle), 1, (float)Math.Cos(angle));
 
             }
         }

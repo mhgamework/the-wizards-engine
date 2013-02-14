@@ -178,8 +178,8 @@ Responsible for item pickup/drop
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>656</x>
-      <y>176</y>
+      <x>760</x>
+      <y>56</y>
       <w>184</w>
       <h>64</h>
     </coordinates>
@@ -246,13 +246,13 @@ Responsible for item pickup/drop
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>816</x>
-      <y>184</y>
-      <w>96</w>
-      <h>64</h>
+      <x>832</x>
+      <y>96</y>
+      <w>176</w>
+      <h>104</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>80;48;24;24</additional_attributes>
+    <additional_attributes>160;88;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
@@ -634,11 +634,11 @@ Charges all crystals with ambient energy
     <coordinates>
       <x>488</x>
       <y>136</y>
-      <w>184</w>
-      <h>88</h>
+      <w>112</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>168;72;24;24</additional_attributes>
+    <additional_attributes>96;32;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -812,12 +812,12 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>488</x>
-      <y>80</y>
-      <w>264</w>
-      <h>112</h>
+      <y>64</y>
+      <w>288</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>248;96;24;24</additional_attributes>
+    <additional_attributes>272;24;24;40</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -1142,15 +1142,26 @@ bg=#AAAAFF</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>968</x>
-      <y>16</y>
+      <x>584</x>
+      <y>144</y>
       <w>264</w>
-      <h>80</h>
+      <h>48</h>
     </coordinates>
     <panel_attributes>ItemPickupper
 --
 + Pickup(IRTSCharacter,DroppedThing)
 + Drop(IRTSCharacter)</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>824</x>
+      <y>152</y>
+      <w>88</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>72;72;24;24</additional_attributes>
   </element>
 </diagram>

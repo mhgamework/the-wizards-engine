@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1.Characters;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
 using MHGameWork.TheWizards.RTSTestCase1.Pickupping;
+using MHGameWork.TheWizards.RTSTestCase1.Players;
 using SlimDX;
 using SlimDX.DirectInput;
 
@@ -28,33 +29,24 @@ namespace MHGameWork.TheWizards.RTS
 
         public void Simulate()
         {
-            simulateKeyE();
-            updateRenderer();
-        }
-
-        private void updateRenderer()
-        {
-            //pickupEntity.Visible = player.Holding != null;
-            //pickupEntity.WorldMatrix = Matrix.Translation(calculateHoldPosition());
-            //pickupEntity.Kinematic = true;
-            //pickupEntity.Solid = true;
-            //if (player.Holding != null)
-            //    pickupEntity.Mesh = player.Holding.CreateMesh();
+            foreach (var pl in TW.Data.Objects.Where(o => o is UserPlayer).Cast<UserPlayer>().ToArray())
+                simulateKeyE(pl);
 
         }
 
-        private void simulateKeyE()
+        private void simulateKeyE(UserPlayer player)
         {
-            //if (!TW.Graphics.Keyboard.IsKeyPressed(Key.E)) return;
+            if (!TW.Graphics.Keyboard.IsKeyPressed(Key.E)) return;
 
-            //if (player.Holding == null)
-            //    tryPickup();
-            //else
-            //    tryDrop();
+            if (player.Holding == null)
+                tryPickup(player);
+            else
+                tryDrop(player);
         }
 
-        private void tryDrop()
+        private void tryDrop(UserPlayer player)
         {
+            player.DropHolding();
             //var dropped = new DroppedThing();
             //dropped.InitialPosition = calculateHoldPosition();
             //if (dropped.InitialPosition.Y < 0.2f) dropped.InitialPosition = new Vector3(dropped.InitialPosition.X, 0.2f, dropped.InitialPosition.Z);
@@ -65,27 +57,18 @@ namespace MHGameWork.TheWizards.RTS
 
         }
 
-        private Vector3 calculateHoldPosition()
+        private void tryPickup(UserPlayer player)
         {
-            Matrix viewInverse = TW.Data.GetSingleton<CameraInfo>().ActiveCamera.ViewInverse;
-            return (viewInverse.xna().Translation + viewInverse.xna().Forward * 3).dx();
-        }
+            //var obj = TW.Data.GetSingleton<Engine.WorldRendering.World>()
+            //            .Raycast(TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay(), e => e.Tag is DroppedThing);
+            var obj = player.Targeted;
+            if (obj == null) return;
+            if (player.TargetDistance > 5) return;
+            if (!(obj.Tag is DroppedThing)) return;
 
-        private void tryPickup()
-        {
-            var obj = TW.Data.GetSingleton<Engine.WorldRendering.World>()
-                        .Raycast(TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay(), e => e.Tag is DroppedThing);
-            if (!obj.IsHit) return;
-            if (obj.Distance > 5) return;
-            if (obj.Object == null) return;
+            var found = obj.Tag as DroppedThing;
 
-            var ent = obj.Object;
-            var found = ent.Tag as DroppedThing;
-            if (found == null) return;
-
-
-            //TODO: player.Holding = found;
-
+            player.Holding = found;
 
         }
     }

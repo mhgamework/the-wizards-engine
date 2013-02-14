@@ -5,6 +5,7 @@ using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.RTSTestCase1.Characters;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
 using SlimDX;
+using StillDesign.PhysX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 {
@@ -37,6 +38,16 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
         public void MoveTo(Vector3 position)
         {
             Goal = position;
+        }
+
+        public Actor GetHoldingActor()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Vector3 GetHoldingPosition()
+        {
+            throw new System.NotImplementedException();
         }
 
         public void DropHolding()

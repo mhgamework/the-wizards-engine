@@ -240,6 +240,7 @@
     <Compile Include="RTSTestCase1\Players\PlayerPickupSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\PlayerUseSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\UserPlayer.cs" />
+    <Compile Include="RTSTestCase1\_Tests\UserPlayerTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\PickupTest.cs" />
     <Compile Include="RTS\TestUtilities.cs" />
     <Compile Include="Navigation2D\Vertex2D.cs" />
