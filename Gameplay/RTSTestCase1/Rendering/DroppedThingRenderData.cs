@@ -15,9 +15,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
             this.t = t;
             
             ent = new Engine.WorldRendering.Entity();
-            ent.Solid = true;
-            ent.Static = false;
-            ent.Kinematic = false;
+            
             ent.Tag = t;
             t.set(ent);
         }
@@ -27,6 +25,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
             if (ent.Mesh == null)
                 ent.Mesh = t.Thing.CreateMesh();
 
+            ent.Solid = true;
+            ent.Static = false;
+            ent.Kinematic = false;
             //t.InitialPosition = ent.WorldMatrix.xna().Translation.dx();
             ent.WorldMatrix = Matrix.Translation(t.InitialPosition);
         }

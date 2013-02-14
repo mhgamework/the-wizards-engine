@@ -9,6 +9,7 @@ using MHGameWork.TheWizards.RTSTestCase1.Characters;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
 using SlimDX;
 using StillDesign.PhysX;
+using Ray = SlimDX.Ray;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Players
 {
@@ -48,6 +49,13 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
         public void DropHolding()
         {
             Holding = null;
+        }
+
+        public Ray GetTargetingRay()
+        {
+            //TODO: support multi-user
+
+            return TW.Data.Get<CameraInfo>().GetCenterScreenRay();
         }
     }
 }

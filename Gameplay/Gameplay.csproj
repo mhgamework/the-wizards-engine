@@ -238,6 +238,7 @@
     <Compile Include="RTSTestCase1\Pickupping\PickupPhysXUpdater.cs" />
     <Compile Include="RTSTestCase1\Pickupping\PickupSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\PlayerPickupSimulator.cs" />
+    <Compile Include="RTSTestCase1\Players\PlayerTargetingSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\PlayerUseSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\UserPlayer.cs" />
     <Compile Include="RTSTestCase1\_Tests\UserPlayerTest.cs" />

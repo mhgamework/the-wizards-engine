@@ -25,13 +25,40 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
     public class UserPlayerTest
     {
         private TWEngine engine = EngineFactory.CreateEngine();
-        private UserPlayer player;
 
         [SetUp]
         public void Setup()
         {
             TestUtilities.CreateGroundPlane();
+        }
 
+        [Test]
+        public void TestTargeting()
+        {
+            var drop = new DroppedThing()
+            {
+                Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Wood },
+                InitialPosition = new Vector3(1, 1, 1)
+            };
+
+            var player =  new UserPlayer() { Position = new Vector3(3, 3, 3) };
+
+            engine.AddSimulator(new BasicSimulator(delegate
+                {
+                    if (player.Targeted == null) return;
+                    player.Targeted.WorldMatrix = player.Targeted.WorldMatrix*
+                                                  Matrix.Translation(TW.Graphics.Elapsed, 0, 0);
+                }));
+            
+
+            
+
+            engine.AddSimulator(new PlayerTargetingSimulator());
+            engine.AddSimulator(new UpdateSimulator());
+
+            engine.AddSimulator(new RTSEntitySimulator());
+
+            engine.AddSimulator(new WorldRenderingSimulator());
         }
 
         [Test]
@@ -48,6 +75,39 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
             new PickupTest() { Drop = drop };
 
+            engine.AddSimulator(new PlayerPickupSimulator());
+
+            engine.AddSimulator(new PickupSimulator());
+
+            engine.AddSimulator(new RTSEntitySimulator());
+
+            engine.AddSimulator(new PhysXSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
+            engine.AddSimulator(new PhysXDebugRendererSimulator());
+        }
+
+        [Test]
+        public void TestAll()
+        {
+            var drop = new DroppedThing()
+            {
+                Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Wood },
+                InitialPosition = new Vector3(1, 1, 1)
+            };
+
+            var player = new UserPlayer() { Position = new Vector3(3, 3, 3) };
+
+            //engine.AddSimulator(new BasicSimulator(delegate
+            //{
+            //    if (player.Targeted == null) return;
+            //    player.Targeted.WorldMatrix = player.Targeted.WorldMatrix *
+            //                                  Matrix.Translation(TW.Graphics.Elapsed, 0, 0);
+            //}));
+
+
+
+
+            engine.AddSimulator(new PlayerTargetingSimulator());
             engine.AddSimulator(new PlayerPickupSimulator());
 
             engine.AddSimulator(new PickupSimulator());

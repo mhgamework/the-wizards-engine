@@ -59,8 +59,7 @@ namespace MHGameWork.TheWizards.RTS
 
         private void tryPickup(UserPlayer player)
         {
-            //var obj = TW.Data.GetSingleton<Engine.WorldRendering.World>()
-            //            .Raycast(TW.Data.GetSingleton<CameraInfo>().GetCenterScreenRay(), e => e.Tag is DroppedThing);
+            
             var obj = player.Targeted;
             if (obj == null) return;
             if (player.TargetDistance > 5) return;

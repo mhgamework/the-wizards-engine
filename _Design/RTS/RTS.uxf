@@ -5,7 +5,7 @@
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1112</x>
-      <y>600</y>
+      <y>680</y>
       <w>128</w>
       <h>48</h>
     </coordinates>
@@ -18,7 +18,7 @@
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1112</x>
-      <y>656</y>
+      <y>736</y>
       <w>128</w>
       <h>48</h>
     </coordinates>
@@ -31,7 +31,7 @@
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1624</x>
-      <y>856</y>
+      <y>936</y>
       <w>200</w>
       <h>56</h>
     </coordinates>
@@ -45,7 +45,7 @@
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>872</x>
-      <y>544</y>
+      <y>624</y>
       <w>216</w>
       <h>72</h>
     </coordinates>
@@ -60,7 +60,7 @@
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1624</x>
-      <y>1248</y>
+      <y>1328</y>
       <w>200</w>
       <h>40</h>
     </coordinates>
@@ -74,7 +74,7 @@
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1624</x>
-      <y>728</y>
+      <y>808</y>
       <w>200</w>
       <h>112</h>
     </coordinates>
@@ -92,7 +92,7 @@
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>640</x>
-      <y>448</y>
+      <y>528</y>
       <w>200</w>
       <h>72</h>
     </coordinates>
@@ -107,7 +107,7 @@
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>896</x>
-      <y>184</y>
+      <y>264</y>
       <w>216</w>
       <h>96</h>
     </coordinates>
@@ -126,7 +126,7 @@ Responsible for item pickup/drop
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>304</x>
-      <y>144</y>
+      <y>224</y>
       <w>208</w>
       <h>32</h>
     </coordinates>
@@ -139,7 +139,7 @@ Responsible for item pickup/drop
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>648</x>
-      <y>552</y>
+      <y>632</y>
       <w>184</w>
       <h>64</h>
     </coordinates>
@@ -152,7 +152,7 @@ Responsible for item pickup/drop
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>632</x>
-      <y>656</y>
+      <y>736</y>
       <w>216</w>
       <h>48</h>
     </coordinates>
@@ -165,7 +165,7 @@ Responsible for item pickup/drop
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>600</x>
-      <y>736</y>
+      <y>816</y>
       <w>384</w>
       <h>56</h>
     </coordinates>
@@ -179,7 +179,7 @@ Responsible for item pickup/drop
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>760</x>
-      <y>56</y>
+      <y>136</y>
       <w>184</w>
       <h>64</h>
     </coordinates>
@@ -194,7 +194,7 @@ Responsible for item pickup/drop
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>808</x>
-      <y>560</y>
+      <y>640</y>
       <w>80</w>
       <h>40</h>
     </coordinates>
@@ -206,7 +206,7 @@ Responsible for item pickup/drop
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>960</x>
-      <y>256</y>
+      <y>336</y>
       <w>48</w>
       <h>304</h>
     </coordinates>
@@ -217,7 +217,7 @@ Responsible for item pickup/drop
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>624</x>
-      <y>1008</y>
+      <y>1088</y>
       <w>200</w>
       <h>64</h>
     </coordinates>
@@ -232,7 +232,7 @@ Responsible for item pickup/drop
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>928</x>
-      <y>1032</y>
+      <y>1112</y>
       <w>184</w>
       <h>64</h>
     </coordinates>
@@ -247,7 +247,7 @@ Responsible for item pickup/drop
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>832</x>
-      <y>96</y>
+      <y>176</y>
       <w>176</w>
       <h>104</h>
     </coordinates>
@@ -258,7 +258,7 @@ Responsible for item pickup/drop
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>928</x>
-      <y>928</y>
+      <y>1008</y>
       <w>184</w>
       <h>96</h>
     </coordinates>
@@ -275,7 +275,7 @@ Responsible for item pickup/drop
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1624</x>
-      <y>1096</y>
+      <y>1176</y>
       <w>200</w>
       <h>64</h>
     </coordinates>
@@ -290,7 +290,7 @@ Responsible for item pickup/drop
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>800</x>
-      <y>952</y>
+      <y>1032</y>
       <w>144</w>
       <h>104</h>
     </coordinates>
@@ -301,7 +301,7 @@ Responsible for item pickup/drop
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>800</x>
-      <y>1032</y>
+      <y>1112</y>
       <w>144</w>
       <h>56</h>
     </coordinates>
@@ -313,7 +313,7 @@ Responsible for item pickup/drop
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>880</x>
-      <y>1408</y>
+      <y>1488</y>
       <w>224</w>
       <h>64</h>
     </coordinates>
@@ -327,7 +327,7 @@ access</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>656</x>
-      <y>1632</y>
+      <y>1712</y>
       <w>208</w>
       <h>104</h>
     </coordinates>
@@ -345,7 +345,7 @@ access</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>504</x>
-      <y>1616</y>
+      <y>1696</y>
       <w>160</w>
       <h>72</h>
     </coordinates>
@@ -356,7 +356,7 @@ access</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>880</x>
-      <y>1288</y>
+      <y>1368</y>
       <w>224</w>
       <h>88</h>
     </coordinates>
@@ -372,7 +372,7 @@ to allow slow calculation</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1624</x>
-      <y>1176</y>
+      <y>1256</y>
       <w>200</w>
       <h>64</h>
     </coordinates>
@@ -387,7 +387,7 @@ to allow slow calculation</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>632</x>
-      <y>1144</y>
+      <y>1224</y>
       <w>224</w>
       <h>56</h>
     </coordinates>
@@ -401,7 +401,7 @@ to allow slow calculation</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>648</x>
-      <y>832</y>
+      <y>912</y>
       <w>184</w>
       <h>64</h>
     </coordinates>
@@ -414,7 +414,7 @@ to allow slow calculation</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>632</x>
-      <y>1240</y>
+      <y>1320</y>
       <w>224</w>
       <h>72</h>
     </coordinates>
@@ -430,7 +430,7 @@ Responsible for exploding crystals
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1128</x>
-      <y>1304</y>
+      <y>1384</y>
       <w>184</w>
       <h>48</h>
     </coordinates>
@@ -443,7 +443,7 @@ Responsible for exploding crystals
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1624</x>
-      <y>1016</y>
+      <y>1096</y>
       <w>200</w>
       <h>64</h>
     </coordinates>
@@ -457,7 +457,7 @@ Responsible for exploding crystals
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>632</x>
-      <y>1360</y>
+      <y>1440</y>
       <w>224</w>
       <h>56</h>
     </coordinates>
@@ -470,7 +470,7 @@ Responsible for exploding crystals
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>656</x>
-      <y>248</y>
+      <y>328</y>
       <w>184</w>
       <h>64</h>
     </coordinates>
@@ -484,7 +484,7 @@ Responsible for exploding crystals
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1136</x>
-      <y>1368</y>
+      <y>1448</y>
       <w>184</w>
       <h>64</h>
     </coordinates>
@@ -499,7 +499,7 @@ Responsible for exploding crystals
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1624</x>
-      <y>1296</y>
+      <y>1376</y>
       <w>200</w>
       <h>48</h>
     </coordinates>
@@ -512,7 +512,7 @@ Responsible for exploding crystals
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>640</x>
-      <y>344</y>
+      <y>424</y>
       <w>232</w>
       <h>64</h>
     </coordinates>
@@ -526,7 +526,7 @@ Responsible for exploding crystals
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>720</x>
-      <y>288</y>
+      <y>368</y>
       <w>48</w>
       <h>72</h>
     </coordinates>
@@ -537,7 +537,7 @@ Responsible for exploding crystals
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>632</x>
-      <y>1456</y>
+      <y>1536</y>
       <w>224</w>
       <h>64</h>
     </coordinates>
@@ -552,7 +552,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1640</x>
-      <y>192</y>
+      <y>272</y>
       <w>200</w>
       <h>64</h>
     </coordinates>
@@ -567,7 +567,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1624</x>
-      <y>928</y>
+      <y>1008</y>
       <w>200</w>
       <h>72</h>
     </coordinates>
@@ -581,7 +581,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>312</x>
-      <y>272</y>
+      <y>352</y>
       <w>208</w>
       <h>32</h>
     </coordinates>
@@ -594,7 +594,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>312</x>
-      <y>432</y>
+      <y>512</y>
       <w>208</w>
       <h>32</h>
     </coordinates>
@@ -607,7 +607,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>312</x>
-      <y>536</y>
+      <y>616</y>
       <w>208</w>
       <h>32</h>
     </coordinates>
@@ -620,7 +620,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>312</x>
-      <y>640</y>
+      <y>720</y>
       <w>208</w>
       <h>32</h>
     </coordinates>
@@ -633,7 +633,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>488</x>
-      <y>136</y>
+      <y>216</y>
       <w>112</w>
       <h>48</h>
     </coordinates>
@@ -644,7 +644,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>496</x>
-      <y>264</y>
+      <y>344</y>
       <w>176</w>
       <h>40</h>
     </coordinates>
@@ -655,7 +655,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>496</x>
-      <y>424</y>
+      <y>504</y>
       <w>160</w>
       <h>72</h>
     </coordinates>
@@ -666,7 +666,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>496</x>
-      <y>528</y>
+      <y>608</y>
       <w>168</w>
       <h>72</h>
     </coordinates>
@@ -677,7 +677,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>312</x>
-      <y>728</y>
+      <y>808</y>
       <w>208</w>
       <h>32</h>
     </coordinates>
@@ -690,7 +690,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>496</x>
-      <y>632</y>
+      <y>712</y>
       <w>152</w>
       <h>72</h>
     </coordinates>
@@ -701,7 +701,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>496</x>
-      <y>720</y>
+      <y>800</y>
       <w>120</w>
       <h>56</h>
     </coordinates>
@@ -712,7 +712,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>304</x>
-      <y>40</y>
+      <y>120</y>
       <w>208</w>
       <h>32</h>
     </coordinates>
@@ -725,7 +725,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>312</x>
-      <y>848</y>
+      <y>928</y>
       <w>208</w>
       <h>32</h>
     </coordinates>
@@ -738,7 +738,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>320</x>
-      <y>1272</y>
+      <y>1352</y>
       <w>208</w>
       <h>32</h>
     </coordinates>
@@ -751,7 +751,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>496</x>
-      <y>840</y>
+      <y>920</y>
       <w>168</w>
       <h>40</h>
     </coordinates>
@@ -762,7 +762,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>496</x>
-      <y>1000</y>
+      <y>1080</y>
       <w>144</w>
       <h>56</h>
     </coordinates>
@@ -773,7 +773,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>312</x>
-      <y>944</y>
+      <y>1024</y>
       <w>208</w>
       <h>32</h>
     </coordinates>
@@ -786,7 +786,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>312</x>
-      <y>1008</y>
+      <y>1088</y>
       <w>208</w>
       <h>32</h>
     </coordinates>
@@ -799,7 +799,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>304</x>
-      <y>96</y>
+      <y>176</y>
       <w>208</w>
       <h>32</h>
     </coordinates>
@@ -812,7 +812,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>488</x>
-      <y>64</y>
+      <y>144</y>
       <w>288</w>
       <h>56</h>
     </coordinates>
@@ -823,7 +823,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>504</x>
-      <y>1264</y>
+      <y>1344</y>
       <w>136</w>
       <h>128</h>
     </coordinates>
@@ -834,7 +834,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>504</x>
-      <y>1264</y>
+      <y>1344</y>
       <w>136</w>
       <h>232</h>
     </coordinates>
@@ -845,7 +845,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>504</x>
-      <y>1256</y>
+      <y>1336</y>
       <w>136</w>
       <h>40</h>
     </coordinates>
@@ -856,7 +856,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>504</x>
-      <y>1144</y>
+      <y>1224</y>
       <w>144</w>
       <h>160</h>
     </coordinates>
@@ -867,7 +867,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>320</x>
-      <y>1752</y>
+      <y>1832</y>
       <w>208</w>
       <h>32</h>
     </coordinates>
@@ -880,7 +880,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>504</x>
-      <y>1264</y>
+      <y>1344</y>
       <w>384</w>
       <h>184</h>
     </coordinates>
@@ -891,7 +891,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>512</x>
-      <y>1272</y>
+      <y>1352</y>
       <w>376</w>
       <h>80</h>
     </coordinates>
@@ -902,7 +902,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>1080</x>
-      <y>1304</y>
+      <y>1384</y>
       <w>56</w>
       <h>40</h>
     </coordinates>
@@ -913,7 +913,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>832</x>
-      <y>1368</y>
+      <y>1448</y>
       <w>312</w>
       <h>32</h>
     </coordinates>
@@ -924,7 +924,7 @@ Charges all crystals with ambient energy
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>320</x>
-      <y>1560</y>
+      <y>1640</y>
       <w>208</w>
       <h>112</h>
     </coordinates>
@@ -941,7 +941,7 @@ moving them from generation to output point
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1408</x>
-      <y>160</y>
+      <y>240</y>
       <w>176</w>
       <h>56</h>
     </coordinates>
@@ -955,7 +955,7 @@ moving them from generation to output point
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1408</x>
-      <y>232</y>
+      <y>312</y>
       <w>176</w>
       <h>80</h>
     </coordinates>
@@ -971,7 +971,7 @@ moving them from generation to output point
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1408</x>
-      <y>320</y>
+      <y>400</y>
       <w>176</w>
       <h>80</h>
     </coordinates>
@@ -987,7 +987,7 @@ moving them from generation to output point
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>1560</x>
-      <y>208</y>
+      <y>288</y>
       <w>96</w>
       <h>72</h>
     </coordinates>
@@ -998,7 +998,7 @@ moving them from generation to output point
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1408</x>
-      <y>408</y>
+      <y>488</y>
       <w>176</w>
       <h>64</h>
     </coordinates>
@@ -1014,7 +1014,7 @@ moving them from generation to output point
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1024</x>
-      <y>744</y>
+      <y>824</y>
       <w>80</w>
       <h>24</h>
     </coordinates>
@@ -1025,7 +1025,7 @@ moving them from generation to output point
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>920</x>
-      <y>816</y>
+      <y>896</y>
       <w>264</w>
       <h>40</h>
     </coordinates>
@@ -1038,7 +1038,7 @@ moving them from generation to output point
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>960</x>
-      <y>728</y>
+      <y>808</y>
       <w>80</w>
       <h>56</h>
     </coordinates>
@@ -1049,7 +1049,7 @@ moving them from generation to output point
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>928</x>
-      <y>768</y>
+      <y>848</y>
       <w>112</w>
       <h>64</h>
     </coordinates>
@@ -1060,7 +1060,7 @@ moving them from generation to output point
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1408</x>
-      <y>480</y>
+      <y>560</y>
       <w>176</w>
       <h>64</h>
     </coordinates>
@@ -1076,7 +1076,7 @@ moving them from generation to output point
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1408</x>
-      <y>552</y>
+      <y>632</y>
       <w>176</w>
       <h>64</h>
     </coordinates>
@@ -1092,7 +1092,7 @@ moving them from generation to output point
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>320</x>
-      <y>1800</y>
+      <y>1880</y>
       <w>208</w>
       <h>32</h>
     </coordinates>
@@ -1105,7 +1105,7 @@ moving them from generation to output point
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>656</x>
-      <y>1528</y>
+      <y>1608</y>
       <w>208</w>
       <h>96</h>
     </coordinates>
@@ -1120,7 +1120,7 @@ moving them from generation to output point
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>504</x>
-      <y>1552</y>
+      <y>1632</y>
       <w>160</w>
       <h>64</h>
     </coordinates>
@@ -1131,7 +1131,7 @@ moving them from generation to output point
     <type>com.umlet.element.Note</type>
     <coordinates>
       <x>1544</x>
-      <y>696</y>
+      <y>776</y>
       <w>384</w>
       <h>680</h>
     </coordinates>
@@ -1140,28 +1140,28 @@ bg=#AAAAFF</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>584</x>
-      <y>144</y>
-      <w>264</w>
-      <h>48</h>
-    </coordinates>
-    <panel_attributes>ItemPickupper
---
-+ Pickup(IRTSCharacter,DroppedThing)
-+ Drop(IRTSCharacter)</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>824</x>
-      <y>152</y>
+      <y>232</y>
       <w>88</w>
       <h>88</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>72;72;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>88</x>
+      <y>192</y>
+      <w>200</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>This has changed, using a 
+targeting simulator,
+and physx pickup (pickupsimulator)
+bg=blue</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
