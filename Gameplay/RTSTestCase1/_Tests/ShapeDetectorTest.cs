@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using DirectX11;
+using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.RTSTestCase1.Shaping;
 using NUnit.Framework;
 using Rhino.Mocks;
 namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 {
     [TestFixture]
+    [EngineTest]
     public class ShapeDetectorTest
     {
         [Test]
