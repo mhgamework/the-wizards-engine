@@ -26,6 +26,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
 
         public float TargetDistance { get; set; }
 
+        public Vector3 LookDirection { get; set; }
+
         public Actor GetHoldingActor()
         {
             try
@@ -38,6 +40,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
             return null;
 
         }
+
+        public UserPlayer()
+        {
+            LookDirection = -Vector3.UnitZ;
+        }
+
 
         public Vector3 GetHoldingPosition()
         {
