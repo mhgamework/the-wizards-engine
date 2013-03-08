@@ -1,7 +1,6 @@
 To compile => all solutions must be compiled!!
 
-/The Wizards.sln
-/The Wizards Tools/The Wizards Tools.sln
+Use BuildAll.bat to compile everything(this is a clean and build command for everything)
 
 -----------
 When using the wizards dlls, this must done:
@@ -21,13 +20,13 @@ add to the app.config file:
 
 Nvidia PhysX
 XNA 2.0 Redist 
-SlimDX SDK for development or Redist (Not Tested)
-DevExpress 10.1.5.0 (research patched version by Danny Su)
-DirectX SDK (apparently)
-
+SlimDX SDK for development or Redist 4.0 32bit
 Visual C++ 2008 redistributable package (NOT SP1)
+DirectX SDK (apparently)
+PostSharp (can be found in the /_Libraries folder)
 
-PostSharp in the /_Libraries folder must be installed to develop
+
+(NOT NECESSARY)DevExpress 10.1.5.0 (research patched version by Danny Su)
 
 
 
