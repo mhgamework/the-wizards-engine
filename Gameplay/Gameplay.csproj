@@ -293,6 +293,10 @@
     <Compile Include="RTSTestCase1\Magic\CrystalAveragerSimulator.cs" />
     <Compile Include="RTSTestCase1\Magic\ICrystalDensityExpert.cs" />
     <Compile Include="RTSTestCase1\Magic\SimpleCrystal.cs" />
+    <Compile Include="RTSTestCase1\Inputting\InputFactory.cs" />
+    <Compile Include="RTSTestCase1\Inputting\InputSimulator.cs" />
+    <Compile Include="RTSTestCase1\Inputting\UserButtonEvent.cs" />
+    <Compile Include="RTSTestCase1\Magic\FieldDensityCalculator.cs" />
     <Compile Include="RTSTestCase1\Pickupping\IPickupObject.cs" />
     <Compile Include="RTSTestCase1\Characters\SimpleRTSCharacter.cs" />
     <Compile Include="RTSTestCase1\Pickupping\PickupPhysXUpdater.cs" />
