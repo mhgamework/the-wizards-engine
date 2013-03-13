@@ -229,6 +229,7 @@
     <Compile Include="Engine\PhysX\BarrelShooterSimulator.cs" />
     <Compile Include="Engine\PhysX\PhysXData.cs" />
     <Compile Include="Math\IterateExtensions.cs" />
+    <Compile Include="Math\Point2.cs" />
     <Compile Include="Math\UtilityExtensions.cs" />
     <Compile Include="Navigation2D\PathfinderVisualizer.cs" />
     <Compile Include="RTSTestCase1\Cannons\CannonSimulator.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="RTSTestCase1\Inputting\InputFactory.cs" />
     <Compile Include="RTSTestCase1\Inputting\InputSimulator.cs" />
     <Compile Include="RTSTestCase1\Inputting\UserButtonEvent.cs" />
+    <Compile Include="RTSTestCase1\Magic\FieldDensityCalculator.cs" />
     <Compile Include="RTSTestCase1\Pickupping\IPickupObject.cs" />
     <Compile Include="RTSTestCase1\Characters\SimpleRTSCharacter.cs" />
     <Compile Include="RTSTestCase1\Pickupping\PickupPhysXUpdater.cs" />
