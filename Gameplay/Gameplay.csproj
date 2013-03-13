@@ -287,6 +287,12 @@
     <Compile Include="RTSTestCase1\Simulators\InputSimulator.cs" />
     <Compile Include="RTSTestCase1\Inputting\UserButtonEvent.cs" />
     <Compile Include="RTSTestCase1\Magic\FieldDensityCalculator.cs" />
+    <Compile Include="RTSTestCase1\Magic\AmbientEnergyCharger.cs" />
+    <Compile Include="RTSTestCase1\Magic\CrystalAverager.cs" />
+    <Compile Include="RTSTestCase1\Magic\ICrystal.cs" />
+    <Compile Include="RTSTestCase1\Magic\CrystalAveragerSimulator.cs" />
+    <Compile Include="RTSTestCase1\Magic\ICrystalDensityExpert.cs" />
+    <Compile Include="RTSTestCase1\Magic\SimpleCrystal.cs" />
     <Compile Include="RTSTestCase1\Pickupping\IPickupObject.cs" />
     <Compile Include="RTSTestCase1\Characters\SimpleRTSCharacter.cs" />
     <Compile Include="RTSTestCase1\Pickupping\PickupPhysXUpdater.cs" />
@@ -350,6 +356,8 @@
     <Compile Include="RTSTestCase1\_Tests\GoblinsTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\InputTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\PlayersTest.cs" />
+    <Compile Include="RTSTestCase1\_Tests\UserPlayerTest.cs" />
+    <Compile Include="RTSTestCase1\_Tests\EnergyFlowTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\PickupTest.cs" />
     <Compile Include="RTSTestCase1\RTS\TestUtilities.cs" />
     <Compile Include="Navigation2D\Vertex2D.cs" />
