@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
@@ -13,7 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
 {
     [TestFixture]
     public class RenderingTest

@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
 using TreeGenerator.NoiseGenerater;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering.Terrain
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA.Terrain
 {
     [TestFixture]
     public class TerrainRenderingTest

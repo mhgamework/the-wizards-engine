@@ -6,7 +6,7 @@ using MHGameWork.TheWizards.Terrain.Geomipmap;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering.Terrain
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA.Terrain
 {
     public class SimpleTerrain
     {

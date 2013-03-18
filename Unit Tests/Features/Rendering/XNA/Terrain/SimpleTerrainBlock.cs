@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ITerrainBlock = MHGameWork.TheWizards.Terrain.Geomipmap.ITerrainBlock;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering.Terrain
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA.Terrain
 {
     public class SimpleTerrainBlock : ITerrainBlock
     {
