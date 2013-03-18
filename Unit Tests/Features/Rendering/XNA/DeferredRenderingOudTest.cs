@@ -2,7 +2,7 @@
 using MHGameWork.TheWizards.Rendering.Deferred;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
 {
     [TestFixture]
     public class DeferredRenderingOudTest

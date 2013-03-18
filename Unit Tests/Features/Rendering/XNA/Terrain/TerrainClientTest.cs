@@ -15,7 +15,7 @@ using MHGameWork.TheWizards.ServerClient.Database;
 using Microsoft.Xna.Framework;
 using StillDesign.PhysX;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering.Terrain
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA.Terrain
 {
     [TestFixture]
     public class TerrainClientTest

@@ -2,6 +2,7 @@
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Tests.Features.Core.Networking;
 using MHGameWork.TheWizards.Tests.Features.Rendering;
+using MHGameWork.TheWizards.Tests.Features.Rendering.XNA;
 using MHGameWork.TheWizards.Tests.Rendering;
 using MHGameWork.TheWizards.World.Static;
 using Microsoft.Xna.Framework;
