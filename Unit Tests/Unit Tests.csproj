@@ -156,7 +156,7 @@
     <Compile Include="Features\Data\Forms\ClassFormTest.cs" />
     <Compile Include="Features\Various\TestRootObjectTable.cs" />
     <Compile Include="Features\Various\TestVSIntegration.cs" />
-    <Compile Include="Features\Rendering\Particles\ParticleTests.cs" />
+    <Compile Include="Features\Rendering\XNA\ParticleTests.cs" />
     <Compile Include="Features\Simulation\Physics\TestSphereShooter.cs" />
     <Compile Include="Features\Generation\ProceduralTerrainGeneration\NoiseTests.cs" />
     <Compile Include="Features\Generation\ProceduralTerrainGeneration\TerrainConverter.cs" />
@@ -173,10 +173,9 @@
     <Compile Include="Features\Core\Networking\NetworkingServerTest.cs" />
     <Compile Include="Features\Simulation\Physics\CogTest.cs" />
     <Compile Include="Features\Simulation\Physics\PhysicsMeshTest.cs" />
-    <Compile Include="Features\Rendering\DeferredRenderingOudTest.cs" />
-    <Compile Include="Features\Rendering\EntityTestHelpers.cs" />
-    <Compile Include="Features\Rendering\Graphics\Curve3DTester.cs" />
-    <Compile Include="Features\Rendering\Graphics\GraphicsTest.cs" />
+    <Compile Include="Features\Rendering\XNA\DeferredRenderingOudTest.cs" />
+    <Compile Include="Features\Rendering\XNA\Curve3DTester.cs" />
+    <Compile Include="Features\Rendering\XNA\GraphicsTest.cs" />
     <Compile Include="Features\Core\Networking\DataPacket.cs" />
     <Compile Include="Features\Core\Networking\DataPacketFactory.cs" />
     <Compile Include="Features\Core\Networking\ErrorPacket.cs" />
@@ -186,14 +185,14 @@
     <Compile Include="Features\Data\OBJParser\OBJParserTest.cs" />
     <Compile Include="Features\Simulation\Physics\PhysicsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Features\Rendering\RenderingTest.cs" />
+    <Compile Include="Features\Rendering\XNA\RenderingTest.cs" />
     <Compile Include="Features\Rendering\TextRenderingTest.cs" />
     <Compile Include="Features\Various\Server\LauncherServerTest.cs" />
     <Compile Include="Features\Various\Showcase.cs" />
-    <Compile Include="Features\Rendering\Terrain\SimpleTerrain.cs" />
-    <Compile Include="Features\Rendering\Terrain\SimpleTerrainBlock.cs" />
-    <Compile Include="Features\Rendering\Terrain\TerrainClientTest.cs" />
-    <Compile Include="Features\Rendering\Terrain\TerrainRenderingTest.cs" />
+    <Compile Include="Features\Rendering\XNA\Terrain\SimpleTerrain.cs" />
+    <Compile Include="Features\Rendering\XNA\Terrain\SimpleTerrainBlock.cs" />
+    <Compile Include="Features\Rendering\XNA\Terrain\TerrainClientTest.cs" />
+    <Compile Include="Features\Rendering\XNA\Terrain\TerrainRenderingTest.cs" />
     <Compile Include="Features\Generation\Treegenerater\Tests.cs" />
     <Compile Include="Features\Generation\Treegenerater\TreeSynchronisationTest.cs" />
     <Compile Include="Features\Various\Utilities\UtilitiesTest.cs" />
@@ -245,7 +244,7 @@
     <EmbeddedResource Include="Features\Simulation\Physics\Files\CollisionModelBoxes001.obj" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Features\Rendering\Graphics\Files\TestShader.fx" />
+    <EmbeddedResource Include="Features\Rendering\XNA\Files\TestShader.fx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Features\Simulation\Animation\Files\TestSkeleton02.asf" />
@@ -260,7 +259,7 @@
     <EmbeddedResource Include="Features\Simulation\Animation\Files\TestAnimation01.amc" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Features\Rendering\Graphics\Files\TestShaderInclude.fx" />
+    <EmbeddedResource Include="Features\Rendering\XNA\Files\TestShaderInclude.fx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Features\Rendering\DirectX11\MiniTri.fx" />
