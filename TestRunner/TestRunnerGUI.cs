@@ -44,20 +44,25 @@ namespace MHGameWork.TheWizards.TestRunner
 
             rootNode = builder.CreateTestsTree(TestsAssembly);
 
-            TestRunner = new NUnitTestRunner();
+            TestRunner = createTestRunner();
 
         }
-        public TestRunnerGUI( TestNode rootNode)
+        public TestRunnerGUI(TestNode rootNode)
         {
             this.rootNode = rootNode;
-            TestRunner = new NUnitTestRunner();
+            TestRunner = createTestRunner();
+        }
+
+        private static ConsoleOutputTestRunner createTestRunner()
+        {
+            return new ConsoleOutputTestRunner(new NUnitTestRunner());
         }
 
 
         public void Run()
         {
 
-            
+
             rootNode.SortRecursive();
 
             var sel = new TestSelectionInterface(rootNode);
@@ -80,7 +85,7 @@ namespace MHGameWork.TheWizards.TestRunner
                                     sel.Hide();
                                     doTestRun(obj);
                                     sel.Show();
-                                }; 
+                                };
 
 
 
@@ -212,10 +217,10 @@ namespace MHGameWork.TheWizards.TestRunner
 
 
                 //if (!testResult.Success)
-                    //if (testResult.ErrorType == typeof(NotImplementedException).FullName)
-                        //node.State = TestState.NotImplemented;
-                    //else
-                        //node.State = TestState.Failed;
+                //if (testResult.ErrorType == typeof(NotImplementedException).FullName)
+                //node.State = TestState.NotImplemented;
+                //else
+                //node.State = TestState.Failed;
 
                 updateNodeInTreeView(node);
 
@@ -235,7 +240,7 @@ namespace MHGameWork.TheWizards.TestRunner
         ///
         /// TODO:fix automated testing
         /// 
-        
+
         /*private TestResult runTestMethod(MethodInfo method)
         {
             if (data.RunAutomated)
