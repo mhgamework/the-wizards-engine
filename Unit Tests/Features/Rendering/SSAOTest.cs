@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.Rendering.SSAO;
 using MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11;
+using MHGameWork.TheWizards.Tests.Features.Rendering.XNA;
 using NUnit.Framework;
 using SlimDX.DirectInput;
 

@@ -5,7 +5,7 @@ using NUnit.Framework;
 using System.Threading;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering.Graphics
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
 {
     [TestFixture]
     public class Curve3DTester
