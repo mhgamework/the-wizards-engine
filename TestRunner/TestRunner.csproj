@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandlineOptions.cs" />
+    <Compile Include="ConsoleOutputTestRunner.cs" />
     <Compile Include="ITest.cs" />
     <Compile Include="ITestRunner.cs" />
     <Compile Include="NUnitTest.cs" />
