@@ -331,7 +331,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
             Vector3 radius = new Vector3(100, 1000, 100);
             FrustumCuller culler = new FrustumCuller(new BoundingBox(-radius, radius), 6);
 
-            var mesh = DeferredRenderingTest.CreateSimpleTestMesh();
+            var mesh = RenderingTestsHelper.CreateSimpleTestMesh();
 
             var texturePool = new TheWizards.Rendering.Deferred.TexturePool(game);
 
