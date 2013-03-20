@@ -265,7 +265,7 @@
     <Compile Include="Rendering\Default\DefaultRenderElement.cs" />
     <Compile Include="Rendering\Default\DefaultRenderer.cs" />
     <Compile Include="Rendering\Deferred\Meshes\DeferredMeshRenderElement.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\DeferredMeshRenderer.cs" />
+    <Compile Include="Rendering\Deferred\Meshes\DeferredMeshesRenderer.cs" />
     <Compile Include="Rendering\Deferred\Meshes\DeferredMeshVertex.cs" />
     <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
     <Compile Include="Rendering\Deferred\DeferredRendererOud.cs" />

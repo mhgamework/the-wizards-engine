@@ -43,7 +43,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private HorizonSSAORenderer ssao;
 
         private FrustumCuller frustumCuller;
-        private DeferredMeshRenderer meshRenderer;
+        private DeferredMeshesRenderer meshesRenderer;
         private FrustumCullerView gbufferView;
         private ShaderResourceView skyColorRV;
         private readonly int screenWidth;
@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private List<DeferredLinesElement> lineElements = new List<DeferredLinesElement>();
         private List<DeferredMeshRenderElement> meshElements = new List<DeferredMeshRenderElement>();
 
-        public int DrawCalls { get { return meshRenderer.DrawCalls; } }
+        public int DrawCalls { get { return meshesRenderer.DrawCalls; } }
 
         public HorizonSSAORenderer SSAO
         {
@@ -80,7 +80,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             gBuffer = new GBuffer(game.Device, width, height);
             texturePool = new TexturePool(game);
 
-            meshRenderer = new DeferredMeshRenderer(game, gBuffer, texturePool);
+            meshesRenderer = new DeferredMeshesRenderer(game, gBuffer, texturePool);
 
             directionalLightRenderer = new DirectionalLightRenderer(game, gBuffer);
             spotLightRenderer = new SpotLightRenderer(game, gBuffer);
@@ -135,7 +135,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             frustumCuller = new FrustumCuller(new BoundingBox(-radius, radius), 1);
 
             gbufferView = frustumCuller.CreateView();
-            meshRenderer.Culler = frustumCuller;
+            meshesRenderer.Culler = frustumCuller;
 
             Texture2D skyColorTexture;// = Texture2D.FromFile(game.Device, TWDir.GameData.CreateSubdirectory("Core") + "\\skyColor.bmp");
 
@@ -199,7 +199,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         public DeferredMeshRenderElement CreateMeshElement(IMesh mesh)
         {
             if (mesh == null) throw new NullReferenceException();
-            var el = meshRenderer.AddMesh(mesh);
+            var el = meshesRenderer.AddMesh(mesh);
 
             meshElements.Add(el);
 
@@ -411,7 +411,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             //TODO: fix culling+removing of elements
             //gbufferView.UpdateVisibility(cullCam.ViewProjection);
             //setMeshRendererVisibles(gbufferView);
-            meshRenderer.Draw();
+            meshesRenderer.Draw();
         }
 
         private void setMeshRendererVisibles(FrustumCullerView view)
@@ -432,9 +432,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         /// </summary>
         private void setAllMeshesInvisible()
         {
-            for (int i = 0; i < meshRenderer.Elements.Count; i++)
+            for (int i = 0; i < meshesRenderer.Elements.Count; i++)
             {
-                meshRenderer.Elements[i].Visible = false;
+                meshesRenderer.Elements[i].Visible = false;
             }
         }
 
@@ -468,7 +468,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                            //TODO: fix culling+removing of elements
                                            //view.UpdateVisibility(lightCamera.ViewProjection);
                                            //setMeshRendererVisibles(view);
-                                           meshRenderer.DrawShadowCastersDepth();
+                                           meshesRenderer.DrawShadowCastersDepth();
                                            game.Camera = oldCam;
                                        }, mainCamera);
         }
@@ -484,7 +484,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                       //TODO: fix culling+removing of elements
                                       //view.UpdateVisibility(lightCamera.ViewProjection);
                                       //setMeshRendererVisibles(view);
-                                      meshRenderer.DrawShadowCastersDepth();
+                                      meshesRenderer.DrawShadowCastersDepth();
                                       game.Camera = oldCam;
                                   });
         }
@@ -496,11 +496,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             //TODO: fix culling+removing of elements
             //view.UpdateVisibility(r.LightCamera.ViewProjection);
             //setMeshRendererVisibles(view);
-            r.UpdateShadowMap(meshRenderer.DrawShadowCastersDepth);
+            r.UpdateShadowMap(meshesRenderer.DrawShadowCastersDepth);
             game.Camera = oldCam;
         }
 
-        public DeferredMeshRenderer DEBUG_MeshRenderer { get { return meshRenderer; } }
+        public DeferredMeshesRenderer DebugMeshesRenderer { get { return meshesRenderer; } }
         public FrustumCuller DEBUG_FrustumCuller { get { return frustumCuller; } }
         public ICamera DEBUG_SeperateCullCamera { get; set; }
 

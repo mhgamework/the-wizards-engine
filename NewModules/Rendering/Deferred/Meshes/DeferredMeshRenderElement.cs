@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
     /// </summary>
     public class DeferredMeshRenderElement : ICullable
     {
-        public DeferredMeshRenderElement(DeferredMeshRenderer renderer, IMesh mesh)
+        public DeferredMeshRenderElement(DeferredMeshesRenderer renderer, IMesh mesh)
         {
             Renderer = renderer;
             Mesh = mesh;
@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             updateBoundingBox();
         }
 
-        public DeferredMeshRenderer Renderer { get; private set; }
+        public DeferredMeshesRenderer Renderer { get; private set; }
         public bool CastsShadows { get; set; }
         public IMesh Mesh { get; private set; }
         private Matrix worldMatrix;
