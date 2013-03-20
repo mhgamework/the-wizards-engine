@@ -4,7 +4,7 @@ using MHGameWork.TheWizards.Rendering;
 using NUnit.Framework;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.Data
 {
     [TestFixture]
     public class MeshOptimizerTest

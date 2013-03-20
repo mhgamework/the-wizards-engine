@@ -11,7 +11,7 @@ using NUnit.Framework;
 using SlimDX;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.Culling
 {
     [TestFixture]
     public class CullingTest

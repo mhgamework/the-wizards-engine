@@ -7,7 +7,7 @@ using NUnit.Framework;
 using SlimDX;
 using SlimDX.DXGI;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.Text
 {
     [TestFixture]
     public class TextRenderingTest
