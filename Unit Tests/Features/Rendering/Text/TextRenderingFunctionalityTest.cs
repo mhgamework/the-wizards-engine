@@ -13,7 +13,7 @@ using SpriteTextRenderer;
 using Font = System.Drawing.Font;
 using FontStyle = SlimDX.DirectWrite.FontStyle;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.Text
 {
     [TestFixture]
     public class TextRenderingFunctionalityTest
