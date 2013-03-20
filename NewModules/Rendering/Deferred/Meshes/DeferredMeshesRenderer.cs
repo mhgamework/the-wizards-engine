@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
     /// Note that this class does not share IMeshPart data, that is parts are not shared across meshes
     /// Note: This class discretizes vertex positions!!
     /// </summary>
-    public class DeferredMeshRenderer
+    public class DeferredMeshesRenderer
     {
         public static readonly FileInfo DeferredMeshFX = new System.IO.FileInfo(CompiledShaderCache.Current.RootShaderPath + "Deferred\\DeferredMesh.fx");
 
@@ -38,7 +38,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private MeshRenderDataFactory renderDataFactory;
 
 
-        public DeferredMeshRenderer(DX11Game game, GBuffer gBuffer, TexturePool texturePool)
+        public DeferredMeshesRenderer(DX11Game game, GBuffer gBuffer, TexturePool texturePool)
         {
             this.game = game;
             this.gBuffer = gBuffer;

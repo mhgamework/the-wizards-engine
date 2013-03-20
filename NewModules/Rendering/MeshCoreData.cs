@@ -22,13 +22,16 @@ namespace MHGameWork.TheWizards.Rendering
         {
             public Color DiffuseColor;
             public ITexture DiffuseMap;
+            public ITexture NormalMap;
+            public ITexture SpecularMap;
             public bool ColoredMaterial = false;
             public string Name;
 
             protected bool Equals(Material other)
             {
-                return DiffuseColor.Equals(other.DiffuseColor) && Equals(DiffuseMap, other.DiffuseMap) && ColoredMaterial.Equals(other.ColoredMaterial) && string.Equals(Name, other.Name);
-            }
+                return DiffuseColor.Equals(other.DiffuseColor) && Equals(DiffuseMap, other.DiffuseMap) && Equals(NormalMap, other.NormalMap) && Equals(SpecularMap, other.SpecularMap);
+            	//TODO: add color equals check
+			}
 
             public override bool Equals(object obj)
             {
@@ -42,10 +45,10 @@ namespace MHGameWork.TheWizards.Rendering
             {
                 unchecked
                 {
-                    int hashCode = DiffuseColor.GetHashCode();
+                    var hashCode = DiffuseColor.GetHashCode();
                     hashCode = (hashCode*397) ^ (DiffuseMap != null ? DiffuseMap.GetHashCode() : 0);
-                    hashCode = (hashCode*397) ^ ColoredMaterial.GetHashCode();
-                    hashCode = (hashCode*397) ^ (Name != null ? Name.GetHashCode() : 0);
+                    hashCode = (hashCode*397) ^ (NormalMap != null ? NormalMap.GetHashCode() : 0);
+                    hashCode = (hashCode*397) ^ (SpecularMap != null ? SpecularMap.GetHashCode() : 0);
                     return hashCode;
                 }
             }

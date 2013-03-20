@@ -496,7 +496,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
 
             var gBuffer = new GBuffer(game.Device, 800, 600);
 
-            var renderer = new DeferredMeshRenderer(game, gBuffer, texturePool);
+            var renderer = new DeferredMeshesRenderer(game, gBuffer, texturePool);
 
 
 
@@ -629,9 +629,9 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
                 {
                     //renderer.DEBUG_FrustumCuller.CullCamera = game.Camera;
                     //renderer.DEBUG_FrustumCuller.UpdateVisibility();
-                    //for (int i = 0; i < renderer.DEBUG_MeshRenderer.Elements.Count; i++)
+                    //for (int i = 0; i < renderer.DebugMeshesRenderer.Elements.Count; i++)
                     //{
-                    //    var el = renderer.DEBUG_MeshRenderer.Elements[i];
+                    //    var el = renderer.DebugMeshesRenderer.Elements[i];
 
                     //    game.LineManager3D.AddBox(el.BoundingBox.dx(), new SlimDX.Color4(0, 1, 0));
                     //}
