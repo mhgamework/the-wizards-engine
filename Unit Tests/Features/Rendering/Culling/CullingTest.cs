@@ -337,7 +337,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Culling
 
             var gBuffer = new GBuffer(game.Device, 800, 600);
 
-            var renderer = new DeferredMeshRenderer(game, gBuffer, texturePool);
+            var renderer = new DeferredMeshesRenderer(game, gBuffer, texturePool);
             var final = new CombineFinalRenderer(game, gBuffer);
 
 

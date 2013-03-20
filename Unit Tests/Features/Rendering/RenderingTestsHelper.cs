@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Tests.Features.Rendering.XNA;
@@ -47,17 +48,36 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
             return mesh;
         }
 
-        public static RAMTexture GetTestTexture()
+        private static RAMTexture loadTexture(string file)
         {
             var tex = new RAMTexture();
 
             var data = tex.GetCoreData();
             data.StorageType = TextureCoreData.TextureStorageType.Disk;
-            data.DiskFilePath = TestFiles.BrickRoundJPG;
+            data.DiskFilePath = file;
             /*data.StorageType = TextureCoreData.TextureStorageType.Assembly;
             data.Assembly = Assembly.GetExecutingAssembly();
             data.AssemblyResourceName = "MHGameWork.TheWizards.Tests.OBJParser.Files.maps.BrickRound0030_7_S.jpg";*/
             return tex;
         }
+
+
+        public static RAMTexture GetTestTexture() { return loadTexture(TestFiles.BrickRoundJPG); }
+        public static RAMTexture GetDiffuseMap() { return loadTexture(); }
+        public static RAMTexture GetNormalMap() { return loadTexture(); }
+        public static RAMTexture GetSpecularMap() { return loadTexture(); }
+
+        public static IMesh createSphere(ITexture diffuse, ITexture normal, ITexture specular)
+        {
+            var builder = new MeshBuilder();
+            builder.AddSphere(20, 1);
+            var mesh = builder.CreateMesh();
+
+            mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap = diffuse;
+
+        }
+
+
+     
     }
 }

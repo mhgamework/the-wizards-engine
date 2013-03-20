@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
 
             var context = game.Device.ImmediateContext;
 
-            var shader = BasicShader.LoadAutoreload(game, DeferredMeshRenderer.DeferredMeshFX);
+            var shader = BasicShader.LoadAutoreload(game, DeferredMeshesRenderer.DeferredMeshFX);
             shader.SetTechnique("Technique1");
 
             var gBuffer = new GBuffer(game.Device, 800, 600);

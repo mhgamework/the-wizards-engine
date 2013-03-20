@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
             var gBuffer = new GBuffer(game.Device, 800, 600);
 
-            var renderer = new DeferredMeshRenderer(game, gBuffer, texturePool);
+            var renderer = new DeferredMeshesRenderer(game, gBuffer, texturePool);
 
 
             DeferredMeshRenderElement middle = null;
@@ -182,7 +182,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
             var gBuffer = new GBuffer(game.Device, 800, 600);
 
-            DeferredMeshRenderer renderer = InitDefaultMeshRenderer(game, gBuffer);
+            DeferredMeshesRenderer renderer = InitDefaultMeshRenderer(game, gBuffer);
 
 
             var el = renderer.AddMesh(mesh);
@@ -237,7 +237,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
             var gBuffer = new GBuffer(game.Device, 800, 600);
 
-            var renderer = new DeferredMeshRenderer(game, gBuffer, texturePool);
+            var renderer = new DeferredMeshesRenderer(game, gBuffer, texturePool);
 
 
             DeferredMeshRenderElement middle = null;
@@ -283,11 +283,11 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
 
 
-        public static DeferredMeshRenderer InitDefaultMeshRenderer(DX11Game game, GBuffer gBuffer)
+        public static DeferredMeshesRenderer InitDefaultMeshRenderer(DX11Game game, GBuffer gBuffer)
         {
             var texturePool = new TheWizards.Rendering.Deferred.TexturePool(game);
 
-            var renderer = new DeferredMeshRenderer(game, gBuffer, texturePool);
+            var renderer = new DeferredMeshesRenderer(game, gBuffer, texturePool);
 
             return renderer;
         }
