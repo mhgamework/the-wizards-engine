@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Filters;
@@ -16,7 +12,7 @@ using NUnit.Framework;
 using SlimDX;
 using SlimDX.DXGI;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.Postprocessing
 {
     [TestFixture, RequiresSTA]
     public class FiltersTest

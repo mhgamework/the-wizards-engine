@@ -1,7 +1,7 @@
 ﻿using MHGameWork.TheWizards.Rendering;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.Data
 {
     [TestFixture]
     public class MeshOptimizerTest
