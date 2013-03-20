@@ -19,7 +19,7 @@ using EffectFlags = SlimDX.D3DCompiler.EffectFlags;
 namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
 {
     [TestFixture]
-    public class DirectX11Test
+    public class SlimDXDirectX11Test
     {
         public const string Wallpaper001_png = @"..\GameData\Core\Wallpaper001.png";
 

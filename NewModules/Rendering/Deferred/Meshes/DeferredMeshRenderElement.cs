@@ -4,6 +4,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.Rendering.Deferred
 {
+    /// <summary>
+    /// Responsible for providing a facade to a mesh element in the deferred renderer
+    /// </summary>
     public class DeferredMeshRenderElement : ICullable
     {
         public DeferredMeshRenderElement(DeferredMeshRenderer renderer, IMesh mesh)

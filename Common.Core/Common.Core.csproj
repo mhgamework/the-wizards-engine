@@ -194,7 +194,6 @@
     <Compile Include="DirectX11\Rendering\Deferred\CombineFinalRenderer.cs" />
     <Compile Include="DirectX11\Rendering\Deferred\DirectionalLightRenderer.cs" />
     <Compile Include="DirectX11\Rendering\Deferred\GBuffer.cs" />
-    <Compile Include="DirectX11\Rendering\Deferred\GBufferShader.cs" />
     <Compile Include="DirectX11\Rendering\Deferred\PointLightRenderer.cs" />
     <Compile Include="DirectX11\Rendering\Deferred\SpotLightRenderer.cs" />
     <Compile Include="DirectX11\Rendering\Deferred\ToneMapRenderer.cs" />
