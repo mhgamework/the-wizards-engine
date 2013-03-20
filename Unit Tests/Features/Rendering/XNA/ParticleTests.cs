@@ -35,7 +35,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
 
         //    var pool = new VertexDeclarationPool();
         //    pool.SetVertexElements<Emitter.ParticleVertex>(Emitter.ParticleVertex.VertexElements);
-        //    var texPool = new TexturePool();
+        //    var texPool = new TexturePoolTest();
         //    var testTexture = GetTestTexture();
         //    SimpleParticleCreater creater = new SimpleParticleCreater();
         //    EmitterParameters param = new EmitterParameters();
@@ -190,7 +190,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
 
         //    var pool = new VertexDeclarationPool();
         //    pool.SetVertexElements<Emitter.ParticleVertex>(Emitter.ParticleVertex.VertexElements);
-        //    var texPool = new TexturePool();
+        //    var texPool = new TexturePoolTest();
         //    var testTexture = GetTestTexture();
         //    creater = new SparkelParticleCreater();
         //    EmitterParameters param = new EmitterParameters();
@@ -254,7 +254,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
 
         //    var pool = new VertexDeclarationPool();
         //    pool.SetVertexElements<Emitter.ParticleVertex>(Emitter.ParticleVertex.VertexElements);
-        //    var texPool = new TexturePool();
+        //    var texPool = new TexturePoolTest();
         //    var testTexture = GetTestTexture();
         //    creater = new SparkelParticleCreater();
         //    EmitterParameters param = new EmitterParameters();

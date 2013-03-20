@@ -156,13 +156,15 @@
     <Compile Include="Features\Rendering\DirectX11\SpectaterCameraTest.cs" />
     <Compile Include="Features\Rendering\DX11FontWrapperTest.cs" />
     <Compile Include="Features\Rendering\FiltersTest.cs" />
+    <Compile Include="Features\Rendering\Postprocessing\FiltersTest.cs" />
+    <Compile Include="Features\Rendering\RenderingTestsHelper.cs" />
     <Compile Include="Features\Simulation\Animation\AnimationTest.cs" />
     <Compile Include="Features\Various\Client\ClientTest.cs" />
     <Compile Include="Features\Data\CoreTest.cs" />
     <Compile Include="Features\Rendering\DirectX11\XAudio2Test.cs" />
     <Compile Include="Features\Rendering\DirectX11\DeferredTest.cs" />
     <Compile Include="Features\Rendering\DirectX11\SharpDXTest.cs" />
-    <Compile Include="Features\Rendering\DirectX11\DirectX11Test.cs" />
+    <Compile Include="Features\Rendering\DirectX11\SlimDXDirectX11Test.cs" />
     <Compile Include="Features\Rendering\DirectX11\TessellationTest.cs" />
     <Compile Include="Features\Various\FileHelperTest.cs" />
     <Compile Include="Features\Data\Forms\ClassFormTest.cs" />
@@ -176,12 +178,12 @@
     <Compile Include="Features\Generation\ProceduralTerrainGeneration\TerrainConverter.cs" />
     <Compile Include="Features\Generation\ProceduralTerrainGeneration\TerrainGenerationTests.cs" />
     <Compile Include="Features\Core\Profiling\ProfilingTest.cs" />
-    <Compile Include="Features\Rendering\MeshOptimizerTest.cs" />
-    <Compile Include="Features\Rendering\TextRenderingFunctionalityTest.cs" />
-    <Compile Include="Features\Rendering\CullingTest.cs" />
+    <Compile Include="Features\Rendering\Data\MeshOptimizerTest.cs" />
+    <Compile Include="Features\Rendering\Text\TextRenderingFunctionalityTest.cs" />
+    <Compile Include="Features\Rendering\Culling\CullingTest.cs" />
     <Compile Include="Features\Rendering\DeferredRenderingTest.cs" />
-    <Compile Include="Features\Rendering\MeshLoaderTest.cs" />
-    <Compile Include="Features\Rendering\SSAOTest.cs" />
+    <Compile Include="Features\Rendering\Data\MeshLoaderTest.cs" />
+    <Compile Include="Features\Rendering\Postprocessing\SSAOTest.cs" />
     <Compile Include="Features\Various\Launcher\LauncherTest.cs" />
     <Compile Include="Features\Core\Networking\NetworkingFilesTest.cs" />
     <Compile Include="Features\Core\Networking\NetworkingServerTest.cs" />
@@ -200,7 +202,7 @@
     <Compile Include="Features\Simulation\Physics\PhysicsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Features\Rendering\XNA\RenderingTest.cs" />
-    <Compile Include="Features\Rendering\TextRenderingTest.cs" />
+    <Compile Include="Features\Rendering\Text\TextRenderingTest.cs" />
     <Compile Include="Features\Various\Server\LauncherServerTest.cs" />
     <Compile Include="Features\Various\Showcase.cs" />
     <Compile Include="Features\Rendering\XNA\Terrain\SimpleTerrain.cs" />
@@ -294,6 +296,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Features\Generation\Voxelization\_doc.txt" />
+    <Content Include="Features\Rendering\DirectX11\_Doc.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

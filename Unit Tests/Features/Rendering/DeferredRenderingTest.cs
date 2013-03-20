@@ -24,31 +24,13 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
     [TestFixture]
     public class DeferredRenderingTest
     {
-
-        public static RAMMesh CreateMerchantsHouseMesh(OBJToRAMMeshConverter c)
-        {
-            return RenderingTest.CreateMerchantsHouseMesh(c);
-        }
-        public static RAMMesh CreateGuildHouseMesh(OBJToRAMMeshConverter c)
-        {
-            return RenderingTest.CreateGuildHouseMesh(c);
-        }
-
-        public static RAMMesh CreateMeshFromObj(OBJToRAMMeshConverter c, string obj, string mtl)
-        {
-            return RenderingTest.CreateMeshFromObj(c, obj, mtl);
-        }
-
-
-
-
         [Test]
         public void TestLoadTexture()
         {
             DX11Game game = new DX11Game();
             var pool = new TheWizards.Rendering.Deferred.TexturePool(game);
 
-            RAMTexture tex = GetTestTexture();
+            RAMTexture tex = RenderingTestsHelper.GetTestTexture();
 
             game.GameLoopEvent += delegate
             {
@@ -69,18 +51,6 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
             game.Run();
         }
 
-        public static RAMTexture GetTestTexture()
-        {
-            var tex = new RAMTexture();
-
-            var data = tex.GetCoreData();
-            data.StorageType = TextureCoreData.TextureStorageType.Disk;
-            data.DiskFilePath = TestFiles.BrickRoundJPG;
-            /*data.StorageType = TextureCoreData.TextureStorageType.Assembly;
-            data.Assembly = Assembly.GetExecutingAssembly();
-            data.AssemblyResourceName = "MHGameWork.TheWizards.Tests.OBJParser.Files.maps.BrickRound0030_7_S.jpg";*/
-            return tex;
-        }
         [Test]
         public void TestRenderDefaultModelShader()
         {
@@ -180,7 +150,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
             game.InitDirectX();
             var context = game.Device.ImmediateContext;
 
-            var mesh = CreateSimpleTestMesh();
+            var mesh = RenderingTestsHelper.CreateSimpleTestMesh();
 
             var texturePool = new TheWizards.Rendering.Deferred.TexturePool(game);
 
@@ -299,10 +269,10 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
 
             var mesh = c.CreateMesh(importer);
 
-            RAMMesh mesh2 = CreateMerchantsHouseMesh(c);
+            RAMMesh mesh2 = RenderingTestsHelper.CreateMerchantsHouseMesh(c);
 
 
-            RAMMesh mesh3 = CreateGuildHouseMesh(c);
+            RAMMesh mesh3 = RenderingTestsHelper.CreateGuildHouseMesh(c);
 
             var gBuffer = new GBuffer(game.Device, 800, 600);
 
@@ -378,7 +348,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
 
             var otherCam = new SpectaterCamera(game.Keyboard, game.Mouse, 1, 10000);
 
-            var mesh = CreateMerchantsHouseMesh(new OBJToRAMMeshConverter(new RAMTextureFactory()));
+            var mesh = RenderingTestsHelper.CreateMerchantsHouseMesh(new OBJToRAMMeshConverter(new RAMTextureFactory()));
 
             var el = renderer.CreateMeshElement(mesh);
             var directional = renderer.CreateDirectionalLight();
@@ -457,7 +427,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
 
             var otherCam = new SpectaterCamera(game.Keyboard, game.Mouse, 1, 10000);
 
-            var mesh = CreateMerchantsHouseMesh(new OBJToRAMMeshConverter(new RAMTextureFactory()));
+            var mesh = RenderingTestsHelper.CreateMerchantsHouseMesh(new OBJToRAMMeshConverter(new RAMTextureFactory()));
 
 
             var el = renderer.CreateMeshElement(mesh);
@@ -537,7 +507,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
             game.InitDirectX();
             var context = game.Device.ImmediateContext;
 
-            var mesh = CreateSimpleTestMesh();
+            var mesh = RenderingTestsHelper.CreateSimpleTestMesh();
 
             var texturePool = new TheWizards.Rendering.Deferred.TexturePool(game);
 
@@ -678,27 +648,6 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
             var renderer = new DeferredMeshRenderer(game, gBuffer, texturePool);
 
             return renderer;
-        }
-
-        public static IMesh CreateSimpleTestMesh()
-        {
-            IMesh mesh;
-
-            mesh = new RAMMesh();
-
-            var part = new MeshCoreData.Part();
-            part.ObjectMatrix = Microsoft.Xna.Framework.Matrix.Identity;
-            part.MeshPart = new RAMMeshPart();
-            ((RAMMeshPart)part.MeshPart).SetGeometryData(MeshPartGeometryData.CreateTestSquare());
-
-            var mat = new MeshCoreData.Material();
-
-            mat.DiffuseMap = GetTestTexture();
-
-            part.MeshMaterial = mat;
-            mesh.GetCoreData().Parts.Add(part);
-
-            return mesh;
         }
     }
 }

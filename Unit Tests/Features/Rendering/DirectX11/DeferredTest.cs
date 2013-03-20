@@ -19,6 +19,9 @@ using Resource = SlimDX.Direct3D11.Resource;
 
 namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
 {
+    /// <summary>
+    /// Tests for all features of the deferred rendering pipeline (the lighting part)
+    /// </summary>
     [TestFixture]
     public class DeferredTest
     {
@@ -1154,7 +1157,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
                 var context = device.ImmediateContext;
 
 
-                var diffuseTexture = Texture2D.FromFile(device, DirectX11Test.Wallpaper001_png);
+                var diffuseTexture = Texture2D.FromFile(device, SlimDXDirectX11Test.Wallpaper001_png);
                 diffuseTextureRv = new ShaderResourceView(device, diffuseTexture);
 
                 shader = BasicShader.LoadAutoreload(game, new FileInfo(CompiledShaderCache.Current.RootShaderPath + "Deferred\\RenderGBuffer.fx"));

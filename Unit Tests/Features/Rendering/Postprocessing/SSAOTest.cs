@@ -67,52 +67,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
 
         }
 
-        [Test]
-        public void TestBilateralBlur()
-        {
-            var c = new OBJToRAMMeshConverter(new RAMTextureFactory());
-
-
-            var importer = new ObjImporter();
-            importer.AddMaterialFileStream("Town001.mtl", new FileStream("../../bin/GameData/Core/Town/OBJ03/Town001.mtl", FileMode.Open));
-            importer.ImportObjFile("../../bin/GameData/Core/Town/OBJ03/Town001.obj");
-
-            var mesh = c.CreateMesh(importer);
-
-            var game = new DX11Game();
-            game.InitDirectX();
-            var context = game.Device.ImmediateContext;
-
-
-            var texturePool = new TheWizards.Rendering.Deferred.TexturePool(game);
-
-            var gBuffer = new GBuffer(game.Device, 800, 600);
-
-            var renderer = new DeferredMeshRenderer(game, gBuffer, texturePool);
-
-
-
-            var el = renderer.AddMesh(mesh);
-            el.WorldMatrix = SlimDX.Matrix.Translation(MathHelper.Right * 0 * 2 + SlimDX.Vector3.UnitZ * 0 * 2);
-
-
-            game.GameLoopEvent += delegate
-            {
-                gBuffer.Clear();
-                gBuffer.SetTargetsToOutputMerger();
-
-                renderer.Draw();
-
-                context.ClearState();
-                game.SetBackbuffer();
-
-                DeferredTest.DrawGBuffer(game, gBuffer);
-
-            };
-
-            game.Run();
-
-        }
+       
 
         [Test]
         public void TestCombineFinalSSAO()
