@@ -45,6 +45,7 @@ GBuffer CreateGBuffer(float3 diffuse, float3 normal, float specularIntensity, fl
 }
 GBuffer_Raw SampleGBuffer(SamplerState s, float2 texcoord)
 {
+	//TODO: use Load instead of Sample?
 	float4 color = GBuffer_Color.Sample(s,texcoord);
 	float4 normal = GBuffer_Normal.Sample(s,texcoord);
 	float depth = GBuffer_Depth.Sample(s,texcoord).x;

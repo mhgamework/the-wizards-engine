@@ -21,14 +21,8 @@ cbuffer perMaterial
 Texture2D txDiffuse		: register(t0);
 Texture2D txNormal		: register(t1);
 Texture2D txSpecular	: register(t2);
-SamplerState Sampler	: register(s0)
+SamplerState Sampler	: register(s0);
 
-struct VertexShaderInput
-{
-    float4 Position : POSITION;
-    float3 Normal : NORMAL;
-    float2 TexCoord : TEXCOORD;
-};
 struct VertexShaderInput
 {
     float4 Position : POSITION;
@@ -59,22 +53,23 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	
 	// World space normal
     float3 normalWS = normalize(mul(input.Normal,(float3x3)World)); 
-	Output.NormalWS = normalWS;
+	output.NormalWS = normalWS;
+
+	float4 positionWS = mul (input.Position, World);
 
 #ifdef NORMAL_MAPPING
-	float4 positionWS = mul (input.Position, World);
 	float3 tangentWS = normalize( mul ( input.Tangent.xyz, (float3x3)WorldMatrix ) );
 	float3 bitangentWS = normalize( cross( normalWS, tangentWS ) ) * input.Tangent.w;
 
-	Output.PositionWS = positionWS.xyz;
-	Output.TangentWS = tangentWS;
-	Output.BitangentWS = bitangentWS;
+	output.PositionWS = positionWS.xyz;
+	output.TangentWS = tangentWS;
+	output.BitangentWS = bitangentWS;
 #endif
 
 
 	// Screen space Position and Texcoord
-    matrix viewProj = mul(View,Projection);
-	output.PositionCS = mul(positionWS, worldViewProj);
+    matrix viewProj = mul(View,Projection); // TODO: check preshader (also check the world multiplication above, now 2 multiplications are done)
+	output.PositionCS = mul(positionWS, viewProj);
     output.TexCoord = input.TexCoord;
 
     return output;
@@ -112,7 +107,7 @@ GBuffer PixelShaderFunction(VertexShaderOutput input)
 
 	normalWS = mul( normalTS, tangentFrameWS );
 #else
-	normalWS = normalize(input.Normal);
+	normalWS = normalize(input.NormalWS);
 #endif
 
     return CreateGBuffer(diffuseAlbedo,	normalWS,specularAlbedo,specularPower);
