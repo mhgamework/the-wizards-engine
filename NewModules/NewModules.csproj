@@ -403,6 +403,7 @@
     <Compile Include="Rendering\SSAO\HorizonSSAORenderer.cs" />
     <Compile Include="Rendering\TangentSolver.cs" />
     <Compile Include="Rendering\TextureCoreData.cs" />
+    <Compile Include="Rendering\TextureMapping\SphericalMapping.cs" />
     <Compile Include="Rendering\TexturePool.cs" />
     <Compile Include="Rendering\Text\TextTexture.cs" />
     <Compile Include="Rendering\Text\Unused\Helpers.cs" />
