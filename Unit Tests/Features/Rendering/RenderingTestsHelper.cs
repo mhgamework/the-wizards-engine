@@ -66,6 +66,9 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
         public static RAMTexture GetDiffuseMap() { return loadTexture(TWDir.GameData + @"\Rendering\BrickOldRounded\BrickOldRounded_COLOR.png"); }
         public static RAMTexture GetNormalMap() { return loadTexture(TWDir.GameData + @"\Rendering\BrickOldRounded\BrickOldRounded_NRM.png"); }
         public static RAMTexture GetSpecularMap() { return loadTexture(TWDir.GameData + @"\Rendering\BrickOldRounded\BrickOldRounded_SPEC.png"); }
+        public static RAMTexture GetDiffuseMapAlpha() { return loadTexture(TWDir.GameData + @"\Rendering\Ivy\Ivy_COLOR.png"); }
+        public static RAMTexture GetNormalMapAlpha() { return loadTexture(TWDir.GameData + @"\Rendering\Ivy\Ivy_NRM.png"); }
+        public static RAMTexture GetSpecularMapAlpha() { return loadTexture(TWDir.GameData + @"\Rendering\Ivy\Ivy_SPEC.png"); }
 
         public static IMesh CreateSphere(ITexture diffuse, ITexture normal, ITexture specular)
         {

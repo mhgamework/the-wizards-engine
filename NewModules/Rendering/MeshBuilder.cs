@@ -211,7 +211,7 @@ namespace MHGameWork.TheWizards.Rendering
             {
                 data.Positions.Add(vertices[index].pos * radius);
                 data.Normals.Add(vertices[index].normal);
-                data.Texcoords.Add(mapping.Map(positions[positions.Count-1].ToSlimDX()).xna());
+                data.Texcoords.Add(mapping.Map(positions[positions.Count-1].ToSlimDX()).xna()*3);
             }
 
         }

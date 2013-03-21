@@ -33,12 +33,12 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
         public static void DrawGBuffer(DX11Game game, GBuffer buffer)
         {
-            game.TextureRenderer.Draw(buffer.DiffuseRV, new Vector2(10, 10),
-                                      new Vector2(300, 300));
-            game.TextureRenderer.Draw(buffer.NormalRV, new Vector2(320, 10),
-                                      new Vector2(300, 300));
-            game.TextureRenderer.Draw(buffer.DepthRV, new Vector2(10, 320),
-                                      new Vector2(300, 300));
+            game.TextureRenderer.Draw(buffer.DiffuseRV, new Vector2(0, 0),
+                                      new Vector2(400, 300));
+            game.TextureRenderer.Draw(buffer.NormalRV, new Vector2(400, 00),
+                                      new Vector2(400, 300));
+            game.TextureRenderer.Draw(buffer.DepthRV, new Vector2(00, 300),
+                                      new Vector2(400, 300));
         }
 
         [Test]
