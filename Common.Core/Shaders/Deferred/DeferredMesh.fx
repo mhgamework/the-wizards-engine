@@ -58,7 +58,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	float4 positionWS = mul (input.Position, World);
 
 #ifdef NORMAL_MAPPING
-	float3 tangentWS = normalize( mul ( input.Tangent.xyz, (float3x3)WorldMatrix ) );
+	float3 tangentWS = normalize( mul ( input.Tangent.xyz, (float3x3)World ) );
 	float3 bitangentWS = normalize( cross( normalWS, tangentWS ) ) * input.Tangent.w;
 
 	output.PositionWS = positionWS.xyz;
