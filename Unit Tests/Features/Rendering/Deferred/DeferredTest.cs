@@ -28,60 +28,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
     {
         private static readonly string HdrImageDDS = TWDir.GameData.CreateSubdirectory("Core") + "\\HdrImage.dds";
 
-        [Test]
-        public void TestGBuffer()
-        {
-            var game = new DX11Game();
-            game.InitDirectX();
-
-            var buffer = new GBuffer(game.Device, 300, 300);
-
-            buffer.Clear();
-
-            game.GameLoopEvent += delegate
-                                      {
-
-                                          DrawGBuffer(game, buffer);
-                                      };
-
-            game.Run();
-
-        }
-
-        public static void DrawGBuffer(DX11Game game, GBuffer buffer)
-        {
-            game.TextureRenderer.Draw(buffer.DiffuseRV, new Vector2(10, 10),
-                                      new Vector2(300, 300));
-            game.TextureRenderer.Draw(buffer.NormalRV, new Vector2(320, 10),
-                                      new Vector2(300, 300));
-            game.TextureRenderer.Draw(buffer.DepthRV, new Vector2(10, 320),
-                                      new Vector2(300, 300));
-        }
-
-        [Test]
-        public void TestRenderToGBuffer()
-        {
-            var game = new DX11Game();
-            game.InitDirectX();
-            var device = game.Device;
-            var context = device.ImmediateContext;
-
-
-            var filledGBuffer = new TestFilledGBuffer(game, 600, 600);
-
-
-            game.GameLoopEvent += delegate
-                                      {
-                                          filledGBuffer.DrawUpdatedGBuffer();
-
-                                          game.SetBackbuffer();
-
-                                          DrawGBuffer(game, filledGBuffer.GBuffer);
-                                      };
-
-            game.Run();
-
-        }
+    
 
         [Test]
         public void TestDirectionalLightAccumulation()
@@ -119,7 +66,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
                 }
 
                 if (game.Keyboard.IsKeyDown(Key.I))
-                    DrawGBuffer(game, filledGBuffer.GBuffer);
+                    GBufferTest.DrawGBuffer(game, filledGBuffer.GBuffer);
                 else
                     light.Draw();
 
@@ -171,7 +118,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
 
                                           if (game.Keyboard.IsKeyDown(Key.I))
-                                              DrawGBuffer(game, filledGBuffer.GBuffer);
+                                              GBufferTest.DrawGBuffer(game, filledGBuffer.GBuffer);
                                           else
                                           {
                                               csmRenderer.RenderShadowOcclusion(game.SpectaterCamera, filledGBuffer.GBuffer.DepthRV);
@@ -236,7 +183,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
 
                 if (game.Keyboard.IsKeyDown(Key.I))
-                    DrawGBuffer(game, filledGBuffer.GBuffer);
+                    GBufferTest.DrawGBuffer(game, filledGBuffer.GBuffer);
                 else
                 {
                     light.Draw();
@@ -287,7 +234,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
                 }
 
                 if (game.Keyboard.IsKeyDown(Key.I))
-                    DrawGBuffer(game, filledGBuffer.GBuffer);
+                    GBufferTest.DrawGBuffer(game, filledGBuffer.GBuffer);
                 else
                     light.Draw();
 
@@ -327,7 +274,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
                 }
 
                 if (game.Keyboard.IsKeyDown(Key.I))
-                    DrawGBuffer(game, filledGBuffer.GBuffer);
+                    GBufferTest.DrawGBuffer(game, filledGBuffer.GBuffer);
                 else
                     light.Draw();
 
@@ -417,7 +364,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
 
                 if (game.Keyboard.IsKeyDown(Key.I))
-                    DrawGBuffer(game, filledGBuffer.GBuffer);
+                    GBufferTest.DrawGBuffer(game, filledGBuffer.GBuffer);
                 else
                 {
                     context.OutputMerger.DepthStencilState = depthState;
@@ -931,7 +878,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
                                           }
 
                                           if (game.Keyboard.IsKeyDown(Key.I))
-                                              DrawGBuffer(game, filledGBuffer.GBuffer);
+                                              GBufferTest.DrawGBuffer(game, filledGBuffer.GBuffer);
                                           else
                                           {
                                               light.Draw();
@@ -990,7 +937,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
 
                 if (game.Keyboard.IsKeyDown(Key.I))
-                    DrawGBuffer(game, filledGBuffer.GBuffer);
+                    GBufferTest.DrawGBuffer(game, filledGBuffer.GBuffer);
                 else
                 {
                     light.Draw();
@@ -1099,7 +1046,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
                 {
                     context.ClearState();
                     game.SetBackbuffer();
-                    DrawGBuffer(game, FilledGBuffer.GBuffer);
+                    GBufferTest.DrawGBuffer(game, FilledGBuffer.GBuffer);
 
                 }
                 else

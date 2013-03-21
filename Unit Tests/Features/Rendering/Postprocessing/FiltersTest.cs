@@ -91,7 +91,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Postprocessing
                 context.ClearState();
                 game.SetBackbuffer();
 
-                DeferredTest.DrawGBuffer(game, gBuffer);
+                GBufferTest.DrawGBuffer(game, gBuffer);
 
             };
 
