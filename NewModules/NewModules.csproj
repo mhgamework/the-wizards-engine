@@ -84,6 +84,7 @@
     <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -309,6 +310,7 @@
     <Compile Include="Raycasting\MeshRaycaster.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshBoundingBoxFactory.cs" />
     <Compile Include="Rendering\Deferred\Meshes\DeferredMaterial.cs" />
+    <Compile Include="Rendering\Deferred\Meshes\MeshPartRenderData.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderData.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderDataFactory.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderMaterial.cs" />

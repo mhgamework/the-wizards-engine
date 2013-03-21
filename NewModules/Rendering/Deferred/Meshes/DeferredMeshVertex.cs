@@ -8,7 +8,7 @@ using SlimDX.Direct3D11;
 
 namespace MHGameWork.TheWizards.Rendering.Deferred
 {
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct DeferredMeshVertex
     {
         public Vector4 Pos;

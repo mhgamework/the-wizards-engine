@@ -14,7 +14,7 @@ single cbuffer sharedData
 
 cbuffer perMaterial
 {
-	float4 diffuseColor = float4(0.5f,0.5f,0.5f,1);
+	float4 diffuseColor = float4(0.5f,0.5f,0.5f,1.0f);
 	float specularIntensity = 0.1f;
 	float specularPower = 0.2f;
 };
@@ -89,7 +89,7 @@ GBuffer PixelShaderFunction(VertexShaderOutput input)
 #endif
 
 	// clip when alpha is below 95 %
-	clip( diffuseAlbedo - 0.95f );
+	clip( diffuseAlbedo.a - 0.95f );
 
 #ifdef SPECULAR_MAPPING
 	specularAlbedo = txSpecular.Sample(samLinear, input.TexCoord).r;
