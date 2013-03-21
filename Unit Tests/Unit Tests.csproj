@@ -167,7 +167,7 @@
     <Compile Include="Features\Various\Client\ClientTest.cs" />
     <Compile Include="Features\Data\CoreTest.cs" />
     <Compile Include="Features\Rendering\DirectX11\XAudio2Test.cs" />
-    <Compile Include="Features\Rendering\DirectX11\DeferredTest.cs" />
+    <Compile Include="Features\Rendering\Deferred\DeferredTest.cs" />
     <Compile Include="Features\Rendering\DirectX11\SharpDXTest.cs" />
     <Compile Include="Features\Rendering\DirectX11\SlimDXDirectX11Test.cs" />
     <Compile Include="Features\Rendering\DirectX11\TessellationTest.cs" />
@@ -186,7 +186,7 @@
     <Compile Include="Features\Rendering\Data\MeshOptimizerTest.cs" />
     <Compile Include="Features\Rendering\Text\TextRenderingFunctionalityTest.cs" />
     <Compile Include="Features\Rendering\Culling\CullingTest.cs" />
-    <Compile Include="Features\Rendering\DeferredRenderingTest.cs" />
+    <Compile Include="Features\Rendering\Deferred\DeferredRenderingTest.cs" />
     <Compile Include="Features\Rendering\Data\MeshLoaderTest.cs" />
     <Compile Include="Features\Rendering\Postprocessing\SSAOTest.cs" />
     <Compile Include="Features\Various\Launcher\LauncherTest.cs" />
