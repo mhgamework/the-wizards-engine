@@ -147,34 +147,14 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             renderDataFactory = new MeshRenderDataFactory(game, baseShader, texturePool);
 
 
-            layout = new InputLayout(game.Device, baseShader.GetCurrentPass(0).Description.Signature, DeferredMeshVertex.Elements);
+            //createInputLayout();
 
-            perObjectBuffer = new Buffer(game.Device, new BufferDescription
-                                                          {
-                                                              BindFlags = BindFlags.ConstantBuffer,
-                                                              CpuAccessFlags = CpuAccessFlags.Write,
-                                                              OptionFlags = ResourceOptionFlags.None,
-                                                              SizeInBytes = 16 * 4, // PerObjectCB
-                                                              Usage = ResourceUsage.Dynamic,
-                                                              StructureByteStride = 0
-                                                          });
+            // createPerObjectCB
 
-            perObjectStrm = new DataStream(baseShader.Effect.GetConstantBufferByName("perObject").ConstantBuffer.Description.SizeInBytes, false, true);
-            perObjectBox = new DataBox(0, 0, perObjectStrm);
-
-            // No support for late initialize anymore, this is moved to Gameplay layer
-            /*for (int i = 0; i < renderDatas.Count; i++)
-            {
-                initMeshRenderData(renderDatas[i]);
-            }*/
         }
 
     
 
-        private struct PerObjectCB
-        {
-            public Matrix WorldMatrix;
-        }
 
         public void Draw() { drawInternal(false); }
         public void DrawShadowCastersDepth() {throw new NotImplementedException(); drawInternal(true); }
@@ -183,12 +163,12 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         {
             drawCalls = 0;
             Performance.BeginEvent(new Color4(System.Drawing.Color.Red), "BeginDrawDeferredMeshes");
-            context.InputAssembler.InputLayout = layout;
-            context.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleList;
+            //context.InputAssembler.InputLayout = layout;
+            
 
-            baseShader.Effect.GetVariableByName("View").AsMatrix().SetMatrix(game.Camera.View);
-            baseShader.Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(game.Camera.Projection);
-            if (!depthOnly) baseShader.Effect.GetConstantBufferByName("perObject").ConstantBuffer = perObjectBuffer;
+            //baseShader.Effect.GetVariableByName("View").AsMatrix().SetMatrix(game.Camera.View);
+            //baseShader.Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(game.Camera.Projection);
+            //if (!depthOnly) baseShader.Effect.GetConstantBufferByName("perObject").ConstantBuffer = perObjectBuffer;
             //perObjectBuffer = baseShader.Effect.GetConstantBufferByName("perObject").ConstantBuffer;
 
 
@@ -220,49 +200,20 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
         private int drawCalls;
-        private DataStream perObjectStrm;
-        private DataBox perObjectBox;
-        private Buffer perObjectBuffer;
-
+        
         private void renderMeshPart(Matrix world, MeshRenderMaterial mat, MeshRenderPart part)
         {
-            updatePerObjectBuffer(part, world);
+            //updatePerObjectBuffer(part, world);
 
             throw new NotImplementedException();
             //setMaterial( mat );
-            setIndexAndVertexBuffer(part);
-            drawIndexed(part);
+            //setIndexAndVertexBuffer(part);
+            //drawIndexed(part);
 
             Performance.SetMarker(new Color4(System.Drawing.Color.Orange), "DrawMeshElement");
         }
 
-       
-
-        private void drawIndexed(MeshRenderPart part)
-        {
-            context.DrawIndexed(part.PrimitiveCount * 3, 0, 0);
-            drawCalls = DrawCalls + 1;
-        }
-
-        private void setIndexAndVertexBuffer(MeshRenderPart part)
-        {
-            context.InputAssembler.SetIndexBuffer(part.IndexBuffer, SlimDX.DXGI.Format.R32_UInt, 0); //Using int indexbuffers
-            context.InputAssembler.SetVertexBuffers(0,
-                                                    new VertexBufferBinding(part.VertexBuffer,
-                                                                            DeferredMeshVertex.SizeInBytes, 0));
-        }
-
-        private void updatePerObjectBuffer(MeshRenderPart part, Matrix world)
-        {
-            var box = context.MapSubresource(perObjectBuffer, MapMode.WriteDiscard,
-                                             MapFlags.None);
-            box.Data.Write(new PerObjectCB
-                               {
-                                   WorldMatrix = Matrix.Transpose(part.ObjectMatrix * world)
-                               });
-
-            context.UnmapSubresource(perObjectBuffer, 0);
-        }
+            
 
 
     }

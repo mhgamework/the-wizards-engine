@@ -63,22 +63,29 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
 
 
         public static RAMTexture GetTestTexture() { return loadTexture(TestFiles.BrickRoundJPG); }
-        public static RAMTexture GetDiffuseMap() { return loadTexture(@"Rendering\BrickOldRounded\BrickOldRounded_COLOR.png"); }
-        public static RAMTexture GetNormalMap() { return loadTexture(@"Rendering\BrickOldRounded\BrickOldRounded_NRM.png"); }
-        public static RAMTexture GetSpecularMap() { return loadTexture(@"Rendering\BrickOldRounded\BrickOldRounded_SPEC.png"); }
+        public static RAMTexture GetDiffuseMap() { return loadTexture(TWDir.GameData + @"\Rendering\BrickOldRounded\BrickOldRounded_COLOR.png"); }
+        public static RAMTexture GetNormalMap() { return loadTexture(TWDir.GameData + @"\Rendering\BrickOldRounded\BrickOldRounded_NRM.png"); }
+        public static RAMTexture GetSpecularMap() { return loadTexture(TWDir.GameData + @"\Rendering\BrickOldRounded\BrickOldRounded_SPEC.png"); }
 
-        public static IMesh createSphere(ITexture diffuse, ITexture normal, ITexture specular)
+        public static IMesh CreateSphere(ITexture diffuse, ITexture normal, ITexture specular)
         {
             var builder = new MeshBuilder();
             builder.AddSphere(20, 1);
             var mesh = builder.CreateMesh();
 
             mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap = diffuse;
+            //TODO!!!
 
             return mesh;
         }
 
+        public static IMeshPart CreateSphereMeshPart()
+        {
+            var mesh = CreateSphere(null, null, null);
+            return mesh.GetCoreData().Parts[0].MeshPart;
+        }
 
-     
+
+
     }
 }
