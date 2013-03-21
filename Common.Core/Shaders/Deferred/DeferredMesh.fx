@@ -83,7 +83,7 @@ GBuffer PixelShaderFunction(VertexShaderOutput input)
 	float3 normalWS;
 
 #ifdef DIFFUSE_MAPPING
-	diffuseAlbedo = txDiffuse.Sample(samLinear, input.TexCoord);
+	diffuseAlbedo = txDiffuse.Sample(Sampler, input.TexCoord);
 #else
 	diffuseAlbedo = diffuseColor;
 #endif
@@ -92,7 +92,7 @@ GBuffer PixelShaderFunction(VertexShaderOutput input)
 	clip( diffuseAlbedo.a - 0.95f );
 
 #ifdef SPECULAR_MAPPING
-	specularAlbedo = txSpecular.Sample(samLinear, input.TexCoord).r;
+	specularAlbedo = txSpecular.Sample(Sampler, input.TexCoord).r;
 #else
 	specularAlbedo = specularIntensity;
 #endif
@@ -102,7 +102,7 @@ GBuffer PixelShaderFunction(VertexShaderOutput input)
 	float3x3 tangentFrameWS = float3x3( normalize( input.TangentWS ), normalize( input.BitangentWS ), normalize( input.NormalWS ) );
 
 	// Sample the tangent-space normal map and decompress
-	float3 normalTS = txNormal.Sample(samLinear, input.TexCoord).rgb;
+	float3 normalTS = txNormal.Sample(Sampler, input.TexCoord).rgb;
 	normalTS = normalize( normalTS * 2.0f - 1.0f );
 
 	normalWS = mul( normalTS, tangentFrameWS );
