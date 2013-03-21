@@ -63,9 +63,9 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
 
 
         public static RAMTexture GetTestTexture() { return loadTexture(TestFiles.BrickRoundJPG); }
-        public static RAMTexture GetDiffuseMap() { return loadTexture(); }
-        public static RAMTexture GetNormalMap() { return loadTexture(); }
-        public static RAMTexture GetSpecularMap() { return loadTexture(); }
+        public static RAMTexture GetDiffuseMap() { return loadTexture(@"Rendering\BrickOldRounded\BrickOldRounded_COLOR.png"); }
+        public static RAMTexture GetNormalMap() { return loadTexture(@"Rendering\BrickOldRounded\BrickOldRounded_NRM.png"); }
+        public static RAMTexture GetSpecularMap() { return loadTexture(@"Rendering\BrickOldRounded\BrickOldRounded_SPEC.png"); }
 
         public static IMesh createSphere(ITexture diffuse, ITexture normal, ITexture specular)
         {
@@ -75,6 +75,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
 
             mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap = diffuse;
 
+            return mesh;
         }
 
 

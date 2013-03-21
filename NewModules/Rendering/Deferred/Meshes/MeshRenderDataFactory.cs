@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
     public class MeshRenderDataFactory
     {
         private readonly DX11Game game;
-        
+
         private ShaderResourceView checkerTextureRV;
 
         private TexturePool texturePool;
@@ -123,6 +123,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             var positions = geomData.GetSourceVector3(MeshPartGeometryData.Semantic.Position);
             var normals = geomData.GetSourceVector3(MeshPartGeometryData.Semantic.Normal);
             var texcoords = geomData.GetSourceVector2(MeshPartGeometryData.Semantic.Texcoord);
+            var tangents = geomData.GetSourceVector3(MeshPartGeometryData.Semantic.Tangent);
             // This might not work when no texcoords
 
             var vertices = new DeferredMeshVertex[positions.Length];
@@ -139,12 +140,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
                 vertices[j].Pos = new Vector4(pos, 1);
 
-
-                vertices[j].Pos = new Vector4(positions[j].ToSlimDX(), 1);
                 vertices[j].Normal = normals[j].ToSlimDX();
-                if (texcoords != null)
-                    vertices[j].UV = texcoords[j].ToSlimDX();
-                //TODO: tangent
+                if (texcoords != null) vertices[j].UV = texcoords[j].ToSlimDX();
+                if (tangents != null) vertices[j].Tangent = new Vector4(tangents[j].ToSlimDX(), 1);
             }
             Buffer vb;
             using (var strm = new DataStream(vertices, true, false))
