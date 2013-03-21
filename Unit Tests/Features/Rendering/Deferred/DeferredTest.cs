@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DirectX11.Rendering.CSM;
 using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.D3DCompiler;
@@ -17,7 +18,7 @@ using Buffer = SlimDX.Direct3D11.Buffer;
 using Device = SlimDX.Direct3D11.Device;
 using Resource = SlimDX.Direct3D11.Resource;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 {
     /// <summary>
     /// Tests for all features of the deferred rendering pipeline (the lighting part)
