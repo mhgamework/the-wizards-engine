@@ -12,6 +12,7 @@ using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.Tests.Features.Data.OBJParser;
+using MHGameWork.TheWizards.Tests.Features.Rendering.Deferred;
 using MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11;
 using MHGameWork.TheWizards.Tests.Features.Simulation.Physics;
 using Microsoft.Xna.Framework;
