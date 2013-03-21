@@ -29,12 +29,6 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
         [Test]
         public void TestAllMaps() { testGBufferSphere(RenderingTestsHelper.GetDiffuseMap(), RenderingTestsHelper.GetNormalMap(), RenderingTestsHelper.GetSpecularMap()); }
 
-        [Test]
-        public void TestFullscreen() { testGBufferSphereFull(RenderingTestsHelper.GetDiffuseMap(), RenderingTestsHelper.GetNormalMap(), RenderingTestsHelper.GetSpecularMap()); }
-
-        [Test]
-        public void TestFullscreenAlpha() { testGBufferSphereFull(RenderingTestsHelper.GetDiffuseMapAlpha(), RenderingTestsHelper.GetNormalMapAlpha(), RenderingTestsHelper.GetSpecularMapAlpha()); }
-
         /// <summary>
         /// Renders a test where the GBuffer is displayed containing a sphere with provided maps.
         /// </summary>
@@ -112,80 +106,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
         }
 
 
-        /// <summary>
-        /// Renders a test where the GBuffer is displayed containing a sphere with provided maps.
-        /// </summary>
-        private void testGBufferSphereFull(ITexture diffuse, ITexture normal, ITexture specular)
-        {
-            var game = createGame();
-            
-            var pool = createTexturePool(game);
-            var txDiffuse = diffuse == null ? null : pool.LoadTexture(diffuse);
-            var txNormal = normal == null ? null : pool.LoadTexture(normal);
-            var txSpecular = specular == null ? null : pool.LoadTexture(specular);
-
-            var mat = new DeferredMaterial(game, txDiffuse, txNormal, txSpecular);
-
-            var part = RenderingTestsHelper.CreateSphereMeshPart();
-            var fact = new MeshRenderDataFactory(game, null, null);
-
-            var partData = fact.CreateMeshPartData(part);
-
-            var buffer = new GBuffer(game.Device, 1920, 1080);
-
-            var perObject = mat.CreatePerObjectCB();
-
-
-            var ctx = game.Device.ImmediateContext;
-
-            perObject.UpdatePerObjectBuffer(ctx, Matrix.Identity);
-
-
-
-
-            // Non-related init code
-            var point = new PointLightRenderer(game, buffer);
-
-            point.LightRadius = 3;
-            point.LightIntensity = 1;
-            point.ShadowsEnabled = false;
-
-
-            float angle = 0;
-
-            var combineFinal = new CombineFinalRenderer(game, buffer);
-            game.GameLoopEvent += delegate
-            {
-                angle += MathHelper.Pi * game.Elapsed;
-                point.LightPosition = new Vector3((float)Math.Sin(angle), (float)Math.Cos(angle), -2);
-
-                ctx.ClearState();
-                buffer.Clear();
-                buffer.SetTargetsToOutputMerger();
-
-                mat.SetCamera(game.Camera.View, game.Camera.Projection);
-
-                mat.SetToContext(ctx);
-                mat.SetPerObjectBuffer(ctx, perObject);
-
-                partData.Draw(ctx);
-
-                ctx.ClearState();
-                combineFinal.SetLightAccumulationStates();
-                combineFinal.ClearLightAccumulation();
-                point.Draw();
-
-                ctx.ClearState();
-                game.SetBackbuffer();
-
-                combineFinal.DrawCombined();
-
-
-            };
-
-            game.Run();
-        }
-
+       
         private static TheWizards.Rendering.Deferred.TexturePool createTexturePool(DX11Game game)
         {
             return new TheWizards.Rendering.Deferred.TexturePool(game);
