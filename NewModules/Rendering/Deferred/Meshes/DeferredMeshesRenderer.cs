@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using DirectX11;
 using MHGameWork.TheWizards.Common.Core;
-using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
@@ -16,7 +15,6 @@ using BoundingFrustum = Microsoft.Xna.Framework.BoundingFrustum;
 using Buffer = SlimDX.Direct3D11.Buffer;
 using CullMode = SlimDX.Direct3D11.CullMode;
 using DataStream = SlimDX.DataStream;
-using EffectTechnique = SlimDX.Direct3D11.EffectTechnique;
 using FillMode = SlimDX.Direct3D11.FillMode;
 using Texture2D = SlimDX.Direct3D11.Texture2D;
 
@@ -31,10 +29,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
     /// </summary>
     public class DeferredMeshesRenderer
     {
-        public static readonly FileInfo DeferredMeshFX = new System.IO.FileInfo(CompiledShaderCache.Current.RootShaderPath + "Deferred\\DeferredMesh.fx");
-
-
-        private MeshBoundingBoxFactory bbFactory = new MeshBoundingBoxFactory();
         private MeshRenderDataFactory renderDataFactory;
 
 
@@ -43,8 +37,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             this.game = game;
             this.gBuffer = gBuffer;
             context = game.Device.ImmediateContext;
-
-
 
             initialize(texturePool);
         }
@@ -95,16 +87,12 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             return ret;
         }
-         
-        //[TWProfile]
+
+
         public DeferredMeshRenderElement AddMesh(IMesh mesh)
         {
-
-            var el = new DeferredMeshRenderElement(this, mesh, bbFactory);
-
-
+            var el = new DeferredMeshRenderElement(this, mesh);
             var data = getRenderData(mesh);
-
 
             el.ElementNumber = data.WorldMatrices.Count;
             data.WorldMatrices.Add(el.WorldMatrix);
@@ -127,13 +115,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             Elements.Remove(el);
 
-            
-            //TODO: not sure this works
-            // EDIT: this does not work, removing in the middle of a list changes later indexes, which breaks the system
-            /*var index = renderDataDict[el.Mesh].Elements.IndexOf(el);
-            renderDataDict[el.Mesh].Elements.RemoveAt(index);
-            renderDataDict[el.Mesh].WorldMatrices.RemoveAt(index);*/
-
 
         }
 
@@ -147,8 +128,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         }
 
 
-
-
         private void initialize(TexturePool texturePool)
         {
             rasterizerState = RasterizerState.FromDescription(game.Device, new RasterizerStateDescription
@@ -156,15 +135,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                                                                    CullMode = CullMode.None,
                                                                                    FillMode = FillMode.Solid,
                                                                                });
-
-
-
-
-            baseShader = BasicShader.LoadAutoreload(game, DeferredMeshFX);
-            baseShader.SetTechnique("Textured"); // "Textured"
-            coloredTechnique = baseShader.GetTechnique("Colored");
-            texturedTechnique = baseShader.GetTechnique("Textured");
-            //baseShader.DiffuseTexture = checkerTexture;
+            throw new NotImplementedException();
+            //initializeMaterial();
 
             renderDataFactory = new MeshRenderDataFactory(game, baseShader, texturePool);
 
@@ -191,12 +163,17 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             }*/
         }
 
+    
+
         private struct PerObjectCB
         {
             public Matrix WorldMatrix;
         }
-        //[TWProfile]
-        public void Draw()
+
+        public void Draw() { drawInternal(false); }
+        public void DrawShadowCastersDepth() {throw new NotImplementedException(); drawInternal(true); }
+
+        private void drawInternal(bool depthOnly)
         {
             drawCalls = 0;
             Performance.BeginEvent(new Color4(System.Drawing.Color.Red), "BeginDrawDeferredMeshes");
@@ -205,122 +182,55 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             baseShader.Effect.GetVariableByName("View").AsMatrix().SetMatrix(game.Camera.View);
             baseShader.Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(game.Camera.Projection);
-            baseShader.Effect.GetConstantBufferByName("perObject").ConstantBuffer = perObjectBuffer;
+            if (!depthOnly) baseShader.Effect.GetConstantBufferByName("perObject").ConstantBuffer = perObjectBuffer;
             //perObjectBuffer = baseShader.Effect.GetConstantBufferByName("perObject").ConstantBuffer;
 
 
-
             baseShader.Apply();
             context.Rasterizer.State = rasterizerState;
 
 
-            for (int i = 0; i < renderDatas.Count; i++)
+            foreach (var el in Elements)
             {
-                //TODO: use instancing here
-                var data = renderDatas[i];
-                for (int j = 0; j < data.WorldMatrices.Count; j++)
+                // Test if it should be rendered
+                if (el.IsDeleted) continue;
+                if (!el.Visible) continue;
+                if (depthOnly && !el.CastsShadows) continue;
+
+
+                foreach ( var mat in  renderDataDict[ el.Mesh ].Materials )
                 {
-                    var el = data.Elements[j];
-                    if (el.IsDeleted) continue;
-                    if (!el.Visible) continue;
-                    var mat = data.WorldMatrices[j];
-                    renderMesh(data, mat);
+                    foreach ( var part in mat.Parts )
+                    {
+                        renderMeshPart( el.WorldMatrix,mat,part );
+                    }
                 }
+
+
             }
             Performance.EndEvent();
-
-            //game.AddToWindowTitle("Calls: " + drawCalls);
-
         }
-        public void DrawShadowCastersDepth()
-        {
-            drawCalls = 0;
-            Performance.BeginEvent(new Color4(System.Drawing.Color.Red), "DMeshes-Depth");
-            context.InputAssembler.InputLayout = layout;
-            context.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleList;
 
-            baseShader.Effect.GetVariableByName("View").AsMatrix().SetMatrix(game.Camera.View);
-            baseShader.Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(game.Camera.Projection);
-            baseShader.Apply();
-            context.Rasterizer.State = rasterizerState;
 
-            for (int i = 0; i < renderDatas.Count; i++)
-            {
-                //TODO: use instancing here
-                var data = renderDatas[i];
-                for (int j = 0; j < data.WorldMatrices.Count; j++)
-                {
-                    var el = data.Elements[j];
-                    if (el.IsDeleted) continue;
-                    if (!el.Visible) continue;
-                    if (!el.CastsShadows) continue;
-                    var mat = data.WorldMatrices[j];
-                    renderMeshDepthOnly(data, mat);
-                }
-            }
-            Performance.EndEvent();
-
-            //game.AddToWindowTitle("Calls: " + drawCalls);
-
-        }
 
         private int drawCalls;
         private DataStream perObjectStrm;
         private DataBox perObjectBox;
         private Buffer perObjectBuffer;
-        private EffectTechnique coloredTechnique;
-        private EffectTechnique texturedTechnique;
 
-        //[TWProfile]
-        private void renderMesh(MeshRenderData data, Matrix world)
-        {
-            for (int i = 0; i < data.Materials.Length; i++)
-            {
-                var mat = data.Materials[i];
-
-
-                for (int j = 0; j < mat.Parts.Length; j++)
-                {
-                    var part = mat.Parts[j];
-                    if (part == null) continue;
-
-
-                    //context.PixelShader.SetConstantBuffer(mat.PerObjectConstantBuffer, 0);
-                    //shaders[i].ViewProjection = game.Camera.ViewProjection;
-                    //mat.Shader.Effect.GetVariableByName("World").AsMatrix().SetMatrix(world * part.ObjectMatrix);
-                    //mat.Shader.Apply();
-                    if (!mat.Material.ColoredMaterial)
-                    {
-                        texturedTechnique.GetPassByIndex(0).Apply(context);
-                        context.PixelShader.SetShaderResource(mat.DiffuseTexture, 0);
-
-                    }
-                    else
-                    {
-                        baseShader.Effect.GetVariableByName("diffuseColor")
-                                  .AsVector()
-                                  .Set(mat.Material.DiffuseColor.ToVector3().dx());
-                        coloredTechnique.GetPassByIndex(0).Apply(context);
-                    }
-
-
-                    drawMeshPart(part, world);
-                    Performance.SetMarker(new Color4(System.Drawing.Color.Orange), "DrawMeshElement");
-
-
-                }
-            }
-        }
-
-        private void drawMeshPart(MeshRenderPart part, Matrix world)
+        private void renderMeshPart(Matrix world, MeshRenderMaterial mat, MeshRenderPart part)
         {
             updatePerObjectBuffer(part, world);
 
-
-            setInputAssembler(part);
-
+            throw new NotImplementedException();
+            //setMaterial( mat );
+            setIndexAndVertexBuffer(part);
             drawIndexed(part);
+
+            Performance.SetMarker(new Color4(System.Drawing.Color.Orange), "DrawMeshElement");
         }
+
+       
 
         private void drawIndexed(MeshRenderPart part)
         {
@@ -328,7 +238,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             drawCalls = DrawCalls + 1;
         }
 
-        private void setInputAssembler(MeshRenderPart part)
+        private void setIndexAndVertexBuffer(MeshRenderPart part)
         {
             context.InputAssembler.SetIndexBuffer(part.IndexBuffer, SlimDX.DXGI.Format.R32_UInt, 0); //Using int indexbuffers
             context.InputAssembler.SetVertexBuffers(0,
@@ -348,48 +258,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             context.UnmapSubresource(perObjectBuffer, 0);
         }
 
-
-        private void renderMeshDepthOnly(MeshRenderData data, Matrix world)
-        {
-            for (int i = 0; i < data.Materials.Length; i++)
-            {
-                var mat = data.Materials[i];
-
-
-                for (int j = 0; j < mat.Parts.Length; j++)
-                {
-                    var part = mat.Parts[j];
-                    if (part == null) continue;
-
-                    Performance.BeginEvent(new Color4(System.Drawing.Color.Red), "DMesh-Depth");
-
-                    drawMeshPart(part, world);
-
-                    Performance.EndEvent();
-
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// Removes a mesh from the gpu cache
-        /// </summary>
-        /// <param name="mesh"></param>
-        //[TWProfile]
-        public void DisposeMesh(IMesh mesh)
-        {
-            var data = renderDataDict[mesh];
-            data.Elements.ForEach(el => el.Delete());
-            
-            data.Dispose();
-
-            renderDataDict.Remove(mesh);
-            renderDatas.Remove(data);
-            bbFactory.ClearCache(mesh);
-
-
-        }
 
     }
 }

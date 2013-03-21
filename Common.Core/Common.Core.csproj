@@ -415,6 +415,7 @@
     <Compile Include="Core\Collections\EventList.cs" />
     <Compile Include="Core\Collections\PrefilledList.cs" />
     <Compile Include="RequiresPostSharp.cs" />
+    <Compile Include="Shaders\ShaderFiles.cs" />
     <Compile Include="Water\Camera.cs" />
     <Compile Include="Water\Mesh.cs" />
     <Compile Include="Water\SubGrid.cs" />

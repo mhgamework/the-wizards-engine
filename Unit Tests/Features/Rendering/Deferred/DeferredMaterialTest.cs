@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
     /// Tests the DeferredMesh.fx shader.
     /// </summary>
     [TestFixture]
-    public class DeferredMeshMaterialTest
+    public class DeferredMaterialTest
     {
         [Test]
         public void TestNoMaps() { testGBufferSphere(null, null, null); }
@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
         /// </summary>
         private void testGBufferSphere(ITexture diffuse, ITexture normal, ITexture specular)
         {
-
+            
         }
 
         private DX11Game createGame()
