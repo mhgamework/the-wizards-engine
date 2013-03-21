@@ -43,7 +43,7 @@ struct VertexShaderOutput
 #ifdef NORMAL_MAPPING
 	float3 PositionWS	: POSITIONWS;
 	float3 TangentWS	: TANGENTWS;
-	float3 BitangentWS	: BITANGENTSWS
+	float3 BitangentWS	: BITANGENTSWS;
 #endif
 	
 };

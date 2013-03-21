@@ -5,6 +5,7 @@ using System.Text;
 using DirectX11;
 
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Rendering.TextureMapping;
 using Microsoft.Xna.Framework.Graphics;
 using SlimDX;
 using XnaVector3 = Microsoft.Xna.Framework.Vector3;
@@ -46,15 +47,15 @@ namespace MHGameWork.TheWizards.Rendering
 
             }
         }
-        
+
         public void AddCustom(Vector3[] nPositions, Vector3[] nNormals, Vector2[] nTexcoords)
         {
             if (nPositions.Length != nNormals.Length) throw new ArgumentException();
             if (nPositions.Length != nTexcoords.Length) throw new ArgumentException();
-            positions.AddRange(nPositions.Select(v=>v.xna()));
-            normals.AddRange(nNormals.Select(v=>v.xna()));
-            
-            texcoords.AddRange(nTexcoords.Select(t=>new Microsoft.Xna.Framework.Vector2(t.X,t.Y)));
+            positions.AddRange(nPositions.Select(v => v.xna()));
+            normals.AddRange(nNormals.Select(v => v.xna()));
+
+            texcoords.AddRange(nTexcoords.Select(t => new Microsoft.Xna.Framework.Vector2(t.X, t.Y)));
         }
 
         public void AddSphere(int segments, float radius)
@@ -173,12 +174,14 @@ namespace MHGameWork.TheWizards.Rendering
                 indices[i] = (short)(1 + numVertsOnRing * (iRing + 1) + (0)); i++;
             }
 
+            var mapping = new SphericalMapping();
+
 
             foreach (var index in indices)
             {
                 this.positions.Add(vertices[index].pos * radius);
                 this.normals.Add(vertices[index].normal);
-                this.texcoords.Add(new Microsoft.Xna.Framework.Vector2());
+                this.texcoords.Add(mapping.Map(positions[positions.Count-1].ToSlimDX()).xna());
             }
 
         }
@@ -200,9 +203,15 @@ namespace MHGameWork.TheWizards.Rendering
             });
             geom.Sources.Add(new MeshPartGeometryData.Source
             {
-                DataVector2= texcoords.ToArray(),
+                DataVector2 = texcoords.ToArray(),
                 Number = 0,
                 Semantic = MeshPartGeometryData.Semantic.Texcoord
+            });
+            geom.Sources.Add(new MeshPartGeometryData.Source
+            {
+                DataVector3 = calculateTangents(),
+                Number = 0,
+                Semantic = MeshPartGeometryData.Semantic.Tangent
             });
 
 
@@ -217,6 +226,12 @@ namespace MHGameWork.TheWizards.Rendering
                                                  ObjectMatrix = Matrix.Identity.xna()
                                              });
             return mesh;
+        }
+
+        private XnaVector3[] calculateTangents()
+        {
+            var solver = new TangentSolver();
+            return solver.GenerateTangents(positions.ToArray(), normals.ToArray(), texcoords.ToArray()).Select(v => new Vector3(v.X, v.Y, v.Z).xna()).ToArray();
         }
 
 
