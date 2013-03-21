@@ -520,7 +520,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
                                       context.ClearState();
                                       game.SetBackbuffer();
 
-                                      DeferredTest.DrawGBuffer(game, gBuffer);
+                                      GBufferTest.DrawGBuffer(game, gBuffer);
 
                                   };
             SlimDX.Configuration.EnableObjectTracking = false;

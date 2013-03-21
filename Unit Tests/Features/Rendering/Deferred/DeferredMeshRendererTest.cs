@@ -152,7 +152,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
                 context.ClearState();
                 game.SetBackbuffer();
 
-                DeferredTest.DrawGBuffer(game, gBuffer);
+                GBufferTest.DrawGBuffer(game, gBuffer);
             };
 
             game.Run();
@@ -214,7 +214,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
                 context.ClearState();
                 game.SetBackbuffer();
 
-                DeferredTest.DrawGBuffer(game, gBuffer);
+                GBufferTest.DrawGBuffer(game, gBuffer);
             };
             game.Run();
 
@@ -268,7 +268,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
                 context.ClearState();
                 game.SetBackbuffer();
 
-                DeferredTest.DrawGBuffer(game, gBuffer);
+                GBufferTest.DrawGBuffer(game, gBuffer);
             };
 
 

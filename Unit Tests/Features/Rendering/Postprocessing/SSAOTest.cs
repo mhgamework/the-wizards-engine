@@ -55,7 +55,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Postprocessing
 
 
                                       if (game.Keyboard.IsKeyDown(Key.I))
-                                          DeferredTest.DrawGBuffer(game, gBuffer);
+                                          GBufferTest.DrawGBuffer(game, gBuffer);
                                       else
                                           game.TextureRenderer.Draw(ssao.MSsaoBuffer.pSRV, new SlimDX.Vector2(0, 0),
                                                                     new SlimDX.Vector2(800, 600));
