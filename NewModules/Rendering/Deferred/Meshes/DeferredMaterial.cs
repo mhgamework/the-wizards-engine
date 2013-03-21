@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Shaders;
+using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 
@@ -13,24 +15,22 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
     /// 
     /// Note: Requires InputLayout: POSITION - NORMAL - TEXCOORD - TANGENT
     /// 
-    /// TODO: per material buffer
-    /// 
+    /// TODO: per material buffer    
     /// </summary>
     public class DeferredMaterial
     {
         private readonly DX11Game game;
-        private readonly DeviceContext context;
         private BasicShader baseShader;
         private ShaderResourceView diffuseTexture;
         private ShaderResourceView normalTexture;
         private ShaderResourceView specularTexture;
         private ShaderResourceView[] textures = new ShaderResourceView[3];
         private SamplerState sampler;
+        private InputLayout inputLayout;
 
         public DeferredMaterial(DX11Game game)
         {
             this.game = game;
-            context = game.Device.ImmediateContext;
         }
 
         public DeferredMaterial(DX11Game game, ShaderResourceView diffuseTexture, ShaderResourceView normalTexture, ShaderResourceView specularTexture)
@@ -54,11 +54,14 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
                 {
                     AddressU = TextureAddressMode.Wrap,
                     AddressV = TextureAddressMode.Wrap,
+                    AddressW = TextureAddressMode.Wrap,
                     Filter = Filter.Anisotropic,
                     MaximumAnisotropy = 16
                 };
 
             sampler = SamplerState.FromDescription(game.Device, desc);
+
+            inputLayout = CreateInputLayout();
 
 
         }
@@ -73,11 +76,89 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
             return list.ToArray();
         }
 
-
-        private void setToContext()
+        private InputLayout CreateInputLayout()
         {
-            context.PixelShader.SetShaderResources(textures, 0, 3);
-            context.PixelShader.SetSampler(sampler, 0);
+            return new InputLayout(game.Device, baseShader.GetCurrentPass(0).Description.Signature, DeferredMeshVertex.Elements);
         }
+
+        public void SetCamera( Matrix view, Matrix projection )
+        {
+            baseShader.Effect.GetVariableByName("View").AsMatrix().SetMatrix(view);
+            baseShader.Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(projection);
+        }
+
+        public void SetPerObjectBuffer(DeviceContext ctx, PerObjectConstantBuffer perObject)
+        {
+            baseShader.Effect.GetConstantBufferByName("perObject").ConstantBuffer = perObject.Buffer;
+        }
+
+        public void SetToContext(DeviceContext ctx)
+        {
+            baseShader.Apply();
+            ctx.PixelShader.SetShaderResources(textures, 0, 3);
+            ctx.PixelShader.SetSampler(sampler, 0);
+            ctx.InputAssembler.InputLayout = inputLayout;
+
+        }
+
+      
+
+        public PerObjectConstantBuffer CreatePerObjectCB()
+        {
+            return new PerObjectConstantBuffer(game);
+        }
+
+        /// <summary>
+        /// Responsible for updating and creating the per object constant buffer for this material
+        /// TODO: convert this into a generic constant buffer class
+        /// </summary>
+        public class PerObjectConstantBuffer
+        {
+            private Buffer perObjectBuffer;
+            private DataStream perObjectStrm;
+            private DataBox perObjectBox;
+
+            public PerObjectConstantBuffer(DX11Game game)
+            {
+                perObjectBuffer = new Buffer(game.Device, new BufferDescription
+                {
+                    BindFlags = BindFlags.ConstantBuffer,
+                    CpuAccessFlags = CpuAccessFlags.Write,
+                    OptionFlags = ResourceOptionFlags.None,
+                    SizeInBytes = 16 * 4, // PerObjectCB
+                    Usage = ResourceUsage.Dynamic,
+                    StructureByteStride = 0
+                });
+
+                //perObjectStrm = new DataStream(baseShader.Effect.GetConstantBufferByName("perObject").ConstantBuffer.Description.SizeInBytes, false, true);
+                perObjectStrm = new DataStream(Marshal.SizeOf(typeof(Data)), false, true);
+                perObjectBox = new DataBox(0, 0, perObjectStrm);
+            }
+
+            public Buffer Buffer
+            {
+                get { return perObjectBuffer; }
+            }
+
+            public void UpdatePerObjectBuffer(DeviceContext context, Matrix world)
+            {
+                var box = context.MapSubresource(Buffer, MapMode.WriteDiscard,
+                                                 MapFlags.None);
+                box.Data.Write(new Data
+                {
+                    WorldMatrix = Matrix.Transpose(world)
+                });
+
+                context.UnmapSubresource(Buffer, 0);
+            }
+
+            private struct Data
+            {
+                public Matrix WorldMatrix;
+            }
+        }
+
+
+     
     }
 }

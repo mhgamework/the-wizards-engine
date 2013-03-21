@@ -10,5 +10,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         public Buffer IndexBuffer;
         public int PrimitiveCount;
         public int VertexCount;
+        
     }
 }

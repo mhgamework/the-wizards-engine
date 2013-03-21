@@ -15,11 +15,6 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
         [Test]
         public void TestGBuffer()
         {
-            runGBufferTest(delegate { });
-        }
-
-        private static void runGBufferTest(Action gameLoop)
-        {
             var game = new DX11Game();
             game.InitDirectX();
 
@@ -28,10 +23,10 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
             buffer.Clear();
 
             game.GameLoopEvent += delegate
-            {
-                gameLoop();
-                DrawGBuffer(game, buffer);
-            };
+                {
+                    ( (Action) delegate { } )();
+                    DrawGBuffer(game, buffer);
+                };
 
             game.Run();
         }

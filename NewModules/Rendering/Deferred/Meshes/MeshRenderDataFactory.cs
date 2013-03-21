@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
 using SlimDX;
 using SlimDX.Direct3D11;
 using Buffer = SlimDX.Direct3D11.Buffer;
@@ -12,6 +13,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 {
     /// <summary>
     /// Responsible for creating MeshRenderData from an IMesh
+    /// Responsible for creating meshpart inputassembler data and setting it to the devicecontext
     /// </summary>
     public class MeshRenderDataFactory
     {
@@ -134,9 +136,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 // Discretize vertex positions, to decrease rounding errors
 
                 var pos = positions[j].ToSlimDX();
-                pos.X = ((int)pos.X * 1000) * 0.001f;
-                pos.Y = ((int)pos.Y * 1000) * 0.001f;
-                pos.Z = ((int)pos.Z * 1000) * 0.001f;
+                pos.X = (int)(pos.X * 1000) * 0.001f;
+                pos.Y = (int)(pos.Y * 1000) * 0.001f;
+                pos.Z = (int)(pos.Z * 1000) * 0.001f;
 
                 vertices[j].Pos = new Vector4(pos, 1);
 
@@ -184,5 +186,22 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             return ib;
         }
 
+
+        public MeshPartRenderData CreateMeshPartData(IMeshPart part)
+        {
+            var data = new MeshPartRenderData();
+
+            var geomData = part.GetGeometryData();
+            int vertCount = geomData.GetSourceVector3(MeshPartGeometryData.Semantic.Position).Length;
+            if (vertCount == 0) throw new InvalidOperationException();
+
+            data.IndexBuffer = CreateMeshPartIndexBuffer(part);
+            data.VertexBuffer = CreateMeshPartVertexBuffer(part);
+
+            //data.VertexCount = vertCount;
+            data.PrimitiveCount = vertCount / 3;
+
+            return data;
+        }
     }
 }
