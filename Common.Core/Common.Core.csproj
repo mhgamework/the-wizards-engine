@@ -407,6 +407,7 @@
     <Compile Include="Core\SlimDXConversion\MathHelper.cs" />
     <Compile Include="Core\TWDir.cs" />
     <Compile Include="RequiresPostSharp.cs" />
+    <Compile Include="Shaders\ShaderFiles.cs" />
     <Compile Include="Water\Camera.cs" />
     <Compile Include="Water\Mesh.cs" />
     <Compile Include="Water\SubGrid.cs" />

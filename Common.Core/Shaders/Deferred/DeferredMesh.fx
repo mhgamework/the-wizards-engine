@@ -29,9 +29,9 @@ struct VertexShaderInput
     float3 Normal : NORMAL;
     float2 TexCoord : TEXCOORD;
 
-#ifdef TANGENTS
+//#ifdef NORMAL_MAPPING
 	float4 Tangent : TANGENT;
-#endif
+//#endif
 	
 };
 struct VertexShaderOutput
