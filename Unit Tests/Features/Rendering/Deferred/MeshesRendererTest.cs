@@ -19,19 +19,21 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
     {
 
         [Test]
-        public void TestSphere() { drawMeshTest(RenderingTestsHelper.CreateSphere(RenderingTestsHelper.GetDiffuseMap(), RenderingTestsHelper.GetNormalMap(), RenderingTestsHelper.GetSpecularMap())); }
+        public void TestSphere() { drawMeshTest(RenderingTestsHelper.CreateSphere(RenderingTestsHelper.GetDiffuseMap(), RenderingTestsHelper.GetNormalMap(), RenderingTestsHelper.GetSpecularMap()), Matrix.Identity); }
         [Test]
-        public void TestBarrel() { drawMeshTest( OBJParserTest.GetBarrelMesh( new OBJToRAMMeshConverter( new RAMTextureFactory() ) ) ); }
+        public void TestBarrel() { drawMeshTest(OBJParserTest.GetBarrelMesh(new OBJToRAMMeshConverter(new RAMTextureFactory())), Matrix.Identity); }
+        [Test]
 
 
-        private void drawMeshTest(IMesh mesh)
+
+        public void drawMeshTest(IMesh mesh, Matrix worldMatrix)
         {
             var game = createGame();
 
 
             var pool = createTexturePool(game);
 
-            var worldMesh = new WorldMesh { Mesh = mesh, WorldMatrix = Matrix.Identity };
+            var worldMesh = new WorldMesh { Mesh = mesh, WorldMatrix = worldMatrix };
 
             var meshes = new MeshesRenderer(new RendererResourcePool(new MeshRenderDataFactory(game, null, pool), pool, game), game);
 
@@ -48,6 +50,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
             game.GameLoopEvent += delegate
             {
                 ctx.ClearState();
+                ctx.Rasterizer.State = game.HelperStates.RasterizerShowAll;
                 gBuffer.Clear();
                 gBuffer.SetTargetsToOutputMerger();
 
