@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Rendering.Deferred;
+using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
+using MHGameWork.TheWizards.Tests.Features.Rendering.Deferred;
 using MHGameWork.TheWizards.Tests.Features.Rendering.XNA;
 using Microsoft.Xna.Framework;
+using SlimDX.Direct3D11;
+using MathHelper = DirectX11.MathHelper;
+using Vector3 = SlimDX.Vector3;
 
 namespace MHGameWork.TheWizards.Tests.Features.Rendering
 {
@@ -77,7 +84,8 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
             var mesh = builder.CreateMesh();
 
             mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap = diffuse;
-            //TODO!!!
+            mesh.GetCoreData().Parts[0].MeshMaterial.NormalMap = normal;
+            mesh.GetCoreData().Parts[0].MeshMaterial.SpecularMap = specular;
 
             return mesh;
         }
@@ -89,6 +97,55 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
         }
 
 
+        public class SimpleLightedScene
+        {
+            private readonly DX11Game game;
+            private readonly GBuffer buffer;
+            private float angle;
+            private CombineFinalRenderer combineFinal;
+            private DeviceContext ctx;
+            private PointLightRenderer point;
 
+            public SimpleLightedScene(DX11Game game, GBuffer buffer)
+            {
+                this.game = game;
+                this.buffer = buffer;
+                ctx = game.Device.ImmediateContext;
+                // Non-related init code
+
+                point = new PointLightRenderer( game,buffer );
+
+                point.LightRadius = 3;
+                point.LightIntensity = 1;
+                point.ShadowsEnabled = false;
+
+                angle = 0;
+
+                combineFinal = new CombineFinalRenderer(game, buffer);
+            }
+
+            public void Render()
+            {
+
+                angle += MathHelper.Pi * game.Elapsed;
+                point.LightPosition = new Vector3((float)Math.Sin(angle), (float)Math.Cos(angle), -2);
+
+                ctx.ClearState();
+                combineFinal.SetLightAccumulationStates();
+                combineFinal.ClearLightAccumulation();
+                point.Draw();
+
+                ctx.ClearState();
+                game.SetBackbuffer();
+                ctx.Rasterizer.SetViewports(new Viewport(400, 300, 400, 300));
+
+                combineFinal.DrawCombined();
+
+
+                game.SetBackbuffer();
+                GBufferTest.DrawGBuffer(game, buffer);
+
+            }
+        }
     }
 }

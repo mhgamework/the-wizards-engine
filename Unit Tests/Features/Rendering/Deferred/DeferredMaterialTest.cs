@@ -36,6 +36,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
         {
             var game = createGame();
 
+
             var pool = createTexturePool(game);
             var txDiffuse = diffuse == null ? null : pool.LoadTexture(diffuse);
             var txNormal = normal == null ? null : pool.LoadTexture(normal);
@@ -50,30 +51,18 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
             var buffer = createGBuffer(game);
 
-            var perObject = DeferredMaterial.CreatePerObjectCB( game );
+            var perObject = DeferredMaterial.CreatePerObjectCB(game);
 
             var ctx = game.Device.ImmediateContext;
 
             perObject.UpdatePerObjectBuffer(ctx, Matrix.Identity);
 
 
+            var scene = new RenderingTestsHelper.SimpleLightedScene(game, buffer);
 
 
-            // Non-related init code
-            var point = new PointLightRenderer(game, buffer);
-            
-            point.LightRadius = 3;
-            point.LightIntensity = 1;
-            point.ShadowsEnabled = false;
-
-
-            float angle = 0;
-
-            var combineFinal = new CombineFinalRenderer(game, buffer);
             game.GameLoopEvent += delegate
                 {
-                    angle += MathHelper.Pi * game.Elapsed;
-                    point.LightPosition = new Vector3((float)Math.Sin(angle), (float)Math.Cos(angle), -2);
 
                     ctx.ClearState();
                     buffer.Clear();
@@ -86,27 +75,14 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
                     partData.Draw(ctx);
 
-                    ctx.ClearState();
-                    combineFinal.SetLightAccumulationStates();
-                    combineFinal.ClearLightAccumulation();
-                    point.Draw();
-
-                    ctx.ClearState();
-                    game.SetBackbuffer();
-                    ctx.Rasterizer.SetViewports(new Viewport(400, 300, 400, 300));
-
-                    combineFinal.DrawCombined();
-
-                    
-                    game.SetBackbuffer();
-                    GBufferTest.DrawGBuffer(game, buffer);
+                    scene.Render();
                 };
 
             game.Run();
         }
 
 
-       
+
         private static TheWizards.Rendering.Deferred.TexturePool createTexturePool(DX11Game game)
         {
             return new TheWizards.Rendering.Deferred.TexturePool(game);
