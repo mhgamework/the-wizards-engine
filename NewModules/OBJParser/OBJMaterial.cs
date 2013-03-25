@@ -15,11 +15,13 @@ namespace MHGameWork.TheWizards.OBJParser
 
         public string AmbientMap;
         public string DiffuseMap;
+        public string BumpMap;
 
         /// <summary>
         /// The obj Ns value
         /// </summary>
         public float SpecularExponent;
+
 
         public override string ToString()
         {

@@ -224,6 +224,11 @@ namespace MHGameWork.TheWizards.OBJParser
                         string pathKd = line.Substring(line.IndexOf("map_Kd") + ("map_Kd").Length).Trim();
                         readingMaterial.DiffuseMap = fixFileUrl(pathKd);
                         break;
+                    case "map_bump":
+                        if (readingMaterial == null) throw new InvalidOperationException("File format invalid!");
+                        string pathbump = line.Substring(line.IndexOf("map_bump") + ("map_bump").Length).Trim();
+                        readingMaterial.BumpMap = fixFileUrl(pathbump);
+                        break;
                 }
 
             }

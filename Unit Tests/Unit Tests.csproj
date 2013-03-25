@@ -142,6 +142,7 @@
   <ItemGroup>
     <Compile Include="Features\Core\Diagnostics\ProfilerComponentTest.cs" />
     <Compile Include="Features\Data\SectionedStreamTest.cs" />
+    <Compile Include="Features\Rendering\Deferred\ShowcaseTest.cs" />
     <Compile Include="Features\Rendering\Deferred\DeferredMaterialTest.cs" />
     <Compile Include="Features\Rendering\Deferred\DeferredMeshRendererTest.cs" />
     <Compile Include="Features\Rendering\Deferred\DeferredRendererTest.cs" />

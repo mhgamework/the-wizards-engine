@@ -253,6 +253,9 @@ namespace MHGameWork.TheWizards.OBJParser
             }
 
 
+            TangentSolver solver = new TangentSolver();
+            var tangents = solver.GenerateTangents(positions, normals, texcoords).Select(f => new Vector3(f.X, f.Y, f.Z)).ToArray();
+
 
 
             var positionsSource = new MeshPartGeometryData.Source();
@@ -264,7 +267,12 @@ namespace MHGameWork.TheWizards.OBJParser
             var texcoordsSource = new MeshPartGeometryData.Source();
             texcoordsSource.DataVector2 = texcoords;
             texcoordsSource.Semantic = MeshPartGeometryData.Semantic.Texcoord;
+            var tangentsSource = new MeshPartGeometryData.Source();
+            tangentsSource.DataVector3 = tangents;
+            tangentsSource.Semantic = MeshPartGeometryData.Semantic.Tangent;
 
+
+         
             var part = new MeshCoreData.Part();
             part.MeshMaterial = materials[sub.Material];
 
@@ -273,6 +281,7 @@ namespace MHGameWork.TheWizards.OBJParser
             meshPart.GetGeometryData().Sources.Add(positionsSource);
             meshPart.GetGeometryData().Sources.Add(normalsSource);
             meshPart.GetGeometryData().Sources.Add(texcoordsSource);
+            meshPart.GetGeometryData().Sources.Add(tangentsSource);
 
             part.MeshPart = meshPart;
             part.ObjectMatrix = Matrix.Identity;
@@ -311,10 +320,9 @@ namespace MHGameWork.TheWizards.OBJParser
                 var mat = importer.Materials[i];
                 var meshMat = new MeshCoreData.Material();
                 if (mat.DiffuseMap != null)
-                {
                     meshMat.DiffuseMap = CreateOrFindIdenticalTexture(mat.DiffuseMap);
-
-                }
+                if ( mat.BumpMap != null )
+                    meshMat.NormalMap = CreateOrFindIdenticalTexture(mat.BumpMap);
                 meshMat.DiffuseColor = mat.DiffuseColor;
                 materials[mat] = meshMat;
             }
