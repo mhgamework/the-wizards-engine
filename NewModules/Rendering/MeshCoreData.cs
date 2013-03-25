@@ -24,21 +24,22 @@ namespace MHGameWork.TheWizards.Rendering
             public ITexture DiffuseMap;
             public ITexture NormalMap;
             public ITexture SpecularMap;
+            public ITexture DisplacementMap;
             public bool ColoredMaterial = false;
             public string Name;
 
-            protected bool Equals(Material other)
+            protected bool Equals( Material other )
             {
-                return DiffuseColor.Equals(other.DiffuseColor) && Equals(DiffuseMap, other.DiffuseMap) && Equals(NormalMap, other.NormalMap) && Equals(SpecularMap, other.SpecularMap);
+                return DiffuseColor.Equals( other.DiffuseColor ) && Equals( DiffuseMap, other.DiffuseMap ) && Equals( NormalMap, other.NormalMap ) && Equals( SpecularMap, other.SpecularMap ) && Equals( DisplacementMap, other.DisplacementMap );
             	//TODO: add color equals check
 			}
 
-            public override bool Equals(object obj)
+            public override bool Equals( object obj )
             {
-                if (ReferenceEquals(null, obj)) return false;
-                if (ReferenceEquals(this, obj)) return true;
-                if (obj.GetType() != this.GetType()) return false;
-                return Equals((Material) obj);
+                if ( ReferenceEquals( null, obj ) ) return false;
+                if ( ReferenceEquals( this, obj ) ) return true;
+                if ( obj.GetType() != this.GetType() ) return false;
+                return Equals( (Material) obj );
             }
 
             public override int GetHashCode()
@@ -46,9 +47,10 @@ namespace MHGameWork.TheWizards.Rendering
                 unchecked
                 {
                     var hashCode = DiffuseColor.GetHashCode();
-                    hashCode = (hashCode*397) ^ (DiffuseMap != null ? DiffuseMap.GetHashCode() : 0);
-                    hashCode = (hashCode*397) ^ (NormalMap != null ? NormalMap.GetHashCode() : 0);
-                    hashCode = (hashCode*397) ^ (SpecularMap != null ? SpecularMap.GetHashCode() : 0);
+                    hashCode = ( hashCode*397 ) ^ ( DiffuseMap != null ? DiffuseMap.GetHashCode() : 0 );
+                    hashCode = ( hashCode*397 ) ^ ( NormalMap != null ? NormalMap.GetHashCode() : 0 );
+                    hashCode = ( hashCode*397 ) ^ ( SpecularMap != null ? SpecularMap.GetHashCode() : 0 );
+                    hashCode = ( hashCode*397 ) ^ ( DisplacementMap != null ? DisplacementMap.GetHashCode() : 0 );
                     return hashCode;
                 }
             }

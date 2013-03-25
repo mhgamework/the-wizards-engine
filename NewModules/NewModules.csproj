@@ -310,6 +310,7 @@
     <Compile Include="Raycasting\MeshRaycaster.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshBoundingBoxFactory.cs" />
     <Compile Include="Rendering\Deferred\Meshes\DeferredMaterial.cs" />
+    <Compile Include="Rendering\Deferred\Meshes\MeshesRenderer.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshPartRenderData.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderData.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderDataFactory.cs" />
@@ -359,7 +360,7 @@
     <Compile Include="Rendering\Default\DefaultModelShader.cs" />
     <Compile Include="Rendering\Default\DefaultRenderElement.cs" />
     <Compile Include="Rendering\Default\DefaultRenderer.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\DeferredMeshRenderElement.cs" />
+    <Compile Include="Rendering\Deferred\Meshes\DeferredRendererMeshes.cs" />
     <Compile Include="Rendering\Deferred\Meshes\DeferredMeshesRenderer.cs" />
     <Compile Include="Rendering\Deferred\Meshes\DeferredMeshVertex.cs" />
     <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
@@ -730,6 +731,7 @@
     <Content Include="Persistence\_doc.txt" />
     <Content Include="Physics\_doc.txt" />
     <Content Include="Rendering\Default\_doc.txt" />
+    <Content Include="Rendering\Deferred\Meshes\_doc.txt" />
     <Content Include="Rendering\Text\_doc.txt" />
     <Content Include="Rendering\_doc.txt" />
     <Content Include="Serialization\_doc.txt" />

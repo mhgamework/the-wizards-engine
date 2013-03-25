@@ -15,7 +15,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         }
 
         public List<Matrix> WorldMatrices = new List<Matrix>();
-        public List<DeferredMeshRenderElement> Elements = new List<DeferredMeshRenderElement>();
+        public List<DeferredRendererMeshes> Elements = new List<DeferredRendererMeshes>();
         public MeshRenderMaterial[] Materials;
 
 

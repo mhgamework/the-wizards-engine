@@ -6,10 +6,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 {
     /// <summary>
     /// Responsible for providing a facade to a mesh element in the deferred renderer
+    /// TODO: add a 'DeferredRendererLights', conform with the paradigm of this class.
     /// </summary>
-    public class DeferredMeshRenderElement : ICullable
+    public class DeferredRendererMeshes : ICullable
     {
-        public DeferredMeshRenderElement(DeferredMeshesRenderer renderer, IMesh mesh)
+        public DeferredRendererMeshes(DeferredMeshesRenderer renderer, IMesh mesh)
         {
             Renderer = renderer;
             Mesh = mesh;
