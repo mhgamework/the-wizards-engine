@@ -28,11 +28,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
         private SamplerState sampler;
         private InputLayout inputLayout;
 
-        public DeferredMaterial(DX11Game game)
-        {
-            this.game = game;
-        }
-
+    
         public DeferredMaterial(DX11Game game, ShaderResourceView diffuseTexture, ShaderResourceView normalTexture, ShaderResourceView specularTexture)
         {
             this.game = game;
@@ -103,9 +99,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
 
       
 
-        public PerObjectConstantBuffer CreatePerObjectCB()
+        public static PerObjectConstantBuffer CreatePerObjectCB( DX11Game dx11Game )
         {
-            return new PerObjectConstantBuffer(game);
+            return new PerObjectConstantBuffer(dx11Game);
         }
 
         /// <summary>

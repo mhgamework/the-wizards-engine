@@ -52,7 +52,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         private LineManager3D lineManager;
         private List<DeferredLinesElement> lineElements = new List<DeferredLinesElement>();
-        private List<DeferredMeshRenderElement> meshElements = new List<DeferredMeshRenderElement>();
+        private List<DeferredRendererMeshes> meshElements = new List<DeferredRendererMeshes>();
         private CombinedRT postProcessRT1;
         private CombinedRT postProcessRT2;
         private FogEffect fogRenderer;
@@ -243,7 +243,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             return light;
         }
 
-        public DeferredMeshRenderElement CreateMeshElement(IMesh mesh)
+        public DeferredRendererMeshes CreateMeshElement(IMesh mesh)
         {
             if (mesh == null) throw new NullReferenceException();
             var el = meshesRenderer.AddMesh(mesh);
@@ -519,7 +519,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             setAllMeshesInvisible();
             for (int i = 0; i < cullables.Count; i++)
             {
-                var c = (DeferredMeshRenderElement)cullables[i];
+                var c = (DeferredRendererMeshes)cullables[i];
                 c.Visible = true;
                 //game.LineManager3D.AddBox(c.BoundingBox.dx(), new Color4(0, 1, 0));
             }

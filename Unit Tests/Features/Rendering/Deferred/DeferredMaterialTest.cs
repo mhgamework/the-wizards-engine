@@ -50,7 +50,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
             var buffer = createGBuffer(game);
 
-            var perObject = mat.CreatePerObjectCB();
+            var perObject = DeferredMaterial.CreatePerObjectCB( game );
 
             var ctx = game.Device.ImmediateContext;
 

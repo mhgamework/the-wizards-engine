@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
             var renderer = new DeferredMeshesRenderer(game, gBuffer, texturePool);
 
 
-            DeferredMeshRenderElement middle = null;
+            DeferredRendererMeshes middle = null;
 
 
 
@@ -240,7 +240,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
             var renderer = new DeferredMeshesRenderer(game, gBuffer, texturePool);
 
 
-            DeferredMeshRenderElement middle = null;
+            DeferredRendererMeshes middle = null;
 
             for (int i = 0; i < 50; i++)
             {
