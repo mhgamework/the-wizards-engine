@@ -23,9 +23,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
     //TODO: call UpdateCullable in the correct places
 
     /// <summary>
-    /// This class manages a number of IMesh elements and renders them to a GBuffer
-    /// Note that this class does not share IMeshPart data, that is parts are not shared across meshes
-    /// Note: This class discretizes vertex positions!!
+    /// This class is responsible for the mesh subpart of the deferred renderer facade. 
+    /// It provides MeshRenderElements that expose the functionality offered by the renderer.
     /// </summary>
     public class DeferredMeshesRenderer
     {
@@ -47,7 +46,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private readonly GBuffer gBuffer;
 
 
-        private List<DeferredMeshRenderElement> elements = new List<DeferredMeshRenderElement>();
+        private List<DeferredRendererMeshes> elements = new List<DeferredRendererMeshes>();
 
         private BasicShader baseShader;
 
@@ -57,7 +56,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private InputLayout layout;
 
 
-        public List<DeferredMeshRenderElement> Elements
+        public List<DeferredRendererMeshes> Elements
         {
             get { return elements; }
         }
@@ -89,9 +88,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         }
 
 
-        public DeferredMeshRenderElement AddMesh(IMesh mesh)
+        public DeferredRendererMeshes AddMesh(IMesh mesh)
         {
-            var el = new DeferredMeshRenderElement(this, mesh);
+            var el = new DeferredRendererMeshes(this, mesh);
             var data = getRenderData(mesh);
 
             el.ElementNumber = data.WorldMatrices.Count;
@@ -106,7 +105,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             return el;
         }
 
-        public void DeleteMesh(DeferredMeshRenderElement el)
+        public void DeleteMesh(DeferredRendererMeshes el)
         {
             if (el.IsDeleted) throw new InvalidOperationException();
 
@@ -118,7 +117,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         }
 
-        public void UpdateWorldMatrix(DeferredMeshRenderElement el)
+        public void UpdateWorldMatrix(DeferredRendererMeshes el)
         {
             renderDataDict[el.Mesh].WorldMatrices[el.ElementNumber] = el.WorldMatrix;
 
@@ -135,15 +134,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                                                                    CullMode = CullMode.None,
                                                                                    FillMode = FillMode.Solid,
                                                                                });
-            throw new NotImplementedException();
-            //initializeMaterial();
 
             renderDataFactory = new MeshRenderDataFactory(game, baseShader, texturePool);
 
 
-            //createInputLayout();
-
-            // createPerObjectCB
+     
 
         }
 

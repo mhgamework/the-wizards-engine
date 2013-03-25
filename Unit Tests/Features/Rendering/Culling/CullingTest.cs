@@ -342,7 +342,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Culling
 
 
 
-            DeferredMeshRenderElement middle = null;
+            DeferredRendererMeshes middle = null;
 
             for (int i = 0; i < 50; i++)
             {
