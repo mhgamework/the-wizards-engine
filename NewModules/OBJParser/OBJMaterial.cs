@@ -16,6 +16,9 @@ namespace MHGameWork.TheWizards.OBJParser
         public string AmbientMap;
         public string DiffuseMap;
         public string BumpMap;
+        public string SpecularMap;
+        
+        
 
         /// <summary>
         /// The obj Ns value
