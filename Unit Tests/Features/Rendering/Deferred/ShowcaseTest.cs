@@ -26,9 +26,9 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
         {
             drawMeshTest(RenderingTestsHelper.CreateMeshFromObj(new OBJToRAMMeshConverter(new RAMTextureFactory()),
                                                                   TWDir.GameData +
-                                                                  @"\Rendering\Showcase\Merged\Showcase001.obj",
+                                                                  @"\Rendering\Showcase\Merged\Showcase.obj",
                                                                   TWDir.GameData +
-                                                                  @"\Rendering\Showcase\Merged\Showcase001.mtl"), Matrix.Scaling(100, 100, 100));
+                                                                  @"\Rendering\Showcase\Merged\Showcase.mtl"), Matrix.Scaling(1, 1, 1));
         }
 
 
