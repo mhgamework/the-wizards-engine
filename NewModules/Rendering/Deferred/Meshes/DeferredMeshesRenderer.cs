@@ -1,24 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using DirectX11;
-using MHGameWork.TheWizards.Common.Core;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
-using Microsoft.Xna.Framework.Graphics;
 using SlimDX;
 using SlimDX.Direct3D11;
-using BoundingFrustum = Microsoft.Xna.Framework.BoundingFrustum;
-using Buffer = SlimDX.Direct3D11.Buffer;
 using CullMode = SlimDX.Direct3D11.CullMode;
-using DataStream = SlimDX.DataStream;
 using FillMode = SlimDX.Direct3D11.FillMode;
-using Texture2D = SlimDX.Direct3D11.Texture2D;
 
-namespace MHGameWork.TheWizards.Rendering.Deferred
+namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
 {
     //TODO: call UpdateCullable in the correct places
 
@@ -30,12 +20,15 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
     {
         private MeshRenderDataFactory renderDataFactory;
 
+        private List<MeshElementPart> parts = new List<MeshElementPart>();
+
 
         public DeferredMeshesRenderer(DX11Game game, GBuffer gBuffer, TexturePool texturePool)
         {
             this.game = game;
             this.gBuffer = gBuffer;
-            context = game.Device.ImmediateContext;
+            this.pool = texturePool;
+            ctx = game.Device.ImmediateContext;
 
             initialize(texturePool);
         }
@@ -44,19 +37,20 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         private readonly DX11Game game;
         private readonly GBuffer gBuffer;
+        private readonly TexturePool pool;
 
 
-        private List<DeferredRendererMeshes> elements = new List<DeferredRendererMeshes>();
+        private List<DeferredMeshElement> elements = new List<DeferredMeshElement>();
 
         private BasicShader baseShader;
 
 
-        private DeviceContext context;
+        private DeviceContext ctx;
         private RasterizerState rasterizerState;
         private InputLayout layout;
 
 
-        public List<DeferredRendererMeshes> Elements
+        public List<DeferredMeshElement> Elements
         {
             get { return elements; }
         }
@@ -88,24 +82,59 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         }
 
 
-        public DeferredRendererMeshes AddMesh(IMesh mesh)
+        public DeferredMeshElement AddMesh(IMesh mesh)
         {
-            var el = new DeferredRendererMeshes(this, mesh);
-            var data = getRenderData(mesh);
+            var el = new DeferredMeshElement(this, mesh);
+            //var data = getRenderData(mesh);
 
-            el.ElementNumber = data.WorldMatrices.Count;
-            data.WorldMatrices.Add(el.WorldMatrix);
-            data.Elements.Add(el);
+            //el.ElementNumber = data.WorldMatrices.Count;
+            //data.WorldMatrices.Add(el.WorldMatrix);
+            //data.Elements.Add(el);
 
-
+            createParts(el);
             Elements.Add(el);
-            if (Culler != null)
-                Culler.AddCullable(el);
+            //if (Culler != null)
+            //Culler.AddCullable(el);
 
             return el;
         }
 
-        public void DeleteMesh(DeferredRendererMeshes el)
+        private void createParts(DeferredMeshElement el)
+        {
+            foreach (var p in el.Mesh.GetCoreData().Parts)
+            {
+                var mat = createMaterial(p);
+                var data = createRenderData(p.MeshPart);
+
+                var part = new MeshElementPart(mat, data);
+                part.CreateBuffers(game);
+                part.perObject.UpdatePerObjectBuffer(ctx, p.ObjectMatrix.ToSlimDX() * el.WorldMatrix);
+                parts.Add(part);
+            }
+        }
+
+        private MeshPartRenderData createRenderData(IMeshPart part)
+        {
+            return renderDataFactory.CreateMeshPartData(part);
+        }
+
+        private DeferredMaterial createMaterial(MeshCoreData.Part part)
+        {
+            var diffuse = part.MeshMaterial.DiffuseMap;
+            var normal = part.MeshMaterial.NormalMap;
+            var specular = part.MeshMaterial.SpecularMap;
+
+
+            var txDiffuse = diffuse == null ? null : pool.LoadTexture(diffuse);
+            var txNormal = normal == null ? null : pool.LoadTexture(normal);
+            var txSpecular = specular == null ? null : pool.LoadTexture(specular);
+
+
+            return new DeferredMaterial(game, txDiffuse, txNormal, txSpecular);
+
+        }
+
+        public void DeleteMesh(DeferredMeshElement el)
         {
             if (el.IsDeleted) throw new InvalidOperationException();
 
@@ -117,7 +146,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         }
 
-        public void UpdateWorldMatrix(DeferredRendererMeshes el)
+        public void UpdateWorldMatrix(DeferredMeshElement el)
         {
             renderDataDict[el.Mesh].WorldMatrices[el.ElementNumber] = el.WorldMatrix;
 
@@ -131,29 +160,39 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         {
             rasterizerState = RasterizerState.FromDescription(game.Device, new RasterizerStateDescription
                                                                                {
-                                                                                   CullMode = CullMode.None,
+                                                                                   CullMode = CullMode.Back,
                                                                                    FillMode = FillMode.Solid,
                                                                                });
 
             renderDataFactory = new MeshRenderDataFactory(game, baseShader, texturePool);
 
 
-     
+
 
         }
 
-    
+
 
 
         public void Draw() { drawInternal(false); }
-        public void DrawShadowCastersDepth() {throw new NotImplementedException(); drawInternal(true); }
+        //TODO: optimize depth
+        public void DrawShadowCastersDepth() { drawInternal(true); }
 
         private void drawInternal(bool depthOnly)
         {
-            drawCalls = 0;
-            Performance.BeginEvent(new Color4(System.Drawing.Color.Red), "BeginDrawDeferredMeshes");
-            //context.InputAssembler.InputLayout = layout;
-            
+
+
+            ctx.Rasterizer.State = rasterizerState;
+            foreach (var p in parts)
+            {
+                p.Render(game.Camera, ctx);
+            }
+
+
+
+            //Performance.BeginEvent(new Color4(System.Drawing.Color.Red), "BeginDrawDeferredMeshes");
+            //ctx.InputAssembler.InputLayout = layout;
+
 
             //baseShader.Effect.GetVariableByName("View").AsMatrix().SetMatrix(game.Camera.View);
             //baseShader.Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(game.Camera.Projection);
@@ -161,48 +200,40 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             //perObjectBuffer = baseShader.Effect.GetConstantBufferByName("perObject").ConstantBuffer;
 
 
-            baseShader.Apply();
-            context.Rasterizer.State = rasterizerState;
+            //baseShader.Apply();
 
 
-            foreach (var el in Elements)
-            {
-                // Test if it should be rendered
-                if (el.IsDeleted) continue;
-                if (!el.Visible) continue;
-                if (depthOnly && !el.CastsShadows) continue;
+
+            //foreach (var el in Elements)
+            //{
+            //    // Test if it should be rendered
+            //    if (el.IsDeleted) continue;
+            //    if (!el.Visible) continue;
+            //    if (depthOnly && !el.CastsShadows) continue;
 
 
-                foreach ( var mat in  renderDataDict[ el.Mesh ].Materials )
-                {
-                    foreach ( var part in mat.Parts )
-                    {
-                        renderMeshPart( el.WorldMatrix,mat,part );
-                    }
-                }
+            //    foreach ( var mat in  renderDataDict[ el.Mesh ].Materials )
+            //    {
+            //        foreach ( var part in mat.Parts )
+            //        {
 
 
-            }
-            Performance.EndEvent();
+            //            renderMeshPart( el.WorldMatrix,mat,part );
+            //        }
+            //    }
+
+
+            //}
+            //Performance.EndEvent();
         }
 
 
 
         private int drawCalls;
-        
-        private void renderMeshPart(Matrix world, MeshRenderMaterial mat, MeshRenderPart part)
-        {
-            //updatePerObjectBuffer(part, world);
 
-            throw new NotImplementedException();
-            //setMaterial( mat );
-            //setIndexAndVertexBuffer(part);
-            //drawIndexed(part);
 
-            Performance.SetMarker(new Color4(System.Drawing.Color.Orange), "DrawMeshElement");
-        }
 
-            
+
 
 
     }

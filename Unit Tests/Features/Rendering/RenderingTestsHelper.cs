@@ -19,6 +19,9 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
 {
     public static class RenderingTestsHelper
     {
+
+
+
         public static RAMMesh CreateMerchantsHouseMesh(OBJToRAMMeshConverter c)
         {
             return RenderingTest.CreateMerchantsHouseMesh(c);
@@ -76,6 +79,9 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
         public static RAMTexture GetDiffuseMapAlpha() { return loadTexture(TWDir.GameData + @"\Rendering\Ivy\Ivy_COLOR.png"); }
         public static RAMTexture GetNormalMapAlpha() { return loadTexture(TWDir.GameData + @"\Rendering\Ivy\Ivy_NRM.png"); }
         public static RAMTexture GetSpecularMapAlpha() { return loadTexture(TWDir.GameData + @"\Rendering\Ivy\Ivy_SPEC.png"); }
+
+        public static readonly string ShowcaseOBJ = TWDir.GameData +  @"\Rendering\Showcase\Merged\Showcase.obj";
+        public static readonly string ShowcaseMTL = TWDir.GameData + @"\Rendering\Showcase\Merged\Showcase.mtl";
 
         public static IMesh CreateSphere(ITexture diffuse, ITexture normal, ITexture specular)
         {

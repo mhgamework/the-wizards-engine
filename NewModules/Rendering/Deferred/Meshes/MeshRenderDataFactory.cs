@@ -38,6 +38,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         }
 
 
+        [Obsolete("This is currently obsolete, it contains too many optimizations. Not everything has been ported.")]
         public void InitMeshRenderData(MeshRenderData data)
         {
             var materials = new List<MeshRenderMaterial>();
