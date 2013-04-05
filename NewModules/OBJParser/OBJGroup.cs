@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 
 namespace MHGameWork.TheWizards.OBJParser
@@ -58,6 +59,17 @@ namespace MHGameWork.TheWizards.OBJParser
                 Faces = new List<Face>();
             }
 
+            public List<Vector3> GetPositions(ObjImporter importer)
+            {
+                var positions = new List<Vector3>();
+                foreach ( var f in Faces )
+                {
+                    positions.Add(importer.Vertices[f.V1.Position]);
+                    positions.Add(importer.Vertices[f.V2.Position]);
+                    positions.Add(importer.Vertices[f.V3.Position]);
+                }
+                return positions;
+            }
         }
 
         public override string ToString()

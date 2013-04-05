@@ -301,6 +301,7 @@
     <Compile Include="Networking\SimpleClientPacketManager.cs" />
     <Compile Include="Networking\SimpleClientPacketTransporter.cs" />
     <Compile Include="Networking\SimpleServerPacketManager.cs" />
+    <Compile Include="OBJParser\OBJInterpreter.cs" />
     <Compile Include="Pathing\IAI.cs" />
     <Compile Include="Pathing\IAIMover.cs" />
     <Compile Include="Pathing\SimpleAIMover.cs" />
@@ -314,6 +315,7 @@
     <Compile Include="Raycasting\MeshRaycaster.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshBoundingBoxFactory.cs" />
     <Compile Include="Rendering\Deferred\Meshes\DeferredMaterial.cs" />
+    <Compile Include="Rendering\Deferred\Meshes\MeshElementPart.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshesRenderer.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshPartRenderData.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderData.cs" />
@@ -364,7 +366,7 @@
     <Compile Include="Rendering\Default\DefaultModelShader.cs" />
     <Compile Include="Rendering\Default\DefaultRenderElement.cs" />
     <Compile Include="Rendering\Default\DefaultRenderer.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\DeferredRendererMeshes.cs" />
+    <Compile Include="Rendering\Deferred\Meshes\DeferredMeshElement.cs" />
     <Compile Include="Rendering\Deferred\Meshes\DeferredMeshesRenderer.cs" />
     <Compile Include="Rendering\Deferred\Meshes\DeferredMeshVertex.cs" />
     <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />

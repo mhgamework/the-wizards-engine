@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DirectX11.Rendering.CSM;
 using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.Rendering.SSAO;
 using SlimDX;
 using SlimDX.Direct3D11;
@@ -52,7 +53,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         private LineManager3D lineManager;
         private List<DeferredLinesElement> lineElements = new List<DeferredLinesElement>();
-        private List<DeferredRendererMeshes> meshElements = new List<DeferredRendererMeshes>();
+        private List<DeferredMeshElement> meshElements = new List<DeferredMeshElement>();
         private CombinedRT postProcessRT1;
         private CombinedRT postProcessRT2;
         private FogEffect fogRenderer;
@@ -243,7 +244,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             return light;
         }
 
-        public DeferredRendererMeshes CreateMeshElement(IMesh mesh)
+        public DeferredMeshElement CreateMeshElement(IMesh mesh)
         {
             if (mesh == null) throw new NullReferenceException();
             var el = meshesRenderer.AddMesh(mesh);
@@ -310,7 +311,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             drawGBuffer(GBuffer);
             drawLines(GBuffer);
             drawLights(combineFinalRenderer);
-            updateSSAO();
+            //updateSSAO();
 
             drawCombinedHdrImage(hdrImageRtv, GBuffer, combineFinalRenderer, skyColorRV, ssao.MSsaoBuffer.pSRV);
             updateTonemapLuminance(calculater);
@@ -519,7 +520,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             setAllMeshesInvisible();
             for (int i = 0; i < cullables.Count; i++)
             {
-                var c = (DeferredRendererMeshes)cullables[i];
+                var c = (DeferredMeshElement)cullables[i];
                 c.Visible = true;
                 //game.LineManager3D.AddBox(c.BoundingBox.dx(), new Color4(0, 1, 0));
             }
