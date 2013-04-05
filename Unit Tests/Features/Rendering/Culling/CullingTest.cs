@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
+using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 using SlimDX;
@@ -342,7 +343,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Culling
 
 
 
-            DeferredRendererMeshes middle = null;
+            DeferredMeshElement middle = null;
 
             for (int i = 0; i < 50; i++)
             {

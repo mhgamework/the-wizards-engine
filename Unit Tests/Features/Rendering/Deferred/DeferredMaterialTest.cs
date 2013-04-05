@@ -38,9 +38,9 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
 
             var pool = createTexturePool(game);
-            var txDiffuse = diffuse == null ? null : pool.LoadTexture(diffuse);
-            var txNormal = normal == null ? null : pool.LoadTexture(normal);
-            var txSpecular = specular == null ? null : pool.LoadTexture(specular);
+                var txDiffuse = diffuse == null ? null : pool.LoadTexture(diffuse);
+                var txNormal = normal == null ? null : pool.LoadTexture(normal);
+                var txSpecular = specular == null ? null : pool.LoadTexture(specular);
 
             var mat = new DeferredMaterial(game, txDiffuse, txNormal, txSpecular);
 

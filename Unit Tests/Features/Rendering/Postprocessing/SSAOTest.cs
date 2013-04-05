@@ -4,6 +4,7 @@ using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
+using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.Rendering.SSAO;
 using MHGameWork.TheWizards.Tests.Features.Rendering.Deferred;
 using MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11;

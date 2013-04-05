@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
+using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11;
 using NUnit.Framework;
 using SlimDX;
@@ -36,7 +37,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
             var renderer = new DeferredMeshesRenderer(game, gBuffer, texturePool);
 
 
-            DeferredRendererMeshes middle = null;
+            DeferredMeshElement middle = null;
 
 
 
@@ -240,7 +241,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
             var renderer = new DeferredMeshesRenderer(game, gBuffer, texturePool);
 
 
-            DeferredRendererMeshes middle = null;
+            DeferredMeshElement middle = null;
 
             for (int i = 0; i < 50; i++)
             {

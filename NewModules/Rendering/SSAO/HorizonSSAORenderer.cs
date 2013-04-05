@@ -298,6 +298,8 @@ namespace MHGameWork.TheWizards.Rendering.SSAO
 
             m_Technique_HBAO.GetPassByIndex(0).Apply(m_D3DDevice.ImmediateContext);
 
+            //TODO: What the?? where is the vertex buffer???
+
             m_D3DDevice.ImmediateContext.Draw(3, 0);
 
             m_DepthTexVar.SetResource(null);
