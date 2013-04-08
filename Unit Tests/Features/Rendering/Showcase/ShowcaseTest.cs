@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
             var renderer = new DeferredRenderer(game);
 
             var showcase = new ShowcaseSceneBuilder();
-            showcase.CreateScene( renderer );
+            showcase.CreateScene(renderer);
 
             game.GameLoopEvent += g => renderer.Draw();
 
@@ -37,7 +37,22 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
         }
 
         [Test]
-        public void TestShowcase()
+        public void TestShowcaseSingleFrame()
+        {
+            var game = createGame();
+
+            var renderer = new DeferredRenderer(game);
+
+            var showcase = new ShowcaseSceneBuilder();
+            showcase.CreateScene(renderer);
+
+            game.GameLoopEvent += delegate { renderer.Draw(); game.Exit(); };
+
+            game.Run();
+        }
+
+        [Test]
+        public void TestShowcaseGBuffer()
         {
             drawMeshTest(RenderingTestsHelper.CreateMeshFromObj(new OBJToRAMMeshConverter(new RAMTextureFactory()),
                                                                   TWDir.GameData +

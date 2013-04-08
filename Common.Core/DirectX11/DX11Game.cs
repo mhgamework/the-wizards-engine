@@ -59,7 +59,14 @@ namespace MHGameWork.TheWizards.DirectX11
 
             void fpsCalculater_DataAvailable(float obj)
             {
-                game.Form.Form.BeginInvoke(new Action(() => Target(obj)));
+                try
+                {
+                    game.Form.Form.BeginInvoke(new Action(() => Target(obj)));
+                }
+                catch ( Exception ex)
+                {
+                    Console.WriteLine("Can't process FPS data!!");
+                }
             }
 
             private void Target(float obj)

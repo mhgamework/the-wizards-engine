@@ -19,10 +19,9 @@ namespace MHGameWork.TheWizards.ServerClient
         bool mChanged = true;
 
 
-
-        public float angleX;
-        public float angleY;
-        public float angleZ;
+        private float angleX;
+        private float angleY;
+        private float angleZ;
         private Vector3 vLookAt;
         private Vector3 vLookDir;
         private Vector3 vLookEye;
