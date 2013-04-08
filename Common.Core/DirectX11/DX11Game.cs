@@ -63,9 +63,9 @@ namespace MHGameWork.TheWizards.DirectX11
                 {
                     game.Form.Form.BeginInvoke(new Action(() => Target(obj)));
                 }
-                catch (Exception ex)
+                catch ( Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine("Can't process FPS data!!");
                 }
             }
 
