@@ -280,6 +280,7 @@
   <ItemGroup>
     <Content Include="Features\Generation\Voxelization\_doc.txt" />
     <Content Include="Features\Rendering\DirectX11\_Doc.txt" />
+    <Content Include="Features\Rendering\Showcase\camera.xml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

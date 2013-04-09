@@ -6,6 +6,10 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.DirectX11.Graphics
 {
+    /// <summary>
+    /// Responsible for interpreting user input for a spectator camera
+    /// Responsible for construction camera matrices for the spectator camera
+    /// </summary>
     public class SpectaterCamera : ICamera
     {
         Matrix view;
@@ -25,20 +29,18 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         private Vector3 vLookUp;
 
 
-        private readonly TWKeyboard keyboard;
-        private readonly TWMouse mouse;
         private float nearClip;
         public float NearClip
         {
             get { return nearClip; }
-            set { nearClip = value; CalculateProjection(); }
+            set { nearClip = value; calculateProjection(); }
         }
 
         private float farClip;
         public float FarClip
         {
             get { return farClip; }
-            set { farClip = value; CalculateProjection(); }
+            set { farClip = value; calculateProjection(); }
         }
 
         private bool enabled;
@@ -62,7 +64,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             set
             {
                 fieldOfView = value;
-                CalculateProjection();
+                calculateProjection();
             }
         }
 
@@ -73,21 +75,19 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             set
             {
                 aspectRatio = value;
-                CalculateProjection();
+                calculateProjection();
             }
         }
 
-        public SpectaterCamera(TWKeyboard keyboard, TWMouse mouse, float nearPlane, float farPlane)
+        public SpectaterCamera(float nearPlane, float farPlane)
         {
             enabled = true;
-            this.keyboard = keyboard;
-            this.mouse = mouse;
             nearClip = nearPlane;
             farClip = farPlane;
             fieldOfView = MathHelper.ToRadians(45.0f);
             aspectRatio = 4 / 3f;
             view = Matrix.Identity;//Matrix.CreateLookAt(new Vector3(0, 0, -4000), Vector3.Zero, Vector3.Up);
-            CalculateProjection();
+            calculateProjection();
             CameraUp = MathHelper.Up;
             CameraDirection = MathHelper.Forward;
             CameraPosition = new Vector3(0.1f, 0.1f, 0.1f);
@@ -104,7 +104,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             UpdateCameraInfo();
 
         }
-        private void CalculateProjection()
+        private void calculateProjection()
         {
             projection = Matrix.PerspectiveFovRH(fieldOfView,
                 //4 / 3F, 1.23456f, 10000.0f );
@@ -113,9 +113,10 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         }
 
 
-        public SpectaterCamera(TWKeyboard keyboard, TWMouse mouse)
-            : this(keyboard, mouse, 0.1f, 400.0f)
+        public SpectaterCamera()
+            : this(0.1f, 400.0f)
         {
+            mChanged = true;
         }
 
 
@@ -328,17 +329,17 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
 
 
 
-        public void Update(float elapsed)
+        public void Update(float elapsed, TWKeyboard keyboard, TWMouse mouse)
         {
             if (!Enabled) return;
 
 
-            processUserInput(elapsed);
+            processUserInput(elapsed,keyboard,mouse);
 
             UpdateCameraInfo();
         }
 
-        private void processUserInput(float elapsed)
+        private void processUserInput(float elapsed, TWKeyboard keyboard, TWMouse mouse)
         {
             if (!enableUserInput) return;
             Vector3 vSnelheid = new Vector3();

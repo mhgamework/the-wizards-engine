@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
-using MHGameWork.TheWizards.Tests.Features.Data.OBJParser;
-using MHGameWork.TheWizards.Tests.Features.Rendering.Showcase;
+using MHGameWork.TheWizards.Tests.Features.Rendering.Deferred;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.Direct3D11;
+using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
+namespace MHGameWork.TheWizards.Tests.Features.Rendering.Showcase
 {
     /// <summary>
     /// 
@@ -21,6 +23,8 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
     [TestFixture]
     public class ShowcaseTest
     {
+        private const string ShowcaseCamera = "../../Unit Tests/Features/Rendering/Showcase/camera.xml";
+
         [Test]
         public void TestCompleteShowcase()
         {
@@ -31,9 +35,23 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
             var showcase = new ShowcaseSceneBuilder();
             showcase.CreateScene(renderer);
 
-            game.GameLoopEvent += g => renderer.Draw();
+            game.GameLoopEvent += g =>
+            {
+                renderer.Draw();
+                if (game.Keyboard.IsKeyDown(Key.C))
+                {
+                    var s = createCameraSerializer();
+                    using (var fs = File.OpenWrite("camera.xml"))
+                        s.Serialize(fs, game.SpectaterCamera);
+                }
+            };
 
             game.Run();
+        }
+
+        private static XmlSerializer createCameraSerializer()
+        {
+            return new XmlSerializer(typeof(SpectaterCamera));
         }
 
         [Test]
@@ -41,18 +59,32 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
         {
             var game = createGame();
 
+            game.SpectaterCamera = loadCamera(ShowcaseCamera);
+            game.Camera = game.SpectaterCamera;
+
             var renderer = new DeferredRenderer(game);
 
             var showcase = new ShowcaseSceneBuilder();
             showcase.CreateScene(renderer);
 
-            game.GameLoopEvent += delegate { renderer.Draw(); game.Exit(); };
+            game.GameLoopEvent += delegate
+            {
+                renderer.Draw();
+                game.Exit();
+            };
 
             game.Run();
         }
 
+        private SpectaterCamera loadCamera(string showcaseCamera)
+        {
+            var s = createCameraSerializer();
+            using (var fs = File.OpenRead(showcaseCamera))
+                return (SpectaterCamera)s.Deserialize(fs);
+        }
+
         [Test]
-        public void TestShowcaseGBuffer()
+        public void TestShowcaseGBuffer()   
         {
             drawMeshTest(RenderingTestsHelper.CreateMeshFromObj(new OBJToRAMMeshConverter(new RAMTextureFactory()),
                                                                   TWDir.GameData +

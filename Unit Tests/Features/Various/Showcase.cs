@@ -566,7 +566,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
 
             var visualizer = new QuadTreeVisualizer();
 
-            var otherCam = new SpectaterCamera(game.Keyboard, game.Mouse, 1, 10000);
+            var otherCam = new SpectaterCamera( 1, 10000);
             var camState = false;
             int state = 0;
             bool rotate = false;
@@ -621,7 +621,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
                 }
                 game.SpectaterCamera.EnableUserInput = camState;
                 otherCam.EnableUserInput = !camState;
-                otherCam.Update(game.Elapsed);
+                otherCam.Update(game.Elapsed,game.Keyboard,game.Mouse);
 
 
                 renderer.Draw();

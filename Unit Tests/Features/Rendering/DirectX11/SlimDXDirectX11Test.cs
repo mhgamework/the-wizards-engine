@@ -408,13 +408,13 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
             device.ImmediateContext.Rasterizer.State = rasterizerState;
 
 
-            var cam = new SpectaterCamera(keyboard, mouse);
+            var cam = new SpectaterCamera();
 
             game.GameLoopEvent += delegate
                                   {
                                       mouse.UpdateMouseState(m.GetCurrentState());
                                       keyboard.UpdateKeyboardState(kb.GetCurrentState());
-                                      cam.Update(0.001f);
+                                      cam.Update(0.001f, keyboard, mouse);
 
                                       device.ImmediateContext.InputAssembler.InputLayout = layout;
                                       device.ImmediateContext.InputAssembler.PrimitiveTopology =
@@ -479,7 +479,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
             device.ImmediateContext.Rasterizer.State = rasterizerState;
 
 
-            var cam = new SpectaterCamera(keyboard, mouse);
+            var cam = new SpectaterCamera();
 
             var lineManager = new LineManager3D(device);
 
@@ -487,7 +487,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
             {
                 mouse.UpdateMouseState(m.GetCurrentState());
                 keyboard.UpdateKeyboardState(kb.GetCurrentState());
-                cam.Update(0.001f);
+                cam.Update(0.001f, keyboard, mouse);
 
                 for (int num = 0; num < 200; num++)
                 {

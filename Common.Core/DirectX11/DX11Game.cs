@@ -110,7 +110,7 @@ namespace MHGameWork.TheWizards.DirectX11
 
             updateElapsed();
 
-            SpectaterCamera.Update(Elapsed);
+            SpectaterCamera.Update(Elapsed,keyboard,mouse);
 
             Form.Device.ImmediateContext.ClearRenderTargetView(Form.RenderTargetView, new Color4(Color.DeepSkyBlue));
 
@@ -320,7 +320,7 @@ namespace MHGameWork.TheWizards.DirectX11
             diMouse = new SlimDX.DirectInput.Mouse(new DirectInput());
             diMouse.SetCooperativeLevel(Form.Form, CooperativeLevel.Exclusive | CooperativeLevel.Foreground);
 
-            SpectaterCamera = new SpectaterCamera(keyboard, mouse);
+            SpectaterCamera = new SpectaterCamera();
             Camera = SpectaterCamera;
 
 
@@ -348,7 +348,7 @@ namespace MHGameWork.TheWizards.DirectX11
 
 
         // Helper
-        public SpectaterCamera SpectaterCamera { get; private set; }
+        public SpectaterCamera SpectaterCamera { get; set; }
         public LineManager3D LineManager3D { get; private set; }
         /// <summary>
         /// Contains some pipeline states for easy use.
