@@ -57,11 +57,10 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Showcase
             foreach (var pos in lightPositions)
             {
                 var l = renderer.CreatePointLight();
-                l.ShadowsEnabled = false;
+                l.ShadowsEnabled = true;
                 l.LightPosition = pos;
                 l.LightRadius = 5f;
                 l.LightIntensity = 1;
-                l.ShadowsEnabled = true;
                 lights.Add(l);
             }
 

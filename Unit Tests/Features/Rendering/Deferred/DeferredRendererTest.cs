@@ -47,7 +47,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
             var renderer = new DeferredRenderer(game);
 
-            var otherCam = new SpectaterCamera(game.Keyboard, game.Mouse, 1, 10000);
+            var otherCam = new SpectaterCamera( 1, 10000);
 
             var mesh = RenderingTestsHelper.CreateMerchantsHouseMesh(new OBJToRAMMeshConverter(new RAMTextureFactory()));
 
@@ -110,7 +110,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
                 }
                 game.SpectaterCamera.EnableUserInput = camState;
                 otherCam.EnableUserInput = !camState;
-                otherCam.Update(game.Elapsed);
+                otherCam.Update(game.Elapsed, game.Keyboard, game.Mouse);
                 renderer.Draw();
 
             };
@@ -125,7 +125,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
             var renderer = new DeferredRenderer(game);
 
-            var otherCam = new SpectaterCamera(game.Keyboard, game.Mouse, 1, 10000);
+            var otherCam = new SpectaterCamera(1, 10000);
 
             var mesh = RenderingTestsHelper.CreateMerchantsHouseMesh(new OBJToRAMMeshConverter(new RAMTextureFactory()));
 
@@ -190,7 +190,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
                 }
                 game.SpectaterCamera.EnableUserInput = camState;
                 otherCam.EnableUserInput = !camState;
-                otherCam.Update(game.Elapsed);
+                otherCam.Update(game.Elapsed, game.Keyboard, game.Mouse);
                 renderer.Draw();
 
             };
