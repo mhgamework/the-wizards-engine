@@ -53,7 +53,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
             //QuadTreeVisualizer visualizer = new QuadTreeVisualizer();
 
 
-            SpectaterCamera cullCam = new SpectaterCamera(game.Keyboard, game.Mouse, 10f, 80);
+            SpectaterCamera cullCam = new SpectaterCamera(10f, 80);
 
             cullCam.Positie = new Vector3(8, 10, 8);
             cullCam.EnableUserInput = false;
@@ -89,7 +89,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
                 if (rotate)
                     cullCam.AngleHorizontal += game.Elapsed * MathHelper.Pi * (1 / 8f);
-                cullCam.Update(game.Elapsed);
+                cullCam.Update(game.Elapsed,game.Keyboard,game.Mouse);
                 if (game.Keyboard.IsKeyPressed(Key.NumberPadPlus))
                     selectedNode++;
                 if (game.Keyboard.IsKeyPressed(Key.NumberPadMinus))

@@ -110,7 +110,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Culling
 
 
 
-            SpectaterCamera cullCam = new SpectaterCamera(game.Keyboard, game.Mouse, 10f, 80);
+            SpectaterCamera cullCam = new SpectaterCamera(10f, 80);
             cullCam.Positie = new Vector3(8, 10, 8);
             cullCam.EnableUserInput = false;
 
@@ -181,7 +181,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Culling
                            return view.IsNodeVisible(node);
                        });
 
-                    cullCam.Update(game.Elapsed);
+                    cullCam.Update(game.Elapsed, game.Keyboard, game.Mouse);
                     /*int count = -1;
                     visualizer.RenderNodeGroundBoundig(game, culler.RootNode,
                     delegate(Culler.CullNode node, out Color col)
@@ -368,7 +368,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Culling
 
 
 
-            SpectaterCamera cullCam = new SpectaterCamera(game.Keyboard, game.Mouse, 10f, 80);
+            SpectaterCamera cullCam = new SpectaterCamera( 10f, 80);
             cullCam.Positie = new Vector3(8, 10, 8);
             cullCam.EnableUserInput = false;
 
@@ -448,7 +448,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Culling
                            return view.IsNodeVisible(node);
                        });
 
-                    cullCam.Update(game.Elapsed);
+                    cullCam.Update(game.Elapsed, game.Keyboard, game.Mouse);
 
 
                     /*int count = -1;
