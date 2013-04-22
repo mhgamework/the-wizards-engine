@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>790</x>
+      <y>140</y>
+      <w>190</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>GoblinCommandOrb
+--
+In-world goblin command
+--
++ Goblin
++ CommandType</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>400</x>
+      <y>570</y>
+      <w>190</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>GoblinBehaviourSimulator
+--
+Simulates goblin behaviour
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1120</x>
+      <y>290</y>
+      <w>190</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>GoblinBehaviourSimulator
+--
+Simulates goblin behaviour
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>490</x>
+      <y>150</y>
+      <w>190</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Goblin
+--
+In-world goblin
+--
++ Spatial
++ World Memory
++ Orbs</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>190</x>
+      <y>140</y>
+      <w>190</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>GoblinCommandOrb
+--
+In-world goblin command
+--
++ Goblin
++ CommandType</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>760</x>
+      <y>560</y>
+      <w>190</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>GoblinBehaviourSimulator
+--
+Simulates goblin behaviour
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>460</x>
+      <y>380</y>
+      <w>190</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>CommanType
+--
+Represents a type of goblin comman
+--
++ Name
++ Model</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

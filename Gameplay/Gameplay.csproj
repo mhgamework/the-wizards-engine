@@ -249,6 +249,7 @@
     <Compile Include="RTSTestCase1\Players\PlayerTargetingSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\PlayerUseSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\UserPlayer.cs" />
+    <Compile Include="RTSTestCase1\_Tests\GoblinsTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\InputTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\UserPlayerTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\PickupTest.cs" />
