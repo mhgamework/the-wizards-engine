@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
 
         public IMesh Mesh { get; set; }
-        public Matrix WorldMatrix { get; set; }
+        public virtual Matrix WorldMatrix { get; set; }
         public bool Visible { get; set; }
 
         /// <summary>

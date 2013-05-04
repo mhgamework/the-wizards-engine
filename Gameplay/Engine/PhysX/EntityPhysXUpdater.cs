@@ -58,7 +58,7 @@ namespace MHGameWork.TheWizards.Engine.PhysX
                     data = new EntityPhysX(ent, factory);
                     ent.set(data);
                 }
-                data.OnEntityChanged();
+                data.OnEntityChanged(); //TODO: should in fact only be called on worldmatrix changes!!
 
                 if (ent.Static == false)
                 {

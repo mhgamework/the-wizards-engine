@@ -234,6 +234,11 @@
     <Compile Include="Navigation2D\PathfinderVisualizer.cs" />
     <Compile Include="RTSTestCase1\Cannons\CannonSimulator.cs" />
     <Compile Include="RTSTestCase1\Characters\IRTSCharacter.cs" />
+    <Compile Include="RTSTestCase1\CommandFactory.cs" />
+    <Compile Include="RTSTestCase1\Goblins\GoblinCommandOrb.cs" />
+    <Compile Include="RTSTestCase1\Goblins\GoblinCommandsPart.cs" />
+    <Compile Include="RTSTestCase1\Goblins\GoblinCommandsSimulator.cs" />
+    <Compile Include="RTSTestCase1\Goblins\GoblinCommandType.cs" />
     <Compile Include="RTSTestCase1\Inputting\InputFactory.cs" />
     <Compile Include="RTSTestCase1\Inputting\InputSimulator.cs" />
     <Compile Include="RTSTestCase1\Inputting\UserButtonEvent.cs" />
@@ -249,11 +254,14 @@
     <Compile Include="RTSTestCase1\Players\PlayerTargetingSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\PlayerUseSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\UserPlayer.cs" />
+    <Compile Include="RTSTestCase1\_Engine\PhysicalSimulator.cs" />
+    <Compile Include="RTSTestCase1\_Engine\IPhysical.cs" />
+    <Compile Include="RTSTestCase1\_Engine\Physical.cs" />
     <Compile Include="RTSTestCase1\_Tests\GoblinsTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\InputTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\UserPlayerTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\PickupTest.cs" />
-    <Compile Include="RTS\TestUtilities.cs" />
+    <Compile Include="RTSTestCase1\RTS\TestUtilities.cs" />
     <Compile Include="Navigation2D\Vertex2D.cs" />
     <Compile Include="Navigation2D\Waypoint.cs" />
     <Compile Include="Navigation2D\WaypointConnectionProvider.cs" />
@@ -302,18 +310,18 @@
     <Compile Include="RTSTestCase1\_Tests\WorldResourceGenerationTest.cs" />
     <Compile Include="RTSTestCase1\WorldResources\IWorldResource.cs" />
     <Compile Include="RTSTestCase1\WorldResources\WorldResourceGenerator.cs" />
-    <Compile Include="RTS\GoblinMover.cs">
+    <Compile Include="RTSTestCase1\RTS\GoblinMover.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RTS\TerrainAStar.cs">
+    <Compile Include="RTSTestCase1\RTS\TerrainAStar.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RTSTestCase1\Shaping\IShape.cs" />
     <Compile Include="RTSTestCase1\Shaping\IShapeElement.cs" />
     <Compile Include="RTSTestCase1\Shaping\ShapeDetector.cs" />
     <Compile Include="RTSTestCase1\_Tests\ShapeDetectorTest.cs" />
-    <Compile Include="RTS\GoblinMovementSimulatorSimple.cs" />
-    <Compile Include="RTS\GoblinMovementSimulator.cs" />
+    <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulatorSimple.cs" />
+    <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulator.cs" />
     <Compile Include="_Features\TextMenu.cs" />
     <Compile Include="_Features\TextMenuItem.cs" />
     <Compile Include="Pickup\Inventory.cs" />

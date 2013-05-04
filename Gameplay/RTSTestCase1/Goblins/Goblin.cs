@@ -4,18 +4,18 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.RTSTestCase1.Characters;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
+using MHGameWork.TheWizards.RTSTestCase1._Engine;
 using SlimDX;
 using StillDesign.PhysX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 {
     [ModelObjectChanged]
-    public class Goblin : EngineModelObject ,IRTSCharacter
+    public class Goblin : EngineModelObject, IRTSCharacter, IPhysical
     {
         public Entity Attacked { get; set; }
         public Vector3 Position { get; set; }
         public Vector3 Goal { get; set; }
-        public Goblin BestFriend { get; set; }
         public Thing Holding { get; set; }
         public Entity Used { get; set; }
         public Vector3 LookDirection { get; set; }
@@ -27,6 +27,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
         public Goblin()
         {
             IsFriendly = true;
+            Physical = new Physical();
+            Commands = new GoblinCommandsPart();
+            Commands.Goblin = this; // TODO: do this automatically?
         }
 
 
@@ -88,5 +91,22 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
         {
             return CalculateHoldingMatrix().xna().Translation.dx();
         }
+
+
+        // Physical
+
+        public Physical Physical { get; set; }
+        public void UpdatePhysical()
+        {
+            Physical.Mesh = TW.Assets.LoadMesh("Core\\Barrel01");//Load("Goblin\\GoblinLowRes");
+            Physical.Solid = true;
+            Physical.Static = false;
+            Physical.Solid = false;
+        }
+
+
+        // Showing of commands
+
+        public GoblinCommandsPart Commands { get; set; }
     }
 }

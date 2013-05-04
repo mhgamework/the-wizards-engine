@@ -9,6 +9,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
 {
+    /// <summary>
+    /// TODO: convert to IPhysical
+    /// </summary>
     public class TreeRenderData : IModelObjectAddon<Tree>
     {
         private readonly Tree tree;
