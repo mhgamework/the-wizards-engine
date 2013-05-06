@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using DirectX11;
@@ -54,9 +55,17 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Showcase
             return new XmlSerializer(typeof(SpectaterCamera));
         }
 
+        [Xunit.Fact]
+        public void test()
+        {
+            var p = new ObjImporter();
+        }
+
+        [Xunit.Fact]
         [Test]
         public void TestShowcaseSingleFrame()
         {
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             var game = createGame();
 
             game.SpectaterCamera = loadCamera(ShowcaseCamera);
@@ -74,6 +83,11 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Showcase
             };
 
             game.Run();
+        }
+
+        System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            return null;
         }
 
         private SpectaterCamera loadCamera(string showcaseCamera)
