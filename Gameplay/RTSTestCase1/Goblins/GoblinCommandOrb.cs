@@ -31,5 +31,23 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 
             entity.ObjectMatrix = Matrix.Scaling(0.5f, 0.5f, 0.5f);
         }
+
+        /// <summary>
+        /// Updates correct placement of the orb when it is in a holder
+        /// </summary>
+        public void UpdateInHolder()
+        {
+            if (CurrentHolder == null) return;
+
+            var index = CurrentHolder.CommandHolder.AssignedCommands.IndexOf(this);
+
+            var pos = CurrentHolder.CommandHolder.HoldingArea.RelativeStart
+                      + CurrentHolder.CommandHolder.HoldingArea.Direction*index*0.6f;
+
+            pos += CurrentHolder.Physical.WorldMatrix.xna().Translation.dx();
+
+            Physical.WorldMatrix = Matrix.Translation(pos);
+        }
+        public ICommandHolder CurrentHolder { get; set; }
     }
 }

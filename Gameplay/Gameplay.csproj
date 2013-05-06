@@ -235,6 +235,8 @@
     <Compile Include="RTSTestCase1\Cannons\CannonSimulator.cs" />
     <Compile Include="RTSTestCase1\Characters\IRTSCharacter.cs" />
     <Compile Include="RTSTestCase1\CommandFactory.cs" />
+    <Compile Include="RTSTestCase1\Goblins\Cart.cs" />
+    <Compile Include="RTSTestCase1\Goblins\CommandHolderPart.cs" />
     <Compile Include="RTSTestCase1\Goblins\GoblinCommandOrb.cs" />
     <Compile Include="RTSTestCase1\Goblins\GoblinCommandsPart.cs" />
     <Compile Include="RTSTestCase1\Goblins\GoblinCommandsSimulator.cs" />
