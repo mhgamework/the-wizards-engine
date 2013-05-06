@@ -1,20 +1,23 @@
 ﻿using System;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.RTSTestCase1._Engine
+namespace MHGameWork.TheWizards.RTSTestCase1
 {
     /// <summary>
     /// Should not be using an interface, should be an interface on its own.
     /// </summary>
+    [ModelObjectChanged]
     public class Physical : EngineModelObject
     {
 
         public Physical()
         {
             ObjectMatrix = Matrix.Identity;
+            Visible = true;
         }
 
         /// <summary>
@@ -27,6 +30,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Engine
         public bool Solid { get; set; }
         public IMesh Mesh { get; set; }
         public bool Static { get; set; }
+        public bool Visible { get; set; }
 
         public void Update()
         {
@@ -37,6 +41,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Engine
             Entity.Solid = Solid;
             Entity.Mesh = Mesh;
             Entity.Static = Static;
+            Entity.Visible = Visible;
 
             //TODO: add another simualtor after the one that calls this update, 
             //  to allow for debug visualization!!?

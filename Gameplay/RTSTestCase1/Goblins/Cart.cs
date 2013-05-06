@@ -1,5 +1,5 @@
-﻿using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.RTSTestCase1._Engine;
+﻿using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
@@ -7,17 +7,19 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
     /// <summary>
     /// A cart!!
     /// </summary>
-    public class Cart: EngineModelObject, IPhysical, ICommandHolder
+    [ModelObjectChanged]
+    public class Cart : EngineModelObject, IPhysical, ICommandHolder
     {
         public Cart()
         {
             Physical = new Physical();
             CommandHolder = new CommandHolderPart();
+            CommandHolder.Holder = this;
 
             CommandHolder.HoldingArea = new HoldingAreaDescription()
             {
-                RelativeStart =  new Vector3(0,2,0),
-                Direction = new Vector3(1,0,0)
+                RelativeStart = new Vector3(0, 2, 0),
+                Direction = new Vector3(1, 0, 0)
             };
         }
 

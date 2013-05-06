@@ -4,7 +4,6 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.RTSTestCase1.Characters;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
-using MHGameWork.TheWizards.RTSTestCase1._Engine;
 using SlimDX;
 using StillDesign.PhysX;
 

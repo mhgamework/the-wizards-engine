@@ -14,15 +14,25 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
     {
         public void Simulate()
         {
-            foreach (var g in TW.Data.Objects.Where(o => o is Goblin).Cast<Goblin>().ToArray())
-            {
-                g.Commands.UpdateShowingCommands();
-            }
+            updateGoblinsProvidingCommands();
 
             assignHoldersToOrbs();
+            updateOrbsInHolders();
+        }
+
+        private static void updateOrbsInHolders()
+        {
             foreach (var g in TW.Data.Objects.Where(o => o is GoblinCommandOrb).Cast<GoblinCommandOrb>().ToArray())
             {
                 g.UpdateInHolder();
+            }
+        }
+
+        private static void updateGoblinsProvidingCommands()
+        {
+            foreach (var g in TW.Data.Objects.Where(o => o is Goblin).Cast<Goblin>().ToArray())
+            {
+                g.Commands.UpdateShowingCommands();
             }
         }
 
@@ -30,10 +40,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
         {
             var map = new Dictionary<GoblinCommandOrb, ICommandHolder>();
 
-            foreach (var g in TW.Data.Objects.Where(o => o is ICommandHolder).Cast<ICommandHolder>().ToArray())
+            foreach (var g in TW.Data.Objects.Where(o => o is CommandHolderPart).Cast<CommandHolderPart>().ToArray())
             {
-                foreach (var o in g.CommandHolder.AssignedCommands)
-                    map[o] = g;
+                foreach (var o in g.AssignedCommands)
+                    map[o] = g.Holder;
             }
 
             foreach (var o in map.Keys)

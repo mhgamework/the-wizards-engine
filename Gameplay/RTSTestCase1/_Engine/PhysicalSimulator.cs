@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Engine.WorldRendering;
-using MHGameWork.TheWizards.Persistence;
-using MHGameWork.TheWizards.RTSTestCase1.Items;
-using MHGameWork.TheWizards.RTSTestCase1.WorldResources;
-using MHGameWork.TheWizards.RTSTestCase1._Engine;
 
-namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
+namespace MHGameWork.TheWizards.RTSTestCase1
 {
     /// <summary>
     /// Binds entities to visualize, simulate physx for the objects in the RTSTestCase1

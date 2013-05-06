@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1.Pickupping;
-using MHGameWork.TheWizards.RTSTestCase1._Engine;
 using SlimDX;
 using StillDesign.PhysX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 {
+    [ModelObjectChanged]
     public class GoblinCommandOrb : EngineModelObject, IPhysical
     {
         public Physical Physical { get; set; }
