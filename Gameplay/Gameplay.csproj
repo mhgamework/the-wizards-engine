@@ -241,6 +241,8 @@
     <Compile Include="RTSTestCase1\Goblins\GoblinCommandsPart.cs" />
     <Compile Include="RTSTestCase1\Goblins\GoblinCommandsSimulator.cs" />
     <Compile Include="RTSTestCase1\Goblins\GoblinCommandType.cs" />
+    <Compile Include="RTSTestCase1\Goblins\GoblinFollowBehaviour.cs" />
+    <Compile Include="RTSTestCase1\Goblins\IGoblinBehaviour.cs" />
     <Compile Include="RTSTestCase1\Inputting\InputFactory.cs" />
     <Compile Include="RTSTestCase1\Inputting\InputSimulator.cs" />
     <Compile Include="RTSTestCase1\Inputting\UserButtonEvent.cs" />

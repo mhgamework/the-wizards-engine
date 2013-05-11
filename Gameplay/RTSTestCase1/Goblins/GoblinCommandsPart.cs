@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
                 orb.Physical.Visible = false;
                 //TW.Data.RemoveObject(orb);
             }
-            Orbs.Clear();
+            //Orbs.Clear();
         }
     }
 }

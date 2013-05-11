@@ -21,7 +21,15 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
     public class GoblinsTest
     {
         private TWEngine engine = EngineFactory.CreateEngine();
+        private CommandFactory f;
+        private Data data;
 
+        [SetUp]
+        public void Setup()
+        {
+            f = TW.Data.Get<CommandFactory>();
+            data = TW.Data.Get<Data>();
+        }
         /// <summary>
         /// This is a full testcase for the goblins functionality. Unit tests should be added later on when the testcase is completed.
         /// </summary>
@@ -42,7 +50,45 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
         private void createWorld()
         {
-            var f = TW.Data.Get<CommandFactory>();
+            //TestRender();
+            //TestShowCommands();
+            //TestHoldOrbs();
+            TestFollowOrb();
+        }
+
+        private void TestFollowOrb()
+        {
+            Goblin goblin;
+            data.FollowOrb = new GoblinCommandOrb() { Type = TW.Data.Get<CommandFactory>().Follow };
+            data.FollowOrb.Physical.WorldMatrix = Matrix.Translation(new Vector3(2, 0, 2));
+            goblin = new Goblin();
+            goblin.Commands.Orbs.Add(data.FollowOrb);
+            goblin.Physical.WorldMatrix = Matrix.Translation(2, 0, 16);
+        }
+
+        private void TestHoldOrbs()
+        {
+            data.HolderCart = new Cart();
+            data.HolderCart.Physical.WorldMatrix = Matrix.Translation(new Vector3(2, 0, 10));
+            data.HolderCart.CommandHolder.AssignedCommands.Add(new GoblinCommandOrb
+                {
+                    Type = TW.Data.Get<CommandFactory>().Follow
+                });
+            data.HolderCart.CommandHolder.AssignedCommands.Add(new GoblinCommandOrb
+                {
+                    Type = TW.Data.Get<CommandFactory>().Defend
+                });
+        }
+
+        private void TestShowCommands()
+        {
+            data.CommandsGoblin = new Goblin();
+            data.CommandsGoblin.Physical.WorldMatrix = Matrix.Translation(new Vector3(2, 0, 6));
+            data.CommandsGoblin.Commands.ShowingCommands = true;
+        }
+
+        private void TestRender()
+        {
             GoblinCommandOrb g;
             g = new GoblinCommandOrb { Type = f.Follow };
             g.Physical.WorldMatrix = Matrix.Translation(new Vector3(2, 0, 2));
@@ -57,24 +103,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             Cart cart;
             cart = new Cart();
             cart.Physical.WorldMatrix = Matrix.Translation(new Vector3(8, 0, 2));
-
-
-            var data = TW.Data.Get<Data>();
-
-
-
-            data.CommandsGoblin = new Goblin();
-            data.CommandsGoblin.Physical.WorldMatrix = Matrix.Translation(new Vector3(2, 0, 6));
-            data.CommandsGoblin.Commands.ShowingCommands = true;
-
-
-
-
-            data.HolderCart = new Cart();
-            data.HolderCart.Physical.WorldMatrix = Matrix.Translation(new Vector3(2, 0, 10));
-            data.HolderCart.CommandHolder.AssignedCommands.Add(new GoblinCommandOrb { Type = f.Follow });
-            data.HolderCart.CommandHolder.AssignedCommands.Add(new GoblinCommandOrb { Type = f.Defend });
-
         }
 
         public class Simulator : ISimulator
@@ -83,8 +111,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             private ClockedTimer clock = new ClockedTimer(TW.Graphics);
             public void Simulate()
             {
-                clock.Tick(data.CommandsGoblin, tickCommandsGoblin());
-                clock.Tick(data.HolderCart, tickHolderCart());
+                if (data.CommandsGoblin != null) clock.Tick(data.CommandsGoblin, tickCommandsGoblin());
+                if (data.HolderCart != null) clock.Tick(data.HolderCart, tickHolderCart());
+                if (data.FollowOrb != null) clock.Tick(data.FollowOrb, tickFollowOrb());
             }
 
             private IEnumerable<float> tickHolderCart()
@@ -100,12 +129,21 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                 data.CommandsGoblin.Commands.ShowingCommands = !data.CommandsGoblin.Commands.ShowingCommands;
                 yield return 2;
             }
+            private IEnumerable<float> tickFollowOrb()
+            {
+                data.FollowOrb.Physical.WorldMatrix = Matrix.Translation(2, 0, 16);
+                yield return 5;
+                data.FollowOrb.Physical.WorldMatrix = Matrix.Translation(6, 0, 16);
+                yield return 5;
+            }
         }
 
         public class Data : EngineModelObject
         {
             public Goblin CommandsGoblin { get; set; }
             public Cart HolderCart { get; set; }
+
+            public GoblinCommandOrb FollowOrb { get; set; }
         }
 
         public class ClockedTimer

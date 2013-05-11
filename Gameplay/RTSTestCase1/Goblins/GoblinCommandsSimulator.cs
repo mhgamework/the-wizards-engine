@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Engine;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 {
@@ -10,7 +11,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
     /// Responsible for simulating goblin commands behaviour
     /// Also simulates the command orbs
     /// </summary>
-    public class GoblinCommandsSimulator :ISimulator
+    public class GoblinCommandsSimulator : ISimulator
     {
         public void Simulate()
         {
@@ -18,7 +19,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 
             assignHoldersToOrbs();
             updateOrbsInHolders();
-        }
+            }
 
         private static void updateOrbsInHolders()
         {
@@ -26,6 +27,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
             {
                 g.UpdateInHolder();
             }
+
+
+
+            doBehaviour();
+
         }
 
         private static void updateGoblinsProvidingCommands()
@@ -33,6 +39,26 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
             foreach (var g in TW.Data.Objects.Where(o => o is Goblin).Cast<Goblin>().ToArray())
             {
                 g.Commands.UpdateShowingCommands();
+            }
+        }
+        private void doBehaviour()
+        {
+            foreach (var g in TW.Data.Objects.Where(o => o is Goblin).Cast<Goblin>().ToArray())
+            {
+                if (g.Commands.ShowingCommands) continue;
+                if (g.Commands.Orbs.Count == 0) continue;
+
+                var f = new GoblinFollowBehaviour();
+
+                f.Update(g);
+
+                var toGoal = -(g.Physical.WorldMatrix.xna().Translation.dx() - g.Goal);
+                toGoal.Normalize();
+                toGoal = toGoal*2;
+
+                g.Physical.WorldMatrix = g.Physical.WorldMatrix*Matrix.Translation(toGoal*TW.Graphics.Elapsed);
+                Console.WriteLine(g.Goal);
+
             }
         }
 
