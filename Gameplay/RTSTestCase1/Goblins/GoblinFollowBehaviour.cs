@@ -15,7 +15,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
             var goal = playerPos;
             if (toPlayer.Length() < minDistance)
                 goal = goblin.Position;
-            goal.Y = 0.85f / 2;
+            goal.Y = 0;
             goblin.MoveTo(goal);
         }
 

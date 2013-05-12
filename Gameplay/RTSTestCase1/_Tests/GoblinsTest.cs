@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.PhysX;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using MHGameWork.TheWizards.RTSTestCase1.Inputting;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
@@ -50,10 +51,13 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
         private void createWorld()
         {
+            TestUtilities.CreateGroundPlane();
+
             //TestRender();
             //TestShowCommands();
             //TestHoldOrbs();
-            TestFollowOrb();
+            //TestFollowOrb();
+            TestFollowWithCart();
         }
 
         private void TestFollowOrb()
@@ -64,6 +68,17 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             goblin = new Goblin();
             goblin.Commands.Orbs.Add(data.FollowOrb);
             goblin.Physical.WorldMatrix = Matrix.Translation(2, 0, 16);
+        }
+
+        private void TestFollowWithCart()
+        {
+            Goblin goblin;
+            data.FollowOrbCart = new GoblinCommandOrb() { Type = TW.Data.Get<CommandFactory>().Follow };
+            data.FollowOrbCart.Physical.WorldMatrix = Matrix.Translation(new Vector3(2, 0, 2));
+            goblin = new Goblin();
+            goblin.Commands.Orbs.Add(data.FollowOrbCart);
+            goblin.Physical.WorldMatrix = Matrix.Translation(2, 0, 16);
+            goblin.Cart = new Cart();
         }
 
         private void TestHoldOrbs()
@@ -114,6 +129,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                 if (data.CommandsGoblin != null) clock.Tick(data.CommandsGoblin, tickCommandsGoblin());
                 if (data.HolderCart != null) clock.Tick(data.HolderCart, tickHolderCart());
                 if (data.FollowOrb != null) clock.Tick(data.FollowOrb, tickFollowOrb());
+                if (data.FollowOrbCart != null) clock.Tick(data.FollowOrbCart,tickFollowOrbCart());
             }
 
             private IEnumerable<float> tickHolderCart()
@@ -136,6 +152,13 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                 data.FollowOrb.Physical.WorldMatrix = Matrix.Translation(6, 0, 16);
                 yield return 5;
             }
+            private IEnumerable<float> tickFollowOrbCart()
+            {
+                data.FollowOrbCart.Physical.WorldMatrix = Matrix.Translation(2, 0, 16);
+                yield return 5;
+                data.FollowOrbCart.Physical.WorldMatrix = Matrix.Translation(6, 0, 16);
+                yield return 5;
+            }
         }
 
         public class Data : EngineModelObject
@@ -144,6 +167,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             public Cart HolderCart { get; set; }
 
             public GoblinCommandOrb FollowOrb { get; set; }
+
+            public GoblinCommandOrb FollowOrbCart { get; set; }
         }
 
         public class ClockedTimer

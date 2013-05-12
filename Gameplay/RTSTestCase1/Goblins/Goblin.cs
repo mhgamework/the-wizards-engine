@@ -98,6 +98,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
         public void UpdatePhysical()
         {
             Physical.Mesh = TW.Assets.LoadMesh("Core\\Barrel01");//Load("Goblin\\GoblinLowRes");
+            Physical.ObjectMatrix = Matrix.Translation(0, 0.9f / 2, 0);
             Physical.Solid = true;
             Physical.Static = false;
             Physical.Solid = false;
@@ -107,5 +108,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
         // Showing of commands
 
         public GoblinCommandsPart Commands { get; set; }
+
+
+
+        public Cart Cart { get; set; }
     }
 }

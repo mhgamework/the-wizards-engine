@@ -53,10 +53,19 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
                 f.Update(g);
 
                 var toGoal = -(g.Physical.WorldMatrix.xna().Translation.dx() - g.Goal);
+                if (toGoal.Length() < 0.01) continue;
                 toGoal.Normalize();
                 toGoal = toGoal*2;
 
+                
+
                 g.Physical.WorldMatrix = g.Physical.WorldMatrix*Matrix.Translation(toGoal*TW.Graphics.Elapsed);
+
+                if (g.Cart != null)
+                {
+                    g.Cart.Physical.WorldMatrix = g.Physical.WorldMatrix * Matrix.Translation(0,0,1.7f);
+                }
+
                 Console.WriteLine(g.Goal);
 
             }
