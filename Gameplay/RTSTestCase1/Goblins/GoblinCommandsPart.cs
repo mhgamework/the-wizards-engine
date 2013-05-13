@@ -52,7 +52,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
             foreach (var orb in Orbs)
             {
                 orb.Physical.Visible = false;
-                TW.Data.RemoveObject(orb);
+                //TW.Data.RemoveObject(orb);
             }
             Orbs.Clear();
         }

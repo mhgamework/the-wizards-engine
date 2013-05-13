@@ -141,8 +141,13 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                             task.Enumerator = task.Enumerable.GetEnumerator();
                     }
 
-                    task.nextTime = game.TotalRunTime + task.Enumerator.Current;
+                    if (task.Enumerator.Current < 0.0001) //TODO this is bug?
+                        return;
 
+                    while (task.nextTime < game.TotalRunTime)
+                        task.nextTime = task.nextTime + task.Enumerator.Current;
+
+                    //Console.WriteLine(task.nextTime);
                 }
             }
 
