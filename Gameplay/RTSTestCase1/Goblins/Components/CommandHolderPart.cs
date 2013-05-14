@@ -3,10 +3,10 @@ using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
+namespace MHGameWork.TheWizards.RTSTestCase1.Goblins.Components
 {
     [ModelObjectChanged]
-    public class CommandHolderPart : EngineModelObject
+    public class CommandHolderPart : EngineModelObject, IObjectPart
     {
         /// <summary>
         /// 
@@ -32,9 +32,5 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
     {
         public Vector3 RelativeStart;
         public Vector3 Direction;
-    }
-    public interface ICommandHolder :IModelObject, IPhysical
-    {
-        CommandHolderPart CommandHolder { get; set; }
     }
 }

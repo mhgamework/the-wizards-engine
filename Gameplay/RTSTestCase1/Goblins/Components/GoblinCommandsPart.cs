@@ -7,7 +7,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins.Components
     /// <summary>
     /// Responsible for enabling a goblin to provide commands to the user
     /// </summary>
-    public class GoblinCommandsPart : EngineModelObject
+    public class GoblinCommandsPart : EngineModelObject,IObjectPart
     {
         public GoblinCommandsPart()
         {

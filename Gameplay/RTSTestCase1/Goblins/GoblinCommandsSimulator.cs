@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.RTSTestCase1.Goblins.Components;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Goblins

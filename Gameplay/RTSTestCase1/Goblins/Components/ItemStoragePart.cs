@@ -1,12 +1,11 @@
-﻿using EnvDTE;
-using MHGameWork.TheWizards.Data;
+﻿using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using System.Linq;
 
-namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
+namespace MHGameWork.TheWizards.RTSTestCase1.Goblins.Components
 {
     [ModelObjectChanged]
-    public class ItemStoragePart : EngineModelObject
+    public class ItemStoragePart : EngineModelObject,IObjectPart
     {
         public ItemStoragePart()
         {
@@ -21,18 +20,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
              .First(g => g.FullName == "MHGameWork.TheWizards.RTSTestCase1.Goblins.Components");
             foreach (var source in mine.Members.OfType<EnvDTE.CodeClass>())
             {
-
-                var interfaces = source.ImplementedInterfaces.OfType<CodeInterface>();
-                foreach (var i in interfaces)
-                {
-                    
-                }
+                var i = source.Bases;
             }
 
         }
-    }
-    public interface IItemStorage
-    {
-        ItemStoragePart ItemStorage { get; set; }
     }
 }

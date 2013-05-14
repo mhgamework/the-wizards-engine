@@ -240,11 +240,12 @@
     <Compile Include="RTSTestCase1\CommandFactory.cs" />
     <Compile Include="RTSTestCase1\Goblins\Cart.cs" />
     <Compile Include="RTSTestCase1\Goblins\Components\CommandHolderPart.cs" />
+    <Compile Include="RTSTestCase1\Goblins\Components\IObjectPart.cs" />
     <Compile Include="RTSTestCase1\Goblins\Components\ItemStoragePart.cs" />
-    <Compile Include="RTSTestCase1\Goblins\Components\Template1.cs">
+    <Compile Include="RTSTestCase1\Goblins\Components\ObjectPartInterfaces.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Template1.tt</DependentUpon>
+      <DependentUpon>ObjectPartInterfaces.tt</DependentUpon>
     </Compile>
     <Compile Include="RTSTestCase1\Goblins\GoblinCommandOrb.cs" />
     <Compile Include="RTSTestCase1\Goblins\Components\GoblinCommandsPart.cs" />
@@ -485,9 +486,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="RTSTestCase1\Goblins\Components\Template1.tt">
+    <None Include="RTSTestCase1\Goblins\Components\ObjectPartInterfaces.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template1.cs</LastGenOutput>
+      <LastGenOutput>ObjectPartInterfaces.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

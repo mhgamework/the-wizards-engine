@@ -1,5 +1,6 @@
 ﻿using DirectX11;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.RTSTestCase1.Goblins.Components;
 using MHGameWork.TheWizards.RTSTestCase1._Engine;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;

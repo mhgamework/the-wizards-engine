@@ -5,6 +5,7 @@ using System.Text;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.RTSTestCase1.Goblins.Components;
 using MHGameWork.TheWizards.RTSTestCase1.Pickupping;
 using SlimDX;
 using StillDesign.PhysX;
@@ -45,7 +46,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
             var pos = CurrentHolder.CommandHolder.HoldingArea.RelativeStart
                       + CurrentHolder.CommandHolder.HoldingArea.Direction*index*0.6f;
 
-            pos += CurrentHolder.Physical.WorldMatrix.xna().Translation.dx();
+            pos += ((IPhysical)CurrentHolder).Physical.WorldMatrix.xna().Translation.dx();
 
             Physical.WorldMatrix = Matrix.Translation(pos);
         }

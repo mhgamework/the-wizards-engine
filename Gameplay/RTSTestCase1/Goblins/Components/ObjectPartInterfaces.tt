@@ -1,0 +1,72 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Windows.Forms.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ assembly name="EnvDTE" #>
+<#
+	///
+	/// See http://t4-editor.tangible-engineering.com/blog/walking-the-visual-studio-code-model-with-t4-template.html
+	///
+
+  var visualStudio = (this.Host as IServiceProvider).GetService(typeof(EnvDTE.DTE))
+                      as EnvDTE.DTE;
+  var project = visualStudio.Solution.FindProjectItem(this.Host.TemplateFile)
+                                     .ContainingProject as EnvDTE.Project;
+
+	var	tNamespace = "MHGameWork.TheWizards.RTSTestCase1.Goblins.Components";
+
+	
+
+	
+#>
+// This is the output code from your template
+// you only get syntax-highlighting here - not intellisense
+namespace <#=tNamespace#>{
+  
+       <#
+		var mine = GetNamespace(project, tNamespace);
+            foreach (var source in mine.Members.OfType<EnvDTE.CodeClass>())
+            {		
+                var interfaces = source.ImplementedInterfaces.OfType<EnvDTE.CodeInterface>().FirstOrDefault(i=>i.Name == "IObjectPart");
+				if (interfaces == null) continue;
+				var name = source.Name;
+				if (name.EndsWith("Part")) name = name.Substring(0,name.Length-4);
+
+				
+		#>
+		public interface <#= "I" + name#>{
+			<#=source.FullName#> <#=name#> {get;set;}
+		}
+		<#
+            }
+
+		#>
+}
+ 
+<#+  
+	EnvDTE.CodeNamespace GetNamespace(EnvDTE.Project f ,string name)
+	{
+		var namespaceParts = name.Split('.');
+		EnvDTE.CodeNamespace current = null;
+		foreach (var part in namespaceParts)
+		{
+			if (current == null)
+			{
+				current = f.CodeModel.CodeElements.OfType<EnvDTE.CodeNamespace>().First(n=>n.Name == part);
+				continue;
+			}
+			current = current.Members.OfType<EnvDTE.CodeNamespace>().First(n=>n.Name == part);		
+		}
+		return current;
+	}
+	
+#>
