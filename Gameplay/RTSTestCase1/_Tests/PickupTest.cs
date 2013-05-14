@@ -67,9 +67,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
             engine.AddSimulator(new CircleMover());
             engine.AddSimulator(new PickupSimulator());
-
             engine.AddSimulator(new RTSEntitySimulator());
-
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.AddSimulator(new PhysXDebugRendererSimulator());

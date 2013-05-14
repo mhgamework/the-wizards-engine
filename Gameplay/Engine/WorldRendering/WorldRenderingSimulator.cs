@@ -31,7 +31,6 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
             var data = TW.Data.GetSingleton<Data>();
 
-            //if (!data.LightCreated)
             {
                 //var light = deferred.CreateDirectionalLight();
                 //light.LightDirection = Vector3.Normalize(new Vector3(1, -1, 1));
@@ -40,7 +39,9 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
                 var light = deferred.CreateSpotLight();
                 light.LightPosition = new Vector3(-1,1,-1) *30;
-                light.LightIntensity = 1;
+                light.LightIntensity = 0.1f;
+                if (data.SunEnabled)
+                  light.LightIntensity = 1;
                 light.LightRadius = 400;
                 light.SpotDirection = Vector3.Normalize(-light.LightPosition);
                 light.ShadowsEnabled = true;
@@ -90,6 +91,8 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         public class Data : EngineModelObject
         {
             public bool LightCreated = false;
+
+            public bool SunEnabled = true;
         }
     }
 }

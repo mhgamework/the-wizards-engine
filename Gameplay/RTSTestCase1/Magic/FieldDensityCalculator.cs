@@ -19,8 +19,14 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
             {
                 var cellIndex = grid.GetCellIndexForCoordinate(el.Position);
                 grid.AddDensity(cellIndex, el.Density);
-
-                // TODO: now edges will give wierd behaviour, add distance based algorithm
+                int range = 4;
+                for (int i = -range; i < range + 1; i++)
+                {
+                    for (int j = -range; j < range + 1; j++)
+                    {
+                        grid.AddDensity(cellIndex + new Point2(i, j), el.Density/ (Math.Abs(j) + Math.Abs(i) + 1));
+                    }
+                }
 
             }
 
@@ -34,6 +40,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
         Point2 GetCellIndexForCoordinate(Vector3 position);
         void AddDensity(Point2 cellIndex, float density);
         void Reset();
+        float GetDensity(Point2 cell);
     }
 
     public interface IFieldElement
@@ -81,14 +88,14 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
             position = (position - Offset) / NodeSize;
             return Point2.Floor(position.TakeXZ());
         }
-
         public void AddDensity(Point2 cellIndex, float density)
+        {AddDensity(cellIndex,density,5);}
+
+        private void AddDensity(Point2 cellIndex, float density, int range)
         {
             if (!InGrid(cellIndex)) return; // Not necessary but, hey we like duplicate code!
-
-            SetDensity(cellIndex, GetDensity(cellIndex) + density);
-
-            // Trololololo
+            
+                    SetDensity(cellIndex,GetDensity(cellIndex) + density);
         }
 
         public float GetDensityAt(Vector3 position)

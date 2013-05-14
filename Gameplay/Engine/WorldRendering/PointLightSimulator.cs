@@ -5,7 +5,7 @@
     /// </summary>
     public class PointLightSimulator : ISimulator
     {
-        class Data : IModelObjectAddon<PointLight>
+        public class Data : IModelObjectAddon<PointLight>
         {
             private Rendering.Deferred.PointLight el;
 
@@ -26,7 +26,7 @@
                 el.LightPosition = light.Position;
                 el.LightRadius = light.Size;
                 el.LightIntensity = light.Intensity;
-                el.ShadowsEnabled = true;
+                el.ShadowsEnabled = light.ShadowsEnabled;
             }
 
 

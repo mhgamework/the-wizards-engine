@@ -12,6 +12,5 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
         float GetEnergy();
         void SetEnergy(float level);
         Vector3 GetPosition();
-    }
-    
+    }    
 }
