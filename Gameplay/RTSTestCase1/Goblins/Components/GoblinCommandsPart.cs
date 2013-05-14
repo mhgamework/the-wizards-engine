@@ -2,7 +2,7 @@
 using MHGameWork.TheWizards.Engine;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
+namespace MHGameWork.TheWizards.RTSTestCase1.Goblins.Components
 {
     /// <summary>
     /// Responsible for enabling a goblin to provide commands to the user

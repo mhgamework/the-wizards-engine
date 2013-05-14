@@ -3,6 +3,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.RTSTestCase1.Characters;
+using MHGameWork.TheWizards.RTSTestCase1.Goblins.Components;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
 using SlimDX;
 using StillDesign.PhysX;
