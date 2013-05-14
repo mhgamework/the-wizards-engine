@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
         private Entity ent;
         public float glowPart{ get; set; }
         private float glowSpeed = 10f;
-        public PointLight PointLight { get; set; }
+        //public PointLight PointLight { get; set; }
         public CrystalRenderData(SimpleCrystal crystal)
         {
             this.crystal = crystal;
@@ -38,13 +38,25 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
             if (ent.Mesh == null)
                 ent.Mesh = TW.Assets.LoadMesh("RTS\\BuildingCrystal\\BuildingCrystal");
             
-            PointLight= PointLight ?? new PointLight();
-            PointLight.ShadowsEnabled = false;
-            PointLight.Position = crystal.Position + Vector3.UnitY * 2.3f;
+            //PointLight= PointLight ?? new PointLight();
+            //PointLight.ShadowsEnabled = false;
+            //PointLight.Position = crystal.Position + Vector3.UnitY * 2.3f;
+            
             ent.WorldMatrix =  Matrix.Translation(crystal.Position) ;
-            PointLight.Size= 6;
+            
+            //PointLight.Size= 6;
         }
-        
+        [TWProfile]
+        public void RenderBar()
+        {
+            
+            var level = crystal.Energy/crystal.Capacity;
+            var beginPosition = crystal.GetPosition() + new Vector3(0, 0, 4);
+            TW.Graphics.LineManager3D.AddBox(new BoundingBox(beginPosition,beginPosition + new Vector3(1,1,level*4)),new Color4(1,0.4f,0));
+            TW.Graphics.LineManager3D.AddBox(new BoundingBox(beginPosition + new Vector3(0, 0, level * 4), beginPosition + new Vector3(1, 1, 4)), new Color4(0.4f,1, 0));
+            
+        }
+
         public void Dispose()
         {
             if (ent == null) return;

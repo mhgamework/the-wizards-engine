@@ -43,3 +43,4 @@ using MHGameWork.TheWizards.Data;
 #if PROFILE
 [assembly: TWProfile(AttributeTargetTypes = "MHGameWork.TheWizards.*", AttributeTargetMembers = "*")]
 #endif
+[assembly: TWProfile(AttributeTargetTypes = "MHGameWork.TheWizards.RTSTestCase1.Magic.*", AttributeTargetMembers = "*")]

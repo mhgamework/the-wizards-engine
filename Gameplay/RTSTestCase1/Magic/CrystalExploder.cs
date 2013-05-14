@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
          }
         void kaboom(ICrystal crystal)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

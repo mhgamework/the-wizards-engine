@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
                 var energyFlow = difference*crystal.GetCapacity()*elapsedTime/3;
                 otherCrystal.SetEnergy(otherCrystal.GetEnergy() + energyFlow);
                 crystal.SetEnergy(crystal.GetEnergy() - energyFlow);
-                Console.WriteLine("Energy = " + crystal.GetEnergy());
+                //Console.WriteLine("Energy = " + crystal.GetEnergy());
             }
         }
         private float getLevel(ICrystal crystal)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MHGameWork.TheWizards.Data;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Magic
@@ -21,12 +22,14 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
             initGrid.Initialize(nodeSize, gridSize);
             grid = initGrid;
         }
-
+        
         private static SimpleGrid CreateGrid()
         {
             return new SimpleGrid();
         }
 
+
+        [TWProfile]
         public void PutCrystals(IEnumerable<SimpleCrystal> addCrystals)
         {
             foreach (var simpleCrystal in addCrystals)
@@ -35,12 +38,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
                 updated = false;
             }
         }
-
+        [TWProfile]
         public void ResetDensities()
         {
             SimpleGrid grid = CreateGrid();
         }
-
+        [TWProfile]
         public float GetDensity(Vector3 position)
         {
             if(!updated)

@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
                     renderData.glowPart += 4*(1 + 5*load ) * TW.Graphics.Elapsed;
                 if (renderData.glowPart > 2 * Math.PI)
                     renderData.glowPart = renderData.glowPart - (2 * (float)Math.PI);
-                renderData.PointLight.Intensity =0.3f * (1 + (float)Math.Sin(renderData.glowPart));
+                //renderData.PointLight.Intensity =0.3f * (1 + (float)Math.Sin(renderData.glowPart));
             }
         }
     }
