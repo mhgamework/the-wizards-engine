@@ -19,5 +19,6 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         public float Size { get; set; }
         public bool Enabled { get; set; }
 
+        public bool ShadowsEnabled { get; set; }
     }
 }

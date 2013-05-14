@@ -289,14 +289,15 @@
     <Compile Include="RTSTestCase1\Magic\FieldDensityCalculator.cs" />
     <Compile Include="RTSTestCase1\Magic\AmbientEnergyCharger.cs" />
     <Compile Include="RTSTestCase1\Magic\CrystalAverager.cs" />
+    <Compile Include="RTSTestCase1\Magic\CrystalExploder.cs" />
+    <Compile Include="RTSTestCase1\Magic\CrystalSpawner.cs" />
     <Compile Include="RTSTestCase1\Magic\ICrystal.cs" />
-    <Compile Include="RTSTestCase1\Magic\CrystalAveragerSimulator.cs" />
-    <Compile Include="RTSTestCase1\Magic\ICrystalDensityExpert.cs" />
+    <Compile Include="RTSTestCase1\Magic\IEnergyDensityExpert.cs" />
     <Compile Include="RTSTestCase1\Magic\SimpleCrystal.cs" />
-    <Compile Include="RTSTestCase1\Inputting\InputFactory.cs" />
-    <Compile Include="RTSTestCase1\Inputting\InputSimulator.cs" />
-    <Compile Include="RTSTestCase1\Inputting\UserButtonEvent.cs" />
     <Compile Include="RTSTestCase1\Magic\FieldDensityCalculator.cs" />
+    <Compile Include="RTSTestCase1\Magic\SimpleCrystalDensityExpert.cs" />
+    <Compile Include="RTSTestCase1\Magic\Simulators\CrystalAveragerSimulator.cs" />
+    <Compile Include="RTSTestCase1\Magic\Simulators\MagicSimulator.cs" />
     <Compile Include="RTSTestCase1\Pickupping\IPickupObject.cs" />
     <Compile Include="RTSTestCase1\Characters\SimpleRTSCharacter.cs" />
     <Compile Include="RTSTestCase1\Pickupping\PickupPhysXUpdater.cs" />
@@ -361,7 +362,10 @@
     <Compile Include="RTSTestCase1\_Tests\InputTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\PlayersTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\UserPlayerTest.cs" />
+    <Compile Include="RTSTestCase1\Rendering\CrystalGlowSimulator.cs" />
+    <Compile Include="RTSTestCase1\Rendering\CrystalRenderData.cs" />
     <Compile Include="RTSTestCase1\_Tests\EnergyFlowTest.cs" />
+    <Compile Include="RTSTestCase1\_Tests\MagicTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\PickupTest.cs" />
     <Compile Include="RTSTestCase1\RTS\TestUtilities.cs" />
     <Compile Include="Navigation2D\Vertex2D.cs" />
@@ -388,13 +392,13 @@
     <Compile Include="RTSTestCase1\RTS\IGoblinCommand.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RTSTestCase1\Items\DroppedThing.cs">
+    <Compile Include="RTSTestCase1\Magic\Items\DroppedThing.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RTSTestCase1\Items\ResourceType.cs">
+    <Compile Include="RTSTestCase1\Magic\Items\ResourceType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RTSTestCase1\Items\Thing.cs">
+    <Compile Include="RTSTestCase1\Magic\Items\Thing.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RTSTestCase1\Rendering\CannonRenderData.cs" />
@@ -568,6 +572,7 @@
     <Content Include="_Features\_doc.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="RTSTestCase1\Inputting\" />
     <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>

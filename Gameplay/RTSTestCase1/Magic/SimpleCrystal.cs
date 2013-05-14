@@ -10,23 +10,29 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
 {
 
     [ModelObjectChanged]
-    class SimpleCrystal : EngineModelObject, ICrystal
+    public class SimpleCrystal : EngineModelObject, ICrystal, IFieldElement
     {
 
         public float Capacity { get; set; }     
         public float Energy { get; set; }   
         public Vector3 Position{ get; set; }
-        public float GetCapacity()
+        public SimpleCrystal()
+        {
+            Capacity = 1;
+            Energy = 0;
+        }
+
+        float ICrystal.GetCapacity()
         {
             return Capacity;    
         }
-
-        public float GetEnergy()
+        
+        float ICrystal.GetEnergy()
         {
             return Energy;
         }
 
-        public void SetEnergy(float newEnergy)
+        void ICrystal.SetEnergy(float newEnergy)
         {
             Energy = newEnergy;
         }
@@ -34,6 +40,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
         public Vector3 GetPosition()
         {
             return Position;
+        }
+
+        float IFieldElement.Density
+        {
+            get { return Energy;}
         }
     }
 }

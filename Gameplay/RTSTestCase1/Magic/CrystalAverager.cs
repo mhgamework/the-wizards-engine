@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Magic
@@ -9,11 +10,13 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
         {
             foreach (var otherCrystal in crystals)
             {
+                if (otherCrystal == crystal) continue;
                 if (!(Vector3.DistanceSquared(crystal.GetPosition(), otherCrystal.GetPosition()) < 400)) continue;
                 var difference = getLevel(crystal) - getLevel(otherCrystal);
-                var energyFlow = difference * crystal.GetCapacity() * otherCrystal.GetCapacity() * elapsedTime/50;
+                var energyFlow = difference*crystal.GetCapacity()*elapsedTime/3;
                 otherCrystal.SetEnergy(otherCrystal.GetEnergy() + energyFlow);
-                crystal.SetEnergy(crystal.GetEnergy() + energyFlow);
+                crystal.SetEnergy(crystal.GetEnergy() - energyFlow);
+                Console.WriteLine("Energy = " + crystal.GetEnergy());
             }
         }
         private float getLevel(ICrystal crystal)
