@@ -26,19 +26,18 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
             if (nextTime < 1)
                 return retList;
             nextTime -= 1;
-            var randPosition = new Vector3(randomizer.Next((int)MinPosition.X, (int)MaxPosition.X),
-                                           randomizer.Next((int)MinPosition.Y, (int)MaxPosition.Y),
-                                           randomizer.Next((int)MinPosition.Z, (int)MaxPosition.Z));
-            //float density = densityExpert.GetDensity(randPosition);
-            float density = 0;
+            var randPosition = new Vector3(randomizer.Next((int) MinPosition.X, (int) MaxPosition.X),
+                                           randomizer.Next((int) MinPosition.Y, (int) MaxPosition.Y),
+                                           randomizer.Next((int) MinPosition.Z, (int) MaxPosition.Z));
+            float density = densityExpert.GetDensity(randPosition);
             if (density <= SpawnDensity)
             {
-                //Console.WriteLine("found density " + density + "  at " + randPosition.X + "," + randPosition.Z);
+                Console.WriteLine("found density " + density + "  at " + randPosition.X + "," + randPosition.Z);
                 retList.Add(createCrystal(randPosition));
             }
-
             return retList;
         }
+
         private ICrystal createCrystal(Vector3 position)
         {
             return new SimpleCrystal { Position = position, Capacity = 1000};

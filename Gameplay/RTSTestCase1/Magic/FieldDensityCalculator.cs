@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DirectX11;
+using MHGameWork.TheWizards.Data;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Magic
@@ -10,6 +11,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
     /// </summary>
     public class FieldDensityCalculator
     {
+        [TWProfile]
         public void CalculateDensities(List<IFieldElement> elements, IGrid grid)
         {
 
@@ -24,7 +26,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
                 {
                     for (int j = -range; j < range + 1; j++)
                     {
-                        grid.AddDensity(cellIndex + new Point2(i, j), el.Density/ (Math.Abs(j) + Math.Abs(i) + 1));
+                        grid.AddDensity(cellIndex + new Point2(i, j), el.Density / (Math.Abs(j) + Math.Abs(i) + 1));
                     }
                 }
 
@@ -89,13 +91,13 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
             return Point2.Floor(position.TakeXZ());
         }
         public void AddDensity(Point2 cellIndex, float density)
-        {AddDensity(cellIndex,density,5);}
+        { AddDensity(cellIndex, density, 5); }
 
         private void AddDensity(Point2 cellIndex, float density, int range)
         {
             if (!InGrid(cellIndex)) return; // Not necessary but, hey we like duplicate code!
-            
-                    SetDensity(cellIndex,GetDensity(cellIndex) + density);
+
+            SetDensity(cellIndex, GetDensity(cellIndex) + density);
         }
 
         public float GetDensityAt(Vector3 position)
