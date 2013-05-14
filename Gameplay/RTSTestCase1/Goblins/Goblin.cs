@@ -56,8 +56,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
         {
             var pos = Position;
             pos.Y = 0.5f;
-            new DroppedThing() { Thing = Holding, InitialPosition = CalculateHoldingResourcePosition() };
-
+            var drop = new DroppedThing() { Thing = Holding  };
+            drop.Physical.WorldMatrix = Matrix.Translation(CalculateHoldingResourcePosition());
             Holding = null;
         }
 

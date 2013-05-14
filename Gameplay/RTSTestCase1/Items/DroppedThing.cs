@@ -1,21 +1,36 @@
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.RTSTestCase1._Engine;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Items
 {
+    /// <summary>
+    /// Should be renamed Item? should be a component instead of an imodelobject?
+    /// </summary>
     [ModelObjectChanged]
-    public class DroppedThing : EngineModelObject
+    public class DroppedThing : EngineModelObject,IPhysical
     {
-        /// <summary>
-        /// The current position is stored in Entity, due to a design problem.
-        /// </summary>
-        public Vector3 InitialPosition { get; set; }
-        public Thing Thing { get; set; }
-        public Vector3 GetRealTimePosition()
+        public DroppedThing()
         {
-            return get<Entity>().WorldMatrix.xna().Translation.dx();
+            Physical = new Physical();
+        }
+
+        public Thing Thing { get; set; }
+
+        public Physical Physical { get; set; }
+        public void UpdatePhysical()
+        {
+            var ent = Physical;
+            if (ent.Mesh == null)
+                ent.Mesh = Thing.CreateMesh();
+
+            ent.Solid = true;
+            ent.Static = false;
+
+            ent.Solid = false;
+
         }
     }
 }

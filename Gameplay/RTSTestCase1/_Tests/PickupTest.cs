@@ -36,9 +36,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         {
             var drop = new DroppedThing()
                 {
-                    Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Wood },
-                    InitialPosition = new Vector3(1, 1, 1)
+                    Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Wood }
                 };
+            drop.Physical.WorldMatrix = Matrix.Translation(new Vector3(1, 1, 1));
             var obj = TW.Data.Get<SimplePickupObject>();
             obj.Position = new Vector3(1.5f, 1, 1);
             obj.Holding = drop;
@@ -58,8 +58,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             var drop = new DroppedThing()
             {
                 Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Wood },
-                InitialPosition = new Vector3(1, 1, 1)
+                
             };
+            drop.Physical.WorldMatrix = Matrix.Translation( new Vector3(1, 1, 1));
             var obj = TW.Data.Get<SimplePickupObject>();
             obj.Position = new Vector3(1.5f, 1, 1);
             obj.Holding = drop;

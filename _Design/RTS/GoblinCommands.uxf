@@ -1,13 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="12.0">
-  <zoom_level>10</zoom_level>
+  <zoom_level>9</zoom_level>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>150</x>
-      <y>500</y>
-      <w>250</w>
-      <h>120</h>
+      <x>225</x>
+      <y>108</y>
+      <w>225</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>Goblin
+--
+In-world goblin
+--
++ Spatial
++ World Memory
++ GoblinCommandsPart
++ Cart</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>315</x>
+      <y>819</y>
+      <w>216</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>IPhysical
+--
+Responsible for providing pysical 
+properties to a EngineObject.
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1242</x>
+      <y>198</y>
+      <w>116</w>
+      <h>116</h>
+    </coordinates>
+    <panel_attributes>
+lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>99;27;27;99</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>468</x>
+      <y>108</y>
+      <w>216</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Cart
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>81</x>
+      <y>288</y>
+      <w>225</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>GoblinBehaviourSimulator
 --
@@ -19,55 +79,25 @@ Simulates goblin behaviour
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>510</x>
-      <y>120</y>
-      <w>250</w>
-      <h>100</h>
+      <x>549</x>
+      <y>693</y>
+      <w>225</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>Goblin
+    <panel_attributes>CommandHolderPart
 --
-In-world goblin
---
-+ Spatial
-+ World Memory
-+ GoblinCommandsPart</panel_attributes>
++ AssignedOrbs
+
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>150</x>
-      <y>270</y>
-      <w>250</w>
-      <h>100</h>
-    </coordinates>
-    <panel_attributes>GoblinCommandOrb
---
-In-world goblin command
---
-+ Spatial
-+ Goblin
-+ CommandType</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>370</x>
-      <y>290</y>
-      <w>370</w>
-      <h>440</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>350;420;30;30</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>150</x>
-      <y>380</y>
-      <w>250</w>
-      <h>100</h>
+      <x>81</x>
+      <y>405</y>
+      <w>225</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>CommandType
 --
@@ -78,39 +108,26 @@ Represents a type of goblin command
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>730</x>
-      <y>140</y>
-      <w>230</w>
-      <h>60</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>30;30;210;40</additional_attributes>
-  </element>
-  <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>720</x>
-      <y>650</y>
-      <w>250</w>
-      <h>120</h>
+      <x>1233</x>
+      <y>135</y>
+      <w>216</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>IPhysical
+    <panel_attributes>IGoblinBehaviour
 --
-Responsible for providing pysical 
-properties to a EngineObject.
---
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>940</x>
-      <y>120</y>
-      <w>250</w>
-      <h>100</h>
+      <x>792</x>
+      <y>693</y>
+      <w>225</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>GoblinCommandsPart
 --
@@ -118,6 +135,65 @@ Responsible for providing command support
 --
 + Enabled
 + Orbs</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1161</x>
+      <y>297</y>
+      <w>216</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>GoblinFollowBehaviour
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>945</x>
+      <y>108</y>
+      <w>216</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>DroppedThing (should be Item)
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>315</x>
+      <y>693</y>
+      <w>216</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Physical
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>702</x>
+      <y>108</y>
+      <w>225</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>GoblinCommandOrb
+--
+In-world goblin command
+--
++ Spatial
++ Goblin
++ CommandType</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

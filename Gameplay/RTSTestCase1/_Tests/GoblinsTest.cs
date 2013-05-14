@@ -11,6 +11,7 @@ using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using MHGameWork.TheWizards.RTSTestCase1.Inputting;
+using MHGameWork.TheWizards.RTSTestCase1.Items;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
 using NUnit.Framework;
 using SlimDX;
@@ -53,11 +54,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         {
             TestUtilities.CreateGroundPlane();
 
-            //TestRender();
+            TestRender();
             //TestShowCommands();
             //TestHoldOrbs();
             //TestFollowOrb();
-            TestFollowWithCart();
+            //TestFollowWithCart();
         }
 
         private void TestFollowOrb()
@@ -118,6 +119,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             Cart cart;
             cart = new Cart();
             cart.Physical.WorldMatrix = Matrix.Translation(new Vector3(8, 0, 2));
+
+            DroppedThing drop;
+            drop = new DroppedThing();
+            drop.Thing = new Thing() {Type = TW.Data.Get<ResourceFactory>().Stone};
+            drop.Physical.WorldMatrix = Matrix.Translation(new Vector3(10, 0, 2));
         }
 
         public class Simulator : ISimulator

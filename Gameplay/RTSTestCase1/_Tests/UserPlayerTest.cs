@@ -39,9 +39,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             var drop = new DroppedThing()
             {
                 Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Wood },
-                InitialPosition = new Vector3(1, 1, 1)
+                
             };
-
+            drop.Physical.WorldMatrix = Matrix.Translation(new Vector3(1, 1, 1));
             var player =  new UserPlayer() { Position = new Vector3(3, 3, 3) };
 
             engine.AddSimulator(new BasicSimulator(delegate
@@ -68,10 +68,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             var drop = new DroppedThing()
                 {
                     Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Wood },
-                    InitialPosition = new Vector3(1, 1, 1)
+
                 };
 
-
+            drop.Physical.WorldMatrix = Matrix.Translation(new Vector3(1, 1, 1));
             engine.AddSimulator(new UpdateSimulator());
 
             new PickupTest() { Drop = drop };
@@ -93,9 +93,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             var drop = new DroppedThing()
             {
                 Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Wood },
-                InitialPosition = new Vector3(1, 1, 1)
+                
             };
-
+            drop.Physical.WorldMatrix = Matrix.Translation(new Vector3(1, 1, 1));
             var player = new UserPlayer() { Position = new Vector3(3, 3, 3) };
 
             //engine.AddSimulator(new BasicSimulator(delegate

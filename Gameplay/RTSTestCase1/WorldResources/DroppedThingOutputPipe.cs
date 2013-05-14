@@ -81,7 +81,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources
         }
         public void SpawnItem(Thing thing)
         {
-            drop = new DroppedThing() { InitialPosition = spawnPosition, Thing = thing };
+            drop = new DroppedThing() { Thing = thing };
+            drop.Physical.WorldMatrix = Matrix.Translation(spawnPosition);
         }
     }
 }
