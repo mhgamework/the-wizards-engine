@@ -74,14 +74,14 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
             renderLines();
         }
-        [TWProfile]
+        
         private void drawDeferred()
         {
             TW.Graphics.Camera = info.ActiveCamera;
             deferred.Draw(); // TODO: fixthis : LOL draw first ? is this correct?
         }
 
-        [TWProfile]
+        
         private static void renderLines()
         {
             TW.Graphics.LineManager3D.Render(TW.Graphics.Camera);

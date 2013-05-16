@@ -37,7 +37,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
         {
             if (ent.Mesh == null)
                 ent.Mesh = TW.Assets.LoadMesh("RTS\\BuildingCrystal\\BuildingCrystal");
-            
+            ent.Visible = crystal.Active;
             //PointLight= PointLight ?? new PointLight();
             //PointLight.ShadowsEnabled = false;
             //PointLight.Position = crystal.Position + Vector3.UnitY * 2.3f;
@@ -46,10 +46,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
             
             //PointLight.Size= 6;
         }
-        [TWProfile]
+        
         public void RenderBar()
         {
-            
+            if (!crystal.IsActive())
+                return;
             var level = crystal.Energy/crystal.Capacity;
             var beginPosition = crystal.GetPosition() + new Vector3(0, 0, 4);
             TW.Graphics.LineManager3D.AddBox(new BoundingBox(beginPosition,beginPosition + new Vector3(1,1,level*4)),new Color4(1,0.4f,0));

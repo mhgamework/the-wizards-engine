@@ -41,6 +41,6 @@ using MHGameWork.TheWizards.Data;
 
 //[assembly: TWProfile(TWProfileAttribute.NameType.Class, AttributeTargetTypes = "MHGameWork.TheWizards.*", AttributeTargetMembers = "Simulate")]
 #if PROFILE
-[assembly: TWProfile(AttributeTargetTypes = "MHGameWork.TheWizards.*", AttributeTargetMembers = "*")]
+[assembly: (AttributeTargetTypes = "MHGameWork.TheWizards.*", AttributeTargetMembers = "*")]
 #endif
-[assembly: TWProfile(AttributeTargetTypes = "MHGameWork.TheWizards.RTSTestCase1.Magic.*", AttributeTargetMembers = "*")]
+//[assembly: TWProfile(AttributeTargetTypes = "MHGameWork.TheWizards.RTSTestCase1.Magic.*", AttributeTargetMembers = "*")]

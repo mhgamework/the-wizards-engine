@@ -11,7 +11,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
     /// </summary>
     public class FieldDensityCalculator
     {
-        [TWProfile]
+        
         public void CalculateDensities(List<IFieldElement> elements, IGrid grid)
         {
 
@@ -70,11 +70,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
             Offset = new Vector3();
         }
 
-        public void Initialize(float nodeSize, int gridSize)
+        public void Initialize(float nodeSize, int gridSize, Vector3 offSet)
         {
             NodeSize = nodeSize;
             GridSize = gridSize;
-
+            Offset = offSet;
             values = new float[gridSize, gridSize];
         }
 
@@ -128,10 +128,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
         private void forall(Action<Point2> func)
         {
             for (int x = 0; x < GridSize; x++)
+            {
                 for (int y = 0; y < GridSize; y++)
                 {
                     func(new Point2(x, y));
                 }
+            }
         }
     }
 }
