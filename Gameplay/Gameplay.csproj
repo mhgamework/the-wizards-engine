@@ -279,6 +279,8 @@
     <Compile Include="RTSTestCase1\Magic\FieldDensityCalculator.cs" />
     <Compile Include="RTSTestCase1\Magic\SimpleCrystalDensityExpert.cs" />
     <Compile Include="RTSTestCase1\Magic\Simulators\CrystalAveragerSimulator.cs" />
+    <Compile Include="RTSTestCase1\Magic\Simulators\CrystalBrownSimulator.cs" />
+    <Compile Include="RTSTestCase1\Magic\Simulators\GridDrawSimulator.cs" />
     <Compile Include="RTSTestCase1\Magic\Simulators\MagicSimulator.cs" />
     <Compile Include="RTSTestCase1\Pickupping\IPickupObject.cs" />
     <Compile Include="RTSTestCase1\Characters\SimpleRTSCharacter.cs" />

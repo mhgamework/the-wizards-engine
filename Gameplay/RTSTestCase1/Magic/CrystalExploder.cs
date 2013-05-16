@@ -7,7 +7,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
 {
     class CrystalExploder
     {
-        private float KABOOMDENSITY = 300;
+        private float KABOOMDENSITY = 2000;
         
        public   IEnumerable<ICrystal> CheckExplode(IEnergyDensityExpert densityExpert, IEnumerable<ICrystal> crystals, float elapsedTime)
          {
@@ -16,11 +16,13 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
            {
                kaboom(kaboomer);
            }
+           Console.WriteLine();
            return kaboomers;
-         }
+         
+       }
         void kaboom(ICrystal crystal)
         {
-            
+            Console.WriteLine("Crystal exploded");   
         }
     }
 }

@@ -46,14 +46,17 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
         public void TestMagicSimulation()
         {
+            var crystal = new SimpleCrystal() { Position = new Vector3(0, 0, 0), Capacity = 1000 };
+            var crystal2 = new SimpleCrystal() { Position = new Vector3(10, 0, 0), Capacity = 1000 };
+            
+            var crystal3 = new SimpleCrystal() { Position = new Vector3(20, 0, 0), Capacity = 1000, Energy = 1000 };
+            var crystal4 = new SimpleCrystal() { Position = new Vector3(30, 0, 0), Capacity = 1000, Energy = 1000 };
+            engine.AddSimulator(new CrystalBrownSimulator());
             engine.AddSimulator(new MagicSimulator());
             engine.AddSimulator(new RTSEntitySimulator());
             //engine.AddSimulator(new CrystalGlowSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
-            var crystal = new SimpleCrystal(){Position = new Vector3(0,0,0),Capacity = 1000};
-            var crystal2 = new SimpleCrystal() { Position = new Vector3(10, 0, 0), Capacity = 1000 };
-            var crystal3 = new SimpleCrystal() { Position = new Vector3(20, 0, 0), Capacity = 1000,Energy = 1000};
-            
+               
         }
 
         private IFieldElement createElement(Vector3 p0, int p1)

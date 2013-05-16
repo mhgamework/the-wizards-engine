@@ -6,10 +6,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
 {
     public class CrystalAverager
     {
-        public void processCrystal(IEnumerable<ICrystal> crystals, ICrystal crystal,float elapsedTime)
+        public void processCrystal(IEnumerable<ICrystal> crystals, ICrystal crystal, float elapsedTime)
         {
             foreach (var otherCrystal in crystals)
-            {
+            { 
                 if (otherCrystal == crystal) continue;
                 if (!(Vector3.DistanceSquared(crystal.GetPosition(), otherCrystal.GetPosition()) < 400)) continue;
                 var difference = getLevel(crystal) - getLevel(otherCrystal);

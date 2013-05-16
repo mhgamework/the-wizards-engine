@@ -12,7 +12,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
         public Vector3 MaxPosition { get; set; }
         private float nextTime;
         private Random randomizer = new Random();
-        private static float SpawnDensity = 0;
+        private static float SpawnDensity = 20;
         public CrystalSpawner()
         {
             MinPosition = new Vector3(-20, 0, -20);
@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
 
         private ICrystal createCrystal(Vector3 position)
         {
-            return new SimpleCrystal { Position = position, Capacity = 1000};
+            return new SimpleCrystal { Position = position, Capacity = 1000,Energy =  ((float)randomizer.NextDouble())*800f};
         }
     }
 }

@@ -20,6 +20,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
         {
             Capacity = 1;
             Energy = 0;
+            Active = true;
         }
 
         float ICrystal.GetCapacity()
@@ -42,8 +43,15 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
             return Position;
         }
 
-        float IFieldElement.Density
+        public bool IsActive()
         {
+            return Active;
+        }
+
+        public bool Active { get; set; }
+
+        float IFieldElement.Density
+        {   
             get { return Energy;}
         }
     }
