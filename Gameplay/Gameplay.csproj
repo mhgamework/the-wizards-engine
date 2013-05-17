@@ -272,6 +272,7 @@
     <Compile Include="RTSTestCase1\Players\PlayerTargetingSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\PlayerUseSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\UserPlayer.cs" />
+    <Compile Include="RTSTestCase1\WorldResources\WorldResourceGenerationSimulator.cs" />
     <Compile Include="RTSTestCase1\_Engine\PhysicalSimulator.cs" />
     <Compile Include="RTSTestCase1\_Engine\IPhysical.cs" />
     <Compile Include="RTSTestCase1\_Engine\Physical.cs" />
@@ -322,7 +323,7 @@
     <Compile Include="RTSTestCase1\WorldResources\DroppedThingOutputPipe.cs" />
     <Compile Include="RTSTestCase1\WorldResources\Rock.cs" />
     <Compile Include="RTSTestCase1\WorldResources\Tree.cs" />
-    <Compile Include="RTSTestCase1\WorldResources\WorldResourceGenerationSimulator.cs" />
+    <Compile Include="RTSTestCase1\WorldResources\WorldResourceGenerationWithPipesSimulator.cs" />
     <Compile Include="RTSTestCase1\_Tests\RTSRenderingTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldResourceGenerationTest.cs" />
     <Compile Include="RTSTestCase1\WorldResources\IWorldResource.cs" />

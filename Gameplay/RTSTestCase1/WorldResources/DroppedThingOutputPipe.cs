@@ -74,10 +74,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources
         {
             if (drop == null) return null;
 
-            if (drop.get<Entity>() == null) return null;
-            if (drop.get<Entity>().get<EntityPhysXUpdater.EntityPhysX>() == null) return null;
-            if (drop.get<Entity>().get<EntityPhysXUpdater.EntityPhysX>().getCurrentActor() == null) return null;
-            return drop.get<Entity>().get<EntityPhysXUpdater.EntityPhysX>().getCurrentActor();
+            var entity = drop.Physical.Entity;
+            if (entity == null) return null;
+            if (entity.get<EntityPhysXUpdater.EntityPhysX>() == null) return null;
+            if (entity.get<EntityPhysXUpdater.EntityPhysX>().getCurrentActor() == null) return null;
+            return entity.get<EntityPhysXUpdater.EntityPhysX>().getCurrentActor();
         }
         public void SpawnItem(Thing thing)
         {
