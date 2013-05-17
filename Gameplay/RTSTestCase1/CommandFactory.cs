@@ -14,16 +14,22 @@ namespace MHGameWork.TheWizards.RTSTestCase1
             Follow = new GoblinCommandType { Name = "Follow", MeshPath = @"RTS\Commands\export\follow" };
             Cancel = new GoblinCommandType { Name = "Cancel", MeshPath = @"RTS\Commands\export\cancel" };
             Defend = new GoblinCommandType { Name = "Defend", MeshPath = @"RTS\Commands\export\defend" };
+            MoveSource = new GoblinCommandType { Name = "MoveSource", MeshPath = @"RTS\Commands\export\moveSource" };
+            MoveTarget = new GoblinCommandType { Name = "MoveTarget", MeshPath = @"RTS\Commands\export\moveTarget" };
         }
         public GoblinCommandType Follow { get; set; }
         public GoblinCommandType Cancel { get; set; }
         public GoblinCommandType Defend { get; set; }
+        public GoblinCommandType MoveSource { get; set; }
+        public GoblinCommandType MoveTarget { get; set; }
 
         public IEnumerable<GoblinCommandType> AllCommands()
         {
             yield return Follow;
             yield return Cancel;
             yield return Defend;
+            yield return MoveSource;
+            yield return MoveTarget;
         }
 
 

@@ -43,7 +43,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1
             Entity.Static = Static;
             Entity.Visible = Visible;
 
-            //TODO: add another simualtor after the one that calls this update, 
+            //TODO: add another simulator after the one that calls this update, 
             //  to allow for debug visualization!!?
 
         }
@@ -56,5 +56,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1
             throw new NotImplementedException();
         }
 
+        public Vector3 GetPosition()
+        {
+            return WorldMatrix.xna().Translation.dx();
+        }
     }
 }

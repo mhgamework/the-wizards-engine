@@ -44,6 +44,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
             engine.AddSimulator(new GoblinCommandsSimulator());
 
+            engine.AddSimulator(new ItemStorageSimulator());
+
+
             engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
@@ -55,17 +58,107 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             TestUtilities.CreateGroundPlane();
 
             TestRender();
-            //TestShowCommands();
-            //TestHoldOrbs();
-            //TestFollowOrb();
-            //TestFollowWithCart();
+            TestShowCommands();
+            TestHoldOrbs();
+            TestFollowOrb();
+            TestFollowWithCart();
+            TestItemStorage();
+            TestMoveItems();
+
+        }
+
+        private void TestMoveItems()
+        {
+            Matrix offset = Matrix.Translation(0, 0, 28);
+
+            StorageCrate crate1, crate2;
+            crate1 = new StorageCrate();
+            crate1.Physical.WorldMatrix = Matrix.Translation(2, 0, 0) * offset;
+
+            for (int i = 0; i < 9*3; i++)
+            {
+                crate1.ItemStorage.Items.Add(new DroppedThing() { Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Stone } });
+            }
+
+            crate2 = new StorageCrate();
+            crate2.Physical.WorldMatrix = Matrix.Translation(10, 0, 0) * offset;
+
+
+
+            var orbSource = new GoblinCommandOrb() { Type = TW.Data.Get<CommandFactory>().MoveSource };
+            var orbTarget = new GoblinCommandOrb() { Type = TW.Data.Get<CommandFactory>().MoveTarget };
+            crate1.CommandHolder.AssignedCommands.Add(orbSource);
+            crate2.CommandHolder.AssignedCommands.Add(orbTarget);
+            
+
+            Goblin goblin;
+
+            goblin = new Goblin();
+            goblin.Physical.WorldMatrix = Matrix.Translation(2, 0, 0)*offset;
+
+            goblin.Commands.Orbs.Add(orbSource);
+            goblin.Commands.Orbs.Add(orbTarget);
+
+
+
+
+            Cart cart = new Cart();
+            cart.Physical.WorldMatrix = Matrix.Translation(14, 0, 0)*offset;
+
+
+            orbSource = new GoblinCommandOrb() { Type = TW.Data.Get<CommandFactory>().MoveSource };
+            orbTarget = new GoblinCommandOrb() { Type = TW.Data.Get<CommandFactory>().MoveTarget };
+            crate2.CommandHolder.AssignedCommands.Add(orbSource);
+            cart.CommandHolder.AssignedCommands.Add(orbTarget);
+
+            goblin = new Goblin();
+            goblin.Physical.WorldMatrix = Matrix.Translation(15, 0, 0) * offset;
+
+            goblin.Commands.Orbs.Add(orbSource);
+            goblin.Commands.Orbs.Add(orbTarget);
+
+
+
+
+        }
+
+        private void TestItemStorage()
+        {
+            StorageCrate crate;
+            crate = new StorageCrate();
+            crate.Physical.WorldMatrix = Matrix.Translation(2, 0, 24);
+
+            Cart cart;
+            cart = new Cart();
+            cart.Physical.WorldMatrix = Matrix.Translation(6, 0, 24);
+
+            for (int i = 0; i < 5; i++)
+            {
+                crate.ItemStorage.Items.Add(new DroppedThing() { Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Stone } });
+                cart.ItemStorage.Items.Add(new DroppedThing() { Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Stone } });
+
+            }
+
+            crate = new StorageCrate();
+            crate.Physical.WorldMatrix = Matrix.Translation(10, 0, 24);
+
+            for (int i = 0; i < 50; i++)
+            {
+                crate.ItemStorage.Items.Add(new DroppedThing() { Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Stone } });
+                cart.ItemStorage.Items.Add(new DroppedThing() { Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Stone } });
+
+            }
+
+
+
+
         }
 
         private void TestFollowOrb()
         {
             Goblin goblin;
             data.FollowOrb = new GoblinCommandOrb() { Type = TW.Data.Get<CommandFactory>().Follow };
-            data.FollowOrb.Physical.WorldMatrix = Matrix.Translation(new Vector3(2, 0, 2));
+            data.FollowOrb.Physical.WorldMatrix = Matrix.Translation(new Vector3(2, 0, 20));
             goblin = new Goblin();
             goblin.Commands.Orbs.Add(data.FollowOrb);
             goblin.Physical.WorldMatrix = Matrix.Translation(2, 0, 16);
@@ -75,7 +168,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         {
             Goblin goblin;
             data.FollowOrbCart = new GoblinCommandOrb() { Type = TW.Data.Get<CommandFactory>().Follow };
-            data.FollowOrbCart.Physical.WorldMatrix = Matrix.Translation(new Vector3(2, 0, 2));
+            data.FollowOrbCart.Physical.WorldMatrix = Matrix.Translation(new Vector3(0, 0, 16));
             goblin = new Goblin();
             goblin.Commands.Orbs.Add(data.FollowOrbCart);
             goblin.Physical.WorldMatrix = Matrix.Translation(2, 0, 16);
@@ -122,8 +215,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
             DroppedThing drop;
             drop = new DroppedThing();
-            drop.Thing = new Thing() {Type = TW.Data.Get<ResourceFactory>().Stone};
+            drop.Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Stone };
             drop.Physical.WorldMatrix = Matrix.Translation(new Vector3(10, 0, 2));
+
+            StorageCrate crate;
+            crate = new StorageCrate();
+            crate.Physical.WorldMatrix = Matrix.Translation(12, 0, 2);
         }
 
         public class Simulator : ISimulator
@@ -135,7 +232,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                 if (data.CommandsGoblin != null) clock.Tick(data.CommandsGoblin, tickCommandsGoblin());
                 if (data.HolderCart != null) clock.Tick(data.HolderCart, tickHolderCart());
                 if (data.FollowOrb != null) clock.Tick(data.FollowOrb, tickFollowOrb());
-                if (data.FollowOrbCart != null) clock.Tick(data.FollowOrbCart,tickFollowOrbCart());
+                if (data.FollowOrbCart != null) clock.Tick(data.FollowOrbCart, tickFollowOrbCart());
             }
 
             private IEnumerable<float> tickHolderCart()
@@ -151,18 +248,19 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                 data.CommandsGoblin.Commands.ShowingCommands = !data.CommandsGoblin.Commands.ShowingCommands;
                 yield return 2;
             }
-            private IEnumerable<float> tickFollowOrb()
-            {
-                data.FollowOrb.Physical.WorldMatrix = Matrix.Translation(2, 0, 16);
-                yield return 5;
-                data.FollowOrb.Physical.WorldMatrix = Matrix.Translation(6, 0, 16);
-                yield return 5;
-            }
+
             private IEnumerable<float> tickFollowOrbCart()
             {
                 data.FollowOrbCart.Physical.WorldMatrix = Matrix.Translation(2, 0, 16);
                 yield return 5;
                 data.FollowOrbCart.Physical.WorldMatrix = Matrix.Translation(6, 0, 16);
+                yield return 5;
+            }
+            private IEnumerable<float> tickFollowOrb()
+            {
+                data.FollowOrb.Physical.WorldMatrix = Matrix.Translation(2, 0, 20);
+                yield return 5;
+                data.FollowOrb.Physical.WorldMatrix = Matrix.Translation(6, 0, 20);
                 yield return 5;
             }
         }

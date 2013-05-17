@@ -247,12 +247,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ObjectPartInterfaces.tt</DependentUpon>
     </Compile>
+    <Compile Include="RTSTestCase1\Goblins\GoblinMoveTargetBehaviour.cs" />
+    <Compile Include="RTSTestCase1\Goblins\GoblinMoveSourceBehaviour.cs" />
     <Compile Include="RTSTestCase1\Goblins\GoblinCommandOrb.cs" />
     <Compile Include="RTSTestCase1\Goblins\Components\GoblinCommandsPart.cs" />
     <Compile Include="RTSTestCase1\Goblins\GoblinCommandsSimulator.cs" />
     <Compile Include="RTSTestCase1\Goblins\GoblinCommandType.cs" />
     <Compile Include="RTSTestCase1\Goblins\GoblinFollowBehaviour.cs" />
     <Compile Include="RTSTestCase1\Goblins\IGoblinBehaviour.cs" />
+    <Compile Include="RTSTestCase1\Goblins\ItemStorageSimulator.cs" />
     <Compile Include="RTSTestCase1\Goblins\StorageCrate.cs" />
     <Compile Include="RTSTestCase1\Inputting\InputFactory.cs" />
     <Compile Include="RTSTestCase1\Inputting\InputSimulator.cs" />

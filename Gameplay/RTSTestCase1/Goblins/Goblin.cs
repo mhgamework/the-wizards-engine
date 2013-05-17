@@ -7,11 +7,12 @@ using MHGameWork.TheWizards.RTSTestCase1.Goblins.Components;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
 using SlimDX;
 using StillDesign.PhysX;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 {
     [ModelObjectChanged]
-    public class Goblin : EngineModelObject, IRTSCharacter, IPhysical
+    public class Goblin : EngineModelObject, IRTSCharacter, IPhysical, IItemStorage
     {
         public Entity Attacked { get; set; }
         public Vector3 Position { get; set; }
@@ -30,6 +31,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
             Physical = new Physical();
             Commands = new GoblinCommandsPart();
             Commands.Goblin = this; // TODO: do this automatically?
+            ItemStorage = new ItemStoragePart();
+            ItemStorage.Parent = this;
         }
 
 
@@ -103,6 +106,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
             Physical.Solid = true;
             Physical.Static = false;
             Physical.Solid = false;
+
+            //ItemStorage.ContainerArea = new BoundingBox(new Vector3(-0.3f, 0.6f, 0.3f), new Vector3(0.3f, 1.1f, 0.3f));
+            ItemStorage.ContainerArea = new BoundingBox(new Vector3(0f, 1f, 0f), new Vector3(2f, 2f, 2f));
         }
 
 
@@ -113,5 +119,80 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 
 
         public Cart Cart { get; set; }
+        public ItemStoragePart ItemStorage { get; set; }
+
+
+        public void UpdateBehaviour()
+        {
+            var g = this;
+            if (g.Commands.ShowingCommands) return;
+            if (g.Commands.Orbs.Count == 0) return;
+
+            var fact = TW.Data.Get<CommandFactory>();
+
+            if (g.hasCommand(fact.Follow))
+            {
+                var f = new GoblinFollowBehaviour();
+
+                f.Update(g);
+                return;
+            }
+
+            if (g.GetOrb(fact.MoveSource)!= null && g.ItemStorage.Items.Count == 0)
+            {
+                var orb = g.GetOrb(fact.MoveSource);
+                if (orb.CurrentHolder is IItemStorage)
+                {
+                    var storage = (IItemStorage) orb.CurrentHolder;
+                    var f = new GoblinMoveSourceBehaviour(storage);
+
+                    f.Update(g);
+                    return;
+                }
+                
+            }
+            if (g.GetOrb(fact.MoveTarget) != null && g.ItemStorage.Items.Count > 0)
+            {
+                var orb = g.GetOrb(fact.MoveTarget);
+                if (orb.CurrentHolder is IItemStorage)
+                {
+                    var storage = (IItemStorage)orb.CurrentHolder;
+                    var f = new GoblinMoveTargetBehaviour(storage);
+
+                    f.Update(g);
+                    return;
+                }
+
+            }
+
+           
+
+
+        }
+
+        private GoblinCommandOrb GetOrb(GoblinCommandType type)
+        {
+            return Commands.Orbs.FirstOrDefault(f => f.Type == type);
+        }
+
+        private bool hasCommand(GoblinCommandType type)
+        {
+            return Commands.Orbs.Count(f => f.Type == type) > 0;
+        }
+
+        public void UpdateMovement(Goblin g)
+        {
+            var toGoal = -(g.Physical.WorldMatrix.xna().Translation.dx() - g.Goal);
+
+            if (toGoal.Length() < 0.01) return;
+            toGoal.Normalize();
+            toGoal = toGoal * 2;
+            g.Physical.WorldMatrix = g.Physical.WorldMatrix*Matrix.Translation(toGoal*TW.Graphics.Elapsed);
+
+            if (g.Cart != null)
+            {
+                g.Cart.Physical.WorldMatrix = g.Physical.WorldMatrix*Matrix.Translation(0, 0, 1.7f);
+            }
+        }
     }
 }

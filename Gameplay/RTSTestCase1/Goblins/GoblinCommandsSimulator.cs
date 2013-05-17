@@ -20,16 +20,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 
             assignHoldersToOrbs();
             updateOrbsInHolders();
-            }
+        }
 
-        private static void updateOrbsInHolders()
+        private void updateOrbsInHolders()
         {
             foreach (var g in TW.Data.Objects.Where(o => o is GoblinCommandOrb).Cast<GoblinCommandOrb>().ToArray())
-            {
-                g.UpdateInHolder();
-            }
-
-
+            { g.UpdateInHolder(); }
 
             doBehaviour();
 
@@ -46,28 +42,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
         {
             foreach (var g in TW.Data.Objects.Where(o => o is Goblin).Cast<Goblin>().ToArray())
             {
-                if (g.Commands.ShowingCommands) continue;
-                if (g.Commands.Orbs.Count == 0) continue;
+                g.UpdateBehaviour();
+                g.UpdateMovement(g);
 
-                var f = new GoblinFollowBehaviour();
-
-                f.Update(g);
-
-                var toGoal = -(g.Physical.WorldMatrix.xna().Translation.dx() - g.Goal);
-                if (toGoal.Length() < 0.01) continue;
-                toGoal.Normalize();
-                toGoal = toGoal*2;
-
-                
-
-                g.Physical.WorldMatrix = g.Physical.WorldMatrix*Matrix.Translation(toGoal*TW.Graphics.Elapsed);
-
-                if (g.Cart != null)
-                {
-                    g.Cart.Physical.WorldMatrix = g.Physical.WorldMatrix * Matrix.Translation(0,0,1.7f);
-                }
-
-                Console.WriteLine(g.Goal);
 
             }
         }

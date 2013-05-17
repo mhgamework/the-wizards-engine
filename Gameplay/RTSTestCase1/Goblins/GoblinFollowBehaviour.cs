@@ -10,9 +10,13 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
         public void Update(Goblin goblin)
         {
             var playerPos = getTargetPos(goblin);
-            var toPlayer = goblin.Position - playerPos;
+            var toPlayer = goblin.Physical.WorldMatrix.xna().Translation.dx() - playerPos;
             var minDistance = 1;
             var goal = playerPos;
+
+
+
+
             if (toPlayer.Length() < minDistance)
                 goal = goblin.Position;
             goal.Y = 0;
