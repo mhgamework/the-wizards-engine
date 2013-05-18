@@ -272,6 +272,7 @@
     <Compile Include="RTSTestCase1\Players\PlayerTargetingSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\PlayerUseSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\UserPlayer.cs" />
+    <Compile Include="RTSTestCase1\WorldResources\IRTSFactory.cs" />
     <Compile Include="RTSTestCase1\WorldResources\WorldResourceGenerationSimulator.cs" />
     <Compile Include="RTSTestCase1\_Engine\PhysicalSimulator.cs" />
     <Compile Include="RTSTestCase1\_Engine\IPhysical.cs" />
@@ -318,7 +319,6 @@
     <Compile Include="RTSTestCase1\Rendering\GoblinRenderData.cs" />
     <Compile Include="RTSTestCase1\Rendering\RockRenderData.cs" />
     <Compile Include="RTSTestCase1\Rendering\RTSEntitySimulator.cs" />
-    <Compile Include="RTSTestCase1\Rendering\TreeRenderData.cs" />
     <Compile Include="RTSTestCase1\ResourceFactory.cs" />
     <Compile Include="RTSTestCase1\WorldResources\DroppedThingOutputPipe.cs" />
     <Compile Include="RTSTestCase1\WorldResources\Rock.cs" />
@@ -327,7 +327,6 @@
     <Compile Include="RTSTestCase1\_Tests\RTSRenderingTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldResourceGenerationTest.cs" />
     <Compile Include="RTSTestCase1\WorldResources\IWorldResource.cs" />
-    <Compile Include="RTSTestCase1\WorldResources\WorldResourceGenerator.cs" />
     <Compile Include="RTSTestCase1\RTS\GoblinMover.cs">
       <SubType>Code</SubType>
     </Compile>

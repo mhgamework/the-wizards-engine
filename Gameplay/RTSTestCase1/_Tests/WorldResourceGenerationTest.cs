@@ -28,17 +28,16 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         public void Setup()
         {
             TestUtilities.CreateGroundPlane();
+            
         }
 
         [Test]
         public void TestRockGeneration()
         {
             createRock();
-            engine.AddSimulator(new WorldResourceGenerationWithPipesSimulator());
-            engine.AddSimulator(new RTSEntitySimulator());
-            engine.AddSimulator(new PhysXSimulator());
+            engine.AddSimulator(new WorldResourceGenerationSimulator());
+            engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
-            engine.AddSimulator(new PhysXDebugRendererSimulator());
         }
 
         
@@ -47,11 +46,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         public void TestTreeGeneration()
         {
             createTree();
-            engine.AddSimulator(new WorldResourceGenerationWithPipesSimulator());
-            engine.AddSimulator(new RTSEntitySimulator());
-            engine.AddSimulator(new PhysXSimulator());
+            engine.AddSimulator(new WorldResourceGenerationSimulator());
+            engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
-            engine.AddSimulator(new PhysXDebugRendererSimulator());
         }
 
 

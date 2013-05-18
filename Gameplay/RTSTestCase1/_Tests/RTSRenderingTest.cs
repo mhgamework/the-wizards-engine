@@ -47,12 +47,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         {
             createTrees();
 
-            engine.AddSimulator(new BasicSimulator(delegate
-            {
-                TW.Data.EnsureAttachment<Tree, TreeRenderData>(o => new TreeRenderData(o));
-                foreach (Tree t in TW.Data.GetChangedObjects<Tree>()) t.get<TreeRenderData>().Update();
-            }));
-
+            engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
         }
 
@@ -76,14 +71,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         {
             createDroppedThing();
 
-            //engine.AddSimulator(new BasicSimulator(delegate
-            //{
-            //    TW.Data.EnsureAttachment<DroppedThing, DroppedThingRenderData>(o => new DroppedThingRenderData(o));
-            //    foreach (DroppedThing t in TW.Data.GetChangedObjects<DroppedThing>()) t.get<DroppedThingRenderData>().Update();
-            //}));
-
-            throw new NotImplementedException();
-
+            engine.AddSimulator(new PhysicalSimulator());   
             engine.AddSimulator(new WorldRenderingSimulator());
         }
         [Test]
@@ -107,7 +95,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         {
             var type = new ResourceType() { Texture = TestUtilities.LoadWoodTexture() };
 
-            var drop = new DroppedThing() {  Thing = new Thing { Type = type } };
+            var drop = new DroppedThing() { Thing = new Thing { Type = type } };
             drop.Physical.WorldMatrix = Matrix.Translation(new Vector3(2, 5, 2));
         }
         private static void createTrees()

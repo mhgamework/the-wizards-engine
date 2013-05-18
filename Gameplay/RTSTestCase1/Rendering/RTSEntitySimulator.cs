@@ -11,9 +11,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
     {
         public void Simulate()
         {
-            TW.Data.EnsureAttachment<Tree,TreeRenderData>(o => new TreeRenderData(o));
-            foreach (Tree t in TW.Data.GetChangedObjects<Tree>()) t.get<TreeRenderData>().Update();
-
             TW.Data.EnsureAttachment<Rock, RockRenderData>(o => new RockRenderData(o));
             foreach (Rock t in TW.Data.GetChangedObjects<Rock>()) t.get<RockRenderData>().Update();
 
