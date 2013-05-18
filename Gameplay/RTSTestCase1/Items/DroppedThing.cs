@@ -14,6 +14,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Items
         public DroppedThing()
         {
             Physical = new Physical();
+            Free = true;
         }
 
         public Thing Thing { get; set; }
@@ -31,5 +32,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Items
             ent.Solid = false;
 
         }
+
+        /// <summary>
+        /// This is true when noone is holding this object.
+        /// </summary>
+        public bool Free { get; set; }
     }
 }
