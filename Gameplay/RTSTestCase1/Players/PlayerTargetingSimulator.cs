@@ -14,7 +14,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
             foreach (var pl in TW.Data.Objects.Where(o => o is UserPlayer).Cast<UserPlayer>().ToArray())
             {
                 var obj = TW.Data.Get<Engine.WorldRendering.World>().Raycast(pl.GetTargetingRay());
-                pl.Targeted = obj.IsHit ? obj.Object : null;
+                pl.Targeted = obj.IsHit ? (Entity)obj.Object : null;
             }
 
         }
