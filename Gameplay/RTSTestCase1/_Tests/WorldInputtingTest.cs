@@ -41,18 +41,26 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             var s = new WorldInputtingSimulator();
             s.Configuration.Menu.CreateItem("Rivers", enableRivers);
             s.Configuration.Menu.CreateItem("Walls", enableWalls);
-            s.Configuration.Menu.CreateItem("Walls", enableWalls);
-            s.Configuration.Menu.CreateItem("Walls", enableWalls);
-            s.Configuration.Menu.CreateItem("Walls", enableWalls);
-            s.Configuration.Menu.CreateItem("Walls", enableWalls);
-            s.Configuration.Menu.CreateItem("Walls", enableWalls);
-            s.Configuration.Menu.CreateItem("Walls", enableWalls);
+            s.Configuration.Menu.CreateItem("Tree", enableRocks);
+            s.Configuration.Menu.CreateItem("Rock", enableTrees);
+  
 
             engine.AddSimulator(s);
             engine.AddSimulator(new WorldRenderingSimulator());
 
 
         }
+
+        private void enableTrees()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void enableRocks()
+        {
+            throw new System.NotImplementedException();
+        }
+
         private void enableRivers()
         {
             
