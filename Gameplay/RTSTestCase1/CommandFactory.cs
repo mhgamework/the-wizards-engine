@@ -16,12 +16,14 @@ namespace MHGameWork.TheWizards.RTSTestCase1
             Defend = new GoblinCommandType { Name = "Defend", MeshPath = @"RTS\Commands\export\defend" };
             MoveSource = new GoblinCommandType { Name = "MoveSource", MeshPath = @"RTS\Commands\export\moveSource" };
             MoveTarget = new GoblinCommandType { Name = "MoveTarget", MeshPath = @"RTS\Commands\export\moveTarget" };
+            Gather = new GoblinCommandType { Name = "Gather", MeshPath = @"RTS\Commands\export\gather" };
         }
         public GoblinCommandType Follow { get; set; }
         public GoblinCommandType Cancel { get; set; }
         public GoblinCommandType Defend { get; set; }
         public GoblinCommandType MoveSource { get; set; }
         public GoblinCommandType MoveTarget { get; set; }
+        public GoblinCommandType Gather { get; set; }
 
         public IEnumerable<GoblinCommandType> AllCommands()
         {
@@ -30,8 +32,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1
             yield return Defend;
             yield return MoveSource;
             yield return MoveTarget;
+            yield return Gather;
         }
 
 
+        public static CommandFactory Get { get { return TW.Data.Get<CommandFactory>(); } }
     }
 }

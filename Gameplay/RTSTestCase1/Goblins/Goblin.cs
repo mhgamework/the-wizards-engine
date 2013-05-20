@@ -138,9 +138,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
                 return;
             }
 
-            if (g.GetOrb(fact.MoveSource)!= null && g.ItemStorage.Items.Count == 0)
+            if (g.Commands. GetOrb(fact.MoveSource)!= null && g.ItemStorage.Items.Count == 0)
             {
-                var orb = g.GetOrb(fact.MoveSource);
+                var orb = g.Commands.GetOrb(fact.MoveSource);
                 if (orb.CurrentHolder is IItemStorage)
                 {
                     var storage = (IItemStorage) orb.CurrentHolder;
@@ -151,9 +151,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
                 }
                 
             }
-            if (g.GetOrb(fact.MoveTarget) != null && g.ItemStorage.Items.Count > 0)
+            if (g.Commands.GetOrb(fact.MoveTarget) != null && g.ItemStorage.Items.Count > 0)
             {
-                var orb = g.GetOrb(fact.MoveTarget);
+                var orb = g.Commands.GetOrb(fact.MoveTarget);
                 if (orb.CurrentHolder is IItemStorage)
                 {
                     var storage = (IItemStorage)orb.CurrentHolder;
@@ -170,10 +170,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 
         }
 
-        private GoblinCommandOrb GetOrb(GoblinCommandType type)
-        {
-            return Commands.Orbs.FirstOrDefault(f => f.Type == type);
-        }
+       
 
         private bool hasCommand(GoblinCommandType type)
         {

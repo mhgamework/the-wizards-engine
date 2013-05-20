@@ -33,5 +33,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1
         }
 
 
+        public static ResourceFactory Get { get { return TW.Data.Get<ResourceFactory>(); } }
+
     }
 }

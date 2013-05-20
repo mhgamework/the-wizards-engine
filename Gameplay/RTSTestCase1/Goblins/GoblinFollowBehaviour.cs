@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 {
-    public class GoblinFollowBehaviour : IGoblinBehaviour
+    public class GoblinFollowBehaviour 
     {
         public void Update(Goblin goblin)
         {

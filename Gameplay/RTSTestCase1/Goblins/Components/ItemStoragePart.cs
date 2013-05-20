@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins.Components
 
         public int Capacity { get; set; }
 
-     
+
 
         public void UpdateItemLocations()
         {
@@ -34,15 +34,28 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins.Components
 
             var iItem = 0;
 
-            for (float y = min.Y; y < max.Y + 100; y += step)// Infinite Y;
+            for (float y = min.Y; y < max.Y + 100; y += step) // Infinite Y;
                 for (float z = min.Z; z < max.Z; z += step)
                     for (float x = min.X; x < max.X; x += step)
                     {
                         if (iItem >= Items.Count) return;
 
-                        Items[iItem].Physical.WorldMatrix = ((IPhysical)Parent).Physical.WorldMatrix * Matrix.Translation(x, y, z);
+                        Items[iItem].Physical.WorldMatrix = ((IPhysical) Parent).Physical.WorldMatrix*
+                                                            Matrix.Translation(x, y, z);
                         iItem++;
                     }
+        }
+
+        public bool IsEmpty
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public bool IsFull
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
         }
     }
 }

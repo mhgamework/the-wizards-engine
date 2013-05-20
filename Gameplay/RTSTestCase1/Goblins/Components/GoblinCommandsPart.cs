@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MHGameWork.TheWizards.Engine;
 using SlimDX;
 
@@ -55,6 +56,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins.Components
                 //TW.Data.RemoveObject(orb);
             }
             //Orbs.Clear();
+        }
+
+        public GoblinCommandOrb GetOrb(GoblinCommandType type)
+        {
+            return Orbs.FirstOrDefault(f => f.Type == type);
         }
     }
 }

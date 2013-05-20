@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.RTSTestCase1._Engine;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 {
-    public class GoblinMoveSourceBehaviour : IGoblinBehaviour
+    public class GoblinMoveSourceBehaviour 
     {
         private readonly IItemStorage storage;
 
