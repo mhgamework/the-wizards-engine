@@ -34,5 +34,16 @@ namespace MHGameWork.TheWizards
         {
             return new Point3(((int)Math.Round(v.X)), ((int)Math.Round(v.Y)), ((int)Math.Round(v.Z)));
         }
+
+
+
+        public static Vector3 GetCenter(this BoundingBox bb)
+        {
+            return (bb.Maximum + bb.Minimum)*0.5f;
+        }
+        public static Vector3 GetSize(this BoundingBox bb)
+        {
+            return bb.Maximum - bb.Minimum;
+        }
     }
 }

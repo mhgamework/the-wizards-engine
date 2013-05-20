@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting;
 using SlimDX;
 
@@ -32,7 +34,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
         {
             this.config = config;
 
-            provider = BoundingBoxSelectableProvider.Create(config.Items, getBoundingBox, OnClick );
+            provider = BoundingBoxSelectableProvider.Create(config.Items, getBoundingBox, OnClick);
 
             selector.AddProvider(provider);
 
@@ -45,26 +47,62 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
 
         }
 
-        public void Show(Vector3 pos, Vector3 lookDir)
+        private List<Entity> entities = new List<Entity>();
+
+        private Dictionary<EditorMenuConfiguration.Item, Entity> map =
+            new Dictionary<EditorMenuConfiguration.Item, Entity>();
+
+        public void Show(Vector3 pos, Vector3 lookDir, Vector3 up)
         {
             Visible = true;
             Position = pos;
             lookDirection = lookDir;
 
-            up = Vector3.UnitY;
+            this.up = up;
             right = -Vector3.Cross(up, lookDirection);
             up = Vector3.Cross(lookDirection, up);
+
+            foreach (var i in config.Items)
+            {
+                var color = new Color4(0.5f, 1, 0);
+                if (provider.IsTargeted(i)) color = new Color4(1, 0, 0);
+
+                var bb = getBoundingBox(i);
+
+                if (! map.ContainsKey(i))
+                {
+                    var e = new Entity()
+                    {
+                        Mesh = UtilityMeshes.CreateMeshWithText(bb.GetSize().X * 0.5f, i.Name, TW.Graphics)
+                        //Visible = false
+
+                    };
+
+                    entities.Add(e);
+
+                    map[i] = e;
+                }
+                var ent = map[i];
+                ent.WorldMatrix = Matrix.Translation(bb.GetCenter());
+                ent.Visible = true;
+
+
+            }
 
         }
         public void Hide()
         {
             Visible = false;
+            foreach (var e in entities)
+            {
+                e.Visible = false;
+            }
         }
 
-        public void Toggle(Vector3 pos, Vector3 lookDir)
+        public void Toggle(Vector3 pos, Vector3 lookDir, Vector3 up)
         {
             Visible = !Visible;
-            if (Visible) Show(pos, lookDir); else Hide();
+            if (Visible) Show(pos, lookDir, up); else Hide();
         }
 
         public void Simulate()
@@ -75,9 +113,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
             foreach (var i in config.Items)
             {
                 var color = new Color4(0.5f, 1, 0);
-                if (provider.IsTargeted(i)) color = new Color4(1, 0, 0);
+                //color = new Color4(1, 0, 0);
+                if (!provider.IsTargeted(i)) continue;
 
-                TW.Graphics.LineManager3D.AddBox(getBoundingBox(i),color);
+                TW.Graphics.LineManager3D.AddBox(getBoundingBox(i), color);
                 num++;
             }
 
@@ -86,7 +125,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
 
         private BoundingBox getBoundingBox(EditorMenuConfiguration.Item item)
         {
-            
+
 
             var index = config.Items.IndexOf(item);
 

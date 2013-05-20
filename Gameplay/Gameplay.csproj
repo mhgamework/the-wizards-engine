@@ -306,6 +306,7 @@
     <Compile Include="RTSTestCase1\_Engine\Physical.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\EditorConfiguration.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\EditorMenuConfiguration.cs" />
+    <Compile Include="RTSTestCase1\_Engine\UtilityMeshes.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\GoblinsTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\InputTest.cs" />

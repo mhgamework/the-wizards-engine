@@ -19,17 +19,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Items
 
         public IMesh CreateMesh()
         {
-            var builder = new MeshBuilder();
-            builder.AddBox(MathHelper.One * -GetRadius(), MathHelper.One * GetRadius());
-            var mesh = builder.CreateMesh();
-
+            ITexture tex = null;
             if (Type != null)
-                mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap = Type.Texture;
+                tex = Type.Texture;
 
-            var skin = 0.02f;
-            mesh.GetCollisionData().Boxes.Add(new MeshCollisionData.Box() { Dimensions = new Vector3(GetRadius() * 2 + skin, GetRadius() * 2 + skin, GetRadius() * 2 + skin), Orientation = Matrix.Identity });
-
-            return mesh;
+            return UtilityMeshes.CreateMeshWithTexture(GetRadius(), tex);
         }
     }
 }
