@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
             if (consumedCrystal.Energy - elapsedTime < 0)
             { Active = false; }
             if (consumedCrystal.Energy > 4)
-            { Active = true; }
+            { Active = true;}
             if (Active)
             { consumedCrystal.Energy -= elapsedTime; }
         }
