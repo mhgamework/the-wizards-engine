@@ -60,5 +60,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1
         {
             return WorldMatrix.xna().Translation.dx();
         }
+
+        public BoundingBox GetBoundingBox()
+        {
+            if (this.Mesh == null) return new BoundingBox(GetPosition(),GetPosition());
+            return TW.Assets.GetBoundingBox(Mesh).Transform(Entity.WorldMatrix);
+        }
     }
 }

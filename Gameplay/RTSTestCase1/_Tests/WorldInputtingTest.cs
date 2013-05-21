@@ -13,6 +13,8 @@ using MHGameWork.TheWizards.RTSTestCase1.Inputting;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting;
+using MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Placing;
+using MHGameWork.TheWizards.RTSTestCase1.WorldResources;
 using NUnit.Framework;
 using SlimDX;
 
@@ -24,6 +26,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
     {
         private TWEngine engine = EngineFactory.CreateEngine();
         private CommandFactory f;
+        private WorldInputtingSimulator inputtingSimulator;
 
         [SetUp]
         public void Setup()
@@ -36,24 +39,31 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         [Test]
         public void TestShizzle()
         {
-
-          
-            var s = new WorldInputtingSimulator();
-            s.Configuration.Menu.CreateItem("Rivers", enableRivers);
-            s.Configuration.Menu.CreateItem("Walls", enableWalls);
-            s.Configuration.Menu.CreateItem("Tree", enableRocks);
-            s.Configuration.Menu.CreateItem("Rock", enableTrees);
+            inputtingSimulator = new WorldInputtingSimulator();
+            inputtingSimulator.Configuration.Menu.CreateItem("Rivers", enableRivers);
+            inputtingSimulator.Configuration.Menu.CreateItem("Walls", enableWalls);
+            inputtingSimulator.Configuration.Menu.CreateItem("Tree", enableRocks);
+            inputtingSimulator.Configuration.Menu.CreateItem("Rock", enableTrees);
   
-
-            engine.AddSimulator(s);
+            engine.AddSimulator(inputtingSimulator);
             engine.AddSimulator(new WorldRenderingSimulator());
-
 
         }
 
         private void enableTrees()
         {
-            throw new System.NotImplementedException();
+            var placer = new WorldPlacer
+                (
+                    getItems: () => TW.Data.Objects.OfType<Tree>(),
+                    getPosition: tree => ((Tree)tree).Position,
+                    setPosition: (tree,position) => ((Tree)tree).Position = position,
+                    getBoundingBox: tree => ((Tree)tree).Physical.GetBoundingBox(),
+                    createItem: () => new Tree()
+                );
+
+            inputtingSimulator.Configuration.Placer = placer;
+
+
         }
 
         private void enableRocks()

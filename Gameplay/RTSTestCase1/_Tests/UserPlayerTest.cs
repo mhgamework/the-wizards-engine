@@ -56,7 +56,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
             engine.AddSimulator(new PlayerTargetingSimulator());
             engine.AddSimulator(new UpdateSimulator());
-
+            engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new RTSEntitySimulator());
 
             engine.AddSimulator(new WorldRenderingSimulator());

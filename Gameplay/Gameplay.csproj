@@ -294,6 +294,7 @@
     <Compile Include="RTSTestCase1\TreeSharp\TreeExample.cs" />
     <Compile Include="RTSTestCase1\TreeSharp\Wait.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\MenuDisplayer.cs" />
+    <Compile Include="RTSTestCase1\WorldInputting\Placing\WorldPlacer.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\Selecting\BoundingBoxSelectableProvider.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\Selecting\Selectable.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\WorldInputtingSimulator.cs" />

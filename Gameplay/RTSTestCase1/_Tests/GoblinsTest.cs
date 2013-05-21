@@ -100,7 +100,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             goblin.Commands.Orbs.Add(orbTarget);
 
 
-
+            
 
             Cart cart = new Cart();
             cart.Physical.WorldMatrix = Matrix.Translation(14, 0, 0)*offset;

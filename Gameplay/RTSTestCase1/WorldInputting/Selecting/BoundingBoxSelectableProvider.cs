@@ -15,7 +15,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting
 
         public bool Enabled { get; set; }
 
-
         private object targeted;
         private Action<object> onClick;
 
