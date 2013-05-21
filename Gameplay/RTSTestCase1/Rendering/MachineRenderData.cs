@@ -2,8 +2,8 @@
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
 {
-    public class MachineRenderData : IModelObjectAddon<>
+    /*public class MachineRenderData : IModelObjectAddon<>
     {
          
-    }
+    }*/
 }

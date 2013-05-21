@@ -286,6 +286,8 @@
     <Compile Include="RTSTestCase1\Simulators\AnimationSimulator.cs" />
     <Compile Include="RTSTestCase1\Simulators\InputSimulator.cs" />
     <Compile Include="RTSTestCase1\Inputting\UserButtonEvent.cs" />
+    <Compile Include="RTSTestCase1\Items\DroppedThing.cs" />
+    <Compile Include="RTSTestCase1\Items\Thing.cs" />
     <Compile Include="RTSTestCase1\Magic\FieldDensityCalculator.cs" />
     <Compile Include="RTSTestCase1\Magic\AmbientEnergyCharger.cs" />
     <Compile Include="RTSTestCase1\Magic\CrystalAverager.cs" />
@@ -296,7 +298,6 @@
     <Compile Include="RTSTestCase1\Magic\IEnergyConsumer.cs" />
     <Compile Include="RTSTestCase1\Magic\IEnergyDensityExpert.cs" />
     <Compile Include="RTSTestCase1\Magic\SimpleCrystal.cs" />
-    <Compile Include="RTSTestCase1\Magic\FieldDensityCalculator.cs" />
     <Compile Include="RTSTestCase1\Magic\SimpleCrystalDensityExpert.cs" />
     <Compile Include="RTSTestCase1\Magic\Simulators\CrystalAveragerSimulator.cs" />
     <Compile Include="RTSTestCase1\Magic\Simulators\CrystalBrownSimulator.cs" />
@@ -401,13 +402,7 @@
     <Compile Include="RTSTestCase1\RTS\IGoblinCommand.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RTSTestCase1\Magic\Items\DroppedThing.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="RTSTestCase1\Magic\Items\ResourceType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RTSTestCase1\Magic\Items\Thing.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RTSTestCase1\Rendering\CannonRenderData.cs" />
@@ -581,7 +576,6 @@
     <Content Include="_Features\_doc.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="RTSTestCase1\Inputting\" />
     <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>
