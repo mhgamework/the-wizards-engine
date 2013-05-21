@@ -43,6 +43,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
             return Position;
         }
 
+        public bool Visible { get; set; }
+
         public bool IsActive()
         {
             return Active;

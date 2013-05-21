@@ -49,6 +49,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
         
         public void RenderBar()
         {
+            if (!crystal.Visible)
+                return;
             if (!crystal.IsActive())
                 return;
             var level = crystal.Energy/crystal.Capacity;

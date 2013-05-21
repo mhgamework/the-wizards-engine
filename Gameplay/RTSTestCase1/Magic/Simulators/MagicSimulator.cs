@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic.Simulators
             crystalSpawner.MaxPosition = -crystalSpawner.MinPosition;
             drawSim = new GridDrawSimulator(densityExpert);
         }
-        
+
         public void Simulate()
         {
             var elapsedTime = TW.Graphics.Elapsed;
@@ -37,44 +37,14 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic.Simulators
             crystals = TW.Data.Objects.Where(o => o is ICrystal && ((ICrystal)o).IsActive()).Cast<ICrystal>();
             SimulateAverager(crystals, elapsedTime);
             SimulateAmbientCharging(crystals, elapsedTime);
-            drawBarsOverCrystals();
             densityExpert.ResetDensities(crystals.Cast<SimpleCrystal>());
             crystalSpawner.DoSpawn(densityExpert, elapsedTime);
-            //refineDensities(crystals.Cast<SimpleCrystal>());
             drawSim.Simulate();
         }
-
-        private void refineDensities(IEnumerable<IFieldElement> crystals )
-        {
-            refineCounter --;
-            if (refineCounter > 0) return;
-            refineCounter += 20;
-            densityExpert.ResetDensities(crystals);
-        }
-
-        private int refineCounter = 20;
-        private void drawBarsOverCrystals()
-        {
-            var crystalRenderData = TW.Data.Objects.OfType<SimpleCrystal>().Select(o => o.get<CrystalRenderData>());
-            foreach (var crystal in crystalRenderData.Where(crystal => crystal != null))
-            {
-                crystal.RenderBar();
-            }
-        }
-
-        
-        private IEnumerator<object> charger;
 
         private void SimulateAmbientCharging(IEnumerable<ICrystal> crystals, float elapsedTime)
         {
             ambientCharger.ChargeAllCrystals(crystals, elapsedTime);
-            return;
-            if (charger == null)
-                return;// charger = ambientCharger.ChargeAllCrystals(crystals, elapsedTime).GetEnumerator();
-
-            if (!charger.MoveNext()) charger = null;
-
-
         }
         private void SimulateAverager(IEnumerable<ICrystal> crystals, float elapsedTime)
         {
@@ -91,18 +61,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic.Simulators
                 {
                     ((SimpleCrystal) kaboom).Active = false;
                 }
-        }
-
-        private IEnumerable<ICrystal> SimulateSpawn(float elapsedTime)
-        {
-
-            //throw new Exception("Not Yet Working");
-            var newies = crystalSpawner.DoSpawn(densityExpert, elapsedTime);
-            foreach (var crystal in newies)
-            {
-                Console.WriteLine("added " + crystal.GetPosition().X + "  " + crystal.GetPosition().Y);
-            }
-            return newies;
         }
     }
 }

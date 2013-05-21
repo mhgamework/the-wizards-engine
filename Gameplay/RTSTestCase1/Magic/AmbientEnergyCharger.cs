@@ -14,14 +14,14 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
         }
 
         private readonly IEnergyDensityExpert crystalDensityExpert;
-        private const int EnergyInAir = 3;
+        private const float EnergyInAir = 1;
         public void /*IEnumerable<object>*/ ChargeAllCrystals(IEnumerable<ICrystal> crystals,float elapsedTime)
         {
             foreach (var crystal in crystals)
             {
                 //todo yielding results in incorrect charging
                 var density = crystalDensityExpert.GetDensity(crystal.GetPosition());
-                var newEnergy = crystal.GetEnergy() + EnergyInAir*elapsedTime/(1 + Math.Abs(density));
+                var newEnergy = crystal.GetEnergy() + crystal.GetCapacity()*EnergyInAir*elapsedTime/(20 + Math.Abs(density));
                 crystal.SetEnergy(newEnergy > crystal.GetCapacity() ? crystal.GetCapacity() : newEnergy);
                 //yield return null;
             }
