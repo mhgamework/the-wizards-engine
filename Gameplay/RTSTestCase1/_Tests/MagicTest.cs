@@ -54,10 +54,17 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             engine.AddSimulator(new CrystalBrownSimulator());
             engine.AddSimulator(new MagicSimulator());
             engine.AddSimulator(new RTSEntitySimulator());
-            //engine.AddSimulator(new CrystalGlowSimulator());
+            engine.AddSimulator(new CrystalInfoDrawSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
                
         }
+
+        public void TestMagicConsumption()
+        {
+            var crystal = new SimpleCrystal() {Position = new Vector3(0, 0, 0), Capacity = 1000};
+            var consumer1 = new SimpleCrystalEnergyConsumer() {Position = new Vector3(1, 0, 0)};
+        }
+
 
         private IFieldElement createElement(Vector3 p0, int p1)
         {
