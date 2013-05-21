@@ -291,6 +291,7 @@
     <Compile Include="RTSTestCase1\Magic\CrystalAverager.cs" />
     <Compile Include="RTSTestCase1\Magic\CrystalExploder.cs" />
     <Compile Include="RTSTestCase1\Magic\CrystalSpawner.cs" />
+    <Compile Include="RTSTestCase1\Magic\EnergyConsumerMachine.cs" />
     <Compile Include="RTSTestCase1\Magic\ICrystal.cs" />
     <Compile Include="RTSTestCase1\Magic\IEnergyConsumer.cs" />
     <Compile Include="RTSTestCase1\Magic\IEnergyDensityExpert.cs" />
@@ -371,6 +372,7 @@
     <Compile Include="RTSTestCase1\_Tests\UserPlayerTest.cs" />
     <Compile Include="RTSTestCase1\Rendering\CrystalGlowSimulator.cs" />
     <Compile Include="RTSTestCase1\Rendering\CrystalRenderData.cs" />
+    <Compile Include="RTSTestCase1\Rendering\MachineRenderData.cs" />
     <Compile Include="RTSTestCase1\_Tests\EnergyFlowTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\MagicTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\PickupTest.cs" />
