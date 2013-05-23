@@ -44,10 +44,26 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             inputtingSimulator.Configuration.Menu.CreateItem("Walls", enableWalls);
             inputtingSimulator.Configuration.Menu.CreateItem("Tree", enableRocks);
             inputtingSimulator.Configuration.Menu.CreateItem("Rock", enableTrees);
-  
+
             engine.AddSimulator(inputtingSimulator);
             engine.AddSimulator(new WorldRenderingSimulator());
 
+        }
+
+        [Test]
+        public void TestWorldPlacer()
+        {
+            inputtingSimulator = new WorldInputtingSimulator();
+            enableTrees();
+
+            var t = new Tree();
+            t.Position = new Vector3(1, 0, 1);
+            t = new Tree();
+            t.Position = new Vector3(2, 0, 2);
+
+            engine.AddSimulator(inputtingSimulator);
+            engine.AddSimulator(new PhysicalSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
         }
 
         private void enableTrees()
@@ -56,9 +72,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                 (
                     getItems: () => TW.Data.Objects.OfType<Tree>(),
                     getPosition: tree => ((Tree)tree).Position,
-                    setPosition: (tree,position) => ((Tree)tree).Position = position,
+                    setPosition: (tree, position) => ((Tree)tree).Position = position,
                     getBoundingBox: tree => ((Tree)tree).Physical.GetBoundingBox(),
-                    createItem: () => new Tree()
+                    createItem: () => new Tree(),
+                    deleteItem: t => TW.Data.RemoveObject((Tree)t)
                 );
 
             inputtingSimulator.Configuration.Placer = placer;
@@ -73,13 +90,13 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
         private void enableRivers()
         {
-            
+
         }
         private void enableWalls()
         {
-            
+
         }
 
-  
+
     }
 }

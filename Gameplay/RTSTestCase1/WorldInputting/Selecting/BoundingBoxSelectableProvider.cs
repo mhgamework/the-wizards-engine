@@ -15,12 +15,19 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting
 
         public bool Enabled { get; set; }
 
+        public object Targeted
+        {
+            get { return targeted; }
+        }
+
         private object targeted;
         private Action<object> onClick;
 
+        
+
         public bool IsTargeted(object obj)
         {
-            return obj == targeted;
+            return obj == Targeted;
         }
         public void SetTargeted(Selectable selectable)
         {

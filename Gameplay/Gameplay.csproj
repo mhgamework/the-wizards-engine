@@ -300,6 +300,7 @@
     <Compile Include="RTSTestCase1\WorldInputting\WorldInputtingSimulator.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\Selecting\IWorldSelectableProvider.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\Selecting\WorldSelector.cs" />
+    <Compile Include="RTSTestCase1\WorldInputting\Placing\WorldPlacerUpdater.cs" />
     <Compile Include="RTSTestCase1\WorldResources\IRTSFactory.cs" />
     <Compile Include="RTSTestCase1\WorldResources\WorldResourceGenerationSimulator.cs" />
     <Compile Include="RTSTestCase1\_Engine\PhysicalSimulator.cs" />

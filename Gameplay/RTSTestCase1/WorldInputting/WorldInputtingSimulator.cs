@@ -19,8 +19,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
         public EditorConfiguration Configuration { get; private set; }
 
         private readonly MenuDisplayer menuDisplayer;
+        private WorldPlacerUpdater selectorUpdater;
         private WorldSelector selector;
-
+        private Vector3 pos;
+        private Vector3 dir;
+        private Vector3 up;
 
 
         public WorldInputtingSimulator()
@@ -36,26 +39,36 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
 
         public void Simulate()
         {
-            var pos = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.xna().Translation.dx();
-            var dir = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.xna().Forward.dx();
-            var up = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.xna().Up.dx();
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.G))
-                menuDisplayer.Toggle(pos + dir * 10, dir,up);
+            if (selectorUpdater == null && Configuration.Placer != null)
+                selectorUpdater = new WorldPlacerUpdater(Configuration.Placer, selector);
 
-            if (menuDisplayer.Visible && Vector3.Distance(pos, menuDisplayer.Position) > 20)
-                menuDisplayer.Hide();
+            pos = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.xna().Translation.dx();
+            dir = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.xna().Forward.dx();
+            up = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.xna().Up.dx();
 
-
-            menuDisplayer.Simulate();
+            simulateMenu();
 
             selector.UpdateTarget(TW.Data.Get<CameraInfo>().GetCenterScreenRay());
             if (TW.Graphics.Mouse.LeftMouseJustPressed)
                 selector.Select();
 
 
+            selectorUpdater.Simulate();
 
-            
 
+
+        }
+
+        private void simulateMenu()
+        {
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.G))
+                menuDisplayer.Toggle(pos + dir * 10, dir, up);
+
+            if (menuDisplayer.Visible && Vector3.Distance(pos, menuDisplayer.Position) > 20)
+                menuDisplayer.Hide();
+
+
+            menuDisplayer.Simulate();
         }
     }
 }
