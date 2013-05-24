@@ -163,7 +163,6 @@
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="BugTests.cs" />
     <Compile Include="Engine\Debugging\AttachDebuggerOnStartupSimulator.cs" />
-    <Compile Include="Engine\EngineData.cs" />
     <Compile Include="Engine\EngineInitializer.cs" />
     <Compile Include="Engine\EngineUIConsole.cs" />
     <Compile Include="Engine\EngineUISimulator.cs" />
@@ -174,6 +173,7 @@
     <Compile Include="Engine\Testing\EngineTestRunner.cs" />
     <Compile Include="Engine\Testing\OtherAppdomainTestRunner.cs" />
     <Compile Include="Engine\Testing\TestingData.cs" />
+    <Compile Include="Engine\Testing\TestSceneBuilder.cs" />
     <Compile Include="Engine\Testing\TestUISimulator.cs" />
     <Compile Include="Engine\Tests\PhysX\BarrelSimulatorTest.cs" />
     <Compile Include="Engine\Tests\PhysX\SimpleEntityPhysicsTest.cs" />

@@ -284,7 +284,13 @@ namespace MHGameWork.TheWizards.Persistence
             while (strm.CurrentSection == ObjectsSection)
             {
                 var id = int.Parse(strm.ReadLine());
-                var type = typeSerializer.Deserialize(strm.ReadLine());
+                var typeName = strm.ReadLine();
+                var type = typeSerializer.Deserialize(typeName);
+                if (type == null)
+                {
+                    Console.WriteLine("Unexisting type: " + typeName);
+                    continue;
+                }
                 var obj = (IModelObject)Activator.CreateInstance(type);
                 myObjectDictionary.setObjectID(obj, id);
 
@@ -295,6 +301,12 @@ namespace MHGameWork.TheWizards.Persistence
             {
                 var id = int.Parse(strm.ReadLine());
                 var obj = myObjectDictionary.getObjectByID(id);
+                if (obj == null)
+                {
+                    Console.WriteLine("Unknown object with ID: " + id);
+                    // Can be caused by corrupt save, or by an unexisting type for which the object was not loaded.
+                    continue;
+                }
         
                 DeserializeAttributes(obj, strm);
             }

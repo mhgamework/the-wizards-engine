@@ -138,8 +138,16 @@ namespace MHGameWork.TheWizards.Engine
         private void loadPlugin()
         {
             if (DontLoadPlugin) return;
-            var plugin = (IGameplayPlugin)activeGameplayAssembly.CreateInstance("MHGameWork.TheWizards.Plugin");
-            plugin.Initialize(this);
+            try
+            {
+                var plugin = (IGameplayPlugin)activeGameplayAssembly.CreateInstance("MHGameWork.TheWizards.Plugin");
+                plugin.Initialize(this);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Failed to load the gameplay plugin!!!!");
+            }
+            
         }
 
         [CatchExceptions]
@@ -205,6 +213,8 @@ namespace MHGameWork.TheWizards.Engine
 
             private void hotload()
             {
+                //TODO: hotloading currently disabled!
+                return;
                 try
                 {
                     var simList = serializeSimulatorList();
@@ -242,7 +252,9 @@ namespace MHGameWork.TheWizards.Engine
 
             private void reloadGameplayDll()
             {
-                var persistentModels = TW.Data.Objects.Where(o => TW.Data.PersistentModelObjects.Contains(o));
+                //TODO: broke the persistance scope here, not sure whether it should be readded
+                var persistentModels = TW.Data.Objects;
+                //var persistentModels = TW.Data.Objects.Where(o => TW.Data.PersistentModelObjects.Contains(o));
                 var mem = TW.Data.ModelSerializer.SerializeToStream(persistentModels);
                 File.WriteAllBytes("temp.txt", mem.ToArray());
 

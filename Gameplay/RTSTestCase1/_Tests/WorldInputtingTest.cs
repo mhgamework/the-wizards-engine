@@ -5,6 +5,7 @@ using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.PhysX;
+using MHGameWork.TheWizards.Engine.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Navigation2D;
@@ -53,13 +54,16 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         [Test]
         public void TestWorldPlacer()
         {
+            DI.Get<TestSceneBuilder>().Setup = delegate
+                {
+                    var t = new Tree();
+                    t.Position = new Vector3(1, 0, 1);
+                    t = new Tree();
+                    t.Position = new Vector3(2, 0, 2);
+                };
+
             inputtingSimulator = new WorldInputtingSimulator();
             enableTrees();
-
-            var t = new Tree();
-            t.Position = new Vector3(1, 0, 1);
-            t = new Tree();
-            t.Position = new Vector3(2, 0, 2);
 
             engine.AddSimulator(inputtingSimulator);
             engine.AddSimulator(new PhysicalSimulator());

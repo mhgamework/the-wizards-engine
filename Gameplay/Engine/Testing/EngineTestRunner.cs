@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.Engine.Testing
     {
         public void RunTest( NUnitTest test)
         {
-            // Hack due to some wierd hotloadin bug (attribute types are not from same loaded assembly as executing assembly)
+            // Hack due to some wierd hotloading bug (attribute types are not from same loaded assembly as executing assembly)
             // Maybe fixed, doesn't matter
             var count = test.TestClass.GetCustomAttributes(true).Count(t => t.GetType().FullName == typeof (EngineTestAttribute).FullName);
             if (count > 0) 
@@ -48,6 +48,7 @@ namespace MHGameWork.TheWizards.Engine.Testing
             RunTestInEngine(engine,new NUnitTest(method,f));
 
         }
+        //TODO: revise the use of persistancescope here
         [PersistanceScope] // Data created when starting a test should persist!
         public void RunTestInEngine(TWEngine engine,NUnitTest test)
         {
@@ -59,6 +60,8 @@ namespace MHGameWork.TheWizards.Engine.Testing
             var runner = new NUnitTestRunner();
             //TODO: runner.Timeout = 10000;
             runner.Run(test);
+
+            DI.Get<TestSceneBuilder>().EnsureTestSceneLoaded();
 
             //TW.Graphics.Form.Show();
 

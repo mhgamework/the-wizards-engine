@@ -15,20 +15,20 @@ namespace MHGameWork.TheWizards.Engine
     public class EngineInitializer
     {
         private TestingData testingData;
-        private EngineData engineData;
 
         public EngineInitializer()
         {
-            testingData = TW.Data.GetSingleton<TestingData>();
-            engineData = TW.Data.GetSingleton<EngineData>();
+            
         }
 
         public void SetupEngine(TWEngine engine)
         {
             TW.Graphics.EscapeExists = false;
 
-            //checkLoadPreviousState();
+            checkLoadPreviousState();
 
+            testingData = TW.Data.Get<TestingData>();
+            
             if (isTestSelected())
             {
                 loadTest(engine);
@@ -41,12 +41,17 @@ namespace MHGameWork.TheWizards.Engine
 
         private void checkLoadPreviousState()
         {
-            if (engineData.PreviousStateLoaded)
-                return;
+            // TODO: this is a hack that is used to determine if this is the first time that the gameplaydll is loaded in the engine, since 
+            //      the gameplay dll, by design cannot destinguish by itself whether this is the first run or not
+            //      maybe a variable should be added that can be used to check if this is the initial run.
+            //      Perhaps move this to the engine? or add a method to the plugin 'onEngineStartup'
+            if (TW.Data.Objects.Count != 0) return; // Engine state not empty
+            // ???
+            //if (engineData.PreviousStateLoaded)
+            //    return;
 
             DI.Get<Persistence.EngineStatePersistor>().LoadEngineState();
 
-            engineData.PreviousStateLoaded = true;
         }
 
         private void loadTest(TWEngine engine)

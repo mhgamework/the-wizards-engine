@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.Engine
     /// </summary>
     public class EngineUISimulator : ISimulator
     {
-        private Textarea area;
+        
         private Stack<TextMenu<Action>> menuStack = new Stack<TextMenu<Action>>();
         private TextMenu<Action> mainMenu;
 
@@ -27,11 +27,20 @@ namespace MHGameWork.TheWizards.Engine
 
         private Data data = TW.Data.GetSingleton<Data>();
 
+        private Textarea area;
+
         public EngineUISimulator()
         {
-            area = new Textarea();
-            area.Position = new Vector2(0, 0);
-            area.Size = new Vector2(200, 600);
+            area = data.Area;
+            if (data.Area == null)
+            {
+                area = new Textarea();
+                area.Position = new Vector2(0, 0);
+                area.Size = new Vector2(200, 600);
+                data.Area = area;
+
+            }
+            
 
             mainMenu = createMainMenu();
 
@@ -97,14 +106,13 @@ namespace MHGameWork.TheWizards.Engine
         private void cleanData()
         {
             var test = TW.Data.GetSingleton<TestingData>();
-            var engine = TW.Data.GetSingleton<EngineData>();
             resetData();
             TW.Data.Objects.Add(test);
-            TW.Data.Objects.Add(engine);
         }
 
         private void resetData()
         {
+            // Clear all objects
             TW.Data.Objects.Clear();
             TW.Debug.NeedsReload = true;
         }
@@ -118,6 +126,7 @@ namespace MHGameWork.TheWizards.Engine
         public class Data : EngineModelObject
         {
             public bool ConsoleCreated { get; set; }
+            public Textarea Area { get; set; }
         }
     }
 }

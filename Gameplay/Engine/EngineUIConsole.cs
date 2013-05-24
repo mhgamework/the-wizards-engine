@@ -14,6 +14,8 @@ namespace MHGameWork.TheWizards.Engine
 
         public EngineUIConsole()
         {
+            //TODO: Console disabled!
+            return;
             var ev = new AutoResetEvent(false);
             //TODO: move this to the engine!!!!
             if (Application.Current == null)

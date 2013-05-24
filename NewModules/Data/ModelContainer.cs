@@ -65,7 +65,13 @@ namespace MHGameWork.TheWizards.Data
         /// <param name="obj"></param>
         public void RemoveObject(IModelObject obj)
         {
-            if (!Objects.Contains(obj)) throw new InvalidOperationException("Object not in list");
+            if (!Objects.Contains(obj))
+            {
+                // Was already removed by someone else (can occur on clean!)
+                //Console.WriteLine("WARNING: destruction of object in the same frame as creation: " + obj.GetType().Name);
+                //flagChanged(obj, ModelChange.Removed);
+                return;
+            }
             Objects.Remove(obj);
             //flagChanged(obj, ModelChange.Removed);
         }

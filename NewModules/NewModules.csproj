@@ -685,7 +685,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Particles\Files\" />
-    <Folder Include="Player\" />
     <Folder Include="TreeGenerator\Clouds\Textures\" />
     <Folder Include="TreeGenerator\Copy\" />
     <Folder Include="TreeGenerator\Editor\Preprocesser\" />
