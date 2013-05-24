@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         public CameraInfo()
         {
             ActivateSpecatorCamera();
-            
+
         }
 
         public CameraMode Mode { get; set; }
@@ -35,7 +35,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         {
             Mode = CameraMode.Specator;
             ActiveCamera = TW.Graphics.SpectaterCamera;
-            
+
         }
 
         public void ActivateCustomCamera(ICamera camera)
@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
             Custom
         }
 
-        
+
 
 
         public Ray GetCenterScreenRay()
@@ -65,6 +65,16 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
                               Direction = Vector3.TransformNormal(MathHelper.Forward, ActiveCamera.ViewInverse)
                           };
             return ret;
+        }
+
+        public Vector3? GetGroundplanePosition()
+        {
+            var ray = TW.Data.Get<CameraInfo>().GetCenterScreenRay();
+            var pl = new Plane(Vector3.UnitY, 0);
+            var dist = ray.xna().Intersects(pl.xna());
+            if (!dist.HasValue)
+                return null;
+            return ray.GetPoint(dist.Value);
         }
     }
 }

@@ -6,19 +6,22 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Placing
 {
     public class WorldPlacer
     {
-        public Func<IEnumerable<object>> getItems;
-        public Func<object, Vector3> getPosition;
-        public Func<object, Vector3, Vector3> setPosition;
-        public Func<object, BoundingBox> getBoundingBox;
-        public Func<object> createItem;
+        public Func<IEnumerable<object>> GetItems;
+        public Func<object, Vector3> GetPosition;
+        public Func<object, Vector3, Vector3> SetPosition;
+        public Func<object, BoundingBox> GetBoundingBox;
+        public Func<object> CreateItem;
+        public readonly Action<object> DeleteItem;
 
-        public WorldPlacer(Func<IEnumerable<object>> getItems, Func<object, Vector3> getPosition, Func<object, Vector3, Vector3> setPosition, Func<object, BoundingBox> getBoundingBox, Func<object> createItem, Action<object> deleteItem)
+        public WorldPlacer(Func<IEnumerable<object>> getItems, Func<object, Vector3> getPosition, Func<object, Vector3, 
+            Vector3> setPosition, Func<object, BoundingBox> getBoundingBox, Func<object> createItem, Action<object> deleteItem)
         {
-            this.getItems = getItems;
-            this.getPosition = getPosition;
-            this.setPosition = setPosition;
-            this.getBoundingBox = getBoundingBox;
-            this.createItem = createItem;
+            this.GetItems = getItems;
+            this.GetPosition = getPosition;
+            this.SetPosition = setPosition;
+            this.GetBoundingBox = getBoundingBox;
+            this.CreateItem = createItem;
+            this.DeleteItem = deleteItem;
         }
     }
 }

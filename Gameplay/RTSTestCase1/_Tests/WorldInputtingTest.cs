@@ -75,7 +75,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                     setPosition: (tree, position) => ((Tree)tree).Position = position,
                     getBoundingBox: tree => ((Tree)tree).Physical.GetBoundingBox(),
                     createItem: () => new Tree(),
-                    deleteItem: t => TW.Data.RemoveObject((Tree)t)
+                    deleteItem: delegate(object t)
+                        {
+                            ((Tree)t).Physical.Visible = false;
+                            TW.Data.RemoveObject((Tree)t);
+                        }
                 );
 
             inputtingSimulator.Configuration.Placer = placer;

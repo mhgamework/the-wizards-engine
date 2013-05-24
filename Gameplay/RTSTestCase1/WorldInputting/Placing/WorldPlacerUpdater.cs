@@ -1,11 +1,12 @@
-﻿using MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Placing;
+﻿using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
+namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Placing
 {
     /// <summary>
-    /// Simulates the World Selection tool
+    /// Simulates the World Placer tool, by allowing for placing and deleting items
+    /// TODO: moving support?
     /// </summary>
     public class WorldPlacerUpdater
     {
@@ -18,8 +19,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
 
             selector = BoundingBoxSelectableProvider.Create
                 (
-                    items: placer.getItems(),
-                    getBoundingBox: placer.getBoundingBox,
+                    items: placer.GetItems(),
+                    getBoundingBox: placer.GetBoundingBox,
                     onClick: onClick
 
                 );
@@ -28,25 +29,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
 
         }
 
-        private object heldObject;
-        private float heldDistance;
-
         private void onClick(object obj)
         {
-            
-        }
 
-        private void pickup(object item)
-        {
-            heldObject = item;
-            //TODO
         }
-
-        private void drop()
-        {
-            heldObject = null;
-        }
-
 
         public void Simulate()
         {
@@ -56,20 +42,28 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
 
         private void simulateInput()
         {
-            if (TW.Graphics.Mouse.RightMouseJustPressed)
+            if (TW.Graphics.Mouse.RightMousePressed && selector.Targeted != null)
             {
-                if (heldObject != null)
-                    drop();
-                else
-                    pickup(selector.Targeted);
+                placer.DeleteItem(selector.Targeted);
+            }
+            if (TW.Graphics.Mouse.LeftMouseJustPressed && selector.Targeted == null)
+            {
+                var p = TW.Data.Get<CameraInfo>().GetGroundplanePosition();
+                if (p.HasValue)
+                {
+                    var item = placer.CreateItem();
+                    placer.SetPosition(item, p.Value);
+                }
             }
         }
 
+
+
         private void simulateRender()
         {
-            foreach (var item in placer.getItems())
+            foreach (var item in placer.GetItems())
             {
-                var bb = placer.getBoundingBox(item);
+                var bb = placer.GetBoundingBox(item);
 
                 var c = new Color4(0, 1, 0);
 
@@ -78,6 +72,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
 
                 TW.Graphics.LineManager3D.AddBox(bb, c);
             }
+            var point = TW.Data.Get<CameraInfo>().GetGroundplanePosition();
+            if (point.HasValue)
+                TW.Graphics.LineManager3D.AddCenteredBox(point.Value, 0.3f, new Color4(1, 1, 0));
+
         }
     }
 }

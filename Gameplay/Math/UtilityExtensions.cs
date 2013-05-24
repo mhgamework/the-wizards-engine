@@ -4,6 +4,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards
 {
+    /// <summary>
+    /// Contains helper methods for the math classes in SlimDX
+    /// </summary>
     public static class UtilityExtensions
     {
         public static Vector3 ToXZ(this Vector2 v)
@@ -44,6 +47,11 @@ namespace MHGameWork.TheWizards
         public static Vector3 GetSize(this BoundingBox bb)
         {
             return bb.Maximum - bb.Minimum;
+        }
+
+        public static Vector3 GetPoint(this Ray ray, float dist)
+        {
+            return ray.Position + ray.Direction*dist;
         }
     }
 }
