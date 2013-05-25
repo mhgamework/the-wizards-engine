@@ -70,6 +70,12 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.2.0\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\packages\Castle.Windsor.3.2.0\lib\net40\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\bin\Binaries\Common.Core.dll</HintPath>
@@ -218,6 +224,8 @@
     <Compile Include="Generation\SimpleCaveGenerator.cs" />
     <Compile Include="Generation\SimpleCaveGenerationTest.cs" />
     <Compile Include="Generation\VoxelTerrainConvertor.cs" />
+    <Compile Include="Graphing\BasicForceRelaxer.cs" />
+    <Compile Include="Graphing\GraphRelaxationTest.cs" />
     <Compile Include="LevelBuilding\LevelBuildingTriggerObjectType.cs" />
     <Compile Include="LevelBuilding\TriggerObject.cs" />
     <Compile Include="Engine\Persistence\Datastore.cs" />
