@@ -105,3 +105,49 @@ Thumbs.db
 *.vspx
 *.psess
 *ncrunch*
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/ASL - Apache Software Foundation License.txt
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/BreakingChanges.txt
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/Castle.Core.3.2.0.nupkg
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/Changes.txt
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/License.txt
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/lib/net35/Castle.Core.dll
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/lib/net35/Castle.Core.xml
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/lib/net40-client/Castle.Core.dll
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/lib/net40-client/Castle.Core.xml
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/lib/net45/Castle.Core.dll
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/lib/net45/Castle.Core.xml
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/lib/sl4/Castle.Core.dll
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/lib/sl4/Castle.Core.xml
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/lib/sl5/Castle.Core.dll
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/lib/sl5/Castle.Core.xml
+/The Wizards Gameplay/packages/Castle.Core.3.2.0/readme.txt
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/ASL - Apache Software Foundation License.txt
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/BreakingChanges.txt
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/Castle.Windsor.3.2.0.nupkg
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/Changes.txt
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/License.txt
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/lib/net35/Castle.Windsor.dll
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/lib/net35/Castle.Windsor.xml
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/lib/net40-client/Castle.Windsor.dll
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/lib/net40-client/Castle.Windsor.xml
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/lib/net40/Castle.Windsor.dll
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/lib/net40/Castle.Windsor.xml
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/lib/net45/Castle.Windsor.dll
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/lib/net45/Castle.Windsor.xml
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/lib/sl4/Castle.Windsor.dll
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/lib/sl4/Castle.Windsor.xml
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/lib/sl5/Castle.Windsor.dll
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/lib/sl5/Castle.Windsor.xml
+/The Wizards Gameplay/packages/Castle.Windsor.3.2.0/readme.txt
+/The Wizards Gameplay/packages/PostSharp.3.0.26/PostSharp.3.0.26.nupkg
+/The Wizards Gameplay/packages/PostSharp.3.0.26/content/RequiresPostSharp.cs
+/The Wizards Gameplay/packages/PostSharp.3.0.26/lib/net20/PostSharp.dll
+/The Wizards Gameplay/packages/PostSharp.3.0.26/lib/net20/PostSharp.xml
+/The Wizards Gameplay/packages/PostSharp.3.0.26/lib/portable-windows8+net40+sl4+wp7/PostSharp.dll
+/The Wizards Gameplay/packages/PostSharp.3.0.26/lib/portable-windows8+net40+sl4+wp7/PostSharp.xml
+/The Wizards Gameplay/packages/PostSharp.3.0.26/tools/PostSharp-Tools.exe
+/The Wizards Gameplay/packages/PostSharp.3.0.26/tools/PostSharp.properties
+/The Wizards Gameplay/packages/PostSharp.3.0.26/tools/PostSharp.targets
+/The Wizards Gameplay/packages/PostSharp.3.0.26/tools/PostSharp.tasks
+/The Wizards Gameplay/packages/PostSharp.3.0.26/tools/install.ps1
+/The Wizards Gameplay/packages/PostSharp.3.0.26/tools/uninstall.ps1

@@ -39,6 +39,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
+    <DontImportPostSharp>True</DontImportPostSharp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -83,7 +84,10 @@
     <Reference Include="nunit.framework">
       <HintPath>..\_Libraries\NUnit-2.5.7.10213\bin\net-2.0\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="PostSharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL" />
+    <Reference Include="PostSharp, Version=3.0.26.9, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PostSharp.3.0.26\lib\net20\PostSharp.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="SlimDX, Version=4.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
@@ -412,6 +416,7 @@
     <Compile Include="Core\Collections\AdvancedQueue.cs" />
     <Compile Include="Core\Collections\EventList.cs" />
     <Compile Include="Core\Collections\PrefilledList.cs" />
+    <Compile Include="RequiresPostSharp.cs" />
     <Compile Include="Water\Camera.cs" />
     <Compile Include="Water\Mesh.cs" />
     <Compile Include="Water\SubGrid.cs" />
@@ -455,6 +460,7 @@
     <EmbeddedResource Include="Core\Graphics\Files\Calibri.xnb" />
     <Compile Include="Core\Graphics\AverageFPSCalculater.cs" />
     <Compile Include="Core\Graphics\BoxMesh.cs" />
+    <None Include="packages.config" />
     <None Include="Shaders\Common.fx" />
     <None Include="Shaders\CSM\CSM.fx" />
     <None Include="Shaders\CSM\CSMCommon.fx" />
@@ -515,6 +521,7 @@
     <Content Include="Shaders\Filters\GaussianBlurCS.hlsl" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\PostSharp.3.0.26\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.3.0.26\tools\PostSharp.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
