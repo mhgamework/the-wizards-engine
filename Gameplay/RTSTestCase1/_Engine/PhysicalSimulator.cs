@@ -36,9 +36,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1
                 phys.UpdatePhysical();
             }
 
-            foreach (var p in TW.Data.GetChangedObjects<Physical>().ToArray())
+            foreach (var c in TW.Data.GetChangesOfType<Physical>().ToArray())
             {
-                p.Update();
+                if (c.Change == ModelChange.Removed)
+                    continue;
+                ((Physical)c.ModelObject).Update();
             }
 
         }

@@ -81,7 +81,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                     createItem: () => new Tree(),
                     deleteItem: delegate(object t)
                         {
-                            ((Tree)t).Physical.Visible = false;
+                            //((Tree)t).Physical.Visible = false;
                             TW.Data.RemoveObject((Tree)t);
                         }
                 );
