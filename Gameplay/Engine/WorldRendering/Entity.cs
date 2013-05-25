@@ -50,11 +50,6 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         public object Tag { get; set; }
 
         public bool CastsShadows { get; set; }
-
-        public override string ToString()
-        {
-            return string.Format("Mesh: {0}, WorldMatrix: {1}", Mesh, WorldMatrix);
-        }
     }
 }
 
