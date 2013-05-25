@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.Engine
     /// </summary>
     public class SimulationRunner
     {
-        public void simulateStep(IEnumerable<ISimulator> simulators)
+        public void SimulateStep(IEnumerable<ISimulator> simulators)
         { foreach (var sim in simulators) { simulateSafe(sim); } }
 
         private void simulateSafe(ISimulator sim)

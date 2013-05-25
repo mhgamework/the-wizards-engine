@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine.Diagnostics.Tracing;
 using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.Serialization;
 
@@ -15,12 +16,14 @@ namespace MHGameWork.TheWizards.Engine
     /// </summary>
     public class DataWrapper : Data.ModelContainer
     {
+        private readonly ITraceLogger logger;
         private AddonAttacher attacher = new AddonAttacher();
 
 
 
-        public DataWrapper()
+        public DataWrapper(ITraceLogger logger)
         {
+            this.logger = logger;
         }
 
 
@@ -65,6 +68,25 @@ namespace MHGameWork.TheWizards.Engine
         public T Get<T>() where T : class, IModelObject, new()
         {
             return GetSingleton<T>();
+        }
+
+
+        public override void AddObject(IModelObject obj)
+        {
+            base.AddObject(obj);
+            logger.Log("Added: " + obj);
+        }
+        public override void NotifyObjectModified(IModelObject obj)
+        {
+            base.NotifyObjectModified(obj);
+            logger.Log("Modified: " + obj);
+
+        }
+        public override void RemoveObject(IModelObject obj)
+        {
+            base.RemoveObject(obj);
+            logger.Log("Removed: " + obj);
+
         }
 
     }

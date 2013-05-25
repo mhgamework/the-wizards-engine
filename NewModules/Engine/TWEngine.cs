@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.Engine.Diagnostics.Tracing;
 using MHGameWork.TheWizards.Engine.Services;
 using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.Profiling;
@@ -17,7 +18,7 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.Engine
 {
-  
+
 
     /// <summary>
     /// This is a host for TW gameplay, it starts and manages the TW context resources, and hotloads the gameplay code
@@ -34,27 +35,40 @@ namespace MHGameWork.TheWizards.Engine
         {
             GameplayDll = "../../Gameplay/bin/x86/Debug/Gameplay.dll";
             codeLoader = new CodeLoader(this);
+            TraceLogger = new EngineTraceLogger();
         }
 
 
         private List<ISimulator> simulators = new List<ISimulator>();
 
         private SimulationRunner simulationRunner = new SimulationRunner();
-        
+
         private AssemblyHotloader gameplayAssemblyHotloader;
         public EngineTWContext twcontext;
+
+        private Assembly activeGameplayAssembly;
+        private readonly CodeLoader codeLoader;
+        private EngineDebugTools debugTools;
+
         public string GameplayDll { get; set; }
 
         public bool DontLoadPlugin { get; set; }
         public bool HotloadingEnabled { get; set; }
 
+        public EngineTraceLogger TraceLogger { get; private set; }
 
 
         public void AddSimulator(ISimulator sim)
         {
-            if (sim.GetType().GetConstructor(new Type[] { }) == null)
-                Console.WriteLine("Simulator found without empty constructor, hotloading will fail! " + sim.GetType().FullName);
+            //NOT a problem anymore:
+            //if (sim.GetType().GetConstructor(new Type[] { }) == null)
+            //    Console.WriteLine("Simulator found without empty constructor, hotloading will fail! " + sim.GetType().FullName);
+
+            sim = new TracingDecoratorSimulator(TraceLogger, sim);
+
             simulators.Add(sim);
+
+
         }
 
         public void Run()
@@ -117,7 +131,7 @@ namespace MHGameWork.TheWizards.Engine
 
             TW.Debug.NeedsReload = false;
 
-            simulationRunner.simulateStep(simulators);
+            simulationRunner.SimulateStep(simulators);
 
             TW.Data.ClearDirty();
             updatePhysics();
@@ -147,7 +161,7 @@ namespace MHGameWork.TheWizards.Engine
             {
                 Console.WriteLine("Failed to load the gameplay plugin!!!!");
             }
-            
+
         }
 
         [CatchExceptions]
@@ -158,9 +172,7 @@ namespace MHGameWork.TheWizards.Engine
         }
 
 
-        private Assembly activeGameplayAssembly;
-        private readonly CodeLoader codeLoader;
-        private EngineDebugTools debugTools;
+
 
 
         public Assembly GetLoadedGameplayAssembly()

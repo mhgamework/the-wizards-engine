@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Diagnostics.Tracing;
+using Rhino.Mocks;
 
 namespace MHGameWork.TheWizards.Tests.Gameplay.Various
 {
@@ -21,7 +23,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Various
 
             game.InitDirectX();
 
-            var container = new DataWrapper();
+            var container = new DataWrapper(Rhino.Mocks.MockRepository.GenerateMock<ITraceLogger>());
 
             physX = new PhysicsWrapper();
             physX.Initialize();
@@ -80,7 +82,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Various
         }
         public void Exit()
         {
-            game.Exit();    
+            game.Exit();
         }
     }
 }

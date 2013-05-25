@@ -26,7 +26,7 @@ namespace MHGameWork.TheWizards.Engine
 
             typeSerializer = new TypeSerializer(engine);
 
-            var container = new DataWrapper();
+            var container = new DataWrapper(engine.TraceLogger);
 
 
             physX = new PhysicsWrapper();

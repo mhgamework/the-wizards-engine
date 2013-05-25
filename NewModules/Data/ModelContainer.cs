@@ -49,7 +49,7 @@ namespace MHGameWork.TheWizards.Data
         /// Registers a modelobject for change logging. This method is supposed to be called by the ModelObject's themselves, not by user
         /// </summary>
         /// <param name="obj"></param>
-        public void AddObject(IModelObject obj)
+        public virtual void AddObject(IModelObject obj)
         {
             if (Objects.Contains(obj)) throw new InvalidOperationException("Object already added");
 
@@ -63,7 +63,7 @@ namespace MHGameWork.TheWizards.Data
         /// TODO: this should be called automatically using a weak references system
         /// </summary>
         /// <param name="obj"></param>
-        public void RemoveObject(IModelObject obj)
+        public virtual void RemoveObject(IModelObject obj)
         {
             if (!Objects.Contains(obj))
             {
@@ -82,7 +82,7 @@ namespace MHGameWork.TheWizards.Data
             dirtyEntities.Clear();
         }
 
-        public void NotifyObjectModified(IModelObject obj)
+        public virtual void NotifyObjectModified(IModelObject obj)
         {
             if (!Objects.Contains(obj))
             {
