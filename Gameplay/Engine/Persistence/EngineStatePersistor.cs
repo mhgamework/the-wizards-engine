@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.Engine.Persistence
             foreach (IModelObject obj in TW.Data.Objects)
                 TW.Data.ModelSerializer.QueueForSerialization(obj);
 
-            using (var fs = File.Open(filename, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+            using (var fs = File.Open(filename, FileMode.Create, FileAccess.Write, FileShare.None))
             using (var writer = new StreamWriter(fs))
             TW.Data.ModelSerializer.Serialize(writer);
         }
