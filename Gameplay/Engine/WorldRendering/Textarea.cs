@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         /// </summary>
         public Vector2 Size { get; set; }
         public bool Visible { get; set; }
-
+        public Color4 BackgroundColor { get; set; }
 
 
         public Textarea()
@@ -32,6 +32,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
             FontSize = 10;
             Color = new Color4(0, 0, 0);
             Text = "The Wizards";
+            BackgroundColor = new Color4(0,0,0,0);
 
         }
 

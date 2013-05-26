@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
                 //    areasAwaitingUpdate.Add(area);
 
                 tex.SetFont(area.FontFamily, area.FontSize);
-                tex.Clear();
+                tex.Clear(area.BackgroundColor);
                 tex.DrawText(area.Text, new Vector2(), area.Color);
                 tex.UpdateTexture();
 
