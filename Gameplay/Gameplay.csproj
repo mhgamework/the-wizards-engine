@@ -174,7 +174,9 @@
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="BugTests.cs" />
     <Compile Include="Engine\Debugging\AttachDebuggerOnStartupSimulator.cs" />
+    <Compile Include="Engine\Debugging\GraphVisualizerSimulator.cs" />
     <Compile Include="Engine\Debugging\ModelObjectGraphSimulator.cs" />
+    <Compile Include="Engine\Debugging\ModelObjectGraphTest.cs" />
     <Compile Include="Engine\EngineInitializer.cs" />
     <Compile Include="Engine\EngineUIConsole.cs" />
     <Compile Include="Engine\EngineUISimulator.cs" />

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Graphing;
 using MHGameWork.TheWizards.Reflection;
 using QuickGraph;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.Engine.Debugging
 {
@@ -59,7 +61,8 @@ namespace MHGameWork.TheWizards.Engine.Debugging
 
         private void removeVertex(IModelObject c)
         {
-            Graph.RemoveVertex(map[c]);
+            if (map.ContainsKey(c))
+                Graph.RemoveVertex(map[c]);
             map.Remove(c);
             //TODO: remove the edges also??
         }
@@ -73,7 +76,7 @@ namespace MHGameWork.TheWizards.Engine.Debugging
 
             foreach (var att in atts)
             {
-                if (!att.Type.IsSubclassOf(typeof(IModelObject))) continue;
+                if (!typeof(IModelObject).IsAssignableFrom(att.Type)) continue;
 
                 var data = att.GetData(v.ModelObject) as IModelObject;
 
@@ -81,17 +84,17 @@ namespace MHGameWork.TheWizards.Engine.Debugging
                 if (!map.ContainsKey(data)) continue;
 
                 Graph.AddEdge(new Edge<Vertex>(v, getVertex(data)));
-
             }
         }
 
-        public class Vertex
+        public class Vertex : IVertex3D
         {
             public Vertex(IModelObject obj)
             {
                 ModelObject = obj;
             }
             public IModelObject ModelObject { get; private set; }
+            public Vector3 Position { get; set; }
         }
     }
 

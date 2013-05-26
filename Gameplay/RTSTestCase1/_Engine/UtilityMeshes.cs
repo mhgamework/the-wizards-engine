@@ -48,7 +48,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1
         {
 
             var texSize = 1024;
-            var file = TWDir.Cache.CreateSubdirectory("BoxText") + "\\" + text + ".dds";
+            var file = TWDir.Cache.CreateSubdirectory("BoxText") + "\\" + text + fontSize +  ".dds";
 
             if (!File.Exists(file))
             {
