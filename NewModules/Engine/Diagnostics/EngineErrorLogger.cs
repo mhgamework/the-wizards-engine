@@ -8,8 +8,8 @@ namespace MHGameWork.TheWizards.Engine.Diagnostics
     /// </summary>
     public class EngineErrorLogger : IErrorLogger
     {
-        public Exception LastException { get; set; }
-        public string LastExtra { get; set; }
+        public Exception LastException { get; private set; }
+        public string LastExtra { get; private set; }
 
         public void Log(Exception exception, string extra)
         {
@@ -17,5 +17,10 @@ namespace MHGameWork.TheWizards.Engine.Diagnostics
             LastExtra = extra;
         }
 
+        public void ClearLast()
+        {
+            LastException = null;
+            LastExtra = "";
+        }
     }
 }

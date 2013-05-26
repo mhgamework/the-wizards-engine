@@ -9,10 +9,12 @@ namespace MHGameWork.TheWizards.Engine
     public class ContextDecoratorSimulator : ISimulator
     {
         private readonly ISimulator decorated;
+        private readonly IErrorLogger errorLogger;
 
         public ContextDecoratorSimulator(ISimulator decorated,IErrorLogger errorLogger)
         {
             this.decorated = decorated;
+            this.errorLogger = errorLogger;
         }
 
 
@@ -28,9 +30,7 @@ namespace MHGameWork.TheWizards.Engine
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error in simulator: {0}", sim.GetType().Name);
-                Console.WriteLine(ex.ToString());
-
+                errorLogger.Log(ex, "Error in simulator: " + sim.GetType().Name);
             }
             TW.Data.RunningSimulator = null;
         }

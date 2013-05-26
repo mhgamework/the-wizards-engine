@@ -9,6 +9,7 @@ namespace MHGameWork.TheWizards.Engine
 {
     public class EngineTWContext
     {
+        private readonly TWEngine engine;
         private GraphicsWrapper game;
         private PhysicsWrapper physX;
         private TypeSerializer typeSerializer;
@@ -17,6 +18,7 @@ namespace MHGameWork.TheWizards.Engine
 
         public EngineTWContext(TWEngine engine)
         {
+            this.engine = engine;
             Context = new TW.Context();
 
             game = new GraphicsWrapper();
@@ -55,6 +57,7 @@ namespace MHGameWork.TheWizards.Engine
             Context.Physics = physX;
             Context.Audio = new AudioWrapper();
             Context.Assets = new AssetsWrapper();
+            Context.Debug = new DebugWrapper(engine);
             TW.SetContext(Context);
         }
 

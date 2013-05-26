@@ -14,11 +14,11 @@ using SlimDX.DirectInput;
 namespace MHGameWork.TheWizards.Engine
 {
     /// <summary>
-    /// Simulates the engine ui (this is pure al logic since it combines all the features that make up the engine)
+    /// Simulates the engine ui (this is pure AL logic since it combines all the features that make up the engine)
     /// </summary>
     public class EngineUISimulator : ISimulator
     {
-        
+
         private Stack<TextMenu<Action>> menuStack = new Stack<TextMenu<Action>>();
         private TextMenu<Action> mainMenu;
 
@@ -32,15 +32,8 @@ namespace MHGameWork.TheWizards.Engine
         public EngineUISimulator()
         {
             area = data.Area;
-            if (data.Area == null)
-            {
-                area = new Textarea();
-                area.Position = new Vector2(0, 0);
-                area.Size = new Vector2(200, 600);
-                data.Area = area;
 
-            }
-            
+
 
             mainMenu = createMainMenu();
 
@@ -52,6 +45,16 @@ namespace MHGameWork.TheWizards.Engine
 
         public void Simulate()
         {
+            if (data.Area == null)
+            {
+                area = new Textarea();
+                area.Position = new Vector2(0, 0);
+                area.Size = new Vector2(200, 600);
+                data.Area = area;
+
+            }
+            updateErrorArea();
+
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.Backspace))
             {
                 if (menuStack.Count == 0)
@@ -82,6 +85,30 @@ namespace MHGameWork.TheWizards.Engine
 
         }
 
+        private void updateErrorArea()
+        {
+            if (data.ErrorArea == null)
+            {
+                data.ErrorArea = new Textarea()
+                    {
+                        Position = new Vector2(10, 550),
+                        Size = new Vector2(800 - 30 * 2, 40),
+                        BackgroundColor = new Color4(1, 1, 0, 0)
+                    };
+            }
+
+            data.ErrorArea.Visible = TW.Debug.LastException != null;
+            if (TW.Debug.LastException == null) return;
+            data.ErrorArea.Text = TW.Debug.LastException.Message;
+            if (!string.IsNullOrEmpty(TW.Debug.LastExceptionExtra))
+                data.ErrorArea.Text += "\n" + TW.Debug.LastExceptionExtra;
+
+            // Hack to stop serializer from failing!
+            data.ErrorArea.Text += "\n";
+
+
+        }
+
 
         private TextMenu<Action> createMainMenu()
         {
@@ -99,6 +126,7 @@ namespace MHGameWork.TheWizards.Engine
 
         private static void OnExit()
         {
+
             DI.Get<Persistence.EngineStatePersistor>().SaveEngineState();
             TW.Graphics.Exit();
         }
@@ -127,6 +155,7 @@ namespace MHGameWork.TheWizards.Engine
         {
             public bool ConsoleCreated { get; set; }
             public Textarea Area { get; set; }
+            public Textarea ErrorArea { get; set; }
         }
     }
 }

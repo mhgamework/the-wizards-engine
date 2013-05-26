@@ -288,6 +288,8 @@ namespace MHGameWork.TheWizards.Engine
 
                 TW.Graphics.AcquireRenderer().ClearAll();
                 TW.Physics.ClearAll();
+                twEngine.EngineErrorLogger.ClearLast();
+
             }
 
             [PersistanceScope]

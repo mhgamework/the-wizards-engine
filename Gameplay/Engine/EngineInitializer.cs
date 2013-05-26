@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Debugging;
 using MHGameWork.TheWizards.Engine.Debugging;
 using MHGameWork.TheWizards.Engine.PhysX;
 using MHGameWork.TheWizards.Engine.Testing;
@@ -66,7 +67,7 @@ namespace MHGameWork.TheWizards.Engine
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                DI.Get<IErrorLogger>().Log(ex,"When starting test (EngineInitializer)");
             }
 
             loadBare(engine);

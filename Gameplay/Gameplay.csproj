@@ -188,6 +188,7 @@
     <Compile Include="Engine\Testing\TestingData.cs" />
     <Compile Include="Engine\Testing\TestSceneBuilder.cs" />
     <Compile Include="Engine\Testing\TestUISimulator.cs" />
+    <Compile Include="Engine\Tests\EngineUITest.cs" />
     <Compile Include="Engine\Tests\PhysX\BarrelSimulatorTest.cs" />
     <Compile Include="Engine\Tests\PhysX\SimpleEntityPhysicsTest.cs" />
     <Compile Include="Engine\UISimulator.cs" />
