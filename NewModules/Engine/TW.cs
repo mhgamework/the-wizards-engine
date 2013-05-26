@@ -34,7 +34,7 @@ namespace MHGameWork.TheWizards
         {
             public Context()
             {
-                Debug = new DebugWrapper();
+                Debug = new DebugWrapper(null);
             }
             public GraphicsWrapper Graphics { get; set; }
             public DataWrapper Data { get; set; }

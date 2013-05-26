@@ -28,6 +28,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <DontImportPostSharp>True</DontImportPostSharp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -168,6 +170,7 @@
     <Compile Include="Cogs\ICogComponent.cs" />
     <Compile Include="Cogs\StaticBox.cs" />
     <Compile Include="CompactQuadTree.cs" />
+    <Compile Include="Debugging\IErrorLogger.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\Terrain\TaggedTerrain.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -185,6 +188,7 @@
     <Compile Include="Engine\Context\DebugWrapper.cs" />
     <Compile Include="Engine\Diagnostics\DiagnosticsController.cs" />
     <Compile Include="Engine\Diagnostics\EngineDataComponent.cs" />
+    <Compile Include="Engine\Diagnostics\EngineErrorLogger.cs" />
     <Compile Include="Engine\Diagnostics\GPUResourcesComponent.cs" />
     <Compile Include="Engine\Diagnostics\IDiagnosticsComponent.cs" />
     <Compile Include="Engine\Diagnostics\OutputComponent.cs" />
@@ -210,6 +214,7 @@
     <Compile Include="EntityOud\Editor\EditorMeshPart.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Injection\DI.cs" />
     <Compile Include="Networking\SimpleClientPacketManager.cs" />
     <Compile Include="Networking\SimpleClientPacketTransporter.cs" />
     <Compile Include="Networking\SimpleServerPacketManager.cs" />
@@ -775,7 +780,6 @@
     <Content Include="TreeGenerator\todo.txt" />
     <Content Include="TreeGenerator\TODO\help\TreeEngineDesign.txt" />
     <Content Include="Voxelization\_doc.txt" />
-    <Content Include="VSIntegration\_doc.txt" />
     <Content Include="_doc.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -802,6 +806,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\PostSharp.3.0.26\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.3.0.26\tools\PostSharp.targets')" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

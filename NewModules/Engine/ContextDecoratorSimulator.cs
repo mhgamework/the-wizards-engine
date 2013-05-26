@@ -1,4 +1,5 @@
 ﻿using System;
+using MHGameWork.TheWizards.Debugging;
 
 namespace MHGameWork.TheWizards.Engine
 {
@@ -9,7 +10,7 @@ namespace MHGameWork.TheWizards.Engine
     {
         private readonly ISimulator decorated;
 
-        public ContextDecoratorSimulator(ISimulator decorated)
+        public ContextDecoratorSimulator(ISimulator decorated,IErrorLogger errorLogger)
         {
             this.decorated = decorated;
         }

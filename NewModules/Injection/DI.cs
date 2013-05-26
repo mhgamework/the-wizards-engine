@@ -27,5 +27,10 @@ namespace MHGameWork.TheWizards
 
             return (T) ret;
         }
+
+        public static void Set<T>(object obj)
+        {
+            if (!typeof (T).IsAssignableFrom(obj.GetType())) throw new InvalidOperationException();
+        }
     }
 }

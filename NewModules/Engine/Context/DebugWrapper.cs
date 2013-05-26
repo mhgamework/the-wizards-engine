@@ -11,12 +11,18 @@ namespace MHGameWork.TheWizards.Engine
     /// </summary>
     public class DebugWrapper
     {
-        public DebugWrapper()
+        private readonly TWEngine engine;
+
+        public DebugWrapper(TWEngine engine)
         {
+            this.engine = engine;
             MainProfilingPoint = Profiler.CreateElement("[THE WIZARDS ENGINE]");
         }
 
         public ProfilingPoint MainProfilingPoint { get; private set; }
         public bool NeedsReload { get; set; }
+
+        public Exception LastException { get { return engine.EngineErrorLogger.LastException; } }
+        public string LastExceptionExtra { get { return engine.EngineErrorLogger.LastExtra; } }
     }
 }

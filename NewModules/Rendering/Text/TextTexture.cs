@@ -64,6 +64,10 @@ namespace MHGameWork.TheWizards.Rendering.Text
         {
             g.Clear(Color.FromArgb(0,0,0,0));
         }
+        public void Clear(Color4 color)
+        {
+            g.Clear(Color.FromArgb(((int)color.Alpha*255), ((int)color.Red * 255), ((int)color.Green*255), ((int)color.Blue *255)));
+        }
 
         public Vector2 MeasureString(string text)
         {
