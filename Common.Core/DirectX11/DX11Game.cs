@@ -59,7 +59,14 @@ namespace MHGameWork.TheWizards.DirectX11
 
             void fpsCalculater_DataAvailable(float obj)
             {
-                game.Form.Form.BeginInvoke(new Action(() => Target(obj)));
+                try
+                {
+                    game.Form.Form.BeginInvoke(new Action(() => Target(obj)));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
             }
 
             private void Target(float obj)
@@ -69,7 +76,7 @@ namespace MHGameWork.TheWizards.DirectX11
                     builder.Clear();
                     builder.Append(obj);
                     builder.Append(" - ");
-                    builder.Append(1/obj);
+                    builder.Append(1 / obj);
                     game.Form.Form.Text = builder.ToString();
 
                 }
