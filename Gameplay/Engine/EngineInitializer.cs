@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Engine.Debugging;
 using MHGameWork.TheWizards.Engine.PhysX;
 using MHGameWork.TheWizards.Engine.Testing;
 using MHGameWork.TheWizards.Engine.VoxelTerraining;
@@ -57,6 +58,7 @@ namespace MHGameWork.TheWizards.Engine
         private void loadTest(TWEngine engine)
         {
             engine.AddSimulator(new EngineUISimulator());
+            
             try
             {
                 var runner = new EngineTestRunner();
@@ -68,6 +70,8 @@ namespace MHGameWork.TheWizards.Engine
             }
 
             loadBare(engine);
+
+            engine.AddSimulator(DI.Get<ModelObjectGraphSimulator>());
         }
 
         private bool isTestSelected()
