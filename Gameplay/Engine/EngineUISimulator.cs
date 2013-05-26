@@ -10,6 +10,7 @@ using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.VSIntegration;
 using SlimDX;
 using SlimDX.DirectInput;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.Engine
 {
@@ -91,8 +92,8 @@ namespace MHGameWork.TheWizards.Engine
             {
                 data.ErrorArea = new Textarea()
                     {
-                        Position = new Vector2(10, 550),
-                        Size = new Vector2(800 - 30 * 2, 40),
+                        Position = new Vector2(10, 600 - 10 - 60),
+                        Size = new Vector2(800 - 10 * 2, 60),
                         BackgroundColor = new Color4(1, 1, 0, 0)
                     };
             }
@@ -103,9 +104,17 @@ namespace MHGameWork.TheWizards.Engine
             if (!string.IsNullOrEmpty(TW.Debug.LastExceptionExtra))
                 data.ErrorArea.Text += "\n" + TW.Debug.LastExceptionExtra;
 
+            data.ErrorArea.Text += "\n" + new string(TW.Debug.LastException.StackTrace.TakeWhile(c => c != '\n').ToArray());
+
             // Hack to stop serializer from failing!
             data.ErrorArea.Text += "\n";
 
+
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.L))
+            {
+                var attacher = new VSDebugAttacher();
+                attacher.SelectExceptionLine(TW.Debug.LastException);
+            }
 
         }
 
