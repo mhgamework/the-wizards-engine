@@ -174,7 +174,7 @@
     <Compile Include="Features\Data\Forms\ClassFormTest.cs" />
     <Compile Include="Features\Various\CastleWindsorTest.cs" />
     <Compile Include="Features\Various\TestRootObjectTable.cs" />
-    <Compile Include="Features\Various\TestVSIntegration.cs" />
+    <Compile Include="Features\Various\VSIntegrationTest.cs" />
     <Compile Include="Features\Rendering\Particles\ParticleTests.cs" />
     <Compile Include="Features\Simulation\Physics\TestSphereShooter.cs" />
     <Compile Include="Features\Generation\ProceduralTerrainGeneration\NoiseTests.cs" />
