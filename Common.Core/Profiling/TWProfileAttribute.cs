@@ -12,7 +12,7 @@ namespace MHGameWork.TheWizards.Data
     /// Applying this attribute to a method will create a profiling point around the entire method.
     /// </summary>
     [MulticastAttributeUsage(MulticastTargets.Method)]
-    [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Method, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
     [Serializable]
     public sealed class TWProfileAttribute : MethodInterceptionAspect
     {

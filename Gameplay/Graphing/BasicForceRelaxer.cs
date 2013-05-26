@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.Graphing
         private float attractionFactor = 2; //2
         private float minNodeDistance = 1f; // 1
         private float repulsionFactor = 1; // 1
-        private float simulationSpeed = 10f; // 0.1f
+        private float simulationSpeed = 15f; // 0.1f
 
         private Seeder r = new Seeder(87683234);
 

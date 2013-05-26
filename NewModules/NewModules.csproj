@@ -192,16 +192,17 @@
     <Compile Include="Engine\Context\EngineAssetFactory.cs" />
     <Compile Include="Engine\Context\EngineMeshFactory.cs" />
     <Compile Include="Engine\Context\EngineTWContext.cs" />
+    <Compile Include="Engine\Diagnostics\Profiling\ProfilingDecoratorSimulator.cs" />
     <Compile Include="Engine\Diagnostics\Tracing\ITraceLogger.cs" />
     <Compile Include="Engine\Diagnostics\Tracing\TracingDecoratorSimulator.cs" />
     <Compile Include="Engine\EngineDebugTools.cs" />
     <Compile Include="Engine\Diagnostics\Tracing\EngineTraceLogger.cs" />
+    <Compile Include="Engine\ContextDecoratorSimulator.cs" />
     <Compile Include="Engine\Serialization\FilebasedAssetSerializer.cs" />
     <Compile Include="Engine\Context\GraphicsWrapper.cs" />
     <Compile Include="Engine\Data\PersistanceScopeAttribute.cs" />
     <Compile Include="Engine\Context\PhysicsWrapper.cs" />
     <Compile Include="Engine\Services\WPFApplicationService.cs" />
-    <Compile Include="Engine\SimulationRunner.cs" />
     <Compile Include="Entities\Editor\Rendering\EditorMaterial.cs" />
     <Compile Include="EntityOud\Editor\EditorMesh.cs">
       <SubType>Code</SubType>

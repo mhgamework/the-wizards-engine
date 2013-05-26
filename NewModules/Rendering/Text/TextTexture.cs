@@ -37,6 +37,7 @@ namespace MHGameWork.TheWizards.Rendering.Text
             g = System.Drawing.Graphics.FromImage(bmp);
             g.PageUnit = GraphicsUnit.Pixel;
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+            
 
             Clear();
         }
@@ -62,6 +63,12 @@ namespace MHGameWork.TheWizards.Rendering.Text
         public void Clear()
         {
             g.Clear(Color.FromArgb(0,0,0,0));
+        }
+
+        public Vector2 MeasureString(string text)
+        {
+            var s =  g.MeasureString(text, font);
+            return new Vector2(s.Width,s.Height);
         }
 
         /// <summary>

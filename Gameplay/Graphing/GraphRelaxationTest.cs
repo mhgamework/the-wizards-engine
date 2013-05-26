@@ -35,6 +35,7 @@ namespace MHGameWork.TheWizards.Graphing
         public void TestBasicForce()
         {
             DI.Get<TestSceneBuilder>().Setup = () => createVertices(2);
+            DI.Get<TestSceneBuilder>().EnsureTestSceneLoaded();
 
             var g = new BidirectionalGraph<MyVertex, MyEdge>();
             var edges = new List<MyEdge>();
@@ -62,7 +63,7 @@ namespace MHGameWork.TheWizards.Graphing
         public void TestBasicForceAllToOne()
         {
             DI.Get<TestSceneBuilder>().Setup = () => createVertices();
-
+            DI.Get<TestSceneBuilder>().EnsureTestSceneLoaded();
             var g = new BidirectionalGraph<MyVertex, MyEdge>();
 
             var edges = new List<MyEdge>();
@@ -78,7 +79,7 @@ namespace MHGameWork.TheWizards.Graphing
         public void TestBasicForceLine()
         {
             DI.Get<TestSceneBuilder>().Setup = () => createVertices(100);
-
+            DI.Get<TestSceneBuilder>().EnsureTestSceneLoaded();
             var g = new BidirectionalGraph<MyVertex, MyEdge>();
 
             var edges = new List<MyEdge>();
@@ -96,7 +97,7 @@ namespace MHGameWork.TheWizards.Graphing
         public void TestBasicForceComplex()
         {
             DI.Get<TestSceneBuilder>().Setup = () => createVertices(100);
-
+            DI.Get<TestSceneBuilder>().EnsureTestSceneLoaded();
             var g = new BidirectionalGraph<MyVertex, MyEdge>();
 
             var edges = new List<MyEdge>();

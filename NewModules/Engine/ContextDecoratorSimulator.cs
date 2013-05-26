@@ -1,20 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MHGameWork.TheWizards.Engine
 {
     /// <summary>
-    /// Responsible for safely executing a collection of simulators
+    /// Decorates a simulator to make it show up the the profiler
     /// </summary>
-    public class SimulationRunner
+    public class ContextDecoratorSimulator : ISimulator
     {
-        public void SimulateStep(IEnumerable<ISimulator> simulators)
-        { foreach (var sim in simulators) { simulateSafe(sim); } }
+        private readonly ISimulator decorated;
 
-        private void simulateSafe(ISimulator sim)
+        public ContextDecoratorSimulator(ISimulator decorated)
         {
+            this.decorated = decorated;
+        }
+
+
+        public void Simulate()
+        {
+            var sim = decorated;
+
             TW.Data.RunningSimulator = sim;
             try
             {
@@ -28,7 +32,6 @@ namespace MHGameWork.TheWizards.Engine
 
             }
             TW.Data.RunningSimulator = null;
-
         }
     }
 }

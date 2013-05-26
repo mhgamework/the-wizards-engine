@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.Engine.Diagnostics.Profiling;
 using MHGameWork.TheWizards.Engine.Diagnostics.Tracing;
 using MHGameWork.TheWizards.Engine.Services;
 using MHGameWork.TheWizards.Persistence;
@@ -41,8 +42,6 @@ namespace MHGameWork.TheWizards.Engine
 
         private List<ISimulator> simulators = new List<ISimulator>();
 
-        private SimulationRunner simulationRunner = new SimulationRunner();
-
         private AssemblyHotloader gameplayAssemblyHotloader;
         public EngineTWContext twcontext;
 
@@ -64,6 +63,8 @@ namespace MHGameWork.TheWizards.Engine
             //if (sim.GetType().GetConstructor(new Type[] { }) == null)
             //    Console.WriteLine("Simulator found without empty constructor, hotloading will fail! " + sim.GetType().FullName);
 
+            sim = new ContextDecoratorSimulator(sim);
+            sim = new ProfilingDecoratorSimulator(sim);
             sim = new TracingDecoratorSimulator(TraceLogger, sim);
 
             simulators.Add(sim);
@@ -131,7 +132,8 @@ namespace MHGameWork.TheWizards.Engine
 
             TW.Debug.NeedsReload = false;
 
-            simulationRunner.SimulateStep(simulators);
+            foreach (var sim in simulators)
+                sim.Simulate();
 
             TW.Data.ClearDirty();
             updatePhysics();

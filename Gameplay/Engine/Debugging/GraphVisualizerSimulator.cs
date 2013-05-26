@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DirectX11;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Graphing;
 using MHGameWork.TheWizards.RTSTestCase1;
@@ -40,12 +41,11 @@ namespace MHGameWork.TheWizards.Engine.Debugging
         {
             var s = new Seeder(123);
 
-            for (int i = 0; i < 10; i++)
-                relaxer.Relax(TW.Graphics.Elapsed);
+            relaxGraph();
 
             foreach (var n in g.Vertices)
             {
-                if ( n.ModelObject is Entity && entities.ContainsValue(n.ModelObject as Entity)) continue;
+                if (n.ModelObject is Entity && entities.ContainsValue(n.ModelObject as Entity)) continue;
                 var ent = getEntity(n);
                 ent.WorldMatrix = Matrix.Translation(n.Position);
                 //TW.Graphics.LineManager3D.AddCenteredBox(n.Position, 1, getRandomColor(s));
@@ -55,6 +55,13 @@ namespace MHGameWork.TheWizards.Engine.Debugging
                 TW.Graphics.LineManager3D.AddLine(e.Source.Position, getRandomColor(s), e.Target.Position, getRandomColor(s));
             }
         }
+
+        private void relaxGraph()
+        {
+            //for (int i = 0; i < 2; i++)
+            relaxer.Relax(TW.Graphics.Elapsed);
+        }
+
         private static Color4 getRandomColor(Seeder s)
         {
             return new Color4(s.NextVector3(Vector3.Zero.xna(), MathHelper.One.xna()).dx());
@@ -65,7 +72,7 @@ namespace MHGameWork.TheWizards.Engine.Debugging
             if (!entities.ContainsKey(v))
             {
                 var ent = new Entity();
-                ent.Mesh = UtilityMeshes.CreateMeshWithText(0.2f, v.ModelObject.GetType().Name, TW.Graphics,50);
+                ent.Mesh = UtilityMeshes.CreateMeshWithText(0.2f, v.ModelObject.GetType().Name, TW.Graphics);
                 entities[v] = ent;
                 TW.Data.Get<Data>().OwnedEntities.Add(ent);
             }

@@ -39,23 +39,35 @@ namespace MHGameWork.TheWizards.RTSTestCase1
 
         /// <summary>
         /// TODO: this is somewhat haxor
+        /// Note: fontSize should do nothing :p remove this
         /// </summary>
         /// <param name="radius"></param>
         /// <param name="text"></param>
         /// <param name="game"></param>
         /// <returns></returns>
-        public static IMesh CreateMeshWithText(float radius, string text, DX11Game game, int fontSize = 200)
+        public static IMesh CreateMeshWithText(float radius, string text, DX11Game game)
         {
+            var fontSize = 100;
 
             var texSize = 1024;
-            var file = TWDir.Cache.CreateSubdirectory("BoxText") + "\\" + text + fontSize +  ".dds";
+            TWDir.Cache.CreateSubdirectory("BoxText");
+
+            var name = "BoxText\\" + text + "Auto.dds";
+            var file = TWDir.Cache + "\\" + name;
 
             if (!File.Exists(file))
             {
                 var tex = new TextTexture(TW.Graphics, texSize, texSize);
 
                 tex.SetFont("Arial", fontSize);
+
+                var size = tex.MeasureString(text);
+                var scale = texSize/size.X;
+
+                tex.SetFont("Arial", fontSize * scale);
+
                 tex.Clear();
+                
                 tex.DrawText(text, new Vector2(0, texSize / 2 - fontSize), new Color4(1, 1, 1));
                 tex.UpdateTexture();
 
@@ -64,10 +76,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1
             }
 
 
-            var texture = new RAMTexture();
-            texture.GetCoreData().StorageType = TextureCoreData.TextureStorageType.Disk;
-            texture.GetCoreData().DiskFilePath = file;
-
+            //TODO: remove TW dependency
+            var texture = TW.Assets.LoadTextureFromCache(name);
 
             return CreateMeshWithTexture(radius, texture);
         }

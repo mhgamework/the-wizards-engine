@@ -47,9 +47,24 @@ namespace MHGameWork.TheWizards
         /// <returns></returns>
         public ITexture LoadTexture(string relativeCorePath)
         {
-
             string filePath = TWDir.GameData + "\\" + relativeCorePath;
 
+            return loadTextureInternal(filePath);
+        }
+        /// <summary>
+        /// WITH extension!!
+        /// </summary>
+        /// <param name="relativeCorePath"></param>
+        /// <returns></returns>
+        public ITexture LoadTextureFromCache(string relativeCorePath)
+        {
+            string filePath = TWDir.Cache + "\\" + relativeCorePath;
+
+            return loadTextureInternal(filePath);
+        }
+
+        private ITexture loadTextureInternal(string filePath)
+        {
             if (!System.IO.File.Exists(filePath))
             {
                 Console.WriteLine("Texture not found on disk: (" + filePath + ")");
@@ -57,13 +72,11 @@ namespace MHGameWork.TheWizards
             }
 
             var searchTex = TextureFactory.FindTexture(delegate(ITexture tex)
-            {
-                var data = tex.GetCoreData();
-                return data.StorageType == TextureCoreData.TextureStorageType.Disk && data.DiskFilePath == filePath;
-            });
+                {
+                    var data = tex.GetCoreData();
+                    return data.StorageType == TextureCoreData.TextureStorageType.Disk && data.DiskFilePath == filePath;
+                });
             if (searchTex != null) return searchTex;
-
-
 
 
             var ret = new RAMTexture();
@@ -71,8 +84,6 @@ namespace MHGameWork.TheWizards
             ret.GetCoreData().DiskFilePath = filePath;
             TextureFactory.AddTexture(ret);
             return ret;
-
-
         }
 
         public IMesh GetMesh(Guid guid)
