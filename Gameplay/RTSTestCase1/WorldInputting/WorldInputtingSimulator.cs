@@ -17,22 +17,23 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
     /// </summary>
     public class WorldInputtingSimulator : ISimulator
     {
-        public EditorConfiguration Configuration { get; private set; }
+        private readonly EditorConfiguration controller;
 
-        private readonly MenuDisplayer menuDisplayer;
-        private WorldPlacerUpdater selectorUpdater;
+
+        private MenuDisplayer menuDisplayer;
+        private WorldPlacerUpdater worldPlacerUpdater;
         private WorldSelector selector;
         private Vector3 pos;
         private Vector3 dir;
         private Vector3 up;
 
 
-        public WorldInputtingSimulator()
+        public WorldInputtingSimulator(EditorConfiguration controller)
         {
-            Configuration = new EditorConfiguration();
+            this.controller = controller;
             selector = new WorldSelector();
 
-            menuDisplayer = new MenuDisplayer(Configuration.Menu, selector);
+
 
 
 
@@ -40,12 +41,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
 
         public void Simulate()
         {
-            if (selectorUpdater == null && Configuration.Placer != null)
-                selectorUpdater = new WorldPlacerUpdater(Configuration.Placer, selector);
 
-            pos = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.xna().Translation.dx();
-            dir = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.xna().Forward.dx();
-            up = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.xna().Up.dx();
+
+            updateCameraInfo();
 
             simulateMenu();
 
@@ -53,15 +51,44 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
             if (TW.Graphics.Mouse.LeftMouseJustPressed)
                 selector.Select();
 
-
-            selectorUpdater.Simulate();
-
+            simulateWorldPlacer();
 
 
+            if (controller.SelectableProvider != null) // TODO very dirty
+                selector.AddProvider(controller.SelectableProvider);
+
+
+            selector.RenderSelection();
+        }
+
+        private void simulateWorldPlacer()
+        {
+            if (controller.Placer == null)
+            {
+                if (worldPlacerUpdater != null)
+                    worldPlacerUpdater.Disable();
+                worldPlacerUpdater = null;
+            }
+            if (worldPlacerUpdater == null && controller.Placer != null)
+                worldPlacerUpdater = new WorldPlacerUpdater(controller.Placer, selector);
+            if (worldPlacerUpdater != null)
+                worldPlacerUpdater.Simulate();
+        }
+
+        private void updateCameraInfo()
+        {
+            pos = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.xna().Translation.dx();
+            dir = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.xna().Forward.dx();
+            up = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.xna().Up.dx();
         }
 
         private void simulateMenu()
         {
+            if (menuDisplayer == null || menuDisplayer.Config != controller.Menu)
+            {
+                menuDisplayer = new MenuDisplayer(controller.Menu, selector);
+            }
+
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.G))
                 menuDisplayer.Toggle(pos + dir * 10, dir, up);
 

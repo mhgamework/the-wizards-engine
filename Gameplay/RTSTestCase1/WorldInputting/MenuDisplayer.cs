@@ -14,6 +14,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
     {
         private readonly EditorMenuConfiguration config;
 
+        public EditorMenuConfiguration Config
+        {
+            get { return config; }
+        }
+
         private bool visible = false;
 
         public Vector3 Position { get; private set; }
@@ -89,6 +94,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
 
             }
 
+            provider.Enabled = true;
         }
         public void Hide()
         {
@@ -97,6 +103,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
             {
                 e.Visible = false;
             }
+            provider.Enabled = false;
         }
 
         public void Toggle(Vector3 pos, Vector3 lookDir, Vector3 up)

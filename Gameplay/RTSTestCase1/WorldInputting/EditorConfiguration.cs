@@ -1,4 +1,5 @@
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Placing;
+using MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting;
 using MHGameWork.TheWizards.RTSTestCase1._Tests;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
@@ -10,10 +11,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
     {
         public EditorConfiguration()
         {
-            Menu = new EditorMenuConfiguration();
         }
-        public EditorMenuConfiguration Menu { get; private set; }
+        public EditorMenuConfiguration Menu { get; set; }
 
         public WorldPlacer Placer { get; set; }
+
+        public BoundingBoxSelectableProvider SelectableProvider { get; set; }
     }
 }

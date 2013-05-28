@@ -29,6 +29,7 @@ namespace MHGameWork.TheWizards.Engine
     ///                                  the objects are serialized to a format independent of the old gameplay dll
     ///                                  The new dll is loaded, and the old types are mapped onto the new types, new objects are created and the links are re-established
     /// 
+    /// Note: their is a concept hotloading and a concept reloading. Hotloading was something changes that has been removed now, only reloading is used, see wiki for more info
     /// </summary>
 
     public class TWEngine
@@ -111,7 +112,7 @@ namespace MHGameWork.TheWizards.Engine
             codeLoader.setNeedsReload();
             TW.Graphics.GameLoopEvent += gameLoopProfiled;
             gameplayAssemblyHotloader = new AssemblyHotloader(new FileInfo(GameplayDll));
-            gameplayAssemblyHotloader.Changed += () => codeLoader.setNeedsHotload();
+            gameplayAssemblyHotloader.Changed += () => codeLoader.setNeedsReload();
             debugTools = new EngineDebugTools(TW.Graphics.Form.GameLoopProfilingPoint);
 
         }

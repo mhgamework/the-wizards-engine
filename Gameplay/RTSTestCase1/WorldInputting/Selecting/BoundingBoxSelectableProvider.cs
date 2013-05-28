@@ -45,6 +45,22 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting
             onClick(selectable.Object);
         }
 
+        public void Render()
+        {
+            if (!Enabled) return;
+            foreach (var item in items)
+            {
+                var bb = getBoundingBox(item);
+
+                var c = new Color4(0, 1, 0);
+
+                if (IsTargeted(item))
+                    c = new Color4(1, 0, 0);
+
+                TW.Graphics.LineManager3D.AddBox(bb, c);
+            }
+        }
+
         private BoundingBoxSelectableProvider()
         {
             Enabled = true;

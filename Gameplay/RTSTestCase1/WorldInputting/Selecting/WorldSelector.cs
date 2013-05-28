@@ -47,6 +47,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting
             lastTargetedProvider.Select(lastSelectable);
         }
 
+        public void RenderSelection()
+        {
+            foreach (var p in providers)
+                p.Render();
+        }
+
         private IWorldSelectableProvider lastTargetedProvider = null;
         private Selectable lastSelectable;
         private void setTargeted(IWorldSelectableProvider provider, Selectable selectable)
@@ -97,6 +103,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting
 
         public void AddProvider(BoundingBoxSelectableProvider provider)
         {
+            if (providers.Contains(provider)) return;
             providers.Add(provider);
         }
     }

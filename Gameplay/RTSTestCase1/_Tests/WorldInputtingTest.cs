@@ -21,13 +21,16 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 {
+    /// <summary>
+    /// TODO: test this without the reference to Tree!
+    /// </summary>
     [TestFixture]
     [EngineTest]
     public class WorldInputtingTest
     {
         private TWEngine engine = EngineFactory.CreateEngine();
         private CommandFactory f;
-        private WorldInputtingSimulator inputtingSimulator;
+        EditorConfiguration controller = new EditorConfiguration();
 
         [SetUp]
         public void Setup()
@@ -40,13 +43,16 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         [Test]
         public void TestShizzle()
         {
-            inputtingSimulator = new WorldInputtingSimulator();
-            inputtingSimulator.Configuration.Menu.CreateItem("Rivers", enableRivers);
-            inputtingSimulator.Configuration.Menu.CreateItem("Walls", enableWalls);
-            inputtingSimulator.Configuration.Menu.CreateItem("Tree", enableRocks);
-            inputtingSimulator.Configuration.Menu.CreateItem("Rock", enableTrees);
+            
+            var menu = new EditorMenuConfiguration();
+            controller.Menu = menu;
 
-            engine.AddSimulator(inputtingSimulator);
+            menu.CreateItem("Rivers", enableRivers);
+            menu.CreateItem("Walls", enableWalls);
+            menu.CreateItem("Tree", enableRocks);
+            menu.CreateItem("Rock", enableTrees);
+            
+            engine.AddSimulator(new WorldInputtingSimulator(controller));
             engine.AddSimulator(new WorldRenderingSimulator());
 
         }
@@ -54,6 +60,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         [Test]
         public void TestWorldPlacer()
         {
+
             DI.Get<TestSceneBuilder>().Setup = delegate
                 {
                     var t = new Tree();
@@ -62,10 +69,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                     t.Position = new Vector3(2, 0, 2);
                 };
 
-            inputtingSimulator = new WorldInputtingSimulator();
             enableTrees();
 
-            engine.AddSimulator(inputtingSimulator);
+
+            engine.AddSimulator(new WorldInputtingSimulator(controller));
             engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
         }
@@ -82,7 +89,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                     deleteItem: t => TW.Data.RemoveObject((Tree) t)
                 );
 
-            inputtingSimulator.Configuration.Placer = placer;
+            controller.Placer = placer;
 
 
         }

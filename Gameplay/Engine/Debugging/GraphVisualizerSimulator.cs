@@ -72,7 +72,7 @@ namespace MHGameWork.TheWizards.Engine.Debugging
             if (!entities.ContainsKey(v))
             {
                 var ent = new Entity();
-                ent.Mesh = UtilityMeshes.CreateMeshWithText(0.2f, v.ModelObject.GetType().Name, TW.Graphics);
+                ent.Mesh = UtilityMeshes.CreateMeshWithText(0.4f, v.ModelObject.GetType().Name, TW.Graphics);
                 entities[v] = ent;
                 TW.Data.Get<Data>().OwnedEntities.Add(ent);
             }

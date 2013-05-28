@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using MHGameWork.TheWizards.Data;
@@ -103,6 +104,11 @@ namespace MHGameWork.TheWizards.Engine
             data.ErrorArea.Text = TW.Debug.LastException.Message;
             if (!string.IsNullOrEmpty(TW.Debug.LastExceptionExtra))
                 data.ErrorArea.Text += "\n" + TW.Debug.LastExceptionExtra;
+
+
+            //var trace = new StackTrace(TW.Debug.LastException);
+            //data.ErrorArea.Text += "\n" + trace.GetFrame(0).GetMethod() + "ello" ;
+            
 
             data.ErrorArea.Text += "\n" + new string(TW.Debug.LastException.StackTrace.TakeWhile(c => c != '\n').ToArray());
 

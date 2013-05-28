@@ -270,6 +270,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ObjectPartInterfaces.tt</DependentUpon>
     </Compile>
+    <Compile Include="RTSTestCase1\Goblins\CubedTerrain.cs" />
     <Compile Include="RTSTestCase1\Goblins\GoblinMoveTargetBehaviour.cs" />
     <Compile Include="RTSTestCase1\Goblins\GoblinMoveSourceBehaviour.cs" />
     <Compile Include="RTSTestCase1\Goblins\GoblinBehaviourSimulator.cs" />
@@ -280,6 +281,7 @@
     <Compile Include="RTSTestCase1\Goblins\GoblinFollowBehaviour.cs" />
     <Compile Include="RTSTestCase1\Goblins\ItemStorageSimulator.cs" />
     <Compile Include="RTSTestCase1\Goblins\StorageCrate.cs" />
+    <Compile Include="RTSTestCase1\Goblins\TerrainCube.cs" />
     <Compile Include="RTSTestCase1\Inputting\InputFactory.cs" />
     <Compile Include="RTSTestCase1\Inputting\InputSimulator.cs" />
     <Compile Include="RTSTestCase1\Inputting\UserButtonEvent.cs" />
@@ -324,6 +326,7 @@
     <Compile Include="RTSTestCase1\WorldInputting\EditorConfiguration.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\EditorMenuConfiguration.cs" />
     <Compile Include="RTSTestCase1\_Engine\UtilityMeshes.cs" />
+    <Compile Include="RTSTestCase1\_Tests\WorldBuilderTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\GoblinsTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\InputTest.cs" />

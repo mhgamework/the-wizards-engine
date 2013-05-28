@@ -40,6 +40,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Placing
             simulateRender();
         }
 
+        public void Disable()
+        {
+            selector.Enabled = false;
+        }
+
         private void simulateInput()
         {
             if (TW.Graphics.Mouse.RightMousePressed && selector.Targeted != null)
@@ -61,17 +66,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Placing
 
         private void simulateRender()
         {
-            foreach (var item in placer.GetItems())
-            {
-                var bb = placer.GetBoundingBox(item);
-
-                var c = new Color4(0, 1, 0);
-
-                if (selector.IsTargeted(item))
-                    c = new Color4(1, 0, 0);
-
-                TW.Graphics.LineManager3D.AddBox(bb, c);
-            }
+            
             var point = TW.Data.Get<CameraInfo>().GetGroundplanePosition();
             if (point.HasValue)
                 TW.Graphics.LineManager3D.AddCenteredBox(point.Value, 0.3f, new Color4(1, 1, 0));

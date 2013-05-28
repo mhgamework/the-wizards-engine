@@ -59,7 +59,7 @@ namespace MHGameWork.TheWizards.Engine
         private void loadTest(TWEngine engine)
         {
             engine.AddSimulator(new EngineUISimulator());
-            engine.AddSimulator(new GraphVisualizerSimulator());
+            //engine.AddSimulator(new GraphVisualizerSimulator());
             try
             {
                 var runner = new EngineTestRunner();
@@ -72,7 +72,7 @@ namespace MHGameWork.TheWizards.Engine
 
             loadBare(engine);
 
-            engine.AddSimulator(DI.Get<ModelObjectGraphSimulator>());
+            //engine.AddSimulator(DI.Get<ModelObjectGraphSimulator>());
             
         }
 
