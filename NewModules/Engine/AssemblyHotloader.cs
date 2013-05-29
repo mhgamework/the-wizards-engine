@@ -41,15 +41,22 @@ namespace MHGameWork.TheWizards.Engine
         /// <returns></returns>
         public Assembly LoadCopied()
         {
-            var tempFile = Path.GetTempFileName();
+            //var tempFile = Path.GetTempFileName();
+            //File.Copy(file.FullName, tempFile + ".dll", true);
+            //File.Copy(Path.ChangeExtension(file.FullName, "pdb"), tempFile + ".pdb", true);
 
-            File.Copy(file.FullName, tempFile + ".dll", true);
-            File.Copy(Path.ChangeExtension(file.FullName, "pdb"), tempFile + ".pdb", true);
-            //File.Delete(GameplayDll);
-            //File.Delete(Path.ChangeExtension(GameplayDll,"pdb"));
-            //File.Delete(Path.ChangeExtension(GameplayDll, "pssym"));
-            //File.Delete(Path.ChangeExtension(GameplayDll, "dll.config"));
-            return Assembly.LoadFile(tempFile + ".dll");
+            var srcDll = file.FullName;
+            var srcPdb = Path.ChangeExtension(file.FullName, "pdb");
+
+            var r = new Random();
+            var tempFolder = TWDir.Cache.CreateSubdirectory(r.Next().ToString());
+            var dll = tempFolder.FullName + "\\" + Path.GetFileName(srcDll);
+            var pdb = tempFolder.FullName + "\\" + Path.GetFileName(srcPdb);
+
+            File.Copy(srcDll,dll);
+            File.Copy(srcPdb,pdb);
+
+            return Assembly.LoadFile(dll);
         }
 
 
