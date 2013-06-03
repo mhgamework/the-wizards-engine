@@ -16,6 +16,7 @@ using MHGameWork.TheWizards.RTSTestCase1.Pickupping;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
 using NUnit.Framework;
+using Rhino.Mocks;
 using SlimDX;
 using StillDesign.PhysX;
 
@@ -23,7 +24,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 {
     [TestFixture]
     [EngineTest]
-    public class UserPlayerTest
+    public class PlayersTest
     {
         private TWEngine engine = EngineFactory.CreateEngine();
 
@@ -33,26 +34,56 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             TestUtilities.CreateGroundPlane();
         }
 
+
+        [Test]
+        public void TestSimplePlayerInputController()
+        {
+            // Autoassert example.
+            // the autoAssert object is injected as dependency (no static shizzle)
+            var p = MockRepository.GenerateMock<UserPlayer>();
+            p.Position = Vector3.Zero;
+
+            var c = new SimplePlayerInputController(p);
+            c.MoveForward();
+            c.ProcessMovement(1); // moves forward
+
+            // autoAssert.Equal(p.Position)
+
+            c.MoveForward();
+            c.MoveLeft();
+            c.ProcessMovement(1);
+            // autoAssert.Equal(p.Position)
+
+            c.MoveForward();
+            c.MoveLeft();
+            c.MoveRight();
+            c.MoveBackward();
+            c.Jump();
+            // autoAssert.Equal(p.Position)
+
+
+        }
+
         [Test]
         public void TestTargeting()
         {
             var drop = new DroppedThing()
             {
                 Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Wood },
-                
+
             };
             drop.Physical.WorldMatrix = Matrix.Translation(new Vector3(1, 1, 1));
-            var player =  new UserPlayer() { Position = new Vector3(3, 3, 3) };
+            var player = new UserPlayer() { Position = new Vector3(3, 3, 3) };
 
             engine.AddSimulator(new BasicSimulator(delegate
                 {
                     if (player.Targeted == null) return;
-                    player.Targeted.WorldMatrix = player.Targeted.WorldMatrix*
+                    player.Targeted.WorldMatrix = player.Targeted.WorldMatrix *
                                                   Matrix.Translation(TW.Graphics.Elapsed, 0, 0);
                 }));
-            
 
-            
+
+
 
             engine.AddSimulator(new PlayerTargetingSimulator());
             engine.AddSimulator(new UpdateSimulator());
@@ -93,7 +124,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             var drop = new DroppedThing()
             {
                 Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Wood },
-                
+
             };
             drop.Physical.WorldMatrix = Matrix.Translation(new Vector3(1, 1, 1));
             var player = new UserPlayer() { Position = new Vector3(3, 3, 3) };
@@ -124,9 +155,13 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         [Test]
         public void TestMovement()
         {
+
+            // Was the point of this?
             var player = new UserPlayer() { Position = new Vector3(3, 3, 3) };
 
-            engine.AddSimulator(new InputSimulator());  
+            DI.Set<IPlayerInputController>(new SimplePlayerInputController(TW.Data.Get<LocalGameData>().LocalPlayer));
+
+            engine.AddSimulator(new InputSimulator());
 
             engine.AddSimulator(new PlayerMovementSimulator());
             engine.AddSimulator(new PlayerCameraSimulator());

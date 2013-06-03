@@ -290,12 +290,14 @@
     <Compile Include="RTSTestCase1\Characters\SimpleRTSCharacter.cs" />
     <Compile Include="RTSTestCase1\Pickupping\PickupPhysXUpdater.cs" />
     <Compile Include="RTSTestCase1\Pickupping\PickupSimulator.cs" />
+    <Compile Include="RTSTestCase1\Players\IPlayerInputController.cs" />
     <Compile Include="RTSTestCase1\Players\LocalGameData.cs" />
     <Compile Include="RTSTestCase1\Players\PlayerCameraSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\PlayerMovementSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\PlayerPickupSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\PlayerTargetingSimulator.cs" />
     <Compile Include="RTSTestCase1\Players\PlayerUseSimulator.cs" />
+    <Compile Include="RTSTestCase1\Players\SimplePlayerInputController.cs" />
     <Compile Include="RTSTestCase1\Players\UserPlayer.cs" />
     <Compile Include="RTSTestCase1\TreeSharp\Action.cs" />
     <Compile Include="RTSTestCase1\TreeSharp\Composite.cs" />
@@ -330,7 +332,7 @@
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\GoblinsTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\InputTest.cs" />
-    <Compile Include="RTSTestCase1\_Tests\UserPlayerTest.cs" />
+    <Compile Include="RTSTestCase1\_Tests\PlayersTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\PickupTest.cs" />
     <Compile Include="RTSTestCase1\RTS\TestUtilities.cs" />
     <Compile Include="Navigation2D\Vertex2D.cs" />

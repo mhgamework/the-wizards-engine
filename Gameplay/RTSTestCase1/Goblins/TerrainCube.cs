@@ -29,6 +29,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
             var pos = Physical.GetPosition();
 
             var height = Elevated ? 20 : 0;
+            height = 20;
+            Physical.Visible = Elevated;
 
             Physical.ObjectMatrix = Matrix.Translation(0, -GetCellSize() / 2, 0);
 

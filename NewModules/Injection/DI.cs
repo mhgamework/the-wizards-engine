@@ -31,6 +31,7 @@ namespace MHGameWork.TheWizards
         public static void Set<T>(object obj)
         {
             if (!typeof (T).IsAssignableFrom(obj.GetType())) throw new InvalidOperationException();
+            items[typeof (T)] = obj;
         }
     }
 }
