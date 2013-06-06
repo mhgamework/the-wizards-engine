@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1.Inputting;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Players
 {
     /// <summary>
-    /// Responsible for processing local user movement input
-    /// Responsible for converting user input to movement commands
-    /// Responsible for processing movement commands to UserPlayer movement
+    /// Simulates the logic associated with the local player (so not remote players)
     /// 
-    /// Untested
+    /// 
+    /// Responsible for processing local user movement input
+    /// Responsible for updating targeted items in the world
+    /// 
     /// </summary>
-    public class PlayerMovementSimulator : ISimulator
+    public class UserPlayerSimulator : ISimulator
     {
         public UserButtonEvent Forward;
         public UserButtonEvent Backward;
@@ -25,33 +27,49 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
 
         private IPlayerInputController playerController = DI.Get<IPlayerInputController>();
 
+        private SimpleUserTargeter targeter = new SimpleUserTargeter();
 
-        public PlayerMovementSimulator()
+        public UserPlayerSimulator()
         {
-            var buttonFactory=TW.Data.Get<InputFactory>();
+            var buttonFactory = TW.Data.Get<InputFactory>();
 
             Forward = buttonFactory.GetButton("moveForward");
             Backward = buttonFactory.GetButton("moveBackward");
             StrafeLeft = buttonFactory.GetButton("moveStrafeLeft");
             StrafeRight = buttonFactory.GetButton("moveStrafeRight");
             Jump = buttonFactory.GetButton("moveJump");
-            
+
         }
 
         public void Simulate()
         {
-            if (Forward.Down) playerController. MoveForward();
+            simulateMovement();
+            updateTargeted();
+        }
+
+        private void updateTargeted()
+        {
+            //TODO: fix the foreach because wtf is this
+            foreach (var pl in TW.Data.Objects.Where(o => o is UserPlayer).Cast<UserPlayer>().ToArray())
+            {
+                var r = pl.GetTargetingRay();
+                var obj = TW.Data.Get<Engine.WorldRendering.World>().Raycast(r);
+                targeter.Targeted = obj.IsHit ? (Entity)obj.Object : null;
+                if (obj.IsHit)
+                    targeter.TargetPoint = r.GetPoint(obj.Distance);
+            }
+
+        }
+
+        private void simulateMovement()
+        {
+            if (Forward.Down) playerController.MoveForward();
             if (Backward.Down) playerController.MoveBackward();
             if (StrafeLeft.Down) playerController.MoveLeft();
             if (StrafeRight.Down) playerController.MoveRight();
             if (Jump.Pressed) playerController.Jump();
 
             playerController.ProcessMovement(TW.Graphics.Elapsed);
-
         }
-
-            
-
-       
     }
 }

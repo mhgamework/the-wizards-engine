@@ -5,6 +5,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
     /// <summary>
     /// Transforming user input into player movement
     /// Relies on TW.Data domain
+    /// TODO: rename to playermovement?
+    /// Also: replace userplayer with interface??
     /// </summary>
     public class SimplePlayerInputController : IPlayerInputController
     {

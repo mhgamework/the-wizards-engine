@@ -18,6 +18,7 @@ namespace MHGameWork.TheWizards.Simulators
     /// <summary>
     /// This class is responsible for simulating the local player input
     /// TODO: split
+    /// Uses Physx!!
     /// </summary>
     public class LocalPlayerSimulator : ISimulator
     {

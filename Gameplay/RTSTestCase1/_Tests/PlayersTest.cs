@@ -10,6 +10,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.RTS;
+using MHGameWork.TheWizards.RTSTestCase1.Animation;
 using MHGameWork.TheWizards.RTSTestCase1.Inputting;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
 using MHGameWork.TheWizards.RTSTestCase1.Pickupping;
@@ -18,6 +19,7 @@ using MHGameWork.TheWizards.RTSTestCase1.Rendering;
 using NUnit.Framework;
 using Rhino.Mocks;
 using SlimDX;
+using SlimDX.DirectInput;
 using StillDesign.PhysX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1._Tests
@@ -65,32 +67,84 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         }
 
         [Test]
-        public void TestTargeting()
+        public void TestGroundAttack()
         {
-            var drop = new DroppedThing()
-            {
-                Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Wood },
+            //TODO: try use windsor here
+            // Edit i know i suggested windsor, but now i see the custom service implementation so i dont think
+            //    its usefull anymore
+            var targeter = new SimpleUserTargeter(); // TODO: mock here?
+            targeter.Targeted = new object();
+            targeter.TargetPoint = new Vector3(2, 0, 2);
 
-            };
-            drop.Physical.WorldMatrix = Matrix.Translation(new Vector3(1, 1, 1));
-            var player = new UserPlayer() { Position = new Vector3(3, 3, 3) };
+
+            var rocks = new List<IRock>();
+
+            var rockFactory = MockRepository.GenerateStub<IRockCreator>();
+            rockFactory.Stub(f => f.CreateRock()).Do(new Func<IRock>(
+                delegate
+                {
+                    var ret = MockRepository.GenerateStub<IRock>();
+                    rocks.Add(ret);
+                    return ret;
+                }));
+
+            rockFactory.Stub(f => f.DestroyRock(null)).IgnoreArguments().Do(new Action<IRock>(delegate(IRock r)
+                {
+                    rocks.Remove(r);
+                }));
+
+
+            var attack = new PlayerGroundAttacker(targeter, rockFactory, new SimpleAnimationProvider());
+
+
 
             engine.AddSimulator(new BasicSimulator(delegate
                 {
-                    if (player.Targeted == null) return;
-                    player.Targeted.WorldMatrix = player.Targeted.WorldMatrix *
-                                                  Matrix.Translation(TW.Graphics.Elapsed, 0, 0);
+                    if (TW.Graphics.Keyboard.IsKeyPressed(Key.F))
+                        attack.Attack();
+
+                    attack.Update(TW.Graphics.Elapsed);
+                    attack.Render(TW.Graphics.LineManager3D);
+
+                    foreach (var r in rocks)
+                    {
+                        TW.Graphics.LineManager3D.AddCenteredBox(r.Position, 1, new Color4(0.5f, 0.5f, 0));
+                    }
                 }));
 
 
 
+        }
 
-            engine.AddSimulator(new PlayerTargetingSimulator());
-            engine.AddSimulator(new UpdateSimulator());
-            engine.AddSimulator(new PhysicalSimulator());
-            engine.AddSimulator(new RTSEntitySimulator());
+        [Test]
+        public void TestTargeting()
+        {
+            //var drop = new DroppedThing()
+            //{
+            //    Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Wood },
 
-            engine.AddSimulator(new WorldRenderingSimulator());
+            //};
+            //drop.Physical.WorldMatrix = Matrix.Translation(new Vector3(1, 1, 1));
+            //var player = new UserPlayer() { Position = new Vector3(3, 3, 3) };
+
+            //engine.AddSimulator(new BasicSimulator(delegate
+            //    {
+            //        if (player.Targeted == null) return;
+            //        player.Targeted.WorldMatrix = player.Targeted.WorldMatrix *
+            //                                      Matrix.Translation(TW.Graphics.Elapsed, 0, 0);
+            //    }));
+
+
+
+
+            //engine.AddSimulator(new PlayerTargetingSimulator());
+            //engine.AddSimulator(new UpdateSimulator());
+            //engine.AddSimulator(new PhysicalSimulator());
+            //engine.AddSimulator(new RTSEntitySimulator());
+
+            //engine.AddSimulator(new WorldRenderingSimulator());
+
+            throw new NotImplementedException();
         }
 
         [Test]
@@ -139,7 +193,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
 
 
-            engine.AddSimulator(new PlayerTargetingSimulator());
+            engine.AddSimulator(new UserPlayerSimulator());
             engine.AddSimulator(new PlayerPickupSimulator());
 
             engine.AddSimulator(new PickupSimulator());
@@ -163,7 +217,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
             engine.AddSimulator(new InputSimulator());
 
-            engine.AddSimulator(new PlayerMovementSimulator());
+            engine.AddSimulator(new UserPlayerSimulator());
             engine.AddSimulator(new PlayerCameraSimulator());
 
             engine.AddSimulator(new WorldRenderingSimulator());
