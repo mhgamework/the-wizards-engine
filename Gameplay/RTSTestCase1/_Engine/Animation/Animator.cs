@@ -134,6 +134,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Animation
         private class ActionTrack : ITrack
         {
             private readonly AnimationDescription.TimedAction timedAction;
+            private float startTime;
 
             public ActionTrack(AnimationDescription.TimedAction timedAction)
             {
@@ -143,10 +144,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Animation
             public bool Complete { get; private set; }
             public void Start(float time)
             {
+                startTime = time;
             }
 
             public void SetTime(float time)
             {
+                time -= startTime;
                 if (time < timedAction.Time) return;
 
                 timedAction.Action();
