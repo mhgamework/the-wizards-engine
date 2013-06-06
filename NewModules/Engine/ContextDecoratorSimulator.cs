@@ -4,7 +4,7 @@ using MHGameWork.TheWizards.Debugging;
 namespace MHGameWork.TheWizards.Engine
 {
     /// <summary>
-    /// Decorates a simulator to make it show up the the profiler
+    /// Decorates a simulator to make it run in the W context, and catches all exceptions
     /// </summary>
     public class ContextDecoratorSimulator : ISimulator
     {

@@ -67,6 +67,7 @@ namespace MHGameWork.TheWizards.Engine
             }
             catch (Exception ex)
             {
+                //TODO: this does not work since the error is caught in the NUnit Test Runner!!
                 DI.Get<IErrorLogger>().Log(ex,"When starting test (EngineInitializer)");
             }
 
