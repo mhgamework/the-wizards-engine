@@ -336,6 +336,7 @@
     <Compile Include="RTSTestCase1\WorldInputting\EditorMenuConfiguration.cs" />
     <Compile Include="RTSTestCase1\_Engine\UtilityMeshes.cs" />
     <Compile Include="RTSTestCase1\_Tests\AnimationTest.cs" />
+    <Compile Include="RTSTestCase1\_Tests\RTSTestCase1Test.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldBuilderTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\GoblinsTest.cs" />
@@ -535,6 +536,7 @@
     <Compile Include="_XNA\World\ServerWorld.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Animation\_doc.txt" />
     <Content Include="Building\_doc.txt" />
     <Content Include="Engine\engine_architecture-1.jpg" />
     <Content Include="Engine\_Core\_doc.txt" />
