@@ -1,4 +1,6 @@
-﻿using SlimDX;
+﻿using MHGameWork.TheWizards.MathExtra;
+using SlimDX;
+using Matrix = Microsoft.Xna.Framework.Matrix;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Players
 {
@@ -6,7 +8,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
     /// Transforming user input into player movement
     /// Relies on TW.Data domain
     /// TODO: rename to playermovement?
-    /// Also: replace userplayer with interface??
+    /// Also: replace userplayer with interface?? (or even more, a factory/getter?)
     /// </summary>
     public class SimplePlayerInputController : IPlayerInputController
     {
@@ -45,6 +47,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
 
         public void ProcessMovement(float elapsed)
         {
+            delta = Vector3.TransformNormal(delta,
+                Matrix.CreateFromQuaternion( Functions.CreateFromLookDir(player.LookDirection.xna())).dx() );
+
             player.Position += delta * elapsed;
             player.Position = player.Position.TakeXZ().ToXZ(1.5f);
             delta = new Vector3();

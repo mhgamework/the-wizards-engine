@@ -101,7 +101,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             engine.AddSimulator(new BasicSimulator(delegate
                 {
                     if (TW.Graphics.Keyboard.IsKeyPressed(Key.F))
-                        attack.Attack();
+                        attack.Attack(1);
 
                     attack.Update(TW.Graphics.Elapsed);
                     attack.Render(TW.Graphics.LineManager3D);
@@ -175,6 +175,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         [Test]
         public void TestAll()
         {
+            //Obsolete! 
+
             var drop = new DroppedThing()
             {
                 Thing = new Thing() { Type = TW.Data.Get<ResourceFactory>().Wood },
@@ -193,7 +195,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
 
 
-            engine.AddSimulator(new UserPlayerSimulator());
+            //engine.AddSimulator(new UserPlayerSimulator());
             engine.AddSimulator(new PlayerPickupSimulator());
 
             engine.AddSimulator(new PickupSimulator());
@@ -205,23 +207,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             engine.AddSimulator(new PhysXDebugRendererSimulator());
         }
 
-
-        [Test]
-        public void TestMovement()
-        {
-
-            // Was the point of this?
-            var player = new UserPlayer() { Position = new Vector3(3, 3, 3) };
-
-            DI.Set<IPlayerInputController>(new SimplePlayerInputController(TW.Data.Get<LocalGameData>().LocalPlayer));
-
-            engine.AddSimulator(new InputSimulator());
-
-            engine.AddSimulator(new UserPlayerSimulator());
-            engine.AddSimulator(new PlayerCameraSimulator());
-
-            engine.AddSimulator(new WorldRenderingSimulator());
-        }
 
         [ModelObjectChanged]
         public class PickupTest : EngineModelObject, IUpdatableObject

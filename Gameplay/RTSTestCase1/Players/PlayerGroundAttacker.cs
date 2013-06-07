@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.RTSTestCase1.Animation;
 using SlimDX;
@@ -20,6 +23,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
         private IRockCreator rockCreator;
         private IAnimator animator;
 
+        public IDamageApplier DamageApplier { get; set; }
+        public IWorldLocator WorldLocator { get; set; }
+
         public PlayerGroundAttacker(IUserTargeter targeter, IRockCreator rockCreator, IAnimationProvider animationProvider)
         {
             this.targeter = targeter;
@@ -27,29 +33,47 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
             animator = animationProvider.CreateAnimator();
         }
 
-        public void Attack()
+        public void Attack(float strength)
         {
             if (targeter.Targeted == null) return;
 
             var point = targeter.TargetPoint;
             point.Y = 0;
 
-            emergeRockAt(point);
+            emergeRockAt(point,strength);
 
         }
 
-        private void emergeRockAt(Vector3 point)
+        private void emergeRockAt(Vector3 point, float strength)
         {
             var rock = rockCreator.CreateRock();
 
             var desc = animator.CreateDescription();
             var prop = desc.CreateProperty(() => rock.Position, v => rock.Position = v);
             prop.AddKey(0, point);
-            prop.AddKey(0.1f, point + Vector3.UnitY);
+            prop.AddKey(0.1f, point + Vector3.UnitY * strength);
+            prop.AddKey(0.2f, point + Vector3.UnitY * strength);
+            prop.AddKey(0.25f, point + Vector3.UnitY * strength);
+            prop.AddKey(0.35f, point - Vector3.UnitY * 1.001f);
+
+            
+            desc.AddAction(0.1f, delegate
+                {
+                    foreach (var o in getObjectsHitByRock(point).ToArray<object>())
+                    {
+                        DamageApplier.ApplyDamage(o);
+                    }
+                });
 
             desc.AddAction(2, () => rockCreator.DestroyRock(rock));
 
             animator.Run(desc);
+        }
+
+        private IEnumerable<object> getObjectsHitByRock(Vector3 point)
+        {
+            //TODO: specify by exact rock collision.
+            return WorldLocator.AtPosition(point, 1f);
         }
 
         public void Update(float elapsed)
@@ -65,6 +89,19 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
 
             l.AddCenteredBox(point, 0.2f, new Color4(1, 1, 0));
         }
+    }
+
+    public interface IWorldLocator
+    {
+        IEnumerable<object> AtPosition(Vector3 point, float radius);
+    }
+
+    /// <summary>
+    /// Use RTS scope interface IWorldObject?
+    /// </summary>
+    public interface IDamageApplier
+    {
+        void ApplyDamage(object o);
     }
 
 

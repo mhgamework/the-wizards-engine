@@ -1,19 +1,28 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Debugging;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.PhysX;
+using MHGameWork.TheWizards.Engine.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.RTS;
+using MHGameWork.TheWizards.RTSTestCase1.Animation;
+using MHGameWork.TheWizards.RTSTestCase1.Goblins;
+using MHGameWork.TheWizards.RTSTestCase1.Inputting;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
 using MHGameWork.TheWizards.RTSTestCase1.Pickupping;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
 using NUnit.Framework;
 using SlimDX;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 {
@@ -38,8 +47,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             }
             catch (Exception ex)
             {
-                DI.Get<IErrorLogger>().Log(ex,"Test Setup");
-            }   
+                DI.Get<IErrorLogger>().Log(ex, "Test Setup");
+            }
         }
 
         [Test]
@@ -53,16 +62,67 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                         .Where(o => typeof(ISimulator).IsAssignableFrom(o))
                         .WithServiceAllInterfaces().WithServiceSelf()
                         );
-            c.Register(
-                Classes.FromThisAssembly()
-                       .Pick()
-                       .WithServiceDefaultInterfaces());
+            //c.Register(
+            //    Classes.FromThisAssembly().Pick().WithServiceSelf().WithServiceAllInterfaces()
+            //    //.Where(o => typeof(ISimulator).IsAssignableFrom(o)).WithServiceSelf()
+            //            );
+            c.Register(Component.For<IPlayerInputController>().ImplementedBy<SimplePlayerInputController>());
+            c.Register(Component.For<UserPlayer>().Instance(TW.Data.Get<LocalGameData>().LocalPlayer));
+            c.Register(Component.For<PlayerGroundAttacker>());
+            c.Register(Component.For<IAnimationProvider>().ImplementedBy<SimpleAnimationProvider>());
 
+            c.Register(Component.For<IWorldLocator>().ImplementedBy<SimpleWorldLocator>());
+            c.Register(Component.For<IDamageApplier>().ImplementedBy<SimpleDamageApplier>());
+
+            engine.AddSimulator(c.Resolve<InputSimulator>());
             engine.AddSimulator(c.Resolve<UserPlayerSimulator>());
             engine.AddSimulator(c.Resolve<PlayerCameraSimulator>());
             engine.AddSimulator(c.Resolve<PhysicalSimulator>());
             engine.AddSimulator(c.Resolve<WorldRenderingSimulator>());
+
+
+
+
+
+
+
+
+
+
+
+
+            DI.Get<TestSceneBuilder>().Setup = delegate
+                {
+                    TestUtilities.CreateGroundPlane();
+
+                    var g = new Goblin();
+                    g.Physical.WorldMatrix = Matrix.Translation(3, 0, 3);
+                };
+
+
         }
 
+    }
+
+    public class SimpleWorldLocator : IWorldLocator
+    {
+        public IEnumerable<object> AtPosition(Vector3 point, float radius)
+        {
+            return
+                TW.Data.Objects.OfType<IPhysical>()
+                  .Where(p => Vector3.Distance(p.Physical.GetPosition(), point) < radius);
+        }
+    }
+
+    public class SimpleDamageApplier : IDamageApplier
+    {
+        public void ApplyDamage(object o)
+        {
+            if (o is IPhysical)
+            {
+                ((IPhysical)o).Physical.Visible = false;
+                TW.Data.RemoveObject((IModelObject) o);
+            }
+        }
     }
 }

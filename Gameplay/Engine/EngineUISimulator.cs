@@ -89,32 +89,31 @@ namespace MHGameWork.TheWizards.Engine
 
         private void updateErrorArea()
         {
-            if (data.ErrorArea == null)
-            {
-                data.ErrorArea = new Textarea()
-                    {
-                        Position = new Vector2(10, 600 - 10 - 60),
-                        Size = new Vector2(800 - 10 * 2, 60),
-                        BackgroundColor = new Color4(1, 1, 0, 0)
-                    };
-            }
+            if (data.ErrorArea == null) { data.ErrorArea = new Textarea(); }
+           
+
 
             data.ErrorArea.Visible = TW.Debug.LastException != null;
             if (TW.Debug.LastException == null) return;
-            data.ErrorArea.Text = TW.Debug.LastException.Message;
+            data.ErrorArea.Text = TW.Debug.LastException.GetType().Name + " - " + TW.Debug.LastException.Message;
             if (!string.IsNullOrEmpty(TW.Debug.LastExceptionExtra))
                 data.ErrorArea.Text += "\n" + TW.Debug.LastExceptionExtra;
 
 
             //var trace = new StackTrace(TW.Debug.LastException);
             //data.ErrorArea.Text += "\n" + trace.GetFrame(0).GetMethod() + "ello" ;
-            
+
 
             data.ErrorArea.Text += "\n" + new string(TW.Debug.LastException.StackTrace.TakeWhile(c => c != '\n').ToArray());
 
             // Hack to stop serializer from failing!
             data.ErrorArea.Text += "\n";
 
+            if (TW.Debug.LastException.InnerException != null)
+                data.ErrorArea.Text += TW.Debug.LastException.InnerException.GetType().Name + " - " + TW.Debug.LastException.InnerException.Message;
+
+            var wrappedLines = Wrap(data.ErrorArea.Text, 100);
+            data.ErrorArea.Text = wrappedLines.Aggregate("", (agg, part) => agg + part + "\n");
 
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.L))
             {
@@ -122,6 +121,64 @@ namespace MHGameWork.TheWizards.Engine
                 attacher.SelectExceptionLine(TW.Debug.LastException);
             }
 
+            var t = data.ErrorArea;
+            var height = wrappedLines.Count * t.FontSize*2;
+            
+            t.Position = new Vector2(10, 600 - 10 - height);
+            t.Size = new Vector2(800 - 10 * 2, height);
+            t.BackgroundColor = new Color4(1, 1, 1,1);
+
+        }
+
+
+        /// <summary>
+        /// Returns a list of strings no larger than the max length sent in.
+        /// </summary>
+        /// <remarks>useful function used to wrap string text for reporting.</remarks>
+        /// <param name="text">Text to be wrapped into of List of Strings</param>
+        /// <param name="maxLength">Max length you want each line to be.</param>
+        /// <returns>List of Strings</returns>
+        public static List<String> Wrap(string text, int maxLength)
+        {
+            // Return empty list of strings if the text was empty
+            if (text.Length == 0) return new List<string>();
+            var lines = new List<string>();
+
+            var oriLines = text.Split('\n');
+            
+            foreach (var oriLine in oriLines)
+            {
+
+
+
+                var words = oriLine.Split(' ');
+                
+                var currentLine = "";
+
+                foreach (var currentWord in words)
+                {
+
+                    if ((currentLine.Length > maxLength) ||
+                        ((currentLine.Length + currentWord.Length) > maxLength))
+                    {
+                        lines.Add(currentLine);
+                        currentLine = "";
+                    }
+
+                    if (currentLine.Length > 0)
+                        currentLine += " " + currentWord;
+                    else
+                        currentLine += currentWord;
+
+                }
+
+                if (currentLine.Length > 0)
+                    lines.Add(currentLine);
+
+            }
+
+
+            return lines;
         }
 
 
