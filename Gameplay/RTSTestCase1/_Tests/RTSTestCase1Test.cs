@@ -76,17 +76,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
             engine.AddSimulator(c.Resolve<InputSimulator>());
             engine.AddSimulator(c.Resolve<UserPlayerSimulator>());
+            engine.AddSimulator(c.Resolve<GoblinAttackSimulator>());
+
             engine.AddSimulator(c.Resolve<PlayerCameraSimulator>());
             engine.AddSimulator(c.Resolve<PhysicalSimulator>());
             engine.AddSimulator(c.Resolve<WorldRenderingSimulator>());
-
-
-
-
-
-
-
-
 
 
 
@@ -102,6 +96,20 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
         }
 
+    }
+
+    public class GoblinAttackSimulator : ISimulator
+    {
+        public void Simulate()
+        {
+            foreach (var g in TW.Data.Objects.OfType<Goblin>())
+            {
+                if (Vector3.Distance(g.Physical.GetPosition().TakeXZ().ToXZ(0)
+                    , TW.Data.Get<LocalGameData>().LocalPlayer.Position.TakeXZ().ToXZ(0)) 
+                    < 1)
+                    TW.Data.Get<LocalGameData>().LocalPlayer.Position = new Vector3();
+            }
+        }
     }
 
     public class SimpleWorldLocator : IWorldLocator
@@ -121,7 +129,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             if (o is IPhysical)
             {
                 ((IPhysical)o).Physical.Visible = false;
-                TW.Data.RemoveObject((IModelObject) o);
+                TW.Data.RemoveObject((IModelObject)o);
             }
         }
     }
