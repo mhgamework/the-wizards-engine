@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Debugging;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine.Diagnostics;
 using MHGameWork.TheWizards.Engine.Diagnostics.Profiling;
@@ -40,6 +41,8 @@ namespace MHGameWork.TheWizards.Engine
             codeLoader = new CodeLoader(this);
             TraceLogger = new EngineTraceLogger();
             EngineErrorLogger = new EngineErrorLogger();
+            // WARNING: BUG: Note: this is somewhat fishy!!!
+            DI.Set<IErrorLogger>(EngineErrorLogger);
         }
 
         public EngineErrorLogger EngineErrorLogger { get; private set; }
