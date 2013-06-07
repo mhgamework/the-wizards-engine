@@ -17,7 +17,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
     /// Responsible for updating targeted items in the world
     /// 
     /// </summary>
-    public class UserPlayerSimulator : ISimulator
+    public class UserPlayerSimulator : ISimulator, IUserTargeter
     {
         public UserButtonEvent Forward;
         public UserButtonEvent Backward;
@@ -26,8 +26,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
         public UserButtonEvent Jump;
 
         private IPlayerInputController playerController = DI.Get<IPlayerInputController>();
-
-        private SimpleUserTargeter targeter = new SimpleUserTargeter();
 
         public UserPlayerSimulator()
         {
@@ -54,9 +52,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
             {
                 var r = pl.GetTargetingRay();
                 var obj = TW.Data.Get<Engine.WorldRendering.World>().Raycast(r);
-                targeter.Targeted = obj.IsHit ? (Entity)obj.Object : null;
+                targeted = obj.IsHit ? (Entity)obj.Object : null;
                 if (obj.IsHit)
-                    targeter.TargetPoint = r.GetPoint(obj.Distance);
+                    targetPoint = r.GetPoint(obj.Distance);
             }
 
         }
@@ -71,5 +69,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
 
             playerController.ProcessMovement(TW.Graphics.Elapsed);
         }
+
+
+        private object targeted;
+        object IUserTargeter.Targeted { get { return targeted; } }
+
+        private Vector3 targetPoint;
+        Vector3 IUserTargeter.TargetPoint { get { return targetPoint; } }
     }
 }

@@ -72,9 +72,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             //TODO: try use windsor here
             // Edit i know i suggested windsor, but now i see the custom service implementation so i dont think
             //    its usefull anymore
-            var targeter = new SimpleUserTargeter(); // TODO: mock here?
-            targeter.Targeted = new object();
-            targeter.TargetPoint = new Vector3(2, 0, 2);
+            var targeter = MockRepository.GenerateStub<IUserTargeter>(); // TODO: mock here?
+            targeter.Stub(o => o.Targeted).Return(new object());
+            targeter.Stub(o => o.TargetPoint).Return(new Vector3(2, 0, 2));
 
 
             var rocks = new List<IRock>();
