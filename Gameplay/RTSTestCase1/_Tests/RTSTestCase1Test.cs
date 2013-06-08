@@ -90,16 +90,38 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
             DI.Get<TestSceneBuilder>().Setup = delegate
                 {
-                    TestUtilities.CreateGroundPlane();
+                    new Groundplane();
 
                     var g = new Goblin();
                     g.Physical.WorldMatrix = Matrix.Translation(3, 0, 3);
+
+                    var d = new DroppedThing();
+                    d.Thing = new Thing() { Type = ResourceFactory.Get.Wood };
+                    d.Item.Free = true;
+                    d.Physical.WorldMatrix = Matrix.Translation(5, 0, 5);
                 };
 
 
         }
 
+        [ModelObjectChanged]
+        public class Groundplane : EngineModelObject, IPhysical
+        {
+            public Groundplane()
+            {
+                Physical = new Physical();
+            }
+            public Physical Physical { get; set; }
+            public void UpdatePhysical()
+            {
+                Physical.Mesh = TW.Assets.LoadMesh("Core\\Building\\Plane");
+                Physical.ObjectMatrix = Matrix.Scaling(1000, 1000, 1000);
+                Physical.WorldMatrix = Matrix.Identity;
+            }
+        }
     }
+
+
 
     public class SimpleWorldLocator : IWorldLocator
     {
@@ -115,7 +137,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
     {
         public void ApplyDamage(object o)
         {
-            if (o is IPhysical)
+            if (o is Goblin)
             {
                 ((IPhysical)o).Physical.Visible = false;
                 TW.Data.RemoveObject((IModelObject)o);

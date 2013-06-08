@@ -3,6 +3,7 @@ using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1.Inputting;
+using MHGameWork.TheWizards.RTSTestCase1.Items;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
 using SlimDX;
 
@@ -24,6 +25,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
         public UserButtonEvent StrafeRight;
         public UserButtonEvent Jump;
         public UserButtonEvent Attack;
+        public UserButtonEvent Use;
 
         private IPlayerMovementController playerController;
 
@@ -44,6 +46,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
             StrafeRight = buttonFactory.GetButton("moveStrafeRight");
             Jump = buttonFactory.GetButton("moveJump");
             Attack = buttonFactory.GetButton("attack");
+            Use = buttonFactory.GetButton("use");
 
         }
 
@@ -55,6 +58,36 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
             updateTargeted();
 
             simulateAttacks();
+
+            simulateBuilding();
+            simulatePickup();
+
+        }
+
+        private void simulateBuilding()
+        {
+        }
+
+        private void simulatePickup()
+        {
+            if (!Use.Pressed) return;
+            var pl = TW.Data.Get<LocalGameData>().LocalPlayer;
+            if (pl.ItemStorage.IsFull)
+            {
+                var i = pl.ItemStorage.Items[0];
+                pl.ItemStorage.Items.Remove(i);
+                i.Item.Free = true;
+            }
+            else
+            {
+                var i = targeted as DroppedThing;
+                if (i != null && i.Item.Free)
+                {
+                    i.Item.Free = false;
+                    pl.ItemStorage.Items.Add(i);
+                }
+            }
+
         }
 
         private static void updateLookDirection()
@@ -85,7 +118,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
             {
                 var r = pl.GetTargetingRay();
                 var obj = TW.Data.Get<Engine.WorldRendering.World>().Raycast(r);
-                targeted = obj.IsHit ? (Entity)obj.Object : null;
+                targeted = obj.IsHit ? obj.Object : null;
                 if (obj.IsHit)
                     targetPoint = r.GetPoint(obj.Distance);
             }

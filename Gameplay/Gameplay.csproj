@@ -263,9 +263,11 @@
     <Compile Include="RTSTestCase1\CommandFactory.cs" />
     <Compile Include="RTSTestCase1\Goblins\Cart.cs" />
     <Compile Include="RTSTestCase1\Goblins\Components\CommandHolderPart.cs" />
-    <Compile Include="RTSTestCase1\Goblins\Components\IObjectPart.cs" />
-    <Compile Include="RTSTestCase1\Goblins\Components\ItemStoragePart.cs" />
-    <Compile Include="RTSTestCase1\Goblins\Components\ObjectPartInterfaces.cs">
+    <Compile Include="RTSTestCase1\Items\IItem.cs" />
+    <Compile Include="RTSTestCase1\Items\CartHolderPart.cs" />
+    <Compile Include="RTSTestCase1\_Engine\ObjectParts\IObjectPart.cs" />
+    <Compile Include="RTSTestCase1\Items\ItemStoragePart.cs" />
+    <Compile Include="RTSTestCase1\_Engine\ObjectParts\ObjectPartInterfaces.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ObjectPartInterfaces.tt</DependentUpon>
@@ -279,8 +281,7 @@
     <Compile Include="RTSTestCase1\Goblins\GoblinCommandsSimulator.cs" />
     <Compile Include="RTSTestCase1\Goblins\GoblinCommandType.cs" />
     <Compile Include="RTSTestCase1\Goblins\GoblinFollowBehaviour.cs" />
-    <Compile Include="RTSTestCase1\Goblins\ItemStorageSimulator.cs" />
-    <Compile Include="RTSTestCase1\Goblins\StorageCrate.cs" />
+    <Compile Include="RTSTestCase1\Items\StorageCrate.cs" />
     <Compile Include="RTSTestCase1\Goblins\TerrainCube.cs" />
     <Compile Include="RTSTestCase1\Inputting\InputFactory.cs" />
     <Compile Include="RTSTestCase1\Simulators\AnimationSimulator.cs" />
@@ -371,7 +372,6 @@
     <Compile Include="RTSTestCase1\_Tests\InputTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\PlayersTest.cs" />
     <Compile Include="RTSTestCase1\Rendering\CrystalGlowSimulator.cs" />
-    <Compile Include="RTSTestCase1\Rendering\CrystalRenderData.cs" />
     <Compile Include="RTSTestCase1\Rendering\MachineRenderData.cs" />
     <Compile Include="RTSTestCase1\_Tests\EnergyFlowTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\MagicTest.cs" />
@@ -579,7 +579,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="RTSTestCase1\Goblins\Components\ObjectPartInterfaces.tt">
+    <None Include="RTSTestCase1\_Engine\ObjectParts\ObjectPartInterfaces.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ObjectPartInterfaces.cs</LastGenOutput>
     </None>

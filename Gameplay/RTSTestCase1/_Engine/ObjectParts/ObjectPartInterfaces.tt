@@ -22,11 +22,11 @@
   var project = visualStudio.Solution.FindProjectItem(this.Host.TemplateFile)
                                      .ContainingProject as EnvDTE.Project;
 
-	var	tNamespace = "MHGameWork.TheWizards.RTSTestCase1.Goblins.Components";
+	var	tNamespace = "MHGameWork.TheWizards.RTSTestCase1";
 
 	
-
 	
+
 #>
 // This is the output code from your template
 // you only get syntax-highlighting here - not intellisense
@@ -34,7 +34,11 @@ namespace <#=tNamespace#>{
   
        <#
 		var mine = GetNamespace(project, tNamespace);
-            foreach (var source in mine.Members.OfType<EnvDTE.CodeClass>())
+
+		foreach (var nSpace in GetNamespacesAndChildren(mine))
+        {
+
+            foreach (var source in nSpace.Members.OfType<EnvDTE.CodeClass>())
             {		
                 var interfaces = source.ImplementedInterfaces.OfType<EnvDTE.CodeInterface>().FirstOrDefault(i=>i.Name == "IObjectPart");
 				if (interfaces == null) continue;
@@ -49,6 +53,7 @@ namespace <#=tNamespace#>{
 		<#
             }
 
+        }
 		#>
 }
  
@@ -67,6 +72,16 @@ namespace <#=tNamespace#>{
 			current = current.Members.OfType<EnvDTE.CodeNamespace>().First(n=>n.Name == part);		
 		}
 		return current;
+	}
+
+	IEnumerable<EnvDTE.CodeNamespace> GetNamespacesAndChildren(EnvDTE.CodeNamespace parent)
+	{
+		yield return parent;
+		foreach ( var child in parent.Members.OfType<EnvDTE.CodeNamespace>() )
+        {
+			foreach (var el in GetNamespacesAndChildren(child))
+				yield return el;
+        }
 	}
 	
 #>

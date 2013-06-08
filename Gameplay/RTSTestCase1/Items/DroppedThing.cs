@@ -9,12 +9,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Items
     /// Should be renamed Item? should be a component instead of an imodelobject?
     /// </summary>
     [ModelObjectChanged]
-    public class DroppedThing : EngineModelObject,IPhysical
+    public class DroppedThing : EngineModelObject,IPhysical,IItem
     {
         public DroppedThing()
         {
             Physical = new Physical();
-            Free = true;
+            Item = new ItemPart();
         }
 
         public Thing Thing { get; set; }
@@ -33,9 +33,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Items
 
         }
 
-        /// <summary>
-        /// This is true when noone is holding this object.
-        /// </summary>
-        public bool Free { get; set; }
+        
+
+        public ItemPart Item { get; set; }
     }
 }

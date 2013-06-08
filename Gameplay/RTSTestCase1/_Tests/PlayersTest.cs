@@ -16,6 +16,7 @@ using MHGameWork.TheWizards.RTSTestCase1.Items;
 using MHGameWork.TheWizards.RTSTestCase1.Pickupping;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
+using MHGameWork.TheWizards.RTSTestCase1._Common;
 using NUnit.Framework;
 using Rhino.Mocks;
 using SlimDX;
@@ -73,7 +74,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             // Edit i know i suggested windsor, but now i see the custom service implementation so i dont think
             //    its usefull anymore
             var targeter = MockRepository.GenerateStub<IUserTargeter>(); // TODO: mock here?
-            targeter.Stub(o => o.Targeted).Return(new object());
+            targeter.Stub(o => o.Targeted).Return(MockRepository.GenerateStub<IWorldObject>());
             targeter.Stub(o => o.TargetPoint).Return(new Vector3(2, 0, 2));
 
 

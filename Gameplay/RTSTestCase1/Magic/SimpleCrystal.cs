@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.RTSTestCase1.Items;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Magic
 {
 
     [ModelObjectChanged]
-    public class SimpleCrystal : EngineModelObject, ICrystal, IFieldElement
+    public class SimpleCrystal : EngineModelObject, ICrystal, IFieldElement, IPhysical,IItem
     {
 
         public float Capacity { get; set; }     
@@ -21,6 +22,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
             Capacity = 1;
             Energy = 0;
             Active = true;
+            Physical = new Physical();
+            Item = new ItemPart();
+            
         }
 
         float ICrystal.GetCapacity()
@@ -56,5 +60,51 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
         {   
             get { return Energy;}
         }
+
+        public Physical Physical { get; set; }
+        public void UpdatePhysical()
+        {
+            var ent = Physical;
+
+            ent.Solid = false;
+            ent.Static = true;
+
+            ent.Mesh = TW.Assets.LoadMesh("RTS\\BuildingCrystal\\BuildingCrystal");
+            ent.Visible = Active;
+            //PointLight= PointLight ?? new PointLight();
+            //PointLight.ShadowsEnabled = false;
+            //PointLight.Position = crystal.Position + Vector3.UnitY * 2.3f;
+
+            ent.WorldMatrix = Matrix.Translation(Position);
+
+            //PointLight.Size= 6;
+
+        }
+
+        public ItemPart Item { get; set; }
+
+
+
+
+
+        public float glowPart{ get; set; }
+        private float glowSpeed = 10f;
+        //public PointLight PointLight { get; set; }
+
+
+        
+        public void RenderBar()
+        {
+            if (!Visible)
+                return;
+            if (!IsActive())
+                return;
+            var level = Energy/Capacity;
+            var beginPosition = GetPosition() + new Vector3(0, 0, 4);
+            TW.Graphics.LineManager3D.AddBox(new BoundingBox(beginPosition,beginPosition + new Vector3(1,1,level*4)),new Color4(1,0.4f,0));
+            TW.Graphics.LineManager3D.AddBox(new BoundingBox(beginPosition + new Vector3(0, 0, level * 4), beginPosition + new Vector3(1, 1, 4)), new Color4(0.4f,1, 0));
+            
+        }
+
     }
 }

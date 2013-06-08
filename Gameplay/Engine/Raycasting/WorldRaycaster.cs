@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using DirectX11;
+using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Raycasting;
 using SlimDX;
 
@@ -18,11 +20,11 @@ namespace MHGameWork.TheWizards.Engine.Raycasting
             return Raycast(ray, o => true);
         }
 
-        public RaycastResult Raycast(Ray ray, Func<WorldRendering.Entity, bool> filter)
+        public RaycastResult Raycast(Ray ray, Func<IPhysical, bool> filter)
         {
             var closest = new RaycastResult();
             var newResult = new RaycastResult();
-            foreach (var ent in TW.Data.Objects.OfType<WorldRendering.Entity>())
+            foreach (var ent in TW.Data.Objects.OfType<IPhysical>())
             {
                 if (!filter(ent)) continue;
 
@@ -33,22 +35,22 @@ namespace MHGameWork.TheWizards.Engine.Raycasting
             return closest;
         }
 
-        private void raycastEntity(WorldRendering.Entity ent, Ray ray, RaycastResult newResult)
+        private void raycastEntity(IPhysical ent, Ray ray, RaycastResult newResult)
         {
-            bool abort = !ent.Visible && !RaycastInvisible;
+            bool abort = !ent.Physical.Visible && !RaycastInvisible;
 
-            if (ent.Mesh == null) abort = true;
+            if (ent.Physical.Mesh == null) abort = true;
             if (abort)
             {
                 newResult.Set(null, ent);
                 return;
             }
 
-            var transformed = ray.Transform(Matrix.Invert(ent.WorldMatrix));
+            var transformed = ray.Transform(Matrix.Invert(ent.Physical.ObjectMatrix * ent.Physical.WorldMatrix));
 
 
             //TODO: do course boundingbox check
-            var bb = TW.Assets.GetBoundingBox(ent.Mesh);
+            var bb = TW.Assets.GetBoundingBox(ent.Physical.Mesh);
             if (!transformed.xna().Intersects(bb.xna()).HasValue)
             {
                 newResult.Set(null, ent);
@@ -58,13 +60,13 @@ namespace MHGameWork.TheWizards.Engine.Raycasting
 
 
             Vector3 v1, v2, v3;
-            var distance = MeshRaycaster.RaycastMesh(ent.Mesh, transformed, out v1, out v2, out v3);
+            var distance = MeshRaycaster.RaycastMesh(ent.Physical.Mesh, transformed, out v1, out v2, out v3);
 
 
             newResult.Set(distance, ent);
-            newResult.V1 = Vector3.TransformCoordinate(v1, ent.WorldMatrix);
-            newResult.V2 = Vector3.TransformCoordinate(v2, ent.WorldMatrix);
-            newResult.V3 = Vector3.TransformCoordinate(v3, ent.WorldMatrix);
+            newResult.V1 = Vector3.TransformCoordinate(v1, ent.Physical.WorldMatrix);
+            newResult.V2 = Vector3.TransformCoordinate(v2, ent.Physical.WorldMatrix);
+            newResult.V3 = Vector3.TransformCoordinate(v3, ent.Physical.WorldMatrix);
 
         }
     }

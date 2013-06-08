@@ -2,6 +2,7 @@
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine.Raycasting;
 using MHGameWork.TheWizards.Engine.Synchronization;
+using MHGameWork.TheWizards.RTSTestCase1;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Engine.WorldRendering
@@ -32,7 +33,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         /// Could be seen as a getter
         /// </summary>
         /// <returns></returns>
-        public RaycastResult Raycast(Ray ray, Func<WorldRendering.Entity, bool> filter)
+        public RaycastResult Raycast(Ray ray, Func<IPhysical, bool> filter)
         {
             return raycaster.Raycast(ray,filter);
         }

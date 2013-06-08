@@ -15,9 +15,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
             TW.Data.EnsureAttachment<Rock, RockRenderData>(o => new RockRenderData(o));
             foreach (Rock t in TW.Data.GetChangedObjects<Rock>()) t.get<RockRenderData>().Update();
 
-            TW.Data.EnsureAttachment<SimpleCrystal, CrystalRenderData>(o => new CrystalRenderData(o));
-            foreach (SimpleCrystal t in TW.Data.GetChangedObjects<SimpleCrystal>()) t.get<CrystalRenderData>().Update();
-
         }
 
     }

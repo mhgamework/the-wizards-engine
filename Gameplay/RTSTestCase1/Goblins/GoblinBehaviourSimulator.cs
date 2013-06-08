@@ -86,7 +86,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
             return
                 new While(
                     getSuccessCondition: () => g.ItemStorage.Items.Contains(getDroppedThing()),
-                    getWhileCondition: () => !g.ItemStorage.IsFull && getDroppedThing().Free,
+                    getWhileCondition: () => !g.ItemStorage.IsFull && getDroppedThing().Item.Free,
                     child: new PrioritySelector(
                     getPickupDropAction(getDroppedThing),
                     getMoveInRange(
@@ -205,7 +205,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 
                 return Vector3.DistanceSquared(g.Physical.GetPosition(), getDroppedThing().Physical.GetPosition()) <
                        0.01
-                       && getDroppedThing().Free;
+                       && getDroppedThing().Item.Free;
             }
 
             public NodeResult Execute(BehaviourTreeAgent agent)

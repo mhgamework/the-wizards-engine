@@ -8,7 +8,7 @@ namespace MHGameWork.TheWizards.Navigation2D
     {
         public static Entity CreateGroundPlane()
         {
-            var e =  new Entity()
+            var e = new Entity()
                 {
                     Mesh = TW.Assets.LoadMesh("Core\\Building\\Plane"),
                     WorldMatrix = Matrix.Scaling(1000, 1000, 1000)

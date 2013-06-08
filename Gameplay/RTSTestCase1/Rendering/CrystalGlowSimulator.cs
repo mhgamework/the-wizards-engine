@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Rendering
             var crystals = TW.Data.Objects.Where(o => o is SimpleCrystal).Cast<SimpleCrystal>();
             foreach (var crystal in crystals)
             {
-                var renderData = crystal.get<CrystalRenderData>();
+                var renderData = crystal;
                 var load = crystal.Energy / crystal.Capacity;
                 if(rand.NextDouble()>0.5f)
                     renderData.glowPart += 4*(1 + 5*load ) * TW.Graphics.Elapsed;

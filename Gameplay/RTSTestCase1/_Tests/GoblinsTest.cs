@@ -44,9 +44,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
             engine.AddSimulator(new GoblinCommandsSimulator());
 
-            engine.AddSimulator(new ItemStorageSimulator());
-
-
+            
             engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
