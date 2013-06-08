@@ -75,13 +75,15 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             c.Register(Component.For<IWorldLocator>().ImplementedBy<SimpleWorldLocator>());
             c.Register(Component.For<IDamageApplier>().ImplementedBy<SimpleDamageApplier>());
 
+            engine.AddSimulator(c.Resolve<NetworkReceiveSimulator>());
             engine.AddSimulator(c.Resolve<InputSimulator>());
             engine.AddSimulator(c.Resolve<UserPlayerSimulator>());
-            engine.AddSimulator(c.Resolve<GoblinAttackSimulator>());
-
-            engine.AddSimulator(c.Resolve<PlayerCameraSimulator>());
-            engine.AddSimulator(c.Resolve<PhysicalSimulator>());
-            engine.AddSimulator(c.Resolve<WorldRenderingSimulator>());
+            engine.AddSimulator(c.Resolve<NPCSimulator>());
+            engine.AddSimulator(c.Resolve<RiverSimulator>());
+            engine.AddSimulator(c.Resolve<MagicSimulator>());
+            engine.AddSimulator(c.Resolve<AnimationSimulator>());
+            engine.AddSimulator(c.Resolve<NetworkSendSimulator>());
+            engine.AddSimulator(c.Resolve<RendererSimulator>());
 
 
 
@@ -97,20 +99,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
         }
 
-    }
-
-    public class GoblinAttackSimulator : ISimulator
-    {
-        public void Simulate()
-        {
-            foreach (var g in TW.Data.Objects.OfType<Goblin>())
-            {
-                if (Vector3.Distance(g.Physical.GetPosition().TakeXZ().ToXZ(0)
-                    , TW.Data.Get<LocalGameData>().LocalPlayer.Position.TakeXZ().ToXZ(0)) 
-                    < 1)
-                    TW.Data.Get<LocalGameData>().LocalPlayer.Position = new Vector3();
-            }
-        }
     }
 
     public class SimpleWorldLocator : IWorldLocator

@@ -9,7 +9,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
     {
         public void Simulate()
         {
-            throw new System.NotImplementedException();
         }
     }
 }

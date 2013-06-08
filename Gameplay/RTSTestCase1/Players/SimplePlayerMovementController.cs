@@ -47,8 +47,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
 
         public void ProcessMovement(float elapsed)
         {
-            delta = Vector3.TransformNormal(delta,
-                Matrix.CreateFromQuaternion( Functions.CreateFromLookDir(player.LookDirection.xna())).dx() );
+            delta = Vector3.TransformNormal(delta * 3,
+                Matrix.CreateFromQuaternion(Functions.CreateFromLookDir(player.LookDirection.xna())).dx());
 
             player.Position += delta * elapsed;
             player.Position = player.Position.TakeXZ().ToXZ(1.5f);

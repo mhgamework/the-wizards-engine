@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.RTSTestCase1.Magic;
 using MHGameWork.TheWizards.RTSTestCase1.Magic.Simulators;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
+using MHGameWork.TheWizards.RTSTestCase1.Simulators;
 using NUnit.Framework;
 using SlimDX;
 

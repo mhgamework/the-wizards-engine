@@ -49,14 +49,20 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
 
         public void Simulate()
         {
-            // use specatorcamera lookdir
-            TW.Data.Get<LocalGameData>().LocalPlayer.LookDirection = TW.Graphics.SpectaterCamera.CameraDirection;
-
+            updateLookDirection();
             simulateMovement();
+
             updateTargeted();
 
             simulateAttacks();
         }
+
+        private static void updateLookDirection()
+        {
+            // use specatorcamera lookdir
+            TW.Data.Get<LocalGameData>().LocalPlayer.LookDirection = TW.Graphics.SpectaterCamera.CameraDirection;
+        }
+
         private float chargeStrength = 0;
         private void simulateAttacks()
         {
@@ -133,7 +139,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
             var height = 20;
             Physical.Mesh = UtilityMeshes.CreateMeshWithTexture(size, TW.Assets.LoadTexture("RTS//bark.jpg"));
             Physical.WorldMatrix = Matrix.Translation(position);
-            Physical.ObjectMatrix = Matrix.Scaling(1, height, 1) * Matrix.Translation(-Vector3.UnitY * (size*height));
+            Physical.ObjectMatrix = Matrix.Scaling(1, height, 1) * Matrix.Translation(-Vector3.UnitY * (size * height));
         }
 
         public Vector3 Position
