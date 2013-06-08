@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1.Inputting;
+using MHGameWork.TheWizards.RTSTestCase1.Players;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.RTSTestCase1.Players
+namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
 {
     /// <summary>
     /// Simulates the logic associated with the local player (so not remote players)
@@ -27,7 +25,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
         public UserButtonEvent Jump;
         public UserButtonEvent Attack;
 
-        private IPlayerInputController playerController;
+        private IPlayerMovementController playerController;
 
         /// <summary>
         /// This is a dependency (and it is circular!)
@@ -35,7 +33,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
         /// </summary>
         public PlayerGroundAttacker groundAttacker { get; set; }
 
-        public UserPlayerSimulator(IPlayerInputController playerController)
+        public UserPlayerSimulator(IPlayerMovementController playerController)
         {
             this.playerController = playerController;
             var buttonFactory = TW.Data.Get<InputFactory>();

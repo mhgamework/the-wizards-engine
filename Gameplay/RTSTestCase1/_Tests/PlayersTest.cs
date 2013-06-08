@@ -45,7 +45,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             var p = MockRepository.GenerateMock<UserPlayer>();
             p.Position = Vector3.Zero;
 
-            var c = new SimplePlayerInputController(p);
+            var c = new SimplePlayerMovementController(p);
             c.MoveForward();
             c.ProcessMovement(1); // moves forward
 

@@ -1,6 +1,6 @@
 ﻿namespace MHGameWork.TheWizards.RTSTestCase1.Players
 {
-    public interface IPlayerInputController
+    public interface IPlayerMovementController
     {
         void MoveForward();
         void MoveBackward();

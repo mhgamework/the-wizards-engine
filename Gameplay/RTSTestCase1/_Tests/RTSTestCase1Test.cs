@@ -20,6 +20,7 @@ using MHGameWork.TheWizards.RTSTestCase1.Items;
 using MHGameWork.TheWizards.RTSTestCase1.Pickupping;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
+using MHGameWork.TheWizards.RTSTestCase1.Simulators;
 using NUnit.Framework;
 using SlimDX;
 using System.Linq;
@@ -66,7 +67,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             //    Classes.FromThisAssembly().Pick().WithServiceSelf().WithServiceAllInterfaces()
             //    //.Where(o => typeof(ISimulator).IsAssignableFrom(o)).WithServiceSelf()
             //            );
-            c.Register(Component.For<IPlayerInputController>().ImplementedBy<SimplePlayerInputController>());
+            c.Register(Component.For<IPlayerMovementController>().ImplementedBy<SimplePlayerMovementController>());
             c.Register(Component.For<UserPlayer>().Instance(TW.Data.Get<LocalGameData>().LocalPlayer));
             c.Register(Component.For<PlayerGroundAttacker>());
             c.Register(Component.For<IAnimationProvider>().ImplementedBy<SimpleAnimationProvider>());

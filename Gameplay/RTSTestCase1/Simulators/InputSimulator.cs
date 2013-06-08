@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.Engine;
+﻿using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.RTSTestCase1.Inputting;
 
-namespace MHGameWork.TheWizards.RTSTestCase1.Inputting
+namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
 {
     /// <summary>
     /// Responsible for processing system user input into TW Data

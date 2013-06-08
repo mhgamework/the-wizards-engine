@@ -10,12 +10,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
     /// TODO: rename to playermovement?
     /// Also: replace userplayer with interface?? (or even more, a factory/getter?)
     /// </summary>
-    public class SimplePlayerInputController : IPlayerInputController
+    public class SimplePlayerMovementController : IPlayerMovementController
     {
         private Vector3 delta;
         private readonly UserPlayer player;
 
-        public SimplePlayerInputController(UserPlayer player)
+        public SimplePlayerMovementController(UserPlayer player)
         {
             this.player = player;
         }

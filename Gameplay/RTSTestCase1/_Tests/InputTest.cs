@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTSTestCase1.Inputting;
+using MHGameWork.TheWizards.RTSTestCase1.Simulators;
 using NUnit.Framework;
 using SlimDX;
 

@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins.Components
                     {
                         if (iItem >= Items.Count) return;
 
-                        Items[iItem].Physical.WorldMatrix = ((IPhysical) Parent).Physical.WorldMatrix*
+                        Items[iItem].Physical.WorldMatrix = ((IPhysical)Parent).Physical.WorldMatrix *
                                                             Matrix.Translation(x, y, z);
                         iItem++;
                     }
@@ -48,14 +48,14 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins.Components
 
         public bool IsEmpty
         {
-            get { throw new System.NotImplementedException(); }
-            set { throw new System.NotImplementedException(); }
+            get { return Items.Count == 0; }
+            set { }
         }
 
         public bool IsFull
         {
-            get { throw new System.NotImplementedException(); }
-            set { throw new System.NotImplementedException(); }
+            get { return Items.Count >= Capacity; }
+            set { }
         }
     }
 }
