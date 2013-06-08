@@ -13,13 +13,13 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins.Components
     {
         public ItemStoragePart()
         {
-            Items = new List<DroppedThing>();
+            Items = new List<IItem>();
         }
 
         public IItemStorage Parent { get; set; }
         public BoundingBox ContainerArea { get; set; }
 
-        public List<DroppedThing> Items { get; set; }
+        public List<IItem> Items { get; set; }
 
         public int Capacity { get; set; }
 
@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins.Components
                     {
                         if (iItem >= Items.Count) return;
 
-                        Items[iItem].Physical.WorldMatrix = ((IPhysical)Parent).Physical.WorldMatrix *
+                        ((IPhysical)Items[iItem]).Physical.WorldMatrix = ((IPhysical)Parent).Physical.WorldMatrix *
                                                             Matrix.Translation(x, y, z);
                         iItem++;
                     }

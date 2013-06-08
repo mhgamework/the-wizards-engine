@@ -80,7 +80,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
             }
             else
             {
-                var i = targeted as DroppedThing;
+                var i = targeted as IItem;
                 if (i != null && i.Item.Free)
                 {
                     i.Item.Free = false;

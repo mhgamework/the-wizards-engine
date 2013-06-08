@@ -1,9 +1,11 @@
-﻿using MHGameWork.TheWizards.Engine;
+﻿using System;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1.Magic.Simulators;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
 using System.Linq;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
 {
@@ -21,6 +23,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
 
         public void Simulate()
         {
+            simulateDroppedThingPhysics();
+
             attachInventories();
 
             PlayerCameraSimulator.Simulate();
@@ -31,6 +35,20 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
             CrystalInfoDrawSimulator.Simulate();
             WorldRenderingSimulator.Simulate();
 
+        }
+
+        private void simulateDroppedThingPhysics()
+        {
+            //TODO: add component for this
+            foreach (var t in TW.Data.Objects.OfType<IItem>())
+            {
+                if (!t.Item.Free) continue;
+                var p = t as IPhysical;
+                var pos = p.Physical.GetBoundingBox().Minimum;
+                if (Math.Abs(pos.Y) > 0.001)
+                    p.Physical.WorldMatrix *= Matrix.Translation(0, -Math.Sign(pos.Y) * TW.Graphics.Elapsed, 0);
+
+            }
         }
 
         private void attachInventories()
