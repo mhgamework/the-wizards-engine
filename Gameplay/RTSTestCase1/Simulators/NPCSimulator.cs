@@ -1,6 +1,7 @@
 ﻿using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.RTSTestCase1.Building;
 using MHGameWork.TheWizards.RTSTestCase1.Cannons;
+using MHGameWork.TheWizards.RTSTestCase1.Goblins.Spawning;
 using MHGameWork.TheWizards.RTSTestCase1._Tests;
 using System.Linq;
 
@@ -16,19 +17,26 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
         /// </summary>
         public GoblinAttackSimulator GoblinAttackSimulator { get; set; }
         public CannonSimulator CannonSimulator { get; set; }
+        public GoblinSpawner GoblinSpawner { get; set; }
         public SimpleBuilder SimpleBuilder { get; set; }
-
-        public NPCSimulator()
+        public NPCSimulator(GoblinSpawner s)
         {
+            GoblinSpawner = s;
         }
 
         public void Simulate()
         {
             GoblinAttackSimulator.Simulate();
-
+            SimulateSpawn();
             simulateBuilding();
             CannonSimulator.Simulate();
         }
+        private void SimulateSpawn()
+        {
+            var points = TW.Data.Objects.OfType<GoblinSpawnPoint>();
+            foreach (var goblinSpawnerPoint in points)
+            {
+                GoblinSpawner.Simulate(TW.Graphics.Elapsed,goblinSpawnerPoint);
 
         private float time = 0;
         private void simulateBuilding()

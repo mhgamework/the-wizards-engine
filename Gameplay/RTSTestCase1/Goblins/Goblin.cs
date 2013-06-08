@@ -4,6 +4,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.RTSTestCase1.Characters;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins.Components;
+using MHGameWork.TheWizards.RTSTestCase1.Goblins.Spawning;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
 using SlimDX;
 using StillDesign.PhysX;
@@ -12,7 +13,7 @@ using System.Linq;
 namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 {
     [ModelObjectChanged]
-    public class Goblin : EngineModelObject, IRTSCharacter, IPhysical, IItemStorage
+    public class Goblin : EngineModelObject, IRTSCharacter, IPhysical, IItemStorage,IGoblin
     {
         public Entity Attacked { get; set; }
         public Vector3 Position { get; set; }
@@ -191,5 +192,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
                 g.Cart.Physical.WorldMatrix = g.Physical.WorldMatrix*Matrix.Translation(0, 0, 1.7f);
             }
         }
+
     }
 }

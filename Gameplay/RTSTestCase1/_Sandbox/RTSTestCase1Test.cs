@@ -15,8 +15,10 @@ using MHGameWork.TheWizards.RTS;
 using MHGameWork.TheWizards.RTSTestCase1.Animation;
 using MHGameWork.TheWizards.RTSTestCase1.Building;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins;
+using MHGameWork.TheWizards.RTSTestCase1.Goblins.Spawning;
 using MHGameWork.TheWizards.RTSTestCase1.Inputting;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
+using MHGameWork.TheWizards.RTSTestCase1.Magic;
 using MHGameWork.TheWizards.RTSTestCase1.Pickupping;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
@@ -84,6 +86,14 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             c.Register(Component.For<SimpleBuilder>());
             
 
+
+            c.Register(Component.For<GoblinSpawner>());
+            c.Register(Component.For<IGoblinCreator>().ImplementedBy<GoblinCreator>());
+            
+            
+            
+
+
             engine.AddSimulator(c.Resolve<NetworkReceiveSimulator>());
             engine.AddSimulator(c.Resolve<InputSimulator>());
             engine.AddSimulator(c.Resolve<UserPlayerSimulator>());
@@ -103,6 +113,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
                     var g = new Goblin();
                     g.Physical.WorldMatrix = Matrix.Translation(3, 0, 3);
+                    var crystal = new SimpleCrystal(){Capacity = 1000,Energy = 500};
+                    
+                    var spawner = new GoblinSpawnPoint();
+                    spawner.Position = new Vector3(4, 0, 6);
 
                     for (int i = 0; i < 10; i++)
                     {
@@ -147,6 +161,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                     r = new Rock();
                     r.Position = new Vector3(-17, 0, 14);
                 };
+
 
 
         }
