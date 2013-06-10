@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Items
 
         public void PutInStorage(IItemStorage storage)
         {
-            if (storage.ItemStorage.IsFull) throw new InvalidOperationException();
+            if (storage.ItemStorage.IsFull) throw new InvalidOperationException("Storage is full!");
 
             if (!Free) Drop();
 
@@ -42,6 +42,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Items
 
         public IItemStorage GetCurrentInventory()
         {
+            var arr = TW.Data.Objects.ToArray();
+            var arr2 = TW.Data.Objects.OfType<IItemStorage>().ToArray();
+
             return TW.Data.Objects.OfType<IItemStorage>().FirstOrDefault(i => i.ItemStorage.Items.Contains(Parent));
         }
     }

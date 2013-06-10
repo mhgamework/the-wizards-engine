@@ -18,6 +18,10 @@
 namespace MHGameWork.TheWizards.RTSTestCase1{
   
        
+		public interface IBuildable{
+			MHGameWork.TheWizards.RTSTestCase1.Building.BuildablePart Buildable {get;set;}
+		}
+		
 		public interface IPlayerInteraction{
 			MHGameWork.TheWizards.RTSTestCase1.Players.PlayerInteractionPart PlayerInteraction {get;set;}
 		}

@@ -3,13 +3,14 @@ using System.Linq;
 using MHGameWork.TheWizards.Audio;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.RTSTestCase1.Building;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Cannons
 {
     [ModelObjectChanged]
-    public class Cannon : EngineModelObject
+    public class Cannon : EngineModelObject,IPhysical,IBuildable
     {
         public Vector3 Position { get; set; }
         public float Angle { get; set; }
@@ -22,6 +23,18 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Cannons
         {
             ShootInterval = 4;
             Sound = new SoundEmitter();
+            Buildable = new BuildablePart();
+            Buildable.Parent = this;
+            Physical = new Physical();
+
+            Buildable.RequiredResources.Add(ResourceFactory.Get.Cannonball);
+            Buildable.RequiredResources.Add(ResourceFactory.Get.Stone);
+            Buildable.RequiredResources.Add(ResourceFactory.Get.Stone);
+            Buildable.RequiredResources.Add(ResourceFactory.Get.Stone);
+            Buildable.RequiredResources.Add(ResourceFactory.Get.Stone);
+            Buildable.RequiredResources.Add(ResourceFactory.Get.Stone);
+            Buildable.RequiredResources.Add(ResourceFactory.Get.Stone);
+
         }
 
         public void Update()
@@ -105,6 +118,13 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Cannons
                         .OrderBy(g => Vector3.Distance(g.Position, Position))
                         .FirstOrDefault();
 
+        }
+
+        public BuildablePart Buildable { get; set; }
+        public Physical Physical { get; set; }
+        public void UpdatePhysical()
+        {
+            
         }
     }
 }

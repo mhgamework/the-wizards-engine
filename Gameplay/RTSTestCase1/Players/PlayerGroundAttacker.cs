@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.RTSTestCase1.Animation;
+using MHGameWork.TheWizards.RTSTestCase1._Common;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Players
@@ -89,11 +90,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
 
             l.AddCenteredBox(point, 0.2f, new Color4(1, 1, 0));
         }
-    }
-
-    public interface IWorldLocator
-    {
-        IEnumerable<object> AtPosition(Vector3 point, float radius);
     }
 
     /// <summary>

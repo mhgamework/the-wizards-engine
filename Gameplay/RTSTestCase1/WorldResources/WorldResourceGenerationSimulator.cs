@@ -13,20 +13,24 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources
     {
         public void Simulate()
         {
+            Simulate(TW.Graphics.Elapsed);
+        }
+
+        public void Simulate(float elapsed)
+        {
             var res = getResources();
             foreach (var r in res)
             {
-                r.Grow(TW.Graphics.Elapsed);
+                r.Grow(elapsed);
 
                 generateResource(r);
-
             }
         }
 
         private void generateResource(IWorldResource worldResource)
         {
             if (!worldResource.ResourceAvailable) return;
-            if (getInSphere(worldResource.GenerationPoint, 0.01f).Any(o => o != worldResource)) return;
+            if (getInSphere(worldResource.GenerationPoint, 0.5f).Any(o => o != worldResource)) return;
 
             var thing = worldResource.TakeResource();
             var drop = TW.Data.Get<IRTSFactory>().CreateDroppedThing(thing, worldResource.GenerationPoint);

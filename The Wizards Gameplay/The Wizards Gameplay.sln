@@ -10,19 +10,51 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3626AC
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RTSTestCase1Tests", "RTSTestCase1Tests\RTSTestCase1Tests.csproj", "{F1121190-BB28-43AB-B5BF-9174C2CAB910}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
 		Debug|x86 = Debug|x86
+		Profile|Any CPU = Profile|Any CPU
+		Profile|Mixed Platforms = Profile|Mixed Platforms
 		Profile|x86 = Profile|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}.Debug|x86.ActiveCfg = Debug|x86
 		{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}.Debug|x86.Build.0 = Debug|x86
+		{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}.Profile|Any CPU.ActiveCfg = Profile|x86
+		{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}.Profile|Mixed Platforms.ActiveCfg = Profile|x86
+		{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}.Profile|Mixed Platforms.Build.0 = Profile|x86
 		{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}.Profile|x86.ActiveCfg = Profile|x86
 		{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}.Profile|x86.Build.0 = Profile|x86
+		{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}.Release|Any CPU.ActiveCfg = Release|x86
+		{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}.Release|Mixed Platforms.Build.0 = Release|x86
 		{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}.Release|x86.ActiveCfg = Release|x86
 		{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}.Release|x86.Build.0 = Release|x86
+		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Profile|Any CPU.ActiveCfg = Release|Any CPU
+		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Profile|Any CPU.Build.0 = Release|Any CPU
+		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Profile|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Profile|Mixed Platforms.Build.0 = Release|Any CPU
+		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Profile|x86.ActiveCfg = Release|Any CPU
+		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

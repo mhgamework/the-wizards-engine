@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using MHGameWork.TheWizards.Data;
@@ -21,9 +20,10 @@ using MHGameWork.TheWizards.RTSTestCase1.Pickupping;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
 using MHGameWork.TheWizards.RTSTestCase1.Simulators;
+using MHGameWork.TheWizards.RTSTestCase1.WorldResources;
+using MHGameWork.TheWizards.RTSTestCase1._Common;
 using NUnit.Framework;
 using SlimDX;
-using System.Linq;
 
 namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 {
@@ -40,8 +40,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         /// This allows displaying errors when testing, due to bug in the NUnitTestRunner not using the iErrorLogger
         /// </summary>
         [Test]
+        [Timeout(100000)]
         public void TestSandboxCatch()
         {
+            engine.Initialize();
             try
             {
                 TestSandbox();
@@ -50,6 +52,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             {
                 DI.Get<IErrorLogger>().Log(ex, "Test Setup");
             }
+            engine.Run();
         }
 
         [Test]
@@ -73,13 +76,17 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             c.Register(Component.For<IAnimationProvider>().ImplementedBy<SimpleAnimationProvider>());
 
             c.Register(Component.For<IWorldLocator>().ImplementedBy<SimpleWorldLocator>());
+            c.Register(Component.For<IWorldDestroyer>().ImplementedBy<SimpleWorldDestroyer>());
             c.Register(Component.For<IDamageApplier>().ImplementedBy<SimpleDamageApplier>());
+
+            c.Register(Component.For<SimpleItemPhysicsUpdater>());
+            
 
             engine.AddSimulator(c.Resolve<NetworkReceiveSimulator>());
             engine.AddSimulator(c.Resolve<InputSimulator>());
             engine.AddSimulator(c.Resolve<UserPlayerSimulator>());
             engine.AddSimulator(c.Resolve<NPCSimulator>());
-            engine.AddSimulator(c.Resolve<RiverSimulator>());
+            engine.AddSimulator(c.Resolve<WorldSimulator>());
             engine.AddSimulator(c.Resolve<MagicSimulator>());
             engine.AddSimulator(c.Resolve<AnimationSimulator>());
             engine.AddSimulator(c.Resolve<NetworkSendSimulator>());
@@ -106,6 +113,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
                     var cr = new Cart();
                     cr.Physical.WorldMatrix = Matrix.Translation(5, 0, 0);
+
+
+                    var t = new Tree();
+                    t.Position = new Vector3(12,0,3);
                 };
 
 
@@ -124,30 +135,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                 Physical.Mesh = TW.Assets.LoadMesh("Core\\Building\\Plane");
                 Physical.ObjectMatrix = Matrix.Scaling(1000, 1000, 1000);
                 Physical.WorldMatrix = Matrix.Identity;
-            }
-        }
-    }
-
-
-
-    public class SimpleWorldLocator : IWorldLocator
-    {
-        public IEnumerable<object> AtPosition(Vector3 point, float radius)
-        {
-            return
-                TW.Data.Objects.OfType<IPhysical>()
-                  .Where(p => Vector3.Distance(p.Physical.GetPosition(), point) < radius);
-        }
-    }
-
-    public class SimpleDamageApplier : IDamageApplier
-    {
-        public void ApplyDamage(object o)
-        {
-            if (o is Goblin)
-            {
-                ((IPhysical)o).Physical.Visible = false;
-                TW.Data.RemoveObject((IModelObject)o);
             }
         }
     }

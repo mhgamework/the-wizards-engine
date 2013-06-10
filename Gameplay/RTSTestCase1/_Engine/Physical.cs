@@ -16,6 +16,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1
 
         public Physical()
         {
+            WorldMatrix = Matrix.Identity;
             ObjectMatrix = Matrix.Identity;
             Visible = true;
         }

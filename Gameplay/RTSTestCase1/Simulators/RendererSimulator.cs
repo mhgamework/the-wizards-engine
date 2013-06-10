@@ -24,8 +24,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
 
         public void Simulate()
         {
-            simulateDroppedThingPhysics();
-
             attachObjects();
 
             PlayerCameraSimulator.Simulate();
@@ -38,19 +36,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
 
         }
 
-        private void simulateDroppedThingPhysics()
-        {
-            //TODO: add component for this
-            foreach (var t in TW.Data.Objects.OfType<IItem>())
-            {
-                if (!t.Item.Free) continue;
-                var p = t as IPhysical;
-                var pos = p.Physical.GetBoundingBox().Minimum;
-                if (Math.Abs(pos.Y) > 0.001)
-                    p.Physical.WorldMatrix *= Matrix.Translation(0, -Math.Sign(pos.Y) * TW.Graphics.Elapsed, 0);
-
-            }
-        }
+       
 
         private void attachObjects()
         {

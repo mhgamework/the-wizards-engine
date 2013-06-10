@@ -3,7 +3,7 @@ using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.RTSTestCase1.Animation;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.RTSTestCase1._Tests
+namespace MHGameWork.TheWizards.RTSTestCase1.Tests
 {
     /// <summary>
     /// Test for the Animator, AnimationDescription etc

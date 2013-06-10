@@ -11,7 +11,7 @@ using SlimDX;
 namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources
 {
     [ModelObjectChanged]
-    public class Tree : EngineModelObject, IWorldResource,  IPhysical
+    public class Tree : EngineModelObject, IWorldResource, IPhysical
     {
         public Tree()
         {
@@ -34,8 +34,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources
         public bool ResourceAvailable { get { return Size > 1; } }
         public void Grow(float elapsed)
         {
-            Size += elapsed;
-            if (Size > 6) Size = 6;
+            Size += elapsed / 10; // is the growth rate
+            if (Size > 3) Size = 3;
         }
 
         public Physical Physical { get; set; }
@@ -50,7 +50,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldResources
             entity.WorldMatrix = Matrix.Scaling(1 + tree.Size * 0.1f, 1 + tree.Size * 0.1f, 1 + tree.Size * 0.1f) * Matrix.Scaling(1f, 3, 1f) * Matrix.Translation(tree.Position);
         }
 
-        
+
 
     }
 }

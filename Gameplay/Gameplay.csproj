@@ -258,6 +258,10 @@
     <Compile Include="RTSTestCase1\BehaviourTrees\PrioritySelector.cs" />
     <Compile Include="RTSTestCase1\BehaviourTrees\Sequence.cs" />
     <Compile Include="RTSTestCase1\BehaviourTrees\While.cs" />
+    <Compile Include="RTSTestCase1\Building\BuildablePart.cs" />
+    <Compile Include="RTSTestCase1\_Common\IWorldLocator.cs" />
+    <Compile Include="RTSTestCase1\_Common\IWorldDestroyer.cs" />
+    <Compile Include="RTSTestCase1\Building\SimpleBuilder.cs" />
     <Compile Include="RTSTestCase1\Cannons\CannonSimulator.cs" />
     <Compile Include="RTSTestCase1\Characters\IRTSCharacter.cs" />
     <Compile Include="RTSTestCase1\CommandFactory.cs" />
@@ -265,6 +269,7 @@
     <Compile Include="RTSTestCase1\Goblins\Components\CommandHolderPart.cs" />
     <Compile Include="RTSTestCase1\Items\IItem.cs" />
     <Compile Include="RTSTestCase1\Items\CartHolderPart.cs" />
+    <Compile Include="RTSTestCase1\Items\SimpleItemPhysicsUpdater.cs" />
     <Compile Include="RTSTestCase1\Players\PlayerInteractionPart.cs" />
     <Compile Include="RTSTestCase1\_Engine\ObjectParts\IObjectPart.cs" />
     <Compile Include="RTSTestCase1\Items\ItemStoragePart.cs" />
@@ -318,7 +323,7 @@
     <Compile Include="RTSTestCase1\Simulators\NetworkSendSimulator.cs" />
     <Compile Include="RTSTestCase1\Simulators\NPCSimulator.cs" />
     <Compile Include="RTSTestCase1\Simulators\RendererSimulator.cs" />
-    <Compile Include="RTSTestCase1\Simulators\RiverSimulator.cs" />
+    <Compile Include="RTSTestCase1\Simulators\WorldSimulator.cs" />
     <Compile Include="RTSTestCase1\_Common\IWorldObject.cs" />
     <Compile Include="RTSTestCase1\_Engine\Animation\AnimationDescription.cs" />
     <Compile Include="RTSTestCase1\_Engine\Animation\AnimationProperty.cs" />
@@ -364,9 +369,11 @@
     <Compile Include="RTSTestCase1\WorldInputting\EditorConfiguration.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\EditorMenuConfiguration.cs" />
     <Compile Include="RTSTestCase1\_Engine\UtilityMeshes.cs" />
-    <Compile Include="RTSTestCase1\_Tests\AnimationTest.cs" />
     <Compile Include="RTSTestCase1\NPC\GoblinAttackSimulator.cs" />
-    <Compile Include="RTSTestCase1\_Tests\RTSTestCase1Test.cs" />
+    <Compile Include="RTSTestCase1\_Sandbox\RTSTestCase1Test.cs" />
+    <Compile Include="RTSTestCase1\_Sandbox\SimpleDamageApplier.cs" />
+    <Compile Include="RTSTestCase1\_Sandbox\SimpleWorldDestroyer.cs" />
+    <Compile Include="RTSTestCase1\_Sandbox\SimpleWorldLocator.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldBuilderTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\GoblinsTest.cs" />
