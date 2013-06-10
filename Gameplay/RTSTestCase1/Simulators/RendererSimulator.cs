@@ -1,6 +1,7 @@
 ﻿using System;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using MHGameWork.TheWizards.RTSTestCase1.Magic.Simulators;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
@@ -25,7 +26,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
         {
             simulateDroppedThingPhysics();
 
-            attachInventories();
+            attachObjects();
 
             PlayerCameraSimulator.Simulate();
 
@@ -51,12 +52,17 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
             }
         }
 
-        private void attachInventories()
+        private void attachObjects()
         {
             //foreach (var o in TW.Data.Objects.OfType<i>())
             //{
             //    o.ItemHolder.SetHeldItemDefaultPosition();
             //}
+
+            foreach (var c in TW.Data.Objects.OfType<ICartHolder>())
+            {
+                c.CartHolder.SetHeldItemDefaultPosition();
+            }
 
             foreach (var i in TW.Data.Objects.OfType<IItemStorage>())
             {

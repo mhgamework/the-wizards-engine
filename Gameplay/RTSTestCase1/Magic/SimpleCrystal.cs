@@ -29,6 +29,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Magic
             Active = true;
             Physical = new Physical();
             Item = new ItemPart();
+            Item.Parent = this;
 
         }
 

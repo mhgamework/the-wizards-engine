@@ -95,10 +95,17 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                     var g = new Goblin();
                     g.Physical.WorldMatrix = Matrix.Translation(3, 0, 3);
 
-                    var d = new DroppedThing();
-                    d.Thing = new Thing() { Type = ResourceFactory.Get.Wood };
-                    d.Item.Free = true;
-                    d.Physical.WorldMatrix = Matrix.Translation(5, 0, 5);
+                    for (int i = 0; i < 10; i++)
+                    {
+                        var d = new DroppedThing();
+                        d.Thing = new Thing() { Type = ResourceFactory.Get.Wood };
+                        d.Item.Free = true;
+                        d.Physical.WorldMatrix = Matrix.Translation(5 + i, 0, 5);
+                    }
+
+
+                    var cr = new Cart();
+                    cr.Physical.WorldMatrix = Matrix.Translation(5, 0, 0);
                 };
 
 

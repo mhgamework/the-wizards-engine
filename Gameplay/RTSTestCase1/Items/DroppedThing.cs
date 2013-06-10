@@ -15,6 +15,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Items
         {
             Physical = new Physical();
             Item = new ItemPart();
+            Item.Parent = this;
         }
 
         public Thing Thing { get; set; }

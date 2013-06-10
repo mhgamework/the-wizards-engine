@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.PhysX;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.RTSTestCase1.Characters;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins.Components;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
@@ -17,8 +18,12 @@ using Ray = SlimDX.Ray;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Players
 {
+    public interface IUserPlayer : IItemStorage, IPhysical, ICartHolder,IPlayerInteraction
+    {
+    }
+
     [ModelObjectChanged]
-    public class UserPlayer : EngineModelObject, IRTSCharacter, IItemStorage, IPhysical
+    public class UserPlayer : EngineModelObject, IRTSCharacter, IUserPlayer
     {
 
         public Entity Used { get; set; }
@@ -53,6 +58,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
             ItemStorage = new ItemStoragePart();
             Physical = new Physical();
             ItemStorage.Parent = this;
+            CartHolder = new CartHolderPart();
+            CartHolder.Parent = this;
+            PlayerInteraction = new PlayerInteractionPart();
+            PlayerInteraction.Player = this;
 
         }
 
@@ -80,10 +89,20 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
         public Physical Physical { get; set; }
         public void UpdatePhysical()
         {
-            Physical.WorldMatrix = Matrix.Translation(Position);
+            var dir = LookDirection;
+            dir.Y = 0;
+            dir = Vector3.Normalize(-dir);
+
+            Physical.WorldMatrix = Microsoft.Xna.Framework.Matrix.CreateFromQuaternion( Functions.CreateFromLookDir(dir.xna())).dx()
+                * Matrix.Translation(Position);
             ItemStorage.Parent = this;
             ItemStorage.Capacity = 1;
             ItemStorage.ContainerArea = new BoundingBox(new Vector3(0f, -0.3f, 0f), new Vector3(2f, 1f, 2f));
+            CartHolder.Parent = this;
+            PlayerInteraction.Player = this;
         }
+
+        public CartHolderPart CartHolder { get; set; }
+        public PlayerInteractionPart PlayerInteraction { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using MHGameWork.TheWizards.RTSTestCase1.Inputting;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
@@ -28,6 +29,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
         public UserButtonEvent Use;
 
         private IPlayerMovementController playerController;
+
+        private UserPlayer localPlayer = TW.Data.Get<LocalGameData>().LocalPlayer;
 
         /// <summary>
         /// This is a dependency (and it is circular!)
@@ -60,34 +63,20 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
             simulateAttacks();
 
             simulateBuilding();
-            simulatePickup();
+
+            if (Use.Pressed)
+            {
+                localPlayer.PlayerInteraction.Targeter = this;
+                localPlayer.PlayerInteraction.Interact();
+            }
+
 
         }
+
+
 
         private void simulateBuilding()
         {
-        }
-
-        private void simulatePickup()
-        {
-            if (!Use.Pressed) return;
-            var pl = TW.Data.Get<LocalGameData>().LocalPlayer;
-            if (pl.ItemStorage.IsFull)
-            {
-                var i = pl.ItemStorage.Items[0];
-                pl.ItemStorage.Items.Remove(i);
-                i.Item.Free = true;
-            }
-            else
-            {
-                var i = targeted as IItem;
-                if (i != null && i.Item.Free)
-                {
-                    i.Item.Free = false;
-                    pl.ItemStorage.Items.Add(i);
-                }
-            }
-
         }
 
         private static void updateLookDirection()

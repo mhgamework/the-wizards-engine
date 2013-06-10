@@ -18,6 +18,18 @@
 namespace MHGameWork.TheWizards.RTSTestCase1{
   
        
+		public interface IPlayerInteraction{
+			MHGameWork.TheWizards.RTSTestCase1.Players.PlayerInteractionPart PlayerInteraction {get;set;}
+		}
+		
+		public interface IItem{
+			MHGameWork.TheWizards.RTSTestCase1.Items.ItemPart Item {get;set;}
+		}
+		
+		public interface ICartHolder{
+			MHGameWork.TheWizards.RTSTestCase1.Items.CartHolderPart CartHolder {get;set;}
+		}
+		
 		public interface ICommandHolder{
 			MHGameWork.TheWizards.RTSTestCase1.Goblins.Components.CommandHolderPart CommandHolder {get;set;}
 		}
@@ -28,14 +40,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1{
 		
 		public interface IItemStorage{
 			MHGameWork.TheWizards.RTSTestCase1.Goblins.Components.ItemStoragePart ItemStorage {get;set;}
-		}
-		
-		public interface ICartHolder{
-			MHGameWork.TheWizards.RTSTestCase1.Items.CartHolderPart CartHolder {get;set;}
-		}
-		
-		public interface IItem{
-			MHGameWork.TheWizards.RTSTestCase1.Items.ItemPart Item {get;set;}
 		}
 		
 }

@@ -40,8 +40,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins.Components
                     {
                         if (iItem >= Items.Count) return;
 
-                        ((IPhysical)Items[iItem]).Physical.WorldMatrix = ((IPhysical)Parent).Physical.WorldMatrix *
-                                                            Matrix.Translation(x, y, z);
+                        ((IPhysical)Items[iItem]).Physical.WorldMatrix =
+                            Matrix.Translation(x, y, z)
+                            * ((IPhysical)Parent).Physical.WorldMatrix;
                         iItem++;
                     }
         }

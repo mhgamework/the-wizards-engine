@@ -24,6 +24,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         [Test]
         public void TestBigToSmallSlowFlow()
         {
+            engine.Initialize();
             var sim = new CrystalAverager();
                                                                                                                     
             var simpleCryst1 = new SimpleCrystal { Position = new Vector3(0, 0, 0), Capacity = 1000, Energy = 500 };
