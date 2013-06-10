@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}</ProjectGuid>
@@ -261,10 +261,11 @@
     <Compile Include="RTSTestCase1\Cannons\CannonSimulator.cs" />
     <Compile Include="RTSTestCase1\Characters\IRTSCharacter.cs" />
     <Compile Include="RTSTestCase1\CommandFactory.cs" />
-    <Compile Include="RTSTestCase1\Goblins\Cart.cs" />
+    <Compile Include="RTSTestCase1\Items\Cart.cs" />
     <Compile Include="RTSTestCase1\Goblins\Components\CommandHolderPart.cs" />
     <Compile Include="RTSTestCase1\Items\IItem.cs" />
     <Compile Include="RTSTestCase1\Items\CartHolderPart.cs" />
+    <Compile Include="RTSTestCase1\Players\PlayerInteractionPart.cs" />
     <Compile Include="RTSTestCase1\_Engine\ObjectParts\IObjectPart.cs" />
     <Compile Include="RTSTestCase1\Items\ItemStoragePart.cs" />
     <Compile Include="RTSTestCase1\_Engine\ObjectParts\ObjectPartInterfaces.cs">
@@ -569,6 +570,30 @@
     <Content Include="Engine\_Core\_doc.txt" />
     <Content Include="Engine\_doc.html" />
     <Content Include="LevelBuilding\_doc.txt" />
+    <Content Include="msvcm90d.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="msvcp90d.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="msvcr90d.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Novodex_C_Wrapper.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NxCharacter.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NxCooking.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PhysXLoader.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sharp3D.Math.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Tiling\_doc.txt" />
     <Content Include="Engine\WorldRendering\_doc.txt" />
     <Content Include="_doc.txt" />
@@ -586,6 +611,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeReference Include="Microsoft.VC90.DebugCRT, Version=9.0.21022.8, PublicKeyToken=1fc8b3b9a1e18e3b, ProcessorArchitecture=x86, Type=win32">
+      <Name>Microsoft.VC90.DebugCRT.manifest</Name>
+      <HintPath>..\_Libraries\VC++ 2008 DEBUG(NO SP1)\Microsoft.VC90.DebugCRT.manifest</HintPath>
+    </NativeReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
