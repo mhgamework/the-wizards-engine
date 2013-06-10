@@ -23,6 +23,7 @@ obj/
 !/bin/GameData/Core/
 !/bin/Scripts/
 /bin/Binaries/*
+/bin/BinariesGame/*
 /bin/Test/*
 /bin/Cache/*
 

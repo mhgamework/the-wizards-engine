@@ -38,6 +38,7 @@ namespace MHGameWork.TheWizards.Engine
         public TWEngine()
         {
             GameplayDll = "../../Gameplay/bin/x86/Debug/Gameplay.dll";
+            GameplayDll = "../BinariesGame/Gameplay.dll";
             codeLoader = new CodeLoader(this);
             TraceLogger = new EngineTraceLogger();
             EngineErrorLogger = new EngineErrorLogger();

@@ -165,6 +165,11 @@ namespace MHGameWork.TheWizards.Graphics
 
         public XNAGame()
         {
+#if NCRUNCH
+            AutoShutdown = 1;
+            DefaultInputDisabled = true;
+#endif
+
             lastInstance = this;
 
             graphics = new GraphicsDeviceManager(this);

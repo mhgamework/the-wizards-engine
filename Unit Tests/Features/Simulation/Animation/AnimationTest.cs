@@ -135,7 +135,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
         {
             var parser = new ASFParser();
 
-            using (var strm = EmbeddedFile.GetStream("MHGameWork.TheWizards.Tests.Animation.Files.TestSkeleton01.asf"))
+            using (var strm = EmbeddedFile.GetStream("MHGameWork.TheWizards.Tests.Features.Simulation.Animation.Files.TestSkeleton01.asf"))
             {
                 parser.ImportASF(strm);
             }
@@ -185,7 +185,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
 
             skeleton1.UpdateAbsoluteMatrices();
 
-            using (var strm = EmbeddedFile.GetStream("MHGameWork.TheWizards.Tests.Animation.Files.TestSkeleton01.asf"))
+            using (var strm = EmbeddedFile.GetStream("MHGameWork.TheWizards.Tests.Features.Simulation.Animation.Files.TestSkeleton01.asf"))
             {
                 parser.ImportASF(strm);
 
@@ -343,7 +343,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
         public void TestImportAMC()
         {
             AMCParser parser = new AMCParser();
-            using (var strm = EmbeddedFile.GetStream("MHGameWork.TheWizards.Tests.Animation.Files.TestAnimation01.amc"))
+            using (var strm = EmbeddedFile.GetStream("MHGameWork.TheWizards.Tests.Features.Simulation.Animation.Files.TestAnimation01.amc"))
             {
                 parser.ImportAMC(strm);
 
@@ -358,7 +358,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
         public void TestImportAMCCreateRelativeMatrices()
         {
             AMCParser parser = new AMCParser();
-            using (var strm = EmbeddedFile.GetStream("MHGameWork.TheWizards.Tests.Animation.Files.TestAnimation02.amc"))
+            using (var strm = EmbeddedFile.GetStream("MHGameWork.TheWizards.Tests.Features.Simulation.Animation.Files.TestAnimation02.amc"))
             {
                 parser.ImportAMC(strm);
 
@@ -366,7 +366,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
 
             // Import skeleton
             var asfParser = new ASFParser();
-            using (var strm = EmbeddedFile.GetStream("MHGameWork.TheWizards.Tests.Animation.Files.TestSkeleton02.asf"))
+            using (var strm = EmbeddedFile.GetStream("MHGameWork.TheWizards.Tests.Features.Simulation.Animation.Files.TestSkeleton02.asf"))
             {
                 asfParser.ImportASF(strm);
 

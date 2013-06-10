@@ -147,9 +147,6 @@
     <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
-    <Reference Include="TestRunner, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <ExecutableExtension>.exe</ExecutableExtension>
-    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -251,6 +248,10 @@
     <ProjectReference Include="..\NewModules\NewModules.csproj">
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
       <Name>NewModules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestRunner\TestRunner.csproj">
+      <Project>{ac6c51ce-96fb-401b-9b51-1302f273a52a}</Project>
+      <Name>TestRunner</Name>
     </ProjectReference>
     <ProjectReference Include="..\WPF\WPF.csproj">
       <Project>{8a52d3e0-5362-4d9f-a29e-32e24ad65eaf}</Project>

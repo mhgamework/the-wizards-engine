@@ -11,8 +11,8 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
         [Test]
         public void TestZip()
         {
-            string sPath = "ServerClient.exe";
-            var destFile = @"..\Test\Zip\ServerClient.exe.zip";
+            string sPath = AppDomain.CurrentDomain.BaseDirectory + "\\Unit Tests.dll";
+            var destFile = AppDomain.CurrentDomain.BaseDirectory + @"..\Test\Zip\Unit Tests.dll.zip";
             FileInfo fOut = new FileInfo(destFile);
             fOut.Directory.Create();
             ZipOutputStream zipOut = new ZipOutputStream(fOut.Create());
@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
 
             //Load
             ZipInputStream zipIn = new ZipInputStream(File.OpenRead(destFile));
-            FileStream streamWriter = File.Create(@"..\Test\Zip\ServerClient.exe");
+            FileStream streamWriter = File.Create(AppDomain.CurrentDomain.BaseDirectory +  @"..\Test\Zip\Unit Tests.dll");
             entry = zipIn.GetNextEntry();
             long size = entry.Size;
             byte[] data = new byte[size];

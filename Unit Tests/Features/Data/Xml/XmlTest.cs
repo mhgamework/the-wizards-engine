@@ -59,13 +59,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Data.Xml
             Assert.AreEqual(t, tRead);
         }
 
-        [Test]
-        public void TestCustomElementSerializer()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Test]
+      [Test]
         public void TestCustomSerializer()
         {
             var container = new SimpleContainerClass();
