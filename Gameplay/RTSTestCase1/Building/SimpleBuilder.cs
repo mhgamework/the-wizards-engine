@@ -10,10 +10,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Building
     /// </summary>
     public class SimpleBuilder
     {
-        private readonly SimpleWorldLocator locator;
+        private readonly IWorldLocator locator;
         private readonly IWorldDestroyer destroyer;
 
-        public SimpleBuilder(SimpleWorldLocator locator, IWorldDestroyer destroyer)
+        public SimpleBuilder(IWorldLocator locator, IWorldDestroyer destroyer)
         {
             this.locator = locator;
             this.destroyer = destroyer;

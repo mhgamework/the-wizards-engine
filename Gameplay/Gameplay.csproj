@@ -412,7 +412,6 @@
     <Compile Include="RTSTestCase1\Magic\Items\ResourceType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RTSTestCase1\Rendering\CannonRenderData.cs" />
     <Compile Include="RTSTestCase1\Rendering\GoblinRenderData.cs" />
     <Compile Include="RTSTestCase1\Rendering\RockRenderData.cs" />
     <Compile Include="RTSTestCase1\Rendering\RTSEntitySimulator.cs" />

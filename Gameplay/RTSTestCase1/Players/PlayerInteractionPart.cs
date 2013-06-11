@@ -1,5 +1,6 @@
 ﻿using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.RTSTestCase1.Cannons;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins.Components;
 
@@ -105,5 +106,15 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
             return Player.ItemStorage.Items.Count > 0 ? Player.ItemStorage.Items[0] : null;
         }
 
+        public void BuildCannon()
+        {
+            var pos = Targeter.TargetPoint;
+            pos.Y = 0;
+
+            var c = new Cannon();
+            c.Position = pos;
+
+            c.Buildable.ResetBuild();
+        }
     }
 }

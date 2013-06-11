@@ -27,6 +27,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
         public UserButtonEvent Jump;
         public UserButtonEvent Attack;
         public UserButtonEvent Use;
+        private UserButtonEvent BuildCannon;
+
 
         private IPlayerMovementController playerController;
 
@@ -50,6 +52,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
             Jump = buttonFactory.GetButton("moveJump");
             Attack = buttonFactory.GetButton("attack");
             Use = buttonFactory.GetButton("use");
+            BuildCannon = buttonFactory.GetButton("build1");
 
         }
 
@@ -64,19 +67,25 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
 
             simulateBuilding();
 
-            if (Use.Pressed)
-            {
-                localPlayer.PlayerInteraction.Targeter = this;
-                localPlayer.PlayerInteraction.Interact();
-            }
+            simulateInteraction();
 
 
         }
 
+        private void simulateInteraction()
+        {
+            if (!Use.Pressed) return;
+            localPlayer.PlayerInteraction.Targeter = this;
+            localPlayer.PlayerInteraction.Interact();
+        }
 
 
         private void simulateBuilding()
         {
+            localPlayer.PlayerInteraction.Targeter = this;
+
+            if (BuildCannon.Pressed)
+                localPlayer.PlayerInteraction.BuildCannon();
         }
 
         private static void updateLookDirection()

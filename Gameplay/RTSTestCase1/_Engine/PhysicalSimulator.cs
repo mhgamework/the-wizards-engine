@@ -33,6 +33,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1
                 }
 
                 //if (phys.Physical == null) phys.Physical = new Physical();
+                //phys.UpdatePhysical();
+            }
+            foreach (var phys in TW.Data.Objects.OfType<IPhysical>())
+            {
+                // This should be called on change only, but due to bugs it was moved to executing every frame.
                 phys.UpdatePhysical();
             }
 

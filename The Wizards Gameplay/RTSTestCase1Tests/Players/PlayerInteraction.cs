@@ -1,9 +1,12 @@
 ﻿using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Diagnostics.Tracing;
+using MHGameWork.TheWizards.RTSTestCase1.Cannons;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
 using NSubstitute;
 using NUnit.Framework;
+using SlimDX;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Tests.Players
 {
@@ -75,6 +78,19 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Tests.Players
             part.Interact();
 
             Assert.AreEqual(null, player.CartHolder.AssignedCart);
+        }
+
+        [Test]
+        public void TestBuildCannon()
+        {
+            targeter.Targeted.Returns(Substitute.For<IPhysical>());
+            targeter.TargetPoint.Returns(new Vector3(1, 0, 1));
+
+            part.BuildCannon();
+
+            Assert.That(TW.Data.Objects.OfType<Cannon>().Any(c => c.Position == new Vector3(1, 0, 1)));
+            
+
         }
     }
 }

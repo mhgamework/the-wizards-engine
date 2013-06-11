@@ -67,5 +67,14 @@ namespace MHGameWork.TheWizards.RTSTestCase1
             if (this.Mesh == null) return new BoundingBox(GetPosition(),GetPosition());
             return TW.Assets.GetBoundingBox(Mesh).Transform(Entity.WorldMatrix);
         }
+
+        /// <summary>
+        /// Overrides previous worldmatrix settings!
+        /// </summary>
+        /// <param name="pos"></param>
+        public void SetPosition(Vector3 pos)
+        {
+            WorldMatrix = Matrix.Translation(pos);
+        }
     }
 }

@@ -13,6 +13,7 @@ using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.RTS;
 using MHGameWork.TheWizards.RTSTestCase1.Animation;
+using MHGameWork.TheWizards.RTSTestCase1.Building;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using MHGameWork.TheWizards.RTSTestCase1.Inputting;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
@@ -80,6 +81,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             c.Register(Component.For<IDamageApplier>().ImplementedBy<SimpleDamageApplier>());
 
             c.Register(Component.For<SimpleItemPhysicsUpdater>());
+            c.Register(Component.For<SimpleBuilder>());
             
 
             engine.AddSimulator(c.Resolve<NetworkReceiveSimulator>());
@@ -108,6 +110,17 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                         d.Thing = new Thing() { Type = ResourceFactory.Get.Wood };
                         d.Item.Free = true;
                         d.Physical.WorldMatrix = Matrix.Translation(5 + i, 0, 5);
+
+
+                        d = new DroppedThing();
+                        d.Thing = new Thing() { Type = ResourceFactory.Get.Stone };
+                        d.Item.Free = true;
+                        d.Physical.WorldMatrix = Matrix.Translation(5 + i, 0, 6);
+
+                        d = new DroppedThing();
+                        d.Thing = new Thing() { Type = ResourceFactory.Get.Cannonball };
+                        d.Item.Free = true;
+                        d.Physical.WorldMatrix = Matrix.Translation(5 + i, 0, 7);
                     }
 
 

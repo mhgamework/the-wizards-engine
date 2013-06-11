@@ -124,7 +124,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Cannons
         public Physical Physical { get; set; }
         public void UpdatePhysical()
         {
-            
+            var scale = Buildable.BuildProgress*0.9f + 0.1f;
+            Physical.WorldMatrix = Matrix.Scaling(scale,scale,scale)* Matrix.RotationY(Angle) * Matrix.Translation(Position);
+            Physical.Mesh = TW.Assets.LoadMesh("RTS\\Cannon");
         }
     }
 }

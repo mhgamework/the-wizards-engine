@@ -29,17 +29,20 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Building
         public void ResetBuild()
         {
             BuildProgress = 0;
+            ResourcesRemaining.Clear();
             ResourcesRemaining.AddRange(RequiredResources);
         }
 
         public bool StillNeedsResource(ResourceType type)
         {
-            return RequiredResources.Contains(type);
+            return ResourcesRemaining.Contains(type);
         }
 
         public void ProvideResource(ResourceType type)
         {
-            if (!ResourcesRemaining.Remove(type)) throw new InvalidOperationException();
+            if (!ResourcesRemaining.Contains(type)) throw new InvalidOperationException("This resource is not required anymore!");
+
+            ResourcesRemaining.Remove(type);
 
             BuildProgress = 1 - ResourcesRemaining.Count / (float)RequiredResources.Count;
         }

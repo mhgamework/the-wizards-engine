@@ -109,8 +109,13 @@ namespace MHGameWork.TheWizards.Engine
             // Hack to stop serializer from failing!
             data.ErrorArea.Text += "\n";
 
-            if (TW.Debug.LastException.InnerException != null)
-                data.ErrorArea.Text += TW.Debug.LastException.InnerException.GetType().Name + " - " + TW.Debug.LastException.InnerException.Message;
+            Exception inner = TW.Debug.LastException;
+            while ( (inner = inner.InnerException) != null)
+            {
+                data.ErrorArea.Text += inner.GetType().Name + " - " + inner.Message;
+                    //new string(inner.StackTrace.TakeWhile(c => c != '\n').ToArray());
+
+            }
 
             var wrappedLines = Wrap(data.ErrorArea.Text, 100);
             data.ErrorArea.Text = wrappedLines.Aggregate("", (agg, part) => agg + part + "\n");

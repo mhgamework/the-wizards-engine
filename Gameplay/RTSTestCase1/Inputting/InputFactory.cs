@@ -24,6 +24,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Inputting
             addButton("moveStrafeRight", Key.D);
             addButton("moveJump", Key.Space);
             addButton("use", Key.F);
+            addButton("build1", Key.D1);
             setLeftMouse("attack");
         }
 
