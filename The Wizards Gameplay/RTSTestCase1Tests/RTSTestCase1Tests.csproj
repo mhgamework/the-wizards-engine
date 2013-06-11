@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="AnimationTest.cs" />
     <Compile Include="Building\BuildingTest.cs" />
+    <Compile Include="Goblins\SpawningTest.cs" />
     <Compile Include="Items\ItemPhysics.cs" />
     <Compile Include="Items\ItemTest.cs" />
     <Compile Include="Players\PlayerInteractionTest.cs" />

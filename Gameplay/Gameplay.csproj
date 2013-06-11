@@ -377,8 +377,6 @@
     <Compile Include="RTSTestCase1\_Sandbox\SimpleDamageApplier.cs" />
     <Compile Include="RTSTestCase1\_Sandbox\SimpleWorldDestroyer.cs" />
     <Compile Include="RTSTestCase1\_Sandbox\SimpleWorldLocator.cs" />
-    <Compile Include="RTSTestCase1\_Tests\RTSTestCase1Test.cs" />
-    <Compile Include="RTSTestCase1\_Tests\SpawningTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldBuilderTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\GoblinsTest.cs" />

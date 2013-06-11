@@ -31,12 +31,15 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
             simulateBuilding();
             CannonSimulator.Simulate();
         }
+
         private void SimulateSpawn()
         {
             var points = TW.Data.Objects.OfType<GoblinSpawnPoint>();
             foreach (var goblinSpawnerPoint in points.ToArray())
             {
-                GoblinSpawner.Simulate(TW.Graphics.Elapsed,goblinSpawnerPoint);
+                GoblinSpawner.Simulate(TW.Graphics.Elapsed, goblinSpawnerPoint);
+            }
+        }
 
         private float time = 0;
         private void simulateBuilding()

@@ -1,13 +1,7 @@
-﻿using System;
-using MHGameWork.TheWizards.Debugging;
-using MHGameWork.TheWizards.Engine.Features.Testing;
-using MHGameWork.TheWizards.RTSTestCase1.Goblins.Spawning;
-using MHGameWork.TheWizards.RTSTestCase1.Magic;
+﻿using MHGameWork.TheWizards.Engine.Features.Testing;
 using NUnit.Framework;
-using Rhino.Mocks;
-using SlimDX;
 
-namespace MHGameWork.TheWizards.RTSTestCase1._Tests
+namespace MHGameWork.TheWizards.RTSTestCase1.Tests.Goblins
 {
     [TestFixture]
     [EngineTest]
