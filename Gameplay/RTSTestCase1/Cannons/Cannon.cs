@@ -10,7 +10,7 @@ using SlimDX;
 namespace MHGameWork.TheWizards.RTSTestCase1.Cannons
 {
     [ModelObjectChanged]
-    public class Cannon : EngineModelObject,IPhysical,IBuildable
+    public class Cannon : EngineModelObject, IPhysical, IBuildable
     {
         public Vector3 Position { get; set; }
         public float Angle { get; set; }
@@ -39,7 +39,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Cannons
 
         public void Update()
         {
-            
+
             if (Sound.Sound == null)
             {
                 Sound.Sound = SoundFactory.Load("RTS\\CannonShot.wav");
@@ -47,6 +47,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Cannons
                 Sound.Loop = false;
                 Sound.Ambient = false;
             }
+
+            if (Buildable.BuildProgress < 1) return;
 
             var targetAngle = calculateTargetAngle();
             if (!reachedAngle(targetAngle))
@@ -124,8 +126,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Cannons
         public Physical Physical { get; set; }
         public void UpdatePhysical()
         {
-            var scale = Buildable.BuildProgress*0.9f + 0.1f;
-            Physical.WorldMatrix = Matrix.Scaling(scale,scale,scale)* Matrix.RotationY(Angle) * Matrix.Translation(Position);
+            var scale = Buildable.BuildProgress * 0.9f + 0.1f;
+            Physical.WorldMatrix = Matrix.Scaling(scale, scale, scale) * Matrix.RotationY(Angle) * Matrix.Translation(Position);
             Physical.Mesh = TW.Assets.LoadMesh("RTS\\Cannon");
         }
     }

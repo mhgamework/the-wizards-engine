@@ -130,6 +130,22 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
                     var t = new Tree();
                     t.Position = new Vector3(12,0,3);
+
+                    t = new Tree();
+                    t.Position = new Vector3(15, 0, 3);
+
+                    t = new Tree();
+                    t.Position = new Vector3(17, 0, 3);
+
+
+                    var r = new Rock();
+                    r.Position = new Vector3(-12, 0, 8);
+
+                    r = new Rock();
+                    r.Position = new Vector3(-15, 0, 20);
+
+                    r = new Rock();
+                    r.Position = new Vector3(-17, 0, 14);
                 };
 
 

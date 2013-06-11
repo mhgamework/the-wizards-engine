@@ -12,11 +12,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1
         public ResourceFactory()
         {
             //TODO: this is not allowed!!! the contents in these variables are lost on hotloading , so the resourcetypes become unlinked.
-            Stone = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS//bark.jpg") };
-            Wood = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS//bark.jpg") };
+            Stone = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS//Resources//Stone.png") };
+            Wood = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS//Resources//Wood.jpg") };
             Barrel = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS//bark.jpg") };
             Crystal = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS//bark.jpg") };
-            Cannonball = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS//bark.jpg") };
+            Cannonball = new ResourceType() { Texture = TW.Assets.LoadTexture("RTS//Resources//Cannonball.png") };
 
         }
         public ResourceType Stone { get; private set; }

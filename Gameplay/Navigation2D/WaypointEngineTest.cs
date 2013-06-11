@@ -10,6 +10,7 @@ using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTS;
+using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
 using NUnit.Framework;
@@ -124,7 +125,7 @@ namespace MHGameWork.TheWizards.Navigation2D
             engine.AddSimulator(new NavigableGrid2DVizualizationSimulator());
 
             engine.AddSimulator(new GoblinMovementSimulatorSimple());
-            engine.AddSimulator(new RTSEntitySimulator());
+            engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new WaypointVisualizer());
 
             //engine.AddSimulator(new EntityBatcherSimulator());
@@ -149,7 +150,7 @@ namespace MHGameWork.TheWizards.Navigation2D
             engine.AddSimulator(new NavigableGrid2DVizualizationSimulator());
 
             engine.AddSimulator(new GoblinMovementSimulatorSimple());
-            engine.AddSimulator(new RTSEntitySimulator());
+            engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new WaypointVisualizer());
 
             //engine.AddSimulator(new EntityBatcherSimulator());

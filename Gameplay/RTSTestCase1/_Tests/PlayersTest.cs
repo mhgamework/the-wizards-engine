@@ -141,7 +141,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             //engine.AddSimulator(new PlayerTargetingSimulator());
             //engine.AddSimulator(new UpdateSimulator());
             //engine.AddSimulator(new PhysicalSimulator());
-            //engine.AddSimulator(new RTSEntitySimulator());
+            //engine.AddSimulator(new PhysicalSimulator());
 
             //engine.AddSimulator(new WorldRenderingSimulator());
 
@@ -166,7 +166,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
             engine.AddSimulator(new PickupSimulator());
 
-            engine.AddSimulator(new RTSEntitySimulator());
+            engine.AddSimulator(new PhysicalSimulator());
 
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
@@ -201,7 +201,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 
             engine.AddSimulator(new PickupSimulator());
 
-            engine.AddSimulator(new RTSEntitySimulator());
+            engine.AddSimulator(new PhysicalSimulator());
 
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());

@@ -20,7 +20,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
         public WorldRenderingSimulator WorldRenderingSimulator { get; set; }
         public CrystalInfoDrawSimulator CrystalInfoDrawSimulator { get; set; }
 
-        public RTSEntitySimulator RTSEntitySimulator { get; set; }
 
         public void Simulate()
         {
@@ -28,7 +27,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
 
             PlayerCameraSimulator.Simulate();
 
-            RTSEntitySimulator.Simulate(); //Remove: this is replace by the physical simulator
             PhysicalSimulator.Simulate();
 
             CrystalInfoDrawSimulator.Simulate();

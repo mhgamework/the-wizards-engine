@@ -58,7 +58,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             createTree();
             createRock();
             engine.AddSimulator(new WorldResourceGenerationWithPipesSimulator());
-            engine.AddSimulator(new RTSEntitySimulator());
+            engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.AddSimulator(new PhysXDebugRendererSimulator());
@@ -70,7 +70,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             createTree();
             createRock();
             engine.AddSimulator(new WorldResourceGenerationWithPipesSimulator());
-            engine.AddSimulator(new RTSEntitySimulator());
+            engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
         }
 
@@ -84,7 +84,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         {
             engine.AddSimulator(new TestOutputPipeSimulator());
 
-            engine.AddSimulator(new RTSEntitySimulator());
+            engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.AddSimulator(new PhysXDebugRendererSimulator());
@@ -95,7 +95,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             engine.AddSimulator(new TestOutputPipeSimulator());
             engine.AddSimulator(new TestOutputPipeSimulator());
 
-            engine.AddSimulator(new RTSEntitySimulator());
+            engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.AddSimulator(new PhysXDebugRendererSimulator());

@@ -105,7 +105,24 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Tests.Building
             foreach (var r in buildable.Buildable.RequiredResources)
                 builder.BuildSingleResource(buildable);
 
-            Assert.That(buildable.Buildable.BuildProgress, Is.EqualTo(1));
+            Assert.That(buildable.Buildable.BuildProgress, Is.Not.EqualTo(1));
+        }
+
+        [Test]
+        public void TestOnlyTakeFree()
+        {
+            var r = buildable.Buildable.RequiredResources.First();
+            var d = new DroppedThing() { Thing = new Thing() { Type = r } };
+            d.Item.Free = false;
+
+            builder.BuildSingleResource(buildable);
+            Assert.That(buildable.Buildable.BuildProgress, Is.EqualTo(0));
+
+            d.Item.Free = true;
+
+            builder.BuildSingleResource(buildable);
+            Assert.That(buildable.Buildable.BuildProgress, Is.GreaterThan(0));
+
         }
 
         /// <summary>

@@ -380,7 +380,6 @@
     <Compile Include="RTSTestCase1\_Tests\InputTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\PlayersTest.cs" />
     <Compile Include="RTSTestCase1\Rendering\CrystalGlowSimulator.cs" />
-    <Compile Include="RTSTestCase1\Rendering\MachineRenderData.cs" />
     <Compile Include="RTSTestCase1\_Tests\EnergyFlowTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\MagicTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\PickupTest.cs" />
@@ -413,8 +412,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RTSTestCase1\Rendering\GoblinRenderData.cs" />
-    <Compile Include="RTSTestCase1\Rendering\RockRenderData.cs" />
-    <Compile Include="RTSTestCase1\Rendering\RTSEntitySimulator.cs" />
     <Compile Include="RTSTestCase1\ResourceFactory.cs" />
     <Compile Include="RTSTestCase1\WorldResources\DroppedThingOutputPipe.cs" />
     <Compile Include="RTSTestCase1\WorldResources\Rock.cs" />

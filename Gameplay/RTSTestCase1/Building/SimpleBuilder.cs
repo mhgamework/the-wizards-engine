@@ -24,7 +24,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Building
 
         public void BuildSingleResource(IBuildable buildable)
         {
-            var item = locator.AtObject((IPhysical)buildable, BuildRange).OfType<DroppedThing>().FirstOrDefault(d => buildable.Buildable.StillNeedsResource(d.Thing.Type));
+            var item = locator
+                .AtObject((IPhysical)buildable, BuildRange)
+                .OfType<DroppedThing>()
+                .FirstOrDefault(d => d.Item.Free && buildable.Buildable.StillNeedsResource(d.Thing.Type));
 
             if (item == null) return;
 

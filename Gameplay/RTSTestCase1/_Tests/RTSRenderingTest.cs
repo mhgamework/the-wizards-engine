@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             createRocks();
             createDroppedThing();
 
-            engine.AddSimulator(new RTSEntitySimulator());
+            engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new PhysXSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.AddSimulator(new PhysXDebugRendererSimulator());
@@ -56,11 +56,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         public void TestRenderRock()
         {
             createRocks();
-            engine.AddSimulator(new BasicSimulator(delegate
-            {
-                TW.Data.EnsureAttachment<Rock, RockRenderData>(o => new RockRenderData(o));
-                foreach (Rock t in TW.Data.GetChangedObjects<Rock>()) t.get<RockRenderData>().Update();
-            }));
+          
+            engine.AddSimulator( new PhysicalSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
         }
 

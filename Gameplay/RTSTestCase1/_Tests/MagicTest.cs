@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             var crystal4 = new SimpleCrystal() { Position = new Vector3(30, 0, 0), Capacity = 1000, Energy = 1000 };
             engine.AddSimulator(new CrystalBrownSimulator());
             engine.AddSimulator(new MagicSimulator());
-            engine.AddSimulator(new RTSEntitySimulator());
+            engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new CrystalInfoDrawSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
                
