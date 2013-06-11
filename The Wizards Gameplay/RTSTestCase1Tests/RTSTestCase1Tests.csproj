@@ -65,7 +65,7 @@
     <Compile Include="Building\BuildingTest.cs" />
     <Compile Include="Items\ItemPhysics.cs" />
     <Compile Include="Items\ItemTest.cs" />
-    <Compile Include="Players\PlayerInteraction.cs" />
+    <Compile Include="Players\PlayerInteractionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequiresPostSharp.cs" />
     <Compile Include="Resources\ResourceGenerationTest.cs" />

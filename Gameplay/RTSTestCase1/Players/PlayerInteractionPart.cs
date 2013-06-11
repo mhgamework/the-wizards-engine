@@ -3,26 +3,31 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.RTSTestCase1.Cannons;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins.Components;
+using MHGameWork.TheWizards.RTSTestCase1._Common;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Players
 {
+    /// <summary>
+    /// TODO: This has no meaning as part?? convert to component?
+    /// </summary>
     [ModelObjectChanged]
     public class PlayerInteractionPart : EngineModelObject, IObjectPart
     {
         public IUserPlayer Player { get; set; }
         public IUserTargeter Targeter { get; set; }
 
+        public IWorldLocator WorldLocator { get; set; }
 
         public void Interact()
         {
             // Note that this is a chain of responsibility
-
-            if (tryPutInStorage()) return;
             if (tryTakeCart()) return;
 
-            if (Targeter.Targeted is Cart
-                && simulateUseCart((Cart)Targeter.Targeted))
-                return;
+            if (tryPickupInCart()) return;
+            if (tryPickupInPlayer()) return;
+
+            if (tryReleaseCart()) return;
             if (Targeter.Targeted is IItem
                 && simulateUseItem((IItem)Targeter.Targeted))
                 return;
@@ -30,7 +35,22 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
             simulateUseOther();
         }
 
-        private bool tryPutInStorage()
+        private bool tryPickupInCart()
+        {
+            var item = Targeter.Targeted as IItem;
+            if (item == null) return false;
+            if (TW.Data.Objects.OfType<Cart>().Any(c => c.ItemStorage.Items.Contains(item))) return false;
+
+            var cart = WorldLocator.AtPosition(Player.Physical.GetPosition(), 3).OfType<Cart>().FirstOrDefault(c => !c.ItemStorage.IsFull);
+
+            if (cart == null) return false;
+
+            item.Item.PutInStorage(cart);
+
+            return true;
+        }
+
+        private bool tryPickupInPlayer()
         {
             var store = Targeter.Targeted as IItemStorage;
 
@@ -71,14 +91,17 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
         }
 
 
-        private bool simulateUseCart(Cart cart)
+        private bool tryReleaseCart()
         {
-
-
+            var cart = Targeter.Targeted as Cart;
+            if (cart == null) return false;
+            if (Player.CartHolder.AssignedCart == null) return false;
             // Holding a cart and clicked on a cart => just release current cart
             Player.CartHolder.ReleaseCart();
             return true;
         }
+
+
 
         private bool simulateUseItem(IItem item)
         {

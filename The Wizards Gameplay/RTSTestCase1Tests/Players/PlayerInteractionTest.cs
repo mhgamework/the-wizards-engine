@@ -2,7 +2,9 @@
 using MHGameWork.TheWizards.Engine.Diagnostics.Tracing;
 using MHGameWork.TheWizards.RTSTestCase1.Cannons;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins;
+using MHGameWork.TheWizards.RTSTestCase1.Items;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
+using MHGameWork.TheWizards.RTSTestCase1._Tests;
 using NSubstitute;
 using NUnit.Framework;
 using SlimDX;
@@ -11,7 +13,7 @@ using System.Linq;
 namespace MHGameWork.TheWizards.RTSTestCase1.Tests.Players
 {
     [TestFixture]
-    public class PlayerInteraction
+    public class PlayerInteractionTest
     {
         private PlayerInteractionPart part;
         private UserPlayer player;
@@ -19,6 +21,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Tests.Players
         private Cart cart;
         private Cart cart2;
         private UserPlayer player2;
+        private DroppedThing item;
 
         [SetUp]
         public void Setup()
@@ -26,6 +29,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Tests.Players
             TestUtilities.SetupTWContext();
 
             part = new PlayerInteractionPart();
+            part.WorldLocator = new SimpleWorldLocator();
 
             player = Substitute.For<UserPlayer>();
             player2 = Substitute.For<UserPlayer>();
@@ -35,7 +39,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Tests.Players
             part.Targeter = targeter;
 
             cart = Substitute.For<Cart>();
+            cart.ItemStorage.Capacity = 5;
             cart2 = Substitute.For<Cart>();
+
+            item = new DroppedThing();
+            
         }
 
         [Test]
@@ -78,6 +86,41 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Tests.Players
             part.Interact();
 
             Assert.AreEqual(null, player.CartHolder.AssignedCart);
+        }
+
+        [Test]
+        public void TestPickupWhenCartNear()
+        {
+            targeter.Targeted.Returns(item);
+            
+            part.Interact();
+
+            Assert.That(player.ItemStorage.IsEmpty);
+            Assert.That(cart.ItemStorage.Items.Contains(item));
+        }
+
+        [Test]
+        public void TestPickupWhenNoCartNear()
+        {
+            targeter.Targeted.Returns(item);
+            cart.Physical.SetPosition(new Vector3(10,0,0));
+
+            part.Interact();
+
+            Assert.That(!player.ItemStorage.IsEmpty);
+            Assert.That(!cart.ItemStorage.Items.Contains(item));
+        }
+
+        [Test]
+        public void TestTakeFromCart()
+        {
+            targeter.Targeted.Returns(item);
+            item.Item.PutInStorage(cart);
+
+            part.Interact();
+
+            Assert.That(!player.ItemStorage.IsEmpty);
+            Assert.That(!cart.ItemStorage.Items.Contains(item));
         }
 
         [Test]

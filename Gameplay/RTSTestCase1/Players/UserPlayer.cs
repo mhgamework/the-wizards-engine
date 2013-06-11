@@ -62,6 +62,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Players
             CartHolder.Parent = this;
             PlayerInteraction = new PlayerInteractionPart();
             PlayerInteraction.Player = this;
+            ItemStorage.Capacity = 1;
 
         }
 

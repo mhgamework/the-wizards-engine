@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using MHGameWork.TheWizards.RTSTestCase1.Inputting;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
+using MHGameWork.TheWizards.RTSTestCase1._Common;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
@@ -39,6 +40,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
         /// Pull out the attacksimulator?
         /// </summary>
         public PlayerGroundAttacker groundAttacker { get; set; }
+        public IWorldLocator WorldLocator { get; set; }
 
         public UserPlayerSimulator(IPlayerMovementController playerController)
         {
@@ -65,6 +67,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
 
             simulateAttacks();
 
+
+            localPlayer.PlayerInteraction.Targeter = this;
+            localPlayer.PlayerInteraction.WorldLocator = WorldLocator;
+
             simulateBuilding();
 
             simulateInteraction();
@@ -75,15 +81,13 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
         private void simulateInteraction()
         {
             if (!Use.Pressed) return;
-            localPlayer.PlayerInteraction.Targeter = this;
+            
             localPlayer.PlayerInteraction.Interact();
         }
 
 
         private void simulateBuilding()
         {
-            localPlayer.PlayerInteraction.Targeter = this;
-
             if (BuildCannon.Pressed)
                 localPlayer.PlayerInteraction.BuildCannon();
         }
