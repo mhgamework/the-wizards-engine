@@ -289,10 +289,8 @@
     <Compile Include="RTSTestCase1\Goblins\GoblinCommandType.cs" />
     <Compile Include="RTSTestCase1\Goblins\GoblinFollowBehaviour.cs" />
     <Compile Include="RTSTestCase1\Items\StorageCrate.cs" />
-    <Compile Include="RTSTestCase1\Goblins\ItemStorageSimulator.cs" />
     <Compile Include="RTSTestCase1\Goblins\Spawning\GoblinSpawner.cs" />
     <Compile Include="RTSTestCase1\Goblins\Spawning\GoblinSpawnPoint.cs" />
-    <Compile Include="RTSTestCase1\Goblins\StorageCrate.cs" />
     <Compile Include="RTSTestCase1\Goblins\TerrainCube.cs" />
     <Compile Include="RTSTestCase1\Inputting\InputFactory.cs" />
     <Compile Include="RTSTestCase1\Simulators\AnimationSimulator.cs" />

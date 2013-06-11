@@ -34,7 +34,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Simulators
         private void SimulateSpawn()
         {
             var points = TW.Data.Objects.OfType<GoblinSpawnPoint>();
-            foreach (var goblinSpawnerPoint in points)
+            foreach (var goblinSpawnerPoint in points.ToArray())
             {
                 GoblinSpawner.Simulate(TW.Graphics.Elapsed,goblinSpawnerPoint);
 
