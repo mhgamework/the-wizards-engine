@@ -102,9 +102,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Showcase
         public void TestShowcaseGBuffer()   
         {
             drawMeshTest(RenderingTestsHelper.CreateMeshFromObj(new OBJToRAMMeshConverter(new RAMTextureFactory()),
-                                                                  TWDir.GameData +
                                                                   RenderingTestsHelper.ShowcaseOBJ,
-                                                                  TWDir.GameData +
                                                                   RenderingTestsHelper.ShowcaseMTL), Matrix.Scaling(1, 1, 1));
         }
 
