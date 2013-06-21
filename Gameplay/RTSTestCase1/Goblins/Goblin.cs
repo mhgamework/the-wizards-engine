@@ -1,4 +1,6 @@
+using System;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Debugging;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.MathExtra;
@@ -13,10 +15,36 @@ using System.Linq;
 namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 {
     [ModelObjectChanged]
-    public class Goblin : EngineModelObject, IRTSCharacter, IPhysical, IItemStorage,IGoblin
+    public class Goblin : EngineModelObject, IRTSCharacter, IPhysical, IItemStorage, IGoblin
     {
         public Entity Attacked { get; set; }
-        public Vector3 Position { get; set; }
+        public Vector3 Position
+        {
+            get
+            {
+                try
+                {
+                    return Physical.GetPosition();
+
+                }
+                catch (Exception ex)
+                {
+                    DI.Get<IErrorLogger>().Log(ex, "Goblin");
+                }
+                return new Vector3();
+            }
+            set
+            {
+                try
+                {
+                    Physical.SetPosition(value);
+                }
+                catch (Exception ex)
+                {
+                    DI.Get<IErrorLogger>().Log(ex, "Goblin");
+                }
+            }
+        }
         public Vector3 Goal { get; set; }
         public Thing Holding { get; set; }
         public Entity Used { get; set; }
@@ -61,7 +89,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
         {
             var pos = Position;
             pos.Y = 0.5f;
-            var drop = new DroppedThing() { Thing = Holding  };
+            var drop = new DroppedThing() { Thing = Holding };
             drop.Physical.WorldMatrix = Matrix.Translation(CalculateHoldingResourcePosition());
             Holding = null;
         }
@@ -139,18 +167,18 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
                 return;
             }
 
-            if (g.Commands. GetOrb(fact.MoveSource)!= null && g.ItemStorage.Items.Count == 0)
+            if (g.Commands.GetOrb(fact.MoveSource) != null && g.ItemStorage.Items.Count == 0)
             {
                 var orb = g.Commands.GetOrb(fact.MoveSource);
                 if (orb.CurrentHolder is IItemStorage)
                 {
-                    var storage = (IItemStorage) orb.CurrentHolder;
+                    var storage = (IItemStorage)orb.CurrentHolder;
                     var f = new GoblinMoveSourceBehaviour(storage);
 
                     f.Update(g);
                     return;
                 }
-                
+
             }
             if (g.Commands.GetOrb(fact.MoveTarget) != null && g.ItemStorage.Items.Count > 0)
             {
@@ -166,12 +194,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 
             }
 
-           
+
 
 
         }
 
-       
+
 
         private bool hasCommand(GoblinCommandType type)
         {
@@ -185,11 +213,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
             if (toGoal.Length() < 0.01) return;
             toGoal.Normalize();
             toGoal = toGoal * 2;
-            g.Physical.WorldMatrix = g.Physical.WorldMatrix*Matrix.Translation(toGoal*TW.Graphics.Elapsed);
+            g.Physical.WorldMatrix = g.Physical.WorldMatrix * Matrix.Translation(toGoal * TW.Graphics.Elapsed);
 
             if (g.Cart != null)
             {
-                g.Cart.Physical.WorldMatrix = g.Physical.WorldMatrix*Matrix.Translation(0, 0, 1.7f);
+                g.Cart.Physical.WorldMatrix = g.Physical.WorldMatrix * Matrix.Translation(0, 0, 1.7f);
             }
         }
 

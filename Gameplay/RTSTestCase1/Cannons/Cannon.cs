@@ -53,13 +53,14 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Cannons
             var targetAngle = calculateTargetAngle();
             if (!reachedAngle(targetAngle))
                 turnToTarget(targetAngle);
-            else
-                attemptFire();
+
+            attemptFire();
         }
 
         private void attemptFire()
         {
             if (NextShot > TW.Graphics.TotalRunTime) return;
+            if (Math.Abs(calculateTargetAngle() - Angle) > 0.1) return;
             resetShotInterval();
             Sound.Start();
             var g = findClosestGoblin();
@@ -79,7 +80,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Cannons
             var add = Math.Sign(diff) * TW.Graphics.Elapsed * speed;
             if (Math.Abs(add) > Math.Abs(diff)) add = diff;
             Angle += add;
-            resetShotInterval();
+            
         }
 
 

@@ -111,12 +111,16 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                 {
                     new Groundplane();
 
-                    var g = new Goblin();
-                    g.Physical.WorldMatrix = Matrix.Translation(3, 0, 3);
-                    var crystal = new SimpleCrystal(){Capacity = 1000,Energy = 500};
+                    //var g = new Goblin();
+                    //g.Physical.WorldMatrix = Matrix.Translation(3, 0, 3);
+                    //var crystal = new SimpleCrystal(){Capacity = 1000,Energy = 500};
                     
                     var spawner = new GoblinSpawnPoint();
-                    spawner.Position = new Vector3(4, 0, 6);
+                    spawner.Position = new Vector3(24, 0, 16);
+                    spawner = new GoblinSpawnPoint();
+                    spawner.Position = new Vector3(18, 0, 24);
+                    spawner = new GoblinSpawnPoint();
+                    spawner.Position = new Vector3(20, 0, 19);
 
                     for (int i = 0; i < 10; i++)
                     {
