@@ -26,6 +26,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Showcase
     {
         private const string ShowcaseCamera = "../../Unit Tests/Features/Rendering/Showcase/camera.xml";
 
+        [Xunit.Fact]
         [Test]
         public void TestCompleteShowcase()
         {
