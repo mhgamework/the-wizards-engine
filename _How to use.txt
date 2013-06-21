@@ -46,3 +46,12 @@ Solution: Add these files to the executables folder:
 _Libraries\VC++ 2008 DEBUG(NO SP1)
 
 WARNING: when using retail StillDesign.PhysX, these files should probably be removed!
+
+
+-- To enable running tests with visual studio testrunner:
+-- Add to C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.executionengine.x86.exe.config
+<startup useLegacyV2RuntimeActivationPolicy="true">
+    <supportedRuntime version="v4.0"/>
+    <supportedRuntime version="v2.0.50727"/>
+</startup> 
+-- then RESTART visualstudio!!!
