@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3626AC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RTSTestCase1Tests", "RTSTestCase1Tests\RTSTestCase1Tests.csproj", "{F1121190-BB28-43AB-B5BF-9174C2CAB910}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyMerchantTests", "SkyMerchantTests\SkyMerchantTests.csproj", "{79FF4DEF-251E-4743-AE1E-8146162E972D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,21 @@ Global
 		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F1121190-BB28-43AB-B5BF-9174C2CAB910}.Release|x86.ActiveCfg = Release|Any CPU
+		{79FF4DEF-251E-4743-AE1E-8146162E972D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79FF4DEF-251E-4743-AE1E-8146162E972D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79FF4DEF-251E-4743-AE1E-8146162E972D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{79FF4DEF-251E-4743-AE1E-8146162E972D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{79FF4DEF-251E-4743-AE1E-8146162E972D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{79FF4DEF-251E-4743-AE1E-8146162E972D}.Profile|Any CPU.ActiveCfg = Release|Any CPU
+		{79FF4DEF-251E-4743-AE1E-8146162E972D}.Profile|Any CPU.Build.0 = Release|Any CPU
+		{79FF4DEF-251E-4743-AE1E-8146162E972D}.Profile|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{79FF4DEF-251E-4743-AE1E-8146162E972D}.Profile|Mixed Platforms.Build.0 = Release|Any CPU
+		{79FF4DEF-251E-4743-AE1E-8146162E972D}.Profile|x86.ActiveCfg = Release|Any CPU
+		{79FF4DEF-251E-4743-AE1E-8146162E972D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79FF4DEF-251E-4743-AE1E-8146162E972D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79FF4DEF-251E-4743-AE1E-8146162E972D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{79FF4DEF-251E-4743-AE1E-8146162E972D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{79FF4DEF-251E-4743-AE1E-8146162E972D}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

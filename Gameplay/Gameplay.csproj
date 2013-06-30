@@ -435,6 +435,11 @@
     <Compile Include="RTSTestCase1\_Tests\ShapeDetectorTest.cs" />
     <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulatorSimple.cs" />
     <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulator.cs" />
+    <Compile Include="SkyMerchant\Array3D.cs" />
+    <Compile Include="SkyMerchant\IFiniteVoxels.cs" />
+    <Compile Include="SkyMerchant\IslandsTest.cs" />
+    <Compile Include="SkyMerchant\VoxelMaterial.cs" />
+    <Compile Include="SkyMerchant\VoxelMeshBuilder.cs" />
     <Compile Include="_Features\TextMenu.cs" />
     <Compile Include="_Features\TextMenuItem.cs" />
     <Compile Include="Pickup\Inventory.cs" />

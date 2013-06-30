@@ -65,15 +65,7 @@ namespace MHGameWork.TheWizards.Engine.VoxelTerraining
             return Voxels[pos.X, pos.Y, pos.Z];
         }
 
-        public IEnumerable<Point3> GetNeighbourPositions(Point3 curr)
-        {
-            yield return new Point3(curr.X + 1, curr.Y, curr.Z);
-            yield return new Point3(curr.X - 1, curr.Y, curr.Z);
-            yield return new Point3(curr.X, curr.Y - 1, curr.Z);
-            yield return new Point3(curr.X, curr.Y + 1, curr.Z);
-            yield return new Point3(curr.X, curr.Y, curr.Z + 1);
-            yield return new Point3(curr.X, curr.Y, curr.Z - 1);
-        }
+       
 
         public class Voxel
         {
