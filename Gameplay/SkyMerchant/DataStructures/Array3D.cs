@@ -1,7 +1,11 @@
 ﻿using DirectX11;
 
-namespace SkyMerchantTests
+namespace MHGameWork.TheWizards.SkyMerchant.DataStructures
 {
+    /// <summary>
+    /// Represents a array that can be accessed using Point3
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Array3D<T>
     {
         private T[, ,] arr;

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DirectX11;
-using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
-namespace SkyMerchantTests
+namespace MHGameWork.TheWizards.SkyMerchant.Voxels
 {
     public class VoxelMeshBuilder
     {
@@ -98,7 +96,7 @@ namespace SkyMerchantTests
                         nPos[j] = center + dir + up + right;
                         j++;
                     }
-
+                    
 
                     {
                         var j = 0;

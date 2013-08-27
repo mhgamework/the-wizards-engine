@@ -76,5 +76,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1
         {
             WorldMatrix = Matrix.Translation(pos);
         }
+
+        public void MoveTo(Vector3 target, float elapsed)
+        {
+            var newPos = GetPosition();
+            newPos = Vector3.Normalize(target - newPos) * elapsed;
+            SetPosition(newPos);
+        }
     }
 }

@@ -26,11 +26,24 @@ namespace MHGameWork.TheWizards
             return new Vector2(v.X, v.Y);
         }
 
+        public static Vector3 ChangeX(this Vector3 v, float x)
+        {
+            return new Vector3(x, v.Y, v.Z);
+        }
+        public static Vector3 ChangeY(this Vector3 v, float y)
+        {
+            return new Vector3(v.X, y, v.Z);
+        }
+        public static Vector3 ChangeZ(this Vector3 v, float z)
+        {
+            return new Vector3(v.X, v.Y, z);
+        }
+
 
 
         public static Vector3 TakeXYZ(this Vector4 v)
         {
-            return new Vector3(v.X,v.Y,v.Z);
+            return new Vector3(v.X, v.Y, v.Z);
         }
 
         public static Point3 ToPoint3Rounded(this Vector3 v)
@@ -42,7 +55,7 @@ namespace MHGameWork.TheWizards
 
         public static Vector3 GetCenter(this BoundingBox bb)
         {
-            return (bb.Maximum + bb.Minimum)*0.5f;
+            return (bb.Maximum + bb.Minimum) * 0.5f;
         }
         public static Vector3 GetSize(this BoundingBox bb)
         {
@@ -51,7 +64,7 @@ namespace MHGameWork.TheWizards
 
         public static Vector3 GetPoint(this Ray ray, float dist)
         {
-            return ray.Position + ray.Direction*dist;
+            return ray.Position + ray.Direction * dist;
         }
     }
 }

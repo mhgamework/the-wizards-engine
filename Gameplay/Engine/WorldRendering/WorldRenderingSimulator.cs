@@ -32,19 +32,19 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
             var data = TW.Data.GetSingleton<Data>();
 
             {
-                //var light = deferred.CreateDirectionalLight();
-                //light.LightDirection = Vector3.Normalize(new Vector3(1, -1, 1));
-                //light.ShadowsEnabled = true;
-                //data.LightCreated = true;
+                var light = deferred.CreateDirectionalLight();
+                light.LightDirection = Vector3.Normalize(new Vector3(1, -1, 1));
+                light.ShadowsEnabled = false;
+                data.LightCreated = true;
 
-                var light = deferred.CreateSpotLight();
-                light.LightPosition = new Vector3(-1,1,-1) *30;
-                light.LightIntensity = 0.1f;
-                if (data.SunEnabled)
-                  light.LightIntensity = 1;
-                light.LightRadius = 400;
-                light.SpotDirection = Vector3.Normalize(-light.LightPosition);
-                light.ShadowsEnabled = true;
+                //var light = deferred.CreateSpotLight();
+                //light.LightPosition = new Vector3(-1,1,-1) *30;
+                //light.LightIntensity = 0.1f;
+                //if (data.SunEnabled)
+                //  light.LightIntensity = 1;
+                //light.LightRadius = 400;
+                //light.SpotDirection = Vector3.Normalize(-light.LightPosition);
+                //light.ShadowsEnabled = true;
                 
 
             }

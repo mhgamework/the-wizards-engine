@@ -52,7 +52,14 @@ namespace MHGameWork.TheWizards
             var treeBuilder = new TestsTreeBuilder();
             var builder = new NunitTestsTreeBuilder(treeBuilder);
             builder.CreateTestsTree(Assembly.LoadFrom("Unit Tests.dll"));
-            builder.CreateTestsTree(Assembly.LoadFrom("../../Gameplay/bin/x86/Debug/Gameplay.dll"));
+            try
+            {
+                builder.CreateTestsTree(Assembly.LoadFrom("../../Gameplay/bin/x86/Debug/Gameplay.dll"));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
 
             TestRunnerGUI runnerGui = new TestRunnerGUI(treeBuilder.RootNode);
             //runner.RunTestNewProcessPath = "\"" + Assembly.GetExecutingAssembly().Location + "\"" + " -test {0}";

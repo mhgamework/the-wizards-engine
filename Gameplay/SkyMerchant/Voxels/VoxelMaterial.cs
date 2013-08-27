@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.Rendering;
 
-namespace SkyMerchantTests
+namespace MHGameWork.TheWizards.SkyMerchant.Voxels
 {
     public class VoxelMaterial
     {

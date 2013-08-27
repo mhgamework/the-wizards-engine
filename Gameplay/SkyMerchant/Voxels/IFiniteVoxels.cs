@@ -1,7 +1,6 @@
-﻿using System;
-using DirectX11;
+﻿using DirectX11;
 
-namespace SkyMerchantTests
+namespace MHGameWork.TheWizards.SkyMerchant.Voxels
 {
     public interface IFiniteVoxels
     {
