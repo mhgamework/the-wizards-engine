@@ -180,7 +180,9 @@ namespace TreeGenerator.TreeEngine
             game = _game;
             TWTexture TextureImage = TWTexture.FromImageFile(game,new MHGameWork.TheWizards.ServerClient.GameFile(texture));
 
-            BillBoardShader = BasicShader.LoadFromEmbeddedFile(game, Assembly.GetExecutingAssembly(), "TreeGenerator.TreeEngine.BillBoardShader.fx", "..\\..\\..\\TreeEngine\\BillBoardShader.fx", new EffectPool());
+            BillBoardShader = BasicShader.LoadFromFXFile(game,
+                                                         new GameFile(
+                                                             @"C:\_MHData\1 - Projecten\The Wizards\_Source\NewModules\TreeGenerator\TreeEngine\BillBoardShader.fx"));//LoadFromEmbeddedFile(game, Assembly.GetExecutingAssembly(),@"C:\_MHData\1 - Projecten\The Wizards\_Source\NewModules\TreeGenerator\TreeEngine\BillBoardShader.fx" , new EffectPool());//"TreeGenerator.TreeEngine.BillBoardShader.fx", "..\\..\\..\\TreeEngine\\BillBoardShader.fx"
             BillBoardShader.SetTechnique("Billboard");
             BillBoardShader.SetParameter("world", Matrix.Identity);
             BillBoardShader.SetParameter("viewProjection", Matrix.Identity);
@@ -396,7 +398,7 @@ namespace TreeGenerator.TreeEngine
                                               new Vector2(1, 1), Vector3.Zero, Vector3.Zero));
                     }
                     part.RenderAsBillBoards = true;
-                    part.Texture = "speedtree/DefaultLeaves.tga";
+                    part.Texture = @"C:\_MHData\1 - Projecten\The Wizards\_Source\bin\GameData\Core\TreeGenerator\DefaultLeaves.tga";
                     part.Initialize(game);
 
                 };

@@ -216,7 +216,7 @@ namespace TreeGenerator.help
                 shader.SetTechnique("SpecularPerPixel");
                 texture = TWTexture.FromImageFile(game, new GameFile(DiffuseTexture));
             */
-            TWTexture texture = TWTexture.FromImageFile(game, new GameFile(game.EngineFiles.RootDirectory + @"Textures\treebark002.bmp"));
+            TWTexture texture = TWTexture.FromImageFile(game, new GameFile(@"C:\_MHData\1 - Projecten\The Wizards\_Source\bin\GameData\Core\TreeGenerator\DefaultBark.tga"));//new GameFile(game.EngineFiles.RootDirectory + @"Textures\treebark002.bmp"));
             shader.SetParameter("diffuseTexture", texture);
             shader.SetParameter("diffuseTextureRepeatU", 1.0f);
             shader.SetParameter("diffuseTextureRepeatV", 1.0f);

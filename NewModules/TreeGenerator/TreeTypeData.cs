@@ -186,7 +186,7 @@ namespace TreeGenerator
         }
         public static TreeTypeData GetTestTreeType(ITextureFactory textureFactory)
         {
-            Stream st = MHGameWork.TheWizards.Common.Core.EmbeddedFile.GetStream("TreeGenerator.Files.TestTree.XML", "TestTree.XML");
+            Stream st = MHGameWork.TheWizards.Common.Core.EmbeddedFile.GetStream(@"C:\_MHData\1 - Projecten\The Wizards\_Source\NewModules\TreeGenerator\Files\TestTree.XML");//GetStream("TreeGenerator.Files.TestTree.XML", ");
 
 
             TreeTypeData treeTypeData = LoadFromXML(st, textureFactory);
