@@ -1,17 +1,29 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.IO;
+using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.RTSTestCase1._Common;
 using System.Linq;
+using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.SkyMerchant._Windsor;
+using Microsoft.Xna.Framework.Graphics;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
-    public class RobotPlayerPart
+    [ModelObjectChanged]
+    public class RobotPlayerPart : EngineModelObject, IPhysical
     {
         #region "Injection"
         public Physical Physical { get; set; }
+
+
+        [NonOptional]
         public IWorldLocator WorldLocator { get; set; }
         public RobotPlayerNormalMovementPart NormalMovement { get; set; }
+        [NonOptional]
         public ISimulationEngine SimulationEngine { get; set; }
         #endregion
 
@@ -19,6 +31,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         {
             Items = new List<ItemPart>();
             Health = 100;
+        }
+
+
+        public void UpdatePhysical()
+        {
+
         }
 
         #region Items
@@ -50,10 +68,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 
         public void PickupClosest()
         {
-            var closest = WorldLocator.AtObject<ItemPart>(Physical, 2);
-            if (!closest.Any()) return;
+            var closest = WorldLocator.AtObject<ItemPart>(Physical, 2f);
 
-            Pickup(closest.First());
+            var item = closest.FirstOrDefault(i => !i.InStorage);
+            if (item == null) return;
+
+            Pickup(item);
 
         }
 
@@ -73,7 +93,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
                 Drop(item);
                 yield return item;
             }
-            
+
         }
 
         public bool HasItems(ItemType type, int amount)
@@ -89,6 +109,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         #endregion
 
         #region Movement + flying
+
 
         public bool Flying { get; set; }
         public IslandPart FlyingIsland { get; set; }
@@ -150,6 +171,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         public void ApplyDamage(float gunDamage)
         {
             Health -= gunDamage;
+            Physical.SetPosition(Physical.GetPosition() - NormalMovement.LookDirection.ChangeY(0) * 3);
         }
 
         #endregion

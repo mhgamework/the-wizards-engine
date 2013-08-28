@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SlimDX;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.RTSTestCase1._Common
 {
@@ -26,9 +27,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Common
         /// <param name="ph"></param>
         /// <param name="radius"></param>
         /// <returns></returns>
-        public static IEnumerable<T> AtObject<T>(this IWorldLocator l, Physical ph, float radius)
+        public static IEnumerable<T> AtObject<T>(this IWorldLocator l, Physical ph, float radius) where T : IPhysical
         {
-            throw new NotImplementedException();
+            return l.AtObject(ph, radius).OfType<T>();
         }
     }
 }

@@ -32,7 +32,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
         public NodeResult Execute(BehaviourTreeAgent agent)
         {
             if (Vector3.Distance(brain.Position, brain.Destination) < 0.01f) return NodeResult.Success;
-            ph.MoveTo(brain.Destination, engine.Elapsed);
+            ph.MoveTo(brain.Destination,2, engine.Elapsed);
             return NodeResult.Running;
         }
     }

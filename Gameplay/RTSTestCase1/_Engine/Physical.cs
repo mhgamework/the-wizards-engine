@@ -64,7 +64,8 @@ namespace MHGameWork.TheWizards.RTSTestCase1
 
         public BoundingBox GetBoundingBox()
         {
-            if (this.Mesh == null) return new BoundingBox(GetPosition(),GetPosition());
+            if (this.Mesh == null) return new BoundingBox(GetPosition(), GetPosition());
+            if (Entity == null) return TW.Assets.GetBoundingBox(Mesh);
             return TW.Assets.GetBoundingBox(Mesh).Transform(Entity.WorldMatrix);
         }
 
@@ -75,12 +76,13 @@ namespace MHGameWork.TheWizards.RTSTestCase1
         public void SetPosition(Vector3 pos)
         {
             WorldMatrix = Matrix.Translation(pos);
+
         }
 
-        public void MoveTo(Vector3 target, float elapsed)
+        public void MoveTo(Vector3 target, float speed, float elapsed)
         {
             var newPos = GetPosition();
-            newPos = Vector3.Normalize(target - newPos) * elapsed;
+            newPos = newPos + Vector3.Normalize(target - newPos) * speed * elapsed;
             SetPosition(newPos);
         }
     }

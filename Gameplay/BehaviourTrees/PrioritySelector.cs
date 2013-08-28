@@ -14,7 +14,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1.BehaviourTrees
         public PrioritySelector(params IBehaviourNode[] children)
         {
             this.children = children;
-            throw new System.NotImplementedException();
         }
 
         public bool CanExecute(BehaviourTreeAgent agent)

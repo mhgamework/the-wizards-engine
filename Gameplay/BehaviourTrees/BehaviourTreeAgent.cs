@@ -34,6 +34,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.BehaviourTrees
 
         public IBehaviourNode GetState(IBehaviourNode sequence)
         {
+            if (!nodeStates.ContainsKey(sequence)) return null;
             return nodeStates[sequence];
         }
 

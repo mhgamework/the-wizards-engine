@@ -1,64 +1,122 @@
 ﻿using System;
 using DirectX11;
+using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.RTSTestCase1;
+using MHGameWork.TheWizards.RTSTestCase1._Common;
+using MHGameWork.TheWizards.SkyMerchant._Windsor;
 using SlimDX;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
-    public class RobotPlayerNormalMovementPart
+    [ModelObjectChanged]
+    public class RobotPlayerNormalMovementPart : EngineModelObject
     {
         #region "Injection"
+        [NonOptional]
         public IUserMovementInput MovementInput { get; set; }
+        [NonOptional]
         public ISimulationEngine SimulationEngine { get; set; }
+        [NonOptional]
+        public IWorldLocator WorldLocator { get; set; }
         public Physical Physical { get; set; }
         public BasicPhysicsPart Physics { get; set; }
         #endregion
 
         public Vector3 Velocity { get { return Physics.Velocity; } set { Physics.Velocity = value; } }
+        public Vector3 LookDirection { get; set; }
 
         /// <summary>
         /// Executed by the robotplayerpart
         /// </summary>
         public void SimulateMovement()
         {
-            //TODO: jump
-            applyMovementControls();
-            applyGravity();
-            applyGliding();
+            applyJump();
+            applyGroundMovement();
+            if (IsGliding())
+                applyGliding();
+            else
+                applyGravity();
+
+            applyVelocity();
 
 
+            Physical.WorldMatrix =
+                getRotationMatrix()
+                    * Matrix.Translation(Physical.GetPosition());
+        }
+
+        private Matrix getRotationMatrix()
+        {
+            var dir = LookDirection.xna();
+            dir.Y = 0;
+            dir.Normalize();
+            return Microsoft.Xna.Framework.Matrix.CreateFromQuaternion(Functions.CreateFromLookDir(dir)).dx();
         }
 
         private void applyVelocity()
         {
-            Physical.SetPosition(Physical.GetPosition() + Velocity * SimulationEngine.Elapsed);
+            moveTo(Physical.GetPosition() + Velocity * SimulationEngine.Elapsed);
         }
 
-        private void applyMovementControls()
+        private float lastJump = -100;
+        private void applyJump()
         {
-            if (IsOnGround())
-            {
-                applyGroundMovement();
-                return;
-            }
+            if (!MovementInput.IsJump()) return;
 
-            applyVelocity();
+            if (lastJump + 3.5f > SimulationEngine.CurrentTime) return;
 
+            lastJump = SimulationEngine.CurrentTime;
+            Velocity = new Vector3(0, 15, 0);
         }
 
         private void applyGroundMovement()
         {
+            if (!IsOnGround()) return;
+            if (Physical.GetPosition().Y < GetGroundPoint().Y)
+                Physical.SetPosition(Physical.GetPosition().ChangeY(GetGroundPoint().Y));
+
+
             var dir = getInputControlsDirection();
+            dir = Vector3.TransformNormal(dir, getRotationMatrix()) * 3;
+            Velocity = dir.TakeXZ().ToXZ(Velocity.Y);
+            if (Velocity.Y < 0) Velocity = Velocity.ChangeY(0);
 
-            Physical.SetPosition(dir * SimulationEngine.Elapsed);
-            Velocity = Vector3.Zero;
 
-            //TODO: align on ground
+
+
         }
+
+        private void moveTo(Vector3 newPos)
+        {
+            if (IsOnGround())
+            {
+                var groundHeight = GetGroundPoint().Y + 0.05f;
+                if (newPos.Y < groundHeight) newPos.Y = groundHeight;
+            }
+
+            Physical.SetPosition(newPos);
+        }
+
 
         public bool IsOnGround()
         {
-            throw new NotImplementedException();
+            var result = TW.Data.Get<Engine.WorldRendering.World>().Raycast(getGroundCastRay());
+            return result.IsHit && result.Distance < 0.1f;
+            //return WorldLocator.AtPosition(Physical.GetPosition(), 0.2f).Any(o => o != Physical);
+        }
+        public Vector3 GetGroundPoint()
+        {
+            var ray = getGroundCastRay();
+            var result = TW.Data.Get<Engine.WorldRendering.World>().Raycast(ray);
+            return ray.GetPoint(result.Distance);
+        }
+
+        private Ray getGroundCastRay()
+        {
+            return new Ray(Physical.GetPosition() - new Vector3(0, 0.01f, 0), -MathHelper.Up);
         }
 
         private Vector3 getInputControlsDirection()
@@ -88,15 +146,16 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
             var yVelocity = Vector3.Dot(Vector3.UnitY, Velocity);
 
             float dragFactor = 1;
-            ApplyForce(yVelocity * yVelocity * Vector3.UnitY * dragFactor);
-
+            //ApplyForce(yVelocity * yVelocity * Vector3.UnitY * dragFactor);
+            Velocity = new Vector3(0, -0.3f, 0);
+            Velocity += Vector3.Normalize(LookDirection.ChangeY(0)) * 4;
 
 
         }
 
         private bool IsGliding()
         {
-            return Vector3.Dot(Velocity, Vector3.UnitY) < 0;
+            return MovementInput.IsGliding() && Vector3.Dot(Velocity, Vector3.UnitY) < 0;
         }
 
         public void ApplyForce(Vector3 force)
@@ -112,6 +171,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
             bool IsStrafeLeft();
             bool IsStrafeRight();
             bool IsJump();
+            bool IsGliding();
         }
 
         /// <summary>

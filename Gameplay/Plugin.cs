@@ -44,10 +44,27 @@ namespace MHGameWork.TheWizards
 
             //testAddStupidRedHelperMesh(engine);
             //testFirstPersonCamera(engine);
+
+            cleanData();
             var initializer = new EngineInitializer();
 
             initializer.SetupEngine(engine);
         }
+
+        private void cleanData()
+        {
+            var test = TW.Data.GetSingleton<TestingData>();
+            resetData();
+            TW.Data.Objects.Add(test);
+        }
+
+        private void resetData()
+        {
+            // Clear all objects
+            TW.Data.Objects.Clear();
+            TW.Debug.NeedsReload = true;
+        }
+
 
         private void testAddStupidRedHelperMesh(TWEngine engine)
         {

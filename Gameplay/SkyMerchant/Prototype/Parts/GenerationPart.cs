@@ -1,12 +1,27 @@
-﻿namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
+﻿using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.SkyMerchant._Windsor;
+
+namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
-    public class GenerationPart
+    [ModelObjectChanged]
+    public class GenerationPart : EngineModelObject
     {
+        private ISimulationEngine simulationEngine;
 
         #region Injection
-
+        [NonOptional]
         public IItemFactory Factory { get; set; }
-        public ISimulationEngine SimulationEngine { get; set; }
+        [NonOptional]
+        public ISimulationEngine SimulationEngine
+        {
+            get { return simulationEngine; }
+            set
+            {
+                simulationEngine = value;
+                NextResourceGeneration = SimulationEngine.CurrentTime + GenerationInterval;
+            }
+        }
 
         #endregion
 
@@ -42,7 +57,7 @@
 
         }
 
-        
+
         public interface IItemFactory
         {
             ItemPart CreateItem();

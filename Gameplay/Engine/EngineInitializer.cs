@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.Engine
 
         public EngineInitializer()
         {
-            
+
         }
 
         public void SetupEngine(TWEngine engine)
@@ -30,7 +30,7 @@ namespace MHGameWork.TheWizards.Engine
             checkLoadPreviousState();
 
             testingData = TW.Data.Get<TestingData>();
-            
+
             if (isTestSelected())
             {
                 loadTest(engine);
@@ -68,13 +68,13 @@ namespace MHGameWork.TheWizards.Engine
             catch (Exception ex)
             {
                 //TODO: this does not work since the error is caught in the NUnit Test Runner!!
-                DI.Get<IErrorLogger>().Log(ex,"When starting test (EngineInitializer)");
+                DI.Get<IErrorLogger>().Log(ex, "When starting test (EngineInitializer)");
             }
 
             loadBare(engine);
 
             //engine.AddSimulator(DI.Get<ModelObjectGraphSimulator>());
-            
+
         }
 
         private bool isTestSelected()
@@ -83,8 +83,7 @@ namespace MHGameWork.TheWizards.Engine
         }
 
         private void loadBare(TWEngine engine)
-
-           {
+        {
             engine.AddSimulator(new TestUISimulator());
             engine.AddSimulator(new UISimulator());
         }

@@ -443,7 +443,10 @@
     <Compile Include="SkyMerchant\Prototype\AI\EnemyBehaviourFactory.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\EnemyBrain.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\FindTargetBehaviour.cs" />
+    <Compile Include="SkyMerchant\Prototype\ITypedFactory.cs" />
+    <Compile Include="SkyMerchant\Prototype\ObjectsFactory.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\BasicPhysicsPart.cs" />
+    <Compile Include="SkyMerchant\Prototype\Parts\GenerationSourcePart.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\GenerationPart.cs" />
     <Compile Include="SkyMerchant\Prototype\ISimulationEngine.cs" />
     <Compile Include="SkyMerchant\Prototype\IslandMeshFactory.cs" />
@@ -457,6 +460,8 @@
     <Compile Include="SkyMerchant\Prototype\Parts\TraderPart.cs" />
     <Compile Include="SkyMerchant\Prototype\PrototypeInstaller.cs" />
     <Compile Include="SkyMerchant\Prototype\PrototypeMain.cs" />
+    <Compile Include="SkyMerchant\Prototype\SimpleItemFactory.cs" />
+    <Compile Include="SkyMerchant\Prototype\SimpleUserMovementInput.cs" />
     <Compile Include="SkyMerchant\Voxels\IFiniteVoxels.cs" />
     <Compile Include="SkyMerchant\IslandsTest.cs" />
     <Compile Include="SkyMerchant\FlyingPrototypeTest.cs" />

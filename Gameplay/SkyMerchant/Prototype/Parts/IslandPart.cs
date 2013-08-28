@@ -7,11 +7,16 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
+    /// <summary>
+    /// IPhysical is here to make the simpleworldlocator work
+    /// </summary>
     [ModelObjectChanged]
-    public class IslandPart : EngineModelObject
+    public class IslandPart : EngineModelObject, IPhysical
     {
         #region Injection
         public Physical Physical { get; set; }
+        
+
         public BasicPhysicsPart Physics { get; set; }
         [NonOptional]
         public IslandMeshFactory IslandMeshFactory { get; set; }
@@ -24,7 +29,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         }
 
 
+        public void UpdatePhysical()
+        {
 
+        }
 
 
         #region Visualization
@@ -48,7 +56,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
             Physical.Mesh = IslandMeshFactory.GetMesh(Seed);
             var boundingBox = TW.Assets.GetBoundingBox(Physical.Mesh);
             var center = (boundingBox.Minimum + boundingBox.Maximum) * 0.5f;
-
+            center.Y = boundingBox.Maximum.Y;
             Physical.ObjectMatrix = Matrix.Translation(-center);
         }
 

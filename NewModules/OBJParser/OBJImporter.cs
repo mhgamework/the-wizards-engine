@@ -316,7 +316,7 @@ namespace MHGameWork.TheWizards.OBJParser
             }
             else
             {
-                fv.Normal = int.Parse(facePiece[1]);//TODO: This might need to bee texcoords
+                fv.Normal = int.Parse(facePiece[2]);//TODO: This might need to bee texcoords
             }
                 
             return fv;

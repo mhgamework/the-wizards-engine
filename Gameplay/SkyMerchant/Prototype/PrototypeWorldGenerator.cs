@@ -1,5 +1,4 @@
 ﻿using System;
-using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant._Windsor;
 using SlimDX;
@@ -24,14 +23,42 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             worldMin.Y = 0;
             worldMax.Y = 20;
 
-            var density = 1/(20*20f);
+            var density = 1 / (20 * 20f);
 
-            for (int i = 0; i < size * size *density; i++)
+            for (int i = 0; i < size * size * density; i++)
             {
                 var n = Factory.CreateIsland();
                 n.Seed = Random.Next(3);
                 n.Physical.SetPosition(nextVector3(worldMin, worldMax));
                 n.TargetHeight = n.Physical.GetPosition().Y;
+
+
+                ItemPart item;
+                item = Factory.CreateCog();
+                item.PlaceOnIsland(n);
+
+
+
+
+
+
+                item = Factory.CreateTube();
+                item.PlaceOnIsland(n);
+                item = Factory.CreateTube();
+                item.PlaceOnIsland(n);
+
+                var source = Factory.CreateTree();
+                source.Physical.SetPosition(n.Physical.GetPosition());
+
+
+            }
+            density = 1 / 100f;
+            //for (int i = 0; i < size * size * density; i++)
+            for (int i = 0; i < 10; i++)
+            {
+                var robot = Factory.CreateDrone();
+                robot.Physical.SetPosition(nextVector3(worldMin, worldMax));
+                robot.GuardPosition = robot.Physical.GetPosition();
             }
         }
 
@@ -43,32 +70,5 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
         {
             return (float)Random.NextDouble() * (max - min) + min;
         }
-    }
-
-    public class ObjectsFactory
-    {
-        private readonly ITypedFactory factory;
-
-        public ObjectsFactory(ITypedFactory factory)
-        {
-            this.factory = factory;
-        }
-
-        public IslandPart CreateIsland()
-        {
-            var ret = factory.CreateIsland();
-            ret.Physical = factory.CreatePhysical();
-            ret.Physics = factory.CreatePhysics();
-            return ret;
-
-        }
-    }
-
-    public interface ITypedFactory
-    {
-        IslandPart CreateIsland();
-        BasicPhysicsPart CreatePhysics();
-        Physical CreatePhysical();
-
     }
 }

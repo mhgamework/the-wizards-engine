@@ -1,8 +1,10 @@
 ﻿using System;
+using Castle.Core;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.RTSTestCase1.BehaviourTrees;
 using MHGameWork.TheWizards.RTSTestCase1._Common;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
+using MHGameWork.TheWizards.SkyMerchant._Windsor;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
@@ -12,23 +14,35 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
     /// </summary>
     public class EnemyBehaviourFactory
     {
+        private EnemyBrain brain;
+
         #region Injection
+        [NonOptional]
         public ISimulationEngine SimulationEngine { get; set; }
+        [NonOptional]
         public IWorldLocator WorldLocator { get; set; }
+        [NonOptional]
         public TraderPart.IItemFactory ItemFactory { get; set; }
+        [NonOptional]
+        public Random Random { get; set; }
         /// <summary>
         /// WARNING! NOT A SERVICE!! NOT SINGLETON
         /// </summary>
-        public EnemyBrain Brain { get; set; }
+        [DoNotWire]
+        public EnemyBrain Brain
+        {
+            get { return brain; }
+            set { brain = value; }
+        }
+
         public Physical Physical { get; set; }
-        public Random Random { get; set; }
         #endregion
 
         public IBehaviourNode CreateGuardPosition(Func<Vector3> getPosition)
         {
             return new ConcurrentSelector(
                 new FindTargetBehaviour(Brain, WorldLocator),
-                new Sequence(
+                new ConcurrentSelector(
                     new SingleActionBehaviour(() => Brain.Destination = getPosition()),
                     new MoveToDestinationBehaviour(Brain, SimulationEngine, Physical)
                 )
@@ -39,6 +53,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
         public IBehaviourNode CreateChaseTarget()
         {
             return new ConcurrentSelector(
+                new Condition(ag => Brain.TargetPlayer != null &&
+                    Vector3.Distance(Brain.TargetPlayer.Physical.GetPosition(), Brain.Position) < Brain.LookDistance),
                 new SingleActionBehaviour(delegate
                 {
                     if (Brain.TargetPlayer == null) return;
