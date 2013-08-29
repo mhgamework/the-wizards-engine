@@ -72,7 +72,7 @@ namespace MHGameWork.TheWizards.Engine
             //if (sim.GetType().GetConstructor(new Type[] { }) == null)
             //    Console.WriteLine("Simulator found without empty constructor, hotloading will fail! " + sim.GetType().FullName);
 
-            sim = new ContextDecoratorSimulator(sim,EngineErrorLogger);
+            sim = new ContextDecoratorSimulator(sim, EngineErrorLogger);
             sim = new ProfilingDecoratorSimulator(sim);
             sim = new TracingDecoratorSimulator(TraceLogger, sim);
 
@@ -278,18 +278,39 @@ namespace MHGameWork.TheWizards.Engine
                 //TODO: broke the persistance scope here, not sure whether it should be readded
                 var persistentModels = TW.Data.Objects;
                 //var persistentModels = TW.Data.Objects.Where(o => TW.Data.PersistentModelObjects.Contains(o));
-                var mem = TW.Data.ModelSerializer.SerializeToStream(persistentModels);
-                File.WriteAllBytes("temp.txt", mem.ToArray());
+                MemoryStream mem = null;
+                try
+                {
+                    mem = TW.Data.ModelSerializer.SerializeToStream(persistentModels);
+                    File.WriteAllBytes("temp.txt", mem.ToArray());
+                }
+                catch (Exception ex)
+                {
+                    DI.Get<IErrorLogger>().Log(ex,"Serialize engine data");
+                }
+
 
                 TW.Data.Objects.Clear();
                 TW.Data.PersistentModelObjects.Clear();
 
                 twEngine.updateActiveGameplayAssembly();
 
-                var objects = deserializeData(mem);
-                // The deserialized objects are added to TW.Data automatically
-                //foreach (var obj in objects)
-                //    TW.Data.AddObject(obj);
+                try
+                {
+                    if (mem != null)
+                    {
+                        var objects = deserializeData(mem);
+                        // The deserialized objects are added to TW.Data automatically
+                        //foreach (var obj in objects)
+                        //    TW.Data.AddObject(obj);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    DI.Get<IErrorLogger>().Log(ex, "Deserialize engine data");
+                    return;
+                }
+        
 
                 TW.Graphics.AcquireRenderer().ClearAll();
                 TW.Physics.ClearAll();

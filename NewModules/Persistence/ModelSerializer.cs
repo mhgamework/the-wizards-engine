@@ -8,6 +8,7 @@ using System.Text;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Collections;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Debugging;
 using MHGameWork.TheWizards.Reflection;
 using MHGameWork.TheWizards.Serialization;
 
@@ -123,7 +124,15 @@ namespace MHGameWork.TheWizards.Persistence
         {
             while (strm.CurrentSection == "EntityAttributes")
             {
-                readAttribute(obj, strm);
+                try
+                {
+                    readAttribute(obj, strm);
+
+                }
+                catch (Exception ex)
+                {
+                    DI.Get<IErrorLogger>().Log(ex,"Can't deserialize attribute!");
+                }
             }
         }
 
@@ -291,10 +300,18 @@ namespace MHGameWork.TheWizards.Persistence
                     Console.WriteLine("Unexisting type: " + typeName);
                     continue;
                 }
-                var obj = (IModelObject)Activator.CreateInstance(type);
-                myObjectDictionary.setObjectID(obj, id);
+                try
+                {
+                    var obj = (IModelObject)Activator.CreateInstance(type);
+                    myObjectDictionary.setObjectID(obj, id);
 
-                ret.Add(obj);
+                    ret.Add(obj);
+                }
+                catch (Exception ex)
+                {
+                    DI.Get<IErrorLogger>().Log(ex, "Cant create model object");
+                }
+               
             }
 
             while (strm.CurrentSection == AttributesSection)
