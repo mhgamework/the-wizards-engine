@@ -209,6 +209,7 @@ namespace MHGameWork.TheWizards.DirectX11
             }
         }
 
+        public bool MouseInputDisabled { get; set; }
         public bool AllowF3InputToggle { get; set; }
         bool inputJustToggled = false;
 
@@ -259,8 +260,12 @@ namespace MHGameWork.TheWizards.DirectX11
             //MouseState mouseState = Microsoft.Xna.Framework.Input.Mouse.GetState();
 
             keyboard.UpdateKeyboardState(keyboardState);
-            if (diMouse.Acquire().IsSuccess)
-                mouse.UpdateMouseState(diMouse.GetCurrentState());
+            if (!MouseInputDisabled)
+            {
+                if (diMouse.Acquire().IsSuccess)
+                    mouse.UpdateMouseState(diMouse.GetCurrentState());
+            }
+            
 
             // Allows the game to exit
             if (EscapeExists && keyboard.IsKeyDown(Key.Escape))

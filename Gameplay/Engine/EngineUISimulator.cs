@@ -57,6 +57,18 @@ namespace MHGameWork.TheWizards.Engine
             }
             updateErrorArea();
 
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.Tab))
+            {
+                TW.Graphics.Mouse.CursorEnabled = !TW.Graphics.Mouse.CursorEnabled;
+                TW.Graphics.MouseInputDisabled = TW.Graphics.Mouse.CursorEnabled;
+            }
+            
+
+            updateMenu();
+        }
+
+        private void updateMenu()
+        {
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.Backspace))
             {
                 if (menuStack.Count == 0)
@@ -78,13 +90,11 @@ namespace MHGameWork.TheWizards.Engine
                 currentMenu.MoveUp();
 
 
-
-
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.Return))
                 if (currentMenu.SelectedItem != null) currentMenu.SelectedItem();
 
-            area.Text = currentMenu.generateText();
 
+            area.Text = currentMenu.generateText();
         }
 
         private void updateErrorArea()

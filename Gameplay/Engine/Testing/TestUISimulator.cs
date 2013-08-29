@@ -27,10 +27,12 @@ namespace MHGameWork.TheWizards.Engine.Testing
                 runner.RunTest(picker.GetPickedTest());
             }
 
-            if (!TW.Graphics.Keyboard.IsKeyPressed(Key.F5)) return;
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.F5))
+            {
+                //TODO: disable all user input for simulators?
+                picker.ShowTestPicker();
+            }
 
-            //TODO: disable all user input for simulators?
-            picker.ShowTestPicker();
         }
     }
 }
