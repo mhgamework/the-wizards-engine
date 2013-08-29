@@ -24,6 +24,7 @@ namespace MHGameWork.TheWizards.Persistence
 
         public string Serialize(object obj, Type type, StringSerializer stringSerializer)
         {
+            if (obj == null) return StringSerializer.Unknown;
             builder.Clear();
             var list = (IList)obj;
 
@@ -44,6 +45,7 @@ namespace MHGameWork.TheWizards.Persistence
 
         public object Deserialize(string value, Type type, StringSerializer stringSerializer)
         {
+            if (value == StringSerializer.Unknown) return null;
             var list = (IList)Activator.CreateInstance(type);
 
             var reader = new StringReader(value);
