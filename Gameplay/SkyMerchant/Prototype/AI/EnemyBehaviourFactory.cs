@@ -1,5 +1,6 @@
 ﻿using System;
 using Castle.Core;
+using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.RTSTestCase1.BehaviourTrees;
 using MHGameWork.TheWizards.RTSTestCase1._Common;

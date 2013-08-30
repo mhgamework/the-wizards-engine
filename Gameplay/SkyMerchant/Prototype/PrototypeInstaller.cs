@@ -5,6 +5,7 @@ using Castle.Windsor;
 using Castle.Facilities.TypedFactory;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.RTSTestCase1._Common;

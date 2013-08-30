@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.PhysX;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.RTSTestCase1.Characters;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins.Components;

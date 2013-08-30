@@ -1,11 +1,10 @@
 ﻿using System;
 using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.RTSTestCase1
+namespace MHGameWork.TheWizards.Engine.Worlding
 {
     /// <summary>
     /// Should not be using an interface, should be an interface on its own.

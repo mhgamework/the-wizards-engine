@@ -2,6 +2,7 @@
 using System.Linq;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Worlding;
 
 namespace MHGameWork.TheWizards.RTSTestCase1
 {

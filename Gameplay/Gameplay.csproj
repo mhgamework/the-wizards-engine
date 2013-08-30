@@ -259,8 +259,8 @@
     <Compile Include="BehaviourTrees\Sequence.cs" />
     <Compile Include="BehaviourTrees\While.cs" />
     <Compile Include="RTSTestCase1\Building\BuildablePart.cs" />
-    <Compile Include="RTSTestCase1\_Common\IWorldLocator.cs" />
-    <Compile Include="RTSTestCase1\_Common\IWorldDestroyer.cs" />
+    <Compile Include="Engine\Worlding\IWorldLocator.cs" />
+    <Compile Include="Engine\Worlding\IWorldDestroyer.cs" />
     <Compile Include="RTSTestCase1\Building\SimpleBuilder.cs" />
     <Compile Include="RTSTestCase1\Cannons\CannonSimulator.cs" />
     <Compile Include="RTSTestCase1\Characters\IRTSCharacter.cs" />
@@ -367,8 +367,8 @@
     <Compile Include="RTSTestCase1\WorldResources\WorldResourceGenerationSimulator.cs" />
     <Compile Include="RTSTestCase1\_Engine\Animation\SimpleAnimationProvider.cs" />
     <Compile Include="RTSTestCase1\_Engine\PhysicalSimulator.cs" />
-    <Compile Include="RTSTestCase1\_Engine\IPhysical.cs" />
-    <Compile Include="RTSTestCase1\_Engine\Physical.cs" />
+    <Compile Include="Engine\Worlding\IPhysical.cs" />
+    <Compile Include="Engine\Worlding\Physical.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\EditorConfiguration.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\EditorMenuConfiguration.cs" />
     <Compile Include="RTSTestCase1\_Engine\UtilityMeshes.cs" />

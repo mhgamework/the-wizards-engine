@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.Data;
 
-namespace MHGameWork.TheWizards.RTSTestCase1
+namespace MHGameWork.TheWizards.Engine.Worlding
 {
     /// <summary>
     /// Responsible for indicating that a modelobject should be physical.

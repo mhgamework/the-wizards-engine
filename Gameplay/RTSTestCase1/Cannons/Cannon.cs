@@ -3,6 +3,7 @@ using System.Linq;
 using MHGameWork.TheWizards.Audio;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1.Building;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using SlimDX;

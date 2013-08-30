@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SlimDX;
 using System.Linq;
 
-namespace MHGameWork.TheWizards.RTSTestCase1._Common
+namespace MHGameWork.TheWizards.Engine.Worlding
 {
     public interface IWorldLocator
     {

@@ -1,4 +1,4 @@
-﻿namespace MHGameWork.TheWizards.RTSTestCase1._Common
+﻿namespace MHGameWork.TheWizards.Engine.Worlding
 {
     public interface IWorldDestroyer
     {

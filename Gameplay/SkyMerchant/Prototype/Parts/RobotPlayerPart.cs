@@ -3,6 +3,7 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.RTSTestCase1._Common;
 using System.Linq;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using System.Linq;
+using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
 using SlimDX;
 

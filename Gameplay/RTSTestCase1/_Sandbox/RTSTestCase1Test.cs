@@ -9,6 +9,7 @@ using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.PhysX;
 using MHGameWork.TheWizards.Engine.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.RTS;
