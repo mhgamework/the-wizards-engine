@@ -55,9 +55,4 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
             Physical.SetPosition(Island.Physical.GetPosition().ChangeY(Island.GetMaxY()) + RandomOffset);
         }
     }
-
-    public class ItemType
-    {
-        public string Name;
-    }
 }

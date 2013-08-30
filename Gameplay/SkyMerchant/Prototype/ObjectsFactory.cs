@@ -10,6 +10,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
     {
         private readonly ITypedFactory factory;
 
+        private ItemType cogType = new ItemType() { Name = "Cog" };
+        private ItemType woodType = new ItemType() { Name = "Wood" };
+        private ItemType tubeType = new ItemType() { Name = "Tube" };
+
         public ObjectsFactory(ITypedFactory factory)
         {
             this.factory = factory;
@@ -28,6 +32,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             var part = factory.CreateItemPart();
             part.Physical = factory.CreatePhysical();
             part.Physical.Mesh = TW.Assets.LoadMesh("SkyMerchant/Cogs/Cog01");
+            part.Type = cogType;
             return part;
         }
         public ItemPart CreateTube()
@@ -35,6 +40,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             var part = factory.CreateItemPart();
             part.Physical = factory.CreatePhysical();
             part.Physical.Mesh = TW.Assets.LoadMesh("SkyMerchant/TubePart/TubePart");
+            part.Type = tubeType;
             return part;
         }
 
@@ -43,6 +49,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             var part = factory.CreateItemPart();
             part.Physical = factory.CreatePhysical();
             part.Physical.Mesh = UtilityMeshes.CreateMeshWithText(0.4f, "Wood", TW.Graphics);
+            part.Type = woodType;
             return part;
         }
 

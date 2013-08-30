@@ -454,6 +454,7 @@
     <Compile Include="SkyMerchant\Prototype\IslandMeshFactory.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\IslandPart.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\MoveToDestinationBehaviour.cs" />
+    <Compile Include="SkyMerchant\Prototype\ItemType.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\PiratePart.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\ProximityChaseEnemyPart.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\RobotPlayerNormalMovementPart.cs" />
@@ -462,6 +463,7 @@
     <Compile Include="SkyMerchant\Prototype\Parts\TraderPart.cs" />
     <Compile Include="SkyMerchant\Prototype\PrototypeInstaller.cs" />
     <Compile Include="SkyMerchant\Prototype\PrototypeMain.cs" />
+    <Compile Include="SkyMerchant\Prototype\RobotInventoryTextView.cs" />
     <Compile Include="SkyMerchant\Prototype\SimpleItemFactory.cs" />
     <Compile Include="SkyMerchant\Prototype\SimpleUserMovementInput.cs" />
     <Compile Include="SkyMerchant\Voxels\IFiniteVoxels.cs" />

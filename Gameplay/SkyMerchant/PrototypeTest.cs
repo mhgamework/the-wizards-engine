@@ -58,6 +58,7 @@ namespace MHGameWork.TheWizards.SkyMerchant
         #endregion
 
         private RobotPlayerPart robot;
+        private RobotInventoryTextView view;
 
 
         public PrototypeTest()
@@ -112,6 +113,7 @@ namespace MHGameWork.TheWizards.SkyMerchant
             robot.SimulateCogConsumption();
             robot.SimulateDeath();
             setCameraView();
+            view.Update();
         }
 
         private void tryPickup()
@@ -163,6 +165,9 @@ namespace MHGameWork.TheWizards.SkyMerchant
 
             var scale = 0.1f;
             robot.Physical.ObjectMatrix = Matrix.Scaling(scale, scale, scale) * Matrix.RotationY(MathHelper.Pi);
+
+
+            view = new RobotInventoryTextView(robot);
 
             return robot;
         }
