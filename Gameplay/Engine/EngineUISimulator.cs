@@ -220,13 +220,12 @@ namespace MHGameWork.TheWizards.Engine
 
         private void cleanData()
         {
-            var test = TW.Data.GetSingleton<TestingData>();
             resetData();
-            TW.Data.Objects.Add(test);
         }
 
         private void resetData()
         {
+            DI.Get<EngineTestState>().SetActiveTest(null);
             // Clear all objects
             TW.Data.Objects.Clear();
             TW.Debug.NeedsReload = true;

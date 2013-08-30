@@ -15,7 +15,7 @@ namespace MHGameWork.TheWizards.Engine.Testing
 
         public TestUISimulator()
         {
-            picker = new EngineTestPicker();
+            picker = new EngineTestPicker(DI.Get<EngineTestState>());
             
         }
 
@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.Engine.Testing
         {
             if (picker.PickCompleted)
             {
-                var runner = new EngineTestRunner();
+                var runner = new EngineTestRunner(DI.Get<EngineTestState>());
                 runner.RunTest(picker.GetPickedTest());
             }
 

@@ -141,7 +141,7 @@ namespace MHGameWork.TheWizards.SkyMerchant
 
         private void setupTest()
         {
-            PrototypeWorldGenerator.GenerateWorld(60);
+            PrototypeWorldGenerator.GenerateWorld(30);
 
             robot = createRobot();
 

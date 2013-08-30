@@ -10,13 +10,20 @@ namespace MHGameWork.TheWizards.Engine.Testing
     /// </summary>
     public class TestSceneBuilder
     {
+        private EngineTestState testState;
+
+        public TestSceneBuilder(EngineTestState testState)
+        {
+            this.testState = testState;
+        }
+
         public void EnsureTestSceneLoaded()
         {
             if (Setup == null) return;
 
-            var testData = TW.Data.Get<TestingData>();
+            var testName = testState.GetTestName();
 
-            var testName = testData.ActiveTestClass + "." + testData.ActiveTestMethod;
+            
 
             if (testName == TW.Data.Get<Data>().LoadedTestScene) return;
 

@@ -143,6 +143,11 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
             {
                 NormalMovement.SimulateMovement();
             }
+            if (Physical.GetPosition().Y < -20)
+            {
+                Physical.SetPosition(Physical.GetPosition().ChangeY(50));
+                NormalMovement.Velocity = new Vector3();
+            }
         }
 
         #endregion

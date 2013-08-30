@@ -16,7 +16,13 @@ namespace MHGameWork.TheWizards.Engine.Testing
     {
         private TestNode rootNode;
 
-        
+        private EngineTestState testState;
+
+        public EngineTestPicker(EngineTestState testState)
+        {
+            this.testState = testState;
+        }
+
         public bool PickCompleted
         {
             get { return pickCompleted; }
@@ -33,7 +39,7 @@ namespace MHGameWork.TheWizards.Engine.Testing
             var nunit = new NunitTestsTreeBuilder(builder);
             nunit.CreateTestsTree(TW.Data.GameplayAssembly);
 
-            var unittests = Assembly.LoadFrom( "Unit Tests.dll");
+            var unittests = Assembly.LoadFrom("Unit Tests.dll");
             nunit.CreateTestsTree(unittests);
 
             return builder.RootNode;
@@ -43,10 +49,10 @@ namespace MHGameWork.TheWizards.Engine.Testing
 
         public void ShowTestPicker()
         {
-            var testData = TW.Data.GetSingleton<TestingData>();
             var ui = new TestSelectionInterface(createTree());
             ui.Data = new SaveData();
-            ui.SelectNodeByPath(testData.ActiveTestClass + "." + testData.ActiveTestMethod);
+            if (testState.GetActiveTest() != null)
+                ui.SelectNodeByPath(testState.GetActiveTest().ReflectedType.FullName + "." + testState.GetActiveTest().Name);
             NUnitTest ret = null;
             ui.RunTestMethod += delegate(TestNode node)
             {
@@ -69,6 +75,8 @@ namespace MHGameWork.TheWizards.Engine.Testing
 
         private volatile NUnitTest pickedTest;
         private volatile bool pickCompleted;
+
+
 
         public NUnitTest GetPickedTest()
         {

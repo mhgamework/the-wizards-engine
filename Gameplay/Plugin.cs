@@ -8,6 +8,7 @@ using System.Text;
 using MHGameWork.TheWizards.Animation;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Debugging;
+using MHGameWork.TheWizards.Engine.Files;
 using MHGameWork.TheWizards.Engine.Persistence;
 using MHGameWork.TheWizards.Engine.PhysX;
 using MHGameWork.TheWizards.Engine.Testing;
@@ -45,26 +46,28 @@ namespace MHGameWork.TheWizards
             //testAddStupidRedHelperMesh(engine);
             //testFirstPersonCamera(engine);
 
+            TW.Graphics.MouseInputDisabled = true;
+            TW.Graphics.Mouse.CursorEnabled = true;
+
+            var fs = new EngineFileSystem(TWDir.GameData.FullName + "\\EngineFS");
+            DI.Set<IEngineFilesystem>(fs);
+            DI.Set<EngineTestState>(new EngineTestState(fs));
+            DI.Set<TestSceneBuilder>(new TestSceneBuilder(DI.Get<EngineTestState>()));
+
             cleanData();
-            var initializer = new EngineInitializer();
+            var initializer = new EngineInitializer(DI.Get<EngineTestState>());
 
             initializer.SetupEngine(engine);
         }
 
         private void cleanData()
         {
-            var test = TW.Data.GetSingleton<TestingData>();
-            resetData();
-            TW.Data.Objects.Add(test);
-        }
-
-        private void resetData()
-        {
             // Clear all objects
             TW.Data.Objects.Clear();
             TW.Debug.NeedsReload = true;
-        }
 
+
+        }
 
         private void testAddStupidRedHelperMesh(TWEngine engine)
         {

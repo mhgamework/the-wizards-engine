@@ -16,11 +16,11 @@ namespace MHGameWork.TheWizards.Engine
     /// </summary>
     public class EngineInitializer
     {
-        private TestingData testingData;
+        private EngineTestState engineTestState;
 
-        public EngineInitializer()
+        public EngineInitializer(EngineTestState engineTestState)
         {
-
+            this.engineTestState = engineTestState;
         }
 
         public void SetupEngine(TWEngine engine)
@@ -28,8 +28,6 @@ namespace MHGameWork.TheWizards.Engine
             TW.Graphics.EscapeExists = false;
 
             checkLoadPreviousState();
-
-            testingData = TW.Data.Get<TestingData>();
 
             if (isTestSelected())
             {
@@ -62,7 +60,7 @@ namespace MHGameWork.TheWizards.Engine
             //engine.AddSimulator(new GraphVisualizerSimulator());
             try
             {
-                var runner = new EngineTestRunner();
+                var runner = new EngineTestRunner(engineTestState);
                 runner.RunTestDataTest(engine);
             }
             catch (Exception ex)
@@ -79,7 +77,7 @@ namespace MHGameWork.TheWizards.Engine
 
         private bool isTestSelected()
         {
-            return testingData.ActiveTestClass != null;
+            return engineTestState.GetActiveTest() != null;
         }
 
         private void loadBare(TWEngine engine)

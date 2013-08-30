@@ -19,6 +19,14 @@ namespace MHGameWork.TheWizards.Engine.Testing
     /// </summary>
     public class EngineTestRunner
     {
+        private EngineTestState testState;
+
+        public EngineTestRunner(EngineTestState testState)
+        {
+            this.testState = testState;
+        }
+
+
         public void RunTest( NUnitTest test)
         {
             // Hack due to some wierd hotloading bug (attribute types are not from same loaded assembly as executing assembly)
@@ -26,9 +34,7 @@ namespace MHGameWork.TheWizards.Engine.Testing
             var count = test.TestClass.GetCustomAttributes(true).Count(t => t.GetType().FullName == typeof (EngineTestAttribute).FullName);
             if (count > 0) 
             {
-                TW.Data.GetSingleton<TestingData>().ActiveTestClass = TW.Data.TypeSerializer.Serialize(test.TestClass);
-                TW.Data.GetSingleton<TestingData>().ActiveTestMethod = test.TestMethod.Name;
-
+                testState.SetActiveTest(test.TestMethod);
                 TW.Debug.NeedsReload = true;
             }
             else
@@ -40,12 +46,9 @@ namespace MHGameWork.TheWizards.Engine.Testing
 
         public void RunTestDataTest(TWEngine engine)
         {
-            var testData = TW.Data.GetSingleton<TestingData>();
-            var f = TW.Data.GameplayAssembly.GetTypes().First(t => t.FullName == testData.ActiveTestClass);
-            var method = f.GetMethod(testData.ActiveTestMethod);
+            var method = testState.GetActiveTest();
 
-
-            RunTestInEngine(engine,new NUnitTest(method,f));
+            RunTestInEngine(engine,new NUnitTest(method,method.ReflectedType));
 
         }
         //TODO: revise the use of persistancescope here

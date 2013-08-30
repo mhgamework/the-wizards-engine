@@ -2,6 +2,7 @@
 using DirectX11;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Raycasting;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.RTSTestCase1;
@@ -104,14 +105,20 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 
         public bool IsOnGround()
         {
-            var result = TW.Data.Get<Engine.WorldRendering.World>().Raycast(getGroundCastRay());
+            var result = raycastGround();
             return result.IsHit && result.Distance < 0.1f;
             //return WorldLocator.AtPosition(Physical.GetPosition(), 0.2f).Any(o => o != Physical);
         }
+
+        private RaycastResult raycastGround()
+        {
+            return TW.Data.Get<Engine.WorldRendering.World>().Raycast(getGroundCastRay(), i => i is IslandPart);
+        }
+
         public Vector3 GetGroundPoint()
         {
             var ray = getGroundCastRay();
-            var result = TW.Data.Get<Engine.WorldRendering.World>().Raycast(ray);
+            var result = raycastGround();
             return ray.GetPoint(result.Distance);
         }
 

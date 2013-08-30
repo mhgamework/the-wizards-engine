@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             worldMin.Y = 0;
             worldMax.Y = 20;
 
-            var density = 1 / (20 * 20f);
+            var density = 1 / (100f);
 
             for (int i = 0; i < size * size * density; i++)
             {
@@ -38,10 +38,6 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
                 item.PlaceOnIsland(n);
 
 
-
-
-
-
                 item = Factory.CreateTube();
                 item.PlaceOnIsland(n);
                 item = Factory.CreateTube();
@@ -54,7 +50,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             }
             density = 1 / 100f;
             //for (int i = 0; i < size * size * density; i++)
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < density; i++)
             {
                 var robot = Factory.CreateDrone();
                 robot.Physical.SetPosition(nextVector3(worldMin, worldMax));
