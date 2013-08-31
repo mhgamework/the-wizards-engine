@@ -34,6 +34,7 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
     <PostSharpHost>Managed</PostSharpHost>
     <RegisterForComInterop>false</RegisterForComInterop>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -161,8 +162,6 @@
     <Compile Include="ApplicationLogic\Main\TheWizardsClient.cs" />
     <Compile Include="ApplicationLogic\Main\TheWizardsServer.cs" />
     <Compile Include="ApplicationLogic\Main\TheWizardsServerCore.cs" />
-    <Compile Include="ApplicationLogic\Main\TreeClient.cs" />
-    <Compile Include="ApplicationLogic\Main\TreeServer.cs" />
     <Compile Include="ApplicationLogic\Networking\Client\GameClient.cs" />
     <Compile Include="ApplicationLogic\Networking\Server\GameClient.cs" />
     <Compile Include="ApplicationLogic\Networking\Server\GameClientListener.cs" />

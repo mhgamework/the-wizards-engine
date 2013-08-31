@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
+﻿using MHGameWork.TheWizards.Rendering.Vegetation.Trees;
+using NUnit.Framework;
 using TreeGenerator;
 using TreeGenerator.help;
-using TreeGenerator.TreeEngine;
 
 namespace MHGameWork.TheWizards.Tests.Features.Generation.Treegenerater
 {

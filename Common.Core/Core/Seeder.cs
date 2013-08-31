@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards
 {
+    [Obsolete ("New version is called DXSeeder")]
     public class Seeder
     {
         private Random random;
@@ -45,7 +46,13 @@ namespace MHGameWork.TheWizards
             ret.Y = NextFloat(min.Y, max.Y);
             return ret;
         }
-
+        public SlimDX.Vector2 NextVector2(SlimDX.Vector2 min, SlimDX.Vector2 max)
+        {
+            SlimDX.Vector2 ret = new SlimDX.Vector2();
+            ret.X = NextFloat(min.X, max.X);
+            ret.Y = NextFloat(min.Y, max.Y);
+            return ret;
+        }
         public Vector3 NextVector3(Vector3 min, Vector3 max)
         {
             if (min.X > max.X)

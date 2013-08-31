@@ -51,6 +51,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -154,6 +155,7 @@
     <Compile Include="CommonOld\Wereld\IQuadtreeNode.cs" />
     <Compile Include="CommonOld\Wereld\QuadtreeChildDirection.cs" />
     <Compile Include="CommonOld\Wereld\QuadTreeNode.cs" />
+    <Compile Include="Core\DXSeeder.cs" />
     <Compile Include="Core\SlimDXMathExtensions.cs" />
     <Compile Include="Core\Database\Database.cs" />
     <Compile Include="Core\Database\IGameObject.cs" />
@@ -518,6 +520,9 @@
   <ItemGroup>
     <Content Include="Shaders\Deferred\TODO\RandomNormals.png" />
     <Content Include="Shaders\Filters\GaussianBlurCS.hlsl" />
+    <None Include="Shaders\Vegetation\Grass.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\PostSharp.3.0.26\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.3.0.26\tools\PostSharp.targets')" />

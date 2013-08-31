@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using MHGameWork.TheWizards.Common.Core;
 using MHGameWork.TheWizards.ServerClient.Graphics;
@@ -269,10 +270,12 @@ namespace MHGameWork.TheWizards.Graphics
             //
 
             if ( shader != null ) shader.Dispose();
-
-            System.IO.Stream strm = EmbeddedFile.GetStreamFullPath(
-                "MHGameWork.TheWizards.Graphics.Files.ColladaModelNew.fx",
-                game.EngineFiles.DebugFilesDirectory + "/ColladaModelNew.fx" );
+            System.IO.Stream strm =
+                File.OpenRead(
+                    @"C:\_MHData\1 - Projecten\The Wizards\_Source\Common.Core\Core\Graphics\Files\ColladaModelNew.fx");
+            //System.IO.Stream strm = EmbeddedFile.GetStreamFullPath(
+            //    "MHGameWork.TheWizards.Graphics.Files.ColladaModelNew.fx",
+            //    game.EngineFiles.DebugFilesDirectory + "/ColladaModelNew.fx" );
 
             shader = BasicShader.LoadFromFXFile( game, strm, pool );
             //Shader = BasicShader.LoadFromFXFile( game, new GameFile( shaderFilename ), pool );

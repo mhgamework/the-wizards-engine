@@ -159,6 +159,8 @@
     <Compile Include="Features\Data\SectionedStreamTest.cs" />
     <Compile Include="Features\Rendering\DirectX11\DX11PerformanceTest.cs" />
     <Compile Include="Features\Rendering\FiltersTest.cs" />
+    <Compile Include="Features\Rendering\Vegetation\GrassTest.cs" />
+    <Compile Include="Features\Rendering\Vegetation\TreeTest.cs" />
     <Compile Include="Features\Simulation\Animation\AnimationTest.cs" />
     <Compile Include="Features\Various\Client\ClientTest.cs" />
     <Compile Include="Features\Data\CoreTest.cs" />

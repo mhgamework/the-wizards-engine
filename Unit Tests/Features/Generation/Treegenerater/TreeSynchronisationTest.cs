@@ -13,7 +13,6 @@ using NUnit.Framework;
 using TreeGenerator;
 using TreeGenerator.EngineSynchronisation;
 using TreeGenerator.LodEngine;
-using TreeGenerator.TreeEngine;
 
 namespace MHGameWork.TheWizards.Tests.Features.Generation.Treegenerater
 {

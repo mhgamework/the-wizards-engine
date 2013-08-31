@@ -25,7 +25,6 @@ using Microsoft.Xna.Framework.Input;
 using StillDesign.PhysX;
 using TreeGenerator.EngineSynchronisation;
 using TreeGenerator.LodEngine;
-using TreeGenerator.TreeEngine;
 using PlayerController = MHGameWork.TheWizards._XNA.Gameplay.PlayerController;
 
 namespace MHGameWork.TheWizards.Main
