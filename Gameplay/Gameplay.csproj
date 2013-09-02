@@ -265,6 +265,14 @@
     <Compile Include="RTSTestCase1\Building\BuildablePart.cs" />
     <Compile Include="Engine\Worlding\IWorldLocator.cs" />
     <Compile Include="Engine\Worlding\IWorldDestroyer.cs" />
+    <Compile Include="RTSTestCase1\Shaping\BuildGridRaycaster.cs" />
+    <Compile Include="RTSTestCase1\Shaping\IBuildGrid.cs" />
+    <Compile Include="RTSTestCase1\Shaping\ModelBuilderPrototypeTest.cs" />
+    <Compile Include="RTSTestCase1\Shaping\SimpleBuildGrid.cs" />
+    <Compile Include="RTSTestCase1\Shaping\MovementNormalHasher.cs" />
+    <Compile Include="RTSTestCase1\Shaping\SimpleShapeDetector.cs" />
+    <Compile Include="RTSTestCase1\_Common\IWorldLocator.cs" />
+    <Compile Include="RTSTestCase1\_Common\IWorldDestroyer.cs" />
     <Compile Include="RTSTestCase1\Building\SimpleBuilder.cs" />
     <Compile Include="RTSTestCase1\Cannons\CannonSimulator.cs" />
     <Compile Include="RTSTestCase1\Characters\IRTSCharacter.cs" />
@@ -434,8 +442,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RTSTestCase1\Shaping\IShape.cs" />
-    <Compile Include="RTSTestCase1\Shaping\IShapeElement.cs" />
-    <Compile Include="RTSTestCase1\Shaping\ShapeDetector.cs" />
     <Compile Include="RTSTestCase1\_Tests\ShapeDetectorTest.cs" />
     <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulatorSimple.cs" />
     <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulator.cs" />

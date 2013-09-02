@@ -5,6 +5,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Shaping
 {
     public interface IShape
     {
-        Dictionary<IShape, Point3> GetShape();
+    }
+    public interface IShapeElement
+    {
+
     }
 }

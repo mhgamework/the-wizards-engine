@@ -31,7 +31,7 @@ namespace MHGameWork.TheWizards.CG.Spatial
         public bool Traverse(RayTrace trace, Func<Point3, bool> nodeCallback)
         {
             //trace.Ray = new Ray(trace.Ray.Position - GridOffset, trace.Ray.Direction);
-
+            //TODO: ALLWAYS RETURNS TRUE 
             Vector3 tDelta;
             tDelta.X = NodeSize / M.Abs(trace.Ray.Direction.X); // how far we must move in the ray direction before we encounter a new voxel in x-direction
             tDelta.Y = NodeSize / M.Abs(trace.Ray.Direction.Y); // same but y-direction

@@ -183,12 +183,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         //    if (drivingIsland == null) return;
 
         //    var dir = new Vector3(0, 0, 0);
-        //    if (TW.Graphics.Keyboard.IsKeyDown(Key.W)) dir += new Vector3(0, 0, -1);
-        //    if (TW.Graphics.Keyboard.IsKeyDown(Key.A)) dir += new Vector3(-1, 0, 0);
-        //    if (TW.Graphics.Keyboard.IsKeyDown(Key.S)) dir += new Vector3(0, 0, 1);
-        //    if (TW.Graphics.Keyboard.IsKeyDown(Key.D)) dir += new Vector3(1, 0, 0);
+        //    if (TW.Graphics.Keyboard.IsKeyDown(MinHash.W)) dir += new Vector3(0, 0, -1);
+        //    if (TW.Graphics.Keyboard.IsKeyDown(MinHash.A)) dir += new Vector3(-1, 0, 0);
+        //    if (TW.Graphics.Keyboard.IsKeyDown(MinHash.S)) dir += new Vector3(0, 0, 1);
+        //    if (TW.Graphics.Keyboard.IsKeyDown(MinHash.D)) dir += new Vector3(1, 0, 0);
 
-        //    if (TW.Graphics.Keyboard.IsKeyDown(Key.C)) drivingIsland.Velocity = new Vector3();
+        //    if (TW.Graphics.Keyboard.IsKeyDown(MinHash.C)) drivingIsland.Velocity = new Vector3();
 
         //    dir = -Vector3.TransformNormal(dir, Matrix.RotationY(-TW.Graphics.SpectaterCamera.AngleHorizontal));
 

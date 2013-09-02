@@ -9,7 +9,7 @@ using SlimDX;
 namespace MHGameWork.TheWizards.RTSTestCase1.Goblins
 {
     /// <summary>
-    /// Pro-ness terrain in cube shape: supports elevated and non-elevated state :)
+    /// Pro-ness terrain in cube BuiltShape: supports elevated and non-elevated state :)
     /// </summary>
     [ModelObjectChanged]
     public class TerrainCube : EngineModelObject, IPhysical
