@@ -152,6 +152,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.Shaping
         {
             var retDictionairy = currentBlocks.ToDictionary(currentBlock => Vector3.TransformCoordinate(currentBlock.Key.ToVector3(), rotationMatrix).ToPoint3Rounded(), currentBlock => currentBlock.Value);
             currentBlocks = retDictionairy;
+            rotation = rotation*rotationMatrix;
             return currentBlocks;
         }
     }

@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         [Test]
         public void SimpleWorkingTest()
         {
-            var mrDetect = new ShapeDetectorBuilder().BuildShapeDetector();
+            var mrDetect = getShapeDetector(); ;
             var woodShape = CreateShapeElement();
             var stoneShape = CreateShapeElement();
             var stonePickaxe= CreateFirstMockShape();
@@ -37,7 +37,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         [Test]
         public void NormalizeTranslationTest()
         {
-            var mrDetect = new ShapeDetectorBuilder().BuildShapeDetector();
+            var mrDetect = getShapeDetector();
             var woodShape = CreateShapeElement();
             var stoneShape = CreateShapeElement();
             var stonePickaxe = CreateFirstMockShape();
@@ -48,10 +48,15 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
             throw new NotImplementedException();
         }
 
+        private static IShapeDetector getShapeDetector()
+        {
+            return new ShapeDetectorBuilder().BuildShapeDetector();
+        }
+
         [Test]
         public void NormalizeRotationTest()
         {
-            var mrDetect = new ShapeDetectorBuilder().BuildShapeDetector(); ;
+            var mrDetect = getShapeDetector(); 
             var woodShape = CreateShapeElement();
             var stoneShape = CreateShapeElement();
             var stonePickaxe = CreateFirstMockShape();
@@ -66,7 +71,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
         {
            try
             {
-            var mrDetect = new ShapeDetectorBuilder().BuildShapeDetector();
+                var mrDetect = getShapeDetector(); ;
             var woodShape = CreateShapeElement();
             var stoneShape = CreateShapeElement();
             var woodPickaxe = CreateFirstMockShape();
