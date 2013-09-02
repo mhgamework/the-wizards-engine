@@ -267,7 +267,9 @@
     <Compile Include="Engine\Worlding\IWorldDestroyer.cs" />
     <Compile Include="RTSTestCase1\Shaping\BuildGridRaycaster.cs" />
     <Compile Include="RTSTestCase1\Shaping\IBuildGrid.cs" />
+    <Compile Include="RTSTestCase1\Shaping\ModelBuilder.cs" />
     <Compile Include="RTSTestCase1\Shaping\ModelBuilderPrototypeTest.cs" />
+    <Compile Include="RTSTestCase1\Shaping\ShapeHasher.cs" />
     <Compile Include="RTSTestCase1\Shaping\SimpleBuildGrid.cs" />
     <Compile Include="RTSTestCase1\Shaping\MovementNormalHasher.cs" />
     <Compile Include="RTSTestCase1\Shaping\SimpleShapeDetector.cs" />

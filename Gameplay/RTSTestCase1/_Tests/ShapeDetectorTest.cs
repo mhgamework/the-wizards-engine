@@ -114,7 +114,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                  var coolShape2 = MockRepository.GenerateMock<IShape>();
 
 
-                 var mrDetect = new ShapeDetectorBuilder().BuildShapeDetector(); ;
+                 var mrDetect = new ShapeDetectorBuilder().BuildShapeDetector();
 
                  var shapeElements = new Dictionary<Point3, IShapeElement>();
                  shapeElements.Add(new Point3(), zeroElement);
