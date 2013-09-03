@@ -22,7 +22,7 @@ Nvidia PhysX
 XNA 2.0 Redist 
 SlimDX SDK for development or Redist 4.0 32bit
 Visual C++ 2008 redistributable package (NOT SP1)
-DirectX SDK (apparently)
+Latest directx redistributable
 PostSharp (can be found in the /_Libraries folder)
 
 
