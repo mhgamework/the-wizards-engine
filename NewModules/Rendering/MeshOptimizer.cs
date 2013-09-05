@@ -8,6 +8,7 @@ namespace MHGameWork.TheWizards.Rendering
 {
     /// <summary>
     /// Responsible for creating an Optimized version of an IMesh (optimzed for use with deferredmeshrenderer atm)
+    /// Merges parts with identical materials.
     /// </summary>
     public class MeshOptimizer
     {
