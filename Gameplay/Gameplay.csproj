@@ -439,6 +439,7 @@
     <Compile Include="RTSTestCase1\_Tests\ShapeDetectorTest.cs" />
     <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulatorSimple.cs" />
     <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulator.cs" />
+    <Compile Include="SkyMerchant\BridgeMeshBuilder.cs" />
     <Compile Include="SkyMerchant\BridgeTest.cs" />
     <Compile Include="SkyMerchant\DataStructures\Array3D.cs" />
     <Compile Include="SkyMerchant\DataStructures\Array2D.cs" />
@@ -480,6 +481,8 @@
     <Compile Include="SkyMerchant\Prototype\Parts\RobotPlayerPart.cs" />
     <Compile Include="SkyMerchant\Voxels\VoxelMaterial.cs" />
     <Compile Include="SkyMerchant\Voxels\VoxelMeshBuilder.cs" />
+    <Compile Include="SkyMerchant\_Engine\AssetsRepository.cs" />
+    <Compile Include="SkyMerchant\_Engine\DynamicAssetsFactory.cs" />
     <Compile Include="SkyMerchant\_Engine\Rendering2DComponentsFactory.cs" />
     <Compile Include="SkyMerchant\_Windsor\NonOptionalDependencies.cs" />
     <Compile Include="_Features\TextMenu.cs" />
