@@ -52,6 +52,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.BehaviourTrees
 
                 }
             }
+            agent.StoreState(this, null);
             return NodeResult.Success;
 
         }
