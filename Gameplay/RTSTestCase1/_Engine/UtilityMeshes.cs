@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Text;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
@@ -52,7 +54,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1
             var texSize = 1024;
             TWDir.Cache.CreateSubdirectory("BoxText");
 
-            var name = "BoxText\\" + text + "Auto2.dds";
+            var name = "BoxText\\" + GetInt64HashCode(text) + "Auto2.dds";
             var file = TWDir.Cache + "\\" + name;
 
             if (!File.Exists(file))
@@ -81,5 +83,28 @@ namespace MHGameWork.TheWizards.RTSTestCase1
 
             return CreateMeshWithTexture(radius, texture);
         }
+
+        static Int64 GetInt64HashCode(string strText)
+        {
+            Int64 hashCode = 0;
+            if (!string.IsNullOrEmpty(strText))
+            {
+                //Unicode Encode Covering all characterset
+                byte[] byteContents = Encoding.Unicode.GetBytes(strText);
+                System.Security.Cryptography.SHA256 hash =
+                new System.Security.Cryptography.SHA256CryptoServiceProvider();
+                byte[] hashText = hash.ComputeHash(byteContents);
+                //32Byte hashText separate
+                //hashCodeStart = 0~7  8Byte
+                //hashCodeMedium = 8~23  8Byte
+                //hashCodeEnd = 24~31  8Byte
+                //and Fold
+                Int64 hashCodeStart = BitConverter.ToInt64(hashText, 0);
+                Int64 hashCodeMedium = BitConverter.ToInt64(hashText, 8);
+                Int64 hashCodeEnd = BitConverter.ToInt64(hashText, 24);
+                hashCode = hashCodeStart ^ hashCodeMedium ^ hashCodeEnd;
+            }
+            return (hashCode);
+        }  
     }
 }
