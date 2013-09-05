@@ -1,10 +1,14 @@
-﻿namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
+﻿using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
+
+namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
     /// <summary>
     /// Currently the trader generates resources per second, 
     /// later on it should acquire them from other computer driven robot players
     /// </summary>
-    public class TraderPart
+    [ModelObjectChanged]
+    public class TraderPart : EngineModelObject
     {
         #region Injection
         public IItemFactory ItemFactory { get; set; }

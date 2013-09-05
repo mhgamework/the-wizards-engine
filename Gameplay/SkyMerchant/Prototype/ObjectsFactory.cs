@@ -1,4 +1,5 @@
-﻿using DirectX11;
+﻿using System;
+using DirectX11;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.AI;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
@@ -10,9 +11,9 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
     {
         private readonly ITypedFactory factory;
 
-        private ItemType cogType = new ItemType() { Name = "Cog" };
-        private ItemType woodType = new ItemType() { Name = "Wood" };
-        private ItemType tubeType = new ItemType() { Name = "Tube" };
+        public ItemType CogType = new ItemType() { Name = "Cog" };
+        public ItemType WoodType = new ItemType() { Name = "Wood" };
+        public ItemType TubeType = new ItemType() { Name = "Tube" };
 
         public ObjectsFactory(ITypedFactory factory)
         {
@@ -32,7 +33,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             var part = factory.CreateItemPart();
             part.Physical = factory.CreatePhysical();
             part.Physical.Mesh = TW.Assets.LoadMesh("SkyMerchant/Cogs/Cog01");
-            part.Type = cogType;
+            part.Type = CogType;
             return part;
         }
         public ItemPart CreateTube()
@@ -40,7 +41,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             var part = factory.CreateItemPart();
             part.Physical = factory.CreatePhysical();
             part.Physical.Mesh = TW.Assets.LoadMesh("SkyMerchant/TubePart/TubePart");
-            part.Type = tubeType;
+            part.Type = TubeType;
             return part;
         }
 
@@ -49,7 +50,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             var part = factory.CreateItemPart();
             part.Physical = factory.CreatePhysical();
             part.Physical.Mesh = UtilityMeshes.CreateMeshWithText(0.4f, "Wood", TW.Graphics);
-            part.Type = woodType;
+            part.Type = WoodType;
             return part;
         }
 
@@ -79,6 +80,21 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             return part;
         }
 
+        public PiratePart CreatePirate()
+        {
+            var beh = factory.CreateEnemyBehaviourFactory();
+            beh.Physical = factory.CreatePhysical();
+            beh.Brain = new EnemyBrain();
+
+            var part = factory.CreatePiratePart(beh,beh.Brain);
+            part.Physical = beh.Physical;
+            part.Physical.Mesh = TW.Assets.LoadMesh("SkyMerchant/DummyRobot/DummyRobot");
+            part.Physical.ObjectMatrix = Matrix.Scaling(MathHelper.One * 0.3f);
+
+
+            return part;
+        }
+
         private class TreeItemFactory : GenerationPart.IItemFactory
         {
             private ObjectsFactory factory;
@@ -92,6 +108,28 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             {
                 return factory.CreateWoodBlock();
             }
+        }
+
+        public TraderVisualizerPart CreateTrader()
+        {
+            var trader = factory.CreateTraderPart();
+            var viz = factory.CreateTraderVisualizerPart();
+            viz.TraderPart = trader;
+            viz.Physical = factory.CreatePhysical();
+
+            return viz;
+        }
+
+        public ItemPart CreateItem(ItemType type)
+        {
+            if (type == CogType)
+                return CreateCog();
+            if (type == WoodType)
+                return CreateWoodBlock();
+            if (type == TubeType)
+                return CreateTube();
+
+            throw new NotImplementedException();
         }
     }
 }

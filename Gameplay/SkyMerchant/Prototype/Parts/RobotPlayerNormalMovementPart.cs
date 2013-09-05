@@ -188,7 +188,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         /// <returns></returns>
         public IslandPart GetPositionIsland()
         {
-            throw new NotImplementedException();
+            return WorldLocator.AtObject<IslandPart>(Physical, 3).FirstOrDefault();
         }
     }
 }

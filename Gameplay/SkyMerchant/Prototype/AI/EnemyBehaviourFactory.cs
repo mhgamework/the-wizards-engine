@@ -42,13 +42,18 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
         public IBehaviourNode CreateGuardPosition(Func<Vector3> getPosition)
         {
             return new ConcurrentSelector(
-                new FindTargetBehaviour(Brain, WorldLocator),
+                CreateFindTarget(),
                 new ConcurrentSelector(
                     new SingleActionBehaviour(() => Brain.Destination = getPosition()),
                     new MoveToDestinationBehaviour(Brain, SimulationEngine, Physical)
                 )
 
                 );
+        }
+
+        public IBehaviourNode CreateFindTarget()
+        {
+            return new FindTargetBehaviour(Brain, WorldLocator);
         }
 
         public IBehaviourNode CreateChaseTarget()

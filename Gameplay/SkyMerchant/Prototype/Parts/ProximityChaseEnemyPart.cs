@@ -18,22 +18,24 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         #region Injection
         public Physical Physical { get; set; }
         private EnemyBehaviourFactory BehaviourFactory;
+        [DoNotWire]
         public EnemyBrain Brain { get; set; }
         #endregion
 
         private IBehaviourNode behaviourTree;
         private BehaviourTreeAgent agent;
 
-        public ProximityChaseEnemyPart(EnemyBehaviourFactory behaviourFactory, EnemyBrain Brain)
+        public ProximityChaseEnemyPart(EnemyBehaviourFactory behaviourFactory, EnemyBrain brain)
         {
             BehaviourFactory = behaviourFactory;
             behaviourTree = CreateBehaviourTree();
             agent = new BehaviourTreeAgent(behaviourTree);
             GunChargedTime = -1;
-            Brain.LookDistance = 20;
-            Brain.ShootDistance = 5;
-            Brain.ShootInterval = 2;
-            Brain.GunDamage = 20;
+            brain.LookDistance = 20;
+            brain.ShootDistance = 5;
+            brain.ShootInterval = 2;
+            brain.GunDamage = 20;
+            Brain = brain;
         }
 
 

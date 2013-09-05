@@ -12,16 +12,13 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
     {
         private readonly RobotPlayerPart robot;
 
-        private Textarea area = new Textarea();
 
         public RobotInventoryTextView(RobotPlayerPart robot)
         {
             this.robot = robot;
-            area.Position = new Vector2(5, 5);
-            area.Size = new Vector2(100, 100);
         }
 
-        public void Update()
+        public string GenerateText()
         {
             var types = robot.Items.Select(i => i.Type).Distinct();
             var counts = types.ToDictionary(t => t, t => robot.Items.Count(i => i.Type == t));
@@ -31,9 +28,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             {
                 text += t.Name + ": " + counts[t] + "\n";
             }
-
-            area.Text = text;
+            return text;
         }
-
     }
 }

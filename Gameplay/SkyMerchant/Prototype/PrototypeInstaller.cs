@@ -25,9 +25,6 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             container.AddFacility<TypedFactoryFacility>();
 
             container.Register(
-                Component.For<PrototypeTest>(),
-                Component.For<PrototypeWorldGenerator>(),
-                Component.For<ObjectsFactory>(),
                 Component.For<ITypedFactory>().AsFactory(),
                 Component.For<IslandMeshFactory>(),
                 Component.For<VoxelMeshBuilder>(),
@@ -48,11 +45,16 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
                 );
 
 
+            // Override!!!
+            container.Register(Component.For<RobotPlayerPart>().LifestyleSingleton());
+
+            // Register all object parts
             container.Register(
                 Classes.FromThisAssembly().InSameNamespaceAs<IslandPart>().WithServiceSelf().LifestyleTransient());
 
             container.Register(
                 Component.For<Physical>().LifestyleTransient());
+
 
 
 
@@ -66,7 +68,14 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
                 Component.For<CustomCamera>());
 
             container.Register(
-                Component.For<EnemyBehaviourFactory>().LifestyleTransient()); 
+                Component.For<EnemyBehaviourFactory>().LifestyleTransient());
+
+            Console.WriteLine(Classes.FromThisAssembly().InSameNamespaceAs<PrototypeTest>().ToString());
+
+            // Register all components as a service in itself or similarly named interfaces
+            container.Register(Classes.FromThisAssembly().InNamespace("MHGameWork.TheWizards.SkyMerchant").WithServiceSelf().WithServiceDefaultInterfaces());
+            container.Register(Classes.FromThisAssembly().InNamespace("MHGameWork.TheWizards.SkyMerchant.Prototype").WithServiceSelf().WithServiceDefaultInterfaces());
+            container.Register(Classes.FromThisAssembly().InNamespace("MHGameWork.TheWizards.SkyMerchant._Engine").WithServiceSelf().WithServiceDefaultInterfaces());
         }
     }
 }

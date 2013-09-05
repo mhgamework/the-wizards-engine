@@ -461,8 +461,10 @@
     <Compile Include="SkyMerchant\Prototype\AI\ShootBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\SingleActionBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\TraderPart.cs" />
+    <Compile Include="SkyMerchant\Prototype\Parts\TraderVisualizerPart.cs" />
     <Compile Include="SkyMerchant\Prototype\PrototypeInstaller.cs" />
     <Compile Include="SkyMerchant\Prototype\PrototypeMain.cs" />
+    <Compile Include="SkyMerchant\Prototype\PrototypeUserInterface.cs" />
     <Compile Include="SkyMerchant\Prototype\RobotInventoryTextView.cs" />
     <Compile Include="SkyMerchant\Prototype\SimpleItemFactory.cs" />
     <Compile Include="SkyMerchant\Prototype\SimpleUserMovementInput.cs" />
@@ -475,6 +477,7 @@
     <Compile Include="SkyMerchant\Prototype\Parts\RobotPlayerPart.cs" />
     <Compile Include="SkyMerchant\Voxels\VoxelMaterial.cs" />
     <Compile Include="SkyMerchant\Voxels\VoxelMeshBuilder.cs" />
+    <Compile Include="SkyMerchant\_Engine\Rendering2DComponentsFactory.cs" />
     <Compile Include="SkyMerchant\_Windsor\NonOptionalDependencies.cs" />
     <Compile Include="_Features\TextMenu.cs" />
     <Compile Include="_Features\TextMenuItem.cs" />

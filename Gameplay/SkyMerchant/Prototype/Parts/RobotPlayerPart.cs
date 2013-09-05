@@ -26,6 +26,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         public RobotPlayerNormalMovementPart NormalMovement { get; set; }
         [NonOptional]
         public ISimulationEngine SimulationEngine { get; set; }
+        [NonOptional]
+        public ObjectsFactory ObjectsFactory { get; set; }
         #endregion
 
         public RobotPlayerPart()
@@ -155,15 +157,22 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         #region Health and cogs
 
         public float Health { get; set; }
-        public float Cogs { get; set; }
 
         public void SimulateCogConsumption()
         {
-            Cogs -= SimulationEngine.Elapsed * 20;
-            if (Cogs > 0) return;
+            Health -= SimulationEngine.Elapsed * 0.2f;
 
-            Cogs = 0;
-            Health = 0;
+            var cogRepairAmount = 50;
+            if (Health < cogRepairAmount)
+            {
+                // Try consume cog
+                var cog = Items.FirstOrDefault(o => o.Type == ObjectsFactory.CogType);
+                if (cog != null)
+                {
+                    Items.Remove(cog);
+                    Health += cogRepairAmount;
+                }
+            }
         }
 
         public void SimulateDeath()

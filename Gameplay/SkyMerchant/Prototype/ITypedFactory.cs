@@ -17,7 +17,11 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
 
         GenerationPart CreateGenerationPart(GenerationPart.IItemFactory factory);
         GenerationSourcePart CreateGenerationSourcePart();
-        ProximityChaseEnemyPart CreateProximityChaseEnemyPart(EnemyBehaviourFactory behaviourFactory, EnemyBrain Brain);
+        ProximityChaseEnemyPart CreateProximityChaseEnemyPart(EnemyBehaviourFactory behaviourFactory, EnemyBrain brain);
         EnemyBehaviourFactory CreateEnemyBehaviourFactory();
+        PiratePart CreatePiratePart(EnemyBehaviourFactory behaviourFactory, EnemyBrain brain);
+
+        TraderPart CreateTraderPart();
+        TraderVisualizerPart CreateTraderVisualizerPart();
     }
 }

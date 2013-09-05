@@ -13,7 +13,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
 
         public ItemPart CreateItem(ItemType type)
         {
-            return factory.CreateWoodBlock();
+
+            return factory.CreateItem(type);
         }
 
         public void Destroy(ItemPart item)

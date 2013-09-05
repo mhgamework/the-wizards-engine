@@ -55,6 +55,11 @@ namespace MHGameWork.TheWizards.SkyMerchant
         public CustomCamera Camera { get; set; }
         [NonOptional]
         public IWorldLocator WorldLocator { get; set; }
+        [NonOptional]
+        public PrototypeUserInterface UserInterface { get; set; }
+        [NonOptional]
+        public ObjectsFactory ObjectsFactory { get; set; }
+
         #endregion
 
         private RobotPlayerPart robot;
@@ -101,7 +106,20 @@ namespace MHGameWork.TheWizards.SkyMerchant
             {
                 i.SimulateBehaviour();
             }
+            foreach (var i in TW.Data.Objects.OfType<TraderVisualizerPart>().ToArray())
+            {
+                i.FixMesh();
+            }
+            foreach (var i in TW.Data.Objects.OfType<TraderPart>().ToArray())
+            {
+                i.SimulateResourcesGeneration();
+            }
+            foreach (var i in TW.Data.Objects.OfType<PiratePart>().ToArray()) // To array because this removes modelobjects
+            {
+                i.SimulateBehaviour();
+            }
             processRobot();
+            UserInterface.Update();
         }
 
         private void processRobot()
@@ -113,12 +131,17 @@ namespace MHGameWork.TheWizards.SkyMerchant
             robot.SimulateCogConsumption();
             robot.SimulateDeath();
             setCameraView();
-            view.Update();
         }
 
         private void tryPickup()
         {
             if (!TW.Graphics.Keyboard.IsKeyPressed(Key.F)) return;
+            var trader = WorldLocator.AtObject<TraderVisualizerPart>(robot.Physical, 4).FirstOrDefault();
+            if (trader != null && trader.TraderPart.CanTradeWith(robot))
+            {
+                trader.TraderPart.PerformTrade(robot);
+            }
+
             var resource = WorldLocator.AtObject<GenerationSourcePart>(robot.Physical, 4).FirstOrDefault();
             if (resource != null && resource.GenerationPart.HasResource)
             {
@@ -143,7 +166,7 @@ namespace MHGameWork.TheWizards.SkyMerchant
 
         private void setupTest()
         {
-            PrototypeWorldGenerator.GenerateWorld(30);
+            PrototypeWorldGenerator.GenerateWorld(80);
 
             robot = createRobot();
 
@@ -168,6 +191,12 @@ namespace MHGameWork.TheWizards.SkyMerchant
 
 
             view = new RobotInventoryTextView(robot);
+
+            robot.Pickup(ObjectsFactory.CreateWoodBlock());
+            robot.Pickup(ObjectsFactory.CreateWoodBlock());
+            robot.Pickup(ObjectsFactory.CreateWoodBlock());
+            robot.Pickup(ObjectsFactory.CreateWoodBlock());
+            robot.Pickup(ObjectsFactory.CreateWoodBlock());
 
             return robot;
         }

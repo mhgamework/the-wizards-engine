@@ -33,20 +33,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
                 n.TargetHeight = n.Physical.GetPosition().Y;
 
 
-                ItemPart item;
-                item = Factory.CreateCog();
-                item.PlaceOnIsland(n);
-
-
-                item = Factory.CreateTube();
-                item.PlaceOnIsland(n);
-                item = Factory.CreateTube();
-                item.PlaceOnIsland(n);
-
-                var source = Factory.CreateTree();
-                source.Physical.SetPosition(n.Physical.GetPosition());
-
-
+                populateIsland(n);
             }
             density = 1 / 100f;
             //for (int i = 0; i < size * size * density; i++)
@@ -55,6 +42,49 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
                 var robot = Factory.CreateDrone();
                 robot.Physical.SetPosition(nextVector3(worldMin, worldMax));
                 robot.GuardPosition = robot.Physical.GetPosition();
+            }
+
+            density = 1 / 100f;
+            //for (int i = 0; i < size * size * density; i++)
+            for (int i = 0; i < density; i++)
+            {
+                var robot = Factory.CreatePirate();
+                robot.Physical.SetPosition(nextVector3(worldMin, worldMax));
+            }
+        }
+
+        private void populateIsland(IslandPart n)
+        {
+            if (Random.NextDouble() < 0.1f)
+            {
+                var tViz = Factory.CreateTrader();
+                var t = tViz.TraderPart;
+                t.GivesAmount = 1;
+                t.GivesType = Factory.CogType;
+
+                t.WantsAmount = 5;
+                t.WantsType = Factory.WoodType;
+
+                tViz.Physical.SetPosition(n.Physical.GetPosition());
+                
+            }
+            ItemPart item;
+            while (Random.NextDouble() < 0.1f)
+            {
+                item = Factory.CreateCog();
+                item.PlaceOnIsland(n);
+            }
+
+            while (Random.NextDouble() < 0.2f)
+            {
+                item = Factory.CreateTube();
+                item.PlaceOnIsland(n);
+            }
+
+            if (Random.NextDouble() < 0.4f)
+            {
+                var source = Factory.CreateTree();
+                source.Physical.SetPosition(n.Physical.GetPosition());
             }
         }
 
