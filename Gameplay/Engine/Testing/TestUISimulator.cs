@@ -23,8 +23,8 @@ namespace MHGameWork.TheWizards.Engine.Testing
         {
             if (picker.PickCompleted)
             {
-                var runner = new EngineTestRunner(DI.Get<EngineTestState>());
-                runner.RunTest(picker.GetPickedTest());
+                var picked = picker.GetPickedTest();
+                DI.Get<EngineTestState>().SetActiveTest(picked.TestMethod);
             }
 
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.F5))

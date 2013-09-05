@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Engine.PhysX;
 using MHGameWork.TheWizards.Engine.Testing;
 using MHGameWork.TheWizards.Engine.VoxelTerraining;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.TestRunner;
 
 namespace MHGameWork.TheWizards.Engine
 {
@@ -60,8 +61,9 @@ namespace MHGameWork.TheWizards.Engine
             //engine.AddSimulator(new GraphVisualizerSimulator());
             try
             {
-                var runner = new EngineTestRunner(engineTestState);
-                runner.RunTestDataTest(engine);
+                var test = new NUnitTest(engineTestState.GetActiveTest(), engineTestState.GetActiveTest().ReflectedType);
+                var runner = new EngineTestRunner();
+                runner.RunTestInEngine(engine, test);
             }
             catch (Exception ex)
             {

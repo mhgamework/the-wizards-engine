@@ -58,14 +58,11 @@ namespace MHGameWork.TheWizards.TestRunner
 
         public void Run(ITest test)
         {
-            var unit = (NUnitTest) test;
-            var instance = Activator.CreateInstance(unit.TestClass);
-
             var thread = new Thread(delegate()
             {
                 try
                 {
-                    RunNormal(instance, unit.TestMethod);
+                    RunInThisThread(test);
                 }
                 catch (Exception ex)
                 {
@@ -79,6 +76,14 @@ namespace MHGameWork.TheWizards.TestRunner
             thread.Start();
 
             thread.Join();
+
+        }
+        public void RunInThisThread(ITest test)
+        {
+            var unit = (NUnitTest)test;
+            var instance = Activator.CreateInstance(unit.TestClass);
+
+            RunNormal(instance, unit.TestMethod);
 
         }
 

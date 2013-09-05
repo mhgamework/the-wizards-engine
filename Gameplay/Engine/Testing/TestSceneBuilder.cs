@@ -4,7 +4,7 @@ namespace MHGameWork.TheWizards.Engine.Testing
 {
     /// <summary>
     /// Responsible for holding information on how to construct the current test scene, and providing ways to construct it
-    /// (NOTE: this is called by the EngineTestRunner)
+    /// (NOTE: this is called by the MultiTypeTestRunner)
     /// 
     /// This checks the TW.Data to see if the scene is already initially build, if it isnt, builds it
     /// </summary>

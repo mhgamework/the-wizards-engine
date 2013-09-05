@@ -185,7 +185,7 @@
     <Compile Include="Engine\Testing\EngineTestAttribute.cs" />
     <Compile Include="Engine\Persistence\EngineStatePersistor.cs" />
     <Compile Include="Engine\Testing\EngineTestPicker.cs" />
-    <Compile Include="Engine\Testing\MultiTypeTestRunner.cs" />
+    <Compile Include="Engine\Testing\EngineTestRunner.cs" />
     <Compile Include="Engine\Testing\OtherAppdomainTestRunner.cs" />
     <Compile Include="Engine\Testing\EngineTestState.cs" />
     <Compile Include="Engine\Testing\TestSceneBuilder.cs" />
