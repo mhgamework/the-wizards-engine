@@ -1,5 +1,9 @@
-﻿using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
+﻿using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Worlding;
+using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using SlimDX;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Building._SkyMerchant
 {
@@ -14,10 +18,38 @@ namespace MHGameWork.TheWizards.SkyMerchant.Building._SkyMerchant
 
         float Durability { get; set; }
 
-        void PlaceAt(Vector3 pos);
+        IMachine Machine { get; }
 
-        IMachine Machine { get; set; }
+        IItemType Type { get; }
+
+    }
+
+    [ModelObjectChanged]
+    public class SimpleItem : EngineModelObject, IItem
+    {
+        public SimpleItem(IIsland island)
+        {
+            Island = island;
+        }
+
+        public Physical Physical = new Physical();
+        private IItemType type;
+        public Vector3 IslandPosition { get { return Physical.GetPosition(); } }
+        public IIsland Island { get; private set; }
+        public float Durability { get; set; }
 
 
+        public IMachine Machine
+        { get { return TW.Data.Objects.OfType<SimpleMachine>().FirstOrDefault(s => s.Items.Contains(this)); } }
+
+        public IItemType Type
+        {
+            get { return type; }
+            set
+            {
+                type = value;
+                Physical.Mesh = ((SimpleItemType)type).Mesh;
+            }
+        }
     }
 }

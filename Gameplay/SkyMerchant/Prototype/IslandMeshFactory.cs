@@ -27,13 +27,19 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 
         public IMesh CreateMesh(int seed)
         {
+            var island = CreateVoxels(seed);
+            var mesh = c.BuildMesh(island);
+
+            return mesh;
+        }
+
+        public IFiniteVoxels CreateVoxels(int seed)
+        {
             var r = new Random(seed);
             var gen = new IslandGenerater(r);
 
             var island = gen.GenerateIsland(r.Next(7, 20));
-            var mesh = c.BuildMesh(island);
-
-            return mesh;
+            return island;
         }
     }
 }
