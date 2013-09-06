@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using DirectX11;
 
-namespace MHGameWork.TheWizards.RTSTestCase1.Shaping
+namespace MHGameWork.TheWizards.SkyMerchant.Building.Shaping
 {
     public interface IBuildGrid
     {

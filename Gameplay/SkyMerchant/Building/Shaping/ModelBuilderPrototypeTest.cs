@@ -8,13 +8,14 @@ using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.RTSTestCase1._Tests;
 using NUnit.Framework;
 using Rhino.Mocks;
 using SlimDX;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.RTSTestCase1.Shaping
+namespace MHGameWork.TheWizards.SkyMerchant.Building.Shaping
 {
     [TestFixture]
     [EngineTest]

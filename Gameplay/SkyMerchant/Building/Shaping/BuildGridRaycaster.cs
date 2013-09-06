@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using DirectX11;
+﻿using DirectX11;
 using MHGameWork.TheWizards.CG.Spatial;
-using MHGameWork.TheWizards.Engine.WorldRendering;
-using SlimDX;
 
-namespace MHGameWork.TheWizards.RTSTestCase1.Shaping
+namespace MHGameWork.TheWizards.SkyMerchant.Building.Shaping
 {
 
     public class BuildGridRaycaster

@@ -3,7 +3,7 @@ using DirectX11;
 using System.Linq;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.RTSTestCase1.Shaping
+namespace MHGameWork.TheWizards.SkyMerchant.Building.Shaping
 {
     public interface IShapeDetector
     {

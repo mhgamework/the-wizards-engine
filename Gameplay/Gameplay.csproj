@@ -265,14 +265,14 @@
     <Compile Include="RTSTestCase1\Building\BuildablePart.cs" />
     <Compile Include="Engine\Worlding\IWorldLocator.cs" />
     <Compile Include="Engine\Worlding\IWorldDestroyer.cs" />
-    <Compile Include="RTSTestCase1\Shaping\BuildGridRaycaster.cs" />
-    <Compile Include="RTSTestCase1\Shaping\IBuildGrid.cs" />
-    <Compile Include="RTSTestCase1\Shaping\ModelBuilder.cs" />
-    <Compile Include="RTSTestCase1\Shaping\ModelBuilderPrototypeTest.cs" />
-    <Compile Include="RTSTestCase1\Shaping\ShapeHasher.cs" />
-    <Compile Include="RTSTestCase1\Shaping\SimpleBuildGrid.cs" />
-    <Compile Include="RTSTestCase1\Shaping\MovementNormalHasher.cs" />
-    <Compile Include="RTSTestCase1\Shaping\SimpleShapeDetector.cs" />
+    <Compile Include="SkyMerchant\Building\Shaping\BuildGridRaycaster.cs" />
+    <Compile Include="SkyMerchant\Building\Shaping\IBuildGrid.cs" />
+    <Compile Include="SkyMerchant\Building\Shaping\ModelBuilder.cs" />
+    <Compile Include="SkyMerchant\Building\Shaping\ModelBuilderPrototypeTest.cs" />
+    <Compile Include="SkyMerchant\Building\Shaping\ShapeHasher.cs" />
+    <Compile Include="SkyMerchant\Building\Shaping\SimpleBuildGrid.cs" />
+    <Compile Include="SkyMerchant\Building\Shaping\MovementNormalHasher.cs" />
+    <Compile Include="SkyMerchant\Building\Shaping\SimpleShapeDetector.cs" />
     <Compile Include="RTSTestCase1\Building\SimpleBuilder.cs" />
     <Compile Include="RTSTestCase1\Cannons\CannonSimulator.cs" />
     <Compile Include="RTSTestCase1\Characters\IRTSCharacter.cs" />
@@ -441,8 +441,8 @@
     <Compile Include="RTSTestCase1\RTS\TerrainAStar.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RTSTestCase1\Shaping\IShape.cs" />
-    <Compile Include="RTSTestCase1\_Tests\ShapeDetectorTest.cs" />
+    <Compile Include="SkyMerchant\Building\Shaping\IShape.cs" />
+    <Compile Include="SkyMerchant\Building\ShapeDetectorTest.cs" />
     <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulatorSimple.cs" />
     <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulator.cs" />
     <Compile Include="SkyMerchant\BridgeMeshBuilder.cs" />
@@ -638,6 +638,7 @@
     <Content Include="_Features\_doc.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="SkyMerchant\Building\_SkyMerchant\" />
     <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>

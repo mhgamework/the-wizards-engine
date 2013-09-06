@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.Debugging;
 using MHGameWork.TheWizards.Engine.Features.Testing;
-using MHGameWork.TheWizards.RTSTestCase1.Shaping;
+using MHGameWork.TheWizards.SkyMerchant.Building.Shaping;
 using NUnit.Framework;
 using Rhino.Mocks;
 using SlimDX;
 using System.Linq;
 
-namespace MHGameWork.TheWizards.RTSTestCase1._Tests
+namespace MHGameWork.TheWizards.SkyMerchant.Building
 {
     [TestFixture]
     [EngineTest]
