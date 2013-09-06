@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTSTestCase1._Tests;
 using NUnit.Framework;
