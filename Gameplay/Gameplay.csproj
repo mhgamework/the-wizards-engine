@@ -265,6 +265,7 @@
     <Compile Include="RTSTestCase1\Building\BuildablePart.cs" />
     <Compile Include="Engine\Worlding\IWorldLocator.cs" />
     <Compile Include="Engine\Worlding\IWorldDestroyer.cs" />
+    <Compile Include="SkyMerchant\Building\IPlayerBuilder.cs" />
     <Compile Include="SkyMerchant\Building\Shaping\BuildGridRaycaster.cs" />
     <Compile Include="SkyMerchant\Building\Shaping\IBuildGrid.cs" />
     <Compile Include="SkyMerchant\Building\Shaping\ModelBuilder.cs" />
@@ -447,6 +448,11 @@
     <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulator.cs" />
     <Compile Include="SkyMerchant\BridgeMeshBuilder.cs" />
     <Compile Include="SkyMerchant\BridgeTest.cs" />
+    <Compile Include="SkyMerchant\Building\_SkyMerchant\IIsland.cs" />
+    <Compile Include="SkyMerchant\Building\_SkyMerchant\IItem.cs" />
+    <Compile Include="SkyMerchant\Building\_SkyMerchant\IMachine.cs" />
+    <Compile Include="SkyMerchant\Building\_SkyMerchant\IMachineFactory.cs" />
+    <Compile Include="SkyMerchant\Building\_SkyMerchant\IRobotPlayer.cs" />
     <Compile Include="SkyMerchant\DataStructures\Array3D.cs" />
     <Compile Include="SkyMerchant\DataStructures\Array2D.cs" />
     <Compile Include="SkyMerchant\PrototypeTest.cs" />
@@ -638,7 +644,6 @@
     <Content Include="_Features\_doc.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SkyMerchant\Building\_SkyMerchant\" />
     <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>
