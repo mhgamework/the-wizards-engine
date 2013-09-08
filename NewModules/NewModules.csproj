@@ -241,6 +241,7 @@
     <Compile Include="Persistence\PersistAttribute.cs" />
     <Compile Include="Physics\MeshPhysicsFactoryXNA.cs" />
     <Compile Include="Raycasting\MeshRaycaster.cs" />
+    <Compile Include="Rendering\Deferred\Meshes\MeshBoundingBoxFactory.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderData.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderDataFactory.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderMaterial.cs" />

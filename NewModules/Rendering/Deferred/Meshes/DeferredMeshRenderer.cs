@@ -32,6 +32,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         public static readonly FileInfo DeferredMeshFX = new System.IO.FileInfo(CompiledShaderCache.Current.RootShaderPath + "Deferred\\DeferredMesh.fx");
 
 
+        private MeshBoundingBoxFactory bbFactory = new MeshBoundingBoxFactory();
         private MeshRenderDataFactory renderDataFactory;
 
 
@@ -97,7 +98,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         public DeferredMeshRenderElement AddMesh(IMesh mesh)
         {
 
-            var el = new DeferredMeshRenderElement(this, mesh);
+            var el = new DeferredMeshRenderElement(this, mesh,bbFactory);
 
 
             var data = getRenderData(mesh);

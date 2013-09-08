@@ -6,13 +6,14 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 {
     public class DeferredMeshRenderElement : ICullable
     {
-        public DeferredMeshRenderElement(DeferredMeshRenderer renderer, IMesh mesh)
+        public DeferredMeshRenderElement(DeferredMeshRenderer renderer, IMesh mesh,MeshBoundingBoxFactory boundingBoxFactory)
         {
             Renderer = renderer;
             Mesh = mesh;
             worldMatrix = Matrix.Identity;
             visible = true;
             CastsShadows = true;
+            cachedMeshCorners = boundingBoxFactory.GetCorners(mesh);
             updateBoundingBox();
         }
 
@@ -22,6 +23,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private Matrix worldMatrix;
         private BoundingBox boundingBox;
         private bool visible;
+
+        private Vector3[] cachedMeshCorners;
 
         public Matrix WorldMatrix
         {
@@ -43,19 +46,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         private void updateBoundingBox()
         {
-
-            //TODO: optimize!
-            //Lol!
-            // EDIT: MOAR LOL!
-            boundingBox = Mesh.GetCoreData().Parts.Select(part => (part.MeshPart.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position).Length == 0 ? new Microsoft.Xna.Framework.BoundingBox() :
-                Microsoft.Xna.Framework.BoundingBox.CreateFromPoints(
-                part.MeshPart.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position))))
-                .Aggregate(new Microsoft.Xna.Framework.BoundingBox(), (current, t) => current.MergeWith(t)).dx();
-
-            boundingBox = SlimDX.BoundingBox.FromPoints(Vector3.TransformCoordinate(boundingBox.GetCorners(), ref worldMatrix));
-
-
+            boundingBox = SlimDX.BoundingBox.FromPoints(Vector3.TransformCoordinate(cachedMeshCorners, ref worldMatrix));
         }
+
+      
 
         /// <summary>
         /// Removes this element from the renderer
