@@ -30,9 +30,9 @@ namespace MHGameWork.TheWizards.Engine.Worlding
         public bool Solid { get; set; }
         public IMesh Mesh { get; set; }
         public bool Static { get; set; }
-        public bool Visible { get; set; }
+        public virtual bool Visible { get; set; }
 
-        public void Update()
+        public virtual void Update()
         {
             if (Entity == null) Entity = new Entity();
 
