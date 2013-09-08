@@ -11,18 +11,34 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
     public class LineLodPhysical : Physical
     {
         private bool visible;
+        private CameraInfo info;
         public const float LineLodDistance = 30;
+
+
+        public LineLodPhysical()
+        {
+            info = TW.Data.Get<CameraInfo>();
+        }
+
         public override void Update()
         {
             base.Update();
-            var meshVisible = Vector3.Distance(TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.xna().Translation.dx(), GetPosition()) <
-                               LineLodDistance;
-
-            Entity.Visible = meshVisible;
-            if (!meshVisible)
-                TW.Graphics.LineManager3D.AddAABB(GetBoundingBox(), Matrix.Identity, new Color4(0, 0, 0));
-
+            UpdateMeshVisibility();
         }
+
+        public void UpdateMeshVisibility()
+        {
+            if (Entity == null) return;
+            var meshVisible =
+                Vector3.Distance(info.ActiveCamera.ViewInverse.xna().Translation.dx(), GetPosition()) <
+                LineLodDistance;
+
+            if (Entity.Visible != meshVisible)
+                Entity.Visible = meshVisible;
+            if (!meshVisible) ;
+            TW.Graphics.LineManager3D.AddAABB(GetBoundingBox(), Matrix.Identity, new Color4(0, 0, 0));
+        }
+
         public override bool Visible
         {
             get { return visible; }

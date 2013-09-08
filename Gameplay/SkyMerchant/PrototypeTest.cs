@@ -11,6 +11,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.RTSTestCase1._Common;
+using MHGameWork.TheWizards.SkyMerchant.Lod;
 using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant._Windsor;
@@ -118,6 +119,10 @@ namespace MHGameWork.TheWizards.SkyMerchant
             {
                 i.SimulateBehaviour();
             }
+            foreach (var i in TW.Data.Objects.OfType<LineLodPhysical>())
+            {
+                i.UpdateMeshVisibility();
+            }
             processRobot();
             UserInterface.Update();
         }
@@ -166,7 +171,7 @@ namespace MHGameWork.TheWizards.SkyMerchant
 
         private void setupTest()
         {
-            PrototypeWorldGenerator.GenerateWorld(80);
+            PrototypeWorldGenerator.GenerateWorld(150);
 
             robot = createRobot();
 

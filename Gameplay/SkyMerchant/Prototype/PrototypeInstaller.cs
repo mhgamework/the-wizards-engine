@@ -10,6 +10,7 @@ using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.RTSTestCase1._Common;
 using MHGameWork.TheWizards.RTSTestCase1._Tests;
+using MHGameWork.TheWizards.SkyMerchant.Lod;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.AI;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant.Voxels;
@@ -23,6 +24,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
         {
             container.AddFacility<NonOptionalPropertiesFacility>();
             container.AddFacility<TypedFactoryFacility>();
+
+
+            //container.Register(Component.For<Physical>().LifestyleTransient());
+            container.Register(Component.For<Physical>().ImplementedBy<LineLodPhysical>().LifestyleTransient());
+
+
 
             container.Register(
                 Component.For<ITypedFactory>().AsFactory(),
@@ -52,8 +59,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             container.Register(
                 Classes.FromThisAssembly().InSameNamespaceAs<IslandPart>().WithServiceSelf().LifestyleTransient());
 
-            container.Register(
-                Component.For<Physical>().LifestyleTransient());
+            
 
 
 

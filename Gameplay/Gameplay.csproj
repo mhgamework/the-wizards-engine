@@ -450,6 +450,7 @@
     <Compile Include="SkyMerchant\DataStructures\Array3D.cs" />
     <Compile Include="SkyMerchant\DataStructures\Array2D.cs" />
     <Compile Include="SkyMerchant\Lod\LineLodPhysical.cs" />
+    <Compile Include="SkyMerchant\Lod\LodTest.cs" />
     <Compile Include="SkyMerchant\PrototypeTest.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\PickupTargetItemBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\FindClosestResourceBehaviour.cs" />
