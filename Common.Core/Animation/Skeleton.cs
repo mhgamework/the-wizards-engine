@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.Animation
     {
         /// <summary>
         /// Joints are ordered by tree-depth, rootnode first.
-        /// Joints[i].depth is always smaller than Joints[i+1].depth
+        /// Joints[i].depth is always smaller or equal than Joints[i+1].depth
         /// </summary>
         public List<Joint> Joints = new List<Joint>();
 

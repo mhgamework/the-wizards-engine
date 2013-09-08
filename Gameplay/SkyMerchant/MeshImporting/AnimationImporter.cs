@@ -12,10 +12,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
     public class AnimationImporter
     {
 
-        private List<BoneData> bones; //TODO: export and import bone zero-transformations
+        private List<BoneData> bones; //TODO: export and import bone zero-transformations (currently just frame 0 values)
         private List<Frame> frames; 
 
-        public void LoadAnimation(String path)
+        public void LoadAnimation(String path, out List<BoneData> boneStructure, out List<Frame> frameData)
         {
             reset();
 
@@ -40,7 +40,14 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
                     line = reader.ReadLine();
                 }
 
-                String happy = "yay!";
+
+                //todo: properly export/import zero-transforms
+                var frameZero = frames.Where(e => e.FrameID == 0).ToList().First();
+                setZeroTransformations(frameZero);
+
+
+                boneStructure = bones.ToList();
+                frameData = frames.ToList();
             }
         }
 
@@ -98,5 +105,22 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
             pieces = pieces.Select(e => e.Replace('.', ',')).ToArray();
             return new Quaternion(float.Parse(pieces[0]), float.Parse(pieces[1]), float.Parse(pieces[2]), float.Parse(pieces[3]));
         }
+    
+        /// <summary>
+        /// Sets the zero-transforms of all bones to the transform they have in given frame.
+        /// </summary>
+        /// <param name="f"></param>
+        private void setZeroTransformations(Frame f)
+        {
+            foreach (var b in f.getBoneData())
+            {
+                var bone = bones.Where(e => e.Name == b.BoneName).ToList().First();
+                bone.ZeroRotation = b.Rotation;
+                bone.ZeroScale = b.Scale;
+                bone.ZeroTranslation = b.Translation;
+            }
+        }
+
+
     }
 }

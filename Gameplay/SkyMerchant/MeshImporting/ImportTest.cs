@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Animation;
 using MHGameWork.TheWizards.Debugging;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
@@ -25,6 +26,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
         //private String testImportMeshPath = "C:/Users/Simon/Documents/My Dropbox/Projects/SkyMerchant/MaxScriptExporter/geomTest.twobj";
         private String testImportMeshPath = "C:/Users/Simon/Documents/My Dropbox/Projects/SkyMerchant/MaxScriptExporter/rodwen.twobj";
         private String testImportAnimPath = "C:/Users/Simon/Documents/My Dropbox/Projects/SkyMerchant/MaxScriptExporter/animationTest.twanim";
+        private String testImportSkinPath = "C:/Users/Simon/Documents/My Dropbox/Projects/SkyMerchant/MaxScriptExporter/skinTest.twskin";
+
 
         [Test]
         public void TestImportMesh()
@@ -106,7 +109,71 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
             try
             {
                 var importer = new AnimationImporter();
-                importer.LoadAnimation(testImportAnimPath);
+                List<BoneData> boneStructure;
+                List<Frame> frameData;
+                importer.LoadAnimation(testImportAnimPath, out boneStructure, out frameData);
+
+            }
+            catch (Exception ex)
+            {
+                DI.Get<IErrorLogger>().Log(ex, "Init prototype");
+            }
+        }
+
+        [Test]
+        public void TestRenderBones()
+        {
+            try
+            {
+                var importer = new AnimationImporter();
+                List<BoneData> boneStructure;
+                List<Frame> frameData;
+                importer.LoadAnimation(testImportAnimPath, out boneStructure, out frameData);
+
+                var skeletonBuilder = new SkeletonBuilder();
+                var skeleton = skeletonBuilder.BuildSkeleton(boneStructure);
+
+                var skeletonVisualizer = new SkeletonVisualizer();
+                //skeletonVisualizer.VisualizeSkeleton(game, skeleton); //todo: get game
+
+            }
+            catch (Exception ex)
+            {
+                DI.Get<IErrorLogger>().Log(ex, "Init prototype");
+            }
+        }
+
+        [Test]
+        public void TestRenderAnimation()
+        {
+            try
+            {
+                var importer = new AnimationImporter();
+                List<BoneData> boneStructure;
+                List<Frame> frameData;
+                importer.LoadAnimation(testImportAnimPath, out boneStructure, out frameData);
+
+                var skeletonBuilder = new SkeletonBuilder();
+                var skeleton = skeletonBuilder.BuildSkeleton(boneStructure);
+
+                var skeletonVisualizer = new SkeletonVisualizer();
+                //skeletonVisualizer.VisualizeSkeleton(game, skeleton); //todo: get game
+
+            }
+            catch (Exception ex)
+            {
+                DI.Get<IErrorLogger>().Log(ex, "Init prototype");
+            }
+        }
+
+        [Test]
+        public void TestImportSkinData()
+        {
+            try
+            {
+                var importer = new SkinDataImporter();
+                List<VertexSkinData> skinData;
+                importer.LoadSkinData(testImportSkinPath, out skinData);
             }
             catch (Exception ex)
             {

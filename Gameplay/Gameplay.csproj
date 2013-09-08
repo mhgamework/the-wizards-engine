@@ -486,11 +486,15 @@
     <Compile Include="SkyMerchant\MeshImporting\AnimationImporter.cs" />
     <Compile Include="SkyMerchant\MeshImporting\BoneData.cs" />
     <Compile Include="SkyMerchant\MeshImporting\BoneTransformation.cs" />
+    <Compile Include="SkyMerchant\MeshImporting\BoneWeight.cs" />
     <Compile Include="SkyMerchant\MeshImporting\Frame.cs" />
     <Compile Include="SkyMerchant\MeshImporting\ImportTest.cs" />
     <Compile Include="SkyMerchant\MeshImporting\Material.cs" />
     <Compile Include="SkyMerchant\MeshImporting\MeshBuilder.cs" />
     <Compile Include="SkyMerchant\MeshImporting\MeshImporter.cs" />
+    <Compile Include="SkyMerchant\MeshImporting\SkeletonBuilder.cs" />
+    <Compile Include="SkyMerchant\MeshImporting\SkinDataImporter.cs" />
+    <Compile Include="SkyMerchant\MeshImporting\VertexSkinData.cs" />
     <Compile Include="SkyMerchant\PrototypeTest.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\PickupTargetItemBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\FindClosestResourceBehaviour.cs" />
