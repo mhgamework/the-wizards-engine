@@ -4,8 +4,9 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using DirectX11;
 using MHGameWork.TheWizards.Graphics;
-using Microsoft.Xna.Framework;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.Animation
 {
@@ -58,7 +59,7 @@ namespace MHGameWork.TheWizards.Animation
 
         }
 
-        public Microsoft.Xna.Framework.Matrix CalculateRelativeMatrix(AMCSegment seg, ASFJoint asfJoint)
+        public Matrix CalculateRelativeMatrix(AMCSegment seg, ASFJoint asfJoint)
         {
 
             if (asfJoint.name == "root")
@@ -67,11 +68,11 @@ namespace MHGameWork.TheWizards.Animation
                 //use root orientation here? prob not
                 Matrix c = Matrix.Identity;
                 c =
-                    Matrix.CreateRotationX(MathHelper.ToRadians(seg.Data[3])) *
-                    Matrix.CreateRotationY(MathHelper.ToRadians(seg.Data[4])) * Matrix.CreateRotationZ(MathHelper.ToRadians(seg.Data[5]));
+                    Matrix.RotationX(MathHelper.ToRadians(seg.Data[3])) *
+                    Matrix.RotationY(MathHelper.ToRadians(seg.Data[4])) * Matrix.RotationZ(MathHelper.ToRadians(seg.Data[5]));
 
                 //use root position here? prob not
-                Matrix b = Matrix.CreateTranslation(seg.Data[0], seg.Data[1], seg.Data[2]);
+                Matrix b = Matrix.Translation(seg.Data[0], seg.Data[1], seg.Data[2]);
                 Matrix m = Matrix.Identity;
 
                 m = Matrix.Identity;
@@ -84,11 +85,11 @@ namespace MHGameWork.TheWizards.Animation
             {
 
                 //WARNING: not using the given order asfJoint.axisOrder
-                Matrix c = Matrix.CreateRotationX(MathHelper.ToRadians( asfJoint.axis.X))
-                           * Matrix.CreateRotationY(MathHelper.ToRadians( asfJoint.axis.Y))
-                           * Matrix.CreateRotationZ(MathHelper.ToRadians( asfJoint.axis.Z));
+                Matrix c = Matrix.RotationX(MathHelper.ToRadians( asfJoint.axis.X))
+                           * Matrix.RotationY(MathHelper.ToRadians( asfJoint.axis.Y))
+                           * Matrix.RotationZ(MathHelper.ToRadians( asfJoint.axis.Z));
 
-                Matrix b = Matrix.CreateTranslation(asfJoint.parent.direction * asfJoint.parent.length);
+                Matrix b = Matrix.Translation(asfJoint.parent.direction * asfJoint.parent.length);
                 Matrix m = Matrix.Identity;
 
                 for (int i = 0; i < asfJoint.dof.Length; i++)
@@ -96,13 +97,13 @@ namespace MHGameWork.TheWizards.Animation
                     switch (asfJoint.dof[i])
                     {
                         case "rx":
-                            m = m * Matrix.CreateRotationX(MathHelper.ToRadians(seg.Data[i]));
+                            m = m * Matrix.RotationX(MathHelper.ToRadians(seg.Data[i]));
                             break;
                         case "ry":
-                            m = m * Matrix.CreateRotationY(MathHelper.ToRadians(seg.Data[i]));
+                            m = m * Matrix.RotationY(MathHelper.ToRadians(seg.Data[i]));
                             break;
                         case "rz":
-                            m = m * Matrix.CreateRotationZ(MathHelper.ToRadians(seg.Data[i]));
+                            m = m * Matrix.RotationZ(MathHelper.ToRadians(seg.Data[i]));
                             break;
                     }
                 }

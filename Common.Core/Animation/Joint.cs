@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.Animation
 {
@@ -48,7 +48,7 @@ namespace MHGameWork.TheWizards.Animation
                 RelativeMatrix = initialRotation;
                 return;
             }
-            RelativeMatrix = initialRotation * Matrix.CreateTranslation(Parent.Length, 0, 0);
+            RelativeMatrix = initialRotation * Matrix.Translation(Parent.Length, 0, 0);
         }
     }
 }

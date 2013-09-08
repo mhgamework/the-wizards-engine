@@ -4,7 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.Animation
 {
@@ -265,10 +265,10 @@ namespace MHGameWork.TheWizards.Animation
                 //get rotation component inherited from the parent rotation
                 child.CalculateInitialRelativeMatrix(Matrix.Identity);
                 child.CalculateAbsoluteMatrix();
-                var trans = Vector3.Transform(Vector3.Zero, child.AbsoluteMatrix);
-                var rotationMat = child.AbsoluteMatrix * Matrix.CreateTranslation(-trans);
+                var trans = Vector3.TransformCoordinate(Vector3.Zero, child.AbsoluteMatrix);
+                var rotationMat = child.AbsoluteMatrix * Matrix.Translation(-trans);
 
-                child.CalculateInitialRelativeMatrix(XnaMathExtensions.CreateRotationMatrixMapDirection(Vector3.UnitX, asfChild.direction) * Matrix.Invert(rotationMat));
+                child.CalculateInitialRelativeMatrix(XnaMathExtensions.CreateRotationMatrixMapDirection(Vector3.UnitX.xna(), asfChild.direction.xna()).dx() * Matrix.Invert(rotationMat));
                 //Undo rotation of parent
                 //child.RelativeMatrix = XnaMathExtensions.CreateRotationMatrixMapDirection(Vector3.UnitX, asfChild.direction) * Matrix.CreateTranslation(trans) * Matrix.Invert(child.AbsoluteMatrix);
                 //child.RelativeMatrix = Matrix.Invert(rotationMat) * XnaMathExtensions.CreateRotationMatrixMapDirection(Vector3.UnitX, asfChild.direction);

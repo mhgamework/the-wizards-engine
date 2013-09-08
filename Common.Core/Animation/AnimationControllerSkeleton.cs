@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+using SlimDX;
+using Quaternion = Microsoft.Xna.Framework.Quaternion;
 
 namespace MHGameWork.TheWizards.Animation
 {
@@ -106,20 +107,20 @@ namespace MHGameWork.TheWizards.Animation
 
         public Matrix InterpolateBoneRelativeMatrices(Matrix mat1, Matrix mat2, float factor)
         {
-            Vector3 trans1 = Vector3.Transform(Vector3.Zero, mat1);
-            Vector3 trans2 = Vector3.Transform(Vector3.Zero, mat1);
+            Vector3 trans1 = Vector3.TransformCoordinate(Vector3.Zero, mat1);
+            Vector3 trans2 = Vector3.TransformCoordinate(Vector3.Zero, mat1);
             if ((trans1 - trans2).LengthSquared() > 0.0001f)
                 throw new InvalidOperationException("Translation changes of bones is not supported");
 
-            var rot1 = mat1 * Matrix.CreateTranslation(-trans1);
-            var rot2 = mat2 * Matrix.CreateTranslation(-trans2);
+            var rot1 = mat1 * Matrix.Translation(-trans1);
+            var rot2 = mat2 * Matrix.Translation(-trans2);
 
-            var q1 = Quaternion.CreateFromRotationMatrix(rot1);
-            var q2 = Quaternion.CreateFromRotationMatrix(rot2);
+            var q1 = Microsoft.Xna.Framework.Quaternion.CreateFromRotationMatrix(rot1.xna());
+            var q2 = Microsoft.Xna.Framework.Quaternion.CreateFromRotationMatrix(rot2.xna());
 
             var q = Quaternion.Slerp(q1, q2, factor);
 
-            return Matrix.CreateFromQuaternion(q) * Matrix.CreateTranslation(trans1);
+            return Microsoft.Xna.Framework.Matrix.CreateFromQuaternion(q).dx() * Matrix.Translation(trans1);
         }
 
 

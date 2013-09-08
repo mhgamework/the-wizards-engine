@@ -1,9 +1,11 @@
-﻿using MHGameWork.TheWizards.Animation;
+﻿using System.Drawing;
+using DirectX11;
+using MHGameWork.TheWizards.Animation;
 using MHGameWork.TheWizards.Common.Core;
+using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Graphics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
 {
@@ -19,7 +21,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
         public void TestSkeletonVisualizer()
         {
             
-            var game = new XNAGame();
+            var game = new DX11Game();
 
             var skeleton = new Skeleton();
             Joint joint;
@@ -27,8 +29,8 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
             joint = new Joint();
             joint.Name = "Root";
             joint.Length = 2;
-            joint.AbsoluteMatrix = Matrix.CreateRotationZ(MathHelper.PiOver2) * // This makes X the forward direction
-                Matrix.CreateTranslation(5, 0, 5);
+            joint.AbsoluteMatrix = Matrix.RotationZ(MathHelper.PiOver2) * // This makes X the forward direction
+                Matrix.Translation(5, 0, 5);
             skeleton.Joints.Add(joint);
 
             var parent = joint;
@@ -37,7 +39,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
             joint.Name = "Arm1";
             joint.Length = 2;
             joint.Parent = parent;
-            joint.AbsoluteMatrix = Matrix.CreateRotationZ(MathHelper.PiOver4) * Matrix.CreateTranslation(4, 0, 0)
+            joint.AbsoluteMatrix = Matrix.RotationZ(MathHelper.PiOver4) * Matrix.Translation(4, 0, 0)
                 * joint.Parent.AbsoluteMatrix;
             skeleton.Joints.Add(joint);
 
@@ -45,7 +47,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
             joint.Name = "Arm2Upper";
             joint.Length = 2;
             joint.Parent = parent;
-            joint.AbsoluteMatrix = Matrix.CreateRotationZ(-MathHelper.PiOver4) * Matrix.CreateTranslation(4, 0, 0)
+            joint.AbsoluteMatrix = Matrix.RotationZ(-MathHelper.PiOver4) * Matrix.Translation(4, 0, 0)
                 * joint.Parent.AbsoluteMatrix;
             skeleton.Joints.Add(joint);
 
@@ -55,7 +57,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
             joint.Name = "Arm2Lower";
             joint.Length = 2;
             joint.Parent = parent;
-            joint.AbsoluteMatrix = Matrix.CreateRotationZ(MathHelper.PiOver4) * Matrix.CreateTranslation(2, 0, 0)
+            joint.AbsoluteMatrix = Matrix.RotationZ(MathHelper.PiOver4) * Matrix.Translation(2, 0, 0)
                 * joint.Parent.AbsoluteMatrix;
             skeleton.Joints.Add(joint);
 
@@ -64,7 +66,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
 
 
 
-            game.DrawEvent += delegate
+            game.GameLoopEvent += delegate
                                   {
                                       vis.VisualizeSkeleton(game, skeleton);
                                   };
@@ -80,7 +82,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
         [RequiresThread(System.Threading.ApartmentState.STA)]
         public void TestSkeletonUpdateAbsoluteMatrices()
         {
-            var game = new XNAGame();
+            var game = new DX11Game();
 
             var skeleton = new Skeleton();
             Joint joint;
@@ -88,7 +90,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
             joint = new Joint();
             joint.Name = "Root";
             joint.Length = 4;
-            joint.CalculateInitialRelativeMatrix(Matrix.CreateTranslation(5, 0, 5));
+            joint.CalculateInitialRelativeMatrix(Matrix.Translation(5, 0, 5));
             skeleton.Joints.Add(joint);
 
             var parent = joint;
@@ -97,14 +99,14 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
             joint.Name = "Arm1";
             joint.Length = 2;
             joint.Parent = parent;
-            joint.CalculateInitialRelativeMatrix(Matrix.CreateRotationZ(MathHelper.PiOver4));
+            joint.CalculateInitialRelativeMatrix(Matrix.RotationZ(MathHelper.PiOver4));
             skeleton.Joints.Add(joint);
 
             joint = new Joint();
             joint.Name = "Arm2Upper";
             joint.Length = 2;
             joint.Parent = parent;
-            joint.CalculateInitialRelativeMatrix(Matrix.CreateRotationZ(-MathHelper.PiOver4));
+            joint.CalculateInitialRelativeMatrix(Matrix.RotationZ(-MathHelper.PiOver4));
             skeleton.Joints.Add(joint);
 
             parent = joint;
@@ -113,7 +115,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
             joint.Name = "Arm2Lower";
             joint.Length = 2;
             joint.Parent = parent;
-            joint.CalculateInitialRelativeMatrix(Matrix.CreateRotationY(MathHelper.PiOver4));
+            joint.CalculateInitialRelativeMatrix(Matrix.RotationY(MathHelper.PiOver4));
             skeleton.Joints.Add(joint);
 
 
@@ -121,7 +123,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
 
             skeleton.UpdateAbsoluteMatrices();
 
-            game.DrawEvent += delegate
+            game.GameLoopEvent += delegate
             {
                 vis.VisualizeSkeleton(game, skeleton);
             };
@@ -140,10 +142,10 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
                 parser.ImportASF(strm);
             }
 
-            var game = new XNAGame();
+            var game = new DX11Game();
 
 
-            game.DrawEvent += delegate
+            game.GameLoopEvent += delegate
                                   {
                                       drawASFJoint(game, parser.RootJoint, new Vector3(4, 0, 4));
                                   };
@@ -151,7 +153,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
             game.Run();
 
         }
-        private void drawASFJoint(XNAGame game, ASFJoint joint, Vector3 pos)
+        private void drawASFJoint(DX11Game game, ASFJoint joint, Vector3 pos)
         {
             for (int i = 0; i < joint.children.Count; i++)
             {
@@ -174,11 +176,11 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
 
             var child1 = new ASFJoint();
             child1.length = 4;
-            child1.direction = Vector3.Up;
+            child1.direction = MathHelper.Up;
             root.children.Add(child1);
 
             var child2 = new ASFJoint();
-            child2.direction = Vector3.Up;
+            child2.direction = MathHelper.Up;
             child1.children.Add(child2);
 
             var skeleton1 = parser.ImportSkeleton();
@@ -193,10 +195,10 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
             var skeleton2 = parser.ImportSkeleton();
             skeleton2.UpdateAbsoluteMatrices();
 
-            var game = new XNAGame();
+            var game = new DX11Game();
             var vis = new SkeletonVisualizer();
 
-            game.DrawEvent += delegate
+            game.GameLoopEvent += delegate
             {
                 vis.VisualizeSkeleton(game, skeleton1, new Vector3(4, 0, 4));
                 vis.VisualizeSkeleton(game, skeleton2, new Vector3(11, 0, 11));
@@ -232,23 +234,20 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
 
             var p = new Vector3(4, 5, 4);
 
-            var m1 = Matrix.CreateFromAxisAngle(Vector3.Normalize(new Vector3(-1, 4, 3)), 4) * Matrix.CreateTranslation(p);
-            var m2 = Matrix.CreateFromAxisAngle(Vector3.Normalize(new Vector3(3, 2, 8)), 4) * Matrix.CreateTranslation(p);
+            var m1 = Matrix.RotationAxis(Vector3.Normalize(new Vector3(-1, 4, 3)), 4) * Matrix.Translation(p);
+            var m2 = Matrix.RotationAxis(Vector3.Normalize(new Vector3(3, 2, 8)), 4) * Matrix.Translation(p);
 
-            var game = new XNAGame();
+            var game = new DX11Game();
             var visualizer = new SkeletonVisualizer();
 
-            game.UpdateEvent += delegate
+            game.GameLoopEvent += delegate
                                     {
                                         controller.ProgressTime(game.Elapsed);
                                         controller.UpdateSkeleton();
                                         skeleton.UpdateAbsoluteMatrices();
+                                        visualizer.VisualizeSkeleton(game, skeleton);
                                     };
 
-            game.DrawEvent += delegate
-                                  {
-                                      visualizer.VisualizeSkeleton(game, skeleton);
-                                  };
             game.Run();
         }
 
@@ -260,7 +259,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
             joint = new Joint();
             joint.Name = "Root";
             joint.Length = 4;
-            joint.RelativeMatrix = Matrix.CreateTranslation(4, 0, 4);
+            joint.RelativeMatrix = Matrix.Translation(4, 0, 4);
             skeleton.Joints.Add(joint);
 
             var parent = joint;
@@ -276,7 +275,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
             joint = new Joint();
             joint.Name = "Arm2Endnode";
             joint.Parent = parent;
-            joint.RelativeMatrix = Matrix.CreateTranslation(0, 2, 0);
+            joint.RelativeMatrix = Matrix.Translation(0, 2, 0);
             skeleton.Joints.Add(joint);
 
             animation = new TheWizards.Animation.Animation();
@@ -287,12 +286,12 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
             animation.Tracks[0].Frames.Add(new TheWizards.Animation.Animation.Keyframe()
                                                {
                                                    Time = 0,
-                                                   Value = Matrix.Identity * Matrix.CreateTranslation(0, 2, 0)
+                                                   Value = Matrix.Identity * Matrix.Translation(0, 2, 0)
                                                });
             animation.Tracks[0].Frames.Add(new TheWizards.Animation.Animation.Keyframe()
                                                {
                                                    Time = 1,
-                                                   Value = Matrix.CreateRotationZ(MathHelper.PiOver4)*Matrix.CreateTranslation(0, 2, 0)
+                                                   Value = Matrix.RotationZ(MathHelper.PiOver4)*Matrix.Translation(0, 2, 0)
                                                });
         }
 
@@ -305,14 +304,14 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
 
             var p = new Vector3(4, 5, 4);
 
-            var m1 = Matrix.CreateFromAxisAngle(Vector3.Normalize(new Vector3(-1, 4, 3)), 4) * Matrix.CreateTranslation(p);
-            var m2 = Matrix.CreateFromAxisAngle(Vector3.Normalize(new Vector3(3, 2, 8)), 4) * Matrix.CreateTranslation(p);
+            var m1 = Matrix.RotationAxis(Vector3.Normalize(new Vector3(-1, 4, 3)), 4) * Matrix.Translation(p);
+            var m2 = Matrix.RotationAxis(Vector3.Normalize(new Vector3(3, 2, 8)), 4) * Matrix.Translation(p);
 
-            var game = new XNAGame();
+            var game = new DX11Game();
 
             var factor = 0f;
             float dir = 1;
-            game.DrawEvent += delegate
+            game.GameLoopEvent += delegate
                                   {
                                       factor += game.Elapsed*dir;
                                       if (factor > 1) dir = -1;
@@ -322,11 +321,11 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
 
                                       game.LineManager3D.DrawGroundShadows = true;
 
-                                      game.LineManager3D.AddLine(p, Vector3.Transform(Vector3.Up * 5, m1),
+                                      game.LineManager3D.AddLine(p, Vector3.TransformCoordinate(MathHelper.Up * 5, m1),
                                                                  Color.Red);
-                                      game.LineManager3D.AddLine(p, Vector3.Transform(Vector3.Up * 5, m2),
+                                      game.LineManager3D.AddLine(p, Vector3.TransformCoordinate(MathHelper.Up * 5, m2),
                                                                  Color.Green);
-                                      game.LineManager3D.AddLine(p, Vector3.Transform(Vector3.Up * 5, m),
+                                      game.LineManager3D.AddLine(p, Vector3.TransformCoordinate(MathHelper.Up * 5, m),
                                                                  Color.Yellow);
                                   };
             game.Run();
@@ -374,7 +373,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
             var skeleton = asfParser.ImportSkeleton();
 
 
-            var game = new XNAGame();
+            var game = new DX11Game();
             var vis = new SkeletonVisualizer();
 
             for (int i = 0; i < skeleton.Joints.Count; i++)
@@ -384,7 +383,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Simulation.Animation
 
             float time = 0;
             float speed = 1;
-            game.DrawEvent += delegate
+            game.GameLoopEvent += delegate
                                 {
                                     game.LineManager3D.DrawGroundShadows = true;
 
