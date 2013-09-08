@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.Engine
         {
             TW.Graphics.EscapeExists = false;
 
-            checkLoadPreviousState();
+            //checkLoadPreviousState();
 
             if (isTestSelected())
             {
