@@ -60,7 +60,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
                 joint.Parent = temp[0];
 
             joint.RelativeMatrix = Matrix.Transformation(Vector3.Zero, Quaternion.Identity, b.ZeroScale, Vector3.Zero,
-                                                         b.ZeroRotation, b.ZeroTranslation).xna();
+                                                         b.ZeroRotation, b.ZeroTranslation);
 
             return joint;
         }

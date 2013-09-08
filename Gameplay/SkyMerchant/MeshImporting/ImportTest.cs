@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Animation;
 using MHGameWork.TheWizards.Debugging;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.RTSTestCase1;
@@ -134,7 +135,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
                 var skeleton = skeletonBuilder.BuildSkeleton(boneStructure);
 
                 var skeletonVisualizer = new SkeletonVisualizer();
-                //skeletonVisualizer.VisualizeSkeleton(game, skeleton); //todo: get game
+                //skeletonVisualizer.VisualizeSkeleton(game, skeleton);
 
             }
             catch (Exception ex)
