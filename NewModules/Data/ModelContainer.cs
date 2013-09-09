@@ -14,6 +14,57 @@ namespace MHGameWork.TheWizards.Data
     /// </summary>
     public class ModelContainer
     {
+        private class EntitiesCollection
+        {
+            private PrefilledList<ObjectChange> list;
+            private Dictionary<IModelObject, ObjectChange> getChange = new Dictionary<IModelObject, ObjectChange>();
+            public EntitiesCollection(Func<ObjectChange> func)
+            {
+                list = new PrefilledList<ObjectChange>(func);
+            }
+
+
+            public void GetArray(out ObjectChange[] array, out int length)
+            {
+                list.GetArray(out array, out length);
+            }
+
+            public ObjectChange this[int index]
+            {
+                get { return list[index]; }
+            }
+
+            public void Clear()
+            {
+                list.Clear();
+                getChange.Clear();
+            }
+
+            public ObjectChange Add(IModelObject obj)
+            {
+                var ret = list.Add();
+                ret.ModelObject = obj;
+                getChange.Add(ret.ModelObject, ret);
+                return ret;
+            }
+
+            public int Count
+            {
+                get { return list.Count; }
+            }
+
+            public ObjectChange GetChange(IModelObject obj)
+            {
+                ObjectChange ret;
+
+                if (getChange.TryGetValue(obj, out ret)) return ret;
+
+                ret = Add(obj);
+                ret.Change = ModelChange.None;
+
+                return ret;
+            }
+        }
 
         public EventList<IModelObject> Objects { get; private set; }
 
@@ -35,11 +86,11 @@ namespace MHGameWork.TheWizards.Data
                                                     flagChanged(obj, ModelChange.Removed);
                                                 });
 
-            dirtyEntities = new PrefilledList<ObjectChange>(() => new ObjectChange());
+            dirtyEntities = new EntitiesCollection(() => new ObjectChange());
 
         }
 
-        private PrefilledList<ObjectChange> dirtyEntities;
+        private EntitiesCollection dirtyEntities;
         public void GetObjectChanges(out ObjectChange[] array, out int length)
         {
             dirtyEntities.GetArray(out array, out length);
@@ -84,17 +135,13 @@ namespace MHGameWork.TheWizards.Data
 
         public virtual void NotifyObjectModified(IModelObject obj)
         {
-            if (!Objects.Contains(obj))
-            {
-                //throw new InvalidOperationException("Object not in this container!");
-                return;
-            }
+            // Note: Removed for performance reasons!     if (!Objects.Contains(obj)) return;
             flagChanged(obj, ModelChange.Modified);
         }
 
         private void flagChanged(IModelObject obj, ModelChange change)
         {
-            var ret = getChange(obj);
+            var ret = dirtyEntities.GetChange(obj);
 
             if (change == ModelChange.Removed && ret.Change == ModelChange.Added)
             {
@@ -124,21 +171,7 @@ namespace MHGameWork.TheWizards.Data
 
         }
 
-        private ObjectChange getChange(IModelObject obj)
-        {
-            for (int i = 0; i < dirtyEntities.Count; i++)
-            {
-                if (dirtyEntities[i].ModelObject != obj)
-                    continue;
-                return dirtyEntities[i];
-            }
 
-            var ret = dirtyEntities.Add();
-            ret.ModelObject = obj;
-            ret.Change = ModelChange.None;
-
-            return ret;
-        }
 
 
         public class ObjectChange

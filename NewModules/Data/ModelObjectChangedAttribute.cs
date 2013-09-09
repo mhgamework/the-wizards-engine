@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.Data
 
             return base.CompileTimeValidate(locationInfo);
         }
-
+     
         public override void OnSetValue(LocationInterceptionArgs args)
         {
             if (args.Value != args.GetCurrentValue())
