@@ -12,7 +12,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
     {
         private bool visible;
         private CameraInfo info;
-        public const float LineLodDistance = 30;
+        public const float LineLodDistance = 60;
 
 
         public LineLodPhysical()
