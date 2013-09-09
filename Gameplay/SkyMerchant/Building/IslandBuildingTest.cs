@@ -58,7 +58,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Building
                     if (robot.SelectedItem == null)
                     {
                         // If robot has no selected item, add a new one
-                        robot.SelectedItem = CreateItem(cogType);
+                        robot.SelectedItem = CreateItem(cogType); //----->   Jasper was hier <--------
                         robot.SelectedItem.Physical.Visible = false;
                     }
                     if (!island.BuildMode)
