@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Debugging;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.Engine.CodeLoading;
 using MHGameWork.TheWizards.Engine.Diagnostics;
 using MHGameWork.TheWizards.Engine.Diagnostics.Profiling;
 using MHGameWork.TheWizards.Engine.Diagnostics.Tracing;
@@ -37,9 +37,10 @@ namespace MHGameWork.TheWizards.Engine
     {
         public TWEngine()
         {
+            ReloadScheduled = false;
             GameplayDll = "../../Gameplay/bin/x86/Debug/Gameplay.dll";
             GameplayDll = "../BinariesGame/Gameplay.dll";
-            codeLoader = new CodeLoader(this);
+            codeLoader = new RestartCodeLoader(this); // Use the PersistentCodeLoader for the old style hotloading!
             TraceLogger = new EngineTraceLogger();
             EngineErrorLogger = new EngineErrorLogger();
             // WARNING: BUG: Note: this is somewhat fishy!!!
@@ -49,13 +50,13 @@ namespace MHGameWork.TheWizards.Engine
         public EngineErrorLogger EngineErrorLogger { get; private set; }
 
 
-        private List<ISimulator> simulators = new List<ISimulator>();
+        public List<ISimulator> simulators = new List<ISimulator>();
 
         private AssemblyHotloader gameplayAssemblyHotloader;
         public EngineTWContext twcontext;
 
         private Assembly activeGameplayAssembly;
-        private readonly CodeLoader codeLoader;
+        private readonly ICodeLoader codeLoader;
         private EngineDebugTools debugTools;
 
         public string GameplayDll { get; set; }
@@ -113,13 +114,34 @@ namespace MHGameWork.TheWizards.Engine
 
             twcontext.Context.SetService<WPFApplicationService>(new WPFApplicationService());
 
-            codeLoader.setNeedsReload();
+            ScheduleReload();
             TW.Graphics.GameLoopEvent += gameLoopProfiled;
             gameplayAssemblyHotloader = new AssemblyHotloader(new FileInfo(GameplayDll));
-            gameplayAssemblyHotloader.Changed += () => codeLoader.setNeedsReload();
+            gameplayAssemblyHotloader.Changed += () => ScheduleReload();
             debugTools = new EngineDebugTools(TW.Graphics.Form.GameLoopProfilingPoint);
 
         }
+
+        #region Code loading
+
+        public bool ReloadScheduled { get; private set; }
+
+        public void ScheduleReload()
+        {
+            ReloadScheduled = true;
+        }
+
+        private void checkReload()
+        {
+            if (!ReloadScheduled) return;
+            codeLoader.Reload();
+            ReloadScheduled = false;
+        }
+
+        #endregion
+
+        #region Game loop
+
 
         private void gameLoopProfiled(DX11Game dx11Game)
         {
@@ -131,13 +153,11 @@ namespace MHGameWork.TheWizards.Engine
 
         private void gameLoopStep()
         {
-            if (TW.Graphics.Keyboard.IsKeyReleased(Key.R)) codeLoader.setNeedsReload();
-            if (TW.Graphics.Keyboard.IsKeyReleased(Key.H)) codeLoader.setNeedsHotload();
+            if (TW.Graphics.Keyboard.IsKeyReleased(Key.R)) ScheduleReload();
             if (TW.Graphics.Keyboard.IsKeyReleased(Key.P)) debugTools.Show();
             if (TW.Graphics.Keyboard.IsKeyReleased(Key.M)) debugTools.Profiler.TakeSnapshot();
-            if (TW.Debug.NeedsReload) codeLoader.setNeedsReload();
-            codeLoader.checkReload();
-            codeLoader.checkHotload();
+            if (TW.Debug.NeedsReload) ScheduleReload();
+            checkReload();
 
             TW.Debug.NeedsReload = false;
 
@@ -154,7 +174,9 @@ namespace MHGameWork.TheWizards.Engine
             TW.Physics.Update(TW.Graphics.Elapsed);
         }
 
-        private void createSimulators()
+        #endregion
+
+        public void CreateSimulators()
         {
             simulators.Clear();
             loadPlugin();
@@ -176,7 +198,7 @@ namespace MHGameWork.TheWizards.Engine
         }
 
         [CatchExceptions]
-        private void updateActiveGameplayAssembly()
+        public void updateActiveGameplayAssembly()
         {
             activeGameplayAssembly = gameplayAssemblyHotloader.LoadCopied();
             TW.Data.GameplayAssembly = activeGameplayAssembly;
@@ -192,154 +214,23 @@ namespace MHGameWork.TheWizards.Engine
         }
 
 
-
-
-
-
-
-
-
-        public class CodeLoader
+        /// <summary>
+        /// Resets all the persistent things about the engine, which are not from the gameplay dll
+        /// </summary>
+        public void ClearAllEngineState()
         {
-            private TWEngine twEngine;
-            private volatile bool needsReload;
-            private bool needsHotload = true;
-
-            public CodeLoader(TWEngine twEngine)
-            {
-                this.twEngine = twEngine;
-            }
-
-            public void checkReload()
-            {
-                if (!needsReload) return;
-                needsReload = false;
-                reload();
-            }
-
-            private void reload()
-            {
-                reloadGameplayDll();
-                twEngine.createSimulators(); // reinitialize!
-            }
-
-            public void checkHotload()
-            {
-                if (!twEngine.HotloadingEnabled) return;
-                if (!needsHotload) return;
-                needsHotload = false;
-
-                hotload();
-
-
-            }
-
-            private void hotload()
-            {
-                //TODO: hotloading currently disabled!
-                return;
-                try
-                {
-                    var simList = serializeSimulatorList();
-                    reloadGameplayDll();
-                    deserializeSimulatorList(simList);
-                }
-                catch (Exception party)
-                {
-                    Console.WriteLine("Hotload failed");
-                    Console.Write(party);
-                }
-            }
-
-            private void deserializeSimulatorList(string[] simList)
-            {
-                twEngine.simulators.Clear();
-                foreach (var name in simList)
-                {
-                    var type = TW.Data.TypeSerializer.Deserialize(name);
-                    if (type == null)
-                    {
-                        Console.Write("Unable to hotload simulator: " + name);
-                        continue;
-                    }
-
-                    var sim = (ISimulator)Activator.CreateInstance(type);
-                    twEngine.simulators.Add(sim);
-                }
-            }
-
-            private string[] serializeSimulatorList()
-            {
-                return twEngine.simulators.Select(s => s.GetType()).Select(TW.Data.TypeSerializer.Serialize).ToArray();
-            }
-
-            private void reloadGameplayDll()
-            {
-                //TODO: broke the persistance scope here, not sure whether it should be readded
-                var persistentModels = TW.Data.Objects;
-                //var persistentModels = TW.Data.Objects.Where(o => TW.Data.PersistentModelObjects.Contains(o));
-                MemoryStream mem = null;
-                try
-                {
-                    mem = TW.Data.ModelSerializer.SerializeToStream(persistentModels);
-                    File.WriteAllBytes("temp.txt", mem.ToArray());
-                }
-                catch (Exception ex)
-                {
-                    DI.Get<IErrorLogger>().Log(ex,"Serialize engine data");
-                }
-
-
-                TW.Data.Objects.Clear();
-                TW.Data.PersistentModelObjects.Clear();
-
-                twEngine.updateActiveGameplayAssembly();
-
-                try
-                {
-                    if (mem != null)
-                    {
-                        var objects = deserializeData(mem);
-                        // The deserialized objects are added to TW.Data automatically
-                        //foreach (var obj in objects)
-                        //    TW.Data.AddObject(obj);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    DI.Get<IErrorLogger>().Log(ex, "Deserialize engine data");
-                    return;
-                }
-        
-
-                TW.Graphics.AcquireRenderer().ClearAll();
-                TW.Physics.ClearAll();
-                twEngine.EngineErrorLogger.ClearLast();
-
-            }
-
-            [PersistanceScope]
-            private List<IModelObject> deserializeData(MemoryStream memoryStream)
-            {
-                TW.Data.InPersistenceScope = true;
-
-                var ret = TW.Data.ModelSerializer.Deserialize(new StreamReader(memoryStream));
-
-                TW.Data.InPersistenceScope = false;
-
-                return ret;
-            }
-
-            public void setNeedsReload()
-            {
-                needsReload = true;
-            }
-
-            public void setNeedsHotload()
-            {
-                needsHotload = true;
-            }
+            TW.Graphics.AcquireRenderer().ClearAll();
+            TW.Physics.ClearAll();
+            EngineErrorLogger.ClearLast();
         }
 
+        /// <summary>
+        /// Resets all the gameplay dll's data
+        /// </summary>
+        public void ClearAllGameplayData()
+        {
+            TW.Data.Objects.Clear();
+            TW.Data.PersistentModelObjects.Clear();
+        }
     }
 }

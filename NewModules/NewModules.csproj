@@ -193,6 +193,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Engine\AssemblyHotloader.cs" />
+    <Compile Include="Engine\CodeLoading\RestartCodeLoader.cs" />
+    <Compile Include="Engine\CodeLoading\PersistentCodeLoader.cs" />
     <Compile Include="Engine\Context\AssetsWrapper.cs" />
     <Compile Include="Engine\Context\AudioWrapper.cs" />
     <Compile Include="Engine\CatchExceptionsAttribute.cs" />
@@ -214,6 +216,7 @@
     <Compile Include="Engine\EngineDebugTools.cs" />
     <Compile Include="Engine\Diagnostics\Tracing\EngineTraceLogger.cs" />
     <Compile Include="Engine\ContextDecoratorSimulator.cs" />
+    <Compile Include="Engine\CodeLoading\ICodeLoader.cs" />
     <Compile Include="Engine\Serialization\FilebasedAssetSerializer.cs" />
     <Compile Include="Engine\Context\GraphicsWrapper.cs" />
     <Compile Include="Engine\Data\PersistanceScopeAttribute.cs" />
