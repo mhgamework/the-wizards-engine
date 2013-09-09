@@ -57,20 +57,21 @@ namespace MHGameWork.TheWizards.Engine.Testing
         private void load()
         {
             Data data = null;
+            activeTest = null;
 
             try
             {
                 data = filesystem.LoadXml<Data>(getFileName());
+                if (data == null) return;
+                if (data.ActiveTestMethod == null) return;
+                var type = TW.Data.TypeSerializer.Deserialize(data.ActiveTestClass);
+                activeTest = type.GetMethod(data.ActiveTestMethod);
             }
             catch (Exception ex)
             {
                 DI.Get<IErrorLogger>().Log(ex,"Load test state");
             }
-            if (data == null) return;
-            activeTest = null;
-            if (data.ActiveTestMethod == null) return;
-            var type = TW.Data.TypeSerializer.Deserialize(data.ActiveTestClass);
-            activeTest = type.GetMethod(data.ActiveTestMethod);
+           
         }
 
         private static string getFileName()
