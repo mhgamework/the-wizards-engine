@@ -12,7 +12,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
     {
         private bool visible;
         private CameraInfo info;
-        public const float LineLodDistance = 60;
+        public const float LineLodDistance = 100;
 
 
         public LineLodPhysical()
@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
             if (Entity.Visible != meshVisible)
                 Entity.Visible = meshVisible;
             if (!meshVisible) ;
-            TW.Graphics.LineManager3D.AddAABB(GetBoundingBox(), Matrix.Identity, new Color4(0, 0, 0));
+            //TW.Graphics.LineManager3D.AddAABB(GetBoundingBox(), Matrix.Identity, new Color4(0, 0, 0));
         }
 
         public override bool Visible

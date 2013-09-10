@@ -39,6 +39,32 @@ namespace MHGameWork.TheWizards
             return new Vector3(v.X, v.Y, z);
         }
 
+        public static float MaxComponent(this Vector3 v)
+        {
+            return Math.Max(v.X, Math.Max(v.Y, v.Z));
+        }
+        public static float MaxComponent(this Vector4 v)
+        {
+            return Math.Max(v.X, Math.Max(v.Y, Math.Max(v.Z, v.W)));
+        }
+        public static float MaxComponent(this Vector2 v)
+        {
+            return Math.Max(v.X, v.Y);
+        }
+
+        public static float MinComponent(this Vector3 v)
+        {
+            return Math.Min(v.X, Math.Min(v.Y, v.Z));
+        }
+        public static float MinComponent(this Vector4 v)
+        {
+            return Math.Min(v.X, Math.Min(v.Y, Math.Min(v.Z, v.W)));
+        }
+        public static float MinComponent(this Vector2 v)
+        {
+            return Math.Min(v.X, v.Y);
+        }
+
 
 
         public static Vector3 TakeXYZ(this Vector4 v)
