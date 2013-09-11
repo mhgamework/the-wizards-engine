@@ -454,6 +454,7 @@
     <Compile Include="SkyMerchant\Lod\IWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\LineLodPhysical.cs" />
     <Compile Include="SkyMerchant\Lod\LodTest.cs" />
+    <Compile Include="SkyMerchant\Lod\OptimizedWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\PhysicalLodRenderer.cs" />
     <Compile Include="SkyMerchant\Lod\SimpleWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\WorldOctreeExtensions.cs" />

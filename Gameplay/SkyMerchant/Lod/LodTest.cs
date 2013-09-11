@@ -23,7 +23,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
         [Test]
         public void TestLineLod()
         {
-            setupObjects(1000f, () => new LineLodPhysical());
+            setupObjects(
+                2000f, () => new LineLodPhysical());
 
             engine.AddSimulator(new BasicSimulator(delegate
                 {
@@ -131,7 +132,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
         public void TestChunkCoordinateChildren()
         {
             var coord = ChunkCoordinate.Root;
-            printChildren(coord,2);
+            printChildren(coord, 2);
         }
 
         private void printChildren(ChunkCoordinate c, int depth)
@@ -144,6 +145,26 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
             }
 
             c.GetChildren().ForEach(v => printChildren(v, depth));
+        }
+
+        [Test]
+        public void TestUnrolledIndex()
+        {
+            var coord = ChunkCoordinate.Root;
+            Assert.AreEqual(0, coord.GetUnrolledIndex());
+
+
+            var level1 = coord.GetChildren().Select(p => p.GetUnrolledIndex());
+
+            Assert.AreEqual(8, level1.Distinct().Count());
+            Assert.False(level1.Any(i => !(i >= 1 && i < 1 + 8)));
+
+
+            var level2 = coord.GetChildren().SelectMany(c => c.GetChildren()).Select(p => p.GetUnrolledIndex());
+
+            Assert.AreEqual(8 * 8, level2.Distinct().Count());
+            Assert.False(level2.Any(i => !(i >= 1 + 8 && i < 1 + 8 + 8 * 8)));
+
         }
     }
 }

@@ -86,14 +86,14 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            return obj is ChunkCoordinate && Equals((ChunkCoordinate) obj);
+            return obj is ChunkCoordinate && Equals((ChunkCoordinate)obj);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return (Depth*397) ^ Position.GetHashCode();
+                return (Depth * 397) ^ Position.GetHashCode();
             }
         }
 
@@ -108,7 +108,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
             {
                 unchecked
                 {
-                    return (obj.Depth*397) ^ obj.Position.GetHashCode();
+                    return (obj.Depth * 397) ^ obj.Position.GetHashCode();
                 }
             }
         }
@@ -118,6 +118,30 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
         public static IEqualityComparer<ChunkCoordinate> DepthPositionComparer
         {
             get { return DepthPositionComparerInstance; }
+        }
+
+        /// <summary>
+        /// Returns an index with given properties
+        ///     the map 'index to chunkcoord' is a bijection
+        ///     index >= 0
+        ///     index1 smaller than index2 => depth1 smaller or equal than depth2
+        /// </summary>
+        /// <returns></returns>
+        public int GetUnrolledIndex()
+        {
+            if (Depth == 0) return 0;
+            // sum previous depths (geometric series)
+            var a = 1;
+            var r = 8;
+            var r_tothe_n = 1 << (Depth * 3); // 8^Depth
+            var start = a * (1 - r_tothe_n) / (1 - r);
+
+            var x = Position.X + (1 << (Depth - 1));
+            var y = Position.Y + (1 << (Depth - 1));
+            var z = Position.Z + (1 << (Depth - 1));
+
+
+            return start + z * (1 << (Depth * 2)) + y * (1 << Depth) + x;
         }
     }
 }
