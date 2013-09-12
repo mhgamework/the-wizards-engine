@@ -12,12 +12,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
         ///     condition(chunk) => condition(parent(chunk))
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<ChunkCoordinate> FindChunks(this IWorldOctree tree, int maxDepth,
+        public static IEnumerable<ChunkCoordinate> FindChunksDown(this IWorldOctree tree, int maxDepth,
                                                               Func<ChunkCoordinate, bool> condition)
         {
-            return FindChunks(tree, ChunkCoordinate.Root, maxDepth, condition);
+            return FindChunksDown(tree, ChunkCoordinate.Root, maxDepth, condition);
         }
-        private static IEnumerable<ChunkCoordinate> FindChunks(IWorldOctree tree, ChunkCoordinate parent, int maxDepth, Func<ChunkCoordinate, bool> condition)
+        private static IEnumerable<ChunkCoordinate> FindChunksDown(IWorldOctree tree, ChunkCoordinate parent, int maxDepth, Func<ChunkCoordinate, bool> condition)
         {
             if (!condition(parent)) yield break;
 
@@ -29,15 +29,31 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
 
             foreach (var child in parent.GetChildren())
             {
-                foreach (var res in FindChunks(tree, child, maxDepth, condition))
+                foreach (var res in FindChunksDown(tree, child, maxDepth, condition))
                     yield return res;
             }
 
         }
 
+        /// <summary>
+        /// Returns all chunks with depth maxdepth for which condition is true.
+        /// The condition has as constraint:
+        ///     condition(chunk) => condition(parent(chunk))
+        /// </summary>
+        /// <returns></returns>
+        public static ChunkCoordinate FindChunkUp(this IWorldOctree tree, ChunkCoordinate start,
+                                                              Func<ChunkCoordinate, bool> condition)
+        {
+            if (start.IsEmtpy) return start;
+            if (condition(start)) return start;
+
+            return tree.FindChunkUp(start.GetParent(),condition);
+
+        }
+
         public static IEnumerable<ChunkCoordinate> GetChunksInRange(this IWorldOctree worldOctree, Vector3 position, float minRange, float maxRange, int depth)
         {
-            return worldOctree.FindChunks(depth, delegate(ChunkCoordinate c)
+            return worldOctree.FindChunksDown(depth, delegate(ChunkCoordinate c)
             {
                 // Check if chunk is in range, assume spherical chunks
                 var size = worldOctree.GetChunkRadius(c).Length();

@@ -7,6 +7,9 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
 {
     /// <summary>
     /// Represents a chunk at a depth and position
+    /// 
+    /// The coordinate system for the chunks grows outwards from 0,0,0 (only positive numbers)
+    /// At each depth the number of nodes is doubled on each axis, the root stays in position.
     /// </summary>
     public struct ChunkCoordinate
     {
@@ -28,8 +31,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
         static ChunkCoordinate()
         {
             Root = new ChunkCoordinate(0, new Point3());
+            Empty = new ChunkCoordinate(-1, new Point3());
         }
 
+        public static ChunkCoordinate Empty { get; private set; }
         public static ChunkCoordinate Root { get; private set; }
 
         public IEnumerable<ChunkCoordinate> GetChildren()
@@ -42,12 +47,13 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
             var ymod = 1;//cY < 0 ? -1 : 1;
             var zmod = 1;//cZ < 0 ? -1 : 1;
 
-            if (Depth == 0) // is root
-            {
-                xmod = -1;
-                ymod = -1;
-                zmod = -1;
-            }
+            //if (Depth == 0) // is root
+            //{
+            //    xmod = -1;
+            //    ymod = -1;
+            //    zmod = -1;
+            //}
+            if (IsEmtpy) throw new NotImplementedException();
 
             yield return new ChunkCoordinate(cDepth, cX, cY, cZ);
             yield return new ChunkCoordinate(cDepth, cX, cY, cZ + zmod);
@@ -61,21 +67,29 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
 
         public BoundingBox GetBoundingBox(Vector3 rootCenter, Vector3 rootSize)
         {
-            if (Depth == 0)
-                return new BoundingBox(rootCenter - rootSize * 0.5f, rootCenter + rootSize * 0.5f);
+            if (IsEmtpy) throw new NotImplementedException();
+
+            var rootMin = rootCenter - rootSize * 0.5f;
+
+            if (IsRoot)
+                return new BoundingBox(rootMin, rootMin + rootSize);
+
             var size = GetChunkSize(rootSize);
-            var min = rootCenter + Vector3.Modulate(Position.ToVector3(), size);
+            var min = rootMin + Vector3.Modulate(Position.ToVector3(), size);
             return new BoundingBox(min, min + size);
         }
         public Vector3 GetChunkSize(Vector3 rootSize)
         {
+            if (Depth < 0) throw new NotImplementedException();
+
             var divide = 1 << Depth;
             return rootSize / divide;
         }
 
         public override string ToString()
         {
-            return string.Format("Depth: {0}, {1}", Depth, Position);
+            if (Depth < 0) return "Chunk - Empty";
+            return string.Format("Chunk - Depth: {0}, {1}", Depth, Position);
         }
 
         public bool Equals(ChunkCoordinate other)
@@ -120,6 +134,9 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
             get { return DepthPositionComparerInstance; }
         }
 
+        public bool IsEmtpy { get { return Depth < 0; } }
+        public bool IsRoot { get { return Depth == 0; } }
+
         /// <summary>
         /// Returns an index with given properties
         ///     the map 'index to chunkcoord' is a bijection
@@ -129,19 +146,40 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
         /// <returns></returns>
         public int GetUnrolledIndex()
         {
-            if (Depth == 0) return 0;
+            if (IsEmtpy) return -1;
+            if (IsRoot) return 0;
             // sum previous depths (geometric series)
             var a = 1;
             var r = 8;
             var r_tothe_n = 1 << (Depth * 3); // 8^Depth
             var start = a * (1 - r_tothe_n) / (1 - r);
 
-            var x = Position.X + (1 << (Depth - 1));
-            var y = Position.Y + (1 << (Depth - 1));
-            var z = Position.Z + (1 << (Depth - 1));
+            var x = Position.X;
+            var y = Position.Y;
+            var z = Position.Z;
 
 
             return start + z * (1 << (Depth * 2)) + y * (1 << Depth) + x;
+        }
+
+        public ChunkCoordinate GetParent()
+        {
+            if (IsRoot) return Empty;
+            if (IsRoot) throw new InvalidOperationException();
+
+            //var sX = Math.Sign(Position.X);
+            //var sY = Math.Sign(Position.Y);
+            //var sZ = Math.Sign(Position.Z);
+
+            //var x = ((Position.X * sX) >> 1) * sX;
+            //var y = ((Position.Y * sY) >> 1) * sY;
+            //var z = ((Position.Z * sZ) >> 1) * sZ;
+
+            var x = Position.X / 2;
+            var y = Position.Y / 2;
+            var z = Position.Z / 2;
+
+            return new ChunkCoordinate(Depth - 1, x, y, z);
         }
     }
 }

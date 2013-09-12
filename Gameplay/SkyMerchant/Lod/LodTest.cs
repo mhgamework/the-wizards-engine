@@ -111,7 +111,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
                         TW.Graphics.LineManager3D.AddCenteredBox(tree.GetChunkCenter(c), tree.GetChunkRadius(c).MaxComponent() * 2, new Color4(1, 1, 0));
                     }
 
-                    var inChunk = tree.FindChunks(2, delegate(ChunkCoordinate c)
+                    var inChunk = tree.FindChunksDown(2, delegate(ChunkCoordinate c)
                         {
                             BoundingBox chunkBoundingBox = tree.GetChunkBoundingBox(c);
                             ContainmentType containmentType = chunkBoundingBox.xna().Contains(campos.xna());
@@ -165,6 +165,26 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
             Assert.AreEqual(8 * 8, level2.Distinct().Count());
             Assert.False(level2.Any(i => !(i >= 1 + 8 && i < 1 + 8 + 8 * 8)));
 
+        }
+
+        [Test]
+        public void TestGetParent()
+        {
+            Assert.AreEqual(ChunkCoordinate.Empty, ChunkCoordinate.Root.GetParent());
+
+            var children = ChunkCoordinate.Root.GetChildren().ToArray();
+
+            foreach (var rootChild in children)
+            {
+                Assert.AreEqual(ChunkCoordinate.Root,rootChild.GetParent());
+
+                var subChildren = rootChild.GetChildren().ToArray();
+                foreach (var subChild in subChildren)
+                {
+                    Assert.AreEqual(rootChild, subChild.GetParent());
+                    
+                }
+            }
         }
     }
 }
