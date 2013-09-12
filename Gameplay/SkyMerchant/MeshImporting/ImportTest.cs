@@ -80,6 +80,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
                 watcher.Path = testImportMeshPath;
                 watcher.Filter = "*";*/
                 var physical = new Physical();
+                physical.Mesh = mesh;
 
                 engine.AddSimulator(new BasicSimulator(delegate
                 {
@@ -88,8 +89,6 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
                     {
 
                     }*/
-
-                    physical.Mesh = mesh;
                     //TW.Data.RemoveObject(physical);
 
                 }));
@@ -135,7 +134,19 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
                 var skeleton = skeletonBuilder.BuildSkeleton(boneStructure);
 
                 var skeletonVisualizer = new SkeletonVisualizer();
-                //skeletonVisualizer.VisualizeSkeleton(game, skeleton);
+                
+
+                var engine = EngineFactory.CreateEngine();
+                //var physical = new Physical();
+                //physical.Mesh = mesh;
+
+                engine.AddSimulator(new BasicSimulator(delegate
+                {
+                    skeletonVisualizer.VisualizeSkeleton(TW.Graphics, skeleton);
+                }));
+
+                engine.AddSimulator(new PhysicalSimulator());
+                engine.AddSimulator(new WorldRenderingSimulator());
 
             }
             catch (Exception ex)
@@ -147,24 +158,34 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
         [Test]
         public void TestRenderAnimation()
         {
-            try
+            var importer = new AnimationImporter();
+            List<BoneData> boneStructure;
+            List<Frame> frameData;
+            importer.LoadAnimation(testImportAnimPath, out boneStructure, out frameData);
+
+            var skeletonBuilder = new SkeletonBuilder();
+            var skeleton = skeletonBuilder.BuildSkeleton(boneStructure);
+            var controller = new AnimationControllerSkeleton(skeleton);
+
+            var animationBuilder = new AnimationBuilder();
+            var animation = animationBuilder.BuildAnimation(frameData, skeleton);
+
+            controller.SetAnimation(0, animation);
+
+            var skeletonVisualizer = new SkeletonVisualizer();
+
+            var engine = EngineFactory.CreateEngine();
+
+            engine.AddSimulator(new BasicSimulator(delegate
             {
-                var importer = new AnimationImporter();
-                List<BoneData> boneStructure;
-                List<Frame> frameData;
-                importer.LoadAnimation(testImportAnimPath, out boneStructure, out frameData);
+                controller.ProgressTime(TW.Graphics.Elapsed);
+                controller.UpdateSkeleton();
+                skeleton.UpdateAbsoluteMatrices();
+                skeletonVisualizer.VisualizeSkeleton(TW.Graphics, skeleton);
+            }));
 
-                var skeletonBuilder = new SkeletonBuilder();
-                var skeleton = skeletonBuilder.BuildSkeleton(boneStructure);
-
-                var skeletonVisualizer = new SkeletonVisualizer();
-                //skeletonVisualizer.VisualizeSkeleton(game, skeleton); //todo: get game
-
-            }
-            catch (Exception ex)
-            {
-                DI.Get<IErrorLogger>().Log(ex, "Init prototype");
-            }
+            engine.AddSimulator(new PhysicalSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
         }
 
         [Test]
