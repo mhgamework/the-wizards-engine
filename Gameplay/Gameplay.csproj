@@ -194,6 +194,7 @@
     <Compile Include="Engine\Tests\PhysX\BarrelSimulatorTest.cs" />
     <Compile Include="Engine\Tests\PhysX\SimpleEntityPhysicsTest.cs" />
     <Compile Include="Engine\UISimulator.cs" />
+    <Compile Include="Engine\Worlding\IWorldObjectPart.cs" />
     <Compile Include="Engine\WorldRendering\FirstPersonCamera.cs" />
     <Compile Include="Engine\WorldRendering\FirstPersonCameraSimulator.cs" />
     <Compile Include="Engine\_Core\IEngineModelObject.cs" />
@@ -339,7 +340,6 @@
     <Compile Include="RTSTestCase1\Simulators\NPCSimulator.cs" />
     <Compile Include="RTSTestCase1\Simulators\RendererSimulator.cs" />
     <Compile Include="RTSTestCase1\Simulators\WorldSimulator.cs" />
-    <Compile Include="RTSTestCase1\_Common\IWorldObject.cs" />
     <Compile Include="RTSTestCase1\_Engine\Animation\AnimationDescription.cs" />
     <Compile Include="RTSTestCase1\_Engine\Animation\AnimationProperty.cs" />
     <Compile Include="RTSTestCase1\_Engine\Animation\Animator.cs" />
@@ -451,7 +451,6 @@
     <Compile Include="SkyMerchant\DataStructures\Array2D.cs" />
     <Compile Include="SkyMerchant\DataStructures\DictionaryExtensions.cs" />
     <Compile Include="SkyMerchant\Lod\ChunkCoordinate.cs" />
-    <Compile Include="SkyMerchant\Lod\IWorldObject.cs" />
     <Compile Include="SkyMerchant\Lod\IWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\LineLodPhysical.cs" />
     <Compile Include="SkyMerchant\Lod\LodTest.cs" />
