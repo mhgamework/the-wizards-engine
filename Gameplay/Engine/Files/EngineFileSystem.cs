@@ -42,6 +42,9 @@ namespace MHGameWork.TheWizards.Engine.Files
 
         private FileStream openWrite(string s)
         {
+            var fi = new FileInfo(s);
+            fi.Directory.Create();
+
             return File.Create(s);
         }
         private FileStream openRead(string s)
