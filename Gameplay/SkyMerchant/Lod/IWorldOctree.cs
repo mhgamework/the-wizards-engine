@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
     /// </summary>
     public interface IWorldOctree
     {
-        IEnumerable<Physical> GetPhysicals(ChunkCoordinate coord);
+        IEnumerable<Physical> GetWorldObjects(ChunkCoordinate coord);
         Vector3 GetChunkRadius(ChunkCoordinate chunk);
         Vector3 GetChunkCenter(ChunkCoordinate chunk);
         BoundingBox GetChunkBoundingBox(ChunkCoordinate chunk);

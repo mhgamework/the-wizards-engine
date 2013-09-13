@@ -17,7 +17,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
         {
             return FindChunksDown(tree, ChunkCoordinate.Root, maxDepth, condition);
         }
-        private static IEnumerable<ChunkCoordinate> FindChunksDown(IWorldOctree tree, ChunkCoordinate parent, int maxDepth, Func<ChunkCoordinate, bool> condition)
+        public static IEnumerable<ChunkCoordinate> FindChunksDown(this IWorldOctree tree, ChunkCoordinate parent, int maxDepth, Func<ChunkCoordinate, bool> condition)
         {
             if (!condition(parent)) yield break;
 

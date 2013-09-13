@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
         /// </summary>
         /// <param name="coord"></param>
         /// <returns></returns>
-        public IEnumerable<Physical> GetPhysicals(ChunkCoordinate coord)
+        public IEnumerable<Physical> GetWorldObjects(ChunkCoordinate coord)
         {
             var bb = coord.GetBoundingBox(new Vector3(), radius*2);
             return

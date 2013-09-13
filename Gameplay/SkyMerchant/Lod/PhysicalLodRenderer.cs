@@ -14,10 +14,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
     /// </summary>
     public class PhysicalLodRenderer
     {
-        private float renderPhysicalRange = 100;
+        private float renderPhysicalRange = 50;
         private float renderLineRange = 1000;
         private int wireframeNodeDepth = 3;
-        private int physicalNodeDepth = 3;
+        private int physicalNodeDepth = 5;
 
         private IWorldOctree worldOctree;
 
@@ -50,7 +50,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
         private void updateWireframeBox(LineManager3DLines ret, ChunkCoordinate chunk)
         {
             ret.ClearAllLines();
-            worldOctree.GetPhysicals(chunk)
+            worldOctree.GetWorldObjects(chunk)
                 .ForEach(p => ret.AddAABB(p.GetBoundingBox(), Matrix.Identity, new Color4(0, 0, 0)));
 
         }
@@ -79,7 +79,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
 
         private IEnumerable<Physical> getPhysicals(ChunkCoordinate arg)
         {
-            return worldOctree.GetPhysicals(arg);
+            return worldOctree.GetWorldObjects(arg);
         }
 
         #endregion

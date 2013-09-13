@@ -451,6 +451,7 @@
     <Compile Include="SkyMerchant\DataStructures\Array2D.cs" />
     <Compile Include="SkyMerchant\DataStructures\DictionaryExtensions.cs" />
     <Compile Include="SkyMerchant\Lod\ChunkCoordinate.cs" />
+    <Compile Include="SkyMerchant\Lod\IWorldObject.cs" />
     <Compile Include="SkyMerchant\Lod\IWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\LineLodPhysical.cs" />
     <Compile Include="SkyMerchant\Lod\LodTest.cs" />

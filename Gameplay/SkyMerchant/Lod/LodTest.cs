@@ -32,10 +32,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
                     {
                         i.UpdateMeshVisibility();
                     }
-
                 }));
-
-
 
             engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
@@ -91,6 +88,30 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
             {
                 lod.RenderLines();
             }));
+
+        }
+
+        [Test]
+        public void TestPhysicalLodRendererOptimized()
+        {
+            float size = 1000f;
+            setupObjects(size, () => new Physical());
+
+            var tree = new OptimizedWorldOctree(new Vector3(size, 200, size), 5);
+            var lod = new PhysicalLodRenderer(tree);
+
+            TW.Data.Objects.OfType<Physical>().ForEach(delegate(Physical p) { tree.AddWorldObject(p);
+                                                                                p.Visible = false;
+            });
+
+            engine.AddSimulator(new BasicSimulator(lod.UpdateRendererState));
+
+
+
+            engine.AddSimulator(new PhysicalSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
+
+            engine.AddSimulator(new BasicSimulator(lod.RenderLines));
 
         }
 
@@ -176,13 +197,13 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
 
             foreach (var rootChild in children)
             {
-                Assert.AreEqual(ChunkCoordinate.Root,rootChild.GetParent());
+                Assert.AreEqual(ChunkCoordinate.Root, rootChild.GetParent());
 
                 var subChildren = rootChild.GetChildren().ToArray();
                 foreach (var subChild in subChildren)
                 {
                     Assert.AreEqual(rootChild, subChild.GetParent());
-                    
+
                 }
             }
         }

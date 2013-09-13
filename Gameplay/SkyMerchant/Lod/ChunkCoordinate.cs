@@ -149,10 +149,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
             if (IsEmtpy) return -1;
             if (IsRoot) return 0;
             // sum previous depths (geometric series)
-            var a = 1;
-            var r = 8;
-            var r_tothe_n = 1 << (Depth * 3); // 8^Depth
-            var start = a * (1 - r_tothe_n) / (1 - r);
+            var start = GetCumulativeNbChunks(Depth);
 
             var x = Position.X;
             var y = Position.Y;
@@ -161,6 +158,21 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
 
             return start + z * (1 << (Depth * 2)) + y * (1 << Depth) + x;
         }
+
+        public static int GetCumulativeNbChunks(int depth)
+        {
+            var a = 1;
+            var r = 8;
+            var r_tothe_n = GetNbChunksAtDepth(depth); // 8^Depth
+            var start = a*(1 - r_tothe_n)/(1 - r);
+            return start;
+        }
+
+        public static int GetNbChunksAtDepth(int depth)
+        {
+            return 1 << (depth * 3);
+        }
+     
 
         public ChunkCoordinate GetParent()
         {
