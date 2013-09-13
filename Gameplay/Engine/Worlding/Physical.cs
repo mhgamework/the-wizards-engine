@@ -64,7 +64,7 @@ namespace MHGameWork.TheWizards.Engine.Worlding
         public BoundingBox GetBoundingBox()
         {
             if (this.Mesh == null) return new BoundingBox(GetPosition(), GetPosition());
-            if (Entity == null) return TW.Assets.GetBoundingBox(Mesh);
+            if (Entity == null) return TW.Assets.GetBoundingBox(Mesh).Transform(ObjectMatrix * WorldMatrix);
             return TW.Assets.GetBoundingBox(Mesh).Transform(Entity.WorldMatrix);
         }
 
