@@ -25,9 +25,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
         private System.Collections.Concurrent.ConcurrentQueue<string> fileQueue = new System.Collections.Concurrent.ConcurrentQueue<string>();
 
         //private String testImportMeshPath = "C:/Users/Simon/Documents/My Dropbox/Projects/SkyMerchant/MaxScriptExporter/geomTest.twobj";
-        private String testImportMeshPath = "C:/Users/Simon/Documents/My Dropbox/Projects/SkyMerchant/MaxScriptExporter/rodwen.twobj";
-        private String testImportAnimPath = "C:/Users/Simon/Documents/My Dropbox/Projects/SkyMerchant/MaxScriptExporter/animationTest.twanim";
-        private String testImportSkinPath = "C:/Users/Simon/Documents/My Dropbox/Projects/SkyMerchant/MaxScriptExporter/skinTest.twskin";
+        private String testImportMeshPath = TWDir.GameData + "/MaxScriptExporter/rodwen.twobj";
+        private String testImportAnimPathRenderBones = TWDir.GameData + "/MaxScriptExporter/animationTest1501.twanim";
+        //private String testImportAnimPath = TWDir.GameData + "/MaxScriptExporter/animationTest.twanim";
+        private String testImportAnimPath = TWDir.GameData + "/MaxScriptExporter/robotAnimTest01.twanim";
+        //private String testImportAnimPath = TWDir.GameData + "/MaxScriptExporter/bigSAnim01.twanim";
+        private String testImportSkinPath = TWDir.GameData + "/MaxScriptExporter/skinTest.twskin";
 
 
         [Test]
@@ -128,7 +131,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
                 var importer = new AnimationImporter();
                 List<BoneData> boneStructure;
                 List<Frame> frameData;
-                importer.LoadAnimation(testImportAnimPath, out boneStructure, out frameData);
+                importer.LoadAnimation(testImportAnimPathRenderBones, out boneStructure, out frameData);
 
                 var skeletonBuilder = new SkeletonBuilder();
                 var skeleton = skeletonBuilder.BuildSkeleton(boneStructure);

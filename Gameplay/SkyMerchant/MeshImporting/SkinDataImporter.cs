@@ -6,6 +6,9 @@ using System.Text;
 
 namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
 {
+    /// <summary>
+    /// Responsible for parsing .twskin files
+    /// </summary>
     public class SkinDataImporter
     {
         private List<VertexSkinData> skinData;

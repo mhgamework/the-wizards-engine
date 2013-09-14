@@ -9,6 +9,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
 {
+    /// <summary>
+    /// Responsible for parsing .twobj files
+    /// </summary>
     public class MeshImporter
     {
 

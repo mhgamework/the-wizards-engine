@@ -7,14 +7,18 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
 {
+    /// <summary>
+    /// Responsible for converting imported animation-data into an Animaion and adding it to a given Skeleton.
+    /// </summary>
     public class AnimationBuilder
     {
 
-        private const float secondsPerFrame = 1/30; //TODO: maybe change to frame-IDs instead of frame-times in animation-tracks?
+        private const float secondsPerFrame = 1/30f; //TODO: maybe change to frame-IDs instead of frame-times in animation-tracks?
 
         public Animation.Animation BuildAnimation(List<Frame> frameData, Skeleton skeleton)
         {
             var animation = new Animation.Animation();
+            animation.Length = frameData.Count;
 
             foreach (var frame in frameData)
             {
@@ -32,6 +36,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
             }
 
             setFrameTimeLengths(animation);
+           
 
             return animation;
         }
@@ -64,8 +69,15 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
                 a.Tracks.Add(track);
             }
 
+            track.Frames.Add(convertFrame(f));
+        }
 
-
+        private Animation.Animation.Keyframe convertFrame(Keyframe f)
+        {
+            var ret = new Animation.Animation.Keyframe();
+            ret.Time = f.Time;
+            ret.Value = (Matrix)f.Value;
+            return ret;
         }
 
         private void setFrameTimeLengths(Animation.Animation a)

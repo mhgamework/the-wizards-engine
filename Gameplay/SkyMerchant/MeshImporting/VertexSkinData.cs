@@ -5,6 +5,9 @@ using System.Text;
 
 namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
 {
+    /// <summary>
+    /// Helper class
+    /// </summary>
     public class VertexSkinData
     {
         public int VertexID;

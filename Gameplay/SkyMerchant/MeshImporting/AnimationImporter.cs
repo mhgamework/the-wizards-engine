@@ -9,6 +9,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
 {
+    /// <summary>
+    /// Responsible for parsing .twanim files
+    /// </summary>
     public class AnimationImporter
     {
 

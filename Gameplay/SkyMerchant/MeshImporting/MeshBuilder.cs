@@ -8,6 +8,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
 {
+    /// <summary>
+    /// Respinsible for converting imported mesh data into an IMesh
+    /// </summary>
     public class MeshBuilder
     {
 

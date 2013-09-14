@@ -7,7 +7,7 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
 {
-    public class SkeletonBuilder //todo: xna to dx??
+    public class SkeletonBuilder
     {
         /// <summary>
         /// Builds a skeleton given a list of bonedata-objects
@@ -22,10 +22,13 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
             var toAdd = bones.ToList();
             var toCheck = new List<BoneData>();
 
-            var root = toAdd.Where(e => e.ParentName == "").ToList().First();
-            toAdd.Remove(root);
-            toCheck.Add(root);
-            skeleton.Joints.Add(jointFromBoneData(root, skeleton.Joints));
+            var roots = toAdd.Where(e => e.ParentName == "").ToList();
+            foreach (var root in roots)
+            {
+                toAdd.Remove(root);
+                toCheck.Add(root);
+                skeleton.Joints.Add(jointFromBoneData(root, skeleton.Joints));
+            }
 
             while(toCheck.Count > 0)
             {
@@ -59,7 +62,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
             if(temp.Count != 0)
                 joint.Parent = temp[0];
 
-            joint.RelativeMatrix = Matrix.Transformation(Vector3.Zero, Quaternion.Identity, b.ZeroScale, Vector3.Zero,
+            joint.RelativeMatrix = Matrix.Transformation(Vector3.Zero, Quaternion.Identity, b.ZeroScale, b.ZeroTranslation,
                                                          b.ZeroRotation, b.ZeroTranslation);
 
             return joint;

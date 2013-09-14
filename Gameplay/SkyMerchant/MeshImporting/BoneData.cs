@@ -6,6 +6,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
 {
+    /// <summary>
+    /// Helper class
+    /// </summary>
     public class BoneData
     {
         public String Name;
