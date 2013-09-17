@@ -15,7 +15,7 @@ using TreeGenerator.TerrrainGeneration;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Vector3 = Microsoft.Xna.Framework.Vector3;
 
-namespace MHGameWork.TheWizards.SkyMerchant
+namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 {
     [TestFixture]
     [EngineTest]

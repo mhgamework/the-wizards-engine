@@ -5,6 +5,7 @@ using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.SkyMerchant.Voxels;
+using MHGameWork.TheWizards.SkyMerchant._Tests.Development;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant

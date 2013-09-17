@@ -14,6 +14,8 @@ using MHGameWork.TheWizards.SkyMerchant.Lod;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.AI;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant.Voxels;
+using MHGameWork.TheWizards.SkyMerchant._Tests.Development;
+using MHGameWork.TheWizards.SkyMerchant._Tests.Stable;
 using MHGameWork.TheWizards.SkyMerchant._Windsor;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype
@@ -26,8 +28,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             container.AddFacility<TypedFactoryFacility>();
 
 
-            //container.Register(Component.For<Physical>().LifestyleTransient());
-            container.Register(Component.For<Physical>().ImplementedBy<LineLodPhysical>().LifestyleTransient());
+            container.Register(Component.For<PrototypeTest>());
+            container.Register(Component.For<Physical>().ImplementedBy<Physical>().LifestyleTransient());
 
 
 
@@ -75,8 +77,6 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
 
             container.Register(
                 Component.For<EnemyBehaviourFactory>().LifestyleTransient());
-
-            Console.WriteLine(Classes.FromThisAssembly().InSameNamespaceAs<PrototypeTest>().ToString());
 
             // Register all components as a service in itself or similarly named interfaces
             container.Register(Classes.FromThisAssembly().InNamespace("MHGameWork.TheWizards.SkyMerchant").WithServiceSelf().WithServiceDefaultInterfaces());

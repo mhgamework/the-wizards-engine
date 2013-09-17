@@ -1,5 +1,4 @@
 ﻿using System;
-using Castle.MicroKernel.Resolvers;
 using Castle.Windsor;
 using DirectX11;
 using MHGameWork.TheWizards.Debugging;
@@ -10,7 +9,6 @@ using MHGameWork.TheWizards.Engine.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
-
 using MHGameWork.TheWizards.SkyMerchant.Lod;
 using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
@@ -20,12 +18,15 @@ using System.Linq;
 using SlimDX;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.SkyMerchant
+namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
 {
     [EngineTest]
     [TestFixture]
     public class PrototypeTest
     {
+        /// <summary>
+        /// Starts the prototype!
+        /// </summary>
         [Test]
         public void TestPlayPrototype()
         {
@@ -118,10 +119,6 @@ namespace MHGameWork.TheWizards.SkyMerchant
             foreach (var i in TW.Data.Objects.OfType<PiratePart>().ToArray()) // To array because this removes modelobjects
             {
                 i.SimulateBehaviour();
-            }
-            foreach (var i in TW.Data.Objects.OfType<LineLodPhysical>())
-            {
-                i.UpdateMeshVisibility();
             }
             processRobot();
             UserInterface.Update();

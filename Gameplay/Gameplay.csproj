@@ -452,13 +452,13 @@
     <Compile Include="SkyMerchant\DataStructures\DictionaryExtensions.cs" />
     <Compile Include="SkyMerchant\Lod\ChunkCoordinate.cs" />
     <Compile Include="SkyMerchant\Lod\IWorldOctree.cs" />
-    <Compile Include="SkyMerchant\Lod\LineLodPhysical.cs" />
-    <Compile Include="SkyMerchant\_Tests\Development\LodTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Stable\LodTest.cs" />
     <Compile Include="SkyMerchant\Lod\OptimizedWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\PhysicalLodRenderer.cs" />
     <Compile Include="SkyMerchant\Lod\SimpleWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\WorldOctreeExtensions.cs" />
-    <Compile Include="SkyMerchant\_Tests\Development\PrototypeTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Stable\WorldOctreeTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Stable\PrototypeTest.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\PickupTargetItemBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\FindClosestResourceBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\EnemyBehaviourFactory.cs" />
