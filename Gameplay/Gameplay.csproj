@@ -446,19 +446,19 @@
     <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulatorSimple.cs" />
     <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulator.cs" />
     <Compile Include="SkyMerchant\BridgeMeshBuilder.cs" />
-    <Compile Include="SkyMerchant\BridgeTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Stable\BridgeTest.cs" />
     <Compile Include="SkyMerchant\DataStructures\Array3D.cs" />
     <Compile Include="SkyMerchant\DataStructures\Array2D.cs" />
     <Compile Include="SkyMerchant\DataStructures\DictionaryExtensions.cs" />
     <Compile Include="SkyMerchant\Lod\ChunkCoordinate.cs" />
     <Compile Include="SkyMerchant\Lod\IWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\LineLodPhysical.cs" />
-    <Compile Include="SkyMerchant\Lod\LodTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Development\LodTest.cs" />
     <Compile Include="SkyMerchant\Lod\OptimizedWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\PhysicalLodRenderer.cs" />
     <Compile Include="SkyMerchant\Lod\SimpleWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\WorldOctreeExtensions.cs" />
-    <Compile Include="SkyMerchant\PrototypeTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Development\PrototypeTest.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\PickupTargetItemBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\FindClosestResourceBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\EnemyBehaviourFactory.cs" />
@@ -488,8 +488,8 @@
     <Compile Include="SkyMerchant\Prototype\SimpleItemFactory.cs" />
     <Compile Include="SkyMerchant\Prototype\SimpleUserMovementInput.cs" />
     <Compile Include="SkyMerchant\Voxels\IFiniteVoxels.cs" />
-    <Compile Include="SkyMerchant\IslandsTest.cs" />
-    <Compile Include="SkyMerchant\FlyingPrototypeTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Development\IslandsTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Development\FlyingPrototypeTest.cs" />
     <Compile Include="SkyMerchant\Island.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\ItemPart.cs" />
     <Compile Include="SkyMerchant\Prototype\PrototypeWorldGenerator.cs" />
@@ -641,12 +641,15 @@
     <Content Include="Engine\_Core\_doc.txt" />
     <Content Include="Engine\_doc.html" />
     <Content Include="LevelBuilding\_doc.txt" />
+    <Content Include="SkyMerchant\_Tests\_doc.html" />
     <Content Include="Tiling\_doc.txt" />
     <Content Include="Engine\WorldRendering\_doc.txt" />
     <Content Include="_doc.txt" />
     <Content Include="_Features\_doc.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="SkyMerchant\_Tests\Broken\" />
+    <Folder Include="SkyMerchant\_Tests\Unused\" />
     <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>

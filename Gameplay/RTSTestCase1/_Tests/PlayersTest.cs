@@ -16,7 +16,7 @@ using MHGameWork.TheWizards.RTSTestCase1.Items;
 using MHGameWork.TheWizards.RTSTestCase1.Pickupping;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
-using MHGameWork.TheWizards.RTSTestCase1._Common;
+
 using NUnit.Framework;
 using Rhino.Mocks;
 using SlimDX;

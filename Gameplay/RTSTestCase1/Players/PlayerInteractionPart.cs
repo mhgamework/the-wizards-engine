@@ -4,7 +4,7 @@ using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1.Cannons;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins.Components;
-using MHGameWork.TheWizards.RTSTestCase1._Common;
+
 using System.Linq;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Players

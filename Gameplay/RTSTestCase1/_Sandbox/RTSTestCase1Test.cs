@@ -25,7 +25,7 @@ using MHGameWork.TheWizards.RTSTestCase1.Players;
 using MHGameWork.TheWizards.RTSTestCase1.Rendering;
 using MHGameWork.TheWizards.RTSTestCase1.Simulators;
 using MHGameWork.TheWizards.RTSTestCase1.WorldResources;
-using MHGameWork.TheWizards.RTSTestCase1._Common;
+
 using NUnit.Framework;
 using SlimDX;
 

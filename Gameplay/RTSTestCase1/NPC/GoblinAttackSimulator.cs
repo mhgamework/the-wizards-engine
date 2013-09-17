@@ -8,7 +8,7 @@ using MHGameWork.TheWizards.RTS;
 using MHGameWork.TheWizards.RTSTestCase1.Cannons;
 using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
-using MHGameWork.TheWizards.RTSTestCase1._Common;
+
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1._Tests

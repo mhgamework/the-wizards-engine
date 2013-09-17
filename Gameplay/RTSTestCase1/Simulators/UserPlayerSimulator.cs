@@ -7,7 +7,7 @@ using MHGameWork.TheWizards.RTSTestCase1.Goblins;
 using MHGameWork.TheWizards.RTSTestCase1.Inputting;
 using MHGameWork.TheWizards.RTSTestCase1.Items;
 using MHGameWork.TheWizards.RTSTestCase1.Players;
-using MHGameWork.TheWizards.RTSTestCase1._Common;
+
 using SlimDX;
 
 namespace MHGameWork.TheWizards.RTSTestCase1.Simulators

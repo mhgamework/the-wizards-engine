@@ -6,7 +6,7 @@ using MHGameWork.TheWizards.Engine.Raycasting;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.RTSTestCase1;
-using MHGameWork.TheWizards.RTSTestCase1._Common;
+
 using MHGameWork.TheWizards.SkyMerchant._Windsor;
 using SlimDX;
 using System.Linq;
