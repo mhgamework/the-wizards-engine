@@ -446,12 +446,17 @@
     <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulatorSimple.cs" />
     <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulator.cs" />
     <Compile Include="SkyMerchant\BridgeMeshBuilder.cs" />
+    <Compile Include="SkyMerchant\SimulationPausing\PausingWrapper.cs" />
+    <Compile Include="SkyMerchant\SimulationPausing\SimplePausingExample.cs" />
+    <Compile Include="SkyMerchant\_Engine\IThreadFactory.cs" />
+    <Compile Include="SkyMerchant\_Tests\Development\SimulationPausingTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\BridgeTest.cs" />
     <Compile Include="SkyMerchant\DataStructures\Array3D.cs" />
     <Compile Include="SkyMerchant\DataStructures\Array2D.cs" />
     <Compile Include="SkyMerchant\DataStructures\DictionaryExtensions.cs" />
     <Compile Include="SkyMerchant\Lod\ChunkCoordinate.cs" />
     <Compile Include="SkyMerchant\Lod\IWorldOctree.cs" />
+    <Compile Include="SkyMerchant\_Tests\Development\QuestEditorTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\LodTest.cs" />
     <Compile Include="SkyMerchant\Lod\OptimizedWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\PhysicalLodRenderer.cs" />
