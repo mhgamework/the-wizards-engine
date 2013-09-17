@@ -5,6 +5,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.SkyMerchant.SimulationPausing;
+using MHGameWork.TheWizards.SkyMerchant._Engine;
 using NUnit.Framework;
 using SlimDX.DirectInput;
 
@@ -22,6 +23,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         /// <summary>
         /// Prints Hello, then pauses, then prints Hello2, then pauses again (in the gameloop)
         /// Pause continues until Return is pressed
+        /// TODO: abort the pauser!
         /// </summary>
         [Test]
         public void TestPausingWrapper()
@@ -31,7 +33,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
                 {
                     Console.WriteLine("Hello");
                     while (!TW.Graphics.Keyboard.IsKeyPressed(Key.Return)) wrapper.Pause();
-                });
+                },new SimpleThreadFactory());
 
             engine.AddSimulator(new BasicSimulator(wrapper.Execute));
         }
@@ -47,7 +49,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
             var numFrames = 1000;
             var watch = new Stopwatch();
 
-            var pausable = new PausingWrapper(simulateDummy);
+            var pausable = new PausingWrapper(simulateDummy, new SimpleThreadFactory());
 
 
             watch.Reset();

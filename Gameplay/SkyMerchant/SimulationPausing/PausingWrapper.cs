@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.SkyMerchant._Engine;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.SkyMerchant.SimulationPausing
@@ -21,12 +22,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.SimulationPausing
         private bool canRunSimulation = false;
         private bool executingWrappedMethod = false;
 
-        public PausingWrapper(Action pausableMethod)
+        public PausingWrapper(Action pausableMethod, SimpleThreadFactory simpleThreadFactory)
         {
             this.pausableMethod = pausableMethod;
 
             //Note: this is deliberately not a background thread, since this could potentially cause slowdowns due to the OS not scheduling this thread fast enough
-            thread = new Thread(simulationThread);
+            thread = simpleThreadFactory.CreateThread(simulationThread);
             thread.Start();
 
             
@@ -52,7 +53,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.SimulationPausing
             lock (syncObject)
             {
                 while (!canRunSimulation)
-                    Monitor.Wait(syncObject, 200);
+                    Monitor.Wait(syncObject);
 
                 executingWrappedMethod = true;
 
