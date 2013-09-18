@@ -168,9 +168,9 @@
     <Compile Include="ApplicationLogic\Networking\Client\GameClient.cs" />
     <Compile Include="ApplicationLogic\Networking\Server\GameClient.cs" />
     <Compile Include="ApplicationLogic\Networking\Server\GameClientListener.cs" />
-    <Compile Include="Assetbrowser\AssetBrowserCamera.cs" />
-    <Compile Include="Assetbrowser\AssetbrowserData.cs" />
-    <Compile Include="Assetbrowser\AssetbrowserItem.cs" />
+    <Compile Include="SkyMerchant\Assetbrowser\AssetBrowserCamera.cs" />
+    <Compile Include="SkyMerchant\Assetbrowser\AssetbrowserData.cs" />
+    <Compile Include="SkyMerchant\Assetbrowser\AssetbrowserItem.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="BugTests.cs" />
     <Compile Include="Engine\Debugging\AttachDebuggerOnStartupSimulator.cs" />
@@ -197,7 +197,7 @@
     <Compile Include="Engine\WorldRendering\FirstPersonCamera.cs" />
     <Compile Include="Engine\WorldRendering\FirstPersonCameraSimulator.cs" />
     <Compile Include="Engine\_Core\IEngineModelObject.cs" />
-    <Compile Include="_Tests\AssetBrowserTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Development\AssetBrowserTest.cs" />
     <Compile Include="_Tests\Assets\AssetsSynchronizationTest.cs" />
     <Compile Include="_Tests\Assets\SimpleAsset.cs" />
     <Compile Include="_Tests\Assets\SimpleAssetFactory.cs" />
@@ -530,7 +530,7 @@
     <Compile Include="Animation\AnimationSimulator.cs" />
     <Compile Include="Engine\Raycasting\RaycastResult.cs" />
     <Compile Include="Engine\Raycasting\WorldRaycaster.cs" />
-    <Compile Include="Assetbrowser\AssetbrowserSimulator.cs" />
+    <Compile Include="SkyMerchant\Assetbrowser\AssetbrowserSimulator.cs" />
     <Compile Include="Building\Block.cs" />
     <Compile Include="Building\BlockFactory.cs" />
     <Compile Include="Building\BlockLayout.cs" />
