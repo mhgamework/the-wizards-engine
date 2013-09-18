@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.SimulationPausing
         private bool canRunSimulation = false;
         private bool executingWrappedMethod = false;
 
-        public PausingWrapper(Action pausableMethod, SimpleThreadFactory simpleThreadFactory)
+        public PausingWrapper(Action pausableMethod, IThreadFactory simpleThreadFactory)
         {
             this.pausableMethod = pausableMethod;
 
@@ -75,7 +75,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.SimulationPausing
         /// <summary>
         /// Runs the method (or resumes in case of pausing)
         /// </summary>
-        public void Execute()
+        public virtual void Execute()
         {
             lock (syncObject)
             {

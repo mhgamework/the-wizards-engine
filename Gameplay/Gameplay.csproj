@@ -194,7 +194,6 @@
     <Compile Include="Engine\Tests\PhysX\BarrelSimulatorTest.cs" />
     <Compile Include="Engine\Tests\PhysX\SimpleEntityPhysicsTest.cs" />
     <Compile Include="Engine\UISimulator.cs" />
-    <Compile Include="Engine\Worlding\IWorldObjectPart.cs" />
     <Compile Include="Engine\WorldRendering\FirstPersonCamera.cs" />
     <Compile Include="Engine\WorldRendering\FirstPersonCameraSimulator.cs" />
     <Compile Include="Engine\_Core\IEngineModelObject.cs" />
@@ -449,7 +448,9 @@
     <Compile Include="SkyMerchant\SimulationPausing\PausingWrapper.cs" />
     <Compile Include="SkyMerchant\SimulationPausing\SimplePausingExample.cs" />
     <Compile Include="SkyMerchant\_Engine\IThreadFactory.cs" />
+    <Compile Include="SkyMerchant\_Engine\Spatial\IPosition.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\SimulationPausingTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Ideas\UnsortedIdeasTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\BridgeTest.cs" />
     <Compile Include="SkyMerchant\DataStructures\Array3D.cs" />
     <Compile Include="SkyMerchant\DataStructures\Array2D.cs" />
