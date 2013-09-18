@@ -5,6 +5,7 @@ using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor;
 using MHGameWork.TheWizards.SkyMerchant.SimulationPausing;
 using MHGameWork.TheWizards.SkyMerchant._Engine;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Spatial;
@@ -129,6 +130,45 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 
         }
 
+        [Test]
+        public void TestHotkeybar()
+        {
+            var bar = new Hotbar();
+            var view = new HotbarTextView(bar, new Rendering2DComponentsFactory());
+            var controller = new HotbarController(bar, view);
+
+
+            bar.SetHotbarItem(0, CreateHotbarItem("Island"));
+            bar.SetHotbarItem(1, CreateHotbarItem("Scripting"));
+            bar.SetHotbarItem(5, CreateHotbarItem("Bridge"));
+            bar.SetHotbarItem(8, CreateHotbarItem("Spawn drone"));
+
+
+            addTestSimulation(controller.Update);
+        }
+
+        private IHotbarItem CreateHotbarItem(string name)
+        {
+            var ret = MockRepository.GenerateStub<IHotbarItem>();
+            ret.Stub(i => i.Name).Return(name);
+
+            ret.Stub(i => i.OnDeselected()).Do(new Action(() => Console.WriteLine("Deselected: " + name)));
+            ret.Stub(i => i.OnSelected()).Do(new Action(() => Console.WriteLine("Selected: " + name)));
+            return ret;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
         private void addTestVisualization(Action action)
         {
             engine.AddSimulator(new BasicSimulator(action));
@@ -149,69 +189,13 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
             var wrapper = StaticPauser.CreateWrapper(action, new SimpleThreadFactory());
             engine.AddSimulator(new BasicSimulator(wrapper.Execute));
         }
+
+
+
+
     }
 
-    public class SimpleMutableSpatial : IMutableSpatial
-    {
-        private readonly BoundingBox localBounding;
 
-        public SimpleMutableSpatial(BoundingBox localBounding)
-        {
-            this.localBounding = localBounding;
-        }
-
-        public Vector3 Position { get; set; }
-        public Quaternion Rotation { get; set; }
-        public BoundingBox LocalBoundingBox { get { return localBounding; } }
-    }
-
-    /// <summary>
-    /// Works by picking up objects and placing them in a fixed position relative to the camera, depending on their size.
-    /// Note: probably a bad idea, better use something that uses the pickup distance as the relative position.
-    /// </summary>
-    public class WorldObjectMover
-    {
-        private readonly ICamera cam;
-
-        private IMutableSpatial holdingItem;
-
-        public IMutableSpatial HoldingItem
-        {
-            get { return holdingItem; }
-        }
-
-        public WorldObjectMover(ICamera cam)
-        {
-            this.cam = cam;
-        }
-
-        public void Pickup(IMutableSpatial item)
-        {
-            Drop();
-            holdingItem = item;
-
-
-        }
-
-        public void Drop()
-        {
-            holdingItem = null;
-        }
-
-        public void Update()
-        {
-            if (holdingItem == null) return;
-            var camPos = cam.ViewInverse.xna().Translation.dx();
-            var camDir = cam.ViewInverse.xna().Forward.dx();
-
-            var dist = 10f;
-
-            dist = (holdingItem.LocalBoundingBox.Maximum - holdingItem.LocalBoundingBox.Minimum).MaxComponent() * 4;
-
-            holdingItem.Position = camPos + camDir * dist;
-        }
-
-    }
 
     public static class AutomatedTestingExtensions
     {
