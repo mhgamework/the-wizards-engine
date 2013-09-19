@@ -8,6 +8,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
     /// <summary>
     /// Responsible for converting user input into hotbar commands.
     /// Also manages the view
+    /// 
+    /// Responsible for translating user keys into hotbar slots!
     /// </summary>
     public class HotbarController
     {
@@ -52,13 +54,13 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
 
         private void trySwap()
         {
-            var down = GetDownKeys();
-            var pressed = GetPressedKeys();
+            var down = GetDownSlots();
+            var pressed = GetPressedSlots();
             if (down.Count() != 2 || pressed.Count() != 1) return;
 
             // swap
-            var slot1 = Array.IndexOf(slotKeys, down.First());
-            var slot2 = Array.IndexOf(slotKeys, pressed.First());
+            var slot1 = down.First();
+            var slot2 = pressed.First();
 
             var item1 = bar.GetHotbarItem(slot1);
             var item2 = bar.GetHotbarItem(slot2);
@@ -69,23 +71,29 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
 
         private void trySelect()
         {
-            var down = GetDownKeys();
-            var pressed = GetPressedKeys();
+            var down = GetDownSlots();
+            var pressed = GetPressedSlots();
             if (down.Count() != 1 || pressed.Count() != 1) return;
 
-            bar.SelectedSlot = Array.IndexOf(slotKeys, pressed.First());
+            bar.SelectedSlot = pressed.First();
         }
 
-        private IEnumerable<Key> GetDownKeys()
+        /// <summary>
+        /// Returns a list of hotkey bar slots for which the corresponding key is currently pressed down on the keyboard 
+        /// </summary>
+        public IEnumerable<int> GetDownSlots()
         {
             foreach (var key in slotKeys)
-                if (TW.Graphics.Keyboard.IsKeyDown(key)) yield return key;
+                if (TW.Graphics.Keyboard.IsKeyDown(key)) yield return Array.IndexOf(slotKeys, key);
         }
 
-        private IEnumerable<Key> GetPressedKeys()
+        /// <summary>
+        /// Returns a list of hotkey bar slots for which the corresponding key was pressed down this frame (and not previous frame)
+        /// </summary>
+        public IEnumerable<int> GetPressedSlots()
         {
             foreach (var key in slotKeys)
-                if (TW.Graphics.Keyboard.IsKeyPressed(key)) yield return key;
+                if (TW.Graphics.Keyboard.IsKeyPressed(key)) yield return Array.IndexOf(slotKeys, key);
         }
 
         private IHotbarItem GetHotbarItem(int slot)

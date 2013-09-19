@@ -3,6 +3,7 @@ using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Simulators;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory;
 using NUnit.Framework;
 
@@ -19,12 +20,23 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 
             var view = new InventoryView3D(createRootItem(), new WireframeInventoryNodeRenderer());
 
-            game.AddSimulator(new BasicSimulator(view.Simulate));
+            game.AddSimulator(new BasicSimulator(view.Update));
             game.AddSimulator(new WorldRenderingSimulator());
 
             game.Run();
         }
 
+        [Test]
+        public void TestInventoryController()
+        {
+            var game = EngineFactory.CreateEngine();
+            var controller = new InventoryController(new HotbarController(null, null));
+
+            game.AddSimulator(new BasicSimulator(controller.Update));
+            game.AddSimulator(new WorldRenderingSimulator());
+
+            game.Run();
+        }
        
 
         private IInventoryNode createRootItem()

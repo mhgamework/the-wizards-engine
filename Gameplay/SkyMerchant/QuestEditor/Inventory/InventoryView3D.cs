@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory
     /// <summary>
     /// This manages the renderered entities for asset browsing considering the user camera.
     /// </summary>
-    public class InventoryView3D : ISimulator
+    public class InventoryView3D
     {
         private readonly IInventoryNodeRenderer renderer;
         private readonly Tree tree;
@@ -26,7 +26,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory
 
         private float targetSpeed = 10;
 
-        public void Simulate()
+        public void Update()
         {
             updateWireframeBoxes();
             renderItemLinesHighlight(tree.findBrowsingItem());
