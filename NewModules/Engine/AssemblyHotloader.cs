@@ -49,12 +49,36 @@ namespace MHGameWork.TheWizards.Engine
             var srcPdb = Path.ChangeExtension(file.FullName, "pdb");
 
             var r = new Random();
-            var tempFolder = TWDir.Cache.CreateSubdirectory(r.Next().ToString());
+            var tempFolder = TWDir.Cache.CreateSubdirectory("Hotload").CreateSubdirectory(r.Next().ToString());
             var dll = tempFolder.FullName + "\\" + Path.GetFileName(srcDll);
             var pdb = tempFolder.FullName + "\\" + Path.GetFileName(srcPdb);
 
             File.Copy(srcDll,dll);
             File.Copy(srcPdb,pdb);
+
+            return Assembly.LoadFile(dll);
+        }
+
+        /// <summary>
+        /// Copies all of the directory where the gameplay dll is to a cache folder. 
+        /// The intent here was to have the gamepaly dependencies in the project too, however, this doesn't seem to work?
+        /// </summary>
+        /// <returns></returns>
+        public Assembly LoadCopiedWholeDirectory()
+        {
+
+            var srcDll = file.FullName;
+            var srcPdb = Path.ChangeExtension(file.FullName, "pdb");
+
+            var r = new Random();
+            var tempFolder = TWDir.Cache.CreateSubdirectory("Hotload").CreateSubdirectory(r.Next().ToString());
+
+            foreach (var iFile in file.Directory.GetFiles())
+            {
+                iFile.CopyTo(tempFolder.FullName + "\\" + iFile.Name);
+            }
+
+            var dll = tempFolder.FullName + "\\" + Path.GetFileName(srcDll);
 
             return Assembly.LoadFile(dll);
         }
