@@ -16,6 +16,10 @@ add to the app.config file:
 </configuration>
 
 
+All dependencies which are in the hotloaded gameplay project, and not in the engine do not work since they are not in the bin/binaries folder.
+A cheat utilized here is to add these dependencies to the NewModules project too, however unused in this project!
+
+
 ----Must install:
 
 Nvidia PhysX
