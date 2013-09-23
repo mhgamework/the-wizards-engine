@@ -31,10 +31,11 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory
             updateWireframeBoxes();
             renderItemLinesHighlight(tree.findBrowsingItem());
             updateCamera();
+        }
 
-
-
-
+        public IInventoryNode GetSelectedNode()
+        {
+            
         }
 
         private void updateWireframeBoxes()

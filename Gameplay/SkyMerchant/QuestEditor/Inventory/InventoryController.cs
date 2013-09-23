@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Timers;
+using MHGameWork.TheWizards.SkyMerchant._Undocumented;
 using bbv.Common.StateMachine;
-using bbv.Common.StateMachine.Internals;
 
 namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory
 {
@@ -12,13 +12,13 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory
     public class InventoryController
     {
         private readonly HotbarController hotbarController;
-        private PassiveStateMachine<States, Events> fsm;
+        private readonly InventoryView3D view;
+      
 
-        private bool timerElapsed = false;
-
-        public InventoryController(HotbarController hotbarController)
+        public InventoryController(HotbarController hotbarController, InventoryView3D view)
         {
             this.hotbarController = hotbarController;
+            this.view = view;
 
             var timer = new Timer(1000);
             timer.Elapsed += (sender, args) => timerElapsed = true;
@@ -27,6 +27,16 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory
             fsm.Start();
         }
         public void Update()
+        {
+            updatePickupStateMachine();
+        }
+
+        #region Pickup state machine
+        private PassiveStateMachine<States, Events> fsm;
+        private bool timerElapsed = false;
+
+
+        private void updatePickupStateMachine()
         {
             var down = hotbarController.GetDownSlots();
 
@@ -55,19 +65,15 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory
             fsm.In(States.Holding)
                .On(Events.MultipleSlotPressed).Goto(States.None);
             fsm.In(States.Holding)
-                .On(Events.NoSlotPressed).Goto(States.None);
+               .On(Events.NoSlotPressed).Goto(States.None);
             fsm.In(States.Holding)
-                .On(Events.Timer).Goto(States.Complete).Execute(SelectTargetedInventoryItem);
+               .On(Events.Timer).Goto(States.Complete).Execute(SelectTargetedInventoryItem);
 
             fsm.In(States.Complete).On(Events.NoSlotPressed).Goto(States.None);
 
             return fsm;
         }
 
-        public void SelectTargetedInventoryItem()
-        {
-            Console.WriteLine("Selected!");
-        }
         private enum States
         {
             None,
@@ -82,96 +88,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory
             Timer
         }
 
-    }
+        #endregion
 
-    public class ConsoleLoggingExtension<T, U> : IExtension<T, U>
-        where T : IComparable
-        where U : IComparable
-    {
-        public void StartedStateMachine(IStateMachineInformation<T, U> stateMachine)
+        public void SelectTargetedInventoryItem()
         {
-
+            
         }
 
-        public void StoppedStateMachine(IStateMachineInformation<T, U> stateMachine)
-        {
-        }
-
-        public void EventQueued(IStateMachineInformation<T, U> stateMachine, U eventId, object[] eventArguments)
-        {
-        }
-
-        public void EventQueuedWithPriority(IStateMachineInformation<T, U> stateMachine, U eventId, object[] eventArguments)
-        {
-        }
-
-        public void SwitchedState(IStateMachineInformation<T, U> stateMachine, IState<T, U> oldState, IState<T, U> newState)
-        {
-            Console.WriteLine("Entered state {0}", newState.Id);
-        }
-
-        public void InitializingStateMachine(IStateMachineInformation<T, U> stateMachine, ref T initialState)
-        {
-        }
-
-        public void InitializedStateMachine(IStateMachineInformation<T, U> stateMachine, T initialState)
-        {
-        }
-
-        public void EnteringInitialState(IStateMachineInformation<T, U> stateMachine, T state)
-        {
-        }
-
-        public void EnteredInitialState(IStateMachineInformation<T, U> stateMachine, T state, IStateContext<T, U> stateContext)
-        {
-        }
-
-        public void FiringEvent(IStateMachineInformation<T, U> stateMachine, ref U eventId, ref object[] eventArguments)
-        {
-        }
-
-        public void FiredEvent(IStateMachineInformation<T, U> stateMachine, ITransitionContext<T, U> context)
-        {
-        }
-
-        public void HandlingEntryActionException(IStateMachineInformation<T, U> stateMachine, IState<T, U> state, IStateContext<T, U> stateContext,
-                                                 ref Exception exception)
-        {
-        }
-
-        public void HandledEntryActionException(IStateMachineInformation<T, U> stateMachine, IState<T, U> state, IStateContext<T, U> stateContext,
-                                                Exception exception)
-        {
-        }
-
-        public void HandlingExitActionException(IStateMachineInformation<T, U> stateMachine, IState<T, U> state, IStateContext<T, U> stateContext,
-                                                ref Exception exception)
-        {
-        }
-
-        public void HandledExitActionException(IStateMachineInformation<T, U> stateMachine, IState<T, U> state, IStateContext<T, U> stateContext,
-                                               Exception exception)
-        {
-        }
-
-        public void HandlingGuardException(IStateMachineInformation<T, U> stateMachine, ITransition<T, U> transition,
-                                           ITransitionContext<T, U> transitionContext, ref Exception exception)
-        {
-        }
-
-        public void HandledGuardException(IStateMachineInformation<T, U> stateMachine, ITransition<T, U> transition,
-                                          ITransitionContext<T, U> transitionContext, Exception exception)
-        {
-        }
-
-        public void HandlingTransitionException(IStateMachineInformation<T, U> stateMachine, ITransition<T, U> transition,
-                                                ITransitionContext<T, U> context, ref Exception exception)
-        {
-        }
-
-        public void HandledTransitionException(IStateMachineInformation<T, U> stateMachine, ITransition<T, U> transition,
-                                               ITransitionContext<T, U> transitionContext, Exception exception)
-        {
-        }
     }
 }

@@ -203,6 +203,7 @@
     <Compile Include="Engine\WorldRendering\FirstPersonCamera.cs" />
     <Compile Include="Engine\WorldRendering\FirstPersonCameraSimulator.cs" />
     <Compile Include="Engine\_Core\IEngineModelObject.cs" />
+    <Compile Include="SkyMerchant\_Undocumented\ConsoleLoggingExtension.cs" />
     <Compile Include="SkyMerchant\QuestEditor\Inventory\InventoryController.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\InventoryTest.cs" />
     <Compile Include="_Tests\Assets\AssetsSynchronizationTest.cs" />
