@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
     public class AnimationBuilder
     {
 
-        private const float secondsPerFrame = 1/30f; //TODO: maybe change to frame-IDs instead of frame-times in animation-tracks?
+        private const float secondsPerFrame = 5* 1/30f; //TODO: maybe change to frame-IDs instead of frame-times in animation-tracks?
 
         public Animation.Animation BuildAnimation(List<Frame> frameData, Skeleton skeleton)
         {

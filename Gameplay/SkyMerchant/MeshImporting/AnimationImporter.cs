@@ -45,7 +45,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
 
 
                 //todo: properly export/import zero-transforms
-                var frameZero = frames.Where(e => e.FrameID == 25).ToList().First();
+                var frameZero = frames.Where(e => e.FrameID == 0).ToList().First();
                 setZeroTransformations(frameZero);
 
 
@@ -106,7 +106,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
         {
             var pieces = s.Split(',');
             pieces = pieces.Select(e => e.Replace('.', ',')).ToArray();
-            return new Quaternion(float.Parse(pieces[0]), float.Parse(pieces[1]), float.Parse(pieces[2]), float.Parse(pieces[3]));
+            return  Quaternion.Invert(new Quaternion(float.Parse(pieces[0]), float.Parse(pieces[1]), float.Parse(pieces[2]), float.Parse(pieces[3])));
         }
     
         /// <summary>
