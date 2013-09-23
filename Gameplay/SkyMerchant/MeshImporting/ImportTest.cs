@@ -211,10 +211,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
             var engine = EngineFactory.CreateEngine();
             engine.AddSimulator(new BasicSimulator(delegate
             {
-                if (TW.Graphics.Elapsed < 1 / 60f)
+                /*if (TW.Graphics.Elapsed < 1 / 60f)
                 {
                     Thread.Sleep(TimeSpan.FromSeconds((1 / 60 - TW.Graphics.Elapsed )*2));
-                }
+                }*/
                 foreach (var joint in skeleton.Joints)
                 {
                     TW.Graphics.LineManager3D.AddMatrixAxes(joint.AbsoluteMatrix);
