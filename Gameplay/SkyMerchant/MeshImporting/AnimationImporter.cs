@@ -45,7 +45,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
 
 
                 //todo: properly export/import zero-transforms
-                var frameZero = frames.Where(e => e.FrameID == 0).ToList().First();
+                var frameZero = frames.Where(e => e.FrameID == 25).ToList().First();
                 setZeroTransformations(frameZero);
 
 

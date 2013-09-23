@@ -494,6 +494,7 @@
     <Compile Include="SkyMerchant\MeshImporting\MeshBuilder.cs" />
     <Compile Include="SkyMerchant\MeshImporting\MeshImporter.cs" />
     <Compile Include="SkyMerchant\MeshImporting\SkeletonBuilder.cs" />
+    <Compile Include="SkyMerchant\MeshImporting\SkeletonBuilderAbsolute.cs" />
     <Compile Include="SkyMerchant\MeshImporting\SkinDataImporter.cs" />
     <Compile Include="SkyMerchant\MeshImporting\VertexSkinData.cs" />
     <Compile Include="SkyMerchant\PrototypeTest.cs" />
@@ -536,6 +537,7 @@
     <Compile Include="SkyMerchant\Voxels\VoxelMeshBuilder.cs" />
     <Compile Include="SkyMerchant\_Engine\AssetsRepository.cs" />
     <Compile Include="SkyMerchant\_Engine\DynamicAssetsFactory.cs" />
+    <Compile Include="SkyMerchant\_Engine\LineManager3DExtension.cs" />
     <Compile Include="SkyMerchant\_Engine\Rendering2DComponentsFactory.cs" />
     <Compile Include="SkyMerchant\_Windsor\NonOptionalDependencies.cs" />
     <Compile Include="_Features\TextMenu.cs" />

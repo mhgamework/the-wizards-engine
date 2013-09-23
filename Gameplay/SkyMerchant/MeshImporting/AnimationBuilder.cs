@@ -28,15 +28,14 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
                     var keyFrame = new Keyframe();
                     float frameTime = frame.FrameID*secondsPerFrame;
                     keyFrame.Time = frameTime;
-                    keyFrame.Value = Matrix.Transformation(Vector3.Zero, Quaternion.Identity, bd.Scale, Vector3.Zero,
-                                                         bd.Rotation, bd.Translation);
+                    keyFrame.Value = Matrix.RotationQuaternion(bd.Rotation) * Matrix.Scaling(bd.Scale) *
+                                   Matrix.Translation(bd.Translation);
 
                     addKeyframe(animation, joint, keyFrame);
                 }
             }
 
             setFrameTimeLengths(animation);
-           
 
             return animation;
         }
