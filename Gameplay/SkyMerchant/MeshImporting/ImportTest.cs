@@ -26,19 +26,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
     public class ImportTest
     {
         private System.Collections.Concurrent.ConcurrentQueue<string> fileQueue = new System.Collections.Concurrent.ConcurrentQueue<string>();
-
-        private String testImportMeshPath = TWDir.GameData + "/MaxScriptExporter/rodwen.twobj";
-
-        private String testImportAnimPathRenderBones = TWDir.GameData + "/MaxScriptExporter/animationTest1501.twanim";
-        //private String testImportAnimPath = TWDir.GameData + "/MaxScriptExporter/animationTest.twanim";
-        private String testImportAnimPath = TWDir.GameData + "/MaxScriptExporter/robotAnimTest01.twanim";
-        //private String testImportAnimPath = TWDir.GameData + "/MaxScriptExporter/bigSAnim01.twanim";
-        private String testAbsoluteAnimPath = TWDir.GameData + "/MaxScriptExporter/absAnimTest.twanim";
-        private String testAbsoluteAnimPathUnmodified_Simple = TWDir.GameData + "/MaxScriptExporter/absAnimTest_unmodified.twanim";
-        private String testAbsoluteAnimPathUnmodified = TWDir.GameData + "/MaxScriptExporter/robotAnimUnmodified.twanim";
-
-        private String testImportSkinPath = TWDir.GameData + "/MaxScriptExporter/skinTest.twskin";
-
+        private String testImportMeshPath = TWDir.GameData + "/Core/MaxScriptExporter/rodwen.twobj";
+        private String testAbsoluteAnimPathUnmodified_Simple = TWDir.GameData + "/Core/MaxScriptExporter/absAnimTest_unmodified.twanim";
+        private String testAbsoluteAnimPathUnmodified = TWDir.GameData + "/Core/MaxScriptExporter/robotAnimUnmodified.twanim";
+        private String testImportSkinPath = TWDir.GameData + "/Core/MaxScriptExporter/skinTest.twskin";
 
         [Test]
         public void TestParseMesh()
@@ -75,71 +66,21 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
             var parser = new AnimationParser();
             List<BoneData> boneStructure;
             List<Frame> frameData;
-            parser.LoadAnimation(testImportAnimPath, out boneStructure, out frameData);
+            parser.LoadAnimation(testAbsoluteAnimPathUnmodified_Simple, out boneStructure, out frameData);
         }
 
-        [Test]
+       [Test]
         public void TestRenderBones()
         {
-            //TODO: fix/remove?
-            try
-            {
-                var importer = new AnimationParser();
-                List<BoneData> boneStructure;
-                List<Frame> frameData;
-                importer.LoadAnimation(testImportAnimPathRenderBones, out boneStructure, out frameData);
-
-                var skeletonBuilder = new SkeletonBuilder();
-                var skeleton = skeletonBuilder.BuildSkeleton(boneStructure);
-
-                var skeletonVisualizer = new SkeletonVisualizer();
-
-
-                var engine = EngineFactory.CreateEngine();
-                //var physical = new Physical();
-                //physical.Mesh = mesh;
-
-                engine.AddSimulator(new BasicSimulator(delegate
-                {
-                    skeletonVisualizer.VisualizeSkeleton(TW.Graphics, skeleton);
-                }));
-
-                engine.AddSimulator(new PhysicalSimulator());
-                engine.AddSimulator(new WorldRenderingSimulator());
-
-            }
-            catch (Exception ex)
-            {
-                DI.Get<IErrorLogger>().Log(ex, "Init prototype");
-            }
-        }
-
-        [Test]
-        public void TestRenderAnimation()
-        {
-            //TODO: fix/remove?
-            var importer = new AnimationParser();
-            List<BoneData> boneStructure;
-            List<Frame> frameData;
-            importer.LoadAnimation(testImportAnimPath, out boneStructure, out frameData);
-
-            var skeletonBuilder = new SkeletonBuilder();
-            var skeleton = skeletonBuilder.BuildSkeleton(boneStructure);
-            var controller = new AnimationControllerSkeleton(skeleton);
-
-            var animationBuilder = new AnimationBuilder();
-            var animation = animationBuilder.BuildAnimation(frameData, skeleton);
-
-            controller.SetAnimation(0, animation);
+            Skeleton skeleton;
+            Animation.Animation animation;
+            var importer = new AnimationImporter();
+            importer.ImportAnimation(testAbsoluteAnimPathUnmodified_Simple, out skeleton, out animation);
 
             var skeletonVisualizer = new SkeletonVisualizer();
-
             var engine = EngineFactory.CreateEngine();
-
             engine.AddSimulator(new BasicSimulator(delegate
             {
-                controller.ProgressTime(TW.Graphics.Elapsed);
-                controller.UpdateSkeleton();
                 skeleton.UpdateAbsoluteMatrices();
                 skeletonVisualizer.VisualizeSkeleton(TW.Graphics, skeleton);
             }));
@@ -148,30 +89,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
             engine.AddSimulator(new WorldRenderingSimulator());
         }
 
-
         [Test]
-        public void TestRenderAbsoluteBones()
-        {
-            //TODO: fix
-            Skeleton skeleton;
-            Animation.Animation animation;
-            var importer = new AnimationImporter();
-            importer.ImportAnimation(testAbsoluteAnimPathUnmodified, out skeleton, out animation);
-
-            var skeletonVisualizer = new SkeletonVisualizer();
-            var engine = EngineFactory.CreateEngine();
-            engine.AddSimulator(new BasicSimulator(delegate
-            {
-                skeleton.Joints.ForEach(j => j.AbsoluteMatrix = j.RelativeMatrix); //haxor to display skeleton structure while using absolute transforms
-                skeletonVisualizer.VisualizeSkeleton(TW.Graphics, skeleton);
-            }));
-
-            engine.AddSimulator(new PhysicalSimulator());
-            engine.AddSimulator(new WorldRenderingSimulator());
-        }
-
-        [Test]
-        public void TestRenderAbsoluteAnimation()
+        public void TestRenderAnimation()
         {
             Skeleton skeleton;
             Animation.Animation animation;
@@ -182,14 +101,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
             controller.SetAnimation(0, animation);
             var skeletonVisualizer = new SkeletonVisualizer();
 
-            //skeleton.Joints.ForEach(j => j.Parent = null);// set parents to null
-
             var engine = EngineFactory.CreateEngine();
             engine.AddSimulator(new BasicSimulator(delegate
             {
                 controller.ProgressTime(TW.Graphics.Elapsed);
                 controller.UpdateSkeleton();
-                skeleton.Joints.ForEach(j => j.AbsoluteMatrix = j.RelativeMatrix); //haxor to display skeleton structure while using absolute transforms
+                skeleton.UpdateAbsoluteMatrices();
 
                 skeletonVisualizer.VisualizeSkeleton(TW.Graphics, skeleton);
 

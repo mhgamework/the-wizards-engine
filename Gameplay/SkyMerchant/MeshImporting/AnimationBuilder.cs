@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
     public class AnimationBuilder
     {
 
-        private const float secondsPerFrame = 5* 1/30f; //TODO: maybe change to frame-IDs instead of frame-times in animation-tracks?
+        private const float secondsPerFrame = 1 / 30f; //TODO: maybe change to frame-IDs instead of frame-times in animation-tracks?
 
         public Animation.Animation BuildAnimation(List<Frame> frameData, Skeleton skeleton)
         {
@@ -26,7 +26,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
                 {
                     var joint = getJointWithName(skeleton, bd.BoneName);
                     var keyFrame = new Keyframe();
-                    float frameTime = frame.FrameID*secondsPerFrame;
+                    float frameTime = frame.FrameID * secondsPerFrame;
                     keyFrame.Time = frameTime;
                     keyFrame.Value = Matrix.RotationQuaternion(bd.Rotation) * Matrix.Scaling(bd.Scale) *
                                    Matrix.Translation(bd.Translation);
@@ -37,7 +37,30 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
 
             setFrameTimeLengths(animation);
 
+            convertFrameValuesFromAbsoluteToRelative(skeleton, animation);
+
             return animation;
+        }
+
+        private void convertFrameValuesFromAbsoluteToRelative(Skeleton skeleton, Animation.Animation animation)
+        {
+            Func<Joint, Animation.Animation.Track> getTrack = o => animation.Tracks.First(t => t.Joint == o);
+
+            var joints = Enumerable.Reverse(skeleton.Joints).ToArray();
+
+            foreach (var joint in joints)
+            {
+                if (joint.Parent == null) continue;
+                var track = getTrack(joint);
+                var parentTrack = getTrack(joint.Parent);
+
+                foreach (var frame in track.Frames)
+                {
+                    var parentAbsMatrix = parentTrack.Frames.First(f => f.Time == frame.Time).Value;
+                    // Assume there is a keyframe for each joint at each frame.
+                    frame.Value = frame.Value * Matrix.Invert(parentAbsMatrix);
+                }
+            }
         }
 
         private Joint getJointWithName(Skeleton s, String n)

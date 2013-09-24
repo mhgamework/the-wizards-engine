@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
 {
     public class SkeletonBuilder
     {
-        /// <summary>
+        /// <summary> 
         /// Builds a skeleton given a list of bonedata-objects
         /// Skeleton is build by ordering the given list root-bone-first
         /// Assumes the given list is valid (ie no bones without parents/nonexistent parents except for the root-bone)
@@ -46,7 +46,13 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
 
             foreach (var joint in skeleton.Joints)
             {
-                joint.CalculateAbsoluteMatrix();
+                if(joint.Parent == null)
+                {
+                    joint.RelativeMatrix = joint.AbsoluteMatrix;
+                    continue;
+                }
+
+                joint.RelativeMatrix = joint.AbsoluteMatrix * Matrix.Invert(joint.Parent.AbsoluteMatrix)    ;
             }
 
             return skeleton;
@@ -62,8 +68,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
             if(temp.Count != 0)
                 joint.Parent = temp[0];
 
-            joint.RelativeMatrix = Matrix.Transformation(Vector3.Zero, Quaternion.Identity, b.ZeroScale, b.ZeroTranslation,
-                                                         b.ZeroRotation, b.ZeroTranslation);
+            joint.AbsoluteMatrix = Matrix.RotationQuaternion(b.ZeroRotation) * Matrix.Scaling(b.ZeroScale) *
+                                   Matrix.Translation(b.ZeroTranslation);
 
             return joint;
         }
