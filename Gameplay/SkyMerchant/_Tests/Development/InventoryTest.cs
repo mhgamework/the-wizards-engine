@@ -30,7 +30,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         public void TestInventoryController()
         {
             var game = EngineFactory.CreateEngine();
-            var controller = new InventoryController(new HotbarController(null, null));
+            var controller = new InventoryController(new HotbarController(null, null),null);
 
             game.AddSimulator(new BasicSimulator(controller.Update));
             game.AddSimulator(new WorldRenderingSimulator());

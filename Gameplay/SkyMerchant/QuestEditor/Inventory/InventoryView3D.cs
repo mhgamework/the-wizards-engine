@@ -35,7 +35,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory
 
         public IInventoryNode GetSelectedNode()
         {
-            
+            throw new NotImplementedException();
         }
 
         private void updateWireframeBoxes()

@@ -498,7 +498,6 @@
     <Compile Include="SkyMerchant\MeshImporting\SkeletonBuilder.cs" />
     <Compile Include="SkyMerchant\MeshImporting\SkinDataImporter.cs" />
     <Compile Include="SkyMerchant\MeshImporting\VertexSkinData.cs" />
-    <Compile Include="SkyMerchant\PrototypeTest.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\PickupTargetItemBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\FindClosestResourceBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\EnemyBehaviourFactory.cs" />
