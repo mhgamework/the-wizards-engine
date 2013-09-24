@@ -10,6 +10,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
     public class SkeletonBuilderAbsolute
     {
         /// <summary>
+        /// DEPRECATED, use normal skeletons but set for each frame for each bone: absoluteMatrix = relativeMatrix
         /// Builds a skeleton given a list of bonedata-objects, with assumption no bone has parents (absolute transforms will be used).
         /// </summary>
         /// <param name="bones"></param>

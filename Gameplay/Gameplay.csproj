@@ -485,6 +485,7 @@
     <Compile Include="SkyMerchant\_Tests\Stable\PrototypeTest.cs" />
     <Compile Include="SkyMerchant\MeshImporting\AnimationBuilder.cs" />
     <Compile Include="SkyMerchant\MeshImporting\AnimationImporter.cs" />
+    <Compile Include="SkyMerchant\MeshImporting\AnimationParser.cs" />
     <Compile Include="SkyMerchant\MeshImporting\BoneData.cs" />
     <Compile Include="SkyMerchant\MeshImporting\BoneTransformation.cs" />
     <Compile Include="SkyMerchant\MeshImporting\BoneWeight.cs" />

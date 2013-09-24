@@ -19,9 +19,14 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
             boneData.Add(b);
         }
 
-        public List<BoneTransformation> getBoneData()
+        public List<BoneTransformation> GetBoneData()
         {
             return boneData.ToList();
+        }
+
+        public void SetBoneData(List<BoneTransformation> bd)
+        {
+            boneData = bd;
         }
 
     }

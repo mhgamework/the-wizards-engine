@@ -118,7 +118,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
         {
             try
             {
-                var importer = new AnimationImporter();
+                var importer = new AnimationParser();
                 List<BoneData> boneStructure;
                 List<Frame> frameData;
                 importer.LoadAnimation(testImportAnimPath, out boneStructure, out frameData);
@@ -135,7 +135,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
         {
             try
             {
-                var importer = new AnimationImporter();
+                var importer = new AnimationParser();
                 List<BoneData> boneStructure;
                 List<Frame> frameData;
                 importer.LoadAnimation(testImportAnimPathRenderBones, out boneStructure, out frameData);
@@ -168,7 +168,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
         [Test]
         public void TestRenderAnimation()
         {
-            var importer = new AnimationImporter();
+            var importer = new AnimationParser();
             List<BoneData> boneStructure;
             List<Frame> frameData;
             importer.LoadAnimation(testImportAnimPath, out boneStructure, out frameData);
@@ -202,7 +202,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
         [Test]
         public void TestRenderAbsoluteBones()
         {
-            var importer = new AnimationImporter();
+            var importer = new AnimationParser();
             List<BoneData> boneStructure;
             List<Frame> frameData;
             importer.LoadAnimation(testAbsoluteAnimPathUnmodified, out boneStructure, out frameData);
@@ -232,21 +232,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
         [Test]
         public void TestRenderAbsoluteAnimation()
         {
+            Skeleton skeleton;
+            Animation.Animation animation;
             var importer = new AnimationImporter();
-            List<BoneData> boneStructure;
-            List<Frame> frameData;
-            importer.LoadAnimation(testAbsoluteAnimPathUnmodified, out boneStructure, out frameData);
+            importer.ImportAnimation(testAbsoluteAnimPathUnmodified, out skeleton, out animation);
 
-            var skeletonBuilder = new SkeletonBuilder();
-            var skeleton = skeletonBuilder.BuildSkeleton(boneStructure);
             var controller = new AnimationControllerSkeleton(skeleton);
-
-            var animationBuilder = new AnimationBuilder();
-            var animation = animationBuilder.BuildAnimation(frameData, skeleton);
-
-            animation.Tracks =
-                animation.Tracks.Where(t => !t.Joint.Name.Contains("IK") && !t.Joint.Name.Contains("FK")).ToList();
-
             controller.SetAnimation(0, animation);
             var skeletonVisualizer = new SkeletonVisualizer();
 
@@ -257,16 +248,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
             {
                 controller.ProgressTime(TW.Graphics.Elapsed);
                 controller.UpdateSkeleton();
-                skeleton.Joints.ForEach(j => j.AbsoluteMatrix = j.RelativeMatrix);
-                //skeleton.UpdateAbsoluteMatrices();
+                skeleton.Joints.ForEach(j => j.AbsoluteMatrix = j.RelativeMatrix); //haxor to display skeleton structure while using absolute transforms
 
                 skeletonVisualizer.VisualizeSkeleton(TW.Graphics, skeleton);
 
-               /* TW.Graphics.LineManager3D.DrawGroundShadows = true;
-                foreach (var joint in skeleton.Joints)
-                {
-                    TW.Graphics.LineManager3D.AddMatrixAxes(joint.AbsoluteMatrix);
-                }*/
             }));
 
             engine.AddSimulator(new PhysicalSimulator());

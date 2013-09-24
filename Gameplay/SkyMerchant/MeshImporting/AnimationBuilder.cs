@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
 
             foreach (var frame in frameData)
             {
-                foreach (var bd in frame.getBoneData())
+                foreach (var bd in frame.GetBoneData())
                 {
                     var joint = getJointWithName(skeleton, bd.BoneName);
                     var keyFrame = new Keyframe();
