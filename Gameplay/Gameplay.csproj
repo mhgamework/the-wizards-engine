@@ -494,6 +494,7 @@
     <Compile Include="SkyMerchant\MeshImporting\Material.cs" />
     <Compile Include="SkyMerchant\MeshImporting\MeshBuilder.cs" />
     <Compile Include="SkyMerchant\MeshImporting\MeshImporter.cs" />
+    <Compile Include="SkyMerchant\MeshImporting\MeshParser.cs" />
     <Compile Include="SkyMerchant\MeshImporting\SkeletonBuilder.cs" />
     <Compile Include="SkyMerchant\MeshImporting\SkeletonBuilderAbsolute.cs" />
     <Compile Include="SkyMerchant\MeshImporting\SkinDataImporter.cs" />

@@ -27,112 +27,61 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
     {
         private System.Collections.Concurrent.ConcurrentQueue<string> fileQueue = new System.Collections.Concurrent.ConcurrentQueue<string>();
 
-        //private String testImportMeshPath = "C:/Users/Simon/Documents/My Dropbox/Projects/SkyMerchant/MaxScriptExporter/geomTest.twobj";
         private String testImportMeshPath = TWDir.GameData + "/MaxScriptExporter/rodwen.twobj";
+
         private String testImportAnimPathRenderBones = TWDir.GameData + "/MaxScriptExporter/animationTest1501.twanim";
         //private String testImportAnimPath = TWDir.GameData + "/MaxScriptExporter/animationTest.twanim";
         private String testImportAnimPath = TWDir.GameData + "/MaxScriptExporter/robotAnimTest01.twanim";
         //private String testImportAnimPath = TWDir.GameData + "/MaxScriptExporter/bigSAnim01.twanim";
         private String testAbsoluteAnimPath = TWDir.GameData + "/MaxScriptExporter/absAnimTest.twanim";
-        //private String testAbsoluteAnimPathUnmodified = TWDir.GameData + "/MaxScriptExporter/absAnimTest_unmodified.twanim";
+        private String testAbsoluteAnimPathUnmodified_Simple = TWDir.GameData + "/MaxScriptExporter/absAnimTest_unmodified.twanim";
         private String testAbsoluteAnimPathUnmodified = TWDir.GameData + "/MaxScriptExporter/robotAnimUnmodified.twanim";
 
         private String testImportSkinPath = TWDir.GameData + "/MaxScriptExporter/skinTest.twskin";
 
 
         [Test]
-        public void TestImportMesh()
+        public void TestParseMesh()
         {
-            try
-            {
-                var importer = new MeshImporter();
-                Material[] matStream;
-                Vector3[] posStream;
-                Vector3[] normStream;
-                Vector3[] texcoStream;
-                Dictionary<int, List<int>> posInd;
-                Dictionary<int, List<int>> normInd;
-                Dictionary<int, List<int>> texcoInd;
-                importer.LoadMesh(testImportMeshPath, out matStream, out posStream, out normStream, out texcoStream, out posInd, out normInd, out texcoInd);
-
-            }
-            catch (Exception ex)
-            {
-                DI.Get<IErrorLogger>().Log(ex, "Init prototype");
-            }
-
+            var parser = new MeshParser();
+            Material[] matStream;
+            Vector3[] posStream;
+            Vector3[] normStream;
+            Vector3[] texcoStream;
+            Dictionary<int, List<int>> posInd;
+            Dictionary<int, List<int>> normInd;
+            Dictionary<int, List<int>> texcoInd;
+            parser.LoadMesh(testImportMeshPath, out matStream, out posStream, out normStream, out texcoStream, out posInd, out normInd, out texcoInd);
         }
 
         [Test]
         public void TestRenderMesh()
         {
-            try
-            {
-                var importer = new MeshImporter();
-                Material[] matStream;
-                Vector3[] posStream;
-                Vector3[] normStream;
-                Vector3[] texcoStream;
-                Dictionary<int, List<int>> posInd;
-                Dictionary<int, List<int>> normInd;
-                Dictionary<int, List<int>> texcoInd;
-                importer.LoadMesh(testImportMeshPath, out matStream, out posStream, out normStream, out texcoStream, out posInd, out normInd, out texcoInd);
-
-                var meshBuilder = new MeshBuilder();
-                var mesh = meshBuilder.BuildMesh(matStream, posStream, normStream, texcoStream, posInd, normInd, texcoInd);
-
-
-                var engine = EngineFactory.CreateEngine();
-
-                /*var watcher = new FileSystemWatcher();
-                watcher.Changed += watcher_Changed;
-                watcher.EnableRaisingEvents = true;
-                watcher.Path = testImportMeshPath;
-                watcher.Filter = "*";*/
-                var physical = new Physical();
-                physical.Mesh = mesh;
-
-                engine.AddSimulator(new BasicSimulator(delegate
-                {
-                    /*string result = null;
-                    while (fileQueue.TryDequeue(out result))
-                    {
-
-                    }*/
-                    //TW.Data.RemoveObject(physical);
-
-                }));
-
-                engine.AddSimulator(new PhysicalSimulator());
-                engine.AddSimulator(new WorldRenderingSimulator());
-
-            }
-            catch (Exception ex)
-            {
-                DI.Get<IErrorLogger>().Log(ex, "Init prototype");
-            }
+            var importer = new MeshImporter();
+            IMesh mesh;
+            importer.ImportMesh(testImportMeshPath, out mesh);
+            
+            var engine = EngineFactory.CreateEngine();
+            var physical = new Physical();
+            physical.Mesh = mesh;
+            engine.AddSimulator(new BasicSimulator());
+            engine.AddSimulator(new PhysicalSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
         }
 
         [Test]
-        public void TestImportAnimationData()
+        public void TestParseAnimationData()
         {
-            try
-            {
-                var importer = new AnimationParser();
-                List<BoneData> boneStructure;
-                List<Frame> frameData;
-                importer.LoadAnimation(testImportAnimPath, out boneStructure, out frameData);
-
-            }
-            catch (Exception ex)
-            {
-                DI.Get<IErrorLogger>().Log(ex, "Init prototype");
-            }
+            var parser = new AnimationParser();
+            List<BoneData> boneStructure;
+            List<Frame> frameData;
+            parser.LoadAnimation(testImportAnimPath, out boneStructure, out frameData);
         }
 
         [Test]
         public void TestRenderBones()
         {
+            //TODO: fix/remove?
             try
             {
                 var importer = new AnimationParser();
@@ -168,6 +117,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
         [Test]
         public void TestRenderAnimation()
         {
+            //TODO: fix/remove?
             var importer = new AnimationParser();
             List<BoneData> boneStructure;
             List<Frame> frameData;
@@ -202,27 +152,18 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
         [Test]
         public void TestRenderAbsoluteBones()
         {
-            var importer = new AnimationParser();
-            List<BoneData> boneStructure;
-            List<Frame> frameData;
-            importer.LoadAnimation(testAbsoluteAnimPathUnmodified, out boneStructure, out frameData);
+            //TODO: fix
+            Skeleton skeleton;
+            Animation.Animation animation;
+            var importer = new AnimationImporter();
+            importer.ImportAnimation(testAbsoluteAnimPathUnmodified, out skeleton, out animation);
 
-            var skeletonBuilder = new SkeletonBuilderAbsolute();
-            var skeleton = skeletonBuilder.BuildSkeleton(boneStructure);
-
+            var skeletonVisualizer = new SkeletonVisualizer();
             var engine = EngineFactory.CreateEngine();
             engine.AddSimulator(new BasicSimulator(delegate
             {
-                /*if (TW.Graphics.Elapsed < 1 / 60f)
-                {
-                    Thread.Sleep(TimeSpan.FromSeconds((1 / 60 - TW.Graphics.Elapsed )*2));
-                }*/
-
-                TW.Graphics.LineManager3D.DrawGroundShadows = true;
-                foreach (var joint in skeleton.Joints)
-                {
-                    TW.Graphics.LineManager3D.AddMatrixAxes(joint.AbsoluteMatrix);
-                }
+                skeleton.Joints.ForEach(j => j.AbsoluteMatrix = j.RelativeMatrix); //haxor to display skeleton structure while using absolute transforms
+                skeletonVisualizer.VisualizeSkeleton(TW.Graphics, skeleton);
             }));
 
             engine.AddSimulator(new PhysicalSimulator());
@@ -262,23 +203,11 @@ namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
         [Test]
         public void TestImportSkinData()
         {
-            try
-            {
-                var importer = new SkinDataImporter();
-                List<VertexSkinData> skinData;
-                importer.LoadSkinData(testImportSkinPath, out skinData);
-            }
-            catch (Exception ex)
-            {
-                DI.Get<IErrorLogger>().Log(ex, "Init prototype");
-            }
-        }
+            //TODO
 
-
-        void watcher_Changed(object sender, FileSystemEventArgs e)
-        {
-            // Other thread!!!!!!
-            fileQueue.Enqueue(e.FullPath);
+            var importer = new SkinDataImporter();
+            List<VertexSkinData> skinData;
+            importer.LoadSkinData(testImportSkinPath, out skinData);
         }
     }
 }
