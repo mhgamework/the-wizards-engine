@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory
@@ -33,9 +35,24 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory
             updateCamera();
         }
 
+
+
         public IInventoryNode GetSelectedNode()
         {
-            throw new NotImplementedException();
+            var ray = TW.Data.Get<CameraInfo>().GetCenterScreenRay();
+            var node = tree.findBrowsingItem();
+
+            Func<IInventoryNode, float?> getDistance = i => tree.GetBoundingBox(i).xna().Intersects(ray.xna());
+
+            var hit = node.Children.Where(c => getDistance(c).HasValue).OrderBy(getDistance).FirstOrDefault();
+
+
+
+            foreach (var child in node.Children)
+            {
+                var bb = tree.GetBoundingBox(child);
+
+            }
         }
 
         private void updateWireframeBoxes()
