@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
     /// <summary>
     /// This manages the renderered entities for asset browsing considering the user camera.
     /// </summary>
-    public class InventoryView3D
+    public class InventoryView3D : IInventoryView
     {
         private readonly IInventoryNodeRenderer renderer;
         private readonly Tree tree;

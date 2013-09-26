@@ -13,10 +13,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
     public class InventoryController
     {
         private readonly HotbarController hotbarController;
-        private readonly InventoryView3D view;
+        private readonly IInventoryView view;
 
 
-        public InventoryController(HotbarController hotbarController, InventoryView3D view)
+        public InventoryController(HotbarController hotbarController, IInventoryView view)
         {
             this.hotbarController = hotbarController;
             this.view = view;
