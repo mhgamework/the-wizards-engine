@@ -18,6 +18,9 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
     [TestFixture]
     public class InventoryTest
     {
+        /// <summary>
+        /// Tests the basic view using a wireframerenderer
+        /// </summary>
         [Test]
         public void TestInventoryView3D()
         {
@@ -31,6 +34,9 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
             game.Run();
         }
 
+        /// <summary>
+        /// Test the FSM in this class, probably split this test?
+        /// </summary>
         [Test]
         public void TestInventoryController()
         {
@@ -44,37 +50,16 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         }
 
         /// <summary>
-        /// Shows the actual inventory to use in the quest builder
-        /// </summary>
-        [Test]
-        public void TestDefaultInventoryWithInventoryView()
-        {
-            var game = EngineFactory.CreateEngine();
-
-            var builder = new DefaultInventoryBuilder();
-
-            var view = new InventoryView3D(builder.CreateTree(), new WireframeInventoryNodeRenderer());
-
-            game.AddSimulator(new BasicSimulator(view.Update));
-            game.AddSimulator(new WorldRenderingSimulator());
-
-            game.Run();
-        }
-
-        /// <summary>
         /// Shows the actual inventory to use in the quest builder, while rendering meshes
         /// </summary>
         [Test]
-        public void TestDefaultInventoryWithInventoryViewAndMeshes()
+        public void TestMeshSpawnerRenderer()
         {
-
             var game = EngineFactory.CreateEngine();
-
-            var builder = new DefaultInventoryBuilder();
 
             var meshRender = new MeshSpawnerInventoryRenderer(new WireframeInventoryNodeRenderer());
 
-            var view = new InventoryView3D(builder.CreateTree(), meshRender);
+            var view = new InventoryView3D(createInventoryWithMeshSpanwers(), meshRender);
 
             game.AddSimulator(new BasicSimulator(meshRender.MakeAllInvisible));
             game.AddSimulator(new BasicSimulator(view.Update));
@@ -88,28 +73,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         /// Shows the actual inventory to use in the quest builder, while rendering meshes
         /// </summary>
         [Test]
-        public void TestHotBarItemMeshInventoryRenderer()
-        {
-            //TODO
-            //var game = EngineFactory.CreateEngine();
-
-            //var meshRender = new HotBarItemTextInventoryRenderer(new WireframeInventoryNodeRenderer());
-
-            //var view = new InventoryView3D(createInventoryWithHotbaritems(), meshRender);
-
-            //game.AddSimulator(new BasicSimulator(meshRender.MakeAllInvisible));
-            //game.AddSimulator(new BasicSimulator(view.Update));
-            //game.AddSimulator(new PhysicalSimulator());
-            //game.AddSimulator(new WorldRenderingSimulator());
-
-            //game.Run();
-        }
-
-        /// <summary>
-        /// Shows the actual inventory to use in the quest builder, while rendering meshes
-        /// </summary>
-        [Test]
-        public void TestHotBarItemTextInventoryRenderer()
+        public void TestTextRenderer()
         {
             var game = EngineFactory.CreateEngine();
 
@@ -190,6 +154,20 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
             root.AddChild(new HotBarItemInventoryNode(createHotbarItem("Michiel")));
 
             return root;
+        }
+
+        private IInventoryNode createInventoryWithMeshSpanwers()
+        {
+            var root = createGroupNode();
+            root.AddChild(new HotBarItemInventoryNode(createMeshSpawner("Core\\Barrel01")));
+            root.AddChild(new HotBarItemInventoryNode(createMeshSpawner("Core\\Crate01")));
+
+            return root;
+        }
+
+        private IHotbarItem createMeshSpawner(string path)
+        {
+            return new MeshSpawnerItem(path);
         }
 
         private GroupInventoryNode createGroupNode()
