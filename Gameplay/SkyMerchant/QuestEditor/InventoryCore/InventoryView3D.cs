@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DirectX11;
-using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory
+namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
 {
     /// <summary>
     /// This manages the renderered entities for asset browsing considering the user camera.

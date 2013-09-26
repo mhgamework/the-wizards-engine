@@ -1,7 +1,7 @@
 ﻿using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory
+namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
 {
     public class WireframeInventoryNodeRenderer : IInventoryNodeRenderer
     {

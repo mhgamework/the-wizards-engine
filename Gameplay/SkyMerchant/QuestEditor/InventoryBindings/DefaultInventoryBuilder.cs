@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
 namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings

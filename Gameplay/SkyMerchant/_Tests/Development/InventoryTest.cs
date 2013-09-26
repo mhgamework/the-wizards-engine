@@ -4,8 +4,8 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor;
-using MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using NUnit.Framework;
 

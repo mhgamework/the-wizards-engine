@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory
+namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
 {
     public class GroupInventoryNode : IInventoryNode
     {

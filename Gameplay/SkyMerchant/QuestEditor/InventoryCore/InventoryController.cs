@@ -5,7 +5,7 @@ using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings;
 using MHGameWork.TheWizards.SkyMerchant._Undocumented;
 using bbv.Common.StateMachine;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory
+namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
 {
     /// <summary>
     /// Responsible for processing user input and providing display for the user, for working with the inventory
