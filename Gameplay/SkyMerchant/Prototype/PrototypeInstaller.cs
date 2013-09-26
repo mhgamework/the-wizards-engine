@@ -14,9 +14,9 @@ using MHGameWork.TheWizards.SkyMerchant.Lod;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.AI;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant.Voxels;
+using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using MHGameWork.TheWizards.SkyMerchant._Tests.Development;
 using MHGameWork.TheWizards.SkyMerchant._Tests.Stable;
-using MHGameWork.TheWizards.SkyMerchant._Windsor;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype
 {

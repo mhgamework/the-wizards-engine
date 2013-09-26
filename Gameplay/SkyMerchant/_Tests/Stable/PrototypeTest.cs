@@ -12,7 +12,7 @@ using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.SkyMerchant.Lod;
 using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
-using MHGameWork.TheWizards.SkyMerchant._Windsor;
+using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using NUnit.Framework;
 using System.Linq;
 using SlimDX;

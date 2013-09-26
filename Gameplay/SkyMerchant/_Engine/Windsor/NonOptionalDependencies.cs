@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
 using Castle.Core;
-using Castle.Core.Logging;
 using Castle.MicroKernel;
 using Castle.MicroKernel.Facilities;
 using Castle.MicroKernel.ModelBuilder;
 
-namespace MHGameWork.TheWizards.SkyMerchant._Windsor
+namespace MHGameWork.TheWizards.SkyMerchant._Engine.Windsor
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class NonOptionalAttribute : Attribute

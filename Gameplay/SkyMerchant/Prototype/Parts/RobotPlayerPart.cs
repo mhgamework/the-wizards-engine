@@ -8,7 +8,7 @@ using MHGameWork.TheWizards.RTSTestCase1;
 
 using System.Linq;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.SkyMerchant._Windsor;
+using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using Microsoft.Xna.Framework.Graphics;
 using SlimDX;
 

@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.SkyMerchant._Windsor;
+using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {

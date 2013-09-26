@@ -7,7 +7,6 @@ using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.RTSTestCase1.BehaviourTrees;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.AI;
-using MHGameWork.TheWizards.SkyMerchant._Windsor;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
