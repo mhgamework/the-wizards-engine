@@ -10,6 +10,7 @@ using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
 using MHGameWork.TheWizards.SkyMerchant._Engine;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 {
@@ -84,6 +85,47 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         }
 
         /// <summary>
+        /// Shows the actual inventory to use in the quest builder, while rendering meshes
+        /// </summary>
+        [Test]
+        public void TestHotBarItemMeshInventoryRenderer()
+        {
+            //TODO
+            //var game = EngineFactory.CreateEngine();
+
+            //var meshRender = new HotBarItemTextInventoryRenderer(new WireframeInventoryNodeRenderer());
+
+            //var view = new InventoryView3D(createInventoryWithHotbaritems(), meshRender);
+
+            //game.AddSimulator(new BasicSimulator(meshRender.MakeAllInvisible));
+            //game.AddSimulator(new BasicSimulator(view.Update));
+            //game.AddSimulator(new PhysicalSimulator());
+            //game.AddSimulator(new WorldRenderingSimulator());
+
+            //game.Run();
+        }
+
+        /// <summary>
+        /// Shows the actual inventory to use in the quest builder, while rendering meshes
+        /// </summary>
+        [Test]
+        public void TestHotBarItemTextInventoryRenderer()
+        {
+            var game = EngineFactory.CreateEngine();
+
+            var meshRender = new HotBarItemTextInventoryRenderer(new WireframeInventoryNodeRenderer());
+
+            var view = new InventoryView3D(createInventoryWithHotbaritems(), meshRender);
+
+            game.AddSimulator(new BasicSimulator(meshRender.MakeAllInvisible));
+            game.AddSimulator(new BasicSimulator(view.Update));
+            game.AddSimulator(new PhysicalSimulator());
+            game.AddSimulator(new WorldRenderingSimulator());
+
+            game.Run();
+        }
+
+        /// <summary>
         /// Tests the inventory controller (integration test)
         /// </summary>
         [Test]
@@ -94,7 +136,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 
             var builder = new DefaultInventoryBuilder();
 
-            var meshRender = new MeshSpawnerInventoryRenderer(new WireframeInventoryNodeRenderer());
+            var meshRender = new MeshSpawnerInventoryRenderer(new HotBarItemTextInventoryRenderer(new WireframeInventoryNodeRenderer()));
 
             var view = new InventoryView3D(builder.CreateTree(), meshRender);
 
@@ -139,10 +181,27 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
             return root;
         }
 
+        private IInventoryNode createInventoryWithHotbaritems()
+        {
+            var root = createGroupNode();
+            root.AddChild(new HotBarItemInventoryNode(createHotbarItem("Japser")));
+            root.AddChild(new HotBarItemInventoryNode(createHotbarItem("Chuptys")));
+            root.AddChild(new HotBarItemInventoryNode(createHotbarItem("Bart")));
+            root.AddChild(new HotBarItemInventoryNode(createHotbarItem("Michiel")));
+
+            return root;
+        }
+
         private GroupInventoryNode createGroupNode()
         {
             return new GroupInventoryNode();
         }
 
+        private IHotbarItem createHotbarItem(string name)
+        {
+            var ret = MockRepository.GenerateStub<IHotbarItem>();
+            ret.Stub(o => o.Name).Return(name);
+            return ret;
+        }
     }
 }

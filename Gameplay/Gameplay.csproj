@@ -205,10 +205,12 @@
     <Compile Include="Engine\_Core\IEngineModelObject.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\BridgeToolItem.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\DefaultInventoryBuilder.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\HotBarItemTextInventoryRenderer.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\IslandToolItem.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\MeshSpawnerInventoryRenderer.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\MeshSpawnersInventoryNode.cs" />
     <Compile Include="SkyMerchant\_Engine\CacheAttribute.cs" />
+    <Compile Include="SkyMerchant\_Engine\LinqExtensions.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorldScript.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\MeshSpawnerItem.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\ScriptToolItem.cs" />

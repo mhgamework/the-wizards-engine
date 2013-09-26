@@ -27,6 +27,7 @@ namespace MHGameWork.TheWizards.Engine
         public void SetupEngine(TWEngine engine)
         {
             TW.Graphics.EscapeExists = false;
+            TW.Graphics.AllowF3InputToggle = false;
 
             //checkLoadPreviousState();
 

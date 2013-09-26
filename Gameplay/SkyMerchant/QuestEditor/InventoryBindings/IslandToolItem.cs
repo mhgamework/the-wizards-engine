@@ -8,20 +8,18 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
     /// </summary>
     public class IslandToolItem : IHotbarItem
     {
-        public string Name { get; private set; }
+        public string Name { get { return "IslandTool"; } }
         public void OnSelected()
         {
-            throw new System.NotImplementedException();
+
         }
 
         public void OnDeselected()
         {
-            throw new System.NotImplementedException();
         }
 
         public void Update()
         {
-            throw new System.NotImplementedException();
         }
     }
 }

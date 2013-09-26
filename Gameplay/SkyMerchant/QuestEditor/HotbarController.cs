@@ -11,6 +11,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
     /// Also manages the view
     /// 
     /// Responsible for translating user keys into hotbar slots!
+    /// 
+    /// NOT responsible for simulating the selected item's behaviour!!
     /// </summary>
     public class HotbarController
     {
@@ -37,8 +39,6 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
         {
             trySelect();
             trySwap();
-
-            updateSelectedItem();
 
             view.Update();
         }
