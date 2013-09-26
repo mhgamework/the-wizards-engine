@@ -2,10 +2,12 @@
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
+using MHGameWork.TheWizards.SkyMerchant._Engine;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using NUnit.Framework;
 
@@ -32,7 +34,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         public void TestInventoryController()
         {
             var game = EngineFactory.CreateEngine();
-            var controller = new InventoryController(new HotbarController(null, null),null);
+            var controller = new InventoryController(new HotbarController(null, null), null);
 
             game.AddSimulator(new BasicSimulator(controller.Update));
             game.AddSimulator(new WorldRenderingSimulator());
@@ -57,7 +59,60 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 
             game.Run();
         }
-       
+
+        /// <summary>
+        /// Shows the actual inventory to use in the quest builder, while rendering meshes
+        /// </summary>
+        [Test]
+        public void TestDefaultInventoryWithInventoryViewAndMeshes()
+        {
+
+            var game = EngineFactory.CreateEngine();
+
+            var builder = new DefaultInventoryBuilder();
+
+            var meshRender = new MeshSpawnerInventoryRenderer(new WireframeInventoryNodeRenderer());
+
+            var view = new InventoryView3D(builder.CreateTree(), meshRender);
+
+            game.AddSimulator(new BasicSimulator(meshRender.MakeAllInvisible));
+            game.AddSimulator(new BasicSimulator(view.Update));
+            game.AddSimulator(new PhysicalSimulator());
+            game.AddSimulator(new WorldRenderingSimulator());
+
+            game.Run();
+        }
+
+        /// <summary>
+        /// Tests the inventory controller (integration test)
+        /// </summary>
+        [Test]
+        public void TestControllerFull()
+        {
+
+            var game = EngineFactory.CreateEngine();
+
+            var builder = new DefaultInventoryBuilder();
+
+            var meshRender = new MeshSpawnerInventoryRenderer(new WireframeInventoryNodeRenderer());
+
+            var view = new InventoryView3D(builder.CreateTree(), meshRender);
+
+            var bar = new Hotbar();
+            var hotbarController = new HotbarController(bar, new HotbarTextView(bar, new Rendering2DComponentsFactory()));
+            var controller = new InventoryController(hotbarController, view);
+
+
+            game.AddSimulator(new BasicSimulator(meshRender.MakeAllInvisible));
+            game.AddSimulator(new BasicSimulator(view.Update));
+            game.AddSimulator(new BasicSimulator(controller.Update));
+            game.AddSimulator(new BasicSimulator(hotbarController.Update));
+
+            game.AddSimulator(new PhysicalSimulator());
+            game.AddSimulator(new WorldRenderingSimulator());
+
+            game.Run();
+        }
 
         private IInventoryNode createRootItem()
         {

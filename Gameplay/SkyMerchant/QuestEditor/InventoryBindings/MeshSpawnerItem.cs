@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.Rendering;
+﻿using System.IO;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
 namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
@@ -17,7 +18,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
         public MeshSpawnerItem(string meshPath)
         {
             this.MeshPath = meshPath;
-            Name = "Mesh Spawner";
+            Name = "Mesh Spawner " + Path.GetFileNameWithoutExtension(meshPath);
         }
 
         public string Name { get; private set; }

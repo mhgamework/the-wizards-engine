@@ -4,34 +4,40 @@ using System.Reflection;
 using System.Text;
 using PostSharp.Aspects;
 using PostSharp.Extensibility;
+using PostSharp.Serialization;
 
 namespace MHGameWork.TheWizards.SkyMerchant._Engine
 {
     /// <summary>
     /// Caches the return values of this method
     /// FROM: http://www.postsharp.net/blog/post/SOLID-Caching
+    /// (edited!)
     /// </summary>
     [Serializable]
     public class CacheAttribute : MethodInterceptionAspect
     {
         [NonSerialized]
-        private static readonly Dictionary<string,object> _cache;
+        private Dictionary<string,object> _cache;
+        [NonSerialized]
         private string _methodName;
 
         /// <summary>
-        /// No clue why this is static
+        /// No clue why this was static or what the postsharpenvironment is supposed to do
         /// </summary>
-        static CacheAttribute()
+        public CacheAttribute()
         {
-            if (!PostSharpEnvironment.IsPostSharpRunning)
-            {
-                _cache = new Dictionary<string, object>();
-            }
+            //if (!PostSharpEnvironment.IsPostSharpRunning)
+            //{
+            //_cache = new Dictionary<string, object>();
+
+            //}
         }
 
-        public override void CompileTimeInitialize(MethodBase method, AspectInfo aspectInfo)
+        public override void RuntimeInitialize(MethodBase method)
         {
             _methodName = method.Name;
+            _cache = new Dictionary<string, object>();
+
         }
 
         public override void OnInvoke(MethodInterceptionArgs args)

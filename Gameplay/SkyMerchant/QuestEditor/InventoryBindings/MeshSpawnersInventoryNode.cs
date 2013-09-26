@@ -36,7 +36,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
         [Cache]
         private IInventoryNode getMeshNode(FileSystemInfo file)
         {
-            return new HotBarItemInventoryNode(new MeshSpawnerItem(file.FullName));
+            var path = file.FullName;
+            path = path.Substring(0, path.Length - file.Extension.Length);
+
+            path = path.Replace(TWDir.GameData + "\\", "");
+
+            return new HotBarItemInventoryNode(new MeshSpawnerItem(path));
         }
 
         [Cache]

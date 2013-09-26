@@ -206,6 +206,7 @@
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\BridgeToolItem.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\DefaultInventoryBuilder.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\IslandToolItem.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\MeshSpawnerInventoryRenderer.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\MeshSpawnersInventoryNode.cs" />
     <Compile Include="SkyMerchant\_Engine\CacheAttribute.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorldScript.cs" />

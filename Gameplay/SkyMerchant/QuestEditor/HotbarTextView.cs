@@ -17,8 +17,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
             this.bar = bar;
 
             textarea = rendering.CreateTextArea();
-            textarea.Position = new Vector2(650, 10);
-            textarea.Size = new Vector2(140, 400);
+            textarea.Position = new Vector2(600, 10);
+            textarea.Size = new Vector2(190, 400);
         }
 
         public void Update()

@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
             this.hotbarController = hotbarController;
             this.view = view;
 
-            var timer = new Timer(1000);
+            var timer = new Timer(500);
             timer.Elapsed += (sender, args) => timerElapsed = true;
             fsm = createStateMachine(timer);
 

@@ -49,11 +49,23 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
             var ray = TW.Data.Get<CameraInfo>().GetCenterScreenRay();
             var node = tree.findBrowsingItem();
 
+            var nodes = GetIntersectingNodes(node, ray);
+
             Func<IInventoryNode, float?> getDistance = i => tree.GetBoundingBox(i).xna().Intersects(ray.xna());
 
-            var hit = node.Children.Where(c => getDistance(c).HasValue).OrderBy(getDistance).FirstOrDefault();
+            var hit = nodes.OrderBy(getDistance).FirstOrDefault();
 
             return hit;
+        }
+
+        private IEnumerable<IInventoryNode> GetIntersectingNodes(IInventoryNode current, Ray ray)
+        {
+            var dist=tree.GetBoundingBox(current).xna().Intersects(ray.xna());
+            if (!dist.HasValue) return Enumerable.Empty<IInventoryNode>();
+
+            if (current.Children.Count == 0) return new []{ current };
+
+            return current.Children.SelectMany(c => GetIntersectingNodes(c, ray));
         }
 
         private void updateWireframeBoxes()
