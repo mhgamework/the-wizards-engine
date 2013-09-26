@@ -88,6 +88,14 @@ namespace MHGameWork.TheWizards
             return bb.Maximum - bb.Minimum;
         }
 
+        public static BoundingBox GetShrinked(this BoundingBox bb, float percentage)
+        {
+            var scale = bb.GetSize().MaxComponent();
+            bb.Minimum += MathHelper.One * percentage * scale;
+            bb.Maximum -= MathHelper.One * percentage * scale;
+            return bb;
+        }
+
         public static Vector3 GetPoint(this Ray ray, float dist)
         {
             return ray.Position + ray.Direction * dist;

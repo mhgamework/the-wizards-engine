@@ -120,7 +120,31 @@ namespace MHGameWork.TheWizards.Engine
             gameplayAssemblyHotloader.Changed += () => ScheduleReload();
             debugTools = new EngineDebugTools(TW.Graphics.Form.GameLoopProfilingPoint);
 
+            attachAssemblyLoader();
+
         }
+
+        #region Assembly resolver for gameplaydll
+
+        /// <summary>
+        /// Solves postsharp loader issues. When someone requests the gameplay dll (eg serialized postsharp aspects), it should resolve to the current gameplay dll!
+        /// </summary>
+        private void attachAssemblyLoader()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+        }
+
+        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            if (args.Name == "Gameplay, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null")
+            {
+                return GetLoadedGameplayAssembly();
+            }
+            return null;
+        }
+
+        #endregion
+
 
         #region Code loading
 

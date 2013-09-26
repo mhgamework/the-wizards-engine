@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX.DirectInput;
 using System.Linq;
 
@@ -14,6 +15,9 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
     public class HotbarController
     {
         private readonly Hotbar bar;
+
+        public Hotbar Bar { get { return bar; } }
+
         private readonly HotbarTextView view;
 
         private Key[] slotKeys = new Key[] { Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9 };

@@ -1,0 +1,3 @@
+﻿Contains all the interfaces which pose as a wrapper between the runtime-specific gameplay code and the more engine related features.
+(these interfaces are used by mapbuilders or scriptwriters)
+See engine architecture!

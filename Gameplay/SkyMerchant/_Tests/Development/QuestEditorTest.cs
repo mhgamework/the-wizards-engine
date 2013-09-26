@@ -9,6 +9,7 @@ using MHGameWork.TheWizards.SkyMerchant.QuestEditor;
 using MHGameWork.TheWizards.SkyMerchant.SimulationPausing;
 using MHGameWork.TheWizards.SkyMerchant._Engine;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Spatial;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using NUnit.Framework;
 using Rhino.Mocks;
 using SlimDX;

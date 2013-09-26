@@ -203,8 +203,20 @@
     <Compile Include="Engine\WorldRendering\FirstPersonCamera.cs" />
     <Compile Include="Engine\WorldRendering\FirstPersonCameraSimulator.cs" />
     <Compile Include="Engine\_Core\IEngineModelObject.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\BridgeToolItem.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\DefaultInventoryBuilder.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\IslandToolItem.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\MeshSpawnersInventoryNode.cs" />
+    <Compile Include="SkyMerchant\_Engine\CacheAttribute.cs" />
+    <Compile Include="SkyMerchant\_GameplayInterfacing\IWorldScript.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\MeshSpawnerItem.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\ScriptToolItem.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\InventoryCore\GroupInventoryNode.cs" />
+    <Compile Include="SkyMerchant\_GameplayInterfacing\IInventoryNode.cs" />
+    <Compile Include="SkyMerchant\_GameplayInterfacing\IInventoryNodeRenderer.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\InventoryCore\WireframeInventoryNodeRenderer.cs" />
     <Compile Include="SkyMerchant\_Undocumented\ConsoleLoggingExtension.cs" />
-    <Compile Include="SkyMerchant\QuestEditor\Inventory\InventoryController.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\InventoryCore\InventoryController.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\InventoryTest.cs" />
     <Compile Include="_Tests\Assets\AssetsSynchronizationTest.cs" />
     <Compile Include="_Tests\Assets\SimpleAsset.cs" />
@@ -456,7 +468,7 @@
     <Compile Include="SkyMerchant\QuestEditor\Hotbar.cs" />
     <Compile Include="SkyMerchant\QuestEditor\HotbarController.cs" />
     <Compile Include="SkyMerchant\QuestEditor\HotbarTextView.cs" />
-    <Compile Include="SkyMerchant\QuestEditor\IHotbarItem.cs" />
+    <Compile Include="SkyMerchant\_GameplayInterfacing\IHotbarItem.cs" />
     <Compile Include="SkyMerchant\SimulationPausing\PausingWrapper.cs" />
     <Compile Include="SkyMerchant\SimulationPausing\SimplePausingExample.cs" />
     <Compile Include="SkyMerchant\_Engine\IThreadFactory.cs" />
@@ -539,7 +551,7 @@
     <Compile Include="SkyMerchant\_Engine\DynamicAssetsFactory.cs" />
     <Compile Include="SkyMerchant\_Engine\LineManager3DExtension.cs" />
     <Compile Include="SkyMerchant\_Engine\Rendering2DComponentsFactory.cs" />
-    <Compile Include="SkyMerchant\_Windsor\NonOptionalDependencies.cs" />
+    <Compile Include="SkyMerchant\_Engine\Windsor\NonOptionalDependencies.cs" />
     <Compile Include="_Features\TextMenu.cs" />
     <Compile Include="_Features\TextMenuItem.cs" />
     <Compile Include="Pickup\Inventory.cs" />
@@ -554,7 +566,7 @@
     <Compile Include="Animation\AnimationSimulator.cs" />
     <Compile Include="Engine\Raycasting\RaycastResult.cs" />
     <Compile Include="Engine\Raycasting\WorldRaycaster.cs" />
-    <Compile Include="SkyMerchant\QuestEditor\Inventory\InventoryView3D.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\InventoryCore\InventoryView3D.cs" />
     <Compile Include="Building\Block.cs" />
     <Compile Include="Building\BlockFactory.cs" />
     <Compile Include="Building\BlockLayout.cs" />
@@ -681,6 +693,8 @@
     <Content Include="Engine\_Core\_doc.txt" />
     <Content Include="Engine\_doc.html" />
     <Content Include="LevelBuilding\_doc.txt" />
+    <Content Include="SkyMerchant\QuestEditor\InventoryBindings\_doc.txt" />
+    <Content Include="SkyMerchant\_GameplayInterfacing\_doc.txt" />
     <Content Include="SkyMerchant\_Tests\_doc.html" />
     <Content Include="Tiling\_doc.txt" />
     <Content Include="Engine\WorldRendering\_doc.txt" />

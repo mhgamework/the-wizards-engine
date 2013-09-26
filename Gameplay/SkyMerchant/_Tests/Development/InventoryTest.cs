@@ -5,6 +5,8 @@ using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.Inventory;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
@@ -33,6 +35,24 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
             var controller = new InventoryController(new HotbarController(null, null),null);
 
             game.AddSimulator(new BasicSimulator(controller.Update));
+            game.AddSimulator(new WorldRenderingSimulator());
+
+            game.Run();
+        }
+
+        /// <summary>
+        /// Shows the actual inventory to use in the quest builder
+        /// </summary>
+        [Test]
+        public void TestDefaultInventoryWithInventoryView()
+        {
+            var game = EngineFactory.CreateEngine();
+
+            var builder = new DefaultInventoryBuilder();
+
+            var view = new InventoryView3D(builder.CreateTree(), new WireframeInventoryNodeRenderer());
+
+            game.AddSimulator(new BasicSimulator(view.Update));
             game.AddSimulator(new WorldRenderingSimulator());
 
             game.Run();
