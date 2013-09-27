@@ -108,6 +108,9 @@
       <HintPath>..\bin\Binaries\NewModules.exe</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NSubstitute">
+      <HintPath>..\packages\NSubstitute.1.6.1.0\lib\NET40\NSubstitute.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -204,6 +207,7 @@
     <Compile Include="Engine\WorldRendering\FirstPersonCameraSimulator.cs" />
     <Compile Include="Engine\_Core\IEngineModelObject.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\BridgeToolItem.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\WorldPlacerHelper.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\DefaultInventoryBuilder.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\HotBarItemTextInventoryRenderer.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\IslandToolItem.cs" />
@@ -219,6 +223,7 @@
     <Compile Include="SkyMerchant\_GameplayInterfacing\IInventoryNode.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IInventoryNodeRenderer.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\WireframeInventoryNodeRenderer.cs" />
+    <Compile Include="SkyMerchant\_Tests\Development\QuestEditorToolsTest.cs" />
     <Compile Include="SkyMerchant\_Undocumented\ConsoleLoggingExtension.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\InventoryController.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\InventoryTest.cs" />
@@ -570,7 +575,7 @@
     <Compile Include="Animation\AnimationSimulator.cs" />
     <Compile Include="Engine\Raycasting\RaycastResult.cs" />
     <Compile Include="Engine\Raycasting\WorldRaycaster.cs" />
-    <Compile Include="SkyMerchant\QuestEditor\InventoryCore\InventoryView3D.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\InventoryCore\InventoryView3DTopDown.cs" />
     <Compile Include="Building\Block.cs" />
     <Compile Include="Building\BlockFactory.cs" />
     <Compile Include="Building\BlockLayout.cs" />

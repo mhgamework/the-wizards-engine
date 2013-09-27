@@ -1,5 +1,6 @@
 ﻿using System;
 using DirectX11;
+using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.AI;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
@@ -93,6 +94,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
 
 
             return part;
+        }
+
+        public Physical CreateMeshObject()
+        {
+            var p = factory.CreatePhysical();
+            return p;
         }
 
         private class TreeItemFactory : GenerationPart.IItemFactory

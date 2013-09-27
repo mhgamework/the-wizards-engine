@@ -41,7 +41,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
 
             path = path.Replace(TWDir.GameData + "\\", "");
 
-            return new HotBarItemInventoryNode(new MeshSpawnerItem(path));
+            return new HotBarItemInventoryNode(new MeshSpawnerItem(path,null));
         }
 
         [Cache]

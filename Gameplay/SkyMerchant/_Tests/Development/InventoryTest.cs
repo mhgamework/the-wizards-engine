@@ -26,7 +26,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         {
             var game = EngineFactory.CreateEngine();
 
-            var view = new InventoryView3D(createRootItem(), new WireframeInventoryNodeRenderer());
+            var view = new InventoryView3DTopDown(createRootItem(), new WireframeInventoryNodeRenderer());
 
             game.AddSimulator(new BasicSimulator(view.Update));
             game.AddSimulator(new WorldRenderingSimulator());
@@ -59,7 +59,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 
             var meshRender = new MeshSpawnerInventoryRenderer(new WireframeInventoryNodeRenderer());
 
-            var view = new InventoryView3D(createInventoryWithMeshSpanwers(), meshRender);
+            var view = new InventoryView3DTopDown(createInventoryWithMeshSpanwers(), meshRender);
 
             game.AddSimulator(new BasicSimulator(meshRender.MakeAllInvisible));
             game.AddSimulator(new BasicSimulator(view.Update));
@@ -79,7 +79,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 
             var meshRender = new HotBarItemTextInventoryRenderer(new WireframeInventoryNodeRenderer());
 
-            var view = new InventoryView3D(createInventoryWithHotbaritems(), meshRender);
+            var view = new InventoryView3DTopDown(createInventoryWithHotbaritems(), meshRender);
 
             game.AddSimulator(new BasicSimulator(meshRender.MakeAllInvisible));
             game.AddSimulator(new BasicSimulator(view.Update));
@@ -102,7 +102,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 
             var meshRender = new MeshSpawnerInventoryRenderer(new HotBarItemTextInventoryRenderer(new WireframeInventoryNodeRenderer()));
 
-            var view = new InventoryView3D(builder.CreateTree(), meshRender);
+            var view = new InventoryView3DTopDown(builder.CreateTree(), meshRender);
 
             var bar = new Hotbar();
             var hotbarController = new HotbarController(bar, new HotbarTextView(bar, new Rendering2DComponentsFactory()));
@@ -167,7 +167,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 
         private IHotbarItem createMeshSpawner(string path)
         {
-            return new MeshSpawnerItem(path);
+            return new MeshSpawnerItem(path,null);
         }
 
         private GroupInventoryNode createGroupNode()

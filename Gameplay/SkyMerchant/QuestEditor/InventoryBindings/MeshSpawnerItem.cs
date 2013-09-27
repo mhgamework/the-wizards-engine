@@ -1,5 +1,7 @@
 ﻿using System.IO;
+using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
 namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
@@ -9,16 +11,28 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
     /// </summary>
     public class MeshSpawnerItem : IHotbarItem
     {
+        private readonly ObjectsFactory factory;
+        private WorldPlacerHelper placer;
         public string MeshPath { get; private set; }
 
         /// <summary>
         /// TODO: replace meshPath with IMesh, when lazy mesh loading is supported.
         /// </summary>
-        /// <param name="meshPath"></param>
-        public MeshSpawnerItem(string meshPath)
+        public MeshSpawnerItem(string meshPath, ObjectsFactory factory)
         {
+            this.factory = factory;
             this.MeshPath = meshPath;
             Name = "Mesh: " + Path.GetFileNameWithoutExtension(meshPath);
+
+            placer = new WorldPlacerHelper(createNewMesh);
+
+        }
+
+        private Physical createNewMesh()
+        {
+            var p = factory.CreateMeshObject();
+            p.Mesh = TW.Assets.LoadMesh(MeshPath);
+            return p;
         }
 
         public string Name { get; private set; }
@@ -33,6 +47,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
 
         public void Update()
         {
+            placer.Update();
         }
     }
 }

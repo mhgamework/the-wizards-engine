@@ -34,7 +34,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
         {
             var ret = new GroupInventoryNode();
 
-            ret.AddChild(new HotBarItemInventoryNode(new IslandToolItem()));
+            ret.AddChild(new HotBarItemInventoryNode(new IslandToolItem(null,null)));
             ret.AddChild(new HotBarItemInventoryNode(new BridgeToolItem()));
 
             return ret;
