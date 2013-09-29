@@ -98,7 +98,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 
             var game = EngineFactory.CreateEngine();
 
-            var builder = new DefaultInventoryBuilder();
+            var builder = new DefaultInventoryBuilder(null,null);
 
             var meshRender = new MeshSpawnerInventoryRenderer(new HotBarItemTextInventoryRenderer(new WireframeInventoryNodeRenderer()));
 

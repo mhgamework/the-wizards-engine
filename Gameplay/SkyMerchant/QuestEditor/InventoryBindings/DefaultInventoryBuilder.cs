@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
@@ -9,7 +11,16 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
     /// </summary>
     public class DefaultInventoryBuilder
     {
-         public IInventoryNode CreateTree()
+        private Random random;
+        private ObjectsFactory objectsFactory;
+
+        public DefaultInventoryBuilder(Random random, ObjectsFactory objectsFactory)
+        {
+            this.random = random;
+            this.objectsFactory = objectsFactory;
+        }
+
+        public IInventoryNode CreateTree()
          {
              var root = new GroupInventoryNode();
              root.AddChild(createTools());
@@ -34,7 +45,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
         {
             var ret = new GroupInventoryNode();
 
-            ret.AddChild(new HotBarItemInventoryNode(new IslandToolItem(null,null)));
+            ret.AddChild(new HotBarItemInventoryNode(new IslandToolItem(objectsFactory,random)));
             ret.AddChild(new HotBarItemInventoryNode(new BridgeToolItem()));
 
             return ret;

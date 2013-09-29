@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using Castle.Windsor;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.RTSTestCase1;
+using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
 using MHGameWork.TheWizards.SkyMerchant.SimulationPausing;
 using MHGameWork.TheWizards.SkyMerchant._Engine;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Spatial;
@@ -148,6 +154,29 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
             addTestSimulation(controller.Update);
         }
 
+
+        [Test]
+        public void TestQuestEditorController()
+        {
+            //TODO: test this
+            var container = new WindsorContainer();
+            container.Install(new QuestEditorInstaller());
+            container.Install(new PrototypeInstaller());
+            container.Install(new EngineInstaller());
+
+            var controller = container.Resolve<QuestEditorController>();
+
+
+            engine.AddSimulator(new BasicSimulator(controller.Update));
+            engine.AddSimulator(new PhysicalSimulator());
+            engine.AddSimulator(new WorldRenderingSimulator());
+        }
+
+
+
+
+
+
         private IHotbarItem CreateHotbarItem(string name)
         {
             var ret = MockRepository.GenerateStub<IHotbarItem>();
@@ -195,7 +224,6 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 
 
     }
-
 
 
     public static class AutomatedTestingExtensions

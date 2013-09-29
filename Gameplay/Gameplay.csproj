@@ -214,7 +214,9 @@
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\MeshSpawnerInventoryRenderer.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\MeshSpawnersInventoryNode.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\IInventoryView.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\QuestEditorInstaller.cs" />
     <Compile Include="SkyMerchant\_Engine\CacheAttribute.cs" />
+    <Compile Include="SkyMerchant\_Engine\EngineInstaller.cs" />
     <Compile Include="SkyMerchant\_Engine\LinqExtensions.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorldScript.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\MeshSpawnerItem.cs" />
@@ -223,6 +225,7 @@
     <Compile Include="SkyMerchant\_GameplayInterfacing\IInventoryNode.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IInventoryNodeRenderer.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\WireframeInventoryNodeRenderer.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\QuestEditorController.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\QuestEditorToolsTest.cs" />
     <Compile Include="SkyMerchant\_Undocumented\ConsoleLoggingExtension.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\InventoryController.cs" />
