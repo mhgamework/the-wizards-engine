@@ -1,1 +1,0 @@
-﻿This package contains files from Chuptys building/tile engine experiments. They are partially in the obsolete XNA format, and could be ported to the new ModelContainer system
