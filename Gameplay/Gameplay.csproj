@@ -169,8 +169,8 @@
     <Compile Include="Animation\IAnimatable.cs" />
     <Compile Include="Animation\Keyframe.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
-    <Compile Include="ApplicationLogic\EntityOud\SimpleAssetStaticWorldObject.cs" />
-    <Compile Include="ApplicationLogic\EntityOud\SimpleAssetStaticWorldObjectFactory.cs" />
+    <Compile Include="_Tests\Assets\SimpleAssetStaticWorldObject.cs" />
+    <Compile Include="_Tests\Assets\SimpleAssetStaticWorldObjectFactory.cs" />
     <Compile Include="Engine\Debugging\AttachDebuggerOnStartupSimulator.cs" />
     <Compile Include="Engine\Debugging\GraphVisualizerSimulator.cs" />
     <Compile Include="Engine\Debugging\ModelObjectGraphSimulator.cs" />
@@ -239,7 +239,6 @@
     <Compile Include="_Tests\OldScripting\Scripting\ScriptingTest.cs" />
     <Compile Include="_Tests\OldScripting\Scripting\TestScriptImplementation.cs" />
     <Compile Include="_Tests\OldScripting\Scripting\TestScriptWrapper.cs" />
-    <Compile Include="_Tests\TilingTest.cs" />
     <Compile Include="_Tests\Various\LocalGame.cs" />
     <Compile Include="_Tests\Various\ModelTest.cs" />
     <Compile Include="Generation\VoxelGrid.cs" />
@@ -397,12 +396,6 @@
     <Compile Include="Engine\DebugSimulator.cs" />
     <Compile Include="Engine\Debugging\ProfilerSimulator.cs" />
     <Compile Include="Engine\PhysX\PhysXDebugRendererSimulator.cs" />
-    <Compile Include="Tiling\TileBoundary.cs" />
-    <Compile Include="Tiling\TileBoundaryWinding.cs" />
-    <Compile Include="Tiling\TileFace.cs" />
-    <Compile Include="Tiling\TileFaceExtensions.cs" />
-    <Compile Include="Tiling\TileModel.cs" />
-    <Compile Include="Tiling\TileRotationExtension.cs" />
     <Compile Include="Engine\VoxelTerraining\FlashlightSimulator.cs" />
     <Compile Include="Engine\VoxelTerraining\TerrainEditorSimulator.cs" />
     <Compile Include="Engine\VoxelTerraining\VoxelBlock.cs" />
@@ -423,8 +416,6 @@
     <Compile Include="Engine\Synchronization\NoSyncAttribute.cs" />
     <Compile Include="Engine\WorldRendering\CameraInfo.cs" />
     <Compile Include="Engine\WorldRendering\Entity.cs" />
-    <Compile Include="Tiling\TiledEntity.cs" />
-    <Compile Include="Tiling\TileRotation.cs" />
     <Compile Include="Engine\Synchronization\ChangePacket.cs" />
     <Compile Include="Engine\NetworkSyncerSimulator.cs" />
     <Compile Include="Engine\PhysX\PhysXSimulator.cs" />
@@ -439,7 +430,6 @@
     <Compile Include="Player\XNATaskQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Simulators\ThirdPersonCameraSimulator.cs" />
-    <Compile Include="Tiling\TileEditorSimulator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Animation\_doc.txt" />
@@ -449,7 +439,6 @@
     <Content Include="SkyMerchant\QuestEditor\InventoryBindings\_doc.txt" />
     <Content Include="SkyMerchant\_GameplayInterfacing\_doc.txt" />
     <Content Include="SkyMerchant\_Tests\_doc.html" />
-    <Content Include="Tiling\_doc.txt" />
     <Content Include="Engine\WorldRendering\_doc.txt" />
     <Content Include="_doc.txt" />
     <Content Include="_Features\_doc.txt" />
