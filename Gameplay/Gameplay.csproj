@@ -181,7 +181,6 @@
     <Compile Include="ApplicationLogic\Networking\Server\GameClient.cs" />
     <Compile Include="ApplicationLogic\Networking\Server\GameClientListener.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
-    <Compile Include="BugTests.cs" />
     <Compile Include="Engine\Debugging\AttachDebuggerOnStartupSimulator.cs" />
     <Compile Include="Engine\Debugging\GraphVisualizerSimulator.cs" />
     <Compile Include="Engine\Debugging\ModelObjectGraphSimulator.cs" />
@@ -206,6 +205,9 @@
     <Compile Include="Engine\WorldRendering\FirstPersonCamera.cs" />
     <Compile Include="Engine\WorldRendering\FirstPersonCameraSimulator.cs" />
     <Compile Include="Engine\_Core\IEngineModelObject.cs" />
+    <Compile Include="RTSTestCase1\RTS\TerrainAStar.cs" />
+    <Compile Include="RTSTestCase1\RTS\TestUtilities.cs" />
+    <Compile Include="RTSTestCase1\_Sandbox\SimpleWorldLocator.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\BridgeToolItem.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\WorldPlacerHelper.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\DefaultInventoryBuilder.cs" />
@@ -265,7 +267,6 @@
     <Compile Include="Math\IterateExtensions.cs" />
     <Compile Include="Math\Point2.cs" />
     <Compile Include="Math\UtilityExtensions.cs" />
-    <Compile Include="Navigation2D\PathfinderVisualizer.cs" />
     <Compile Include="RequiresPostSharp.cs" />
     <Compile Include="BehaviourTrees\BehaviourTreeAgent.cs" />
     <Compile Include="BehaviourTrees\ConcurrentSelector.cs" />
@@ -275,110 +276,17 @@
     <Compile Include="BehaviourTrees\PrioritySelector.cs" />
     <Compile Include="BehaviourTrees\Sequence.cs" />
     <Compile Include="BehaviourTrees\While.cs" />
-    <Compile Include="RTSTestCase1\Building\BuildablePart.cs" />
     <Compile Include="Engine\Worlding\IWorldLocator.cs" />
     <Compile Include="Engine\Worlding\IWorldDestroyer.cs" />
-    <Compile Include="RTSTestCase1\Shaping\BuildGridRaycaster.cs" />
-    <Compile Include="RTSTestCase1\Shaping\IBuildGrid.cs" />
-    <Compile Include="RTSTestCase1\Shaping\ModelBuilder.cs" />
-    <Compile Include="RTSTestCase1\Shaping\ModelBuilderPrototypeTest.cs" />
-    <Compile Include="RTSTestCase1\Shaping\ShapeHasher.cs" />
-    <Compile Include="RTSTestCase1\Shaping\SimpleBuildGrid.cs" />
-    <Compile Include="RTSTestCase1\Shaping\MovementNormalHasher.cs" />
-    <Compile Include="RTSTestCase1\Shaping\SimpleShapeDetector.cs" />
-    <Compile Include="RTSTestCase1\Building\SimpleBuilder.cs" />
-    <Compile Include="RTSTestCase1\Cannons\CannonSimulator.cs" />
-    <Compile Include="RTSTestCase1\Characters\IRTSCharacter.cs" />
-    <Compile Include="RTSTestCase1\CommandFactory.cs" />
-    <Compile Include="RTSTestCase1\Items\Cart.cs" />
-    <Compile Include="RTSTestCase1\Goblins\Components\CommandHolderPart.cs" />
-    <Compile Include="RTSTestCase1\Items\IItem.cs" />
-    <Compile Include="RTSTestCase1\Items\CartHolderPart.cs" />
-    <Compile Include="RTSTestCase1\Items\SimpleItemPhysicsUpdater.cs" />
-    <Compile Include="RTSTestCase1\Players\PlayerInteractionPart.cs" />
     <Compile Include="RTSTestCase1\_Engine\ObjectParts\IObjectPart.cs" />
-    <Compile Include="RTSTestCase1\Items\ItemStoragePart.cs" />
-    <Compile Include="RTSTestCase1\_Engine\ObjectParts\ObjectPartInterfaces.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ObjectPartInterfaces.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RTSTestCase1\Goblins\CubedTerrain.cs" />
-    <Compile Include="RTSTestCase1\Goblins\GoblinCreator.cs" />
-    <Compile Include="RTSTestCase1\Goblins\GoblinMoveTargetBehaviour.cs" />
-    <Compile Include="RTSTestCase1\Goblins\GoblinMoveSourceBehaviour.cs" />
-    <Compile Include="RTSTestCase1\Goblins\GoblinBehaviourSimulator.cs" />
-    <Compile Include="RTSTestCase1\Goblins\GoblinCommandOrb.cs" />
-    <Compile Include="RTSTestCase1\Goblins\Components\GoblinCommandsPart.cs" />
-    <Compile Include="RTSTestCase1\Goblins\GoblinCommandsSimulator.cs" />
-    <Compile Include="RTSTestCase1\Goblins\GoblinCommandType.cs" />
-    <Compile Include="RTSTestCase1\Goblins\GoblinFollowBehaviour.cs" />
-    <Compile Include="RTSTestCase1\Items\StorageCrate.cs" />
-    <Compile Include="RTSTestCase1\Goblins\Spawning\GoblinSpawner.cs" />
-    <Compile Include="RTSTestCase1\Goblins\Spawning\GoblinSpawnPoint.cs" />
-    <Compile Include="RTSTestCase1\Goblins\TerrainCube.cs" />
     <Compile Include="RTSTestCase1\Inputting\InputFactory.cs" />
-    <Compile Include="RTSTestCase1\Simulators\AnimationSimulator.cs" />
     <Compile Include="RTSTestCase1\Simulators\InputSimulator.cs" />
     <Compile Include="RTSTestCase1\Inputting\UserButtonEvent.cs" />
-    <Compile Include="RTSTestCase1\Items\DroppedThing.cs" />
-    <Compile Include="RTSTestCase1\Items\Thing.cs" />
-    <Compile Include="RTSTestCase1\Magic\FieldDensityCalculator.cs" />
-    <Compile Include="RTSTestCase1\Magic\AmbientEnergyCharger.cs" />
-    <Compile Include="RTSTestCase1\Magic\CrystalAverager.cs" />
-    <Compile Include="RTSTestCase1\Magic\CrystalExploder.cs" />
-    <Compile Include="RTSTestCase1\Magic\CrystalSpawner.cs" />
-    <Compile Include="RTSTestCase1\Magic\EnergyConsumerMachine.cs" />
-    <Compile Include="RTSTestCase1\Magic\ICrystal.cs" />
-    <Compile Include="RTSTestCase1\Magic\IEnergyConsumer.cs" />
-    <Compile Include="RTSTestCase1\Magic\IEnergyDensityExpert.cs" />
-    <Compile Include="RTSTestCase1\Magic\SimpleCrystal.cs" />
-    <Compile Include="RTSTestCase1\Magic\SimpleCrystalDensityExpert.cs" />
-    <Compile Include="RTSTestCase1\Magic\Simulators\CrystalAveragerSimulator.cs" />
-    <Compile Include="RTSTestCase1\Magic\Simulators\CrystalBrownSimulator.cs" />
-    <Compile Include="RTSTestCase1\Magic\Simulators\CrystalInfoDrawSimulator.cs" />
-    <Compile Include="RTSTestCase1\Magic\Simulators\CrystalPlacerSimulator.cs" />
-    <Compile Include="RTSTestCase1\Magic\Simulators\EnergyConsumptionSimulator.cs" />
-    <Compile Include="RTSTestCase1\Magic\Simulators\GridDrawSimulator.cs" />
-    <Compile Include="RTSTestCase1\Simulators\MagicSimulator.cs" />
-    <Compile Include="RTSTestCase1\Magic\SimpleCrystalEnergyConsumer.cs" />
-    <Compile Include="RTSTestCase1\Pickupping\IPickupObject.cs" />
-    <Compile Include="RTSTestCase1\Characters\SimpleRTSCharacter.cs" />
-    <Compile Include="RTSTestCase1\Pickupping\PickupPhysXUpdater.cs" />
-    <Compile Include="RTSTestCase1\Pickupping\PickupSimulator.cs" />
-    <Compile Include="RTSTestCase1\Players\IUserTargeter.cs" />
-    <Compile Include="RTSTestCase1\Simulators\NetworkReceiveSimulator.cs" />
-    <Compile Include="RTSTestCase1\Simulators\NetworkSendSimulator.cs" />
-    <Compile Include="RTSTestCase1\Simulators\NPCSimulator.cs" />
-    <Compile Include="RTSTestCase1\Simulators\RendererSimulator.cs" />
-    <Compile Include="RTSTestCase1\Simulators\WorldSimulator.cs" />
     <Compile Include="RTSTestCase1\_Engine\Animation\AnimationDescription.cs" />
     <Compile Include="RTSTestCase1\_Engine\Animation\AnimationProperty.cs" />
     <Compile Include="RTSTestCase1\_Engine\Animation\Animator.cs" />
     <Compile Include="RTSTestCase1\_Engine\Animation\IAnimationProvider.cs" />
     <Compile Include="RTSTestCase1\_Engine\Animation\IAnimator.cs" />
-    <Compile Include="RTSTestCase1\Players\PlayerGroundAttacker.cs" />
-    <Compile Include="RTSTestCase1\Players\IPlayerMovementController.cs" />
-    <Compile Include="RTSTestCase1\Players\LocalGameData.cs" />
-    <Compile Include="RTSTestCase1\Players\PlayerCameraSimulator.cs" />
-    <Compile Include="RTSTestCase1\Simulators\UserPlayerSimulator.cs" />
-    <Compile Include="RTSTestCase1\Players\PlayerPickupSimulator.cs" />
-    <Compile Include="RTSTestCase1\Players\PlayerUseSimulator.cs" />
-    <Compile Include="RTSTestCase1\Players\SimplePlayerMovementController.cs" />
-    <Compile Include="RTSTestCase1\Players\UserPlayer.cs" />
-    <Compile Include="RTSTestCase1\TreeSharp\Action.cs" />
-    <Compile Include="RTSTestCase1\TreeSharp\Composite.cs" />
-    <Compile Include="RTSTestCase1\TreeSharp\Decorator.cs" />
-    <Compile Include="RTSTestCase1\TreeSharp\DecoratorContinue.cs" />
-    <Compile Include="RTSTestCase1\TreeSharp\GroupComposite.cs" />
-    <Compile Include="RTSTestCase1\TreeSharp\Parallel.cs" />
-    <Compile Include="RTSTestCase1\TreeSharp\PrioritySelector.cs" />
-    <Compile Include="RTSTestCase1\TreeSharp\RunStatus.cs" />
-    <Compile Include="RTSTestCase1\TreeSharp\Selector.cs" />
-    <Compile Include="RTSTestCase1\TreeSharp\Sequence.cs" />
-    <Compile Include="RTSTestCase1\TreeSharp\Switch.cs" />
-    <Compile Include="RTSTestCase1\TreeSharp\TreeExample.cs" />
-    <Compile Include="RTSTestCase1\TreeSharp\Wait.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\MenuDisplayer.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\Placing\WorldPlacer.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\Selecting\BoundingBoxSelectableProvider.cs" />
@@ -387,8 +295,6 @@
     <Compile Include="RTSTestCase1\WorldInputting\Selecting\IWorldSelectableProvider.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\Selecting\WorldSelector.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\Placing\WorldPlacerUpdater.cs" />
-    <Compile Include="RTSTestCase1\WorldResources\IRTSFactory.cs" />
-    <Compile Include="RTSTestCase1\WorldResources\WorldResourceGenerationSimulator.cs" />
     <Compile Include="RTSTestCase1\_Engine\Animation\SimpleAnimationProvider.cs" />
     <Compile Include="RTSTestCase1\_Engine\PhysicalSimulator.cs" />
     <Compile Include="Engine\Worlding\IPhysical.cs" />
@@ -396,67 +302,7 @@
     <Compile Include="RTSTestCase1\WorldInputting\EditorConfiguration.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\EditorMenuConfiguration.cs" />
     <Compile Include="RTSTestCase1\_Engine\UtilityMeshes.cs" />
-    <Compile Include="RTSTestCase1\NPC\GoblinAttackSimulator.cs" />
-    <Compile Include="RTSTestCase1\_Sandbox\RTSTestCase1Test.cs" />
-    <Compile Include="RTSTestCase1\_Sandbox\SimpleDamageApplier.cs" />
-    <Compile Include="RTSTestCase1\_Sandbox\SimpleWorldDestroyer.cs" />
-    <Compile Include="RTSTestCase1\_Sandbox\SimpleWorldLocator.cs" />
-    <Compile Include="RTSTestCase1\_Tests\WorldBuilderTest.cs" />
-    <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
-    <Compile Include="RTSTestCase1\_Tests\GoblinsTest.cs" />
     <Compile Include="RTSTestCase1\_Tests\InputTest.cs" />
-    <Compile Include="RTSTestCase1\_Tests\PlayersTest.cs" />
-    <Compile Include="RTSTestCase1\Rendering\CrystalGlowSimulator.cs" />
-    <Compile Include="RTSTestCase1\_Tests\EnergyFlowTest.cs" />
-    <Compile Include="RTSTestCase1\_Tests\MagicTest.cs" />
-    <Compile Include="RTSTestCase1\_Tests\PickupTest.cs" />
-    <Compile Include="RTSTestCase1\RTS\TestUtilities.cs" />
-    <Compile Include="Navigation2D\Vertex2D.cs" />
-    <Compile Include="Navigation2D\Waypoint.cs" />
-    <Compile Include="Navigation2D\WaypointConnectionProvider.cs" />
-    <Compile Include="Navigation2D\WaypointEngineTest.cs" />
-    <Compile Include="Navigation2D\GridConnectionProvider.cs" />
-    <Compile Include="Navigation2D\IConnectionProvider.cs" />
-    <Compile Include="Navigation2D\ExplorationData.cs" />
-    <Compile Include="Navigation2D\NavigableGrid2D.cs" />
-    <Compile Include="Navigation2D\NavigableGrid2DData.cs" />
-    <Compile Include="Navigation2D\NavigableGrid2DVizualizationSimulator.cs" />
-    <Compile Include="Navigation2D\NavigableGrid3DEntitySimulator.cs" />
-    <Compile Include="Navigation2D\Navigation2DTest.cs" />
-    <Compile Include="Navigation2D\PathFinder2D.cs" />
-    <Compile Include="Navigation2D\WaypointEngine.cs" />
-    <Compile Include="Navigation2D\WaypointVisualizer.cs" />
-    <Compile Include="RTSTestCase1\Cannons\Cannon.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RTSTestCase1\Goblins\Goblin.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RTSTestCase1\RTS\IGoblinCommand.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RTSTestCase1\Magic\Items\ResourceType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RTSTestCase1\Rendering\GoblinRenderData.cs" />
-    <Compile Include="RTSTestCase1\ResourceFactory.cs" />
-    <Compile Include="RTSTestCase1\WorldResources\DroppedThingOutputPipe.cs" />
-    <Compile Include="RTSTestCase1\WorldResources\Rock.cs" />
-    <Compile Include="RTSTestCase1\WorldResources\Tree.cs" />
-    <Compile Include="RTSTestCase1\WorldResources\WorldResourceGenerationWithPipesSimulator.cs" />
-    <Compile Include="RTSTestCase1\_Tests\RTSRenderingTest.cs" />
-    <Compile Include="RTSTestCase1\_Tests\WorldResourceGenerationTest.cs" />
-    <Compile Include="RTSTestCase1\WorldResources\IWorldResource.cs" />
-    <Compile Include="RTSTestCase1\RTS\GoblinMover.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RTSTestCase1\RTS\TerrainAStar.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RTSTestCase1\Shaping\IShape.cs" />
-    <Compile Include="RTSTestCase1\_Tests\ShapeDetectorTest.cs" />
-    <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulatorSimple.cs" />
-    <Compile Include="RTSTestCase1\RTS\GoblinMovementSimulator.cs" />
     <Compile Include="SkyMerchant\BridgeMeshBuilder.cs" />
     <Compile Include="SkyMerchant\QuestEditor\Hotbar.cs" />
     <Compile Include="SkyMerchant\QuestEditor\HotbarController.cs" />
@@ -622,7 +468,6 @@
   <ItemGroup>
     <Folder Include="SkyMerchant\_Tests\Broken\" />
     <Folder Include="SkyMerchant\_Tests\Unused\" />
-    <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
