@@ -169,6 +169,7 @@
     <Compile Include="Animation\IAnimatable.cs" />
     <Compile Include="Animation\Keyframe.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
+    <Compile Include="SkyMerchant\_Tests\Ideas\DynamicObjectsTest.cs" />
     <Compile Include="_Tests\Assets\SimpleAssetStaticWorldObject.cs" />
     <Compile Include="_Tests\Assets\SimpleAssetStaticWorldObjectFactory.cs" />
     <Compile Include="Engine\Debugging\AttachDebuggerOnStartupSimulator.cs" />
