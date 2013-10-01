@@ -168,6 +168,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 
 
             engine.AddSimulator(new BasicSimulator(controller.Update));
+            engine.AddSimulator(new SkyMerchantRenderingSimulator());
             engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
         }

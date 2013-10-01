@@ -3,6 +3,7 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
 namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
@@ -19,6 +20,14 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
                     var builder = input.Resolve<DefaultInventoryBuilder>();
                     return builder.CreateTree();
                 }));
+
+            container.Register(Component.For<IInventoryNodeRenderer>().UsingFactoryMethod(delegate(IKernel input)
+                {
+                    return
+                        new MeshSpawnerInventoryRenderer(
+                            new HotBarItemTextInventoryRenderer(
+                                new WireframeInventoryNodeRenderer()));
+            }));
 
             container.Register(Classes.FromThisAssembly()
                    .InNamespace("MHGameWork.TheWizards.SkyMerchant.QuestEditor",true)

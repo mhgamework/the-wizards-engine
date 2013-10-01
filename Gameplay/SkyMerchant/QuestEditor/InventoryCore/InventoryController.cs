@@ -30,6 +30,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
         public void Update()
         {
             updatePickupStateMachine();
+            view.Update();
         }
 
         #region Pickup state machine

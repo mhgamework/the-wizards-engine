@@ -13,11 +13,13 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
     public class MeshSpawnersInventoryNode : IInventoryNode
     {
         private readonly DirectoryInfo folder;
+        private readonly IMeshSpawnerItemFactory factory;
         public ReadOnlyCollection<IInventoryNode> Children { get { return new ReadOnlyCollection<IInventoryNode>(GetChildrenFromDisk().ToList()); } }
 
-        public MeshSpawnersInventoryNode(DirectoryInfo folder)
+        public MeshSpawnersInventoryNode(DirectoryInfo folder, IMeshSpawnerItemFactory factory)
         {
             this.folder = folder;
+            this.factory = factory;
         }
 
 
@@ -41,13 +43,13 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
 
             path = path.Replace(TWDir.GameData + "\\", "");
 
-            return new HotBarItemInventoryNode(new MeshSpawnerItem(path,null));
+            return new HotBarItemInventoryNode(factory.CreateItem(path));
         }
 
         [Cache]
         private IInventoryNode getFolderNode(DirectoryInfo childFolder)
         {
-            return new MeshSpawnersInventoryNode(childFolder);
+            return new MeshSpawnersInventoryNode(childFolder, factory);
         }
 
         private bool isMesh(FileSystemInfo arg)

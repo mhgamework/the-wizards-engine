@@ -1,4 +1,6 @@
-﻿using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
+﻿using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
@@ -30,6 +32,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
         private void simulateWorld()
         {
             if (inInventory) return;
+            TW.Data.Get<CameraInfo>().ActivateSpecatorCamera();
+            TW.Graphics.SpectaterCamera.Enabled = true;
             hotbarController.Update();
             var selected = hotbarController.Bar.GetHotbarItem(hotbarController.Bar.SelectedSlot);
             if (selected != null) selected.Update();
@@ -39,7 +43,9 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
         private void simulateInventory()
         {
             if (!inInventory) return;
+            TW.Graphics.SpectaterCamera.Enabled = false;
 
+            hotbarController.Update();
             inventoryController.Update();
 
         }

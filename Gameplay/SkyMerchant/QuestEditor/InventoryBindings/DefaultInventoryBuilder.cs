@@ -13,11 +13,13 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
     {
         private Random random;
         private ObjectsFactory objectsFactory;
+        private readonly IMeshSpawnerItemFactory spawnerFactory;
 
-        public DefaultInventoryBuilder(Random random, ObjectsFactory objectsFactory)
+        public DefaultInventoryBuilder(Random random, ObjectsFactory objectsFactory,IMeshSpawnerItemFactory spawnerFactory)
         {
             this.random = random;
             this.objectsFactory = objectsFactory;
+            this.spawnerFactory = spawnerFactory;
         }
 
         public IInventoryNode CreateTree()
@@ -38,7 +40,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
 
         private IInventoryNode createMeshSpawners()
         {
-            return new MeshSpawnersInventoryNode(new DirectoryInfo(TWDir.GameData + "\\SkyMerchant"));
+            return new MeshSpawnersInventoryNode(new DirectoryInfo(TWDir.GameData + "\\SkyMerchant"), spawnerFactory);
         }
 
         private IInventoryNode createTools()

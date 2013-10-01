@@ -77,7 +77,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
         {
             DI.Get<TestSceneBuilder>().Setup = setupTest;
             Engine.AddSimulator(new BasicSimulator(simulate));
-
+            Engine.AddSimulator(new SkyMerchantRenderingSimulator());
             Engine.AddSimulator(new PhysicalSimulator());
             Engine.AddSimulator(new WorldRenderingSimulator());
 
@@ -87,19 +87,18 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
         private void simulate()
         {
             if (TW.Debug.LastException != null) return;
+
+            
+
             foreach (var i in TW.Data.Objects.OfType<IslandPart>())
             {
-                i.FixPhysical();
                 //i.SimulateFloatForce();
                 //i.SimulateIslandAirDrag();
                 //i.SimulateIslandShieldCollision();
                 //i.SimulateIslandWrapping();
                 //i.SimulateMovement();
             }
-            foreach (var i in TW.Data.Objects.OfType<ItemPart>())
-            {
-                i.FixPosition();
-            }
+
             foreach (var i in TW.Data.Objects.OfType<GenerationSourcePart>())
             {
                 i.SimulateGeneration();
@@ -108,10 +107,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
             {
                 i.SimulateBehaviour();
             }
-            foreach (var i in TW.Data.Objects.OfType<TraderVisualizerPart>().ToArray())
-            {
-                i.FixMesh();
-            }
+
             foreach (var i in TW.Data.Objects.OfType<TraderPart>().ToArray())
             {
                 i.SimulateResourcesGeneration();
@@ -122,6 +118,10 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
             }
             processRobot();
             UserInterface.Update();
+        }
+        private void simulateRendering()
+        {
+          
         }
 
         private void processRobot()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
@@ -16,11 +17,15 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
         private readonly Tree tree;
         private IInventoryNode root;
 
+        private SpectaterCamera camera;
+
         public InventoryView3DTopDown(IInventoryNode rootNode, IInventoryNodeRenderer renderer)
         {
             this.root = rootNode;
             this.renderer = renderer;
             tree = new Tree(rootNode);
+            camera = new SpectaterCamera(TW.Graphics.Keyboard, TW.Graphics.Mouse, 1, 100);
+
         }
 
 
@@ -28,6 +33,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
 
         public void Update()
         {
+            TW.Data.Get<CameraInfo>().ActiveCamera = camera;
+            camera.Update(TW.Graphics.Elapsed);
             updateWireframeBoxes();
             updateCamera();
             renderItemLinesHighlight(tree.findBrowsingItem());
@@ -60,10 +67,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
 
         private IEnumerable<IInventoryNode> GetIntersectingNodes(IInventoryNode current, Ray ray)
         {
-            var dist=tree.GetBoundingBox(current).xna().Intersects(ray.xna());
+            var dist = tree.GetBoundingBox(current).xna().Intersects(ray.xna());
             if (!dist.HasValue) return Enumerable.Empty<IInventoryNode>();
 
-            if (current.Children.Count == 0) return new []{ current };
+            if (current.Children.Count == 0) return new[] { current };
 
             return current.Children.SelectMany(c => GetIntersectingNodes(c, ray));
         }
@@ -89,10 +96,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
             targetSpeed = v.X * 2;
 
             var factor = 0.9f;
-            TW.Graphics.SpectaterCamera.MovementSpeed = TW.Graphics.SpectaterCamera.MovementSpeed * (1 - factor) +
+            camera.MovementSpeed = camera.MovementSpeed * (1 - factor) +
                                                         targetSpeed * factor;
-            TW.Graphics.SpectaterCamera.NearClip = v.X * 0.01f;
-            TW.Graphics.SpectaterCamera.FarClip = v.X * 400f;
+            camera.NearClip = v.X * 0.01f;
+            camera.FarClip = v.X * 400f;
 
         }
 
