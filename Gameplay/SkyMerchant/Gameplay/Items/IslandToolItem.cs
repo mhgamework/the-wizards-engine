@@ -1,12 +1,7 @@
 ﻿using System;
-using DirectX11;
-using MHGameWork.TheWizards.Engine.WorldRendering;
-using MHGameWork.TheWizards.Engine.Worlding;
-using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
-using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
+namespace MHGameWork.TheWizards.SkyMerchant.Gameplay.Items
 {
     /// <summary>
     /// Allows placing and randomizing islands

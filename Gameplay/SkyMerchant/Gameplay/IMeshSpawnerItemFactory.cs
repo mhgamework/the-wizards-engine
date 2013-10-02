@@ -1,4 +1,6 @@
-﻿namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
+﻿using MHGameWork.TheWizards.SkyMerchant.Gameplay.Items;
+
+namespace MHGameWork.TheWizards.SkyMerchant.Gameplay
 {
     public interface IMeshSpawnerItemFactory
     {

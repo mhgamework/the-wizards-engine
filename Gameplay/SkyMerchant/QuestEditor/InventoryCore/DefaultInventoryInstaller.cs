@@ -1,14 +1,14 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Castle.MicroKernel;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using MHGameWork.TheWizards.SkyMerchant.Prototype;
-using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
+using MHGameWork.TheWizards.SkyMerchant.Gameplay;
+using MHGameWork.TheWizards.SkyMerchant.Gameplay.Inventory;
+using MHGameWork.TheWizards.SkyMerchant.Gameplay.Items;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
+namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
 {
     /// <summary>
     /// Responsible for setting up the default inventory, as it should be used in the actual game.

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using MHGameWork.TheWizards.SkyMerchant.Gameplay;
 using MHGameWork.TheWizards.SkyMerchant._Engine;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using System.Linq;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
+namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
 {
     /// <summary>
     /// Provides a node that dynamically provides spawners for meshes found in a folder on the filesystem.

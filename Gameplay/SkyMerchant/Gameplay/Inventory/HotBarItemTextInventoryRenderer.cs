@@ -2,10 +2,11 @@
 using DirectX11;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
+namespace MHGameWork.TheWizards.SkyMerchant.Gameplay.Inventory
 {
     public class HotBarItemTextInventoryRenderer : IInventoryNodeRenderer
     {

@@ -2,7 +2,7 @@
 using MHGameWork.TheWizards.SkyMerchant._Engine;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
+namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.HotbarCore
 {
     /// <summary>
     /// Visualizes the hotbar using text

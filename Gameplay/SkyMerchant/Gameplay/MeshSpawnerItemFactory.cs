@@ -1,7 +1,8 @@
-﻿using MHGameWork.TheWizards.SkyMerchant.Prototype;
+﻿using MHGameWork.TheWizards.SkyMerchant.Gameplay.Items;
+using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
+namespace MHGameWork.TheWizards.SkyMerchant.Gameplay
 {
     public class MeshSpawnerItemFactory : IMeshSpawnerItemFactory
     {

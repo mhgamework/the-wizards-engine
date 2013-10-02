@@ -2,7 +2,7 @@
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Scripting
+namespace MHGameWork.TheWizards.SkyMerchant.Gameplay.Scripts
 {
     public class RotateOnTheSpotScript : IWorldScript
     {

@@ -1,9 +1,7 @@
-﻿using System;
-using MHGameWork.TheWizards.Engine.Worlding;
-using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
+﻿using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using System.Linq;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
+namespace MHGameWork.TheWizards.SkyMerchant.Gameplay.Items
 {
     /// <summary>
     /// Allows binding a script (specified on construction) to a world object

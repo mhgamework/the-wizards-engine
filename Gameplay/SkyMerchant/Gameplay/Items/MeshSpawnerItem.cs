@@ -1,10 +1,7 @@
 ﻿using System.IO;
-using MHGameWork.TheWizards.Engine.Worlding;
-using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
+namespace MHGameWork.TheWizards.SkyMerchant.Gameplay.Items
 {
     /// <summary>
     /// Spawns a mesh set on constructions

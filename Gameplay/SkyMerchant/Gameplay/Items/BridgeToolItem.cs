@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
+namespace MHGameWork.TheWizards.SkyMerchant.Gameplay.Items
 {
     /// <summary>
     /// Allows connecting islands with bridges

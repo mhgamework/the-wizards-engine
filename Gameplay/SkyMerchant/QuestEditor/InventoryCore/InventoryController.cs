@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Timers;
-using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor.HotbarCore;
 using MHGameWork.TheWizards.SkyMerchant._Undocumented;
 using bbv.Common.StateMachine;
 

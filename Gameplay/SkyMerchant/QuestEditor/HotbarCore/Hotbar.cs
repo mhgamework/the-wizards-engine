@@ -1,8 +1,7 @@
 ﻿using System;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
-using MHGameWork.TheWizards.SkyMerchant._Tests.Development;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
+namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.HotbarCore
 {
     /// <summary>
     /// Responsible for holding the hotbar state

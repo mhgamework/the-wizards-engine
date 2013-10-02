@@ -1,7 +1,7 @@
 ﻿using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Spatial;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
+namespace MHGameWork.TheWizards.SkyMerchant.Gameplay
 {
     /// <summary>
     /// Works by picking up objects and placing them in a fixed position relative to the camera, depending on their size.

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.Engine.Worlding;
+using MHGameWork.TheWizards.SkyMerchant.Gameplay.Items;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
+namespace MHGameWork.TheWizards.SkyMerchant.Gameplay.Inventory
 {
     /// <summary>
     /// Shows meshes for the mesh spawner in the inventory renderer!

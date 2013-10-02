@@ -2,7 +2,6 @@
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 

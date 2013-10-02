@@ -1,5 +1,6 @@
 ﻿using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor.HotbarCore;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
 using SlimDX.DirectInput;
 

@@ -4,7 +4,7 @@ using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX.DirectInput;
 using System.Linq;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
+namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.HotbarCore
 {
     /// <summary>
     /// Responsible for converting user input into hotbar commands.

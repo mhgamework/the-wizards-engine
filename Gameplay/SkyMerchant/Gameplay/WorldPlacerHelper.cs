@@ -1,12 +1,10 @@
 ﻿using System;
 using DirectX11;
 using MHGameWork.TheWizards.Engine.WorldRendering;
-using MHGameWork.TheWizards.Engine.Worlding;
-using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
+namespace MHGameWork.TheWizards.SkyMerchant.Gameplay
 {
     /// <summary>
     /// Implements placing things in the world using the mouse
