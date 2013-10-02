@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MHGameWork.TheWizards.SkyMerchant._Engine
 {
@@ -25,6 +26,14 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine
         {
             if (o == null) return failureValue;
             return evaluator(o);
+        }
+
+        public static IEnumerable<T> Print<T>(this IEnumerable<T> list)
+        {
+            foreach (var l in list)
+                Console.WriteLine(l);
+
+            return list;
         }
 
     }

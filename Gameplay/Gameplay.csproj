@@ -170,8 +170,11 @@
     <Compile Include="Animation\Keyframe.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="SkyMerchant\Prototype\SkyMerchantRenderingSimulator.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\ScriptsInventoryNode.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\IMeshSpawnerItemFactory.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryBindings\MeshSpawnerItemFactory.cs" />
+    <Compile Include="SkyMerchant\QuestEditor\Scripting\RotateOnTheSpotScript.cs" />
+    <Compile Include="SkyMerchant\_GameplayInterfacing\IWorldObject.cs" />
     <Compile Include="SkyMerchant\_Tests\Ideas\DynamicObjectsTest.cs" />
     <Compile Include="_Tests\Assets\SimpleAssetStaticWorldObject.cs" />
     <Compile Include="_Tests\Assets\SimpleAssetStaticWorldObjectFactory.cs" />

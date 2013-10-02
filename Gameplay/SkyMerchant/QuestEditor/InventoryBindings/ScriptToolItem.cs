@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
+﻿using System;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
 namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
 {
@@ -7,14 +8,15 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
     /// </summary>
     public class ScriptToolItem : IHotbarItem
     {
-        private readonly IWorldScript script;
+        private readonly Type scriptType;
 
-        public ScriptToolItem(IWorldScript script)
+        public ScriptToolItem(Type scriptType)
         {
-            this.script = script;
+            if (!typeof(IWorldScript).IsAssignableFrom(scriptType)) throw new InvalidOperationException();
+            this.scriptType = scriptType;
         }
 
-        public string Name { get; private set; }
+        public string Name { get { return scriptType.Name; } }
         public void OnSelected()
         {
             throw new System.NotImplementedException();

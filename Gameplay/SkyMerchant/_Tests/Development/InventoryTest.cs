@@ -9,6 +9,7 @@ using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
 using MHGameWork.TheWizards.SkyMerchant._Engine;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
+using NSubstitute;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -70,6 +71,28 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         }
 
         /// <summary>
+        /// Tests visualizing scripts from the gameplay dll
+        /// </summary>
+        [Test]
+        public void TestScriptInventoryNode()
+        {
+            var node = new ScriptsInventoryNode("MHGameWork.TheWizards.SkyMerchant", f => new ScriptToolItem(f));
+
+            var game = EngineFactory.CreateEngine();
+
+            var meshRender = new HotBarItemTextInventoryRenderer(new WireframeInventoryNodeRenderer());
+
+            var view = new InventoryView3DTopDown(node, meshRender);
+
+            game.AddSimulator(new BasicSimulator(meshRender.MakeAllInvisible));
+            game.AddSimulator(new BasicSimulator(view.Update));
+            game.AddSimulator(new PhysicalSimulator());
+            game.AddSimulator(new WorldRenderingSimulator());
+
+            game.Run();
+        }
+
+        /// <summary>
         /// Shows the actual inventory to use in the quest builder, while rendering meshes
         /// </summary>
         [Test]
@@ -98,7 +121,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 
             var game = EngineFactory.CreateEngine();
 
-            var builder = new DefaultInventoryBuilder(null,null,null);
+            var builder = new DefaultInventoryBuilder(null, null, null);
 
             var meshRender = new MeshSpawnerInventoryRenderer(new HotBarItemTextInventoryRenderer(new WireframeInventoryNodeRenderer()));
 
@@ -167,7 +190,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 
         private IHotbarItem createMeshSpawner(string path)
         {
-            return new MeshSpawnerItem(path,null);
+            return new MeshSpawnerItem(path, null);
         }
 
         private GroupInventoryNode createGroupNode()
@@ -181,5 +204,9 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
             ret.Stub(o => o.Name).Return(name);
             return ret;
         }
+
+
     }
+
+
 }
