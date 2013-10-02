@@ -15,19 +15,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(Component.For<IInventoryNode>().UsingFactoryMethod(delegate(IKernel input)
-                {
-                    var builder = input.Resolve<DefaultInventoryBuilder>();
-                    return builder.CreateTree();
-                }));
 
-            container.Register(Component.For<IInventoryNodeRenderer>().UsingFactoryMethod(delegate(IKernel input)
-                {
-                    return
-                        new MeshSpawnerInventoryRenderer(
-                            new HotBarItemTextInventoryRenderer(
-                                new WireframeInventoryNodeRenderer()));
-            }));
 
             container.Register(Classes.FromThisAssembly()
                    .InNamespace("MHGameWork.TheWizards.SkyMerchant.QuestEditor",true)

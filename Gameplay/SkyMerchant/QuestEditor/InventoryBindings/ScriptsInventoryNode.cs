@@ -16,12 +16,14 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
     {
         private readonly string namespc;
         private readonly Func<Type, ScriptToolItem> createScriptToolItem;
-        public ReadOnlyCollection<IInventoryNode> Children { get { return new ReadOnlyCollection<IInventoryNode>(GetChildren().ToList()); } }
+        public ReadOnlyCollection<IInventoryNode> Children { get; private set; }
 
         public ScriptsInventoryNode(string namespc, Func<Type, ScriptToolItem> createScriptToolItem)
         {
             this.namespc = namespc;
             this.createScriptToolItem = createScriptToolItem;
+
+            Children = new ReadOnlyCollection<IInventoryNode>(GetChildren().ToList());
         }
 
 
@@ -30,7 +32,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
             foreach (var t in Assembly.GetExecutingAssembly()
                             .GetTypes()
                             .Where(t => t.Namespace == namespc)
-                            .Where(t => typeof(IWorldScript).IsAssignableFrom(t)))
+                            .Where(isWorldScript))
             {
                 yield return getScriptNode(t);
             }
@@ -41,8 +43,15 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
                 .Where(n => !n.Contains('.'))
                 .Distinct())
             {
-                yield return getFolderNode(namespc + "." + childNamespace);
+                var node =  getFolderNode(namespc + "." + childNamespace);
+                if (node.Children.Any())
+                    yield return node;
             }
+        }
+
+        private bool isWorldScript(Type t)
+        {
+            return typeof(IWorldScript).IsAssignableFrom(t) && t != typeof(IWorldScript);
         }
 
         [Cache]

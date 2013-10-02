@@ -1,9 +1,11 @@
-﻿using MHGameWork.TheWizards.Engine;
+﻿using Castle.Windsor;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Simulators;
+using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
@@ -121,14 +123,17 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 
             var game = EngineFactory.CreateEngine();
 
-            var builder = new DefaultInventoryBuilder(null, null, null);
+            var container = new WindsorContainer();
+            container.Install(new QuestEditorInstaller());
+            container.Install(new PrototypeInstaller());
+            container.Install(new DefaultInventoryInstaller());
 
             var meshRender = new MeshSpawnerInventoryRenderer(new HotBarItemTextInventoryRenderer(new WireframeInventoryNodeRenderer()));
 
-            var view = new InventoryView3DTopDown(builder.CreateTree(), meshRender);
+            var view = new InventoryView3DTopDown(container.Resolve<IInventoryNode>(), meshRender);
 
             var bar = new Hotbar();
-            var hotbarController = new HotbarController(bar, new HotbarTextView(bar, new Rendering2DComponentsFactory()));
+            var hotbarController = new HotbarController(bar, new HotbarTextView(bar, container.Resolve<Rendering2DComponentsFactory>()));
             var controller = new InventoryController(hotbarController, view);
 
 

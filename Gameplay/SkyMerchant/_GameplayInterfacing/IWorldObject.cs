@@ -1,4 +1,5 @@
-﻿using SlimDX;
+﻿using System.Collections.Generic;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing
 {
@@ -23,5 +24,8 @@ namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing
         /// Disables or enables the object in gameplay situations (the user can not detect the object in any way when disabled)
         /// </summary>
         bool Enabled { get; set; }
+
+
+        IList<IWorldScript> Scripts { get; }
     }
 }

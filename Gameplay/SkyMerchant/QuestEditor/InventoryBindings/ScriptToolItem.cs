@@ -19,17 +19,14 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
         public string Name { get { return scriptType.Name; } }
         public void OnSelected()
         {
-            throw new System.NotImplementedException();
         }
 
         public void OnDeselected()
         {
-            throw new System.NotImplementedException();
         }
 
         public void Update()
         {
-            throw new System.NotImplementedException();
         }
     }
 }

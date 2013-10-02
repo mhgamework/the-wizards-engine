@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
             var phys = getPhysical(hbi.Item);
 
             phys.WorldMatrix =
-            Matrix.Scaling(MathHelper.One * bb.GetSize().MinComponent()) *
+            Matrix.Scaling(MathHelper.One *0.9f* bb.GetSize().ChangeY(float.MaxValue).MinComponent()) *
             Matrix.Translation(bb.GetCenter());
             phys.Visible = true;
 

@@ -15,10 +15,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
     public class WorldPlacerHelper : IHotbarItem
     {
 
-        private Func<Physical> createNew;
+        private Func<IWorldObject> createNew;
         private float zoom = 10;
 
-        public WorldPlacerHelper(Func<Physical> createNew)
+        public WorldPlacerHelper(Func<IWorldObject> createNew)
         {
             this.createNew = createNew;
         }
@@ -57,7 +57,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
         private void createNewObject()
         {
             var p = createNew();
-            p.WorldMatrix = Matrix.RotationQuaternion(GetPlaceOrientation()) * Matrix.Translation(GetPlacePosition());
+            p.Postion = GetPlacePosition();
+            p.Rotation = GetPlaceOrientation();
         }
 
         private Vector3 GetPlacePosition()

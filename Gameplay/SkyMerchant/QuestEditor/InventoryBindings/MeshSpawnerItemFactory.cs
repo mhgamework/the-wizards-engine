@@ -1,20 +1,21 @@
 ﻿using MHGameWork.TheWizards.SkyMerchant.Prototype;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
 namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
 {
     public class MeshSpawnerItemFactory : IMeshSpawnerItemFactory
     {
+        private readonly IWorld world;
         private readonly ObjectsFactory factory;
 
-        public MeshSpawnerItemFactory(ObjectsFactory factory)
+        public MeshSpawnerItemFactory(IWorld world)
         {
-            this.factory = factory;
-
+            this.world = world;
         }
 
         public MeshSpawnerItem CreateItem(string path)
         {
-            return new MeshSpawnerItem(path, factory);
+            return new MeshSpawnerItem(path, world);
         }
     }
 }

@@ -160,6 +160,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         {
             //TODO: test this
             var container = new WindsorContainer();
+            container.Install(new DefaultInventoryInstaller());
             container.Install(new QuestEditorInstaller());
             container.Install(new PrototypeInstaller());
             container.Install(new EngineInstaller());

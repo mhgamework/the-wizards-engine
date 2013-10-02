@@ -11,16 +11,16 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
     /// </summary>
     public class MeshSpawnerItem : IHotbarItem
     {
-        private readonly ObjectsFactory factory;
+        private readonly IWorld world;
         private WorldPlacerHelper placer;
         public string MeshPath { get; private set; }
 
         /// <summary>
         /// TODO: replace meshPath with IMesh, when lazy mesh loading is supported.
         /// </summary>
-        public MeshSpawnerItem(string meshPath, ObjectsFactory factory)
+        public MeshSpawnerItem(string meshPath, IWorld world)
         {
-            this.factory = factory;
+            this.world = world;
             this.MeshPath = meshPath;
             Name = "Mesh: " + Path.GetFileNameWithoutExtension(meshPath);
 
@@ -28,10 +28,9 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
 
         }
 
-        private Physical createNewMesh()
+        private IWorldObject createNewMesh()
         {
-            var p = factory.CreateMeshObject();
-            p.Mesh = TW.Assets.LoadMesh(MeshPath);
+            var p = world.CreateMeshObject(TW.Assets.LoadMesh(MeshPath));
             return p;
         }
 

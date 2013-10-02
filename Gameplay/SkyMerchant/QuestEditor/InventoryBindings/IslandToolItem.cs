@@ -15,12 +15,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
     public class IslandToolItem : IHotbarItem
     {
         private readonly WorldPlacerHelper placer;
-        private readonly ObjectsFactory objectsFactory;
+        private readonly IWorld world;
         private readonly Random random;
 
-        public IslandToolItem(ObjectsFactory objectsFactory, Random random)
+        public IslandToolItem(IWorld world, Random random)
         {
-            this.objectsFactory = objectsFactory;
+            this.world = world;
             this.random = random;
             placer = new WorldPlacerHelper(createNewIsland);
         }
@@ -40,11 +40,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
             placer.Update();
         }
 
-        private Physical createNewIsland()
+        private IWorldObject createNewIsland()
         {
-            var island = objectsFactory.CreateIsland();
-            island.Seed = random.Next();
-            return island.Physical;
+            var island = world.CreateIsland(random.Next());
+            return island;
         }
 
     }

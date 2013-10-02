@@ -12,6 +12,7 @@ using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings;
 using MHGameWork.TheWizards.SkyMerchant.Voxels;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using NSubstitute;
 using NUnit.Framework;
 using System.Linq;
@@ -47,14 +48,15 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
             engine.AddSimulator(new WorldRenderingSimulator());
         }
 
-        private ObjectsFactory createObjectsFactory()
+        private IWorld createObjectsFactory()
         {
-            var meshFactory = new IslandMeshFactory(new VoxelMeshBuilder());
-            var typeFactory = Substitute.For<ITypedFactory>();
-            typeFactory.CreateIsland().Returns(i => new IslandPart() { IslandMeshFactory = meshFactory });
-            typeFactory.CreatePhysical().Returns(i => new Physical());
-            var ret = new ObjectsFactory(typeFactory);
-            return ret;
+            throw new NotImplementedException();
+            //var meshFactory = new IslandMeshFactory(new VoxelMeshBuilder());
+            //var typeFactory = Substitute.For<ITypedFactory>();
+            //typeFactory.CreateIsland().Returns(i => new IslandPart() { IslandMeshFactory = meshFactory });
+            //typeFactory.CreatePhysical().Returns(i => new Physical());
+            //var ret = new ObjectsFactory(typeFactory);
+            //return ret;
         }
     }
 }
