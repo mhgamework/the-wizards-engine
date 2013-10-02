@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MHGameWork.TheWizards.SkyMerchant._Engine.Spatial;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing
@@ -6,16 +7,8 @@ namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing
     /// <summary>
     /// Represents a physical thing in the world
     /// </summary>
-    public interface IWorldObject
+    public interface IWorldObject : IMutableSpatial
     {
-        /// <summary>
-        /// World position
-        /// </summary>
-        Vector3 Postion { get; set; }
-        /// <summary>
-        /// World rotation
-        /// </summary>
-        Quaternion Rotation { get; set; }
         /// <summary>
         /// Whether the object is rendered or not
         /// </summary>

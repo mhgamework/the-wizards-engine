@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 using System.Linq;
 
@@ -6,7 +7,8 @@ namespace MHGameWork.TheWizards.Engine.Worlding
 {
     public interface IWorldLocator
     {
-        IEnumerable<object> AtPosition(Vector3 point, float radius);
+        IEnumerable<IWorldObject> AtPosition(Vector3 point, float radius);
+        IEnumerable<IWorldObject> Raycast(Ray ray);
     }
     public static class WorldLocatorExtensions
     {

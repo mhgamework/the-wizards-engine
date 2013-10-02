@@ -57,7 +57,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryBindings
         private void createNewObject()
         {
             var p = createNew();
-            p.Postion = GetPlacePosition();
+            p.Position = GetPlacePosition();
             p.Rotation = GetPlaceOrientation();
         }
 

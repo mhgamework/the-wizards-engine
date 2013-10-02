@@ -1,4 +1,5 @@
-﻿using Castle.Windsor;
+﻿using System;
+using Castle.Windsor;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
@@ -78,7 +79,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         [Test]
         public void TestScriptInventoryNode()
         {
-            var node = new ScriptsInventoryNode("MHGameWork.TheWizards.SkyMerchant", f => new ScriptToolItem(f));
+            var node = new ScriptsInventoryNode("MHGameWork.TheWizards.SkyMerchant", f => new ScriptToolItem(getScriptType(f),null));
 
             var game = EngineFactory.CreateEngine();
 
@@ -92,6 +93,13 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
             game.AddSimulator(new WorldRenderingSimulator());
 
             game.Run();
+        }
+
+        private IScriptType getScriptType(Type type)
+        {
+            var ret = Substitute.For<IScriptType>();
+            ret.Name.Returns(type.Name);
+            return ret;
         }
 
         /// <summary>
