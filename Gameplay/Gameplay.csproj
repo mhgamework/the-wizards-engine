@@ -169,7 +169,7 @@
     <Compile Include="Animation\IAnimatable.cs" />
     <Compile Include="Animation\Keyframe.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
-    <Compile Include="SkyMerchant\Gameplay\GameplayInstaller.cs" />
+    <Compile Include="SkyMerchant\Installers\GameplayInstaller.cs" />
     <Compile Include="SkyMerchant\Prototype\SkyMerchantRenderingSimulator.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\ScriptsInventoryNode.cs" />
     <Compile Include="SkyMerchant\Gameplay\IMeshSpawnerItemFactory.cs" />
@@ -178,7 +178,7 @@
     <Compile Include="SkyMerchant\QuestEditor\Scripting\ScriptsRepository.cs" />
     <Compile Include="SkyMerchant\QuestEditor\Scripting\ScriptsSimulator.cs" />
     <Compile Include="SkyMerchant\Worlding\LocalPlayer.cs" />
-    <Compile Include="SkyMerchant\Worlding\WorldingInstaller.cs" />
+    <Compile Include="SkyMerchant\Installers\WorldingInstaller.cs" />
     <Compile Include="SkyMerchant\Worlding\World.cs" />
     <Compile Include="SkyMerchant\Worlding\WorldObject.cs" />
     <Compile Include="SkyMerchant\Worlding\WorldObjectScriptsList.cs" />
@@ -219,15 +219,15 @@
     <Compile Include="SkyMerchant\Worlding\SimpleWorldLocator.cs" />
     <Compile Include="SkyMerchant\Gameplay\Items\BridgeToolItem.cs" />
     <Compile Include="SkyMerchant\Gameplay\WorldPlacerHelper.cs" />
-    <Compile Include="SkyMerchant\QuestEditor\InventoryCore\DefaultInventoryInstaller.cs" />
+    <Compile Include="SkyMerchant\Installers\DefaultInventoryInstaller.cs" />
     <Compile Include="SkyMerchant\Gameplay\Inventory\HotBarItemTextInventoryRenderer.cs" />
     <Compile Include="SkyMerchant\Gameplay\Items\IslandToolItem.cs" />
     <Compile Include="SkyMerchant\Gameplay\Inventory\MeshSpawnerInventoryRenderer.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\MeshSpawnersInventoryNode.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\IInventoryView.cs" />
-    <Compile Include="SkyMerchant\QuestEditor\QuestEditorInstaller.cs" />
+    <Compile Include="SkyMerchant\Installers\QuestEditorInstaller.cs" />
     <Compile Include="SkyMerchant\_Engine\CacheAttribute.cs" />
-    <Compile Include="SkyMerchant\_Engine\EngineInstaller.cs" />
+    <Compile Include="SkyMerchant\Installers\EngineInstaller.cs" />
     <Compile Include="SkyMerchant\_Engine\LinqExtensions.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorldScript.cs" />
     <Compile Include="SkyMerchant\Gameplay\Items\MeshSpawnerItem.cs" />
@@ -378,7 +378,7 @@
     <Compile Include="SkyMerchant\Prototype\AI\SingleActionBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\TraderPart.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\TraderVisualizerPart.cs" />
-    <Compile Include="SkyMerchant\Prototype\PrototypeInstaller.cs" />
+    <Compile Include="SkyMerchant\Installers\PrototypeInstaller.cs" />
     <Compile Include="SkyMerchant\Prototype\PrototypeMain.cs" />
     <Compile Include="SkyMerchant\Prototype\PrototypeUserInterface.cs" />
     <Compile Include="SkyMerchant\Prototype\RobotInventoryTextView.cs" />

@@ -161,7 +161,6 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         [Test]
         public void TestQuestEditorController()
         {
-            //TODO: test this
             var container = new WindsorContainer();
             container.Install(new DefaultInventoryInstaller());
             container.Install(new GameplayInstaller());
