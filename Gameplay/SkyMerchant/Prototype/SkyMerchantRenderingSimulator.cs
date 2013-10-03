@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
+using MHGameWork.TheWizards.SkyMerchant.Worlding;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype
 {
@@ -17,6 +18,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
                 i.FixMesh();
             foreach (var i in TW.Data.Objects.OfType<ItemPart>())
                 i.FixPosition();
+            foreach ( var i in TW.Data.Objects.OfType<WorldObject>())
+                i.UpdatePhysical();
         }
     }
 }

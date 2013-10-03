@@ -19,6 +19,13 @@ namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing
         bool Enabled { get; set; }
 
 
-        IList<IWorldScript> Scripts { get; }
+        ICollection<IWorldScript> Scripts { get; }
+    }
+    public static class WorldObjectExtensions
+    {
+        public static Matrix GetWorldMatrix(this IWorldObject obj)
+        {
+            return Matrix.RotationQuaternion(obj.Rotation) * Matrix.Translation(obj.Position);
+        }
     }
 }

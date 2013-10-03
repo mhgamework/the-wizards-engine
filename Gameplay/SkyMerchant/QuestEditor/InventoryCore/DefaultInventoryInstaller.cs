@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Castle.MicroKernel;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
@@ -6,6 +7,7 @@ using Castle.Windsor;
 using MHGameWork.TheWizards.SkyMerchant.Gameplay;
 using MHGameWork.TheWizards.SkyMerchant.Gameplay.Inventory;
 using MHGameWork.TheWizards.SkyMerchant.Gameplay.Items;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor.Scripting;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
 namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
@@ -17,7 +19,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
     {
         private IInventoryNode createScripts(IKernel input)
         {
-            return new ScriptsInventoryNode("MHGameWork.TheWizards.SkyMerchant", t => input.Resolve<ScriptToolItem>(new Arguments().InsertTyped(t)));
+            return new ScriptsInventoryNode("MHGameWork.TheWizards.SkyMerchant",
+                                            delegate(Type t)
+                                            {
+                                                var repo = input.Resolve<ScriptsRepository>();
+                                                return input.Resolve<ScriptToolItem>(new Arguments().InsertTyped(repo.GetScriptType(t)));
+                                            });
         }
 
         private IInventoryNode createMeshSpawners(IKernel input)

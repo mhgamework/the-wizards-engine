@@ -10,6 +10,6 @@ namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing
         /// <summary>
         /// Ordered by distances, nearest first.
         /// </summary>
-        IEnumerable<IWorldObject> TargetedObjects { get; set; }
+        IEnumerable<IWorldObject> TargetedObjects { get; }
     }
 }

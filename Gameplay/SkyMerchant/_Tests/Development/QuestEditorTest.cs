@@ -13,7 +13,9 @@ using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.HotbarCore;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor.Scripting;
 using MHGameWork.TheWizards.SkyMerchant.SimulationPausing;
+using MHGameWork.TheWizards.SkyMerchant.Worlding;
 using MHGameWork.TheWizards.SkyMerchant._Engine;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Spatial;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
@@ -162,7 +164,9 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
             //TODO: test this
             var container = new WindsorContainer();
             container.Install(new DefaultInventoryInstaller());
+            container.Install(new GameplayInstaller());
             container.Install(new QuestEditorInstaller());
+            container.Install(new WorldingInstaller());
             container.Install(new PrototypeInstaller());
             container.Install(new EngineInstaller());
 
@@ -170,6 +174,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 
 
             engine.AddSimulator(new BasicSimulator(controller.Update));
+            engine.AddSimulator(new ScriptsSimulator());
             engine.AddSimulator(new SkyMerchantRenderingSimulator());
             engine.AddSimulator(new PhysicalSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
