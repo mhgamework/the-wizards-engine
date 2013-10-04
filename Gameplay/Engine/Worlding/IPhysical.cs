@@ -1,4 +1,5 @@
 ﻿using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 
 namespace MHGameWork.TheWizards.Engine.Worlding
 {
@@ -12,7 +13,7 @@ namespace MHGameWork.TheWizards.Engine.Worlding
     /// </summary>
     public interface IPhysical : IModelObject
     {
-        Physical Physical { get; set; }
+        IPhysicalPart Physical { get; set; }
         void UpdatePhysical();
     }
 }

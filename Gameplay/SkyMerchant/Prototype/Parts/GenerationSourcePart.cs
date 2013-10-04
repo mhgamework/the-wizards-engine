@@ -11,7 +11,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
     {
         #region Injection
         public GenerationPart GenerationPart { get; set; }
-        public Physical Physical { get; set; }
+        public IPhysicalPart Physical { get; set; }
       
         #endregion
 

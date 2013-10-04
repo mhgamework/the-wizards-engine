@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
     public class TraderVisualizerPart : EngineModelObject, IPhysical
     {
         public TraderPart TraderPart { get; set; }
-        public Physical Physical { get; set; }
+        public IPhysicalPart Physical { get; set; }
 
 
         public TraderVisualizerPart()

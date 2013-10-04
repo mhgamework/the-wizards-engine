@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace MHGameWork.TheWizards.Engine.Worlding
         {
             return l.AtPosition(ph.Physical.GetPosition(), radius);
         }
-        public static IEnumerable<object> AtObject(this IWorldLocator l, Physical ph, float radius)
+        public static IEnumerable<object> AtObject(this IWorldLocator l, IPhysicalPart ph, float radius)
         {
             return l.AtPosition(ph.GetPosition(), radius);
         }
@@ -28,7 +29,7 @@ namespace MHGameWork.TheWizards.Engine.Worlding
         /// <param name="ph"></param>
         /// <param name="radius"></param>
         /// <returns></returns>
-        public static IEnumerable<T> AtObject<T>(this IWorldLocator l, Physical ph, float radius) where T : IPhysical
+        public static IEnumerable<T> AtObject<T>(this IWorldLocator l, IPhysicalPart ph, float radius) where T : IPhysical
         {
             return l.AtObject(ph, radius).OfType<T>();
         }

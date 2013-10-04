@@ -25,6 +25,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
                       where intersect.HasValue
                       orderby intersect.Value
                       select obj;
+
             return ret;
         }
 

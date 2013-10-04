@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         public ISimulationEngine SimulationEngine { get; set; }
         [NonOptional]
         public IWorldLocator WorldLocator { get; set; }
-        public Physical Physical { get; set; }
+        public IPhysicalPart Physical { get; set; }
         public BasicPhysicsPart Physics { get; set; }
         #endregion
 

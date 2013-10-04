@@ -18,6 +18,15 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine
             if (o == null) return null;
             return evaluator(o);
         }
+        /// <summary>
+        /// Basic Maybe monad implementation
+        /// </summary>
+        public static TResult? With<TInput, TResult>(this TInput? o, Func<TInput, TResult> evaluator)
+            where TResult : struct
+            where TInput : struct
+        {
+            return o.HasValue ? evaluator(o.Value) : (TResult?)null;
+        }
 
         /// <summary>
         /// Returns with a default value

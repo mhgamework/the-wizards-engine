@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
     public class RobotPlayerPart : EngineModelObject, IPhysical
     {
         #region "Injection"
-        public Physical Physical { get; set; }
+        public IPhysicalPart Physical { get; set; }
 
 
         [NonOptional]

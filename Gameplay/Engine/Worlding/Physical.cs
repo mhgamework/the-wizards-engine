@@ -2,15 +2,16 @@
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Engine.Worlding
 {
-    /// <summary>
+  /// <summary>
     /// Should not be using an interface, should be an interface on its own.
     /// </summary>
     [ModelObjectChanged]
-    public class Physical : EngineModelObject
+    public class Physical : EngineModelObject, IPhysicalPart
     {
 
         public Physical()

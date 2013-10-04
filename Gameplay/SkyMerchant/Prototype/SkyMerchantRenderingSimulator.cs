@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.SkyMerchant.Gameplay;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant.Worlding;
 
@@ -19,6 +20,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             foreach (var i in TW.Data.Objects.OfType<ItemPart>())
                 i.FixPosition();
             foreach ( var i in TW.Data.Objects.OfType<WorldObject>())
+                i.UpdatePhysical();
+            foreach (var i in TW.Data.Objects.OfType<BridgePart>())
                 i.UpdatePhysical();
         }
     }

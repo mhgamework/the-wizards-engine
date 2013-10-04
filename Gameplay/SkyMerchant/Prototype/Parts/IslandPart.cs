@@ -3,6 +3,7 @@ using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
+using MHGameWork.TheWizards.SkyMerchant.Worlding;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using SlimDX;
 
@@ -12,11 +13,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
     /// IPhysical is here to make the simpleworldlocator work
     /// </summary>
     [ModelObjectChanged]
-    public class IslandPart : EngineModelObject, IPhysical
+    public class IslandPart : EngineModelObject,IPhysical
     {
         #region Injection
-        public Physical Physical { get; set; }
-        
+        public IPhysicalPart Physical { get; set; }
+
+        public WorldObject WorldObject { get; set; }
 
         public BasicPhysicsPart Physics { get; set; }
         [NonOptional]

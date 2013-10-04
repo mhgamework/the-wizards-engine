@@ -169,7 +169,9 @@
     <Compile Include="Animation\IAnimatable.cs" />
     <Compile Include="Animation\Keyframe.cs" />
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
+    <Compile Include="SkyMerchant\Gameplay\BridgePart.cs" />
     <Compile Include="SkyMerchant\Installers\GameplayInstaller.cs" />
+    <Compile Include="SkyMerchant\Prototype\Parts\IPhysicalPart.cs" />
     <Compile Include="SkyMerchant\Prototype\SkyMerchantRenderingSimulator.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\ScriptsInventoryNode.cs" />
     <Compile Include="SkyMerchant\Gameplay\IMeshSpawnerItemFactory.cs" />
@@ -327,7 +329,7 @@
     <Compile Include="SkyMerchant\_Tests\Development\SimulationPausingTest.cs" />
     <Compile Include="SkyMerchant\Gameplay\WorldObjectMover.cs" />
     <Compile Include="SkyMerchant\_Tests\Ideas\UnsortedIdeasTest.cs" />
-    <Compile Include="SkyMerchant\_Tests\Stable\BridgeTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Development\BridgeTest.cs" />
     <Compile Include="SkyMerchant\DataStructures\Array3D.cs" />
     <Compile Include="SkyMerchant\DataStructures\Array2D.cs" />
     <Compile Include="SkyMerchant\DataStructures\DictionaryExtensions.cs" />
@@ -463,6 +465,7 @@
     <Content Include="_Features\_doc.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="SkyMerchant\Gameplay\AirCurrents\" />
     <Folder Include="SkyMerchant\_Tests\Broken\" />
   </ItemGroup>
   <ItemGroup>

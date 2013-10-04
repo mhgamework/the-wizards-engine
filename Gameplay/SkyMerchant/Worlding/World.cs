@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Worlding
         {
             var i = factory.CreateIsland();
             i.Seed = seed;
-            return new WorldObject(i.Physical);
+            return (IWorldObject)i.Physical;
         }
     }
 }

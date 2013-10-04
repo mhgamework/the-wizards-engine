@@ -2,6 +2,8 @@
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
+using SlimDX;
+using MHGameWork.TheWizards.SkyMerchant._Engine;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Worlding
 {
@@ -24,6 +26,15 @@ namespace MHGameWork.TheWizards.SkyMerchant.Worlding
                 var ray = TW.Data.Get<CameraInfo>().GetCenterScreenRay();
                 return worldlocator.Raycast(ray);
             }
+        }
+
+        public Vector3? GetPointTargetedOnObject(IWorldObject obj)
+        {
+            var ray = TW.Data.Get<CameraInfo>().GetCenterScreenRay();
+            var localRay = ray.Transform(Matrix.Invert(obj.GetWorldMatrix()));
+            var dist = localRay.xna().Intersects(obj.LocalBoundingBox.xna());
+
+            return dist.With(d => Vector3.TransformCoordinate(localRay.GetPoint(d), obj.GetWorldMatrix()));
         }
     }
 }

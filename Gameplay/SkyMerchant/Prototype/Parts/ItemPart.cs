@@ -12,7 +12,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
     public class ItemPart : EngineModelObject ,IPhysical
     {
         #region Injection
-        public Physical Physical { get; set; }
+        public IPhysicalPart Physical { get; set; }
        
 
         public Random Random { get; set; }

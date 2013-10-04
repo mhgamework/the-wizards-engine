@@ -24,11 +24,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1
 
                 if (c.Change == ModelChange.Removed)
                 {
-                    if (phys.Physical.Entity != null)
-                        TW.Data.RemoveObject(phys.Physical.Entity);
-                    phys.Physical.Entity = null;
-                    TW.Data.RemoveObject(phys.Physical);
-                    phys.Physical = null;
+                    //TODO: this is not supported anymore!!!
+                    //if (phys.Physical.Entity != null)
+                    //    TW.Data.RemoveObject(phys.Physical.Entity);
+                    //phys.Physical.Entity = null;
+                    //TW.Data.RemoveObject(phys.Physical);
+                    //phys.Physical = null;
 
                     continue;
                 }

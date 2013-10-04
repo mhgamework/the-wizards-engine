@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing
 {
@@ -11,5 +12,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing
         /// Ordered by distances, nearest first.
         /// </summary>
         IEnumerable<IWorldObject> TargetedObjects { get; }
+
+        Vector3? GetPointTargetedOnObject(IWorldObject island);
     }
 }

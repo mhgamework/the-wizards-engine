@@ -14,6 +14,7 @@ using MHGameWork.TheWizards.SkyMerchant.Lod;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.AI;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant.Voxels;
+using MHGameWork.TheWizards.SkyMerchant.Worlding;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using MHGameWork.TheWizards.SkyMerchant._Tests.Development;
 using MHGameWork.TheWizards.SkyMerchant._Tests.Stable;
@@ -30,6 +31,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
 
             container.Register(Component.For<PrototypeTest>());
             container.Register(Component.For<Physical>().ImplementedBy<Physical>().LifestyleTransient());
+            container.Register(Component.For<IPhysicalPart>().ImplementedBy<WorldObject>().LifestyleTransient());
 
 
 
