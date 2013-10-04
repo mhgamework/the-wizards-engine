@@ -181,7 +181,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
         {
             var mov = TypedFactory.CreateRobotMovementPart();
             var robot = TypedFactory.CreateRobotPlayerPart();
-            robot.Physical = TypedFactory.CreatePhysical();
+            robot.Physical = TypedFactory.CreatePhysicalPart();
             robot.NormalMovement = mov;
             robot.Physical.Mesh = TW.Assets.LoadMesh("SkyMerchant/DummyRobot/DummyRobot");
 

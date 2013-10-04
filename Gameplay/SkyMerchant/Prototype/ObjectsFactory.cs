@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
         public IslandPart CreateIsland()
         {
             var ret = factory.CreateIsland();
-            ret.Physical = factory.CreatePhysical();
+            ret.Physical = factory.CreatePhysicalPart();
             ret.Physics = factory.CreatePhysics();
             return ret;
 
@@ -32,7 +32,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
         public ItemPart CreateCog()
         {
             var part = factory.CreateItemPart();
-            part.Physical = factory.CreatePhysical();
+            part.Physical = factory.CreatePhysicalPart();
             part.Physical.Mesh = TW.Assets.LoadMesh("SkyMerchant/Cogs/Cog01");
             part.Type = CogType;
             return part;
@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
         public ItemPart CreateTube()
         {
             var part = factory.CreateItemPart();
-            part.Physical = factory.CreatePhysical();
+            part.Physical = factory.CreatePhysicalPart();
             part.Physical.Mesh = TW.Assets.LoadMesh("SkyMerchant/TubePart/TubePart");
             part.Type = TubeType;
             return part;
@@ -49,7 +49,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
         public ItemPart CreateWoodBlock()
         {
             var part = factory.CreateItemPart();
-            part.Physical = factory.CreatePhysical();
+            part.Physical = factory.CreatePhysicalPart();
             part.Physical.Mesh = UtilityMeshes.CreateMeshWithText(0.4f, "Wood", TW.Graphics);
             part.Type = WoodType;
             return part;
@@ -59,7 +59,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
         {
             var part = factory.CreateGenerationSourcePart();
             part.GenerationPart = factory.CreateGenerationPart(new TreeItemFactory(this));
-            part.Physical = factory.CreatePhysical();
+            part.Physical = factory.CreatePhysicalPart();
             part.Physical.ObjectMatrix = Matrix.Scaling(MathHelper.One * 0.8f);
 
             part.EmptyMesh = TW.Assets.LoadMesh("SkyMerchant/Tree/Tree_NoLeaves");
@@ -71,7 +71,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
         public ProximityChaseEnemyPart CreateDrone()
         {
             var beh = factory.CreateEnemyBehaviourFactory();
-            beh.Physical = factory.CreatePhysical();
+            beh.Physical = factory.CreatePhysicalPart();
             beh.Brain = new EnemyBrain();
             
             var part = factory.CreateProximityChaseEnemyPart(beh,beh.Brain);
@@ -84,7 +84,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
         public PiratePart CreatePirate()
         {
             var beh = factory.CreateEnemyBehaviourFactory();
-            beh.Physical = factory.CreatePhysical();
+            beh.Physical = factory.CreatePhysicalPart();
             beh.Brain = new EnemyBrain();
 
             var part = factory.CreatePiratePart(beh,beh.Brain);
@@ -96,9 +96,9 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             return part;
         }
 
-        public Physical CreateMeshObject()
+        public IPhysicalPart CreateMeshObject()
         {
-            var p = factory.CreatePhysical();
+            var p = factory.CreatePhysicalPart();
             return p;
         }
 
@@ -122,7 +122,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             var trader = factory.CreateTraderPart();
             var viz = factory.CreateTraderVisualizerPart();
             viz.TraderPart = trader;
-            viz.Physical = factory.CreatePhysical();
+            viz.Physical = factory.CreatePhysicalPart();
 
             return viz;
         }

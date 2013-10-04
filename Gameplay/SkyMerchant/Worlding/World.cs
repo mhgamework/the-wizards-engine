@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.Engine.Worlding;
+﻿using System;
+using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
@@ -11,15 +12,17 @@ namespace MHGameWork.TheWizards.SkyMerchant.Worlding
     public class World : IWorld
     {
         private readonly ObjectsFactory factory;
+        private readonly Func<Physical> createPhysical;
 
-        public World(ObjectsFactory factory)
+        public World(ObjectsFactory factory, Func<Physical> createPhysical)
         {
             this.factory = factory;
+            this.createPhysical = createPhysical;
         }
 
         public IWorldObject CreateMeshObject(IMesh loadMesh)
         {
-            var ph = factory.CreateMeshObject();
+            var ph = createPhysical();
             ph.Mesh = loadMesh;
 
             return new WorldObject(ph);

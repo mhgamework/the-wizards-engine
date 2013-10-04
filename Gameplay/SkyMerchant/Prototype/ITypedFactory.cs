@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
     {
         IslandPart CreateIsland();
         BasicPhysicsPart CreatePhysics();
-        Physical CreatePhysical();
+        IPhysicalPart CreatePhysicalPart();
         ItemPart CreateItemPart();
 
         RobotPlayerPart CreateRobotPlayerPart();

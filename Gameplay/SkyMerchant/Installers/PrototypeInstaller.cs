@@ -63,13 +63,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             container.Register(
                 Classes.FromThisAssembly().InSameNamespaceAs<IslandPart>().WithServiceSelf().LifestyleTransient());
 
-            
+
 
 
 
 
             container.Register(
-                Component.For<IWorldLocator>().ImplementedBy<SimpleWorldLocator>(),
                 Component.For<ISimulationEngine>().ImplementedBy<SimpleSimulationEngine>(),
                 Component.For<RobotPlayerNormalMovementPart.IUserMovementInput>().ImplementedBy<SimpleUserMovementInput>()
                 );

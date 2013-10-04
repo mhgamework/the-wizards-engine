@@ -15,7 +15,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
     public class ProximityChaseEnemyPart : EngineModelObject
     {
         #region Injection
-        public Physical Physical { get; set; }
+        public IPhysicalPart Physical { get; set; }
         private EnemyBehaviourFactory BehaviourFactory;
         [DoNotWire]
         public EnemyBrain Brain { get; set; }

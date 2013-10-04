@@ -13,6 +13,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Gameplay
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
+            container.Register(Component.For<BridgePart>().LifestyleTransient());
             container.Register(Classes.FromThisAssembly().BasedOn<IWorldScript>().WithServiceSelf().LifestyleTransient());
             container.Register(Classes.FromThisAssembly()
                    .InNamespace("MHGameWork.TheWizards.SkyMerchant.Gameplay", true)

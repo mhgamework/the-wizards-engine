@@ -39,7 +39,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Worlding
             ph.Visible = Visible && Enabled;
         }
         public BoundingBox LocalBoundingBox
-        { get { return ph.Mesh == null ? new BoundingBox() : TW.Assets.GetBoundingBox(ph.Mesh); } }
+        { get { return ph.Mesh == null ? new BoundingBox() : TW.Assets.GetBoundingBox(ph.Mesh).Transform(ph.ObjectMatrix); } }
 
         public ICollection<IWorldScript> Scripts { get; private set; }
 

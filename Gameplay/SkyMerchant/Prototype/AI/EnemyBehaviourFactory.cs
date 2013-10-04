@@ -35,7 +35,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
             set { brain = value; }
         }
 
-        public Physical Physical { get; set; }
+        public IPhysicalPart Physical { get; set; }
         #endregion
 
         public IBehaviourNode CreateGuardPosition(Func<Vector3> getPosition)

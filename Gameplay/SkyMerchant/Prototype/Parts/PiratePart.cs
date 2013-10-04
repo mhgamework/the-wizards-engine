@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         private readonly EnemyBehaviourFactory behaviourFactory;
 
         #region Injection
-        public Physical Physical { get; set; }
+        public IPhysicalPart Physical { get; set; }
         #endregion
 
         private IBehaviourNode behaviourTree;
