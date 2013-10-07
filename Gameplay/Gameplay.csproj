@@ -184,11 +184,13 @@
     <Compile Include="SkyMerchant\Worlding\World.cs" />
     <Compile Include="SkyMerchant\Worlding\WorldObject.cs" />
     <Compile Include="SkyMerchant\Worlding\WorldObjectScriptsList.cs" />
+    <Compile Include="SkyMerchant\_Engine\Windsor\WindsorDebugTools.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\ILocalPlayer.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorld.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorldObject.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IScriptType.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\ScriptingTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Development\WindsorTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Ideas\DynamicObjectsTest.cs" />
     <Compile Include="_Tests\Assets\SimpleAssetStaticWorldObject.cs" />
     <Compile Include="_Tests\Assets\SimpleAssetStaticWorldObjectFactory.cs" />
