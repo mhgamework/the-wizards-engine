@@ -191,7 +191,10 @@
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorldObject.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IScriptType.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\ScriptingTest.cs" />
-    <Compile Include="SkyMerchant\_Tests\Development\WindsorTest.cs" />
+    <Compile Include="SkyMerchant\Generation\ArrayFiniteVoxels.cs" />
+    <Compile Include="SkyMerchant\Generation\IslandGenerater.cs" />
+    <Compile Include="SkyMerchant\_Tests\Stable\VoxelsTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Stable\WindsorTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Ideas\DynamicObjectsTest.cs" />
     <Compile Include="_Tests\Assets\SimpleAssetStaticWorldObject.cs" />
     <Compile Include="_Tests\Assets\SimpleAssetStaticWorldObjectFactory.cs" />
@@ -245,7 +248,7 @@
     <Compile Include="SkyMerchant\_Tests\Development\QuestEditorToolsTest.cs" />
     <Compile Include="SkyMerchant\_Undocumented\ConsoleLoggingExtension.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\InventoryController.cs" />
-    <Compile Include="SkyMerchant\_Tests\Development\InventoryTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Stable\InventoryTest.cs" />
     <Compile Include="_Tests\Assets\AssetsSynchronizationTest.cs" />
     <Compile Include="_Tests\Assets\SimpleAsset.cs" />
     <Compile Include="_Tests\Assets\SimpleAssetFactory.cs" />
@@ -329,10 +332,10 @@
     <Compile Include="SkyMerchant\_Engine\Spatial\IMutablePosition.cs" />
     <Compile Include="SkyMerchant\_Engine\Spatial\SimpleMutableSpatial.cs" />
     <Compile Include="SkyMerchant\_Engine\Spatial\SpatialExtensions.cs" />
-    <Compile Include="SkyMerchant\_Tests\Development\SimulationPausingTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Stable\SimulationPausingTest.cs" />
     <Compile Include="SkyMerchant\Gameplay\WorldObjectMover.cs" />
     <Compile Include="SkyMerchant\_Tests\Ideas\UnsortedIdeasTest.cs" />
-    <Compile Include="SkyMerchant\_Tests\Development\BridgeTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Stable\BridgeTest.cs" />
     <Compile Include="SkyMerchant\DataStructures\Array3D.cs" />
     <Compile Include="SkyMerchant\DataStructures\Array2D.cs" />
     <Compile Include="SkyMerchant\DataStructures\DictionaryExtensions.cs" />
@@ -390,7 +393,7 @@
     <Compile Include="SkyMerchant\Prototype\SimpleItemFactory.cs" />
     <Compile Include="SkyMerchant\Prototype\SimpleUserMovementInput.cs" />
     <Compile Include="SkyMerchant\Voxels\IFiniteVoxels.cs" />
-    <Compile Include="SkyMerchant\_Tests\Development\IslandsTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Stable\IslandsTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Unused\FlyingPrototypeTest.cs" />
     <Compile Include="SkyMerchant\Island.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\ItemPart.cs" />

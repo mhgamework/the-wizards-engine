@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.SkyMerchant.Generation;
 using MHGameWork.TheWizards.SkyMerchant.Voxels;
 using MHGameWork.TheWizards.SkyMerchant._Tests.Development;
 

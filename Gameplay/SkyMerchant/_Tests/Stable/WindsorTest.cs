@@ -4,7 +4,7 @@ using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
+namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
 {
     /// <summary>
     /// Test some of the windsor utilities

@@ -5,7 +5,6 @@ using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTSTestCase1;
-using MHGameWork.TheWizards.Simulators;
 using MHGameWork.TheWizards.SkyMerchant.Gameplay.Inventory;
 using MHGameWork.TheWizards.SkyMerchant.Gameplay.Items;
 using MHGameWork.TheWizards.SkyMerchant.Prototype;
@@ -18,7 +17,7 @@ using NSubstitute;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
+namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
 {
     [EngineTest]
     [TestFixture]

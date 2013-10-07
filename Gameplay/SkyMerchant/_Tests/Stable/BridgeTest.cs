@@ -95,6 +95,9 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
             engine.AddSimulator(new WorldRenderingSimulator());
         }
 
+        /// <summary>
+        /// Tests the creation of an in-game bridge part
+        /// </summary>
         [Test]
         public void TestBridgePart()
         {

@@ -11,7 +11,7 @@ using SlimDX;
 using System.Linq;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
+namespace MHGameWork.TheWizards.SkyMerchant._Tests.Unused
 {
     [TestFixture]
     [EngineTest]

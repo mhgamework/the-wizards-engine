@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Gameplay;
@@ -9,7 +8,7 @@ using MHGameWork.TheWizards.SkyMerchant._Engine;
 using NUnit.Framework;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
+namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
 {
     /// <summary>
     /// Simple testcase of implementing a pause in simulation, by running simulation on a different thread (but not concurrently!!)
