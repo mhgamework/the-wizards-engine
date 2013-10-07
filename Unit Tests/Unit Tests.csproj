@@ -158,6 +158,7 @@
     <Compile Include="Features\Core\Diagnostics\ProfilerComponentTest.cs" />
     <Compile Include="Features\Data\SectionedStreamTest.cs" />
     <Compile Include="Features\Rendering\DirectX11\DX11PerformanceTest.cs" />
+    <Compile Include="Features\Rendering\DX11FontWrapperTest.cs" />
     <Compile Include="Features\Rendering\FiltersTest.cs" />
     <Compile Include="Features\Simulation\Animation\AnimationTest.cs" />
     <Compile Include="Features\Various\Client\ClientTest.cs" />
@@ -256,6 +257,10 @@
     <ProjectReference Include="..\WPF\WPF.csproj">
       <Project>{8a52d3e0-5362-4d9f-a29e-32e24ad65eaf}</Project>
       <Name>WPF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wrappers\Wrappers.vcxproj">
+      <Project>{d1e82bbb-8426-4451-ba37-792822e0fe6e}</Project>
+      <Name>Wrappers</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

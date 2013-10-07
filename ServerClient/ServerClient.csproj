@@ -177,6 +177,9 @@
     <Compile Include="UnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FW1FontWrapper.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
     <Content Include="TWConfig.xml">
