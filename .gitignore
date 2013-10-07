@@ -47,10 +47,13 @@ obj/
 # *.user should contain debug settings and are meant to be synced
 *.suo
 
-# Various application junk
-/Ankh.Load
+#Resharper
 *_ReSharper*
 /The Wizards.4.0.resharper
+
+# Various application junk
+/Ankh.Load
+
 /~$e Wizards Design.docx
 /The Wizards.ncb
 /testimpactdata.sdf
@@ -180,3 +183,4 @@ Thumbs.db
 /Debug
 
 Debug
+/The Wizards.sln.DotSettings.user
