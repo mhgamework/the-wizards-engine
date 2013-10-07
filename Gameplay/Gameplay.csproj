@@ -172,6 +172,7 @@
     <Compile Include="SkyMerchant\Gameplay\BridgePart.cs" />
     <Compile Include="SkyMerchant\Installers\GameplayInstaller.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\IPhysicalPart.cs" />
+    <Compile Include="SkyMerchant\Prototype\PlayerRobotSimulator.cs" />
     <Compile Include="SkyMerchant\Prototype\SkyMerchantRenderingSimulator.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\ScriptsInventoryNode.cs" />
     <Compile Include="SkyMerchant\Gameplay\IMeshSpawnerItemFactory.cs" />

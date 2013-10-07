@@ -8,10 +8,13 @@ using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
+using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.SkyMerchant.Lod;
 using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
+using MHGameWork.TheWizards.SkyMerchant.Worlding;
+using MHGameWork.TheWizards.SkyMerchant._Engine;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using NUnit.Framework;
 using System.Linq;
@@ -30,42 +33,29 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
         [Test]
         public void TestPlayPrototype()
         {
-            try
-            {
-                var container = BootstrapContainer();
+            var container = BootstrapContainer();
 
-                var prototype = container.Resolve<PrototypeTest>();
-                prototype.Run();
-            }
-            catch (Exception ex)
-            {
-                DI.Get<IErrorLogger>().Log(ex, "Init prototype");
-            }
-
+            var prototype = container.Resolve<PrototypeTest>();
+            prototype.Run();
         }
 
-
+      
 
         #region Injection
         [NonOptional]
         public TWEngine Engine { get; set; }
         [NonOptional]
         public PrototypeWorldGenerator PrototypeWorldGenerator { get; set; }
-        [NonOptional]
-        public ITypedFactory TypedFactory { get; set; }
-        [NonOptional]
-        public CustomCamera Camera { get; set; }
-        [NonOptional]
-        public IWorldLocator WorldLocator { get; set; }
+
         [NonOptional]
         public PrototypeUserInterface UserInterface { get; set; }
+
         [NonOptional]
-        public ObjectsFactory ObjectsFactory { get; set; }
+        public PlayerRobotSimulator PlayerRobotSimulator { get; set; }
 
         #endregion
 
-        private RobotPlayerPart robot;
-        private RobotInventoryTextView view;
+
 
 
         public PrototypeTest()
@@ -88,7 +78,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
         {
             if (TW.Debug.LastException != null) return;
 
-            
+
 
             foreach (var i in TW.Data.Objects.OfType<IslandPart>())
             {
@@ -116,98 +106,27 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
             {
                 i.SimulateBehaviour();
             }
-            processRobot();
+            PlayerRobotSimulator.SimulateRobotNonUserInput();
+            PlayerRobotSimulator.SimulateRobotUserInput();
             UserInterface.Update();
         }
-        private void simulateRendering()
-        {
-          
-        }
 
-        private void processRobot()
-        {
-            tryPickup();
-
-            robot.NormalMovement.LookDirection = TW.Graphics.SpectaterCamera.CameraDirection;
-            robot.SimulateMovement();
-            robot.SimulateCogConsumption();
-            robot.SimulateDeath();
-            setCameraView();
-        }
-
-        private void tryPickup()
-        {
-            if (!TW.Graphics.Keyboard.IsKeyPressed(Key.F)) return;
-            var trader = WorldLocator.AtObject<TraderVisualizerPart>(robot.Physical, 4).FirstOrDefault();
-            if (trader != null && trader.TraderPart.CanTradeWith(robot))
-            {
-                trader.TraderPart.PerformTrade(robot);
-            }
-
-            var resource = WorldLocator.AtObject<GenerationSourcePart>(robot.Physical, 4).FirstOrDefault();
-            if (resource != null && resource.GenerationPart.HasResource)
-            {
-                resource.GenerationPart.PlayerPickResource(robot);
-                return;
-            }
-
-            robot.PickupClosest();
-        }
-
-        private void setCameraView()
-        {
-            var eye = robot.Physical.GetPosition();
-            var dir = TW.Graphics.SpectaterCamera.CameraDirection;
-
-            eye += new Vector3(0, 2, 0);
-            eye -= dir * 2.5f;
-            eye += Vector3.Cross(dir, MathHelper.Up) * 0.5f;
-
-            Camera.SetViewMatrix(Matrix.LookAtRH(eye, eye + dir, MathHelper.Up));
-        }
 
         private void setupTest()
         {
             PrototypeWorldGenerator.GenerateWorld(150);
 
-            robot = createRobot();
-
-            TW.Data.Get<CameraInfo>().ActivateCustomCamera(Camera);
-
-            Camera.SetProjectionMatrix(TW.Graphics.SpectaterCamera.Projection);
-        }
-
-        private RobotPlayerPart createRobot()
-        {
-            var mov = TypedFactory.CreateRobotMovementPart();
-            var robot = TypedFactory.CreateRobotPlayerPart();
-            robot.Physical = TypedFactory.CreatePhysicalPart();
-            robot.NormalMovement = mov;
-            robot.Physical.Mesh = TW.Assets.LoadMesh("SkyMerchant/DummyRobot/DummyRobot");
-
-            mov.Physical = robot.Physical;
-            mov.Physics = TypedFactory.CreatePhysics();
-
-            var scale = 0.1f;
-            robot.Physical.ObjectMatrix = Matrix.Scaling(scale, scale, scale) * Matrix.RotationY(MathHelper.Pi);
-
-
-            view = new RobotInventoryTextView(robot);
-
-            robot.Pickup(ObjectsFactory.CreateWoodBlock());
-            robot.Pickup(ObjectsFactory.CreateWoodBlock());
-            robot.Pickup(ObjectsFactory.CreateWoodBlock());
-            robot.Pickup(ObjectsFactory.CreateWoodBlock());
-            robot.Pickup(ObjectsFactory.CreateWoodBlock());
-
-            return robot;
+            PlayerRobotSimulator.ActivateRobotCamera();
         }
 
 
         public IWindsorContainer BootstrapContainer()
         {
             return new WindsorContainer()
-                .Install(new PrototypeInstaller());
+                .Install(new PrototypeInstaller())
+                .Install(new EngineInstaller())
+                .Install(new WorldingInstaller())
+                ;
         }
     }
 }

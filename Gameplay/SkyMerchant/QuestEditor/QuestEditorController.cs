@@ -1,8 +1,12 @@
-﻿using MHGameWork.TheWizards.DirectX11.Graphics;
+﻿using System;
+using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.HotbarCore;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
 using SlimDX.DirectInput;
+using bbv.Common.StateMachine;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
 {
@@ -12,27 +16,36 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
     public class QuestEditorController
     {
         private HotbarController hotbarController;
+        private readonly PlayerRobotSimulator playerRobotSimulator;
         private InventoryController inventoryController;
 
-        private bool inInventory;
+        private PassiveStateMachine<States, Events> fsm;
+        private States ActiveState;
 
-        public QuestEditorController(InventoryController inventoryController, HotbarController hotbarController)
+        public QuestEditorController(InventoryController inventoryController, HotbarController hotbarController, PlayerRobotSimulator playerRobotSimulator)
         {
             this.inventoryController = inventoryController;
             this.hotbarController = hotbarController;
+            this.playerRobotSimulator = playerRobotSimulator;
+
+            createStateMachine();
+            fsm.Start();
         }
 
         public void Update()
         {
-            tryToggleInventory();
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.E)) fsm.Fire(Events.InventoryKey);
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.Return)) fsm.Fire(Events.PlayKey);
+
 
             simulateInventory();
             simulateWorld();
+            simulatePlayMode();
         }
 
         private void simulateWorld()
         {
-            if (inInventory) return;
+            if (ActiveState != States.Edit) return;
             TW.Data.Get<CameraInfo>().ActivateSpecatorCamera();
             TW.Graphics.SpectaterCamera.Enabled = true;
             hotbarController.Update();
@@ -43,7 +56,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
 
         private void simulateInventory()
         {
-            if (!inInventory) return;
+            if (ActiveState != States.Inventory) return;
+
             TW.Graphics.SpectaterCamera.Enabled = false;
 
             hotbarController.Update();
@@ -51,10 +65,46 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
 
         }
 
-        private void tryToggleInventory()
+        private void simulatePlayMode()
         {
-            if (!TW.Graphics.Keyboard.IsKeyPressed(Key.E)) return;
-            inInventory = !inInventory;
+            if (ActiveState != States.Play) return;
+
+            playerRobotSimulator.ActivateRobotCamera();
+            playerRobotSimulator.SimulateRobotNonUserInput();
+            playerRobotSimulator.SimulateRobotUserInput();
+        }
+
+        private void createStateMachine()
+        {
+            fsm = new PassiveStateMachine<States, Events>();
+            fsm.In(States.Edit)
+               .On(Events.InventoryKey).Goto(States.Inventory)
+               .On(Events.PlayKey).Goto(States.Play);
+
+            fsm.In(States.Inventory).On(Events.InventoryKey).Goto(States.Edit);
+
+            fsm.In(States.Play).On(Events.PlayKey).Goto(States.Edit);
+
+
+            foreach (var s in Enum.GetValues(typeof(States)).Cast<States>())
+                fsm.In(s).ExecuteOnEntry(new Action(() => ActiveState = s));
+
+            fsm.Initialize(States.Edit);
+
+
+
+        }
+
+        private enum States
+        {
+            Inventory,
+            Edit,
+            Play
+        }
+        private enum Events
+        {
+            InventoryKey,
+            PlayKey
         }
     }
 }
