@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <p>
+        Contains information about the automated testing project design.</p>
+    <h1>Overview</h1>
+    <p>
+        The automated testing project will allow user to <strong>mark </strong>objects. Marking indicates that at that point in the execution, the object&#39;s state should be fixed across multiple test runs. If the state of this object is identical to a stored &#39;correct&#39; state, the test is considered successful.</p>
+    <p>
+        The engine will provide tools to manually validate the state at this points, so that you don&#39;t have to recreate these states by hand, testing them is good enough. This means that there is a user mode and a automated mode.</p>
+    <h1>Ideas</h1>
+    <p>
+        Depending on the type of the marked object, a specific visualization can be made. There should be a way to add specific test visualizations for data types.</p>
+    <ul>
+        <li>IMesh: render mesh</li>
+        <li>Framebuffer: show buffer</li>
+        <li>Matrix: show decomposed text + axis</li>
+        <li>Objects: show text based, or graph based?</li>
+    </ul>
+
+</body>
+</html>

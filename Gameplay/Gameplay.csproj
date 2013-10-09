@@ -465,6 +465,9 @@
     <Content Include="Engine\_doc.html" />
     <Content Include="SkyMerchant\Gameplay\_doc.txt" />
     <Content Include="SkyMerchant\_GameplayInterfacing\_doc.txt" />
+    <Content Include="SkyMerchant\_Ideas\CSharpTricks.html" />
+    <Content Include="SkyMerchant\_Ideas\Engine.html" />
+    <Content Include="SkyMerchant\_Ideas\Projects\AutomatedTesting.html" />
     <Content Include="SkyMerchant\_Tests\_doc.html" />
     <Content Include="Engine\WorldRendering\_doc.txt" />
     <Content Include="_doc.txt" />
