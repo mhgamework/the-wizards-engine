@@ -2,7 +2,7 @@
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 
-namespace MHGameWork.TheWizards.SkyMerchant._Engine
+namespace MHGameWork.TheWizards.SkyMerchant.Installers
 {
     /// <summary>
     /// Installs the production use dependencies to the engine

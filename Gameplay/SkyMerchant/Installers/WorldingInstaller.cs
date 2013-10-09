@@ -3,9 +3,10 @@ using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1._Tests;
+using MHGameWork.TheWizards.SkyMerchant.Worlding;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
-namespace MHGameWork.TheWizards.SkyMerchant.Worlding
+namespace MHGameWork.TheWizards.SkyMerchant.Installers
 {
     /// <summary>
     /// Installs the quest editor's production dependencies
@@ -16,7 +17,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Worlding
         {
             container.Register(Component.For<ILocalPlayer>().ImplementedBy<LocalPlayer>());
             container.Register(Component.For<IWorldLocator>().ImplementedBy<SimpleWorldLocator>());
-            container.Register(Component.For<IWorld>().ImplementedBy<World>());
+            container.Register(Component.For<IWorld>().ImplementedBy<Worlding.World>());
             //container.Register(Component.For<worldo>());
             //container.Register(Component.For<LocalPlayer>());
 

@@ -7,10 +7,11 @@ using Castle.Windsor;
 using MHGameWork.TheWizards.SkyMerchant.Gameplay;
 using MHGameWork.TheWizards.SkyMerchant.Gameplay.Inventory;
 using MHGameWork.TheWizards.SkyMerchant.Gameplay.Items;
+using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.Scripting;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
+namespace MHGameWork.TheWizards.SkyMerchant.Installers
 {
     /// <summary>
     /// Responsible for setting up the default inventory, as it should be used in the actual game.

@@ -1,5 +1,6 @@
 ﻿using System;
 using Castle.Windsor;
+using MHGameWork.TheWizards.SkyMerchant.Installers;
 using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using NUnit.Framework;

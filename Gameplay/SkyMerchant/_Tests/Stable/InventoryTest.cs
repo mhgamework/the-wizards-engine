@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.SkyMerchant.Gameplay.Inventory;
 using MHGameWork.TheWizards.SkyMerchant.Gameplay.Items;
+using MHGameWork.TheWizards.SkyMerchant.Installers;
 using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.HotbarCore;

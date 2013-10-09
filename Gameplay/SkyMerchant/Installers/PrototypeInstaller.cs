@@ -7,19 +7,15 @@ using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.Gameplay;
-using MHGameWork.TheWizards.RTSTestCase1;
-
-using MHGameWork.TheWizards.RTSTestCase1._Tests;
-using MHGameWork.TheWizards.SkyMerchant.Lod;
+using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.AI;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant.Voxels;
 using MHGameWork.TheWizards.SkyMerchant.Worlding;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
-using MHGameWork.TheWizards.SkyMerchant._Tests.Development;
 using MHGameWork.TheWizards.SkyMerchant._Tests.Stable;
 
-namespace MHGameWork.TheWizards.SkyMerchant.Prototype
+namespace MHGameWork.TheWizards.SkyMerchant.Installers
 {
     public class PrototypeInstaller : IWindsorInstaller
     {

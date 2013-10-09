@@ -10,6 +10,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTSTestCase1;
+using MHGameWork.TheWizards.SkyMerchant.Installers;
 using MHGameWork.TheWizards.SkyMerchant.Lod;
 using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;

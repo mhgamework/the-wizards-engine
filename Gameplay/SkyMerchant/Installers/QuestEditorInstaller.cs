@@ -1,12 +1,9 @@
-﻿using Castle.MicroKernel;
-using Castle.MicroKernel.Registration;
+﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.Scripting;
-using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
-namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor
+namespace MHGameWork.TheWizards.SkyMerchant.Installers
 {
     /// <summary>
     /// Installs the quest editor's production dependencies
