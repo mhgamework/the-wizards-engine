@@ -3,8 +3,8 @@ using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
-using MHGameWork.TheWizards.SkyMerchant.Worlding;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         #region Injection
         public IPhysicalPart Physical { get; set; }
 
-        public WorldObject WorldObject { get; set; }
+        public IWorldObject WorldObject { get; set; }
 
         public BasicPhysicsPart Physics { get; set; }
         [NonOptional]
