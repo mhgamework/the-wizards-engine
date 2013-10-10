@@ -1,4 +1,5 @@
 ﻿using System;
+using Castle.MicroKernel;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
@@ -13,6 +14,7 @@ using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant.Voxels;
 using MHGameWork.TheWizards.SkyMerchant.Worlding;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using MHGameWork.TheWizards.SkyMerchant._Tests.Stable;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Installers
@@ -26,10 +28,6 @@ namespace MHGameWork.TheWizards.SkyMerchant.Installers
 
 
             container.Register(Component.For<PrototypeTest>());
-            container.Register(Component.For<Physical>().ImplementedBy<Physical>().LifestyleTransient());
-            container.Register(Component.For<IPhysicalPart>().ImplementedBy<WorldObject>().LifestyleTransient());
-
-
 
             container.Register(
                 Component.For<ITypedFactory>().AsFactory(),
@@ -50,16 +48,6 @@ namespace MHGameWork.TheWizards.SkyMerchant.Installers
             container.Register(
                 Component.For<TWEngine>().UsingFactoryMethod(EngineFactory.CreateEngine)
                 );
-
-
-            // Override!!!
-            container.Register(Component.For<RobotPlayerPart>().LifestyleSingleton());
-
-            // Register all object parts
-            container.Register(
-                Classes.FromThisAssembly().InSameNamespaceAs<IslandPart>().WithServiceSelf().LifestyleTransient());
-
-
 
 
 

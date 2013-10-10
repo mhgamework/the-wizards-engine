@@ -107,13 +107,13 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
             bridge.AnchorA = new BridgePart.BridgeAnchor()
                 {
                     Island = createIsland(new Vector3(5, 0, 5)),
-                    RelativePosition =  new Vector3(4.5f, 0, 4.5f)
+                    RelativePosition = new Vector3(4.5f, 0, 4.5f)
                 };
 
             bridge.AnchorB = new BridgePart.BridgeAnchor()
                 {
                     Island = createIsland(new Vector3(25, 5, 20)),
-                    RelativePosition =  new Vector3(-5, 0, -5)
+                    RelativePosition = new Vector3(-5, 0, -5)
                 };
 
             engine.AddSimulator(new SkyMerchantRenderingSimulator());
@@ -123,15 +123,15 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
 
         private IWorldObject createIsland(Vector3 pos)
         {
-
-            var w = new WorldObject(new Physical());
+            var ph = new Physical();
+            var w = new WorldObject(ph);
             w.Position = pos;
 
             var ret = new IslandPart();
-            ret.Physical = w;
+            ret.Physical = new WorldObjectPhysicalPart(w, ph);
             ret.IslandMeshFactory = new IslandMeshFactory(new VoxelMeshBuilder());
 
-            
+
 
             return w;
         }
