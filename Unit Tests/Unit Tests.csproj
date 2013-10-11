@@ -160,6 +160,7 @@
     <Compile Include="Features\Rendering\DirectX11\DX11PerformanceTest.cs" />
     <Compile Include="Features\Rendering\DX11FontWrapperTest.cs" />
     <Compile Include="Features\Rendering\FiltersTest.cs" />
+    <Compile Include="Features\Rendering\Particles\CloudsTest.cs" />
     <Compile Include="Features\Simulation\Animation\AnimationTest.cs" />
     <Compile Include="Features\Various\Client\ClientTest.cs" />
     <Compile Include="Features\Data\CoreTest.cs" />

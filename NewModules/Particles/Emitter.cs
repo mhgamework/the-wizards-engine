@@ -64,30 +64,11 @@ namespace MHGameWork.TheWizards.Particles
             this.width = width;
             this.height = height;
             simulater = new ParticleSimulater(game, parameters.size, parameters.EffectName);
-            
 
-
-            var blendStateDescription = new BlendStateDescription();
-            blendStateDescription.RenderTargets[0].BlendEnable = true;
-            blendStateDescription.RenderTargets[0].BlendOperation = BlendOperation.Add;
-            blendStateDescription.RenderTargets[0].BlendOperationAlpha = BlendOperation.Add;
-            blendStateDescription.RenderTargets[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;
-            blendStateDescription.RenderTargets[0].SourceBlend = BlendOption.One;
-            blendStateDescription.RenderTargets[0].SourceBlendAlpha = BlendOption.One;
-            blendStateDescription.RenderTargets[0].DestinationBlend = BlendOption.One;
-            blendStateDescription.RenderTargets[0].DestinationBlendAlpha = BlendOption.InverseSourceAlpha;
-
-            additiveBlendState = BlendState.FromDescription(game.Device, blendStateDescription);
-            blendStateDescription.RenderTargets[0].BlendEnable = true;
-            blendStateDescription.RenderTargets[0].BlendOperation = BlendOperation.Add;
-            blendStateDescription.RenderTargets[0].BlendOperationAlpha = BlendOperation.Add;
-            blendStateDescription.RenderTargets[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;
-            blendStateDescription.RenderTargets[0].SourceBlend = BlendOption.One;
-            blendStateDescription.RenderTargets[0].SourceBlendAlpha = BlendOption.One;
-            blendStateDescription.RenderTargets[0].DestinationBlend = BlendOption.InverseSourceAlpha;
-            blendStateDescription.RenderTargets[0].DestinationBlendAlpha = BlendOption.InverseSourceAlpha;
-
-            normalBlendState = BlendState.FromDescription(game.Device, blendStateDescription);
+            premultipliedBlendState = createPremultipliedBlendState();
+            alphaBlendBlendState = createAlphaBlendBlendState();
+            additiveBlendState = createAdditiveBlendState();
+            normalBlendState = createNormalBlendState();
 
             depthStencilState = DepthStencilState.FromDescription(game.Device, new DepthStencilStateDescription
                                                                                    {
@@ -99,6 +80,72 @@ namespace MHGameWork.TheWizards.Particles
 
 
         }
+
+        private BlendState createAdditiveBlendState()
+        {
+            var blendStateDescription = new BlendStateDescription();
+            blendStateDescription.RenderTargets[0].BlendEnable = true;
+            blendStateDescription.RenderTargets[0].BlendOperation = BlendOperation.Add;
+            blendStateDescription.RenderTargets[0].BlendOperationAlpha = BlendOperation.Add;
+            blendStateDescription.RenderTargets[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;
+            blendStateDescription.RenderTargets[0].SourceBlend = BlendOption.One;
+            blendStateDescription.RenderTargets[0].SourceBlendAlpha = BlendOption.One;
+            blendStateDescription.RenderTargets[0].DestinationBlend = BlendOption.One;
+            blendStateDescription.RenderTargets[0].DestinationBlendAlpha = BlendOption.InverseSourceAlpha;
+            return BlendState.FromDescription(game.Device, blendStateDescription);
+            
+        }
+        private BlendState createNormalBlendState()
+        {
+            var blendStateDescription = new BlendStateDescription();
+            blendStateDescription.RenderTargets[0].BlendEnable = true;
+            blendStateDescription.RenderTargets[0].BlendOperation = BlendOperation.Add;
+            blendStateDescription.RenderTargets[0].BlendOperationAlpha = BlendOperation.Add;
+            blendStateDescription.RenderTargets[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;
+            blendStateDescription.RenderTargets[0].SourceBlend = BlendOption.One;
+            blendStateDescription.RenderTargets[0].SourceBlendAlpha = BlendOption.One;
+            blendStateDescription.RenderTargets[0].DestinationBlend = BlendOption.InverseSourceAlpha;
+            blendStateDescription.RenderTargets[0].DestinationBlendAlpha = BlendOption.InverseSourceAlpha;
+            return BlendState.FromDescription(game.Device, blendStateDescription);
+        }
+
+        private BlendState createAlphaBlendBlendState()
+        {
+            var blendStateDescription = new BlendStateDescription();
+            blendStateDescription.RenderTargets[0].BlendEnable = true;
+            
+            blendStateDescription.RenderTargets[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;
+
+            blendStateDescription.RenderTargets[0].BlendOperation = BlendOperation.Add;
+            blendStateDescription.RenderTargets[0].SourceBlend = BlendOption.SourceAlpha; 
+            blendStateDescription.RenderTargets[0].DestinationBlend = BlendOption.InverseSourceAlpha;
+
+            blendStateDescription.RenderTargets[0].BlendOperationAlpha = BlendOperation.Add;
+            blendStateDescription.RenderTargets[0].SourceBlendAlpha = BlendOption.SourceAlpha;
+            blendStateDescription.RenderTargets[0].DestinationBlendAlpha = BlendOption.InverseSourceAlpha;
+            
+            return BlendState.FromDescription(game.Device, blendStateDescription);
+        }
+
+        private BlendState createPremultipliedBlendState()
+        {
+            var blendStateDescription = new BlendStateDescription();
+            blendStateDescription.RenderTargets[0].BlendEnable = true;
+
+            blendStateDescription.RenderTargets[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;
+
+            blendStateDescription.RenderTargets[0].BlendOperation = BlendOperation.Add;
+            blendStateDescription.RenderTargets[0].SourceBlend = BlendOption.One;
+            blendStateDescription.RenderTargets[0].DestinationBlend = BlendOption.InverseSourceAlpha;
+
+            blendStateDescription.RenderTargets[0].BlendOperationAlpha = BlendOperation.Add;
+            blendStateDescription.RenderTargets[0].SourceBlendAlpha = BlendOption.One;
+            blendStateDescription.RenderTargets[0].DestinationBlendAlpha = BlendOption.InverseSourceAlpha;
+
+            return BlendState.FromDescription(game.Device, blendStateDescription);
+        }
+
+
 
         public Color4 StartColor
         {
@@ -210,11 +257,13 @@ namespace MHGameWork.TheWizards.Particles
 
         public float TimeSinceStart;
         private DeviceContext context;
+        private BlendState alphaBlendBlendState;
         private BlendState additiveBlendState;
         private DepthStencilState depthStencilState;
         private int height;
         private int width;
         private BlendState normalBlendState;
+        private BlendState premultipliedBlendState;
 
         public void Update()
         {
@@ -244,7 +293,8 @@ namespace MHGameWork.TheWizards.Particles
                 
             }
 
-            if ((time + game.Elapsed > parameters.ParticleFrequency) && createParticles)
+
+            if ((time + game.Elapsed > parameters.ParticleFrequency) && createParticles && parameters.AutoSpawnParticles)
             {
                 AddParticles(parameters.particleCreater, (int)(ParticlesPerSecond * (time + game.Elapsed)));
                 time = 0;
@@ -419,7 +469,7 @@ namespace MHGameWork.TheWizards.Particles
 
             //xna alpha style
             // Set the alpha blend mode.
-            context.OutputMerger.BlendState = additiveBlendState;
+            context.OutputMerger.BlendState = premultipliedBlendState;
 
 
             // Set the alpha test mode.
@@ -432,7 +482,7 @@ namespace MHGameWork.TheWizards.Particles
             // (so particles will not obscure other particles).
 
             //game.GraphicsDevice.RenderState.DepthBufferEnable = true;
-            //game.GraphicsDevice.RenderState.DepthBufferWriteEnable = false;
+            //game.GraphicsDevice.RenderState.DepthBufferWriteEnable = false;t
 
             //end xna alpha style
 
@@ -466,7 +516,7 @@ namespace MHGameWork.TheWizards.Particles
             context.ClearState();
             game.SetBackbuffer();
             game.TextureRenderer.Draw(timeTextureRSV, new Vector2(0, 400), new Vector2(200, 200));
-            context.OutputMerger.BlendState = normalBlendState;
+            context.OutputMerger.BlendState = alphaBlendBlendState;
             game.TextureRenderer.Draw(allParticlesSRV, new Vector2(0,0), new Vector2(800, 600));//note: screen size
             
         }

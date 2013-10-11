@@ -115,6 +115,7 @@ VSOut vs_DirectionalBillboard(VertexInput In)
    //translationRight=float3(1,0,0)*In.TexCoord.x*In.size.x;
    //pos=pos/pos.w;
    //pos=pos+ translationUp*In.TexCoord.y*lerp(height,heightEnd,lifetime*oneOverTotalLifeTime)+ dir*(In.TexCoord.x*lerp(width,widthEnd,lifetime*oneOverTotalLifeTime)+0.5);
+   //TODO MHGW: i think the next line is incorrectly scaling the particles
    pos=pos+ float4(translationUp*In.TexCoord.y*lerp(height,heightEnd,lifetime*oneOverTotalLifeTime),1)
 		+ float4(dir*(In.TexCoord.x-0.5)*lerp(width,widthEnd,lifetime*oneOverTotalLifeTime),1);
    
@@ -131,17 +132,26 @@ VSOut vs_DirectionalBillboard(VertexInput In)
 // Pixel Shader
 float4 ps_main(VSOut In):SV_TARGET0
 {
-	
-	
-		clip(-In.lifeTime*oneOverTotalLifeTime+1);
+	clip(-In.lifeTime*oneOverTotalLifeTime+1);
 	//return float4(0.1f,0,0,0.1f);
 	//return float4(In.lifeTime*oneOverTotalLifeTime-1,0,0,1);
 	float4 Out;
 	
-	Out =txDiffuse.Sample( samLinear, In.TexCoord);
+	Out =txDiffuse.Sample( samLinear, In.TexCoord) * 1.0f;
 	
+
 	float3 color=lerp(startColor.rgb,endColor.rgb,In.lifeTime*oneOverTotalLifeTime);
-	return float4(color*Out.r,Out.r);//float4(Out.a,0,0,1);
+
+		//return float4(Out.a,0,0,1);
+		//return float4(Out.rgb,1);
+
+	float base = 5 * (Out.a*Out.a);
+	Out.rgb = float3(1,1,1) *  base + Out.rgb * (1-base);
+
+	return float4(Out.rgb	*Out.a ,  0.4f * Out.a	) * 1;
+
+	return float4(float3(1,1,1) ,Out.a);//float4(Out.a,0,0,1);
+	//return float4(color*Out.r,Out.r);//float4(Out.a,0,0,1);
 }
 
 // Technique

@@ -25,6 +25,8 @@ namespace MHGameWork.TheWizards.Rendering
         private List<Microsoft.Xna.Framework.Vector3> normals = new List<Microsoft.Xna.Framework.Vector3>();
         private List<Microsoft.Xna.Framework.Vector2> texcoords = new List<Microsoft.Xna.Framework.Vector2>();
 
+        public ITexture DiffuseTexture { get; set; }
+
         public void AddBox(Vector3 min, Vector3 max)
         {
             TangentVertex[] vertices;
@@ -46,15 +48,15 @@ namespace MHGameWork.TheWizards.Rendering
 
             }
         }
-        
+
         public void AddCustom(Vector3[] nPositions, Vector3[] nNormals, Vector2[] nTexcoords)
         {
             if (nPositions.Length != nNormals.Length) throw new ArgumentException();
             if (nPositions.Length != nTexcoords.Length) throw new ArgumentException();
-            positions.AddRange(nPositions.Select(v=>v.xna()));
-            normals.AddRange(nNormals.Select(v=>v.xna()));
-            
-            texcoords.AddRange(nTexcoords.Select(t=>new Microsoft.Xna.Framework.Vector2(t.X,t.Y)));
+            positions.AddRange(nPositions.Select(v => v.xna()));
+            normals.AddRange(nNormals.Select(v => v.xna()));
+
+            texcoords.AddRange(nTexcoords.Select(t => new Microsoft.Xna.Framework.Vector2(t.X, t.Y)));
         }
 
         public void AddSphere(int segments, float radius)
@@ -200,7 +202,7 @@ namespace MHGameWork.TheWizards.Rendering
             });
             geom.Sources.Add(new MeshPartGeometryData.Source
             {
-                DataVector2= texcoords.ToArray(),
+                DataVector2 = texcoords.ToArray(),
                 Number = 0,
                 Semantic = MeshPartGeometryData.Semantic.Texcoord
             });
@@ -208,6 +210,9 @@ namespace MHGameWork.TheWizards.Rendering
 
             var part = new RAMMeshPart();
             part.SetGeometryData(geom);
+
+            var material = new MeshCoreData.Material() { DiffuseColor = Color.White };
+            if (DiffuseTexture != null) new MeshCoreData.Material() { DiffuseMap = DiffuseTexture   };
 
             var mesh = new RAMMesh();
             mesh.GetCoreData().Parts.Add(new MeshCoreData.Part

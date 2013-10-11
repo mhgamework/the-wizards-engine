@@ -1,4 +1,7 @@
-
+float4 calculateNone(float3 oldVelocity, float3 oldPosition)
+{
+	return float4(0,0,0,0);
+}
 float4 calculateBall(float3 oldVelocity, float3 oldPosition)
 {
 	return float4(0,0,0,1);

@@ -35,7 +35,7 @@ namespace MHGameWork.TheWizards.Particles
         public Boolean Directional = false;
         public Vector2 UvStart = Vector2.Zero;
         public Vector2 UvSize = new Vector2(1, 1);
-        public Boolean CreateParticles = true;
+        public Boolean AutoSpawnParticles = true;
         public Boolean Continueous = true;
         public float CreationTime = 1;
         //out constructor
