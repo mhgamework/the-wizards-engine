@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
         public bool CanExecute(BehaviourTreeAgent agent)
         {
             return brain.TargetItem != null &&
-                   Vector3.Distance(brain.TargetItem.Physical.GetPosition(), brain.Position) < 1;
+                   Vector3.Distance(brain.TargetItem.Physical.Position, brain.Position) < 1;
         }
 
         public NodeResult Execute(BehaviourTreeAgent agent)

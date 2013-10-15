@@ -25,17 +25,17 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
         public IWorldLocator WorldLocator { get; set; }
 
         [NonOptional]
-        public ObjectsFactory ObjectsFactory { get; set; }
+        public PrototypeObjectsFactory PrototypeObjectsFactory { get; set; }
 
         private RobotPlayerPart robot;
         private RobotInventoryTextView view;
 
-        public PlayerRobotSimulator(CustomCamera camera, ITypedFactory typedFactory, IWorldLocator worldLocator, ObjectsFactory objectsFactory)
+        public PlayerRobotSimulator(CustomCamera camera, ITypedFactory typedFactory, IWorldLocator worldLocator, PrototypeObjectsFactory prototypeObjectsFactory)
         {
             Camera = camera;
             TypedFactory = typedFactory;
             WorldLocator = worldLocator;
-            ObjectsFactory = objectsFactory;
+            PrototypeObjectsFactory = prototypeObjectsFactory;
             robot = createRobot();
 
         }
@@ -90,7 +90,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
 
         private void setCameraView()
         {
-            var eye = robot.Physical.GetPosition();
+            var eye = robot.Physical.Position;
             var dir = TW.Graphics.SpectaterCamera.CameraDirection;
 
             eye += new Vector3(0, 2, 0);
@@ -117,11 +117,11 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
 
             view = new RobotInventoryTextView(robot);
 
-            robot.Pickup(ObjectsFactory.CreateWoodBlock());
-            robot.Pickup(ObjectsFactory.CreateWoodBlock());
-            robot.Pickup(ObjectsFactory.CreateWoodBlock());
-            robot.Pickup(ObjectsFactory.CreateWoodBlock());
-            robot.Pickup(ObjectsFactory.CreateWoodBlock());
+            robot.Pickup(PrototypeObjectsFactory.CreateWoodBlock());
+            robot.Pickup(PrototypeObjectsFactory.CreateWoodBlock());
+            robot.Pickup(PrototypeObjectsFactory.CreateWoodBlock());
+            robot.Pickup(PrototypeObjectsFactory.CreateWoodBlock());
+            robot.Pickup(PrototypeObjectsFactory.CreateWoodBlock());
 
             return robot;
         }

@@ -9,6 +9,7 @@ using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.RTSTestCase1.BehaviourTrees;
 
 using MHGameWork.TheWizards.SkyMerchant.Prototype.AI;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
@@ -23,7 +24,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         private readonly EnemyBehaviourFactory behaviourFactory;
 
         #region Injection
-        public IPhysicalPart Physical { get; set; }
+        public IPositionComponent Physical { get; set; }
         #endregion
 
         private IBehaviourNode behaviourTree;
@@ -46,25 +47,24 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 
         public void SimulateBehaviour()
         {
-            var oldPos = Physical.GetPosition();
+            var oldPos = Physical.Position;
 
 
-            Brain.UpdatePercepts(Physical.GetPosition());
+            Brain.UpdatePercepts(Physical.Position);
             if (behaviourTree.CanExecute(agent))
                 behaviourTree.Execute(agent);
 
-            var dir = Vector3.Normalize((Physical.GetPosition() - oldPos).ChangeY(0));
-            if (dir.Length() > 0.5f)
-                Physical.WorldMatrix = Microsoft.Xna.Framework.Matrix.CreateFromQuaternion(Functions.CreateFromLookDir(dir.xna())).dx()
-                                        * Matrix.RotationY(MathHelper.PiOver2)
-                                        * Matrix.RotationY(MathHelper.PiOver2)
-                                       * Matrix.Translation(Physical.GetPosition());
+            var dir = Vector3.Normalize((Physical.Position - oldPos).ChangeY(0));
+            if (!(dir.Length() > 0.5f)) return;
+            Physical.Rotation = Functions.CreateFromLookDir(dir.xna()).dx()
+                                   * Quaternion.RotationAxis(Vector3.UnitY, MathHelper.PiOver2)
+                                    * Quaternion.RotationAxis(Vector3.UnitY, MathHelper.PiOver2);
         }
 
         private IBehaviourNode CreateBehaviourTree()
         {
             // Shoot, Chase, Idle
-            var ret = new ConcurrentSelector(behaviourFactory.CreateFindTarget(), 
+            var ret = new ConcurrentSelector(behaviourFactory.CreateFindTarget(),
                 new PrioritySelector(
                     behaviourFactory.CreateShootTarget(),
                     behaviourFactory.CreateChaseTarget(),

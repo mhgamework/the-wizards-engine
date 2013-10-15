@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 using System.Linq;
 
@@ -22,7 +23,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         public ISimulationEngine SimulationEngine { get; set; }
         [NonOptional]
         public IWorldLocator WorldLocator { get; set; }
-        public IPhysicalPart Physical { get; set; }
+        public IPositionComponent Physical { get; set; }
         public BasicPhysicsPart Physics { get; set; }
         #endregion
 
@@ -43,23 +44,20 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 
             applyVelocity();
 
-
-            Physical.WorldMatrix =
-                getRotationMatrix()
-                    * Matrix.Translation(Physical.GetPosition());
+            Physical.Rotation = getRotationQuaternion();
         }
 
-        private Matrix getRotationMatrix()
+        private Quaternion getRotationQuaternion()
         {
             var dir = LookDirection.xna();
             dir.Y = 0;
             dir.Normalize();
-            return Microsoft.Xna.Framework.Matrix.CreateFromQuaternion(Functions.CreateFromLookDir(dir)).dx();
+            return Functions.CreateFromLookDir(dir).dx();
         }
 
         private void applyVelocity()
         {
-            moveTo(Physical.GetPosition() + Velocity * SimulationEngine.Elapsed);
+            moveTo(Physical.Position + Velocity * SimulationEngine.Elapsed);
         }
 
         private float lastJump = -100;
@@ -76,12 +74,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         private void applyGroundMovement()
         {
             if (!IsOnGround()) return;
-            if (Physical.GetPosition().Y < GetGroundPoint().Y)
-                Physical.SetPosition(Physical.GetPosition().ChangeY(GetGroundPoint().Y));
+            if (Physical.Position.Y < GetGroundPoint().Y)
+                Physical.Position = Physical.Position.ChangeY(GetGroundPoint().Y);
 
 
             var dir = getInputControlsDirection();
-            dir = Vector3.TransformNormal(dir, getRotationMatrix()) * 3;
+            dir = Vector3.TransformNormal(dir, Matrix.RotationQuaternion(getRotationQuaternion())) * 3;
             Velocity = dir.TakeXZ().ToXZ(Velocity.Y);
             if (Velocity.Y < 0) Velocity = Velocity.ChangeY(0);
 
@@ -98,7 +96,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
                 if (newPos.Y < groundHeight) newPos.Y = groundHeight;
             }
 
-            Physical.SetPosition(newPos);
+            Physical.Position = newPos;
         }
 
 
@@ -106,7 +104,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         {
             var result = raycastGround();
             return result.IsHit && result.Distance < 0.1f;
-            //return WorldLocator.AtPosition(Physical.GetPosition(), 0.2f).Any(o => o != Physical);
+            //return WorldLocator.AtPosition(Physical.Position, 0.2f).Any(o => o != Physical);
         }
 
         private RaycastResult raycastGround()
@@ -123,7 +121,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 
         private Ray getGroundCastRay()
         {
-            return new Ray(Physical.GetPosition() - new Vector3(0, 0.01f, 0), -MathHelper.Up);
+            return new Ray(Physical.Position - new Vector3(0, 0.01f, 0), -MathHelper.Up);
         }
 
         private Vector3 getInputControlsDirection()

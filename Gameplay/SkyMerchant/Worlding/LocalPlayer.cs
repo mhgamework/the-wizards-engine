@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Worlding
             this.worldlocator = worldlocator;
         }
 
-        public IEnumerable<IWorldObject> TargetedObjects
+        public IEnumerable<IPositionComponent> TargetedObjects
         {
             get
             {
@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Worlding
             }
         }
 
-        public Vector3? GetPointTargetedOnObject(IWorldObject obj)
+        public Vector3? GetPointTargetedOnObject(IPositionComponent obj)
         {
             var ray = TW.Data.Get<CameraInfo>().GetCenterScreenRay();
             var localRay = ray.Transform(Matrix.Invert(obj.GetWorldMatrix()));

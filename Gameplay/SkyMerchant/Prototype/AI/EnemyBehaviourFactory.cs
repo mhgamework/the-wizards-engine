@@ -5,6 +5,7 @@ using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.RTSTestCase1.BehaviourTrees;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
@@ -35,7 +36,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
             set { brain = value; }
         }
 
-        public IPhysicalPart Physical { get; set; }
+        public IPositionComponent Physical { get; set; }
         #endregion
 
         public IBehaviourNode CreateGuardPosition(Func<Vector3> getPosition)
@@ -59,11 +60,11 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
         {
             return new ConcurrentSelector(
                 new Condition(ag => Brain.TargetPlayer != null &&
-                    Vector3.Distance(Brain.TargetPlayer.Physical.GetPosition(), Brain.Position) < Brain.LookDistance),
+                    Vector3.Distance(Brain.TargetPlayer.Physical.Position, Brain.Position) < Brain.LookDistance),
                 new SingleActionBehaviour(delegate
                 {
                     if (Brain.TargetPlayer == null) return;
-                    Brain.Destination = Brain.TargetPlayer.Physical.GetPosition();
+                    Brain.Destination = Brain.TargetPlayer.Physical.Position;
                 }),
 
                 new MoveToDestinationBehaviour(Brain, SimulationEngine, Physical)
@@ -81,7 +82,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
                 new PickupTargetItemBehaviour(Brain, ItemFactory),
                 new Sequence(
                     new FindClosestResourceBehaviour(Brain, WorldLocator, range),
-                    new SingleActionBehaviour(() => Brain.Destination = Brain.TargetItem.Physical.GetPosition()),
+                    new SingleActionBehaviour(() => Brain.Destination = Brain.TargetItem.Physical.Position),
                     new MoveToDestinationBehaviour(Brain, SimulationEngine, Physical)
                     )
                 );

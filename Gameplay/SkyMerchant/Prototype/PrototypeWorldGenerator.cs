@@ -8,12 +8,15 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
     public class PrototypeWorldGenerator
     {
         #region Injection
-
-        [NonOptional]
-        public ObjectsFactory Factory { get; set; }
-        [NonOptional]
+        public PrototypeObjectsFactory Factory { get; set; }
         public Random Random { get; set; }
         #endregion
+
+        public PrototypeWorldGenerator(PrototypeObjectsFactory factory, Random random)
+        {
+            Factory = factory;
+            Random = random;
+        }
 
 
         public void GenerateWorld(float size)
@@ -29,8 +32,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             {
                 var n = Factory.CreateIsland();
                 n.Seed = Random.Next(3);
-                n.Physical.SetPosition(nextVector3(worldMin, worldMax));
-                n.TargetHeight = n.Physical.GetPosition().Y;
+                n.Physical.Position = nextVector3(worldMin, worldMax);
+                n.TargetHeight = n.Physical.Position.Y;
 
 
                 populateIsland(n);
@@ -40,8 +43,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             for (int i = 0; i < density; i++)
             {
                 var robot = Factory.CreateDrone();
-                robot.Physical.SetPosition(nextVector3(worldMin, worldMax));
-                robot.GuardPosition = robot.Physical.GetPosition();
+                robot.Physical.Position = nextVector3(worldMin, worldMax);
+                robot.GuardPosition = robot.Physical.Position;
             }
 
             density = 1 / 100f;
@@ -49,7 +52,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             for (int i = 0; i < density; i++)
             {
                 var robot = Factory.CreatePirate();
-                robot.Physical.SetPosition(nextVector3(worldMin, worldMax));
+                robot.Physical.Position = nextVector3(worldMin, worldMax);
             }
         }
 
@@ -65,7 +68,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
                 t.WantsAmount = 5;
                 t.WantsType = Factory.WoodType;
 
-                tViz.Physical.SetPosition(n.Physical.GetPosition());
+                tViz.Physical.Position = n.Physical.Position;
                 
             }
             ItemPart item;
@@ -84,7 +87,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             if (Random.NextDouble() < 0.4f)
             {
                 var source = Factory.CreateTree();
-                source.Physical.SetPosition(n.Physical.GetPosition());
+                source.Physical.Position = n.Physical.Position;
             }
         }
 

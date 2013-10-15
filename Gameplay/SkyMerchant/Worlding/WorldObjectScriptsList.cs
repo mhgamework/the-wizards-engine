@@ -7,12 +7,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.Worlding
 {
     public class WorldObjectScriptsList : ICollection<IWorldScript>
     {
-        private readonly WorldObject obj;
         private List<IWorldScript> scripts = new List<IWorldScript>();
 
-        public WorldObjectScriptsList(WorldObject obj)
+        public WorldObjectScriptsList()
         {
-            this.obj = obj;
         }
 
         public IEnumerator<IWorldScript> GetEnumerator()
@@ -28,7 +26,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Worlding
         public void Add(IWorldScript item)
         {
             scripts.Add(item);
-            item.Initialize(obj);//TODO: probably better use observer pattern
+            //item.Initialize(obj);//TODO: probably better use observer pattern
 
         }
 

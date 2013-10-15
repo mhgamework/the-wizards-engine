@@ -3,28 +3,27 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
     [ModelObjectChanged]
-    public class GenerationSourcePart : EngineModelObject, IPhysical
+    public class GenerationSourcePart : EngineModelObject
     {
-        #region Injection
-        public GenerationPart GenerationPart { get; set; }
-        public IPhysicalPart Physical { get; set; }
+        public GenerationPart GenerationPart { get; private set; }
+        public IPositionComponent Physical { get; private set; }
+        public IMeshRenderComponent MeshRenderComponent { get; private set; }
       
-        #endregion
+
+        public GenerationSourcePart(GenerationPart generationPart, IPositionComponent physical)
+        {
+            GenerationPart = generationPart;
+            Physical = physical;
+        }
+
 
         public IMesh EmptyMesh { get; set; }
         public IMesh FullMesh { get; set; }
-
-        public void UpdatePhysical()
-        {
-        }
-
-        public GenerationSourcePart()
-        {
-        }
 
         public void SimulateGeneration()
         {

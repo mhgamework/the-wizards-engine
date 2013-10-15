@@ -29,22 +29,22 @@ namespace MHGameWork.TheWizards.SkyMerchant.Installers
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            //container.Register(Component.For<Physical>().ImplementedBy<Physical>().Forward<IPhysicalPart>().LifestyleTransient());
+            //container.Register(Component.For<Physical>().ImplementedBy<Physical>().Forward<IPositionComponent>().LifestyleTransient());
             container.Register(Component.For<Physical>().ImplementedBy<Physical>().LifestyleScoped<ObjectPartScope>());
             container.Register(Component.For<IWorldObject>().ImplementedBy<WorldObject>().LifestyleScoped<ObjectPartScope>());
 
             container.Register(
-                Component.For<IPhysicalPart>()
+                Component.For<IPositionComponent>()
                          .ImplementedBy<WorldObjectPhysicalPart>()
                          .LifestyleScoped<ObjectPartScope>());
-            //container.Register(Component.For<IPhysicalPart>().ImplementedBy<WorldObjectPhysicalPart>().UsingFactoryMethod(
+            //container.Register(Component.For<IPositionComponent>().ImplementedBy<WorldObjectPhysicalPart>().UsingFactoryMethod(
             //    delegate(IKernel k)
             //    {
             //        var ph = k.Resolve<Physical>();
             //        var world = new WorldObject(ph);
             //        return new WorldObjectPhysicalPart(world, ph);
             //    }).LifestyleTransient());
-            //container.Register(Component.For<IPhysicalPart>().ImplementedBy<Physical>().LifestyleTransient());
+            //container.Register(Component.For<IPositionComponent>().ImplementedBy<Physical>().LifestyleTransient());
 
             // Override!!!
             container.Register(Component.For<RobotPlayerPart>().LifestyleSingleton());

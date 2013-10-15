@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.RTSTestCase1.BehaviourTrees;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.AI;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
@@ -15,7 +16,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
     public class ProximityChaseEnemyPart : EngineModelObject
     {
         #region Injection
-        public IPhysicalPart Physical { get; set; }
+        public IPositionComponent Physical { get; set; }
         private EnemyBehaviourFactory BehaviourFactory;
         [DoNotWire]
         public EnemyBrain Brain { get; set; }
@@ -50,17 +51,17 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 
         public void SimulateBehaviour()
         {
-            var oldPos = Physical.GetPosition();
+            var oldPos = Physical.Position;
 
-            Brain.UpdatePercepts(Physical.GetPosition());
+            Brain.UpdatePercepts(Physical.Position);
             if (behaviourTree.CanExecute(agent))
                 behaviourTree.Execute(agent);
 
-            var dir = Vector3.Normalize((Physical.GetPosition() - oldPos).ChangeY(0));
+            var dir = Vector3.Normalize((Physical.Position - oldPos).ChangeY(0));
             if (dir.Length() > 0.5f)
                 Physical.WorldMatrix = Microsoft.Xna.Framework.Matrix.CreateFromQuaternion(Functions.CreateFromLookDir(dir.xna())).dx()
                                         * Matrix.RotationY(MathHelper.PiOver2)
-                                       * Matrix.Translation(Physical.GetPosition());
+                                       * Matrix.Translation(Physical.Position);
 
         }
 

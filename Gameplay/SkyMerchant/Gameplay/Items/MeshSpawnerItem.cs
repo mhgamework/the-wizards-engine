@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Gameplay.Items
 
         }
 
-        private IWorldObject createNewMesh()
+        private IPositionComponent createNewMesh()
         {
             var p = world.CreateMeshObject(TW.Assets.LoadMesh(MeshPath));
             return p;

@@ -49,7 +49,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Gameplay
 
         public struct BridgeAnchor
         {
-            public IWorldObject Island { get; set; }
+            public IPositionComponent Island { get; set; }
             public Vector3 RelativePosition { get; set; }
 
             public bool IsEmpty

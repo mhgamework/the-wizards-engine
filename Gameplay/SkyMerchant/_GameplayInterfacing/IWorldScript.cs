@@ -5,7 +5,8 @@
     /// </summary>
     public interface IWorldScript
     {
-        void Initialize(IWorldObject obj);
+        // TODO: This is replaced with constructor injection?
+        //void Initialize(IWorldObject obj);
         void Update();
 
     }

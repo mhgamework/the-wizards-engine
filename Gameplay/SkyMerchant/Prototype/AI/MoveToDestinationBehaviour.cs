@@ -2,6 +2,7 @@
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.RTSTestCase1.BehaviourTrees;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
@@ -10,7 +11,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
     {
         private readonly EnemyBrain brain;
         private readonly ISimulationEngine engine;
-        private readonly IPhysicalPart ph;
+        private readonly IPositionComponent ph;
 
         /// <summary>
         /// Note: replace physical with a moveto delegate?(Action{Vector3})
@@ -18,7 +19,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
         /// <param name="brain"></param>
         /// <param name="engine"></param>
         /// <param name="ph"></param>
-        public MoveToDestinationBehaviour(EnemyBrain brain, ISimulationEngine engine, IPhysicalPart ph)
+        public MoveToDestinationBehaviour(EnemyBrain brain, ISimulationEngine engine, IPositionComponent ph)
         {
             this.brain = brain;
             this.engine = engine;
@@ -34,7 +35,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
         public NodeResult Execute(BehaviourTreeAgent agent)
         {
             if (Vector3.Distance(brain.Position, brain.Destination) < 0.01f) return NodeResult.Success;
-            ph.SetPosition(ph.GetPosition() + Vector3.Normalize(ph.GetPosition() - brain.Destination) * engine.Elapsed * 2);
+            ph.Position = ph.Position + Vector3.Normalize(ph.Position - brain.Destination) * engine.Elapsed * 2;
             return NodeResult.Running;
         }
     }

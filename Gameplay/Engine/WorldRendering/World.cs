@@ -4,6 +4,7 @@ using MHGameWork.TheWizards.Engine.Raycasting;
 using MHGameWork.TheWizards.Engine.Synchronization;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Engine.WorldRendering
@@ -34,7 +35,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         /// Could be seen as a getter
         /// </summary>
         /// <returns></returns>
-        public RaycastResult Raycast(Ray ray, Func<IPhysical, bool> filter)
+        public RaycastResult Raycast(Ray ray, Func<IPositionComponent, bool> filter)
         {
             return raycaster.Raycast(ray,filter);
         }

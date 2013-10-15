@@ -8,18 +8,18 @@ namespace MHGameWork.TheWizards.RTSTestCase1._Tests
 {
     public class SimpleWorldLocator : IWorldLocator
     {
-        public IEnumerable<IWorldObject> AtPosition(Vector3 point, float radius)
+        public IEnumerable<IPositionComponent> AtPosition(Vector3 point, float radius)
         {
-            return from obj in TW.Data.Objects.OfType<IWorldObject>()
+            return from obj in TW.Data.Objects.OfType<IPositionComponent>()
                    let dist = Vector3.Distance(obj.Position, point)
                    where dist < radius
                    orderby dist
                    select obj;
         }
 
-        public IEnumerable<IWorldObject> Raycast(Ray ray)
+        public IEnumerable<IPositionComponent> Raycast(Ray ray)
         {
-            var ret = from obj in TW.Data.Objects.OfType<IWorldObject>()
+            var ret = from obj in TW.Data.Objects.OfType<IPositionComponent>()
                       let localRay = ray.Transform(Matrix.Invert(obj.GetWorldMatrix()))
                       let intersect = localRay.xna().Intersects(obj.LocalBoundingBox.xna())
                       where intersect.HasValue

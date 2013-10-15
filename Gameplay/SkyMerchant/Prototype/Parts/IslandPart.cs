@@ -13,24 +13,24 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
     /// IPhysical is here to make the simpleworldlocator work
     /// </summary>
     [ModelObjectChanged]
-    public class IslandPart : EngineModelObject,IPhysical
+    public class IslandPart : EngineModelObject
     {
         #region Injection
-        public IPhysicalPart Physical { get; set; }
-
-        public IWorldObject WorldObject { get; set; }
-
+        public IPositionComponent Physical { get; set; }
+        public IMeshRenderComponent RenderComponent { get; set; }
         public BasicPhysicsPart Physics { get; set; }
-        [NonOptional]
         public IslandMeshFactory IslandMeshFactory { get; set; }
         #endregion
 
         private static float islandCollisionRadius = 20;
 
-        public IslandPart()
+        public IslandPart(IPositionComponent physical, IMeshRenderComponent renderComponent, BasicPhysicsPart physics, IslandMeshFactory islandMeshFactory)
         {
+            Physical = physical;
+            RenderComponent = renderComponent;
+            Physics = physics;
+            IslandMeshFactory = islandMeshFactory;
         }
-
 
         public void UpdatePhysical()
         {
@@ -46,7 +46,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         /// <returns></returns>
         public float GetMaxY()
         {
-            return Physical.GetBoundingBox().Maximum.Y;
+            return Physical.LocalBoundingBox.Transform(Physical.GetWorldMatrix()).Maximum.Y;
         }
 
         public int Seed { get; set; }
@@ -55,12 +55,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 
         public void FixPhysical()
         {
-            if (Physical.Mesh != null) return;
-            Physical.Mesh = IslandMeshFactory.GetMesh(Seed);
-            var boundingBox = TW.Assets.GetBoundingBox(Physical.Mesh);
+            if (RenderComponent.Mesh != null) return;
+            RenderComponent.Mesh = IslandMeshFactory.GetMesh(Seed);
+            var boundingBox = TW.Assets.GetBoundingBox(RenderComponent.Mesh);
             var center = (boundingBox.Minimum + boundingBox.Maximum) * 0.5f;
             center.Y = boundingBox.Maximum.Y;
-            Physical.ObjectMatrix = Matrix.Translation(-center);
+            RenderComponent.ObjectMatrix = Matrix.Translation(-center);
         }
 
         #endregion
@@ -68,7 +68,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         public void SimulateFloatForce()
         {
             var i = this;
-            var diff = i.Physical.GetPosition().Y - i.TargetHeight;
+            var diff = i.Physical.Position.Y - i.TargetHeight;
             i.Physics.ApplyForce(-diff * Vector3.UnitY);
             i.Physics.ApplyForce(-0.1f * Vector3.UnitY * Vector3.Dot(Vector3.UnitY, i.Physics.Velocity));
 
@@ -78,9 +78,9 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         {
             var i = this;
             // Move and wrap
-            var oldPos = i.Physical.GetPosition();
-            var newPos = i.Physical.GetPosition() + i.Physics.Velocity * TW.Graphics.Elapsed;
-            i.Physical.SetPosition(newPos);
+            var oldPos = i.Physical.Position;
+            var newPos = i.Physical.Position + i.Physics.Velocity * TW.Graphics.Elapsed;
+            i.Physical.Position = newPos;
 
             //TW.Graphics.LineManager3D.AddCenteredBox(newPos, islandCollisionRadius, new Color4(0, 0, 0));
         }
@@ -89,7 +89,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         {
             var i = this;
             // Move and wrap
-            var newPos = i.Physical.GetPosition();
+            var newPos = i.Physical.Position;
             for (int j = 0; j < 3; j++)
             {
                 var worldRange = 2000;
@@ -98,7 +98,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
             }
 
 
-            i.Physical.SetPosition(newPos);
+            i.Physical.Position = newPos;
         }
 
         public void SimulateIslandShieldCollision()
@@ -109,7 +109,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
             foreach (var j in TW.Data.Objects.OfType<IslandPart>())
             {
                 if (i == j) continue;
-                var dir = j.Physical.GetPosition() - i.Physical.GetPosition();
+                var dir = j.Physical.Position - i.Physical.Position;
                 var dist = dir.Length();
 
                 dir.Normalize();
@@ -170,13 +170,13 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         //        if (b.CalculateCurrentLength() > b.InitialLength)
         //            col = new Color4(1, 0, 0);
 
-        //        TW.Graphics.LineManager3D.AddLine(b.Start.Physical.GetPosition() + offset, b.End.Physical.GetPosition() + offset, col);
+        //        TW.Graphics.LineManager3D.AddLine(b.Start.Physical.Position + offset, b.End.Physical.Position + offset, col);
         //    }
 
         //    var target = getTargetedIsland();
         //    if (bridgeStart != null && target != null)
         //    {
-        //        TW.Graphics.LineManager3D.AddLine(bridgeStart.Physical.GetPosition() + offset, target.Physical.GetPosition() + offset, new Color4(1, 0, 0));
+        //        TW.Graphics.LineManager3D.AddLine(bridgeStart.Physical.Position + offset, target.Physical.Position + offset, new Color4(1, 0, 0));
         //    }
         //}
 
@@ -198,7 +198,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 
         //    drivingIsland.Velocity += dir * TW.Graphics.Elapsed;
 
-        //    TW.Graphics.SpectaterCamera.CameraPosition = drivingIsland.Physical.GetPosition() +
+        //    TW.Graphics.SpectaterCamera.CameraPosition = drivingIsland.Physical.Position +
         //                                                 new Vector3(0, 10, 0);
         //}
 

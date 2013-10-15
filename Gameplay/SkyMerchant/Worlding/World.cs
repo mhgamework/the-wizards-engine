@@ -11,28 +11,30 @@ namespace MHGameWork.TheWizards.SkyMerchant.Worlding
     /// </summary>
     public class World : IWorld
     {
-        private readonly ObjectsFactory factory;
+        private readonly PrototypeObjectsFactory factory;
         private readonly Func<Physical> createPhysical;
 
-        public World(ObjectsFactory factory, Func<Physical> createPhysical)
+        public World(PrototypeObjectsFactory factory, Func<Physical> createPhysical)
         {
             this.factory = factory;
             this.createPhysical = createPhysical;
         }
 
-        public IWorldObject CreateMeshObject(IMesh loadMesh)
+        public IPositionComponent CreateMeshObject(IMesh loadMesh)
         {
+            throw new NotImplementedException();
             var ph = createPhysical();
             ph.Mesh = loadMesh;
 
-            return new WorldObject(ph);
+            //return new WorldObject(ph);
         }
 
-        public IWorldObject CreateIsland(int seed)
+        public IPositionComponent CreateIsland(int seed)
         {
+            throw new NotImplementedException();
             var i = factory.CreateIsland();
             i.Seed = seed;
-            return (IWorldObject)i.Physical;
+            //return (IWorldObject)i.Physical;
         }
     }
 }

@@ -55,7 +55,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
             //var typeFactory = Substitute.For<ITypedFactory>();
             //typeFactory.CreateIsland().Returns(i => new IslandPart() { IslandMeshFactory = meshFactory });
             //typeFactory.CreatePhysical().Returns(i => new Physical());
-            //var ret = new ObjectsFactory(typeFactory);
+            //var ret = new PrototypeObjectsFactory(typeFactory);
             //return ret;
         }
     }

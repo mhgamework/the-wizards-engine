@@ -4,9 +4,9 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
 {
     public class SimpleItemFactory : TraderPart.IItemFactory
     {
-        private ObjectsFactory factory;
+        private PrototypeObjectsFactory factory;
 
-        public SimpleItemFactory(ObjectsFactory factory)
+        public SimpleItemFactory(PrototypeObjectsFactory factory)
         {
             this.factory = factory;
         }

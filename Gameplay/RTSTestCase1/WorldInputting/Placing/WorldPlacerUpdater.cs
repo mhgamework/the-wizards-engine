@@ -57,7 +57,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Placing
                 if (p.HasValue)
                 {
                     var item = placer.CreateItem();
-                    placer.SetPosition(item, p.Value);
+                    placer.Position = item, p.Value;
                 }
             }
         }

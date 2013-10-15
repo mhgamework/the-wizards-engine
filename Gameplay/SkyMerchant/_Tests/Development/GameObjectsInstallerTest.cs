@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         [Test]
         public void TestCreateIsland()
         {
-            var fact = container.Resolve<ObjectsFactory>();
+            var fact = container.Resolve<PrototypeObjectsFactory>();
             var island = fact.CreateIsland();
 
             Assert.NotNull(island.IslandMeshFactory);
@@ -44,7 +44,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         [Test]
         public void TestCreatePhysicalPart()
         {
-            var ph = container.Resolve<IPhysicalPart>();
+            var ph = container.Resolve<IPositionComponent>();
 
 
 

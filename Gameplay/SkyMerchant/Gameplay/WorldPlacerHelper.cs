@@ -13,10 +13,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.Gameplay
     public class WorldPlacerHelper : IHotbarItem
     {
 
-        private Func<IWorldObject> createNew;
+        private Func<IPositionComponent> createNew;
         private float zoom = 10;
 
-        public WorldPlacerHelper(Func<IWorldObject> createNew)
+        public WorldPlacerHelper(Func<IPositionComponent> createNew)
         {
             this.createNew = createNew;
         }

@@ -24,6 +24,10 @@ namespace MHGameWork.TheWizards
         {
             return new Microsoft.Xna.Framework.Vector4(v.X, v.Y, v.Z, v.W);
         }
+        public static Microsoft.Xna.Framework.Quaternion xna(this SlimDX.Quaternion v)
+        {
+            return new Microsoft.Xna.Framework.Quaternion(v.X, v.Y, v.Z, v.W);
+        }
         public static Microsoft.Xna.Framework.Matrix xna(this SlimDX.Matrix v)
         {
             return new Microsoft.Xna.Framework.Matrix(v.M11, v.M12, v.M13, v.M14,
@@ -60,6 +64,10 @@ namespace MHGameWork.TheWizards
         public static SlimDX.Vector4 dx(this Microsoft.Xna.Framework.Vector4 v)
         {
             return new SlimDX.Vector4(v.X, v.Y, v.Z, v.W);
+        }
+        public static SlimDX.Quaternion dx(this Microsoft.Xna.Framework.Quaternion v)
+        {
+            return new SlimDX.Quaternion(v.X, v.Y, v.Z, v.W);
         }
         public static SlimDX.Matrix dx(this Microsoft.Xna.Framework.Matrix v)
         {

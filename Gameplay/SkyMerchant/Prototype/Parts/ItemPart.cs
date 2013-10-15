@@ -4,24 +4,26 @@ using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
     [ModelObjectChanged]
-    public class ItemPart : EngineModelObject ,IPhysical
+    public class ItemPart : EngineModelObject 
     {
         #region Injection
-        public IPhysicalPart Physical { get; set; }
-       
-
+        public IPositionComponent Physical { get; set; }
+        public IMeshRenderComponent RenderComponent { get; set; }
         public Random Random { get; set; }
         #endregion
 
-        public ItemPart()
+        public ItemPart(IPositionComponent physical, IMeshRenderComponent renderComponent, Random random)
         {
+            Physical = physical;
+            RenderComponent = renderComponent;
+            Random = random;
         }
-
         public void UpdatePhysical()
         {
         }
@@ -35,14 +37,14 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         {
             InStorage = true;
             Island = null;
-            Physical.Visible = false;
+            RenderComponent.Visible = false;
         }
 
         public void PlaceOnIsland(IslandPart island)
         {
             InStorage = false;
             Island = island;
-            Physical.Visible = true;
+            RenderComponent.Visible = true;
             RandomOffset = new Vector3((float)Random.NextDouble(), 0, (float)Random.NextDouble());
             RandomOffset = RandomOffset - MathHelper.One*0.5f;
             RandomOffset *= 4;
@@ -52,7 +54,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         public void FixPosition()
         {
             if (InStorage) return;
-            Physical.SetPosition(Island.Physical.GetPosition().ChangeY(Island.GetMaxY()) + RandomOffset);
+            Physical.Position = Island.Physical.Position.ChangeY(Island.GetMaxY()) + RandomOffset;
         }
     }
 }

@@ -35,7 +35,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Gameplay.Items
             placer.Update();
         }
 
-        private IWorldObject createNewIsland()
+        private IPositionComponent createNewIsland()
         {
             var island = world.CreateIsland(random.Next());
             return island;

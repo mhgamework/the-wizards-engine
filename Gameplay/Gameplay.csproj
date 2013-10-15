@@ -172,7 +172,7 @@
     <Compile Include="SkyMerchant\Gameplay\BridgePart.cs" />
     <Compile Include="SkyMerchant\Installers\GameObjectsInstaller.cs" />
     <Compile Include="SkyMerchant\Installers\GameplayInstaller.cs" />
-    <Compile Include="SkyMerchant\Prototype\Parts\IPhysicalPart.cs" />
+    <Compile Include="SkyMerchant\Prototype\PrototypeObjectsInvariants.cs" />
     <Compile Include="SkyMerchant\Prototype\PlayerRobotSimulator.cs" />
     <Compile Include="SkyMerchant\Prototype\SkyMerchantRenderingSimulator.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\ScriptsInventoryNode.cs" />
@@ -184,15 +184,17 @@
     <Compile Include="SkyMerchant\Worlding\LocalPlayer.cs" />
     <Compile Include="SkyMerchant\Installers\WorldingInstaller.cs" />
     <Compile Include="SkyMerchant\Worlding\World.cs" />
-    <Compile Include="SkyMerchant\Worlding\WorldObject.cs" />
-    <Compile Include="SkyMerchant\Worlding\WorldObjectPhysicalPart.cs" />
     <Compile Include="SkyMerchant\Worlding\WorldObjectScriptsList.cs" />
     <Compile Include="SkyMerchant\_Engine\Windsor\WindsorDebugTools.cs" />
+    <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IMeshRenderComponent.cs" />
+    <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IRenderComponent.cs" />
+    <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IScriptComponent.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\ILocalPlayer.cs" />
+    <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IPositionComponent.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorld.cs" />
-    <Compile Include="SkyMerchant\_GameplayInterfacing\IWorldObject.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IScriptType.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\GameObjectsInstallerTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Development\PersistenceTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\ScriptingTest.cs" />
     <Compile Include="SkyMerchant\Generation\ArrayFiniteVoxels.cs" />
     <Compile Include="SkyMerchant\Generation\IslandGenerater.cs" />
@@ -295,7 +297,6 @@
     <Compile Include="BehaviourTrees\Sequence.cs" />
     <Compile Include="BehaviourTrees\While.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorldLocator.cs" />
-    <Compile Include="Engine\Worlding\IWorldDestroyer.cs" />
     <Compile Include="RTSTestCase1\_Engine\ObjectParts\IObjectPart.cs" />
     <Compile Include="RTSTestCase1\Inputting\InputFactory.cs" />
     <Compile Include="RTSTestCase1\Simulators\InputSimulator.cs" />
@@ -315,7 +316,6 @@
     <Compile Include="RTSTestCase1\WorldInputting\Placing\WorldPlacerUpdater.cs" />
     <Compile Include="RTSTestCase1\_Engine\Animation\SimpleAnimationProvider.cs" />
     <Compile Include="RTSTestCase1\_Engine\PhysicalSimulator.cs" />
-    <Compile Include="Engine\Worlding\IPhysical.cs" />
     <Compile Include="Engine\Worlding\Physical.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\EditorConfiguration.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\EditorMenuConfiguration.cs" />
@@ -373,11 +373,11 @@
     <Compile Include="SkyMerchant\Prototype\AI\EnemyBrain.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\FindTargetBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\ITypedFactory.cs" />
-    <Compile Include="SkyMerchant\Prototype\ObjectsFactory.cs" />
+    <Compile Include="SkyMerchant\Prototype\PrototypeObjectsFactory.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\BasicPhysicsPart.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\GenerationSourcePart.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\GenerationPart.cs" />
-    <Compile Include="SkyMerchant\Prototype\ISimulationEngine.cs" />
+    <Compile Include="SkyMerchant\_GameplayInterfacing\ISimulationEngine.cs" />
     <Compile Include="SkyMerchant\Prototype\IslandMeshFactory.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\IslandPart.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\MoveToDestinationBehaviour.cs" />
@@ -397,8 +397,6 @@
     <Compile Include="SkyMerchant\Prototype\SimpleUserMovementInput.cs" />
     <Compile Include="SkyMerchant\Voxels\IFiniteVoxels.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\IslandsTest.cs" />
-    <Compile Include="SkyMerchant\_Tests\Unused\FlyingPrototypeTest.cs" />
-    <Compile Include="SkyMerchant\Island.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\ItemPart.cs" />
     <Compile Include="SkyMerchant\Prototype\PrototypeWorldGenerator.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\RobotPlayerPart.cs" />
@@ -478,7 +476,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SkyMerchant\Gameplay\AirCurrents\" />
+    <Folder Include="SkyMerchant\Persistence\" />
     <Folder Include="SkyMerchant\_Tests\Broken\" />
+    <Folder Include="SkyMerchant\_Tests\Unused\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

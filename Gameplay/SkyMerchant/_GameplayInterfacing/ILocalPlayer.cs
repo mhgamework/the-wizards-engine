@@ -11,8 +11,8 @@ namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing
         /// <summary>
         /// Ordered by distances, nearest first.
         /// </summary>
-        IEnumerable<IWorldObject> TargetedObjects { get; }
+        IEnumerable<IPositionComponent> TargetedObjects { get; }
 
-        Vector3? GetPointTargetedOnObject(IWorldObject island);
+        Vector3? GetPointTargetedOnObject(IPositionComponent island);
     }
 }

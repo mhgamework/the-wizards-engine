@@ -8,7 +8,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing
     /// </summary>
     public interface IWorld
     {
-        IWorldObject CreateMeshObject(IMesh loadMesh);
-        IWorldObject CreateIsland(int seed);
+        IPositionComponent CreateMeshObject(IMesh loadMesh);
+        IPositionComponent CreateIsland(int seed);
     }
 }

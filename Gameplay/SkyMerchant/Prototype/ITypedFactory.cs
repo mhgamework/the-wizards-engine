@@ -2,6 +2,7 @@
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.AI;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype
 {
@@ -9,7 +10,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
     {
         IslandPart CreateIsland();
         BasicPhysicsPart CreatePhysics();
-        IPhysicalPart CreatePhysicalPart();
+        IPositionComponent CreatePhysicalPart();
         ItemPart CreateItemPart();
 
         RobotPlayerPart CreateRobotPlayerPart();

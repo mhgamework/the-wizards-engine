@@ -2,6 +2,7 @@
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
@@ -10,11 +11,17 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
     /// Responsible for visualizing a traderpart
     /// </summary>
     [ModelObjectChanged]
-    public class TraderVisualizerPart : EngineModelObject, IPhysical
+    public class TraderVisualizerPart : EngineModelObject
     {
         public TraderPart TraderPart { get; set; }
-        public IPhysicalPart Physical { get; set; }
+        public IMeshRenderComponent Physical { get; set; }
 
+
+        public TraderVisualizerPart(TraderPart traderPart, IMeshRenderComponent physical)
+        {
+            TraderPart = traderPart;
+            Physical = physical;
+        }
 
         public TraderVisualizerPart()
         {

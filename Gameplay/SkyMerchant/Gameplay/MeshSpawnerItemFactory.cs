@@ -7,7 +7,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Gameplay
     public class MeshSpawnerItemFactory : IMeshSpawnerItemFactory
     {
         private readonly IWorld world;
-        private readonly ObjectsFactory factory;
+        private readonly PrototypeObjectsFactory factory;
 
         public MeshSpawnerItemFactory(IWorld world)
         {

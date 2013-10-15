@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.Engine;
+﻿using System;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
@@ -121,19 +122,20 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
             engine.AddSimulator(new WorldRenderingSimulator());
         }
 
-        private IWorldObject createIsland(Vector3 pos)
+        private IPositionComponent createIsland(Vector3 pos)
         {
-            var ph = new Physical();
-            var w = new WorldObject(ph);
-            w.Position = pos;
+            throw new NotImplementedException();
+            //var ph = new Physical();
+            //var w = new WorldObject(ph);
+            //w.Position = pos;
 
-            var ret = new IslandPart();
-            ret.Physical = new WorldObjectPhysicalPart(w, ph);
-            ret.IslandMeshFactory = new IslandMeshFactory(new VoxelMeshBuilder());
+            //var ret = new IslandPart();
+            //ret.Physical = new WorldObjectPhysicalPart(w, ph);
+            //ret.IslandMeshFactory = new IslandMeshFactory(new VoxelMeshBuilder());
 
 
 
-            return w;
+            //return w;
         }
 
 

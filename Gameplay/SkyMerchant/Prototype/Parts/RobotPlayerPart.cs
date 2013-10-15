@@ -9,16 +9,17 @@ using MHGameWork.TheWizards.RTSTestCase1;
 using System.Linq;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using Microsoft.Xna.Framework.Graphics;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
     [ModelObjectChanged]
-    public class RobotPlayerPart : EngineModelObject, IPhysical
+    public class RobotPlayerPart : EngineModelObject
     {
         #region "Injection"
-        public IPhysicalPart Physical { get; set; }
+        public IPositionComponent Physical { get; set; }
 
 
         [NonOptional]
@@ -27,7 +28,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         [NonOptional]
         public ISimulationEngine SimulationEngine { get; set; }
         [NonOptional]
-        public ObjectsFactory ObjectsFactory { get; set; }
+        public PrototypeObjectsFactory PrototypeObjectsFactory { get; set; }
         #endregion
 
         public RobotPlayerPart()
@@ -145,9 +146,9 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
             {
                 NormalMovement.SimulateMovement();
             }
-            if (Physical.GetPosition().Y < -20)
+            if (Physical.Position.Y < -20)
             {
-                Physical.SetPosition(Physical.GetPosition().ChangeY(50));
+                Physical.Position = Physical.Position.ChangeY(50);
                 NormalMovement.Velocity = new Vector3();
             }
         }
@@ -166,7 +167,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
             if (Health < cogRepairAmount)
             {
                 // Try consume cog
-                var cog = Items.FirstOrDefault(o => o.Type == ObjectsFactory.CogType);
+                var cog = Items.FirstOrDefault(o => o.Type == PrototypeObjectsFactory.CogType);
                 if (cog != null)
                 {
                     Items.Remove(cog);
@@ -186,7 +187,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         public void ApplyDamage(float gunDamage)
         {
             Health -= gunDamage;
-            Physical.SetPosition(Physical.GetPosition() - NormalMovement.LookDirection.ChangeY(0) * 3);
+            Physical.Position = Physical.Position - NormalMovement.LookDirection.ChangeY(0) * 3;
         }
 
         #endregion

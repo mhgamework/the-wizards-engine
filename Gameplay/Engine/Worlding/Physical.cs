@@ -11,7 +11,7 @@ namespace MHGameWork.TheWizards.Engine.Worlding
     /// Should not be using an interface, should be an interface on its own.
     /// </summary>
     [ModelObjectChanged]
-    public class Physical : EngineModelObject, IPhysicalPart
+    public class Physical : EngineModelObject
     {
 
         public Physical()
