@@ -1,11 +1,12 @@
 ﻿using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
     [ModelObjectChanged]
-    public class BasicPhysicsPart : EngineModelObject
+    public class BasicPhysicsPart : EngineModelObject, IGameObjectComponent
     {
         #region Injection
 
@@ -16,7 +17,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 
         public BasicPhysicsPart()
         {
-            
+
         }
 
         /// <summary>
@@ -27,6 +28,6 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         public void ApplyForce(Vector3 force)
         {
             Velocity += force * TW.Graphics.Elapsed; //TODO: incorporate mass here? (f=ma)
-        } 
+        }
     }
 }

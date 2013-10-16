@@ -1,6 +1,7 @@
 ﻿using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using System.Linq;
+using MHGameWork.TheWizards.SkyMerchant.Worlding;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype
@@ -12,10 +13,9 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
     {
         private readonly RobotPlayerPart robot;
 
-
-        public RobotInventoryTextView(RobotPlayerPart robot)
+        public RobotInventoryTextView(LocalPlayer player)
         {
-            this.robot = robot;
+            this.robot = player.RobotPlayerPart;
         }
 
         public string GenerateText()

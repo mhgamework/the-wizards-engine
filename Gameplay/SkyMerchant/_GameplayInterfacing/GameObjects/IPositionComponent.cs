@@ -8,9 +8,9 @@ namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects
     /// Responsible for providing the space this object occupies in the world.
     /// Responsible for manipulating this objects world orientation
     /// </summary>
-    public interface IPositionComponent : IMutableSpatial,IGameObjectComponent
+    public interface IPositionComponent : IMutableSpatial, IGameObjectComponent
     {
-        
+
     }
 
     public static class PositionComponentExtensions

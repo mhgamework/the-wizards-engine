@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
+using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 using SlimDX;
@@ -13,11 +14,18 @@ namespace MHGameWork.TheWizards.SkyMerchant.Worlding
     /// </summary>
     public class LocalPlayer : ILocalPlayer
     {
+        public RobotPlayerPart RobotPlayerPart { get; private set; }
+
         private IWorldLocator worldlocator;
 
-        public LocalPlayer(IWorldLocator worldlocator)
+        public LocalPlayer(IWorldLocator worldlocator, IGameObjectsRepository repository)
         {
             this.worldlocator = worldlocator;
+
+            var obj = repository.CreateGameObject();
+            RobotPlayerPart = obj.GetComponent<RobotPlayerPart>();
+
+
         }
 
         public IEnumerable<IPositionComponent> TargetedObjects

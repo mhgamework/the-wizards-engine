@@ -14,31 +14,33 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
     /// <summary>
     /// NOTE: looks programming wise like a EnemyBehaviourPart instead of a factory!
     /// </summary>
-    public class EnemyBehaviourFactory
+    public class EnemyBehaviourFactory : IGameObjectComponent
     {
-        private EnemyBrain brain;
-
         #region Injection
-        [NonOptional]
         public ISimulationEngine SimulationEngine { get; set; }
-        [NonOptional]
         public IWorldLocator WorldLocator { get; set; }
-        [NonOptional]
         public TraderPart.IItemFactory ItemFactory { get; set; }
-        [NonOptional]
         public Random Random { get; set; }
-        /// <summary>
-        /// WARNING! NOT A SERVICE!! NOT SINGLETON
-        /// </summary>
-        [DoNotWire]
-        public EnemyBrain Brain
-        {
-            get { return brain; }
-            set { brain = value; }
-        }
+        public EnemyBrain Brain { get; set; }
 
         public IPositionComponent Physical { get; set; }
         #endregion
+
+        public EnemyBehaviourFactory(EnemyBrain brain,
+            ISimulationEngine simulationEngine,
+            IWorldLocator worldLocator,
+            TraderPart.IItemFactory itemFactory,
+            Random random,
+            IPositionComponent physical)
+        {
+            this.Brain = brain;
+            SimulationEngine = simulationEngine;
+            WorldLocator = worldLocator;
+            ItemFactory = itemFactory;
+            Random = random;
+            Physical = physical;
+        }
+
 
         public IBehaviourNode CreateGuardPosition(Func<Vector3> getPosition)
         {

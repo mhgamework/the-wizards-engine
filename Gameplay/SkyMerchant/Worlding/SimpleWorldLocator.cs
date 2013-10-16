@@ -8,6 +8,13 @@ namespace MHGameWork.TheWizards.SkyMerchant.Worlding
 {
     public class SimpleWorldLocator : IWorldLocator
     {
+        private readonly IGameObjectsRepository repository;
+
+        public SimpleWorldLocator(IGameObjectsRepository repository)
+        {
+            this.repository = repository;
+        }
+
         public IEnumerable<IPositionComponent> AtPosition(Vector3 point, float radius)
         {
             return from obj in TW.Data.Objects.OfType<IPositionComponent>()
@@ -29,5 +36,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.Worlding
             return ret;
         }
 
+        public IEnumerable<T> AtObject<T>(IPositionComponent ph, float radius) where T: IGameObjectComponent
+        {
+            return from pos in AtPosition(ph.Position, radius)
+                   let obj = repository.GetGameObject(pos)
+                   where obj.HasComponent<T>()
+                   select obj.GetComponent<T>();
+        }
     }
 }

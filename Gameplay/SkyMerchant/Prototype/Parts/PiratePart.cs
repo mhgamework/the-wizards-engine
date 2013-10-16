@@ -20,21 +20,18 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
     /// (search,chase, shoot, pickup)
     /// </summary>
     [ModelObjectChanged]
-    public class PiratePart : EngineModelObject
+    public class PiratePart : EngineModelObject,IGameObjectComponent
     {
         private readonly EnemyBehaviourFactory behaviourFactory;
-
-        #region Injection
         public IPositionComponent Physical { get; set; }
-        #endregion
-
         private IBehaviourNode behaviourTree;
         private BehaviourTreeAgent agent;
 
-        public PiratePart(EnemyBehaviourFactory behaviourFactory, EnemyBrain brain)
+        public PiratePart(EnemyBehaviourFactory behaviourFactory, EnemyBrain brain, IPositionComponent Physical)
         {
             this.behaviourFactory = behaviourFactory;
             this.Brain = brain;
+            this.Physical = Physical;
             behaviourTree = CreateBehaviourTree();
             agent = new BehaviourTreeAgent(behaviourTree);
             Brain.LookDistance = 20;

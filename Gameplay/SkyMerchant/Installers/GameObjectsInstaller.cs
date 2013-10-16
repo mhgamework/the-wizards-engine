@@ -12,6 +12,7 @@ using MHGameWork.TheWizards.SkyMerchant.GameObjects;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
+using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Installers
 {
@@ -30,17 +31,15 @@ namespace MHGameWork.TheWizards.SkyMerchant.Installers
             container.Register(Component.For<GameObjectsRepository>().Forward<IGameObjectsRepository>());
             container.Register(Component.For<IGameObjectComponentTypedFactory>().AsFactory());
 
-            // Register the *Component implementations in the GameObjects namespace
-            container.Register(
-                Classes.FromThisAssembly()
-                       .Where(t => t.Namespace == typeof (GameObject).Namespace && t.Name.EndsWith("Component"))
-                       .WithService.AllInterfaces());
 
-            // Register the SkyPhysical
-            container.Register(Component.For<SkyPhysical>());
+            // Register all IGameObjectComponent's 
+            container.Register(Classes.FromThisAssembly().Where(t => typeof(IGameObjectComponent).IsAssignableFrom(t))
+                .WithServiceSelf()
+                .WithServiceAllInterfaces()
+                .LifestyleScoped<GameObjectScope>()     // Scope to gameobjects!
+                .DisablePropertyWiring()                // Disable property wiring!
+                );
 
-            // Set lifetimescope for all IGameObjectComponent's
-            container.Register(Classes.FromThisAssembly().BasedOn<IGameObjectComponent>().WithServiceSelf().LifestyleScoped<GameObjectScope>());
 
             //Legacy: Register all object parts
             container.Register(
@@ -68,8 +67,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Installers
             //    }).LifestyleTransient());
             //container.Register(Component.For<IPositionComponent>().ImplementedBy<Physical>().LifestyleTransient());
 
-            // Override!!!
-            //container.Register(Component.For<RobotPlayerPart>().LifestyleSingleton());
+       
 
             
 

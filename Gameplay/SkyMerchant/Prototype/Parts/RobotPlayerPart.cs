@@ -1,49 +1,42 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.IO;
+using System.Linq;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Engine.Worlding;
-using MHGameWork.TheWizards.RTSTestCase1;
-
-using System.Linq;
-using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
-using Microsoft.Xna.Framework.Graphics;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
     [ModelObjectChanged]
-    public class RobotPlayerPart : EngineModelObject
+    public class RobotPlayerPart : EngineModelObject, IGameObjectComponent
     {
         #region "Injection"
         public IPositionComponent Physical { get; set; }
-
-
-        [NonOptional]
         public IWorldLocator WorldLocator { get; set; }
         public RobotPlayerNormalMovementPart NormalMovement { get; set; }
-        [NonOptional]
         public ISimulationEngine SimulationEngine { get; set; }
-        [NonOptional]
         public PrototypeObjectsFactory PrototypeObjectsFactory { get; set; }
-        [NonOptional]
         public IMeshRenderComponent MeshRenderComponent { get; set; }
         #endregion
 
-        public RobotPlayerPart()
+        public RobotPlayerPart(IWorldLocator worldLocator, 
+            RobotPlayerNormalMovementPart normalMovement, 
+            ISimulationEngine simulationEngine, 
+            PrototypeObjectsFactory prototypeObjectsFactory, 
+            IMeshRenderComponent meshRenderComponent,
+            IPositionComponent physical)
         {
+            WorldLocator = worldLocator;
+            NormalMovement = normalMovement;
+            SimulationEngine = simulationEngine;
+            PrototypeObjectsFactory = prototypeObjectsFactory;
+            MeshRenderComponent = meshRenderComponent;
+            Physical = physical;
+
             Items = new List<ItemPart>();
             Health = 100;
-        }
-
-
-        public void UpdatePhysical()
-        {
-
         }
 
         #region Items

@@ -1,6 +1,8 @@
 ﻿using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
+using MHGameWork.TheWizards.SkyMerchant.Worlding;
 using MHGameWork.TheWizards.SkyMerchant._Engine;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype
@@ -14,11 +16,11 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
 
         private Textarea textarea;
         
-        public PrototypeUserInterface(RobotInventoryTextView inventory, Rendering2DComponentsFactory rendering, RobotPlayerPart robot)
+        public PrototypeUserInterface(RobotInventoryTextView inventory, Rendering2DComponentsFactory rendering, LocalPlayer player)
         {
             this.inventory = inventory;
             this.rendering = rendering;
-            this.robot = robot;
+            robot = player.RobotPlayerPart;
 
             textarea = rendering.CreateTextArea();
 

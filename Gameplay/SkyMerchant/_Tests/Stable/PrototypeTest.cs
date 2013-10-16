@@ -4,6 +4,7 @@ using DirectX11;
 using MHGameWork.TheWizards.Debugging;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.Diagnostics.Tracing;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
@@ -28,6 +29,24 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
     [TestFixture]
     public class PrototypeTest
     {
+
+        /// <summary>
+        /// Starts the prototype!
+        /// </summary>
+        [Test]
+        public void TestDIPrototype()
+        {
+            var ctx = new TW.Context();
+            ctx.Data = new DataWrapper(new EngineTraceLogger());
+            ctx.Assets = new AssetsWrapper();
+            TW.SetContext(ctx);
+
+            var container = BootstrapContainer();
+
+            container.Resolve<PrototypeTest>();
+        }
+
+
         /// <summary>
         /// Starts the prototype!
         /// </summary>
@@ -124,6 +143,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
         public IWindsorContainer BootstrapContainer()
         {
             return new WindsorContainer()
+                .Install(new GameObjectsInstaller())
                 .Install(new PrototypeInstaller())
                 .Install(new EngineInstaller())
                 .Install(new WorldingInstaller())

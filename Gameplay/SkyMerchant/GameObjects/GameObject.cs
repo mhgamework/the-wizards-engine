@@ -21,6 +21,11 @@ namespace MHGameWork.TheWizards.SkyMerchant.GameObjects
             return (T)components.GetOrCreate(typeof(T), createNewComponent<T>);
         }
 
+        public bool HasComponent<T>()
+        {
+            return components.ContainsKey(typeof (T));
+        }
+
         private IGameObjectComponent createNewComponent<T>() where T : IGameObjectComponent
         {
             return repository.CreateComponent<T>(this);

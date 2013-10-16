@@ -15,18 +15,24 @@ using System.Linq;
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
     [ModelObjectChanged]
-    public class RobotPlayerNormalMovementPart : EngineModelObject
+    public class RobotPlayerNormalMovementPart : EngineModelObject,IGameObjectComponent
     {
         #region "Injection"
-        [NonOptional]
         public IUserMovementInput MovementInput { get; set; }
-        [NonOptional]
         public ISimulationEngine SimulationEngine { get; set; }
-        [NonOptional]
         public IWorldLocator WorldLocator { get; set; }
         public IPositionComponent Physical { get; set; }
         public BasicPhysicsPart Physics { get; set; }
         #endregion
+
+        public RobotPlayerNormalMovementPart(IUserMovementInput movementInput, ISimulationEngine simulationEngine, IWorldLocator worldLocator, IPositionComponent physical, BasicPhysicsPart physics)
+        {
+            MovementInput = movementInput;
+            SimulationEngine = simulationEngine;
+            WorldLocator = worldLocator;
+            Physical = physical;
+            Physics = physics;
+        }
 
         public Vector3 Velocity { get { return Physics.Velocity; } set { Physics.Velocity = value; } }
         public Vector3 LookDirection { get; set; }

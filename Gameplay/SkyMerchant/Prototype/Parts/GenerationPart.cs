@@ -2,36 +2,23 @@
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
     [ModelObjectChanged]
-    public class GenerationPart : EngineModelObject
+    public class GenerationPart : EngineModelObject,IGameObjectComponent
     {
         private ISimulationEngine simulationEngine;
 
-        #region Injection
-        [NonOptional]
         public IItemFactory Factory { get; set; }
-        [NonOptional]
-        public ISimulationEngine SimulationEngine
-        {
-            get { return simulationEngine; }
-            set
-            {
-                simulationEngine = value;
-                NextResourceGeneration = SimulationEngine.CurrentTime + GenerationInterval;
-            }
-        }
 
-        #endregion
-
-        public GenerationPart()
+        public GenerationPart(ISimulationEngine simulationEngine)
         {
-            NextResourceGeneration = -1;
+            this.simulationEngine = simulationEngine;
+            NextResourceGeneration = simulationEngine.CurrentTime + GenerationInterval;
             GenerationInterval = 10;
         }
-
 
         public bool HasResource { get; set; }
         public float NextResourceGeneration { get; set; }
@@ -46,13 +33,13 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
             player.Pickup(item);
 
             HasResource = false;
-            NextResourceGeneration = SimulationEngine.CurrentTime + GenerationInterval;
+            NextResourceGeneration = simulationEngine.CurrentTime + GenerationInterval;
         }
 
         public void SimulateResourceGeneration()
         {
             if (HasResource) return;
-            if (SimulationEngine.CurrentTime < NextResourceGeneration) return;
+            if (simulationEngine.CurrentTime < NextResourceGeneration) return;
 
             HasResource = true;
 

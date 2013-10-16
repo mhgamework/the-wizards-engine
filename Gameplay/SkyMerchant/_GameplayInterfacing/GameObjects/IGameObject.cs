@@ -6,5 +6,6 @@
     public interface IGameObject
     {
         T GetComponent<T>() where T : IGameObjectComponent;
+        bool HasComponent<T>();
     }
 }

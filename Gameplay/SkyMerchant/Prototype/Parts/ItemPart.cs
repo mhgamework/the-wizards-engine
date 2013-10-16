@@ -11,7 +11,7 @@ using SlimDX;
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
     [ModelObjectChanged]
-    public class ItemPart : EngineModelObject 
+    public class ItemPart : EngineModelObject,IGameObjectComponent 
     {
         #region Injection
         public IPositionComponent Physical { get; set; }
@@ -24,6 +24,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
             Physical = physical;
             RenderComponent = renderComponent;
             Random = random;
+            InStorage = true;
         }
         public void UpdatePhysical()
         {

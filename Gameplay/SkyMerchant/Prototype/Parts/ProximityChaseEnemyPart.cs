@@ -14,19 +14,18 @@ using SlimDX;
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
     [ModelObjectChanged]
-    public class ProximityChaseEnemyPart : EngineModelObject
+    public class ProximityChaseEnemyPart : EngineModelObject,IGameObjectComponent
     {
         #region Injection
         public IPositionComponent Physical { get; set; }
         private EnemyBehaviourFactory BehaviourFactory;
-        [DoNotWire]
         public EnemyBrain Brain { get; set; }
         #endregion
 
         private IBehaviourNode behaviourTree;
         private BehaviourTreeAgent agent;
 
-        public ProximityChaseEnemyPart(EnemyBehaviourFactory behaviourFactory, EnemyBrain brain)
+        public ProximityChaseEnemyPart(EnemyBehaviourFactory behaviourFactory, EnemyBrain brain,IPositionComponent Physical)
         {
             BehaviourFactory = behaviourFactory;
             behaviourTree = CreateBehaviourTree();
@@ -37,6 +36,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
             brain.ShootInterval = 2;
             brain.GunDamage = 20;
             Brain = brain;
+            this.Physical = Physical;
         }
 
 

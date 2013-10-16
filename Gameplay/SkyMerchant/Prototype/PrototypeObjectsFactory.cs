@@ -2,6 +2,7 @@
 using DirectX11;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.AI;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
@@ -13,15 +14,18 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
     public class PrototypeObjectsFactory
     {
         private readonly IGameObjectsRepository repository;
-        private readonly ITypedFactory factory;
 
-        public ItemType CogType = new ItemType() { Name = "Cog" };
-        public ItemType WoodType = new ItemType() { Name = "Wood" };
-        public ItemType TubeType = new ItemType() { Name = "Tube" };
+        public ItemType CogType;
+        public ItemType WoodType;
+        public ItemType TubeType;
 
         public PrototypeObjectsFactory(IGameObjectsRepository repository)
         {
             this.repository = repository;
+
+            TubeType = new ItemType() { Name = "Tube", Mesh = TW.Assets.LoadMesh("SkyMerchant/TubePart/TubePart") };
+            CogType = new ItemType() { Name = "Cog", Mesh = TW.Assets.LoadMesh("SkyMerchant/Cogs/Cog01") };
+            WoodType = new ItemType() { Name = "Wood", Mesh = UtilityMeshes.CreateMeshWithText(0.4f, "Wood", TW.Graphics) };
         }
 
         public IslandPart CreateIsland()
@@ -30,84 +34,74 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             return obj.GetComponent<IslandPart>();
 
         }
+        public ItemPart CreateItem(ItemType type)
+        {
+            var obj = repository.CreateGameObject();
+            var part = obj.GetComponent<ItemPart>();
+            part.RenderComponent.Mesh = type.Mesh;
+            part.Type = type;
+            return part;
+        }
         public ItemPart CreateCog()
         {
-            //var part = factory.CreateItemPart();
-            //part.Physical = factory.CreatePhysicalPart();
-            //part.Physical.Mesh = TW.Assets.LoadMesh("SkyMerchant/Cogs/Cog01");
-            //part.Type = CogType;
-            //return part;
-            return null;
+            return CreateItem(CogType);
         }
         public ItemPart CreateTube()
         {
-            //var part = factory.CreateItemPart();
-            //part.Physical = factory.CreatePhysicalPart();
-            //part.Physical.Mesh = TW.Assets.LoadMesh("SkyMerchant/TubePart/TubePart");
-            //part.Type = TubeType;
-            //return part;
-            return null;
+            return CreateItem(TubeType);
         }
 
         public ItemPart CreateWoodBlock()
         {
-            //var part = factory.CreateItemPart();
-            //part.Physical = factory.CreatePhysicalPart();
-            //part.Physical.Mesh = UtilityMeshes.CreateMeshWithText(0.4f, "Wood", TW.Graphics);
-            //part.Type = WoodType;
-            //return part;
-            return null;
+            return CreateItem(WoodType);
         }
 
         public GenerationSourcePart CreateTree()
         {
+            var obj = repository.CreateGameObject();
+            var part = obj.GetComponent<GenerationSourcePart>();
+            part.MeshRenderComponent.ObjectMatrix = Matrix.Scaling(MathHelper.One * 0.8f);
 
-            //var part = factory.CreateGenerationSourcePart();
-            //part.GenerationPart = factory.CreateGenerationPart(new TreeItemFactory(this));
-            //part.Physical = factory.CreatePhysicalPart();
-            //part.Physical.ObjectMatrix = Matrix.Scaling(MathHelper.One * 0.8f);
+            part.EmptyMesh = TW.Assets.LoadMesh("SkyMerchant/Tree/Tree_NoLeaves");
+            part.FullMesh = TW.Assets.LoadMesh("SkyMerchant/Tree/Tree_WithLeaves");
 
-            //part.EmptyMesh = TW.Assets.LoadMesh("SkyMerchant/Tree/Tree_NoLeaves");
-            //part.FullMesh = TW.Assets.LoadMesh("SkyMerchant/Tree/Tree_WithLeaves");
+            part.GenerationPart.Factory = new TreeItemFactory(this);
 
-            //return part;
-            return null;
+            return part;
+            
         }
 
         public ProximityChaseEnemyPart CreateDrone()
         {
+            var obj = repository.CreateGameObject();
+            var part = obj.GetComponent<ProximityChaseEnemyPart>();
             //var beh = factory.CreateEnemyBehaviourFactory();
             //beh.Physical = factory.CreatePhysicalPart();
             //beh.Brain = new EnemyBrain();
-            
+
             //var part = factory.CreateProximityChaseEnemyPart(beh,beh.Brain);
             //part.Physical = beh.Physical;
             //part.Physical.Mesh = TW.Assets.LoadMesh("SkyMerchant/EnemyRobot/EnemyRobot");
 
-            //return part;
-            return null;
+            return part;
         }
 
         public PiratePart CreatePirate()
         {
-            //var beh = factory.CreateEnemyBehaviourFactory();
-            //beh.Physical = factory.CreatePhysicalPart();
-            //beh.Brain = new EnemyBrain();
+            var obj = repository.CreateGameObject();
+            var part = obj.GetComponent<PiratePart>();
 
-            //var part = factory.CreatePiratePart(beh,beh.Brain);
-            //part.Physical = beh.Physical;
-            //part.Physical.Mesh = TW.Assets.LoadMesh("SkyMerchant/DummyRobot/DummyRobot");
-            //part.Physical.ObjectMatrix = Matrix.Scaling(MathHelper.One * 0.3f);
+            obj.GetComponent<IMeshRenderComponent>() .Mesh = TW.Assets.LoadMesh("SkyMerchant/DummyRobot/DummyRobot");
+            obj.GetComponent<IMeshRenderComponent>().ObjectMatrix = Matrix.Scaling(MathHelper.One * 0.3f);
 
-
-            //return part;
-            return null;
+            return part;
         }
 
-        public IPositionComponent CreateMeshObject()
+        public IPositionComponent CreateMeshObject(IMesh mesh)
         {
-            var p = factory.CreatePhysicalPart();
-            return p;
+            var obj = repository.CreateGameObject();
+            obj.GetComponent<IMeshRenderComponent>().Mesh = mesh;
+            return obj.GetComponent<IPositionComponent>();
         }
 
         private class TreeItemFactory : GenerationPart.IItemFactory
@@ -129,19 +123,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
         {
             var obj = repository.CreateGameObject();
             return obj.GetComponent<TraderVisualizerPart>();
-            return null;
         }
 
-        public ItemPart CreateItem(ItemType type)
-        {
-            if (type == CogType)
-                return CreateCog();
-            if (type == WoodType)
-                return CreateWoodBlock();
-            if (type == TubeType)
-                return CreateTube();
-
-            throw new NotImplementedException();
-        }
+        
     }
 }

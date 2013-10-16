@@ -188,6 +188,7 @@
     <Compile Include="SkyMerchant\Installers\WorldingInstaller.cs" />
     <Compile Include="SkyMerchant\Worlding\World.cs" />
     <Compile Include="SkyMerchant\Worlding\WorldObjectScriptsList.cs" />
+    <Compile Include="SkyMerchant\_Engine\Windsor\DisablePropertyInjection.cs" />
     <Compile Include="SkyMerchant\_Engine\Windsor\WindsorDebugTools.cs" />
     <Compile Include="SkyMerchant\GameObjects\GameObject.cs" />
     <Compile Include="SkyMerchant\Installers\GameObjectsRepository.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="SkyMerchant\_Tests\Development\GameObjectsTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\PersistenceTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\PrototypeObjectsTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Development\PrototypeWorldGeneratorTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\ScriptingTest.cs" />
     <Compile Include="SkyMerchant\_Engine\Voxels\ArrayFiniteVoxels.cs" />
     <Compile Include="SkyMerchant\Gameplay\IslandGenerater.cs" />
@@ -383,7 +385,6 @@
     <Compile Include="SkyMerchant\Prototype\AI\EnemyBehaviourFactory.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\EnemyBrain.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\FindTargetBehaviour.cs" />
-    <Compile Include="SkyMerchant\Prototype\ITypedFactory.cs" />
     <Compile Include="SkyMerchant\Prototype\PrototypeObjectsFactory.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\BasicPhysicsPart.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\GenerationSourcePart.cs" />
@@ -500,6 +501,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ObjectPartInterfaces.cs</LastGenOutput>
     </None>
+    <None Include="SkyMerchant\GameObjects\_Overview.dgml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

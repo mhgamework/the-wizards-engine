@@ -15,7 +15,6 @@ namespace MHGameWork.TheWizards.SkyMerchant.Installers
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(Component.For<ILocalPlayer>().ImplementedBy<LocalPlayer>());
             container.Register(Component.For<IWorldLocator>().ImplementedBy<SimpleWorldLocator>());
             container.Register(Component.For<IWorld>().ImplementedBy<Worlding.World>());
             //container.Register(Component.For<worldo>());

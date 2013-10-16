@@ -1,4 +1,6 @@
 ﻿using System;
+using Castle.Core;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Diagnostics.Tracing;
@@ -10,6 +12,7 @@ using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 using NSubstitute;
 using NUnit.Framework;
 using System.Linq;
+using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 
 namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 {
@@ -41,7 +44,13 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         {
             var obj = createGameObject();
             var ph = obj.GetComponent<IPositionComponent>();
+
+            var obj2 = createGameObject();
+            var ph2 = obj2.GetComponent<IPositionComponent>();
+
+            Assert.AreNotEqual(ph,ph2);
         }
+
         [Test]
         public void TestCreateMeshRenderComponent()
         {
@@ -76,6 +85,20 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
             Assert.AreNotEqual(comp.SubComponentB.SubSubComponent, comp2.SubComponentB.SubSubComponent);
         }
 
+        [Test]
+        public void TestDoNotWirePropertiesOnGameObjectComponents()
+        {
+            var repo = container.Resolve<IGameObjectsRepository>();
+
+            var obj = repo.CreateGameObject();
+
+            var comp = obj.GetComponent<TestPropertyComponent>();
+
+            Assert.IsNull(comp.Component);
+        }
+
+        
+
         /// <summary>
         /// Test that components are correctly associated with a game object, and dependencies are correctly injected.
         /// </summary>
@@ -103,6 +126,10 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
       
     }
 
+    public class TestPropertyComponent : IGameObjectComponent
+    {
+        public TestSubComponentA Component { get; set; }
+    }
     public class TestComponent : IGameObjectComponent
     {
         public TestSubComponentA SubComponentA { get; set; }

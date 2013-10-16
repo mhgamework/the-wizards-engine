@@ -4,8 +4,10 @@ using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
+using MHGameWork.TheWizards.SkyMerchant.Worlding;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 using SlimDX;
 using SlimDX.DirectInput;
 
@@ -16,12 +18,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
     /// </summary>
     public class PlayerRobotSimulator
     {
+        private readonly LocalPlayer localPlayer;
 
         [NonOptional]
         public CustomCamera Camera { get; set; }
-
-        [NonOptional]
-        public ITypedFactory TypedFactory { get; set; }
 
         [NonOptional]
         public IWorldLocator WorldLocator { get; set; }
@@ -32,13 +32,19 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
         private RobotPlayerPart robot;
         private RobotInventoryTextView view;
 
-        public PlayerRobotSimulator(CustomCamera camera, ITypedFactory typedFactory, IWorldLocator worldLocator, PrototypeObjectsFactory prototypeObjectsFactory)
+        public PlayerRobotSimulator(CustomCamera camera,
+            IWorldLocator worldLocator, 
+            PrototypeObjectsFactory prototypeObjectsFactory, 
+            LocalPlayer localPlayer,
+            RobotInventoryTextView view)
         {
+            this.localPlayer = localPlayer;
+            this.view = view;
             Camera = camera;
-            TypedFactory = typedFactory;
             WorldLocator = worldLocator;
             PrototypeObjectsFactory = prototypeObjectsFactory;
-            robot = createRobot();
+            setupRobot();
+            robot = localPlayer.RobotPlayerPart;
 
         }
 
@@ -102,30 +108,21 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             Camera.SetViewMatrix(Matrix.LookAtRH(eye, eye + dir, MathHelper.Up));
         }
 
-        private RobotPlayerPart createRobot()
+        private void setupRobot()
         {
-            var mov = TypedFactory.CreateRobotMovementPart();
-            var robot = TypedFactory.CreateRobotPlayerPart();
-            robot.Physical = TypedFactory.CreatePhysicalPart();
-            robot.NormalMovement = mov;
+            var robot = localPlayer.RobotPlayerPart;
             robot.MeshRenderComponent.Mesh = TW.Assets.LoadMesh("SkyMerchant/DummyRobot/DummyRobot");
-
-            mov.Physical = robot.Physical;
-            mov.Physics = TypedFactory.CreatePhysics();
 
             var scale = 0.1f;
             robot.MeshRenderComponent.ObjectMatrix = Matrix.Scaling(scale, scale, scale) * Matrix.RotationY(MathHelper.Pi);
 
 
-            view = new RobotInventoryTextView(robot);
 
             robot.Pickup(PrototypeObjectsFactory.CreateWoodBlock());
             robot.Pickup(PrototypeObjectsFactory.CreateWoodBlock());
             robot.Pickup(PrototypeObjectsFactory.CreateWoodBlock());
             robot.Pickup(PrototypeObjectsFactory.CreateWoodBlock());
             robot.Pickup(PrototypeObjectsFactory.CreateWoodBlock());
-
-            return robot;
         }
 
     }

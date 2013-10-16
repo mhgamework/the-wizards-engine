@@ -1,4 +1,5 @@
 ﻿using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
@@ -7,7 +8,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.AI
     /// This is the belief base for the enemy ai agent (and knowledge?)
     /// DO NOT FORGET TO SET THE PERCEPTS!
     /// </summary>
-    public class EnemyBrain
+    public class EnemyBrain:IGameObjectComponent
     {
 
         #region Knowledge

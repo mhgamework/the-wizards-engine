@@ -9,7 +9,7 @@ using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
     [ModelObjectChanged]
-    public class GenerationSourcePart : EngineModelObject
+    public class GenerationSourcePart : EngineModelObject,IGameObjectComponent
     {
         public GenerationPart GenerationPart { get; private set; }
         public IPositionComponent Physical { get; private set; }
