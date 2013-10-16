@@ -1,4 +1,4 @@
-﻿namespace MHGameWork.TheWizards.SkyMerchant.Prototype
+﻿namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing
 {
     public interface ISimulationEngine
     {

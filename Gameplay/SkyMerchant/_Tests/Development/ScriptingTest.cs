@@ -46,8 +46,9 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         {
             var ph = new Physical();
             ph.Mesh = TW.Assets.LoadMesh("Core\\Crate01");
-            var obj = new WorldObject(ph);
-            obj.Scripts.Add(new RotateOnTheSpotScript(new SimpleSimulationEngine()));
+            throw new NotImplementedException();
+            //var obj = new WorldObject(ph);
+            //obj.Scripts.Add(new RotateOnTheSpotScript(new SimpleSimulationEngine()));
 
             engine.AddSimulator(new ScriptsSimulator());
             engine.AddSimulator(new SkyMerchantRenderingSimulator());

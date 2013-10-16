@@ -1,5 +1,6 @@
 ﻿using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 
 namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing
 {

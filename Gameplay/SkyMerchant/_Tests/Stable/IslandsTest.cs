@@ -5,6 +5,7 @@ using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.SkyMerchant.DataStructures;
+using MHGameWork.TheWizards.SkyMerchant.Gameplay;
 using MHGameWork.TheWizards.SkyMerchant.Generation;
 using MHGameWork.TheWizards.SkyMerchant.Voxels;
 using NUnit.Framework;

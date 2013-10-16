@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.SkyMerchant.Generation;
+using MHGameWork.TheWizards.SkyMerchant.Gameplay;
 using MHGameWork.TheWizards.SkyMerchant.Voxels;
-using MHGameWork.TheWizards.SkyMerchant._Tests.Development;
 
-namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
+namespace MHGameWork.TheWizards.SkyMerchant.Prototype
 {
     public class IslandMeshFactory
     {

@@ -1,10 +1,15 @@
-﻿using Castle.Windsor;
+﻿using System;
+using Castle.Windsor;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Diagnostics.Tracing;
+using MHGameWork.TheWizards.SkyMerchant.GameObjects;
 using MHGameWork.TheWizards.SkyMerchant.Installers;
 using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
+using NSubstitute;
 using NUnit.Framework;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
 {
@@ -27,27 +32,108 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
                 new GameObjectsInstaller(),
                 new PrototypeInstaller(),
                 new WorldingInstaller(),
-                new EngineInstaller());
+                new EngineInstaller()
+                );
         }
 
         [Test]
-        public void TestCreateIsland()
+        public void TestCreatePositionComponent()
         {
-            var fact = container.Resolve<PrototypeObjectsFactory>();
-            var island = fact.CreateIsland();
+            var obj = createGameObject();
+            var ph = obj.GetComponent<IPositionComponent>();
+        }
+        [Test]
+        public void TestCreateMeshRenderComponent()
+        {
+            var obj = createGameObject();
+            var ph = obj.GetComponent<IMeshRenderComponent>();
+        }
 
-            Assert.NotNull(island.IslandMeshFactory);
-            Assert.NotNull(island.Physical);
-            Assert.NotNull(island.Physics);
+        private IGameObject createGameObject()
+        {
+            var repo = container.Resolve<IGameObjectsRepository>();
+
+            return repo.CreateGameObject();
         }
 
         [Test]
-        public void TestCreatePhysicalPart()
+        public void TestSimpleScopedComponent()
         {
-            var ph = container.Resolve<IPositionComponent>();
+            var acc = container.Resolve<GameObjectScopeManager>();
+            acc.SetActiveGameObject(Substitute.For<IGameObject>());
+
+            var comp = container.Resolve<TestComponent>();
+
+            Assert.AreEqual(comp, container.Resolve<TestComponent>());
+            Assert.AreEqual(comp.SubComponentA.SubSubComponent,comp.SubComponentB.SubSubComponent);
 
 
+            acc.SetActiveGameObject(Substitute.For<IGameObject>());
 
+            var comp2 = container.Resolve<TestComponent>();
+            Assert.AreNotEqual(comp,comp2);
+            Assert.AreNotEqual(comp.SubComponentA,comp2.SubComponentA);
+            Assert.AreNotEqual(comp.SubComponentB.SubSubComponent, comp2.SubComponentB.SubSubComponent);
         }
+
+        /// <summary>
+        /// Test that components are correctly associated with a game object, and dependencies are correctly injected.
+        /// </summary>
+        [Test]
+        public void TestGameObjectsRepository()
+        {
+            var repo = container.Resolve<IGameObjectsRepository>();
+
+            repo.CreateGameObject();
+            var obj = repo.CreateGameObject();
+            var obj2 = repo.CreateGameObject();
+
+            var comp = obj.GetComponent<TestSubSubComponent>();
+
+            Assert.AreEqual(comp, obj.GetComponent<TestSubSubComponent>());
+
+            var comp2 = obj.GetComponent<TestSubComponentA>();
+            Assert.AreEqual(comp, comp2.SubSubComponent);
+
+
+            Assert.AreNotEqual(comp,obj2.GetComponent<TestSubSubComponent>());
+        }
+
+
+      
+    }
+
+    public class TestComponent : IGameObjectComponent
+    {
+        public TestSubComponentA SubComponentA { get; set; }
+        public TestSubComponentB SubComponentB { get; set; }
+
+        public TestComponent(TestSubComponentA subComponentA, TestSubComponentB subComponentB)
+        {
+            SubComponentA = subComponentA;
+            SubComponentB = subComponentB;
+        }
+    }
+    public class TestSubComponentA : IGameObjectComponent
+    {
+        public TestSubSubComponent SubSubComponent { get; set; }
+
+        public TestSubComponentA(TestSubSubComponent subSubComponent)
+        {
+            SubSubComponent = subSubComponent;
+        }
+    }
+    public class TestSubComponentB : IGameObjectComponent
+    {
+        public TestSubSubComponent SubSubComponent { get; set; }
+
+        public TestSubComponentB(TestSubSubComponent subSubComponent)
+        {
+            SubSubComponent = subSubComponent;
+        }
+    }
+    public class TestSubSubComponent : IGameObjectComponent
+    {
+
     }
 }

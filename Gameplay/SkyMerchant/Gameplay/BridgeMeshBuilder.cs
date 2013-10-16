@@ -1,11 +1,10 @@
-﻿using System;
-using DirectX11;
+﻿using DirectX11;
 using MHGameWork.TheWizards.MathExtra;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.SkyMerchant._Engine;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant
+namespace MHGameWork.TheWizards.SkyMerchant.Gameplay
 {
     /// <summary>
     /// Responsible for building bridge meshes

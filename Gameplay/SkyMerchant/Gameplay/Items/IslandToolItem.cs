@@ -1,5 +1,6 @@
 ﻿using System;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Gameplay.Items
 {

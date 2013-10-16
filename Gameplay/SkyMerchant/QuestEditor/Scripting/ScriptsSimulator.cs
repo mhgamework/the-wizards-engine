@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.Engine;
+﻿using System;
+using MHGameWork.TheWizards.Engine;
 using System.Linq;
 using MHGameWork.TheWizards.SkyMerchant.Worlding;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
@@ -12,13 +13,14 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Scripting
     {
         public void Simulate()
         {
-            foreach (var obj in TW.Data.Objects.OfType<WorldObject>())
-            {
-                foreach (var s in obj.Scripts)
-                {
-                    s.Update();
-                }
-            }
+            throw new NotImplementedException();
+            //foreach (var obj in TW.Data.Objects.OfType<WorldObject>())
+            //{
+            //    foreach (var s in obj.Scripts)
+            //    {
+            //        s.Update();
+            //    }
+            //}
         }
     }
 }

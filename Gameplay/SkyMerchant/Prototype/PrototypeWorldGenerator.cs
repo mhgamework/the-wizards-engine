@@ -68,7 +68,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
                 t.WantsAmount = 5;
                 t.WantsType = Factory.WoodType;
 
-                tViz.Physical.Position = n.Physical.Position;
+                tViz.PositionComponent.Position = n.Physical.Position;
                 
             }
             ItemPart item;

@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.RTSTestCase1.BehaviourTrees;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.AI;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
@@ -59,9 +60,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 
             var dir = Vector3.Normalize((Physical.Position - oldPos).ChangeY(0));
             if (dir.Length() > 0.5f)
-                Physical.WorldMatrix = Microsoft.Xna.Framework.Matrix.CreateFromQuaternion(Functions.CreateFromLookDir(dir.xna())).dx()
-                                        * Matrix.RotationY(MathHelper.PiOver2)
-                                       * Matrix.Translation(Physical.Position);
+            {
+                Physical.Rotation =Functions.CreateFromLookDir(dir.xna()).dx()
+                                    * Quaternion.RotationAxis(Vector3.UnitY, MathHelper.PiOver2);
+                Physical.Position = Physical.Position;
+            }
+
 
         }
 

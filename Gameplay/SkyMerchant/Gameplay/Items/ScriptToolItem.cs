@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
+﻿using System;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using System.Linq;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Gameplay.Items
@@ -36,7 +37,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.Gameplay.Items
             if (!player.TargetedObjects.Any()) return;
             var obj = player.TargetedObjects.First();
 
-            obj.Scripts.Add(scriptType.CreateInstance());
+            throw new NotImplementedException();
+            //obj.Scripts.Add(scriptType.CreateInstance());
 
         }
     }

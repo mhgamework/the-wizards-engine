@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.Engine.WorldRendering;
+﻿using System;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting;
 using SlimDX;
 
@@ -56,8 +57,10 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Placing
                 var p = TW.Data.Get<CameraInfo>().GetGroundplanePosition();
                 if (p.HasValue)
                 {
-                    var item = placer.CreateItem();
-                    placer.Position = item, p.Value;
+                    throw new  NotImplementedException();
+                    //var item = placer.CreateItem();
+                    //item.
+                    //placer.Position = item, p.Value;
                 }
             }
         }
@@ -66,7 +69,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Placing
 
         private void simulateRender()
         {
-            
+
             var point = TW.Data.Get<CameraInfo>().GetGroundplanePosition();
             if (point.HasValue)
                 TW.Graphics.LineManager3D.AddCenteredBox(point.Value, 0.3f, new Color4(1, 1, 0));

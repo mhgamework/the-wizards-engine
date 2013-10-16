@@ -1,4 +1,4 @@
-﻿namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
+﻿namespace MHGameWork.TheWizards.SkyMerchant.Prototype
 {
     public class ItemType
     {

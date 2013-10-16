@@ -4,6 +4,7 @@ using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 {
@@ -15,10 +16,11 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         public IMeshRenderComponent MeshRenderComponent { get; private set; }
       
 
-        public GenerationSourcePart(GenerationPart generationPart, IPositionComponent physical)
+        public GenerationSourcePart(GenerationPart generationPart, IPositionComponent physical, IMeshRenderComponent meshRenderComponent)
         {
             GenerationPart = generationPart;
             Physical = physical;
+            MeshRenderComponent = meshRenderComponent;
         }
 
 
@@ -29,7 +31,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         {
             GenerationPart.SimulateResourceGeneration();
 
-            Physical.Mesh = GenerationPart.HasResource ? FullMesh : EmptyMesh;
+            MeshRenderComponent.Mesh = GenerationPart.HasResource ? FullMesh : EmptyMesh;
 
 
         }

@@ -1,7 +1,7 @@
 ﻿using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing
+namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects
 {
     /// <summary>
     /// This is a Render component which supports mesh rendering

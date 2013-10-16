@@ -19,8 +19,6 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
                 i.FixMesh();
             foreach (var i in TW.Data.Objects.OfType<ItemPart>())
                 i.FixPosition();
-            foreach ( var i in TW.Data.Objects.OfType<WorldObject>())
-                i.UpdatePhysical();
             foreach (var i in TW.Data.Objects.OfType<BridgePart>())
                 i.UpdatePhysical();
         }

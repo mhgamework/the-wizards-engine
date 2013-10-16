@@ -16,6 +16,7 @@ using MHGameWork.TheWizards.SkyMerchant.Worlding;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using MHGameWork.TheWizards.SkyMerchant._Tests.Stable;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Installers
 {
@@ -24,14 +25,15 @@ namespace MHGameWork.TheWizards.SkyMerchant.Installers
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.AddFacility<NonOptionalPropertiesFacility>();
-            container.AddFacility<TypedFactoryFacility>();
+            if (!container.Kernel.GetFacilities().Any(f => f is TypedFactoryFacility))
+                container.AddFacility<TypedFactoryFacility>();
 
 
             container.Register(Component.For<PrototypeTest>());
 
             container.Register(
                 Component.For<ITypedFactory>().AsFactory(),
-                Component.For<IslandMeshFactory>(),
+                //Component.For<IslandMeshFactory>(),
                 Component.For<VoxelMeshBuilder>(),
                 Component.For<TraderPart.IItemFactory>().ImplementedBy<SimpleItemFactory>()
                 );

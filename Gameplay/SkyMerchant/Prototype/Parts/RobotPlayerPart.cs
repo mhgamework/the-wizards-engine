@@ -10,6 +10,7 @@ using System.Linq;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 using Microsoft.Xna.Framework.Graphics;
 using SlimDX;
 
@@ -29,6 +30,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
         public ISimulationEngine SimulationEngine { get; set; }
         [NonOptional]
         public PrototypeObjectsFactory PrototypeObjectsFactory { get; set; }
+        [NonOptional]
+        public IMeshRenderComponent MeshRenderComponent { get; set; }
         #endregion
 
         public RobotPlayerPart()

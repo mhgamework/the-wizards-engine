@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.SkyMerchant.DataStructures;
+using MHGameWork.TheWizards.SkyMerchant.Generation;
 using MHGameWork.TheWizards.SkyMerchant.Voxels;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,7 +10,7 @@ using TreeGenerator.NoiseGenerater;
 using TreeGenerator.TerrrainGeneration;
 using Vector4 = SlimDX.Vector4;
 
-namespace MHGameWork.TheWizards.SkyMerchant.Generation
+namespace MHGameWork.TheWizards.SkyMerchant.Gameplay
 {
     /// <summary>
     /// Generates an island by creating inverting a heightmap and some other manipulations

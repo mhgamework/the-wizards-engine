@@ -12,6 +12,7 @@ using MHGameWork.TheWizards.SkyMerchant.Voxels;
 using MHGameWork.TheWizards.SkyMerchant.Worlding;
 using MHGameWork.TheWizards.SkyMerchant._Engine;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 using NSubstitute;
 using NUnit.Framework;
 using SlimDX;

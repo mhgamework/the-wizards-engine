@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.RTSTestCase1._Tests
+namespace MHGameWork.TheWizards.SkyMerchant.Worlding
 {
     public class SimpleWorldLocator : IWorldLocator
     {

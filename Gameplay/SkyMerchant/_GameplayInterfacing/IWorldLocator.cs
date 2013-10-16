@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
-using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 using SlimDX;
-using System.Linq;
 
-namespace MHGameWork.TheWizards.Engine.Worlding
+namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing
 {
     public interface IWorldLocator
     {

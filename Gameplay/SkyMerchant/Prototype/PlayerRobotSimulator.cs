@@ -5,6 +5,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
+using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using SlimDX;
 using SlimDX.DirectInput;
 
@@ -15,6 +16,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
     /// </summary>
     public class PlayerRobotSimulator
     {
+
         [NonOptional]
         public CustomCamera Camera { get; set; }
 
@@ -106,13 +108,13 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
             var robot = TypedFactory.CreateRobotPlayerPart();
             robot.Physical = TypedFactory.CreatePhysicalPart();
             robot.NormalMovement = mov;
-            robot.Physical.Mesh = TW.Assets.LoadMesh("SkyMerchant/DummyRobot/DummyRobot");
+            robot.MeshRenderComponent.Mesh = TW.Assets.LoadMesh("SkyMerchant/DummyRobot/DummyRobot");
 
             mov.Physical = robot.Physical;
             mov.Physics = TypedFactory.CreatePhysics();
 
             var scale = 0.1f;
-            robot.Physical.ObjectMatrix = Matrix.Scaling(scale, scale, scale) * Matrix.RotationY(MathHelper.Pi);
+            robot.MeshRenderComponent.ObjectMatrix = Matrix.Scaling(scale, scale, scale) * Matrix.RotationY(MathHelper.Pi);
 
 
             view = new RobotInventoryTextView(robot);
