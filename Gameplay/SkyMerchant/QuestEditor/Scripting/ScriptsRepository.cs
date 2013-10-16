@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Castle.MicroKernel;
+using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
-using MHGameWork.TheWizards.SkyMerchant.DataStructures;
 
 namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.Scripting
 {

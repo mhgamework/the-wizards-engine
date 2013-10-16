@@ -1,8 +1,7 @@
 ﻿using DirectX11;
-using MHGameWork.TheWizards.SkyMerchant.DataStructures;
-using MHGameWork.TheWizards.SkyMerchant.Voxels;
+using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 
-namespace MHGameWork.TheWizards.SkyMerchant.Generation
+namespace MHGameWork.TheWizards.SkyMerchant._Engine.Voxels
 {
     /// <summary>
     /// Represents a 3D voxel set

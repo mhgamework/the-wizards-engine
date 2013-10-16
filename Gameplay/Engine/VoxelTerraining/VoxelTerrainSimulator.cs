@@ -5,7 +5,7 @@ using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.SkyMerchant.Voxels;
+using MHGameWork.TheWizards.SkyMerchant._Engine.Voxels;
 using SlimDX;
 using System.Linq;
 

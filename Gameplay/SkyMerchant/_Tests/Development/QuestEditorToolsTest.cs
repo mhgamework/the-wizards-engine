@@ -11,7 +11,6 @@ using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.SkyMerchant.Gameplay.Items;
 using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
-using MHGameWork.TheWizards.SkyMerchant.Voxels;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using NSubstitute;
 using NUnit.Framework;

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
+namespace MHGameWork.TheWizards.SkyMerchant._Engine.MeshImporting
 {
     /// <summary>
     /// Helper class

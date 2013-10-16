@@ -2,7 +2,7 @@
 using MHGameWork.TheWizards.Engine;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.SkyMerchant.SimulationPausing
+namespace MHGameWork.TheWizards.SkyMerchant._Engine.SimulationPausing
 {
     /// <summary>
     /// Simple example that runs a simulation function in a seperate thread so that it can be paused.

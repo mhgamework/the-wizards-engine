@@ -4,7 +4,7 @@ using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant.Voxels
+namespace MHGameWork.TheWizards.SkyMerchant._Engine.Voxels
 {
     public class VoxelMeshBuilder
     {

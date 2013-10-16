@@ -3,8 +3,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
-using MHGameWork.TheWizards.SkyMerchant.Generation;
-using MHGameWork.TheWizards.SkyMerchant.Voxels;
+using MHGameWork.TheWizards.SkyMerchant._Engine.Voxels;
 using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable

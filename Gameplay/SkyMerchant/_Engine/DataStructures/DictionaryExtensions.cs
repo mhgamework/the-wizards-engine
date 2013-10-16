@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MHGameWork.TheWizards.SkyMerchant.DataStructures
+namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
 {
     public static class DictionaryExtensions
     {

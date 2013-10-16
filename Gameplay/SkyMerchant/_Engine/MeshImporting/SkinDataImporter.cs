@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
-namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
+namespace MHGameWork.TheWizards.SkyMerchant._Engine.MeshImporting
 {
     /// <summary>
     /// Responsible for parsing .twskin files

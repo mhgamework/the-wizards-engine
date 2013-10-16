@@ -3,8 +3,8 @@ using System.Diagnostics;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Gameplay;
-using MHGameWork.TheWizards.SkyMerchant.SimulationPausing;
 using MHGameWork.TheWizards.SkyMerchant._Engine;
+using MHGameWork.TheWizards.SkyMerchant._Engine.SimulationPausing;
 using NUnit.Framework;
 using SlimDX.DirectInput;
 

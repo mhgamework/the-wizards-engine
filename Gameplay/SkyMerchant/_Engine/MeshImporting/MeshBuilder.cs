@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards.Rendering;
 using Microsoft.Xna.Framework.Graphics;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
+namespace MHGameWork.TheWizards.SkyMerchant._Engine.MeshImporting
 {
     /// <summary>
     /// Respinsible for converting imported mesh data into an IMesh

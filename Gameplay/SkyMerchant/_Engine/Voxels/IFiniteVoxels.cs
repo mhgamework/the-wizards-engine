@@ -1,6 +1,6 @@
 ﻿using DirectX11;
 
-namespace MHGameWork.TheWizards.SkyMerchant.Voxels
+namespace MHGameWork.TheWizards.SkyMerchant._Engine.Voxels
 {
     public interface IFiniteVoxels
     {

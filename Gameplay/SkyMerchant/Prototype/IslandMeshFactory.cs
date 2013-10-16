@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.SkyMerchant.Gameplay;
-using MHGameWork.TheWizards.SkyMerchant.Voxels;
+using MHGameWork.TheWizards.SkyMerchant._Engine.Voxels;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype
 {

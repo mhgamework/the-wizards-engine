@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MHGameWork.TheWizards.Animation;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
+namespace MHGameWork.TheWizards.SkyMerchant._Engine.MeshImporting
 {
     /// <summary>
     /// Responsible for converting imported animation-data into an Animaion and adding it to a given Skeleton.

@@ -1,6 +1,6 @@
 ﻿using DirectX11;
 
-namespace MHGameWork.TheWizards.SkyMerchant.DataStructures
+namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
 {
     /// <summary>
     /// Represents a array that can be accessed using Point3

@@ -10,8 +10,8 @@ using Castle.Windsor;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.SkyMerchant.GameObjects;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
+using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
-using MHGameWork.TheWizards.SkyMerchant.DataStructures;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Installers
 {

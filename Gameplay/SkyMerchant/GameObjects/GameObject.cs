@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using MHGameWork.TheWizards.SkyMerchant.DataStructures;
 using MHGameWork.TheWizards.SkyMerchant.Installers;
+using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 
 namespace MHGameWork.TheWizards.SkyMerchant.GameObjects

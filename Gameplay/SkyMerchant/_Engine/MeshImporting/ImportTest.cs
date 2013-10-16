@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using MHGameWork.TheWizards.Animation;
-using MHGameWork.TheWizards.Debugging;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
@@ -14,12 +9,9 @@ using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.RTSTestCase1;
 using NUnit.Framework;
 using SlimDX;
-using MHGameWork.TheWizards;
-using Microsoft.Xna.Framework.Graphics;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.SkyMerchant._Engine;
 
-namespace MHGameWork.TheWizards.SkyMerchant.MeshImporting
+namespace MHGameWork.TheWizards.SkyMerchant._Engine.MeshImporting
 {
     [TestFixture]
     [EngineTest]

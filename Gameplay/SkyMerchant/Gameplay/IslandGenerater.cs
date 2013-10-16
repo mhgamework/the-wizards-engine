@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using DirectX11;
-using MHGameWork.TheWizards.SkyMerchant.DataStructures;
-using MHGameWork.TheWizards.SkyMerchant.Generation;
-using MHGameWork.TheWizards.SkyMerchant.Voxels;
+using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
+using MHGameWork.TheWizards.SkyMerchant._Engine.Voxels;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TreeGenerator.NoiseGenerater;

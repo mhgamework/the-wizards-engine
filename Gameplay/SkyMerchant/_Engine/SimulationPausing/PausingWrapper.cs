@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Threading;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.SkyMerchant._Engine;
-using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.SkyMerchant.SimulationPausing
+namespace MHGameWork.TheWizards.SkyMerchant._Engine.SimulationPausing
 {
     /// <summary>
     /// Responsible for wrapping a method so that the wrapped method can pause it's execution.
