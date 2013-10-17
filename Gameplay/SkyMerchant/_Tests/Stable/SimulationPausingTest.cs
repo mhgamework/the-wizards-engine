@@ -15,7 +15,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
     /// </summary>
     [EngineTest]
     [TestFixture]
-    [Category("RunsAutomated")]
+    //[Category("RunsAutomated")]
     public class SimulationPausingTest
     {
         private TWEngine engine = EngineFactory.CreateEngine();

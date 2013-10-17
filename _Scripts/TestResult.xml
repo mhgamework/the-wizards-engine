@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="..\bin\BinariesGame\Gameplay.dll" total="13" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2013-10-17" time="18:15:51">
+  <environment nunit-version="2.5.7.10213" clr-version="2.0.50727.4927" os-version="Microsoft Windows NT 6.1.7600.0" platform="Win32NT" cwd="C:\_MHData\_Source\_Scripts" machine-name="MHGAMEWORKBASE" user="MHGameWork" user-domain="MHGameWorkBase" />
+  <culture-info current-culture="nl-BE" current-uiculture="en-US" />
+  <test-suite type="Assembly" name="..\bin\BinariesGame\Gameplay.dll" executed="True" result="Success" success="True" time="2.821" asserts="0">
+    <properties>
+      <property name="Timeout" value="5000" />
+    </properties>
+    <results>
+      <test-suite type="Namespace" name="MHGameWork" executed="True" result="Success" success="True" time="2.816" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="TheWizards" executed="True" result="Success" success="True" time="2.812" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="SkyMerchant" executed="True" result="Success" success="True" time="2.812" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="_Tests" executed="True" result="Success" success="True" time="2.810" asserts="0">
+                    <results>
+                      <test-suite type="Namespace" name="Development" executed="True" result="Success" success="True" time="0.596" asserts="0">
+                        <results>
+                          <test-suite type="TestFixture" name="GameObjectsInstallerTest" executed="True" result="Success" success="True" time="0.595" asserts="0">
+                            <categories>
+                              <category name="RunsAutomated" />
+                            </categories>
+                            <results>
+                              <test-case name="MHGameWork.TheWizards.SkyMerchant._Tests.Development.GameObjectsInstallerTest.TestCreateMeshRenderComponent" executed="True" result="Success" success="True" time="0.154" asserts="0" />
+                              <test-case name="MHGameWork.TheWizards.SkyMerchant._Tests.Development.GameObjectsInstallerTest.TestCreatePositionComponent" executed="True" result="Success" success="True" time="0.008" asserts="1" />
+                              <test-case name="MHGameWork.TheWizards.SkyMerchant._Tests.Development.GameObjectsInstallerTest.TestDoNotWirePropertiesOnGameObjectComponents" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                              <test-case name="MHGameWork.TheWizards.SkyMerchant._Tests.Development.GameObjectsInstallerTest.TestGameObjectsRepository" executed="True" result="Success" success="True" time="0.001" asserts="3" />
+                              <test-case name="MHGameWork.TheWizards.SkyMerchant._Tests.Development.GameObjectsInstallerTest.TestSimpleScopedComponent" executed="True" result="Success" success="True" time="0.125" asserts="5" />
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                      <test-suite type="Namespace" name="Stable" executed="True" result="Success" success="True" time="2.211" asserts="0">
+                        <results>
+                          <test-suite type="TestFixture" name="SimulationPausingTest" executed="True" result="Success" success="True" time="2.092" asserts="0">
+                            <categories>
+                              <category name="RunsAutomated" />
+                            </categories>
+                            <results>
+                              <test-case name="MHGameWork.TheWizards.SkyMerchant._Tests.Stable.SimulationPausingTest.TestPausingWrapper" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                              <test-case name="MHGameWork.TheWizards.SkyMerchant._Tests.Stable.SimulationPausingTest.TestPausingWrapperPerformance" executed="True" result="Success" success="True" time="2.085" asserts="0" />
+                              <test-case name="MHGameWork.TheWizards.SkyMerchant._Tests.Stable.SimulationPausingTest.TestSimpleExample" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="WindsorTest" executed="True" result="Success" success="True" time="0.031" asserts="0">
+                            <categories>
+                              <category name="RunsAutomated" />
+                            </categories>
+                            <results>
+                              <test-case name="MHGameWork.TheWizards.SkyMerchant._Tests.Stable.WindsorTest.TestDebugWriting" executed="True" result="Success" success="True" time="0.013" asserts="0" />
+                              <test-case name="MHGameWork.TheWizards.SkyMerchant._Tests.Stable.WindsorTest.TestDisablePropertyWiring" executed="True" result="Success" success="True" time="0.004" asserts="1" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="WorldOctreeTest" executed="True" result="Success" success="True" time="0.086" asserts="0">
+                            <results>
+                              <test-case name="MHGameWork.TheWizards.SkyMerchant._Tests.Stable.WorldOctreeTest.TestChunkCoordinateChildren" executed="True" result="Success" success="True" time="0.069" asserts="0">
+                                <categories>
+                                  <category name="RunsAutomated" />
+                                </categories>
+                              </test-case>
+                              <test-case name="MHGameWork.TheWizards.SkyMerchant._Tests.Stable.WorldOctreeTest.TestGetParent" executed="True" result="Success" success="True" time="0.003" asserts="73">
+                                <categories>
+                                  <category name="RunsAutomated" />
+                                </categories>
+                              </test-case>
+                              <test-case name="MHGameWork.TheWizards.SkyMerchant._Tests.Stable.WorldOctreeTest.TestUnrolledIndex" executed="True" result="Success" success="True" time="0.011" asserts="5">
+                                <categories>
+                                  <category name="RunsAutomated" />
+                                </categories>
+                              </test-case>
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

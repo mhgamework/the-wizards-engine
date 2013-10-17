@@ -1,0 +1,1 @@
+nunit-console-x86 "..\bin\BinariesGame\Gameplay.dll" /include=RunsAutomated /noshadow

@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <h1>TeamCity</h1>
+    <p>
+        In order to make TeamCity work with TW, some fixes were needed:</p>
+    <ul>
+        <li>Include the nuget packages into the git, more specifically, the postsharp packages. Without these, the first compilation of the solution would fail</li>
+        <li>Make sure the chosen solution build configuration has all the projects set on compile</li>
+        <li>Make sure the project dependencies are correct. When references to other projects are done by file, these could be incorrect, causing the first build to fail.</li>
+    </ul>
+    <p>
+        &nbsp;</p>
+
+</body>
+</html>
