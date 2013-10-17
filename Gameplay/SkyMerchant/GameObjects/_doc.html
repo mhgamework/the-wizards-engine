@@ -7,8 +7,14 @@
 </head>
 <body>
 
+    <h1>
+        GameObjects</h1>
     <p>
         Implements the GameObjects gameplay interfaces for the SkyMerchant Project.</p>
+    <p>
+        Game objects are composed by IGameObjectComponents. The IGameObjectRepository holds the game objects, and provides access to them.</p>
+    <p>
+        There is a windsor GameObjectScope which allows to set a current active game object, which is to be used to resolve IGameObjectComponents for DI.</p>
 
 </body>
 </html>

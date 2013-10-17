@@ -458,11 +458,13 @@
     <Content Include="Engine\_doc.html" />
     <Content Include="SkyMerchant\GameObjects\_doc.html" />
     <Content Include="SkyMerchant\Gameplay\_doc.txt" />
+    <Content Include="SkyMerchant\_Doc\Unit Testing.html" />
     <Content Include="SkyMerchant\_GameplayInterfacing\_doc.txt" />
     <Content Include="SkyMerchant\_Ideas\CSharpTricks.html" />
     <Content Include="SkyMerchant\_Ideas\Engine.html" />
     <Content Include="SkyMerchant\_Ideas\IDE.html" />
     <Content Include="SkyMerchant\_Ideas\Projects\AutomatedTesting.html" />
+    <Content Include="SkyMerchant\_Ideas\Projects\Documentation.html" />
     <Content Include="SkyMerchant\_Ideas\TODO.html" />
     <Content Include="SkyMerchant\_Tests\_doc.html" />
     <Content Include="Engine\WorldRendering\_doc.txt" />

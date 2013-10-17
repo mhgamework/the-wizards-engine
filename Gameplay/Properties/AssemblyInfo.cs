@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using MHGameWork.TheWizards.Data;
+using NUnit.Framework;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -38,7 +39,8 @@ using MHGameWork.TheWizards.Data;
 
 
 
-
+// Set a global test timeout
+[assembly: Timeout(5000)]
 //[assembly: TWProfile(TWProfileAttribute.NameType.Class, AttributeTargetTypes = "MHGameWork.TheWizards.*", AttributeTargetMembers = "Simulate")]
 #if PROFILE
 [assembly: (AttributeTargetTypes = "MHGameWork.TheWizards.*", AttributeTargetMembers = "*")]
