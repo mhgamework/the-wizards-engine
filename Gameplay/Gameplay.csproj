@@ -460,6 +460,7 @@
     <Content Include="SkyMerchant\Gameplay\_doc.txt" />
     <Content Include="SkyMerchant\_Doc\TeamCity.html" />
     <Content Include="SkyMerchant\_Doc\Unit Testing.html" />
+    <Content Include="SkyMerchant\_Doc\Windsor.html" />
     <Content Include="SkyMerchant\_GameplayInterfacing\_doc.txt" />
     <Content Include="SkyMerchant\_Ideas\CSharpTricks.html" />
     <Content Include="SkyMerchant\_Ideas\Engine.html" />

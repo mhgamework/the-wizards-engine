@@ -35,5 +35,17 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine.Windsor
                 .Replace("MHGameWork.TheWizards.SkyMerchant", "SKY")
                 .Replace("MHGameWork.TheWizards", "TW"));
         }
+
+        /// <summary>
+        /// Logs every created component into the console
+        /// </summary>
+        /// <param name="container"></param>
+        public void EnableCreationLogging(IWindsorContainer container)
+        {
+            container.Kernel.ComponentCreated +=delegate(ComponentModel model, object instance)
+                {
+                    Console.WriteLine("WINDSOR Created {0}", model.Name);
+                };
+        }
     }
 }

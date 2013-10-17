@@ -16,13 +16,19 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
     [Category("RunsAutomated")]
     public class WindsorTest
     {
+        private WindsorDebugTools tools;
+
+        public WindsorTest()
+        {
+            tools = new WindsorDebugTools();
+        }
+
         [Test]
         public void TestDebugWriting()
         {
             var container = new WindsorContainer();
             container.Install(new PrototypeInstaller());
 
-            var tools = new WindsorDebugTools();
             var str = tools.GenerateDependenciesString(container); //.Mark();
 
             Console.WriteLine(str);
@@ -35,6 +41,29 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
             container.Register(Classes.FromThisAssembly().InSameNamespaceAs<TestPropertyComponent>().WithServiceSelf().DisablePropertyWiring());
             var comp = container.Resolve<TestPropertyComponent>();
             Assert.IsNull(comp.Component);
+        }
+
+        [Test]
+        public void TestWindsorLogging()
+        {
+            var container = new WindsorContainer();
+            tools.EnableCreationLogging(container);
+            container.Register(Component.For<WindsorTest>());
+            container.Register(Component.For<Object>().LifestyleTransient());
+            container.Resolve<WindsorTest>();
+            container.Resolve<WindsorTest>();
+            container.Resolve<Object>();
+            container.Resolve<Object>();
+
+            //Test that console now shows output for this creation, but only once
+
+            /**
+            WINDSOR Created MHGameWork.TheWizards.SkyMerchant._Tests.Stable.WindsorTest
+            WINDSOR Created System.Object
+            WINDSOR Created System.Object
+             **/
+
+
         }
     }
 }
