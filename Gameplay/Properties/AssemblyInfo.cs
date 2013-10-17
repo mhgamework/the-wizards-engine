@@ -39,8 +39,8 @@ using NUnit.Framework;
 
 
 
-// Set a global test timeout
-[assembly: Timeout(5000)]
+// Set a global test timeout. Awesome, but very annoying when debugging!
+//[assembly: Timeout(5000)]
 //[assembly: TWProfile(TWProfileAttribute.NameType.Class, AttributeTargetTypes = "MHGameWork.TheWizards.*", AttributeTargetMembers = "Simulate")]
 #if PROFILE
 [assembly: (AttributeTargetTypes = "MHGameWork.TheWizards.*", AttributeTargetMembers = "*")]
