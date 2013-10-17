@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
     /// Test some of the windsor utilities
     /// </summary>
     [TestFixture]
-    //[Category("RunsAutomated")]
+    [Category("RunsAutomated")]
     public class WindsorTest
     {
         [Test]

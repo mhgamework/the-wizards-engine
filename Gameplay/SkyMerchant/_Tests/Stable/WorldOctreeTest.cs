@@ -17,7 +17,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
     /// Tests the ChunkCoordinate and WorldOctreeExtensions (findup and finddown)
     /// </summary>
     [EngineTest]
-    //[TestFixture]
+    [TestFixture]
     public class WorldOctreeTest
     {
         private TWEngine engine = EngineFactory.CreateEngine();
