@@ -1,6 +1,7 @@
 cd ..
 
 rmdir /S /Q "bin/Binaries"
+rmdir /S /Q "bin/BinariesGame"
 rmdir /S /Q "bin/Cache"
 
 rmdir /S /Q "ApplicationLogic/bin"
@@ -42,6 +43,8 @@ rmdir /S /Q "TestRunner/obj"
 rmdir /S /Q "TileEngine/obj"
 rmdir /S /Q "TreeGenerator/obj"
 rmdir /S /Q "Unit Tests/obj"
+
+cd Deprecated
 
 rmdir /S /Q "AdminClientVB/bin"
 rmdir /S /Q "ClientVB/bin"

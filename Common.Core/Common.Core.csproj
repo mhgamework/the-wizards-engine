@@ -100,9 +100,6 @@
     <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
-    <Reference Include="TestRunner">
-      <HintPath>..\bin\Binaries\TestRunner.exe</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -510,6 +507,10 @@
     <ProjectReference Include="..\Deprecated\CommonVB\CommonVB.vbproj">
       <Project>{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}</Project>
       <Name>CommonVB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestRunner\TestRunner.csproj">
+      <Project>{ac6c51ce-96fb-401b-9b51-1302f273a52a}</Project>
+      <Name>TestRunner</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
