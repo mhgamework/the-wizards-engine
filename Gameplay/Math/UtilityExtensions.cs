@@ -100,5 +100,25 @@ namespace MHGameWork.TheWizards
         {
             return ray.Position + ray.Direction * dist;
         }
+
+
+        public static bool IsSameAs(this Vector3 a, Vector3 b)
+        {
+            return Math.Abs(a.X - b.X) < 0.0001f
+                   && Math.Abs(a.Y - b.Y) < 0.0001f
+                   && Math.Abs(a.Z - b.Z) < 0.0001f;
+        }
+        public static bool IsSameAs(this Vector2 a, Vector2 b)
+        {
+            return Math.Abs(a.X - b.X) < 0.0001f
+                   && Math.Abs(a.Y - b.Y) < 0.0001f;
+        }
+        public static bool IsSameAs(this Quaternion a, Quaternion b)
+        {
+            return Math.Abs(a.X - b.X) < 0.0001f
+                   && Math.Abs(a.Y - b.Y) < 0.0001f
+                   && Math.Abs(a.Z - b.Z) < 0.0001f
+                   && Math.Abs(a.W - b.W) < 0.0001f;
+        }
     }
 }
