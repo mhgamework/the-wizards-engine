@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>PostSharp.Patterns.Model</id>
+    <version>3.0.35</version>
+    <title>PostSharp Model Pattern Library</title>
+    <authors>SharpCrafters s.r.o.</authors>
+    <owners>SharpCrafters s.r.o.</owners>
+    <licenseUrl>http://www.sharpcrafters.com/links/nuget-license</licenseUrl>
+    <projectUrl>http://www.sharpcrafters.com/links/nuget-home</projectUrl>
+    <iconUrl>http://www.sharpcrafters.com/nuget/icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An official PostSharp Patterns. Provides an advanced and tested implementation of INotifyPropertyChanged.</description>
+    <language>en-US</language>
+    <tags>postsharp sharcrafters aop aspect Patterns INotifyPropertyChanged notifypropertychanged inpc</tags>
+    <dependencies>
+      <dependency id="PostSharp" version="3.0.35" />
+    </dependencies>
+  </metadata>
+</package>

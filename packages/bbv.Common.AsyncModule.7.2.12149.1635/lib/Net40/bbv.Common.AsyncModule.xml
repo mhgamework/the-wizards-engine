@@ -1,0 +1,1185 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>bbv.Common.AsyncModule</name>
+    </assembly>
+    <members>
+        <member name="T:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension">
+            <summary>
+            Log extension that does nothing. Can be used as a base class for custom loggers.
+            </summary>
+        </member>
+        <member name="T:bbv.Common.AsyncModule.IAsyncModuleLogExtension">
+            <summary>
+            Log extension for <see cref="T:bbv.Common.AsyncModule.ModuleController"/>.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.AddedExtension(bbv.Common.AsyncModule.Extensions.IModuleExtension,System.Object)">
+            <summary>
+            Called when an extension was added.
+            </summary>
+            <param name="extension">The extension.</param>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.ControllerAlreadyRunning(System.Object)">
+            <summary>
+            Called when the controller Controllers the already running.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.Starting(System.Object)">
+            <summary>
+            Called when the controller is starting.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.Started(System.Object,System.Int32)">
+            <summary>
+            Called when the controller is started.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+            <param name="numberOfThreads">The number of threads.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.StoppingAsync(System.Object)">
+            <summary>
+            Called when controller is stopped asynchronously.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.AlreadyStopped(System.Object)">
+            <summary>
+            Called when controller is stopped but it is already stopped.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.Stopping(System.Object,System.TimeSpan)">
+            <summary>
+            Called when control is stopping.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+            <param name="timeout">The timeout.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.AbortingThread(System.Object,System.String,System.TimeSpan)">
+            <summary>
+            Called when a thread is aborted (did not finish in timeout).
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+            <param name="threadName">Name of the thread.</param>
+            <param name="timeout">The timeout.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.EnqueuedMessage(System.Object,System.Object)">
+            <summary>
+            Called when a message is enqueued.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.UnhandledException(System.Object,System.Object,System.Exception)">
+            <summary>
+            Called when an unhandled exception occurs.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+            <param name="message">The message.</param>
+            <param name="exception">The exception.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.Stopped(System.Object)">
+            <summary>
+            Called when controller was stopped.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.NumberOfMessagesInQueue(System.Int32,System.Object)">
+            <summary>
+            Called to report number of remaining messages in queue.
+            </summary>
+            <param name="count">The count.</param>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.WorkerThreadExit(System.String)">
+            <summary>
+            Called when a worker thread exits.
+            </summary>
+            <param name="threadName">Name of the thread.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.SkippingNullMessage(System.Object)">
+            <summary>
+            Called when skipping a null message.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.ConsumingMessage(System.Object,System.Object)">
+            <summary>
+            Called when consuming a message.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.RelayingMessage(System.Object,System.Object,System.String)">
+            <summary>
+            Called when a message is relayed to a consumer.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="controlledModule">The controlled module.</param>
+            <param name="methodName">Name of the method.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.ConsumedMessage(System.Object,System.Object)">
+            <summary>
+            Called when a message was consumed.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.SkippedMessage(System.Object,System.Object)">
+            <summary>
+            Called when a message was skipped (due to an extension).
+            </summary>
+            <param name="message">The message.</param>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.SwallowedException(System.Reflection.TargetInvocationException,System.Object,System.Object)">
+            <summary>
+            Called when an exception was swallowed.
+            </summary>
+            <param name="targetInvocationException">The target invocation exception.</param>
+            <param name="message">The message.</param>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IAsyncModuleLogExtension.NoHandlerFound(System.Object,System.Object)">
+            <summary>
+            Called when no handler method was found for a message.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.AddedExtension(bbv.Common.AsyncModule.Extensions.IModuleExtension,System.Object)">
+            <summary>
+            Called when an extension was added.
+            </summary>
+            <param name="extension">The extension.</param>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.ControllerAlreadyRunning(System.Object)">
+            <summary>
+            Called when the controller Controllers the already running.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.Starting(System.Object)">
+            <summary>
+            Called when the controller is starting.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.Started(System.Object,System.Int32)">
+            <summary>
+            Called when the controller is started.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+            <param name="numberOfThreads">The number of threads.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.StoppingAsync(System.Object)">
+            <summary>
+            Called when controller is stopped asynchronously.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.AlreadyStopped(System.Object)">
+            <summary>
+            Called when controller is stopped but it is already stopped.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.Stopping(System.Object,System.TimeSpan)">
+            <summary>
+            Called when control is stopping.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+            <param name="timeout">The timeout.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.AbortingThread(System.Object,System.String,System.TimeSpan)">
+            <summary>
+            Called when a thread is aborted (did not finish in timeout).
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+            <param name="threadName">Name of the thread.</param>
+            <param name="timeout">The timeout.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.EnqueuedMessage(System.Object,System.Object)">
+            <summary>
+            Called when a message is enqueued.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.UnhandledException(System.Object,System.Object,System.Exception)">
+            <summary>
+            Called when an unhandled exception occurs.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+            <param name="message">The message.</param>
+            <param name="exception">The exception.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.Stopped(System.Object)">
+            <summary>
+            Called when controller was stopped.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.NumberOfMessagesInQueue(System.Int32,System.Object)">
+            <summary>
+            Called to report number of remaining messages in queue.
+            </summary>
+            <param name="count">The count.</param>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.WorkerThreadExit(System.String)">
+            <summary>
+            Called when a worker thread exits.
+            </summary>
+            <param name="threadName">Name of the thread.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.SkippingNullMessage(System.Object)">
+            <summary>
+            Called when skipping a null message.
+            </summary>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.ConsumingMessage(System.Object,System.Object)">
+            <summary>
+            Called when consuming a message.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.RelayingMessage(System.Object,System.Object,System.String)">
+            <summary>
+            Called when a message is relayed to a consumer.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="controlledModule">The controlled module.</param>
+            <param name="methodName">Name of the method.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.ConsumedMessage(System.Object,System.Object)">
+            <summary>
+            Called when a message was consumed.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.SkippedMessage(System.Object,System.Object)">
+            <summary>
+            Called when a message was skipped (due to an extension).
+            </summary>
+            <param name="message">The message.</param>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.SwallowedException(System.Reflection.TargetInvocationException,System.Object,System.Object)">
+            <summary>
+            Called when an exception was swallowed.
+            </summary>
+            <param name="targetInvocationException">The target invocation exception.</param>
+            <param name="message">The message.</param>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.EmptyAsyncModuleLogExtension.NoHandlerFound(System.Object,System.Object)">
+            <summary>
+            Called when no handler method was found for a message.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="controlledModule">The controlled module.</param>
+        </member>
+        <member name="T:bbv.Common.AsyncModule.Events.AfterConsumeMessageEventArgs">
+            <summary>
+            Event arguments for the AfterMessageConsume event.
+            </summary>
+        </member>
+        <member name="T:bbv.Common.AsyncModule.Events.ConsumeMessageEventArgs">
+            <summary>
+            The event arguments of the module controller events: 
+            BeforeConsumeMessage and AfterConsumeMessage.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Events.ConsumeMessageEventArgs.#ctor(System.Object,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:bbv.Common.AsyncModule.Events.ConsumeMessageEventArgs"/> class.
+            </summary>
+            <param name="module">The module, which consumes the message.</param>
+            <param name="message">The message to be consumed.</param>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.Events.ConsumeMessageEventArgs.Module">
+            <summary>
+            Gets the module, which consumes the message.
+            </summary>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.Events.ConsumeMessageEventArgs.Message">
+            <summary>
+            Gets the message to be consumed.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Events.AfterConsumeMessageEventArgs.#ctor(System.Object,System.Object,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:bbv.Common.AsyncModule.Events.AfterConsumeMessageEventArgs"/> class.
+            </summary>
+            <param name="module">The module.</param>
+            <param name="message">The message.</param>
+            <param name="notSkipped">True if the message was consumed, otherwise false (message was skipped).</param>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.Events.AfterConsumeMessageEventArgs.NotSkipped">
+            <summary>
+            Gets a value indicating whether the message was actually consumed and not skipped.
+            </summary>
+            <value><c>true</c> if message was not skipped otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:bbv.Common.AsyncModule.Events.BeforeConsumeMessageEventArgs">
+            <summary>
+            Event args for the <see cref="E:bbv.Common.AsyncModule.IModuleController.BeforeConsumeMessage"/> event.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Events.BeforeConsumeMessageEventArgs.#ctor(System.Object,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:bbv.Common.AsyncModule.Events.BeforeConsumeMessageEventArgs"/> class.
+            </summary>
+            <param name="module">The module, which consumes the message.</param>
+            <param name="message">The message to be consumed.</param>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.Events.BeforeConsumeMessageEventArgs.Cancel">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:bbv.Common.AsyncModule.Events.BeforeConsumeMessageEventArgs"/> is cancel (the message will not be passed to its handler).
+            </summary>
+            <value><c>true</c> if cancel; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:bbv.Common.AsyncModule.Events.ConsumeMessageExceptionEventArgs">
+            <summary>
+            The event arguments of the module controller event
+            ConsumeMessageExceptionOccurred.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Events.ConsumeMessageExceptionEventArgs.#ctor(System.Object,System.Object,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:bbv.Common.AsyncModule.Events.ConsumeMessageExceptionEventArgs"/> class.
+            </summary>
+            <param name="module">The module.</param>
+            <param name="message">The message causing the exception.</param>
+            <param name="exception">The exception.</param>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.Events.ConsumeMessageExceptionEventArgs.Exception">
+            <summary>
+            Gets the exception, which occured during the call to the 
+            message consumer.
+            </summary>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.Events.ConsumeMessageExceptionEventArgs.ExceptionHandled">
+            <summary>
+            Gets or sets a value indicating whether the extension 
+            has handled the exception and no further action of the 
+            module controller is necessary.
+            </summary>
+        </member>
+        <member name="T:bbv.Common.AsyncModule.Events.EnqueueMessageEventArgs">
+            <summary>
+            The event arguments of the module controller events: 
+            BeforeEnqueueMessage and AfterEnqueueMessage.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Events.EnqueueMessageEventArgs.#ctor(System.Object,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:bbv.Common.AsyncModule.Events.EnqueueMessageEventArgs"/> class.
+            </summary>
+            <param name="module">The module, which consumes the message.</param>
+            <param name="message">The message to be consumed.</param>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.Events.EnqueueMessageEventArgs.Module">
+            <summary>
+            Gets the module, which consumes the message.
+            </summary>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.Events.EnqueueMessageEventArgs.Message">
+            <summary>
+            Gets the message to be consumed.
+            </summary>
+        </member>
+        <member name="T:bbv.Common.AsyncModule.Events.UnhandledModuleExceptionEventArgs">
+            <summary>
+            The event arguments of the UnhandledExceptionOccurred event 
+            of the module coordinator.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Events.UnhandledModuleExceptionEventArgs.#ctor(System.Object,System.Object,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:bbv.Common.AsyncModule.Events.UnhandledModuleExceptionEventArgs"/> class.
+            </summary>
+            <param name="module">The module, where the unhandled exception occurred.</param>
+            <param name="message">The message causing the exception. Null if not a message is causing the exception.</param>
+            <param name="unhandledException">The unhandled exception.</param>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.Events.UnhandledModuleExceptionEventArgs.Module">
+            <summary>
+            Gets the module, where the unhandled exception occurred.
+            </summary>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.Events.UnhandledModuleExceptionEventArgs.UnhandledException">
+            <summary>
+            Gets the exception.
+            </summary>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.Events.UnhandledModuleExceptionEventArgs.Message">
+            <summary>
+            Gets the message causing the exception. Null if not a message is causing the exception.
+            </summary>
+        </member>
+        <member name="T:bbv.Common.AsyncModule.Extensions.ConsumePendingMessagesBeforeStopExtension">
+            <summary>
+            This extension consums all pending messages before stopping the 
+            module controller.
+            </summary>
+        </member>
+        <member name="T:bbv.Common.AsyncModule.Extensions.IModuleExtension">
+            <summary>
+            If a module needs to add eventhandlers to the 
+            events of the module controller, it has to implement
+            this interface, so that the module controller can 
+            call Attach and Detach.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Extensions.IModuleExtension.Attach">
+            <summary>
+            Called by the module controller to allow the extension
+            to register itself for events.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Extensions.IModuleExtension.Detach">
+            <summary>
+            Called by the module controller to allow the extension 
+            to remove its event handlers.
+            </summary>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.Extensions.IModuleExtension.ModuleController">
+            <summary>
+            Sets the controller this extension belongs to.
+            </summary>
+            <value>The controller.</value>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.Extensions.ConsumePendingMessagesBeforeStopExtension.pendingMessagesWaitTime">
+            <summary>
+            Time to wait (ms) for pending messages before the module controller is stopped.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.Extensions.ConsumePendingMessagesBeforeStopExtension.pendingMessagesCheckInterval">
+            <summary>
+            In this interval it is checked if there are pending messages.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.Extensions.ConsumePendingMessagesBeforeStopExtension.controllerIsStopping">
+            <summary>
+            True if the module controller of this extension is stopping.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.Extensions.ConsumePendingMessagesBeforeStopExtension.moduleController">
+            <summary>
+            The module controller the extension belongs to. This 
+            field is set through the property ModuleController with 
+            dependency injection.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Extensions.ConsumePendingMessagesBeforeStopExtension.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:bbv.Common.AsyncModule.Extensions.ConsumePendingMessagesBeforeStopExtension"/> class.
+            </summary>
+            <param name="pendingMessagesWaitTime">Time to wait (ms) for pending messages before the module controller is stopped.</param>
+            <param name="pendingMessagesCheckInterval">In this interval it is checked if there are pending messages.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Extensions.ConsumePendingMessagesBeforeStopExtension.Attach">
+            <summary>
+            Attaches the extension to the module controller.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Extensions.ConsumePendingMessagesBeforeStopExtension.Detach">
+            <summary>
+            Removes the connection to the module controller.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Extensions.ConsumePendingMessagesBeforeStopExtension.OnBeforeEnqueueMessage(System.Object,bbv.Common.AsyncModule.Events.EnqueueMessageEventArgs)">
+            <summary>
+            If the module controller is stopping and messages are still enqueue, we ignore them.
+            </summary>
+            <param name="sender">Sender is ignored.</param>
+            <param name="e">Used to prevent the message from being enqueued.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Extensions.ConsumePendingMessagesBeforeStopExtension.OnBeforeModuleStop(System.Object,System.EventArgs)">
+            <summary>
+            Waits until all messages are consumed or until the PendingMessageWaitTime has passed.
+            </summary>
+            <param name="sender">Sender is ignored.</param>
+            <param name="e">Event args are ignored.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Extensions.ConsumePendingMessagesBeforeStopExtension.OnAfterModuleStop(System.Object,System.EventArgs)">
+            <summary>
+            Resets the flag, which indicates that the module controller is stopping.
+            </summary>
+            <param name="sender">Sender is ignored.</param>
+            <param name="e">Event args are ignored.</param>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.Extensions.ConsumePendingMessagesBeforeStopExtension.ModuleController">
+            <summary>
+            Sets the module controller this extension belongs to.
+            </summary>
+        </member>
+        <member name="T:bbv.Common.AsyncModule.Extensions.ModuleExtensionCollection">
+            <summary>
+            This collection contains module extensions.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Extensions.ModuleExtensionCollection.Add``1(System.Object)">
+            <summary>
+            Adds a new extension.
+            </summary>
+            <typeparam name="TExtension">
+            With this type the extension is retrieved by GetExtension().
+            </typeparam>
+            <param name="extensionInstance">
+            The actual extension instance.
+            </param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Extensions.ModuleExtensionCollection.Get``1">
+            <summary>
+            Gets the extension from the module which was registered 
+            with the type TExtensionType.
+            </summary>
+            <typeparam name="TExtension">
+            The type identifying the extension to get.
+            </typeparam>
+            <returns>
+            See above.
+            </returns>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Extensions.ModuleExtensionCollection.RemoveAndDetach(System.Type)">
+            <summary>
+            Removes and detaches an extension.
+            </summary>
+            <param name="extensionType">
+            The type of the extension to remove.
+            </param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Extensions.ModuleExtensionCollection.AddAndAttach(System.Type,System.Object)">
+            <summary>
+            Add the extension to the dictionary. If the extension is of the 
+            type IModuleExtension, the Attach method of the extension is called, 
+            so that the extension can add event handlers to the extension points.
+            </summary>
+            <param name="extensionType">
+            Extension type to add.
+            </param>
+            <param name="extensionInstance">
+            The actual extension.
+            </param>
+        </member>
+        <member name="T:bbv.Common.AsyncModule.Extensions.SkipIfDuplicateInQueueModuleExtension">
+            <summary>
+            Extension that cancels the consumation of a message if there is a message in the queue that is equal to it.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.Extensions.SkipIfDuplicateInQueueModuleExtension.moduleController">
+            <summary>
+            Module controller this extension is registered to.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Extensions.SkipIfDuplicateInQueueModuleExtension.Attach">
+            <summary>
+            Called by the module controller to allow the extension
+            to register itself for events.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Extensions.SkipIfDuplicateInQueueModuleExtension.Detach">
+            <summary>
+            Called by the module controller to allow the extension
+            to remove its event handlers.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.Extensions.SkipIfDuplicateInQueueModuleExtension.ModuleController_BeforeConsumeMessage(System.Object,bbv.Common.AsyncModule.Events.BeforeConsumeMessageEventArgs)">
+            <summary>
+            Handles the BeforeConsumeMessage event of the ModuleController.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:bbv.Common.AsyncModule.Events.BeforeConsumeMessageEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.Extensions.SkipIfDuplicateInQueueModuleExtension.ModuleController">
+            <summary>
+            Sets the controller this extension belongs to.
+            </summary>
+            <value>The controller this extension was added to.</value>
+        </member>
+        <member name="T:bbv.Common.AsyncModule.IModuleController">
+            <summary>
+            The module controller is accessed through this interface.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IModuleController.Initialize(System.Object,System.Int32,System.Boolean,System.String)">
+            <summary>
+            Initializes this instance.
+            </summary>
+            <param name="module">The module to control.</param>
+            <param name="numberOfThreads">The number of worker threads.</param>
+            <param name="runWithBackgroundThread">if set to <c>true</c> then background threads are used.</param>
+            <param name="logger">The name used for the logger.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IModuleController.Initialize(System.Object,System.Boolean)">
+            <summary>
+            Initializes this instance.
+            </summary>
+            <param name="module">The module to control.</param>
+            <param name="runWithBackgroundThread">if set to <c>true</c> then background threads are used.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IModuleController.Initialize(System.Object,System.Int32)">
+            <summary>
+            Initializes this instance.
+            </summary>
+            <param name="module">The module to control.</param>
+            <param name="numberOfThreads">The number of worker threads.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IModuleController.Initialize(System.Object)">
+            <summary>
+            Initializes this instance.
+            </summary>
+            <param name="module">The module to control.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IModuleController.EnqueueMessage(System.Object)">
+            <summary>
+            Called by the coordinator to send a message to the module
+            managed by the controller.
+            </summary>
+            <param name="message">
+            The message can be of any type as long as the sender and 
+            the receiver both know it.
+            </param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IModuleController.EnqueuePriorityMessage(System.Object)">
+            <summary>
+            Puts a message to the front of the message queue of the module managed
+            by this controller.
+            </summary>
+            <param name="message">
+            The message to be enqueued.
+            </param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IModuleController.ClearMessages">
+            <summary>
+            Clears all messages still in the queue and returns them.
+            </summary>
+            <returns>All messages that were cleared from the queue.</returns>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IModuleController.Start">
+            <summary>
+            Starts the message consumer thread(s). If the thread(s) is/are already 
+            started this method returns immediately.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IModuleController.Stop">
+            <summary>
+            Stops the message consumer thread(s).
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IModuleController.Stop(System.TimeSpan)">
+            <summary>
+            Stops the message consumer thread(s) after finshing
+            an message currently processed. If the thread is
+            not responding anymore it is killed.
+            </summary>
+            <param name="timeout">The timeout that defines how long we will wait until the worker threads are killed, i.e. how long a currently 
+            processing message is tolerated.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IModuleController.StopAsync">
+            <summary>
+            Stops the message consumer threads. This method can be called from a message consumer thread.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IModuleController.AddExtension``1(``0)">
+            <summary>
+            Adds an extension to this controller.
+            </summary>
+            <typeparam name="TExtension">The type of the extension.</typeparam>
+            <param name="extension">The extension.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.IModuleController.GetExtension``1">
+            <summary>
+            Gets the extension with the specified type.
+            </summary>
+            <typeparam name="TExtension">The type of the extension.</typeparam>
+            <returns>The extension with the specified type.</returns>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.IModuleController.BeforeModuleStart">
+            <summary>
+            This event is raised before the module is started. Extensions
+            use this event to insert actions before the module starts.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.IModuleController.AfterModuleStart">
+            <summary>
+            This event is raised after the module has been started. Extensions
+            use this event to insert actions after the module starts.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.IModuleController.BeforeModuleStop">
+            <summary>
+            This event is raised before the module is stopped. Extensions
+            use this event to insert actions before the module stops.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.IModuleController.AfterModuleStop">
+            <summary>
+            This event is raised after the module has been stopped. Extensions
+            use this event to insert actions after the module stops.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.IModuleController.BeforeConsumeMessage">
+            <summary>
+            This event is raised before a call to the message consumer. Extensions
+            use this event to insert actions before the message is consumed.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.IModuleController.AfterConsumeMessage">
+            <summary>
+            This event is raised after a call to the message consumer. Extensions
+            use this event to insert actions after the message has been consumed.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.IModuleController.BeforeEnqueueMessage">
+            <summary>
+            This event is raised before the message is enqueued. Extensions
+            use this event to insert actions before the message is enqueued.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.IModuleController.AfterEnqueueMessage">
+            <summary>
+            This event is raised after a message was enqueued. Extensions
+            use this event to insert actions after the message is enqueued.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.IModuleController.ConsumeMessageExceptionOccurred">
+            <summary>
+            This event is raised when an excpetion is thrown during consuming a message.
+            This event is used to react meaningful to exceptions like a retrying mechanism.
+            The event handler can return a value indicating whether the exception was handled.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.IModuleController.UnhandledModuleExceptionOccured">
+            <summary>
+            This event is raised when an unhandled exception in a module occured that was not handled
+            by the <see cref="E:bbv.Common.AsyncModule.IModuleController.ConsumeMessageExceptionOccurred"/> event.
+            This event is just for notification, afterwards the module will continue with the next message.
+            </summary>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.IModuleController.MessageCount">
+            <summary>
+            Gets the number of messages in the message queue.
+            </summary>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.IModuleController.Messages">
+            <summary>
+            Gets the messages in the message queue.
+            </summary>
+            <value>The messages.</value>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.IModuleController.IsAlive">
+            <summary>
+            Gets a value indicating whether the thread(s) managed by the module controller is/are
+            alive.
+            </summary>
+            <value><c>true</c> if this instance is alive; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.IModuleController.LogExtension">
+            <summary>
+            Gets or sets the log extension.
+            </summary>
+            <value>The log extension.</value>
+        </member>
+        <member name="T:bbv.Common.AsyncModule.MessageConsumerAttribute">
+            <summary>
+            If a method is marked with this attribute, it is 
+            recoginzed by the ModuleCoordinator as sink for 
+            messages.
+            </summary>
+        </member>
+        <member name="T:bbv.Common.AsyncModule.ModuleController">
+            <summary>
+            The module coordinator adds a message queue and a message
+            consumer thread to the controlled object.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.ModuleController.DefaultNumberOfThreads">
+            <summary>
+            Default number of threads used to consume messages.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.ModuleController.threadStoppingLock">
+            <summary>
+            Lock object the access <see cref="F:bbv.Common.AsyncModule.ModuleController.threadStopping"/> field.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.ModuleController.lockingObject">
+            <summary>
+            Lock object which synchronizes producer and consumer.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.ModuleController.defaultTimeOut">
+            <summary>
+            Default timeout that defines how long the controller waits for a consuming message
+            before killing the worker thread.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.ModuleController.extensions">
+            <summary>
+            The extensions of the module.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.ModuleController.messageQueue">
+            <summary>
+            Message queue. Is filled through the PostMessage method
+            of the ModuleCoordinator. The messages are consumed by
+            the configured consumer delegate.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.ModuleController.runWithBackgroundThread">
+            <summary>
+            Whether the worker threads are background threads or not.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.ModuleController.numberOfThreads">
+            <summary>
+            Number of threads used to consume messages.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.ModuleController.messageConsumerThreads">
+            <summary>
+            This threads listen to messages which are placed in 
+            the message queue.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.ModuleController.consumeMessageMethodInfos">
+            <summary>
+            A list of message consumer methods.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.ModuleController.controlledModule">
+            <summary>
+            The module controlled by the controller.
+            </summary>
+        </member>
+        <member name="F:bbv.Common.AsyncModule.ModuleController.threadStopping">
+            <summary>
+            Indicates whether we are stopping worker threads.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:bbv.Common.AsyncModule.ModuleController"/> class.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.Initialize(System.Object,System.Int32,System.Boolean,System.String)">
+            <summary>
+            Initializes this instance.
+            </summary>
+            <param name="module">The module to control.</param>
+            <param name="numberOfThreads">The number of worker threads.</param>
+            <param name="runWithBackgroundThread">if set to <c>true</c> then background threads are used.</param>
+            <param name="logger">The name used for the logger.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.Initialize(System.Object,System.Boolean)">
+            <summary>
+            Initializes this instance.
+            </summary>
+            <param name="module">The module to control.</param>
+            <param name="runWithBackgroundThread">if set to <c>true</c> then background threads are used.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.Initialize(System.Object,System.Int32)">
+            <summary>
+            Initializes this instance.
+            </summary>
+            <param name="module">The module to control.</param>
+            <param name="numberOfThreads">The number of worker threads.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.Initialize(System.Object)">
+            <summary>
+            Initializes this instance.
+            </summary>
+            <param name="module">The module to control.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.AddExtension``1(``0)">
+            <summary>
+            Adds an extension to this controller.
+            </summary>
+            <typeparam name="TExtension">The type of the extension.</typeparam>
+            <param name="extension">The extension.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.GetExtension``1">
+            <summary>
+            Gets the extension with the specified type.
+            </summary>
+            <typeparam name="TExtension">The type of the extension.</typeparam>
+            <returns>The extension with the specified type.</returns>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.EnqueueMessage(System.Object)">
+            <summary>
+            Puts a message into the message queue of the module managed
+            by this controller.
+            </summary>
+            <param name="message">
+            The message to be enqueued.
+            </param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.EnqueuePriorityMessage(System.Object)">
+            <summary>
+            Puts a message to the front of the message queue of the module managed
+            by this controller.
+            </summary>
+            <param name="message">
+            The message to be enqueued.
+            </param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.ClearMessages">
+            <summary>
+            Clears all messages still in the queue and returns them.
+            </summary>
+            <returns>
+            All messages that were cleared from the queue.
+            </returns>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.Start">
+            <summary>
+            Starts the message consumer thread.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.StopAsync">
+            <summary>
+            Stops the message consumer thread. If a message is currently processed, this is finished first.
+            If the thread does not response in a given time, it is aborted.
+            If the thread is not started then nothing happens but a log entry.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.Stop">
+            <summary>
+            Stops the message consumer thread(s) with default timeout.
+            This method must not be called on the worker thread of the module.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">
+            Thrown when this method is called from the worker thread itself. This would lead to a <see cref="T:System.Threading.ThreadAbortException"/>.
+            </exception>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.Stop(System.TimeSpan)">
+            <summary>
+            Stops the message consumer thread(s) after finishing
+            an message currently processed. If the thread is
+            not responding anymore it is killed.
+            This method must not be called on the worker thread of the module.
+            </summary>
+            <param name="timeout">The timeout that defines how long we will wait until the worker threads are killed, i.e. how long a currently
+            processing message is tolerated.</param>
+            <exception cref="T:System.InvalidOperationException">
+            Thrown when this method is called from the worker thread itself. This would lead to a <see cref="T:System.Threading.ThreadAbortException"/>.
+            </exception>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.GetConsumeMessageMethodInfos(System.Object)">
+            <summary>
+            Checks the module for MessageConsumer attributes with reflection.
+            The corresponding methods are added to the list of message consumer
+            methods. If there are no valid MessageConsumer attributes, an exception is thrown.
+            </summary>
+            <param name="module">
+            The module to inspect.
+            </param>
+            <returns>
+            A list of methods which are marked with the MessageConsumer attribute.
+            </returns>
+            <exception cref="T:System.ArgumentException">Thrown if no message handle method is found.</exception>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.EnqueueMessage(System.Object,System.Boolean)">
+            <summary>
+            Enqueues the message.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="priority">if set to <c>true</c> then the message is enqueued at the front; otherwise at the end of the queue.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.OnBeforeModuleStart">
+            <summary>
+            Fires the <see cref="E:bbv.Common.AsyncModule.ModuleController.BeforeModuleStart"/> event.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.OnAfterModuleStart">
+            <summary>
+            Fires the <see cref="E:bbv.Common.AsyncModule.ModuleController.AfterModuleStart"/> event.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.OnBeforeModuleStop">
+            <summary>
+            Fires the <see cref="E:bbv.Common.AsyncModule.ModuleController.BeforeModuleStop"/> event.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.OnAfterModuleStop">
+            <summary>
+            Fires the <see cref="E:bbv.Common.AsyncModule.ModuleController.AfterModuleStop"/> event.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.OnBeforeConsumeMessage(System.Object)">
+            <summary>
+            Fires the <see cref="E:bbv.Common.AsyncModule.ModuleController.BeforeConsumeMessage"/> event.
+            </summary>
+            <param name="message">The message that will be consumed.</param>
+            <returns>False if the handler canceled to consume of the message.</returns>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.OnAfterConsumeMessage(System.Object,System.Boolean)">
+            <summary>
+            Fires the <see cref="E:bbv.Common.AsyncModule.ModuleController.AfterConsumeMessage"/> event.
+            </summary>
+            <param name="message">The message that was consumed.</param>
+            <param name="notSkipped">True if message was not skipped (<see cref="P:bbv.Common.AsyncModule.Events.BeforeConsumeMessageEventArgs.Cancel"/> was false.), otherwise false (message not not passed to handler).</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.OnBeforeEnqueueMessage(System.Object,System.Boolean@)">
+            <summary>
+            Fires the <see cref="E:bbv.Common.AsyncModule.ModuleController.BeforeEnqueueMessage"/> event.
+            </summary>
+            <param name="message">The message that wants to be enqueued.</param>
+            <param name="cancel"><c>true</c> to cancel enqueuing of message (message will not be enqueued).</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.OnAfterEnqueueMessage(System.Object)">
+            <summary>
+            Fires the <see cref="E:bbv.Common.AsyncModule.ModuleController.AfterEnqueueMessage"/> event.
+            </summary>
+            <param name="message">The message that was enqueued.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.OnConsumeMessageExceptionOccurred(System.Object,System.Exception)">
+            <summary>
+            Fires the <see cref="E:bbv.Common.AsyncModule.ModuleController.ConsumeMessageExceptionOccurred"/> event.
+            </summary>
+            <param name="message">The message that caused the exception.</param>
+            <param name="exception">The exception that was thrown while consuming the message.</param>
+            <returns>Whether the exception was handled.</returns>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.OnUnhandledModuleExceptionOccured(System.Object,System.Exception)">
+            <summary>
+            Fires the <see cref="E:bbv.Common.AsyncModule.ModuleController.UnhandledModuleExceptionOccured"/> event.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="exception">The exception.</param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.IsCurrentThreadAWorkerThread">
+            <summary>
+            Determines whether the current thread is a worker thread of this module controller.
+            </summary>
+            <returns>
+            <c>true</c> if the current thread is a worker thread of this module controller; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.WaitUntilAllThreadHaveStopped">
+            <summary>
+            Waits until all worker thread have stopped.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.NotifyStopped">
+            <summary>
+            Notifies the module controller that all worker threads are stopped.
+            </summary>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.Run(System.Object)">
+            <summary>
+            The main method of the message consumer thread.
+            </summary>
+            <param name="o">The exit signal that </param>
+        </member>
+        <member name="M:bbv.Common.AsyncModule.ModuleController.ConsumeMessage(System.Object)">
+            <summary>
+            Calls the method marked with the MessageConsumer attribute, which match 
+            the type of the message.
+            </summary>
+            <param name="message">
+            Message to be consumed.
+            </param>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.ModuleController.UnhandledModuleExceptionOccured">
+            <summary>
+            This event is raised when an unhandled exception in a module occurred.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.ModuleController.BeforeModuleStart">
+            <summary>
+            This event is raised before the module is started. Extensions
+            use this event to insert actions before the module starts.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.ModuleController.AfterModuleStart">
+            <summary>
+            This event is raised after the module has been started. Extensions
+            use this event to insert actions after the module starts.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.ModuleController.BeforeModuleStop">
+            <summary>
+            This event is raised before the module is stopped. Extensions
+            use this event to insert actions before the module stops.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.ModuleController.AfterModuleStop">
+            <summary>
+            This event is raised after the module has been stopped. Extensions
+            use this event to insert actions after the module stops.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.ModuleController.BeforeConsumeMessage">
+            <summary>
+            This event is raised before a call to the message consumer. Extensions
+            use this event to insert actions before the message is consumed.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.ModuleController.AfterConsumeMessage">
+            <summary>
+            This event is raised after a call to the message consumer. Extensions
+            use this event to insert actions after the message has been consumed.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.ModuleController.BeforeEnqueueMessage">
+            <summary>
+            This event is raised before the message is enqueued. Extensions
+            use this event to insert actions after before the message is enqueued.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.ModuleController.AfterEnqueueMessage">
+            <summary>
+            This event is raised after the message is enqueued. Extensions
+            use this event to insert actions after before the message is enqueued.
+            </summary>
+        </member>
+        <member name="E:bbv.Common.AsyncModule.ModuleController.ConsumeMessageExceptionOccurred">
+            <summary>
+            This event is raised when an exception is thrown during consuming a message.
+            This event is used to react meaningful to exceptions like a retrying mechanism.
+            The event handler can return a value indicating whether the exception was handled.
+            </summary>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.ModuleController.MessageCount">
+            <summary>
+            Gets the number of messages in the message queue.
+            </summary>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.ModuleController.Messages">
+            <summary>
+            Gets the messages currently in the queue.
+            </summary>
+            <value>The messages.</value>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.ModuleController.IsAlive">
+            <summary>
+            Gets a value indicating whether the message consumer thread(s) is/are alive.
+            </summary>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.ModuleController.LogExtension">
+            <summary>
+            Gets or sets the log extension.
+            </summary>
+            <value>The log extension.</value>
+        </member>
+        <member name="P:bbv.Common.AsyncModule.ModuleController.ThreadStopping">
+            <summary>
+            Gets or sets a value indicating whether we are stopping the worker threads.
+            </summary>
+            <value><c>true</c> if threads are stopping; otherwise, <c>false</c>.</value>
+        </member>
+    </members>
+</doc>

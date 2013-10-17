@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>bbv.Common.AsyncModule</id>
+    <version>7.2.12149.1635</version>
+    <authors>bbv Software Services AG and Contributers</authors>
+    <owners>bbv Software Services AG and Contributers</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
+    <projectUrl>http://code.google.com/p/bbvcommon/</projectUrl>
+    <iconUrl>https://github.com/bbvcommon/bbv.Common/raw/master/documents/nuget.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>AsyncModules provide a simple way to built active objects (objects with a dedicated background thread for asynchronous execution of tasks).
+
+      bbv.Common.AsyncModule is a part of bbv.Common, a library of .NET components and functionality including:
+      * (a)synchronous notification component with thread switching using publisher-subscriber pattern,
+      * hierarchical state machine with fluent definition syntax,
+      * programmatic, loosely coupled, context based rule engine,
+      * support for active objects to build multi-threaded applications</description>
+    <summary>AsyncModules provide a simple way to built active objects (objects with a dedicated background thread for asynchronous execution of tasks).</summary>
+    <tags>active-object multi-threading</tags>
+  </metadata>
+</package>

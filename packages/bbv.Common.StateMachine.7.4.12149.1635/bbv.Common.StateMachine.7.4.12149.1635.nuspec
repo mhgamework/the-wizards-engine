@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>bbv.Common.StateMachine</id>
+    <version>7.4.12149.1635</version>
+    <title>bbv.Common.StateMachine</title>
+    <authors>bbv Software Services AG and Contributers</authors>
+    <owners>bbv Software Services AG and Contributers</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
+    <projectUrl>http://code.google.com/p/bbvcommon/</projectUrl>
+    <iconUrl>https://github.com/bbvcommon/bbv.Common/raw/master/documents/nuget.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Hierarchical state machine with fluent definition syntax
+Features:
+      * states and events can be defined with enums, strings or ints - resulting in single class state machines.
+      * actions
+        o on transitions
+        o entry and exit actions
+      * transition guards
+      * hierarchical
+        o different history behaviors to initialize state always to same state or last active state
+      * fluent definition interface
+      * synchronous/asynchronous state machine
+        o passive state machine handles state transitions synchronously
+        o active state machine handles state transitions asynchronously on the worker thread of the state machine
+      * extensible thorough logging
+      * state machine report for description of state machine
+
+bbv.Common.StateMachine is a part of bbv.Common, a library of .NET components and functionality including:
+      * (a)synchronous notification component with thread switching using publisher-subscriber pattern,
+      * hierarchical state machine with fluent definition syntax,
+      * programmatic, loosely coupled, context based rule engine,
+      * support for active objects to build multi-threaded applications</description>
+    <summary>Hierarchical state machine with fluent definition syntax</summary>
+    <releaseNotes />
+    <copyright />
+    <language />
+    <tags>state-machine</tags>
+    <dependencies>
+      <dependency id="bbv.Common" version="[7.1.0.0, 7.2.0.0)" />
+      <dependency id="bbv.Common.AsyncModule" version="[7.2.0.0, 7.3.0.0)" />
+    </dependencies>
+  </metadata>
+</package>
