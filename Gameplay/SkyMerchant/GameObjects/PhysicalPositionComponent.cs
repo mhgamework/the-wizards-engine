@@ -6,6 +6,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.GameObjects
 {
     /// <summary>
     /// Uses Physical to implement the PositionComponent
+    /// TODO: maybe invert this! Have something track changes to the position component, and set the Physical accordingly
     /// </summary>
     public class PhysicalPositionComponent : IPositionComponent
     {
