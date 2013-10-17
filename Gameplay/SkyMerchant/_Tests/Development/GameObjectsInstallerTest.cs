@@ -20,6 +20,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
     /// 
     /// </summary>
     [TestFixture]
+    [Category("RunsAutomated")]
     public class GameObjectsInstallerTest
     {
         private IWindsorContainer container;
