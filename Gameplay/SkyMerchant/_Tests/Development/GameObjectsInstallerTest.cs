@@ -43,6 +43,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
         [Test]
         public void TestCreatePositionComponent()
         {
+            throw new NotImplementedException();
             var obj = createGameObject();
             var ph = obj.GetComponent<IPositionComponent>();
 
