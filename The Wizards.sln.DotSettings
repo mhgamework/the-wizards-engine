@@ -2,4 +2,63 @@
 	<s:Boolean x:Key="/Default/CodeInspection/CodeAnnotations/NamespacesWithAnnotations/=MHGameWork_002ETheWizards_002EAnnotations/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/UnitTesting/CustomStartDirectory/@EntryValue">$(SolutionDir)\bin\BinariesGame</s:String>
 	<s:Boolean x:Key="/Default/Environment/UnitTesting/ShadowCopy/@EntryValue">False</s:Boolean>
-	<s:Boolean x:Key="/Default/Environment/UnitTesting/UseCustomStartDirectory/@EntryValue">False</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/Environment/UnitTesting/UseCustomStartDirectory/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7CDE2E39BB4F33459AFFC9E277903FDF/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7CDE2E39BB4F33459AFFC9E277903FDF/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7CDE2E39BB4F33459AFFC9E277903FDF/CustomProperties/=Extension/@EntryIndexedValue">html</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7CDE2E39BB4F33459AFFC9E277903FDF/CustomProperties/=FileName/@EntryIndexedValue">_doc</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7CDE2E39BB4F33459AFFC9E277903FDF/CustomProperties/=ValidateFileName/@EntryIndexedValue">False</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7CDE2E39BB4F33459AFFC9E277903FDF/Description/@EntryValue">Documentation</s:String>
+	
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7CDE2E39BB4F33459AFFC9E277903FDF/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7CDE2E39BB4F33459AFFC9E277903FDF/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
+	
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7CDE2E39BB4F33459AFFC9E277903FDF/Text/@EntryValue">&lt;!DOCTYPE html&gt;&#xD;
+&#xD;
+&lt;html lang="en" xmlns="http://www.w3.org/1999/xhtml"&gt;&#xD;
+&lt;head&gt;&#xD;
+    &lt;meta charset="utf-8" /&gt;&#xD;
+    &lt;title&gt;&lt;/title&gt;&#xD;
+&lt;/head&gt;&#xD;
+&lt;body&gt;&#xD;
+&#xD;
+&lt;/body&gt;&#xD;
+&lt;/html&gt;</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Categories/=Imported_002017_002F10_002F2013/@EntryIndexedValue">Imported 17/10/2013</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/CustomProperties/=Extension/@EntryIndexedValue">cs</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/CustomProperties/=FileName/@EntryIndexedValue">MyTest</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/CustomProperties/=ValidateFileName/@EntryIndexedValue">False</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Description/@EntryValue">NUnit TestFixture</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Field/=CLASS/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Field/=CLASS/Expression/@EntryValue">getFileNameWithoutExtension()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Field/=CLASS/Order/@EntryValue">2</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Field/=HEADER/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Field/=HEADER/Expression/@EntryValue">fileheader()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Field/=HEADER/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Field/=NAMESPACE/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Field/=NAMESPACE/Expression/@EntryValue">fileDefaultNamespace()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Field/=NAMESPACE/Order/@EntryValue">1</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B84A7D6CE3347F43AFC0494F08C47821/Text/@EntryValue">using NUnit.Framework;&#xD;
+&#xD;
+$HEADER$namespace $NAMESPACE$&#xD;
+{&#xD;
+    /// &lt;summary&gt;&#xD;
+    /// &#xD;
+    /// &lt;/summary&gt;&#xD;
+    [TestFixture]&#xD;
+    public class $CLASS$&#xD;
+    {&#xD;
+        [Test]&#xD;
+        public void Test()&#xD;
+        {&#xD;
+            $END$&#xD;
+        }&#xD;
+         &#xD;
+    }&#xD;
+}</s:String></wpf:ResourceDictionary>
