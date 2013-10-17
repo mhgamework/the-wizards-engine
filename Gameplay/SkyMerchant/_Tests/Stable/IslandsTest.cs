@@ -22,6 +22,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
         [SetUp]
         public void Setup()
         {
+            engine.Initialize();
             engine.AddSimulator(new WorldRenderingSimulator());
 
             var l = TW.Graphics.AcquireRenderer().CreateDirectionalLight();

@@ -59,6 +59,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
             }));
         }
 
+        [Category("RunsAutomated")]
         [Test]
         public void TestChunkCoordinateChildren()
         {
@@ -78,6 +79,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
             c.GetChildren().ForEach(v => printChildren(v, depth));
         }
 
+        [Category("RunsAutomated")]
         [Test]
         public void TestUnrolledIndex()
         {
@@ -98,6 +100,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
 
         }
 
+        [Category("RunsAutomated")]
         [Test]
         public void TestGetParent()
         {

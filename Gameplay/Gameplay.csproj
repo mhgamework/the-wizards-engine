@@ -185,7 +185,6 @@
     <Compile Include="SkyMerchant\_GameplayInterfacing\IScriptType.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\GameObjectsInstallerTest.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IGameObjectComponent.cs" />
-    <Compile Include="SkyMerchant\_Tests\Development\GameObjectsTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\PersistenceTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\PrototypeObjectsTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\PrototypeWorldGeneratorTest.cs" />
