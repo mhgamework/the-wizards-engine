@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+    </head>
+    <body>
+
+        <h1>ChangeNotification</h1>
+        <p>
+            <em>TODO: this is still conceptual, not implemented yet!</em></p>
+        <p>
+            This is a cool extension of the observer pattern. It follows as a generalization from the ModelObjectChangedAttribute and ModelContainer system.</p>
+        <p>
+            The core idea is that it should be very easy to listen to changes in objects. There should be a way to state: I want to know all changes to this object. Next you should be able to do a &#39;Is this object changed?&#39; or even &#39;What changed?&#39;</p>
+        <h2>Implementation</h2>
+        <p>
+            The current implementation uses postsharp to add change detection to fields. All detected changes are forwarded to a static class. This class will then forward the changes to the different listeners bound to the object.
+        </p>
+        <p>
+            A basic listener is provided, which holds a list of objects it listens to. This listener then tracks all changes, and allows a localized to the listener &#39;Clear&#39; of all changes.</p>
+        <p>
+            Properties are currently not supported, since they are hard to track correctly.</p>
+        <h1 style="padding-top: 0px">Notes</h1>
+        <p style="padding-top: 0px">
+            Since attributes can be added from outside of the change tracked class, tracking can be done without explicit dependency to change logging in the tracked class!</p>
+        <p>
+            Note that several caching optimizations can still be made, even more when some data is added to the observed objects. With the professional version of postsharp implementing this would be very easy, we could just add an observer interface implementation.</p>
+        <p>
+&nbsp;Note that changes on properties are only detected on setters, so if the value of the getter changes, currently no change is detected. With some advanced code analysis it might be possible to use the change information of objects that are used to create the get value to detect changes. A simpler solution might be to create a way to tell the change system that changes to a secondary object will change the get value, hence cause a change in the primary object.</p>
+        <p>
+            Changes to properties could also be detected by looping over each object and retrieving the getter, when the client asks for the list of changed objects. This is slow, but does have correct results for any property implementation. Could be handy if heavy duty operations are to be performed in case of changes.</p>
+        <p>
+            Another idea is to track changes using some sort of version identifiers. One could put &#39;Mark&#39;s in time that discern changes, and for each mark is stored which objects were changed. Another method is to give every individual change a shared increment number, so that you can list all changes between, or starting from.</p>
+
+    </body>
+</html>

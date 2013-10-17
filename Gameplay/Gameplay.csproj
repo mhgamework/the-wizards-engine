@@ -152,6 +152,8 @@
     <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="SkyMerchant\GameObjects\PhysicalMeshRenderComponent.cs" />
     <Compile Include="SkyMerchant\GameObjects\PhysicalPositionComponent.cs" />
+    <Compile Include="SkyMerchant\GameObjects\RelativePositionComponent.cs" />
+    <Compile Include="SkyMerchant\GameObjects\TopologicalUpdater.cs" />
     <Compile Include="SkyMerchant\GameObjects\SkyPhysical.cs" />
     <Compile Include="SkyMerchant\Gameplay\BridgePart.cs" />
     <Compile Include="SkyMerchant\Installers\GameObjectScopeManager.cs" />
@@ -169,6 +171,9 @@
     <Compile Include="SkyMerchant\Installers\WorldingInstaller.cs" />
     <Compile Include="SkyMerchant\Worlding\World.cs" />
     <Compile Include="SkyMerchant\Worlding\WorldObjectScriptsList.cs" />
+    <Compile Include="SkyMerchant\_Engine\ChangeNotification\DefaultChangesSink.cs" />
+    <Compile Include="SkyMerchant\_Engine\ChangeNotification\IChangesSink.cs" />
+    <Compile Include="SkyMerchant\_Engine\ChangeNotification\TrackChangesAttribute.cs" />
     <Compile Include="SkyMerchant\_Engine\Windsor\DisablePropertyInjection.cs" />
     <Compile Include="SkyMerchant\_Engine\Windsor\WindsorDebugTools.cs" />
     <Compile Include="SkyMerchant\GameObjects\GameObject.cs" />
@@ -177,17 +182,19 @@
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IGameObject.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IGameObjectsRepository.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IMeshRenderComponent.cs" />
+    <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IRelativePositionComponent.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IRenderComponent.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IScriptComponent.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\ILocalPlayer.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IPositionComponent.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorld.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IScriptType.cs" />
-    <Compile Include="SkyMerchant\_Tests\Development\GameObjectsInstallerTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Development\RelativePositioningTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Stable\GameObjectsInstallerTest.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IGameObjectComponent.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\PersistenceTest.cs" />
-    <Compile Include="SkyMerchant\_Tests\Development\PrototypeObjectsTest.cs" />
-    <Compile Include="SkyMerchant\_Tests\Development\PrototypeWorldGeneratorTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Stable\PrototypeObjectsTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Stable\PrototypeWorldGeneratorTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\ScriptingTest.cs" />
     <Compile Include="SkyMerchant\_Engine\Voxels\ArrayFiniteVoxels.cs" />
     <Compile Include="SkyMerchant\Gameplay\IslandGenerater.cs" />
@@ -458,9 +465,11 @@
     <Content Include="Engine\_doc.html" />
     <Content Include="SkyMerchant\GameObjects\_doc.html" />
     <Content Include="SkyMerchant\Gameplay\_doc.txt" />
+    <Content Include="SkyMerchant\Persistence\_doc.html" />
     <Content Include="SkyMerchant\_Doc\TeamCity.html" />
     <Content Include="SkyMerchant\_Doc\Unit Testing.html" />
     <Content Include="SkyMerchant\_Doc\Windsor.html" />
+    <Content Include="SkyMerchant\_Engine\ChangeNotification\_doc.html" />
     <Content Include="SkyMerchant\_GameplayInterfacing\_doc.txt" />
     <Content Include="SkyMerchant\_Ideas\CSharpTricks.html" />
     <Content Include="SkyMerchant\_Ideas\Engine.html" />
@@ -475,7 +484,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SkyMerchant\Gameplay\AirCurrents\" />
-    <Folder Include="SkyMerchant\Persistence\" />
     <Folder Include="SkyMerchant\_Tests\Broken\" />
     <Folder Include="SkyMerchant\_Tests\Unused\" />
   </ItemGroup>

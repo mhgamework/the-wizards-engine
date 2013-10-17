@@ -42,6 +42,8 @@
         Try using a build server, eg TeamCity.</p>
     <p>
         Allow DI construction on test fixtures, annotated with a special attribute (eg integration tests for the engine allow injecting engine stuff, <strong>integration tests for skymerchant allow injecting skymerchant stuff</strong>)</p>
+    <p>
+        I now identified why the properties in the change system were supposed to be auto properties! If they would&#39;ve contained complex logic, the change logging would break!!! Solution =&gt; add custom change logging for these properties!</p>
 
 </body>
 </html>
