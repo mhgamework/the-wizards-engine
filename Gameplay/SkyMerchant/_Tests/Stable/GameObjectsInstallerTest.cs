@@ -38,6 +38,34 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
                 new WorldingInstaller(),
                 new EngineInstaller()
                 );
+            // Register all IGameObjectComponent's in the Gameplay assembly
+            container.Register(Classes.FromThisAssembly().Where(t => typeof(IGameObjectComponent).IsAssignableFrom(t) && t.Namespace.StartsWith("MHGameWork.TheWizards.SkyMerchant._Tests"))
+                .WithServiceSelf()
+                .WithServiceAllInterfaces()
+                .LifestyleScoped<GameObjectScope>()     // Scope to gameobjects!
+                .DisablePropertyWiring()                // Disable property wiring!
+                );
+        }
+
+        /// <summary>
+        /// Tests instantiation of the components in the _GameplayInterfaces
+        /// </summary>
+        [Test]
+        public void TestCreateCoreComponents()
+        {
+            testCreateComponent<IMeshRenderComponent>();
+            testCreateComponent<IPositionComponent>();
+            testCreateComponent<IRelativePositionComponent>();
+        }
+        private void testCreateComponent<T>() where T : IGameObjectComponent
+        {
+            var obj = createGameObject();
+            var ph = obj.GetComponent<T>();
+
+            var obj2 = createGameObject();
+            var ph2 = obj2.GetComponent<T>();
+
+            Assert.AreNotEqual(ph, ph2);
         }
 
         [Test]
@@ -86,19 +114,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
             Assert.AreNotEqual(comp.SubComponentB.SubSubComponent, comp2.SubComponentB.SubSubComponent);
         }
 
-        [Test]
-        public void TestDoNotWirePropertiesOnGameObjectComponents()
-        {
-            var repo = container.Resolve<IGameObjectsRepository>();
-
-            var obj = repo.CreateGameObject();
-
-            var comp = obj.GetComponent<TestPropertyComponent>();
-
-            Assert.IsNull(comp.Component);
-        }
-
-        
+       
 
         /// <summary>
         /// Test that components are correctly associated with a game object, and dependencies are correctly injected.

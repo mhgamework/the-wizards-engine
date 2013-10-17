@@ -31,9 +31,16 @@ namespace MHGameWork.TheWizards.SkyMerchant.Installers
             container.Register(Component.For<GameObjectsRepository>().Forward<IGameObjectsRepository>());
             container.Register(Component.For<IGameObjectComponentTypedFactory>().AsFactory());
 
+            container.Register(Component.For<IPositionComponent>().ImplementedBy<PhysicalPositionComponent>().LifestyleScoped<GameObjectScope>());
+            container.Register(Component.For<IPositionComponent>().Forward<IRelativePositionComponent>().ImplementedBy<RelativePositionComponent>().LifestyleScoped<GameObjectScope>());
+            container.Register(
+                Component.For<IRenderComponent>()
+                         .Forward<IMeshRenderComponent>()
+                         .ImplementedBy<PhysicalMeshRenderComponent>().LifestyleScoped<GameObjectScope>());
+            container.Register(Component.For<SkyPhysical>().LifestyleScoped<GameObjectScope>());
 
-            // Register all IGameObjectComponent's 
-            container.Register(Classes.FromThisAssembly().Where(t => typeof(IGameObjectComponent).IsAssignableFrom(t))
+            // Register all IGameObjectComponent's in the Gameplay assembly
+            container.Register(Classes.FromThisAssembly().Where(t => typeof(IGameObjectComponent).IsAssignableFrom(t) && t.Namespace.StartsWith("MHGameWork.TheWizards.SkyMerchant.Gameplay"))
                 .WithServiceSelf()
                 .WithServiceAllInterfaces()
                 .LifestyleScoped<GameObjectScope>()     // Scope to gameobjects!
@@ -67,9 +74,9 @@ namespace MHGameWork.TheWizards.SkyMerchant.Installers
             //    }).LifestyleTransient());
             //container.Register(Component.For<IPositionComponent>().ImplementedBy<Physical>().LifestyleTransient());
 
-       
 
-            
+
+
 
         }
     }
@@ -90,7 +97,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Installers
         public ILifetimeScope GetScope(CreationContext context)
         {
             if (GameObjectScopeManager.ActiveGameObjectScope == null) throw new InvalidOperationException("A game object scope must be set before objects can be created");
-            
+
             return scopes.GetOrCreate(GameObjectScopeManager.ActiveGameObjectScope, () => new DefaultLifetimeScope());
         }
     }
