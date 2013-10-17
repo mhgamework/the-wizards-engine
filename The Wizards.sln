@@ -36,6 +36,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D13117
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gameplay", "Gameplay\Gameplay.csproj", "{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9543AC00-CDE5-4759-BD98-2D031D16DFD4} = {9543AC00-CDE5-4759-BD98-2D031D16DFD4}
+		{372FF145-4B2D-40A4-B171-CFFF159E4C91} = {372FF145-4B2D-40A4-B171-CFFF159E4C91}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Wrappers", "Wrappers\Wrappers.vcxproj", "{D1E82BBB-8426-4451-BA37-792822E0FE6E}"
 EndProject
