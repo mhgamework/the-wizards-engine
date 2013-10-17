@@ -11,6 +11,7 @@ using NUnit.Framework;
 namespace MHGameWork.TheWizards.Tests.Features.Core.Networking
 {
     [TestFixture]
+    [Category("RunsAutomated")]
     public class NetworkingTest
     {
         [Test]
