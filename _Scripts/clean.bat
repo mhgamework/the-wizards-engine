@@ -65,3 +65,5 @@ rmdir /S /Q "CoreFileUpdater/obj"
 rmdir /S /Q "Game3DPlay/obj"
 rmdir /S /Q "NovodexWrapperXNA/obj"
 rmdir /S /Q "ServerClientOud/obj"
+
+cd ..
