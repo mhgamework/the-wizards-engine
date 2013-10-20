@@ -189,6 +189,7 @@
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IPositionComponent.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorld.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IScriptType.cs" />
+    <Compile Include="SkyMerchant\_Tests\Development\RelativePositioningIntegrationTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\RelativePositioningTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\GameObjectsInstallerTest.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IGameObjectComponent.cs" />
