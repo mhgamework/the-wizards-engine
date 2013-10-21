@@ -44,5 +44,14 @@ namespace MHGameWork.TheWizards.SkyMerchant.Installers
             objects.Add(obj);
             return obj;
         }
+
+        public IEnumerable<T> GetAllComponents<T>() where T : IGameObjectComponent
+        {
+            foreach (var obj in objects)
+            {
+                if (!obj.HasComponent<T>()) continue;
+                yield return obj.GetComponent<T>();
+            }
+        }
     }
 }

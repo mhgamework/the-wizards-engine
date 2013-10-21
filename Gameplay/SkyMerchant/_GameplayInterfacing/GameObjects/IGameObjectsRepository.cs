@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects
 {
@@ -9,5 +10,6 @@ namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects
     {
         IGameObject GetGameObject(IGameObjectComponent component);
         IGameObject CreateGameObject();
+        IEnumerable<T> GetAllComponents<T>() where T : IGameObjectComponent;
     }
 }

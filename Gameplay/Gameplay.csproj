@@ -153,7 +153,9 @@
     <Compile Include="SkyMerchant\GameObjects\PhysicalMeshRenderComponent.cs" />
     <Compile Include="SkyMerchant\GameObjects\PhysicalPositionComponent.cs" />
     <Compile Include="SkyMerchant\GameObjects\RelativePositionComponent.cs" />
-    <Compile Include="SkyMerchant\GameObjects\TopologicalUpdater.cs" />
+    <Compile Include="SkyMerchant\GameObjects\RelativePositioningSimulator.cs" />
+    <Compile Include="SkyMerchant\Installers\SimulatorsInstaller.cs" />
+    <Compile Include="SkyMerchant\_Unused\TopologicalUpdater.cs" />
     <Compile Include="SkyMerchant\GameObjects\SkyPhysical.cs" />
     <Compile Include="SkyMerchant\Gameplay\BridgePart.cs" />
     <Compile Include="SkyMerchant\Installers\GameObjectScopeManager.cs" />
@@ -202,6 +204,7 @@
     <Compile Include="SkyMerchant\_Tests\Stable\VoxelsTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\WindsorTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Ideas\DynamicObjectsTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Unused\TopologicalSorterTest.cs" />
     <Compile Include="_Tests\Assets\SimpleAssetStaticWorldObject.cs" />
     <Compile Include="_Tests\Assets\SimpleAssetStaticWorldObjectFactory.cs" />
     <Compile Include="Engine\Debugging\AttachDebuggerOnStartupSimulator.cs" />
@@ -486,7 +489,6 @@
   <ItemGroup>
     <Folder Include="SkyMerchant\Gameplay\AirCurrents\" />
     <Folder Include="SkyMerchant\_Tests\Broken\" />
-    <Folder Include="SkyMerchant\_Tests\Unused\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
