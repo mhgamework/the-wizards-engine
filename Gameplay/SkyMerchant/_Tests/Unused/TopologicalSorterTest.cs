@@ -45,7 +45,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Unused
             }
         }
 
-        private interface IGraphNode
+        public interface IGraphNode
         {
             IGraphNode Parent { get; set; }
         }
