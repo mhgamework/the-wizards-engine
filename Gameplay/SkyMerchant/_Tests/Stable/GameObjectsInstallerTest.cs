@@ -1,20 +1,15 @@
-﻿using System;
-using Castle.Core;
-using Castle.MicroKernel.Registration;
+﻿using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Diagnostics.Tracing;
 using MHGameWork.TheWizards.SkyMerchant.GameObjects;
 using MHGameWork.TheWizards.SkyMerchant.Installers;
-using MHGameWork.TheWizards.SkyMerchant.Prototype;
-using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 using NSubstitute;
 using NUnit.Framework;
-using System.Linq;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 
-namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
+namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
 {
     /// <summary>
     /// 

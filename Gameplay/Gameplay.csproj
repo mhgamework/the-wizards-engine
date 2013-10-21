@@ -158,7 +158,7 @@
     <Compile Include="SkyMerchant\_Unused\TopologicalUpdater.cs" />
     <Compile Include="SkyMerchant\GameObjects\SkyPhysical.cs" />
     <Compile Include="SkyMerchant\Gameplay\BridgePart.cs" />
-    <Compile Include="SkyMerchant\Installers\GameObjectScopeManager.cs" />
+    <Compile Include="SkyMerchant\GameObjects\GameObjectScopeManager.cs" />
     <Compile Include="SkyMerchant\Installers\GameObjectsInstaller.cs" />
     <Compile Include="SkyMerchant\Installers\GameplayInstaller.cs" />
     <Compile Include="SkyMerchant\Prototype\PlayerRobotSimulator.cs" />
@@ -179,8 +179,8 @@
     <Compile Include="SkyMerchant\_Engine\Windsor\DisablePropertyInjection.cs" />
     <Compile Include="SkyMerchant\_Engine\Windsor\WindsorDebugTools.cs" />
     <Compile Include="SkyMerchant\GameObjects\GameObject.cs" />
-    <Compile Include="SkyMerchant\Installers\GameObjectsRepository.cs" />
-    <Compile Include="SkyMerchant\Installers\IGameObjectComponentTypedFactory.cs" />
+    <Compile Include="SkyMerchant\GameObjects\GameObjectsRepository.cs" />
+    <Compile Include="SkyMerchant\GameObjects\IGameObjectComponentTypedFactory.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IGameObject.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IGameObjectsRepository.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IMeshRenderComponent.cs" />
@@ -191,8 +191,8 @@
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IPositionComponent.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorld.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IScriptType.cs" />
-    <Compile Include="SkyMerchant\_Tests\Development\RelativePositioningIntegrationTest.cs" />
-    <Compile Include="SkyMerchant\_Tests\Development\RelativePositioningTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Stable\RelativePositioningIntegrationTest.cs" />
+    <Compile Include="SkyMerchant\_Tests\Stable\RelativePositioningTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\GameObjectsInstallerTest.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IGameObjectComponent.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\PersistenceTest.cs" />

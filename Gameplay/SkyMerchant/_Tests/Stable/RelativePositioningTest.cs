@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.SkyMerchant.GameObjects;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
@@ -7,7 +6,7 @@ using NSubstitute;
 using NUnit.Framework;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
+namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
 {
     [Category("RunsAutomated")]
     [TestFixture]

@@ -1,8 +1,6 @@
 ﻿using System;
 using Castle.Core;
 using Castle.Windsor;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Engine.Diagnostics.Tracing;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
@@ -12,7 +10,7 @@ using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using NUnit.Framework;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
+namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
 {
     /// <summary>
     /// Tests the gameplay objects in the prototype

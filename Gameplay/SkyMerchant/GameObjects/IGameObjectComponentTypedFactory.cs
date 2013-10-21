@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 
-namespace MHGameWork.TheWizards.SkyMerchant.Installers
+namespace MHGameWork.TheWizards.SkyMerchant.GameObjects
 {
     public interface IGameObjectComponentTypedFactory
     {

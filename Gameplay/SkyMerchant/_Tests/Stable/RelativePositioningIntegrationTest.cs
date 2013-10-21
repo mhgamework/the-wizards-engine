@@ -6,12 +6,11 @@ using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.SkyMerchant.GameObjects;
 using MHGameWork.TheWizards.SkyMerchant.Installers;
-using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 using NUnit.Framework;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
+namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
 {
     /// <summary>
     /// Tests the integration of the relative position code in the gameplayinterfaces layer.

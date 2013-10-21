@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MHGameWork.TheWizards.SkyMerchant.GameObjects;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 
-namespace MHGameWork.TheWizards.SkyMerchant.Installers
+namespace MHGameWork.TheWizards.SkyMerchant.GameObjects
 {
     /// <summary>
     /// Implements the game objects repository, using the GameObjectScopeManager

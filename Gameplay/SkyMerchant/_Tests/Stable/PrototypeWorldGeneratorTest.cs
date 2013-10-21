@@ -1,18 +1,14 @@
-﻿using System.Linq;
-using Castle.Windsor;
+﻿using Castle.Windsor;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
-using MHGameWork.TheWizards.Engine.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.SkyMerchant.Installers;
 using MHGameWork.TheWizards.SkyMerchant.Prototype;
-using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
-using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
+namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
 {
     [EngineTest]
     [TestFixture]

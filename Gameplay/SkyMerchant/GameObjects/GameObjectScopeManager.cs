@@ -1,7 +1,7 @@
 ﻿using System;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 
-namespace MHGameWork.TheWizards.SkyMerchant.Installers
+namespace MHGameWork.TheWizards.SkyMerchant.GameObjects
 {
     /// <summary>
     /// Static class that allows setting the current active game object scope. When a game object component is created, it looks to the active game object scope
