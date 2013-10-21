@@ -14,7 +14,6 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
     public class RelativePositioningTest
     {
         private Vector3 posA = new Vector3(1, 0, 0);
-        private Vector3 posB = new Vector3(2, 0, 0);
         private Quaternion rot90 = Quaternion.RotationAxis(Vector3.UnitY, MathHelper.PiOver2);
         private Quaternion rot270 = Quaternion.RotationAxis(Vector3.UnitY, -MathHelper.PiOver2);
 
@@ -107,36 +106,6 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Development
             comp4.Parent = comp1;
         }
 
-        [Test]
-        public void TestTopologicalUpdater()
-        {
-
-            var calls = new List<IRelativePositionComponent>();
-
-            var list = new List<IRelativePositionComponent>();
-            for (int i = 0; i < 5; i++)
-            {
-                list.Add(Substitute.For<IRelativePositionComponent>());
-            }
-
-            list[0].Parent = list[4];
-            list[1].Parent = null;
-            list[2].Parent = list[4];
-            list[3].Parent = list[0];
-            list[4].Parent = null;
-
-
-
-
-            var updater = new TopologicalUpdater();
-            updater.UpdateInTopologicalOrder(list, o => o.Parent, calls.Add);
-
-            foreach (var item in list)
-            {
-                Assert.True(calls.Contains(item));
-                if (item.Parent != null)
-                    Assert.True(calls.IndexOf(item.Parent) < calls.IndexOf(item));
-            }
-        }
+        
     }
 }
