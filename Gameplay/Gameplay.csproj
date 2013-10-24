@@ -185,8 +185,6 @@
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IGameObjectsRepository.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IMeshRenderComponent.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IRelativePositionComponent.cs" />
-    <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IRenderComponent.cs" />
-    <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IScriptComponent.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\ILocalPlayer.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IPositionComponent.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorld.cs" />
@@ -478,7 +476,6 @@
     <Content Include="SkyMerchant\_Ideas\CSharpTricks.html" />
     <Content Include="SkyMerchant\_Ideas\Engine.html" />
     <Content Include="SkyMerchant\_Ideas\IDE.html" />
-    <Content Include="SkyMerchant\_Ideas\Projects\AutomatedTesting.html" />
     <Content Include="SkyMerchant\_Ideas\Projects\Documentation.html" />
     <Content Include="SkyMerchant\_Ideas\TODO.html" />
     <Content Include="SkyMerchant\_Tests\_doc.html" />

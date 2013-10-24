@@ -4,6 +4,7 @@ using SlimDX;
 namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects
 {
     /// <summary>
+    /// This component allows the object to take in a space in the game world.
     /// Implements the position component of a game object.
     /// Responsible for providing the space this object occupies in the world.
     /// Responsible for manipulating this objects world orientation

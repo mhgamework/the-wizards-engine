@@ -33,10 +33,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Installers
 
             container.Register(Component.For<IPositionComponent>().ImplementedBy<PhysicalPositionComponent>().LifestyleScoped<GameObjectScope>());
             container.Register(Component.For<IPositionComponent>().Forward<IRelativePositionComponent>().ImplementedBy<RelativePositionComponent>().LifestyleScoped<GameObjectScope>());
-            container.Register(
-                Component.For<IRenderComponent>()
-                         .Forward<IMeshRenderComponent>()
-                         .ImplementedBy<PhysicalMeshRenderComponent>().LifestyleScoped<GameObjectScope>());
+            container.Register(Component.For<IMeshRenderComponent>().ImplementedBy<PhysicalMeshRenderComponent>().LifestyleScoped<GameObjectScope>());
             container.Register(Component.For<SkyPhysical>().LifestyleScoped<GameObjectScope>());
 
             // Register all IGameObjectComponent's in the Gameplay assembly

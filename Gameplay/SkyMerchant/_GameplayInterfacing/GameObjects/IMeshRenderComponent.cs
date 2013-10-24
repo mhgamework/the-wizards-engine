@@ -4,9 +4,9 @@ using SlimDX;
 namespace MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects
 {
     /// <summary>
-    /// This is a Render component which supports mesh rendering
+    /// This component adds rendering of a mesh to the component.
     /// </summary>
-    public interface IMeshRenderComponent : IRenderComponent
+    public interface IMeshRenderComponent : IGameObjectComponent
     {
         IMesh Mesh { get; set; }
         bool Visible { get; set; }
