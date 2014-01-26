@@ -27,14 +27,23 @@ namespace MHGameWork.TheWizards.RTSTestCase1
         /// <returns></returns>
         public static IMesh CreateMeshWithTexture(float radius, ITexture texture)
         {
+            return CreateBoxWithTexture(texture, new SlimDX.Vector3(radius));
+        }
+
+        public static IMesh CreateBoxWithTexture(ITexture texture, SlimDX.Vector3 dimensions)
+        {
             var builder = new MeshBuilder();
-            builder.AddBox(MathHelper.One * -radius, MathHelper.One * radius);
+            builder.AddBox(-dimensions, dimensions);
             var mesh = builder.CreateMesh();
 
             mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap = texture;
 
             var skin = 0.02f;
-            mesh.GetCollisionData().Boxes.Add(new MeshCollisionData.Box() { Dimensions = new Vector3(radius * 2 + skin, radius * 2 + skin, radius * 2 + skin), Orientation = Matrix.Identity });
+            mesh.GetCollisionData().Boxes.Add(new MeshCollisionData.Box()
+                                                  {
+                                                      Dimensions = dimensions.xna() * 2 + Vector3.One * skin,
+                                                      Orientation = Matrix.Identity
+                                                  });
 
             return mesh;
         }
@@ -48,6 +57,13 @@ namespace MHGameWork.TheWizards.RTSTestCase1
         /// <param name="game"></param>
         /// <returns></returns>
         public static IMesh CreateMeshWithText(float radius, string text, DX11Game game)
+        {
+            var texture = CreateTextureAssetFromText(text, game);
+
+            return CreateMeshWithTexture(radius, texture);
+        }
+
+        public static ITexture CreateTextureAssetFromText(string text, DX11Game game)
         {
             var fontSize = 100;
 
@@ -80,8 +96,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1
 
             //TODO: remove TW dependency
             var texture = TW.Assets.LoadTextureFromCache(name);
-
-            return CreateMeshWithTexture(radius, texture);
+            return texture;
         }
 
         static Int64 GetInt64HashCode(string strText)
@@ -105,6 +120,6 @@ namespace MHGameWork.TheWizards.RTSTestCase1
                 hashCode = hashCodeStart ^ hashCodeMedium ^ hashCodeEnd;
             }
             return (hashCode);
-        }  
+        }
     }
 }

@@ -45,8 +45,9 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 
         public void Pickup(ItemPart item)
         {
+            //Contract.Requires(!HasItem(item));
             if (!CanPickup(item.Type, 1)) return;
-            Contract.Requires(!HasItem(item));
+            
             Items.Add(item);
 
             item.RemoveFromIsland();
@@ -54,7 +55,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 
         public void Drop(ItemPart item)
         {
-            Contract.Requires(HasItem(item));
+            //Contract.Requires(HasItem(item));
             if (!NormalMovement.IsOnGround()) return;
             Items.Remove(item);
 

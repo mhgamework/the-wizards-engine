@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics.Contracts;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using MHGameWork.TheWizards.Data;
@@ -46,3 +47,5 @@ using NUnit.Framework;
 [assembly: (AttributeTargetTypes = "MHGameWork.TheWizards.*", AttributeTargetMembers = "*")]
 #endif
 //[assembly: TWProfile(AttributeTargetTypes = "MHGameWork.TheWizards.RTSTestCase1.Magic.*", AttributeTargetMembers = "*")]
+
+[assembly: ContractVerification(false)]
