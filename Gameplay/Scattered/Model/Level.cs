@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Scattered
+namespace MHGameWork.TheWizards.Scattered.Model
 {
     public class Level
     {

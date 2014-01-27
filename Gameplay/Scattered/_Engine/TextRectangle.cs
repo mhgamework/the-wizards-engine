@@ -21,8 +21,9 @@ namespace MHGameWork.TheWizards.Scattered._Engine
             get { return _text; }
             set
             {
+                var changed = _text != value;
                 _text = value;
-                updateTexture();
+                if (changed) updateTexture();
             }
         }
 
@@ -43,7 +44,6 @@ namespace MHGameWork.TheWizards.Scattered._Engine
         {
 
             Entity = new Entity();
-            Entity.Mesh = UtilityMeshes.CreateBoxWithTexture(null, new Vector3(1, 1, 0.002f));
 
             Text = "[The Wizards Engine - Text]";
 
@@ -52,7 +52,7 @@ namespace MHGameWork.TheWizards.Scattered._Engine
 
         public void Update()
         {
-            
+
 
             var up = Vector3.UnitY;
             if (Math.Abs(Vector3.Dot(up, Normal)) > 0.99) up = -Vector3.UnitZ;
@@ -70,8 +70,8 @@ namespace MHGameWork.TheWizards.Scattered._Engine
 
         private void updateTexture()
         {
-            Entity.Mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseMap
-                = UtilityMeshes.CreateTextureAssetFromText(_text, TW.Graphics);
+            Entity.Mesh = UtilityMeshes.CreateBoxWithTexture(UtilityMeshes.CreateTextureAssetFromText(_text, TW.Graphics), new Vector3(1, 1, 0.002f));
+            Update();
         }
 
 

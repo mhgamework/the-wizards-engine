@@ -2,6 +2,7 @@ using System.Diagnostics.Contracts;
 using System.Drawing;
 using MHGameWork.TheWizards.Engine;
 using Castle.Core.Internal;
+using MHGameWork.TheWizards.Scattered.Model;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Scattered.Rendering
@@ -23,10 +24,7 @@ namespace MHGameWork.TheWizards.Scattered.Rendering
 
         private void drawIsland(Island obj)
         {
-            Contract.Assume(TW.Graphics != null);
-            var size = new Vector3(20, 5, 20);
-
-            TW.Graphics.LineManager3D.AddBox(new BoundingBox(obj.Position - size * 0.5f, obj.Position + size * 0.5f), new Color4(Color.Green));
+            obj.RenderData.UpdateRenderState();
 
             obj.ConnectedIslands.ForEach(i2 => TW.Graphics.LineManager3D.AddLine(obj.Position,i2.Position,new Color4(Color.SaddleBrown)));
 
