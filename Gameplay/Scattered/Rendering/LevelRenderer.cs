@@ -20,17 +20,23 @@ namespace MHGameWork.TheWizards.Scattered.Rendering
         public void Simulate()
         {
             level.Islands.ForEach(drawIsland);
+            level.Travellers.ForEach(drawTraveller);
+        }
+
+        private void drawTraveller(Traveller obj)
+        {
+            TW.Graphics.LineManager3D.AddCenteredBox(obj.BridgePosition.CalculateActualPositon(), 1f, new Color4(0, 1, 0));
         }
 
         private void drawIsland(Island obj)
         {
             obj.RenderData.UpdateRenderState();
 
-            obj.ConnectedIslands.ForEach(i2 => TW.Graphics.LineManager3D.AddLine(obj.Position,i2.Position,new Color4(Color.SaddleBrown)));
+            obj.ConnectedIslands.ForEach(i2 => TW.Graphics.LineManager3D.AddLine(obj.Position, i2.Position, new Color4(Color.SaddleBrown)));
 
         }
 
 
-        
+
     }
 }

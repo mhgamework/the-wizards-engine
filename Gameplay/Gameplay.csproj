@@ -189,6 +189,7 @@
     <Compile Include="Scattered\Model\Inventory.cs" />
     <Compile Include="Scattered\Model\Island.cs" />
     <Compile Include="Scattered\Model\ItemType.cs" />
+    <Compile Include="Scattered\Model\Traveller.cs" />
     <Compile Include="Scattered\Rendering\IRenderable.cs" />
     <Compile Include="Scattered\Rendering\IslandRenderData.cs" />
     <Compile Include="Scattered\Model\Level.cs" />

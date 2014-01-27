@@ -26,6 +26,9 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public IEnumerable<Island> ConnectedIslands { get { return connectedIslands; } }
 
+        /// <summary>
+        /// This is a layer leak. This should only be called from the Rendering layer and is here for simplicity of writing, since data is in aggregation with the Island anyways.
+        /// </summary>
         public IslandRenderData RenderData { get; set; }
 
         public Inventory Inventory { get; private set; }

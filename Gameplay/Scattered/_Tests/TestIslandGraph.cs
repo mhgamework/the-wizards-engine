@@ -47,8 +47,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         public void TestSomeBridges()
         {
             createSomeIslands();
-            isl1.AddBridgeTo(isl3);
-            isl3.AddBridgeTo(isl2);
+            createBridges();
 
             visualizeLevel();
 
@@ -58,10 +57,14 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             CollectionAssert.Contains(isl2.ConnectedIslands, isl3);
         }
 
+    
+
         [Test]
         public void TestIslandUpdateConstructions()
         {
             createSomeIslands();
+            createBridges();
+
             createIslandConstructions();
 
             engine.AddSimulator(new ConstructionSimulator(level));
@@ -78,6 +81,23 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         }
 
         [Test]
+        public void TestRenderTravellers()
+        {
+            createSomeIslands();
+            createBridges();
+
+            Traveller t;
+            t = level.CreateNewTraveller(isl1, () => null);
+            t.BridgePosition = new BridgePosition(isl1, isl3, 0.2f);
+            t = level.CreateNewTraveller(isl1, () => null);
+            t.BridgePosition = new BridgePosition(isl1, isl3, 0.6f);
+            t = level.CreateNewTraveller(isl3, () => null);
+            t.BridgePosition = new BridgePosition(isl3, isl2, 0.5f);
+
+            visualizeLevel();
+        }
+
+        [Test]
         public void TestInterIslandMovement()
         {
             createSomeIslands();
@@ -85,13 +105,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             engine.AddSimulator(new InterIslandMovementSimulator(level));
 
-            isl1.Construction.UpdateAction = delegate
-            {
-                if (nextCliffTimeout > TW.Graphics.TotalRunTime) return;
-                if (isl1.Inventory.GetAmountOfType(airCrystalType) >= 4) return;
-                nextCliffTimeout = TW.Graphics.TotalRunTime + 5;
-                isl1.Inventory.AddNewItems(airCrystalType, 1);
-            };
+          //TODO: create a traveller which has the crystals form the cliffs and drops them off at the warehouse.
 
             visualizeLevel();
         }
@@ -119,6 +133,12 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             isl2.Construction.Name = "Warehouse";
             isl2.Inventory.AddNewItems(new ItemType() { Name = "Scrap" }, 12);
             isl2.Inventory.AddNewItems(new ItemType() { Name = "Iron ore" }, 3);
+        }
+
+        private void createBridges()
+        {
+            isl1.AddBridgeTo(isl3);
+            isl3.AddBridgeTo(isl2);
         }
 
 
