@@ -1,0 +1,2 @@
+﻿This folder was re-added from the rtstestcase1 branch after being removed. Not everything is tested, since it depended partially on the rtstestcase. 
+You should look in this branch for working tests and missing dependent code.
