@@ -31,11 +31,11 @@ namespace MHGameWork.TheWizards.Scattered.Model
         }
 
 
-        public void TransferItems(Inventory sourceInventory, ItemType type, int amount)
+        public void TransferItemsTo(Inventory targetInventory, ItemType type, int amount)
         {
-            if (sourceInventory.GetAmountOfType(type) < amount ) throw new InvalidOperationException();
-            sourceInventory.changeAmountOfType(type,-amount);
-            changeAmountOfType(type,amount);
+            if (this.GetAmountOfType(type) < amount ) throw new InvalidOperationException("The source inventory does not contain enough items");
+            this.changeAmountOfType(type,-amount);
+            targetInventory.changeAmountOfType(type,amount);
         }
 
         public int GetAmountOfType(ItemType type)

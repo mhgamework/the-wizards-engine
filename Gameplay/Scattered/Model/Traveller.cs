@@ -11,12 +11,22 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public Traveller()
         {
             DetermineDestinationAction = () => null;
+            Inventory = new Inventory();
         }
         public BridgePosition BridgePosition { get; set; }
 
         public Island Destination { get; set; }
 
         public Func<Island> DetermineDestinationAction { get; set; }
+
+        public Inventory Inventory { get; private set; }
+
+        public bool IsAtIsland(Island island)
+        {
+            if (BridgePosition.Percentage < 0.001f && BridgePosition.Start == island) return true;
+            if (BridgePosition.Percentage > 0.999f && BridgePosition.End == island) return true;
+            return false;
+        }
     }
 
     public struct BridgePosition

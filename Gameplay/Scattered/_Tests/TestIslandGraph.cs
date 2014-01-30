@@ -57,7 +57,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             CollectionAssert.Contains(isl2.ConnectedIslands, isl3);
         }
 
-    
+
 
         [Test]
         public void TestIslandUpdateConstructions()
@@ -102,10 +102,24 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         {
             createSomeIslands();
             createIslandConstructions();
+            createBridges();
 
             engine.AddSimulator(new InterIslandMovementSimulator(level));
 
-          //TODO: create a traveller which has the crystals form the cliffs and drops them off at the warehouse.
+            //create a traveller which has the crystals form the cliffs and drops them off at the warehouse.
+
+            Traveller trav = null;
+
+            trav = level.CreateNewTraveller(isl1, delegate
+                                                      {
+                                                          if (!trav.IsAtIsland(isl2)) return isl2;
+
+                                                          trav.Inventory.TransferItemsTo(isl2.Inventory, airCrystalType, trav.Inventory.GetAmountOfType(airCrystalType));
+
+                                                          return null;
+                                                      });
+
+            isl1.Inventory.TransferItemsTo(trav.Inventory, airCrystalType, 1);
 
             visualizeLevel();
         }
@@ -132,7 +146,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             isl2.Construction.Name = "Warehouse";
             isl2.Inventory.AddNewItems(new ItemType() { Name = "Scrap" }, 12);
-            isl2.Inventory.AddNewItems(new ItemType() { Name = "Iron ore" }, 3);
+            //isl2.Inventory.AddNewItems(new ItemType() { Name = "Iron ore" }, 3);
         }
 
         private void createBridges()
