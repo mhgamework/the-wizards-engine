@@ -32,5 +32,11 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public IslandRenderData RenderData { get; set; }
 
         public Inventory Inventory { get; private set; }
+
+
+        public override string ToString()
+        {
+            return "Island: " + Construction.Name;
+        }
     }
 }

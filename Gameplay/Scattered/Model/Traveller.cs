@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using SlimDX;
+using System.Linq;
+using MHGameWork.TheWizards.SkyMerchant._Engine;
 
 namespace MHGameWork.TheWizards.Scattered.Model
 {
@@ -15,11 +18,13 @@ namespace MHGameWork.TheWizards.Scattered.Model
         }
         public BridgePosition BridgePosition { get; set; }
 
-        public Island Destination { get; set; }
+        public Island Destination { get { return PlannedPath.With(i => i.Last()); } }
 
         public Func<Island> DetermineDestinationAction { get; set; }
 
         public Inventory Inventory { get; private set; }
+
+        public Island[] PlannedPath { get; set; }
 
         public bool IsAtIsland(Island island)
         {

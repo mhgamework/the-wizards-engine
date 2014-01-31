@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.Navigation2D
     /// <summary>
     /// TODO: add Jump Point Search for symmetric areas!!!
     /// </summary>
-    public class PathFinder2D<T> where T : class
+    public class PathFinder2D<T> : IPathFinder2D<T> where T : class
     {
         private Dictionary<T, float> gScore;
         private Dictionary<T, float> fScore;

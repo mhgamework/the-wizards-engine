@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SlimDX;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.Scattered.Model
 {
@@ -19,7 +20,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
             var ret = new Traveller()
                           {
                               BridgePosition =  new BridgePosition(start,start,0),
-                              Destination = start,
+                              PlannedPath = new []{start},
                               DetermineDestinationAction = destinationAction
                           };
             travellers.Add(ret);
@@ -31,5 +32,10 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public IEnumerable<Island> Islands { get { return islands; } }
 
         public IEnumerable<Traveller> Travellers { get { return travellers; } }
+
+        public void RemoveTraveller(Traveller traveller)
+        {
+            travellers.Remove(traveller);
+        }
     }
 }

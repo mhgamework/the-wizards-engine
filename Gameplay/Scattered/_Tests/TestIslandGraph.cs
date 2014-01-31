@@ -1,13 +1,19 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.Rendering;
 using MHGameWork.TheWizards.Scattered.Simulation;
+using NSubstitute;
+using NSubstitute.Core;
 using NUnit.Framework;
 using SlimDX;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.Scattered._Tests
 {
@@ -98,13 +104,13 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         }
 
         [Test]
-        public void TestInterIslandMovement()
+        public void TestInterIslandMovementSimulator()
         {
             createSomeIslands();
             createIslandConstructions();
             createBridges();
 
-            engine.AddSimulator(new InterIslandMovementSimulator(level));
+            engine.AddSimulator(new InterIslandMovementSimulator(level, createPathFinderMock()));
 
             //create a traveller which has the crystals form the cliffs and drops them off at the warehouse.
 
@@ -112,16 +118,46 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             trav = level.CreateNewTraveller(isl1, delegate
                                                       {
-                                                          if (!trav.IsAtIsland(isl2)) return isl2;
+                                                          if (trav.IsAtIsland(isl2))
+                                                          {
+                                                              // When at warehouse, drop off goods
+                                                              trav.Inventory.TransferItemsTo(isl2.Inventory, airCrystalType, trav.Inventory.GetAmountOfType(airCrystalType));
+                                                          }
 
-                                                          trav.Inventory.TransferItemsTo(isl2.Inventory, airCrystalType, trav.Inventory.GetAmountOfType(airCrystalType));
+                                                          if (trav.Inventory.GetAmountOfType(airCrystalType) > 0)
+                                                              return isl2; // When has goods, go to warehouse
 
-                                                          return null;
+                                                          if (trav.IsAtIsland(isl1))
+                                                          {
+                                                              // When home and empty, no more destination!
+                                                              return null;
+                                                          }
+
+                                                          return isl1; // go home!
                                                       });
 
             isl1.Inventory.TransferItemsTo(trav.Inventory, airCrystalType, 1);
 
             visualizeLevel();
+        }
+
+        private IPathFinder2D<Island> createPathFinderMock()
+        {
+
+            //TODO: This should work, but i think there is a problem with castle windsor trying to load the Island class from a previous version of the gameplay dll (due to hotloading)
+            //var ret = Substitute.For<IIslandPathFinder>();
+            //ret.FindPath(isl1, isl3).Returns(new List<Island>(new[] { isl1, isl3 }));
+            //ret.FindPath(isl3, isl1).Returns(new List<Island>(new[] { isl3, isl1 }));
+            //ret.FindPath(isl2, isl3).Returns(new List<Island>(new[] { isl2, isl3 }));
+            //ret.FindPath(isl3, isl2).Returns(new List<Island>(new[] { isl3, isl2 }));
+
+
+            //ret.FindPath(isl1, isl2).Returns(new List<Island>(new[] { isl1, isl3, isl2 }));
+            //ret.FindPath(isl2, isl1).Returns(new List<Island>(new[] { isl2, isl3, isl1 }));
+
+            var ret = new DummyPathFinder(isl1, isl2, isl3);
+
+            return ret;
         }
 
         public void visualizeLevel()
@@ -156,6 +192,41 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         }
 
 
+        /// <summary>
+        ///  Note working, here to demonstrate a problem with nsubstitute and the engine.
+        /// </summary>
+        public interface IIslandPathFinder : IPathFinder2D<Island>
+        {
 
+        }
+        internal class DummyPathFinder : IPathFinder2D<Island>
+        {
+            private List<List<Island>> data;
+
+            public DummyPathFinder(Island isl1, Island isl2, Island isl3)
+            {
+                data = new List<List<Island>>();
+                data.Add((new[] { isl1, isl3, isl1, isl3 }).ToList());
+                data.Add((new[] { isl2, isl3, isl2, isl3 }).ToList());
+                data.Add((new[] { isl3, isl1, isl3, isl1 }).ToList());
+                data.Add((new[] { isl3, isl2, isl3, isl2 }).ToList());
+
+                data.Add((new[] { isl1, isl2, isl1, isl3, isl2 }).ToList());
+                data.Add((new[] { isl2, isl1, isl2, isl3, isl1 }).ToList());
+            }
+            public List<Island> FindPath(Island start, Island goal)
+            {
+                foreach (var list in data)
+                {
+                    if (list[0] == start && list[1] == goal)
+                        return list.Skip(2).ToList();
+                }
+
+                throw new InvalidOperationException("Path not found!");
+
+            }
+        }
     }
+
+
 }
