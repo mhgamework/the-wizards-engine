@@ -113,15 +113,41 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             engine.AddSimulator(new InterIslandMovementSimulator(level, createPathFinderMock()));
 
             //create a traveller which has the crystals form the cliffs and drops them off at the warehouse.
+            createCrystalToWarehouseCart();
 
+            visualizeLevel();
+        }
+
+        [Test]
+        public void TestIslandConnectionProviderIntegration()
+        {
+            createSomeIslands();
+            createIslandConstructions();
+            createBridges();
+
+            var finder = new PathFinder2D<Island>();
+            finder.ConnectionProvider = new IslandConnectionProvider();
+            engine.AddSimulator(new InterIslandMovementSimulator(level, finder));
+
+            //create a traveller which has the crystals form the cliffs and drops them off at the warehouse.
+
+
+            createCrystalToWarehouseCart();
+
+            visualizeLevel();
+        }
+
+        private void createCrystalToWarehouseCart()
+        {
             Traveller trav = null;
-
             trav = level.CreateNewTraveller(isl1, delegate
                                                       {
                                                           if (trav.IsAtIsland(isl2))
                                                           {
                                                               // When at warehouse, drop off goods
-                                                              trav.Inventory.TransferItemsTo(isl2.Inventory, airCrystalType, trav.Inventory.GetAmountOfType(airCrystalType));
+                                                              trav.Inventory.TransferItemsTo(isl2.Inventory, airCrystalType,
+                                                                                             trav.Inventory.GetAmountOfType(
+                                                                                                 airCrystalType));
                                                           }
 
                                                           if (trav.Inventory.GetAmountOfType(airCrystalType) > 0)
@@ -138,7 +164,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             isl1.Inventory.TransferItemsTo(trav.Inventory, airCrystalType, 1);
 
-            visualizeLevel();
+            return trav;
         }
 
         private IPathFinder2D<Island> createPathFinderMock()
