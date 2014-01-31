@@ -53,8 +53,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
 
             simulateWorldPlacer();
 
-
-            if (controller.SelectableProvider != null) // TODO very dirty
+            // Less dirty than before, but still dirty
+            selector.ClearProviders();
+            if (controller.SelectableProvider != null)
                 selector.AddProvider(controller.SelectableProvider);
 
 

@@ -1,22 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.DirectX11;
+﻿using System.Linq;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
-using MHGameWork.TheWizards.Engine.PhysX;
 using MHGameWork.TheWizards.Engine.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.Gameplay;
-using MHGameWork.TheWizards.Navigation2D;
-using MHGameWork.TheWizards.RTSTestCase1.Goblins;
-using MHGameWork.TheWizards.RTSTestCase1.Inputting;
-using MHGameWork.TheWizards.RTSTestCase1.Items;
-using MHGameWork.TheWizards.RTSTestCase1.Rendering;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Placing;
-using MHGameWork.TheWizards.RTSTestCase1.WorldResources;
 using NUnit.Framework;
 using SlimDX;
 

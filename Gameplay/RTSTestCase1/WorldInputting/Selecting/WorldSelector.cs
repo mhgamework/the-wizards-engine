@@ -106,5 +106,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting
             if (providers.Contains(provider)) return;
             providers.Add(provider);
         }
+        public void ClearProviders()
+        {
+            providers.Clear();
+        }
     }
 }

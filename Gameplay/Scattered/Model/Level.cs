@@ -37,5 +37,10 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             travellers.Remove(traveller);
         }
+
+        public void RemoveIsland(Island island)
+        {
+            islands.Remove(island);
+        }
     }
 }

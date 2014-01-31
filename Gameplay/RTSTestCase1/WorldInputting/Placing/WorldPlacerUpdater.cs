@@ -57,8 +57,9 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Placing
                 var p = TW.Data.Get<CameraInfo>().GetGroundplanePosition();
                 if (p.HasValue)
                 {
-                    throw new  NotImplementedException();
-                    //var item = placer.CreateItem();
+                    //throw new  NotImplementedException();
+                    var item = placer.CreateItem();
+                    placer.SetPosition(item, p.Value);
                     //item.
                     //placer.Position = item, p.Value;
                 }

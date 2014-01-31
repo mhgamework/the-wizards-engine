@@ -216,7 +216,11 @@
     <Compile Include="Scattered\Simulation\ConstructionSimulator.cs" />
     <Compile Include="Scattered\Simulation\InterIslandMovementSimulator.cs" />
     <Compile Include="Scattered\Simulation\IslandConnectionProvider.cs" />
-    <Compile Include="Scattered\Simulation\SandboxControllerSimulator.cs" />
+    <Compile Include="Scattered\Simulation\Sandbox\BridgeBuilderState.cs" />
+    <Compile Include="Scattered\Simulation\Sandbox\ConstructionPlacerState.cs" />
+    <Compile Include="Scattered\Simulation\Sandbox\ISandboxControllerState.cs" />
+    <Compile Include="Scattered\Simulation\Sandbox\IslandPlacerState.cs" />
+    <Compile Include="Scattered\Simulation\Sandbox\SandboxControllerSimulator.cs" />
     <Compile Include="Scattered\_Engine\RendererScene.cs" />
     <Compile Include="Scattered\_Engine\TextRectangle.cs" />
     <Compile Include="Scattered\_Tests\SandboxTest.cs" />

@@ -137,7 +137,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             visualizeLevel();
         }
 
-        private void createCrystalToWarehouseCart()
+        private Traveller createCrystalToWarehouseCart()
         {
             Traveller trav = null;
             trav = level.CreateNewTraveller(isl1, delegate

@@ -11,6 +11,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting
     {
         public EditorConfiguration()
         {
+            Menu = new EditorMenuConfiguration();
         }
         public EditorMenuConfiguration Menu { get; set; }
 
