@@ -203,6 +203,7 @@
     <Compile Include="Navigation2D\WaypointEngine.cs" />
     <Compile Include="Navigation2D\WaypointEngineTest.cs" />
     <Compile Include="Navigation2D\WaypointVisualizer.cs" />
+    <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
     <Compile Include="Scattered\Model\Construction.cs" />
     <Compile Include="Scattered\Model\Inventory.cs" />
     <Compile Include="Scattered\Model\Island.cs" />
@@ -215,8 +216,10 @@
     <Compile Include="Scattered\Simulation\ConstructionSimulator.cs" />
     <Compile Include="Scattered\Simulation\InterIslandMovementSimulator.cs" />
     <Compile Include="Scattered\Simulation\IslandConnectionProvider.cs" />
+    <Compile Include="Scattered\Simulation\SandboxControllerSimulator.cs" />
     <Compile Include="Scattered\_Engine\RendererScene.cs" />
     <Compile Include="Scattered\_Engine\TextRectangle.cs" />
+    <Compile Include="Scattered\_Tests\SandboxTest.cs" />
     <Compile Include="Scattered\_Tests\TestTextRectangle.cs" />
     <Compile Include="Scattered\_Tests\TestIslandGraph.cs" />
     <Compile Include="SkyMerchant\GameObjects\PhysicalMeshRenderComponent.cs" />
