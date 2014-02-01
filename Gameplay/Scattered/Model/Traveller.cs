@@ -28,9 +28,23 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public bool IsAtIsland(Island island)
         {
+            //TODO: use Island property
             if (BridgePosition.Percentage < 0.001f && BridgePosition.Start == island) return true;
             if (BridgePosition.Percentage > 0.999f && BridgePosition.End == island) return true;
             return false;
+        }
+
+        /// <summary>
+        /// Returns null when between islands, otherwise the island it is on
+        /// </summary>
+        public Island Island
+        {
+            get
+            {
+                if (BridgePosition.Percentage < 0.001f) return BridgePosition.Start;
+                if (BridgePosition.Percentage > 0.999f) return BridgePosition.End;
+                return null;
+            }
         }
     }
 

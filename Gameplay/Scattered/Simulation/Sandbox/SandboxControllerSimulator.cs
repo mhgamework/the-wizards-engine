@@ -4,6 +4,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting;
 using MHGameWork.TheWizards.Scattered.Model;
+using MHGameWork.TheWizards.Scattered.Simulation.Constructions;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
@@ -33,7 +34,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
             return new Construction()
             {
                 Name = "Empty",
-                UpdateAction = delegate { }
+                UpdateAction = new NullConstructionAction()
             };
         }
         private Construction createWarehouseConstruction(Island arg)
@@ -41,7 +42,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
             return new Construction()
             {
                 Name = "Warehouse",
-                UpdateAction = delegate { }
+                UpdateAction = new NullConstructionAction()
             };
         }
         private Construction createCrysalCliffsConstruction(Island arg)
@@ -49,7 +50,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
             return new Construction()
             {
                 Name = "Crystal Cliffs",
-                UpdateAction = delegate { }
+                UpdateAction = new CrystalCliffsAction(arg)
             };
         }
 

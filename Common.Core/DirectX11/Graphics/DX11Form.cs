@@ -212,6 +212,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
 
         void form_Resize(object sender, System.EventArgs e)
         {
+            
             // Disabled, this causes random crashes atm
 
             return;

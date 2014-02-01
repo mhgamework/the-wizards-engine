@@ -6,10 +6,10 @@ namespace MHGameWork.TheWizards.Scattered.Model
     {
         public Construction()
         {
-            UpdateAction = delegate {};
+            UpdateAction = new NullConstructionAction();
         }
         public string Name { get; set; }
 
-        public Action UpdateAction { get; set; }
+        public IConstructionAction UpdateAction { get; set; }
     }
 }

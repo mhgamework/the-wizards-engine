@@ -31,7 +31,6 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         private Island isl3;
         private TWEngine engine = EngineFactory.CreateEngine();
         private ItemType airCrystalType;
-        private float nextCliffTimeout = 0;
 
         [SetUp]
         public void Setup()
@@ -63,8 +62,6 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             CollectionAssert.Contains(isl2.ConnectedIslands, isl3);
         }
 
-
-
         [Test]
         public void TestIslandUpdateConstructions()
         {
@@ -75,13 +72,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             engine.AddSimulator(new ConstructionSimulator(level));
 
-            isl1.Construction.UpdateAction = delegate
-            {
-                if (nextCliffTimeout > TW.Graphics.TotalRunTime) return;
-                if (isl1.Inventory.GetAmountOfType(airCrystalType) >= 4) return;
-                nextCliffTimeout = TW.Graphics.TotalRunTime + 5;
-                isl1.Inventory.AddNewItems(airCrystalType, 1);
-            };
+            isl1.Construction.UpdateAction = new CliffsConstructionAction(isl1, airCrystalType);
 
             visualizeLevel();
         }
@@ -250,6 +241,28 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
                 throw new InvalidOperationException("Path not found!");
 
+            }
+        }
+
+        private class CliffsConstructionAction : IConstructionAction
+        {
+            private readonly Island isl1;
+            private readonly ItemType airCrystalType;
+            float nextCliffTimeout = 0;
+
+
+            public CliffsConstructionAction(Island isl1, ItemType airCrystalType)
+            {
+                this.isl1 = isl1;
+                this.airCrystalType = airCrystalType;
+            }
+
+            public void Update()
+            {
+                if (nextCliffTimeout > TW.Graphics.TotalRunTime) return;
+                if (isl1.Inventory.GetAmountOfType(airCrystalType) >= 4) return;
+                nextCliffTimeout = TW.Graphics.TotalRunTime + 5;
+                isl1.Inventory.AddNewItems(airCrystalType, 1);
             }
         }
     }

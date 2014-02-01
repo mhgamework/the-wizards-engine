@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
 
         public void Simulate()
         {
-            level.Islands.Select(i => i.Construction).ForEach(c => c.UpdateAction());
+            level.Islands.Select(i => i.Construction).ForEach(c => c.UpdateAction.Update());
         }
 
     }

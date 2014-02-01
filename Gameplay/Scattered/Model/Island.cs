@@ -7,12 +7,14 @@ namespace MHGameWork.TheWizards.Scattered.Model
     public class Island
     {
         private List<Island> connectedIslands = new List<Island>();
-        public Island()
+        public Island(Level level)
         {
+            Level = level;
             Construction = new Construction() { Name = "Empty" };
             RenderData = new IslandRenderData(this);
             Inventory = new Inventory();
         }
+        public Level Level { get; private set; }
         public Construction Construction { get; set; }
 
         public Vector3 Position { get; set; }
