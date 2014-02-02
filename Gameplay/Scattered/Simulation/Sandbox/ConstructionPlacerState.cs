@@ -24,6 +24,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
 
         public void Update()
         {
+
         }
 
         public void Exit()

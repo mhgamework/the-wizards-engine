@@ -20,7 +20,6 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         private void createItemTypes()
         {
-
             AirCrystalType = new ItemType() {Name = "Air crystal"};
             ScrapType = new ItemType() { Name = "Scrap" };
         }

@@ -209,6 +209,7 @@
     <Compile Include="Scattered\Model\Inventory.cs" />
     <Compile Include="Scattered\Model\Island.cs" />
     <Compile Include="Scattered\Model\ItemType.cs" />
+    <Compile Include="Scattered\Model\LevelXmlSerializer.cs" />
     <Compile Include="Scattered\Model\NullConstructionAction.cs" />
     <Compile Include="Scattered\Model\Traveller.cs" />
     <Compile Include="Scattered\Rendering\IRenderable.cs" />
@@ -216,6 +217,8 @@
     <Compile Include="Scattered\Model\Level.cs" />
     <Compile Include="Scattered\Rendering\LevelRenderer.cs" />
     <Compile Include="Scattered\Simulation\ConstructionSimulator.cs" />
+    <Compile Include="Scattered\Simulation\DistributionHelper.cs" />
+    <Compile Include="Scattered\Simulation\Constructions\ScrapStationAction.cs" />
     <Compile Include="Scattered\Simulation\Constructions\CrystalCliffsAction.cs" />
     <Compile Include="Scattered\Simulation\InterIslandMovementSimulator.cs" />
     <Compile Include="Scattered\Simulation\IslandConnectionProvider.cs" />
@@ -545,6 +548,7 @@
     <Content Include="Engine\_Core\_doc.txt" />
     <Content Include="Engine\_doc.html" />
     <Content Include="Navigation2D\_doc.txt" />
+    <Content Include="Scattered\_doc.html" />
     <Content Include="SkyMerchant\GameObjects\_doc.html" />
     <Content Include="SkyMerchant\Gameplay\_doc.txt" />
     <Content Include="SkyMerchant\Persistence\_doc.html" />

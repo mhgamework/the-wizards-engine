@@ -30,11 +30,14 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             level.CreateNewIsland(new Vector3(20, 0, 30));
             var config = new EditorConfiguration();
 
-            engine.AddSimulator(new SandboxControllerSimulator(level, config));
+            var pathfinder = createPathfinder();
+            var distribution = new DistributionHelper(level, pathfinder);
+
+            engine.AddSimulator(new SandboxControllerSimulator(level, config, distribution));
             engine.AddSimulator(new WorldInputtingSimulator(config));
 
             engine.AddSimulator(new ConstructionSimulator(level));
-            engine.AddSimulator(new InterIslandMovementSimulator(level,createPathfinder()));
+            engine.AddSimulator(new InterIslandMovementSimulator(level, pathfinder));
 
             engine.AddSimulator(new LevelRenderer(level));
             engine.AddSimulator(new WorldRenderingSimulator());
@@ -70,6 +73,16 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         /// </summary>
         [Test]
         public void TestCrystalCliffsDeliverToClosestWarehouse()
+        {
+            // Thinks that should be checked: inventory of cliff and warehouse
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Scrap station and warehouse not connected should not deliver any goods.
+        /// </summary>
+        [Test]
+        public void TestNoDeliverToUnreachable()
         {
             // Thinks that should be checked: inventory of cliff and warehouse
             throw new NotImplementedException();
