@@ -21,10 +21,12 @@ namespace MHGameWork.TheWizards.Scattered.Model
         private void createItemTypes()
         {
             AirCrystalType = new ItemType() {Name = "Air crystal"};
+            AirEnergyType = new ItemType() { Name = "Air energy" };
             ScrapType = new ItemType() { Name = "Scrap" };
         }
 
         public ItemType AirCrystalType { get; private set; }
+        public ItemType AirEnergyType { get; private set; }
         public ItemType ScrapType { get; private set; }
 
         public Island CreateNewIsland(Vector3 position)
@@ -50,6 +52,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public IEnumerable<Island> Islands { get { return islands; } }
 
         public IEnumerable<Traveller> Travellers { get { return travellers; } }
+
 
         public void RemoveTraveller(Traveller traveller)
         {

@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Constructions
 
             if (cart == null && island.Inventory.GetAmountOfType(level.ScrapType) > 0)
             {
-                cart = distributionHelper.CreateSingleTarget(island, isWarehouse);
+                cart = distributionHelper.CreateDeliveryCart(island, isWarehouse);
 
                 if (cart != null) cart.Inventory.TakeAll(island.Inventory);
             }

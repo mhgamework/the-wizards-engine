@@ -217,6 +217,8 @@
     <Compile Include="Scattered\Model\Level.cs" />
     <Compile Include="Scattered\Rendering\LevelRenderer.cs" />
     <Compile Include="Scattered\Simulation\ConstructionSimulator.cs" />
+    <Compile Include="Scattered\Simulation\Constructions\EnergyNodeAction.cs" />
+    <Compile Include="Scattered\Simulation\RoundSimulator.cs" />
     <Compile Include="Scattered\Simulation\DistributionHelper.cs" />
     <Compile Include="Scattered\Simulation\Constructions\ScrapStationAction.cs" />
     <Compile Include="Scattered\Simulation\Constructions\CrystalCliffsAction.cs" />

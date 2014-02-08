@@ -62,5 +62,15 @@ namespace MHGameWork.TheWizards.Scattered.Model
             foreach (var el in new Dictionary<ItemType,int>(inventory.itemAmounts))
                 inventory.TransferItemsTo(this, el.Key, el.Value);
         }
+
+        public int this[ItemType type]
+        {
+            get { return GetAmountOfType(type); }
+        }
+
+        public void DestroyItems(ItemType type, int amount)
+        {
+            changeAmountOfType(type,-amount);
+        }
     }
 }

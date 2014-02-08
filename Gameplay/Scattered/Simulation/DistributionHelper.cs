@@ -26,7 +26,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
         /// <param name="start"></param>
         /// <param name="targetPredicate"></param>
         /// <returns></returns>
-        public Traveller CreateSingleTarget(Island start, Func<Island, bool> targetPredicate)
+        public Traveller CreateDeliveryCart(Island start, Func<Island, bool> targetPredicate)
         {
             //TODO: check unreachable too
             if (!FindReachableIslands(start, targetPredicate).Any()) return null;

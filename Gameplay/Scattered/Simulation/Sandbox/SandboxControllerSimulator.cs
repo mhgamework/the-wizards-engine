@@ -15,20 +15,31 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
     /// </summary>
     public class SandboxControllerSimulator : ISimulator
     {
+        private readonly Level level;
         private readonly DistributionHelper distributionHelper;
         private ISandboxControllerState state;
         private Dictionary<Key, ISandboxControllerState> keyMap = new Dictionary<Key, ISandboxControllerState>();
-        public SandboxControllerSimulator(Level level, EditorConfiguration configuration, DistributionHelper distributionHelper )
+        private RoundSimulator roundSimulator;
+
+        public SandboxControllerSimulator(Level level, EditorConfiguration configuration, DistributionHelper distributionHelper)
         {
+            this.level = level;
             this.distributionHelper = distributionHelper;
             keyMap.Add(Key.D1, new IslandPlacerState(level, configuration));
 
             keyMap.Add(Key.D2, new ConstructionPlacerState(level, configuration, createEmptyConstruction));
             keyMap.Add(Key.D3, new ConstructionPlacerState(level, configuration, createCrysalCliffsConstruction));
             keyMap.Add(Key.D4, new ConstructionPlacerState(level, configuration, createWarehouseConstruction));
-            keyMap.Add(Key.D6, new ConstructionPlacerState(level, configuration, createScrapStationConstruction));
 
-            keyMap.Add(Key.D5, new BridgeBuilderState(level,configuration));
+            keyMap.Add(Key.D5, new BridgeBuilderState(level, configuration));
+            
+            keyMap.Add(Key.D6, new ConstructionPlacerState(level, configuration, createScrapStationConstruction));
+            keyMap.Add(Key.D7, new ConstructionPlacerState(level, configuration, createEnergyNodeConstruction));
+
+            
+
+
+            roundSimulator = new RoundSimulator();
 
         }
 
@@ -53,7 +64,15 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
             return new Construction()
             {
                 Name = "Crystal Cliffs",
-                UpdateAction = new CrystalCliffsAction(arg, distributionHelper)
+                UpdateAction = new CrystalCliffsAction(arg, distributionHelper, roundSimulator)
+            };
+        }
+        private Construction createEnergyNodeConstruction(Island arg)
+        {
+            return new Construction()
+            {
+                Name = "Energy Node",
+                UpdateAction = new EnergyNodeAction(arg, distributionHelper, roundSimulator)
             };
         }
         private Construction createScrapStationConstruction(Island arg)
@@ -61,11 +80,18 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
             return new Construction()
             {
                 Name = "Scrap Station",
-                UpdateAction = new ScrapStationAction(arg,distributionHelper)
+                UpdateAction = new ScrapStationAction(arg, distributionHelper)
             };
         }
 
         public void Simulate()
+        {
+            simulateState();
+
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.U)) roundSimulator.CombatPhase = !roundSimulator.CombatPhase;
+        }
+
+        private void simulateState()
         {
             ISandboxControllerState newState = null;
 
@@ -90,7 +116,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
         public static BoundingBoxSelectableProvider CreateIslandSelectableProvider(Level level, Action<Island> onClickIsland)
         {
             return BoundingBoxSelectableProvider.Create(level.Islands, i => i.GetBoundingBox(), onClickIsland);
-            
+
         }
 
 
