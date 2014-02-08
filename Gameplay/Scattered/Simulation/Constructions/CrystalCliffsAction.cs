@@ -26,6 +26,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Constructions
 
         public void Update()
         {
+            if (cart != null && cart.Destination == null) cart = null; // Cleanup removed cart
             if (island.Inventory.GetAmountOfType(level.AirCrystalType) >= 4)
             {
                 if (cart != null) return; // Cart not back yet
