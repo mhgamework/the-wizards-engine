@@ -35,7 +35,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         [SetUp]
         public void Setup()
         {
-            level = new Level();
+            level = new Level(null);
             airCrystalType = new ItemType() { Name = "Air Crystal" };
 
         }

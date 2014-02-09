@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using MHGameWork.TheWizards.Scattered.Simulation;
+using MHGameWork.TheWizards.Scattered.Simulation.Constructions;
 using SlimDX;
 using System.Linq;
 
@@ -10,17 +12,19 @@ namespace MHGameWork.TheWizards.Scattered.Model
     /// </summary>
     public class Level
     {
+        private readonly ConstructionFactory cFactory;
         private List<Island> islands = new List<Island>();
         private List<Traveller> travellers = new List<Traveller>();
-        
-        public Level()
+
+        public Level(ConstructionFactory cFactory)
         {
+            this.cFactory = cFactory;
             createItemTypes();
         }
 
         private void createItemTypes()
         {
-            AirCrystalType = new ItemType() {Name = "Air crystal"};
+            AirCrystalType = new ItemType() { Name = "Air crystal" };
             AirEnergyType = new ItemType() { Name = "Air energy" };
             ScrapType = new ItemType() { Name = "Scrap" };
         }
@@ -63,5 +67,56 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             islands.Remove(island);
         }
+
+
+
+
+
+        public Construction createEmptyConstruction(Island arg)
+        {
+            return new Construction()
+            {
+                Name = "Empty",
+                UpdateAction = cFactory.CreateConstructionAction<NullConstructionAction>(arg)
+            };
+        }
+
+        public Construction createWarehouseConstruction(Island arg)
+        {
+            return new Construction()
+            {
+                Name = "Warehouse",
+                UpdateAction = new NullConstructionAction()
+            };
+        }
+
+        public Construction createCrysalCliffsConstruction(Island arg)
+        {
+            return new Construction()
+            {
+                Name = "Crystal Cliffs",
+                UpdateAction = cFactory.CreateConstructionAction<CrystalCliffsAction>(arg)
+            };
+        }
+
+        public Construction createEnergyNodeConstruction(Island arg)
+        {
+            return new Construction()
+            {
+                Name = "Energy Node",
+                UpdateAction = cFactory.CreateConstructionAction<EnergyNodeAction>(arg)
+            };
+        }
+
+        public Construction createScrapStationConstruction(Island arg)
+        {
+            return new Construction()
+            {
+                Name = "Scrap Station",
+                UpdateAction = cFactory.CreateConstructionAction<ScrapStationAction>(arg)
+            };
+        }
+
+
     }
 }

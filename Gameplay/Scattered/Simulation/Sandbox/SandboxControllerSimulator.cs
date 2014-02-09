@@ -16,73 +16,33 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
     public class SandboxControllerSimulator : ISimulator
     {
         private readonly Level level;
-        private readonly DistributionHelper distributionHelper;
+        private RoundSimulator roundSimulator;
         private ISandboxControllerState state;
         private Dictionary<Key, ISandboxControllerState> keyMap = new Dictionary<Key, ISandboxControllerState>();
-        private RoundSimulator roundSimulator;
+        
 
-        public SandboxControllerSimulator(Level level, EditorConfiguration configuration, DistributionHelper distributionHelper)
+        public SandboxControllerSimulator(Level level, EditorConfiguration configuration, RoundSimulator roundSimulator)
         {
             this.level = level;
-            this.distributionHelper = distributionHelper;
+            this.roundSimulator = roundSimulator;
             keyMap.Add(Key.D1, new IslandPlacerState(level, configuration));
 
-            keyMap.Add(Key.D2, new ConstructionPlacerState(level, configuration, createEmptyConstruction));
-            keyMap.Add(Key.D3, new ConstructionPlacerState(level, configuration, createCrysalCliffsConstruction));
-            keyMap.Add(Key.D4, new ConstructionPlacerState(level, configuration, createWarehouseConstruction));
+            keyMap.Add(Key.D2, new ConstructionPlacerState(level, configuration, level.createEmptyConstruction));
+            keyMap.Add(Key.D3, new ConstructionPlacerState(level, configuration, level.createCrysalCliffsConstruction));
+            keyMap.Add(Key.D4, new ConstructionPlacerState(level, configuration, level.createWarehouseConstruction));
 
             keyMap.Add(Key.D5, new BridgeBuilderState(level, configuration));
-            
-            keyMap.Add(Key.D6, new ConstructionPlacerState(level, configuration, createScrapStationConstruction));
-            keyMap.Add(Key.D7, new ConstructionPlacerState(level, configuration, createEnergyNodeConstruction));
+
+            keyMap.Add(Key.D6, new ConstructionPlacerState(level, configuration, level.createScrapStationConstruction));
+            keyMap.Add(Key.D7, new ConstructionPlacerState(level, configuration, level.createEnergyNodeConstruction));
 
             
 
 
-            roundSimulator = new RoundSimulator();
 
         }
 
-        private Construction createEmptyConstruction(Island arg)
-        {
-            return new Construction()
-            {
-                Name = "Empty",
-                UpdateAction = new NullConstructionAction()
-            };
-        }
-        private Construction createWarehouseConstruction(Island arg)
-        {
-            return new Construction()
-            {
-                Name = "Warehouse",
-                UpdateAction = new NullConstructionAction()
-            };
-        }
-        private Construction createCrysalCliffsConstruction(Island arg)
-        {
-            return new Construction()
-            {
-                Name = "Crystal Cliffs",
-                UpdateAction = new CrystalCliffsAction(arg, distributionHelper, roundSimulator)
-            };
-        }
-        private Construction createEnergyNodeConstruction(Island arg)
-        {
-            return new Construction()
-            {
-                Name = "Energy Node",
-                UpdateAction = new EnergyNodeAction(arg, distributionHelper, roundSimulator)
-            };
-        }
-        private Construction createScrapStationConstruction(Island arg)
-        {
-            return new Construction()
-            {
-                Name = "Scrap Station",
-                UpdateAction = new ScrapStationAction(arg, distributionHelper)
-            };
-        }
+      
 
         public void Simulate()
         {

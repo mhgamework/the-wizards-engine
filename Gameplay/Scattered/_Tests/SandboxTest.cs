@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.RTSTestCase1.WorldInputting;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.Rendering;
 using MHGameWork.TheWizards.Scattered.Simulation;
+using MHGameWork.TheWizards.Scattered.Simulation.Constructions;
 using MHGameWork.TheWizards.Scattered.Simulation.Sandbox;
 using NUnit.Framework;
 using SlimDX;
@@ -26,14 +27,28 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         [Test]
         public void TestSandbox()
         {
-            var level = new Level();
+            DistributionHelper distributionHelper = null;
+            RoundSimulator roundSimulator = null;
+
+            var pathfinder = createPathfinder();
+
+            var constructionFactory = new ConstructionFactory(new Lazy<DistributionHelper>(() => distributionHelper), new Lazy<RoundSimulator>(() => roundSimulator));
+
+            var level = new Level(constructionFactory);
+
+            distributionHelper = new DistributionHelper(level, pathfinder);
+            roundSimulator = new RoundSimulator();
+            
+            
             level.CreateNewIsland(new Vector3(20, 0, 30));
             var config = new EditorConfiguration();
 
-            var pathfinder = createPathfinder();
-            var distribution = new DistributionHelper(level, pathfinder);
+            
 
-            engine.AddSimulator(new SandboxControllerSimulator(level, config, distribution));
+            
+
+
+            engine.AddSimulator(new SandboxControllerSimulator(level, config, roundSimulator));
             engine.AddSimulator(new WorldInputtingSimulator(config));
 
             engine.AddSimulator(new ConstructionSimulator(level));

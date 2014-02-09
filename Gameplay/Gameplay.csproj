@@ -216,6 +216,7 @@
     <Compile Include="Scattered\Rendering\IslandRenderData.cs" />
     <Compile Include="Scattered\Model\Level.cs" />
     <Compile Include="Scattered\Rendering\LevelRenderer.cs" />
+    <Compile Include="Scattered\Simulation\ConstructionFactory.cs" />
     <Compile Include="Scattered\Simulation\ConstructionSimulator.cs" />
     <Compile Include="Scattered\Simulation\Constructions\EnergyNodeAction.cs" />
     <Compile Include="Scattered\Simulation\RoundSimulator.cs" />
