@@ -40,7 +40,6 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             roundSimulator = new RoundSimulator();
             
             
-            level.CreateNewIsland(new Vector3(20, 0, 30));
             var config = new EditorConfiguration();
 
             

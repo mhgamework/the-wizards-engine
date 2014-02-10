@@ -77,7 +77,8 @@ namespace MHGameWork.TheWizards.Scattered.Model
             return new Construction()
             {
                 Name = "Empty",
-                UpdateAction = cFactory.CreateConstructionAction<NullConstructionAction>(arg)
+                UpdateAction = cFactory.CreateConstructionAction<NullConstructionAction>(arg),
+                LevelConstructorMethod = "createEmptyConstruction" // TODO: try get method name using code or use AOP or add ConstructionType
             };
         }
 
@@ -86,7 +87,8 @@ namespace MHGameWork.TheWizards.Scattered.Model
             return new Construction()
             {
                 Name = "Warehouse",
-                UpdateAction = new NullConstructionAction()
+                UpdateAction = new NullConstructionAction(),
+                LevelConstructorMethod = "createWarehouseConstruction" // TODO: try get method name using code or use AOP
             };
         }
 
@@ -95,7 +97,8 @@ namespace MHGameWork.TheWizards.Scattered.Model
             return new Construction()
             {
                 Name = "Crystal Cliffs",
-                UpdateAction = cFactory.CreateConstructionAction<CrystalCliffsAction>(arg)
+                UpdateAction = cFactory.CreateConstructionAction<CrystalCliffsAction>(arg),
+                LevelConstructorMethod = "createCrysalCliffsConstruction" // TODO: try get method name using code or use AOP
             };
         }
 
@@ -104,7 +107,8 @@ namespace MHGameWork.TheWizards.Scattered.Model
             return new Construction()
             {
                 Name = "Energy Node",
-                UpdateAction = cFactory.CreateConstructionAction<EnergyNodeAction>(arg)
+                UpdateAction = cFactory.CreateConstructionAction<EnergyNodeAction>(arg),
+                LevelConstructorMethod = "createEnergyNodeConstruction" // TODO: try get method name using code or use AOP
             };
         }
 
@@ -113,7 +117,8 @@ namespace MHGameWork.TheWizards.Scattered.Model
             return new Construction()
             {
                 Name = "Scrap Station",
-                UpdateAction = cFactory.CreateConstructionAction<ScrapStationAction>(arg)
+                UpdateAction = cFactory.CreateConstructionAction<ScrapStationAction>(arg),
+                LevelConstructorMethod = "createScrapStationConstruction" // TODO: try get method name using code or use AOP
             };
         }
 

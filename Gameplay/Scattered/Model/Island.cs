@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public Island(Level level)
         {
             Level = level;
-            Construction = new Construction() { Name = "Empty" };
+            Construction = level.createEmptyConstruction(this);
             RenderData = new IslandRenderData(this);
             Inventory = new Inventory();
         }

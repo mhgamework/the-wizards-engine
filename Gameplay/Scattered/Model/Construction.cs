@@ -11,5 +11,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public string Name { get; set; }
 
         public IConstructionAction UpdateAction { get; set; }
+
+        public string LevelConstructorMethod { get; set; }
     }
 }

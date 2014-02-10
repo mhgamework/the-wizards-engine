@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting;
@@ -49,6 +50,19 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
             simulateState();
 
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.U)) roundSimulator.CombatPhase = !roundSimulator.CombatPhase;
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.O)) saveLevel();
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.I)) loadLevel();
+        }
+
+        private void saveLevel()
+        {
+            var s = new LevelSerializer();
+            s.Serialize(level,new FileInfo(TWDir.GameData.CreateSubdirectory("Scattered") + "\\Level.txt"));
+        }
+        private void loadLevel()
+        {
+            var s = new LevelSerializer();
+            s.Deserialize(level, new FileInfo(TWDir.GameData.CreateSubdirectory("Scattered") + "\\Level.txt"));
         }
 
         private void simulateState()

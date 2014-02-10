@@ -219,6 +219,7 @@
     <Compile Include="Scattered\Simulation\ConstructionFactory.cs" />
     <Compile Include="Scattered\Simulation\ConstructionSimulator.cs" />
     <Compile Include="Scattered\Simulation\Constructions\EnergyNodeAction.cs" />
+    <Compile Include="Scattered\Simulation\LevelSerializer.cs" />
     <Compile Include="Scattered\Simulation\RoundSimulator.cs" />
     <Compile Include="Scattered\Simulation\DistributionHelper.cs" />
     <Compile Include="Scattered\Simulation\Constructions\ScrapStationAction.cs" />
