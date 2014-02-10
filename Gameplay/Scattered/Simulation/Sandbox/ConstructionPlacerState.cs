@@ -34,6 +34,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
         private void onClickIsland(Island obj)
         {
             obj.Construction = constructionFactory(obj);
+            obj.Inventory.Clear();
         }
     }
 }

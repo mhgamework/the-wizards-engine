@@ -72,5 +72,10 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             changeAmountOfType(type,-amount);
         }
+
+        public void Clear()
+        {
+            itemAmounts.Clear();
+        }
     }
 }

@@ -63,14 +63,17 @@ namespace MHGameWork.TheWizards.Scattered._Engine
                 up = TW.Graphics.Camera.ViewInverse.xna().Up.dx();
             }
 
+
+            var camDist = Vector3.Distance(Position, TW.Graphics.Camera.ViewInverse.xna().Translation.dx());
+
             Entity.WorldMatrix =
-                Matrix.Scaling(Radius, Radius, Radius)
+                Matrix.Scaling(Radius, Radius, Radius * camDist)
                 * Matrix.Invert(Matrix.LookAtRH(Position, Position + Normal, up));
         }
 
         private void updateTexture()
         {
-            Entity.Mesh = UtilityMeshes.CreateBoxWithTexture(UtilityMeshes.CreateTextureAssetFromText(_text, TW.Graphics), new Vector3(1, 1, 0.002f));
+            Entity.Mesh = UtilityMeshes.CreateBoxWithTexture(UtilityMeshes.CreateTextureAssetFromText(_text, TW.Graphics), new Vector3(1, 1, 0.0002f));
             Update();
         }
 
