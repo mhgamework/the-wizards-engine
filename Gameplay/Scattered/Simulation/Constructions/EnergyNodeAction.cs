@@ -77,11 +77,26 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Constructions
                     return distribution.FindNearestIsland(trav.Island, isDestroyableCliff);
                 });
 
+            trav.OnReachIsland = i =>
+                    {
+                        if (!isCamp(i)) return;
+
+                        if (i.Inventory[level.UnitTier1Type] == 0) return;
+                        i.Inventory.DestroyItems(level.UnitTier1Type,1);
+
+                        trav.Destroy();
+                    };
+
         }
 
         private bool isCrystalCliffs(Island isl, ItemType itemType)
         {
             return isl.Construction.Name == "Crystal Cliffs"; // TODO
+        }
+
+        private bool isCamp(Island isl)
+        {
+            return isl.Construction.Name == "Camp"; // TODO
         }
     }
 }

@@ -38,15 +38,15 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
             }
 
 
-            try
-            {
+            /*try
+            {*/
                 restoreXmlLevel(level, xml);
-            }
+            /*}
             catch (Exception ex)
             {
                 throw new InvalidOperationException(
                     "Can not deserialize the loaded level xml. Xml is valid but could not be converted into a runtime level.",ex);
-            }
+            }*/
             
 
         }

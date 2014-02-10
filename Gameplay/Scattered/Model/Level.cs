@@ -24,11 +24,13 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         private void createItemTypes()
         {
+            UnitTier1Type = new ItemType() { Name = "Air Unit Tier 1" };
             AirCrystalType = new ItemType() { Name = "Air crystal" };
             AirEnergyType = new ItemType() { Name = "Air energy" };
             ScrapType = new ItemType() { Name = "Scrap" };
         }
 
+        public ItemType UnitTier1Type { get; private set; }
         public ItemType AirCrystalType { get; private set; }
         public ItemType AirEnergyType { get; private set; }
         public ItemType ScrapType { get; private set; }
@@ -119,6 +121,26 @@ namespace MHGameWork.TheWizards.Scattered.Model
                 Name = "Scrap Station",
                 UpdateAction = cFactory.CreateConstructionAction<ScrapStationAction>(arg),
                 LevelConstructorMethod = "createScrapStationConstruction" // TODO: try get method name using code or use AOP
+            };
+        }
+
+        public Construction createCampConstruction(Island arg)
+        {
+            return new Construction()
+            {
+                Name = "Camp",
+                UpdateAction = cFactory.CreateConstructionAction<NullConstructionAction>(arg),
+                LevelConstructorMethod = "createCampConstruction" // TODO: try get method name using code or use AOP
+            };
+        }
+
+        public Construction createWorkshop(Island arg)
+        {
+            return new Construction()
+            {
+                Name = "Workshop",
+                UpdateAction = cFactory.CreateConstructionAction<WorkshopAction>(arg),
+                LevelConstructorMethod = "createWorkshop" // TODO: try get method name using code or use AOP
             };
         }
 

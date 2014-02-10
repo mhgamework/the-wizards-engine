@@ -32,6 +32,10 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
         {
             if (obj.Destination == null) return;
 
+            if (obj.Island != null) obj.OnReachIsland(obj.Island);
+
+            if (obj.Destination == null) return; // If the onreachisland changed destination also cancel
+
             // If at destination try to create a new path
             if (obj.IsAtIsland(obj.Destination))
             {
@@ -48,8 +52,15 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
                 // Arrived at next node, shorten path
                 obj.PlannedPath = obj.PlannedPath.Skip(1).ToArray();
                 obj.BridgePosition = new BridgePosition(obj.PlannedPath[0], obj.PlannedPath[1], 0);
+                
+                if (obj.PlannedPath[0] != obj.PlannedPath[1] && !obj.PlannedPath[0].ConnectedIslands.Contains(obj.PlannedPath[1]))
+                {
+                    // There is no bridge here! (anymore?)
+                    obj.PlannedPath = obj.PlannedPath = new [] { obj.Island };
+                }
             }
 
+         
 
             var v = obj.BridgePosition;
 
@@ -79,7 +90,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
             // If still at destination, we wait
             if (obj.IsAtIsland(dest))
             {
-                obj.PlannedPath = new Island[] { pos };
+                obj.PlannedPath = new [] { pos };
                 return false;
             }
 

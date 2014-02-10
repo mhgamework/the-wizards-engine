@@ -36,9 +36,18 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
 
             keyMap.Add(Key.D6, new ConstructionPlacerState(level, configuration, level.createScrapStationConstruction));
             keyMap.Add(Key.D7, new ConstructionPlacerState(level, configuration, level.createEnergyNodeConstruction));
+            keyMap.Add(Key.D8, new ConstructionPlacerState(level, configuration, level.createCampConstruction));
+            keyMap.Add(Key.D9, new ConstructionPlacerState(level, configuration, level.createWorkshop));
 
-            
 
+            try
+            {
+                loadLevel();
+            }
+            catch (Exception ex)
+            {
+             Console.WriteLine(ex);   
+            }
 
 
         }

@@ -20,6 +20,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
             Add(i => new CrystalCliffsAction(i, distributionHelper.Value, roundSimulator.Value));
             Add(i => new EnergyNodeAction(i, distributionHelper.Value, roundSimulator.Value));
             Add(i => new ScrapStationAction(i, distributionHelper.Value));
+            Add(i => new WorkshopAction(i, distributionHelper.Value));
 
         }
 

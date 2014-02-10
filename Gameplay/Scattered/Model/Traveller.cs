@@ -15,6 +15,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             DetermineDestinationAction = () => null;
             Inventory = new Inventory();
+            OnReachIsland = a => { };
         }
         public BridgePosition BridgePosition { get; set; }
 
@@ -45,6 +46,19 @@ namespace MHGameWork.TheWizards.Scattered.Model
                 if (BridgePosition.Percentage > 0.999f) return BridgePosition.End;
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Called every frame when this traveller is at an island and not on a bridge
+        /// </summary>
+        public Action<Island> OnReachIsland { get; set; }
+
+        /// <summary>
+        /// The in-game way to cleanly destroy an traveller at any frame
+        /// </summary>
+        public void Destroy()
+        {
+            PlannedPath = null;
         }
     }
 
