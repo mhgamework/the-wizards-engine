@@ -18,6 +18,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
             OnReachIsland = a => { };
         }
         public BridgePosition BridgePosition { get; set; }
+        public TravellerType Type { get; set; }
 
         public Island Destination { get { return PlannedPath.With(i => i.Last()); } }
 
