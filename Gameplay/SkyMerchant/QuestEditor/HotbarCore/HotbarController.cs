@@ -35,6 +35,9 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.HotbarCore
         }
 
 
+        /// <summary>
+        /// WARNING: you have to manually call the update method on the selected item!!!!
+        /// </summary>
         public void Update()
         {
             trySelect();
@@ -44,7 +47,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.HotbarCore
         }
 
         private IHotbarItem lastSelectedItem;
-        private void updateSelectedItem()
+        /// <summary>
+        /// Why is this seperate? should it be in update?
+        /// </summary>
+        public void UpdateSelectedItem()
         {
             var selected = GetHotbarItem(bar.SelectedSlot);
             if (lastSelectedItem != selected)

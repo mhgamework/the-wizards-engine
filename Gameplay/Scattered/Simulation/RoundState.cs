@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace MHGameWork.TheWizards.Scattered.Simulation.Constructions
+namespace MHGameWork.TheWizards.Scattered.Simulation
 {
     /// <summary>
-    /// Note: this is the sandbox version, should split into an interface and a version that uses time for in game use
+    /// Note: Convert to an interface??
     /// </summary>
-    public class RoundSimulator
+    public class RoundState
     {
         public bool CombatPhase { get; set; }
 

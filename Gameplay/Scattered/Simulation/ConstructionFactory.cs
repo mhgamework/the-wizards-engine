@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
     {
         private Dictionary<Type, Func<Island, IConstructionAction>> bindings = new Dictionary<Type, Func<Island,IConstructionAction>>();
 
-        public ConstructionFactory(Lazy<DistributionHelper> distributionHelper, Lazy<RoundSimulator> roundSimulator)
+        public ConstructionFactory(Lazy<DistributionHelper> distributionHelper, Lazy<RoundState> roundSimulator)
         {
 
             Add(i => new NullConstructionAction());

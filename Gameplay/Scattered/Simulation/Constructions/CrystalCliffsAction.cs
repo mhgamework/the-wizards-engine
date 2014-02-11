@@ -11,17 +11,17 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Constructions
     {
         private readonly Island island;
         private readonly DistributionHelper distribution;
-        private readonly RoundSimulator roundSimulator;
+        private readonly RoundState roundState;
         private Level level;
         private Traveller cart;
 
         private bool harvestedEnergyNode;
 
-        public CrystalCliffsAction(Island island, DistributionHelper distribution,RoundSimulator roundSimulator)
+        public CrystalCliffsAction(Island island, DistributionHelper distribution,RoundState roundState)
         {
             this.island = island;
             this.distribution = distribution;
-            this.roundSimulator = roundSimulator;
+            this.roundState = roundState;
             this.level = island.Level;
         }
 
@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Constructions
         {
             if (tryDeliverCrystals()) return; // Cart not back yet
 
-            roundSimulator.ExecuteDuringBuildPhase(() =>
+            roundState.ExecuteDuringBuildPhase(() =>
                 {
                     if (harvestedEnergyNode) return;
 
@@ -43,7 +43,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Constructions
 
 
                 });
-            roundSimulator.ExecuteDuringCombatPhase(() =>
+            roundState.ExecuteDuringCombatPhase(() =>
                 {
                     harvestedEnergyNode = false;
                 });

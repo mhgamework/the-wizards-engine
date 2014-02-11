@@ -220,12 +220,14 @@
     <Compile Include="Scattered\Simulation\Constructions\WorkshopAction.cs" />
     <Compile Include="Scattered\Simulation\Constructions\EnergyNodeAction.cs" />
     <Compile Include="Scattered\Simulation\LevelSerializer.cs" />
-    <Compile Include="Scattered\Simulation\RoundSimulator.cs" />
+    <Compile Include="Scattered\Simulation\PlayControllerSimulator.cs" />
+    <Compile Include="Scattered\Simulation\RoundState.cs" />
     <Compile Include="Scattered\Simulation\DistributionHelper.cs" />
     <Compile Include="Scattered\Simulation\Constructions\ScrapStationAction.cs" />
     <Compile Include="Scattered\Simulation\Constructions\CrystalCliffsAction.cs" />
     <Compile Include="Scattered\Simulation\InterIslandMovementSimulator.cs" />
     <Compile Include="Scattered\Simulation\IslandConnectionProvider.cs" />
+    <Compile Include="Scattered\Simulation\LoadLevelSimulator.cs" />
     <Compile Include="Scattered\Simulation\Sandbox\BridgeBuilderState.cs" />
     <Compile Include="Scattered\Simulation\Sandbox\ConstructionPlacerState.cs" />
     <Compile Include="Scattered\Simulation\Sandbox\ISandboxControllerState.cs" />
@@ -233,6 +235,7 @@
     <Compile Include="Scattered\Simulation\Sandbox\SandboxControllerSimulator.cs" />
     <Compile Include="Scattered\_Engine\RendererScene.cs" />
     <Compile Include="Scattered\_Engine\TextRectangle.cs" />
+    <Compile Include="Scattered\_Tests\PlayTest.cs" />
     <Compile Include="Scattered\_Tests\SandboxTest.cs" />
     <Compile Include="Scattered\_Tests\TestTextRectangle.cs" />
     <Compile Include="Scattered\_Tests\TestIslandGraph.cs" />

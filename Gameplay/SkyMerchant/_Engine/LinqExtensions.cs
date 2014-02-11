@@ -29,6 +29,16 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine
         }
 
         /// <summary>
+        /// MHGW addition
+        /// </summary>
+        public static void With<TInput>(this TInput o, Action<TInput> evaluator)
+            where TInput : class
+        {
+            if (o == null) return;
+            evaluator(o);
+        }
+
+        /// <summary>
         /// Returns with a default value
         /// </summary>
         public static TResult Return<TInput, TResult>(this TInput o, Func<TInput, TResult> evaluator, TResult failureValue) where TInput : class

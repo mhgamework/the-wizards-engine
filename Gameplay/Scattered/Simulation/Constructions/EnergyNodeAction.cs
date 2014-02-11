@@ -14,7 +14,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Constructions
     {
         private readonly Island island;
         private readonly DistributionHelper distribution;
-        private readonly RoundSimulator roundSimulator;
+        private readonly RoundState roundState;
         private Level level;
 
 
@@ -24,11 +24,11 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Constructions
         private float nextEnemySpawn;
 
 
-        public EnergyNodeAction(Island island, DistributionHelper distribution, RoundSimulator roundSimulator)
+        public EnergyNodeAction(Island island, DistributionHelper distribution, RoundState roundState)
         {
             this.island = island;
             this.distribution = distribution;
-            this.roundSimulator = roundSimulator;
+            this.roundState = roundState;
             this.level = island.Level;
 
             island.Inventory.AddNewItems(level.AirEnergyType, MaxEnergyInventory - island.Inventory[level.AirEnergyType]);
@@ -37,8 +37,8 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Constructions
 
         public void Update()
         {
-            roundSimulator.ExecuteDuringCombatPhase(spawnEnemies);
-            roundSimulator.ExecuteDuringBuildPhase(refillEnergyInventory);
+            roundState.ExecuteDuringCombatPhase(spawnEnemies);
+            roundState.ExecuteDuringBuildPhase(refillEnergyInventory);
 
 
         }

@@ -28,26 +28,28 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         public void TestSandbox()
         {
             DistributionHelper distributionHelper = null;
-            RoundSimulator roundSimulator = null;
+            RoundState roundState = null;
 
             var pathfinder = createPathfinder();
 
-            var constructionFactory = new ConstructionFactory(new Lazy<DistributionHelper>(() => distributionHelper), new Lazy<RoundSimulator>(() => roundSimulator));
+            var constructionFactory = new ConstructionFactory(new Lazy<DistributionHelper>(() => distributionHelper), new Lazy<RoundState>(() => roundState));
+
+
 
             var level = new Level(constructionFactory);
 
             distributionHelper = new DistributionHelper(level, pathfinder);
-            roundSimulator = new RoundSimulator();
-            
-            
+            roundState = new RoundState();
+
+
             var config = new EditorConfiguration();
 
-            
-
-            
 
 
-            engine.AddSimulator(new SandboxControllerSimulator(level, config, roundSimulator));
+
+
+            engine.AddSimulator(new LoadLevelSimulator(level));
+            engine.AddSimulator(new SandboxControllerSimulator(level, config, roundState));
             engine.AddSimulator(new WorldInputtingSimulator(config));
 
             engine.AddSimulator(new ConstructionSimulator(level));

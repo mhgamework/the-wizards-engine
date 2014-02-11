@@ -17,15 +17,15 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
     public class SandboxControllerSimulator : ISimulator
     {
         private readonly Level level;
-        private RoundSimulator roundSimulator;
+        private RoundState roundState;
         private ISandboxControllerState state;
         private Dictionary<Key, ISandboxControllerState> keyMap = new Dictionary<Key, ISandboxControllerState>();
         
 
-        public SandboxControllerSimulator(Level level, EditorConfiguration configuration, RoundSimulator roundSimulator)
+        public SandboxControllerSimulator(Level level, EditorConfiguration configuration, RoundState roundState)
         {
             this.level = level;
-            this.roundSimulator = roundSimulator;
+            this.roundState = roundState;
             keyMap.Add(Key.D1, new IslandPlacerState(level, configuration));
 
             keyMap.Add(Key.D2, new ConstructionPlacerState(level, configuration, level.createEmptyConstruction));
@@ -58,7 +58,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
         {
             simulateState();
 
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.U)) roundSimulator.CombatPhase = !roundSimulator.CombatPhase;
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.U)) roundState.CombatPhase = !roundState.CombatPhase;
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.O)) saveLevel();
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.I)) loadLevel();
         }
