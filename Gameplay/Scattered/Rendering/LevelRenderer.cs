@@ -25,7 +25,11 @@ namespace MHGameWork.TheWizards.Scattered.Rendering
 
         private void drawTraveller(Traveller obj)
         {
-            TW.Graphics.LineManager3D.AddCenteredBox(obj.BridgePosition.CalculateActualPositon(), 1f, new Color4(0, 1, 0));
+            var color = new Color4(0, 1, 0);
+            if (obj.Type.IsEnemy) color = new Color4(1, 0, 0);
+            if (obj.Type == level.WorkshopCartType) color = new Color4(0.5f, 0.5f, 0);
+
+            TW.Graphics.LineManager3D.AddCenteredBox(obj.BridgePosition.CalculateActualPositon(), 1f, color);
         }
 
         private void drawIsland(Island obj)

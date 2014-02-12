@@ -100,6 +100,8 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Constructions
                     i.Inventory.AddNewItems(level.UnitTier1Type, newUnits);
 
                 };
+
+            roamingCart.Type = level.WorkshopCartType;
         }
 
 

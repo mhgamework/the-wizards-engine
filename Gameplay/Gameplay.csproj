@@ -580,6 +580,7 @@
     <Folder Include="SkyMerchant\_Tests\Broken\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="RTSTestCase1\_Engine\ObjectParts\ObjectPartInterfaces.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

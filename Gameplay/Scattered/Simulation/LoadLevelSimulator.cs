@@ -30,7 +30,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
         public void Simulate()
         {
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.O)) saveLevel();
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.I)) loadLevel();
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.I)) loadLevel(); //TODO: clear lvl first
         }
 
         private void saveLevel()

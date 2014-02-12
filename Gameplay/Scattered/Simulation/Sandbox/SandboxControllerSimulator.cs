@@ -18,14 +18,16 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
     {
         private readonly Level level;
         private RoundState roundState;
+        private readonly InterIslandMovementSimulator movementSimulator;
         private ISandboxControllerState state;
         private Dictionary<Key, ISandboxControllerState> keyMap = new Dictionary<Key, ISandboxControllerState>();
         
 
-        public SandboxControllerSimulator(Level level, EditorConfiguration configuration, RoundState roundState)
+        public SandboxControllerSimulator(Level level, EditorConfiguration configuration, RoundState roundState,InterIslandMovementSimulator movementSimulator)
         {
             this.level = level;
             this.roundState = roundState;
+            this.movementSimulator = movementSimulator;
             keyMap.Add(Key.D1, new IslandPlacerState(level, configuration));
 
             keyMap.Add(Key.D2, new ConstructionPlacerState(level, configuration, level.createEmptyConstruction));
@@ -40,14 +42,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
             keyMap.Add(Key.D9, new ConstructionPlacerState(level, configuration, level.createWorkshop));
 
 
-            try
-            {
-                loadLevel();
-            }
-            catch (Exception ex)
-            {
-             Console.WriteLine(ex);   
-            }
+         
 
 
         }
@@ -59,20 +54,10 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
             simulateState();
 
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.U)) roundState.CombatPhase = !roundState.CombatPhase;
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.O)) saveLevel();
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.I)) loadLevel();
+
+            movementSimulator.MovementSpeed = TW.Graphics.Keyboard.IsKeyPressed(Key.N) ? 50 : 10;
         }
 
-        private void saveLevel()
-        {
-            var s = new LevelSerializer();
-            s.Serialize(level,new FileInfo(TWDir.GameData.CreateSubdirectory("Scattered") + "\\Level.txt"));
-        }
-        private void loadLevel()
-        {
-            var s = new LevelSerializer();
-            s.Deserialize(level, new FileInfo(TWDir.GameData.CreateSubdirectory("Scattered") + "\\Level.txt"));
-        }
 
         private void simulateState()
         {

@@ -45,15 +45,16 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             var config = new EditorConfiguration();
 
 
+            var interIslandMovementSimulator = new InterIslandMovementSimulator(level, pathfinder);
 
 
 
             engine.AddSimulator(new LoadLevelSimulator(level));
-            engine.AddSimulator(new SandboxControllerSimulator(level, config, roundState));
+            engine.AddSimulator(new SandboxControllerSimulator(level, config, roundState, interIslandMovementSimulator));
             engine.AddSimulator(new WorldInputtingSimulator(config));
 
             engine.AddSimulator(new ConstructionSimulator(level));
-            engine.AddSimulator(new InterIslandMovementSimulator(level, pathfinder));
+            engine.AddSimulator(interIslandMovementSimulator);
 
             engine.AddSimulator(new LevelRenderer(level));
             engine.AddSimulator(new WorldRenderingSimulator());

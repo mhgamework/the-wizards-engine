@@ -77,12 +77,14 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Constructions
                     return distribution.FindNearestIsland(trav.Island, isDestroyableCliff);
                 });
 
+            trav.Type = new TravellerType() { IsEnemy = true, Name = "ENEMEMEME" };
+
             trav.OnReachIsland = i =>
                     {
                         if (!isCamp(i)) return;
 
                         if (i.Inventory[level.UnitTier1Type] == 0) return;
-                        i.Inventory.DestroyItems(level.UnitTier1Type,1);
+                        i.Inventory.DestroyItems(level.UnitTier1Type, 1);
 
                         trav.Destroy();
                     };

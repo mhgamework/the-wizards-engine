@@ -57,6 +57,8 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
 
                     return start; // go home!
                 });
+
+            cart.Type = level.DeliveryCartType;
             return cart;
         }
 

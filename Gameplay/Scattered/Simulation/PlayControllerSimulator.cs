@@ -10,6 +10,7 @@ using MHGameWork.TheWizards.SkyMerchant._Engine;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using System.Linq;
 using SlimDX;
+using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.Scattered.Simulation
 {
@@ -20,14 +21,17 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
     {
         private Level level;
         private RoundState roundState;
+        private readonly InterIslandMovementSimulator movementSimulator;
         private HotbarController hotbarController;
         private float buildPhaseStart;
         private Textarea debugText;
+        private int buildModeDuration = 15;
 
-        public PlayControllerSimulator(Level level, EditorConfiguration configuration, RoundState roundState)
+        public PlayControllerSimulator(Level level, EditorConfiguration configuration, RoundState roundState, InterIslandMovementSimulator movementSimulator)
         {
             this.level = level;
             this.roundState = roundState;
+            this.movementSimulator = movementSimulator;
 
 
             var bar = new Hotbar();
@@ -36,8 +40,13 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
 
             bar.SetHotbarItem(0, new ControllerStateItem("Bridge", new BridgeBuilderState(level, configuration)));
             bar.SetHotbarItem(1, new ControllerStateItem("Warehouse", new ConstructionPlacerState(level, configuration, level.createWarehouseConstruction)));
+            bar.SetHotbarItem(2, new ControllerStateItem("Crystal Cliffs", new ConstructionPlacerState(level, configuration, level.createCrysalCliffsConstruction)));
+            bar.SetHotbarItem(3, new ControllerStateItem("Camp", new ConstructionPlacerState(level, configuration, level.createCampConstruction)));
+            bar.SetHotbarItem(4, new ControllerStateItem("Workshop", new ConstructionPlacerState(level, configuration, level.createWorkshop)));
+            bar.SetHotbarItem(5, new ControllerStateItem("Scrap station", new ConstructionPlacerState(level, configuration, level.createScrapStationConstruction)));
+            bar.SetHotbarItem(6, new ControllerStateItem("Demolish!", new ConstructionPlacerState(level, configuration, level.createEmptyConstruction)));
 
-
+            buildPhaseStart = TW.Graphics.TotalRunTime;
             createDebugtext();
         }
 
@@ -48,7 +57,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
         {
             debugText = new Textarea();
             debugText.Position = new Vector2(10, 10);
-            debugText.Size = new Vector2(200, 50);
+            debugText.Size = new Vector2(400, 50);
         }
         /// <summary>
         /// TODO: move to rendering layer?
@@ -59,18 +68,20 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
             if (roundState.CombatPhase)
                 debugText.Text += "Combat phase! " + level.Travellers.Count(t => t.Type.IsEnemy) + " enemies left";
             else
-                debugText.Text += "Build phase. Attack commences in " + Math.Floor(buildPhaseStart + 3 - TW.Graphics.TotalRunTime) + " seconds.";
+                debugText.Text += "Build phase. Attack commences in " + Math.Floor(buildPhaseStart + buildModeDuration - TW.Graphics.TotalRunTime) + " seconds.";
         }
 
 
-        public void Simulate()
+        public void Simulate()      
         {
             roundState.ExecuteDuringBuildPhase(() =>
                 {
-                    if (buildPhaseStart + 3 > TW.Graphics.TotalRunTime)
+                    if (buildPhaseStart + buildModeDuration < TW.Graphics.TotalRunTime)
                     {
                         hotbarController.Bar.GetHotbarItem(hotbarController.Bar.SelectedSlot).OnDeselected();
                         roundState.CombatPhase = true;
+
+                        buildPhaseStart = TW.Graphics.TotalRunTime;
                         return;
                     }
 
@@ -80,6 +91,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
 
             roundState.ExecuteDuringCombatPhase(() =>
                 {
+                    if (buildPhaseStart + 3 > TW.Graphics.TotalRunTime) return;
                     if (level.Travellers.Any(t => t.Type.IsEnemy)) return;
 
                     roundState.CombatPhase = false;
@@ -90,6 +102,8 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
 
             updateDebugText();
 
+            if (TW.Graphics.Keyboard.IsKeyDown(Key.N)) movementSimulator.MovementSpeed = 100;
+            else movementSimulator.MovementSpeed = 10;
         }
 
         public class ControllerStateItem : IHotbarItem

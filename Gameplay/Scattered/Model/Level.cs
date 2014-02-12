@@ -28,12 +28,18 @@ namespace MHGameWork.TheWizards.Scattered.Model
             AirCrystalType = new ItemType() { Name = "Air crystal" };
             AirEnergyType = new ItemType() { Name = "Air energy" };
             ScrapType = new ItemType() { Name = "Scrap" };
+
+            WorkshopCartType = new TravellerType() { IsEnemy = false, Name = "Workshop Cart" };
+            DeliveryCartType = new TravellerType() { IsEnemy = false, Name = "Delivery Cart" };
         }
 
         public ItemType UnitTier1Type { get; private set; }
         public ItemType AirCrystalType { get; private set; }
         public ItemType AirEnergyType { get; private set; }
         public ItemType ScrapType { get; private set; }
+
+        public TravellerType WorkshopCartType { get; private set; }
+        public TravellerType DeliveryCartType { get; private set; }
 
         public Island CreateNewIsland(Vector3 position)
         {

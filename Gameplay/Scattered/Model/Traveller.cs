@@ -16,6 +16,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
             DetermineDestinationAction = () => null;
             Inventory = new Inventory();
             OnReachIsland = a => { };
+            Type = new TravellerType() {Name = "Unknown"};
         }
         public BridgePosition BridgePosition { get; set; }
         public TravellerType Type { get; set; }
