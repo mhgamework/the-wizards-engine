@@ -43,7 +43,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public BoundingBox GetBoundingBox()
         {
-            var range = new Vector3(10.1f, 0.01f, 10.1f);
+            var range = new Vector3(5.1f, 0.01f, 5.1f);
             return new BoundingBox(Position - range, Position + range);
         }
     }

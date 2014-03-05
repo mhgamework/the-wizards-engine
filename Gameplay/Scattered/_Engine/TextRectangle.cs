@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.Scattered._Engine
     /// TODO: remove TW dependencies
     /// TODO: add uniform scene management interfaces here (eg ISceneObject containing visible, delete, transform etc)
     /// </summary>
-    public class TextRectangle
+    public class TextRectangle : IDisposable
     {
         private string _text;
         public string Text
@@ -78,7 +78,11 @@ namespace MHGameWork.TheWizards.Scattered._Engine
         }
 
 
-
-
+        public void Dispose()
+        {
+            if (Entity != null)
+                TW.Data.Objects.Remove(Entity);
+            Entity = null;
+        }
     }
 }

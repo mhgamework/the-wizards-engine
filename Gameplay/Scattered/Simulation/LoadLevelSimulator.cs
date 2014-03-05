@@ -41,6 +41,9 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
         private void loadLevel()
         {
             var s = new LevelSerializer();
+
+            level.ClearAll();
+
             s.Deserialize(level, new FileInfo(TWDir.GameData.CreateSubdirectory("Scattered") + "\\Level.txt"));
         }
 
