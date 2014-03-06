@@ -221,6 +221,8 @@
     <Compile Include="Scattered\Simulation\Constructions\WorkshopAction.cs" />
     <Compile Include="Scattered\Simulation\Constructions\EnergyNodeAction.cs" />
     <Compile Include="Scattered\Simulation\LevelSerializer.cs" />
+    <Compile Include="Scattered\Simulation\Playmode\ClusterFlightController.cs" />
+    <Compile Include="Scattered\Simulation\Playmode\ClusterPhysicsSimulator.cs" />
     <Compile Include="Scattered\Simulation\Playmode\PlayControllerSimulator.cs" />
     <Compile Include="Scattered\Simulation\RoundState.cs" />
     <Compile Include="Scattered\Simulation\DistributionHelper.cs" />
@@ -236,6 +238,7 @@
     <Compile Include="Scattered\Simulation\Sandbox\SandboxControllerSimulator.cs" />
     <Compile Include="Scattered\_Engine\RendererScene.cs" />
     <Compile Include="Scattered\_Engine\TextRectangle.cs" />
+    <Compile Include="Scattered\_Tests\FlightTest.cs" />
     <Compile Include="Scattered\_Tests\PlayTest.cs" />
     <Compile Include="Scattered\_Tests\SandboxTest.cs" />
     <Compile Include="Scattered\_Tests\TestTextRectangle.cs" />

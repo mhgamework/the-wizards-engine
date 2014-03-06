@@ -38,6 +38,8 @@ namespace MHGameWork.TheWizards.Scattered.Rendering
 
             obj.ConnectedIslands.ForEach(i2 => TW.Graphics.LineManager3D.AddLine(obj.Position, i2.Position, new Color4(Color.SaddleBrown)));
 
+
+            TW.Graphics.LineManager3D.AddLine(obj.Position, obj.Position + obj.GetForward() * 10, new Color4(1, 0, 0));
         }
 
 

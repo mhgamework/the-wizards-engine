@@ -32,6 +32,7 @@ namespace MHGameWork.TheWizards.Scattered._Engine
         public Vector3 Position { get; set; }
         public float Radius { get; set; }
         public Vector3 Normal { get; set; }
+        public Matrix PreTransformation { get; set; }
 
         public bool IsBillboard { get; set; }
 
@@ -42,18 +43,14 @@ namespace MHGameWork.TheWizards.Scattered._Engine
 
         public TextRectangle()
         {
-
             Entity = new Entity();
-
             Text = "[The Wizards Engine - Text]";
-
+            PreTransformation = Matrix.Identity;
         }
 
 
         public void Update()
         {
-
-
             var up = Vector3.UnitY;
             if (Math.Abs(Vector3.Dot(up, Normal)) > 0.99) up = -Vector3.UnitZ;
 
@@ -63,10 +60,9 @@ namespace MHGameWork.TheWizards.Scattered._Engine
                 up = TW.Graphics.Camera.ViewInverse.xna().Up.dx();
             }
 
-
             var camDist = Vector3.Distance(Position, TW.Graphics.Camera.ViewInverse.xna().Translation.dx());
 
-            Entity.WorldMatrix =
+            Entity.WorldMatrix = PreTransformation *
                 Matrix.Scaling(Radius, Radius, Radius * camDist)
                 * Matrix.Invert(Matrix.LookAtRH(Position, Position + Normal, up));
         }

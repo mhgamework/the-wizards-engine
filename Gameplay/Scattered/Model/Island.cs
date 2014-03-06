@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Castle.Core.Internal;
 using MHGameWork.TheWizards.Scattered.Rendering;
 using SlimDX;
 
@@ -18,6 +19,13 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public Construction Construction { get; set; }
 
         public Vector3 Position { get; set; }
+        public Vector3 Velocity { get; set; }
+        public float RotationY { get; set; }
+
+        public Vector3 GetForward()
+        {
+            return Matrix.RotationY(RotationY).xna().Forward.dx();
+        }
 
         public void AddBridgeTo(Island isl2)
         {
@@ -45,6 +53,22 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             var range = new Vector3(5.1f, 0.01f, 5.1f);
             return new BoundingBox(Position - range, Position + range);
+        }
+
+
+        private void getIslandsInCluster(Island island, HashSet<Island> visited)
+        {
+            if (visited.Contains(island)) return;
+            visited.Add(island);
+
+            island.ConnectedIslands.ForEach(i => getIslandsInCluster(i, visited));
+
+        }
+        public HashSet<Island> GetIslandsInCluster()
+        {
+            var hashSet = new HashSet<Island>();
+            getIslandsInCluster(this, hashSet);
+            return hashSet;
         }
     }
 }
