@@ -19,16 +19,16 @@ namespace MHGameWork.TheWizards.Scattered.Rendering
             this.island = island;
             rect = new TextRectangle();
             if (entity == null) entity = new Entity();
-            entity.Mesh = UtilityMeshes.CreateBoxWithTexture(null, new Vector3(3));
+            entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Island_Medium");// UtilityMeshes.CreateBoxWithTexture(null, new Vector3(3));
         }
 
 
         public void UpdateRenderState()
         {
             rect.Text = island.Construction.Name + "\n" + island.Inventory.CreateItemsString();
-            rect.Position = island.Position + Vector3.UnitY * 4;
+            rect.Position = island.Position + Vector3.UnitY * 1;
             rect.Normal = Vector3.UnitY;
-            rect.Radius = 1;
+            rect.Radius = 0.7f;
             rect.IsBillboard = true;
             //rect.PreTransformation = Matrix.RotationY(island.RotationY);
             rect.Update();

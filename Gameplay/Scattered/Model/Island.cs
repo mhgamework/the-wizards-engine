@@ -18,6 +18,8 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public Level Level { get; private set; }
         public Construction Construction { get; set; }
 
+        public IslandType Type { get; set; }
+
         public Vector3 Position { get; set; }
         public Vector3 Velocity { get; set; }
         public float RotationY { get; set; }
@@ -69,6 +71,13 @@ namespace MHGameWork.TheWizards.Scattered.Model
             var hashSet = new HashSet<Island>();
             getIslandsInCluster(this, hashSet);
             return hashSet;
+        }
+
+        public enum IslandType
+        {
+            Normal,
+            Resource,
+            Tower
         }
     }
 }
