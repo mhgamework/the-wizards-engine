@@ -40,14 +40,14 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
 
             /*try
             {*/
-                restoreXmlLevel(level, xml);
+            restoreXmlLevel(level, xml);
             /*}
             catch (Exception ex)
             {
                 throw new InvalidOperationException(
                     "Can not deserialize the loaded level xml. Xml is valid but could not be converted into a runtime level.",ex);
             }*/
-            
+
 
         }
 
@@ -61,6 +61,9 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
                     var constructionMethod = level.GetType().GetMethod(xmlI.ConstructionConstructor);
                     i.Construction = (Construction)constructionMethod.Invoke(level, new[] { i });
                     xmlI.Island = i;
+
+                    i.Type = (Island.IslandType)Enum.Parse(typeof(Island.IslandType), xmlI.Type);
+
                     objects.Add(i);
                 });
 
@@ -81,7 +84,8 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
                     Island = island,
                     ID = nextID++,
                     Position = island.Position,
-                    ConstructionConstructor = island.Construction.LevelConstructorMethod
+                    ConstructionConstructor = island.Construction.LevelConstructorMethod,
+                    Type = island.Type.ToString()
                 }).ToArray();
 
             xmlLevel.Islands.ForEach(i =>
@@ -106,6 +110,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
             public Vector3 Position;
             public int[] ConnectedIslands;
             public String ConstructionConstructor;
+            public string Type;
 
         }
     }

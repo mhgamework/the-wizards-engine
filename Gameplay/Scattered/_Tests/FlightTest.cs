@@ -94,6 +94,8 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             engine.AddSimulator(new ClusterPhysicsSimulator(level));
 
             engine.AddSimulator(new ThirdPersonCameraSimulator());
+
+            engine.AddSimulator(new LoadLevelSimulator(level));
             engine.AddSimulator(new LevelRenderer(level));
             engine.AddSimulator(new WorldRenderingSimulator());
             return level;

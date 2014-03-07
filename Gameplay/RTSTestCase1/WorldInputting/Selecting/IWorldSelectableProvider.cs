@@ -9,6 +9,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting
     {
         IEnumerable<Selectable> GetSelectables();
         void SetTargeted(Selectable selectable);
+        object GetTargeted();
         void Select(Selectable selectable);
         void Render();
     }

@@ -110,5 +110,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting
         {
             providers.Clear();
         }
+
+        public object GetTargeted()
+        {
+            if (lastSelectable == null) return null;
+            return lastSelectable.Object;
+        }
     }
 }

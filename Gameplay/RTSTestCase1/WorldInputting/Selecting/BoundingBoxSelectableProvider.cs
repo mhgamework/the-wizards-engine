@@ -39,6 +39,11 @@ namespace MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting
             targeted = selectable.Object;
         }
 
+        public object GetTargeted()
+        {
+            return targeted;
+        }
+
         public void Select(Selectable selectable)
         {
             //TODO: not sure this is correct, it should be selecting? instead of clicking

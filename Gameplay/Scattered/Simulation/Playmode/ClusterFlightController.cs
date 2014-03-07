@@ -29,6 +29,8 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Playmode
             if (keyboard.IsKeyDown(Key.A)) turnCluster(island, turnSpeed * TW.Graphics.Elapsed);
             if (keyboard.IsKeyDown(Key.D)) turnCluster(island, -turnSpeed * TW.Graphics.Elapsed);
 
+
+            if (island.Velocity.Length() < 0.1f && ! keyboard.IsKeyDown(Key.W) && !keyboard.IsKeyDown(Key.S)) island.Velocity = new Vector3();
             // Add up and down?
 
             island.GetIslandsInCluster().ForEach(c => c.Velocity = island.Velocity);

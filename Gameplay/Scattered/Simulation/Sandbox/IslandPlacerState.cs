@@ -1,3 +1,4 @@
+using System;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Placing;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -9,11 +10,18 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
     {
         private readonly Level level;
         private readonly EditorConfiguration config;
+        private readonly Action<Island> afterCreate;
 
         public IslandPlacerState(Level level, EditorConfiguration config)
+            : this(level, config, _ => { })
+        {
+
+        }
+        public IslandPlacerState(Level level, EditorConfiguration config, Action<Island> afterCreate)
         {
             this.level = level;
             this.config = config;
+            this.afterCreate = afterCreate;
         }
 
         public void Init()
@@ -23,7 +31,12 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
                 o => ((Island)o).Position,
                 (o, newPos) => ((Island)o).Position = newPos,
                 o => ((Island)o).GetBoundingBox(),
-                () => level.CreateNewIsland(new Vector3(0, 0, 0)),
+                () =>
+                    {
+                        var isl = level.CreateNewIsland(new Vector3(0, 0, 0));
+                        afterCreate(isl);
+                        return isl;
+                    },
                 o => level.RemoveIsland((Island)o)
                 );
         }

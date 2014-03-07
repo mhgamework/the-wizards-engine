@@ -29,17 +29,19 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox
             this.roundState = roundState;
             this.movementSimulator = movementSimulator;
             keyMap.Add(Key.D1, new IslandPlacerState(level, configuration));
+            keyMap.Add(Key.D2, new IslandPlacerState(level, configuration, i=> i.Type = Island.IslandType.Resource));
+            keyMap.Add(Key.D3, new IslandPlacerState(level, configuration, i => i.Type = Island.IslandType.Tower));
 
-            keyMap.Add(Key.D2, new ConstructionPlacerState(level, configuration, level.createEmptyConstruction));
-            keyMap.Add(Key.D3, new ConstructionPlacerState(level, configuration, level.createCrysalCliffsConstruction));
-            keyMap.Add(Key.D4, new ConstructionPlacerState(level, configuration, level.createWarehouseConstruction));
+            //keyMap.Add(Key.D2, new ConstructionPlacerState(level, configuration, level.createEmptyConstruction));
+            //keyMap.Add(Key.D3, new ConstructionPlacerState(level, configuration, level.createCrysalCliffsConstruction));
+            //keyMap.Add(Key.D4, new ConstructionPlacerState(level, configuration, level.createWarehouseConstruction));
 
             keyMap.Add(Key.D5, new BridgeBuilderState(level, configuration));
 
-            keyMap.Add(Key.D6, new ConstructionPlacerState(level, configuration, level.createScrapStationConstruction));
-            keyMap.Add(Key.D7, new ConstructionPlacerState(level, configuration, level.createEnergyNodeConstruction));
-            keyMap.Add(Key.D8, new ConstructionPlacerState(level, configuration, level.createCampConstruction));
-            keyMap.Add(Key.D9, new ConstructionPlacerState(level, configuration, level.createWorkshop));
+            //keyMap.Add(Key.D6, new ConstructionPlacerState(level, configuration, level.createScrapStationConstruction));
+            //keyMap.Add(Key.D7, new ConstructionPlacerState(level, configuration, level.createEnergyNodeConstruction));
+            //keyMap.Add(Key.D8, new ConstructionPlacerState(level, configuration, level.createCampConstruction));
+            //keyMap.Add(Key.D9, new ConstructionPlacerState(level, configuration, level.createWorkshop));
 
 
          

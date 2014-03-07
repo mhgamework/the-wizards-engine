@@ -9,7 +9,9 @@ using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.Rendering;
 using MHGameWork.TheWizards.Scattered.Simulation;
 using MHGameWork.TheWizards.Scattered.Simulation.Constructions;
+using MHGameWork.TheWizards.Scattered.Simulation.Playmode;
 using MHGameWork.TheWizards.Scattered.Simulation.Sandbox;
+using MHGameWork.TheWizards.Simulators;
 using NUnit.Framework;
 using SlimDX;
 
@@ -49,7 +51,9 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             engine.AddSimulator(new ConstructionSimulator(level));
             engine.AddSimulator(interIslandMovementSimulator);
+            engine.AddSimulator(new ClusterPhysicsSimulator(level));
 
+            engine.AddSimulator(new ThirdPersonCameraSimulator());
             engine.AddSimulator(new LevelRenderer(level));
             engine.AddSimulator(new WorldRenderingSimulator());
         }

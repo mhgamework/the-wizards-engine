@@ -2,8 +2,10 @@
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting;
+using MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.Simulation.Constructions;
+using MHGameWork.TheWizards.Scattered.Simulation.Playmode;
 using MHGameWork.TheWizards.Scattered.Simulation.Sandbox;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.HotbarCore;
 using MHGameWork.TheWizards.SkyMerchant._Engine;
@@ -11,6 +13,7 @@ using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using System.Linq;
 using SlimDX;
 using SlimDX.DirectInput;
+using MHGameWork.TheWizards.Scattered._Engine;
 
 namespace MHGameWork.TheWizards.Scattered.Simulation
 {
@@ -48,6 +51,8 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
 
             buildPhaseStart = TW.Graphics.TotalRunTime;
             createDebugtext();
+
+            initIslandSelector();
         }
 
         /// <summary>
@@ -72,38 +77,120 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
         }
 
 
-        public void Simulate()      
+        public void Simulate()
         {
-            roundState.ExecuteDuringBuildPhase(() =>
-                {
-                    if (buildPhaseStart + buildModeDuration < TW.Graphics.TotalRunTime)
-                    {
-                        hotbarController.Bar.GetHotbarItem(hotbarController.Bar.SelectedSlot).OnDeselected();
-                        roundState.CombatPhase = true;
+            simulateHotbar();
 
-                        buildPhaseStart = TW.Graphics.TotalRunTime;
-                        return;
-                    }
+            simulateFlyButton();
+            updateCamera();
+            simulateClusterFlight();
 
-                    hotbarController.Update();
-                    hotbarController.UpdateSelectedItem();
-                });
+            //roundState.ExecuteDuringBuildPhase(() =>
+            //    {
+            //        if (buildPhaseStart + buildModeDuration < TW.Graphics.TotalRunTime)
+            //        {
+            //            hotbarController.Bar.GetHotbarItem(hotbarController.Bar.SelectedSlot).OnDeselected();
+            //            roundState.CombatPhase = true;
 
-            roundState.ExecuteDuringCombatPhase(() =>
-                {
-                    if (buildPhaseStart + 3 > TW.Graphics.TotalRunTime) return;
-                    if (level.Travellers.Any(t => t.Type.IsEnemy)) return;
+            //            buildPhaseStart = TW.Graphics.TotalRunTime;
+            //            return;
+            //        }
 
-                    roundState.CombatPhase = false;
-                    buildPhaseStart = TW.Graphics.TotalRunTime;
+            //        hotbarController.Update();
+            //        hotbarController.UpdateSelectedItem();
+            //    });
 
-                    hotbarController.Bar.GetHotbarItem(hotbarController.Bar.SelectedSlot).OnSelected();
-                });
+            //roundState.ExecuteDuringCombatPhase(() =>
+            //    {
+            //        if (buildPhaseStart + 3 > TW.Graphics.TotalRunTime) return;
+            //        if (level.Travellers.Any(t => t.Type.IsEnemy)) return;
 
-            updateDebugText();
+            //        roundState.CombatPhase = false;
+            //        buildPhaseStart = TW.Graphics.TotalRunTime;
 
-            if (TW.Graphics.Keyboard.IsKeyDown(Key.N)) movementSimulator.MovementSpeed = 100;
-            else movementSimulator.MovementSpeed = 10;
+            //        hotbarController.Bar.GetHotbarItem(hotbarController.Bar.SelectedSlot).OnSelected();
+            //    });
+
+            //updateDebugText();
+
+            //if (TW.Graphics.Keyboard.IsKeyDown(Key.N)) movementSimulator.MovementSpeed = 100;
+            //else movementSimulator.MovementSpeed = 10;
+        }
+
+
+
+
+        private Island flyIsland = null;
+
+        private CameraInfo camInfo = TW.Data.Get<CameraInfo>();
+        private Entity camEntity = new Entity();
+
+        private WorldSelector selector = new WorldSelector();
+
+        private void initIslandSelector()
+        {
+            selector = new WorldSelector();
+            selector.AddProvider(BoundingBoxSelectableProvider.Create(
+                level.Islands.Where(i => i.Type == Island.IslandType.Normal),
+                i => i.GetBoundingBox(),
+                _ => {}
+                ));
+        }
+
+        private void simulateFlyButton()
+        {
+            selector.UpdateTarget(camInfo.GetCenterScreenRay());
+            selector.RenderSelection();
+
+            if (!TW.Graphics.Keyboard.IsKeyPressed(Key.F)) return;
+
+            if (flyIsland != null)
+                flyIsland = null;
+            else
+            {
+                flyIsland = selector.GetTargeted() as Island;// level.Islands.Where(i => i.Type == Island.IslandType.Normal).Raycast(i => i.GetBoundingBox(), camInfo.GetCenterScreenRay());
+            }
+
+
+
+
+        }
+        private void updateCamera()
+        {
+            if (flyIsland == null)
+            {
+                camInfo.Mode = CameraInfo.CameraMode.Specator;
+                camInfo.ActiveCamera = TW.Graphics.SpectaterCamera;
+                TW.Graphics.SpectaterCamera.Enabled = true;
+            }
+            else
+            {
+                TW.Graphics.SpectaterCamera.Enabled = false;
+                camInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
+                camInfo.FirstPersonCameraTarget = camEntity;
+
+                camEntity.WorldMatrix =
+                      Matrix.Translation(
+                          flyIsland.GetIslandsInCluster().Aggregate(new Vector3(), (acc, el) => acc + el.Position) /
+                          flyIsland.GetIslandsInCluster().Count());
+            }
+
+
+        }
+
+        private ClusterFlightController clusterFlightController = new ClusterFlightController(TW.Graphics.Keyboard);
+
+        private void simulateClusterFlight()
+        {
+            if (flyIsland == null) return;
+            clusterFlightController.SimulateFlightStep(flyIsland);
+        }
+
+
+        private void simulateHotbar()
+        {
+            hotbarController.Update();
+            hotbarController.UpdateSelectedItem();
         }
 
         public class ControllerStateItem : IHotbarItem
