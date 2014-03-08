@@ -2,6 +2,7 @@
 using Castle.Core.Internal;
 using MHGameWork.TheWizards.Scattered.Rendering;
 using SlimDX;
+using DirectX11;
 
 namespace MHGameWork.TheWizards.Scattered.Model
 {
@@ -14,6 +15,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
             Construction = level.createEmptyConstruction(this);
             RenderData = new IslandRenderData(this);
             Inventory = new Inventory();
+            BridgeConnectors = new List<BridgeConnector>();
         }
         public Level Level { get; private set; }
         public Construction Construction { get; set; }
@@ -27,6 +29,11 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public Vector3 GetForward()
         {
             return Matrix.RotationY(RotationY).xna().Forward.dx();
+        }
+
+        public Matrix GetWorldMatrix()
+        {
+            return Matrix.RotationY(RotationY)*Matrix.Translation(Position);
         }
 
         public void AddBridgeTo(Island isl2)
@@ -79,5 +86,40 @@ namespace MHGameWork.TheWizards.Scattered.Model
             Resource,
             Tower
         }
+
+
+
+        public List<BridgeConnector> BridgeConnectors { get; set; }
+
+        public class BridgeConnector
+        {
+            private readonly Island island;
+
+            public BridgeConnector(Island island)
+            {
+                this.island = island;
+            }
+
+            public Island Island
+            {
+                get { return island; }
+            }
+
+            public Vector3 RelativePosition;
+            public Vector3 Direction;
+            public BridgeConnector Connection;
+
+            public Vector3 GetAbsolutePosition()
+            {
+                return (Matrix.Translation(RelativePosition)*island.GetWorldMatrix()).GetTranslation();
+            }
+
+            public Vector3 GetAbsoluteDirection()
+            {
+                return Vector3.TransformNormal(Direction, Matrix.RotationY(island.RotationY));
+            }
+        }
     }
+
+  
 }

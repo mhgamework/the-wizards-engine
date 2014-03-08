@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DirectX11;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
@@ -18,6 +19,9 @@ namespace MHGameWork.TheWizards.Scattered.Rendering
 
         //TODO share this
         private Dictionary<Island.IslandType, IMesh> meshes = new Dictionary<Island.IslandType, IMesh>();
+
+        private Dictionary<Island.BridgeConnector, Entity> bridges = new Dictionary<Island.BridgeConnector, Entity>();
+
 
         public IslandRenderData(Island island)
         {
@@ -44,8 +48,27 @@ namespace MHGameWork.TheWizards.Scattered.Rendering
             rect.Update();
 
             entity.Mesh = meshes[island.Type];
-            entity.WorldMatrix = Matrix.RotationY(island.RotationY)*Matrix.Translation(island.Position);
+            entity.WorldMatrix = Matrix.RotationY(island.RotationY) * Matrix.Translation(island.Position);
 
+            island.BridgeConnectors.ForEach(updateBridge);
+
+
+        }
+
+        private void updateBridge(Island.BridgeConnector bridgeConnector)
+        {
+            if (!bridges.ContainsKey(bridgeConnector))
+            {
+                var e = new Entity();
+                e.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\BridgeConnector");
+                bridges[bridgeConnector] = e;
+            }
+            var ent = bridges[bridgeConnector];
+
+            ent.WorldMatrix = Matrix.RotationY(MathHelper.PiOver2 * 2) *
+                Matrix.Invert(Matrix.LookAtRH(bridgeConnector.RelativePosition,
+                                              bridgeConnector.RelativePosition + bridgeConnector.Direction,
+                                              Vector3.UnitY)) * island.GetWorldMatrix();
         }
 
         public void Dispose()

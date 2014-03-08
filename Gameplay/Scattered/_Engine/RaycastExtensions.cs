@@ -6,6 +6,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.Scattered._Engine
 {
+    /// <summary>
+    /// Warning: this is a good idea, but is untested and i think this does not work.
+    /// </summary>
     public static class RaycastExtensions
     {
         public static T Raycast<T>(this IEnumerable<T> e, Func<T, BoundingBox> getBoundingbox, Ray ray) where T : class

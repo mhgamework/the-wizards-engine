@@ -1,4 +1,5 @@
 ﻿using System;
+using DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
@@ -67,11 +68,91 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             isl5.AddBridgeTo(isl4);
         }
 
+        [Test]
+        public void TestBridgeConnecting()
+        {
+            var level = setupRendering();
+
+            var isl = level.CreateNewIsland(new Vector3(5, 3, 5));
+            cameraIsland = isl;
+
+            var isl2 = level.CreateNewIsland(new Vector3(15, 3, 5));
+
+
+            isl.BridgeConnectors.Add(new Island.BridgeConnector(isl)
+                {
+                    Direction = Vector3.UnitX,
+                    RelativePosition = new Vector3(3, 0, 0)
+                });
+
+            isl.BridgeConnectors.Add(new Island.BridgeConnector(isl)
+            {
+                Direction = Vector3.UnitZ,
+                RelativePosition = new Vector3(0, 0, 3)
+            });
+
+            isl2.BridgeConnectors.Add(new Island.BridgeConnector(isl2)
+            {
+                Direction = -Vector3.UnitX,
+                RelativePosition = new Vector3(-3, 0, 0)
+            });
+        }
+
+        [Test]
+        public void TestAutoConnector()
+        {
+            var level = createLevel();
+            var isl = level.CreateNewIsland(new Vector3(5, 3, 5));
+            cameraIsland = isl;
+
+            var isl2 = level.CreateNewIsland(new Vector3(15, 3, 5));
+
+            var a = new Island.BridgeConnector(isl)
+                {
+                    Direction = Vector3.UnitX,
+                    RelativePosition = new Vector3(3, 0, 0)
+                };
+
+            var c = new Island.BridgeConnector(isl)
+            {
+                Direction = Vector3.UnitZ,
+                RelativePosition = new Vector3(0, 0, 3)
+            };
+
+            var b = new Island.BridgeConnector(isl2)
+            {
+                Direction = -Vector3.UnitX,
+                RelativePosition = new Vector3(-3, 0, 0)
+            };
+
+
+            var flight = new ClusterFlightController(TW.Graphics.Keyboard);
+            Assert.False(flight.CanAutoDock(a, b));
+            Assert.False(flight.CanAutoDock(a, c));
+            Assert.False(flight.CanAutoDock(c, b));
+
+            isl.Position = new Vector3(9, 3, 5);
+
+            Assert.True(flight.CanAutoDock(a, b));
+            Assert.False(flight.CanAutoDock(a, c));
+            Assert.False(flight.CanAutoDock(c, b));
+
+            isl.RotationY = MathHelper.PiOver2;
+
+            Assert.False(flight.CanAutoDock(a, b));
+            Assert.False(flight.CanAutoDock(a, c));
+            Assert.True(flight.CanAutoDock(c, b));
+
+            isl.Position = new Vector3(12, 3, 8);
+
+            Assert.False(flight.CanAutoDock(a, b));
+            Assert.False(flight.CanAutoDock(a, c));
+            Assert.False(flight.CanAutoDock(c, b));
+        }
+
         private Level setupRendering()
         {
-            var constructionFactory = new ConstructionFactory(new Lazy<DistributionHelper>(() => null),
-                                                              new Lazy<RoundState>(() => null));
-            var level = new Level(constructionFactory);
+            var level = createLevel();
 
 
             var cam = TW.Data.Get<CameraInfo>();
@@ -88,16 +169,24 @@ namespace MHGameWork.TheWizards.Scattered._Tests
                     controller.SimulateFlightStep(cameraIsland);
                     camEntity.WorldMatrix =
                         Matrix.Translation(
-                            cameraIsland.GetIslandsInCluster().Aggregate(new Vector3(), (acc, el) => acc + el.Position)/
+                            cameraIsland.GetIslandsInCluster().Aggregate(new Vector3(), (acc, el) => acc + el.Position) /
                             cameraIsland.GetIslandsInCluster().Count());
                 }));
             engine.AddSimulator(new ClusterPhysicsSimulator(level));
 
             engine.AddSimulator(new ThirdPersonCameraSimulator());
 
-            engine.AddSimulator(new LoadLevelSimulator(level));
+            //engine.AddSimulator(new LoadLevelSimulator(level));
             engine.AddSimulator(new LevelRenderer(level));
             engine.AddSimulator(new WorldRenderingSimulator());
+            return level;
+        }
+
+        private static Level createLevel()
+        {
+            var constructionFactory = new ConstructionFactory(new Lazy<DistributionHelper>(() => null),
+                                                              new Lazy<RoundState>(() => null));
+            var level = new Level(constructionFactory);
             return level;
         }
     }
