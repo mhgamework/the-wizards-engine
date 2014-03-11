@@ -99,6 +99,53 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         }
 
         [Test]
+        public void TestMultipleConnector()
+        {
+            var level = setupRendering();
+
+            var isl = level.CreateNewIsland(new Vector3(5, 3, 5));
+            cameraIsland = isl;
+
+            var isl2 = level.CreateNewIsland(new Vector3(15, 3, 5));
+
+
+            isl.BridgeConnectors.Add(new Island.BridgeConnector(isl)
+            {
+                Direction = Vector3.UnitX,
+                RelativePosition = new Vector3(3, 0, 0)
+            });
+
+            isl.BridgeConnectors.Add(new Island.BridgeConnector(isl)
+            {
+                Direction = Vector3.UnitZ,
+                RelativePosition = new Vector3(0, 0, 3)
+            });
+
+            isl2.BridgeConnectors.Add(new Island.BridgeConnector(isl2)
+            {
+                Direction = -Vector3.UnitX,
+                RelativePosition = new Vector3(-3, 0, 0)
+            });
+
+            isl = level.CreateNewIsland(new Vector3(5, 3, 20));
+
+
+            isl.BridgeConnectors.Add(new Island.BridgeConnector(isl)
+            {
+                Direction = Vector3.UnitX,
+                RelativePosition = new Vector3(3, 0, 0)
+            });
+
+            isl.BridgeConnectors.Add(new Island.BridgeConnector(isl)
+            {
+                Direction = Vector3.UnitZ,
+                RelativePosition = new Vector3(0, 0, 3)
+            });
+
+        }
+
+
+        [Test]
         public void TestAutoConnector()
         {
             var level = createLevel();
@@ -149,6 +196,9 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             Assert.False(flight.CanAutoDock(a, c));
             Assert.False(flight.CanAutoDock(c, b));
         }
+
+       
+
 
         private Level setupRendering()
         {
