@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Castle.Core.Internal;
+using MHGameWork.TheWizards.Scattered.Core;
 using MHGameWork.TheWizards.Scattered.Rendering;
+using MHGameWork.TheWizards.Scattered.SceneGraphing;
+using MHGameWork.TheWizards.Scattered._Tests;
 using SlimDX;
 using DirectX11;
 
@@ -12,13 +16,11 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public Island(Level level)
         {
             Level = level;
-            Construction = level.createEmptyConstruction(this);
             RenderData = new IslandRenderData(this);
             Inventory = new Inventory();
             BridgeConnectors = new List<BridgeConnector>();
         }
         public Level Level { get; private set; }
-        public Construction Construction { get; set; }
 
         public IslandType Type { get; set; }
 
@@ -55,7 +57,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public override string ToString()
         {
-            return "Island: " + Construction.Name;
+            return "Island: ";
         }
 
         public BoundingBox GetBoundingBox()
@@ -91,6 +93,8 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public List<BridgeConnector> BridgeConnectors { get; set; }
 
+        public SceneGraphNode Node { get; private set; }
+
         public class BridgeConnector
         {
             private readonly Island island;
@@ -118,6 +122,11 @@ namespace MHGameWork.TheWizards.Scattered.Model
             {
                 return Vector3.TransformNormal(Direction, Matrix.RotationY(island.RotationY));
             }
+        }
+
+        public void AddAddon(IIslandAddon addon)
+        {
+            throw new InvalidOperationException();
         }
     }
 

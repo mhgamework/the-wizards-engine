@@ -35,7 +35,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         [SetUp]
         public void Setup()
         {
-            level = new Level(null);
+            level = new Level();
             airCrystalType = new ItemType() { Name = "Air Crystal" };
 
         }
@@ -62,20 +62,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             CollectionAssert.Contains(isl2.ConnectedIslands, isl3);
         }
 
-        [Test]
-        public void TestIslandUpdateConstructions()
-        {
-            createSomeIslands();
-            createBridges();
-
-            createIslandConstructions();
-
-            engine.AddSimulator(new ConstructionSimulator(level));
-
-            isl1.Construction.UpdateAction = new CliffsConstructionAction(isl1, airCrystalType);
-
-            visualizeLevel();
-        }
+      
 
         [Test]
         public void TestRenderTravellers()
@@ -194,10 +181,8 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
         private void createIslandConstructions()
         {
-            isl1.Construction.Name = "Crystal cliffs";
             isl1.Inventory.AddNewItems(airCrystalType, 1);
 
-            isl2.Construction.Name = "Warehouse";
             isl2.Inventory.AddNewItems(new ItemType() { Name = "Scrap" }, 12);
             //isl2.Inventory.AddNewItems(new ItemType() { Name = "Iron ore" }, 3);
         }

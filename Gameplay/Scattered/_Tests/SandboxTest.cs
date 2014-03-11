@@ -8,7 +8,6 @@ using MHGameWork.TheWizards.RTSTestCase1.WorldInputting;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.Rendering;
 using MHGameWork.TheWizards.Scattered.Simulation;
-using MHGameWork.TheWizards.Scattered.Simulation.Constructions;
 using MHGameWork.TheWizards.Scattered.Simulation.Sandbox;
 using NUnit.Framework;
 using SlimDX;
@@ -32,11 +31,10 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             var pathfinder = createPathfinder();
 
-            var constructionFactory = new ConstructionFactory(new Lazy<DistributionHelper>(() => distributionHelper), new Lazy<RoundState>(() => roundState));
 
 
 
-            var level = new Level(constructionFactory);
+            var level = new Level();
 
             distributionHelper = new DistributionHelper(level, pathfinder);
             roundState = new RoundState();
@@ -53,7 +51,6 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             engine.AddSimulator(new SandboxControllerSimulator(level, config, roundState, interIslandMovementSimulator));
             engine.AddSimulator(new WorldInputtingSimulator(config));
 
-            engine.AddSimulator(new ConstructionSimulator(level));
             engine.AddSimulator(interIslandMovementSimulator);
 
             engine.AddSimulator(new LevelRenderer(level));

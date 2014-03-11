@@ -9,7 +9,6 @@ using MHGameWork.TheWizards.RTSTestCase1.WorldInputting;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.Rendering;
 using MHGameWork.TheWizards.Scattered.Simulation;
-using MHGameWork.TheWizards.Scattered.Simulation.Constructions;
 using MHGameWork.TheWizards.Scattered.Simulation.Playmode;
 using MHGameWork.TheWizards.Scattered.Simulation.Sandbox;
 using MHGameWork.TheWizards.Simulators;
@@ -234,9 +233,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
         private static Level createLevel()
         {
-            var constructionFactory = new ConstructionFactory(new Lazy<DistributionHelper>(() => null),
-                                                              new Lazy<RoundState>(() => null));
-            var level = new Level(constructionFactory);
+            var level = new Level();
             return level;
         }
     }

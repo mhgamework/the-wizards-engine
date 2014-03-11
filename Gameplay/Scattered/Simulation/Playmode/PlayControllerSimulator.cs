@@ -4,7 +4,6 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting;
 using MHGameWork.TheWizards.Scattered.Model;
-using MHGameWork.TheWizards.Scattered.Simulation.Constructions;
 using MHGameWork.TheWizards.Scattered.Simulation.Playmode;
 using MHGameWork.TheWizards.Scattered.Simulation.Sandbox;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.HotbarCore;
@@ -42,12 +41,6 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
             hotbarController = new HotbarController(bar, view);
 
             bar.SetHotbarItem(0, new ControllerStateItem("Bridge", new BridgeBuilderState(level, configuration)));
-            bar.SetHotbarItem(1, new ControllerStateItem("Warehouse", new ConstructionPlacerState(level, configuration, level.createWarehouseConstruction)));
-            bar.SetHotbarItem(2, new ControllerStateItem("Crystal Cliffs", new ConstructionPlacerState(level, configuration, level.createCrysalCliffsConstruction)));
-            bar.SetHotbarItem(3, new ControllerStateItem("Camp", new ConstructionPlacerState(level, configuration, level.createCampConstruction)));
-            bar.SetHotbarItem(4, new ControllerStateItem("Workshop", new ConstructionPlacerState(level, configuration, level.createWorkshop)));
-            bar.SetHotbarItem(5, new ControllerStateItem("Scrap station", new ConstructionPlacerState(level, configuration, level.createScrapStationConstruction)));
-            bar.SetHotbarItem(6, new ControllerStateItem("Demolish!", new ConstructionPlacerState(level, configuration, level.createEmptyConstruction)));
 
             buildPhaseStart = TW.Graphics.TotalRunTime;
             createDebugtext();

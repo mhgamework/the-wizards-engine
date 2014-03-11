@@ -39,7 +39,7 @@ namespace MHGameWork.TheWizards.Scattered.Rendering
 
         public void UpdateRenderState()
         {
-            rect.Text = island.Construction.Name + "\n" + island.Inventory.CreateItemsString();
+            rect.Text =  island.Inventory.CreateItemsString();
             rect.Position = island.Position + Vector3.UnitY * 1;
             rect.Normal = Vector3.UnitY;
             rect.Radius = 0.7f;

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using MHGameWork.TheWizards.Scattered.Simulation;
-using MHGameWork.TheWizards.Scattered.Simulation.Constructions;
 using SlimDX;
 using System.Linq;
 using Castle.Core.Internal;
@@ -16,13 +15,11 @@ namespace MHGameWork.TheWizards.Scattered.Model
     /// </summary>
     public class Level
     {
-        private readonly ConstructionFactory cFactory;
         private List<Island> islands = new List<Island>();
         private List<Traveller> travellers = new List<Traveller>();
 
-        public Level(ConstructionFactory cFactory)
+        public Level()
         {
-            this.cFactory = cFactory;
             createItemTypes();
         }
 
@@ -98,88 +95,6 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         #endregion
 
-        #region Construction Types
-        // Note that this region is a leak, it uses simulation code. IoC should be used to allow simulation code to provide implementations for these methods.
-
-        public Construction createEmptyConstruction(Island arg)
-        {
-            return new Construction()
-                       {
-                           Name = "Empty",
-                           UpdateAction = cFactory.CreateConstructionAction<NullConstructionAction>(arg),
-                           LevelConstructorMethod = "createEmptyConstruction"
-                           // TODO: try get method name using code or use AOP or add ConstructionType
-                       };
-        }
-
-        public Construction createWarehouseConstruction(Island arg)
-        {
-            return new Construction()
-                       {
-                           Name = "Warehouse",
-                           UpdateAction = new NullConstructionAction(),
-                           LevelConstructorMethod = "createWarehouseConstruction"
-                           // TODO: try get method name using code or use AOP
-                       };
-        }
-
-        public Construction createCrysalCliffsConstruction(Island arg)
-        {
-            return new Construction()
-                       {
-                           Name = "Crystal Cliffs",
-                           UpdateAction = cFactory.CreateConstructionAction<CrystalCliffsAction>(arg),
-                           LevelConstructorMethod = "createCrysalCliffsConstruction"
-                           // TODO: try get method name using code or use AOP
-                       };
-        }
-
-        public Construction createEnergyNodeConstruction(Island arg)
-        {
-            return new Construction()
-                       {
-                           Name = "Energy Node",
-                           UpdateAction = cFactory.CreateConstructionAction<EnergyNodeAction>(arg),
-                           LevelConstructorMethod = "createEnergyNodeConstruction"
-                           // TODO: try get method name using code or use AOP
-                       };
-        }
-
-        public Construction createScrapStationConstruction(Island arg)
-        {
-            return new Construction()
-                       {
-                           Name = "Scrap Station",
-                           UpdateAction = cFactory.CreateConstructionAction<ScrapStationAction>(arg),
-                           LevelConstructorMethod = "createScrapStationConstruction"
-                           // TODO: try get method name using code or use AOP
-                       };
-        }
-
-        public Construction createCampConstruction(Island arg)
-        {
-            return new Construction()
-                       {
-                           Name = "Camp",
-                           UpdateAction = cFactory.CreateConstructionAction<NullConstructionAction>(arg),
-                           LevelConstructorMethod = "createCampConstruction"
-                           // TODO: try get method name using code or use AOP
-                       };
-        }
-
-        public Construction createWorkshop(Island arg)
-        {
-            return new Construction()
-                       {
-                           Name = "Workshop",
-                           UpdateAction = cFactory.CreateConstructionAction<WorkshopAction>(arg),
-                           LevelConstructorMethod = "createWorkshop" // TODO: try get method name using code or use AOP
-                       };
-        }
-
-        #endregion
-
-
-
+      
     }
 }

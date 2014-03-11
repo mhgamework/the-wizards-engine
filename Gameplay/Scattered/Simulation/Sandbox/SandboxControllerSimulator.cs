@@ -6,7 +6,6 @@ using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting;
 using MHGameWork.TheWizards.Scattered.Model;
-using MHGameWork.TheWizards.Scattered.Simulation.Constructions;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.Scattered.Simulation.Sandbox

@@ -58,8 +58,8 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
             xmlLevel.Islands.ForEach(xmlI =>
                 {
                     var i = level.CreateNewIsland(xmlI.Position);
-                    var constructionMethod = level.GetType().GetMethod(xmlI.ConstructionConstructor);
-                    i.Construction = (Construction)constructionMethod.Invoke(level, new[] { i });
+                    //var constructionMethod = level.GetType().GetMethod(xmlI.ConstructionConstructor);
+                    //i.Construction = (Construction)constructionMethod.Invoke(level, new[] { i });
                     xmlI.Island = i;
 
                     i.Type = (Island.IslandType)Enum.Parse(typeof(Island.IslandType), xmlI.Type);
@@ -84,7 +84,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
                     Island = island,
                     ID = nextID++,
                     Position = island.Position,
-                    ConstructionConstructor = island.Construction.LevelConstructorMethod,
+                    //ConstructionConstructor = island.Construction.LevelConstructorMethod,
                     Type = island.Type.ToString()
                 }).ToArray();
 
