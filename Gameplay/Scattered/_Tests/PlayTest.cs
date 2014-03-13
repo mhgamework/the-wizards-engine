@@ -104,7 +104,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             addBridge(i);
             i.AddAddon(new Tower(level, i.Node.CreateChild()));
 
-            engine.AddSimulator(new EnemySpawningSimulator());
+            engine.AddSimulator(new EnemySpawningSimulator(level,1f));
             engine.AddSimulator(new PlayerMovementSimulator(player));
             engine.AddSimulator(new PlayerInteractionSimulator(level, player));
             engine.AddSimulator(new ClusterPhysicsSimulator(level));
