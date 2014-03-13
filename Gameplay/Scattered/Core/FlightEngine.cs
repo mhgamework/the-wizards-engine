@@ -32,6 +32,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private void onInteract()
         {
             // Toggle flight mode
+            Node.Relative *= Matrix.Translation(1, 0, 0);
         }
     }
 }

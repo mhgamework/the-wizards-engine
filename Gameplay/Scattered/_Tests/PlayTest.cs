@@ -106,7 +106,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             engine.AddSimulator(new EnemySpawningSimulator());
             engine.AddSimulator(new PlayerMovementSimulator(player));
-            engine.AddSimulator(new PlayerInteractionSimulator(player));
+            engine.AddSimulator(new PlayerInteractionSimulator(level, player));
             engine.AddSimulator(new PlayerCameraSimulator(player));
 
             engine.AddSimulator(new SceneGraphRenderingSimulator(() => level.EntityNodes));

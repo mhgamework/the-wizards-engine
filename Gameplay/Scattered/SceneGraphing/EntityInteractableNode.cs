@@ -11,11 +11,19 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
     public class EntityInteractableNode
     {
         private readonly Entity ent;
+        private readonly Action onInteract;
+
+        public Entity Entity
+        {
+            get { return ent; }
+        }
+
         public SceneGraphNode Node { get; private set; }
 
-        public EntityInteractableNode(Entity ent, SceneGraphNode node)
+        public EntityInteractableNode(Entity ent, SceneGraphNode node, Action onInteract)
         {
             this.ent = ent;
+            this.onInteract = onInteract;
             Node = node;
         }
 
@@ -30,6 +38,11 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
             if (Math.Abs(Node.Absolute.M44 - 1) > 0.001) throw new InvalidOperationException("Scaling matrix detected!");
 
             return newRay.xna().Intersects(TW.Assets.GetBoundingBox(ent.Mesh).xna());
+        }
+
+        public void Interact()
+        {
+            onInteract();
         }
     }
 }

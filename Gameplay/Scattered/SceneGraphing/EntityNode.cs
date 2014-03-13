@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
         /// <param name="onInteract"></param>
         public void CreateInteractable(Action onInteract)
         {
-            var ret = level.CreateEntityInteractable(Entity, Node.CreateChild());
+            var ret = level.CreateEntityInteractable(Entity, Node.CreateChild(),onInteract);
         }
     }
 }

@@ -115,9 +115,9 @@ namespace MHGameWork.TheWizards.Scattered.Model
             return ret;
         }
 
-        public EntityInteractableNode CreateEntityInteractable(Entity entity, SceneGraphNode createChild)
+        public EntityInteractableNode CreateEntityInteractable(Entity entity, SceneGraphNode createChild, Action onInteract)
         {
-            var ret = new EntityInteractableNode(entity, createChild);
+            var ret = new EntityInteractableNode(entity, createChild,onInteract);
             InteractableNodes.Add(ret);
             return ret;
         }
