@@ -15,6 +15,7 @@ using MHGameWork.TheWizards.Scattered.Simulation.Sandbox;
 using MHGameWork.TheWizards.Simulators;
 using NUnit.Framework;
 using SlimDX;
+using MHGameWork.TheWizards.Scattered._Engine;
 
 namespace MHGameWork.TheWizards.Scattered._Tests
 {
@@ -46,7 +47,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             var config = new EditorConfiguration();
 
             engine.AddSimulator(new LoadLevelSimulator(level));
-            engine.AddSimulator(new PlayControllerSimulator(level, config, roundState,interIslandMovementSimulator));
+            engine.AddSimulator(new PlayControllerSimulator(level, config, roundState, interIslandMovementSimulator));
             engine.AddSimulator(new WorldInputtingSimulator(config));
 
             engine.AddSimulator(interIslandMovementSimulator);
@@ -69,43 +70,48 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         [Test]
         public void TestCoreGame()
         {
-            Island i;
+
+
             var level = new Level();
-            var rootNode = new SceneGraphNode();
-            var player = new ScatteredPlayer(rootNode.CreateChild());
+            Action<Island> addBridge = il => il.AddAddon(new Bridge(level, il.Node.CreateChild()).Alter(b => b.Node.Relative = Matrix.Translation(0, 0, 8)));
+
+            Island i;
+
+            var player = new ScatteredPlayer(level, level.Node.CreateChild());
             player.Position = new Vector3(0, 3, 0);
 
             i = level.CreateNewIsland(new Vector3(0, 0, 0));
-            i.AddAddon(new Bridge(i.Node.CreateChild()));
-            i.AddAddon(new FlightEngine(i.Node.CreateChild()));
-            
+            addBridge(i);
+            i.AddAddon(new FlightEngine(level, i.Node.CreateChild()));
+
 
             i = level.CreateNewIsland(new Vector3(10, 0, 0));
-            i.AddAddon(new Bridge(i.Node.CreateChild()));
+            addBridge(i);
 
             i = level.CreateNewIsland(new Vector3(20, 0, 0));
-            i.AddAddon(new Bridge(i.Node.CreateChild()));
-            i.AddAddon(new Enemy(i.Node.CreateChild()));
+            addBridge(i);
+            i.AddAddon(new Enemy(level, i.Node.CreateChild()).Alter(e => e.Node.Relative = Matrix.Translation(Vector3.UnitY * 3)));
 
             i = level.CreateNewIsland(new Vector3(30, 0, 0));
-            i.AddAddon(new Bridge(i.Node.CreateChild()));
-            i.AddAddon(new Storage(i.Node.CreateChild()));
+            addBridge(i);
+            i.AddAddon(new Storage(level, i.Node.CreateChild()));
 
             i = level.CreateNewIsland(new Vector3(40, 0, 0));
-            i.AddAddon(new Bridge(i.Node.CreateChild()));
-            i.AddAddon(new Resource(i.Node.CreateChild()));
+            addBridge(i);
+            i.AddAddon(new Resource(level, i.Node.CreateChild()));
 
             i = level.CreateNewIsland(new Vector3(40, 0, 0));
-            i.AddAddon(new Bridge(i.Node.CreateChild()));
-            i.AddAddon(new Tower(i.Node.CreateChild()));
+            addBridge(i);
+            i.AddAddon(new Tower(level, i.Node.CreateChild()));
 
             engine.AddSimulator(new EnemySpawningSimulator());
             engine.AddSimulator(new PlayerMovementSimulator(player));
             engine.AddSimulator(new PlayerInteractionSimulator(player));
             engine.AddSimulator(new PlayerCameraSimulator(player));
-            
+
+            engine.AddSimulator(new SceneGraphRenderingSimulator(() => level.EntityNodes));
             engine.AddSimulator(new WorldRenderingSimulator());
-            
+
 
 
         }

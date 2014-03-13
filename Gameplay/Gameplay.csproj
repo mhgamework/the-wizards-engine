@@ -205,6 +205,8 @@
     <Compile Include="Navigation2D\WaypointVisualizer.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
     <Compile Include="Scattered\Model\Construction.cs" />
+    <Compile Include="Scattered\SceneGraphing\EntityInteractableNode.cs" />
+    <Compile Include="Scattered\SceneGraphing\EntityNode.cs" />
     <Compile Include="Scattered\Model\IConstructionAction.cs" />
     <Compile Include="Scattered\Model\Inventory.cs" />
     <Compile Include="Scattered\Model\Island.cs" />
@@ -217,6 +219,7 @@
     <Compile Include="Scattered\Model\Level.cs" />
     <Compile Include="Scattered\Rendering\LevelRenderer.cs" />
     <Compile Include="Scattered\SceneGraphing\SceneGraphNode.cs" />
+    <Compile Include="Scattered\SceneGraphing\SceneGraphRenderingSimulator.cs" />
     <Compile Include="Scattered\Simulation\LevelSerializer.cs" />
     <Compile Include="Scattered\Simulation\Playmode\ClusterFlightController.cs" />
     <Compile Include="Scattered\Simulation\Playmode\ClusterPhysicsSimulator.cs" />
@@ -230,6 +233,7 @@
     <Compile Include="Scattered\Simulation\Sandbox\ISandboxControllerState.cs" />
     <Compile Include="Scattered\Simulation\Sandbox\IslandPlacerState.cs" />
     <Compile Include="Scattered\Simulation\Sandbox\SandboxControllerSimulator.cs" />
+    <Compile Include="Scattered\_Engine\LinqExtensions.cs" />
     <Compile Include="Scattered\_Engine\RaycastExtensions.cs" />
     <Compile Include="Scattered\_Engine\RendererScene.cs" />
     <Compile Include="Scattered\_Engine\TextRectangle.cs" />

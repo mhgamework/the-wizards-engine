@@ -1,10 +1,11 @@
-﻿using MHGameWork.TheWizards.Scattered.SceneGraphing;
+﻿using MHGameWork.TheWizards.Scattered.Model;
+using MHGameWork.TheWizards.Scattered.SceneGraphing;
 
 namespace MHGameWork.TheWizards.Scattered.Core
 {
     public class Resource : IIslandAddon
     {
-        public Resource(SceneGraphNode node)
+        public Resource(Level level, SceneGraphNode node)
         {
             
         }

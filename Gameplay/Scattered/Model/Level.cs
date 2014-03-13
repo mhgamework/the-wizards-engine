@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered.Simulation;
 using SlimDX;
 using System.Linq;
@@ -18,14 +20,17 @@ namespace MHGameWork.TheWizards.Scattered.Model
         private List<Island> islands = new List<Island>();
         private List<Traveller> travellers = new List<Traveller>();
 
+        public SceneGraphNode Node { get; private set; }
+
         public Level()
         {
             createItemTypes();
+            Node = new SceneGraphNode();
         }
 
         public Island CreateNewIsland(Vector3 position)
         {
-            var ret = new Island(this) { Position = position };
+            var ret = new Island(this, Node.CreateChild()) { Position = position };
             islands.Add(ret);
             return ret;
         }
@@ -95,6 +100,26 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         #endregion
 
-      
+
+        public List<EntityNode> EntityNodes = new List<EntityNode>();
+        public List<EntityInteractableNode> InteractableNodes = new List<EntityInteractableNode>();
+        /// <summary>
+        /// TODO: fix for better DI
+        /// </summary>
+        /// <param name="sceneGraphNode"></param>
+        /// <returns></returns>
+        public EntityNode CreateEntityNode(SceneGraphNode node)
+        {
+            var ret = new EntityNode(this, node);
+            EntityNodes.Add(ret);
+            return ret;
+        }
+
+        public EntityInteractableNode CreateEntityInteractable(Entity entity, SceneGraphNode createChild)
+        {
+            var ret = new EntityInteractableNode(entity, createChild);
+            InteractableNodes.Add(ret);
+            return ret;
+        }
     }
 }

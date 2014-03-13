@@ -13,29 +13,35 @@ namespace MHGameWork.TheWizards.Scattered.Model
     public class Island
     {
         private List<Island> connectedIslands = new List<Island>();
-        public Island(Level level)
+        public Island(Level level, SceneGraphNode node)
         {
             Level = level;
             RenderData = new IslandRenderData(this);
             Inventory = new Inventory();
             BridgeConnectors = new List<BridgeConnector>();
+            Node = node;
+
+
+            var ent = level.CreateEntityNode(node.CreateChild());
+            ent.Node.Relative = Matrix.Scaling(2, 2, 2)*ent.Node.Relative;
+            ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Island_Large");
         }
         public Level Level { get; private set; }
 
         public IslandType Type { get; set; }
 
-        public Vector3 Position { get; set; }
+        public Vector3 Position { get { return Node.Absolute.GetTranslation(); } set { Node.Relative = Node.Relative * Matrix.Translation(value - Position); } }
         public Vector3 Velocity { get; set; }
-        public float RotationY { get; set; }
+        public float RotationY { get; set; } // TODO
 
         public Vector3 GetForward()
         {
-            return Matrix.RotationY(RotationY).xna().Forward.dx();
+            return Node.Absolute.xna().Forward.dx();// Matrix.RotationY(RotationY).xna().Forward.dx();
         }
 
         public Matrix GetWorldMatrix()
         {
-            return Matrix.RotationY(RotationY)*Matrix.Translation(Position);
+            return Node.Absolute; //Matrix.RotationY(RotationY) * Matrix.Translation(Position);
         }
 
         public void AddBridgeTo(Island isl2)
@@ -115,7 +121,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
             public Vector3 GetAbsolutePosition()
             {
-                return (Matrix.Translation(RelativePosition)*island.GetWorldMatrix()).GetTranslation();
+                return (Matrix.Translation(RelativePosition) * island.GetWorldMatrix()).GetTranslation();
             }
 
             public Vector3 GetAbsoluteDirection()
@@ -124,11 +130,13 @@ namespace MHGameWork.TheWizards.Scattered.Model
             }
         }
 
+
+        private List<IIslandAddon> addons = new List<IIslandAddon>();
+        public IEnumerable<IIslandAddon> Addons { get { return addons; } }
+
         public void AddAddon(IIslandAddon addon)
         {
-            throw new InvalidOperationException();
+            addons.Add(addon);
         }
     }
-
-  
 }
