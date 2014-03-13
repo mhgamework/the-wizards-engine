@@ -19,6 +19,11 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
     /// </summary>
     public class SceneGraphNode
     {
+        /// <summary>
+        /// This is the object that is the owner of this node.
+        /// </summary>
+        public object AssociatedObject { get; set; }
+
         public SceneGraphNode()
         {
             Relative = Matrix.Identity;

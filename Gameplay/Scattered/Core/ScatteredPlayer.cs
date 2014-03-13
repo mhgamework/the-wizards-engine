@@ -12,5 +12,10 @@ namespace MHGameWork.TheWizards.Scattered.Core
         }
 
         public Vector3 Position { get; set; }
+
+        /// <summary>
+        /// Contains the island the player is currently flying
+        /// </summary>
+        public Island FlyingIsland { get; set; }
     }
 }

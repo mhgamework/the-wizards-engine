@@ -34,8 +34,6 @@ namespace MHGameWork.TheWizards.Scattered.Rendering
 
         private void drawIsland(Island obj)
         {
-            obj.RenderData.UpdateRenderState();
-
             obj.ConnectedIslands.ForEach(i2 => TW.Graphics.LineManager3D.AddLine(obj.Position, i2.Position, new Color4(Color.SaddleBrown)));
 
 

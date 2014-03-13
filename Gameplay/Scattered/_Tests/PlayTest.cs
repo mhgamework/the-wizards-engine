@@ -77,7 +77,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             Island i;
 
-            var player = new ScatteredPlayer(level, level.Node.CreateChild());
+            var player = level.LocalPlayer;
             player.Position = new Vector3(0, 3, 0);
 
             i = level.CreateNewIsland(new Vector3(0, 0, 0));
@@ -107,6 +107,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             engine.AddSimulator(new EnemySpawningSimulator());
             engine.AddSimulator(new PlayerMovementSimulator(player));
             engine.AddSimulator(new PlayerInteractionSimulator(level, player));
+            engine.AddSimulator(new ClusterPhysicsSimulator(level));
             engine.AddSimulator(new PlayerCameraSimulator(player));
 
             engine.AddSimulator(new SceneGraphRenderingSimulator(() => level.EntityNodes));

@@ -8,5 +8,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         public Storage(Level level, SceneGraphNode node)
         {
         }
+
+        public SceneGraphNode Node { get; private set; }
     }
 }

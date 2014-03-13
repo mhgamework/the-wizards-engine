@@ -8,10 +8,12 @@ namespace MHGameWork.TheWizards.Scattered.Core
 {
     public class FlightEngine : IIslandAddon
     {
+        private readonly Level level;
         public SceneGraphNode Node { get; private set; }
 
         public FlightEngine(Level level, SceneGraphNode node)
         {
+            this.level = level;
             Node = node;
 
 
@@ -32,7 +34,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private void onInteract()
         {
             // Toggle flight mode
-            Node.Relative *= Matrix.Translation(1, 0, 0);
+            level.LocalPlayer.FlyingIsland = (Island)Node.Parent.AssociatedObject; // TODO: improve this?
         }
     }
 }

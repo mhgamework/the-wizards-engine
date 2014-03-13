@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MHGameWork.TheWizards.DirectX11.Input;
+using MHGameWork.TheWizards.Scattered.Core;
 using MHGameWork.TheWizards.Scattered.Model;
 using SlimDX;
 using SlimDX.DirectInput;
@@ -81,7 +82,9 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Playmode
             closestConnection.Mine.Island.AddBridgeTo(closestConnection.Remote.Island);
         }
 
-        public bool CanAutoDock(Island.BridgeConnector A, Island.BridgeConnector B)
+
+
+        public bool CanAutoDock(Bridge A, Bridge B)
         {
             return Vector3.Distance(A.GetAbsolutePosition(), B.GetAbsolutePosition()) < 0.1f
                    && (float)Math.Acos(Vector3.Dot(A.GetAbsoluteDirection(), -B.GetAbsoluteDirection())) < 0.8f;
@@ -90,12 +93,14 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Playmode
         private void turnCluster(Island island, float angle)
         {
             var all = island.GetIslandsInCluster();
-            all.ForEach(c => c.RotationY += angle);
             var mean = all.Aggregate(new Vector3(), (acc, el) => acc + el.Position) / all.Count();
 
-            var rotation = Matrix.Translation(-mean) * Matrix.RotationY(angle) * Matrix.Translation(mean);
+            var trans = Matrix.Translation(-mean) * Matrix.RotationY(angle) * Matrix.Translation(mean);
 
-            all.ForEach(c => c.Position = Vector3.TransformCoordinate(c.Position, rotation));
+            all.ForEach(c => c.Node.Absolute = c.Node.Absolute * trans);
+
+
+            //all.ForEach(c => c.Position = Vector3.TransformCoordinate(c.Position, rotation));
         }
 
         private void moveCluster(Island island, Vector3 offset)

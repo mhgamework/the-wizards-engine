@@ -75,7 +75,6 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
             simulateHotbar();
 
             simulateFlyButton();
-            updateCamera();
             simulateClusterFlight();
 
             //roundState.ExecuteDuringBuildPhase(() =>
@@ -148,28 +147,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation
 
 
         }
-        private void updateCamera()
-        {
-            if (flyIsland == null)
-            {
-                camInfo.Mode = CameraInfo.CameraMode.Specator;
-                camInfo.ActiveCamera = TW.Graphics.SpectaterCamera;
-                TW.Graphics.SpectaterCamera.Enabled = true;
-            }
-            else
-            {
-                TW.Graphics.SpectaterCamera.Enabled = false;
-                camInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
-                camInfo.FirstPersonCameraTarget = camEntity;
-
-                camEntity.WorldMatrix =
-                      Matrix.Translation(
-                          flyIsland.GetIslandsInCluster().Aggregate(new Vector3(), (acc, el) => acc + el.Position) /
-                          flyIsland.GetIslandsInCluster().Count());
-            }
-
-
-        }
+      
 
         private ClusterFlightController clusterFlightController = new ClusterFlightController(TW.Graphics.Keyboard);
 

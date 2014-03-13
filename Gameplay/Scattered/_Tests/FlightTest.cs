@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting;
+using MHGameWork.TheWizards.Scattered.Core;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.Rendering;
 using MHGameWork.TheWizards.Scattered.Simulation;
@@ -77,24 +78,11 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             var isl2 = level.CreateNewIsland(new Vector3(15, 3, 5));
 
+            addBridge(isl, Vector3.UnitX, new Vector3(3, 0, 0));
+            addBridge(isl, Vector3.UnitZ, new Vector3(0, 0, 3));
+            addBridge(isl2, -Vector3.UnitX, new Vector3(-3, 0, 0));
 
-            isl.BridgeConnectors.Add(new Island.BridgeConnector(isl)
-                {
-                    Direction = Vector3.UnitX,
-                    RelativePosition = new Vector3(3, 0, 0)
-                });
 
-            isl.BridgeConnectors.Add(new Island.BridgeConnector(isl)
-            {
-                Direction = Vector3.UnitZ,
-                RelativePosition = new Vector3(0, 0, 3)
-            });
-
-            isl2.BridgeConnectors.Add(new Island.BridgeConnector(isl2)
-            {
-                Direction = -Vector3.UnitX,
-                RelativePosition = new Vector3(-3, 0, 0)
-            });
         }
 
         [Test]
@@ -108,38 +96,15 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             var isl2 = level.CreateNewIsland(new Vector3(15, 3, 5));
 
 
-            isl.BridgeConnectors.Add(new Island.BridgeConnector(isl)
-            {
-                Direction = Vector3.UnitX,
-                RelativePosition = new Vector3(3, 0, 0)
-            });
-
-            isl.BridgeConnectors.Add(new Island.BridgeConnector(isl)
-            {
-                Direction = Vector3.UnitZ,
-                RelativePosition = new Vector3(0, 0, 3)
-            });
-
-            isl2.BridgeConnectors.Add(new Island.BridgeConnector(isl2)
-            {
-                Direction = -Vector3.UnitX,
-                RelativePosition = new Vector3(-3, 0, 0)
-            });
+            addBridge(isl, Vector3.UnitX, new Vector3(3, 0, 0));
+            addBridge(isl, Vector3.UnitZ, new Vector3(0, 0, 3));
+            addBridge(isl2, -Vector3.UnitX, new Vector3(-3, 0, 0));
 
             isl = level.CreateNewIsland(new Vector3(5, 3, 20));
 
 
-            isl.BridgeConnectors.Add(new Island.BridgeConnector(isl)
-            {
-                Direction = Vector3.UnitX,
-                RelativePosition = new Vector3(3, 0, 0)
-            });
-
-            isl.BridgeConnectors.Add(new Island.BridgeConnector(isl)
-            {
-                Direction = Vector3.UnitZ,
-                RelativePosition = new Vector3(0, 0, 3)
-            });
+            addBridge(isl, Vector3.UnitX, new Vector3(3, 0, 0));
+            addBridge(isl, Vector3.UnitZ, new Vector3(0, 0, 3));
 
         }
 
@@ -153,23 +118,9 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             var isl2 = level.CreateNewIsland(new Vector3(15, 3, 5));
 
-            var a = new Island.BridgeConnector(isl)
-                {
-                    Direction = Vector3.UnitX,
-                    RelativePosition = new Vector3(3, 0, 0)
-                };
-
-            var c = new Island.BridgeConnector(isl)
-            {
-                Direction = Vector3.UnitZ,
-                RelativePosition = new Vector3(0, 0, 3)
-            };
-
-            var b = new Island.BridgeConnector(isl2)
-            {
-                Direction = -Vector3.UnitX,
-                RelativePosition = new Vector3(-3, 0, 0)
-            };
+            var a = addBridge(isl, Vector3.UnitX, new Vector3(3, 0, 0));
+            var c = addBridge(isl, Vector3.UnitZ, new Vector3(0, 0, 3));
+            var b = addBridge(isl2, -Vector3.UnitX, new Vector3(-3, 0, 0));
 
 
             var flight = new ClusterFlightController(TW.Graphics.Keyboard);
@@ -183,7 +134,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             Assert.False(flight.CanAutoDock(a, c));
             Assert.False(flight.CanAutoDock(c, b));
 
-            isl.RotationY = MathHelper.PiOver2;
+            isl.Node.Relative *= Matrix.RotationY(MathHelper.PiOver2);
 
             Assert.False(flight.CanAutoDock(a, b));
             Assert.False(flight.CanAutoDock(a, c));
@@ -196,7 +147,13 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             Assert.False(flight.CanAutoDock(c, b));
         }
 
-       
+        private Bridge addBridge(Island isl, Vector3 dir, Vector3 pos)
+        {
+            var b = new Bridge(new Level(), isl.Node.CreateChild());
+            b.Node.Relative = Matrix.Invert(Matrix.LookAtRH(pos, pos + dir, Vector3.UnitY));
+            isl.AddAddon(b);
+            return b;
+        }
 
 
         private Level setupRendering()

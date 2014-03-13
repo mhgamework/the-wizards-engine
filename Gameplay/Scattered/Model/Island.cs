@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered._Tests;
 using SlimDX;
 using DirectX11;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.Scattered.Model
 {
@@ -16,14 +17,12 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public Island(Level level, SceneGraphNode node)
         {
             Level = level;
-            RenderData = new IslandRenderData(this);
             Inventory = new Inventory();
-            BridgeConnectors = new List<BridgeConnector>();
             Node = node;
 
 
             var ent = level.CreateEntityNode(node.CreateChild());
-            ent.Node.Relative = Matrix.Scaling(2, 2, 2)*ent.Node.Relative;
+            ent.Node.Relative = Matrix.Scaling(2, 2, 2) * ent.Node.Relative;
             ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Island_Large");
         }
         public Level Level { get; private set; }
@@ -32,7 +31,6 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public Vector3 Position { get { return Node.Absolute.GetTranslation(); } set { Node.Relative = Node.Relative * Matrix.Translation(value - Position); } }
         public Vector3 Velocity { get; set; }
-        public float RotationY { get; set; } // TODO
 
         public Vector3 GetForward()
         {
@@ -52,11 +50,6 @@ namespace MHGameWork.TheWizards.Scattered.Model
         }
 
         public IEnumerable<Island> ConnectedIslands { get { return connectedIslands; } }
-
-        /// <summary>
-        /// This is a layer leak. This should only be called from the Rendering layer and is here for simplicity of writing, since data is in aggregation with the Island anyways.
-        /// </summary>
-        public IslandRenderData RenderData { get; set; }
 
         public Inventory Inventory { get; private set; }
 
@@ -96,40 +89,10 @@ namespace MHGameWork.TheWizards.Scattered.Model
         }
 
 
-
-        public List<BridgeConnector> BridgeConnectors { get; set; }
-
         public SceneGraphNode Node { get; private set; }
 
-        public class BridgeConnector
-        {
-            private readonly Island island;
 
-            public BridgeConnector(Island island)
-            {
-                this.island = island;
-            }
-
-            public Island Island
-            {
-                get { return island; }
-            }
-
-            public Vector3 RelativePosition;
-            public Vector3 Direction;
-            public BridgeConnector Connection;
-
-            public Vector3 GetAbsolutePosition()
-            {
-                return (Matrix.Translation(RelativePosition) * island.GetWorldMatrix()).GetTranslation();
-            }
-
-            public Vector3 GetAbsoluteDirection()
-            {
-                return Vector3.TransformNormal(Direction, Matrix.RotationY(island.RotationY));
-            }
-        }
-
+        public IEnumerable<Bridge> BridgeConnectors { get { return addons.OfType<Bridge>(); } }
 
         private List<IIslandAddon> addons = new List<IIslandAddon>();
         public IEnumerable<IIslandAddon> Addons { get { return addons; } }

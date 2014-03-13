@@ -9,5 +9,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         {
             
         }
+
+        public SceneGraphNode Node { get; private set; }
     }
 }

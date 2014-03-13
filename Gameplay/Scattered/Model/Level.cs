@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Scattered.Core;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered.Simulation;
 using SlimDX;
@@ -26,12 +27,16 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             createItemTypes();
             Node = new SceneGraphNode();
+            Node.AssociatedObject = this;
+            LocalPlayer = new ScatteredPlayer(this,Node.CreateChild());
         }
 
         public Island CreateNewIsland(Vector3 position)
         {
-            var ret = new Island(this, Node.CreateChild()) { Position = position };
+            var ret = new Island(this, Node.CreateChild() ) { Position = position };
+            ret.Node.AssociatedObject = ret; //TODO: fix this dependency in a better way?
             islands.Add(ret);
+            
             return ret;
         }
         public Traveller CreateNewTraveller(Island start, Func<Island> destinationAction)
@@ -60,8 +65,6 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public void RemoveIsland(Island island)
         {
-            island.RenderData.Dispose();
-            island.RenderData = null;
             islands.Remove(island);
         }
 
@@ -98,6 +101,8 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public TravellerType WorkshopCartType { get; private set; }
         public TravellerType DeliveryCartType { get; private set; }
 
+        public ScatteredPlayer LocalPlayer { get; set; }
+
         #endregion
 
 
@@ -117,7 +122,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public EntityInteractableNode CreateEntityInteractable(Entity entity, SceneGraphNode createChild, Action onInteract)
         {
-            var ret = new EntityInteractableNode(entity, createChild,onInteract);
+            var ret = new EntityInteractableNode(entity, createChild, onInteract);
             InteractableNodes.Add(ret);
             return ret;
         }

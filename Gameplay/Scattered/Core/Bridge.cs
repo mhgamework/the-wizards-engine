@@ -1,5 +1,7 @@
 ﻿using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
+using SlimDX;
+using DirectX11;
 
 namespace MHGameWork.TheWizards.Scattered.Core
 {
@@ -7,11 +9,27 @@ namespace MHGameWork.TheWizards.Scattered.Core
     {
         public SceneGraphNode Node { get; private set; }
 
-        public Bridge(Level level,SceneGraphNode node)
+        public Bridge(Level level, SceneGraphNode node)
         {
             Node = node;
             var ent = level.CreateEntityNode(node.CreateChild());
             ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\BridgeConnector");
+        }
+
+        public Island Island { get { return (Island)Node.Parent.AssociatedObject; } }
+
+        //public Vector3 RelativePosition;
+        //public Vector3 Direction;
+        public Bridge Connection;
+
+        public Vector3 GetAbsolutePosition()
+        {
+            return Node.Absolute.GetTranslation();
+        }
+
+        public Vector3 GetAbsoluteDirection()
+        {
+            return Node.Absolute.xna().Forward.dx();
         }
     }
 }

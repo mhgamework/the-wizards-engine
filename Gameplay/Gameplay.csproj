@@ -215,7 +215,6 @@
     <Compile Include="Scattered\Model\Traveller.cs" />
     <Compile Include="Scattered\Model\TravellerType.cs" />
     <Compile Include="Scattered\Rendering\IRenderable.cs" />
-    <Compile Include="Scattered\Rendering\IslandRenderData.cs" />
     <Compile Include="Scattered\Model\Level.cs" />
     <Compile Include="Scattered\Rendering\LevelRenderer.cs" />
     <Compile Include="Scattered\SceneGraphing\SceneGraphNode.cs" />
