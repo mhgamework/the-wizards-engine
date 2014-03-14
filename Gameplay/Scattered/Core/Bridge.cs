@@ -8,6 +8,10 @@ namespace MHGameWork.TheWizards.Scattered.Core
     public class Bridge : IIslandAddon
     {
         public SceneGraphNode Node { get; private set; }
+        public void PrepareForRendering()
+        {
+            
+        }
 
         public Bridge(Level level, SceneGraphNode node)
         {

@@ -6,6 +6,10 @@ namespace MHGameWork.TheWizards.Scattered.Core
     public class Enemy : IIslandAddon
     {
         public SceneGraphNode Node { get; private set; }
+        public void PrepareForRendering()
+        {
+            
+        }
 
         public Enemy(Level level, SceneGraphNode node)
         {

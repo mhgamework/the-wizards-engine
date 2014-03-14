@@ -16,6 +16,7 @@ using MHGameWork.TheWizards.Simulators;
 using NUnit.Framework;
 using SlimDX;
 using MHGameWork.TheWizards.Scattered._Engine;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.Scattered._Tests
 {
@@ -70,8 +71,6 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         [Test]
         public void TestCoreGame()
         {
-
-
             var level = new Level();
             Action<Island> addBridge = il => il.AddAddon(new Bridge(level, il.Node.CreateChild()).Alter(b => b.Node.Relative = Matrix.Translation(0, 0, 8)));
 
@@ -94,7 +93,9 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             i = level.CreateNewIsland(new Vector3(30, 0, 0));
             addBridge(i);
-            i.AddAddon(new Storage(level, i.Node.CreateChild()));
+            i.AddAddon(new Storage(level, i.Node.CreateChild())
+                .Alter(s => s.Inventory.AddNewItems(
+                    new ItemType(){ Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Items\\CrystalItem")}, 4)));
 
             i = level.CreateNewIsland(new Vector3(40, 0, 0));
             addBridge(i);
@@ -110,11 +111,8 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             engine.AddSimulator(new ClusterPhysicsSimulator(level));
             engine.AddSimulator(new PlayerCameraSimulator(player));
 
-            engine.AddSimulator(new SceneGraphRenderingSimulator(() => level.EntityNodes));
+            engine.AddSimulator(new ScatteredRenderingSimulator(() => level.EntityNodes, () => level.Islands.SelectMany(c => c.Addons)));
             engine.AddSimulator(new WorldRenderingSimulator());
-
-
-
         }
     }
 }

@@ -51,6 +51,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 player.Position = TW.Graphics.SpectaterCamera.CameraPosition;
 
             oldPlayerPos = player.Position;
+
+            player.Direction = TW.Graphics.SpectaterCamera.CameraDirection;
         }
     }
 }

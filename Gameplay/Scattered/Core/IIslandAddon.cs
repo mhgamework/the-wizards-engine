@@ -5,5 +5,6 @@ namespace MHGameWork.TheWizards.Scattered.Core
     public interface IIslandAddon
     {
         SceneGraphNode Node { get; }
+        void PrepareForRendering();
     }
 }

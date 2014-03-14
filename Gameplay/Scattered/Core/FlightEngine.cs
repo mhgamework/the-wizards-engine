@@ -10,6 +10,10 @@ namespace MHGameWork.TheWizards.Scattered.Core
     {
         private readonly Level level;
         public SceneGraphNode Node { get; private set; }
+        public void PrepareForRendering()
+        {
+            
+        }
 
         public FlightEngine(Level level, SceneGraphNode node)
         {

@@ -218,7 +218,7 @@
     <Compile Include="Scattered\Model\Level.cs" />
     <Compile Include="Scattered\Rendering\LevelRenderer.cs" />
     <Compile Include="Scattered\SceneGraphing\SceneGraphNode.cs" />
-    <Compile Include="Scattered\SceneGraphing\SceneGraphRenderingSimulator.cs" />
+    <Compile Include="Scattered\Core\ScatteredRenderingSimulator.cs" />
     <Compile Include="Scattered\Simulation\LevelSerializer.cs" />
     <Compile Include="Scattered\Simulation\Playmode\ClusterFlightController.cs" />
     <Compile Include="Scattered\Simulation\Playmode\ClusterPhysicsSimulator.cs" />

@@ -77,5 +77,16 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             itemAmounts.Clear();
         }
+
+        public IEnumerable<ItemType> Items{get
+        {
+            foreach (var p in itemAmounts)
+            {
+                for (int i = 0; i < p.Value; i++)
+                {
+                    yield return p.Key;
+                }
+            }
+        }}
     }
 }
