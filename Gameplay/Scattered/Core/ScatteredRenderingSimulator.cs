@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
+using SlimDX;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.Scattered.Core
 {
@@ -12,13 +16,21 @@ namespace MHGameWork.TheWizards.Scattered.Core
     /// </summary>
     public class ScatteredRenderingSimulator : ISimulator
     {
+        private readonly Level level;
         private readonly Func<IEnumerable<EntityNode>> getAllEntityNodes;
         private readonly Func<IEnumerable<IIslandAddon>> getAllAddons;
+        private Textarea text;
 
-        public ScatteredRenderingSimulator(Func<IEnumerable<EntityNode>> getAllEntityNodes, Func<IEnumerable<IIslandAddon>> getAllAddons )
+        public ScatteredRenderingSimulator(Level level, Func<IEnumerable<EntityNode>> getAllEntityNodes, Func<IEnumerable<IIslandAddon>> getAllAddons)
         {
+            this.level = level;
             this.getAllEntityNodes = getAllEntityNodes;
             this.getAllAddons = getAllAddons;
+
+            text = new Textarea();
+            text.Position = new Vector2(650, 30);
+            text.Size = new Vector2(140, 200);
+
         }
 
         public void Simulate()
@@ -31,6 +43,9 @@ namespace MHGameWork.TheWizards.Scattered.Core
             {
                 a.PrepareForRendering();
             }
+
+            text.Text = level.LocalPlayer.Inventory.Items.Aggregate("Inventory: \n", (acc, el) => acc + el.Name + "\n");
+
         }
     }
 }

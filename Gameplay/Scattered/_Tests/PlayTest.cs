@@ -93,15 +93,15 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             i = level.CreateNewIsland(new Vector3(30, 0, 0));
             addBridge(i);
+            var crystalItem = new ItemType() {Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Items\\CrystalItem"), Name = "Crystal"};
             i.AddAddon(new Storage(level, i.Node.CreateChild())
-                .Alter(s => s.Inventory.AddNewItems(
-                    new ItemType(){ Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Items\\CrystalItem")}, 4)));
+                .Alter(s => s.Inventory.AddNewItems(crystalItem, 4)));
 
             i = level.CreateNewIsland(new Vector3(40, 0, 0));
             addBridge(i);
-            i.AddAddon(new Resource(level, i.Node.CreateChild()));
+            i.AddAddon(new Resource(level, i.Node.CreateChild(), crystalItem));
 
-            i = level.CreateNewIsland(new Vector3(40, 0, 0));
+            i = level.CreateNewIsland(new Vector3(50, 0, 0));
             addBridge(i);
             i.AddAddon(new Tower(level, i.Node.CreateChild()));
 
@@ -111,7 +111,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             engine.AddSimulator(new ClusterPhysicsSimulator(level));
             engine.AddSimulator(new PlayerCameraSimulator(player));
 
-            engine.AddSimulator(new ScatteredRenderingSimulator(() => level.EntityNodes, () => level.Islands.SelectMany(c => c.Addons)));
+            engine.AddSimulator(new ScatteredRenderingSimulator(level,() => level.EntityNodes, () => level.Islands.SelectMany(c => c.Addons)));
             engine.AddSimulator(new WorldRenderingSimulator());
         }
     }

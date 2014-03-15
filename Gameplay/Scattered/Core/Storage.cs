@@ -36,18 +36,25 @@ namespace MHGameWork.TheWizards.Scattered.Core
                         .Alter(a => a.Relative = Matrix.Scaling(2, 2, 2) * Matrix.Translation(0, 0.5f, 0)))
                         .Alter(a => a.CreateInteractable(() => onInteractItem(a))));
                     level.CreateEntityNode(n).Alter(c => c.Entity.Mesh = warehouseMesh)
-                        .Alter(c => c.Node.Relative = Matrix.Translation(x, 0, y));
+                        .Alter(c => c.Node.Relative = Matrix.Translation(x, 0, y))
+                        .Alter(c => c.CreateInteractable(onInteractPad));
                 }
             }
+        }
+
+        private void onInteractPad()
+        {
+            if (Inventory.ItemCount >= itemNodes.Count) return;
+            if (level.LocalPlayer.Inventory.ItemCount == 0) return;
+
+            level.LocalPlayer.Inventory.TransferItemsTo(Inventory, level.LocalPlayer.Inventory.Items.First(), 1);
         }
 
         private void onInteractItem(EntityNode entityNode)
         {
             var type = Inventory.Items.ElementAt(itemNodes.IndexOf(entityNode));
             if (type == null) throw new InvalidOperationException();
-            Inventory.DestroyItems(type, 1);
-
-            level.LocalPlayer.HeldItem = type;
+            Inventory.TransferItemsTo(level.LocalPlayer.Inventory, type, 1);
         }
 
         public void PrepareForRendering()

@@ -52,14 +52,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
         /// </summary>
         public Island FlyingIsland { get; set; }
 
-        public ItemType HeldItem
-        {
-            get { return heldItem; }
-            set
-            {
-                heldItem = value;
-                itemNode.Entity.Mesh = heldItem.With(i => i.Mesh);
-            }
-        }
+        public Inventory Inventory = new Inventory();
+
+
     }
 }
