@@ -31,5 +31,11 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
         {
             var ret = level.CreateEntityInteractable(Entity, Node.CreateChild(),onInteract);
         }
+
+        public void Dispose()
+        {
+            TW.Data.RemoveObject(Entity);
+            Entity = null;
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         public Bridge(Level level, SceneGraphNode node)
         {
             Node = node;
+            node.AssociatedObject = this;
             var ent = level.CreateEntityNode(node.CreateChild());
             ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\BridgeConnector");
         }

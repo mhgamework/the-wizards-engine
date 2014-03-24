@@ -92,14 +92,19 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public SceneGraphNode Node { get; private set; }
 
 
-        public IEnumerable<Bridge> BridgeConnectors { get { return addons.OfType<Bridge>(); } }
+        public IEnumerable<Bridge> BridgeConnectors { get { return Addons.OfType<Bridge>(); } }
 
-        private List<IIslandAddon> addons = new List<IIslandAddon>();
-        public IEnumerable<IIslandAddon> Addons { get { return addons; } }
+        //private List<IIslandAddon> addons = new List<IIslandAddon>();
+        public IEnumerable<IIslandAddon> Addons
+        {
+            get { return Node.Children.Select(c => c.AssociatedObject).OfType<IIslandAddon>(); }
+        }
 
         public void AddAddon(IIslandAddon addon)
         {
-            addons.Add(addon);
+            if(!Node.Children.Contains(addon.Node) ) throw new InvalidOperationException("Addon should be a direct child of the island node.");
+            if (addon.Node.AssociatedObject != addon) throw new InvalidOperationException("Addon should be associated with its node.");
+            //addons.Add(addon);
         }
     }
 }

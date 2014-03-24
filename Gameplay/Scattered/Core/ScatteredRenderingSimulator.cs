@@ -39,7 +39,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             {
                 n.UpdateForRendering();
             }
-            foreach (var a in getAllAddons())
+            foreach (var a in getAllAddons().ToArray()) // This toarray is a temp bugfix due to the fact that prepareforrendering can create addons :s
             {
                 a.PrepareForRendering();
             }

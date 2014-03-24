@@ -14,6 +14,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
         public Enemy(Level level, SceneGraphNode node)
         {
             Node = node;
+            node.AssociatedObject = this;
+            node.AssociatedObject = this;
             var ent = level.CreateEntityNode(node.CreateChild());
             ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobot");
         }

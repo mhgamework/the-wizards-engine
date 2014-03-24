@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Scattered.Simulation;
 using SlimDX;
 using System.Linq;
 using Castle.Core.Internal;
+using MHGameWork.TheWizards.Scattered._Engine;
 
 namespace MHGameWork.TheWizards.Scattered.Model
 {
@@ -28,15 +29,15 @@ namespace MHGameWork.TheWizards.Scattered.Model
             createItemTypes();
             Node = new SceneGraphNode();
             Node.AssociatedObject = this;
-            LocalPlayer = new ScatteredPlayer(this,Node.CreateChild());
+            LocalPlayer = new ScatteredPlayer(this, Node.CreateChild());
         }
 
         public Island CreateNewIsland(Vector3 position)
         {
-            var ret = new Island(this, Node.CreateChild() ) { Position = position };
+            var ret = new Island(this, Node.CreateChild()) { Position = position };
             ret.Node.AssociatedObject = ret; //TODO: fix this dependency in a better way?
             islands.Add(ret);
-            
+
             return ret;
         }
         public Traveller CreateNewTraveller(Island start, Func<Island> destinationAction)
@@ -125,6 +126,31 @@ namespace MHGameWork.TheWizards.Scattered.Model
             var ret = new EntityInteractableNode(entity, createChild, onInteract);
             InteractableNodes.Add(ret);
             return ret;
+        }
+
+        public void DestroyNode(SceneGraphNode node)
+        {
+            foreach (var c in node.Children.ToArray())
+            {
+                DestroyNode(c);
+            }
+            
+
+            EntityNodes.Where(k => k.Node == node).ToArray()
+                .ForEach(e =>
+                    {
+                        e.Dispose();
+                        EntityNodes.Remove(e);
+                    });
+
+            InteractableNodes.Where(k => k.Node == node).ToArray()
+               .ForEach(e =>
+               {
+                   e.Dispose();
+                   InteractableNodes.Remove(e);
+               });
+
+            node.Dispose();
         }
     }
 }

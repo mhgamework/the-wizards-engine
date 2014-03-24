@@ -204,6 +204,7 @@
     <Compile Include="Navigation2D\WaypointEngineTest.cs" />
     <Compile Include="Navigation2D\WaypointVisualizer.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
+    <Compile Include="Scattered\Core\WorldGenerator.cs" />
     <Compile Include="Scattered\Model\Construction.cs" />
     <Compile Include="Scattered\SceneGraphing\EntityInteractableNode.cs" />
     <Compile Include="Scattered\SceneGraphing\EntityNode.cs" />

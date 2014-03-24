@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Castle.Core.Internal;
+using MHGameWork.TheWizards.Audio;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered._Engine;
@@ -16,9 +17,13 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         private List<EntityNode> itemNodes = new List<EntityNode>();
 
+        private SoundEmitter emitter = new SoundEmitter();
+
         public Storage(Level level, SceneGraphNode node)
         {
             this.level = level;
+            Node = node;
+            node.AssociatedObject = this;
             var warehouseMesh = TW.Assets.LoadMesh("Scattered\\Models\\WarehouseTile");
 
             int sizeX = 5;
@@ -40,6 +45,10 @@ namespace MHGameWork.TheWizards.Scattered.Core
                         .Alter(c => c.CreateInteractable(onInteractPad));
                 }
             }
+
+            //emitter.Sound = SoundFactory.Load("Scattered\\Sound\\Ploep1.wav");
+            //emitter.Stop();
+
         }
 
         private void onInteractPad()
@@ -48,6 +57,22 @@ namespace MHGameWork.TheWizards.Scattered.Core
             if (level.LocalPlayer.Inventory.ItemCount == 0) return;
 
             level.LocalPlayer.Inventory.TransferItemsTo(Inventory, level.LocalPlayer.Inventory.Items.First(), 1);
+            playPloep();
+        }
+
+        private Random r = new Random();
+        private void playPloep()
+        {
+            return;
+            if (emitter.Playing) return;
+            var sounds = new[]
+                {
+                    SoundFactory.Load("Scattered\\Sound\\Ploep1.wav"),
+                    SoundFactory.Load("Scattered\\Sound\\Ploep2.wav"),
+                    SoundFactory.Load("Scattered\\Sound\\Ploep3.wav")
+                };
+            emitter.Sound = sounds[r.Next(0, 2)];
+            emitter.Start();
         }
 
         private void onInteractItem(EntityNode entityNode)
@@ -55,6 +80,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             var type = Inventory.Items.ElementAt(itemNodes.IndexOf(entityNode));
             if (type == null) throw new InvalidOperationException();
             Inventory.TransferItemsTo(level.LocalPlayer.Inventory, type, 1);
+            playPloep();
         }
 
         public void PrepareForRendering()

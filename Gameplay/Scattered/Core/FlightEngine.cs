@@ -19,6 +19,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         {
             this.level = level;
             Node = node;
+            node.AssociatedObject = this;
 
 
             var renderNode = node.CreateChild();

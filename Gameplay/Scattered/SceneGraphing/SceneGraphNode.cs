@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using NUnit.Framework;
 using SlimDX;
 
@@ -24,10 +26,14 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
         /// </summary>
         public object AssociatedObject { get; set; }
 
+        public int ID { get; private set; }
+        private static int nextID = 0;
+
         public SceneGraphNode()
         {
             Relative = Matrix.Identity;
             Absolute = Matrix.Identity;
+            ID = nextID++;
         }
 
         public Matrix Relative { get; set; }
@@ -49,9 +55,19 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
             }
         }
 
-        public SceneGraphNode Parent { get; private set; }
+        public SceneGraphNode Parent
+        {
+            get { return parent; }
+            private set
+            {
+                parent = value;
+                if (children.Contains(parent)) throw new InvalidOperationException();
+            }
+        }
 
         private List<SceneGraphNode> children = new List<SceneGraphNode>();
+        private SceneGraphNode parent;
+
         public IEnumerable<SceneGraphNode> Children
         {
             get { return children; }
@@ -61,20 +77,35 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
         {
             var ret = new SceneGraphNode();
             ret.Parent = this;
-            ret.children.Add(ret);
+            children.Add(ret);
 
             return ret;
         }
 
-        public void ChangeParent(SceneGraphNode newParent)
-        {
-            if (Parent != null)
-            {
-                Parent.children.Remove(this);
-            }
+        //public void ChangeParent(SceneGraphNode newParent)
+        //{
+        //    if (Parent != null)
+        //    {
+        //        Parent.children.Remove(this);
+        //    }
 
-            Parent = newParent;
-            newParent.children.Add(this);
+        //    if (children.Contains(newParent)) throw new InvalidOperationException();
+
+        //    Parent = newParent;
+        //    newParent.children.Add(this);
+        //}
+
+        public void Dispose()
+        {
+            Parent.children.Remove(this);
+            Parent = null;
+            children = null;
+            AssociatedObject = null;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("ID: {0}, Obj: {1}", ID, AssociatedObject);
         }
     }
 }

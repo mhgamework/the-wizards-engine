@@ -44,5 +44,10 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
         {
             onInteract();
         }
+
+        public void Dispose()
+        {
+            // Nothing for now
+        }
     }
 }

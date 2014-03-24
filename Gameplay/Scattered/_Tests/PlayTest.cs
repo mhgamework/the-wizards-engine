@@ -113,6 +113,8 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             engine.AddSimulator(new ScatteredRenderingSimulator(level,() => level.EntityNodes, () => level.Islands.SelectMany(c => c.Addons)));
             engine.AddSimulator(new WorldRenderingSimulator());
+
+            //engine.AddSimulator(new AudioSimulator());
         }
     }
 }

@@ -14,6 +14,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             this.level = level;
             this.type = type;
             Node = node;
+            node.AssociatedObject = this;
 
             level.CreateEntityNode(node.CreateChild())
                  .Alter(k => k.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Infuser"))
