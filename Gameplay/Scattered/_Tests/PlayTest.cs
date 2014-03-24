@@ -72,11 +72,13 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         public void TestCoreGame()
         {
             var level = new Level();
+            var player = level.LocalPlayer;
+            addPlaySimulators(level, player);
+
             Action<Island> addBridge = il => il.AddAddon(new Bridge(level, il.Node.CreateChild()).Alter(b => b.Node.Relative = Matrix.Translation(0, 0, 8)));
 
             Island i;
 
-            var player = level.LocalPlayer;
             player.Position = new Vector3(0, 3, 0);
 
             i = level.CreateNewIsland(new Vector3(0, 0, 0));
@@ -93,7 +95,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             i = level.CreateNewIsland(new Vector3(30, 0, 0));
             addBridge(i);
-            var crystalItem = new ItemType() {Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Items\\CrystalItem"), Name = "Crystal"};
+            var crystalItem = new ItemType() { Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Items\\CrystalItem"), Name = "Crystal" };
             i.AddAddon(new Storage(level, i.Node.CreateChild())
                 .Alter(s => s.Inventory.AddNewItems(crystalItem, 4)));
 
@@ -105,16 +107,52 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             addBridge(i);
             i.AddAddon(new Tower(level, i.Node.CreateChild()));
 
-            engine.AddSimulator(new EnemySpawningSimulator(level,1f));
+
+
+            //engine.AddSimulator(new AudioSimulator());
+        }
+
+        private void addPlaySimulators(Level level, ScatteredPlayer player)
+        {
+            engine.AddSimulator(new EnemySpawningSimulator(level, 0.1f));
             engine.AddSimulator(new PlayerMovementSimulator(player));
             engine.AddSimulator(new PlayerInteractionSimulator(level, player));
             engine.AddSimulator(new ClusterPhysicsSimulator(level));
             engine.AddSimulator(new PlayerCameraSimulator(player));
 
-            engine.AddSimulator(new ScatteredRenderingSimulator(level,() => level.EntityNodes, () => level.Islands.SelectMany(c => c.Addons)));
+            engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes,
+                                                                () => level.Islands.SelectMany(c => c.Addons)));
+            engine.AddSimulator(new WorldRenderingSimulator());
+            //engine.AddSimulator(new AudioSimulator());
+
+        }
+
+        [Test]
+        public void TestWorldGeneration()
+        {
+            var level = new Level();
+            engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes, () => level.Islands.SelectMany(c => c.Addons)));
             engine.AddSimulator(new WorldRenderingSimulator());
 
-            //engine.AddSimulator(new AudioSimulator());
+            var gen = new WorldGenerator(level, new Random());
+
+            gen.Generate();
+
+            TW.Graphics.SpectaterCamera.FarClip = 2000;
+
+        }
+
+        [Test]
+        public void TestProceduralGame()
+        {
+            var level = new Level();
+            var player = level.LocalPlayer;
+            addPlaySimulators(level, player);
+            var gen = new WorldGenerator(level, new Random());
+
+            gen.Generate();
+
+            TW.Graphics.SpectaterCamera.FarClip = 2000;
         }
     }
 }

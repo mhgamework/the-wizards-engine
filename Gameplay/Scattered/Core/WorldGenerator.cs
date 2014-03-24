@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using MHGameWork.TheWizards.Scattered.Model;
+using MHGameWork.TheWizards.Scattered._Engine;
 using SlimDX;
+using DirectX11;
 
 namespace MHGameWork.TheWizards.Scattered.Core
 {
@@ -15,12 +18,89 @@ namespace MHGameWork.TheWizards.Scattered.Core
         {
             this.level = level;
             this.random = random;
-            samples = generateSamples();
+
         }
 
+
+
+        public void Generate()
+        {
+            var sampler = new StratifiedSampler(random, 16);
+            for (int i = 0; i < 30; i++)
+            {
+                var pos = (sampler.Sample() * 40);
+                GenerateCluster(pos);
+            }
+
+            relaxPosition();
+        }
+
+        private void relaxPosition()
+        {
+
+            for (int i = 0; i < 10; i++)
+            {
+                foreach (var a in level.Islands)
+                    foreach (var b in level.Islands)
+                    {
+                        if (a == b) continue;
+                        if (Vector3.Distance(a.Position, b.Position) > 15) continue;
+                        var dir = a.Position - b.Position;
+                        dir.Normalize();
+                        a.Position += dir;
+                        b.Position -= dir;
+
+                    }
+            }
+        }
+
+        public void GenerateCluster(Vector2 center)
+        {
+            var sampler = new StratifiedSampler(random, 6);
+
+            for (int i = 0; i < 10; i++)
+            {
+                var pos = (center + (sampler.Sample() * 15)).ToXZ();
+                var isl = level.CreateNewIsland(pos);
+                isl.Node.Relative = Matrix.RotationY((float)random.NextDouble() * 10) * isl.Node.Relative;
+
+                if (random.NextDouble() < (1/20f))
+                {
+                    Action<Island> addBridge = il => il.AddAddon(new Bridge(level, il.Node.CreateChild()).Alter(b => b.Node.Relative = Matrix.Translation(0, 0, 8)));
+                    Action<Island> addBridge2 = il => il.AddAddon(new Bridge(level, il.Node.CreateChild()).Alter(b => 
+                        b.Node.Relative = Matrix.RotationY(MathHelper.Pi)* Matrix.Translation(0, 0, -6)));
+
+                    isl.AddAddon(new Tower(level, isl.Node.CreateChild()));
+                    isl.AddAddon(new FlightEngine(level, isl.Node.CreateChild()));
+
+                    addBridge(isl);
+                    addBridge2(isl);
+
+                }
+                else if (random.NextDouble() < (1/10f))
+                {
+                    isl.AddAddon(new Storage(level, isl.Node.CreateChild()));
+                }
+            }
+        }
+
+
+
+    }
+
+    public class StratifiedSampler
+    {
+        private readonly Random random;
+
+        public StratifiedSampler(Random random, int size)
+        {
+            this.random = random;
+            stratifiedSize = size;
+            samples = generateSamples();
+        }
         private int[] generateSamples()
         {
-            var ret = new int[stratifiedSize * stratifiedSize];
+            var ret = Enumerable.Range(0, stratifiedSize * stratifiedSize - 1).ToArray();
             for (int i = 0; i < ret.Length * 10; i++)
             {
                 var a = random.Next(0, ret.Length - 1);
@@ -31,29 +111,20 @@ namespace MHGameWork.TheWizards.Scattered.Core
             }
             return ret;
         }
-
-        public void Generate()
-        {
-            for (int i = 0; i < 100; i++)
-            {
-                var pos = (incorrectStratifiedSample() *3).ToXZ();
-                level.CreateNewIsland(pos);
-            }
-        }
-
-
         private int[] samples;
 
         private int samplePos = 0;
-        private int stratifiedSize = 16;
+        private int stratifiedSize = 32;
 
         /// <summary>
         /// Returns between 0 and stratifiedsize;
         /// </summary>
-        private Vector2 incorrectStratifiedSample()
+        public Vector2 Sample()
         {
-            float x = samplePos / stratifiedSize;
-            float y = samplePos % stratifiedSize;
+            var sample = samples[samplePos];
+            float x = sample / stratifiedSize;
+            float y = sample % stratifiedSize;
+            samplePos = (samplePos + 1) % samples.Length;
 
             x += (float)random.NextDouble();
             y += (float)random.NextDouble();

@@ -54,8 +54,12 @@ namespace MHGameWork.TheWizards.Scattered.Core
         public IEnumerable<float> stepBehaviour()
         {
             // find enemy islands
-            var enemyIslands = level.Islands.Where(i => i.Addons.OfType<Enemy>().Any() && Vector3.Distance(i.Node.Absolute.GetTranslation(), Node.Absolute.GetTranslation()) < 200);
-            if (!enemyIslands.Any()) yield return 0.5f;
+            var enemyIslands = level.Islands.Where(i => i.Addons.OfType<Enemy>().Any() && Vector3.Distance(i.Node.Absolute.GetTranslation(), Node.Absolute.GetTranslation()) < 60);
+            if (!enemyIslands.Any())
+            {
+                yield return 0.5f;
+                yield break;
+            }
 
             var target = enemyIslands.First();
             var enemy = target.Addons.OfType<Enemy>().First();
@@ -67,6 +71,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
             {
                 remainingShooting -= TW.Graphics.Elapsed;
                 TW.Graphics.LineManager3D.AddLine(Node.Absolute.GetTranslation() + Vector3.UnitY * 10f, enemy.Node.Absolute.GetTranslation(), new Color4(1, remainingShooting, 0));
+                if (enemy.Node.Children == null) // Cheat
+                    break;
                 yield return 0;
             }
 

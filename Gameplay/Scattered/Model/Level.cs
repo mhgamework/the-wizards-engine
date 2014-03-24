@@ -130,6 +130,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public void DestroyNode(SceneGraphNode node)
         {
+            if (node.Children == null) return; // already disposed
             foreach (var c in node.Children.ToArray())
             {
                 DestroyNode(c);
