@@ -115,7 +115,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         private void addPlaySimulators(Level level, ScatteredPlayer player)
         {
             engine.AddSimulator(new EnemySpawningSimulator(level, 0.1f));
-            engine.AddSimulator(new PlayerMovementSimulator(player));
+            engine.AddSimulator(new PlayerMovementSimulator(level,player));
             engine.AddSimulator(new PlayerInteractionSimulator(level, player));
             engine.AddSimulator(new ClusterPhysicsSimulator(level));
             engine.AddSimulator(new PlayerCameraSimulator(player));
