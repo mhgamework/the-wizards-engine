@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Castle.Core.Internal;
+using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Core;
 using MHGameWork.TheWizards.Scattered.Rendering;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
@@ -23,8 +25,22 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
             var ent = level.CreateEntityNode(node.CreateChild());
             ent.Node.Relative = Matrix.Scaling(2, 2, 2) * ent.Node.Relative;
-            ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Island_Large");
+            entity = ent.Entity;
+            //ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Island_Large");
         }
+
+        private readonly Entity entity;
+        private IMesh mesh;
+        public IMesh Mesh
+        {
+            get { return mesh; }
+            set
+            {
+                mesh = value;
+                entity.Mesh = value;
+            }
+        }
+
         public Level Level { get; private set; }
 
         public IslandType Type { get; set; }
@@ -102,7 +118,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public void AddAddon(IIslandAddon addon)
         {
-            if(!Node.Children.Contains(addon.Node) ) throw new InvalidOperationException("Addon should be a direct child of the island node.");
+            if (!Node.Children.Contains(addon.Node)) throw new InvalidOperationException("Addon should be a direct child of the island node.");
             if (addon.Node.AssociatedObject != addon) throw new InvalidOperationException("Addon should be associated with its node.");
             //addons.Add(addon);
         }

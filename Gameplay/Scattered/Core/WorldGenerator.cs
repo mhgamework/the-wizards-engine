@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using MHGameWork.TheWizards.Scattered.Model;
+using MHGameWork.TheWizards.Scattered.ProcBuilder;
 using MHGameWork.TheWizards.Scattered._Engine;
 using SlimDX;
 using DirectX11;
@@ -26,7 +27,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
         public void Generate()
         {
             var sampler = new StratifiedSampler(random, 16);
-            for (int i = 0; i < 30; i++)
+            var nbClusters = 5;
+            for (int i = 0; i < nbClusters; i++)
             {
                 var pos = (sampler.Sample() * 40);
                 GenerateCluster(pos);
@@ -44,7 +46,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
                     foreach (var b in level.Islands)
                     {
                         if (a == b) continue;
-                        if (Vector3.Distance(a.Position, b.Position) > 15) continue;
+                        if (Vector3.Distance(a.Position, b.Position) > 50) continue;
                         var dir = a.Position - b.Position;
                         dir.Normalize();
                         a.Position += dir;
@@ -57,18 +59,26 @@ namespace MHGameWork.TheWizards.Scattered.Core
         public void GenerateCluster(Vector2 center)
         {
             var sampler = new StratifiedSampler(random, 6);
+            var islandGenerator = new IslandGenerator();
 
-            for (int i = 0; i < 10; i++)
+            var nbIslandsPerCluster = 10;
+            var distanceBetweenIslands = 35;
+            for (int i = 0; i < nbIslandsPerCluster; i++)
             {
-                var pos = (center + (sampler.Sample() * 15)).ToXZ();
+                var pos = (center + (sampler.Sample() * distanceBetweenIslands)).ToXZ();
                 var isl = level.CreateNewIsland(pos);
+
+                var seed = random.Next(int.MinValue, int.MaxValue);
+                var mesh = islandGenerator.GetIslandMesh(islandGenerator.GetIslandBase(seed), seed);
+                isl.Mesh = mesh;
+
                 isl.Node.Relative = Matrix.RotationY((float)random.NextDouble() * 10) * isl.Node.Relative;
 
-                if (random.NextDouble() < (1/20f))
+                if (random.NextDouble() < (1 / 20f))
                 {
                     Action<Island> addBridge = il => il.AddAddon(new Bridge(level, il.Node.CreateChild()).Alter(b => b.Node.Relative = Matrix.Translation(0, 0, 8)));
-                    Action<Island> addBridge2 = il => il.AddAddon(new Bridge(level, il.Node.CreateChild()).Alter(b => 
-                        b.Node.Relative = Matrix.RotationY(MathHelper.Pi)* Matrix.Translation(0, 0, -6)));
+                    Action<Island> addBridge2 = il => il.AddAddon(new Bridge(level, il.Node.CreateChild()).Alter(b =>
+                        b.Node.Relative = Matrix.RotationY(MathHelper.Pi) * Matrix.Translation(0, 0, -6)));
 
                     isl.AddAddon(new Tower(level, isl.Node.CreateChild()));
                     isl.AddAddon(new FlightEngine(level, isl.Node.CreateChild()));
@@ -77,7 +87,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
                     addBridge2(isl);
 
                 }
-                else if (random.NextDouble() < (1/10f))
+                else if (random.NextDouble() < (1 / 10f))
                 {
                     isl.AddAddon(new Storage(level, isl.Node.CreateChild()));
                 }

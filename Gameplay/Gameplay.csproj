@@ -142,6 +142,9 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="ProceduralBuilder">
+      <HintPath>..\_Libraries\ProcBuilder\ProceduralBuilder.exe</HintPath>
+    </Reference>
     <Reference Include="QuickGraph, Version=3.6.61114.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\The Wizards Gameplay\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.dll</HintPath>
@@ -207,6 +210,7 @@
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
     <Compile Include="Scattered\Core\WorldGenerator.cs" />
     <Compile Include="Scattered\Model\Construction.cs" />
+    <Compile Include="Scattered\ProcBuilder\IslandGenerator.cs" />
     <Compile Include="Scattered\SceneGraphing\EntityInteractableNode.cs" />
     <Compile Include="Scattered\SceneGraphing\EntityNode.cs" />
     <Compile Include="Scattered\Model\IConstructionAction.cs" />
@@ -249,6 +253,7 @@
     <Compile Include="Scattered\Core\PlayerMovementSimulator.cs" />
     <Compile Include="Scattered\_Tests\PlayTest.cs" />
     <Compile Include="Scattered\Core\Resource.cs" />
+    <Compile Include="Scattered\_Tests\ProcBuilderTest.cs" />
     <Compile Include="Scattered\_Tests\SandboxTest.cs" />
     <Compile Include="Scattered\Core\ScatteredPlayer.cs" />
     <Compile Include="Scattered\Core\Storage.cs" />
