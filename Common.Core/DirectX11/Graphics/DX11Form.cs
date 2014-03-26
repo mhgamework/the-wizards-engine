@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using MHGameWork.TheWizards.Data;
@@ -31,6 +32,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         {
             //Configuration.EnableObjectTracking = true; // Logs stacktraces of COM object creation
             GameLoopProfilingPoint = Profiling.Profiler.CreateElement("DX11Form.GameLoop");
+            FormSize = new Size(800, 600);
         }
 
 
@@ -51,6 +53,11 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             get { return renderTargetView; }
             set { renderTargetView = value; }
         }
+
+        /// <summary>
+        /// This only works before the first InitDirectX() call
+        /// </summary>
+        public Size FormSize { get; set; }
 
 
         private void gameLoop()
@@ -112,6 +119,9 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             form = new RenderForm("The Wizards - DirectX 11");
             form.Activated += new EventHandler(form_Activated);
             form.Deactivate += new EventHandler(form_Deactivate);
+            form.Size = FormSize;
+            //form.Width = (int)FormSize.X;
+            //form.Height = (int)FormSize.Y;
             //form.TopMost = true;
             //WARNING: THERE IS ONLY ONE BUFFER ATM. (no backbuffer?)
             var desc = new SwapChainDescription

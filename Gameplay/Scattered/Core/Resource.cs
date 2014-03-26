@@ -28,8 +28,11 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private void onInteract()
         {
             if (containsResourcesSince < 3) return;
-
             containsResourcesSince += 3;
+            // Should be in the update method.
+            if (containsResourcesSince + 9 < TW.Graphics.TotalRunTime)
+                containsResourcesSince = TW.Graphics.TotalRunTime - 9;
+
             level.LocalPlayer.Inventory.AddNewItems(type, 1);
 
 
@@ -38,9 +41,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         public SceneGraphNode Node { get; private set; }
         public void PrepareForRendering()
         {
-            // Should be in the update method.
-            if (containsResourcesSince + 20 < TW.Graphics.TotalRunTime)
-                containsResourcesSince = TW.Graphics.TotalRunTime - 20;
+            
         }
     }
 }

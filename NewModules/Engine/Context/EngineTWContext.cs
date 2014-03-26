@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Persistence;
@@ -23,7 +24,14 @@ namespace MHGameWork.TheWizards.Engine
 
             game = new GraphicsWrapper();
 
+            // TODO: make better setting resolution
+            game.Form.FormSize = new Size(1280, 720);
+
+
             game.InitDirectX();
+
+            // TODO: more resolution sjit
+            game.SpectaterCamera.AspectRatio = (float)game.Form.Form.ClientSize.Width / game.Form.Form.ClientSize.Height;
 
 
             typeSerializer = new TypeSerializer(engine);

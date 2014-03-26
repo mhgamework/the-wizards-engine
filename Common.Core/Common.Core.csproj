@@ -51,6 +51,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -193,6 +194,7 @@
     <Compile Include="DirectX11\Rendering\Deferred\AverageLuminanceCalculater.cs" />
     <Compile Include="DirectX11\Rendering\Deferred\CombineFinalRenderer.cs" />
     <Compile Include="DirectX11\Rendering\Deferred\DirectionalLightRenderer.cs" />
+    <Compile Include="DirectX11\Rendering\Deferred\FogEffect.cs" />
     <Compile Include="DirectX11\Rendering\Deferred\GBuffer.cs" />
     <Compile Include="DirectX11\Rendering\Deferred\GBufferShader.cs" />
     <Compile Include="DirectX11\Rendering\Deferred\PointLightRenderer.cs" />
@@ -517,6 +519,7 @@
     <Folder Include="Core\Raycast\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\Deferred\Fog.fx" />
     <Content Include="Shaders\Deferred\TODO\RandomNormals.png" />
     <Content Include="Shaders\Filters\GaussianBlurCS.hlsl" />
   </ItemGroup>

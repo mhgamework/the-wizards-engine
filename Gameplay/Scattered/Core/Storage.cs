@@ -30,7 +30,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
             int sizeY = 3;
 
             var renderNode = node.CreateChild();
-            renderNode.Relative = Matrix.Translation(-sizeX * 0.5f, 0, -sizeY * 0.5f);//sizeX * 0.5f, 0, sizeY * 0.5f);
+
+            renderNode.Relative = Matrix.Scaling(0.3f, 0.3f, 0.3f) * Matrix.Translation(-sizeX * 0.5f, 0, -sizeY * 0.5f);//sizeX * 0.5f, 0, sizeY * 0.5f);
 
             for (int x = 0; x < sizeX; x++)
             {

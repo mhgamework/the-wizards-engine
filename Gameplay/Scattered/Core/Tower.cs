@@ -31,6 +31,9 @@ namespace MHGameWork.TheWizards.Scattered.Core
             updateBehaviour();
         }
 
+        private int state = 0;
+
+
         private void updateBehaviour()
         {
             if (timeWaiting > 0.001)
@@ -57,16 +60,16 @@ namespace MHGameWork.TheWizards.Scattered.Core
             var enemyIslands = level.Islands.Where(i => i.Addons.OfType<Enemy>().Any() && Vector3.Distance(i.Node.Absolute.GetTranslation(), Node.Absolute.GetTranslation()) < 60);
             if (!enemyIslands.Any())
             {
-                yield return 0.5f;
+                yield return 0.1f;
                 yield break;
             }
 
             var target = enemyIslands.First();
             var enemy = target.Addons.OfType<Enemy>().First();
 
-            var remainingShooting = 1f;
+            var remainingShooting = 0.3f;
 
-            yield return 0;
+            
             while (remainingShooting > 0)
             {
                 remainingShooting -= TW.Graphics.Elapsed;
@@ -79,10 +82,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             // destroy enemy!
             level.DestroyNode(enemy.Node);
 
-            yield return 1;
-
-
-
+            yield return 0.3f;
         }
     }
 }

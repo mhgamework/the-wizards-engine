@@ -27,7 +27,11 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
             if (target.Entity.Mesh == null) throw new InvalidOperationException("This is magic!");
 
-            TW.Graphics.LineManager3D.AddAABB(TW.Assets.GetBoundingBox(target.Entity.Mesh), target.Node.Absolute, new Color4(1, 1, 0));
+            var trans = TW.Graphics.LineManager3D.WorldMatrix;
+            TW.Graphics.LineManager3D.WorldMatrix = target.Node.Absolute;
+            TW.Graphics.LineManager3D.AddBox(TW.Assets.GetBoundingBox(target.Entity.Mesh), new Color4(1, 1, 0));
+            
+            TW.Graphics.LineManager3D.WorldMatrix = trans;
 
 
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.F))

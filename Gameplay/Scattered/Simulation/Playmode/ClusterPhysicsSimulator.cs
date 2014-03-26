@@ -20,7 +20,8 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Playmode
 
         private void stepMovement(Island obj)
         {
-            obj.Position += obj.Velocity*TW.Graphics.Elapsed;
+            obj.Position += obj.Velocity * TW.Graphics.Elapsed;
+            obj.Velocity -= obj.Velocity * (0.3f * TW.Graphics.Elapsed);
         }
     }
 }

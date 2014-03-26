@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DirectX11.Rendering.CSM;
 using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.Rendering.SSAO;
+using MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DXGI;
@@ -46,13 +47,16 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private DeferredMeshRenderer meshRenderer;
         private FrustumCullerView gbufferView;
         private ShaderResourceView skyColorRV;
-        private readonly int screenWidth;
-        private readonly int screenHeight;
         private DepthStencilState backgroundDepthStencilState;
 
         private LineManager3D lineManager;
         private List<DeferredLinesElement> lineElements = new List<DeferredLinesElement>();
         private List<DeferredMeshRenderElement> meshElements = new List<DeferredMeshRenderElement>();
+        private CombinedRT postProcessRT1;
+        private CombinedRT postProcessRT2;
+        private FogEffect fogRenderer;
+        private int screenWidth = 100;//800;
+        private int screenHeight = 100;//600;
 
         public int DrawCalls { get { return meshRenderer.DrawCalls; } }
 
@@ -72,9 +76,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             var device = game.Device;
             context = device.ImmediateContext;
 
-            screenWidth = 800;
+            screenWidth = game.Form.Form.ClientSize.Width;
+            screenHeight = game.Form.Form.ClientSize.Height;
+
             int width = screenWidth;
-            screenHeight = 600;
             int height = screenHeight;
 
             gBuffer = new GBuffer(game.Device, width, height);
@@ -161,6 +166,13 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                }, dataRectangle);
 
             skyColorRV = new ShaderResourceView(game.Device, skyColorTexture);
+
+
+            postProcessRT1 = CreateBackbufferLikeRT();
+            postProcessRT2 = CreateBackbufferLikeRT();
+
+            fogRenderer = new FogEffect(game);
+
             backgroundDepthStencilState = DepthStencilState.FromDescription(game.Device, new DepthStencilStateDescription()
             {
                 IsDepthEnabled = true,
@@ -220,6 +232,41 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             el.Lines.Dispose();
         }
 
+        private CombinedRT CreateBackbufferLikeRT()
+        {
+            var desc = new Texture2DDescription
+            {
+                BindFlags =
+                    BindFlags.RenderTarget | BindFlags.ShaderResource,
+                Format = Format.R8G8B8A8_UNorm,
+                Width = screenWidth,
+                Height = screenHeight,
+                ArraySize = 1,
+                SampleDescription = new SampleDescription(1, 0),
+                MipLevels = 1,
+                OptionFlags = ResourceOptionFlags.GenerateMipMaps
+            };
+            return CreateRT(desc);
+        }
+
+        private CombinedRT CreateRT(Texture2DDescription desc)
+        {
+            var ret = new CombinedRT();
+
+            ret.Texture = new Texture2D(game.Device, desc);
+            ret.RTV = new RenderTargetView(game.Device, ret.Texture);
+            ret.RV = new ShaderResourceView(game.Device, ret.Texture);
+
+            return ret;
+        }
+
+        private struct CombinedRT
+        {
+            public ShaderResourceView RV;
+            public RenderTargetView RTV;
+            public Texture2D Texture;
+        }
+
         public void Draw()
         {
 
@@ -235,8 +282,17 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             context.ClearState();
             game.SetBackbuffer();
+            context.OutputMerger.SetTargets(postProcessRT1.RTV);
 
             toneMap.DrawTonemapped(hdrImageRV, calculater.CurrAverageLumRV);
+
+            context.ClearState();
+            game.SetBackbuffer();
+            fogRenderer.PostProcessFog(postProcessRT1.RV,gBuffer, postProcessRT2.RTV);
+            context.ClearState();
+            game.SetBackbuffer();
+            
+            game.TextureRenderer.Draw(postProcessRT2.RV, new Vector2(0, 0), new Vector2(screenWidth, screenHeight));
 
 
             // TODO: currently cheat

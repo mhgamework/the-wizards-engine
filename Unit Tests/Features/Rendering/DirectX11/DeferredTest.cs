@@ -768,6 +768,122 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
         }
 
         [Test]
+        public void TestFog()
+        {
+
+            var game = new DX11Game();
+            game.InitDirectX();
+            var device = game.Device;
+            var context = device.ImmediateContext;
+
+
+
+
+
+            var desc = new Texture2DDescription
+            {
+                BindFlags =
+                    BindFlags.RenderTarget | BindFlags.ShaderResource,
+                Format = Format.R16G16B16A16_Float,
+                Width = 800,
+                Height = 600,
+                ArraySize = 1,
+                SampleDescription = new SampleDescription(1, 0),
+                MipLevels = 1,
+                OptionFlags = ResourceOptionFlags.GenerateMipMaps
+            };
+            var hdrImage = new Texture2D(device, desc);
+
+            var hdrImageRTV = new RenderTargetView(device, hdrImage);
+            var hdrImageRV = new ShaderResourceView(device, hdrImage);
+
+
+            var desc2 = new Texture2DDescription
+            {
+                BindFlags =
+                    BindFlags.RenderTarget | BindFlags.ShaderResource,
+                Format = Format.R8G8B8A8_UNorm,
+                Width = 800,
+                Height = 600,
+                ArraySize = 1,
+                SampleDescription = new SampleDescription(1, 0),
+                MipLevels = 1,
+                OptionFlags = ResourceOptionFlags.GenerateMipMaps
+            };
+
+            var toneMappedImage = new Texture2D(device, desc2);
+
+            var toneMappedImageRTV = new RenderTargetView(device, toneMappedImage);
+            var toneMappedImageRV = new ShaderResourceView(device, toneMappedImage);
+
+            var foggedImage = new Texture2D(device, desc2);
+
+            var foggedImageRTV = new RenderTargetView(device, foggedImage);
+            var foggedImageRV = new ShaderResourceView(device, foggedImage);
+
+
+            var calculater = new AverageLuminanceCalculater(game, hdrImageRV);
+
+            var toneMap = new ToneMapRenderer(game);
+
+            var combineFinal = new TestCombineFinalClass(game);
+
+            var fogRenderer = new FogEffect(game);
+
+            game.GameLoopEvent += delegate
+            {
+                combineFinal.DrawUpdatedDeferredRendering();
+                if (game.Keyboard.IsKeyDown(Key.I)) return;
+                context.Rasterizer.SetViewports(new Viewport(0, 0, 800, 600));
+
+                context.OutputMerger.SetTargets(hdrImageRTV);
+
+                combineFinal.DrawCombined();
+
+
+
+                calculater.DrawUpdatedLogLuminance();
+                calculater.DrawUpdatedAdaptedLogLuminance();
+
+                context.ClearState();
+                game.SetBackbuffer();
+                context.OutputMerger.SetTargets(toneMappedImageRTV);
+
+
+
+
+                if (game.Keyboard.IsKeyDown(Key.K))
+                {
+
+                    game.TextureRenderer.Draw(calculater.AverageLuminanceRV, new Vector2(10, 10),
+                                               new Vector2(300, 300));
+                    game.TextureRenderer.Draw(hdrImageRV, new Vector2(320, 10),
+                                              new Vector2(300, 300));
+                    game.TextureRenderer.Draw(calculater.CurrAverageLumRV, new Vector2(10, 320),
+                                              new Vector2(270, 270));
+                }
+                else
+
+                    toneMap.DrawTonemapped(hdrImageRV, calculater.CurrAverageLumRV);
+
+
+                context.ClearState();
+                game.SetBackbuffer();
+                fogRenderer.PostProcessFog(toneMappedImageRV, combineFinal.FilledGBuffer.GBuffer, foggedImageRTV);
+                context.ClearState();
+                game.SetBackbuffer();
+                //context.ClearRenderTargetView(foggedImageRTV, new Color4(1, 1, 0));
+                game.TextureRenderer.Draw(foggedImageRV, new Vector2(0, 0), new Vector2(800, 600));
+
+
+
+            };
+
+            game.Run();
+        }
+
+
+        [Test]
         public void TestSpotLightRendererShadowing()
         {
             var game = new DX11Game();
@@ -1191,5 +1307,4 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
 
 
     }
-
 }

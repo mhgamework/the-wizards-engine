@@ -148,7 +148,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             var level = new Level();
             var player = level.LocalPlayer;
             addPlaySimulators(level, player);
-            var gen = new WorldGenerator(level, new Random());
+            var gen = new WorldGenerator(level, new Random(0));
 
             gen.Generate();
 
