@@ -116,6 +116,8 @@ namespace MHGameWork.TheWizards.Scattered.Model
             get { return Node.Children.Select(c => c.AssociatedObject).OfType<IIslandAddon>(); }
         }
 
+        public WorldGenerator.IslandDescriptor Descriptor { get; set; }
+
         public void AddAddon(IIslandAddon addon)
         {
             if (!Node.Children.Contains(addon.Node)) throw new InvalidOperationException("Addon should be a direct child of the island node.");

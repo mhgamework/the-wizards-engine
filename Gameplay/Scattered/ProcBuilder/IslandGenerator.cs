@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Rendering;
@@ -7,12 +8,56 @@ using ProceduralBuilder.Building;
 using ProceduralBuilder.Rendering;
 using ProceduralBuilder.RulebaseModules.RulebaseGenerators;
 using ProceduralBuilder.Scattered;
+using ProceduralBuilder.Shapes;
 using ProceduralBuilder.Tools;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Scattered.ProcBuilder
 {
-    public class IslandGenerator
+    public interface IIslandGenerator
+    {
+        List<IBuildingElement> GetIslandBase(int seed);
+        IMesh GetIslandMesh(List<IBuildingElement> islandBase, int seed);
+    }
+
+    public class CachedIslandGenerator : IIslandGenerator
+    {
+        private readonly IIslandGenerator decorated;
+
+        public CachedIslandGenerator(IIslandGenerator decorated)
+        {
+            this.decorated = decorated;
+        }
+
+        public List<IBuildingElement> GetIslandBase(int seed)
+        {
+            return decorated.GetIslandBase(seed);
+        }
+
+        public IMesh GetIslandMesh(List<IBuildingElement> islandBase, int seed)
+        {
+            var hash = GetIslandBaseHash(islandBase) - seed;
+            Trace.WriteLine(hash);
+
+            return decorated.GetIslandMesh(islandBase, seed);
+        }
+
+        public int GetIslandBaseHash(List<IBuildingElement> elements)
+        {
+            var ret = 0;
+            foreach (var el in elements)
+            {
+                if (!(el is Face)) throw new InvalidOperationException();
+                var f = (Face)el;
+
+                ret = (ret + f.WorldMatrix.GetHashCode()) % int.MaxValue / 2;
+                ret = (ret + f.Size.GetHashCode()) % int.MaxValue / 2;
+            }
+            return ret;
+        }
+    }
+
+    public class IslandGenerator : IIslandGenerator
     {
         private const string startSemId = "IslandFace";
 
@@ -20,7 +65,7 @@ namespace MHGameWork.TheWizards.Scattered.ProcBuilder
         {
             var islandTiler = new IslandTiler { IslandSemId = startSemId, IslandSizes = new[] { new Vector2(10, 10), new Vector2(7, 7), new Vector2(5, 10), new Vector2(10, 5) }.ToList(), MaxClusterSize = new Vector2(10, 10) };
             var startShapes = islandTiler.GetIslandTiles(seed);
-            
+
             return startShapes;
         }
 
@@ -42,6 +87,6 @@ namespace MHGameWork.TheWizards.Scattered.ProcBuilder
             return dummyRenderer.GetBatchedMesh();
         }
 
-         
+
     }
 }

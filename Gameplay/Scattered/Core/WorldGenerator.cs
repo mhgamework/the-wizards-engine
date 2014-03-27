@@ -5,8 +5,10 @@ using System.Threading;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.ProcBuilder;
 using MHGameWork.TheWizards.Scattered._Engine;
+using ProceduralBuilder.Building;
 using SlimDX;
 using DirectX11;
+using Castle.Core.Internal;
 
 namespace MHGameWork.TheWizards.Scattered.Core
 {
@@ -26,15 +28,48 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         public void Generate()
         {
+            Console.WriteLine("Generating world...");
             var sampler = new StratifiedSampler(random, 16);
-            var nbClusters = 5;
+            var nbClusters = 1;
             for (int i = 0; i < nbClusters; i++)
             {
                 var pos = (sampler.Sample() * 40);
                 GenerateCluster(pos);
             }
 
+            Console.WriteLine("Generating meshes...");
+
+            generateIslandMeshes();
+
+            Console.WriteLine("Relaxing island positions ...");
+
             relaxPosition();
+        }
+
+        private void generateIslandMeshes()
+        {
+            var islandGenerator = new CachedIslandGenerator(new IslandGenerator());
+
+            Console.WriteLine("Generating island bases");
+            level.Islands.ForEach(i =>
+                                      {
+                                          var desc = i.Descriptor;
+                                          desc.BaseElements = islandGenerator.GetIslandBase(i.Descriptor.seed);
+
+                                          i.Descriptor = desc;
+
+                                      });
+
+            Console.WriteLine("Generating island meshes");
+            level.Islands.ForEach(i =>
+                            {
+                                var desc = i.Descriptor;
+
+                                var mesh = islandGenerator.GetIslandMesh(desc.BaseElements, desc.seed);
+                                i.Mesh = mesh;
+                                i.Descriptor = desc;
+
+                            });
         }
 
         private void relaxPosition()
@@ -59,7 +94,6 @@ namespace MHGameWork.TheWizards.Scattered.Core
         public void GenerateCluster(Vector2 center)
         {
             var sampler = new StratifiedSampler(random, 6);
-            var islandGenerator = new IslandGenerator();
 
             var nbIslandsPerCluster = 10;
             var distanceBetweenIslands = 35;
@@ -67,10 +101,10 @@ namespace MHGameWork.TheWizards.Scattered.Core
             {
                 var pos = (center + (sampler.Sample() * distanceBetweenIslands)).ToXZ();
                 var isl = level.CreateNewIsland(pos);
-
-                var seed = random.Next(int.MinValue, int.MaxValue);
-                var mesh = islandGenerator.GetIslandMesh(islandGenerator.GetIslandBase(seed), seed);
-                isl.Mesh = mesh;
+                isl.Descriptor = new IslandDescriptor()
+                                     {
+                                         seed = random.Next(int.MinValue, int.MaxValue)
+                                     };
 
                 isl.Node.Relative = Matrix.RotationY((float)random.NextDouble() * 10) * isl.Node.Relative;
 
@@ -93,7 +127,11 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 }
             }
         }
-
+        public struct IslandDescriptor
+        {
+            public int seed;
+            public List<IBuildingElement> BaseElements;
+        }
 
 
     }

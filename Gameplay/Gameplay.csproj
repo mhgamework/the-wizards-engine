@@ -129,9 +129,9 @@
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
-    <Reference Include="NSubstitute, Version=1.7.1.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+    <Reference Include="NSubstitute, Version=1.7.2.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NSubstitute.1.7.1.0\lib\NET40\NSubstitute.dll</HintPath>
+      <HintPath>..\packages\NSubstitute.1.7.2.0\lib\NET40\NSubstitute.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
@@ -251,6 +251,8 @@
     <Compile Include="Scattered\Core\PlayerCameraSimulator.cs" />
     <Compile Include="Scattered\Core\PlayerInteractionSimulator.cs" />
     <Compile Include="Scattered\Core\PlayerMovementSimulator.cs" />
+    <Compile Include="Scattered\_Engine\OBJExporter.cs" />
+    <Compile Include="Scattered\_Tests\OBJExporterTest.cs" />
     <Compile Include="Scattered\_Tests\PlayTest.cs" />
     <Compile Include="Scattered\Core\Resource.cs" />
     <Compile Include="Scattered\_Tests\ProcBuilderTest.cs" />
