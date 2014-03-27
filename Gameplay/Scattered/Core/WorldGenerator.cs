@@ -113,10 +113,9 @@ namespace MHGameWork.TheWizards.Scattered.Core
             {
                 var pos = (center + (sampler.Sample() * distanceBetweenIslands)).ToXZ();
                 var isl = level.CreateNewIsland(pos);
-                isl.Descriptor = new IslandDescriptor()
-                                     {
-                                         seed = random.Next(0, 100)
-                                     };
+                var desc = new IslandDescriptor();
+                desc.seed = random.Next(0, 0);
+                isl.Descriptor = desc;
 
                 isl.Node.Relative = Matrix.RotationY((float)random.NextDouble() * 10) * isl.Node.Relative;
 
