@@ -15,7 +15,6 @@ namespace MHGameWork.TheWizards.Scattered._Tests
     [TestFixture]
     public class OBJExporterTest
     {
-        private Matrix transformation;
 
         [Test]
         public void TestExport()

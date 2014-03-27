@@ -58,27 +58,35 @@ namespace MHGameWork.TheWizards.Scattered._Engine
         {
 
             var mathFileName = Path.GetFileNameWithoutExtension(filename) + ".mtl";
+            var mapsPath = Path.GetDirectoryName(filename) + "\\maps";
+            Directory.CreateDirectory(mapsPath);
+
 
             using (var wr = File.CreateText(filename))
             using (var matwr = File.CreateText(Path.ChangeExtension(filename, "mtl")))
-                SaveToFile(mesh, wr, matwr, mathFileName);
+                SaveToFile(mesh, wr, matwr, mathFileName, mapsPath, "maps");
         }
 
-        public void SaveToFile(IMesh mesh, StreamWriter objWr, StreamWriter matWr, string relativeMatPath)
+        public void SaveToFile(IMesh mesh, StreamWriter objWr, StreamWriter matWr, string relativeMatPath, string mapsAbsolutePath, string mapsRelativePath)
         {
             saveObj(mesh, objWr, relativeMatPath);
-            saveMtl(mesh, matWr);
+            saveMtl(mesh, matWr, mapsAbsolutePath, mapsRelativePath);
         }
 
-        private void saveMtl(IMesh mesh, StreamWriter matWr)
+        private void saveMtl(IMesh mesh, StreamWriter matWr, string mapsAbsolutePath, string mapsRelativePath)
         {
             var num = -1;
             foreach (var part in mesh.Parts)
             {
                 num++;
                 matWr.WriteLine("newmtl Material{0}", num);
-                if (part.DiffuseTexture != null)
-                    matWr.WriteLine("   map_Kd {0}", part.DiffuseTexture.FullName);
+                if (part.DiffuseTexture != null && part.DiffuseTexture.Exists)
+                {
+                    var target = mapsAbsolutePath + "\\" + Path.GetFileName(part.DiffuseTexture.FullName);
+                    if (!File.Exists(target))
+                        part.DiffuseTexture.CopyTo(target, false);
+                    matWr.WriteLine("   map_Kd {1}/{0}", part.DiffuseTexture.Name, mapsRelativePath);
+                }
             }
         }
 

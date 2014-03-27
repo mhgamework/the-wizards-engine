@@ -224,7 +224,6 @@
     <Compile Include="Scattered\Model\TravellerType.cs" />
     <Compile Include="Scattered\Rendering\IRenderable.cs" />
     <Compile Include="Scattered\Model\Level.cs" />
-    <Compile Include="Scattered\Rendering\LevelRenderer.cs" />
     <Compile Include="Scattered\SceneGraphing\SceneGraphNode.cs" />
     <Compile Include="Scattered\Core\ScatteredRenderingSimulator.cs" />
     <Compile Include="Scattered\Simulation\LevelSerializer.cs" />

@@ -53,7 +53,6 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             engine.AddSimulator(interIslandMovementSimulator);
 
-            engine.AddSimulator(new LevelRenderer(level));
             engine.AddSimulator(new WorldRenderingSimulator());
         }
 

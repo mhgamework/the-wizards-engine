@@ -166,9 +166,6 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
         public void visualizeLevel()
         {
-            var levelRenderer = new LevelRenderer(level);
-
-            engine.AddSimulator(levelRenderer);
             engine.AddSimulator(new WorldRenderingSimulator());
         }
 

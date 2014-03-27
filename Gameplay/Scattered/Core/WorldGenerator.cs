@@ -115,7 +115,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 pos.Y = random.Next(-2, 3)*5;
                 var isl = level.CreateNewIsland(pos);
                 var desc = new IslandDescriptor();
-                desc.seed = random.Next(0, 10);
+                desc.seed = random.Next(0, 30);
                 isl.Descriptor = desc;
 
                 isl.Node.Relative = Matrix.RotationY((float)random.Next(8) * MathHelper.PiOver4) * isl.Node.Relative;
