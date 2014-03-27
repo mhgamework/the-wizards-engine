@@ -6,14 +6,19 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.Scattered._Tests
 {
-    public class PlayerOnIslandMover
+    /// <summary>
+    /// Allows walking on any surface which is raycastable
+    /// </summary>
+    public class PlayerSurfaceMover
     {
-        private readonly Func<Ray, float?> raycastIsland;
+        private readonly Func<Ray, float?> raycastSurface;
         private Ray downRay;
+        public float WalkHeight { get; private set; }
 
-        public PlayerOnIslandMover( Func<Ray, float?> raycastIsland)
+        public PlayerSurfaceMover(Func<Ray, float?> raycastSurface)
         {
-            this.raycastIsland = raycastIsland;
+            this.raycastSurface = raycastSurface;
+            WalkHeight = 1.8f;
         }
 
         public Vector3 ProcessUserMovement(Vector3 pos)
@@ -33,8 +38,8 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             else
             {
                 downRay = new Ray(newPos, -Vector3.UnitY);
-                var dist = raycastIsland(downRay).Value; //Note: should have a value
-                newPos.Y = downRay.GetPoint(dist).Y + 1.8f;
+                var dist = raycastSurface(downRay).Value; //Note: should have a value
+                newPos.Y = downRay.GetPoint(dist).Y + WalkHeight;
             }
             return newPos;
         }
@@ -56,11 +61,11 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         private bool isAboveIsland(Vector3 pos)
         {
             downRay = new Ray(pos, -Vector3.UnitY);
-            var dist = raycastIsland(downRay);
+            var dist = raycastSurface(downRay);
             return dist.HasValue;
         }
 
-      
+
 
     }
 }

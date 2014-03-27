@@ -26,6 +26,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             this.level = level;
             this.player = player;
             oldPlayerPos = player.Position;
+            islandWalkPlaneRaycaster = new IslandWalkPlaneRaycaster(level);
         }
 
 
@@ -55,6 +56,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         }
 
         private bool shittyToggle = false;
+        private readonly IslandWalkPlaneRaycaster islandWalkPlaneRaycaster;
 
         private void simulateWalking()
         {
@@ -70,10 +72,10 @@ namespace MHGameWork.TheWizards.Scattered.Core
             if (shittyToggle)
             {
                 // Use island transformation
-                var playerOnIslandMover = new PlayerOnIslandMover(onRaycastIsland);
+                var playerOnIslandMover = new PlayerSurfaceMover(islandWalkPlaneRaycaster.onRaycastIsland);
                 newPos = playerOnIslandMover.ProcessUserMovement(oldPlayerPos);
-
             }
+            //TW.Graphics.SpectaterCamera.EnableUserInput = !shittyToggle;
 
             player.Position = newPos;
             TW.Graphics.SpectaterCamera.CameraPosition = newPos;
@@ -83,29 +85,6 @@ namespace MHGameWork.TheWizards.Scattered.Core
             player.Direction = TW.Graphics.SpectaterCamera.CameraDirection;
         }
 
-        private float? onRaycastIsland(Ray p)
-        {
-            return level.Islands.RaycastDetail((i, r) =>
-                {
-                    var localRay = p.Transform(Matrix.Invert(i.Node.Absolute));
-                    i.Descriptor.BaseElements.OfType<Face>().ForEach(f => TW.Graphics.LineManager3D.AddBox(f.GetBoundingBox(), new Color4(0, 0, 0)));
-                    return i.Descriptor.BaseElements.OfType<Face>().RaycastDetail(ProcUtilities.RaycastFace, localRay).DistanceOrNull;
-
-                }, p).DistanceOrNull;
-        }
-
-        private Vector3 validateForWalking(Vector3 newPos)
-        {
-            newPos.Y = 1.8f;
-
-            if (!isWalkablePos(newPos) && isWalkablePos(oldPlayerPos))
-                newPos = oldPlayerPos;
-            return newPos;
-        }
-
-        private bool isWalkablePos(Vector3 pos)
-        {
-            return level.Islands.Any(i => !i.Addons.OfType<Enemy>().Any() && Vector3.Distance(i.Position, pos) < 10);
-        }
+       
     }
 }

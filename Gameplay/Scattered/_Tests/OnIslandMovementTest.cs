@@ -61,7 +61,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             var pos = new Vector3();
             var island = createIsland();
 
-            var playerOnIslandMover = new PlayerOnIslandMover(ray => island.RaycastDetail(ProcUtilities.RaycastFace, ray).DistanceOrNull);
+            var playerOnIslandMover = new PlayerSurfaceMover(ray => island.RaycastDetail(ProcUtilities.RaycastFace, ray).DistanceOrNull);
 
             // gameloop
             engine.AddSimulator(new BasicSimulator(() =>

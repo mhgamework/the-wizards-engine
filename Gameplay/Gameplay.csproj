@@ -208,6 +208,7 @@
     <Compile Include="Navigation2D\WaypointEngineTest.cs" />
     <Compile Include="Navigation2D\WaypointVisualizer.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
+    <Compile Include="Scattered\Core\IslandWalkPlaneRaycaster.cs" />
     <Compile Include="Scattered\Core\WorldGenerator.cs" />
     <Compile Include="Scattered\Model\Construction.cs" />
     <Compile Include="Scattered\ProcBuilder\CachedIslandGenerator.cs" />
@@ -255,7 +256,7 @@
     <Compile Include="Scattered\_Engine\OBJExporter.cs" />
     <Compile Include="Scattered\_Tests\OBJExporterTest.cs" />
     <Compile Include="Scattered\_Tests\OnIslandMovementTest.cs" />
-    <Compile Include="Scattered\_Tests\PlayerOnIslandMover.cs" />
+    <Compile Include="Scattered\_Tests\PlayerSurfaceMover.cs" />
     <Compile Include="Scattered\_Tests\PlayTest.cs" />
     <Compile Include="Scattered\Core\Resource.cs" />
     <Compile Include="Scattered\_Tests\ProcBuilderTest.cs" />
