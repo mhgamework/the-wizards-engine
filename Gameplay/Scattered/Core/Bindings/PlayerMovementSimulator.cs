@@ -1,4 +1,6 @@
-﻿using MHGameWork.TheWizards.Engine;
+﻿using System;
+using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.ProcBuilder;
 using MHGameWork.TheWizards.Scattered.Simulation.Playmode;
@@ -26,7 +28,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             this.level = level;
             this.player = player;
             oldPlayerPos = player.Position;
-            islandWalkPlaneRaycaster = new IslandWalkPlaneRaycaster(level);
+            playerMover = new PlayerMover(new IslandWalkPlaneRaycaster(level));
         }
 
 
@@ -38,6 +40,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 simulateWalking();
             else
                 simulateFlying();
+
         }
 
         private void simulateFlying()
@@ -55,13 +58,13 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         }
 
-        private bool shittyToggle = false;
-        private readonly IslandWalkPlaneRaycaster islandWalkPlaneRaycaster;
+        private bool noclipMode = false;
+        private readonly PlayerMover playerMover;
 
         private void simulateWalking()
         {
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.I))
-                shittyToggle = !shittyToggle;
+                noclipMode = !noclipMode;
             Vector3 newPos;
             // Currently simply use the spectator camera
             if (!oldPlayerPos.Equals(player.Position))
@@ -69,13 +72,10 @@ namespace MHGameWork.TheWizards.Scattered.Core
             else
                 newPos = TW.Graphics.SpectaterCamera.CameraPosition;
 
-            if (shittyToggle)
-            {
-                // Use island transformation
-                var playerOnIslandMover = new PlayerSurfaceMover(islandWalkPlaneRaycaster.onRaycastIsland);
-                newPos = playerOnIslandMover.ProcessUserMovement(oldPlayerPos);
-            }
-            //TW.Graphics.SpectaterCamera.EnableUserInput = !shittyToggle;
+            if (!noclipMode)
+                newPos = playerMover.PerformGameplayMovement(oldPlayerPos);
+
+            //TW.Graphics.SpectaterCamera.EnableUserInput = !noclipMode;
 
             player.Position = newPos;
             TW.Graphics.SpectaterCamera.CameraPosition = newPos;
@@ -84,7 +84,5 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
             player.Direction = TW.Graphics.SpectaterCamera.CameraDirection;
         }
-
-       
     }
 }

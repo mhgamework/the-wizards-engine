@@ -209,6 +209,7 @@
     <Compile Include="Navigation2D\WaypointVisualizer.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
     <Compile Include="Scattered\Core\IslandWalkPlaneRaycaster.cs" />
+    <Compile Include="Scattered\Core\PlayerMover.cs" />
     <Compile Include="Scattered\Core\WorldGenerator.cs" />
     <Compile Include="Scattered\Model\Construction.cs" />
     <Compile Include="Scattered\ProcBuilder\CachedIslandGenerator.cs" />
@@ -226,7 +227,7 @@
     <Compile Include="Scattered\Model\TravellerType.cs" />
     <Compile Include="Scattered\Model\Level.cs" />
     <Compile Include="Scattered\SceneGraphing\SceneGraphNode.cs" />
-    <Compile Include="Scattered\Core\ScatteredRenderingSimulator.cs" />
+    <Compile Include="Scattered\Core\Bindings\ScatteredRenderingSimulator.cs" />
     <Compile Include="Scattered\Simulation\LevelSerializer.cs" />
     <Compile Include="Scattered\Simulation\Playmode\ClusterFlightController.cs" />
     <Compile Include="Scattered\Simulation\Playmode\ClusterPhysicsSimulator.cs" />
@@ -249,10 +250,10 @@
     <Compile Include="Scattered\Core\EnemySpawningSimulator.cs" />
     <Compile Include="Scattered\Core\FlightEngine.cs" />
     <Compile Include="Scattered\_Tests\FlightTest.cs" />
-    <Compile Include="Scattered\Core\IIslandAddon.cs" />
-    <Compile Include="Scattered\Core\PlayerCameraSimulator.cs" />
-    <Compile Include="Scattered\Core\PlayerInteractionSimulator.cs" />
-    <Compile Include="Scattered\Core\PlayerMovementSimulator.cs" />
+    <Compile Include="Scattered\Core\Bindings\IIslandAddon.cs" />
+    <Compile Include="Scattered\Core\Bindings\PlayerCameraSimulator.cs" />
+    <Compile Include="Scattered\Core\Bindings\PlayerInteractionSimulator.cs" />
+    <Compile Include="Scattered\Core\Bindings\PlayerMovementSimulator.cs" />
     <Compile Include="Scattered\_Engine\OBJExporter.cs" />
     <Compile Include="Scattered\_Tests\OBJExporterTest.cs" />
     <Compile Include="Scattered\_Tests\OnIslandMovementTest.cs" />

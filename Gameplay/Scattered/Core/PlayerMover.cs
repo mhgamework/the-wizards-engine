@@ -1,0 +1,68 @@
+using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Scattered._Tests;
+using SlimDX;
+using SlimDX.DirectInput;
+
+namespace MHGameWork.TheWizards.Scattered.Core
+{
+    public class PlayerMover
+    {
+        private readonly IslandWalkPlaneRaycaster islandWalkPlaneRaycaster;
+
+        public PlayerMover(IslandWalkPlaneRaycaster islandWalkPlaneRaycaster)
+        {
+            this.islandWalkPlaneRaycaster = islandWalkPlaneRaycaster;
+            playerOnIslandMover = new PlayerSurfaceMover(islandWalkPlaneRaycaster.onRaycastIsland);
+
+        }
+
+        public Vector3 PerformGameplayMovement(Vector3 currentPos)
+        {
+            Vector3 newPos;
+            if (tryPerformHookJump(currentPos, out newPos))
+            {
+                currentPos = newPos;
+                return currentPos;
+            }
+
+            newPos = playerOnIslandMover.ProcessUserMovement(currentPos);
+            return newPos;
+        }
+
+
+        private Vector3? jumpTarget;
+        private PlayerSurfaceMover playerOnIslandMover;
+
+        private bool tryPerformHookJump(Vector3 currentPos, out Vector3 newPos)
+        {
+            newPos = new Vector3();
+
+            if (jumpTarget != null)
+            {
+                if (Vector3.Distance(jumpTarget.Value, currentPos) < 2)
+                {
+                    newPos = jumpTarget.Value;
+                    jumpTarget = null;
+                    return true;
+                }
+                var dir = Vector3.Normalize(jumpTarget.Value - currentPos);
+                newPos = currentPos + dir * TW.Graphics.Elapsed * 30;
+                return true;
+            }
+
+            var ray = TW.Data.Get<CameraInfo>().GetCenterScreenRay();
+            var raycast = islandWalkPlaneRaycaster.onRaycastIsland(ray);
+            if (raycast == null) return false;
+            var point = ray.GetPoint(raycast.Value);
+            TW.Graphics.LineManager3D.AddCenteredBox(point, 1, new Color4(1, 1, 0));
+
+            if (!TW.Graphics.Keyboard.IsKeyPressed(Key.Space)) return false;
+
+            newPos = point;
+            newPos.Y += playerOnIslandMover.WalkHeight;
+
+            jumpTarget = newPos;
+            return false;
+        }
+    }
+}
