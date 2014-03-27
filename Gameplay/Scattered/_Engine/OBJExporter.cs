@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using Castle.Core.Internal;
@@ -9,6 +10,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.Scattered._Engine
 {
+    /// <summary>
+    /// TODO: WARNING: WILL probably cause problems when using numbers in the meshes larger than 1000 due to number seperators
+    /// </summary>
     public class OBJExporter
     {
         public interface IMesh
@@ -80,11 +84,13 @@ namespace MHGameWork.TheWizards.Scattered._Engine
 
         private static void saveObj(IMesh mesh, StreamWriter wr, string mtlRelativePath)
         {
+            var cult = CultureInfo.GetCultureInfo("en-US").NumberFormat;
+
             wr.WriteLine("mtllib {0}", mtlRelativePath);
 
-            mesh.Parts.SelectMany(p => p.Positions).ForEach(p => wr.WriteLine("v {0:G4} {1:G4} {2:G4}", p.X, p.Y, p.Z));
-            mesh.Parts.SelectMany(p => p.Normals).ForEach(p => wr.WriteLine("vn {0:G4} {1:G4} {2:G4}", p.X, p.Y, p.Z));
-            mesh.Parts.SelectMany(p => p.Texcoords).ForEach(p => wr.WriteLine("vt {0:G4} {1:G4} {2:G4}", p.X, p.Y, 0));
+            mesh.Parts.SelectMany(p => p.Positions).ForEach(p => wr.WriteLine(string.Format(cult, "v {0:F4} {1:F4} {2:F4}", p.X, p.Y, p.Z)));
+            mesh.Parts.SelectMany(p => p.Normals).ForEach(p => wr.WriteLine(string.Format(cult, "vn {0:F4} {1:F4} {2:F4}", p.X, p.Y, p.Z)));
+            mesh.Parts.SelectMany(p => p.Texcoords).ForEach(p => wr.WriteLine(string.Format(cult, "vt {0:F4} {1:F4} {2:F4}", p.X, p.Y, 0)));
 
             var num = -1;
             var totalCount = 1;
