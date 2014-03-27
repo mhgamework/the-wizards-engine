@@ -213,6 +213,7 @@
     <Compile Include="Scattered\ProcBuilder\CachedIslandGenerator.cs" />
     <Compile Include="Scattered\ProcBuilder\IIslandGenerator.cs" />
     <Compile Include="Scattered\ProcBuilder\IslandGenerator.cs" />
+    <Compile Include="Scattered\ProcBuilder\ProcUtilities.cs" />
     <Compile Include="Scattered\SceneGraphing\EntityInteractableNode.cs" />
     <Compile Include="Scattered\SceneGraphing\EntityNode.cs" />
     <Compile Include="Scattered\Model\IConstructionAction.cs" />
@@ -253,6 +254,8 @@
     <Compile Include="Scattered\Core\PlayerMovementSimulator.cs" />
     <Compile Include="Scattered\_Engine\OBJExporter.cs" />
     <Compile Include="Scattered\_Tests\OBJExporterTest.cs" />
+    <Compile Include="Scattered\_Tests\OnIslandMovementTest.cs" />
+    <Compile Include="Scattered\_Tests\PlayerOnIslandMover.cs" />
     <Compile Include="Scattered\_Tests\PlayTest.cs" />
     <Compile Include="Scattered\Core\Resource.cs" />
     <Compile Include="Scattered\_Tests\ProcBuilderTest.cs" />

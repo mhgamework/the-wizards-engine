@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
 
             var ent = level.CreateEntityNode(node.CreateChild());
-            ent.Node.Relative = Matrix.Scaling(2, 2, 2) * ent.Node.Relative;
+            //ent.Node.Relative = Matrix.Scaling(2, 2, 2) * ent.Node.Relative;
             entity = ent.Entity;
             //ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Island_Large");
         }

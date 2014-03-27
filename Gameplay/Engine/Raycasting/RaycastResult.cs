@@ -43,6 +43,11 @@ namespace MHGameWork.TheWizards.Engine.Raycasting
             get { return distance.HasValue; }
         }
 
+        public float? DistanceOrNull
+        {
+            get { return distance; }
+        }
+
         public bool IsCloser(RaycastResult other)
         {
             if (IsHit)

@@ -38,6 +38,11 @@ namespace MHGameWork.TheWizards.Scattered._Engine
 
         public static T Raycast<T>(this IEnumerable<T> e, Func<T, Ray, float?> intersect, Ray ray) where T : class
         {
+            var closest = RaycastDetail(e, intersect, ray);
+            return closest.IsHit ? (T)closest.Object : null;
+        }
+        public static RaycastResult RaycastDetail<T>(this IEnumerable<T> e, Func<T, Ray, float?> intersect, Ray ray) where T : class
+        {
             var closest = new RaycastResult();
             var newResult = new RaycastResult();
 
@@ -57,7 +62,7 @@ namespace MHGameWork.TheWizards.Scattered._Engine
 
             }
 
-            return closest.IsHit ? (T)closest.Object : null;
+            return closest;
         }
     }
 }

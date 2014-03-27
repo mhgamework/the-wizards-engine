@@ -32,7 +32,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         {
             Console.WriteLine("Generating world...");
             generateClusters(new Vector2());
-            generateClusters(new Vector2(1, 0));
+            //generateClusters(new Vector2(1, 0));
 
             Console.WriteLine("Generating meshes...");
 
@@ -41,7 +41,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             Console.WriteLine("Relaxing island positions ...");
 
             relaxPosition();
-        }
+        }   
 
         private void generateClusters(Vector2 offset)
         {
@@ -51,7 +51,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             offset *= numCells * cellSize;
 
             var sampler = new StratifiedSampler(random, numCells);
-            var nbClusters = 40;
+            var nbClusters = 1;
             for (int i = 0; i < nbClusters; i++)
             {
                 var pos = offset + (sampler.Sample() * cellSize);

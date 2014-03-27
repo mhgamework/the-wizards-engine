@@ -1,10 +1,15 @@
 ﻿using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Scattered.Model;
+using MHGameWork.TheWizards.Scattered.ProcBuilder;
 using MHGameWork.TheWizards.Scattered.Simulation.Playmode;
+using MHGameWork.TheWizards.Scattered._Tests;
+using ProceduralBuilder.Shapes;
 using SlimDX;
 using SlimDX.DirectInput;
 using System.Linq;
 using DirectX11;
+using Castle.Core.Internal;
+using MHGameWork.TheWizards.Scattered._Engine;
 
 namespace MHGameWork.TheWizards.Scattered.Core
 {
@@ -63,7 +68,12 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 newPos = TW.Graphics.SpectaterCamera.CameraPosition;
 
             if (shittyToggle)
-                newPos = validateForWalking(newPos);
+            {
+                // Use island transformation
+                var playerOnIslandMover = new PlayerOnIslandMover(onRaycastIsland);
+                newPos = playerOnIslandMover.ProcessUserMovement(oldPlayerPos);
+
+            }
 
             player.Position = newPos;
             TW.Graphics.SpectaterCamera.CameraPosition = newPos;
@@ -71,6 +81,17 @@ namespace MHGameWork.TheWizards.Scattered.Core
             oldPlayerPos = player.Position;
 
             player.Direction = TW.Graphics.SpectaterCamera.CameraDirection;
+        }
+
+        private float? onRaycastIsland(Ray p)
+        {
+            return level.Islands.RaycastDetail((i, r) =>
+                {
+                    var localRay = p.Transform(Matrix.Invert(i.Node.Absolute));
+                    i.Descriptor.BaseElements.OfType<Face>().ForEach(f => TW.Graphics.LineManager3D.AddBox(f.GetBoundingBox(), new Color4(0, 0, 0)));
+                    return i.Descriptor.BaseElements.OfType<Face>().RaycastDetail(ProcUtilities.RaycastFace, localRay).DistanceOrNull;
+
+                }, p).DistanceOrNull;
         }
 
         private Vector3 validateForWalking(Vector3 newPos)
