@@ -7,7 +7,6 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.Scattered.Model;
-using MHGameWork.TheWizards.Scattered.Rendering;
 using MHGameWork.TheWizards.Scattered.Simulation;
 using NSubstitute;
 using NSubstitute.Core;

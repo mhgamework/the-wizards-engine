@@ -7,7 +7,6 @@ using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting;
 using MHGameWork.TheWizards.Scattered.Core;
 using MHGameWork.TheWizards.Scattered.Model;
-using MHGameWork.TheWizards.Scattered.Rendering;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered.Simulation;
 using MHGameWork.TheWizards.Scattered.Simulation.Playmode;

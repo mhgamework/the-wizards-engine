@@ -4,7 +4,6 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
-using MHGameWork.TheWizards.Scattered.Rendering;
 using MHGameWork.TheWizards.Scattered._Engine;
 using NUnit.Framework;
 using SlimDX;
