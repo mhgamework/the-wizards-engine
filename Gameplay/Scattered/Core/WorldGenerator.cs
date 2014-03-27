@@ -24,8 +24,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         }
 
-        private float averageIslandSize = 80;
-        private int distanceBetweenIslands = 80;
+        private float averageIslandSize = 40;
+        private int distanceBetweenIslands = 40;
         private int nbIslandsPerCluster = 10;
 
         public void Generate()
@@ -51,7 +51,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             offset *= numCells * cellSize;
 
             var sampler = new StratifiedSampler(random, numCells);
-            var nbClusters = 1;
+            var nbClusters = 30;
             for (int i = 0; i < nbClusters; i++)
             {
                 var pos = offset + (sampler.Sample() * cellSize);
