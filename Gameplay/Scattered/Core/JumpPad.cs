@@ -13,15 +13,19 @@ namespace MHGameWork.TheWizards.Scattered.Core
     {
         private readonly Level level;
 
-        private Vector3 padPos = new Vector3();
-        private Vector3 target = new Vector3(20, 0, 0);
+        private Vector3 padPos;
 
-        private float timeTravelled = 0f;
-        private float timeToTravel = 0f;
+        private JumpPad targetJumpPad;
+        public JumpPad TargetJumpPad { get { return targetJumpPad; } set { targetJumpPad = value; } }
+
+        private Vector3 targetPos = new Vector3(50, 2, 0);
+
+        private float timeTravelled;
+        private float timeToTravel;
 
         private const float travelDuration = 3f;
         private const float g = 9.81f;
-        
+
 
         public JumpPad(Level level, SceneGraphNode node)
         {
@@ -35,43 +39,42 @@ namespace MHGameWork.TheWizards.Scattered.Core
                         .Alter(c => c.CreateInteractable(onInteract));
         }
 
-        
-
         private void onInteract()
         {
+            if (targetJumpPad == null)
+                return;
+
             Quaternion r;
             Vector3 s;
             Node.Absolute.Decompose(out s, out r, out padPos);
+            targetJumpPad.Node.Absolute.Decompose(out s, out r, out targetPos);
+            targetPos += new Vector3(0, 2, 0);
+
             calcInitialSpeed(travelDuration);
             timeToTravel = travelDuration;
         }
 
         /*
         Fx = Vox*t + Ox;
-   Fy = -0.5 * g * t * t + Voy*t + Oy;
+        Fy = -0.5 * g * t * t + Voy*t + Oy;
 
- * Known values:
+        * Known values:
+        P is the target point.
+        O is the origin point.
+         g is gravity.
 
-   P is the target point.
-   O is the origin point.
-   g is gravity.
+        * Unknown values:
+         Vo is Initial Velocity
+         t is time needed to impact.
+         we can set 't' with a fixed flight time -> 'duration'
+         so:
+               (Px-Ox)
+        Vox = --------
+               duration
 
- * Unknown values:
-
-   Vo is Initial Velocity
-   t is time needed to impact.
-
-   we can set 't' with a fixed flight time -> 'duration'
-
-
-   so:
-         (Px-Ox)
-   Vox = --------
-         duration
-
-         Py + 0.5* g * duration * duration - Oy 
-   Voy = ---------------------------------------
-                  duration
+                 Py + 0.5* g * duration * duration - Oy 
+        Voy = ---------------------------------------
+                          duration
          */
 
         private float v0x;
@@ -79,17 +82,18 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         private void calcInitialSpeed(float duration)
         {
-            var dir = target - padPos;
+            var dir = targetPos - padPos;
             dir.Y = 0;
             var xDist = dir.Length();
 
             v0x = xDist / duration;
-            v0y = (target.Y + 0.5f * g * duration * duration - padPos.Y) / duration;
+            v0y = (targetPos.Y + 0.5f * g * duration * duration - padPos.Y) / duration;
         }
 
         private Vector3 getPosAtTime(float t)
         {
-            var dir = target - padPos;
+            var dir = targetPos - padPos;
+            dir.Normalize();
             var fx = v0x * t;
             var fy = -0.5f * g * t * t + v0y * t;
             return new Vector3(dir.X * fx + padPos.X, fy + padPos.Y, dir.Z * fx + padPos.Z);
@@ -103,6 +107,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 timeTravelled += TW.Graphics.Elapsed;
                 var newPos = getPosAtTime(timeTravelled);
                 level.LocalPlayer.Position += (newPos - level.LocalPlayer.Position);
+
             }
             else
             {

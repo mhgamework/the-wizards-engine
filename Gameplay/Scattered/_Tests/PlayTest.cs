@@ -164,16 +164,21 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             engine.AddSimulator(new PlayerInteractionSimulator(level, player));
             engine.AddSimulator(new ClusterPhysicsSimulator(level));
             engine.AddSimulator(new PlayerCameraSimulator(player));
-            engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes,() => level.Islands.SelectMany(c => c.Addons)));
+            engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes, () => level.Islands.SelectMany(c => c.Addons)));
             engine.AddSimulator(new WorldRenderingSimulator());
 
             player.Position = new Vector3(0, 3, 0);
 
             var i = level.CreateNewIsland(new Vector3(0, 0, 0));
-            i.AddAddon(new JumpPad(level, i.Node.CreateChild()));
+            var jumpPad01 = new JumpPad(level, i.Node.CreateChild());
+            i.AddAddon(jumpPad01);
 
-            i = level.CreateNewIsland(new Vector3(20, 0, 0));
-            i.AddAddon(new JumpPad(level, i.Node.CreateChild()));
+            i = level.CreateNewIsland(new Vector3(0, 50, 150));
+            var jumpPad02 = new JumpPad(level, i.Node.CreateChild());
+            i.AddAddon(jumpPad02);
+
+            jumpPad01.TargetJumpPad = jumpPad02;
+            jumpPad02.TargetJumpPad = jumpPad01;
 
         }
     }
