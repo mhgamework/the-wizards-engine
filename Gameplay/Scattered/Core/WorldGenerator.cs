@@ -24,18 +24,15 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         }
 
-
+        private float averageIslandSize = 35;
+        private int distanceBetweenIslands = 35;
+        private int nbIslandsPerCluster = 10;
 
         public void Generate()
         {
             Console.WriteLine("Generating world...");
-            var sampler = new StratifiedSampler(random, 16);
-            var nbClusters = 1;
-            for (int i = 0; i < nbClusters; i++)
-            {
-                var pos = (sampler.Sample() * 40);
-                GenerateCluster(pos);
-            }
+            generateClusters(new Vector2());
+            generateClusters(new Vector2(1, 0));
 
             Console.WriteLine("Generating meshes...");
 
@@ -46,9 +43,25 @@ namespace MHGameWork.TheWizards.Scattered.Core
             relaxPosition();
         }
 
+        private void generateClusters(Vector2 offset)
+        {
+            int numCells = 16;
+
+            var cellSize = 2 * averageIslandSize;
+            offset *= numCells * cellSize;
+
+            var sampler = new StratifiedSampler(random, numCells);
+            var nbClusters = 30;
+            for (int i = 0; i < nbClusters; i++)
+            {
+                var pos = offset + (sampler.Sample() * cellSize);
+                GenerateCluster(pos);
+            }
+        }
+
         private void generateIslandMeshes()
         {
-            var islandGenerator = new CachedIslandGenerator(new IslandGenerator());
+            var islandGenerator = new CachedIslandGenerator(new IslandGenerator(), new OBJExporter());
 
             Console.WriteLine("Generating island bases");
             level.Islands.ForEach(i =>
@@ -75,13 +88,13 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private void relaxPosition()
         {
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
             {
                 foreach (var a in level.Islands)
                     foreach (var b in level.Islands)
                     {
                         if (a == b) continue;
-                        if (Vector3.Distance(a.Position, b.Position) > 50) continue;
+                        if (Vector3.Distance(a.Position, b.Position) > averageIslandSize * 1.2f) continue;
                         var dir = a.Position - b.Position;
                         dir.Normalize();
                         a.Position += dir;
@@ -95,15 +108,14 @@ namespace MHGameWork.TheWizards.Scattered.Core
         {
             var sampler = new StratifiedSampler(random, 6);
 
-            var nbIslandsPerCluster = 10;
-            var distanceBetweenIslands = 35;
+
             for (int i = 0; i < nbIslandsPerCluster; i++)
             {
                 var pos = (center + (sampler.Sample() * distanceBetweenIslands)).ToXZ();
                 var isl = level.CreateNewIsland(pos);
                 isl.Descriptor = new IslandDescriptor()
                                      {
-                                         seed = random.Next(int.MinValue, int.MaxValue)
+                                         seed = random.Next(0, 100)
                                      };
 
                 isl.Node.Relative = Matrix.RotationY((float)random.NextDouble() * 10) * isl.Node.Relative;

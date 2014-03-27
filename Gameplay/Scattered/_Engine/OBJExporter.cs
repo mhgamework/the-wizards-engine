@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using Castle.Core.Internal;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Rendering;
+using NSubstitute;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Scattered._Engine
@@ -20,6 +22,32 @@ namespace MHGameWork.TheWizards.Scattered._Engine
             Vector3[] Positions { get; }
             Vector3[] Normals { get; }
             Vector2[] Texcoords { get; }
+        }
+
+        public IMesh ConvertFromTWMesh(TheWizards.Rendering.IMesh mesh)
+        {
+            var objMesh = Substitute.For<OBJExporter.IMesh>();
+            objMesh.Parts.Returns(mesh.GetCoreData().Parts.Select(part =>
+                {
+                    var ret = Substitute.For<OBJExporter.IMeshPart>();
+                    ret.DiffuseTexture.Returns(part.MeshMaterial.DiffuseMap == null ? null : new FileInfo(part.MeshMaterial.DiffuseMap.GetCoreData().DiskFilePath));
+                    var transformation = part.ObjectMatrix.dx();
+                    ret.Positions.Returns(
+                        Vector3.TransformCoordinate(
+                            part.MeshPart.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position).Select(
+                                v => v.dx()).ToArray(),
+                            ref transformation));
+                    ret.Normals.Returns(
+                        Vector3.TransformNormal(
+                            part.MeshPart.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Normal).Select(
+                                v => v.dx()).ToArray(),
+                            ref transformation));
+                    ret.Texcoords.Returns(
+                        part.MeshPart.GetGeometryData().GetSourceVector2(MeshPartGeometryData.Semantic.Texcoord).Select(
+                            v => v.ToSlimDX()).ToArray());
+                    return ret;
+                }));
+            return objMesh;
         }
 
         public void SaveToFile(IMesh mesh, string filename)

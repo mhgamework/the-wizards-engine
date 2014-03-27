@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using SlimDX;
 using System.Linq;
+using DirectX11;
 
 namespace MHGameWork.TheWizards.Scattered.Core
 {
@@ -38,6 +39,20 @@ namespace MHGameWork.TheWizards.Scattered.Core
             foreach (var n in getAllEntityNodes())
             {
                 n.UpdateForRendering();
+
+                var dist = Vector3.Distance(n.Node.Absolute.GetTranslation(),
+                                            TW.Graphics.Camera.ViewInverse.GetTranslation());
+
+                n.Entity.Visible = dist < 500;
+
+                if (!n.Entity.Visible)
+                {
+                    var pos = n.Node.Absolute.GetTranslation();
+                    TW.Graphics.LineManager3D.AddLine(pos, pos + Vector3.UnitY * 20, new Color4(0, 0, 1));
+
+                }
+
+
             }
             foreach (var a in getAllAddons().ToArray()) // This toarray is a temp bugfix due to the fact that prepareforrendering can create addons :s
             {

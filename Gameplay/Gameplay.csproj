@@ -210,6 +210,8 @@
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
     <Compile Include="Scattered\Core\WorldGenerator.cs" />
     <Compile Include="Scattered\Model\Construction.cs" />
+    <Compile Include="Scattered\ProcBuilder\CachedIslandGenerator.cs" />
+    <Compile Include="Scattered\ProcBuilder\IIslandGenerator.cs" />
     <Compile Include="Scattered\ProcBuilder\IslandGenerator.cs" />
     <Compile Include="Scattered\SceneGraphing\EntityInteractableNode.cs" />
     <Compile Include="Scattered\SceneGraphing\EntityNode.cs" />
