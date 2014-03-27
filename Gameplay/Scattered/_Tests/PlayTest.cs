@@ -113,7 +113,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         private void addPlaySimulators(Level level, ScatteredPlayer player)
         {
             engine.AddSimulator(new EnemySpawningSimulator(level, 0.1f));
-            engine.AddSimulator(new PlayerMovementSimulator(level,player));
+            engine.AddSimulator(new PlayerMovementSimulator(level, player));
             engine.AddSimulator(new PlayerInteractionSimulator(level, player));
             engine.AddSimulator(new ClusterPhysicsSimulator(level));
             engine.AddSimulator(new PlayerCameraSimulator(player));
@@ -151,6 +151,30 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             gen.Generate();
 
             TW.Graphics.SpectaterCamera.FarClip = 2000;
+        }
+
+
+        [Test]
+        public void TestJumpPad()
+        {
+            var level = new Level();
+            var player = level.LocalPlayer;
+
+            engine.AddSimulator(new PlayerMovementSimulator(level, player));
+            engine.AddSimulator(new PlayerInteractionSimulator(level, player));
+            engine.AddSimulator(new ClusterPhysicsSimulator(level));
+            engine.AddSimulator(new PlayerCameraSimulator(player));
+            engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes,() => level.Islands.SelectMany(c => c.Addons)));
+            engine.AddSimulator(new WorldRenderingSimulator());
+
+            player.Position = new Vector3(0, 3, 0);
+
+            var i = level.CreateNewIsland(new Vector3(0, 0, 0));
+            i.AddAddon(new JumpPad(level, i.Node.CreateChild()));
+
+            i = level.CreateNewIsland(new Vector3(20, 0, 0));
+            i.AddAddon(new JumpPad(level, i.Node.CreateChild()));
+
         }
     }
 }
