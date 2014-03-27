@@ -34,10 +34,9 @@ namespace MHGameWork.TheWizards.Scattered.ProcBuilder
             var islandGen = new IslandGenerator00401 { ParentGenerator = baseGen, Builder = builder };
             islandGen.Initialize();
             baseGen.GetProperty("generator").SetValue(islandGen);
+            islandGen.GetProperty("maxdepth").SetValue(15);
 
-            var levelVisualizer = new BuilderNodeLevelViewer(builder);
             builder.Build(islandBase, baseGen.Generate(), seed);
-            levelVisualizer.ChangeCurrentLevel(100);
 
             return dummyRenderer.GetBatchedMesh();
         }
