@@ -6,6 +6,7 @@ using ProceduralBuilder.Building;
 using ProceduralBuilder.Rendering;
 using ProceduralBuilder.RulebaseModules.RulebaseGenerators;
 using ProceduralBuilder.Scattered;
+using ProceduralBuilder.Shapes;
 using ProceduralBuilder.Tools;
 using SlimDX;
 
@@ -26,19 +27,60 @@ namespace MHGameWork.TheWizards.Scattered.ProcBuilder
 
         public IMesh GetIslandMesh(List<IBuildingElement> islandBase, int seed)
         {
-            var dummyRenderer = new DummyRenderer();
-            var builder = new Builder(dummyRenderer);
-            var baseGen = new BaseGenerator { RandomSeed = seed };
-            baseGen.Initialize();
-            baseGen.GetProperty("startSemId").SetValue(startSemId);
-            var islandGen = new IslandGenerator00401 { ParentGenerator = baseGen, Builder = builder };
-            islandGen.Initialize();
-            baseGen.GetProperty("generator").SetValue(islandGen);
-            islandGen.GetProperty("maxdepth").SetValue(15);
+            IMesh ret;
+            List<IBuildingElement> temp01;
+            List<IBuildingElement> temp02;
+            List<IBuildingElement> temp03;
+            GetIslandParts(islandBase, seed, true, out ret, out temp01, out temp02, out temp03);
+            return ret;
+        }
 
-            builder.Build(islandBase, baseGen.Generate(), seed);
+        public List<IBuildingElement> GetNavMesh(List<IBuildingElement> islandBase, int seed)
+        {
+            IMesh temp01;
+            List<IBuildingElement> ret;
+            List<IBuildingElement> temp02;
+            List<IBuildingElement> temp03;
+            GetIslandParts(islandBase, seed, false, out temp01, out ret, out temp02, out temp03);
+            return ret;
+        }
 
-            return dummyRenderer.GetBatchedMesh();
+        public void GetIslandParts(List<IBuildingElement> islandBase, int seed, bool generateIslandMesh, out IMesh islandMesh, out List<IBuildingElement> navMesh, out List<IBuildingElement> buildMesh, out List<IBuildingElement> borderMesh)
+        {
+            const string grassMeshSemId = "GrassMesh";
+            const string dirtMeshSemId = "DirtMesh";
+            const string walkableSemId = "Walkable";
+            const string buildableSemId = "Buildable";
+            const string borderSemId = "Border";
+            var structureBuilder = new Builder(new DummyRenderer());
+            var meshDummyRenderer = new DummyRenderer();
+            var meshBuilder = new Builder(meshDummyRenderer);
+
+            var structureGen = new IslandStructureGenerator { RandomSeed = seed};
+            structureGen.Initialize();
+            structureGen.GetProperty("startSemId").SetValue(startSemId);
+            structureGen.GetProperty("topMeshSemId").SetValue(grassMeshSemId);
+            structureGen.GetProperty("dirtMeshSemId").SetValue(dirtMeshSemId);
+            structureGen.GetProperty("walkableTopSemId").SetValue(walkableSemId);
+            structureGen.GetProperty("borderTopSemId").SetValue(borderSemId);
+            structureGen.GetProperty("buildSemId").SetValue(buildableSemId);
+            structureBuilder.Build(islandBase, structureGen.Generate(), seed);
+            var allStructureShapes = structureBuilder.GetTerminalShapes();
+
+            if(generateIslandMesh)
+            {
+                var meshGen = new IslandMeshPlacer { RandomSeed = seed };
+                meshGen.Initialize();
+                meshGen.GetProperty("topMeshSemId").SetValue(grassMeshSemId);
+                meshGen.GetProperty("dirtMeshSemId").SetValue(dirtMeshSemId);
+                var shapesToMesh = allStructureShapes.Where(e => ((Face)e).GetSemanticId() == grassMeshSemId || ((Face)e).GetSemanticId() == dirtMeshSemId).ToList();
+                meshBuilder.Build(shapesToMesh, meshGen.Generate(), seed);
+            }
+
+            islandMesh = meshDummyRenderer.GetBatchedMesh();
+            navMesh = allStructureShapes.Where(e => ((Face)e).GetSemanticId() == walkableSemId).ToList();
+            buildMesh = allStructureShapes.Where(e => ((Face)e).GetSemanticId() == buildableSemId).ToList();
+            borderMesh = allStructureShapes.Where(e => ((Face)e).GetSemanticId() == borderSemId).ToList();
         }
 
 

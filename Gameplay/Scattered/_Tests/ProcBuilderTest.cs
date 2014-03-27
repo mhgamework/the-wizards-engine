@@ -11,6 +11,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.Rendering.Text;
 using MHGameWork.TheWizards.Scattered.ProcBuilder;
@@ -375,274 +376,7 @@ namespace ProceduralBuilder.Test
 
             return new RuleBase { Rules = rules };
         }
-
-        [Test]
-        public void TestIslandModulesV004()
-        {
-            var currentSeed = 1;
-
-            const string startSemId = "startSemId";
-
-            #region init
-
-            hideAxes = true;
-            initializeTW();
-            var renderer = new TWRenderWrapper(deferredRenderer, game);
-
-            var editorCam = new EditorCamera(game);
-            game.Camera = editorCam;
-            game.Mouse.CursorEnabled = true;
-
-            var startShapes = new List<IBuildingElement>();
-            rnd.Reset(currentSeed);
-            var center = new Vector3(-5, 0, 5);
-            var faceSize = new Vector2(10, 10);
-            var face = new Face(startSemId, Matrix.RotationX(-(float)Math.PI * 0.5f) * Matrix.RotationY((float)Math.PI) * Matrix.Translation(center.X + faceSize.X * 0.5f, 0, center.Z - faceSize.Y * 0.5f), faceSize);
-            startShapes.Add(face);
-
-            var builder = new Builder(renderer);
-            var exporter = new EasyExporter();
-
-            #endregion init
-
-            var baseGen = new BaseGenerator { RandomSeed = currentSeed };
-            baseGen.Initialize();
-            baseGen.GetProperty("startSemId").SetValue(startSemId);
-            var islandGen = new IslandGenerator004 { ParentGenerator = baseGen, Builder = builder };
-            islandGen.Initialize();
-            baseGen.GetProperty("generator").SetValue(islandGen);
-
-            builder.Build(startShapes, baseGen.Generate(), rnd.GetCurrentSeed());
-
-            var guiListener = new ElementListener();
-            var parameterGroupBox = new ParameterGroupBox(guiListener, new GeneratorDatabase());
-            parameterGroupBox.Show();
-            parameterGroupBox.Initialize(baseGen);
-
-            var needRebuild = false;
-            game.GameLoopEvent += delegate
-            {
-                if (game.Keyboard.IsKeyPressed(Key.F))
-                {
-                    //exporter.ExportScene(renderer.GetCurrentMeshes(), "Islands_" + currentSeed);
-                }
-
-                if (guiListener.Changed)
-                {
-                    needRebuild = true;
-                }
-                if (game.Keyboard.IsKeyPressed(Key.R))
-                {
-                    currentSeed = rnd.GetRandInt(1, int.MaxValue);
-                    needRebuild = true;
-                }
-
-                if (needRebuild)
-                {
-                    builder.Purge();
-                    rnd.Reset(currentSeed);
-                    baseGen.RandomSeed = currentSeed;
-                    builder.Build(startShapes, baseGen.Generate(), rnd.GetCurrentSeed());
-                    needRebuild = false;
-                }
-
-                if (game.Keyboard.IsKeyPressed(Key.L))
-                {
-                    extraLight.LightPosition = editorCam.CameraPosition;
-                }
-                batchText = renderer.BusyBatching ? "Building batch..." : "";
-                editorCam.Update(game.Elapsed);
-                renderer.Update();
-                update();
-                cameraLight.LightPosition = new Vector3(10, 15, 5);
-            };
-
-            game.Run();
-        }
-
-        [Test]
-        public void TestIslandModulesV00402beta()
-        {
-            var currentSeed = 1;
-
-            const string startSemId = "startSemId";
-
-            #region init
-
-            hideAxes = true;
-            initializeTW();
-            var renderer = new TWRenderWrapper(deferredRenderer, game);
-
-            var editorCam = new EditorCamera(game);
-            game.Camera = editorCam;
-            game.Mouse.CursorEnabled = true;
-
-            var startShapes = new List<IBuildingElement>();
-            rnd.Reset(currentSeed);
-            var center = new Vector3(-5, 0, 5);
-            var faceSize = new Vector2(10, 10);
-            var face = new Face(startSemId, Matrix.RotationX(-(float)Math.PI * 0.5f) * Matrix.RotationY((float)Math.PI) * Matrix.Translation(center.X + faceSize.X * 0.5f, 0, center.Z - faceSize.Y * 0.5f), faceSize);
-            startShapes.Add(face);
-
-            var builder = new Builder(renderer);
-
-            #endregion init
-
-            const string topStartSemId = "TopFace";
-
-            var baseGen = new BaseGenerator { RandomSeed = currentSeed };
-            baseGen.Initialize();
-            baseGen.GetProperty("startSemId").SetValue(startSemId);
-            var islandGen = new IslandGenerator004 { ParentGenerator = baseGen, Builder = builder };
-            islandGen.Initialize();
-            islandGen.GetProperty("endSemId").SetValue(topStartSemId);
-            baseGen.GetProperty("generator").SetValue(islandGen);
-
-            var topBuilder = new Builder(renderer);
-            var topGen = new BlockAllocator { RandomSeed = currentSeed };
-            topGen.Builder = topBuilder;
-            topGen.Initialize();
-            topGen.GetProperty("startSemId").SetValue(topStartSemId);
-
-
-
-            builder.Build(startShapes, baseGen.Generate(), rnd.GetCurrentSeed());
-            topBuilder.Build(builder.GetTerminalShapes(), topGen.Generate(), rnd.GetCurrentSeed());
-            /*var shapes = builder.GetTerminalShapes();
-            builder.Purge();
-            foreach (var shape in shapes)
-            {
-                renderer.Render((Face)shape);
-            }*/
-
-            var guiListener = new ElementListener();
-            var parameterGroupBox = new ParameterGroupBox(guiListener, new GeneratorDatabase());
-            parameterGroupBox.Show();
-            parameterGroupBox.Initialize(baseGen);
-
-            var needRebuild = false;
-            game.GameLoopEvent += delegate
-            {
-                if (game.Keyboard.IsKeyPressed(Key.F))
-                {
-                    //exporter.ExportScene(renderer.GetCurrentMeshes(), "Islands_" + currentSeed);
-                }
-
-                if (guiListener.Changed)
-                {
-                    needRebuild = true;
-                }
-                if (game.Keyboard.IsKeyPressed(Key.R))
-                {
-                    currentSeed = rnd.GetRandInt(1, int.MaxValue);
-                    needRebuild = true;
-                }
-
-                if (needRebuild)
-                {
-                    builder.Purge();
-                    rnd.Reset(currentSeed);
-                    baseGen.RandomSeed = currentSeed;
-                    builder.Build(startShapes, baseGen.Generate(), rnd.GetCurrentSeed());
-                    needRebuild = false;
-                }
-
-                if (game.Keyboard.IsKeyPressed(Key.L))
-                {
-                    extraLight.LightPosition = editorCam.CameraPosition;
-                }
-                batchText = renderer.BusyBatching ? "Building batch..." : "";
-                editorCam.Update(game.Elapsed);
-                renderer.Update();
-                update();
-                cameraLight.LightPosition = new Vector3(10, 15, 5);
-            };
-
-            game.Run();
-        }
-
-        [Test]
-        public void TestIslandModulesV00401()
-        {
-            var currentSeed = 1;
-            const string startSemId = "IslandFace";
-
-            #region init
-            hideAxes = true;
-            initializeTW();
-            var renderer = new TWRenderWrapper(deferredRenderer, game);
-            var editorCam = new EditorCamera(game);
-            game.Camera = editorCam;
-            game.Mouse.CursorEnabled = true;
-            rnd.Reset(currentSeed);
-            var builder = new Builder(renderer);
-            var exporter = new EasyExporter();
-
-            #endregion init
-
-            var islandTiler = new IslandTiler { IslandSemId = startSemId, IslandSizes = new[] { new Vector2(10, 10), new Vector2(7, 7), new Vector2(5, 10), new Vector2(10, 5) }.ToList(), MaxClusterSize = new Vector2(10, 10) };
-            var startShapes = islandTiler.GetIslandTiles(currentSeed);
-
-            var baseGen = new BaseGenerator { RandomSeed = currentSeed };
-            baseGen.Initialize();
-            baseGen.GetProperty("startSemId").SetValue(startSemId);
-            var islandGen = new IslandGenerator00401 { ParentGenerator = baseGen, Builder = builder };
-            islandGen.Initialize();
-            baseGen.GetProperty("generator").SetValue(islandGen);
-
-            var levelVisualizer = new BuilderNodeLevelViewer(builder);
-            builder.Build(startShapes, baseGen.Generate(), rnd.GetCurrentSeed());
-            levelVisualizer.ChangeCurrentLevel(100);
-
-            var guiListener = new ElementListener();
-            var parameterGroupBox = new ParameterGroupBox(guiListener, new GeneratorDatabase());
-            parameterGroupBox.Show();
-            parameterGroupBox.Initialize(baseGen);
-
-            var needRebuild = false;
-            game.GameLoopEvent += delegate
-            {
-                if (game.Keyboard.IsKeyPressed(Key.F))
-                {
-                    //exporter.ExportScene(renderer.GetCurrentMeshes(), "Islands_" + currentSeed);
-                }
-
-                if (guiListener.Changed)
-                {
-                    needRebuild = true;
-                }
-                if (game.Keyboard.IsKeyPressed(Key.R))
-                {
-                    currentSeed = rnd.GetRandInt(1, int.MaxValue);
-                    needRebuild = true;
-                }
-
-                if (needRebuild)
-                {
-                    builder.Purge();
-                    rnd.Reset(currentSeed);
-                    baseGen.RandomSeed = currentSeed;
-                    startShapes = islandTiler.GetIslandTiles(currentSeed);
-                    builder.Build(startShapes, baseGen.Generate(), rnd.GetCurrentSeed());
-                    needRebuild = false;
-                }
-
-
-                levelVisualizer.Update(game);
-                if (game.Keyboard.IsKeyPressed(Key.L))
-                {
-                    extraLight.LightPosition = editorCam.CameraPosition;
-                }
-                batchText = renderer.BusyBatching ? "Building batch..." : "";
-                editorCam.Update(game.Elapsed);
-                renderer.Update();
-                update();
-                cameraLight.LightPosition = new Vector3(10, 15, 5);
-            };
-
-            game.Run();
-        }
-
+        
         [Test]
         public void TestIslandGenerator()
         {
@@ -657,6 +391,49 @@ namespace ProceduralBuilder.Test
             deferredRenderer.CreateMeshElement(islandMesh);
 
             engine.AddSimulator(new WorldRenderingSimulator());
+        }
+
+        [Test]
+        public void TestIslandParts()
+        {
+            var seed = 1;
+            
+            #region init
+            hideAxes = true;
+            initializeTW();
+            var renderer = new TWRenderWrapper(deferredRenderer, game);
+            renderer.DrawFaceUnitAxes = false;
+            rnd.Reset(seed);
+            #endregion init
+
+            var generator = new IslandGenerator();
+            var startShapes = generator.GetIslandBase(seed);
+            IMesh islandMesh;
+            List<IBuildingElement> navMesh;
+            List<IBuildingElement> buildMesh;
+            List<IBuildingElement> borderMesh;
+            generator.GetIslandParts(startShapes, seed, true, out islandMesh, out navMesh, out buildMesh, out borderMesh);
+
+            var allFaces = navMesh.Select(element => ((Face) element).ExtraTransform(Matrix.Translation(0, 0, 0.25f), "nav")).ToList();
+            allFaces.AddRange(buildMesh.Select(element => ((Face) element).ExtraTransform(Matrix.Translation(0, 0, 4), "build")));
+            allFaces.AddRange(borderMesh.Select(element => ((Face) element).ExtraTransform(Matrix.Translation(0, 0, 8), "border")));
+
+            var builder = new Builder(renderer);
+            builder.Build(allFaces, new RuleBase(), seed);
+            deferredRenderer.CreateMeshElement(islandMesh);
+
+            game.GameLoopEvent += delegate
+            {
+                if (game.Keyboard.IsKeyPressed(Key.L))
+                {
+                    extraLight.LightPosition = camera.GetCameraPosition();
+                }
+                renderer.Update();
+                update();
+                cameraLight.LightPosition = new Vector3(10, 15, 5);
+            };
+
+            game.Run();
         }
     }
 }
