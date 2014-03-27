@@ -17,7 +17,8 @@ namespace MHGameWork.TheWizards.Scattered.ProcBuilder
 
         public List<IBuildingElement> GetIslandBase(int seed)
         {
-            var islandTiler = new IslandTiler { IslandSemId = startSemId, IslandSizes = new[] { new Vector2(10, 10), new Vector2(7, 7), new Vector2(5, 10), new Vector2(10, 5) }.ToList(), MaxClusterSize = new Vector2(10, 10) };
+            var islandSizes = new[] { new Vector2(10, 10), new Vector2(15, 7), new Vector2(10, 15), new Vector2(10, 5) }.ToList();
+            var islandTiler = new IslandTiler { IslandSemId = startSemId, IslandSizes = islandSizes, MaxClusterSize = new Vector2(20, 20) };
             var startShapes = islandTiler.GetIslandTiles(seed);
 
             return startShapes;
