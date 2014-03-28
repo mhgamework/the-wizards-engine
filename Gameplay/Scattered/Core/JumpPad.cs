@@ -38,23 +38,20 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
             var renderNode = node.CreateChild();
             level.CreateEntityNode(renderNode).Alter(c => c.Entity.Mesh = mesh)
-                        .Alter(c => c.CreateInteractable(onInteract));
+                /*.Alter(c => c.CreateInteractable(onInteract))*/;
         }
 
-        private void onInteract()
+        private void launchPlayer()
         {
             if (targetJumpPad == null)
                 return;
 
+            var landingMat = Matrix.Translation(0, 0, 5f) * targetJumpPad.Node.Absolute;
             Quaternion r;
             Vector3 s;
-            Node.Absolute.Decompose(out s, out r, out padPos);
+            landingMat.Decompose(out s, out r, out targetPos);
 
-            if (!playerClose())
-                return;
-
-            targetJumpPad.Node.Absolute.Decompose(out s, out r, out targetPos);
-            targetPos += new Vector3(0, 2, 0);
+            targetPos += new Vector3(0, 5f, 0);
 
             var xDist = Vector3.Distance(new Vector3(padPos.X, 0, padPos.Z), new Vector3(targetPos.X, 0, targetPos.Z));
             travelDuration = Math.Max(xDist / preferredSpeed, minTravelDuration);
@@ -66,8 +63,9 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         private bool playerClose()
         {
-            var dist = Vector3.Distance(level.LocalPlayer.Position, padPos);
-            return dist < 3.5f;
+            var playerPos = level.LocalPlayer.Position;
+            var dist = Vector3.Distance(new Vector3(playerPos.X, 0, playerPos.Z), new Vector3(padPos.X, 0, padPos.Z));
+            return dist < 2f;
         }
 
         private float xSpeed;
@@ -100,6 +98,15 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         private void update()
         {
+            Quaternion r;
+            Vector3 s;
+            Node.Absolute.Decompose(out s, out r, out padPos);
+
+            if (playerClose())
+            {
+                launchPlayer();
+            }
+
             if (timeToTravel > 0.001f)
             {
                 timeToTravel -= TW.Graphics.Elapsed;
@@ -118,6 +125,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 timeTravelled = 0f;
                 timeToTravel = 0f;
             }
+
+
         }
 
         public SceneGraphNode Node { get; private set; }
