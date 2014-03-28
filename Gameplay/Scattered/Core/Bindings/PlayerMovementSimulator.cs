@@ -33,6 +33,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
 
         private Vector3 oldPlayerPos;
+        private Vector3 oldDirection;
 
         public void Simulate()
         {
@@ -67,6 +68,12 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 noclipMode = !noclipMode;
             Vector3 newPos;
             // Currently simply use the spectator camera
+            if (!oldDirection.Equals(player.Direction))
+                TW.Graphics.SpectaterCamera.CameraDirection = oldDirection;
+            else
+                player.Direction = TW.Graphics.SpectaterCamera.CameraDirection;
+
+
             if (!oldPlayerPos.Equals(player.Position))
                 newPos = player.Position;
             else
@@ -80,7 +87,11 @@ namespace MHGameWork.TheWizards.Scattered.Core
             player.Position = newPos;
             TW.Graphics.SpectaterCamera.CameraPosition = newPos;
 
+
+            if (player.Direction.Length() < 0.999 || player.Direction.Length() > 1.0001 || float.IsNaN(player.Direction.Length())) player.Direction = -Vector3.UnitZ;
+
             oldPlayerPos = player.Position;
+            oldDirection = player.Direction;
 
             player.Direction = TW.Graphics.SpectaterCamera.CameraDirection;
         }
