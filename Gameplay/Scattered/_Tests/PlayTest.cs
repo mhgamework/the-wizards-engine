@@ -191,5 +191,34 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             jumpPad04.TargetJumpPad = jumpPad04;
 
         }
+
+        [Test]
+        public void TestJumpPadInWorld()
+        {
+            var level = new Level();
+            var player = level.LocalPlayer;
+            addPlaySimulators(level, player);
+            var gen = new WorldGenerator(level, new Random(0));
+
+            gen.Generate();
+
+            var i = level.Islands.ElementAt(0);
+            var jumpPad01 = new JumpPad(level, i.Node.CreateChild());
+            i.AddAddon(jumpPad01);
+            var firstJumpPad = jumpPad01;
+            const float nbJumpPads = 5f;
+            for (int j = 1; j < nbJumpPads; j++)
+            {
+                i = level.Islands.ElementAt(j);
+                var jumpPad02 = new JumpPad(level, i.Node.CreateChild());
+                i.AddAddon(jumpPad02);
+
+                jumpPad01.TargetJumpPad = jumpPad02;
+                jumpPad01 = jumpPad02;
+            }
+            jumpPad01.TargetJumpPad = firstJumpPad;
+
+            TW.Graphics.SpectaterCamera.FarClip = 2000;
+        }
     }
 }

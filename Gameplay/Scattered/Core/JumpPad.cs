@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DirectX11;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered._Engine;
@@ -26,7 +27,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private const float minTravelDuration = 3f;
         private const float preferredSpeed = 50f;
         private float travelDuration;
-
+        private float extraHeight;
 
         public JumpPad(Level level, SceneGraphNode node)
         {
@@ -44,7 +45,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         {
             if (targetJumpPad == null)
                 return;
-            
+
             Quaternion r;
             Vector3 s;
             Node.Absolute.Decompose(out s, out r, out padPos);
@@ -56,9 +57,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
             targetPos += new Vector3(0, 2, 0);
 
             var xDist = Vector3.Distance(new Vector3(padPos.X, 0, padPos.Z), new Vector3(targetPos.X, 0, targetPos.Z));
-            travelDuration = xDist / preferredSpeed;
-            if (travelDuration < minTravelDuration)
-                travelDuration = minTravelDuration;
+            travelDuration = Math.Max(xDist / preferredSpeed, minTravelDuration);
+            extraHeight = Math.Max(xDist / 50f * 20f, 20f);
 
             calcInitialSpeed(travelDuration);
             timeToTravel = travelDuration;
@@ -81,7 +81,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             xSpeed = xDist / duration;
             ySpeed = yDist / duration;
 
-            yScaling = Math.Max(targetPos.Y, padPos.Y) + 20f;
+            yScaling = Math.Max(targetPos.Y, padPos.Y) + extraHeight;
         }
 
         private Vector3 getPosAtTime(float t)
@@ -107,13 +107,17 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 var newPos = getPosAtTime(timeTravelled);
                 level.LocalPlayer.Position += (newPos - level.LocalPlayer.Position);
 
+                var dir = new Vector3(targetPos.X, 0, targetPos.Z) - new Vector3(padPos.X, 0, padPos.Z);
+                var playerDir = level.LocalPlayer.Direction;
+                var xlerp = MathHelper.Lerp(playerDir.X, dir.X, 0.2f);
+                var zlerp = MathHelper.Lerp(playerDir.Z, dir.Z, 0.2f);
+                level.LocalPlayer.Direction = new Vector3(xlerp, playerDir.Y, zlerp);
             }
             else
             {
                 timeTravelled = 0f;
                 timeToTravel = 0f;
             }
-
         }
 
         public SceneGraphNode Node { get; private set; }
