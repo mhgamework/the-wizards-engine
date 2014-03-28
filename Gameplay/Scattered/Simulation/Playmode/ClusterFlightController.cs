@@ -25,6 +25,8 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Playmode
             var dir = new Vector3();
             if (keyboard.IsKeyDown(Key.W)) island.Velocity += island.GetForward() * TW.Graphics.Elapsed * 10;
             if (keyboard.IsKeyDown(Key.S)) island.Velocity -= island.GetForward() * TW.Graphics.Elapsed * 10;
+            if (keyboard.IsKeyDown(Key.Space)) island.Position += Vector3.UnitY * TW.Graphics.Elapsed * 5;
+            if (keyboard.IsKeyDown(Key.LeftControl)) island.Position -= Vector3.UnitY * TW.Graphics.Elapsed * 5;
 
 
             var turnSpeed = 0.8f;
