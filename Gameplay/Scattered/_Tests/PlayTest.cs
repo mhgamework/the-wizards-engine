@@ -99,7 +99,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             i = level.CreateNewIsland(new Vector3(40, 0, 0));
             addBridge(i);
-            i.AddAddon(new Resource(level, i.Node.CreateChild(), crystalItem));
+            i.AddAddon(new ResourceGenerator(level, i.Node.CreateChild(), crystalItem));
 
             i = level.CreateNewIsland(new Vector3(50, 0, 0));
             addBridge(i);

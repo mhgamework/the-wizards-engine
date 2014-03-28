@@ -260,7 +260,7 @@
     <Compile Include="Scattered\_Tests\OnIslandMovementTest.cs" />
     <Compile Include="Scattered\_Tests\PlayerSurfaceMover.cs" />
     <Compile Include="Scattered\_Tests\PlayTest.cs" />
-    <Compile Include="Scattered\Core\Resource.cs" />
+    <Compile Include="Scattered\Core\ResourceGenerator.cs" />
     <Compile Include="Scattered\_Tests\ProcBuilderTest.cs" />
     <Compile Include="Scattered\_Tests\SandboxTest.cs" />
     <Compile Include="Scattered\Core\ScatteredPlayer.cs" />
