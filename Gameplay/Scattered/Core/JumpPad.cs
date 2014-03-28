@@ -44,10 +44,14 @@ namespace MHGameWork.TheWizards.Scattered.Core
         {
             if (targetJumpPad == null)
                 return;
-
+            
             Quaternion r;
             Vector3 s;
             Node.Absolute.Decompose(out s, out r, out padPos);
+
+            if (!playerClose())
+                return;
+
             targetJumpPad.Node.Absolute.Decompose(out s, out r, out targetPos);
             targetPos += new Vector3(0, 2, 0);
 
@@ -58,6 +62,12 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
             calcInitialSpeed(travelDuration);
             timeToTravel = travelDuration;
+        }
+
+        private bool playerClose()
+        {
+            var dist = Vector3.Distance(level.LocalPlayer.Position, padPos);
+            return dist < 3.5f;
         }
 
         private float xSpeed;
