@@ -23,8 +23,9 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private float timeTravelled;
         private float timeToTravel;
 
-        private const float travelDuration = 3f;
-        private const float g = 9.81f;
+        private const float minTravelDuration = 3f;
+        private const float preferredSpeed = 50f;
+        private float travelDuration;
 
 
         public JumpPad(Level level, SceneGraphNode node)
@@ -50,53 +51,41 @@ namespace MHGameWork.TheWizards.Scattered.Core
             targetJumpPad.Node.Absolute.Decompose(out s, out r, out targetPos);
             targetPos += new Vector3(0, 2, 0);
 
+            var xDist = Vector3.Distance(new Vector3(padPos.X, 0, padPos.Z), new Vector3(targetPos.X, 0, targetPos.Z));
+            travelDuration = xDist / preferredSpeed;
+            if (travelDuration < minTravelDuration)
+                travelDuration = minTravelDuration;
+
             calcInitialSpeed(travelDuration);
             timeToTravel = travelDuration;
         }
 
-        /*
-        Fx = Vox*t + Ox;
-        Fy = -0.5 * g * t * t + Voy*t + Oy;
-
-        * Known values:
-        P is the target point.
-        O is the origin point.
-         g is gravity.
-
-        * Unknown values:
-         Vo is Initial Velocity
-         t is time needed to impact.
-         we can set 't' with a fixed flight time -> 'duration'
-         so:
-               (Px-Ox)
-        Vox = --------
-               duration
-
-                 Py + 0.5* g * duration * duration - Oy 
-        Voy = ---------------------------------------
-                          duration
-         */
-
-        private float v0x;
-        private float v0y;
-
+        private float xSpeed;
+        private float ySpeed;
+        private float yScaling;
         private void calcInitialSpeed(float duration)
         {
-            var dir = targetPos - padPos;
-            dir.Y = 0;
-            var xDist = dir.Length();
+            var xDist = Vector3.Distance(new Vector3(padPos.X, 0, padPos.Z), new Vector3(targetPos.X, 0, targetPos.Z));
+            var yDist = targetPos.Y - padPos.Y;
 
-            v0x = xDist / duration;
-            v0y = (targetPos.Y + 0.5f * g * duration * duration - padPos.Y) / duration;
+            xSpeed = xDist / duration;
+            ySpeed = yDist / duration;
+
+            yScaling = Math.Max(targetPos.Y, padPos.Y) + 20f;
         }
 
         private Vector3 getPosAtTime(float t)
         {
-            var dir = targetPos - padPos;
-            dir.Normalize();
-            var fx = v0x * t;
-            var fy = -0.5f * g * t * t + v0y * t;
-            return new Vector3(dir.X * fx + padPos.X, fy + padPos.Y, dir.Z * fx + padPos.Z);
+            var percent = t / travelDuration;
+            var sinYHeight = (float)Math.Sin(percent * Math.PI) * yScaling;
+
+            var xPos = t * xSpeed;
+            var yPos = t * ySpeed + sinYHeight;
+
+            var unitDir = new Vector3(targetPos.X, 0, targetPos.Z) - new Vector3(padPos.X, 0, padPos.Z);
+            unitDir.Normalize();
+
+            return new Vector3(padPos.X + xPos * unitDir.X, padPos.Y + yPos, padPos.Z + unitDir.Z * xPos);
         }
 
         private void update()

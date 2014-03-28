@@ -177,8 +177,18 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             var jumpPad02 = new JumpPad(level, i.Node.CreateChild());
             i.AddAddon(jumpPad02);
 
+            i = level.CreateNewIsland(new Vector3(10, 50, 140));
+            var jumpPad03 = new JumpPad(level, i.Node.CreateChild());
+            i.AddAddon(jumpPad03);
+
+            i = level.CreateNewIsland(new Vector3(10, 0, 0));
+            var jumpPad04 = new JumpPad(level, i.Node.CreateChild());
+            i.AddAddon(jumpPad04);
+
             jumpPad01.TargetJumpPad = jumpPad02;
-            jumpPad02.TargetJumpPad = jumpPad01;
+            jumpPad02.TargetJumpPad = jumpPad03;
+            jumpPad03.TargetJumpPad = jumpPad04;
+            jumpPad04.TargetJumpPad = jumpPad04;
 
         }
     }
