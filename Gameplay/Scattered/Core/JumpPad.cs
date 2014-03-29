@@ -125,6 +125,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
             if (timeToTravel > 0.001f)
             {
+                level.LocalPlayer.MovementDisabled = true;
                 if (Vector3.Distance(targetPos, level.LocalPlayer.Position) < 1f)
                 {
                     level.LocalPlayer.Position = targetPos;
@@ -146,6 +147,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             }
             else
             {
+
                 timeTravelled = 0f;
                 timeToTravel = 0f;
             }

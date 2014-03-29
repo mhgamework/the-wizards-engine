@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             this.level = level;
             this.player = player;
             oldPlayerPos = player.Position;
-            playerMover = new PlayerMover(new IslandWalkPlaneRaycaster(level));
+            playerMover = new PlayerMover(level, new IslandWalkPlaneRaycaster(level));
         }
 
 

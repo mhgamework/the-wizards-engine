@@ -1,4 +1,5 @@
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered._Tests;
 using SlimDX;
 using SlimDX.DirectInput;
@@ -7,10 +8,12 @@ namespace MHGameWork.TheWizards.Scattered.Core
 {
     public class PlayerMover
     {
+        private readonly Level level;
         private readonly IslandWalkPlaneRaycaster islandWalkPlaneRaycaster;
 
-        public PlayerMover(IslandWalkPlaneRaycaster islandWalkPlaneRaycaster)
+        public PlayerMover(Level level,IslandWalkPlaneRaycaster islandWalkPlaneRaycaster)
         {
+            this.level = level;
             this.islandWalkPlaneRaycaster = islandWalkPlaneRaycaster;
             playerOnIslandMover = new PlayerSurfaceMover(islandWalkPlaneRaycaster.onRaycastIsland);
 
@@ -18,6 +21,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         public Vector3 PerformGameplayMovement(Vector3 currentPos)
         {
+            if (level.LocalPlayer.MovementDisabled) return currentPos;
+
             Vector3 newPos;
             if (tryPerformHookJump(currentPos, out newPos))
             {

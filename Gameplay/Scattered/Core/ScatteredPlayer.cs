@@ -56,6 +56,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
         /// </summary>
         public Island FlyingIsland { get; set; }
 
+        public bool MovementDisabled { get; set; }
+
         public Inventory Inventory = new Inventory();
 
 
