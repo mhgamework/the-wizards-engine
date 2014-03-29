@@ -32,6 +32,9 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private float travelDuration;
         private float extraHeight;
 
+        public bool IsPerformingJump { get { return timeToTravel > 0; } }
+
+
         public JumpPad(Level level, SceneGraphNode node)
         {
             this.level = level;
@@ -132,7 +135,6 @@ namespace MHGameWork.TheWizards.Scattered.Core
             if (timeToTravel > 0.001f)
             {
                 IsLaunchingPlayer = true;
-                level.LocalPlayer.MovementDisabled = true;
                 if (Vector3.Distance(targetPos, level.LocalPlayer.Position) < 1f)
                 {
                     level.LocalPlayer.Position = targetPos;
@@ -143,7 +145,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
                     timeToTravel -= TW.Graphics.Elapsed;
                     timeTravelled += TW.Graphics.Elapsed;
                     var newPos = GetPosAtTime(timeTravelled);
-                    level.LocalPlayer.Position += (newPos - level.LocalPlayer.Position);
+                    level.LocalPlayer.Position = newPos;
+                    //level.LocalPlayer.Position += (newPos - level.LocalPlayer.Position);
                 }
 
                 /*var dir = new Vector3(targetPos.X, 0, targetPos.Z) - new Vector3(padPos.X, 0, padPos.Z);

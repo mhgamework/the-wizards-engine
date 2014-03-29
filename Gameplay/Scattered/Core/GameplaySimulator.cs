@@ -24,6 +24,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 level.LocalPlayer.AttemptDropResource();
 
             level.Islands.SelectMany(i => i.Addons.OfType<Resource>()).ToArray().ForEach(k => k.AttemptMerge());
+
+            level.LocalPlayer.MovementDisabled = level.Islands.SelectMany(i => i.Addons.OfType<JumpPad>()).Any(j => j.IsPerformingJump);
         }
     }
 }

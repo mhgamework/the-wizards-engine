@@ -77,12 +77,19 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
 
             if (!oldPlayerPos.Equals(player.Position))
+            {
                 newPos = player.Position;
+                oldPlayerPos = player.Position;
+            }
             else
                 newPos = TW.Graphics.SpectaterCamera.CameraPosition;
 
+            
             if (!NoclipMode)
-                newPos = playerMover.PerformGameplayMovement(oldPlayerPos);
+            {
+                    newPos = playerMover.PerformGameplayMovement(oldPlayerPos);
+            }
+                
 
             //TW.Graphics.SpectaterCamera.EnableUserInput = !noclipMode;
 

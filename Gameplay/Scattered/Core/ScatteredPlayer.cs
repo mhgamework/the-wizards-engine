@@ -56,6 +56,11 @@ namespace MHGameWork.TheWizards.Scattered.Core
         /// </summary>
         public Island FlyingIsland { get; set; }
 
+        /// <summary>
+        /// Todo: change this with an object which identifies the current movement type + who is requesting/invoking this type of movement
+        /// Eg: flight, jumppad, ...
+        /// This can be a single object since it is not possible in any case to have 2 movement types at the same time :)
+        /// </summary>
         public bool MovementDisabled { get; set; }
 
         public Inventory Inventory = new Inventory();
