@@ -14,6 +14,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
     {
         public SceneGraphNode Node { get; private set; }
         public float MaxJumpDistance = 250f;
+        public bool IsLaunchingPlayer;
 
         private readonly Level level;
 
@@ -30,7 +31,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private const float preferredSpeed = 50f;
         private float travelDuration;
         private float extraHeight;
-        
+
         public JumpPad(Level level, SceneGraphNode node)
         {
             this.level = level;
@@ -56,7 +57,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             return ret;
         }
 
-        private void launchPlayer()
+        public void CalculateTrajectorySettings()
         {
             if (targetJumpPad == null)
                 return;
@@ -93,13 +94,15 @@ namespace MHGameWork.TheWizards.Scattered.Core
             yScaling = Math.Max(targetPos.Y, padPos.Y) + extraHeight;
         }
 
-        private Vector3 getPosAtTime(float t)
+        public Vector3 GetPosAtTime(float t)
         {
-            var percent = t / travelDuration;
+            var time = Math.Min(t, travelDuration);
+            var percent = time / travelDuration;
+
             var sinYHeight = (float)Math.Sin(percent * Math.PI) * yScaling;
 
-            var xPos = t * xSpeed;
-            var yPos = t * ySpeed + sinYHeight;
+            var xPos = time * xSpeed;
+            var yPos = time * ySpeed + sinYHeight;
 
             var unitDir = new Vector3(targetPos.X, 0, targetPos.Z) - new Vector3(padPos.X, 0, padPos.Z);
             unitDir.Normalize();
@@ -118,13 +121,17 @@ namespace MHGameWork.TheWizards.Scattered.Core
             Vector3 s;
             Node.Absolute.Decompose(out s, out r, out padPos);
 
+            if (playerCurrentlyLaunchedByOtherPad())
+                return;
+
             if (playerClose())
             {
-                launchPlayer();
+                CalculateTrajectorySettings();
             }
 
             if (timeToTravel > 0.001f)
             {
+                IsLaunchingPlayer = true;
                 level.LocalPlayer.MovementDisabled = true;
                 if (Vector3.Distance(targetPos, level.LocalPlayer.Position) < 1f)
                 {
@@ -135,7 +142,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 {
                     timeToTravel -= TW.Graphics.Elapsed;
                     timeTravelled += TW.Graphics.Elapsed;
-                    var newPos = getPosAtTime(timeTravelled);
+                    var newPos = GetPosAtTime(timeTravelled);
                     level.LocalPlayer.Position += (newPos - level.LocalPlayer.Position);
                 }
 
@@ -147,19 +154,32 @@ namespace MHGameWork.TheWizards.Scattered.Core
             }
             else
             {
-
+                IsLaunchingPlayer = false;
                 timeTravelled = 0f;
                 timeToTravel = 0f;
             }
 
+        }
 
+        private bool playerCurrentlyLaunchedByOtherPad()
+        {
+            var allPads = level.Islands.SelectMany(i => i.Addons.OfType<JumpPad>());
+            foreach (var pad in allPads)
+            {
+                if(pad == this)
+                    continue;
+
+                if (pad.IsLaunchingPlayer)
+                    return true;
+            }
+            return false;
         }
 
         private bool selectingTarget;
         private List<JumpPadLocator> locators = new List<JumpPadLocator>();
         private void onInteract()
         {
-            if(selectingTarget)
+            if (selectingTarget)
             {
                 removeLocators();
                 selectingTarget = false;
@@ -211,8 +231,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
             }
             locators = new List<JumpPadLocator>();
         }
-        
-       public void PrepareForRendering()
+
+        public void PrepareForRendering()
         {
             update();
         }

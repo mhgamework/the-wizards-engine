@@ -47,7 +47,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             var jumpPad03 = new JumpPad(level, i.Node.CreateChild());
             i.AddAddon(jumpPad03);
 
-            i = level.CreateNewIsland(new Vector3(10, 0, 0));
+            i = level.CreateNewIsland(new Vector3(20, 0, 0));
             var jumpPad04 = new JumpPad(level, i.Node.CreateChild());
             i.AddAddon(jumpPad04);
 
@@ -57,7 +57,28 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             jumpPad04.TargetJumpPad = jumpPad04;
 
         }
-        
+
+        [Test]
+        public void TestJumpPadTrajectory()
+        {
+            var level = new Level();
+
+            var padPos = new Vector3(150, 3, -50);
+
+            var isle01 = level.CreateNewIsland(new Vector3(0, 0, 0));
+            var pad = new JumpPad(level, isle01.Node.CreateChild());
+
+            var isle02 = level.CreateNewIsland(padPos);
+            var target = new JumpPad(level, isle02.Node.CreateChild());
+
+            pad.TargetJumpPad = target;
+
+            pad.CalculateTrajectorySettings();
+            var endPos = pad.GetPosAtTime(float.MaxValue);
+
+            Assert.True(Vector3.Distance(endPos, target.GetLandingCoordinates()) < 0.01f);
+        }
+
         [Test]
         public void TestJumpPadSelection()
         {
