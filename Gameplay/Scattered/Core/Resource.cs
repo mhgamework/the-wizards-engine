@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
 {
     public class Resource : IIslandAddon
     {
-        private const float itemSize = 0.3f;
+        private const float itemSize = 0.8f;
         private readonly Level level;
         public ItemType Type { get; private set; }
         public int Amount { get; set; }
@@ -52,6 +52,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         public void PrepareForRendering()
         {
+            if (Amount == 0) return;
+
             panelNode.TextRectangle.Text = Amount.ToString();
         }
 

@@ -63,6 +63,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
         /// </summary>
         public bool MovementDisabled { get; set; }
 
+        public FlightEngine FlyingEngine { get; set; }
+
         public Inventory Inventory = new Inventory();
 
 
@@ -79,6 +81,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
             if (Inventory.ItemCount == 0) return;
             var island = GetLookedAtIsland();
             if (island == null) return;
+
+            TW.Graphics.LineManager3D.AddCenteredBox(GetLookedAtIslandSurfacePoint().Value, 0.5f, new Color4(0, 1, 0));
 
             island.AddAddon(new Resource(level, island.Node.CreateChild(), Inventory.Items.First())
                 .Alter(k => k.Amount = 1)
@@ -102,6 +106,15 @@ namespace MHGameWork.TheWizards.Scattered.Core
             var r = new IslandWalkPlaneRaycaster(level);
             var ray = TW.Data.Get<CameraInfo>().GetCenterScreenRay();
             return r.onRaycastIslandReturnIsland(ray);
+        }
+
+        public void StopFlight()
+        {
+            if (FlyingIsland == null) return;
+            Position = FlyingIsland.Position + Vector3.UnitY * 5;
+            Direction = TW.Graphics.Camera.ViewInverse.xna().Forward.dx();
+            FlyingIsland = null;
+            FlyingEngine = null;
         }
 
     }

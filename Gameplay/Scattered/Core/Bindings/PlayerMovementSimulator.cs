@@ -51,16 +51,20 @@ namespace MHGameWork.TheWizards.Scattered.Core
         {
             if (TW.Graphics.Keyboard.IsKeyDown(Key.Escape))
             {
-                player.FlyingIsland = null;
-                player.Position = TW.Graphics.Camera.ViewInverse.GetTranslation();
-                TW.Graphics.SpectaterCamera.CameraDirection = TW.Graphics.Camera.ViewInverse.xna().Forward.dx();
+                player.StopFlight();
                 return;
             }
-            var flightController = new ClusterFlightController(TW.Graphics.Keyboard);
-            flightController.SimulateFlightStep(player.FlyingIsland);
+            if (player.FlyingEngine.HasFuel)
+            {
+                var flightController = new ClusterFlightController(TW.Graphics.Keyboard);
+                flightController.SimulateFlightStep(player.FlyingIsland);
+            }
+
 
 
         }
+
+
 
         private readonly PlayerMover playerMover;
 
@@ -70,10 +74,10 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 NoclipMode = !NoclipMode;
             Vector3 newPos;
             // Currently simply use the spectator camera
-            if (!oldDirection.Equals(player.Direction))
-                TW.Graphics.SpectaterCamera.CameraDirection = oldDirection;
-            else
-                player.Direction = TW.Graphics.SpectaterCamera.CameraDirection;
+            //if (!oldDirection.Equals(player.Direction))
+            //    TW.Graphics.SpectaterCamera.CameraDirection = oldDirection;
+            //else
+            //    player.Direction = TW.Graphics.SpectaterCamera.CameraDirection;
 
 
             if (!oldPlayerPos.Equals(player.Position))
@@ -84,12 +88,12 @@ namespace MHGameWork.TheWizards.Scattered.Core
             else
                 newPos = TW.Graphics.SpectaterCamera.CameraPosition;
 
-            
+
             if (!NoclipMode)
             {
-                    newPos = playerMover.PerformGameplayMovement(oldPlayerPos);
+                newPos = playerMover.PerformGameplayMovement(oldPlayerPos);
             }
-                
+
 
             //TW.Graphics.SpectaterCamera.EnableUserInput = !noclipMode;
 

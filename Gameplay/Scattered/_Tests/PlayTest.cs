@@ -41,7 +41,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             i = level.CreateNewIsland(new Vector3(0, 0, 0));
             addBridge(i);
-            i.AddAddon(new FlightEngine(level, i.Node.CreateChild()));
+            i.AddAddon(new FlightEngine(level, i.Node.CreateChild(), level.CoalType));
 
 
             i = level.CreateNewIsland(new Vector3(10, 0, 0));

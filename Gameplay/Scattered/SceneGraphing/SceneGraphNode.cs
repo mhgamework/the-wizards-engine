@@ -116,7 +116,15 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
         #region Helper methods
 
         public Vector3 Forward { get { return Absolute.xna().Forward.dx(); } }
-        public Vector3 Position { get { return Absolute.GetTranslation(); } set { Relative = Relative * Matrix.Translation(value - Position); } }
+        public Vector3 Position
+        {
+            get { return Absolute.GetTranslation(); }
+            set
+            {
+                var newAbs = Absolute * Matrix.Translation(value - Position);
+                Relative = newAbs * Matrix.Invert(parent.Absolute);
+            }
+        }
 
 
         #endregion

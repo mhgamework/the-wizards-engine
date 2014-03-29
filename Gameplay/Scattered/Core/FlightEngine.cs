@@ -3,21 +3,23 @@ using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered._Engine;
 using SlimDX;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.Scattered.Core
 {
     public class FlightEngine : IIslandAddon
     {
         private readonly Level level;
+        private readonly ItemType coalType;
         public SceneGraphNode Node { get; private set; }
-        public void PrepareForRendering()
-        {
-            
-        }
+        public bool HasFuel { get { return fuelLeft > 0; } }
 
-        public FlightEngine(Level level, SceneGraphNode node)
+        private float fuelLeft;
+
+        public FlightEngine(Level level, SceneGraphNode node, ItemType coalType)
         {
             this.level = level;
+            this.coalType = coalType;
             Node = node;
             node.AssociatedObject = this;
 
@@ -40,6 +42,36 @@ namespace MHGameWork.TheWizards.Scattered.Core
         {
             // Toggle flight mode
             level.LocalPlayer.FlyingIsland = (Island)Node.Parent.AssociatedObject; // TODO: improve this?
+            level.LocalPlayer.FlyingEngine = this;
+        }
+
+        public void PrepareForRendering()
+        {
+            update();
+        }
+
+        private void update()
+        {
+            processFuel();
+        }
+
+        private void processFuel()
+        {
+            fuelLeft -= TW.Graphics.Elapsed;
+
+            if (fuelLeft < 0)
+            {
+                fuelLeft = 0;
+                var island = (Island)Node.Parent.AssociatedObject;
+                var coal = island.Addons.OfType<Resource>().FirstOrDefault(r => r.Type == coalType);
+                if (coal == null) return;
+
+                coal.Amount--;
+                fuelLeft += 10;
+                if (coal.Amount == 0)
+                    level.DestroyNode(coal.Node);
+
+            }
         }
     }
 }

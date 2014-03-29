@@ -41,17 +41,34 @@ namespace MHGameWork.TheWizards.Scattered.Core
             Console.WriteLine("Relaxing island positions ...");
 
             relaxPosition();
-        }   
+
+            generateResources(5, 20, level.CoalType, 0.2f);
+        }
+
+        private void generateResources(int minAmount, int maxAmount, ItemType type, float ratioResourcesOverIslands)
+        {
+            var islands = level.Islands.ToArray();
+            for (int i = 0; i < islands.Count() * ratioResourcesOverIslands; i++)
+            {
+                var island = islands[random.Next(0, islands.Length)];
+                var pos = new Vector3(random.Next(-10, 10), 0, random.Next(-10, 10));
+                var r = new Resource(level, island.Node.CreateChild(), type);
+                r.Node.Relative = Matrix.Translation(pos);
+                r.Amount = random.Next(minAmount, maxAmount);
+
+                island.AddAddon(r);
+            }
+        }
 
         private void generateClusters(Vector2 offset)
         {
-            int numCells = 16;
+            int numCells = 8;
 
             var cellSize = 2 * averageIslandSize;
             offset *= numCells * cellSize;
 
             var sampler = new StratifiedSampler(random, numCells);
-            var nbClusters = 30;
+            var nbClusters = 6;
             for (int i = 0; i < nbClusters; i++)
             {
                 var pos = offset + (sampler.Sample() * cellSize);
@@ -112,7 +129,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             for (int i = 0; i < nbIslandsPerCluster; i++)
             {
                 var pos = (center + (sampler.Sample() * distanceBetweenIslands)).ToXZ();
-                pos.Y = random.Next(-2, 3)*5;
+                pos.Y = random.Next(-2, 3) * 5;
                 var isl = level.CreateNewIsland(pos);
                 var desc = new IslandDescriptor();
                 desc.seed = random.Next(0, 30);
@@ -127,7 +144,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
                         b.Node.Relative = Matrix.RotationY(MathHelper.Pi) * Matrix.Translation(0, 0, -6)));
 
                     isl.AddAddon(new Tower(level, isl.Node.CreateChild()));
-                    isl.AddAddon(new FlightEngine(level, isl.Node.CreateChild()));
+                    isl.AddAddon(new FlightEngine(level, isl.Node.CreateChild(), level.CoalType));
 
                     addBridge(isl);
                     addBridge2(isl);

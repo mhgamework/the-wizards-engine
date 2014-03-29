@@ -169,6 +169,9 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
                 //}
             }
         }
+        /// <summary>
+        /// TODO: WARNING setter is bugged!
+        /// </summary>
         public Vector3 CameraDirection
         {
             get
