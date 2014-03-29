@@ -25,6 +25,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         public PlayerMovementSimulator(Level level, ScatteredPlayer player)
         {
+            NoclipMode = false;
             this.level = level;
             this.player = player;
             oldPlayerPos = player.Position;
@@ -34,6 +35,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         private Vector3 oldPlayerPos;
         private Vector3 oldDirection;
+
+        public bool NoclipMode { get; set; }
 
         public void Simulate()
         {
@@ -59,13 +62,12 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         }
 
-        private bool noclipMode = false;
         private readonly PlayerMover playerMover;
 
         private void simulateWalking()
         {
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.I))
-                noclipMode = !noclipMode;
+                NoclipMode = !NoclipMode;
             Vector3 newPos;
             // Currently simply use the spectator camera
             if (!oldDirection.Equals(player.Direction))
@@ -79,7 +81,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             else
                 newPos = TW.Graphics.SpectaterCamera.CameraPosition;
 
-            if (!noclipMode)
+            if (!NoclipMode)
                 newPos = playerMover.PerformGameplayMovement(oldPlayerPos);
 
             //TW.Graphics.SpectaterCamera.EnableUserInput = !noclipMode;

@@ -208,6 +208,8 @@
     <Compile Include="Navigation2D\WaypointEngineTest.cs" />
     <Compile Include="Navigation2D\WaypointVisualizer.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
+    <Compile Include="Scattered\Core\GameplaySimulator.cs" />
+    <Compile Include="Scattered\Core\Resource.cs" />
     <Compile Include="Scattered\Core\IslandWalkPlaneRaycaster.cs" />
     <Compile Include="Scattered\Core\PlayerMover.cs" />
     <Compile Include="Scattered\Core\JumpPad.cs" />
@@ -217,6 +219,7 @@
     <Compile Include="Scattered\ProcBuilder\IIslandGenerator.cs" />
     <Compile Include="Scattered\ProcBuilder\IslandGenerator.cs" />
     <Compile Include="Scattered\ProcBuilder\ProcUtilities.cs" />
+    <Compile Include="Scattered\SceneGraphing\TextPanelNode.cs" />
     <Compile Include="Scattered\SceneGraphing\EntityInteractableNode.cs" />
     <Compile Include="Scattered\SceneGraphing\EntityNode.cs" />
     <Compile Include="Scattered\Model\IConstructionAction.cs" />
@@ -250,6 +253,7 @@
     <Compile Include="Scattered\Core\Enemy.cs" />
     <Compile Include="Scattered\Core\EnemySpawningSimulator.cs" />
     <Compile Include="Scattered\Core\FlightEngine.cs" />
+    <Compile Include="Scattered\_Tests\AddonsTest.cs" />
     <Compile Include="Scattered\_Tests\FlightTest.cs" />
     <Compile Include="Scattered\Core\Bindings\IIslandAddon.cs" />
     <Compile Include="Scattered\Core\Bindings\PlayerCameraSimulator.cs" />
@@ -265,7 +269,7 @@
     <Compile Include="Scattered\_Tests\SandboxTest.cs" />
     <Compile Include="Scattered\Core\ScatteredPlayer.cs" />
     <Compile Include="Scattered\Core\Storage.cs" />
-    <Compile Include="Scattered\_Tests\TestTextRectangle.cs" />
+    <Compile Include="Scattered\_Tests\TextRectangleTest.cs" />
     <Compile Include="Scattered\_Tests\TestIslandGraph.cs" />
     <Compile Include="Scattered\Core\Tower.cs" />
     <Compile Include="SkyMerchant\GameObjects\PhysicalMeshRenderComponent.cs" />

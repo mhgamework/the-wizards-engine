@@ -13,5 +13,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public string Name { get; set; }
 
         public IMesh Mesh { get; set; }
+
+        public string TexturePath { get; set; }
     }
 }

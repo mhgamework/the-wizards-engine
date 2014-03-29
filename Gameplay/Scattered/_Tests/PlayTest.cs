@@ -25,47 +25,6 @@ namespace MHGameWork.TheWizards.Scattered._Tests
     {
         private TWEngine engine = EngineFactory.CreateEngine();
 
-        /// <summary>
-        /// Runs the sandbox for the game. Game mechanics should be like in the real game, but the user can build anything (sandbox mode)
-        /// </summary>
-        [Test]
-        public void TestSandbox()
-        {
-            DistributionHelper distributionHelper = null;
-            RoundState roundState = null;
-
-            var pathfinder = createPathfinder();
-
-
-            var level = new Level();
-
-            distributionHelper = new DistributionHelper(level, pathfinder);
-            roundState = new RoundState();
-
-            var interIslandMovementSimulator = new InterIslandMovementSimulator(level, pathfinder);
-
-            var config = new EditorConfiguration();
-
-            engine.AddSimulator(new LoadLevelSimulator(level));
-            engine.AddSimulator(new PlayControllerSimulator(level, config, roundState, interIslandMovementSimulator));
-            engine.AddSimulator(new WorldInputtingSimulator(config));
-
-            engine.AddSimulator(interIslandMovementSimulator);
-            engine.AddSimulator(new ClusterPhysicsSimulator(level));
-
-            engine.AddSimulator(new ThirdPersonCameraSimulator());
-            engine.AddSimulator(new WorldRenderingSimulator());
-        }
-
-        private static PathFinder2D<Island> createPathfinder()
-        {
-            var ret = new PathFinder2D<Island>();
-            ret.ConnectionProvider = new IslandConnectionProvider();
-            return ret;
-        }
-
-
-
         [Test]
         public void TestCoreGame()
         {
@@ -115,6 +74,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             engine.AddSimulator(new EnemySpawningSimulator(level, 0.1f));
             engine.AddSimulator(new PlayerMovementSimulator(level, player));
             engine.AddSimulator(new PlayerInteractionSimulator(level, player));
+            engine.AddSimulator(new GameplaySimulator(level));
             engine.AddSimulator(new ClusterPhysicsSimulator(level));
             engine.AddSimulator(new PlayerCameraSimulator(player));
 

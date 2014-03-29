@@ -65,12 +65,12 @@ namespace MHGameWork.TheWizards.RTSTestCase1
 
         public static ITexture CreateTextureAssetFromText(string text, DX11Game game)
         {
-            var fontSize = 100;
-
             var texSize = 1024;
             TWDir.Cache.CreateSubdirectory("BoxText");
 
-            var name = "BoxText\\" + GetInt64HashCode(text) + "Auto2.dds";
+            var fontSize = 100; // not really used??
+
+            var name = "BoxText\\" + GetInt64HashCode(text) + "Auto8.dds";
             var file = TWDir.Cache + "\\" + name;
 
             if (!File.Exists(file))
@@ -80,13 +80,14 @@ namespace MHGameWork.TheWizards.RTSTestCase1
                 tex.SetFont("Arial", fontSize);
 
                 var size = tex.MeasureString(text);
-                var scale = texSize / size.X;
+                var scale = Math.Min(texSize / size.X, texSize / size.Y);
 
                 tex.SetFont("Arial", fontSize * scale);
+                size = tex.MeasureString(text);
 
                 tex.Clear(new Color4(1, 1, 1, 1));
 
-                tex.DrawText(text, new Vector2(0, texSize / 2 - fontSize), new Color4(0, 0, 0));
+                tex.DrawText(text, new Vector2(texSize / 2 - size.X / 2, texSize / 2 - size.Y / 2), new Color4(0, 0, 0));
                 tex.UpdateTexture();
 
 

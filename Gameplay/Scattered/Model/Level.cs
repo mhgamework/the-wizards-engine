@@ -108,6 +108,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
 
         public List<EntityNode> EntityNodes = new List<EntityNode>();
+        public List<TextPanelNode> TextPanelNodes = new List<TextPanelNode>();
         public List<EntityInteractableNode> InteractableNodes = new List<EntityInteractableNode>();
         /// <summary>
         /// TODO: fix for better DI
@@ -118,6 +119,14 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             var ret = new EntityNode(this, node);
             EntityNodes.Add(ret);
+            return ret;
+        }
+
+
+        public TextPanelNode CreateTextPanelNode(SceneGraphNode node)
+        {
+            var ret = new TextPanelNode(this, node);
+            TextPanelNodes.Add(ret);
             return ret;
         }
 
@@ -135,7 +144,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
             {
                 DestroyNode(c);
             }
-            
+
 
             EntityNodes.Where(k => k.Node == node).ToArray()
                 .ForEach(e =>
@@ -143,6 +152,14 @@ namespace MHGameWork.TheWizards.Scattered.Model
                         e.Dispose();
                         EntityNodes.Remove(e);
                     });
+
+            TextPanelNodes.Where(k => k.Node == node).ToArray()
+              .ForEach(e =>
+              {
+                  e.Dispose();
+                  TextPanelNodes.Remove(e);
+              });
+
 
             InteractableNodes.Where(k => k.Node == node).ToArray()
                .ForEach(e =>
@@ -153,5 +170,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
             node.Dispose();
         }
+
     }
+
 }

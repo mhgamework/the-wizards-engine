@@ -17,7 +17,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
     [EngineTest]
     [TestFixture]
     [ContractVerification(true)]
-    public class TestTextRectangle
+    public class TextRectangleTest
     {
         private TWEngine engine = EngineFactory.CreateEngine();
         private List<TextRectangle> rectangles = new List<TextRectangle>();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Castle.Core.Internal;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -59,7 +60,15 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 a.PrepareForRendering();
             }
 
-            text.Text = level.LocalPlayer.Inventory.Items.Aggregate("Inventory: \n", (acc, el) => acc + el.Name + "\n");
+            foreach (var p in level.TextPanelNodes)
+            {
+                p.UpdateForRendering();
+                p.TextRectangle.Update();
+
+            }
+
+
+            text.Text = level.LocalPlayer.Inventory.Items.GroupBy(i => i).Aggregate("Inventory: \n", (acc, el) => acc + el.Count() + " " + el.First().Name + "\n");
 
         }
     }

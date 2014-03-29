@@ -16,6 +16,13 @@ namespace MHGameWork.TheWizards.Scattered._Engine
     public class TextRectangle : IDisposable
     {
         private string _text;
+        private int fontSize;
+        public int FontSize
+        {
+            get { return fontSize; }
+            set { fontSize = value; updateTexture(); }
+        }
+
         public string Text
         {
             get { return _text; }
@@ -43,9 +50,13 @@ namespace MHGameWork.TheWizards.Scattered._Engine
 
         public TextRectangle()
         {
+            fontSize = 100;
             Entity = new Entity();
             Text = "[The Wizards Engine - Text]";
             PreTransformation = Matrix.Identity;
+            Radius = 1;
+            Normal = Vector3.UnitZ;
+
         }
 
 

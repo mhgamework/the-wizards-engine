@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using DirectX11;
 using NUnit.Framework;
 using SlimDX;
 
@@ -107,5 +108,19 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
         {
             return string.Format("ID: {0}, Obj: {1}", ID, AssociatedObject);
         }
+
+
+
+
+
+        #region Helper methods
+
+        public Vector3 Forward { get { return Absolute.xna().Forward.dx(); } }
+        public Vector3 Position { get { return Absolute.GetTranslation(); } set { Relative = Relative * Matrix.Translation(value - Position); } }
+
+
+        #endregion
+
+
     }
 }
