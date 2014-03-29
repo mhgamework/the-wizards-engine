@@ -73,7 +73,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             player.Position = new Vector3(0, 3, 0);
 
-            var i = level.CreateNewIsland(new Vector3(0, 0, 0));
+            var i = level.CreateNewIsland(new Vector3(2, 0, 2));
             var jumpPad01 = new JumpPad(level, i.Node.CreateChild());
             i.AddAddon(jumpPad01);
 

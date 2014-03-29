@@ -12,26 +12,25 @@ namespace MHGameWork.TheWizards.Scattered.Core
 {
     public class JumpPad : IIslandAddon
     {
-        private readonly Level level;
+        public SceneGraphNode Node { get; private set; }
         public float MaxJumpDistance = 250f;
 
-        private Vector3 padPos;
+        private readonly Level level;
 
+        private Vector3 padPos;
         private JumpPad targetJumpPad;
         public JumpPad TargetJumpPad { get { return targetJumpPad; } set { targetJumpPad = value; updateTargetPos(); } }
 
         private Vector3 targetPos;
+        private readonly SceneGraphNode landingNode;
 
         private float timeTravelled;
         private float timeToTravel;
-
         private const float minTravelDuration = 3f;
         private const float preferredSpeed = 50f;
         private float travelDuration;
         private float extraHeight;
-
-        private SceneGraphNode landingNode;
-
+        
         public JumpPad(Level level, SceneGraphNode node)
         {
             this.level = level;
@@ -156,9 +155,18 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         }
 
+        private bool selectingTarget;
         private List<JumpPadLocator> locators = new List<JumpPadLocator>();
         private void onInteract()
         {
+            if(selectingTarget)
+            {
+                removeLocators();
+                selectingTarget = false;
+                return;
+            }
+
+            selectingTarget = true;
             var allpads = level.Islands.SelectMany(i => i.Addons.OfType<JumpPad>());
             foreach (var pad in allpads)
             {
@@ -176,7 +184,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
                 var dir = new Vector3(pos.X, 0, pos.Z) - new Vector3(padPos.X, 0, padPos.Z);
                 dir.Normalize();
-                dir *= 1f + distance / MaxJumpDistance;
+                dir *= 2f + (distance / MaxJumpDistance) * 2f;
 
                 var inverse = Node.Absolute;
                 inverse.Invert();
@@ -191,19 +199,25 @@ namespace MHGameWork.TheWizards.Scattered.Core
         public void TargetPadPicked(JumpPad targetPad)
         {
             TargetJumpPad = targetPad;
+            removeLocators();
+            selectingTarget = false;
+        }
+
+        private void removeLocators()
+        {
             foreach (var locator in locators)
             {
                 locator.Dispose();
             }
             locators = new List<JumpPadLocator>();
         }
-
-
-        public SceneGraphNode Node { get; private set; }
-        public void PrepareForRendering()
+        
+       public void PrepareForRendering()
         {
             update();
         }
+
+
 
         public class JumpPadLocator
         {
