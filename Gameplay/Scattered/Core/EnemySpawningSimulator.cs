@@ -26,6 +26,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         public void Simulate()
         {
+            return; // No spawning :(
             remainingTimeForSpawn -= TW.Graphics.Elapsed;
             if (remainingTimeForSpawn > 0)
                 return;
