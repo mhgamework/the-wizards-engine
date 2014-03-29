@@ -260,6 +260,7 @@
     <Compile Include="Scattered\Core\Bindings\PlayerInteractionSimulator.cs" />
     <Compile Include="Scattered\Core\Bindings\PlayerMovementSimulator.cs" />
     <Compile Include="Scattered\_Engine\OBJExporter.cs" />
+    <Compile Include="Scattered\_Tests\JumpPadTest.cs" />
     <Compile Include="Scattered\_Tests\OBJExporterTest.cs" />
     <Compile Include="Scattered\_Tests\OnIslandMovementTest.cs" />
     <Compile Include="Scattered\_Tests\PlayerSurfaceMover.cs" />

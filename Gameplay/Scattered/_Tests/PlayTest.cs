@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
@@ -112,73 +113,6 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             TW.Graphics.SpectaterCamera.FarClip = 2000;
         }
-
-
-        [Test]
-        public void TestJumpPad()
-        {
-            var level = new Level();
-            var player = level.LocalPlayer;
-
-            engine.AddSimulator(new PlayerMovementSimulator(level, player));
-            engine.AddSimulator(new PlayerInteractionSimulator(level, player));
-            engine.AddSimulator(new ClusterPhysicsSimulator(level));
-            engine.AddSimulator(new PlayerCameraSimulator(player));
-            engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes, () => level.Islands.SelectMany(c => c.Addons)));
-            engine.AddSimulator(new WorldRenderingSimulator());
-
-            player.Position = new Vector3(0, 3, 0);
-
-            var i = level.CreateNewIsland(new Vector3(0, 0, 0));
-            var jumpPad01 = new JumpPad(level, i.Node.CreateChild());
-            i.AddAddon(jumpPad01);
-
-            i = level.CreateNewIsland(new Vector3(0, 50, 150));
-            var jumpPad02 = new JumpPad(level, i.Node.CreateChild());
-            i.AddAddon(jumpPad02);
-
-            i = level.CreateNewIsland(new Vector3(10, 50, 140));
-            var jumpPad03 = new JumpPad(level, i.Node.CreateChild());
-            i.AddAddon(jumpPad03);
-
-            i = level.CreateNewIsland(new Vector3(10, 0, 0));
-            var jumpPad04 = new JumpPad(level, i.Node.CreateChild());
-            i.AddAddon(jumpPad04);
-
-            jumpPad01.TargetJumpPad = jumpPad02;
-            jumpPad02.TargetJumpPad = jumpPad03;
-            jumpPad03.TargetJumpPad = jumpPad04;
-            jumpPad04.TargetJumpPad = jumpPad04;
-
-        }
-
-        [Test]
-        public void TestJumpPadInWorld()
-        {
-            var level = new Level();
-            var player = level.LocalPlayer;
-            addPlaySimulators(level, player);
-            var gen = new WorldGenerator(level, new Random(0));
-
-            gen.Generate();
-
-            var i = level.Islands.ElementAt(0);
-            var jumpPad01 = new JumpPad(level, i.Node.CreateChild());
-            i.AddAddon(jumpPad01);
-            var firstJumpPad = jumpPad01;
-            const float nbJumpPads = 5f;
-            for (int j = 1; j < nbJumpPads; j++)
-            {
-                i = level.Islands.ElementAt(j);
-                var jumpPad02 = new JumpPad(level, i.Node.CreateChild());
-                i.AddAddon(jumpPad02);
-
-                jumpPad01.TargetJumpPad = jumpPad02;
-                jumpPad01 = jumpPad02;
-            }
-            jumpPad01.TargetJumpPad = firstJumpPad;
-
-            TW.Graphics.SpectaterCamera.FarClip = 2000;
-        }
+        
     }
 }

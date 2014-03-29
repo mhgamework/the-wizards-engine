@@ -13,6 +13,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
     public class JumpPad : IIslandAddon
     {
         private readonly Level level;
+        public float MaxJumpDistance = 250f;
 
         private Vector3 padPos;
 
@@ -169,18 +170,17 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 Vector3 pos;
                 pad.Node.Absolute.Decompose(out s, out r, out pos);
 
-                var maxDistance = 200f;
                 var distance = Vector3.Distance(pos, padPos);
-                if (distance > maxDistance)
+                if (distance > MaxJumpDistance)
                     continue;
 
                 var dir = new Vector3(pos.X, 0, pos.Z) - new Vector3(padPos.X, 0, padPos.Z);
                 dir.Normalize();
-                dir *= 2f + distance / maxDistance;
+                dir *= 1f + distance / MaxJumpDistance;
 
                 var inverse = Node.Absolute;
                 inverse.Invert();
-                var extraTransform = Matrix.Scaling(0.5f, 0.5f, 0.5f) *
+                var extraTransform = Matrix.Scaling(0.25f, 0.25f, 0.25f) *
                                      Matrix.Translation(dir + padPos + new Vector3(0, 1, 0)) * inverse;
 
                 var locator = new JumpPadLocator(level, Node, extraTransform, this, pad, pad == targetJumpPad);
