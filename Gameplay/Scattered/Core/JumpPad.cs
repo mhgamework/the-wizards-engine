@@ -147,10 +147,13 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 }
 
                 /*var dir = new Vector3(targetPos.X, 0, targetPos.Z) - new Vector3(padPos.X, 0, padPos.Z);
+                dir.Normalize();
                 var playerDir = level.LocalPlayer.Direction;
                 var xlerp = MathHelper.Lerp(playerDir.X, dir.X, 0.2f);
                 var zlerp = MathHelper.Lerp(playerDir.Z, dir.Z, 0.2f);
-                level.LocalPlayer.Direction = new Vector3(xlerp, playerDir.Y, zlerp);*/
+                var newDir = new Vector3(xlerp, playerDir.Y, zlerp);
+                newDir.Normalize();
+                level.LocalPlayer.Direction = newDir;*/
             }
             else
             {
