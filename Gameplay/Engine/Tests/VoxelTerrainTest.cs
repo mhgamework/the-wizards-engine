@@ -154,7 +154,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
             engine.AddSimulator(new WorldRenderingSimulator());
 
             TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.ThirdPerson;
-            TW.Data.GetSingleton<CameraInfo>().FirstPersonCameraTarget = playerData.Entity;
+            TW.Data.GetSingleton<CameraInfo>().ThirdPersonCameraTarget = playerData.Entity;
 
 
             engine.Run();
@@ -234,7 +234,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Core
             //engine.AddSimulator(new PhysXDebugRendererSimulator());
 
             //TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.ThirdPerson;
-            //TW.Data.GetSingleton<CameraInfo>().FirstPersonCameraTarget = playerData.Entity;
+            //TW.Data.GetSingleton<CameraInfo>().ThirdPersonCameraTarget = playerData.Entity;
 
 
             engine.Run();

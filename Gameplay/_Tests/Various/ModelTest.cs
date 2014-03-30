@@ -118,7 +118,7 @@ namespace MHGameWork.TheWizards.Tests.Gameplay.Various
 
 
             TW.Data.GetSingleton<CameraInfo>().Mode = CameraInfo.CameraMode.ThirdPerson;
-            TW.Data.GetSingleton<CameraInfo>().FirstPersonCameraTarget = player.Entity;
+            TW.Data.GetSingleton<CameraInfo>().ThirdPersonCameraTarget = player.Entity;
 
             game.Run();
         }

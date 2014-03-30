@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         }
 
         public CameraMode Mode { get; set; }
-        public Entity FirstPersonCameraTarget { get; set; }
+        public Entity ThirdPersonCameraTarget { get; set; }
 
         /// <summary>
         /// WARNING: this might be a layer leak

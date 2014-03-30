@@ -164,7 +164,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             cam.Mode = CameraInfo.CameraMode.ThirdPerson;
 
             var camEntity = new Entity();
-            cam.FirstPersonCameraTarget = camEntity;
+            cam.ThirdPersonCameraTarget = camEntity;
 
 
             var controller = new ClusterFlightController(TW.Graphics.Keyboard);

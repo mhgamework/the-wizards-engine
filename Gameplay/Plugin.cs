@@ -69,7 +69,7 @@ namespace MHGameWork.TheWizards
             player.Entity.Visible = false;
             var cameraInfo = TW.Data.GetSingleton<CameraInfo>();
             cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
-            cameraInfo.FirstPersonCameraTarget = player.Entity;
+            cameraInfo.ThirdPersonCameraTarget = player.Entity;
 
             Engine.WorldRendering.Entity e = new Engine.WorldRendering.Entity();
             e.Mesh = MeshFactory.Load("Helpers\\RedHelperBIG\\RedHelperBIG"); //TODO: try to reconstruct bug
@@ -89,7 +89,7 @@ namespace MHGameWork.TheWizards
             var player = new PlayerData();
             var cameraInfo = TW.Data.GetSingleton<CameraInfo>();
             cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
-            cameraInfo.FirstPersonCameraTarget = player.Entity;
+            cameraInfo.ThirdPersonCameraTarget = player.Entity;
 
             Vector3 p0 = new Vector3(1, 0, 1);
             Vector3 p1 = new Vector3(10, 0, 1);
@@ -162,7 +162,7 @@ namespace MHGameWork.TheWizards
             var player = new PlayerData();
             var cameraInfo = TW.Data.GetSingleton<CameraInfo>();
             cameraInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
-            cameraInfo.FirstPersonCameraTarget = player.Entity;
+            cameraInfo.ThirdPersonCameraTarget = player.Entity;
 
             var ent = new Engine.WorldRendering.Entity();
             ent.Mesh = MeshFactory.Load("Level01\\Level01");

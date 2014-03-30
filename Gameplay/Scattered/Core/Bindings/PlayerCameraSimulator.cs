@@ -37,7 +37,9 @@ namespace MHGameWork.TheWizards.Scattered.Core
         {
             TW.Graphics.SpectaterCamera.Enabled = false;
             camInfo.Mode = CameraInfo.CameraMode.ThirdPerson;
-            camInfo.FirstPersonCameraTarget = camEntity;
+            camInfo.ThirdPersonCameraTarget = camEntity;
+
+            
 
             camEntity.WorldMatrix =
                 Matrix.Translation(

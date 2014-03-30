@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.Simulators
             if (info.Mode != CameraInfo.CameraMode.ThirdPerson)
                 return;
 
-            cam.Target = Vector3.TransformCoordinate(new Vector3(), info.FirstPersonCameraTarget.WorldMatrix);
+            cam.Target = Vector3.TransformCoordinate(new Vector3(), info.ThirdPersonCameraTarget.WorldMatrix);
             cam.Update(TW.Graphics);
 
             info.ActiveCamera = cam;
