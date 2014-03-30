@@ -54,6 +54,18 @@ namespace MHGameWork.TheWizards.Scattered.Core
                     island1.AddAddon(
                         new FlightEngine(level, island1.Node.CreateChild(), level.CoalType).Alter(k => k.Node.Relative = Matrix.Translation(pos1)));
                 });
+
+            var rockMesh = TW.Assets.LoadMesh("Scattered\\Models\\Resources\\RockFormation01");
+            var rockBB = new Vector3(8, 0, 8).CenteredBoundingbox();
+            generateAddons(0.5f, rockBB, (island, pos) => island.AddAddon(
+                new MeshAddon(rockMesh, level, island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos))));
+
+            var treeMesh = TW.Assets.LoadMesh("Scattered\\Models\\Resources\\Tree");
+            var treeBB = new Vector3(5, 0, 5).CenteredBoundingbox();
+            generateAddons(0.5f, treeBB, (island, pos) => island.AddAddon(
+                new MeshAddon(treeMesh, level, island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos))));
+            generateAddons(0.5f, treeBB, (island, pos) => island.AddAddon(
+                new MeshAddon(treeMesh, level, island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos))));
         }
 
         private void generateAddons(float appearanceRatio, BoundingBox bb, Action<Island, Vector3> create)
