@@ -151,7 +151,17 @@ namespace MHGameWork.TheWizards.Scattered.Core
                                       {
                                           var desc = i.Descriptor;
                                           desc.BaseElements = islandGenerator.GetIslandBase(i.Descriptor.seed);
-                                          //i.SpaceManager.BuildAreaMeshes = desc.BaseElements;
+
+                                          IMesh temp;
+                                          List<IBuildingElement> navMesh;
+                                          List<IBuildingElement> buildmesh;
+                                          List<IBuildingElement> bordermesh;
+                                          realtimeIslandGenerator.GetIslandParts(desc.BaseElements, desc.seed, false, out temp, out navMesh, out buildmesh, out bordermesh);
+
+                                          i.SpaceManager.BuildAreaMeshes = buildmesh;
+                                          desc.BuildMesh = buildmesh;
+                                          desc.NavMesh = navMesh;
+
                                           i.Descriptor = desc;
 
                                       });
@@ -160,19 +170,9 @@ namespace MHGameWork.TheWizards.Scattered.Core
             level.Islands.ForEach(i =>
                             {
                                 var desc = i.Descriptor;
-
                                 var mesh = islandGenerator.GetIslandMesh(desc.BaseElements, desc.seed);
-
-                                IMesh temp;
-                                List<IBuildingElement> navMesh;
-                                List<IBuildingElement> buildmesh;
-                                List<IBuildingElement> bordermesh;
-                                realtimeIslandGenerator.GetIslandParts(desc.BaseElements, desc.seed, false, out temp, out navMesh, out buildmesh, out bordermesh);
-                                i.SpaceManager.BuildAreaMeshes = buildmesh;
-
                                 i.Mesh = mesh;
                                 i.Descriptor = desc;
-
                             });
         }
 
@@ -218,6 +218,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
         {
             public int seed;
             public List<IBuildingElement> BaseElements;
+            public List<IBuildingElement> NavMesh;
+            public List<IBuildingElement> BuildMesh;
         }
 
 

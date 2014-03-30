@@ -19,21 +19,21 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         public float? onRaycastIsland(Ray p)
         {
-            return level.Islands.Where(i => i.Descriptor.BaseElements != null).RaycastDetail((i, r) =>
+            return level.Islands.Where(i => i.Descriptor.NavMesh != null).RaycastDetail((i, r) =>
                 {
                     var localRay = p.Transform(Matrix.Invert(i.Node.Absolute));
                     //i.Descriptor.BaseElements.OfType<Face>().ForEach(f => TW.Graphics.LineManager3D.AddBox(f.GetBoundingBox(), new Color4(0, 0, 0)));
-                    return i.Descriptor.BaseElements.OfType<Face>().RaycastDetail(ProcUtilities.RaycastFace, localRay).DistanceOrNull;
+                    return i.Descriptor.NavMesh.OfType<Face>().RaycastDetail(ProcUtilities.RaycastFace, localRay).DistanceOrNull;
 
                 }, p).DistanceOrNull;
         }
         public Island onRaycastIslandReturnIsland(Ray p)
         {
-            return (Island)level.Islands.Where(i => i.Descriptor.BaseElements != null).RaycastDetail((i, r) =>
+            return (Island)level.Islands.Where(i => i.Descriptor.NavMesh != null).RaycastDetail((i, r) =>
             {
                 var localRay = p.Transform(Matrix.Invert(i.Node.Absolute));
                 //i.Descriptor.BaseElements.OfType<Face>().ForEach(f => TW.Graphics.LineManager3D.AddBox(f.GetBoundingBox(), new Color4(0, 0, 0)));
-                return i.Descriptor.BaseElements.OfType<Face>().RaycastDetail(ProcUtilities.RaycastFace, localRay).DistanceOrNull;
+                return i.Descriptor.NavMesh.OfType<Face>().RaycastDetail(ProcUtilities.RaycastFace, localRay).DistanceOrNull;
 
             }, p).Object;
         }
