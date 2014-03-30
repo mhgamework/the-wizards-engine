@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.ProcBuilder;
 using MHGameWork.TheWizards.Scattered._Engine;
@@ -43,15 +44,15 @@ namespace MHGameWork.TheWizards.Scattered.Core
             relaxPosition();
 
             generateResources(5, 20, level.CoalType, 0.2f);
-            generateAddons(0.1f,new Vector3(10,0,10).CenteredBoundingbox(), (island, pos) =>
+            generateAddons(0.1f, new Vector3(6, 0, 6).CenteredBoundingbox(), (island, pos) =>
                 {
                     island.AddAddon(
                         new Tower(level, island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos)));
                 });
-            generateAddons(0.05f,new Vector3(10,0,2).CenteredBoundingbox(), (island1, pos1) =>
+            generateAddons(0.05f, new Vector3(10, 0, 2).CenteredBoundingbox(), (island1, pos1) =>
                 {
                     island1.AddAddon(
-                        new FlightEngine(level, island1.Node.CreateChild(),level.CoalType).Alter(k => k.Node.Relative = Matrix.Translation(pos1)));
+                        new FlightEngine(level, island1.Node.CreateChild(), level.CoalType).Alter(k => k.Node.Relative = Matrix.Translation(pos1)));
                 });
         }
 
@@ -131,13 +132,14 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private void generateIslandMeshes()
         {
             var islandGenerator = new CachedIslandGenerator(new IslandGenerator(), new OBJExporter());
+            var realtimeIslandGenerator = new IslandGenerator();
 
             Console.WriteLine("Generating island bases");
             level.Islands.ForEach(i =>
                                       {
                                           var desc = i.Descriptor;
                                           desc.BaseElements = islandGenerator.GetIslandBase(i.Descriptor.seed);
-                                          i.SpaceManager.BuildAreaMeshes = desc.BaseElements;
+                                          //i.SpaceManager.BuildAreaMeshes = desc.BaseElements;
                                           i.Descriptor = desc;
 
                                       });
@@ -148,6 +150,14 @@ namespace MHGameWork.TheWizards.Scattered.Core
                                 var desc = i.Descriptor;
 
                                 var mesh = islandGenerator.GetIslandMesh(desc.BaseElements, desc.seed);
+
+                                IMesh temp;
+                                List<IBuildingElement> navMesh;
+                                List<IBuildingElement> buildmesh;
+                                List<IBuildingElement> bordermesh;
+                                realtimeIslandGenerator.GetIslandParts(desc.BaseElements, desc.seed, false, out temp, out navMesh, out buildmesh, out bordermesh);
+                                i.SpaceManager.BuildAreaMeshes = buildmesh;
+
                                 i.Mesh = mesh;
                                 i.Descriptor = desc;
 
