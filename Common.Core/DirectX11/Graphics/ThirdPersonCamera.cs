@@ -55,6 +55,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         public float LookAngleHorizontal { get; private set; }
         private float mouseSensitivity = 0.1f;
         public Vector3 CameraOffset = new Vector3(0.2f, 0.5f, 0);
+        private float aspectRatio;
 
         public Vector3 CalculatedLookTarget { get; private set; }
 
@@ -62,7 +63,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         {
             scrollFactor = 0.2f;
             enabled = true;
-
+            aspectRatio = 4 / 3f;
             cameraDistance = 10;
             MaxDistance = 100000;
             nearClip = 0.1f;
@@ -76,7 +77,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         }
         private void createProjectionMatrix()
         {
-            proj = Matrix.PerspectiveFovRH(0.45f, 4 / 3F, nearClip, farClip);
+            proj = Matrix.PerspectiveFovRH(0.45f, AspectRatio, nearClip, farClip);
         }
 
         private void createViewMatrix()
@@ -145,8 +146,21 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         public float FarClip
         {
             get { return farClip; }
+            set
+            {
+                farClip = value;
+                createProjectionMatrix();
+            }
         }
-
+        public float AspectRatio
+        {
+            get { return aspectRatio; }
+            set
+            {
+                aspectRatio = value;
+                createProjectionMatrix();
+            }
+        }
         #endregion
 
 
