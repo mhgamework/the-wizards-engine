@@ -26,12 +26,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             var level = new Level();
             var player = level.LocalPlayer;
 
-            engine.AddSimulator(new PlayerMovementSimulator(level, player));
-            engine.AddSimulator(new PlayerInteractionSimulator(level, player));
-            engine.AddSimulator(new ClusterPhysicsSimulator(level));
-            engine.AddSimulator(new PlayerCameraSimulator(player));
-            engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes, () => level.Islands.SelectMany(c => c.Addons)));
-            engine.AddSimulator(new WorldRenderingSimulator());
+            AddonsTest.AddPlaySimulators(level,player,engine);
 
             player.Position = new Vector3(0, 3, 0);
 
@@ -85,12 +80,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             var level = new Level();
             var player = level.LocalPlayer;
 
-            engine.AddSimulator(new PlayerMovementSimulator(level, player));
-            engine.AddSimulator(new PlayerInteractionSimulator(level, player));
-            engine.AddSimulator(new ClusterPhysicsSimulator(level));
-            engine.AddSimulator(new PlayerCameraSimulator(player));
-            engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes, () => level.Islands.SelectMany(c => c.Addons)));
-            engine.AddSimulator(new WorldRenderingSimulator());
+            AddonsTest.AddPlaySimulators(level, player, engine);
 
             player.Position = new Vector3(0, 3, 0);
 
@@ -186,18 +176,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
         private void addPlaySimulators(Level level, ScatteredPlayer player)
         {
-            engine.AddSimulator(new EnemySpawningSimulator(level, 0.1f));
-            engine.AddSimulator(new PlayerMovementSimulator(level, player));
-            engine.AddSimulator(new PlayerInteractionSimulator(level, player));
-            engine.AddSimulator(new GameplaySimulator(level));
-            engine.AddSimulator(new ClusterPhysicsSimulator(level));
-            engine.AddSimulator(new PlayerCameraSimulator(player));
-
-            engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes,
-                                                                () => level.Islands.SelectMany(c => c.Addons)));
-            engine.AddSimulator(new WorldRenderingSimulator());
-            //engine.AddSimulator(new AudioSimulator());
-
+            AddonsTest.AddPlaySimulators(level, player, engine);
         }
 
     }

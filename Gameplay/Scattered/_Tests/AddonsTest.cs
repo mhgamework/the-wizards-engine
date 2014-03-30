@@ -35,9 +35,9 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         {
             var level = new Level();
             var player = level.LocalPlayer;
-            addPlaySimulators(level, player);
+            AddPlaySimulators(level, player, engine);
 
-            var i = createTestIsland(level);
+            var i = CreateTestIsland(level);
 
             var type1 = new ItemType { TexturePath = "Scattered\\Items\\coal.jpg", Name = "Coal" };
             var type2 = new ItemType { TexturePath = "Scattered\\Items\\gem1.jpg", Name = "Gems" };
@@ -64,7 +64,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
                 });
         }
 
-        private Island createTestIsland(Level level)
+        public Island CreateTestIsland(Level level)
         {
             var i = level.CreateNewIsland(new Vector3());
             var desc = new WorldGenerator.IslandDescriptor();
@@ -75,7 +75,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
         }
 
-        private void addPlaySimulators(Level level, ScatteredPlayer player)
+        public static void AddPlaySimulators(Level level, ScatteredPlayer player, TWEngine engine)
         {
             engine.AddSimulator(new PlayerMovementSimulator(level, player).Alter(k => k.NoclipMode = true));
             engine.AddSimulator(new PlayerInteractionSimulator(level, player));

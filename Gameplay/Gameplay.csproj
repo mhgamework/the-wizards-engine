@@ -247,6 +247,7 @@
     <Compile Include="Scattered\Simulation\Sandbox\IslandPlacerState.cs" />
     <Compile Include="Scattered\Simulation\Sandbox\SandboxControllerSimulator.cs" />
     <Compile Include="Scattered\_Engine\LinqExtensions.cs" />
+    <Compile Include="Scattered\_Engine\MathExtensions.cs" />
     <Compile Include="Scattered\_Engine\RaycastExtensions.cs" />
     <Compile Include="Scattered\_Engine\RendererScene.cs" />
     <Compile Include="Scattered\_Engine\TextRectangle.cs" />

@@ -43,6 +43,51 @@ namespace MHGameWork.TheWizards.Scattered.Core
             relaxPosition();
 
             generateResources(5, 20, level.CoalType, 0.2f);
+            generateAddons(0.1f,new Vector3(10,0,10).CenteredBoundingbox(), (island, pos) =>
+                {
+                    island.AddAddon(
+                        new Tower(level, island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos)));
+                });
+            generateAddons(0.05f,new Vector3(10,0,2).CenteredBoundingbox(), (island1, pos1) =>
+                {
+                    island1.AddAddon(
+                        new FlightEngine(level, island1.Node.CreateChild(),level.CoalType).Alter(k => k.Node.Relative = Matrix.Translation(pos1)));
+                });
+        }
+
+        private void generateAddons(float appearanceRatio, BoundingBox bb, Action<Island, Vector3> create)
+        {
+            var shuffledIslands = level.Islands.OrderBy(_ => random.Next()).ToArray();
+            var addonsLeft = appearanceRatio * shuffledIslands.Length;
+
+            foreach (var island in shuffledIslands)
+            {
+                if (addonsLeft < 1) return;
+
+                var pos = island.SpaceManager.GetBuildPosition(bb);
+                if (pos == null) continue;
+
+                addonsLeft--;
+                island.SpaceManager.TakeBuildingSpot(pos.Value, bb);
+
+                //Action<Island> addBridge = il => il.AddAddon(new Bridge(level, il.Node.CreateChild()).Alter(b => b.Node.Relative = Matrix.Translation(0, 0, 8)));
+                //Action<Island> addBridge2 = il => il.AddAddon(new Bridge(level, il.Node.CreateChild()).Alter(b =>
+                //b.Node.Relative = Matrix.RotationY(MathHelper.Pi) * Matrix.Translation(0, 0, -6)));
+
+                create(island, pos.Value);
+                //isl.AddAddon(new FlightEngine(level, isl.Node.CreateChild(), level.CoalType));
+
+                //addBridge(isl);
+                //addBridge2(isl);
+
+                //}
+                //else if (random.NextDouble() < (1 / 10f))
+                //{
+                //isl.AddAddon(new Storage(level, isl.Node.CreateChild()));
+                //}
+
+
+            }
         }
 
         private void generateResources(int minAmount, int maxAmount, ItemType type, float ratioResourcesOverIslands)
@@ -51,9 +96,16 @@ namespace MHGameWork.TheWizards.Scattered.Core
             for (int i = 0; i < islands.Count() * ratioResourcesOverIslands; i++)
             {
                 var island = islands[random.Next(0, islands.Length)];
-                var pos = new Vector3(random.Next(-10, 10), 0, random.Next(-10, 10));
+
+                var boundingBox = new BoundingBox(new Vector3(1, 0, 1) * -0.5f, new Vector3(1, 0, 1) * 0.5f);
+                var pos = island.SpaceManager.GetBuildPosition(boundingBox);
+
+                if (pos == null) continue;
+
+                island.SpaceManager.TakeBuildingSpot(pos.Value, boundingBox);
+
                 var r = new Resource(level, island.Node.CreateChild(), type);
-                r.Node.Relative = Matrix.Translation(pos);
+                r.Node.Relative = Matrix.Translation(pos.Value);
                 r.Amount = random.Next(minAmount, maxAmount);
 
                 island.AddAddon(r);
@@ -85,7 +137,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
                                       {
                                           var desc = i.Descriptor;
                                           desc.BaseElements = islandGenerator.GetIslandBase(i.Descriptor.seed);
-
+                                          i.SpaceManager.BuildAreaMeshes = desc.BaseElements;
                                           i.Descriptor = desc;
 
                                       });
@@ -105,7 +157,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private void relaxPosition()
         {
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 10; i++)
             {
                 foreach (var a in level.Islands)
                     foreach (var b in level.Islands)
@@ -137,23 +189,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
                 isl.Node.Relative = Matrix.RotationY((float)random.Next(8) * MathHelper.PiOver4) * isl.Node.Relative;
 
-                if (random.NextDouble() < (1 / 20f))
-                {
-                    Action<Island> addBridge = il => il.AddAddon(new Bridge(level, il.Node.CreateChild()).Alter(b => b.Node.Relative = Matrix.Translation(0, 0, 8)));
-                    Action<Island> addBridge2 = il => il.AddAddon(new Bridge(level, il.Node.CreateChild()).Alter(b =>
-                        b.Node.Relative = Matrix.RotationY(MathHelper.Pi) * Matrix.Translation(0, 0, -6)));
 
-                    isl.AddAddon(new Tower(level, isl.Node.CreateChild()));
-                    isl.AddAddon(new FlightEngine(level, isl.Node.CreateChild(), level.CoalType));
-
-                    addBridge(isl);
-                    addBridge2(isl);
-
-                }
-                else if (random.NextDouble() < (1 / 10f))
-                {
-                    isl.AddAddon(new Storage(level, isl.Node.CreateChild()));
-                }
             }
         }
         public struct IslandDescriptor

@@ -25,8 +25,9 @@ namespace MHGameWork.TheWizards.Scattered.Model
             //ent.Node.Relative = Matrix.Scaling(2, 2, 2) * ent.Node.Relative;
             entity = ent.Entity;
             //ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Island_Large");
+            SpaceManager = new IslandSpaceManager();
         }
-
+        public IslandSpaceManager SpaceManager { get; set; }
         private readonly Entity entity;
         private IMesh mesh;
         public IMesh Mesh
