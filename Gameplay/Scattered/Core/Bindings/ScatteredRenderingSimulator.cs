@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Castle.Core.Internal;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
@@ -37,6 +38,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         public void Simulate()
         {
+            //renderIslandSpaceManagerBoxes();
             foreach (var n in getAllEntityNodes())
             {
                 n.UpdateForRendering();
@@ -70,6 +72,20 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
             text.Text = level.LocalPlayer.Inventory.Items.GroupBy(i => i).Aggregate("Inventory: \n", (acc, el) => acc + el.Count() + " " + el.First().Name + "\n");
 
+        }
+
+        private void renderIslandSpaceManagerBoxes()
+        {
+            level.Islands.ForEach(i =>
+                {
+                    (i.SpaceManager.GetType().GetField("reservedSpots", BindingFlags.NonPublic | BindingFlags.Instance).GetValue
+                         (i.SpaceManager) as List<BoundingBox>)
+                        .ForEach(b =>
+                            {
+                                TW.Graphics.LineManager3D.WorldMatrix = i.Node.Absolute;
+                                TW.Graphics.LineManager3D.AddBox(b, new Color4(1, 0, 0));
+                            });
+                });
         }
     }
 }
