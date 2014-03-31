@@ -22,11 +22,13 @@ namespace MHGameWork.TheWizards.Scattered.Core
         /// <returns></returns>
         public Vector3? GetBuildPosition(BoundingBox buildBox)
         {
+            var testBox = new BoundingBox(buildBox.Minimum, buildBox.Maximum + new Vector3(0, 1, 0));
+
             var maxNbTries = 100f;
             while (maxNbTries > 0)
             {
                 var pos = getRandomPositionOnMesh();
-                var bb = getTranslatedBoundingBox(buildBox, pos);
+                var bb = getTranslatedBoundingBox(testBox, pos);
                 if (isValidBuildLocation(bb))
                     return pos;
 
@@ -58,7 +60,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
         /// <returns></returns>
         public bool TakeBuildingSpot(Vector3 buildPos, BoundingBox buildBox)
         {
-            var bb = getTranslatedBoundingBox(buildBox, buildPos);
+            var testBox = new BoundingBox(buildBox.Minimum, buildBox.Maximum + new Vector3(0, 1, 0));
+            var bb = getTranslatedBoundingBox(testBox, buildPos);
 
             if (!isValidBuildLocation(bb))
                 return false;

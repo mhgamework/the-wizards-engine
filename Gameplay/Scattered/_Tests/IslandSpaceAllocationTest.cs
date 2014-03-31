@@ -5,6 +5,7 @@ using System.Text;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine.Features.Testing;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Text;
 using MHGameWork.TheWizards.Scattered.Core;
@@ -66,7 +67,8 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             var placedBoxes = generateBuildPlots(rnd, spaceManager, nbBoxes, 1f, 10f);
 
             DX11Game game = TW.Graphics;
-            var infoDisplay = new TextTexture(game, 500, 50);
+            var infoDisplay = new Textarea();
+            infoDisplay.Size = new Vector2(500, 50);
             game.GameLoopEvent += delegate
             {
                 if (game.Keyboard.IsKeyPressed(Key.F))
@@ -83,16 +85,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
                 {
                     TW.Graphics.LineManager3D.AddBox(box, new Color4(1, 0, 0));
                 }
-
-                infoDisplay.Clear();
-                infoDisplay.DrawText("Press F to regenerate", new Vector2(0, 0), new Color4(1, 1, 1));
-                infoDisplay.UpdateTexture();
-                game.Device.ImmediateContext.ClearState();
-                game.SetBackbuffer();
-                game.Device.ImmediateContext.OutputMerger.BlendState = game.HelperStates.AlphaBlend;
-                game.TextureRenderer.Draw(infoDisplay.GPUTexture.View, new Vector2(0, 0), new Vector2(500, 50));
-                game.Device.ImmediateContext.ClearState();
-                game.SetBackbuffer();
+                infoDisplay.Text = "Press F to regenerate";
             };
         }
 
@@ -104,7 +97,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
                 var xSize = minSize + rnd.Next(1, 100) * 0.01f * (maxSize - minSize);
                 var zSize = minSize + rnd.Next(1, 100) * 0.01f * (maxSize - minSize);
 
-                var box = new BoundingBox(new Vector3(0, 0, 0), new Vector3(xSize, 1f, zSize));
+                var box = new BoundingBox(new Vector3(0, 0, 0), new Vector3(xSize, 1, zSize));
                 var pos = spaceManager.GetBuildPosition(box);
 
                 if (pos != null)
