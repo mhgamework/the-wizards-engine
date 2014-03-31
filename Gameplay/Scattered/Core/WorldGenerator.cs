@@ -173,7 +173,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             {
                 var island = islands[random.Next(0, islands.Length)];
 
-                var boundingBox = new BoundingBox(new Vector3(1, 0, 1) * -0.5f, new Vector3(1, 0, 1) * 0.5f);
+                var boundingBox = new Vector3(3,0,3).CenteredBoundingbox();
                 var pos = island.SpaceManager.GetBuildPosition(boundingBox);
 
                 if (pos == null) continue;

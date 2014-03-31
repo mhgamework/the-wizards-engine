@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
@@ -53,8 +54,16 @@ namespace MHGameWork.TheWizards.Scattered.Core
         public void PrepareForRendering()
         {
             if (Amount == 0) return;
-
+            
             panelNode.TextRectangle.Text = Amount.ToString();
+            if (Amount < 10)
+                entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates1");
+            else if (Amount < 20)
+                entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates2");
+            else if (Amount < 50)
+                entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates3");
+            else 
+                entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates4");
         }
 
         public void AttemptMerge()
