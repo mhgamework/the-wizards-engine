@@ -60,12 +60,75 @@ namespace MHGameWork.TheWizards.Scattered.Core
             generateAddons(0.5f, rockBB, (island, pos) => island.AddAddon(
                 new MeshAddon(rockMesh, level, island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos))));
 
-            var treeMesh = TW.Assets.LoadMesh("Scattered\\Models\\Resources\\Tree");
+            generateJumpPads(0.5f);
+
+            /*var treeMesh = TW.Assets.LoadMesh("Scattered\\Models\\Resources\\Tree");
             var treeBB = new Vector3(5, 0, 5).CenteredBoundingbox();
             generateAddons(0.5f, treeBB, (island, pos) => island.AddAddon(
                 new MeshAddon(treeMesh, level, island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos))));
             generateAddons(0.5f, treeBB, (island, pos) => island.AddAddon(
-                new MeshAddon(treeMesh, level, island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos))));
+                new MeshAddon(treeMesh, level, island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos))));*/
+        }
+
+        private void generateJumpPads(float islandPercentage)
+        {
+            var allPads = new List<JumpPad>();
+            var nbJumpPads = (int)Math.Floor(level.Islands.Count() * islandPercentage);
+            var rnd = new Random(0);
+
+
+
+            for (int j = 1; j < nbJumpPads; j++)
+            {
+                var index = rnd.Next(0, level.Islands.Count());
+
+                var isle = level.Islands.ElementAt(index);
+
+                var bb = new BoundingBox(new Vector3(-3, 0, -3), new Vector3(3, 1, 3));
+                var pos = isle.SpaceManager.GetBuildPosition(bb);
+                if (pos == null) continue;
+                isle.SpaceManager.TakeBuildingSpot(pos.Value, bb);
+
+                var jumpPad02 = new JumpPad(level, isle.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation((Vector3)pos));
+
+                isle.AddAddon(jumpPad02);
+                allPads.Add(jumpPad02);
+            }
+
+            #region padTargetting
+            foreach (var pad in allPads)
+            {
+                Vector3 padPos;
+                Vector3 s;
+                Quaternion r;
+                pad.Node.Absolute.Decompose(out s, out r, out padPos);
+
+                for (int i = allPads.IndexOf(pad) + 1; i < allPads.Count; i++)
+                {
+                    Vector3 tPadPos;
+                    allPads[i].Node.Absolute.Decompose(out s, out r, out tPadPos);
+                    if (Vector3.Distance(padPos, tPadPos) <= pad.MaxJumpDistance)
+                    {
+                        pad.TargetJumpPad = allPads[i];
+                        break;
+                    }
+                }
+
+                if (pad.TargetJumpPad != null)
+                    continue;
+
+                for (int i = 0; i < allPads.IndexOf(pad); i++)
+                {
+                    Vector3 tPadPos;
+                    allPads[i].Node.Absolute.Decompose(out s, out r, out tPadPos);
+                    if (Vector3.Distance(padPos, tPadPos) <= pad.MaxJumpDistance)
+                    {
+                        pad.TargetJumpPad = allPads[i];
+                        break;
+                    }
+                }
+            }
+            #endregion padTargetting
         }
 
         private void generateAddons(float appearanceRatio, BoundingBox bb, Action<Island, Vector3> create)
