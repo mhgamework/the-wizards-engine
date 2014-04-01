@@ -61,13 +61,6 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 new MeshAddon(rockMesh, level, island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos))));
 
             generateJumpPads(0.5f);
-
-            /*var treeMesh = TW.Assets.LoadMesh("Scattered\\Models\\Resources\\Tree");
-            var treeBB = new Vector3(5, 0, 5).CenteredBoundingbox();
-            generateAddons(0.5f, treeBB, (island, pos) => island.AddAddon(
-                new MeshAddon(treeMesh, level, island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos))));
-            generateAddons(0.5f, treeBB, (island, pos) => island.AddAddon(
-                new MeshAddon(treeMesh, level, island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos))));*/
         }
 
         private void generateJumpPads(float islandPercentage)
