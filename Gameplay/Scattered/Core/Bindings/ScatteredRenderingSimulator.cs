@@ -38,7 +38,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         public void Simulate()
         {
-            renderIslandSpaceManagerBoxes();
+            //renderIslandSpaceManagerBoxes();
             foreach (var n in getAllEntityNodes())
             {
                 n.UpdateForRendering();

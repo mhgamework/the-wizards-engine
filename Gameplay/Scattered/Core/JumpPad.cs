@@ -34,6 +34,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         public bool IsPerformingJump { get { return timeToTravel > 0; } }
 
+        private float targetSelectionTimeout = float.MinValue;
 
         public JumpPad(Level level, SceneGraphNode node)
         {
@@ -135,6 +136,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
             if (playerClose())
             {
                 CalculateTrajectorySettings();
+                removeLocators();
+                selectingTarget = false;
             }
 
             if (timeToTravel > 0.001f)
@@ -170,6 +173,17 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 timeToTravel = 0f;
             }
 
+            if(targetSelectionTimeout > 0)
+            {
+                targetSelectionTimeout -= TW.Graphics.Elapsed;
+            }
+            if(targetSelectionTimeout <= 0 && targetSelectionTimeout > float.MinValue)
+            {
+                removeLocators();
+                selectingTarget = false;
+                targetSelectionTimeout = float.MinValue;
+            }
+
         }
 
         private bool playerCurrentlyLaunchedByOtherPad()
@@ -198,6 +212,12 @@ namespace MHGameWork.TheWizards.Scattered.Core
             }
 
             selectingTarget = true;
+            targetSelectionTimeout = 10f;
+            showLocators();
+        }
+
+        private void showLocators()
+        {
             var allpads = level.Islands.SelectMany(i => i.Addons.OfType<JumpPad>());
             foreach (var pad in allpads)
             {
@@ -215,23 +235,16 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
                 var dir = new Vector3(pos.X, 0, pos.Z) - new Vector3(padPos.X, 0, padPos.Z);
                 dir.Normalize();
-                dir *= 2f + (distance / MaxJumpDistance) * 2f;
+                dir *= 2f + (distance/MaxJumpDistance)*2f;
 
                 var inverse = Node.Absolute;
                 inverse.Invert();
-                var extraTransform = Matrix.Scaling(0.25f, 0.25f, 0.25f) *
-                                     Matrix.Translation(dir + padPos + new Vector3(0, 1, 0)) * inverse;
+                var extraTransform = Matrix.Scaling(0.25f, 0.25f, 0.25f)*
+                                     Matrix.Translation(dir + padPos + new Vector3(0, 1, 0))*inverse;
 
                 var locator = new JumpPadLocator(level, Node, extraTransform, this, pad, pad == targetJumpPad);
                 locators.Add(locator);
             }
-        }
-
-        public void TargetPadPicked(JumpPad targetPad)
-        {
-            TargetJumpPad = targetPad;
-            removeLocators();
-            selectingTarget = false;
         }
 
         private void removeLocators()
@@ -243,12 +256,20 @@ namespace MHGameWork.TheWizards.Scattered.Core
             locators = new List<JumpPadLocator>();
         }
 
+        public void TargetPadPicked(JumpPad targetPad)
+        {
+            TargetJumpPad = targetPad;
+            removeLocators();
+            showLocators();
+            targetSelectionTimeout = 1f;
+        }
+
+        
         public void PrepareForRendering()
         {
             update();
         }
-
-
+        
 
         public class JumpPadLocator
         {
