@@ -21,6 +21,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
     {
         private List<Island> islands = new List<Island>();
         private List<Traveller> travellers = new List<Traveller>();
+        public List<Bullet> Bullets = new List<Bullet>(); 
 
         public SceneGraphNode Node { get; private set; }
 

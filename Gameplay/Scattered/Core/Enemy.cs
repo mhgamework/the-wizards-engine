@@ -195,7 +195,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 {
                     setNewDodgePos();
                     dodgeTimeout = rnd.Next(1, 4);
-                    //todo: shoot bullet
+                    shoot();
                 }
 
                 dodgeTo(dodgePos, dodgeSpeed);
@@ -232,6 +232,14 @@ namespace MHGameWork.TheWizards.Scattered.Core
             var yInc = (MathHelper.Lerp(currentPos.Y, pos.Y, lerpAmnt) - currentPos.Y) * speed * TW.Graphics.Elapsed;
             var zInc = (MathHelper.Lerp(currentPos.Z, pos.Z, lerpAmnt) - currentPos.Z) * speed * TW.Graphics.Elapsed;
             newPos += new Vector3(xInc, yInc, zInc);
+        }
+
+        private void shoot()
+        {
+            var dir = player.Position - currentPos;
+            dir.Normalize();
+            var bullet = new Bullet(level, level.Node.CreateChild(), currentPos, dir, 20f, 10f);
+            level.Bullets.Add(bullet);
         }
 
         private void rotateYToPosition(Vector3 pos)
