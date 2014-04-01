@@ -151,7 +151,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             CurrentState = EnemyState.PATROL;
         }
 
-        private const float patrolDetectionRange = 20f;
+        private const float patrolDetectionRange = 50f;
         private void updatePatrol()
         {
             if (Vector3.Distance(player.Position, currentPos) < patrolDetectionRange)
@@ -168,16 +168,70 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 CurrentState = EnemyState.DISENGAGE;
 
             if (Vector3.Distance(player.Position, currentPos) < attackRange)
+            {
                 CurrentState = EnemyState.ATTACK;
+                attackPos = currentPos;
+            }
+
         }
 
         private const float attackRange = 30f;
+        private const float dodgeSpeed = 15f;
+        private Vector3 dodgePos;
+        private Vector3 attackPos;
+        private float dodgeTimeout;
         private void updateAttack()
         {
+            if (dodgeTimeout > 0)
+            {
+                dodgeTimeout -= TW.Graphics.Elapsed;
+            }
+            else
+            {
+                if (dodgePos == new Vector3(0, 0, 0))
+                    setNewDodgePos();
+
+                if (Vector3.Distance(dodgePos, currentPos) < 0.5f)
+                {
+                    setNewDodgePos();
+                    dodgeTimeout = rnd.Next(1, 4);
+                    //todo: shoot bullet
+                }
+
+                dodgeTo(dodgePos, dodgeSpeed);
+            }
+
             rotateYToPosition(player.Position);
 
             if (Vector3.Distance(player.Position, currentPos) > attackRange)
+            {
+                dodgePos = new Vector3(0, 0, 0);
+                dodgeTimeout = 0f;
                 CurrentState = EnemyState.ENGAGE;
+            }
+        }
+
+        private Random rnd = new Random();
+        private void setNewDodgePos()
+        {
+            var dir = player.Position - currentPos;
+            dir.Normalize();
+
+            var right = Vector3.Cross(dir, Vector3.UnitY);
+            right.Normalize();
+
+            var tangent = Vector3.Cross(dir, right);
+
+            dodgePos = attackPos + right * rnd.Next(-5, 5) + tangent * rnd.Next(-5, 5) + dir * rnd.Next(1, 3);
+        }
+
+        private void dodgeTo(Vector3 pos, float speed)
+        {
+            var lerpAmnt = 0.2f;
+            var xInc = (MathHelper.Lerp(currentPos.X, pos.X, lerpAmnt) - currentPos.X) * speed * TW.Graphics.Elapsed;
+            var yInc = (MathHelper.Lerp(currentPos.Y, pos.Y, lerpAmnt) - currentPos.Y) * speed * TW.Graphics.Elapsed;
+            var zInc = (MathHelper.Lerp(currentPos.Z, pos.Z, lerpAmnt) - currentPos.Z) * speed * TW.Graphics.Elapsed;
+            newPos += new Vector3(xInc, yInc, zInc);
         }
 
         private void rotateYToPosition(Vector3 pos)
