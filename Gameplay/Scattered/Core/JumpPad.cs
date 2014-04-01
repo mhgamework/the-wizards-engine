@@ -240,7 +240,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 var inverse = Node.Absolute;
                 inverse.Invert();
                 var extraTransform = Matrix.Scaling(0.25f, 0.25f, 0.25f)*
-                                     Matrix.Translation(dir + padPos + new Vector3(0, 1, 0))*inverse;
+                                     Matrix.Translation(dir + padPos)*inverse;
 
                 var locator = new JumpPadLocator(level, Node, extraTransform, this, pad, pad == targetJumpPad);
                 locators.Add(locator);
