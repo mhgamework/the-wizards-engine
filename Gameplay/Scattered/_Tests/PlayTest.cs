@@ -49,7 +49,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             i = level.CreateNewIsland(new Vector3(20, 0, 0));
             addBridge(i);
-            i.AddAddon(new Enemy(level, i.Node.CreateChild()).Alter(e => e.Node.Relative = Matrix.Translation(Vector3.UnitY * 3)));
+            i.AddAddon(new Enemy(level, i.Node.CreateChild(), new Vector3()).Alter(e => e.Node.Relative = Matrix.Translation(Vector3.UnitY * 3)));
 
             i = level.CreateNewIsland(new Vector3(30, 0, 0));
             addBridge(i);

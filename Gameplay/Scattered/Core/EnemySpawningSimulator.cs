@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Scattered._Engine;
 using Microsoft.Xna.Framework;
 using SlimDX;
 using Matrix = SlimDX.Matrix;
+using Vector3 = SlimDX.Vector3;
 
 namespace MHGameWork.TheWizards.Scattered.Core
 {
@@ -38,8 +39,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
             var island = islands.Skip(islandNumber).Take(1).First();
             if (island.Addons.Any(a => a is Enemy))
                 return;
-            island.AddAddon(new Enemy(level,island.Node.CreateChild()).Alter(e=>e.Node.Relative = Matrix.Translation(0,1f,0)));
-            
+            island.AddAddon(new Enemy(level, island.Node.CreateChild(), new Vector3()).Alter(e => e.Node.Relative = Matrix.Translation(0, 1f, 0)));
+
         }
     }
 }

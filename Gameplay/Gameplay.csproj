@@ -257,6 +257,7 @@
     <Compile Include="Scattered\Core\EnemySpawningSimulator.cs" />
     <Compile Include="Scattered\Core\FlightEngine.cs" />
     <Compile Include="Scattered\_Tests\AddonsTest.cs" />
+    <Compile Include="Scattered\_Tests\EnemyTest.cs" />
     <Compile Include="Scattered\_Tests\FlightTest.cs" />
     <Compile Include="Scattered\Core\Bindings\IIslandAddon.cs" />
     <Compile Include="Scattered\Core\Bindings\PlayerCameraSimulator.cs" />
