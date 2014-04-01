@@ -60,6 +60,11 @@ namespace MHGameWork.TheWizards.Scattered.Core
             return ret;
         }
 
+        public static BoundingBox GetLocalBoundingBox()
+        {
+            return new BoundingBox(new Vector3(-3f, 0, -3f), new Vector3(3f, 1, 6));
+        }
+
         public void CalculateTrajectorySettings()
         {
             if (targetJumpPad == null)
@@ -172,7 +177,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             var allPads = level.Islands.SelectMany(i => i.Addons.OfType<JumpPad>());
             foreach (var pad in allPads)
             {
-                if(pad == this)
+                if (pad == this)
                     continue;
 
                 if (pad.IsLaunchingPlayer)

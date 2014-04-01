@@ -76,23 +76,18 @@ namespace MHGameWork.TheWizards.Scattered.Core
             var nbJumpPads = (int)Math.Floor(level.Islands.Count() * islandPercentage);
             var rnd = new Random(0);
 
-
-
             for (int j = 1; j < nbJumpPads; j++)
             {
                 var index = rnd.Next(0, level.Islands.Count());
-
                 var isle = level.Islands.ElementAt(index);
+                var pos = isle.SpaceManager.GetBuildPosition(JumpPad.GetLocalBoundingBox());
 
-                var bb = new BoundingBox(new Vector3(-3, 0, -3), new Vector3(3, 1, 3));
-                var pos = isle.SpaceManager.GetBuildPosition(bb);
                 if (pos == null) continue;
-                isle.SpaceManager.TakeBuildingSpot(pos.Value, bb);
 
-                var jumpPad02 = new JumpPad(level, isle.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation((Vector3)pos));
-
-                isle.AddAddon(jumpPad02);
-                allPads.Add(jumpPad02);
+                isle.SpaceManager.TakeBuildingSpot(pos.Value, JumpPad.GetLocalBoundingBox());
+                var jumpPad = new JumpPad(level, isle.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation((Vector3)pos));
+                isle.AddAddon(jumpPad);
+                allPads.Add(jumpPad);
             }
 
             #region padTargetting
@@ -173,7 +168,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             {
                 var island = islands[random.Next(0, islands.Length)];
 
-                var boundingBox = new Vector3(3,0,3).CenteredBoundingbox();
+                var boundingBox = new Vector3(3, 0, 3).CenteredBoundingbox();
                 var pos = island.SpaceManager.GetBuildPosition(boundingBox);
 
                 if (pos == null) continue;
