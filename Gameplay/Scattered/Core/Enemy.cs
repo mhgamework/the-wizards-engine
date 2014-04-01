@@ -18,6 +18,9 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private Level level;
         private ScatteredPlayer player;
 
+        private const float turnSpeed = (float)Math.PI * 2f;
+        private const float moveSpeed = 5f;
+
         private Vector3 currentPos;
         private Vector3 currentRotation; //xrot, yrot, zrot
         private Vector3 newPos;
@@ -26,8 +29,9 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private Vector3 startLocation;
 
         private float currentHeight;
-        private const float idleHeight = 1.2f;
-        private const float flyHeight = 10f;
+        private const float idleHeight = 1.2f; //heightdifference with island when starting powerup
+        private const float patrolHeight = 7.5f; //heightdifference with island when patrolling
+        private const float attackHeight = 5f; //heightdifference with player when attacking
 
         public Enemy(Level level, SceneGraphNode node, Vector3 relativeStartPos)
         {
@@ -52,7 +56,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             newPos = currentPos;
             newRotation = currentRotation;
 
-            startLocation = currentPos + new Vector3(0, flyHeight - idleHeight, 0);
+            startLocation = currentPos + new Vector3(0, patrolHeight - idleHeight, 0);
         }
 
         public void Activate()
@@ -67,11 +71,21 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         private void update()
         {
+            newPos = currentPos;
+            currentRotation = moduloRotation(currentRotation);
+            newRotation = currentRotation;
+
             updateBehaviour();
 
-            Node.Absolute = Matrix.RotationX(currentRotation.X) * Matrix.RotationZ(currentRotation.Z) * Matrix.RotationY(currentRotation.Y) * Matrix.Translation(newPos);
+            Node.Absolute = Matrix.RotationX(newRotation.X) * Matrix.RotationZ(newRotation.Z) * Matrix.RotationY(newRotation.Y) * Matrix.Translation(newPos);
             currentPos = newPos;
             currentRotation = newRotation;
+        }
+
+        private Vector3 moduloRotation(Vector3 rot)
+        {
+            const float pi = (float)Math.PI;
+            return new Vector3(rot.X % (2 * pi), rot.Y % (2 * pi), rot.Z % (2 * pi));
         }
 
         private void updateBehaviour()
@@ -117,12 +131,12 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
             newRotation += new Vector3(0, powerupRotationSpeed * TW.Graphics.Elapsed, 0);
 
-            while (currentHeight < flyHeight - 0.2f)
+            while (currentHeight < patrolHeight - 0.2f)
             {
                 if (powerupRotationSpeed < 3f)
                     powerupRotationSpeed += TW.Graphics.Elapsed * 10f;
 
-                var heightDiff = (MathHelper.Lerp(currentHeight, flyHeight, 0.2f) - currentHeight) * TW.Graphics.Elapsed * powerupRiseSpeed;
+                var heightDiff = (MathHelper.Lerp(currentHeight, patrolHeight, 0.2f) - currentHeight) * TW.Graphics.Elapsed * powerupRiseSpeed;
                 currentHeight += heightDiff;
                 newPos += new Vector3(0, heightDiff, 0);
                 return;
@@ -144,34 +158,65 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 CurrentState = EnemyState.ENGAGE;
         }
 
-        private const float engageRange = 40f;
+        private const float engageRange = 50f;
         private void updateEngage()
         {
+            rotateYToPosition(player.Position);
+            moveTo(player.Position + new Vector3(0, attackHeight, 0), moveSpeed);
+
             if (Vector3.Distance(player.Position, currentPos) > engageRange)
                 CurrentState = EnemyState.DISENGAGE;
 
             if (Vector3.Distance(player.Position, currentPos) < attackRange)
                 CurrentState = EnemyState.ATTACK;
+        }
 
-            var desiredDir = player.Position + new Vector3(0, flyHeight, 0) - currentPos;
+        private const float attackRange = 30f;
+        private void updateAttack()
+        {
+            rotateYToPosition(player.Position);
+
+            if (Vector3.Distance(player.Position, currentPos) > attackRange)
+                CurrentState = EnemyState.ENGAGE;
+        }
+
+        private void rotateYToPosition(Vector3 pos)
+        {
+            var desiredDir = pos + new Vector3(0, patrolHeight, 0) - currentPos;
             desiredDir = new Vector3(desiredDir.X, 0, desiredDir.Z);
             desiredDir.Normalize();
             var desiredYRot = (float)Math.Acos(desiredDir.Z);
             desiredYRot = Math.Asin(desiredDir.X) > 0 ? desiredYRot - (float)Math.PI * 0.5f : -desiredYRot - (float)Math.PI * 0.5f;
 
-            newRotation = new Vector3(newRotation.X, desiredYRot, newRotation.Z);
+
+            var rotIncrement01 = (MathHelper.Lerp(newRotation.Y, desiredYRot, 0.5f) - newRotation.Y) * TW.Graphics.Elapsed * turnSpeed;
+            var rotIncrement02 = (MathHelper.Lerp(newRotation.Y, desiredYRot - (float)Math.PI * 2, 0.5f) - newRotation.Y) * TW.Graphics.Elapsed * turnSpeed;
+            var rotIncrement = Math.Abs(rotIncrement01) < Math.Abs(rotIncrement02) ? rotIncrement01 : rotIncrement02;
+
+            newRotation = new Vector3(newRotation.X, newRotation.Y + rotIncrement, newRotation.Z);
         }
 
-        private const float attackRange = 20f;
-        private void updateAttack()
+        private void moveTo(Vector3 pos, float speed)
         {
-            if (Vector3.Distance(player.Position, currentPos) > attackRange)
-                CurrentState = EnemyState.ENGAGE;
+            var distance = Vector3.Distance(pos, currentPos);
+            if (distance < speed * TW.Graphics.Elapsed)
+            {
+                newPos = pos;
+                return;
+            }
+
+            var dir = pos - currentPos;
+            dir.Normalize();
+            var posIncr = dir * speed * TW.Graphics.Elapsed;
+            newPos += posIncr;
         }
 
         private void updateDisengage()
         {
-            if (Vector3.Distance(startLocation, currentPos) < 1f)
+            moveTo(startLocation, moveSpeed);
+            rotateYToPosition(startLocation);
+
+            if (Vector3.Distance(startLocation, currentPos) < 0.1f)
                 CurrentState = EnemyState.PATROL;
         }
 
