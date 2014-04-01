@@ -57,7 +57,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             if (player.FlyingEngine.HasFuel)
             {
                 var flightController = new ClusterFlightController(TW.Graphics.Keyboard);
-                flightController.SimulateFlightStep(player.FlyingIsland, player.FlyingEngine.Node.Absolute.xna().Forward.dx());
+                flightController.SimulateFlightStep(player.FlyingIsland, player.FlyingEngine.Node.Absolute.xna().Forward.dx(),player.FlyingEngine.Node.Position);
             }
 
 

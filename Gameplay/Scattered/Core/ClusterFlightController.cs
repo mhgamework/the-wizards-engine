@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Playmode
             this.keyboard = keyboard;
         }
 
-        public void SimulateFlightStep(Island island,Vector3 thrustDirection)
+        public void SimulateFlightStep(Island island,Vector3 thrustDirection, Vector3 centerOfThrust)
         {
             var dir = new Vector3();
             if (keyboard.IsKeyDown(Key.W)) island.Velocity += thrustDirection * TW.Graphics.Elapsed * 10;
@@ -30,8 +30,8 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Playmode
 
 
             var turnSpeed = 0.8f;
-            if (keyboard.IsKeyDown(Key.A)) turnCluster(island, turnSpeed * TW.Graphics.Elapsed);
-            if (keyboard.IsKeyDown(Key.D)) turnCluster(island, -turnSpeed * TW.Graphics.Elapsed);
+            if (keyboard.IsKeyDown(Key.A)) turnCluster(island, turnSpeed * TW.Graphics.Elapsed, centerOfThrust);
+            if (keyboard.IsKeyDown(Key.D)) turnCluster(island, -turnSpeed * TW.Graphics.Elapsed, centerOfThrust);
 
             if (keyboard.IsKeyDown(Key.LeftArrow)) island.Velocity -= getThrustRightDirection(thrustDirection) * TW.Graphics.Elapsed;
             if (keyboard.IsKeyDown(Key.RightArrow)) island.Velocity += getThrustRightDirection(thrustDirection) * TW.Graphics.Elapsed;
@@ -50,7 +50,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Playmode
 
             island.GetIslandsInCluster().ForEach(c => c.Velocity = island.Velocity);
 
-            adjustForDocking(island);
+            adjustForDocking(island,centerOfThrust);
         }
 
         private static Vector3 getThrustRightDirection(Vector3 thrustDirection)
@@ -58,7 +58,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Playmode
             return Vector3.Cross(thrustDirection, Vector3.UnitY);
         }
 
-        private void adjustForDocking(Island island)
+        private void adjustForDocking(Island island, Vector3 centerOfThrust)
         {
             var all = island.GetIslandsInCluster();
             var almostConnections = all.SelectMany(i => i.BridgeConnectors)
@@ -80,7 +80,7 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Playmode
 
             var rot = -closestConnection.Angle * Math.Sign(Vector3.Cross(closestConnection.Mine.GetAbsoluteDirection(), closestConnection.Remote.GetAbsoluteDirection()).Y);
 
-            turnCluster(island, rot);
+            turnCluster(island, rot,centerOfThrust);
             moveCluster(island,
                         closestConnection.Remote.GetAbsolutePosition() - closestConnection.Mine.GetAbsolutePosition());
 
@@ -97,12 +97,12 @@ namespace MHGameWork.TheWizards.Scattered.Simulation.Playmode
                    && (float)Math.Acos(Vector3.Dot(A.GetAbsoluteDirection(), -B.GetAbsoluteDirection())) < 0.8f;
         }
 
-        private void turnCluster(Island island, float angle)
+        private void turnCluster(Island island, float angle,Vector3 centerOfThrust)
         {
             var all = island.GetIslandsInCluster();
-            var mean = all.Aggregate(new Vector3(), (acc, el) => acc + el.Position) / all.Count();
+            //var mean = all.Aggregate(new Vector3(), (acc, el) => acc + el.Position) / all.Count();
 
-            var trans = Matrix.Translation(-mean) * Matrix.RotationY(angle) * Matrix.Translation(mean);
+            var trans = Matrix.Translation(-centerOfThrust) * Matrix.RotationY(angle) * Matrix.Translation(centerOfThrust);
 
             all.ForEach(c => c.Node.Absolute = c.Node.Absolute * trans);
 

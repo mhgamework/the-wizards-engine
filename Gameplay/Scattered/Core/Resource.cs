@@ -11,7 +11,6 @@ namespace MHGameWork.TheWizards.Scattered.Core
 {
     public class Resource : IIslandAddon
     {
-        private const float itemSize = 0.8f;
         private readonly Level level;
         public ItemType Type { get; private set; }
         public int Amount { get; set; }
@@ -25,21 +24,17 @@ namespace MHGameWork.TheWizards.Scattered.Core
             Node = node;
             node.AssociatedObject = this;
 
-            var mesh = UtilityMeshes.CreateBoxWithTexture(TW.Assets.LoadTexture(type.TexturePath), new Vector3(1, 1, 1) * itemSize * 0.5f);
 
             var renderNode = node.CreateChild();
-            renderNode.Relative = Matrix.Scaling(0.5f, 0.5f, 0.5f);
 
             entityNode = level.CreateEntityNode(renderNode.CreateChild())
-                 .Alter(k => k.Entity.Mesh = mesh)
-                 .Alter(k => k.Node.Relative = Matrix.Translation(0, itemSize / 2, 0))
+                 .Alter(k => k.Node.Relative = Matrix.Identity)
                  .Alter(k => k.CreateInteractable(onInteract));
 
             panelNode = level.CreateTextPanelNode(renderNode.CreateChild());
-            panelNode.Node.Relative = Matrix.Translation(0, itemSize * 1.5f, 0);
+            panelNode.Node.Relative = Matrix.Translation(0, 2.5f, 0);
             panelNode.TextRectangle.IsBillboard = true;
-            panelNode.TextRectangle.Radius = itemSize / 2 * 0.9f;
-            panelNode.TextRectangle.FontSize = 10;
+            panelNode.TextRectangle.Radius = 0.35f;
 
             Amount = 1;
         }
@@ -55,7 +50,10 @@ namespace MHGameWork.TheWizards.Scattered.Core
         public void PrepareForRendering()
         {
             if (Amount == 0) return;
-            
+
+            var textViewDist = 15;
+            panelNode.TextRectangle.Entity.Visible = Vector3.Distance(Node.Position, level.LocalPlayer.Position) < textViewDist;
+
             panelNode.TextRectangle.Text = Amount.ToString();
             if (Amount < 10)
                 entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates1");
@@ -63,7 +61,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates2");
             else if (Amount < 50)
                 entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates3");
-            else 
+            else
                 entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates4");
         }
 
@@ -75,7 +73,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 if (r.Amount == 0) continue;
                 if (r == this) continue;
                 if (r.Type != Type) continue;
-                if (Vector3.Distance(r.Node.Position, Node.Position) > 4 * itemSize) continue;
+                var mergeDist = 5;
+                if (Vector3.Distance(r.Node.Position, Node.Position) > mergeDist) continue;
                 Amount += r.Amount;
                 r.Amount = 0;
                 level.DestroyNode(r.Node);
