@@ -58,6 +58,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             var ray = TW.Data.Get<CameraInfo>().GetCenterScreenRay();
             var raycast = islandWalkPlaneRaycaster.onRaycastIsland(ray);
             if (raycast == null) return false;
+            if (raycast.Value > 200) return false;
             var point = ray.GetPoint(raycast.Value);
             TW.Graphics.LineManager3D.AddCenteredBox(point, 1, new Color4(1, 1, 0));
 

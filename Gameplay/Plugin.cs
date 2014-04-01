@@ -47,6 +47,7 @@ namespace MHGameWork.TheWizards
             DI.Set<IEngineFilesystem>(fs);
             DI.Set<EngineTestState>(new EngineTestState(fs));
             DI.Set<TestSceneBuilder>(new TestSceneBuilder(DI.Get<EngineTestState>()));
+            DI.Set<UISimulator>(new UISimulator());
 
             cleanData();
             var initializer = new EngineInitializer(DI.Get<EngineTestState>());

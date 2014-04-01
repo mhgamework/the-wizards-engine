@@ -50,10 +50,12 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
 
 
-            camEntity.WorldMatrix =
-                Matrix.Translation(
-                    player.FlyingIsland.GetIslandsInCluster().Aggregate(new Vector3(), (acc, el) => acc + el.Position) /
-                    player.FlyingIsland.GetIslandsInCluster().Count());
+            //camEntity.WorldMatrix =
+            //    Matrix.Translation(
+            //        player.FlyingIsland.GetIslandsInCluster().Aggregate(new Vector3(), (acc, el) => acc + el.Position) /
+            //        player.FlyingIsland.GetIslandsInCluster().Count());
+
+            camEntity.WorldMatrix = Matrix.Translation(player.FlyingEngine.Node.Position);
         }
 
         private static void updateMovementCamera(CameraInfo camInfo)

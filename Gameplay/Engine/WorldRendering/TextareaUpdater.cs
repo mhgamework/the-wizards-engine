@@ -7,7 +7,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
     /// <summary>
     /// Responsible for processing changes to a textarea
     /// </summary>
-    public class TextareaUpdater
+    public class TextareaUpdater : ISimulator
     {
         private List<Textarea> areas = new List<Textarea>();
 
@@ -15,7 +15,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
         private float nextUpdate;
 
-        public void Update()
+        public void Simulate()
         {
             nextUpdate += TW.Graphics.Elapsed;
             foreach (var change in TW.Data.GetChangesOfType<Textarea>())
@@ -79,9 +79,11 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
 
             //}
+
+            render();
         }
 
-        public void Render()
+        private void render()
         {
             TW.Graphics.Device.ImmediateContext.OutputMerger.BlendState = TW.Graphics.HelperStates.AlphaBlend;
             foreach (var a in areas)

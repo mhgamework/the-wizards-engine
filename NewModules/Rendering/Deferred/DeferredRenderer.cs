@@ -34,7 +34,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private List<SpotLight> spotLights = new List<SpotLight>();
         private CombineFinalRenderer combineFinalRenderer;
         private GBuffer gBuffer;
-        private TexturePool texturePool;
+        public TexturePool TexturePool { get; private set; }
         private RenderTargetView hdrImageRtv;
         private ShaderResourceView hdrImageRV;
         private AverageLuminanceCalculater calculater;
@@ -83,9 +83,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             int height = screenHeight;
 
             gBuffer = new GBuffer(game.Device, width, height);
-            texturePool = new TexturePool(game);
+            TexturePool = new TexturePool(game);
 
-            meshRenderer = new DeferredMeshRenderer(game, gBuffer, texturePool);
+            meshRenderer = new DeferredMeshRenderer(game, gBuffer, TexturePool);
 
             directionalLightRenderer = new DirectionalLightRenderer(game, gBuffer);
             spotLightRenderer = new SpotLightRenderer(game, gBuffer);
@@ -288,10 +288,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             context.ClearState();
             game.SetBackbuffer();
-            fogRenderer.PostProcessFog(postProcessRT1.RV,gBuffer, postProcessRT2.RTV);
+            fogRenderer.PostProcessFog(postProcessRT1.RV, gBuffer, postProcessRT2.RTV);
             context.ClearState();
             game.SetBackbuffer();
-            
+
             game.TextureRenderer.Draw(postProcessRT2.RV, new Vector2(0, 0), new Vector2(screenWidth, screenHeight));
 
 
@@ -579,6 +579,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             }
             meshElements.Clear();
 
+            //TODO: texturepool.clear?
         }
 
     }

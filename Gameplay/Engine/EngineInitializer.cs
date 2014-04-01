@@ -86,7 +86,7 @@ namespace MHGameWork.TheWizards.Engine
         private void loadBare(TWEngine engine)
         {
             engine.AddSimulator(new TestUISimulator());
-            engine.AddSimulator(new UISimulator());
+            engine.AddSimulator(DI.Get<UISimulator>());
         }
         private void loadEngine(TWEngine engine)
         {
@@ -97,7 +97,7 @@ namespace MHGameWork.TheWizards.Engine
             engine.AddSimulator(new FlashlightSimulator());
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.AddSimulator(new TestUISimulator());
-            engine.AddSimulator(new UISimulator());
+            engine.AddSimulator(DI.Get<UISimulator>());
         }
     }
 }

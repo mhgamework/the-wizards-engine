@@ -3,24 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using Castle.Core.Internal;
 
 namespace MHGameWork.TheWizards.Engine
 {
     public class UISimulator :ISimulator
     {
-        private TextareaUpdater textareaSimulator;
+        /// <summary>
+        /// Allows adding additional ui renderers
+        /// </summary>
+        public List<ISimulator> SubSimulators = new List<ISimulator>();
 
         public UISimulator()
         {
-            textareaSimulator = new TextareaUpdater();
-
+            SubSimulators.Add(new TextareaUpdater());
         }
 
         public void Simulate()
         {
-
-            textareaSimulator.Update();
-            textareaSimulator.Render();
+            SubSimulators.ForEach(s => s.Simulate());
         }
     }
 }

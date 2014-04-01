@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using Castle.Core.Internal;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Rendering.Text;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using SlimDX;
@@ -22,7 +23,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private readonly Level level;
         private readonly Func<IEnumerable<EntityNode>> getAllEntityNodes;
         private readonly Func<IEnumerable<IIslandAddon>> getAllAddons;
-        private Textarea text;
+        private HudSimulator hudSimulator;
 
         public ScatteredRenderingSimulator(Level level, Func<IEnumerable<EntityNode>> getAllEntityNodes, Func<IEnumerable<IIslandAddon>> getAllAddons)
         {
@@ -30,9 +31,9 @@ namespace MHGameWork.TheWizards.Scattered.Core
             this.getAllEntityNodes = getAllEntityNodes;
             this.getAllAddons = getAllAddons;
 
-            text = new Textarea();
-            text.Position = new Vector2(650, 30);
-            text.Size = new Vector2(140, 200);
+
+            hudSimulator = new HudSimulator(level);
+
 
         }
 
@@ -69,8 +70,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
             }
 
-
-            text.Text = level.LocalPlayer.Inventory.Items.GroupBy(i => i).Aggregate("Inventory: \n", (acc, el) => acc + el.Count() + " " + el.First().Name + "\n");
+            hudSimulator.Simulate();
 
         }
 
@@ -87,5 +87,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
                             });
                 });
         }
+
+
+
     }
 }

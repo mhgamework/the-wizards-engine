@@ -52,7 +52,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         private void update()
         {
-            processFuel();
+            if (level.LocalPlayer.FlyingEngine == this)
+                processFuel();
         }
 
         private void processFuel()

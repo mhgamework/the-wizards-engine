@@ -171,7 +171,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             engine.AddSimulator(new BasicSimulator(() =>
                 {
-                    controller.SimulateFlightStep(cameraIsland);
+                    controller.SimulateFlightStep(cameraIsland,cameraIsland.GetForward());
                     camEntity.WorldMatrix =
                         Matrix.Translation(
                             cameraIsland.GetIslandsInCluster().Aggregate(new Vector3(), (acc, el) => acc + el.Position) /

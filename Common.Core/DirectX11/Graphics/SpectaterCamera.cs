@@ -375,32 +375,39 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             Snelheid = vSnelheid;
 
 
+            Positie += Snelheid * elapsed;
+            CameraPosition = Positie;
 
 
 
+            ProcessMouseInput();
+        }
 
+        public void ProcessMouseInput()
+        {
             if (mouse.RelativeX != 0)
             {
                 AngleHorizontal += MathHelper.ToRadians(mouse.RelativeX);
-                if (AngleHorizontal > MathHelper.TwoPi) { AngleHorizontal -= MathHelper.TwoPi; }
-                if (AngleHorizontal < 0) { AngleHorizontal += MathHelper.TwoPi; }
-
+                if (AngleHorizontal > MathHelper.TwoPi)
+                {
+                    AngleHorizontal -= MathHelper.TwoPi;
+                }
+                if (AngleHorizontal < 0)
+                {
+                    AngleHorizontal += MathHelper.TwoPi;
+                }
             }
             if (mouse.RelativeY != 0)
             {
                 //TODO: wasda hieronder
-                if (MathHelper.ToRadians(mouse.RelativeY) < MathHelper.PiOver2) { };
-                AngleVertical = MathHelper.Clamp(AngleVertical - MathHelper.ToRadians(mouse.RelativeY), -MathHelper.PiOver2, MathHelper.PiOver2);
-
+                if (MathHelper.ToRadians(mouse.RelativeY) < MathHelper.PiOver2)
+                {
+                }
+                ;
+                AngleVertical = MathHelper.Clamp(AngleVertical - MathHelper.ToRadians(mouse.RelativeY), -MathHelper.PiOver2,
+                                                 MathHelper.PiOver2);
             }
-
-
-
-            Positie += Snelheid * elapsed;
-            CameraPosition = Positie;
         }
-
-
 
 
         public void FitInView(BoundingSphere sphere)

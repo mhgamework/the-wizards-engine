@@ -208,6 +208,7 @@
     <Compile Include="Navigation2D\WaypointEngineTest.cs" />
     <Compile Include="Navigation2D\WaypointVisualizer.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
+    <Compile Include="Scattered\Core\HudSimulator.cs" />
     <Compile Include="Scattered\Core\GameplaySimulator.cs" />
     <Compile Include="Scattered\Core\IslandSpaceManager.cs" />
     <Compile Include="Scattered\Core\MeshAddon.cs" />
@@ -235,9 +236,8 @@
     <Compile Include="Scattered\SceneGraphing\SceneGraphNode.cs" />
     <Compile Include="Scattered\Core\Bindings\ScatteredRenderingSimulator.cs" />
     <Compile Include="Scattered\Simulation\LevelSerializer.cs" />
-    <Compile Include="Scattered\Simulation\Playmode\ClusterFlightController.cs" />
-    <Compile Include="Scattered\Simulation\Playmode\ClusterPhysicsSimulator.cs" />
-    <Compile Include="Scattered\Simulation\Playmode\PlayControllerSimulator.cs" />
+    <Compile Include="Scattered\Core\ClusterFlightController.cs" />
+    <Compile Include="Scattered\Core\Bindings\ClusterPhysicsSimulator.cs" />
     <Compile Include="Scattered\Simulation\RoundState.cs" />
     <Compile Include="Scattered\Simulation\DistributionHelper.cs" />
     <Compile Include="Scattered\Simulation\InterIslandMovementSimulator.cs" />

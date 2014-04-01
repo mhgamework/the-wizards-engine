@@ -71,8 +71,17 @@ namespace MHGameWork.TheWizards.Scattered.Core
         public void TryPickupResource(Resource resource)
         {
             if (Inventory.ItemCount > 0 && Inventory.Items.First() != resource.Type) return;
-            Inventory.AddNewItems(resource.Type, resource.Amount);
-            level.DestroyNode(resource.Node);
+
+            var maxInventorySize = 40;
+
+            var transferSize = Math.Min(resource.Amount, maxInventorySize - Inventory.ItemCount);
+            Inventory.AddNewItems(resource.Type, transferSize);
+            resource.Amount -= transferSize;
+
+            if (resource.Amount < 0) throw new InvalidOperationException("Programming error check!");
+
+            if (resource.Amount == 0)
+                level.DestroyNode(resource.Node);
 
         }
         public void AttemptDropResource()
@@ -111,7 +120,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         public void StopFlight()
         {
             if (FlyingIsland == null) return;
-            Position = FlyingIsland.Position + Vector3.UnitY * 5;
+            Position = FlyingEngine.Node.Position + Vector3.UnitY * 5;
             Direction = TW.Graphics.Camera.ViewInverse.xna().Forward.dx();
             FlyingIsland = null;
             FlyingEngine = null;

@@ -28,6 +28,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             var mesh = UtilityMeshes.CreateBoxWithTexture(TW.Assets.LoadTexture(type.TexturePath), new Vector3(1, 1, 1) * itemSize * 0.5f);
 
             var renderNode = node.CreateChild();
+            renderNode.Relative = Matrix.Scaling(0.5f, 0.5f, 0.5f);
 
             entityNode = level.CreateEntityNode(renderNode.CreateChild())
                  .Alter(k => k.Entity.Mesh = mesh)
