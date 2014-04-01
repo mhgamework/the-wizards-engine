@@ -10,9 +10,11 @@ namespace MHGameWork.TheWizards.Scattered.Core
 {
     public class IslandSpaceManager
     {
-        public List<IBuildingElement> BuildAreaMeshes;
+        private List<IBuildingElement> buildAreaMeshes;
+        public List<IBuildingElement> BuildAreaMeshes { get { return buildAreaMeshes; } set { setBuildMeshes(value); } }
         private List<BoundingBox> reservedSpots = new List<BoundingBox>();
         private Random rnd = new Random(0);
+        private readonly Vector3 posOffset = new Vector3(0, 0, 0.2f); //compensates for grass model thickness, in local (face) space!
 
         /// <summary>
         /// Returns the position (island-space) of a free buildingspot of specified size.
@@ -35,6 +37,15 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 maxNbTries--;
             }
             return null;
+        }
+
+        private void setBuildMeshes(List<IBuildingElement> meshes)
+        {
+            buildAreaMeshes = new List<IBuildingElement>();
+            foreach (var f in meshes.Cast<Face>())
+            {
+                buildAreaMeshes.Add(f.ExtraTransform(Matrix.Translation(posOffset), f.GetSemanticId()));
+            }
         }
 
         private Vector3 getRandomPositionOnMesh()
