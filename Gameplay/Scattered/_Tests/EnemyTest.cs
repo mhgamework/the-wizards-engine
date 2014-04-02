@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             island.AddAddon(enemy);
 
             enemy.Activate();
-            
+
             TW.Graphics.SpectaterCamera.FarClip = 2000;
         }
 
@@ -68,6 +68,32 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             isle.Mesh = mesh;
             isle.Descriptor = desc;
         }
+
+        [Test]
+        public void TestEnemyInWorld()
+        {
+            var level = new Level();
+            var player = level.LocalPlayer;
+            addPlaySimulators(level, player);
+            var gen = new WorldGenerator(level, new Random(0));
+
+            gen.Generate();
+
+            var nbEnemies = (int)Math.Floor(level.Islands.Count() * 0.5f);
+            var rnd = new Random(0);
+            for (int j = 1; j < nbEnemies; j++)
+            {
+                var index = rnd.Next(0, level.Islands.Count());
+
+                var island = level.Islands.ElementAt(index);
+                var enemy = new Enemy(level, island.Node.CreateChild(), new Vector3());
+                island.AddAddon(enemy);
+                enemy.Activate();
+            }
+
+            TW.Graphics.SpectaterCamera.FarClip = 2000;
+        }
+
 
         private void addPlaySimulators(Level level, ScatteredPlayer player)
         {

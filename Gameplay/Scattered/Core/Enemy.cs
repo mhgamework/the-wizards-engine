@@ -31,7 +31,19 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private float currentHeight;
         private const float idleHeight = 1.2f; //heightdifference with island when starting powerup
         private const float patrolHeight = 7.5f; //heightdifference with island when patrolling
-        private const float attackHeight = 5f; //heightdifference with player when attacking
+        private const float attackHeight = 3f; //heightdifference with player when attacking
+
+        private SceneGraphNode bodyNode;
+        private SceneGraphNode sightNode;
+        private SceneGraphNode tailNode;
+        private SceneGraphNode propellorAxesNode;
+        private SceneGraphNode propellorLeftNode;
+        private SceneGraphNode propellorRightNode;
+
+        private EntityNode propLeftEnt;
+        private EntityNode propRightEnt;
+        private EntityNode tailEnt;
+        private EntityNode sightEnt;
 
         public Enemy(Level level, SceneGraphNode node, Vector3 relativeStartPos)
         {
@@ -41,9 +53,36 @@ namespace MHGameWork.TheWizards.Scattered.Core
             this.level = level;
             player = level.LocalPlayer;
 
-            var ent = level.CreateEntityNode(node.CreateChild());
-            ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobot");
-            ent.Node.Relative = Matrix.Scaling(2, 2, 2);
+            bodyNode = Node.CreateChild();
+            bodyNode.Relative = Matrix.Scaling(2, 2, 2) * Matrix.RotationZ(-(float)Math.PI * 0.05f);
+            var bodyEnt = level.CreateEntityNode(bodyNode.CreateChild());
+            bodyEnt.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\Body");
+
+            sightNode = bodyNode.CreateChild();
+            sightEnt = level.CreateEntityNode(sightNode.CreateChild());
+            sightEnt.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\Sight_red");
+
+            tailNode = bodyNode.CreateChild();
+            tailNode.Relative = Matrix.Translation(new Vector3(0, -0.05f, 0));
+            tailEnt = level.CreateEntityNode(tailNode.CreateChild());
+            tailEnt.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\Tail");
+
+            propellorAxesNode = bodyNode.CreateChild();
+            propellorAxesNode.Relative = Matrix.Translation(new Vector3(-0.02f, -0.05f, 0));
+            var axesEnt = level.CreateEntityNode(propellorAxesNode.CreateChild());
+            axesEnt.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\PropellorAxes");
+
+            propellorLeftNode = propellorAxesNode.CreateChild();
+            propellorLeftNode.Relative = Matrix.Translation(new Vector3(-0.02f, 0.212f, 0.585f));
+            propLeftEnt = level.CreateEntityNode(propellorLeftNode.CreateChild());
+            propLeftEnt.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\Propellor");
+
+            propellorRightNode = propellorAxesNode.CreateChild();
+            propellorRightNode.Relative = Matrix.Translation(new Vector3(-0.02f, 0.212f, -0.585f));
+            propRightEnt = level.CreateEntityNode(propellorRightNode.CreateChild());
+            propRightEnt.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\Propellor");
+
+
 
             Node.Relative = Matrix.Translation(relativeStartPos + new Vector3(0, idleHeight, 0));
             currentHeight = idleHeight;
@@ -76,10 +115,26 @@ namespace MHGameWork.TheWizards.Scattered.Core
             newRotation = currentRotation;
 
             updateBehaviour();
+            updateMeshes();
 
             Node.Absolute = Matrix.RotationX(newRotation.X) * Matrix.RotationZ(newRotation.Z) * Matrix.RotationY(newRotation.Y) * Matrix.Translation(newPos);
             currentPos = newPos;
             currentRotation = newRotation;
+        }
+
+        private float propellorRot;
+        private void updateMeshes()
+        {
+            propellorRot += TW.Graphics.Elapsed * 1000f;
+            propellorRot = propellorRot % 360f;
+            propLeftEnt.Node.Relative = Matrix.RotationY(propellorRot / 180f * (float)Math.PI);
+            propRightEnt.Node.Relative = Matrix.RotationY(-propellorRot / 180f * (float)Math.PI);
+
+            var horDist = Vector3.Distance(new Vector3(currentPos.X, 0, currentPos.Z), new Vector3(newPos.X, 0, newPos.Z));
+            propellorAxesNode.Relative = Matrix.RotationZ(-horDist * 50f) * Matrix.Translation(new Vector3(-0.02f, -0.05f, 0));
+
+            var yRotDiff = currentRotation.Y - newRotation.Y;
+            tailEnt.Node.Relative = Matrix.RotationX(-yRotDiff * 75f);
         }
 
         private Vector3 moduloRotation(Vector3 rot)
@@ -212,6 +267,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         }
 
         private Random rnd = new Random();
+
         private void setNewDodgePos()
         {
             var dir = player.Position - currentPos;
@@ -222,7 +278,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
             var tangent = Vector3.Cross(dir, right);
 
-            dodgePos = attackPos + right * rnd.Next(-5, 5) + tangent * rnd.Next(-5, 5) + dir * rnd.Next(1, 3);
+            dodgePos = attackPos + right * rnd.Next(-5, 5) + tangent * rnd.Next(-2, 5) + dir * rnd.Next(1, 3);
         }
 
         private void dodgeTo(Vector3 pos, float speed)
