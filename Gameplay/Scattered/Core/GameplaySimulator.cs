@@ -23,6 +23,11 @@ namespace MHGameWork.TheWizards.Scattered.Core
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.Q))
                 level.LocalPlayer.AttemptDropResource();
 
+            if (!TW.Graphics.Mouse.CursorEnabled && TW.Graphics.Mouse.LeftMouseJustPressed)
+            {
+                level.LocalPlayer.Shoot();
+            }
+
             level.Islands.SelectMany(i => i.Addons.OfType<Resource>()).ToArray().ForEach(k => k.AttemptMerge());
 
             level.LocalPlayer.MovementDisabled = level.Islands.SelectMany(i => i.Addons.OfType<JumpPad>()).Any(j => j.IsPerformingJump);

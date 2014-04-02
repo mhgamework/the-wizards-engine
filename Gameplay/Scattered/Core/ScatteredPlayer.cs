@@ -117,6 +117,11 @@ namespace MHGameWork.TheWizards.Scattered.Core
             return r.onRaycastIslandReturnIsland(ray);
         }
 
+        public Ray GetTargetingRay()
+        {
+            return TW.Data.Get<CameraInfo>().GetCenterScreenRay();
+        }
+
         public void StopFlight()
         {
             if (FlyingIsland == null) return;
@@ -126,5 +131,22 @@ namespace MHGameWork.TheWizards.Scattered.Core
             FlyingEngine = null;
         }
 
+        public Enemy GetTargetedEnemy()
+        {
+            var ray = GetTargetingRay();
+            var cast = level.Islands.SelectMany(i => i.Addons.OfType<Enemy>()).Raycast(e => e.LocalBoundingBox,
+                                                                            e => e.Node.Absolute, ray);
+            if (!cast.IsHit) return null;
+            return (Enemy) cast.Object;
+        }
+
+        public void Shoot()
+        {
+            var target = GetTargetedEnemy();
+            if (target == null) return;
+            target.Kill();
+            level.DestroyNode(target.Node);
+
+        }
     }
 }

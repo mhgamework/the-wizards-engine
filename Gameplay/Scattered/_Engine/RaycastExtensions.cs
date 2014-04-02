@@ -11,7 +11,7 @@ namespace MHGameWork.TheWizards.Scattered._Engine
     /// </summary>
     public static class RaycastExtensions
     {
-        public static T Raycast<T>(this IEnumerable<T> e, Func<T, BoundingBox> getBoundingbox, Ray ray) where T : class
+        public static RaycastResult Raycast<T>(this IEnumerable<T> e, Func<T, BoundingBox> getLocalBoundingbox, Func<T, Matrix> getTransform, Ray ray) where T : class
         {
             var closest = new RaycastResult();
             var newResult = new RaycastResult();
@@ -21,11 +21,18 @@ namespace MHGameWork.TheWizards.Scattered._Engine
 
             foreach (var s in e)
             {
-                var dist = ray.xna().Intersects(getBoundingbox(s).xna());
+                var transformation = getTransform(s);
+                var localRay = ray.Transform(Matrix.Invert(transformation));
+                var dist = localRay.xna().Intersects(getLocalBoundingbox(s).xna());
+                if (dist != null)
+                {
+                    var localPoint = localRay.GetPoint(dist.Value);
+                    var point = Vector3.TransformCoordinate(localPoint, transformation);
+                    dist = Vector3.Distance(ray.Position, point);
+                }
 
                 newResult.Set(dist, s);
 
-                newResult = new RaycastResult();
                 if (newResult.IsCloser(closest))
                 {
                     newResult.CopyTo(closest);
@@ -33,7 +40,7 @@ namespace MHGameWork.TheWizards.Scattered._Engine
 
             }
 
-            return closest.IsHit ? (T)closest.Object : null;
+            return closest;
         }
 
         public static T Raycast<T>(this IEnumerable<T> e, Func<T, Ray, float?> intersect, Ray ray) where T : class

@@ -3,6 +3,7 @@ using DirectX11;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using SlimDX;
+using MHGameWork.TheWizards.Scattered._Engine;
 
 namespace MHGameWork.TheWizards.Scattered.Core
 {
@@ -14,6 +15,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             update();
         }
 
+        public BoundingBox LocalBoundingBox { get; private set; }
         public EnemyState CurrentState = EnemyState.INACTIVE;
         private Level level;
         private ScatteredPlayer player;
@@ -96,6 +98,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             newRotation = currentRotation;
 
             startLocation = currentPos + new Vector3(0, patrolHeight - idleHeight, 0);
+            LocalBoundingBox = new Vector3(2, 2, 2).CenteredBoundingbox();
         }
 
         public void Activate()
@@ -341,12 +344,19 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private void updateDead()
         {
             //dying animation, cleanup
+            level.DestroyNode(Node);
+
         }
 
 
         public enum EnemyState
         {
             INACTIVE, POWERUP, PATROL, ENGAGE, ATTACK, DISENGAGE, DEAD
+        }
+
+        public void Kill()
+        {
+            CurrentState = EnemyState.DEAD;
         }
     }
 }
