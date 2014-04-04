@@ -17,6 +17,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private Vector3 direction;
         private EntityNode itemNode;
         private ItemType heldItem;
+        public float Health { get; private set; }
 
         public ScatteredPlayer(Level level, SceneGraphNode node)
         {
@@ -148,5 +149,10 @@ namespace MHGameWork.TheWizards.Scattered.Core
             level.DestroyNode(target.Node);
 
         }
+        public void TakeDamage(float amount)
+        {
+            Health -= amount;
+        }
+
     }
 }
