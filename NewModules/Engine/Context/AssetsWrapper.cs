@@ -49,6 +49,8 @@ namespace MHGameWork.TheWizards
         {
             string filePath = TWDir.GameData + "\\" + relativeCorePath;
 
+            if (!File.Exists(filePath)) throw new ArgumentException("Invalid texture path: " + filePath);
+
             return loadTextureInternal(filePath);
         }
         /// <summary>
