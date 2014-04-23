@@ -41,7 +41,10 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
             lifetime -= TW.Graphics.Elapsed;
             if (lifetime < 0)
+            {
                 Dispose();
+                return;
+            }
 
             if (Vector3.Distance(level.LocalPlayer.Position, Position) < 0.5f)
             {
