@@ -23,6 +23,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.Q))
                 level.LocalPlayer.AttemptDropResource();
 
+            level.LocalPlayer.AttemptHeal();
+
             if (!TW.Graphics.Mouse.CursorEnabled && TW.Graphics.Mouse.LeftMouseJustPressed)
             {
                 level.LocalPlayer.Shoot();

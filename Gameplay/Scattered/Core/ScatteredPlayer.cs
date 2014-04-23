@@ -25,6 +25,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             this.node = node;
 
             itemNode = level.CreateEntityNode(node.CreateChild().Alter(c => c.Relative = Matrix.Translation(0, -0.5f, -3)));
+            Health = 1;
         }
 
         public Vector3 Position
@@ -102,6 +103,42 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         }
 
+
+        private float healing = 0;
+        public void AttemptHeal()
+        {
+
+            if (healing > 0)
+            {
+                Health += TW.Graphics.Elapsed / 10f;
+                healing -= TW.Graphics.Elapsed / 10f;
+                if (Health > 1) Health = 1;
+                return;
+            }
+            if (Health >= 1)
+            {
+                Health = 1;
+                healing = 0;
+                return;
+            }
+            var closeFries = level.Islands.SelectMany(i => i.Addons).OfType<Resource>()
+                .Where(r => r.Type == level.FriesType && r.Amount != 0)
+                .Where(r => Vector3.Distance(Position, r.Node.Position) < 3);
+
+            if (!closeFries.Any()) return;
+            var fries = closeFries.First();
+
+            fries.Amount--;
+            if (fries.Amount == 0)
+                level.DestroyNode(fries.Node);
+
+            healing = 0.1f;
+
+
+
+        }
+
+
         public Vector3? GetLookedAtIslandSurfacePoint()
         {
             var r = new IslandWalkPlaneRaycaster(level);
@@ -138,7 +175,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             var cast = level.Islands.SelectMany(i => i.Addons.OfType<Enemy>()).Raycast(e => e.LocalBoundingBox,
                                                                             e => e.Node.Absolute, ray);
             if (!cast.IsHit) return null;
-            return (Enemy) cast.Object;
+            return (Enemy)cast.Object;
         }
 
         public void Shoot()

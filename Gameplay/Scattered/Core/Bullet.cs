@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
 {
     public class Bullet
     {
-        private readonly Level level;
+        private Level level;
         public SceneGraphNode Node { get; private set; }
         public Vector3 Position { get; private set; }
         private Vector3 direction;
@@ -35,18 +35,28 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         public void Update()
         {
+            if (level == null) return;
             Position += direction * speed * TW.Graphics.Elapsed;
             Node.Absolute = Matrix.Translation(Position);
 
             lifetime -= TW.Graphics.Elapsed;
             if (lifetime < 0)
                 Dispose();
+
+            if (Vector3.Distance(level.LocalPlayer.Position, Position) < 0.5f)
+            {
+                level.LocalPlayer.TakeDamage(0.2f);
+                Dispose();
+            }
+
         }
 
         public void Dispose()
         {
+            if (level == null) return;
             level.Bullets.Remove(this);
             level.DestroyNode(Node);
+            level = null;
         }
     }
 }

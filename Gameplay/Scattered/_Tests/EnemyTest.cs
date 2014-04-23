@@ -110,5 +110,25 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             //engine.AddSimulator(new AudioSimulator());
 
         }
+
+
+        [Test]
+        public void TestHealing()
+        {
+            var level = new Level();
+            var player = level.LocalPlayer;
+            player.TakeDamage(0.9f);
+            addPlaySimulators(level, player);
+
+            var islePos = new Vector3(30, 0, 30);
+            Island island;
+            createIsland(level, islePos, out island);
+
+            island.AddAddon(new Resource(level, island.Node.CreateChild(), level.FriesType).Alter(r => r.Amount = 3).Alter(r => r.Node.Position = new Vector3(10, 0, 0)));
+            island.AddAddon(new Resource(level, island.Node.CreateChild(), level.FriesType).Alter(r => r.Amount = 1).Alter(r => r.Node.Position = new Vector3(3, 0, 8)));
+            island.AddAddon(new Resource(level, island.Node.CreateChild(), level.FriesType).Alter(r => r.Amount = 5).Alter(r => r.Node.Position = new Vector3(18, 0, 1)));
+
+            TW.Graphics.SpectaterCamera.FarClip = 2000;
+        }
     }
 }

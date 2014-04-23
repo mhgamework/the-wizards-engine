@@ -15,6 +15,9 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private ShaderResourceView reticleTextureRv;
         private ShaderResourceView grayTextureRv;
 
+        private float right = TW.Graphics.Form.Form.ClientSize.Width;
+        private float bottom = TW.Graphics.Form.Form.ClientSize.Height;
+
         public HudSimulator(Level level)
         {
             this.level = level;
@@ -37,36 +40,66 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         public void DrawUI()
         {
-            drawReticle(reticleTextureRv);
+            TW.Graphics.Device.ImmediateContext.OutputMerger.BlendState = TW.Graphics.HelperStates.AlphaBlend;
+            drawReticle();
+            drawHealthBar(level.LocalPlayer.Health);
         }
 
-        private void drawReticle(ShaderResourceView tex)
+        private void drawReticle()
         {
-            TW.Graphics.Device.ImmediateContext.OutputMerger.BlendState = TW.Graphics.HelperStates.AlphaBlend;
+
             var center = new Vector2(TW.Graphics.Form.Form.ClientSize.Width, TW.Graphics.Form.Form.ClientSize.Height) * 0.5f;
             var reticleSize = new Vector2(32, 32);
-            TW.Graphics.TextureRenderer.Draw(tex, center - reticleSize * 0.5f, reticleSize);
+
+            var tex = TW.Assets.LoadTexture("Scattered\\Models\\Reticle.png");
+
+            draw(tex, center - reticleSize * 0.5f, reticleSize);
         }
 
-        private void drawRectangle(Vector2 pos, Vector2 size, int border)
+        private void drawHealthBar(float health)
         {
-            draw(grayTextureRv, pos.X, pos.Y - border, size.X, border);
-            draw(grayTextureRv, pos.X, pos.Y + size.Y, size.X, border);
+            var back = TW.Assets.LoadTexture("Scattered\\HUD\\HealthBarBack.png");
+            var front = TW.Assets.LoadTexture("Scattered\\HUD\\HealthBar.png");
 
-            draw(grayTextureRv, pos.X - border, pos.Y, border, size.Y);
-            draw(grayTextureRv, pos.X + size.X, pos.Y, border, size.Y);
+            var maxHeight = 150;
+            var height = maxHeight * health;
 
-            //draw(grayTextureRv, pos.X - border, pos.Y - border, size.X, size.Y);
-            //draw(grayTextureRv, pos.X, pos.Y - border, size.X, size.Y);
-            //draw(grayTextureRv, pos.X, pos.Y - border, size.X, size.Y);
-            //draw(grayTextureRv, pos.X, pos.Y - border, size.X, size.Y);
+            draw(back, right - 70, 20, 50, maxHeight);
+            draw(front, right - 70, 20 + (maxHeight - height), 50, height);
+
+        }
+
+        //private void drawRectangle(Vector2 pos, Vector2 size, int border)
+        //{
+        //    draw(grayTextureRv, pos.X, pos.Y - border, size.X, border);
+        //    draw(grayTextureRv, pos.X, pos.Y + size.Y, size.X, border);
+
+        //    draw(grayTextureRv, pos.X - border, pos.Y, border, size.Y);
+        //    draw(grayTextureRv, pos.X + size.X, pos.Y, border, size.Y);
+
+        //    //draw(grayTextureRv, pos.X - border, pos.Y - border, size.X, size.Y);
+        //    //draw(grayTextureRv, pos.X, pos.Y - border, size.X, size.Y);
+        //    //draw(grayTextureRv, pos.X, pos.Y - border, size.X, size.Y);
+        //    //draw(grayTextureRv, pos.X, pos.Y - border, size.X, size.Y);
 
 
+        //}
+
+
+
+        private void draw(ITexture tex, Vector2 pos, Vector2 size)
+        {
+            draw(TW.Graphics.AcquireRenderer().TexturePool.LoadTexture(tex), pos.X, pos.Y, size.X, size.Y);
+        }
+
+        private void draw(ITexture tex, float x, float y, float sizeX, float sizeY)
+        {
+            draw(TW.Graphics.AcquireRenderer().TexturePool.LoadTexture(tex), x, y, sizeX, sizeY);
         }
 
         private void draw(ShaderResourceView rv, float x, float y, float sizeX, float sizeY)
         {
-            TW.Graphics.TextureRenderer.Draw(rv, new Vector2(x, y), new Vector2(x + sizeX, y + sizeY));
+            TW.Graphics.TextureRenderer.Draw(rv, new Vector2(x, y), new Vector2(sizeX, sizeY));
         }
 
     }
