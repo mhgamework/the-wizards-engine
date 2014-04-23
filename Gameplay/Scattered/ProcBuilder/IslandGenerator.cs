@@ -53,8 +53,10 @@ namespace MHGameWork.TheWizards.Scattered.ProcBuilder
             const string buildableSemId = "Buildable";
             const string borderSemId = "Border";
             var structureBuilder = new Builder(new DummyRenderer());
+            structureBuilder.SuppressWarnings = true;
             var meshDummyRenderer = new DummyRenderer();
             var meshBuilder = new Builder(meshDummyRenderer);
+            meshBuilder.SuppressWarnings = true;
 
             var structureGen = new IslandStructureGenerator { RandomSeed = seed};
             structureGen.Initialize();
