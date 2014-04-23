@@ -103,12 +103,13 @@ namespace MHGameWork.TheWizards.Rendering
         {
             if (a.DiffuseColor != b.DiffuseColor) return false;
             if (a.DiffuseMap != b.DiffuseMap) return false;
+            if (a.Name != b.Name) return false;
             return true;
         }
 
         private MeshCoreData.Material createMaterialCopy(MeshCoreData.Material original)
         {
-            return new MeshCoreData.Material { DiffuseMap = original.DiffuseMap, DiffuseColor = original.DiffuseColor };
+            return new MeshCoreData.Material { DiffuseMap = original.DiffuseMap, DiffuseColor = original.DiffuseColor, Name = original.Name };
         }
 
         private void clearBuffers()

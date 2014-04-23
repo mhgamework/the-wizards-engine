@@ -86,8 +86,8 @@ namespace MHGameWork.TheWizards.Scattered.Model
             AirCrystalType = new ItemType() { Name = "Air crystal" };
             AirEnergyType = new ItemType() { Name = "Air energy" };
             ScrapType = new ItemType() { Name = "Scrap" };
-            CoalType = new ItemType() { Name = "Coal", TexturePath = "Scattered\\Items\\coal.jpg" };
-            FriesType = new ItemType() { Name = "Fries", TexturePath = "Scattered\\Items\\fries.jpg" };
+            CoalType = new ItemType() { Name = "Coal", TexturePath = "Scattered\\Models\\Items\\coal.jpg" };
+            FriesType = new ItemType() { Name = "Fries", TexturePath = "Scattered\\Models\\Items\\fries.jpg" };
 
             WorkshopCartType = new TravellerType() { IsEnemy = false, Name = "Workshop Cart" };
             DeliveryCartType = new TravellerType() { IsEnemy = false, Name = "Delivery Cart" };

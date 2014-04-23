@@ -22,27 +22,28 @@ namespace MHGameWork.TheWizards.Rendering
         {
             public Color DiffuseColor;
             public ITexture DiffuseMap;
+            public string Name;
 
             public bool Equals(Material other)
             {
                 if (ReferenceEquals(null, other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return other.DiffuseColor.Equals(DiffuseColor) && Equals(other.DiffuseMap, DiffuseMap);
+                return other.DiffuseColor.Equals(DiffuseColor) && Equals(other.DiffuseMap, DiffuseMap) && Equals(other.Name, Name);
             }
 
             public override bool Equals(object obj)
             {
                 if (ReferenceEquals(null, obj)) return false;
                 if (ReferenceEquals(this, obj)) return true;
-                if (obj.GetType() != typeof (Material)) return false;
-                return Equals((Material) obj);
+                if (obj.GetType() != typeof(Material)) return false;
+                return Equals((Material)obj);
             }
 
             public override int GetHashCode()
             {
                 unchecked
                 {
-                    return (DiffuseColor.GetHashCode()*397) ^ (DiffuseMap != null ? DiffuseMap.GetHashCode() : 0);
+                    return (DiffuseColor.GetHashCode() * 397) ^ (DiffuseMap != null ? DiffuseMap.GetHashCode() : 0);
                 }
             }
         }
@@ -52,7 +53,7 @@ namespace MHGameWork.TheWizards.Rendering
 
     public class MeshCoreDataFactoryOld : IDataElementFactory<MeshCoreData>
     {
-        
+
         private WorldDatabase.WorldDatabase database;
         public MeshCoreDataFactoryOld(WorldDatabase.WorldDatabase database)
         {
@@ -64,7 +65,7 @@ namespace MHGameWork.TheWizards.Rendering
             return "MeshCoreDataFactory001";
         }
 
-        public MeshCoreData ReadFromDisk( DataItemIdentifier item, DataRevisionIdentifier revision )
+        public MeshCoreData ReadFromDisk(DataItemIdentifier item, DataRevisionIdentifier revision)
         {
             /*TWXmlNode node = TWXmlNode.GetRootNodeFromFile( getFilename( item, revision ) );
 
@@ -85,7 +86,7 @@ namespace MHGameWork.TheWizards.Rendering
             throw new NotImplementedException();
         }
 
-        public void WriteToDisk( DataItemIdentifier item, DataRevisionIdentifier revision, MeshCoreData dataElement )
+        public void WriteToDisk(DataItemIdentifier item, DataRevisionIdentifier revision, MeshCoreData dataElement)
         {
             /*TWXmlNode node = new TWXmlNode( TWXmlNode.CreateXmlDocument(), "MeshCoreData" );
 
@@ -104,20 +105,20 @@ namespace MHGameWork.TheWizards.Rendering
             throw new NotImplementedException();
         }
 
-        private string getFilename( DataItemIdentifier item, DataRevisionIdentifier revision )
+        private string getFilename(DataItemIdentifier item, DataRevisionIdentifier revision)
         {
-            return database.GetRevisionDataElementFolder( revision ) + "\\MeshCoreData" +
-                             item.Id.ToString( "00000" );
+            return database.GetRevisionDataElementFolder(revision) + "\\MeshCoreData" +
+                             item.Id.ToString("00000");
         }
 
-        IDataElement IDataElementFactory.ReadFromDisk( DataItemIdentifier item, DataRevisionIdentifier revision )
+        IDataElement IDataElementFactory.ReadFromDisk(DataItemIdentifier item, DataRevisionIdentifier revision)
         {
-            return ReadFromDisk( item, revision );
+            return ReadFromDisk(item, revision);
         }
 
-        public void WriteToDisk( DataItemIdentifier item, DataRevisionIdentifier revision, IDataElement dataElement )
+        public void WriteToDisk(DataItemIdentifier item, DataRevisionIdentifier revision, IDataElement dataElement)
         {
-            WriteToDisk( item, revision, dataElement as MeshCoreData );
+            WriteToDisk(item, revision, dataElement as MeshCoreData);
         }
     }
 }

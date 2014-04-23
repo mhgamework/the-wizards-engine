@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered._Engine;
@@ -55,14 +58,53 @@ namespace MHGameWork.TheWizards.Scattered.Core
             panelNode.TextRectangle.Entity.Visible = Vector3.Distance(Node.Position, level.LocalPlayer.Position) < textViewDist;
 
             panelNode.TextRectangle.Text = Amount.ToString();
-            if (Amount < 10)
-                entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates1");
-            else if (Amount < 20)
-                entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates2");
-            else if (Amount < 50)
-                entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates3");
-            else
-                entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates4");
+            entityNode.Entity.Mesh = GetCorrectMesh(Amount, Type);
+            //if (Amount < 10)
+            //    entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates1");
+            //else if (Amount < 20)
+            //    entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates2");
+            //else if (Amount < 50)
+            //    entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates3");
+            //else
+            //    entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates4");
+        }
+
+        private Dictionary<ItemType, Dictionary<int, IMesh>> itemMeshes =
+            new Dictionary<ItemType, Dictionary<int, IMesh>>();
+        private IMesh GetCorrectMesh(int amount, ItemType type)
+        {
+            if (!itemMeshes.ContainsKey(type))
+            {
+                // create
+
+                var dic = new Dictionary<int, IMesh>();
+                var tex = TW.Assets.LoadTexture(type.TexturePath);
+                dic[10] = alterMesh(TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates1"), "01___Default", tex);
+                dic[20] = alterMesh(TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates2"), "01___Default", tex);
+                dic[50] = alterMesh(TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates3"), "01___Default", tex);
+                dic[int.MaxValue] = alterMesh(TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates4"), "01___Default", tex);
+
+                itemMeshes[type] = dic;
+            }
+            var correctMeshes = itemMeshes[type].Where(p => amount < p.Key).OrderBy(p => p.Key);
+
+            if (!correctMeshes.Any())
+                return itemMeshes[type].OrderByDescending(p => p.Key).First().Value;
+
+            return correctMeshes.First().Value;
+
+        }
+
+        private IMesh alterMesh(IMesh mesh, string texname, ITexture tex)
+        {
+            // Somewhat of a cheat, use the meshoptimizer to create a copy
+            var copy = new MeshOptimizer().CreateOptimized(mesh);
+            var mat = copy.GetCoreData().Parts.Where(p => p.MeshMaterial.Name == texname).FirstOrDefault();
+            if (mat == null) throw new InvalidOperationException("Mesh does not contain material " + texname);
+            mat.MeshMaterial.DiffuseMap = tex;
+
+            return copy;
+
         }
 
         public void AttemptMerge()

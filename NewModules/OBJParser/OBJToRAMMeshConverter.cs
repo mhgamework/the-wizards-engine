@@ -316,6 +316,7 @@ namespace MHGameWork.TheWizards.OBJParser
 
                 }
                 meshMat.DiffuseColor = mat.DiffuseColor;
+                meshMat.Name = mat.Name;
                 materials[mat] = meshMat;
             }
             return materials;
