@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Scattered.Core;
+using MHGameWork.TheWizards.Scattered.Core.Bindings;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered.Simulation;
 using SlimDX;
@@ -124,6 +125,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             var ret = new EntityNode(this, node);
             EntityNodes.Add(ret);
+            node.ObserveDestroy(() => EntityNodes.Remove(ret));
             return ret;
         }
 
@@ -132,6 +134,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             var ret = new TextPanelNode(this, node);
             TextPanelNodes.Add(ret);
+            node.ObserveDestroy(() => TextPanelNodes.Remove(ret));
             return ret;
         }
 
@@ -139,6 +142,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             var ret = new EntityInteractableNode(entity, createChild, onInteract);
             InteractableNodes.Add(ret);
+            createChild.ObserveDestroy(() => InteractableNodes.Remove(ret));
             return ret;
         }
 
@@ -149,29 +153,6 @@ namespace MHGameWork.TheWizards.Scattered.Model
             {
                 DestroyNode(c);
             }
-
-
-            EntityNodes.Where(k => k.Node == node).ToArray()
-                .ForEach(e =>
-                    {
-                        e.Dispose();
-                        EntityNodes.Remove(e);
-                    });
-
-            TextPanelNodes.Where(k => k.Node == node).ToArray()
-              .ForEach(e =>
-              {
-                  e.Dispose();
-                  TextPanelNodes.Remove(e);
-              });
-
-
-            InteractableNodes.Where(k => k.Node == node).ToArray()
-               .ForEach(e =>
-               {
-                   e.Dispose();
-                   InteractableNodes.Remove(e);
-               });
 
             node.Dispose();
         }
@@ -200,6 +181,34 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             return FindInRange<T>(node, range, wherePredicate).FirstOrDefault();
         }
+
+
+        #region ClockedBehaviourService
+
+        private List<ClockedBehaviourSimulator> clockedBehaviourSimulators = new List<ClockedBehaviourSimulator>();
+
+        /// <summary>
+        /// Adds a behaviour simulator to this object. This behaviour is executed repeatedly, and the return value of the behaviour enumerable
+        /// is used as a waiting period until the next frame.
+        /// The behaviour is automatically stopped when the object is removed.
+        /// </summary>
+        /// <param name="islandAddon"></param>
+        /// <param name="stepBehaviour"></param>
+        public void AddBehaviour(SceneGraphNode node, IEnumerable<float> stepBehaviour)
+        {
+            var sim = new ClockedBehaviourSimulator(stepBehaviour);
+            clockedBehaviourSimulators.Add(sim);
+            node.ObserveDestroy(() => clockedBehaviourSimulators.Remove(sim));
+
+        }
+
+        public void SimulateBehaviours()
+        {
+            clockedBehaviourSimulators.ForEach(c => c.Update());
+        }
+
+        #endregion
+
     }
 
 }

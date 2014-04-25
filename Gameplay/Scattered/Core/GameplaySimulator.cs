@@ -1,4 +1,5 @@
 ﻿using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Scattered.Core.Bindings;
 using MHGameWork.TheWizards.Scattered.Model;
 using SlimDX.DirectInput;
 using System.Linq;
@@ -39,6 +40,10 @@ namespace MHGameWork.TheWizards.Scattered.Core
             {
                 bullet.Update();
             }
+
+            level.SimulateBehaviours();
+
+
         }
     }
 }

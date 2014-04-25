@@ -20,6 +20,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
             var ent = level.CreateEntityNode(node);
             ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Tower");
+
+            level.AddBehaviour(Node, stepBehaviour());
         }
 
         public SceneGraphNode Node { get; private set; }
@@ -31,34 +33,13 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         public void PrepareForRendering()
         {
-            // Move this to the update method?
-            updateBehaviour();
+            
         }
 
         private int state = 0;
 
 
-        private float timeWaiting = 0;
-        private IEnumerator<float> behaviourEnumerable;
-        private void updateBehaviour()
-        {
-            if (timeWaiting > 0.001)
-            {
-                timeWaiting -= TW.Graphics.Elapsed;
-                return;
-            }
-
-            if (behaviourEnumerable != null && !behaviourEnumerable.MoveNext())
-                behaviourEnumerable = null;
-
-            // In this implementation i try to have movenext and current next to eachother since i do not know which one of the 2 executes the enumerable
-            if (behaviourEnumerable == null)
-            {
-                behaviourEnumerable = stepBehaviour().GetEnumerator();
-                if (!behaviourEnumerable.MoveNext()) return; // empty enumerator, throw exception?
-            }
-            timeWaiting = behaviourEnumerable.Current;
-        }
+       
 
         public IEnumerable<float> stepBehaviour()
         {

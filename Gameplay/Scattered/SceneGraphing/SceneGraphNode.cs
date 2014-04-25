@@ -98,6 +98,7 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
 
         public void Dispose()
         {
+            destroyObservers.ForEach(a => a());
             Parent.children.Remove(this);
             Parent = null;
             children = null;
@@ -129,6 +130,10 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
 
         #endregion
 
-
+        private List<Action> destroyObservers = new List<Action>();
+        public void ObserveDestroy(Action func)
+        {
+            destroyObservers.Add(func);
+        }
     }
 }
