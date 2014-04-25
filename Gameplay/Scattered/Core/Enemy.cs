@@ -12,7 +12,6 @@ namespace MHGameWork.TheWizards.Scattered.Core
         public SceneGraphNode Node { get; private set; }
         public void PrepareForRendering()
         {
-            update();
         }
 
         public BoundingBox LocalBoundingBox { get; private set; }
@@ -99,6 +98,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
             startLocation = currentPos + new Vector3(0, patrolHeight - idleHeight, 0);
             LocalBoundingBox = new Vector3(2, 2, 2).CenteredBoundingbox();
+
+            level.AddBehaviour(node,update);
         }
 
         public void Activate()

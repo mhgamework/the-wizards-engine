@@ -31,6 +31,9 @@ namespace MHGameWork.TheWizards.Scattered.Core
             var ent = level.CreateEntityNode(node.CreateChild());
             ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Bullet");
             ent.Node.Relative = Matrix.Scaling(2, 2, 2);
+
+            level.AddBehaviour(node,Update);
+
         }
 
         public void Update()

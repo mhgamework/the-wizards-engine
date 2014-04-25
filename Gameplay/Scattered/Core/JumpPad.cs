@@ -50,6 +50,9 @@ namespace MHGameWork.TheWizards.Scattered.Core
             landingNode = node.CreateChild();
             landingNode.Relative = Matrix.Translation(new Vector3(0, 2f, 5f));
 
+            level.AddBehaviour(node, update);
+
+
         }
 
         public Vector3 GetLandingCoordinates()
@@ -267,7 +270,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
         
         public void PrepareForRendering()
         {
-            update();
+            
         }
         
 

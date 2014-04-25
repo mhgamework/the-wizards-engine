@@ -187,6 +187,18 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         private List<ClockedBehaviourSimulator> clockedBehaviourSimulators = new List<ClockedBehaviourSimulator>();
 
+
+        public void AddBehaviour(SceneGraphNode node, Action update)
+        {
+            AddBehaviour(node,singleUpdate(update));
+        }
+
+        private IEnumerable<float> singleUpdate(Action update)
+        {
+            update();
+            yield return 0;
+        }
+
         /// <summary>
         /// Adds a behaviour simulator to this object. This behaviour is executed repeatedly, and the return value of the behaviour enumerable
         /// is used as a waiting period until the next frame.

@@ -36,6 +36,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 .Alter(ent => ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\PropellorEngine"))
                 .Alter(e => e.CreateInteractable(onInteract));
 
+            level.AddBehaviour(node, update);
+
         }
 
         private void onInteract()
@@ -47,7 +49,6 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
         public void PrepareForRendering()
         {
-            update();
         }
 
         private void update()
