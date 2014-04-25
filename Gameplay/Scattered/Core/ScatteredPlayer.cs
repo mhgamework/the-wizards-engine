@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace MHGameWork.TheWizards.Scattered.Core
 {
-    public class ScatteredPlayer
+    public class ScatteredPlayer : IHasNode
     {
         private readonly Level level;
         private readonly SceneGraphNode node;
@@ -191,5 +191,6 @@ namespace MHGameWork.TheWizards.Scattered.Core
             Health -= amount;
         }
 
+        public SceneGraphNode Node { get { return node; } }
     }
 }

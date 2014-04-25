@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
     {
         private List<Island> islands = new List<Island>();
         private List<Traveller> travellers = new List<Traveller>();
-        public List<Bullet> Bullets = new List<Bullet>(); 
+        public List<Bullet> Bullets = new List<Bullet>();
 
         public SceneGraphNode Node { get; private set; }
 
@@ -176,6 +176,30 @@ namespace MHGameWork.TheWizards.Scattered.Model
             node.Dispose();
         }
 
+        public IEnumerable<T> FindInRange<T>(SceneGraphNode node, int range, Func<T, bool> wherePredicate)
+            where T : class, IHasNode
+        {
+            if (typeof(IIslandAddon).IsAssignableFrom(typeof(T)))
+            {
+                // Search the addons
+                return Islands.SelectMany(i => i.Addons).OfType<T>()
+                .Where(r => Vector3.Distance(node.Position, r.Node.Position) < range);
+            }
+            if (typeof(ScatteredPlayer).IsAssignableFrom(typeof(T)))
+            {
+                // Search players (eg player)
+                if (Vector3.Distance(node.Position, LocalPlayer.Position) < range) return new[] { LocalPlayer as T };
+                return new T[0];
+
+            }
+            throw new NotImplementedException();
+        }
+
+        public T FindClosest<T>(SceneGraphNode node, int range, Func<T, bool> wherePredicate)
+            where T : class, IHasNode
+        {
+            return FindInRange<T>(node, range, wherePredicate).FirstOrDefault();
+        }
     }
 
 }

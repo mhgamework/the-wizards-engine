@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Reflection;
 using Castle.Core.Internal;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Text;
+using MHGameWork.TheWizards.Scattered.Core.Bindings;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using SlimDX;
 using System.Linq;
 using DirectX11;
+using MHGameWork.TheWizards.Scattered._Engine;
 
 namespace MHGameWork.TheWizards.Scattered.Core
 {
@@ -24,6 +27,8 @@ namespace MHGameWork.TheWizards.Scattered.Core
         private readonly Func<IEnumerable<EntityNode>> getAllEntityNodes;
         private readonly Func<IEnumerable<IIslandAddon>> getAllAddons;
         private HudSimulator hudSimulator;
+
+        private Textarea debugTextArea = new Textarea();
 
         public ScatteredRenderingSimulator(Level level, Func<IEnumerable<EntityNode>> getAllEntityNodes, Func<IEnumerable<IIslandAddon>> getAllAddons)
         {
@@ -71,7 +76,54 @@ namespace MHGameWork.TheWizards.Scattered.Core
             }
 
             hudSimulator.Simulate();
+            renderDebugHud();
 
+        }
+
+        private void renderDebugHud()
+        {
+            setupDebugTextArea();
+
+            //debugTextArea.Text = "The text!";
+            updateDebugAddonText();
+        }
+
+        private void setupDebugTextArea()
+        {
+            debugTextArea.Position = new Vector2(300, 10);
+            debugTextArea.Size = new Vector2(200, 100);
+            debugTextArea.Visible = true;
+        }
+
+        private void updateDebugAddonText()
+        {
+            var target = level.EntityNodes.Where(e => e.Entity.Mesh != null).Raycast(e => TW.Assets.GetBoundingBox(e.Entity.Mesh), e => e.Node.Absolute,
+                                                   level.LocalPlayer.GetTargetingRay());
+
+            debugTextArea.Text = "No object";
+
+            if (!target.IsHit) return;
+
+            
+            var node = ((EntityNode)target.Object).Node;
+            while (node.AssociatedObject == null || (!(node.AssociatedObject is IIslandAddon)))
+            {
+                node = node.Parent;
+                if (node == null) break;
+            }
+            if (node == null) return;
+            // Node should now be the addon node
+
+            debugTextArea.Text = node.AssociatedObject.GetType().Name + ":\n";
+
+
+            if (node.AssociatedObject is IDebugAddon)
+            {
+                var addon = (IDebugAddon)node.AssociatedObject;
+                debugTextArea.Text += addon.GetDebugText();
+            }
+
+           
         }
 
         private void renderIslandSpaceManagerBoxes()

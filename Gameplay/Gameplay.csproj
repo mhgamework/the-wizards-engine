@@ -208,9 +208,11 @@
     <Compile Include="Navigation2D\WaypointEngineTest.cs" />
     <Compile Include="Navigation2D\WaypointVisualizer.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
+    <Compile Include="Scattered\Core\Bindings\IDebugAddon.cs" />
     <Compile Include="Scattered\Core\Bullet.cs" />
     <Compile Include="Scattered\Core\HudSimulator.cs" />
     <Compile Include="Scattered\Core\GameplaySimulator.cs" />
+    <Compile Include="Scattered\Core\Bindings\IHasNode.cs" />
     <Compile Include="Scattered\Core\IslandSpaceManager.cs" />
     <Compile Include="Scattered\Core\MeshAddon.cs" />
     <Compile Include="Scattered\Core\Resource.cs" />

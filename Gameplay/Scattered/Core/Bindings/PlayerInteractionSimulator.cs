@@ -1,6 +1,7 @@
 ﻿using System;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Scattered.Core.Bindings;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered._Engine;
 using SlimDX;
@@ -37,7 +38,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.F))
             {
                 target.Interact();
-            }
+            }           
         }
     }
 }

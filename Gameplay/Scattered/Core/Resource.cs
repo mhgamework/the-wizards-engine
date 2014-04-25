@@ -122,5 +122,14 @@ namespace MHGameWork.TheWizards.Scattered.Core
                 level.DestroyNode(r.Node);
             }
         }
+
+        public void TakeAmount(int i)
+        {
+            if (Amount == 0) throw new InvalidOperationException("Resource with amount 0 detected!");
+            if (Amount < i) throw new InvalidOperationException("not enough amount in this resource!");
+            Amount -= i;
+            if (Amount == 0)
+                level.DestroyNode(Node);
+        }
     }
 }
