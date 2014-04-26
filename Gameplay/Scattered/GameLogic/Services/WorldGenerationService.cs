@@ -19,6 +19,10 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
         public interface IGameObjectsFactory
         {
             Tower CreateTower(SceneGraphNode node);
+            FlightEngine CreateEngine(SceneGraphNode node, ItemType type);
+            MeshAddon CreateMeshAddon(SceneGraphNode node, IMesh mesh);
+            JumpPad CreateJumpPad(SceneGraphNode node);
+            Resource.Factory CreateResource { get; }
         }
 
         private readonly Level level;
@@ -51,20 +55,19 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
             relaxPosition();
 
             generateResources(5, 20, level.CoalType, 0.2f);
-            generateAddons(0.1f, new Vector3(6, 0, 6).CenteredBoundingbox(), (island, pos) =>
-                {
-                    island.AddAddon(objectsFactory.CreateTower(island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos)));
-                });
-            generateAddons(0.05f, new Vector3(10, 0, 2).CenteredBoundingbox(), (island1, pos1) =>
-                {
-                    island1.AddAddon(
-                        new FlightEngine(level, island1.Node.CreateChild(), level.CoalType).Alter(k => k.Node.Relative = Matrix.Translation(pos1)));
-                });
+            generateAddons(0.1f, new Vector3(6, 0, 6).CenteredBoundingbox(),
+                (island, pos) => island.AddAddon(objectsFactory.CreateTower(island.Node.CreateChild())
+                    .Alter(k => k.Node.Relative = Matrix.Translation(pos))));
+            generateAddons(0.05f, new Vector3(10, 0, 2).CenteredBoundingbox(),
+                (island1, pos1) => island1.AddAddon(
+                objectsFactory.CreateEngine(island1.Node.CreateChild(), level.CoalType)
+                              .Alter(k => k.Node.Relative = Matrix.Translation(pos1))));
 
             var rockMesh = TW.Assets.LoadMesh("Scattered\\Models\\Resources\\RockFormation01");
             var rockBB = new Vector3(8, 0, 8).CenteredBoundingbox();
             generateAddons(0.5f, rockBB, (island, pos) => island.AddAddon(
-                new MeshAddon(rockMesh, level, island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos))));
+                objectsFactory.CreateMeshAddon(island.Node.CreateChild(), rockMesh)
+                .Alter(k => k.Node.Relative = Matrix.Translation(pos))));
 
             generateJumpPads(0.5f);
         }
@@ -73,7 +76,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
         {
             var allPads = new List<JumpPad>();
             var nbJumpPads = (int)Math.Floor(level.Islands.Count() * islandPercentage);
-            var rnd = new Random(0);
+            var rnd = new Random(0); //TODO: new random here!
 
             for (int j = 1; j < nbJumpPads; j++)
             {
@@ -84,7 +87,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
                 if (pos == null) continue;
 
                 isle.SpaceAllocator.TakeBuildingSpot(pos.Value, JumpPad.GetLocalBoundingBox());
-                var jumpPad = new JumpPad(level, isle.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation((Vector3)pos));
+                var jumpPad = objectsFactory.CreateJumpPad(isle.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation((Vector3)pos));
                 isle.AddAddon(jumpPad);
                 allPads.Add(jumpPad);
             }
@@ -174,7 +177,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 
                 island.SpaceAllocator.TakeBuildingSpot(pos.Value, boundingBox);
 
-                var r = new Resource(level, island.Node.CreateChild(), type);
+                var r = objectsFactory.CreateResource(island.Node.CreateChild(), type);
                 r.Node.Relative = Matrix.Translation(pos.Value);
                 r.Amount = random.Next(minAmount, maxAmount);
 

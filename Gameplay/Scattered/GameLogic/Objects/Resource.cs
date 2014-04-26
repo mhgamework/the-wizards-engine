@@ -18,6 +18,8 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
         private TextPanelNode panelNode;
         private EntityNode entityNode;
 
+        public delegate Resource Factory(SceneGraphNode node, ItemType type);
+
         public Resource(Level level, SceneGraphNode node, ItemType type)
         {
             this.level = level;
