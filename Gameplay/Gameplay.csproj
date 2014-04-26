@@ -109,6 +109,9 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.3.1\lib\net40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="bbv.Common">
       <HintPath>..\packages\bbv.Common.7.1.12149.1635\lib\Net40\bbv.Common.dll</HintPath>
     </Reference>
@@ -215,7 +218,6 @@
     <Compile Include="Scattered\Core\PlayerMover.cs" />
     <Compile Include="Scattered\Core\JumpPad.cs" />
     <Compile Include="Scattered\Core\WorldGenerator.cs" />
-    <Compile Include="Scattered\Model\Construction.cs" />
     <Compile Include="Scattered\ProcBuilder\CachedIslandGenerator.cs" />
     <Compile Include="Scattered\ProcBuilder\IIslandGenerator.cs" />
     <Compile Include="Scattered\ProcBuilder\IslandGenerator.cs" />
@@ -223,13 +225,9 @@
     <Compile Include="Scattered\SceneGraphing\TextPanelNode.cs" />
     <Compile Include="Scattered\SceneGraphing\EntityInteractableNode.cs" />
     <Compile Include="Scattered\SceneGraphing\EntityNode.cs" />
-    <Compile Include="Scattered\Model\IConstructionAction.cs" />
     <Compile Include="Scattered\Model\Inventory.cs" />
     <Compile Include="Scattered\Model\Island.cs" />
     <Compile Include="Scattered\Model\ItemType.cs" />
-    <Compile Include="Scattered\Model\NullConstructionAction.cs" />
-    <Compile Include="Scattered\Model\Traveller.cs" />
-    <Compile Include="Scattered\Model\TravellerType.cs" />
     <Compile Include="Scattered\Model\Level.cs" />
     <Compile Include="Scattered\SceneGraphing\SceneGraphNode.cs" />
     <Compile Include="Scattered\Core\Bindings\ScatteredRenderingSimulator.cs" />

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
+using Autofac;
+using Autofac.Core;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
@@ -16,6 +19,7 @@ using NUnit.Framework;
 using SlimDX;
 using MHGameWork.TheWizards.Scattered._Engine;
 using System.Linq;
+using Module = Autofac.Module;
 
 namespace MHGameWork.TheWizards.Scattered._Tests
 {
@@ -114,6 +118,99 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         }
 
 
-     
+        [Test]
+        public void PlayGame()
+        {
+            var builder = new ContainerBuilder();
+
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Simulator")).SingleInstance();
+            builder.RegisterType<ScatteredGame>();
+
+            builder.Register(c => new EnemySpawningSimulator(c.Resolve<Level>(), 100)).SingleInstance();
+            builder.Register(c =>
+                {
+                    var lvl = c.Resolve<Level>();
+                    return new ScatteredRenderingSimulator(lvl, () => lvl.EntityNodes,
+                                                    () => lvl.Islands.SelectMany(d => d.Addons));
+
+                });
+
+            builder.Register(c => new Level()).SingleInstance();
+            builder.Register(c => c.Resolve<Level>().LocalPlayer).SingleInstance();
+
+            builder.Register(c => new Random(0));
+            builder.RegisterType<WorldGenerator>().SingleInstance();
+
+            builder.RegisterModule<LogRequestsModule>();
+
+
+            var cont = builder.Build();
+
+            cont.Resolve<ScatteredGame>().LoadIntoEngine(engine);
+        }
+
+
+
+
+
+    }
+
+    public class LogRequestsModule : Module
+    {
+        protected override void AttachToComponentRegistration(
+          IComponentRegistry componentRegistry,
+          IComponentRegistration registration)
+        {
+            // Use the event args to log detailed info
+            registration.Preparing += (sender, args) =>
+                                      Console.WriteLine(
+                                          "Resolving concrete type {0}",
+                                          args.Component.Activator.LimitType);
+        }
+    }
+    public class ScatteredGame
+    {
+        private EnemySpawningSimulator EnemySpawningSimulator;
+        private PlayerMovementSimulator PlayerMovementSimulator;
+        private PlayerInteractionSimulator PlayerInteractionSimulator;
+        private GameplaySimulator GameplaySimulator;
+        private ClusterPhysicsSimulator ClusterPhysicsSimulator;
+        private PlayerCameraSimulator PlayerCameraSimulator;
+
+        private ScatteredRenderingSimulator ScatteredRenderingSimulator;
+        private WorldRenderingSimulator WorldRenderingSimulator;
+
+        private WorldGenerator gen;
+
+        public ScatteredGame(EnemySpawningSimulator enemySpawningSimulator, PlayerMovementSimulator playerMovementSimulator, PlayerInteractionSimulator playerInteractionSimulator, GameplaySimulator gameplaySimulator, ClusterPhysicsSimulator clusterPhysicsSimulator, PlayerCameraSimulator playerCameraSimulator, ScatteredRenderingSimulator scatteredRenderingSimulator, WorldRenderingSimulator worldRenderingSimulator, Level level, WorldGenerator gen)
+        {
+            EnemySpawningSimulator = enemySpawningSimulator;
+            PlayerMovementSimulator = playerMovementSimulator;
+            PlayerInteractionSimulator = playerInteractionSimulator;
+            GameplaySimulator = gameplaySimulator;
+            ClusterPhysicsSimulator = clusterPhysicsSimulator;
+            PlayerCameraSimulator = playerCameraSimulator;
+            ScatteredRenderingSimulator = scatteredRenderingSimulator;
+            WorldRenderingSimulator = worldRenderingSimulator;
+            this.gen = gen;
+        }
+
+        public void LoadIntoEngine(TWEngine engine)
+        {
+            engine.AddSimulator(EnemySpawningSimulator);
+            engine.AddSimulator(PlayerMovementSimulator);
+            engine.AddSimulator(PlayerInteractionSimulator);
+            engine.AddSimulator(GameplaySimulator);
+            engine.AddSimulator(ClusterPhysicsSimulator);
+            engine.AddSimulator(PlayerCameraSimulator);
+
+            engine.AddSimulator(ScatteredRenderingSimulator);
+            engine.AddSimulator(WorldRenderingSimulator);
+            //engine.AddSimulator(new AudioSimulator());
+
+            gen.Generate();
+
+            TW.Graphics.SpectaterCamera.FarClip = 2000;
+        }
     }
 }
