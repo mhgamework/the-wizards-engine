@@ -16,20 +16,20 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 {
     public class WorldGenerationService
     {
-        /*public interface IGameObjectsFactory
+        public interface IGameObjectsFactory
         {
-            Func<Tower> CreateTower();
-        }*/
+            Tower CreateTower(SceneGraphNode node);
+        }
 
         private readonly Level level;
         private readonly Random random;
-        private readonly Func<SceneGraphNode, Tower> createTower;
+        private readonly IGameObjectsFactory objectsFactory;
 
-        public WorldGenerationService(Level level, Random random, Func<SceneGraphNode, Tower> createTower)
+        public WorldGenerationService(Level level, Random random, IGameObjectsFactory objectsFactory)
         {
             this.level = level;
             this.random = random;
-            this.createTower = createTower;
+            this.objectsFactory = objectsFactory;
         }
 
         private float averageIslandSize = 40;
@@ -53,7 +53,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
             generateResources(5, 20, level.CoalType, 0.2f);
             generateAddons(0.1f, new Vector3(6, 0, 6).CenteredBoundingbox(), (island, pos) =>
                 {
-                    island.AddAddon(createTower(island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos)));
+                    island.AddAddon(objectsFactory.CreateTower(island.Node.CreateChild()).Alter(k => k.Node.Relative = Matrix.Translation(pos)));
                 });
             generateAddons(0.05f, new Vector3(10, 0, 2).CenteredBoundingbox(), (island1, pos1) =>
                 {

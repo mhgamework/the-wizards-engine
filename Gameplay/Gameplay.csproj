@@ -112,6 +112,9 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.3.1\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac.Extras.AggregateService">
+      <HintPath>..\packages\Autofac.Extras.AggregateService.3.0.4\lib\net40\Autofac.Extras.AggregateService.dll</HintPath>
+    </Reference>
     <Reference Include="bbv.Common">
       <HintPath>..\packages\bbv.Common.7.1.12149.1635\lib\Net40\bbv.Common.dll</HintPath>
     </Reference>
@@ -121,8 +124,9 @@
     <Reference Include="bbv.Common.StateMachine">
       <HintPath>..\packages\bbv.Common.StateMachine.7.4.12149.1635\lib\Net40\bbv.Common.StateMachine.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Core">
-      <HintPath>..\packages\Castle.Core.3.2.0\lib\net40-client\Castle.Core.dll</HintPath>
+    <Reference Include="Castle.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Castle.Core.3.2.2\lib\net40-client\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Windsor">
       <HintPath>..\packages\Castle.Windsor.3.2.0\lib\net40\Castle.Windsor.dll</HintPath>
@@ -257,6 +261,7 @@
     <Compile Include="Scattered\_Engine\OBJExporter.cs" />
     <Compile Include="Scattered\_Tests\IslandSpaceAllocationTest.cs" />
     <Compile Include="Scattered\_Tests\JumpPadTest.cs" />
+    <Compile Include="Scattered\Bindings\LogRequestsModule.cs" />
     <Compile Include="Scattered\_Tests\OBJExporterTest.cs" />
     <Compile Include="Scattered\_Tests\OnIslandMovementTest.cs" />
     <Compile Include="Scattered\_Tests\PlayerSurfaceMover.cs" />
@@ -265,6 +270,7 @@
     <Compile Include="Scattered\_Tests\ProcBuilderTest.cs" />
     <Compile Include="Scattered\GameLogic\Objects\ScatteredPlayer.cs" />
     <Compile Include="Scattered\GameLogic\Objects\Storage.cs" />
+    <Compile Include="Scattered\Bindings\ScatteredGame.cs" />
     <Compile Include="Scattered\_Tests\TextRectangleTest.cs" />
     <Compile Include="Scattered\GameLogic\Objects\Tower.cs" />
     <Compile Include="SkyMerchant\GameObjects\PhysicalMeshRenderComponent.cs" />
