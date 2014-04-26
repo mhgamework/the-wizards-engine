@@ -31,7 +31,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
                       Matrix.Translation(buildSpaceSize.X, 0, 0);
             var buildSpace = new Face("", mat, buildSpaceSize);
 
-            var spaceManager = new IslandSpaceManager { BuildAreaMeshes = new IBuildingElement[] { buildSpace }.ToList() };
+            var spaceManager = new IslandSpaceAllocator { BuildAreaMeshes = new IBuildingElement[] { buildSpace }.ToList() };
             var rnd = new Random(0);
             var placedBoxes = generateBuildPlots(rnd, spaceManager, 10, 1f, 3f);
 
@@ -60,7 +60,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             //buildMesh = buildMesh.Where(e => ((Face)e).GetBoundingBox().Maximum.Y < 1f).ToList();
 
-            var spaceManager = new IslandSpaceManager { BuildAreaMeshes = buildMesh };
+            var spaceManager = new IslandSpaceAllocator { BuildAreaMeshes = buildMesh };
 
             var nbBoxes = 10;
             var rnd = new Random(0);
@@ -89,7 +89,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             };
         }
 
-        private List<BoundingBox> generateBuildPlots(Random rnd, IslandSpaceManager spaceManager, int nbBoxes, float minSize, float maxSize)
+        private List<BoundingBox> generateBuildPlots(Random rnd, IslandSpaceAllocator spaceAllocator, int nbBoxes, float minSize, float maxSize)
         {
             var placedBoxes = new List<BoundingBox>();
             for (int i = 0; i < nbBoxes; i++)
@@ -98,11 +98,11 @@ namespace MHGameWork.TheWizards.Scattered._Tests
                 var zSize = minSize + rnd.Next(1, 100) * 0.01f * (maxSize - minSize);
 
                 var box = new BoundingBox(new Vector3(0, 0, 0), new Vector3(xSize, 1, zSize));
-                var pos = spaceManager.GetBuildPosition(box);
+                var pos = spaceAllocator.GetBuildPosition(box);
 
                 if (pos != null)
                 {
-                    spaceManager.TakeBuildingSpot((Vector3)pos, box);
+                    spaceAllocator.TakeBuildingSpot((Vector3)pos, box);
                     placedBoxes.Add(new BoundingBox(box.Minimum + (Vector3)pos, box.Maximum + (Vector3)pos));
                 }
             }

@@ -66,7 +66,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         public Island CreateTestIsland(Level level)
         {
             var i = level.CreateNewIsland(new Vector3());
-            var desc = new WorldGenerator.IslandDescriptor();
+            var desc = new WorldGenerationService.IslandDescriptor();
             desc.BaseElements = new[] { new Face("banana", Matrix.RotationX(-MathHelper.PiOver2), new Vector2(5, 5)) }.OfType<IBuildingElement>().ToList();
             desc.seed = 0;
             i.Descriptor = desc;
@@ -76,15 +76,16 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
         public static void AddPlaySimulators(Level level, ScatteredPlayer player, TWEngine engine)
         {
-            engine.AddSimulator(new PlayerMovementSimulator(level, player).Alter(k => k.NoclipMode = true));
-            engine.AddSimulator(new PlayerInteractionSimulator(level, player));
-            engine.AddSimulator(new GameplaySimulator(level));
-            engine.AddSimulator(new ClusterPhysicsSimulator(level));
-            engine.AddSimulator(new PlayerCameraSimulator(player));
+            throw new NotImplementedException();
+            //engine.AddSimulator(new PlayerMovementSimulator(level, player).Alter(k => k.NoclipMode = true));
+            //engine.AddSimulator(new PlayerInteractionSimulator(level, player));
+            //engine.AddSimulator(new GameSimulationService(level));
+            //engine.AddSimulator(new ClusterPhysicsSimulator(level));
+            //engine.AddSimulator(new PlayerCameraSimulator(player));
 
-            engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes,
-                                                                () => level.Islands.SelectMany(c => c.Addons)));
-            engine.AddSimulator(new WorldRenderingSimulator());
+            //engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes,
+            //                                                    () => level.Islands.SelectMany(c => c.Addons)));
+            //engine.AddSimulator(new WorldRenderingSimulator());
 
         }
     }

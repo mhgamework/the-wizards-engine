@@ -75,16 +75,16 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
         private void addPlaySimulators(Level level, ScatteredPlayer player)
         {
-            engine.AddSimulator(new EnemySpawningSimulator(level, 0.1f));
-            engine.AddSimulator(new PlayerMovementSimulator(level, player));
-            engine.AddSimulator(new PlayerInteractionSimulator(level, player));
-            engine.AddSimulator(new GameplaySimulator(level));
-            engine.AddSimulator(new ClusterPhysicsSimulator(level));
-            engine.AddSimulator(new PlayerCameraSimulator(player));
+            throw new NotImplementedException();
+            //engine.AddSimulator(new PlayerMovementSimulator(level, player));
+            //engine.AddSimulator(new PlayerInteractionSimulator(level, player));
+            //engine.AddSimulator(new GameSimulationService(level));
+            //engine.AddSimulator(new ClusterPhysicsSimulator(level));
+            //engine.AddSimulator(new PlayerCameraSimulator(player));
 
-            engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes,
-                                                                () => level.Islands.SelectMany(c => c.Addons)));
-            engine.AddSimulator(new WorldRenderingSimulator());
+            //engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes,
+            //                                                    () => level.Islands.SelectMany(c => c.Addons)));
+            //engine.AddSimulator(new WorldRenderingSimulator());
             //engine.AddSimulator(new AudioSimulator());
 
         }
@@ -96,7 +96,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes, () => level.Islands.SelectMany(c => c.Addons)));
             engine.AddSimulator(new WorldRenderingSimulator());
 
-            var gen = new WorldGenerator(level, new Random());
+            var gen = new WorldGenerationService(level, new Random(),null);
 
             gen.Generate();
 
@@ -110,7 +110,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             var level = new Level();
             var player = level.LocalPlayer;
             addPlaySimulators(level, player);
-            var gen = new WorldGenerator(level, new Random(0));
+            var gen = new WorldGenerationService(level, new Random(0),null);
 
             gen.Generate();
 
@@ -126,7 +126,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Simulator")).SingleInstance();
             builder.RegisterType<ScatteredGame>();
 
-            builder.Register(c => new EnemySpawningSimulator(c.Resolve<Level>(), 100)).SingleInstance();
+            builder.Register(c => new EnemySpawningService(c.Resolve<Level>(), 100)).SingleInstance();
             builder.Register(c =>
                 {
                     var lvl = c.Resolve<Level>();
@@ -139,7 +139,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             builder.Register(c => c.Resolve<Level>().LocalPlayer).SingleInstance();
 
             builder.Register(c => new Random(0));
-            builder.RegisterType<WorldGenerator>().SingleInstance();
+            builder.RegisterType<WorldGenerationService>().SingleInstance();
 
             builder.RegisterModule<LogRequestsModule>();
 
@@ -170,37 +170,41 @@ namespace MHGameWork.TheWizards.Scattered._Tests
     }
     public class ScatteredGame
     {
-        private EnemySpawningSimulator EnemySpawningSimulator;
         private PlayerMovementSimulator PlayerMovementSimulator;
         private PlayerInteractionSimulator PlayerInteractionSimulator;
-        private GameplaySimulator GameplaySimulator;
+        private GameSimulationService gameSimulationService;
         private ClusterPhysicsSimulator ClusterPhysicsSimulator;
         private PlayerCameraSimulator PlayerCameraSimulator;
 
         private ScatteredRenderingSimulator ScatteredRenderingSimulator;
         private WorldRenderingSimulator WorldRenderingSimulator;
 
-        private WorldGenerator gen;
+        private WorldGenerationService gen;
 
-        public ScatteredGame(EnemySpawningSimulator enemySpawningSimulator, PlayerMovementSimulator playerMovementSimulator, PlayerInteractionSimulator playerInteractionSimulator, GameplaySimulator gameplaySimulator, ClusterPhysicsSimulator clusterPhysicsSimulator, PlayerCameraSimulator playerCameraSimulator, ScatteredRenderingSimulator scatteredRenderingSimulator, WorldRenderingSimulator worldRenderingSimulator, Level level, WorldGenerator gen)
+        public ScatteredGame(PlayerMovementSimulator playerMovementSimulator,
+            PlayerInteractionSimulator playerInteractionSimulator, 
+            ClusterPhysicsSimulator clusterPhysicsSimulator, 
+            PlayerCameraSimulator playerCameraSimulator, 
+            ScatteredRenderingSimulator scatteredRenderingSimulator, 
+            WorldRenderingSimulator worldRenderingSimulator, 
+            WorldGenerationService gen, 
+            GameSimulationService gameSimulationService)
         {
-            EnemySpawningSimulator = enemySpawningSimulator;
             PlayerMovementSimulator = playerMovementSimulator;
             PlayerInteractionSimulator = playerInteractionSimulator;
-            GameplaySimulator = gameplaySimulator;
             ClusterPhysicsSimulator = clusterPhysicsSimulator;
             PlayerCameraSimulator = playerCameraSimulator;
             ScatteredRenderingSimulator = scatteredRenderingSimulator;
             WorldRenderingSimulator = worldRenderingSimulator;
             this.gen = gen;
+            this.gameSimulationService = gameSimulationService;
         }
 
         public void LoadIntoEngine(TWEngine engine)
         {
-            engine.AddSimulator(EnemySpawningSimulator);
             engine.AddSimulator(PlayerMovementSimulator);
             engine.AddSimulator(PlayerInteractionSimulator);
-            engine.AddSimulator(GameplaySimulator);
+            engine.AddSimulator(gameSimulationService);
             engine.AddSimulator(ClusterPhysicsSimulator);
             engine.AddSimulator(PlayerCameraSimulator);
 

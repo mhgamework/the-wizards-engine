@@ -47,7 +47,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         private void createIsland(Level level, Vector3 islePos, out Island isle)
         {
             isle = level.CreateNewIsland(islePos);
-            var desc = new WorldGenerator.IslandDescriptor();
+            var desc = new WorldGenerationService.IslandDescriptor();
             desc.seed = 0;
             isle.Descriptor = desc;
 
@@ -60,7 +60,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             List<IBuildingElement> bordermesh;
             realtimeIslandGenerator.GetIslandParts(desc.BaseElements, desc.seed, false, out temp, out navMesh, out buildmesh,
                                                    out bordermesh);
-            isle.SpaceManager.BuildAreaMeshes = buildmesh;
+            isle.SpaceAllocator.BuildAreaMeshes = buildmesh;
             desc.BuildMesh = buildmesh;
             desc.NavMesh = navMesh;
             isle.Descriptor = desc;
@@ -75,7 +75,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             var level = new Level();
             var player = level.LocalPlayer;
             addPlaySimulators(level, player);
-            var gen = new WorldGenerator(level, new Random(0));
+            var gen = new WorldGenerationService(level, new Random(0),null);
 
             gen.Generate();
 
@@ -97,16 +97,17 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
         private void addPlaySimulators(Level level, ScatteredPlayer player)
         {
-            engine.AddSimulator(new EnemySpawningSimulator(level, 0.1f));
-            engine.AddSimulator(new PlayerMovementSimulator(level, player));
-            engine.AddSimulator(new PlayerInteractionSimulator(level, player));
-            engine.AddSimulator(new GameplaySimulator(level));
-            engine.AddSimulator(new ClusterPhysicsSimulator(level));
-            engine.AddSimulator(new PlayerCameraSimulator(player));
+            throw new NotImplementedException();
+            //engine.AddSimulator(new EnemySpawningService(level, 0.1f));
+            //engine.AddSimulator(new PlayerMovementSimulator(level, player));
+            //engine.AddSimulator(new PlayerInteractionSimulator(level, player));
+            //engine.AddSimulator(new GameSimulationService(level));
+            //engine.AddSimulator(new ClusterPhysicsSimulator(level));
+            //engine.AddSimulator(new PlayerCameraSimulator(player));
 
-            engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes,
-                                                                () => level.Islands.SelectMany(c => c.Addons)));
-            engine.AddSimulator(new WorldRenderingSimulator());
+            //engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes,
+            //                                                    () => level.Islands.SelectMany(c => c.Addons)));
+            //engine.AddSimulator(new WorldRenderingSimulator());
             //engine.AddSimulator(new AudioSimulator());
 
         }

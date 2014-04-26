@@ -10,6 +10,9 @@ using System.Linq;
 
 namespace MHGameWork.TheWizards.Scattered.Simulation.Playmode
 {
+    /// <summary>
+    /// This translates user input into cluster movement.
+    /// </summary>
     public class ClusterFlightController
     {
         private readonly TWKeyboard keyboard;

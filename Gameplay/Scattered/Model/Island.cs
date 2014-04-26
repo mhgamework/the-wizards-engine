@@ -25,9 +25,9 @@ namespace MHGameWork.TheWizards.Scattered.Model
             //ent.Node.Relative = Matrix.Scaling(2, 2, 2) * ent.Node.Relative;
             entity = ent.Entity;
             //ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Island_Large");
-            SpaceManager = new IslandSpaceManager();
+            SpaceAllocator = new IslandSpaceAllocator();
         }
-        public IslandSpaceManager SpaceManager { get; set; }
+        public IslandSpaceAllocator SpaceAllocator { get; set; }
         private readonly Entity entity;
         private IMesh mesh;
         public IMesh Mesh
@@ -115,7 +115,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
             get { return Node.Children.Select(c => c.AssociatedObject).OfType<IIslandAddon>(); }
         }
 
-        public WorldGenerator.IslandDescriptor Descriptor { get; set; }
+        public WorldGenerationService.IslandDescriptor Descriptor { get; set; }
 
         public void AddAddon(IIslandAddon addon)
         {
