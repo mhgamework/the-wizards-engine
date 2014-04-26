@@ -41,29 +41,8 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
             return ret;
         }
-        public Traveller CreateNewTraveller(Island start, Func<Island> destinationAction)
-        {
-            var ret = new Traveller()
-                          {
-                              BridgePosition = new BridgePosition(start, start, 0),
-                              PlannedPath = new[] { start },
-                              DetermineDestinationAction = destinationAction
-                          };
-            travellers.Add(ret);
-
-            return ret;
-
-        }
 
         public IEnumerable<Island> Islands { get { return islands; } }
-
-        public IEnumerable<Traveller> Travellers { get { return travellers; } }
-
-
-        public void RemoveTraveller(Traveller traveller)
-        {
-            travellers.Remove(traveller);
-        }
 
         public void RemoveIsland(Island island)
         {
@@ -74,7 +53,6 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public void ClearAll()
         {
             islands.ToArray().ForEach(RemoveIsland);
-            travellers.ToArray().ForEach(RemoveTraveller);
         }
 
 
@@ -89,8 +67,6 @@ namespace MHGameWork.TheWizards.Scattered.Model
             CoalType = new ItemType() { Name = "Coal", TexturePath = "Scattered\\Models\\Items\\coal.jpg" };
             FriesType = new ItemType() { Name = "Fries", TexturePath = "Scattered\\Models\\Items\\fries.jpg" };
 
-            WorkshopCartType = new TravellerType() { IsEnemy = false, Name = "Workshop Cart" };
-            DeliveryCartType = new TravellerType() { IsEnemy = false, Name = "Delivery Cart" };
         }
 
         public ItemType UnitTier1Type { get; private set; }
@@ -102,14 +78,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         #endregion
 
-        #region Cart Types
-
-        public TravellerType WorkshopCartType { get; private set; }
-        public TravellerType DeliveryCartType { get; private set; }
-
         public ScatteredPlayer LocalPlayer { get; set; }
-
-        #endregion
 
 
         public List<EntityNode> EntityNodes = new List<EntityNode>();
@@ -168,19 +137,21 @@ namespace MHGameWork.TheWizards.Scattered.Model
             node.Dispose();
         }
 
+        #region SpatialService
+
         public IEnumerable<T> FindInRange<T>(SceneGraphNode node, int range, Func<T, bool> wherePredicate)
             where T : class, IHasNode
         {
-            if (typeof(IIslandAddon).IsAssignableFrom(typeof(T)))
+            if (typeof (IIslandAddon).IsAssignableFrom(typeof (T)))
             {
                 // Search the addons
                 return Islands.SelectMany(i => i.Addons).OfType<T>()
-                .Where(r => Vector3.Distance(node.Position, r.Node.Position) < range);
+                              .Where(r => Vector3.Distance(node.Position, r.Node.Position) < range);
             }
-            if (typeof(ScatteredPlayer).IsAssignableFrom(typeof(T)))
+            if (typeof (ScatteredPlayer).IsAssignableFrom(typeof (T)))
             {
                 // Search players (eg player)
-                if (Vector3.Distance(node.Position, LocalPlayer.Position) < range) return new[] { LocalPlayer as T };
+                if (Vector3.Distance(node.Position, LocalPlayer.Position) < range) return new[] {LocalPlayer as T};
                 return new T[0];
 
             }
@@ -192,6 +163,9 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             return FindInRange<T>(node, range, wherePredicate).FirstOrDefault();
         }
+
+        #endregion
+
 
 
         #region ClockedBehaviourService

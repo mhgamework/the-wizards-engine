@@ -11,7 +11,6 @@ using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered.Simulation;
 using MHGameWork.TheWizards.Scattered.Simulation.Playmode;
-using MHGameWork.TheWizards.Scattered.Simulation.Sandbox;
 using MHGameWork.TheWizards.Simulators;
 using NUnit.Framework;
 using SlimDX;

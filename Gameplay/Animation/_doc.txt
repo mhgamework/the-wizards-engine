@@ -1,2 +1,0 @@
-﻿This animation framework is now superseeded by the animation framework in the RTSTestcase 
-(or also the one using the Animator and AnimationDescription)

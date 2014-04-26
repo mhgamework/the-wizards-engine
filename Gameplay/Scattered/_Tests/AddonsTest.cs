@@ -12,7 +12,6 @@ using MHGameWork.TheWizards.Scattered.ProcBuilder;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered.Simulation;
 using MHGameWork.TheWizards.Scattered.Simulation.Playmode;
-using MHGameWork.TheWizards.Scattered.Simulation.Sandbox;
 using MHGameWork.TheWizards.Simulators;
 using NUnit.Framework;
 using ProceduralBuilder.Building;

@@ -184,12 +184,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Animation\AnimationController.cs" />
-    <Compile Include="Animation\EntityRotationAnimatable.cs" />
-    <Compile Include="Animation\EntityTranslationAnimatable.cs" />
-    <Compile Include="Animation\IAnimatable.cs" />
-    <Compile Include="Animation\Keyframe.cs" />
-    <Compile Include="Animation\EntityScalingAnimatable.cs" />
     <Compile Include="Navigation2D\ExplorationData.cs" />
     <Compile Include="Navigation2D\GridConnectionProvider.cs" />
     <Compile Include="Navigation2D\IConnectionProvider.cs" />
@@ -243,14 +237,8 @@
     <Compile Include="Scattered\Core\ClusterFlightController.cs" />
     <Compile Include="Scattered\Core\Bindings\ClusterPhysicsSimulator.cs" />
     <Compile Include="Scattered\Simulation\RoundState.cs" />
-    <Compile Include="Scattered\Simulation\DistributionHelper.cs" />
-    <Compile Include="Scattered\Simulation\InterIslandMovementSimulator.cs" />
     <Compile Include="Scattered\Simulation\IslandConnectionProvider.cs" />
     <Compile Include="Scattered\Simulation\LoadLevelSimulator.cs" />
-    <Compile Include="Scattered\Simulation\Sandbox\BridgeBuilderState.cs" />
-    <Compile Include="Scattered\Simulation\Sandbox\ISandboxControllerState.cs" />
-    <Compile Include="Scattered\Simulation\Sandbox\IslandPlacerState.cs" />
-    <Compile Include="Scattered\Simulation\Sandbox\SandboxControllerSimulator.cs" />
     <Compile Include="Scattered\_Engine\LinqExtensions.cs" />
     <Compile Include="Scattered\_Engine\MathExtensions.cs" />
     <Compile Include="Scattered\_Engine\RaycastExtensions.cs" />
@@ -276,11 +264,9 @@
     <Compile Include="Scattered\_Tests\PlayTest.cs" />
     <Compile Include="Scattered\Core\ResourceGenerator.cs" />
     <Compile Include="Scattered\_Tests\ProcBuilderTest.cs" />
-    <Compile Include="Scattered\_Tests\SandboxTest.cs" />
     <Compile Include="Scattered\Core\ScatteredPlayer.cs" />
     <Compile Include="Scattered\Core\Storage.cs" />
     <Compile Include="Scattered\_Tests\TextRectangleTest.cs" />
-    <Compile Include="Scattered\_Tests\TestIslandGraph.cs" />
     <Compile Include="Scattered\Core\Tower.cs" />
     <Compile Include="SkyMerchant\GameObjects\PhysicalMeshRenderComponent.cs" />
     <Compile Include="SkyMerchant\GameObjects\PhysicalPositionComponent.cs" />
@@ -402,9 +388,6 @@
     <Compile Include="_Tests\Core\WorldRenderingTest.cs" />
     <Compile Include="_Tests\Enginetest.cs" />
     <Compile Include="_Tests\NavigationTest.cs" />
-    <Compile Include="_Tests\OldScripting\Scripting\ScriptingTest.cs" />
-    <Compile Include="_Tests\OldScripting\Scripting\TestScriptImplementation.cs" />
-    <Compile Include="_Tests\OldScripting\Scripting\TestScriptWrapper.cs" />
     <Compile Include="_Tests\Various\LocalGame.cs" />
     <Compile Include="_Tests\Various\ModelTest.cs" />
     <Compile Include="Generation\VoxelGrid.cs" />
@@ -486,21 +469,6 @@
     <Compile Include="SkyMerchant\Lod\WorldOctreeExtensions.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\WorldOctreeTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\PrototypeTest.cs" />
-    <Compile Include="SkyMerchant\_Engine\MeshImporting\AnimationBuilder.cs" />
-    <Compile Include="SkyMerchant\_Engine\MeshImporting\AnimationImporter.cs" />
-    <Compile Include="SkyMerchant\_Engine\MeshImporting\AnimationParser.cs" />
-    <Compile Include="SkyMerchant\_Engine\MeshImporting\BoneData.cs" />
-    <Compile Include="SkyMerchant\_Engine\MeshImporting\BoneTransformation.cs" />
-    <Compile Include="SkyMerchant\_Engine\MeshImporting\BoneWeight.cs" />
-    <Compile Include="SkyMerchant\_Engine\MeshImporting\Frame.cs" />
-    <Compile Include="SkyMerchant\_Engine\MeshImporting\ImportTest.cs" />
-    <Compile Include="SkyMerchant\_Engine\MeshImporting\Material.cs" />
-    <Compile Include="SkyMerchant\_Engine\MeshImporting\MeshBuilder.cs" />
-    <Compile Include="SkyMerchant\_Engine\MeshImporting\MeshImporter.cs" />
-    <Compile Include="SkyMerchant\_Engine\MeshImporting\MeshParser.cs" />
-    <Compile Include="SkyMerchant\_Engine\MeshImporting\SkeletonBuilder.cs" />
-    <Compile Include="SkyMerchant\_Engine\MeshImporting\SkinDataImporter.cs" />
-    <Compile Include="SkyMerchant\_Engine\MeshImporting\VertexSkinData.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\PickupTargetItemBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\FindClosestResourceBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\EnemyBehaviourFactory.cs" />
@@ -548,7 +516,6 @@
     <Compile Include="Engine\PhysX\EntityPhysXUpdater.cs" />
     <Compile Include="Player\PlayerClientPhysics.cs" />
     <Compile Include="Plugin.cs" />
-    <Compile Include="Animation\AnimationSimulator.cs" />
     <Compile Include="Engine\Raycasting\RaycastResult.cs" />
     <Compile Include="Engine\Raycasting\WorldRaycaster.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\InventoryView3DTopDown.cs" />
@@ -593,7 +560,6 @@
     <Compile Include="Simulators\ThirdPersonCameraSimulator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Animation\_doc.txt" />
     <Content Include="Engine\engine_architecture-1.jpg" />
     <Content Include="Engine\_Core\_doc.txt" />
     <Content Include="Engine\_doc.html" />
