@@ -22,7 +22,6 @@ namespace MHGameWork.TheWizards.Scattered.Model
     {
         private List<Island> islands = new List<Island>();
         private List<Traveller> travellers = new List<Traveller>();
-        public List<Bullet> Bullets = new List<Bullet>();
 
         public SceneGraphNode Node { get; private set; }
 
@@ -125,7 +124,11 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             var ret = new EntityNode(this, node);
             EntityNodes.Add(ret);
-            node.ObserveDestroy(() => EntityNodes.Remove(ret));
+            node.ObserveDestroy(() =>
+                {
+                    EntityNodes.Remove(ret);
+                    ret.Dispose();
+                });
             return ret;
         }
 
@@ -134,7 +137,11 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             var ret = new TextPanelNode(this, node);
             TextPanelNodes.Add(ret);
-            node.ObserveDestroy(() => TextPanelNodes.Remove(ret));
+            node.ObserveDestroy(() =>
+                {
+                    TextPanelNodes.Remove(ret);
+                    ret.Dispose();
+                });
             return ret;
         }
 
@@ -142,7 +149,11 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             var ret = new EntityInteractableNode(entity, createChild, onInteract);
             InteractableNodes.Add(ret);
-            createChild.ObserveDestroy(() => InteractableNodes.Remove(ret));
+            createChild.ObserveDestroy(() =>
+                {
+                    InteractableNodes.Remove(ret);
+                    ret.Dispose();
+                });
             return ret;
         }
 

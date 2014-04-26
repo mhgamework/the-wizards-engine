@@ -299,7 +299,7 @@ namespace MHGameWork.TheWizards.Scattered.Core
             var dir = player.Position - currentPos;
             dir.Normalize();
             var bullet = new Bullet(level, level.Node.CreateChild(), currentPos, dir, 20f, 10f);
-            level.Bullets.Add(bullet);
+            //TODO: empty constructor usage!!
         }
 
         private void rotateYToPosition(Vector3 pos)

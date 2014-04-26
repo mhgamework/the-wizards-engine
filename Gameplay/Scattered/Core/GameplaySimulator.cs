@@ -35,12 +35,6 @@ namespace MHGameWork.TheWizards.Scattered.Core
 
             level.LocalPlayer.MovementDisabled = level.Islands.SelectMany(i => i.Addons.OfType<JumpPad>()).Any(j => j.IsPerformingJump);
 
-            var bulletCopy = level.Bullets.ToList();
-            foreach (var bullet in bulletCopy)
-            {
-                bullet.Update();
-            }
-
             level.SimulateBehaviours();
 
 

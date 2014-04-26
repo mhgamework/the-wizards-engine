@@ -60,7 +60,6 @@ namespace MHGameWork.TheWizards.Scattered.Core
         public void Dispose()
         {
             if (level == null) return;
-            level.Bullets.Remove(this);
             level.DestroyNode(Node);
             level = null;
         }
