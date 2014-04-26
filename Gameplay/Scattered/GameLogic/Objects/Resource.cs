@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MHGameWork.TheWizards.Engine.WorldRendering;
-using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Scattered.Bindings;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered._Engine;
 using SlimDX;
-using Castle.Core.Internal;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
 {
     public class Resource : IIslandAddon
     {

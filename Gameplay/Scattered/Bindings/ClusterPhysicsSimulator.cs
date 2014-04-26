@@ -2,7 +2,7 @@
 using MHGameWork.TheWizards.Scattered.Model;
 using Castle.Core.Internal;
 
-namespace MHGameWork.TheWizards.Scattered.Simulation.Playmode
+namespace MHGameWork.TheWizards.Scattered.Bindings
 {
     public class ClusterPhysicsSimulator : ISimulator
     {

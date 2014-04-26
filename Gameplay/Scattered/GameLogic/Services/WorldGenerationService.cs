@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Scattered.GameLogic.Objects;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.ProcBuilder;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
@@ -12,7 +12,7 @@ using SlimDX;
 using DirectX11;
 using Castle.Core.Internal;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 {
     public class WorldGenerationService
     {

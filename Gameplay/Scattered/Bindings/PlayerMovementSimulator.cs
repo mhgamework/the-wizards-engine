@@ -1,19 +1,11 @@
-﻿using System;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Engine.WorldRendering;
+﻿using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Scattered.GameLogic.Objects;
+using MHGameWork.TheWizards.Scattered.GameLogic.Services;
 using MHGameWork.TheWizards.Scattered.Model;
-using MHGameWork.TheWizards.Scattered.ProcBuilder;
-using MHGameWork.TheWizards.Scattered.Simulation.Playmode;
-using MHGameWork.TheWizards.Scattered._Tests;
-using ProceduralBuilder.Shapes;
 using SlimDX;
 using SlimDX.DirectInput;
-using System.Linq;
-using DirectX11;
-using Castle.Core.Internal;
-using MHGameWork.TheWizards.Scattered._Engine;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.Bindings
 {
     /// <summary>
     /// Processes walking AND flying movement

@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using MHGameWork.TheWizards.Scattered.Core.Bindings;
+using MHGameWork.TheWizards.Scattered.Bindings;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
-using System.Linq;
 using DirectX11;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
 {
     public class Tower : IIslandAddon, IDebugAddon
     {

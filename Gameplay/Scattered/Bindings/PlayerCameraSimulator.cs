@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using MHGameWork.TheWizards.DirectX11.Graphics;
+﻿using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Scattered.GameLogic.Objects;
 using MHGameWork.TheWizards.Simulators;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.Bindings
 {
     public class PlayerCameraSimulator : ISimulator
     {

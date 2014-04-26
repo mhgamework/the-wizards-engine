@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
@@ -21,18 +18,13 @@ using ProceduralBuilder.Conditions.PreConditions;
 using ProceduralBuilder.Helpers;
 using ProceduralBuilder.IO;
 using ProceduralBuilder.Rendering;
-using ProceduralBuilder.RulebaseModules;
-using ProceduralBuilder.RulebaseModules.GUI;
-using ProceduralBuilder.RulebaseModules.RulebaseGenerators;
 using ProceduralBuilder.Rules;
-using ProceduralBuilder.Scattered;
 using ProceduralBuilder.Shapes;
-using ProceduralBuilder.Tools;
 using SlimDX;
 using SlimDX.DirectInput;
 using PointLight = MHGameWork.TheWizards.Rendering.Deferred.PointLight;
 
-namespace ProceduralBuilder.Test
+namespace MHGameWork.TheWizards.Scattered._Tests
 {
     [TestFixture]
     [EngineTest]

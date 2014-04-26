@@ -2,12 +2,14 @@
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Scattered.Bindings;
+using MHGameWork.TheWizards.Scattered.GameLogic.Objects;
 using MHGameWork.TheWizards.Scattered.Model;
 using SlimDX;
 using SlimDX.Direct3D11;
 using Castle.Core.Internal;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 {
     public class HudService 
     {

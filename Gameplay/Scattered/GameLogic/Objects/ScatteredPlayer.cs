@@ -1,13 +1,14 @@
 ﻿using System;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Scattered.Bindings;
+using MHGameWork.TheWizards.Scattered.GameLogic.Services;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using SlimDX;
 using MHGameWork.TheWizards.Scattered._Engine;
-using MHGameWork.TheWizards.SkyMerchant._Engine;
 using System.Linq;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
 {
     public class ScatteredPlayer : IHasNode
     {

@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.Scattered.SceneGraphing;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.Bindings
 {
     public interface IHasNode
     {

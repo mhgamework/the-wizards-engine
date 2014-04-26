@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ProceduralBuilder.Building;
 using ProceduralBuilder.Shapes;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 {
     /// <summary>
     /// Keeps track of the allocation of objects on an islands surface.

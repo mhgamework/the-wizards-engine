@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Linq;
-using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Scattered.GameLogic.Objects;
 using MHGameWork.TheWizards.Scattered.Model;
-using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered._Engine;
-using Microsoft.Xna.Framework;
-using SlimDX;
 using Matrix = SlimDX.Matrix;
 using Vector3 = SlimDX.Vector3;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 {
     public class EnemySpawningService
     {

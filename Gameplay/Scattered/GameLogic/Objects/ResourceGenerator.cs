@@ -1,8 +1,9 @@
-﻿using MHGameWork.TheWizards.Scattered.Model;
+﻿using MHGameWork.TheWizards.Scattered.Bindings;
+using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered._Engine;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
 {
     public class ResourceGenerator : IIslandAddon
     {

@@ -8,7 +8,7 @@ using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Text;
-using MHGameWork.TheWizards.Scattered.Core;
+using MHGameWork.TheWizards.Scattered.GameLogic.Services;
 using MHGameWork.TheWizards.Scattered.ProcBuilder;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;

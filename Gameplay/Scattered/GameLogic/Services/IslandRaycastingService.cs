@@ -1,12 +1,11 @@
 using System.Linq;
-using Castle.Core.Internal;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.ProcBuilder;
 using MHGameWork.TheWizards.Scattered._Engine;
 using ProceduralBuilder.Shapes;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 {
     public class IslandRaycastingService
     {

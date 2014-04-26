@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using Castle.Core.Internal;
 using MHGameWork.TheWizards.Audio;
+using MHGameWork.TheWizards.Scattered.Bindings;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered._Engine;
 using SlimDX;
 using System.Linq;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
 {
     public class Storage : IIslandAddon
     {

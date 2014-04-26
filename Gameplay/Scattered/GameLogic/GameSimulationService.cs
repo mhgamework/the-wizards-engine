@@ -1,11 +1,11 @@
 ﻿using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Scattered.Core.Bindings;
+using MHGameWork.TheWizards.Scattered.GameLogic.Objects;
+using MHGameWork.TheWizards.Scattered.GameLogic.Services;
 using MHGameWork.TheWizards.Scattered.Model;
 using SlimDX.DirectInput;
 using System.Linq;
-using Castle.Core.Internal;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.GameLogic
 {
     /// <summary>
     /// Performs the update step of the gameplay phase

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MHGameWork.TheWizards.Scattered.Core.Bindings
+namespace MHGameWork.TheWizards.Scattered.Bindings
 {
     /// <summary>
     /// The update function steps the behaviour. This behaviour is executed repeatedly, and the return value of the behaviour enumerable

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using MHGameWork.TheWizards.DirectX11.Input;
-using MHGameWork.TheWizards.Scattered.Core;
+using MHGameWork.TheWizards.Scattered.GameLogic.Objects;
 using MHGameWork.TheWizards.Scattered.Model;
 using SlimDX;
 using SlimDX.DirectInput;
 using Castle.Core.Internal;
 using System.Linq;
 
-namespace MHGameWork.TheWizards.Scattered.Simulation.Playmode
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 {
     /// <summary>
     /// This translates user input into cluster movement.

@@ -6,9 +6,9 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
-using MHGameWork.TheWizards.Scattered.Core;
+using MHGameWork.TheWizards.Scattered.GameLogic.Objects;
+using MHGameWork.TheWizards.Scattered.GameLogic.Services;
 using MHGameWork.TheWizards.Scattered.Model;
-using MHGameWork.TheWizards.Scattered.Simulation.Playmode;
 using NUnit.Framework;
 using SlimDX;
 

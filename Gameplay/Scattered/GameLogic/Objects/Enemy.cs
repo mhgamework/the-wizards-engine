@@ -1,11 +1,12 @@
 ﻿using System;
 using DirectX11;
+using MHGameWork.TheWizards.Scattered.Bindings;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using SlimDX;
 using MHGameWork.TheWizards.Scattered._Engine;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
 {
     public class Enemy : IIslandAddon
     {

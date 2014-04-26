@@ -4,7 +4,7 @@ using MHGameWork.TheWizards.Scattered._Tests;
 using SlimDX;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 {
     public class PlayerMovementService
     {

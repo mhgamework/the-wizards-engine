@@ -1,4 +1,4 @@
-﻿namespace MHGameWork.TheWizards.Scattered.Core.Bindings
+﻿namespace MHGameWork.TheWizards.Scattered.Bindings
 {
     /// <summary>
     /// Extending an IIslandAddon with this interface will add debugging capabilities

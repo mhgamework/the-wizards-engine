@@ -4,9 +4,7 @@ using System.Reflection;
 using Castle.Core.Internal;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
-using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Rendering.Text;
-using MHGameWork.TheWizards.Scattered.Core.Bindings;
+using MHGameWork.TheWizards.Scattered.GameLogic.Services;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using SlimDX;
@@ -14,7 +12,7 @@ using System.Linq;
 using DirectX11;
 using MHGameWork.TheWizards.Scattered._Engine;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.Bindings
 {
     /// <summary>
     /// Supports rendering for entity nodes and Updates all addons.

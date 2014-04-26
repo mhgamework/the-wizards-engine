@@ -1,9 +1,10 @@
-﻿using MHGameWork.TheWizards.Scattered.Model;
+﻿using MHGameWork.TheWizards.Scattered.Bindings;
+using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using SlimDX;
 using DirectX11;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
 {
     public class Bridge : IIslandAddon
     {

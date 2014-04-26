@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace MHGameWork.TheWizards.Scattered.Core
+namespace MHGameWork.TheWizards.Scattered.GameLogic
 {
     public class GameLogicModule : Module
     {
