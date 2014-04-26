@@ -3,7 +3,6 @@ using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.RTSTestCase1;
-using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 using SlimDX;

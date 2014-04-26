@@ -1,13 +1,12 @@
 ﻿using System;
 using Castle.Core.Internal;
-using Castle.Facilities.TypedFactory;
-using Castle.MicroKernel.Facilities;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTSTestCase1;
+using MHGameWork.TheWizards.Scattered._Engine;
 using MHGameWork.TheWizards.SkyMerchant.Gameplay.Items;
 using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;

@@ -1,6 +1,7 @@
 ﻿using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Scattered.Model;
 using Castle.Core.Internal;
+using MHGameWork.TheWizards.Scattered._Engine;
 
 namespace MHGameWork.TheWizards.Scattered.Bindings
 {

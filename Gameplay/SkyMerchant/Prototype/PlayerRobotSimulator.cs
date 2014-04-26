@@ -5,7 +5,6 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant.Worlding;
-using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 using SlimDX;
@@ -20,13 +19,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype
     {
         private readonly LocalPlayer localPlayer;
 
-        [NonOptional]
         public CustomCamera Camera { get; set; }
 
-        [NonOptional]
         public IWorldLocator WorldLocator { get; set; }
 
-        [NonOptional]
         public PrototypeObjectsFactory PrototypeObjectsFactory { get; set; }
 
         private RobotPlayerPart robot;

@@ -40,7 +40,6 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
             Brain.GunDamage = 20;
         }
 
-        [DoNotWire]
         public EnemyBrain Brain { get; set; }
 
         public void SimulateBehaviour()

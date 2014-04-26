@@ -1,6 +1,5 @@
 ﻿using System;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
-using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant.Prototype

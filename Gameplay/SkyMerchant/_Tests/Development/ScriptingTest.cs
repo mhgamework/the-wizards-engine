@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Castle.Windsor;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;

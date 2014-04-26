@@ -124,13 +124,6 @@
     <Reference Include="bbv.Common.StateMachine">
       <HintPath>..\packages\bbv.Common.StateMachine.7.4.12149.1635\lib\Net40\bbv.Common.StateMachine.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Castle.Core.3.2.2\lib\net40-client\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.Windsor">
-      <HintPath>..\packages\Castle.Windsor.3.2.0\lib\net40\Castle.Windsor.dll</HintPath>
-    </Reference>
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -277,30 +270,23 @@
     <Compile Include="SkyMerchant\GameObjects\PhysicalPositionComponent.cs" />
     <Compile Include="SkyMerchant\GameObjects\RelativePositionComponent.cs" />
     <Compile Include="SkyMerchant\GameObjects\RelativePositioningSimulator.cs" />
-    <Compile Include="SkyMerchant\Installers\SimulatorsInstaller.cs" />
     <Compile Include="SkyMerchant\_Unused\TopologicalUpdater.cs" />
     <Compile Include="SkyMerchant\GameObjects\SkyPhysical.cs" />
     <Compile Include="SkyMerchant\Gameplay\BridgePart.cs" />
     <Compile Include="SkyMerchant\GameObjects\GameObjectScopeManager.cs" />
-    <Compile Include="SkyMerchant\Installers\GameObjectsInstaller.cs" />
-    <Compile Include="SkyMerchant\Installers\GameplayInstaller.cs" />
     <Compile Include="SkyMerchant\Prototype\PlayerRobotSimulator.cs" />
     <Compile Include="SkyMerchant\Prototype\SkyMerchantRenderingSimulator.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\ScriptsInventoryNode.cs" />
     <Compile Include="SkyMerchant\Gameplay\IMeshSpawnerItemFactory.cs" />
     <Compile Include="SkyMerchant\Gameplay\MeshSpawnerItemFactory.cs" />
     <Compile Include="SkyMerchant\Gameplay\Scripts\RotateOnTheSpotScript.cs" />
-    <Compile Include="SkyMerchant\QuestEditor\Scripting\ScriptsRepository.cs" />
     <Compile Include="SkyMerchant\QuestEditor\Scripting\ScriptsSimulator.cs" />
     <Compile Include="SkyMerchant\Worlding\LocalPlayer.cs" />
-    <Compile Include="SkyMerchant\Installers\WorldingInstaller.cs" />
     <Compile Include="SkyMerchant\Worlding\World.cs" />
     <Compile Include="SkyMerchant\Worlding\WorldObjectScriptsList.cs" />
     <Compile Include="SkyMerchant\_Engine\ChangeNotification\DefaultChangesSink.cs" />
     <Compile Include="SkyMerchant\_Engine\ChangeNotification\IChangesSink.cs" />
     <Compile Include="SkyMerchant\_Engine\ChangeNotification\TrackChangesAttribute.cs" />
-    <Compile Include="SkyMerchant\_Engine\Windsor\DisablePropertyInjection.cs" />
-    <Compile Include="SkyMerchant\_Engine\Windsor\WindsorDebugTools.cs" />
     <Compile Include="SkyMerchant\GameObjects\GameObject.cs" />
     <Compile Include="SkyMerchant\GameObjects\GameObjectsRepository.cs" />
     <Compile Include="SkyMerchant\GameObjects\IGameObjectComponentTypedFactory.cs" />
@@ -312,22 +298,15 @@
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IPositionComponent.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorld.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IScriptType.cs" />
-    <Compile Include="SkyMerchant\_Tests\Stable\RelativePositioningIntegrationTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\RelativePositioningTest.cs" />
-    <Compile Include="SkyMerchant\_Tests\Stable\GameObjectsInstallerTest.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\GameObjects\IGameObjectComponent.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\PersistenceTest.cs" />
-    <Compile Include="SkyMerchant\_Tests\Stable\PrototypeObjectsTest.cs" />
-    <Compile Include="SkyMerchant\_Tests\Stable\PrototypeWorldGeneratorTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Development\ScriptingTest.cs" />
     <Compile Include="SkyMerchant\_Engine\Voxels\ArrayFiniteVoxels.cs" />
     <Compile Include="SkyMerchant\Gameplay\IslandGenerater.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\VoxelsTest.cs" />
-    <Compile Include="SkyMerchant\_Tests\Stable\WindsorTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Ideas\DynamicObjectsTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Unused\TopologicalSorterTest.cs" />
-    <Compile Include="_Tests\Assets\SimpleAssetStaticWorldObject.cs" />
-    <Compile Include="_Tests\Assets\SimpleAssetStaticWorldObjectFactory.cs" />
     <Compile Include="Engine\Debugging\AttachDebuggerOnStartupSimulator.cs" />
     <Compile Include="Engine\Debugging\GraphVisualizerSimulator.cs" />
     <Compile Include="Engine\Debugging\ModelObjectGraphSimulator.cs" />
@@ -357,16 +336,12 @@
     <Compile Include="SkyMerchant\Worlding\SimpleWorldLocator.cs" />
     <Compile Include="SkyMerchant\Gameplay\Items\BridgeToolItem.cs" />
     <Compile Include="SkyMerchant\Gameplay\WorldPlacerHelper.cs" />
-    <Compile Include="SkyMerchant\Installers\DefaultInventoryInstaller.cs" />
     <Compile Include="SkyMerchant\Gameplay\Inventory\HotBarItemTextInventoryRenderer.cs" />
     <Compile Include="SkyMerchant\Gameplay\Items\IslandToolItem.cs" />
     <Compile Include="SkyMerchant\Gameplay\Inventory\MeshSpawnerInventoryRenderer.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\MeshSpawnersInventoryNode.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\IInventoryView.cs" />
-    <Compile Include="SkyMerchant\Installers\QuestEditorInstaller.cs" />
     <Compile Include="SkyMerchant\_Engine\CacheAttribute.cs" />
-    <Compile Include="SkyMerchant\Installers\EngineInstaller.cs" />
-    <Compile Include="SkyMerchant\_Engine\LinqExtensions.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorldScript.cs" />
     <Compile Include="SkyMerchant\Gameplay\Items\MeshSpawnerItem.cs" />
     <Compile Include="SkyMerchant\Gameplay\Items\ScriptToolItem.cs" />
@@ -378,10 +353,6 @@
     <Compile Include="SkyMerchant\_Tests\Development\QuestEditorToolsTest.cs" />
     <Compile Include="SkyMerchant\_Undocumented\ConsoleLoggingExtension.cs" />
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\InventoryController.cs" />
-    <Compile Include="SkyMerchant\_Tests\Stable\InventoryTest.cs" />
-    <Compile Include="_Tests\Assets\AssetsSynchronizationTest.cs" />
-    <Compile Include="_Tests\Assets\SimpleAsset.cs" />
-    <Compile Include="_Tests\Assets\SimpleAssetFactory.cs" />
     <Compile Include="_Tests\EngineFactory.cs" />
     <Compile Include="_Tests\Core\AudioTest.cs" />
     <Compile Include="_Tests\Core\DebugTest.cs" />
@@ -466,14 +437,12 @@
     <Compile Include="SkyMerchant\_Engine\DataStructures\DictionaryExtensions.cs" />
     <Compile Include="SkyMerchant\Lod\ChunkCoordinate.cs" />
     <Compile Include="SkyMerchant\Lod\IWorldOctree.cs" />
-    <Compile Include="SkyMerchant\_Tests\Development\QuestEditorTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\LodTest.cs" />
     <Compile Include="SkyMerchant\Lod\OptimizedWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\PhysicalLodRenderer.cs" />
     <Compile Include="SkyMerchant\Lod\SimpleWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\WorldOctreeExtensions.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\WorldOctreeTest.cs" />
-    <Compile Include="SkyMerchant\_Tests\Stable\PrototypeTest.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\PickupTargetItemBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\FindClosestResourceBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\AI\EnemyBehaviourFactory.cs" />
@@ -495,7 +464,6 @@
     <Compile Include="SkyMerchant\Prototype\AI\SingleActionBehaviour.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\TraderPart.cs" />
     <Compile Include="SkyMerchant\Prototype\Parts\TraderVisualizerPart.cs" />
-    <Compile Include="SkyMerchant\Installers\PrototypeInstaller.cs" />
     <Compile Include="SkyMerchant\Prototype\PrototypeMain.cs" />
     <Compile Include="SkyMerchant\Prototype\PrototypeUserInterface.cs" />
     <Compile Include="SkyMerchant\Prototype\RobotInventoryTextView.cs" />
@@ -512,7 +480,6 @@
     <Compile Include="SkyMerchant\_Engine\DynamicAssetsFactory.cs" />
     <Compile Include="SkyMerchant\_Engine\LineManager3DExtension.cs" />
     <Compile Include="SkyMerchant\_Engine\Rendering2DComponentsFactory.cs" />
-    <Compile Include="SkyMerchant\_Engine\Windsor\NonOptionalDependencies.cs" />
     <Compile Include="_Features\TextMenu.cs" />
     <Compile Include="_Features\TextMenuItem.cs" />
     <Compile Include="Audio\SoundFactory.cs" />

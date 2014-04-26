@@ -1,6 +1,5 @@
 ﻿using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.SkyMerchant._Engine.Windsor;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing.GameObjects;
 
