@@ -240,8 +240,8 @@
     <Compile Include="Scattered\Simulation\IslandConnectionProvider.cs" />
     <Compile Include="Scattered\Simulation\LoadLevelSimulator.cs" />
     <Compile Include="Scattered\_Engine\LinqExtensions.cs" />
-    <Compile Include="Scattered\_Engine\MathExtensions.cs" />
-    <Compile Include="Scattered\_Engine\RaycastExtensions.cs" />
+    <Compile Include="Math\MathExtensions.cs" />
+    <Compile Include="Math\RaycastExtensions.cs" />
     <Compile Include="Scattered\_Engine\RendererScene.cs" />
     <Compile Include="Scattered\_Engine\TextRectangle.cs" />
     <Compile Include="Scattered\Core\Bridge.cs" />
