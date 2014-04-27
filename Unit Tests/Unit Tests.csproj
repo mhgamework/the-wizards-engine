@@ -71,12 +71,6 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core">
-      <HintPath>..\packages\Castle.Core.3.2.0\lib\net40-client\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.Windsor">
-      <HintPath>..\packages\Castle.Windsor.3.2.0\lib\net40\Castle.Windsor.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.Utils.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraBars.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -170,7 +164,6 @@
     <Compile Include="Features\Rendering\DirectX11\TessellationTest.cs" />
     <Compile Include="Features\Various\FileHelperTest.cs" />
     <Compile Include="Features\Data\Forms\ClassFormTest.cs" />
-    <Compile Include="Features\Various\CastleWindsorTest.cs" />
     <Compile Include="Features\Various\TestRootObjectTable.cs" />
     <Compile Include="Features\Various\VSIntegrationTest.cs" />
     <Compile Include="Features\Rendering\Particles\ParticleTests.cs" />
