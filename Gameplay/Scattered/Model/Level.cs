@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
     /// 
     /// TODO: split into gamestate + constructors?
     /// </summary>
-    public class Level
+    public class Level : IObjectHandle
     {
         private List<Island> islands = new List<Island>();
 

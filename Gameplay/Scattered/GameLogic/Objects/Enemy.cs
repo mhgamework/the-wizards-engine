@@ -18,6 +18,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
         public BoundingBox LocalBoundingBox { get; private set; }
         public EnemyState CurrentState = EnemyState.INACTIVE;
         private Level level;
+        private readonly Bullet.Factory createBullet;
         private ScatteredPlayer player;
 
         private const float turnSpeed = (float)Math.PI * 2f;
@@ -47,12 +48,13 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
         private EntityNode tailEnt;
         private EntityNode sightEnt;
 
-        public Enemy(Level level, SceneGraphNode node, Vector3 relativeStartPos)
+        public Enemy(Level level, SceneGraphNode node, Vector3 relativeStartPos, Bullet.Factory createBullet )
         {
             Node = node;
             node.AssociatedObject = this;
 
             this.level = level;
+            this.createBullet = createBullet;
             player = level.LocalPlayer;
 
             bodyNode = Node.CreateChild();
@@ -299,8 +301,8 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
         {
             var dir = player.Position - currentPos;
             dir.Normalize();
-            var bullet = new Bullet(level, level.Node.CreateChild(), currentPos, dir, 20f, 10f);
-            //TODO: empty constructor usage!!
+
+            createBullet(currentPos, dir, 20f, 10f);
         }
 
         private void rotateYToPosition(Vector3 pos)

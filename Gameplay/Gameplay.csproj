@@ -204,6 +204,7 @@
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
     <Compile Include="Scattered\Bindings\ClockedBehaviourSimulator.cs" />
     <Compile Include="Scattered\Bindings\IDebugAddon.cs" />
+    <Compile Include="Scattered\GameLogic\IObjectHandle.cs" />
     <Compile Include="Scattered\GameLogic\GameLogicModule.cs" />
     <Compile Include="Scattered\GameLogic\Objects\Bullet.cs" />
     <Compile Include="Scattered\GameLogic\Services\HudService.cs" />

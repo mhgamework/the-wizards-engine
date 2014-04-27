@@ -42,6 +42,8 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic
             builder.Register(c => c.Resolve<Level>().Node.CreateChild()); // TODO: this is verrrry shady
 
             builder.RegisterAggregateService<WorldGenerationService.IGameObjectsFactory>();
+
+            builder.RegisterType<Level>().AsSelf().AsImplementedInterfaces();
         }
     }
 }

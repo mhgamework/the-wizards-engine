@@ -36,7 +36,8 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             createIsland(level, islePos, out island);
 
             var enemyRelativeStartPos = new Vector3(-30, 0, 5);
-            var enemy = new Enemy(level, island.Node.CreateChild(), enemyRelativeStartPos);
+            var enemy = new Enemy(level, island.Node.CreateChild(), enemyRelativeStartPos,
+                (position, direction, speed, lifetime) => new Bullet(level, level.Node.CreateChild(), position, direction, speed, lifetime));
             island.AddAddon(enemy);
 
             enemy.Activate();
@@ -75,7 +76,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             var level = new Level();
             var player = level.LocalPlayer;
             addPlaySimulators(level, player);
-            var gen = new WorldGenerationService(level, new Random(0),null);
+            var gen = new WorldGenerationService(level, new Random(0), null);
 
             gen.Generate();
 
@@ -86,7 +87,8 @@ namespace MHGameWork.TheWizards.Scattered._Tests
                 var index = rnd.Next(0, level.Islands.Count());
 
                 var island = level.Islands.ElementAt(index);
-                var enemy = new Enemy(level, island.Node.CreateChild(), new Vector3());
+                var enemy = new Enemy(level, island.Node.CreateChild(), new Vector3(),
+                    (position, direction, speed, lifetime) => new Bullet(level, level.Node.CreateChild(), position, direction, speed, lifetime));
                 island.AddAddon(enemy);
                 enemy.Activate();
             }
