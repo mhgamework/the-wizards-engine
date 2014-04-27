@@ -1,4 +1,5 @@
 ﻿using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Scattered.Bindings;
 using MHGameWork.TheWizards.Scattered.GameLogic.Objects;
 using MHGameWork.TheWizards.Scattered.GameLogic.Services;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -15,17 +16,22 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic
         private Level level;
 
         private EnemySpawningService enemySpawningService;
+        private readonly PlayerInteractionService interactionService;
+        private readonly ClusterPhysicsService clusterPhysicsService;
 
-        public GameSimulationService(Level level, EnemySpawningService enemySpawningService)
+        public GameSimulationService(Level level, EnemySpawningService enemySpawningService,PlayerInteractionService interactionService, ClusterPhysicsService clusterPhysicsService)
         {
             this.level = level;
             this.enemySpawningService = enemySpawningService;
+            this.interactionService = interactionService;
+            this.clusterPhysicsService = clusterPhysicsService;
         }
 
         public void Simulate()
         {
             simulatePlayer();
             simulateGameObjects();
+            clusterPhysicsService.UpdateClusterMovement();
         }
 
         private void simulateGameObjects()
@@ -36,6 +42,8 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic
 
         private void simulatePlayer()
         {
+            interactionService.SimulateInteraction();
+
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.Q))
                 level.LocalPlayer.AttemptDropResource();
 

@@ -209,7 +209,7 @@
     <Compile Include="Scattered\GameLogic\Services\HudService.cs" />
     <Compile Include="Scattered\GameLogic\GameSimulationService.cs" />
     <Compile Include="Scattered\Bindings\IHasNode.cs" />
-    <Compile Include="Scattered\GameLogic\Services\IslandSpaceAllocator.cs" />
+    <Compile Include="Scattered\ProcBuilder\IslandSpaceAllocator.cs" />
     <Compile Include="Scattered\GameLogic\Objects\MeshAddon.cs" />
     <Compile Include="Scattered\GameLogic\Objects\Resource.cs" />
     <Compile Include="Scattered\GameLogic\Services\IslandRaycastingService.cs" />
@@ -231,7 +231,7 @@
     <Compile Include="Scattered\Bindings\ScatteredRenderingSimulator.cs" />
     <Compile Include="Scattered\Simulation\LevelSerializer.cs" />
     <Compile Include="Scattered\GameLogic\Services\ClusterFlightController.cs" />
-    <Compile Include="Scattered\Bindings\ClusterPhysicsSimulator.cs" />
+    <Compile Include="Scattered\GameLogic\Services\ClusterPhysicsService.cs" />
     <Compile Include="Scattered\Simulation\RoundState.cs" />
     <Compile Include="Scattered\Simulation\IslandConnectionProvider.cs" />
     <Compile Include="Scattered\Simulation\LoadLevelSimulator.cs" />
@@ -249,7 +249,7 @@
     <Compile Include="Scattered\_Tests\FlightTest.cs" />
     <Compile Include="Scattered\Bindings\IIslandAddon.cs" />
     <Compile Include="Scattered\Bindings\PlayerCameraSimulator.cs" />
-    <Compile Include="Scattered\Bindings\PlayerInteractionSimulator.cs" />
+    <Compile Include="Scattered\GameLogic\Services\PlayerInteractionService.cs" />
     <Compile Include="Scattered\Bindings\PlayerMovementSimulator.cs" />
     <Compile Include="Scattered\_Engine\OBJExporter.cs" />
     <Compile Include="Scattered\_Tests\IslandSpaceAllocationTest.cs" />

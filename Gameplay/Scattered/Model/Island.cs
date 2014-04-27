@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Bindings;
 using MHGameWork.TheWizards.Scattered.GameLogic.Objects;
 using MHGameWork.TheWizards.Scattered.GameLogic.Services;
+using MHGameWork.TheWizards.Scattered.ProcBuilder;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using SlimDX;
 using DirectX11;

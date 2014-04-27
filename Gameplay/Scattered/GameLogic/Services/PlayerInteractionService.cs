@@ -7,20 +7,20 @@ using MHGameWork.TheWizards.Scattered._Engine;
 using SlimDX;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.Scattered.Bindings
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 {
-    public class PlayerInteractionSimulator : ISimulator
+    public class PlayerInteractionService 
     {
         private readonly Level level;
         private readonly ScatteredPlayer player;
 
-        public PlayerInteractionSimulator(Level level, ScatteredPlayer player)
+        public PlayerInteractionService(Level level, ScatteredPlayer player)
         {
             this.level = level;
             this.player = player;
         }
 
-        public void Simulate()
+        public void SimulateInteraction()
         {
             var target = level.InteractableNodes.Raycast((n, r) => n.Intersects(r), TW.Data.Get<CameraInfo>().GetCenterScreenRay());
 

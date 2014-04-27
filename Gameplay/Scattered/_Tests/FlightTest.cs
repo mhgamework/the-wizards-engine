@@ -166,6 +166,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             var camEntity = new Entity();
             cam.ThirdPersonCameraTarget = camEntity;
 
+            var phys = new ClusterPhysicsService(level);
 
             var controller = new ClusterFlightController(TW.Graphics.Keyboard);
 
@@ -176,8 +177,9 @@ namespace MHGameWork.TheWizards.Scattered._Tests
                         Matrix.Translation(
                             cameraIsland.GetIslandsInCluster().Aggregate(new Vector3(), (acc, el) => acc + el.Position) /
                             cameraIsland.GetIslandsInCluster().Count());
+
+                    phys.UpdateClusterMovement();
                 }));
-            engine.AddSimulator(new ClusterPhysicsSimulator(level));
 
             engine.AddSimulator(new ThirdPersonCameraSimulator());
 

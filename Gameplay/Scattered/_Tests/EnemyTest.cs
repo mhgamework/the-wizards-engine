@@ -100,9 +100,9 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             throw new NotImplementedException();
             //engine.AddSimulator(new EnemySpawningService(level, 0.1f));
             //engine.AddSimulator(new PlayerMovementSimulator(level, player));
-            //engine.AddSimulator(new PlayerInteractionSimulator(level, player));
+            //engine.AddSimulator(new PlayerInteractionService(level, player));
             //engine.AddSimulator(new GameSimulationService(level));
-            //engine.AddSimulator(new ClusterPhysicsSimulator(level));
+            //engine.AddSimulator(new ClusterPhysicsService(level));
             //engine.AddSimulator(new PlayerCameraSimulator(player));
 
             //engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes,

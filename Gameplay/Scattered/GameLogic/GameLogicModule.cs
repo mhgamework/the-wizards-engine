@@ -11,8 +11,13 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic
         {
             registerDefaults(builder);
 
+            // Objects
+
             // Single player config!
             builder.Register(c => c.Resolve<Level>().LocalPlayer).SingleInstance();
+
+
+            // Services
 
             // Config enemy spawn rate
             builder.Register(c => new EnemySpawningService(c.Resolve<Level>(), 100)).SingleInstance();

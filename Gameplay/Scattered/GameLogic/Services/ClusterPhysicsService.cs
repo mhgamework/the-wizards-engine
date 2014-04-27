@@ -1,20 +1,17 @@
-﻿using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Scattered.Model;
-using Castle.Core.Internal;
-using MHGameWork.TheWizards.Scattered._Engine;
+﻿using MHGameWork.TheWizards.Scattered.Model;
 
-namespace MHGameWork.TheWizards.Scattered.Bindings
+namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 {
-    public class ClusterPhysicsSimulator : ISimulator
+    public class ClusterPhysicsService 
     {
         private readonly Level level;
 
-        public ClusterPhysicsSimulator(Level level)
+        public ClusterPhysicsService(Level level)
         {
             this.level = level;
         }
 
-        public void Simulate()
+        public void UpdateClusterMovement()
         {
             level.Islands.ForEach(stepMovement);
         }

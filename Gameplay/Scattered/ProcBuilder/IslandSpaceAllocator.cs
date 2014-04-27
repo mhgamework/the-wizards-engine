@@ -5,7 +5,7 @@ using ProceduralBuilder.Building;
 using ProceduralBuilder.Shapes;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
+namespace MHGameWork.TheWizards.Scattered.ProcBuilder
 {
     /// <summary>
     /// Keeps track of the allocation of objects on an islands surface.
