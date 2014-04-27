@@ -184,23 +184,23 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Navigation2D\ExplorationData.cs" />
-    <Compile Include="Navigation2D\GridConnectionProvider.cs" />
-    <Compile Include="Navigation2D\IConnectionProvider.cs" />
-    <Compile Include="Navigation2D\IPathFinder2D.cs" />
-    <Compile Include="Navigation2D\NavigableGrid2D.cs" />
-    <Compile Include="Navigation2D\NavigableGrid2DData.cs" />
-    <Compile Include="Navigation2D\NavigableGrid2DVizualizationSimulator.cs" />
-    <Compile Include="Navigation2D\NavigableGrid3DEntitySimulator.cs" />
-    <Compile Include="Navigation2D\Navigation2DTest.cs" />
-    <Compile Include="Navigation2D\PathFinder2D.cs" />
-    <Compile Include="Navigation2D\PathfinderVisualizer.cs" />
-    <Compile Include="Navigation2D\Vertex2D.cs" />
-    <Compile Include="Navigation2D\Waypoint.cs" />
-    <Compile Include="Navigation2D\WaypointConnectionProvider.cs" />
-    <Compile Include="Navigation2D\WaypointEngine.cs" />
-    <Compile Include="Navigation2D\WaypointEngineTest.cs" />
-    <Compile Include="Navigation2D\WaypointVisualizer.cs" />
+    <Compile Include="Simulation\Navigation2D\ExplorationData.cs" />
+    <Compile Include="Simulation\Navigation2D\GridConnectionProvider.cs" />
+    <Compile Include="Simulation\Navigation2D\IConnectionProvider.cs" />
+    <Compile Include="Simulation\Navigation2D\IPathFinder2D.cs" />
+    <Compile Include="Simulation\Navigation2D\NavigableGrid2D.cs" />
+    <Compile Include="Simulation\Navigation2D\NavigableGrid2DData.cs" />
+    <Compile Include="Simulation\Navigation2D\NavigableGrid2DVizualizationSimulator.cs" />
+    <Compile Include="Simulation\Navigation2D\NavigableGrid3DEntitySimulator.cs" />
+    <Compile Include="Simulation\Navigation2D\Navigation2DTest.cs" />
+    <Compile Include="Simulation\Navigation2D\PathFinder2D.cs" />
+    <Compile Include="Simulation\Navigation2D\PathfinderVisualizer.cs" />
+    <Compile Include="Simulation\Navigation2D\Vertex2D.cs" />
+    <Compile Include="Simulation\Navigation2D\Waypoint.cs" />
+    <Compile Include="Simulation\Navigation2D\WaypointConnectionProvider.cs" />
+    <Compile Include="Simulation\Navigation2D\WaypointEngine.cs" />
+    <Compile Include="Simulation\Navigation2D\WaypointEngineTest.cs" />
+    <Compile Include="Simulation\Navigation2D\WaypointVisualizer.cs" />
     <Compile Include="RTSTestCase1\_Tests\WorldInputtingTest.cs" />
     <Compile Include="Scattered\Bindings\ClockedBehaviourSimulator.cs" />
     <Compile Include="Scattered\Bindings\IDebugAddon.cs" />
@@ -372,8 +372,8 @@
     <Compile Include="Generation\SimpleCaveGenerator.cs" />
     <Compile Include="Generation\SimpleCaveGenerationTest.cs" />
     <Compile Include="Generation\VoxelTerrainConvertor.cs" />
-    <Compile Include="Graphing\BasicForceRelaxer.cs" />
-    <Compile Include="Graphing\GraphRelaxationTest.cs" />
+    <Compile Include="_Unsorted\Graphing\BasicForceRelaxer.cs" />
+    <Compile Include="_Unsorted\Graphing\GraphRelaxationTest.cs" />
     <Compile Include="Engine\Persistence\Datastore.cs" />
     <Compile Include="Engine\Persistence\PersistenceUI.cs" />
     <Compile Include="Engine\PhysX\BarrelShooterSimulator.cs" />
@@ -382,14 +382,14 @@
     <Compile Include="Math\Point2.cs" />
     <Compile Include="Math\UtilityExtensions.cs" />
     <Compile Include="RequiresPostSharp.cs" />
-    <Compile Include="BehaviourTrees\BehaviourTreeAgent.cs" />
-    <Compile Include="BehaviourTrees\ConcurrentSelector.cs" />
-    <Compile Include="BehaviourTrees\Condition.cs" />
-    <Compile Include="BehaviourTrees\Decorator.cs" />
-    <Compile Include="BehaviourTrees\IBehaviourNode.cs" />
-    <Compile Include="BehaviourTrees\PrioritySelector.cs" />
-    <Compile Include="BehaviourTrees\Sequence.cs" />
-    <Compile Include="BehaviourTrees\While.cs" />
+    <Compile Include="Simulation\BehaviourTrees\BehaviourTreeAgent.cs" />
+    <Compile Include="Simulation\BehaviourTrees\ConcurrentSelector.cs" />
+    <Compile Include="Simulation\BehaviourTrees\Condition.cs" />
+    <Compile Include="Simulation\BehaviourTrees\Decorator.cs" />
+    <Compile Include="Simulation\BehaviourTrees\IBehaviourNode.cs" />
+    <Compile Include="Simulation\BehaviourTrees\PrioritySelector.cs" />
+    <Compile Include="Simulation\BehaviourTrees\Sequence.cs" />
+    <Compile Include="Simulation\BehaviourTrees\While.cs" />
     <Compile Include="SkyMerchant\_GameplayInterfacing\IWorldLocator.cs" />
     <Compile Include="RTSTestCase1\_Engine\ObjectParts\IObjectPart.cs" />
     <Compile Include="RTSTestCase1\Inputting\InputFactory.cs" />
@@ -436,7 +436,7 @@
     <Compile Include="SkyMerchant\_Engine\DataStructures\Array3D.cs" />
     <Compile Include="SkyMerchant\_Engine\DataStructures\Array2D.cs" />
     <Compile Include="SkyMerchant\_Engine\DataStructures\DictionaryExtensions.cs" />
-    <Compile Include="SkyMerchant\Lod\ChunkCoordinate.cs" />
+    <Compile Include="Simulation\Spatial\ChunkCoordinate.cs" />
     <Compile Include="SkyMerchant\Lod\IWorldOctree.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\LodTest.cs" />
     <Compile Include="SkyMerchant\Lod\OptimizedWorldOctree.cs" />
@@ -487,7 +487,7 @@
     <Compile Include="Audio\SoundEmitter.cs" />
     <Compile Include="Audio\SoundEmitterUpdater.cs" />
     <Compile Include="Engine\PhysX\EntityPhysXUpdater.cs" />
-    <Compile Include="Player\PlayerClientPhysics.cs" />
+    <Compile Include="_Unsorted\Player\PlayerClientPhysics.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Engine\Raycasting\RaycastResult.cs" />
     <Compile Include="Engine\Raycasting\WorldRaycaster.cs" />
@@ -513,7 +513,7 @@
     <Compile Include="Engine\WorldRendering\Textarea.cs" />
     <Compile Include="Engine\WorldRendering\TextareaUpdater.cs" />
     <Compile Include="Engine\WorldRendering\WireframeBox.cs" />
-    <Compile Include="Player\PlayerController.cs" />
+    <Compile Include="_Unsorted\Player\PlayerController.cs" />
     <Compile Include="Engine\Synchronization\NoSyncAttribute.cs" />
     <Compile Include="Engine\WorldRendering\CameraInfo.cs" />
     <Compile Include="Engine\WorldRendering\Entity.cs" />
@@ -521,22 +521,22 @@
     <Compile Include="Engine\NetworkSyncerSimulator.cs" />
     <Compile Include="Engine\PhysX\PhysXSimulator.cs" />
     <Compile Include="Engine\WorldRendering\WorldRenderingSimulator.cs" />
-    <Compile Include="Sphere.cs" />
-    <Compile Include="Player\LocalPlayerSimulator.cs" />
+    <Compile Include="_Unsorted\Sphere.cs" />
+    <Compile Include="_Unsorted\Player\LocalPlayerSimulator.cs" />
     <Compile Include="Engine\Synchronization\IVirtualEndpoint.cs" />
     <Compile Include="Engine\Synchronization\VirtualModelSyncer.cs" />
     <Compile Include="Engine\Synchronization\VirtualMultiEndpoint.cs" />
-    <Compile Include="Player\Client\PlayerClientPhysics.cs" />
-    <Compile Include="Player\PlayerData.cs" />
-    <Compile Include="Player\XNATaskQueue.cs" />
+    <Compile Include="_Unsorted\Player\Client\PlayerClientPhysics.cs" />
+    <Compile Include="_Unsorted\Player\PlayerData.cs" />
+    <Compile Include="_Unsorted\Player\XNATaskQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Simulators\ThirdPersonCameraSimulator.cs" />
+    <Compile Include="_Unsorted\Simulators\ThirdPersonCameraSimulator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Engine\engine_architecture-1.jpg" />
     <Content Include="Engine\_Core\_doc.txt" />
     <Content Include="Engine\_doc.html" />
-    <Content Include="Navigation2D\_doc.txt" />
+    <Content Include="Simulation\Navigation2D\_doc.txt" />
     <Content Include="Scattered\_doc.html" />
     <Content Include="SkyMerchant\GameObjects\_doc.html" />
     <Content Include="SkyMerchant\Gameplay\_doc.txt" />
@@ -561,7 +561,6 @@
     <Folder Include="SkyMerchant\_Tests\Broken\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="RTSTestCase1\_Engine\ObjectParts\ObjectPartInterfaces.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
