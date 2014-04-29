@@ -1,23 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MHGameWork.TheWizards.Engine.Worlding;
-using MHGameWork.TheWizards.Simulation.Spatial;
+using MHGameWork.TheWizards.SkyMerchant._Engine.Spatial;
 using SlimDX;
 using ContainmentType = Microsoft.Xna.Framework.ContainmentType;
 
-namespace MHGameWork.TheWizards.SkyMerchant.Lod
+namespace MHGameWork.TheWizards.Simulation.Spatial
 {
     /// <summary>
     /// Fake octree implementation (non-optimized)
     /// </summary>
-    public class SimpleWorldOctree : IWorldOctree
+    public class SimpleWorldOctree<T> : IWorldOctree<T> where T : IBoundingBox
     {
         private readonly Vector3 radius;
+        private readonly IEnumerable<T> getObjects;
 
 
-        public SimpleWorldOctree(Vector3 radius)
+        public SimpleWorldOctree(Vector3 radius, IEnumerable<T> getObjects)
         {
             this.radius = radius;
+            this.getObjects = getObjects;
         }
 
         /// <summary>
@@ -25,12 +27,10 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
         /// </summary>
         /// <param name="coord"></param>
         /// <returns></returns>
-        public IEnumerable<Physical> GetWorldObjects(ChunkCoordinate coord)
+        public IEnumerable<T> GetWorldObjects(ChunkCoordinate coord)
         {
-            var bb = coord.GetBoundingBox(new Vector3(), radius*2);
-            return
-                TW.Data.Objects.OfType<Physical>()
-                  .Where(p => bb.xna().Contains(p.GetBoundingBox().xna()) != ContainmentType.Disjoint);
+            var bb = coord.GetBoundingBox(new Vector3(), radius * 2);
+            return getObjects.Where(p => bb.xna().Contains(p.LocalBoundingBox.xna()) != ContainmentType.Disjoint);
         }
 
         public Vector3 GetChunkRadius(ChunkCoordinate chunk)
@@ -46,7 +46,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
 
         public BoundingBox GetChunkBoundingBox(ChunkCoordinate chunk)
         {
-            return chunk.GetBoundingBox(new Vector3(), radius*2);
+            return chunk.GetBoundingBox(new Vector3(), radius * 2);
         }
 
         public bool IsLeaf(ChunkCoordinate parent)

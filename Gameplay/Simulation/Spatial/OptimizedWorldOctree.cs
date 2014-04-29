@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using MHGameWork.TheWizards.Engine.Worlding;
-using MHGameWork.TheWizards.Simulation.Spatial;
+using MHGameWork.TheWizards.SkyMerchant._Engine.Spatial;
 using SlimDX;
 using ContainmentType = Microsoft.Xna.Framework.ContainmentType;
-using System.Linq;
-using Castle.Core.Internal;
 
-namespace MHGameWork.TheWizards.SkyMerchant.Lod
+namespace MHGameWork.TheWizards.Simulation.Spatial
 {
     /// <summary>
     /// Responsible for providing access to the physicals in the world, using an octree. 
@@ -21,7 +18,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
     /// TODO: think about using a leaf cell size as to define the tree, instead of a size and a depth
     /// TODO: try a version where there each physical is in a single node.
     /// </summary>
-    public class OptimizedWorldOctree : IWorldOctree
+    public class OptimizedWorldOctree<T> : IWorldOctree<T> where T : IBoundingBox
     {
         private readonly Vector3 size;
         private readonly int maxDepth;
@@ -29,9 +26,9 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
         /// <summary>
         /// Unrolled tree data
         /// </summary>
-        private List<Physical>[] data;
+        private List<T>[] data;
 
-        private Dictionary<Physical, List<int>> getPhysicalChunks = new Dictionary<Physical, List<int>>();
+        private Dictionary<T, List<int>> getPhysicalChunks = new Dictionary<T, List<int>>();
         /// <summary>
         /// 
         /// </summary>
@@ -41,14 +38,14 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
         {
             this.size = size;
             this.maxDepth = maxDepth;
-            data = new List<Physical>[ChunkCoordinate.GetCumulativeNbChunks(maxDepth + 1)];
+            data = new List<T>[ChunkCoordinate.GetCumulativeNbChunks(maxDepth + 1)];
             for (int i = 0; i < data.Length; i++)
             {
-                data[i] = new List<Physical>();
+                data[i] = new List<T>();
             }
         }
 
-        public IEnumerable<Physical> GetWorldObjects(ChunkCoordinate coord)
+        public IEnumerable<T> GetWorldObjects(ChunkCoordinate coord)
         {
             var index = coord.GetUnrolledIndex();
             var ret = data[index];
@@ -76,14 +73,14 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
             return (chunk.Depth == maxDepth);
         }
 
-        public void AddWorldObject(Physical p)
+        public void AddWorldObject(T p)
         {
-            var physBB = p.GetBoundingBox().xna();
+            var physBB = p.LocalBoundingBox.xna();
 
             var chunks = new List<int>();
             getPhysicalChunks[p] = chunks;
 
-            WorldOctreeExtensions.FindChunksDown(this, maxDepth, delegate(ChunkCoordinate coordinate)
+            this.FindChunksDown(maxDepth, delegate(ChunkCoordinate coordinate)
                 {
                     var bb = GetChunkBoundingBox(coordinate).xna();
                     var containment = physBB.Contains(bb);
@@ -103,12 +100,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
 
                 }).ForEach(f => f.Depth = f.Depth); // Cheat to make this execute!
         }
-        public void UpdateWorldObject(Physical p)
+        public void UpdateWorldObject(T p)
         {
             RemoveWorldObject(p);
             AddWorldObject(p);
         }
-        public void RemoveWorldObject(Physical p)
+        public void RemoveWorldObject(T p)
         {
             var chunks = getPhysicalChunks[p];
             foreach (var c in chunks)

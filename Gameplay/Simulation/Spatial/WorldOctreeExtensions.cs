@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using MHGameWork.TheWizards.Simulation.Spatial;
+using MHGameWork.TheWizards.SkyMerchant._Engine.Spatial;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant.Lod
+namespace MHGameWork.TheWizards.Simulation.Spatial
 {
     public static class WorldOctreeExtensions
     {
@@ -13,12 +13,12 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
         ///     condition(chunk) => condition(parent(chunk))
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<ChunkCoordinate> FindChunksDown(this IWorldOctree tree, int maxDepth,
-                                                              Func<ChunkCoordinate, bool> condition)
+        public static IEnumerable<ChunkCoordinate> FindChunksDown<T>(this IWorldOctree<T> tree, int maxDepth,
+                                                              Func<ChunkCoordinate, bool> condition) where T : IBoundingBox
         {
             return FindChunksDown(tree, ChunkCoordinate.Root, maxDepth, condition);
         }
-        public static IEnumerable<ChunkCoordinate> FindChunksDown(this IWorldOctree tree, ChunkCoordinate parent, int maxDepth, Func<ChunkCoordinate, bool> condition)
+        public static IEnumerable<ChunkCoordinate> FindChunksDown<T>(this IWorldOctree<T> tree, ChunkCoordinate parent, int maxDepth, Func<ChunkCoordinate, bool> condition) where T : IBoundingBox
         {
             if (!condition(parent)) yield break;
 
@@ -42,8 +42,8 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
         ///     condition(chunk) => condition(parent(chunk))
         /// </summary>
         /// <returns></returns>
-        public static ChunkCoordinate FindChunkUp(this IWorldOctree tree, ChunkCoordinate start,
-                                                              Func<ChunkCoordinate, bool> condition)
+        public static ChunkCoordinate FindChunkUp<T>(this IWorldOctree<T> tree, ChunkCoordinate start,
+                                                              Func<ChunkCoordinate, bool> condition) where T : IBoundingBox
         {
             if (start.IsEmtpy) return start;
             if (condition(start)) return start;
@@ -52,7 +52,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Lod
 
         }
 
-        public static IEnumerable<ChunkCoordinate> GetChunksInRange(this IWorldOctree worldOctree, Vector3 position, float minRange, float maxRange, int depth)
+        public static IEnumerable<ChunkCoordinate> GetChunksInRange<T>(this IWorldOctree<T> worldOctree, Vector3 position, float minRange, float maxRange, int depth) where T : IBoundingBox
         {
             return worldOctree.FindChunksDown(depth, delegate(ChunkCoordinate c)
             {

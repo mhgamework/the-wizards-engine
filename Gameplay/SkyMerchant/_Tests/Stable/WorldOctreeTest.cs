@@ -6,10 +6,12 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
-using MHGameWork.TheWizards.SkyMerchant.Lod;
+using MHGameWork.TheWizards.Simulation.Spatial;
 using NUnit.Framework;
 using SlimDX;
 using ContainmentType = Microsoft.Xna.Framework.ContainmentType;
+using SimpleWorldOctree = MHGameWork.TheWizards.SkyMerchant.Lod.SimpleWorldOctree;
+using WorldOctreeExtensions = MHGameWork.TheWizards.SkyMerchant.Lod.WorldOctreeExtensions;
 
 namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
 {
@@ -36,13 +38,13 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
             engine.AddSimulator(new BasicSimulator(delegate
             {
                 Vector3 campos = TW.Graphics.Camera.ViewInverse.xna().Translation.dx();
-                var chunks = tree.GetChunksInRange(campos, 100, 200, 2);
+                var chunks = WorldOctreeExtensions.GetChunksInRange(tree, campos, 100, 200, 2);
                 foreach (var c in chunks)
                 {
                     TW.Graphics.LineManager3D.AddCenteredBox(tree.GetChunkCenter(c), tree.GetChunkRadius(c).MaxComponent() * 2, new Color4(1, 1, 0));
                 }
 
-                var inChunk = tree.FindChunksDown(2, delegate(ChunkCoordinate c)
+                var inChunk = WorldOctreeExtensions.FindChunksDown(tree, 2, delegate(ChunkCoordinate c)
                 {
                     BoundingBox chunkBoundingBox = tree.GetChunkBoundingBox(c);
                     Microsoft.Xna.Framework.ContainmentType containmentType = chunkBoundingBox.xna().Contains(campos.xna());

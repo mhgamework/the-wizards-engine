@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DirectX11;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.SkyMerchant.Lod
+namespace MHGameWork.TheWizards.Simulation.Spatial
 {
     /// <summary>
     /// Represents a chunk at a depth and position

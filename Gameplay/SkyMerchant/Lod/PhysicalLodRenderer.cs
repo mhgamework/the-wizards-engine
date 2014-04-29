@@ -4,6 +4,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using System.Linq;
 using Castle.Core.Internal;
 using MHGameWork.TheWizards.Engine.Worlding;
+using MHGameWork.TheWizards.Simulation.Spatial;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
 

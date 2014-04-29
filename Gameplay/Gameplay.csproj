@@ -184,6 +184,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rendering\Lod\IRenderable.cs" />
     <Compile Include="Simulation\Navigation2D\ExplorationData.cs" />
     <Compile Include="Simulation\Navigation2D\GridConnectionProvider.cs" />
     <Compile Include="Simulation\Navigation2D\IConnectionProvider.cs" />
@@ -267,6 +268,11 @@
     <Compile Include="Scattered\Bindings\ScatteredGame.cs" />
     <Compile Include="Scattered\_Tests\TextRectangleTest.cs" />
     <Compile Include="Scattered\GameLogic\Objects\Tower.cs" />
+    <Compile Include="Simulation\Spatial\IWorldOctree.cs" />
+    <Compile Include="Simulation\Spatial\OptimizedWorldOctree.cs" />
+    <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />
+    <Compile Include="Simulation\Spatial\SimpleWorldOctree.cs" />
+    <Compile Include="Simulation\Spatial\WorldOctreeExtensions.cs" />
     <Compile Include="SkyMerchant\GameObjects\PhysicalMeshRenderComponent.cs" />
     <Compile Include="SkyMerchant\GameObjects\PhysicalPositionComponent.cs" />
     <Compile Include="SkyMerchant\GameObjects\RelativePositionComponent.cs" />
@@ -423,12 +429,12 @@
     <Compile Include="SkyMerchant\_Engine\SimulationPausing\PausingWrapper.cs" />
     <Compile Include="SkyMerchant\_Engine\SimulationPausing\SimplePausingExample.cs" />
     <Compile Include="SkyMerchant\_Engine\IThreadFactory.cs" />
-    <Compile Include="SkyMerchant\_Engine\Spatial\IBoundingBox.cs" />
-    <Compile Include="SkyMerchant\_Engine\Spatial\IMutableOrientation.cs" />
-    <Compile Include="SkyMerchant\_Engine\Spatial\IMutableSpatial.cs" />
-    <Compile Include="SkyMerchant\_Engine\Spatial\IMutablePosition.cs" />
-    <Compile Include="SkyMerchant\_Engine\Spatial\SimpleMutableSpatial.cs" />
-    <Compile Include="SkyMerchant\_Engine\Spatial\SpatialExtensions.cs" />
+    <Compile Include="Simulation\Spatial\IBoundingBox.cs" />
+    <Compile Include="Simulation\Spatial\IMutableOrientation.cs" />
+    <Compile Include="Simulation\Spatial\IMutableSpatial.cs" />
+    <Compile Include="Simulation\Spatial\IMutablePosition.cs" />
+    <Compile Include="Simulation\Spatial\SimpleMutableSpatial.cs" />
+    <Compile Include="Simulation\Spatial\SpatialExtensions.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\SimulationPausingTest.cs" />
     <Compile Include="SkyMerchant\Gameplay\WorldObjectMover.cs" />
     <Compile Include="SkyMerchant\_Tests\Ideas\UnsortedIdeasTest.cs" />
@@ -558,6 +564,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SkyMerchant\Gameplay\AirCurrents\" />
+    <Folder Include="SkyMerchant\_Engine\Spatial\" />
     <Folder Include="SkyMerchant\_Tests\Broken\" />
   </ItemGroup>
   <ItemGroup>
