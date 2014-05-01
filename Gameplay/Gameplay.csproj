@@ -185,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Rendering\Lod\IRenderable.cs" />
+    <Compile Include="Rendering\Lod\PhysicalLodRenderer.cs" />
     <Compile Include="Simulation\Navigation2D\ExplorationData.cs" />
     <Compile Include="Simulation\Navigation2D\GridConnectionProvider.cs" />
     <Compile Include="Simulation\Navigation2D\IConnectionProvider.cs" />
@@ -270,7 +271,6 @@
     <Compile Include="Scattered\GameLogic\Objects\Tower.cs" />
     <Compile Include="Simulation\Spatial\IWorldOctree.cs" />
     <Compile Include="Simulation\Spatial\OptimizedWorldOctree.cs" />
-    <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />
     <Compile Include="Simulation\Spatial\SimpleWorldOctree.cs" />
     <Compile Include="Simulation\Spatial\WorldOctreeExtensions.cs" />
     <Compile Include="SkyMerchant\GameObjects\PhysicalMeshRenderComponent.cs" />
@@ -439,9 +439,9 @@
     <Compile Include="SkyMerchant\Gameplay\WorldObjectMover.cs" />
     <Compile Include="SkyMerchant\_Tests\Ideas\UnsortedIdeasTest.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\BridgeTest.cs" />
-    <Compile Include="SkyMerchant\_Engine\DataStructures\Array3D.cs" />
-    <Compile Include="SkyMerchant\_Engine\DataStructures\Array2D.cs" />
-    <Compile Include="SkyMerchant\_Engine\DataStructures\DictionaryExtensions.cs" />
+    <Compile Include="Data\Array3D.cs" />
+    <Compile Include="Data\Array2D.cs" />
+    <Compile Include="Data\DictionaryExtensions.cs" />
     <Compile Include="Simulation\Spatial\ChunkCoordinate.cs" />
     <Compile Include="SkyMerchant\Lod\IWorldOctree.cs" />
     <Compile Include="SkyMerchant\_Tests\Stable\LodTest.cs" />
@@ -564,7 +564,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SkyMerchant\Gameplay\AirCurrents\" />
-    <Folder Include="SkyMerchant\_Engine\Spatial\" />
     <Folder Include="SkyMerchant\_Tests\Broken\" />
   </ItemGroup>
   <ItemGroup>

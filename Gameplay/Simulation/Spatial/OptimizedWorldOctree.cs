@@ -13,10 +13,9 @@ namespace MHGameWork.TheWizards.Simulation.Spatial
     /// Note: this class is probably pretty slow for dynamic objects
     /// 
     /// 
-    /// 
-    /// TODO: use IWorldObject instead of Physical
+    /// TODO: using IBoundingBox, which is fishy
     /// TODO: think about using a leaf cell size as to define the tree, instead of a size and a depth
-    /// TODO: try a version where there each physical is in a single node.
+    /// TODO: try a version where there each IBoundingBox is in a single node.
     /// </summary>
     public class OptimizedWorldOctree<T> : IWorldOctree<T> where T : IBoundingBox
     {
