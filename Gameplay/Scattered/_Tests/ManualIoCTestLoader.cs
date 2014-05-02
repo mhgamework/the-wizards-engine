@@ -1,5 +1,6 @@
 ﻿using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Rendering.Particles;
 using MHGameWork.TheWizards.Scattered._Tests.GameLogic;
 using MHGameWork.TheWizards.Simulation.ActionScheduling;
 using MHGameWork.TheWizards.Testing;
@@ -24,13 +25,15 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         [Test]
         public void Run()
         {
-            var r = new IRenderingTester(EngineFactory.CreateEngine(), new IActionScheduler());
+            var r = new IRenderingTester(EngineFactory.CreateEngine(), new IActionScheduler(), new ParticlesBoxRenderer());
 
-            //var test = new SpellCastingEffectsTest(r);
+            var test = new SpellCastingEffectsTest(r);
             //test.TestBurstEffect();
+            test.TestBeamEffect();
 
-            var test = new ParticleEffectTest(r);
-            test.TestEmitter();
+            //var test = new ParticleEffectTest(r);
+            //test.TestEmitter();
+            //test.TestBoxRenderer();
         }
     }
 }

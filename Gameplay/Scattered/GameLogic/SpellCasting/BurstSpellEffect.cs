@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.Rendering.Particles;
+﻿using System;
+using MHGameWork.TheWizards.Rendering.Particles;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Scattered.GameLogic.SpellCasting
@@ -10,17 +11,18 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.SpellCasting
     {
         private readonly ParticleEffect effect;
         private CustomEmitter emitter;
+        private Seeder seeder = new Seeder(0);
 
         public BurstSpellEffect(ParticleEffect effect)
         {
             this.effect = effect;
 
-            emitter = effect.CreateCustomEmitter(1 / 10f, p =>
+            emitter = effect.CreateCustomEmitter(1 / 100f, p =>
                 {
                     p.Color = new Color4(1, 0, 0);
                     p.Size = 0.1f;
-                    p.StartVelocity = new Vector3(0, 0, -1);
-                    p.Duration = 0.5f;
+                    p.StartVelocity = new Vector3(seeder.NextFloat(-1, 1)*2, seeder.NextFloat(-1, 1) * 0.7f, seeder.NextFloat(-4, -5));
+                    p.Duration = 1f;
                 });
 
         }

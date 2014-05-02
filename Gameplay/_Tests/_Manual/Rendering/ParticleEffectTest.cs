@@ -38,5 +38,29 @@ namespace MHGameWork.TheWizards._Tests._Manual.Rendering
             test.ObserveUpdate(() => renderer.RenderEffect(effect));
 
         }
+
+        public void TestBoxRenderer()
+        {
+            var effect = new ParticleEffect();
+
+            test.ObserveUpdate(effect.Update);
+
+            test.SetCameraPosition(new Vector3(10, 3, 0), new Vector3());
+
+            var emitter = effect.CreateCustomEmitter(1 / 100f, p =>
+            {
+                p.Color = new Color4(1, 0, 0);
+                p.Size = 0.1f;
+                p.StartVelocity = new Vector3(0, 0, -5);
+                p.Duration = 1;
+            });
+
+            emitter.Start();
+
+            var renderer = new ParticlesBoxRenderer();
+
+            test.ObserveUpdate(() => renderer.RenderEffect(effect));
+
+        }
     }
 }

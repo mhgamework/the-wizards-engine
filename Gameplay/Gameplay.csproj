@@ -188,11 +188,12 @@
     <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />
     <Compile Include="Rendering\Particles\ColoredParticle.cs" />
     <Compile Include="Rendering\Particles\CustomEmitter.cs" />
-    <Compile Include="Rendering\Particles\LineParticleRenderer.cs" />
     <Compile Include="Rendering\Particles\ParticleEffect.cs" />
+    <Compile Include="Rendering\Particles\ParticlesBoxRenderer.cs" />
     <Compile Include="Rendering\Particles\ParticlesLineRenderer.cs" />
     <Compile Include="Scattered\Bindings\BindingsModule.cs" />
     <Compile Include="Scattered\GameLogic\SpellCasting\BurstSpellEffect.cs" />
+    <Compile Include="Scattered\GameLogic\SpellCasting\BeamSpellEffect.cs" />
     <Compile Include="Scattered\_Tests\GameLogic\SpellCastingEffectsTest.cs" />
     <Compile Include="Scattered\_Tests\ManualIoCTestLoader.cs" />
     <Compile Include="Scattered\_Tests\_Integration\LodTest.cs" />

@@ -21,13 +21,27 @@ namespace MHGameWork.TheWizards.Scattered._Tests.GameLogic
         {
             var effect = new BurstSpellEffect(r.CreateParticleEffect());
 
-            r.SetCameraPosition( new Vector3(10, 0, 0), new Vector3());
+            r.SetCameraPosition(new Vector3(0, 1, 2), new Vector3(0, 0, -3));
 
-            r.SetRepeat(3000, () =>
+            r.SetRepeat(3, () =>
                 {
                     effect.Start();
-                    r.SetTimeout(2000, effect.Stop);
+                    r.SetTimeout(2, effect.Stop);
                 });
+
+        }
+
+        public void TestBeamEffect()
+        {
+            var effect = new BeamSpellEffect(r.CreateParticleEffect());
+
+            r.SetCameraPosition(new Vector3(0, 1, 2), new Vector3(0, 0, -3));
+
+            r.SetRepeat(3, () =>
+            {
+                effect.Start();
+                r.SetTimeout(2, effect.Stop);
+            });
 
         }
     }

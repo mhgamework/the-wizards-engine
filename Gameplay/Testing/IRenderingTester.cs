@@ -13,18 +13,21 @@ namespace MHGameWork.TheWizards.Testing
     /// <summary>
     /// Interface + implementation of this interface using the TWEngine system
     /// This is a colleciton interface, meant to be convenient for testing
+    /// TODO: add debug printing
     /// </summary>
     public class IRenderingTester
     {
         private readonly TWEngine engine;
         private readonly IActionScheduler scheduler;
+        private readonly ParticlesBoxRenderer particleBoxRenderer;
         private List<ParticleEffect> particleEffects = new List<ParticleEffect>();
         private List<Action<float>> updateObservers = new List<Action<float>>();
 
-        public IRenderingTester(TWEngine engine, IActionScheduler scheduler)
+        public IRenderingTester(TWEngine engine, IActionScheduler scheduler, ParticlesBoxRenderer particleBoxRenderer)
         {
             this.engine = engine;
             this.scheduler = scheduler;
+            this.particleBoxRenderer = particleBoxRenderer;
 
             scheduler.SetCurrentTime(TW.Graphics.TotalRunTime);
 
@@ -39,6 +42,8 @@ namespace MHGameWork.TheWizards.Testing
             particleEffects.ForEach(e => e.Update(TW.Graphics.Elapsed));
             updateObservers.ForEach(a => a(TW.Graphics.Elapsed));
             scheduler.ExecuteActions(TW.Graphics.TotalRunTime);
+
+            particleBoxRenderer.RenderEffects(particleEffects);
         }
 
         public void SetRepeat(float interval, Action action)
