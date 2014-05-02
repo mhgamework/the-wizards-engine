@@ -186,6 +186,11 @@
   <ItemGroup>
     <Compile Include="Rendering\Lod\IRenderable.cs" />
     <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />
+    <Compile Include="Rendering\Particles\ColoredParticle.cs" />
+    <Compile Include="Rendering\Particles\CustomEmitter.cs" />
+    <Compile Include="Rendering\Particles\LineParticleRenderer.cs" />
+    <Compile Include="Rendering\Particles\ParticleEffect.cs" />
+    <Compile Include="Rendering\Particles\ParticlesLineRenderer.cs" />
     <Compile Include="Scattered\Bindings\BindingsModule.cs" />
     <Compile Include="Scattered\GameLogic\SpellCasting\BurstSpellEffect.cs" />
     <Compile Include="Scattered\_Tests\GameLogic\SpellCastingEffectsTest.cs" />
@@ -369,6 +374,7 @@
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\InventoryController.cs" />
     <Compile Include="Testing\IRenderingTester.cs" />
     <Compile Include="_Tests\Simulation\ActionSchedulerTest.cs" />
+    <Compile Include="_Tests\_Manual\Rendering\ParticleEffectTest.cs" />
     <Compile Include="_Tests\_Unsorted\EngineFactory.cs" />
     <Compile Include="_Tests\_Unsorted\Core\AudioTest.cs" />
     <Compile Include="_Tests\_Unsorted\Core\DebugTest.cs" />
@@ -453,7 +459,7 @@
     <Compile Include="Data\DictionaryExtensions.cs" />
     <Compile Include="Simulation\Spatial\ChunkCoordinate.cs" />
     <Compile Include="SkyMerchant\Lod\IWorldOctree.cs" />
-    <Compile Include="_Tests\_Manual\LodTest.cs" />
+    <Compile Include="_Tests\_Manual\Rendering\LodTest.cs" />
     <Compile Include="SkyMerchant\Lod\OptimizedWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\PhysicalLodRenderer.cs" />
     <Compile Include="SkyMerchant\Lod\SimpleWorldOctree.cs" />
@@ -572,7 +578,6 @@
     <Content Include="_Features\_doc.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Rendering\Particles\" />
     <Folder Include="SkyMerchant\Gameplay\AirCurrents\" />
     <Folder Include="SkyMerchant\_Tests\Broken\" />
   </ItemGroup>

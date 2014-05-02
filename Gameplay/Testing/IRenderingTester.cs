@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Rendering.Particles;
 using MHGameWork.TheWizards.Simulation.ActionScheduling;
 using SlimDX;
 
@@ -15,6 +18,8 @@ namespace MHGameWork.TheWizards.Testing
     {
         private readonly TWEngine engine;
         private readonly IActionScheduler scheduler;
+        private List<ParticleEffect> particleEffects = new List<ParticleEffect>();
+        private List<Action<float>> updateObservers = new List<Action<float>>();
 
         public IRenderingTester(TWEngine engine, IActionScheduler scheduler)
         {
@@ -27,8 +32,12 @@ namespace MHGameWork.TheWizards.Testing
             engine.AddSimulator(new WorldRenderingSimulator());
         }
 
+        public LineManager3D LineManager3D { get { return TW.Graphics.LineManager3D; } }
+
         private void update()
         {
+            particleEffects.ForEach(e => e.Update(TW.Graphics.Elapsed));
+            updateObservers.ForEach(a => a(TW.Graphics.Elapsed));
             scheduler.ExecuteActions(TW.Graphics.TotalRunTime);
         }
 
@@ -53,6 +62,24 @@ namespace MHGameWork.TheWizards.Testing
         {
             TW.Graphics.SpectaterCamera.CameraPosition = position;
             TW.Graphics.SpectaterCamera.CameraDirection = Vector3.Normalize(lookTarget - position);
+        }
+
+        public ParticleEffect CreateParticleEffect()
+        {
+            var ret = new ParticleEffect();
+
+            particleEffects.Add(ret);
+            return ret;
+        }
+
+        public void ObserveUpdate(Action onUpdate)
+        {
+            ObserveUpdate(_ => onUpdate());
+        }
+
+        public void ObserveUpdate(Action<float> onUpdate)
+        {
+            updateObservers.Add(onUpdate);
         }
     }
 }

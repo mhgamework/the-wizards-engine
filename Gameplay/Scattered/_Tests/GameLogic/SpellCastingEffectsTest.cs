@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests.GameLogic
 
         public void TestBurstEffect()
         {
-            var effect = new BurstSpellEffect();
+            var effect = new BurstSpellEffect(r.CreateParticleEffect());
 
             r.SetCameraPosition( new Vector3(10, 0, 0), new Vector3());
 
@@ -28,6 +28,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests.GameLogic
                     effect.Start();
                     r.SetTimeout(2000, effect.Stop);
                 });
+
         }
     }
 }
