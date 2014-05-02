@@ -60,31 +60,31 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
             bodyNode = Node.CreateChild();
             bodyNode.Relative = Matrix.Scaling(2, 2, 2) * Matrix.RotationZ(-(float)Math.PI * 0.05f);
             var bodyEnt = level.CreateEntityNode(bodyNode.CreateChild());
-            bodyEnt.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\Body");
+            bodyEnt.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\Body");
 
             sightNode = bodyNode.CreateChild();
             sightEnt = level.CreateEntityNode(sightNode.CreateChild());
-            sightEnt.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\Sight_red");
+            sightEnt.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\Sight_red");
 
             tailNode = bodyNode.CreateChild();
             tailNode.Relative = Matrix.Translation(new Vector3(0, -0.05f, 0));
             tailEnt = level.CreateEntityNode(tailNode.CreateChild());
-            tailEnt.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\Tail");
+            tailEnt.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\Tail");
 
             propellorAxesNode = bodyNode.CreateChild();
             propellorAxesNode.Relative = Matrix.Translation(new Vector3(-0.02f, -0.05f, 0));
             var axesEnt = level.CreateEntityNode(propellorAxesNode.CreateChild());
-            axesEnt.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\PropellorAxes");
+            axesEnt.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\PropellorAxes");
 
             propellorLeftNode = propellorAxesNode.CreateChild();
             propellorLeftNode.Relative = Matrix.Translation(new Vector3(-0.02f, 0.212f, 0.585f));
             propLeftEnt = level.CreateEntityNode(propellorLeftNode.CreateChild());
-            propLeftEnt.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\Propellor");
+            propLeftEnt.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\Propellor");
 
             propellorRightNode = propellorAxesNode.CreateChild();
             propellorRightNode.Relative = Matrix.Translation(new Vector3(-0.02f, 0.212f, -0.585f));
             propRightEnt = level.CreateEntityNode(propellorRightNode.CreateChild());
-            propRightEnt.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\Propellor");
+            propRightEnt.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\EnemyRobotParts\\Propellor");
 
 
 

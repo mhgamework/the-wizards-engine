@@ -42,7 +42,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
                     itemNodes.Add(level.CreateEntityNode(n.CreateChild()
                         .Alter(a => a.Relative = Matrix.Scaling(2, 2, 2) * Matrix.Translation(0, 0.5f, 0)))
                         .Alter(a => a.CreateInteractable(() => onInteractItem(a))));
-                    level.CreateEntityNode(n).Alter(c => c.Entity.Mesh = warehouseMesh)
+                    level.CreateEntityNode(n).Alter(c => c.Mesh = warehouseMesh)
                         .Alter(c => c.Node.Relative = Matrix.Translation(x, 0, y))
                         .Alter(c => c.CreateInteractable(onInteractPad));
                 }
@@ -87,8 +87,8 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
 
         public void PrepareForRendering()
         {
-            itemNodes.ForEach(n => n.Entity.Mesh = null);
-            itemNodes.Zip(Inventory.Items, (e, i) => new { E = e, I = i }).ForEach(n => n.E.Entity.Mesh = n.I.Mesh);
+            itemNodes.ForEach(n => n.Mesh = null);
+            itemNodes.Zip(Inventory.Items, (e, i) => new { E = e, I = i }).ForEach(n => n.E.Mesh = n.I.Mesh);
         }
 
         public SceneGraphNode Node { get; private set; }

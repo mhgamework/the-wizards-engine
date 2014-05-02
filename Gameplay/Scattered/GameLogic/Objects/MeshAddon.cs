@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
             Node.AssociatedObject = this;
 
             var ent = level.CreateEntityNode(node);
-            ent.Entity.Mesh = mesh;
+            ent.Mesh = mesh;
         }
 
         public SceneGraphNode Node { get; private set; }

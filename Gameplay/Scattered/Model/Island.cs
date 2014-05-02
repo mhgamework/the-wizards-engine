@@ -23,15 +23,12 @@ namespace MHGameWork.TheWizards.Scattered.Model
             Inventory = new Inventory();
             Node = node;
 
-
             var ent = level.CreateEntityNode(node.CreateChild());
-            //ent.Node.Relative = Matrix.Scaling(2, 2, 2) * ent.Node.Relative;
-            entity = ent.Entity;
-            //ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Island_Large");
+            entity = ent;
             SpaceAllocator = new IslandSpaceAllocator();
         }
         public IslandSpaceAllocator SpaceAllocator { get; set; }
-        private readonly Entity entity;
+        private readonly EntityNode entity;
         private IMesh mesh;
         public IMesh Mesh
         {
@@ -39,7 +36,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
             set
             {
                 mesh = value;
-                entity.Mesh = value;
+                Entity.Mesh = value;
             }
         }
 
@@ -52,12 +49,12 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public Vector3 GetForward()
         {
-            return Node.Absolute.xna().Forward.dx();// Matrix.RotationY(RotationY).xna().Forward.dx();
+            return Node.Absolute.xna().Forward.dx();
         }
 
         public Matrix GetWorldMatrix()
         {
-            return Node.Absolute; //Matrix.RotationY(RotationY) * Matrix.Translation(Position);
+            return Node.Absolute; 
         }
 
         public void AddBridgeTo(Island isl2)
@@ -119,6 +116,11 @@ namespace MHGameWork.TheWizards.Scattered.Model
         }
 
         public WorldGenerationService.IslandDescriptor Descriptor { get; set; }
+
+        public EntityNode Entity
+        {
+            get { return entity; }
+        }
 
         public void AddAddon(IIslandAddon addon)
         {

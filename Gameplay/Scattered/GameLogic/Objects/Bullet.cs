@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
             this.lifetime = lifetime;
 
             var ent = handle.CreateEntityNode(node.CreateChild());
-            ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Bullet");
+            ent.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Bullet");
             ent.Node.Relative = Matrix.Scaling(2, 2, 2);
 
             handle.AddBehaviour(node, Update);

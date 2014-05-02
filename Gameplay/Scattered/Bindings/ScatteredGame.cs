@@ -14,7 +14,6 @@ namespace MHGameWork.TheWizards.Scattered.Bindings
         private PlayerCameraSimulator PlayerCameraSimulator;
 
         private ScatteredRenderingSimulator ScatteredRenderingSimulator;
-        private WorldRenderingSimulator WorldRenderingSimulator;
 
         private WorldGenerationService gen;
 
@@ -23,7 +22,6 @@ namespace MHGameWork.TheWizards.Scattered.Bindings
                              ClusterPhysicsService clusterPhysicsService, 
                              PlayerCameraSimulator playerCameraSimulator, 
                              ScatteredRenderingSimulator scatteredRenderingSimulator, 
-                             WorldRenderingSimulator worldRenderingSimulator, 
                              WorldGenerationService gen, 
                              GameSimulationService gameSimulationService)
         {
@@ -32,7 +30,6 @@ namespace MHGameWork.TheWizards.Scattered.Bindings
             this.clusterPhysicsService = clusterPhysicsService;
             this.PlayerCameraSimulator = playerCameraSimulator;
             this.ScatteredRenderingSimulator = scatteredRenderingSimulator;
-            this.WorldRenderingSimulator = worldRenderingSimulator;
             this.gen = gen;
             this.gameSimulationService = gameSimulationService;
         }
@@ -44,12 +41,15 @@ namespace MHGameWork.TheWizards.Scattered.Bindings
             engine.AddSimulator(PlayerCameraSimulator);
 
             engine.AddSimulator(ScatteredRenderingSimulator);
-            engine.AddSimulator(WorldRenderingSimulator);
             //engine.AddSimulator(new AudioSimulator());
 
-            gen.Generate();
-
             TW.Graphics.SpectaterCamera.FarClip = 2000;
+        }
+
+        public void GenerateWorld()
+        {
+            gen.Generate();
+            
         }
     }
 }

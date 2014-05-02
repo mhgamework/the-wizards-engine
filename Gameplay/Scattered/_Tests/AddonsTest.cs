@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
     {
         private TWEngine engine = EngineFactory.CreateEngine();
 
-        [Test]
+        /*[Test]
         public void TestResource()
         {
             var level = new Level();
@@ -87,6 +87,6 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             //                                                    () => level.Islands.SelectMany(c => c.Addons)));
             //engine.AddSimulator(new WorldRenderingSimulator());
 
-        }
+        }*/
     }
 }

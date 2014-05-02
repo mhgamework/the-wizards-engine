@@ -14,11 +14,11 @@ namespace MHGameWork.TheWizards.Simulation.Spatial
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<ChunkCoordinate> FindChunksDown<T>(this IWorldOctree<T> tree, int maxDepth,
-                                                              Func<ChunkCoordinate, bool> condition) where T : IBoundingBox
+                                                              Func<ChunkCoordinate, bool> condition) where T : IWorldObject
         {
             return FindChunksDown(tree, ChunkCoordinate.Root, maxDepth, condition);
         }
-        public static IEnumerable<ChunkCoordinate> FindChunksDown<T>(this IWorldOctree<T> tree, ChunkCoordinate parent, int maxDepth, Func<ChunkCoordinate, bool> condition) where T : IBoundingBox
+        public static IEnumerable<ChunkCoordinate> FindChunksDown<T>(this IWorldOctree<T> tree, ChunkCoordinate parent, int maxDepth, Func<ChunkCoordinate, bool> condition) where T : IWorldObject
         {
             if (!condition(parent)) yield break;
 
@@ -43,7 +43,7 @@ namespace MHGameWork.TheWizards.Simulation.Spatial
         /// </summary>
         /// <returns></returns>
         public static ChunkCoordinate FindChunkUp<T>(this IWorldOctree<T> tree, ChunkCoordinate start,
-                                                              Func<ChunkCoordinate, bool> condition) where T : IBoundingBox
+                                                              Func<ChunkCoordinate, bool> condition) where T : IWorldObject
         {
             if (start.IsEmtpy) return start;
             if (condition(start)) return start;
@@ -52,7 +52,7 @@ namespace MHGameWork.TheWizards.Simulation.Spatial
 
         }
 
-        public static IEnumerable<ChunkCoordinate> GetChunksInRange<T>(this IWorldOctree<T> worldOctree, Vector3 position, float minRange, float maxRange, int depth) where T : IBoundingBox
+        public static IEnumerable<ChunkCoordinate> GetChunksInRange<T>(this IWorldOctree<T> worldOctree, Vector3 position, float minRange, float maxRange, int depth) where T : IWorldObject
         {
             return worldOctree.FindChunksDown(depth, delegate(ChunkCoordinate c)
             {

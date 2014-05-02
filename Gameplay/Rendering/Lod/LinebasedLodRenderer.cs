@@ -13,16 +13,21 @@ namespace MHGameWork.TheWizards.Rendering.Lod
     /// </summary>
     public class LinebasedLodRenderer
     {
-        private float renderPhysicalRange = 50;
-        private float renderLineRange = 1000;
-        private int wireframeNodeDepth = 3;
-        private int physicalNodeDepth = 5;
+        public float renderPhysicalRange = 50;
+        public float renderLineRange = 1000;
+        public int wireframeNodeDepth = 3;
+        public int physicalNodeDepth = 5;
 
         private IWorldOctree<IRenderable> worldOctree;
 
         public LinebasedLodRenderer(IWorldOctree<IRenderable> worldOctree)
         {
             this.worldOctree = worldOctree;
+        }
+
+        public List<IRenderable> VisibleRenderables
+        {
+            get { return visibleRenderables; }
         }
 
         /// <summary>
@@ -50,7 +55,7 @@ namespace MHGameWork.TheWizards.Rendering.Lod
         {
             ret.ClearAllLines();
             worldOctree.GetWorldObjects(chunk)
-                .ForEach(p => ret.AddAABB(p.LocalBoundingBox, Matrix.Identity, new Color4(0, 0, 0)));
+                .ForEach(p => ret.AddAABB(p.BoundingBox, Matrix.Identity, new Color4(0, 0, 0)));
 
         }
 
@@ -58,16 +63,16 @@ namespace MHGameWork.TheWizards.Rendering.Lod
 
         #region Physical layer
 
-        private List<IRenderable> visiblePhysicals = new List<IRenderable>();
+        private List<IRenderable> visibleRenderables = new List<IRenderable>();
 
         private void updateVisiblePhysicals()
         {
-            visiblePhysicals.ForEach(i => i.Visible = false);
+            VisibleRenderables.ForEach(i => i.Visible = false);
 
-            visiblePhysicals.Clear();
-            visiblePhysicals.AddRange(worldOctree.GetChunksInRange(getCameraPosition(), 0, renderPhysicalRange, physicalNodeDepth).SelectMany(getPhysicals));
+            VisibleRenderables.Clear();
+            VisibleRenderables.AddRange(worldOctree.GetChunksInRange(getCameraPosition(), 0, renderPhysicalRange, physicalNodeDepth).SelectMany(getPhysicals));
 
-            visiblePhysicals.ForEach(i => i.Visible = true);
+            VisibleRenderables.ForEach(i => i.Visible = true);
 
         }
 
@@ -87,6 +92,7 @@ namespace MHGameWork.TheWizards.Rendering.Lod
 
         public void RenderLines()
         {
+            return;
             Vector3 cameraPosition = getCameraPosition();
 
             var all = worldOctree.GetChunksInRange(cameraPosition, renderPhysicalRange, renderLineRange,
@@ -98,7 +104,7 @@ namespace MHGameWork.TheWizards.Rendering.Lod
             var fullWireframe = all.Except(partiallyWireframe);
 
             fullWireframe.Select(getChunkLines).ForEach(l => TW.Graphics.LineManager3D.Render(l, TW.Graphics.Camera));
-            partiallyWireframe.SelectMany(getPhysicals).Where(p => !p.Visible).ForEach(l => TW.Graphics.LineManager3D.AddBox(l.LocalBoundingBox, new Color4(0, 0, 0)));
+            partiallyWireframe.SelectMany(getPhysicals).Where(p => !p.Visible).ForEach(l => TW.Graphics.LineManager3D.AddBox(l.BoundingBox, new Color4(0, 0, 0)));
 
         }
     }

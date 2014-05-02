@@ -37,7 +37,19 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
             ID = nextID++;
         }
 
-        public Matrix Relative { get; set; }
+        public Matrix Relative
+        {
+            get { return relative; }
+            set
+            {
+                var change = relative != value;
+                relative = value;
+                if (change) onChange();
+            }
+        }
+
+       
+
         public Matrix Absolute
         {
             get
@@ -61,8 +73,10 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
             get { return parent; }
             private set
             {
+                var change = parent != value;
                 parent = value;
                 if (children.Contains(parent)) throw new InvalidOperationException();
+                if (change) onChange(); // Can be extended to check position changes
             }
         }
 
@@ -134,6 +148,23 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
         public void ObserveDestroy(Action func)
         {
             destroyObservers.Add(func);
+        }
+
+        private List<Action> changeObservers = new List<Action>();
+        private Matrix relative;
+
+        public void ObserveChange(Action func)
+        {
+            changeObservers.Add(func);
+        }
+
+        /// <summary>
+        /// Raises the change event
+        /// </summary>
+        private void onChange()
+        {
+            children.ForEach(c => c.onChange());
+            changeObservers.ForEach(a => a());
         }
     }
 }

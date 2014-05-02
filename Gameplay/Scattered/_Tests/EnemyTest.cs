@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
     {
         private TWEngine engine = EngineFactory.CreateEngine();
 
-        [Test]
+        /*[Test]
         public void TestEnemyBehaviour()
         {
             var level = new Level();
@@ -132,6 +132,6 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             island.AddAddon(new Resource(level, island.Node.CreateChild(), level.FriesType).Alter(r => r.Amount = 5).Alter(r => r.Node.Position = new Vector3(18, 0, 1)));
 
             TW.Graphics.SpectaterCamera.FarClip = 2000;
-        }
+        }*/
     }
 }

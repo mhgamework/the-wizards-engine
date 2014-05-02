@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
             node.AssociatedObject = this;
 
             level.CreateEntityNode(node.CreateChild())
-                 .Alter(k => k.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Infuser"))
+                 .Alter(k => k.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Infuser"))
                  .Alter(k => k.CreateInteractable(onInteract));
 
             containsResourcesSince = TW.Graphics.TotalRunTime;

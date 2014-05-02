@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards.Simulation.Spatial
     /// <summary>
     /// Responsible for providing hierarchial chunk based access to the world.
     /// </summary>
-    public interface IWorldOctree<out T> where T : IBoundingBox
+    public interface IWorldOctree<out T> where T : IWorldObject
     {
         IEnumerable<T> GetWorldObjects(ChunkCoordinate coord);
         Vector3 GetChunkRadius(ChunkCoordinate chunk);

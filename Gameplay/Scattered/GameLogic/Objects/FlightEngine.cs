@@ -29,12 +29,12 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
 
             level.CreateEntityNode(renderNode.CreateChild())
                  .Alter(e => e.Node.Relative = Matrix.RotationY(-MathHelper.PiOver2) * Matrix.Translation(new Vector3(1.5f, 0, 0)))
-                .Alter(ent => ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\PropellorEngine"))
+                .Alter(ent => ent.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\PropellorEngine"))
                 .Alter(e => e.CreateInteractable(onInteract));
 
             level.CreateEntityNode(renderNode.CreateChild())
                 .Alter(e => e.Node.Relative = Matrix.RotationY(-MathHelper.PiOver2) * Matrix.Translation(new Vector3(-1.5f, 0, 0)))
-                .Alter(ent => ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\PropellorEngine"))
+                .Alter(ent => ent.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\PropellorEngine"))
                 .Alter(e => e.CreateInteractable(onInteract));
 
             level.AddBehaviour(node, update);

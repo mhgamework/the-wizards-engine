@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
             Node = node;
             node.AssociatedObject = this;
             var ent = level.CreateEntityNode(node.CreateChild());
-            ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\BridgeConnector");
+            ent.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\BridgeConnector");
         }
 
         public Island Island { get { return (Island)Node.Parent.AssociatedObject; } }

@@ -11,13 +11,13 @@ namespace MHGameWork.TheWizards.Simulation.Spatial
     /// Physicals should be accessible in O(1).
     /// Note that each physical is stored multiple times, and at least once at each depth.
     /// Note: this class is probably pretty slow for dynamic objects
+    /// For tests see the LinebasedLodRenderer test.
     /// 
-    /// 
-    /// TODO: using IBoundingBox, which is fishy
+    /// TODO: using IWorldObject, which is fishy
     /// TODO: think about using a leaf cell size as to define the tree, instead of a size and a depth
-    /// TODO: try a version where there each IBoundingBox is in a single node.
+    /// TODO: try a version where there each IWorldObject is in a single node.
     /// </summary>
-    public class OptimizedWorldOctree<T> : IWorldOctree<T> where T : IBoundingBox
+    public class OptimizedWorldOctree<T> : IWorldOctree<T> where T : IWorldObject
     {
         private readonly Vector3 size;
         private readonly int maxDepth;
@@ -74,7 +74,7 @@ namespace MHGameWork.TheWizards.Simulation.Spatial
 
         public void AddWorldObject(T p)
         {
-            var physBB = p.LocalBoundingBox.xna();
+            var physBB = p.BoundingBox.xna();
 
             var chunks = new List<int>();
             getPhysicalChunks[p] = chunks;

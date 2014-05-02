@@ -1,17 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.RTSTestCase1;
-using MHGameWork.TheWizards.SkyMerchant.Lod;
+using MHGameWork.TheWizards.Simulation.Spatial;
 using NUnit.Framework;
 using SlimDX;
 using System.Linq;
-using Castle.Core.Internal;
 
-namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
+namespace MHGameWork.TheWizards.Rendering.Lod
 {
     [TestFixture]
     [EngineTest]
@@ -54,9 +54,9 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
         public void TestPhysicalLodRendererDummy()
         {
             float size = 400f;
-            setupObjects(size, () => new Physical());
+            setupObjects(size, () => new RenderablePhysical());
 
-            var lod = new PhysicalLodRenderer(new SimpleWorldOctree(new Vector3(size, 200, size)));
+            var lod = new LinebasedLodRenderer(new SimpleWorldOctree<RenderablePhysical>(new Vector3(size, 200, size),TW.Data.Objects.OfType<RenderablePhysical>()));
 
             TW.Data.Objects.OfType<Physical>().ForEach(delegate(Physical p) { p.Visible = false; });
 
@@ -76,12 +76,12 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
         public void TestPhysicalLodRendererOptimized()
         {
             float size = 1000f;
-            setupObjects(size, () => new Physical());
+            setupObjects(size, () => new RenderablePhysical());
 
-            var tree = new OptimizedWorldOctree(new Vector3(size, 200, size), 5);
-            var lod = new PhysicalLodRenderer(tree);
+            var tree = new OptimizedWorldOctree<RenderablePhysical>(new Vector3(size, 200, size), 5);
+            var lod = new LinebasedLodRenderer(tree);
 
-            TW.Data.Objects.OfType<Physical>().ForEach(delegate(Physical p) { tree.AddWorldObject(p); p.Visible = false; });
+            TW.Data.Objects.OfType<RenderablePhysical>().ForEach(delegate(RenderablePhysical p) { tree.AddWorldObject(p); p.Visible = false; });
 
             engine.AddSimulator(new BasicSimulator(lod.UpdateRendererState));
 
@@ -94,6 +94,11 @@ namespace MHGameWork.TheWizards.SkyMerchant._Tests.Stable
 
         }
 
-        
+        public class RenderablePhysical : Physical, IRenderable
+        {
+            public BoundingBox BoundingBox { get { return GetBoundingBox(); } }
+        }
+
+
     }
 }

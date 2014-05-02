@@ -148,7 +148,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
         private Bridge addBridge(Island isl, Vector3 dir, Vector3 pos)
         {
-            var b = new Bridge(new Level(), isl.Node.CreateChild());
+            var b = new Bridge(new Level(null), isl.Node.CreateChild());
             b.Node.Relative = Matrix.Invert(Matrix.LookAtRH(pos, pos + dir, Vector3.UnitY));
             isl.AddAddon(b);
             return b;
@@ -190,7 +190,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
         private static Level createLevel()
         {
-            var level = new Level();
+            var level = new Level(null);
             return level;
         }
     }

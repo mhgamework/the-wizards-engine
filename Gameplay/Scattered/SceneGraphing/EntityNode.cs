@@ -1,25 +1,51 @@
 ﻿using System;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Rendering.Lod;
 using MHGameWork.TheWizards.Scattered.Model;
+using MHGameWork.TheWizards.Simulation.Spatial;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.Scattered.SceneGraphing
 {
-    public class EntityNode
+    /// <summary>
+    /// This is the Lod implementation of an entity node
+    /// </summary>
+    public class EntityNode : IRenderable
     {
         private readonly Level level;
+        private readonly OptimizedWorldOctree<IRenderable> tree;
         public SceneGraphNode Node { get; private set; }
-        public Entity Entity { get; private set; }
+        private Entity Entity;
 
-        public EntityNode(Level level,SceneGraphNode node)
+        public EntityNode(Level level, SceneGraphNode node, OptimizedWorldOctree<IRenderable> tree)
         {
             this.level = level;
+            this.tree = tree;
             Node = node;
-            Entity = new Entity();
+            visible = false;// Default to invisible
+            node.ObserveChange(onNodeChange);
         }
 
-        public void UpdateForRendering()
+        private void createEntity()
         {
+            if (Entity == null)
+                Entity = new Entity();
+            updateEntity();
+        }
+
+        private void updateEntity()
+        {
+            if (Entity == null) return; 
+            Entity.Visible = visible;
+            Entity.Mesh = mesh;
             Entity.WorldMatrix = Node.Absolute;
+        }
+
+        private void onNodeChange()
+        {
+            updateEntity();
+            tree.UpdateWorldObject(this);
         }
 
         /// <summary>
@@ -29,13 +55,49 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
         /// <param name="onInteract"></param>
         public void CreateInteractable(Action onInteract)
         {
-            var ret = level.CreateEntityInteractable(Entity, Node.CreateChild(),onInteract);
+            throw new NotImplementedException(); // Do not pass entities around anymore
+            var ret = level.CreateEntityInteractable(Entity, Node.CreateChild(), onInteract);
         }
 
         public void Dispose()
         {
-            TW.Data.RemoveObject(Entity);
+            if (Entity != null)
+                TW.Data.RemoveObject(Entity);
             Entity = null;
+        }
+
+        public BoundingBox BoundingBox
+        {
+            get
+            {
+                if (Mesh == null) return new BoundingBox();
+                return TW.Assets.GetBoundingBox(Mesh).Transform(Node.Absolute);
+            }
+        }
+
+        private bool visible;
+        public bool Visible
+        {
+            get { return visible; }
+            set
+            {
+                visible = value;
+                if (visible) createEntity(); 
+                // TODO: add some way to remove an entity when far enough
+            }
+        }
+
+        private IMesh mesh;
+        public IMesh Mesh
+        {
+            get { return mesh; }
+            set
+            {
+                var change = mesh != value;
+                mesh = value;
+                updateEntity();
+                if (change) onNodeChange();
+            }
         }
     }
 }

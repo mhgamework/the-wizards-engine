@@ -60,7 +60,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
             panelNode.TextRectangle.Entity.Visible = Vector3.Distance(Node.Position, level.LocalPlayer.Position) < textViewDist;
 
             panelNode.TextRectangle.Text = Amount.ToString();
-            entityNode.Entity.Mesh = GetCorrectMesh(Amount, Type);
+            entityNode.Mesh = GetCorrectMesh(Amount, Type);
             //if (Amount < 10)
             //    entityNode.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\items\\ItemCrates1");
             //else if (Amount < 20)

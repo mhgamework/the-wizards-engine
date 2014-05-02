@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
             node.AssociatedObject = this;
 
             var ent = level.CreateEntityNode(node);
-            ent.Entity.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Tower");
+            ent.Mesh = TW.Assets.LoadMesh("Scattered\\Models\\Tower");
 
             level.AddBehaviour(Node, stepBehaviour());
         }

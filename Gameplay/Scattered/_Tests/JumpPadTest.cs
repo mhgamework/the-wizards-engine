@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
     {
         private TWEngine engine = EngineFactory.CreateEngine();
 
-        [Test]
+        /*[Test]
         public void TestJumpPadFlight()
         {
             var level = new Level();
@@ -177,7 +177,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         private void addPlaySimulators(Level level, ScatteredPlayer player)
         {
             AddonsTest.AddPlaySimulators(level, player, engine);
-        }
+        }*/
 
     }
 }

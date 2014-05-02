@@ -43,7 +43,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
             var mesh = TW.Assets.LoadMesh("Scattered\\Models\\JumpPad");
 
             var renderNode = node.CreateChild();
-            level.CreateEntityNode(renderNode).Alter(c => c.Entity.Mesh = mesh)
+            level.CreateEntityNode(renderNode).Alter(c => c.Mesh = mesh)
                 .Alter(c => c.CreateInteractable(onInteract));
 
             landingNode = node.CreateChild();
@@ -291,7 +291,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Objects
                 renderNode = node.CreateChild();
                 renderNode.Relative = extratransform;
 
-                level.CreateEntityNode(renderNode).Alter(c => c.Entity.Mesh = mesh)
+                level.CreateEntityNode(renderNode).Alter(c => c.Mesh = mesh)
                     .Alter(c => c.CreateInteractable(onInteract));
             }
 

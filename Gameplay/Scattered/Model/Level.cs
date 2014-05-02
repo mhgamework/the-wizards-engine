@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Rendering.Lod;
 using MHGameWork.TheWizards.Scattered.Bindings;
 using MHGameWork.TheWizards.Scattered.GameLogic.Objects;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
 using MHGameWork.TheWizards.Scattered.Simulation;
+using MHGameWork.TheWizards.Simulation.Spatial;
 using SlimDX;
 using System.Linq;
 using Castle.Core.Internal;
@@ -20,12 +22,14 @@ namespace MHGameWork.TheWizards.Scattered.Model
     /// </summary>
     public class Level : IObjectHandle
     {
+        private readonly OptimizedWorldOctree<IRenderable> worldOctree;
         private List<Island> islands = new List<Island>();
 
         public SceneGraphNode Node { get; private set; }
 
-        public Level()
+        public Level(OptimizedWorldOctree<IRenderable> worldOctree )
         {
+            this.worldOctree = worldOctree;
             createItemTypes();
             Node = new SceneGraphNode();
             Node.AssociatedObject = this;
@@ -90,11 +94,14 @@ namespace MHGameWork.TheWizards.Scattered.Model
         /// <returns></returns>
         public EntityNode CreateEntityNode(SceneGraphNode node)
         {
-            var ret = new EntityNode(this, node);
+            var ret = new EntityNode(this, node,worldOctree);
             EntityNodes.Add(ret);
+
+            worldOctree.AddWorldObject(ret);
             node.ObserveDestroy(() =>
                 {
                     EntityNodes.Remove(ret);
+                    worldOctree.RemoveWorldObject(ret);
                     ret.Dispose();
                 });
             return ret;

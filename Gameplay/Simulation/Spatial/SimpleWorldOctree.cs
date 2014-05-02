@@ -9,8 +9,9 @@ namespace MHGameWork.TheWizards.Simulation.Spatial
 {
     /// <summary>
     /// Fake octree implementation (non-optimized)
+    /// For tests see the LinebasedLodRenderer test.
     /// </summary>
-    public class SimpleWorldOctree<T> : IWorldOctree<T> where T : IBoundingBox
+    public class SimpleWorldOctree<T> : IWorldOctree<T> where T : IWorldObject
     {
         private readonly Vector3 radius;
         private readonly IEnumerable<T> getObjects;
@@ -30,7 +31,7 @@ namespace MHGameWork.TheWizards.Simulation.Spatial
         public IEnumerable<T> GetWorldObjects(ChunkCoordinate coord)
         {
             var bb = coord.GetBoundingBox(new Vector3(), radius * 2);
-            return getObjects.Where(p => bb.xna().Contains(p.LocalBoundingBox.xna()) != ContainmentType.Disjoint);
+            return getObjects.Where(p => bb.xna().Contains(p.BoundingBox.xna()) != ContainmentType.Disjoint);
         }
 
         public Vector3 GetChunkRadius(ChunkCoordinate chunk)

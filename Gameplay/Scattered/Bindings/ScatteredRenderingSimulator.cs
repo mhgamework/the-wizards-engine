@@ -4,6 +4,7 @@ using System.Reflection;
 using Castle.Core.Internal;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Rendering.Lod;
 using MHGameWork.TheWizards.Scattered.GameLogic.Services;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
@@ -22,17 +23,19 @@ namespace MHGameWork.TheWizards.Scattered.Bindings
     public class ScatteredRenderingSimulator : ISimulator
     {
         private readonly Level level;
-        private readonly Func<IEnumerable<EntityNode>> getAllEntityNodes;
         private readonly Func<IEnumerable<IIslandAddon>> getAllAddons;
+        private LinebasedLodRenderer lodRenderer;
+        private readonly WorldRenderingSimulator renderingSimulator;
         private HudService hudService;
 
         private Textarea debugTextArea = new Textarea();
 
-        public ScatteredRenderingSimulator(Level level, Func<IEnumerable<EntityNode>> getAllEntityNodes, Func<IEnumerable<IIslandAddon>> getAllAddons)
+        public ScatteredRenderingSimulator(Level level, Func<IEnumerable<IIslandAddon>> getAllAddons, LinebasedLodRenderer lodRenderer,WorldRenderingSimulator renderingSimulator)
         {
             this.level = level;
-            this.getAllEntityNodes = getAllEntityNodes;
             this.getAllAddons = getAllAddons;
+            this.lodRenderer = lodRenderer;
+            this.renderingSimulator = renderingSimulator;
 
 
             hudService = new HudService(level);
@@ -43,24 +46,11 @@ namespace MHGameWork.TheWizards.Scattered.Bindings
         public void Simulate()
         {
             //renderIslandSpaceManagerBoxes();
-            foreach (var n in getAllEntityNodes())
-            {
-                n.UpdateForRendering();
 
-                var dist = Vector3.Distance(n.Node.Absolute.GetTranslation(),
-                                            TW.Graphics.Camera.ViewInverse.GetTranslation());
+            lodRenderer.UpdateRendererState();
 
-                n.Entity.Visible = dist < 500;
+            lodRenderer.RenderLines();
 
-                if (!n.Entity.Visible)
-                {
-                    var pos = n.Node.Absolute.GetTranslation();
-                    TW.Graphics.LineManager3D.AddLine(pos, pos + Vector3.UnitY * 20, new Color4(0, 0, 1));
-
-                }
-
-
-            }
             foreach (var a in getAllAddons().ToArray()) // This toarray is a temp bugfix due to the fact that prepareforrendering can create addons :s
             {
                 a.PrepareForRendering();
@@ -75,6 +65,8 @@ namespace MHGameWork.TheWizards.Scattered.Bindings
 
             hudService.Simulate();
             renderDebugHud();
+
+            renderingSimulator.Simulate();
 
         }
 
@@ -95,14 +87,14 @@ namespace MHGameWork.TheWizards.Scattered.Bindings
 
         private void updateDebugAddonText()
         {
-            var target = level.EntityNodes.Where(e => e.Entity.Mesh != null).Raycast(e => TW.Assets.GetBoundingBox(e.Entity.Mesh), e => e.Node.Absolute,
+            var target = level.EntityNodes.Where(e => e.Mesh != null).Raycast(e => TW.Assets.GetBoundingBox(e.Mesh), e => e.Node.Absolute,
                                                    level.LocalPlayer.GetTargetingRay());
 
             debugTextArea.Text = "No object";
 
             if (!target.IsHit) return;
 
-            
+
             var node = ((EntityNode)target.Object).Node;
             while (node.AssociatedObject == null || (!(node.AssociatedObject is IIslandAddon)))
             {
@@ -121,7 +113,7 @@ namespace MHGameWork.TheWizards.Scattered.Bindings
                 debugTextArea.Text += addon.GetDebugText();
             }
 
-           
+
         }
 
         private void renderIslandSpaceManagerBoxes()

@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Navigation2D;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting;
+using MHGameWork.TheWizards.Rendering.Lod;
 using MHGameWork.TheWizards.Scattered.Bindings;
 using MHGameWork.TheWizards.Scattered.GameLogic;
 using MHGameWork.TheWizards.Scattered.GameLogic.Objects;
@@ -29,7 +30,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
     {
         private TWEngine engine = EngineFactory.CreateEngine();
 
-        [Test]
+        /*[Test]
         public void TestCoreGame()
         {
             var level = new Level();
@@ -73,7 +74,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
 
             //engine.AddSimulator(new AudioSimulator());
-        }
+        }*/
 
         private void addPlaySimulators(Level level, ScatteredPlayer player)
         {
@@ -94,7 +95,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         [Test]
         public void TestWorldGeneration()
         {
-            var level = new Level();
+            /*var level = new Level();
             engine.AddSimulator(new ScatteredRenderingSimulator(level, () => level.EntityNodes, () => level.Islands.SelectMany(c => c.Addons)));
             engine.AddSimulator(new WorldRenderingSimulator());
 
@@ -102,21 +103,21 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             gen.Generate();
 
-            TW.Graphics.SpectaterCamera.FarClip = 2000;
+            TW.Graphics.SpectaterCamera.FarClip = 2000;*/
 
         }
 
         [Test]
         public void TestProceduralGame()
         {
-            var level = new Level();
+            /*var level = new Level();
             var player = level.LocalPlayer;
             addPlaySimulators(level, player);
             var gen = new WorldGenerationService(level, new Random(0),null);
 
             gen.Generate();
 
-            TW.Graphics.SpectaterCamera.FarClip = 2000;
+            TW.Graphics.SpectaterCamera.FarClip = 2000;*/
         }
 
 
@@ -126,28 +127,23 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             engine.Initialize();
             var builder = new ContainerBuilder();
 
-            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Simulator")).SingleInstance();
-            builder.RegisterType<ScatteredGame>();
-
-            builder.Register(c =>
-                {
-                    var lvl = c.Resolve<Level>();
-                    return new ScatteredRenderingSimulator(lvl, () => lvl.EntityNodes,
-                                                    () => lvl.Islands.SelectMany(d => d.Addons));
-
-                });
-
-            builder.Register(c => new Level()).SingleInstance();
-            
-            builder.Register(c => new Random(0));
-
+            // Logging
             builder.RegisterModule<LogRequestsModule>();
+
+            // configuration based binding
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Simulator")).SingleInstance();
+
+            // Binding for gameplay objects
             builder.RegisterModule<GameLogicModule>();
 
+            // Core behaviour binding for scattered
+            builder.RegisterModule<BindingsModule>(); 
 
             var cont = builder.Build();
 
-            cont.Resolve<ScatteredGame>().LoadIntoEngine(engine);
+            var game = cont.Resolve<ScatteredGame>();
+            game.LoadIntoEngine(engine);
+            game.GenerateWorld();
         }
 
 

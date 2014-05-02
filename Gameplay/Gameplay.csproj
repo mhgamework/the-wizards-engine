@@ -185,7 +185,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Rendering\Lod\IRenderable.cs" />
-    <Compile Include="Rendering\Lod\PhysicalLodRenderer.cs" />
+    <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />
+    <Compile Include="Scattered\Bindings\BindingsModule.cs" />
+    <Compile Include="Scattered\_Tests\LodTest.cs" />
+    <Compile Include="Scattered\_Tests\ScatteredModule.cs" />
     <Compile Include="Simulation\Navigation2D\ExplorationData.cs" />
     <Compile Include="Simulation\Navigation2D\GridConnectionProvider.cs" />
     <Compile Include="Simulation\Navigation2D\IConnectionProvider.cs" />
@@ -429,7 +432,7 @@
     <Compile Include="SkyMerchant\_Engine\SimulationPausing\PausingWrapper.cs" />
     <Compile Include="SkyMerchant\_Engine\SimulationPausing\SimplePausingExample.cs" />
     <Compile Include="SkyMerchant\_Engine\IThreadFactory.cs" />
-    <Compile Include="Simulation\Spatial\IBoundingBox.cs" />
+    <Compile Include="Simulation\Spatial\IWorldObject.cs" />
     <Compile Include="Simulation\Spatial\IMutableOrientation.cs" />
     <Compile Include="Simulation\Spatial\IMutableSpatial.cs" />
     <Compile Include="Simulation\Spatial\IMutablePosition.cs" />
@@ -444,7 +447,7 @@
     <Compile Include="Data\DictionaryExtensions.cs" />
     <Compile Include="Simulation\Spatial\ChunkCoordinate.cs" />
     <Compile Include="SkyMerchant\Lod\IWorldOctree.cs" />
-    <Compile Include="SkyMerchant\_Tests\Stable\LodTest.cs" />
+    <Compile Include="Rendering\Lod\LodTest.cs" />
     <Compile Include="SkyMerchant\Lod\OptimizedWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\PhysicalLodRenderer.cs" />
     <Compile Include="SkyMerchant\Lod\SimpleWorldOctree.cs" />
