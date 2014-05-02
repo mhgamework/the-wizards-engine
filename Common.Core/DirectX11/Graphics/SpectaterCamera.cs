@@ -186,18 +186,14 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
                 Vector3 groundProj = value;
                 groundProj.Y = 0;
                 groundProj.Normalize();
-                if (Math.Abs(groundProj.X) < float.Epsilon && Math.Abs(groundProj.Z) < float.Epsilon)
-                {
-                    // Straight Up or down
-                    AngleVertical = 0;
-                }
-                else
-                {
-                    AngleVertical = (float)Math.Acos(Vector3.Dot(groundProj, value));
-                }
+
+                AngleVertical = (float)Math.Acos(Vector3.Dot(groundProj, value));
+
+                if (value.Y < 0) AngleVertical = -AngleVertical;
+                
                 Vector3 source = new Vector3(0f, 0f, 1f);
                 float horizontal = (float)Math.Acos(Vector3.Dot(groundProj, source));
-                if (groundProj.X < 0) horizontal = -horizontal;
+                if (groundProj.X > 0) horizontal = -horizontal; // This is inverted since the angles are inverted in the angle properties to matrix conversion?
                 AngleHorizontal = horizontal;
 
                 AngleRoll = 0;

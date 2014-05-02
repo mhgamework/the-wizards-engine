@@ -1,5 +1,6 @@
 ﻿using System;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Simulation.ActionScheduling;
 using SlimDX;
@@ -23,6 +24,7 @@ namespace MHGameWork.TheWizards.Testing
             scheduler.SetCurrentTime(TW.Graphics.TotalRunTime);
 
             engine.AddSimulator(new BasicSimulator(update));
+            engine.AddSimulator(new WorldRenderingSimulator());
         }
 
         private void update()
