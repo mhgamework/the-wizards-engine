@@ -453,7 +453,7 @@
     <Compile Include="Data\DictionaryExtensions.cs" />
     <Compile Include="Simulation\Spatial\ChunkCoordinate.cs" />
     <Compile Include="SkyMerchant\Lod\IWorldOctree.cs" />
-    <Compile Include="Rendering\Lod\LodTest.cs" />
+    <Compile Include="_Tests\_Manual\LodTest.cs" />
     <Compile Include="SkyMerchant\Lod\OptimizedWorldOctree.cs" />
     <Compile Include="SkyMerchant\Lod\PhysicalLodRenderer.cs" />
     <Compile Include="SkyMerchant\Lod\SimpleWorldOctree.cs" />
