@@ -378,6 +378,7 @@
     <Compile Include="SkyMerchant\QuestEditor\InventoryCore\InventoryController.cs" />
     <Compile Include="Testing\IRenderingTester.cs" />
     <Compile Include="_Tests\Simulation\ActionSchedulerTest.cs" />
+    <Compile Include="_Tests\_Manual\Math\GeometrySamplerTest.cs" />
     <Compile Include="_Tests\_Manual\Rendering\ParticleEffectTest.cs" />
     <Compile Include="_Tests\_Unsorted\EngineFactory.cs" />
     <Compile Include="_Tests\_Unsorted\Core\AudioTest.cs" />

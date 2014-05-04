@@ -1,9 +1,11 @@
-﻿using MHGameWork.TheWizards.Engine.Features.Testing;
+﻿using System;
+using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Rendering.Particles;
 using MHGameWork.TheWizards.Scattered._Tests.GameLogic;
 using MHGameWork.TheWizards.Simulation.ActionScheduling;
 using MHGameWork.TheWizards.Testing;
+using MHGameWork.TheWizards._Tests._Manual.Math;
 using MHGameWork.TheWizards._Tests._Manual.Rendering;
 using NUnit.Framework;
 
@@ -17,24 +19,34 @@ namespace MHGameWork.TheWizards.Scattered._Tests
     [EngineTest]
     public class ManualIoCTestLoader
     {
+        private IActionScheduler iActionScheduler = new IActionScheduler();
+        private Random random = new Random();
+        private Seeder seeder = new Seeder(0);
+        private GeometrySampler sampler;
+        private IRenderingTester renderingTester;
+
         public ManualIoCTestLoader()
         {
-
+            sampler = new GeometrySampler(seeder);
+            renderingTester = new IRenderingTester(EngineFactory.CreateEngine(), new IActionScheduler(), new ParticlesBoxRenderer());
         }
 
         [Test]
         public void Run()
         {
-            var r = new IRenderingTester(EngineFactory.CreateEngine(), new IActionScheduler(), new ParticlesBoxRenderer());
 
-            var test = new SpellCastingEffectsTest(r);
+            //var test = new SpellCastingEffectsTest(renderingTester);
             //test.TestBurstEffect();
             //test.TestBeamEffect();
-            test.TestImpactEffect();
+            //test.TestImpactEffect();
 
             //var test = new ParticleEffectTest(r);
             //test.TestEmitter();
             //test.TestBoxRenderer();
+
+            var test = new GeometrySamplerTest(renderingTester, seeder);
+            //test.TestCircle();
+            test.TestSphere();
         }
     }
 }
