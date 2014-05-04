@@ -12,14 +12,18 @@ namespace MHGameWork.TheWizards.Scattered._Tests.GameLogic
     public class SpellCastingEffectsTest
     {
         private readonly IRenderingTester r;
+        private readonly GeometrySampler sampler;
 
-        public SpellCastingEffectsTest(IRenderingTester r)
+        public SpellCastingEffectsTest(IRenderingTester r,GeometrySampler sampler)
         {
             this.r = r;
+            this.sampler = sampler;
         }
 
         public void TestBurstEffect()
         {
+            r.SetCameraPosition(new Vector3(0, 1, 2), new Vector3(0, 0, -3));
+
             var effect = new BurstSpellEffect(r.CreateParticleEffect());
 
             loopEffect(effect.Start, effect.Stop);
@@ -29,7 +33,9 @@ namespace MHGameWork.TheWizards.Scattered._Tests.GameLogic
 
         public void TestBeamEffect()
         {
-            var effect = new BeamSpellEffect(r.CreateParticleEffect());
+            r.SetCameraPosition(new Vector3(0, 1, 2), new Vector3(0, 0, -3));
+
+            var effect = new BeamSpellEffect(r.CreateParticleEffect(), sampler);
 
             loopEffect(effect.Start, effect.Stop);
 
@@ -38,7 +44,10 @@ namespace MHGameWork.TheWizards.Scattered._Tests.GameLogic
 
         public void TestImpactEffect()
         {
-            var effect = new ImpactSpellEffect(r.CreateParticleEffect());
+
+            r.SetCameraPosition(new Vector3(0, 0, 5), new Vector3(0, 0, 0));
+
+            var effect = new ImpactSpellEffect(r.CreateParticleEffect(), sampler);
 
             loopEffect(effect.Start, effect.Stop);
 
@@ -46,7 +55,6 @@ namespace MHGameWork.TheWizards.Scattered._Tests.GameLogic
 
         private void loopEffect(Action startAction, Action endAction)
         {
-            r.SetCameraPosition(new Vector3(0, 1, 2), new Vector3(0, 0, -3));
 
             r.SetRepeat(3, () =>
             {

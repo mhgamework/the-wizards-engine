@@ -7,45 +7,55 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.SpellCasting
 {
     /// <summary>
     /// Simulates a burst spell effect
+    /// Idea, add normal direction for which to erupt particles
     /// </summary>
     public class ImpactSpellEffect
     {
         private readonly ParticleEffect effect;
+        private readonly GeometrySampler sampler;
         private CustomEmitter emitter;
         private Seeder seeder = new Seeder(0);
 
-        public ImpactSpellEffect(ParticleEffect effect)
+        public ImpactSpellEffect(ParticleEffect effect, GeometrySampler sampler)
         {
             this.effect = effect;
+            this.sampler = sampler;
 
             effect.Gravity = new Vector3(0, -10, 0);
 
-            emitter = effect.CreateCustomEmitter(1 / 100f, p =>
+            /*emitter = effect.CreateCustomEmitter(1 / 100f, p =>
                 {
-                    p.StartPosition = seeder.NextFloat(0, 0.3f) * new Vector3(randomPointOnCircle(), 0);
+                    p.StartPosition = new Vector3(0, 0, 0);
                     p.Color = new Color4(1, 0, 0);
                     p.Size = 0.1f;
-                    p.StartVelocity = new Vector3(0, 0, seeder.NextFloat(-1, -1)) * 50;
-                    p.Duration = 1f;
-                });
+                    p.StartVelocity = sampler.RandomPointOnSphere()*5;
+                    p.Duration = 3f;
+                });*/
 
         }
-
-        private Vector2 randomPointOnCircle()
-        {
-            var angle = seeder.NextFloat(0, MathHelper.TwoPi);
-            return new Vector2((float)Math.Sin(angle), (float)Math.Cos(angle));
-        }
-
 
         public void Start()
         {
-            emitter.Start();
+            //emitter.Start();
+            for (int i = 0; i < 50; i++)
+            {
+                var p = new ColoredParticle();
+                p.StartPosition = new Vector3(0, 0, 0);
+                p.Color = new Color4(1, 0, 0);
+                p.Size = 0.1f;
+                p.StartVelocity = (sampler.RandomPointOnSphere() * 6).Alter(v => v.ChangeY((float)Math.Abs(v.Y)));
+
+                p.Duration = 1f;
+                p.SpawnTime = effect.CurrentTime;
+
+
+                effect.AddParticle(p);
+            }
         }
 
         public void Stop()
         {
-            emitter.Stop();
+            //emitter.Stop();
         }
     }
 }

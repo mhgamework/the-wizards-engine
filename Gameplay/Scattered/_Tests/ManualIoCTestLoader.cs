@@ -35,18 +35,18 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         public void Run()
         {
 
-            //var test = new SpellCastingEffectsTest(renderingTester);
+            var test = new SpellCastingEffectsTest(renderingTester, sampler);
             //test.TestBurstEffect();
-            //test.TestBeamEffect();
+            test.TestBeamEffect();
             //test.TestImpactEffect();
 
             //var test = new ParticleEffectTest(r);
             //test.TestEmitter();
             //test.TestBoxRenderer();
 
-            var test = new GeometrySamplerTest(renderingTester, seeder);
+            //var test = new GeometrySamplerTest(renderingTester, seeder);
             //test.TestCircle();
-            test.TestSphere();
+            //test.TestSphere();
         }
     }
 }

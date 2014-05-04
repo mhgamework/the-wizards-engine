@@ -11,16 +11,18 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.SpellCasting
     public class BeamSpellEffect
     {
         private readonly ParticleEffect effect;
+        private readonly GeometrySampler sampler;
         private CustomEmitter emitter;
         private Seeder seeder = new Seeder(0);
 
-        public BeamSpellEffect(ParticleEffect effect)
+        public BeamSpellEffect(ParticleEffect effect,GeometrySampler sampler)
         {
             this.effect = effect;
+            this.sampler = sampler;
 
             emitter = effect.CreateCustomEmitter(1 / 100f, p =>
                 {
-                    p.StartPosition = seeder.NextFloat(0, 0.3f) * new Vector3(randomPointOnCircle(), 0);
+                    p.StartPosition = seeder.NextFloat(0, 0.3f) * new Vector3(sampler.RandomPointOnCircle(), 0);
                     p.Color = new Color4(1, 0, 0);
                     p.Size = 0.1f;
                     p.StartVelocity = new Vector3(0, 0, seeder.NextFloat(-1, -1)) * 50;
@@ -28,13 +30,6 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.SpellCasting
                 });
 
         }
-
-        private Vector2 randomPointOnCircle()
-        {
-            var angle = seeder.NextFloat(0, MathHelper.TwoPi);
-            return new Vector2((float)Math.Sin(angle), (float)Math.Cos(angle));
-        }
-
 
         public void Start()
         {
