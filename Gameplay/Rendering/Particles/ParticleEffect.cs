@@ -14,6 +14,15 @@ namespace MHGameWork.TheWizards.Rendering.Particles
 
         public Vector3 Gravity { get; set; }
 
+        public Func<ColoredParticle, Vector3> CalculatePosition { get; set; }
+
+        public ParticleEffect()
+        {
+            CalculatePosition = CalculatePositionVelocityGravity;
+        }
+
+
+
         /// <summary>
         /// TODO: maybe use description?
         /// </summary>
@@ -44,11 +53,18 @@ namespace MHGameWork.TheWizards.Rendering.Particles
 
         }
 
-        public Vector3 CalculatePosition(ColoredParticle particle)
+        public Vector3 CalculatePositionVelocityGravity(ColoredParticle particle)
         {
+
             var lifeTime = (CurrentTime - particle.SpawnTime);
-            return particle.StartPosition + particle.StartVelocity * lifeTime
+            var ret = particle.StartPosition
+                + particle.StartVelocity * lifeTime
                 + Gravity * lifeTime * lifeTime;
+
+
+
+
+            return ret;
         }
 
         public IEnumerable<ColoredParticle> Particles { get { return particles; } }

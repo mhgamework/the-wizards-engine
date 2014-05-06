@@ -37,8 +37,9 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             var test = new SpellCastingEffectsTest(renderingTester, sampler);
             //test.TestBurstEffect();
-            test.TestBeamEffect();
+            //test.TestBeamEffect();
             //test.TestImpactEffect();
+            test.TestShieldEffect();
 
             //var test = new ParticleEffectTest(r);
             //test.TestEmitter();
