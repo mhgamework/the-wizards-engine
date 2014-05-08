@@ -22,6 +22,17 @@ namespace MHGameWork.TheWizards
             return new Vector2((float)Math.Sin(angle), (float)Math.Cos(angle));
         }
 
+        public Vector2 RandomPointOnCircleSurface()
+        {
+            Vector2 v;
+            do
+            {
+                v = new Vector2(s.NextFloat(-1, 1), s.NextFloat(-1, 1));
+            } while (v.Length() > 1);
+
+            return v;
+        }
+
         /// <summary>
         /// From http://mathoverflow.net/questions/24688/efficiently-sampling-points-uniformly-from-the-surface-of-an-n-sphere
         /// </summary>

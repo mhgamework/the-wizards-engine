@@ -34,6 +34,8 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.SpellCasting
 
         }
 
+        public Vector3 Position { get; set; }
+
         public void Start()
         {
             //emitter.Start();

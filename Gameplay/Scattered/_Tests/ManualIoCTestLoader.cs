@@ -39,7 +39,8 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             //test.TestBurstEffect();
             //test.TestBeamEffect();
             //test.TestImpactEffect();
-            test.TestShieldEffect();
+            //test.TestShieldEffect();
+            test.TestMineEffect();
 
             //var test = new ParticleEffectTest(r);
             //test.TestEmitter();
