@@ -22,6 +22,7 @@ namespace MHGameWork.TheWizards.Rendering
         {
             public Color DiffuseColor;
             public ITexture DiffuseMap;
+            public bool ColoredMaterial = false;
             public string Name;
 
             public bool Equals(Material other)

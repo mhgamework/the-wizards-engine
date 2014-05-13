@@ -224,6 +224,63 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
 
         }
 
+        [Test]
+        public void TestMeshRendererColored()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+            var context = game.Device.ImmediateContext;
+
+            var mesh = CreateSimpleTestMesh();
+
+            var texturePool = new TheWizards.Rendering.Deferred.TexturePool(game);
+
+            var gBuffer = new GBuffer(game.Device, 800, 600);
+
+            var renderer = new DeferredMeshRenderer(game, gBuffer, texturePool);
+
+            var seeder = new Seeder(0);
+
+            DeferredMeshRenderElement middle = null;
+
+            for (int i = 0; i < 50; i++)
+            {
+                for (int j = 0; j < 50; j++)
+                {
+                    var builder = new MeshBuilder();
+                    builder.AddBox(new Vector3(), new Vector3(1, 1, 1));
+                    var copy = builder.CreateMesh();
+                    copy.GetCoreData().Parts[0].MeshMaterial.ColoredMaterial = true;
+                    copy.GetCoreData().Parts[0].MeshMaterial.DiffuseColor = seeder.NextColor();
+                    var el = renderer.AddMesh(copy);
+                    el.WorldMatrix = Matrix.Translation(MathHelper.Right * i * 2 + Vector3.UnitZ * j * 2);
+
+                    if (i > 20 && i < 30 && j > 20 && j < 30)
+                        el.Delete();
+                }
+
+            }
+
+            game.GameLoopEvent += delegate
+            {
+                gBuffer.Clear();
+                gBuffer.SetTargetsToOutputMerger();
+
+                context.Rasterizer.State = game.HelperStates.RasterizerShowAll;
+
+                renderer.Draw();
+
+                context.ClearState();
+                game.SetBackbuffer();
+
+                DeferredTest.DrawGBuffer(game, gBuffer);
+            };
+
+
+            game.Run();
+
+        }
+
 
         [Test]
         public void TestMeshRendererAdvanced()
@@ -299,7 +356,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
 
             el.Lines.AddBox(new BoundingBox(Vector3.Zero, MathHelper.One), new Color4(1, 0, 0));
 
-            
+
             game.GameLoopEvent += delegate
             {
                 renderer.Draw();
@@ -346,7 +403,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
                                               state = 2;
                                           if (game.Keyboard.IsKeyPressed(Key.D4))
                                               state = 3;
-                                          
+
                                           switch (state)
                                           {
                                               case 0:
@@ -376,7 +433,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
                                           {
                                               game.Camera = otherCam;
                                               renderer.DEBUG_SeperateCullCamera = game.SpectaterCamera;
-                                              
+
 
                                           }
                                           game.SpectaterCamera.EnableUserInput = camState;
@@ -400,7 +457,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
             var otherCam = new SpectaterCamera(game.Keyboard, game.Mouse, 1, 10000);
 
             var mesh = CreateMerchantsHouseMesh(new OBJToRAMMeshConverter(new RAMTextureFactory()));
-            
+
 
             var el = renderer.CreateMeshElement(mesh);
             el.CastsShadows = false;

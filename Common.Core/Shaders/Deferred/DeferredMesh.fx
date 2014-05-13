@@ -12,11 +12,15 @@ single cbuffer sharedData
 	matrix Projection;
 };
 
+
+
 cbuffer perMaterial
 {
 	float specularIntensity = 0.1f;
 	float specularPower = 0.2f;
+	
 };
+float3 diffuseColor = float3(1,1,0); 
 Texture2D txDiffuse;
 
 
@@ -57,7 +61,15 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 }
 
 
-GBuffer PixelShaderFunction(VertexShaderOutput input)
+GBuffer PixelShaderFunctionColored(VertexShaderOutput input)
+{
+    return CreateGBuffer(
+		diffuseColor,
+		normalize(input.Normal),
+		specularIntensity,
+		specularPower);
+}
+GBuffer PixelShaderFunctionTextured(VertexShaderOutput input)
 {
     return CreateGBuffer(
 		txDiffuse.Sample(samLinear, input.TexCoord),
@@ -77,13 +89,23 @@ float4 DepthOnlyVS(VertexShaderInput input) : SV_POSITION
 }
 
 
-technique10 Technique1
+technique10 Textured
 {
     pass Pass1
     {
 		SetGeometryShader( NULL );
 		SetVertexShader( CompileShader( vs_4_0, VertexShaderFunction() ) );
-		SetPixelShader( CompileShader( ps_4_0, PixelShaderFunction() ) );
+		SetPixelShader( CompileShader( ps_4_0, PixelShaderFunctionTextured() ) );
+    }
+
+}
+technique10 Colored
+{
+    pass Pass1
+    {
+		SetGeometryShader( NULL );
+		SetVertexShader( CompileShader( vs_4_0, VertexShaderFunction() ) );
+		SetPixelShader( CompileShader( ps_4_0, PixelShaderFunctionColored() ) );
     }
 
 }

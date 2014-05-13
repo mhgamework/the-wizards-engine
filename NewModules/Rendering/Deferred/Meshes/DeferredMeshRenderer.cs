@@ -15,6 +15,7 @@ using BoundingFrustum = Microsoft.Xna.Framework.BoundingFrustum;
 using Buffer = SlimDX.Direct3D11.Buffer;
 using CullMode = SlimDX.Direct3D11.CullMode;
 using DataStream = SlimDX.DataStream;
+using EffectTechnique = SlimDX.Direct3D11.EffectTechnique;
 using FillMode = SlimDX.Direct3D11.FillMode;
 using Texture2D = SlimDX.Direct3D11.Texture2D;
 
@@ -138,6 +139,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         }
 
 
+        
+
         private void initialize(TexturePool texturePool)
         {
             rasterizerState = RasterizerState.FromDescription(game.Device, new RasterizerStateDescription
@@ -150,7 +153,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
             baseShader = BasicShader.LoadAutoreload(game, DeferredMeshFX);
-            baseShader.SetTechnique("Technique1");
+            baseShader.SetTechnique("Textured"); // "Textured"
+            coloredTechnique = baseShader.GetTechnique("Colored");
+            texturedTechnique = baseShader.GetTechnique("Textured");
             //baseShader.DiffuseTexture = checkerTexture;
 
             renderDataFactory = new MeshRenderDataFactory(game, baseShader, texturePool);
@@ -255,6 +260,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private DataStream perObjectStrm;
         private DataBox perObjectBox;
         private Buffer perObjectBuffer;
+        private EffectTechnique coloredTechnique;
+        private EffectTechnique texturedTechnique;
 
         private void renderMesh(MeshRenderData data, Matrix world)
         {
@@ -273,8 +280,20 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                     //shaders[i].ViewProjection = game.Camera.ViewProjection;
                     //mat.Shader.Effect.GetVariableByName("World").AsMatrix().SetMatrix(world * part.ObjectMatrix);
                     //mat.Shader.Apply();
-
-                    context.PixelShader.SetShaderResource(mat.DiffuseTexture, 0);
+                    if (!mat.Material.ColoredMaterial)
+                    {
+                        texturedTechnique.GetPassByIndex(0).Apply(context);
+                        context.PixelShader.SetShaderResource(mat.DiffuseTexture, 0);
+                        
+                    }
+                    else
+                    {
+                        baseShader.Effect.GetVariableByName("diffuseColor")
+                                  .AsVector()
+                                  .Set(mat.Material.DiffuseColor.ToVector3().dx());
+                        coloredTechnique.GetPassByIndex(0).Apply(context);
+                    }
+                    
 
                     drawMeshPart(part, world);
                     Performance.SetMarker(new Color4(System.Drawing.Color.Orange), "DrawMeshElement");
