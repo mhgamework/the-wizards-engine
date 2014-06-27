@@ -104,5 +104,9 @@ namespace MHGameWork.TheWizards
             return new SlimDX.Ray(v.Position.dx(), v.Direction.dx());
         }
 
+        public static SlimDX.Color4 dx(this System.Drawing.Color v)
+        {
+            return new SlimDX.Color4(v);
+        }
     }
 }

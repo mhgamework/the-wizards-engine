@@ -184,6 +184,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GodGame\Model\GameVoxel.cs" />
+    <Compile Include="GodGame\GodPowers.cs" />
+    <Compile Include="GodGame\SimpleWorldRenderer.cs" />
+    <Compile Include="GodGame\World.cs" />
+    <Compile Include="GodGame\_Tests\GodPowersTest.cs" />
+    <Compile Include="GodGame\_Tests\HumanCityTest.cs" />
+    <Compile Include="GodGame\VoxelType.cs" />
     <Compile Include="Math\GeometrySampler.cs" />
     <Compile Include="Rendering\Lod\IRenderable.cs" />
     <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />

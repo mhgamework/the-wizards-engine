@@ -1,4 +1,6 @@
-﻿using DirectX11;
+﻿using System;
+using DirectX11;
+using MHGameWork.TheWizards.GodGame.Model;
 
 namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
 {
@@ -42,6 +44,16 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
             var ret = new Array2D<T>(r.Size);
             ret.arr = (T[,])r.arr.Clone();
             return ret;
+        }
+
+        public void ForEach(Action<T, Point2> func)
+        {
+            for (int x = 0; x < Size.X; x++)
+                for (int y = 0; y < Size.Y; y++)
+                {
+                    var pos = new Point2(x, y);
+                    func(this[pos], pos);
+                }
         }
     }
 }
