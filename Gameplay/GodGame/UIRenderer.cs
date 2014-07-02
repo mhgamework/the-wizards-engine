@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame._Tests;
 using MHGameWork.TheWizards.Scattered.GameLogic.Services;
 using SlimDX;
@@ -14,6 +15,7 @@ namespace MHGameWork.TheWizards.GodGame
         private readonly World world;
         private readonly PlayerInputSimulator inputSim;
         private TargetingReticle reticle;
+        private Textarea textarea;
 
         public UIRenderer(World world, PlayerInputSimulator inputSim)
         {
@@ -21,13 +23,24 @@ namespace MHGameWork.TheWizards.GodGame
             this.inputSim = inputSim;
 
             reticle = new TargetingReticle();
+
+            textarea = new Textarea();
+            textarea.Position = new Vector2(TW.Graphics.Form.Form.ClientSize.Width - 120, 20);
+            textarea.Size = new Vector2(100, 50);
+            
         }
 
         public void Simulate()
         {
+            updateTextarea();
             reticle.drawReticle();
             drawSelectedVoxel();
             drawWorldBoundingbox();
+        }
+
+        private void updateTextarea()
+        {
+            textarea.Text = inputSim.ActiveHandler.Name;
         }
 
         private void drawWorldBoundingbox()

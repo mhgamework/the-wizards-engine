@@ -197,7 +197,7 @@
     <Compile Include="GodGame\_Tests\GodGameMainTest.cs" />
     <Compile Include="GodGame\_Tests\GodPowersTest.cs" />
     <Compile Include="GodGame\VoxelType.cs" />
-    <Compile Include="GodGame\PlayerInputHandler.cs" />
+    <Compile Include="GodGame\CreateLandInputHandler.cs" />
     <Compile Include="GodGame\PlayerInputSimulator.cs" />
     <Compile Include="GodGame\_Tests\RendererTest.cs" />
     <Compile Include="GodGame\_Tests\VoxelTypesTest.cs" />

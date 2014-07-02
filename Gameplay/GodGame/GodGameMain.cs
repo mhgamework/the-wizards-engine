@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.Engine;
+﻿using System;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame._Tests;
 
@@ -11,11 +12,11 @@ namespace MHGameWork.TheWizards.GodGame
     {
         public World World { get; private set; }
 
-        public GodGameMain(TWEngine engine, World world)
+
+
+        public GodGameMain(TWEngine engine, World world, PlayerInputSimulator playerInputSimulator)
         {
             World = world;
-            var playerInputHandler = new PlayerInputHandler(world);
-            var playerInputSimulator = new PlayerInputSimulator(playerInputHandler, world);
             engine.AddSimulator(playerInputSimulator);
 
             engine.AddSimulator(new TickSimulator(world));

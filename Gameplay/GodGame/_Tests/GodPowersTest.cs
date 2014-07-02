@@ -21,8 +21,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             var world = new World(10, 10);
 
 
-            var playerInputHandler = new PlayerInputHandler(world);
-            var playerInputSimulator = new PlayerInputSimulator(playerInputHandler, world);
+            var playerInputHandler = new CreateLandInputHandler(world);
+            var playerInputSimulator = new PlayerInputSimulator(new[] {playerInputHandler }, world);
             engine.AddSimulator(playerInputSimulator);
             engine.AddSimulator(new SimpleWorldRenderer(world));
             engine.AddSimulator(new WorldRenderingSimulator());

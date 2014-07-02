@@ -1,7 +1,9 @@
-﻿using MHGameWork.TheWizards.Engine;
+﻿using System.Collections.Generic;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Gameplay;
 using NUnit.Framework;
 using SlimDX;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.GodGame._Tests
 {
@@ -28,9 +30,18 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                     else
                         v.ChangeType(GameVoxelType.Land);
                 });
-            var ret = new GodGameMain(EngineFactory.CreateEngine(), world);
+
+
+
+            var ret = new GodGameMain(EngineFactory.CreateEngine(), world, new PlayerInputSimulator(createPlayerInputs(world).ToArray(), world));
 
             return ret;
+        }
+
+        private static IEnumerable<IPlayerInputHandler> createPlayerInputs(World world)
+        {
+            yield return new CreateLandInputHandler(world);
+            yield return new DelegatePlayerInputHandler("Village", v => v.ChangeType(GameVoxelType.Land), v => v.ChangeType(GameVoxelType.Land));
         }
 
     }
