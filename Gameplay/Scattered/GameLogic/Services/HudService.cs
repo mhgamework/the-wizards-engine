@@ -15,7 +15,6 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
     {
         private readonly Level level;
         private Textarea text;
-        private ShaderResourceView reticleTextureRv;
         private ShaderResourceView grayTextureRv;
 
         private float right = TW.Graphics.Form.Form.ClientSize.Width;
@@ -36,8 +35,6 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
             goalText.Position = new Vector2(right - 20 - 200, 20 + 200 + 20);
             goalText.Size = new Vector2(120, 150);
 
-            var reticleTexture = TW.Assets.LoadTexture("Scattered\\Models\\Reticle.png");
-            reticleTextureRv = TW.Graphics.AcquireRenderer().TexturePool.LoadTexture(reticleTexture);
 
             var grayTexture = TW.Assets.LoadTexture("Scattered\\Models\\Maps\\DarkGrey.png");
             grayTextureRv = TW.Graphics.AcquireRenderer().TexturePool.LoadTexture(grayTexture);
@@ -45,6 +42,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 
 
             DI.Get<UISimulator>().SubSimulators.Add(new BasicSimulator(DrawUI));
+            targetingReticle = new TargetingReticle();
         }
         public void Simulate()
         {
@@ -55,7 +53,7 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
         public void DrawUI()
         {
             TW.Graphics.Device.ImmediateContext.OutputMerger.BlendState = TW.Graphics.HelperStates.AlphaBlend;
-            drawReticle();
+            targetingReticle.drawReticle();
             drawHealthBar(level.LocalPlayer.Health);
             drawMap();
             updateGoalText();
@@ -68,20 +66,11 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 
         }
 
-        private void drawReticle()
-        {
-
-            var center = new Vector2(TW.Graphics.Form.Form.ClientSize.Width, TW.Graphics.Form.Form.ClientSize.Height) * 0.5f;
-            var reticleSize = new Vector2(32, 32);
-
-            var tex = TW.Assets.LoadTexture("Scattered\\Models\\Reticle.png");
-
-            draw(tex, center - reticleSize * 0.5f, reticleSize);
-        }
-
         float mapViewRange = 200f;
         private Vector2 mapPos;
         private Vector2 mapSize = new Vector2(200, 200);
+        private readonly TargetingReticle targetingReticle;
+
         private void drawMap()
         {
             mapPos = new Vector2(right - 20 - mapSize.X, 20);
@@ -140,12 +129,6 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 
         //}
 
-
-
-        private void draw(ITexture tex, Vector2 pos, Vector2 size)
-        {
-            draw(TW.Graphics.AcquireRenderer().TexturePool.LoadTexture(tex), pos.X, pos.Y, size.X, size.Y);
-        }
 
         private void draw(ITexture tex, float x, float y, float sizeX, float sizeY)
         {

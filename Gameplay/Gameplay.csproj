@@ -211,6 +211,7 @@
     <Compile Include="Rendering\Particles\ParticlesBoxRenderer.cs" />
     <Compile Include="Rendering\Particles\ParticlesLineRenderer.cs" />
     <Compile Include="Scattered\Bindings\BindingsModule.cs" />
+    <Compile Include="Rendering\TargetingReticle.cs" />
     <Compile Include="Scattered\GameLogic\SpellCasting\BurstSpellEffect.cs" />
     <Compile Include="Scattered\GameLogic\SpellCasting\BeamSpellEffect.cs" />
     <Compile Include="Scattered\GameLogic\SpellCasting\ImpactSpellEffect.cs" />

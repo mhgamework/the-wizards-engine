@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
+using MHGameWork.TheWizards.Scattered._Engine;
 
 namespace MHGameWork.TheWizards.GodGame
 {
@@ -25,24 +26,36 @@ namespace MHGameWork.TheWizards.GodGame
             Debug.Assert(Math.Abs(world.VoxelSize.X - world.VoxelSize.Y) < 0.001f);
 
             entities = new Array2D<Entity>(new Point2(RenderSize, RenderSize));
-            entities.ForEach((e, p) => entities[p] = new Entity()
-                {
-                    WorldMatrix = Matrix.Scaling(new Vector3(world.VoxelSize.X)) * Matrix.Translation(world.GetBoundingBox(p).GetCenter())
-                });
+            entities.ForEach((e, p) => entities[p] = new Entity());
 
         }
 
         public void Simulate()
         {
+            var target = TW.Data.Get<CameraInfo>().GetGroundplanePosition();
+            if (!target.HasValue) return;
+
+            var offset =
+                ((target.Value / world.VoxelSize.X).TakeXZ() - new Point2(RenderSize / 2, RenderSize / 2))
+                .Floor();
+
+
+            var worldTranslation = ((Vector2)offset).ToXZ() * world.VoxelSize.X;
+
+            var bb = new BoundingBox(new Vector3() + worldTranslation, (world.VoxelSize * RenderSize).ToXZ(2) + worldTranslation);
+            TW.Graphics.LineManager3D.AddBox(bb, new Color4(0, 0, 0));
+
             entities.ForEach((e, p) =>
                 {
-                    var v = world.GetVoxel(p);
+                    var v = world.GetVoxel(p + new Point2(offset));
                     if (v == null)
                     {
                         e.Visible = false;
                         return;
                     }
                     e.Mesh = getMesh(v);
+                    e.WorldMatrix = Matrix.Scaling(new Vector3(world.VoxelSize.X)) *
+                                    Matrix.Translation(world.GetBoundingBox(p).GetCenter() + worldTranslation);
                     e.Visible = e.Mesh != null;
 
 
@@ -58,7 +71,7 @@ namespace MHGameWork.TheWizards.GodGame
         {
             if (gameVoxel.Type == null) return null;
             return gameVoxel.Type.GetMesh(gameVoxel);
-          
+
         }
     }
 }

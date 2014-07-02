@@ -14,6 +14,7 @@ namespace MHGameWork.TheWizards.GodGame
     {
         public Vector2 VoxelSize { get; private set; }
         private Array2D<GameVoxel> voxels;
+        public int WorldSize { get { return voxels.Size.X; } }
         public World(int size, float voxelSize)
         {
             this.VoxelSize = new Vector2(voxelSize);
@@ -47,5 +48,7 @@ namespace MHGameWork.TheWizards.GodGame
         {
             return voxels.Get8Connected(coord);
         }
+
+
     }
 }

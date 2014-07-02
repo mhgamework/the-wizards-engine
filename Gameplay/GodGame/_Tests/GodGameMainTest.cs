@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
         public static GodGameMain CreateGame()
         {
-            var world = new World(20, 10);
+            var world = new World(40, 10);
             world.ForEach((v, p) =>
                 {
                     if (Vector2.Distance(p, new Vector2(10, 10)) > 6)
