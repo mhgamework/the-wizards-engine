@@ -6,6 +6,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
 {
     /// <summary>
     /// Represents a array that can be accessed using Point3
+    /// Allows infinite accessing, crossing boundaries returns the default value.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class Array2D<T>

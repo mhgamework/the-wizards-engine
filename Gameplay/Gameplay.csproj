@@ -188,9 +188,13 @@
     <Compile Include="GodGame\GodPowers.cs" />
     <Compile Include="GodGame\SimpleWorldRenderer.cs" />
     <Compile Include="GodGame\World.cs" />
+    <Compile Include="GodGame\_Tests\GameVoxelType.cs" />
     <Compile Include="GodGame\_Tests\GodPowersTest.cs" />
     <Compile Include="GodGame\_Tests\HumanCityTest.cs" />
     <Compile Include="GodGame\VoxelType.cs" />
+    <Compile Include="GodGame\_Tests\PlayerInputHandler.cs" />
+    <Compile Include="GodGame\_Tests\PlayerInputSimulator.cs" />
+    <Compile Include="GodGame\_Tests\RendererTest.cs" />
     <Compile Include="Math\GeometrySampler.cs" />
     <Compile Include="Rendering\Lod\IRenderable.cs" />
     <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />
@@ -446,7 +450,7 @@
     <Compile Include="Engine\Worlding\Physical.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\EditorConfiguration.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\EditorMenuConfiguration.cs" />
-    <Compile Include="RTSTestCase1\_Engine\UtilityMeshes.cs" />
+    <Compile Include="Rendering\UtilityMeshes.cs" />
     <Compile Include="RTSTestCase1\_Tests\InputTest.cs" />
     <Compile Include="SkyMerchant\Gameplay\BridgeMeshBuilder.cs" />
     <Compile Include="SkyMerchant\QuestEditor\HotbarCore\Hotbar.cs" />

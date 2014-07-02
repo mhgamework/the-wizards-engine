@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
 
         private void updateEntity()
         {
-            if (Entity == null) return; 
+            if (Entity == null) return;
             Entity.Visible = visible;
             Entity.Mesh = mesh;
             Entity.WorldMatrix = Node.Absolute;
@@ -55,8 +55,8 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
         /// <param name="onInteract"></param>
         public void CreateInteractable(Action onInteract)
         {
-            throw new NotImplementedException(); // Do not pass entities around anymore
-            var ret = level.CreateEntityInteractable(Entity, Node.CreateChild(), onInteract);
+            //throw new NotImplementedException(); // Do not pass entities around anymore
+            level.CreateEntityInteractable(this, Node.CreateChild(), onInteract);
         }
 
         public void Dispose()
@@ -82,7 +82,7 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
             set
             {
                 visible = value;
-                if (visible) createEntity(); 
+                if (visible) createEntity();
                 // TODO: add some way to remove an entity when far enough
             }
         }

@@ -10,18 +10,19 @@ namespace MHGameWork.TheWizards.Scattered.SceneGraphing
     /// </summary>
     public class EntityInteractableNode
     {
-        private readonly Entity ent;
+        private readonly EntityNode ent;
         private readonly Action onInteract;
 
-        public Entity Entity
+        public EntityNode Entity
         {
             get { return ent; }
         }
 
         public SceneGraphNode Node { get; private set; }
 
-        public EntityInteractableNode(Entity ent, SceneGraphNode node, Action onInteract)
+        public EntityInteractableNode( EntityNode ent, SceneGraphNode node, Action onInteract)
         {
+            if (ent == null) throw new InvalidOperationException();
             this.ent = ent;
             this.onInteract = onInteract;
             Node = node;

@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.Scattered.Bindings
 
         EntityNode CreateEntityNode(SceneGraphNode node);
         TextPanelNode CreateTextPanelNode(SceneGraphNode node);
-        EntityInteractableNode CreateEntityInteractable(Entity entity, SceneGraphNode createChild, Action onInteract);
+        EntityInteractableNode CreateEntityInteractable(EntityNode entity, SceneGraphNode createChild, Action onInteract);
 
         void DestroyNode(SceneGraphNode node);
         void AddBehaviour(SceneGraphNode node, Action update);
