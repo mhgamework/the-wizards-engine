@@ -1,5 +1,3 @@
-using MHGameWork.TheWizards.GodGame.Model;
-
 namespace MHGameWork.TheWizards.GodGame
 {
     public class GodPowers

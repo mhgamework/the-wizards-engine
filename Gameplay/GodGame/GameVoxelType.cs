@@ -1,6 +1,6 @@
 ﻿using SlimDX;
 
-namespace MHGameWork.TheWizards.GodGame._Tests
+namespace MHGameWork.TheWizards.GodGame
 {
     public class GameVoxelType
     {
@@ -22,6 +22,11 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         public GameVoxelType(string name)
         {
             Name = name;
+        }
+
+        public virtual void Tick()
+        {
+            
         }
 
     }

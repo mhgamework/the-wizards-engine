@@ -1,6 +1,4 @@
-﻿using MHGameWork.TheWizards.GodGame.Model;
-
-namespace MHGameWork.TheWizards.GodGame._Tests
+﻿namespace MHGameWork.TheWizards.GodGame._Tests
 {
     public class PlayerInputHandler
     {

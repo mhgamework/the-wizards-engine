@@ -1,6 +1,5 @@
 ﻿using System;
 using DirectX11;
-using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
 using MHGameWork.TheWizards.Scattered._Engine;

@@ -1,6 +1,5 @@
 ﻿using System;
 using DirectX11;
-using MHGameWork.TheWizards.GodGame.Model;
 
 namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
 {

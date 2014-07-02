@@ -1,6 +1,5 @@
 ﻿using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
-using MHGameWork.TheWizards.GodGame.Model;
 
 namespace MHGameWork.TheWizards.GodGame._Tests
 {
