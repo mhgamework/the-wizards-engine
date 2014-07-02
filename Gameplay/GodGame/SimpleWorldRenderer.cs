@@ -12,7 +12,7 @@ namespace MHGameWork.TheWizards.GodGame
 {
     public class SimpleWorldRenderer : ISimulator
     {
-        public const int RenderSize = 10;
+        public const int RenderSize = 20;
         private World world;
 
         private Array2D<Entity> entities;
@@ -57,9 +57,8 @@ namespace MHGameWork.TheWizards.GodGame
         private IMesh getMesh(GameVoxel gameVoxel)
         {
             if (gameVoxel.Type == null) return null;
-            if (gameVoxel.Type.NoMesh) return null;
-
-            return UtilityMeshes.CreateBoxColored(gameVoxel.Type.Color, new Vector3(0.5f, 0.05f, 0.5f));
+            return gameVoxel.Type.GetMesh(gameVoxel);
+          
         }
     }
 }

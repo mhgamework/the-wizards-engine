@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
@@ -40,6 +41,11 @@ namespace MHGameWork.TheWizards.GodGame
         public GameVoxel GetVoxel(Point2 p)
         {
             return voxels[p];
+        }
+
+        public IEnumerable<GameVoxel> Get8Connected(Point2 coord)
+        {
+            return voxels.Get8Connected(coord);
         }
     }
 }

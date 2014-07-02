@@ -6,12 +6,12 @@ namespace MHGameWork.TheWizards.GodGame
     public class GameVoxel
     {
         private readonly World world;
-        private readonly Point2 coord;
+        public Point2 Coord { get; private set; }
 
         public GameVoxel(World world, Point2 coord)
         {
             this.world = world;
-            this.coord = coord;
+            this.Coord = coord;
         }
 
         public void ChangeType(GameVoxelType air)
@@ -21,9 +21,10 @@ namespace MHGameWork.TheWizards.GodGame
 
         public GameVoxelType Type { get; private set; }
 
+
         public BoundingBox GetBoundingBox()
         {
-            return world.GetBoundingBox(coord);
+            return world.GetBoundingBox(Coord);
         }
     }
 }

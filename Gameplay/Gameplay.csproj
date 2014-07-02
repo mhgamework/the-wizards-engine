@@ -185,16 +185,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GodGame\GameVoxel.cs" />
+    <Compile Include="GodGame\GodGameMain.cs" />
     <Compile Include="GodGame\GodPowers.cs" />
+    <Compile Include="GodGame\ITickHandle.cs" />
     <Compile Include="GodGame\SimpleWorldRenderer.cs" />
+    <Compile Include="GodGame\TickSimulator.cs" />
+    <Compile Include="GodGame\Types\InfestationVoxelType.cs" />
+    <Compile Include="GodGame\UIRenderer.cs" />
     <Compile Include="GodGame\World.cs" />
-    <Compile Include="GodGame\GameVoxelType.cs" />
+    <Compile Include="GodGame\Types\GameVoxelType.cs" />
+    <Compile Include="GodGame\_Tests\GodGameMainTest.cs" />
     <Compile Include="GodGame\_Tests\GodPowersTest.cs" />
-    <Compile Include="GodGame\_Tests\HumanCityTest.cs" />
     <Compile Include="GodGame\VoxelType.cs" />
-    <Compile Include="GodGame\_Tests\PlayerInputHandler.cs" />
-    <Compile Include="GodGame\_Tests\PlayerInputSimulator.cs" />
+    <Compile Include="GodGame\PlayerInputHandler.cs" />
+    <Compile Include="GodGame\PlayerInputSimulator.cs" />
     <Compile Include="GodGame\_Tests\RendererTest.cs" />
+    <Compile Include="GodGame\_Tests\VoxelTypesTest.cs" />
     <Compile Include="Math\GeometrySampler.cs" />
     <Compile Include="Rendering\Lod\IRenderable.cs" />
     <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />

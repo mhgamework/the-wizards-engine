@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using DirectX11;
+using MHGameWork.TheWizards.GodGame;
 
 namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
 {
@@ -54,6 +56,19 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
                     var pos = new Point2(x, y);
                     func(this[pos], pos);
                 }
+        }
+
+        public IEnumerable<T> Get8Connected(Point2 coord)
+        {
+            yield return this[new Point2(coord.X + 1, coord.Y + 1)];
+            yield return this[new Point2(coord.X + 1, coord.Y + 0)];
+            yield return this[new Point2(coord.X + 1, coord.Y - 1)];
+            yield return this[new Point2(coord.X + 0, coord.Y + 1)];
+            //yield return this[new Point2(coord.X + 0, coord.Y + 0)];
+            yield return this[new Point2(coord.X + 0, coord.Y - 1)];
+            yield return this[new Point2(coord.X - 1, coord.Y + 1)];
+            yield return this[new Point2(coord.X - 1, coord.Y + 0)];
+            yield return this[new Point2(coord.X - 1, coord.Y - 1)];
         }
     }
 }

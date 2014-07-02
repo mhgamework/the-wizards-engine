@@ -30,9 +30,9 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         {
             var ret = new World(5, 10);
 
-            var typeRed = new GameVoxelType("Red") { Color = Color.Red.dx() };
-            var typeGreen = new GameVoxelType("Green") { Color = Color.Green.dx() };
-            var typeBlue = new GameVoxelType("Blue") { Color = Color.Blue.dx() };
+            var typeRed = new GameVoxelType("Red") { Color = Color.Red };
+            var typeGreen = new GameVoxelType("Green") { Color = Color.Green };
+            var typeBlue = new GameVoxelType("Blue") { Color = Color.Blue };
 
             ret.GetVoxel(new Point2(0, 0)).ChangeType(typeRed);
             ret.GetVoxel(new Point2(1, 1)).ChangeType(typeRed);
