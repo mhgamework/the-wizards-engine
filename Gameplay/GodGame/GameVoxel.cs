@@ -21,6 +21,8 @@ namespace MHGameWork.TheWizards.GodGame
 
         public GameVoxelType Type { get; private set; }
 
+        public int DataValue { get; set; }
+
 
         public BoundingBox GetBoundingBox()
         {

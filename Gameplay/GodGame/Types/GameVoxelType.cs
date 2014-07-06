@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
@@ -10,6 +11,7 @@ namespace MHGameWork.TheWizards.GodGame
         public static GameVoxelType Air;
         public static GameVoxelType Land;
         public static InfestationVoxelType Infestation = new InfestationVoxelType();
+        public static ForestType Forest = new ForestType();
 
         static GameVoxelType()
         {

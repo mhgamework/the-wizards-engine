@@ -100,5 +100,42 @@ namespace MHGameWork.TheWizards
             return color;
         }
 
+        /// <summary>
+        /// When called ensures that on average each ('averageInterval' seconds) the function returns true,
+        /// as long as the elapsed value is small enough compared to the average interval 
+        /// (otherwise multiple events could occur in a single interval)
+        /// Uses Poisson distribution for 1 or more events inside a single interval
+        /// TODO: only executes action once, could execute multiple times to be more correct 
+        /// </summary>
+        /// <returns></returns>
+        public void EachRandomInterval(float averageInterval, Action action, float elapsed)
+        {
+            var count = PoissonSmall(averageInterval * elapsed);
+            for (int i = 0; i < count; i++)
+            {
+                action();
+            }
+        }
+
+        /// <summary>
+        /// TODO: returns a maximum of 100, otherwise this function might get to slow and
+        /// a better implementation is required
+        /// </summary>
+        /// <param name="lambda"></param>
+        /// <returns></returns>
+        public int PoissonSmall(double lambda)
+        {
+            // Algorithm due to Donald Knuth, 1969.
+            double p = 1.0, L = Math.Exp(-lambda);
+            int k = 0;
+            do
+            {
+                k++;
+                p *= NextFloat(0, 1); //GetUniform();
+            }
+            while (p > L && k < 99);
+            return k - 1;
+        }
+
     }
 }

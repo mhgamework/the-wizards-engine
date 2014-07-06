@@ -190,6 +190,7 @@
     <Compile Include="GodGame\ITickHandle.cs" />
     <Compile Include="GodGame\SimpleWorldRenderer.cs" />
     <Compile Include="GodGame\TickSimulator.cs" />
+    <Compile Include="GodGame\Types\ForestType.cs" />
     <Compile Include="GodGame\Types\InfestationVoxelType.cs" />
     <Compile Include="GodGame\UIRenderer.cs" />
     <Compile Include="GodGame\World.cs" />

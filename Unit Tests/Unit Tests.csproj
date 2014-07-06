@@ -150,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Features\Core\Diagnostics\ProfilerComponentTest.cs" />
+    <Compile Include="Features\Core\SeederTest.cs" />
     <Compile Include="Features\Data\SectionedStreamTest.cs" />
     <Compile Include="Features\Rendering\DirectX11\DX11PerformanceTest.cs" />
     <Compile Include="Features\Rendering\DirectX11\SpectaterCameraTest.cs" />
