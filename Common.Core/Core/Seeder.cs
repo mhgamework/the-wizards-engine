@@ -110,7 +110,7 @@ namespace MHGameWork.TheWizards
         /// <returns></returns>
         public void EachRandomInterval(float averageInterval, Action action, float elapsed)
         {
-            var count = PoissonSmall(averageInterval * elapsed);
+            var count = PoissonSmall(elapsed / averageInterval);
             for (int i = 0; i < count; i++)
             {
                 action();

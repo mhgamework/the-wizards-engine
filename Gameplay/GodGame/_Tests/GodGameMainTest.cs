@@ -42,7 +42,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         {
             yield return new CreateLandInputHandler(world);
             yield return new DelegatePlayerInputHandler("Forest", v => v.ChangeType(GameVoxelType.Land), v => v.ChangeType(GameVoxelType.Forest));
-            yield return new DelegatePlayerInputHandler("Village", v => v.ChangeType(GameVoxelType.Land), v => v.ChangeType(GameVoxelType.Land));
+            yield return new DelegatePlayerInputHandler("Village", v => v.ChangeType(GameVoxelType.Land), v => v.ChangeType(GameVoxelType.VillageType));
+            yield return new DelegatePlayerInputHandler("Warehouse", v => v.ChangeType(GameVoxelType.Land), v => v.ChangeType(GameVoxelType.WarehouseType));
         }
 
     }

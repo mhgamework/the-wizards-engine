@@ -292,11 +292,16 @@ namespace MHGameWork.TheWizards.Rendering
         public static IMesh Transform(IMesh mesh, Matrix transform)
         {
             //TODO: first take deep copy?
-            foreach (var part in mesh.GetCoreData().Parts)
-            {
-                part.ObjectMatrix = part.ObjectMatrix * transform.xna();
-            }
-            return mesh;
+            var ret = new RAMMesh();
+            ret.GetCoreData().Parts = mesh.GetCoreData().Parts.Select(p =>
+                {
+                    var nPart = new MeshCoreData.Part();
+                    nPart.ObjectMatrix = p.ObjectMatrix*transform.xna();
+                    nPart.MeshMaterial = p.MeshMaterial;
+                    nPart.MeshPart = p.MeshPart;
+                    return nPart;
+                }).ToList();
+            return ret;
         }
     }
 }

@@ -7,21 +7,34 @@ namespace MHGameWork.TheWizards.GodGame
     public class ITickHandle
     {
         private readonly World world;
+        private GameVoxel currentVoxel;
 
         public ITickHandle(World world)
         {
             this.world = world;
             Seeder = new Seeder(0);
         }
-
-        public IEnumerable<GameVoxel> Get8Connected(GameVoxel v)
+        /// <summary>
+        /// WARNING: setter only for internal use!
+        /// </summary>
+        public GameVoxel CurrentVoxel
         {
-            return world.Get8Connected(v.Coord);
+            get
+            {
+                if (currentVoxel == null) throw new InvalidOperationException("Tickhandle has no voxel set!"); return currentVoxel; }
+            set { currentVoxel = value; }
+        }
+
+        public IEnumerable<GameVoxel> Get8Connected()
+        {
+            return world.Get8Connected(CurrentVoxel.Coord);
         }
 
         public Seeder Seeder { get; private set; }
 
         public float Elapsed { get { return TW.Graphics.Elapsed; } }
+
+        public float TotalTime { get { return TW.Graphics.TotalRunTime; } }
 
         /// <summary>
         /// When called ensures that on average each ('averageInterval' seconds) the function returns true,
@@ -34,6 +47,11 @@ namespace MHGameWork.TheWizards.GodGame
         public void EachRandomInterval(float averageInterval, Action action)
         {
             Seeder.EachRandomInterval(averageInterval, action, Elapsed);
+        }
+
+        public IEnumerable<GameVoxel> GetRange(int radius)
+        {
+            return world.GetRange(CurrentVoxel, radius);
         }
     }
 }

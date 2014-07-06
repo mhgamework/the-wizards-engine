@@ -15,6 +15,8 @@ namespace MHGameWork.TheWizards.GodGame
         public static GameVoxelType Land;
         public static InfestationVoxelType Infestation = new InfestationVoxelType();
         public static ForestType Forest = new ForestType();
+        public static VillageType VillageType = new VillageType();
+        public static WarehouseType WarehouseType = new WarehouseType();
 
         static GameVoxelType()
         {
@@ -60,9 +62,11 @@ namespace MHGameWork.TheWizards.GodGame
             get { return coloredBaseMesh; }
             set
             {
-                if (coloredBaseMesh == value) return; coloredBaseMesh = value; updateColoredBaseMesh();
+                if (coloredBaseMesh == value) return;
+                coloredBaseMesh = value;
+                updateColoredBaseMesh();
             }
-        } 
+        }
         #endregion
 
         private void searchSuggestedMeshes()
@@ -86,7 +90,7 @@ namespace MHGameWork.TheWizards.GodGame
             }
         }
 
-        public virtual void Tick(GameVoxel v, ITickHandle handle)
+        public virtual void Tick(ITickHandle handle)
         {
 
         }

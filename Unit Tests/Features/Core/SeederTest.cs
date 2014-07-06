@@ -33,10 +33,10 @@ namespace MHGameWork.TheWizards.Tests.Features.Core
         [Test]
         public void TestExecuteInterval()
         {
+            testExecuteInterval(10000, 1/30f, 5);
             testExecuteInterval(10000, 0.01f, 1);
             testExecuteInterval(10000, 0.1f, 1);
             testExecuteInterval(10000, 1f, 1);
-            testExecuteInterval(10000, 0.1f, 10f);
             testExecuteInterval(10000, 0.1f, 0.3f);
         }
 
@@ -55,7 +55,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Core
                 seeder.EachRandomInterval(interval, () => count++, elapsed);
             }
 
-            var avg = count / time;
+            var avg = time/count;
             Assert.AreEqual(interval, avg, interval * 0.05f);
         }
     }

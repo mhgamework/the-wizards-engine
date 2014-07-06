@@ -10,10 +10,10 @@ namespace MHGameWork.TheWizards.GodGame
         {
             Color = Color.Red;
         }
-        public override void Tick(GameVoxel v, ITickHandle handle)
+        public override void Tick(ITickHandle handle)
         {
             if (handle.Seeder.NextFloat(0, 100) > 1) return;
-            var possible = handle.Get8Connected(v).Where(isInfecteable).ToArray();
+            var possible = handle.Get8Connected().Where(isInfecteable).ToArray();
             if (possible.Length == 0) return;
             var i = handle.Seeder.NextInt(0, possible.Length - 1);
 

@@ -26,7 +26,12 @@ namespace MHGameWork.TheWizards.GodGame
             world.ForEach((v, p) =>
                 {
                     if (v.Type == null) return;
-                    v.Type.Tick(v, handle);
+
+                    handle.CurrentVoxel = v;
+
+                    v.Type.Tick(handle);
+
+                    handle.CurrentVoxel = null;
                 });
         }
     }
