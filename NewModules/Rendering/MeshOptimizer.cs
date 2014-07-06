@@ -109,7 +109,7 @@ namespace MHGameWork.TheWizards.Rendering
 
         private MeshCoreData.Material createMaterialCopy(MeshCoreData.Material original)
         {
-            return new MeshCoreData.Material { DiffuseMap = original.DiffuseMap, DiffuseColor = original.DiffuseColor, Name = original.Name };
+            return original.Copy();
         }
 
         private void clearBuffers()

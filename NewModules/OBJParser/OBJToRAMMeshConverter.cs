@@ -315,6 +315,7 @@ namespace MHGameWork.TheWizards.OBJParser
                     meshMat.DiffuseMap = CreateOrFindIdenticalTexture(mat.DiffuseMap);
 
                 }
+                meshMat.ColoredMaterial = mat.DiffuseMap == null;
                 meshMat.DiffuseColor = mat.DiffuseColor;
                 meshMat.Name = mat.Name;
                 materials[mat] = meshMat;

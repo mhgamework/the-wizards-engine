@@ -47,6 +47,12 @@ namespace MHGameWork.TheWizards.Rendering
                     return (DiffuseColor.GetHashCode() * 397) ^ (DiffuseMap != null ? DiffuseMap.GetHashCode() : 0);
                 }
             }
+
+            public Material Copy()
+            {
+                return new MeshCoreData.Material { DiffuseMap = DiffuseMap, DiffuseColor = DiffuseColor, Name = Name, ColoredMaterial = ColoredMaterial };
+
+            }
         }
     }
 
