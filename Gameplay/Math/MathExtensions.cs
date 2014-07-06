@@ -20,9 +20,23 @@ namespace MHGameWork.TheWizards.Scattered._Engine
             return Point2.Ceiling(v);
         }
 
-        public static int Floor(this float f)
+        public static int Floor(this double d)
         {
-            return (int) Math.Floor(f);
+            return (int)Math.Floor(d);
+        }
+        public static float ToF(this double p)
+        {
+            return (float)p;
+        }
+
+        public static int Floor(this float d)
+        {
+            return (int)Math.Floor(d);
+        }
+
+        public static float F(this double d)
+        {
+            return (float)d;
         }
 
     }
