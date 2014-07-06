@@ -41,6 +41,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         private static IEnumerable<IPlayerInputHandler> createPlayerInputs(World world)
         {
             yield return new CreateLandInputHandler(world);
+            yield return new DelegatePlayerInputHandler("Forest", v => v.ChangeType(GameVoxelType.Land), v => v.ChangeType(GameVoxelType.Forest));
             yield return new DelegatePlayerInputHandler("Village", v => v.ChangeType(GameVoxelType.Land), v => v.ChangeType(GameVoxelType.Land));
         }
 

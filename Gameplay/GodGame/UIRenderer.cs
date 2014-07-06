@@ -3,6 +3,8 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame._Tests;
 using MHGameWork.TheWizards.Scattered.GameLogic.Services;
+using MHGameWork.TheWizards.Scattered.SceneGraphing;
+using MHGameWork.TheWizards.Scattered._Engine;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.GodGame
@@ -27,7 +29,7 @@ namespace MHGameWork.TheWizards.GodGame
             textarea = new Textarea();
             textarea.Position = new Vector2(TW.Graphics.Form.Form.ClientSize.Width - 120, 20);
             textarea.Size = new Vector2(100, 50);
-            
+
         }
 
         public void Simulate()
@@ -36,6 +38,7 @@ namespace MHGameWork.TheWizards.GodGame
             reticle.drawReticle();
             drawSelectedVoxel();
             drawWorldBoundingbox();
+            drawDataValue();
         }
 
         private void updateTextarea()
@@ -56,6 +59,27 @@ namespace MHGameWork.TheWizards.GodGame
             bb.Maximum.Y = 1f;
 
             TW.Graphics.LineManager3D.AddBox(bb, Color.Yellow.dx());
+        }
+
+
+
+
+        private TextRectangle dataValueRectangle = new TextRectangle();
+
+        private void drawDataValue()
+        {
+            var target = inputSim.GetTargetedVoxel();
+            if (target == null || target.DataValue == 0) return;
+            var max = target.GetBoundingBox().Maximum;
+            var min = target.GetBoundingBox().Minimum;
+            var pos = (max + min) * 0.5f + new Vector3(0, 6.5f, 0);
+
+            dataValueRectangle.Position = pos;
+            dataValueRectangle.IsBillboard = true;
+            dataValueRectangle.Text = target.DataValue.ToString();
+            dataValueRectangle.Radius = 3;
+            dataValueRectangle.Update();
+
         }
     }
 }

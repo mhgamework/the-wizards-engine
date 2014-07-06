@@ -1,8 +1,11 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
+using MHGameWork.TheWizards.IO;
 
 namespace MHGameWork.TheWizards.GodGame
 {
@@ -18,10 +21,20 @@ namespace MHGameWork.TheWizards.GodGame
             Air = new GameVoxelType("Air") { NoMesh = true };
             Land = new GameVoxelType("Land") { Color = Color.SandyBrown };
         }
+        public GameVoxelType(string name)
+        {
+            Name = name;
+            coloredBaseMesh = true;
+
+            searchSuggestedMeshes();
+        }
+
+        public string Name { get; private set; }
+
 
         public bool NoMesh { get; private set; }
 
-        public string Name { get; private set; }
+        #region Colored mesh
 
         public Color Color
         {
@@ -30,15 +43,47 @@ namespace MHGameWork.TheWizards.GodGame
             {
                 if (color == value) return;
                 color = value;
-                if (NoMesh) mesh = null;
-
-                mesh = UtilityMeshes.CreateBoxColored(Color, new Vector3(0.5f, 0.05f, 0.5f));
+                updateColoredBaseMesh();
             }
         }
 
-        public GameVoxelType(string name)
+        private void updateColoredBaseMesh()
         {
-            Name = name;
+            if (NoMesh) mesh = null;
+            if (!ColoredBaseMesh) return;
+
+            mesh = UtilityMeshes.CreateBoxColored(Color, new Vector3(0.5f, 0.05f, 0.5f));
+        }
+
+        public bool ColoredBaseMesh
+        {
+            get { return coloredBaseMesh; }
+            set
+            {
+                if (coloredBaseMesh == value) return; coloredBaseMesh = value; updateColoredBaseMesh();
+            }
+        } 
+        #endregion
+
+        private void searchSuggestedMeshes()
+        {
+            var tilesFolder = TWDir.GameData.GetChild("Scattered").GetChild("GodGame").GetChild("Tiles");
+            if (tilesFolder.CreateFile(Name + ".obj").Exists) // CreateFile is a misnomer
+            {
+                mesh = TW.Assets.LoadMesh("Scattered\\GodGame\\Tiles\\" + Name);
+                mesh = MeshBuilder.Transform(mesh, Matrix.Scaling(0.1f, 0.1f, 0.1f));
+                ColoredBaseMesh = false;
+            }
+
+            var meshes = tilesFolder.GetFiles(Name + "*.obj");
+            foreach (var f in meshes)
+            {
+                var dataValStr = Path.GetFileNameWithoutExtension(f.FullName).Substring(Name.Length);
+                int dataVal;
+                if (!int.TryParse(dataValStr, out dataVal)) continue;
+
+                datavalueMeshes[dataVal] = TW.Assets.LoadMesh("Scattered\\GodGame\\Tiles\\" + Name + dataVal.ToString());
+            }
         }
 
         public virtual void Tick(GameVoxel v, ITickHandle handle)
@@ -47,10 +92,14 @@ namespace MHGameWork.TheWizards.GodGame
         }
 
         protected IMesh mesh;
+        protected Dictionary<int, IMesh> datavalueMeshes = new Dictionary<int, IMesh>();
         private Color color;
+        private bool coloredBaseMesh;
 
         public virtual IMesh GetMesh(GameVoxel gameVoxel)
         {
+            if (datavalueMeshes.ContainsKey(gameVoxel.DataValue))
+                return datavalueMeshes[gameVoxel.DataValue];
             return mesh;
         }
 

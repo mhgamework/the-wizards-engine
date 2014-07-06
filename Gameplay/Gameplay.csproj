@@ -202,6 +202,7 @@
     <Compile Include="GodGame\PlayerInputSimulator.cs" />
     <Compile Include="GodGame\_Tests\RendererTest.cs" />
     <Compile Include="GodGame\_Tests\VoxelTypesTest.cs" />
+    <Compile Include="IO\IOExtensions.cs" />
     <Compile Include="Math\GeometrySampler.cs" />
     <Compile Include="Rendering\Lod\IRenderable.cs" />
     <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />
