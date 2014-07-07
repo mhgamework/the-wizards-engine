@@ -54,7 +54,12 @@ namespace MHGameWork.TheWizards.GodGame
         {
             for (int x = center.Coord.X - radius; x <= center.Coord.X + radius; x++)
                 for (int y = center.Coord.Y - radius; y <= center.Coord.Y + radius; y++)
-                    yield return voxels[new Point2(x, y)];
+                {
+                    var v = voxels[new Point2(x, y)];
+
+                    if (v != null)
+                        yield return v;
+                }
         }
     }
 }
