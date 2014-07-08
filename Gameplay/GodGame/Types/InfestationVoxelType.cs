@@ -10,14 +10,21 @@ namespace MHGameWork.TheWizards.GodGame
         {
             Color = Color.Red;
         }
-        public override void Tick(ITickHandle handle)
+        public override void Tick(IVoxelHandle handle)
         {
             if (handle.Seeder.NextFloat(0, 100) > 1) return;
             var possible = handle.Get8Connected().Where(isInfecteable).ToArray();
             if (possible.Length == 0) return;
             var i = handle.Seeder.NextInt(0, possible.Length - 1);
 
-            possible[i].ChangeType(GameVoxelType.Infestation);
+            var target = possible[i];
+
+            target.MagicLevel--;
+            if (target.MagicLevel < 0)
+            {
+                target.MagicLevel = 0;
+                target.ChangeType(GameVoxelType.Infestation);
+            }
         }
 
         private bool isInfecteable(GameVoxel arg)

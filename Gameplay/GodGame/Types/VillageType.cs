@@ -12,16 +12,16 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
 
 
-        public override void Tick(ITickHandle handle)
+        public override void Tick(IVoxelHandle handle)
         {
             handle.EachRandomInterval(1, () => doWork(handle));
 
         }
 
-        private void doWork(ITickHandle handle)
+        private void doWork(IVoxelHandle handle)
         {
             var warehouse =
-                handle.GetRange(5).FirstOrDefault(v => v.Type == WarehouseType && v.DataValue < 20);
+                handle.GetRange(5).FirstOrDefault(v => v.Type == Warehouse && v.DataValue < 20);
             if (warehouse == null) return;
 
             var forest = handle.GetRange(5).FirstOrDefault(v => v.Type == Forest && v.DataValue > 0);

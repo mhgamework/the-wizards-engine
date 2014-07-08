@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace MHGameWork.TheWizards.GodGame
 {
-    public class ITickHandle
+    public class IVoxelHandle
     {
         private readonly World world;
         private GameVoxel currentVoxel;
 
-        public ITickHandle(World world)
+        public IVoxelHandle(World world)
         {
             this.world = world;
             Seeder = new Seeder(0);

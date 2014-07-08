@@ -3,6 +3,10 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.GodGame
 {
+    /// <summary>
+    /// Split this class into a 'enginemodelobject' part, for data storage, and a 'domain model part', 
+    /// which should be merged with the IVoxelHandle probably
+    /// </summary>
     public class GameVoxel
     {
         private readonly World world;
@@ -17,11 +21,14 @@ namespace MHGameWork.TheWizards.GodGame
         public void ChangeType(GameVoxelType air)
         {
             Type = air;
+            DataValue = 0;
         }
 
         public GameVoxelType Type { get; private set; }
 
         public int DataValue { get; set; }
+
+        public int MagicLevel { get; set; }
 
 
         public BoundingBox GetBoundingBox()

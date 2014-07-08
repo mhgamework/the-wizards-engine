@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             Color = Color.Gold;
         }
-        public override void Tick(ITickHandle handle)
+        public override void Tick(IVoxelHandle handle)
         {
             
 

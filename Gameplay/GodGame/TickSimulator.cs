@@ -5,7 +5,7 @@ namespace MHGameWork.TheWizards.GodGame
     public class TickSimulator : ISimulator
     {
         private readonly World world;
-        private ITickHandle handle;
+        private IVoxelHandle handle;
 
         public const float TickInterval = 1 / 20f;
         private float nextTick;
@@ -14,7 +14,7 @@ namespace MHGameWork.TheWizards.GodGame
         {
             this.world = world;
 
-            handle = new ITickHandle(world);
+            handle = new IVoxelHandle(world);
 
             nextTick = TW.Graphics.TotalRunTime + TickInterval;
         }

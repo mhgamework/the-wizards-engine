@@ -15,8 +15,9 @@ namespace MHGameWork.TheWizards.GodGame
         public static GameVoxelType Land;
         public static InfestationVoxelType Infestation = new InfestationVoxelType();
         public static ForestType Forest = new ForestType();
-        public static VillageType VillageType = new VillageType();
-        public static WarehouseType WarehouseType = new WarehouseType();
+        public static VillageType Village = new VillageType();
+        public static WarehouseType Warehouse = new WarehouseType();
+        public static MonumentType Monument = new MonumentType();
 
         static GameVoxelType()
         {
@@ -90,7 +91,7 @@ namespace MHGameWork.TheWizards.GodGame
             }
         }
 
-        public virtual void Tick(ITickHandle handle)
+        public virtual void Tick(IVoxelHandle handle)
         {
 
         }
@@ -108,7 +109,9 @@ namespace MHGameWork.TheWizards.GodGame
         }
 
 
-
-
+        public bool Interact(IVoxelHandle handle)
+        {
+            return false;
+        }
     }
 }

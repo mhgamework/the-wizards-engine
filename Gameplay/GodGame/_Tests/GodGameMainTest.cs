@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.GodGame.Types;
 using NUnit.Framework;
 using SlimDX;
 using System.Linq;
@@ -41,10 +42,21 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         private static IEnumerable<IPlayerInputHandler> createPlayerInputs(World world)
         {
             yield return new CreateLandInputHandler(world);
-            yield return new DelegatePlayerInputHandler("Forest", v => v.ChangeType(GameVoxelType.Land), v => v.ChangeType(GameVoxelType.Forest));
-            yield return new DelegatePlayerInputHandler("Village", v => v.ChangeType(GameVoxelType.Land), v => v.ChangeType(GameVoxelType.VillageType));
-            yield return new DelegatePlayerInputHandler("Warehouse", v => v.ChangeType(GameVoxelType.Land), v => v.ChangeType(GameVoxelType.WarehouseType));
+            yield return createTypeInput(GameVoxelType.Forest);
+            yield return createTypeInput(GameVoxelType.Village);
+            yield return createTypeInput(GameVoxelType.Warehouse);
+            yield return createTypeInput(GameVoxelType.Infestation);
+            yield return createTypeInput(GameVoxelType.Monument);
         }
 
+        private static DelegatePlayerInputHandler createTypeInput(GameVoxelType type)
+        {
+            return new DelegatePlayerInputHandler(type.Name, v => v.ChangeType(GameVoxelType.Land),
+                v =>
+                {
+                    if (v.Type == GameVoxelType.Land)
+                        v.ChangeType(type);
+                });
+        }
     }
 }

@@ -2,6 +2,7 @@
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using System.Linq;
+using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame._Tests
 {
@@ -22,28 +23,45 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
         public void Simulate()
         {
-            var playerInputHandlers = handlers.Concat(handlers);
-            if (TW.Graphics.Mouse.RelativeScrollWheel < 0)
-            {
-                var inputHandlers = handlers.SkipWhile(el => el != ActiveHandler);
-                var skipWhile = inputHandlers.Concat(handlers);
-                ActiveHandler = skipWhile.Skip(1).First();
-
-
-            }
-            if (TW.Graphics.Mouse.RelativeScrollWheel > 0)
-            {
-                var inputHandlers = playerInputHandlers.TakeWhile((el, i) => el != ActiveHandler || i == 0);
-                ActiveHandler = inputHandlers.Last();
-            }
+            scrollActiveHandler();
 
             var target = GetTargetedVoxel();
             if (target == null) return;
 
+            if (tryVoxelInteract(target)) return;
+
             if (TW.Graphics.Mouse.LeftMouseJustPressed)
                 ActiveHandler.OnLeftClick(target);
-            if (TW.Graphics.Mouse.RightMouseJustPressed)
+            else if (TW.Graphics.Mouse.RightMouseJustPressed)
                 ActiveHandler.OnRightClick(target);
+        }
+
+        private bool tryVoxelInteract(GameVoxel target)
+        {
+            var handle = new IVoxelHandle(world);
+            handle.CurrentVoxel = target;
+
+            var ret = target.Type.Interact(handle);
+
+            handle.CurrentVoxel = null;
+
+            return ret;
+        }
+
+        private void scrollActiveHandler()
+        {
+            var playerInputHandlers = handlers.Concat(handlers);
+            if (TW.Graphics.Mouse.RelativeScrollWheel < 0 || TW.Graphics.Keyboard.IsKeyPressed(Key.UpArrow))
+            {
+                var inputHandlers = handlers.SkipWhile(el => el != ActiveHandler);
+                var skipWhile = inputHandlers.Concat(handlers);
+                ActiveHandler = skipWhile.Skip(1).First();
+            }
+            if (TW.Graphics.Mouse.RelativeScrollWheel > 0 || TW.Graphics.Keyboard.IsKeyPressed(Key.DownArrow))
+            {
+                var inputHandlers = playerInputHandlers.TakeWhile((el, i) => el != ActiveHandler || i == 0);
+                ActiveHandler = inputHandlers.Last();
+            }
         }
 
         public GameVoxel GetTargetedVoxel()

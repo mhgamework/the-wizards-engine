@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             }
 
         }
-        public override void Tick(ITickHandle handle)
+        public override void Tick(IVoxelHandle handle)
         {
             if (handle.CurrentVoxel.DataValue >= 5)
             {

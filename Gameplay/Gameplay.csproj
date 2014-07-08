@@ -187,9 +187,10 @@
     <Compile Include="GodGame\GameVoxel.cs" />
     <Compile Include="GodGame\GodGameMain.cs" />
     <Compile Include="GodGame\GodPowers.cs" />
-    <Compile Include="GodGame\ITickHandle.cs" />
+    <Compile Include="GodGame\IVoxelHandle.cs" />
     <Compile Include="GodGame\SimpleWorldRenderer.cs" />
     <Compile Include="GodGame\TickSimulator.cs" />
+    <Compile Include="GodGame\Types\MonumentType.cs" />
     <Compile Include="GodGame\Types\WarehouseType.cs" />
     <Compile Include="GodGame\Types\VillageType.cs" />
     <Compile Include="GodGame\Types\ForestType.cs" />
