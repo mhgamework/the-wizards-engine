@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using MHGameWork.TheWizards.GodGame.Internal;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {

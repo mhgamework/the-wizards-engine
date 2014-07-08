@@ -5,7 +5,7 @@ using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
 using MHGameWork.TheWizards.Scattered._Engine;
 
-namespace MHGameWork.TheWizards.GodGame
+namespace MHGameWork.TheWizards.GodGame.Internal
 {
     /// <summary>
     /// World starts at 0,0 and grows in positive direction

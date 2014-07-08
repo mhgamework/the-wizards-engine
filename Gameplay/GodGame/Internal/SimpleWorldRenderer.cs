@@ -3,13 +3,12 @@ using System.Diagnostics;
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
-using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
 using MHGameWork.TheWizards.Scattered._Engine;
 
-namespace MHGameWork.TheWizards.GodGame
+namespace MHGameWork.TheWizards.GodGame.Internal
 {
     public class SimpleWorldRenderer : ISimulator
     {

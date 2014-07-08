@@ -1,10 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using DirectX11;
 using System.Linq;
+using MHGameWork.TheWizards.GodGame.Types;
 
-namespace MHGameWork.TheWizards.GodGame
+namespace MHGameWork.TheWizards.GodGame.Internal
 {
     public class IVoxelHandle
     {

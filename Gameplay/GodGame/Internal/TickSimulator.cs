@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.Engine;
 
-namespace MHGameWork.TheWizards.GodGame
+namespace MHGameWork.TheWizards.GodGame.Internal
 {
     public class TickSimulator : ISimulator
     {

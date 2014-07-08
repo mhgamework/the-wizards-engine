@@ -1,4 +1,5 @@
 ﻿using DirectX11;
+using MHGameWork.TheWizards.GodGame.Types;
 using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.GodGame._Tests

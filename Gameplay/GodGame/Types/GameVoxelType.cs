@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using MHGameWork.TheWizards.GodGame.Types;
+using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 using MHGameWork.TheWizards.IO;
 
-namespace MHGameWork.TheWizards.GodGame
+namespace MHGameWork.TheWizards.GodGame.Types
 {
     public class GameVoxelType
     {

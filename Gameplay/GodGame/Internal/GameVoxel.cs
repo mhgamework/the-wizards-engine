@@ -1,7 +1,8 @@
 using DirectX11;
+using MHGameWork.TheWizards.GodGame.Types;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.GodGame
+namespace MHGameWork.TheWizards.GodGame.Internal
 {
     /// <summary>
     /// Split this class into a 'enginemodelobject' part, for data storage, and a 'domain model part', 

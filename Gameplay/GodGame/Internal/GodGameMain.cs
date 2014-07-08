@@ -1,9 +1,7 @@
-﻿using System;
-using MHGameWork.TheWizards.Engine;
+﻿using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
-using MHGameWork.TheWizards.GodGame._Tests;
 
-namespace MHGameWork.TheWizards.GodGame
+namespace MHGameWork.TheWizards.GodGame.Internal
 {
     /// <summary>
     /// Runs the godgame

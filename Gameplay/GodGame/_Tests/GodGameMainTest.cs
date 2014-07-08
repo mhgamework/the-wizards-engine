@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Types;
 using NUnit.Framework;
 using SlimDX;
@@ -23,7 +24,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
         public static GodGameMain CreateGame()
         {
-            var world = new World(40, 10);
+            var world = new Internal.World(40, 10);
             world.ForEach((v, p) =>
                 {
                     if (Vector2.Distance(p, new Vector2(10, 10)) > 6)
@@ -39,7 +40,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             return ret;
         }
 
-        private static IEnumerable<IPlayerInputHandler> createPlayerInputs(World world)
+        private static IEnumerable<IPlayerInputHandler> createPlayerInputs(Internal.World world)
         {
             yield return new CreateLandInputHandler(world);
             yield return createTypeInput(GameVoxelType.Forest);

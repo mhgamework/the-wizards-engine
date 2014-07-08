@@ -1,6 +1,7 @@
 ﻿using System;
+using MHGameWork.TheWizards.GodGame.Internal;
 
-namespace MHGameWork.TheWizards.GodGame._Tests
+namespace MHGameWork.TheWizards.GodGame
 {
     class DelegatePlayerInputHandler : IPlayerInputHandler
     {

@@ -1,4 +1,6 @@
-﻿namespace MHGameWork.TheWizards.GodGame._Tests
+﻿using MHGameWork.TheWizards.GodGame.Internal;
+
+namespace MHGameWork.TheWizards.GodGame
 {
     public interface IPlayerInputHandler
     {

@@ -1,10 +1,13 @@
-﻿namespace MHGameWork.TheWizards.GodGame._Tests
+﻿using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Types;
+
+namespace MHGameWork.TheWizards.GodGame
 {
     public class CreateLandInputHandler : IPlayerInputHandler
     {
-        private readonly World world;
+        private readonly Internal.World world;
 
-        public CreateLandInputHandler(World world)
+        public CreateLandInputHandler(Internal.World world)
         {
             this.world = world;
         }

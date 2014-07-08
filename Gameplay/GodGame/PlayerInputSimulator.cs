@@ -2,18 +2,19 @@
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using System.Linq;
+using MHGameWork.TheWizards.GodGame.Internal;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.GodGame._Tests
+namespace MHGameWork.TheWizards.GodGame
 {
     public class PlayerInputSimulator : ISimulator
     {
         private readonly IEnumerable<IPlayerInputHandler> handlers;
-        private World world;
+        private Internal.World world;
 
         public IPlayerInputHandler ActiveHandler { get; private set; }
 
-        public PlayerInputSimulator(IEnumerable<IPlayerInputHandler> handlers, World world)
+        public PlayerInputSimulator(IEnumerable<IPlayerInputHandler> handlers, Internal.World world)
         {
             this.handlers = handlers;
             this.world = world;

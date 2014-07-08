@@ -14,12 +14,12 @@ namespace MHGameWork.TheWizards.GodGame
     /// </summary>
     public class UIRenderer : ISimulator
     {
-        private readonly World world;
+        private readonly Internal.World world;
         private readonly PlayerInputSimulator inputSim;
         private TargetingReticle reticle;
         private Textarea textarea;
 
-        public UIRenderer(World world, PlayerInputSimulator inputSim)
+        public UIRenderer(Internal.World world, PlayerInputSimulator inputSim)
         {
             this.world = world;
             this.inputSim = inputSim;
