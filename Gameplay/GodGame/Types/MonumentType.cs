@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
             foreach (var v in handle.GetRange(5))
             {
-                v.MagicLevel = 3;
+                v.Data.MagicLevel = 3;
                 if (v.Type == Infestation)
                     v.ChangeType(Land);
 

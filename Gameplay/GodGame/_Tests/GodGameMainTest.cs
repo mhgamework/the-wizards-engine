@@ -51,7 +51,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
         private static DelegatePlayerInputHandler createTypeInput(GameVoxelType type)
         {
-            return new DelegatePlayerInputHandler(type.Name, v => v.ChangeType(GameVoxelType.Land),
+            return new DelegatePlayerInputHandler(type.Name, 
+                v => v.ChangeType(GameVoxelType.Land),
                 v =>
                 {
                     if (v.Type == GameVoxelType.Land)

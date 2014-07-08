@@ -21,14 +21,14 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private void doWork(IVoxelHandle handle)
         {
             var warehouse =
-                handle.GetRange(5).FirstOrDefault(v => v.Type == Warehouse && v.DataValue < 20);
+                handle.GetRange(5).FirstOrDefault(v => v.Type == Warehouse && v.Data.DataValue < 20);
             if (warehouse == null) return;
 
-            var forest = handle.GetRange(5).FirstOrDefault(v => v.Type == Forest && v.DataValue > 0);
+            var forest = handle.GetRange(5).FirstOrDefault(v => v.Type == Forest && v.Data.DataValue > 0);
             if (forest == null) return;
 
-            forest.DataValue--;
-            warehouse.DataValue++;
+            forest.Data.DataValue--;
+            warehouse.Data.DataValue++;
         }
     }
 }

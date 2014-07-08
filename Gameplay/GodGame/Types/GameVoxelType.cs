@@ -101,10 +101,10 @@ namespace MHGameWork.TheWizards.GodGame
         private Color color;
         private bool coloredBaseMesh;
 
-        public virtual IMesh GetMesh(GameVoxel gameVoxel)
+        public virtual IMesh GetMesh(IVoxelHandle gameVoxel)
         {
-            if (datavalueMeshes.ContainsKey(gameVoxel.DataValue))
-                return datavalueMeshes[gameVoxel.DataValue];
+            if (datavalueMeshes.ContainsKey(gameVoxel.Data.DataValue))
+                return datavalueMeshes[gameVoxel.Data.DataValue];
             return mesh;
         }
 

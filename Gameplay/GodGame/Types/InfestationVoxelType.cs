@@ -19,15 +19,15 @@ namespace MHGameWork.TheWizards.GodGame
 
             var target = possible[i];
 
-            target.MagicLevel--;
-            if (target.MagicLevel < 0)
+            target.Data.MagicLevel--;
+            if (target.Data.MagicLevel < 0)
             {
-                target.MagicLevel = 0;
+                target.Data.MagicLevel = 0;
                 target.ChangeType(GameVoxelType.Infestation);
             }
         }
 
-        private bool isInfecteable(GameVoxel arg)
+        private bool isInfecteable(IVoxelHandle arg)
         {
             if (arg == null) return false;
             if (arg.Type == null) return false;

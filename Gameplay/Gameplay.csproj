@@ -184,23 +184,23 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GodGame\GameVoxel.cs" />
-    <Compile Include="GodGame\GodGameMain.cs" />
-    <Compile Include="GodGame\GodPowers.cs" />
-    <Compile Include="GodGame\IVoxelHandle.cs" />
-    <Compile Include="GodGame\SimpleWorldRenderer.cs" />
-    <Compile Include="GodGame\TickSimulator.cs" />
+    <Compile Include="GodGame\DelegatePlayerInputHandler.cs" />
+    <Compile Include="GodGame\Internal\GameVoxel.cs" />
+    <Compile Include="GodGame\Internal\GodGameMain.cs" />
+    <Compile Include="GodGame\IPlayerInputHandler.cs" />
+    <Compile Include="GodGame\Internal\IVoxelHandle.cs" />
+    <Compile Include="GodGame\Internal\SimpleWorldRenderer.cs" />
+    <Compile Include="GodGame\Internal\TickSimulator.cs" />
     <Compile Include="GodGame\Types\MonumentType.cs" />
     <Compile Include="GodGame\Types\WarehouseType.cs" />
     <Compile Include="GodGame\Types\VillageType.cs" />
     <Compile Include="GodGame\Types\ForestType.cs" />
     <Compile Include="GodGame\Types\InfestationVoxelType.cs" />
     <Compile Include="GodGame\UIRenderer.cs" />
-    <Compile Include="GodGame\World.cs" />
+    <Compile Include="GodGame\Internal\World.cs" />
     <Compile Include="GodGame\Types\GameVoxelType.cs" />
+    <Compile Include="GodGame\VoxelData.cs" />
     <Compile Include="GodGame\_Tests\GodGameMainTest.cs" />
-    <Compile Include="GodGame\_Tests\GodPowersTest.cs" />
-    <Compile Include="GodGame\VoxelType.cs" />
     <Compile Include="GodGame\CreateLandInputHandler.cs" />
     <Compile Include="GodGame\PlayerInputSimulator.cs" />
     <Compile Include="GodGame\_Tests\RendererTest.cs" />

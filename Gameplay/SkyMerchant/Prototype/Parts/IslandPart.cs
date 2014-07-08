@@ -196,7 +196,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.Prototype.Parts
 
         //    dir *= 5;
 
-        //    drivingIsland.Velocity += dir * TW.Graphics.Elapsed;
+        //    drivingIsland.Velocity += dir * TW.Graphics.TickLength;
 
         //    TW.Graphics.SpectaterCamera.CameraPosition = drivingIsland.Physical.Position +
         //                                                 new Vector3(0, 10, 0);

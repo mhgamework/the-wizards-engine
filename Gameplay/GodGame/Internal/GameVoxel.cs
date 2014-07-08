@@ -21,15 +21,24 @@ namespace MHGameWork.TheWizards.GodGame
         public void ChangeType(GameVoxelType air)
         {
             Type = air;
-            DataValue = 0;
+            Data = new VoxelData();
         }
 
         public GameVoxelType Type { get; private set; }
 
-        public int DataValue { get; set; }
+        public VoxelData Data { get; set; }
 
-        public int MagicLevel { get; set; }
+        public int MagicLevel
+        {
+            get { return Data.MagicLevel; }
+            set { Data.MagicLevel = value; }
+        }
 
+        public int DataValue
+        {
+            get { return Data.DataValue; }
+            set { Data.DataValue = value; }
+        }
 
         public BoundingBox GetBoundingBox()
         {
