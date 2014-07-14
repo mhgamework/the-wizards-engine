@@ -18,6 +18,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public static VillageType Village = new VillageType();
         public static WarehouseType Warehouse = new WarehouseType();
         public static MonumentType Monument = new MonumentType();
+        public static WaterType Water = new WaterType();
+        public static HoleType Hole = new HoleType();
 
         static GameVoxelType()
         {

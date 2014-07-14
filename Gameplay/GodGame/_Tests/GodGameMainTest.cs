@@ -48,6 +48,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             yield return createTypeInput(GameVoxelType.Warehouse);
             yield return createTypeInput(GameVoxelType.Infestation);
             yield return createTypeInput(GameVoxelType.Monument);
+            yield return createTypeInput(GameVoxelType.Water);
+            yield return createTypeInput(GameVoxelType.Hole);
         }
 
         private static DelegatePlayerInputHandler createTypeInput(GameVoxelType type)

@@ -38,6 +38,16 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         {
             return world.Get8Connected(CurrentVoxel.Coord).Select(encapsulate);
         }
+      
+        public IEnumerable<IVoxelHandle> Get4Connected()
+        {
+            var ret = new IVoxelHandle[4];
+            ret[0] = GetRelative(new Point2(1, 0));
+            ret[1] = GetRelative(new Point2(-1, 0));
+            ret[2] = GetRelative(new Point2(0, 1));
+            ret[3] = GetRelative(new Point2(0, -1));
+            return ret;
+        }
 
         public Seeder Seeder { get; private set; }
 
