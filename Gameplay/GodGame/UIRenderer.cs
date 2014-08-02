@@ -87,19 +87,23 @@ namespace MHGameWork.TheWizards.GodGame
         }
 
 
-        private List<IVoxelInfoVisualizer> visualizers = new List<IVoxelInfoVisualizer>();
+        private List<IVoxelInfoVisualizer> visualizers = new List<IVoxelInfoVisualizer>();  
         private GameVoxel visualizedVoxel = null;
         private GameVoxelType visualizedType = null;
         private void updateSelectedVoxelVisualizers()
         {
             var voxel = inputSim.GetTargetedVoxel();
-            if (voxel != visualizedVoxel || voxel.Type != visualizedType)
+            if (voxel != visualizedVoxel || (voxel != null && voxel.Type != visualizedType))
             {
                 foreach (var v in visualizers) v.Hide();
                 visualizers.Clear();
-                visualizers.AddRange(voxel.Type.GetInfoVisualizers(new IVoxelHandle(world, voxel)));
+
+                visualizedVoxel = null;
+                visualizedVoxel = null;
+                
                 visualizedVoxel = voxel;
                 visualizedType = voxel.Type;
+                visualizers.AddRange(voxel.Type.GetInfoVisualizers(new IVoxelHandle(world, voxel)));
                 foreach (var v in visualizers) v.Show();
 
             }

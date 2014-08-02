@@ -14,12 +14,13 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         }
 
-        private float nextInfuse;
 
         public override void Tick(IVoxelHandle handle)
         {
+            var nextInfuse = handle.Data.DataValue / 1000;
+
             if (nextInfuse > handle.TotalTime) return;
-            nextInfuse = handle.TotalTime + 1;
+            handle.Data.DataValue = (int)((handle.TotalTime + 1) * 1000);
 
             foreach (var v in handle.GetRange(5))
             {
