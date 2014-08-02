@@ -57,8 +57,8 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public void TransferItemsTo(Inventory targetInventory, ItemType type, int amount)
         {
             if (this.GetAmountOfType(type) < amount) throw new InvalidOperationException("The source inventory does not contain enough items");
+            amount = targetInventory.changeAmountOfType(type, amount);
             this.changeAmountOfType(type, -amount);
-            targetInventory.changeAmountOfType(type, amount);
         }
 
         public int GetAmountOfType(ItemType type)
@@ -81,7 +81,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public void TakeAll(Inventory inventory)
         {
-            foreach (var el in new Dictionary<ItemType,int>(inventory.itemAmounts))
+            foreach (var el in new Dictionary<ItemType, int>(inventory.itemAmounts))
                 inventory.TransferItemsTo(this, el.Key, el.Value);
         }
 
@@ -92,7 +92,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public void DestroyItems(ItemType type, int amount)
         {
-            changeAmountOfType(type,-amount);
+            changeAmountOfType(type, -amount);
         }
 
         public void Clear()
@@ -100,15 +100,23 @@ namespace MHGameWork.TheWizards.Scattered.Model
             itemAmounts.Clear();
         }
 
-        public IEnumerable<ItemType> Items{get
+        public IEnumerable<ItemType> Items
         {
-            foreach (var p in itemAmounts)
+            get
             {
-                for (int i = 0; i < p.Value; i++)
+                foreach (var p in itemAmounts)
                 {
-                    yield return p.Key;
+                    for (int i = 0; i < p.Value; i++)
+                    {
+                        yield return p.Key;
+                    }
                 }
             }
-        }}
+        }
+
+        public int AvailableSlots
+        {
+            get { return Capacity - ItemCount; }
+        }
     }
 }

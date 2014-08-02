@@ -17,7 +17,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             this.world = world;
             Seeder = new Seeder(0);
         }
-        public IVoxelHandle(World world, GameVoxel gameVoxel) : this(world)
+        public IVoxelHandle(World world, GameVoxel gameVoxel)
+            : this(world)
         {
             CurrentVoxel = gameVoxel;
         }
@@ -102,6 +103,30 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         public GameVoxelType Type
         {
             get { return currentVoxel.Type; }
+        }
+
+        public bool CanAcceptItemType(ItemType type)
+        {
+            return Type.CanAcceptItemType(this, type);
+        }
+
+
+        protected bool Equals(IVoxelHandle other)
+        {
+            return Equals(currentVoxel, other.currentVoxel);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((IVoxelHandle) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (currentVoxel != null ? currentVoxel.GetHashCode() : 0);
         }
     }
 }

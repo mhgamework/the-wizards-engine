@@ -1,5 +1,8 @@
 ﻿using System.Drawing;
+using DirectX11;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.Scattered.Model;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
@@ -8,15 +11,45 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public WarehouseType()
             : base("Warehouse")
         {
-            Color = Color.Gold;
         }
         public override void Tick(IVoxelHandle handle)
         {
-            
+            handle.Data.Inventory.ChangeCapacity(25);
 
         }
 
+        public override bool CanAcceptItemType(IVoxelHandle voxelHandle, ItemType type)
+        {
+            return voxelHandle.Data.Inventory.AvailableSlots > 0;
+        }
 
-        
+        public override System.Collections.Generic.IEnumerable<IVoxelInfoVisualizer> GetInfoVisualizers(IVoxelHandle handle)
+        {
+            yield break;
+        }
+
+        public override System.Collections.Generic.IEnumerable<IVoxelInfoVisualizer> GetCustomVisualizers(IVoxelHandle handle)
+        {
+            var inv = new InventoryVisualizer(handle);
+            inv.ItemRelativeTransformationProvider = i =>
+                {
+                    var size = 5;
+                    var x = (float)(i % size);
+                    var y = (float)(i / size);
+                    var tileSize = 10;
+
+                    var cellSize = tileSize / (float)size;
+
+                    x -= size / 2f;
+                    y -= size / 2f;
+
+
+                    return Matrix.Scaling(MathHelper.One * 0.5f) *
+                           Matrix.Translation(cellSize * (x + 0.5f), 1f, cellSize * (y + 0.5f));
+                };
+            yield return inv;
+        }
+
+
     }
 }

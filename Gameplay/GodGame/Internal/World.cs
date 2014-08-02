@@ -15,6 +15,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         public Vector2 VoxelSize { get; private set; }
         private Array2D<GameVoxel> voxels;
         public int WorldSize { get { return voxels.Size.X; } }
+
+      
+
         public World(int size, float voxelSize)
         {
             this.VoxelSize = new Vector2(voxelSize);
@@ -60,6 +63,27 @@ namespace MHGameWork.TheWizards.GodGame.Internal
                     if (v != null)
                         yield return v;
                 }
+        }
+
+
+        private HashSet<GameVoxel> changedVoxels = new HashSet<GameVoxel>();
+        /// <summary>
+        /// TODO: WARNING: this currently only works for type changes
+        /// </summary>
+        public IEnumerable<GameVoxel> ChangedVoxels
+        {
+            get { return changedVoxels; }
+        }
+        public void NotifyVoxelChanged(GameVoxel v)
+        {
+            changedVoxels.Add(v);
+        }
+
+        public void ClearChangedFlags()
+        {
+            foreach (var voxel in ChangedVoxels)
+                voxel.TypeChanged = false;
+            changedVoxels.Clear();
         }
     }
 }

@@ -100,7 +100,7 @@ namespace MHGameWork.TheWizards.GodGame
 
                 visualizedVoxel = null;
                 visualizedType = null;
-                if (visualizedVoxel != null)
+                if (voxel != null)
                 {
                     visualizedVoxel = voxel;
                     visualizedType = voxel.Type;

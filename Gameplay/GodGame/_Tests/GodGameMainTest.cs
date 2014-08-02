@@ -52,6 +52,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             yield return createTypeInput(GameVoxelType.Hole);
             yield return createOreInput();
             yield return createTypeInput(GameVoxelType.Miner);
+            yield return createTypeInput(GameVoxelType.Road);
         }
 
         private static DelegatePlayerInputHandler createTypeInput(GameVoxelType type)

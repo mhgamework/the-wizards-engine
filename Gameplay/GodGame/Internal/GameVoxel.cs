@@ -11,6 +11,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
     public class GameVoxel
     {
         private readonly World world;
+        private GameVoxelType type;
         public Point2 Coord { get; private set; }
 
         public GameVoxel(World world, Point2 coord)
@@ -25,7 +26,18 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             Data = new VoxelData();
         }
 
-        public GameVoxelType Type { get; private set; }
+        public GameVoxelType Type
+        {
+            get { return type; }
+            private set
+            {
+                if (type == value) return; type = value;
+                TypeChanged = true;
+                world.NotifyVoxelChanged(this);
+            }
+        }
+
+        public bool TypeChanged { get; set; }
 
         public VoxelData Data { get; set; }
 

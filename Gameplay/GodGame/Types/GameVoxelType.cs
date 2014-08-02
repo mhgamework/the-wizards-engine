@@ -24,6 +24,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public static HoleType Hole = new HoleType();
         public static OreType Ore = new OreType();
         public static MinerType Miner = new MinerType();
+        public static RoadType Road = new RoadType();
 
         static GameVoxelType()
         {
@@ -131,8 +132,17 @@ namespace MHGameWork.TheWizards.GodGame.Types
         /// </summary>
         public virtual IEnumerable<IVoxelInfoVisualizer> GetInfoVisualizers(IVoxelHandle handle)
         {
-            return Enumerable.Empty<IVoxelInfoVisualizer>();
+            yield return new InventoryVisualizer(handle);
         }
-     
+
+        public virtual bool CanAcceptItemType(IVoxelHandle voxelHandle, ItemType type)
+        {
+            return false;
+        }
+
+        public virtual IEnumerable<IVoxelInfoVisualizer> GetCustomVisualizers(IVoxelHandle handle)
+        {
+          yield break;
+        }
     }
 }

@@ -22,8 +22,25 @@ namespace MHGameWork.TheWizards.GodGame.Types
             // TODO: should actually be done on type change of voxel, not every tick
             handle.Data.Inventory.ChangeCapacity(5);
 
-
             handle.EachRandomInterval(1, () => tryMine(handle));
+            handle.EachRandomInterval(1, () => tryOutput(handle));
+        }
+
+        private void tryOutput(IVoxelHandle handle)
+        {
+            if (handle.Data.Inventory.ItemCount == 0) return;
+            var type = handle.Data.Inventory.Items.First();
+            var target = handle.Get4Connected().FirstOrDefault(v => v.CanAcceptItemType(type));
+
+            if (target == null) return;
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (!target.CanAcceptItemType(type)) break;
+                if (handle.Data.Inventory[type] == 0) break;
+                handle.Data.Inventory.TransferItemsTo(target.Data.Inventory, type, 1);
+            }
+
         }
 
         private void tryMine(IVoxelHandle handle)

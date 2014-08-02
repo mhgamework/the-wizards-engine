@@ -18,12 +18,24 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private readonly GameVoxel handle;
         private Entity[] entityCache = new Entity[50];
 
+        public Func<int, Matrix> ItemRelativeTransformationProvider { get; set; }
+
         public InventoryVisualizer(IVoxelHandle handle)
         {
             // WARNING: cannot keep handle because it can be shared across voxels!!
             // IDEA: should autoconvert between the gameplay voxel type and the rendering voxel type
             this.handle = handle.GetInternalVoxel();
+
+            ItemRelativeTransformationProvider = getItemCircleTransformation;
         }
+
+        private Matrix getItemCircleTransformation(int i)
+        {
+            var radius = handle.GetBoundingBox().Maximum.X - handle.GetBoundingBox().Minimum.X;
+            var angle = MathHelper.TwoPi / handle.Data.Inventory.ItemCount * i;
+            return Matrix.Translation( new Vector3(Math.Cos(angle).ToF(), 0.5f, Math.Sin(angle).ToF()) * radius);
+        }
+
 
         public void Show()
         {
@@ -33,15 +45,13 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public void Update()
         {
             var center = handle.GetBoundingBox().GetCenter();
-            var radius = handle.GetBoundingBox().Maximum.X - handle.GetBoundingBox().Minimum.X;
             var items = handle.Data.Inventory.Items.ToArray();
 
             for (int i = 0; i < items.Length; i++)
             {
-                var angle = MathHelper.TwoPi / items.Length * i;
                 var ent = getEntity(i);
                 ent.Mesh = items[i].Mesh;
-                ent.WorldMatrix = Matrix.Translation(center + new Vector3(Math.Cos(angle).ToF(), 0, Math.Sin(angle).ToF()) * radius);
+                ent.WorldMatrix = ItemRelativeTransformationProvider(i) * Matrix.Translation(center);
             }
 
         }
