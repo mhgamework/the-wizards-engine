@@ -6,10 +6,22 @@ namespace MHGameWork.TheWizards.Scattered._Engine
 {
     public static class MathExtensions
     {
-        public static BoundingBox CenteredBoundingbox(this Vector3 v)
+        /// <summary>
+        /// Creates a bounding box centered on the origin with given size.
+        /// </summary>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        public static BoundingBox CenteredBoundingbox(this Vector3 size)
         {
-            return new BoundingBox(-v * 0.5f, v * 0.5f);
+            return new BoundingBox(-size * 0.5f, size * 0.5f);
         }
+
+        public static BoundingBox ToBoundingBox(this Vector3 center, Vector3 radius)
+        {
+            return new BoundingBox(center - radius, center + radius);
+        }
+
+
 
         public static Point2 Floor(this Vector2 v)
         {

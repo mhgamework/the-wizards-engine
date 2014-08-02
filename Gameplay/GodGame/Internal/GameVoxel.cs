@@ -41,9 +41,14 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             set { Data.DataValue = value; }
         }
 
+        public World World
+        {
+            get { return world; }
+        }
+
         public BoundingBox GetBoundingBox()
         {
-            return world.GetBoundingBox(Coord);
+            return World.GetBoundingBox(Coord);
         }
     }
 }

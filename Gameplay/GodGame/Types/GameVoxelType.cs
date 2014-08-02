@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Scattered.Model;
 using SlimDX;
 using MHGameWork.TheWizards.IO;
 
@@ -11,8 +13,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
 {
     public class GameVoxelType
     {
-        public static GameVoxelType Air;
-        public static GameVoxelType Land;
+        public static GameVoxelType Air = new GameVoxelType("Air") { NoMesh = true };
+        public static GameVoxelType Land = new GameVoxelType("Land") { Color = Color.SandyBrown };
         public static InfestationVoxelType Infestation = new InfestationVoxelType();
         public static ForestType Forest = new ForestType();
         public static VillageType Village = new VillageType();
@@ -20,11 +22,11 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public static MonumentType Monument = new MonumentType();
         public static WaterType Water = new WaterType();
         public static HoleType Hole = new HoleType();
+        public static OreType Ore = new OreType();
+        public static MinerType Miner = new MinerType();
 
         static GameVoxelType()
         {
-            Air = new GameVoxelType("Air") { NoMesh = true };
-            Land = new GameVoxelType("Land") { Color = Color.SandyBrown };
         }
         public GameVoxelType(string name)
         {
@@ -36,10 +38,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public string Name { get; private set; }
 
-
-        public bool NoMesh { get; private set; }
-
-        #region Colored mesh
+        #region Mesh
 
         public Color Color
         {
@@ -70,7 +69,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 updateColoredBaseMesh();
             }
         }
-        #endregion
+
+        public bool NoMesh { get; private set; }
 
         private void searchSuggestedMeshes()
         {
@@ -93,10 +93,6 @@ namespace MHGameWork.TheWizards.GodGame.Types
             }
         }
 
-        public virtual void Tick(IVoxelHandle handle)
-        {
-
-        }
 
         protected IMesh mesh;
         protected Dictionary<int, IMesh> datavalueMeshes = new Dictionary<int, IMesh>();
@@ -110,10 +106,33 @@ namespace MHGameWork.TheWizards.GodGame.Types
             return mesh;
         }
 
+        #endregion
 
-        public bool Interact(IVoxelHandle handle)
+        /// <summary>
+        /// Called when a voxel should simulate its logic
+        /// </summary>
+        /// <param name="handle"></param>
+        public virtual void Tick(IVoxelHandle handle) { }
+
+        /// <summary>
+        /// Called when the user attempts to interact with the voxels, 
+        /// most likely through a right click
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <returns></returns>
+        public virtual bool Interact(IVoxelHandle handle) { return false; }
+
+        /// <summary>
+        /// Used to display info about a voxel. The user can request additional info about a voxel.
+        /// This method should return a list of visualizers that display the necessary info to the user
+        /// for given voxel.
+        /// NOTE: the list of returned visualizers should remain the same for each voxel+type combination throughout the application,
+        /// otherwise the list might not get updated as expected.
+        /// </summary>
+        public virtual IEnumerable<IVoxelInfoVisualizer> GetInfoVisualizers(IVoxelHandle handle)
         {
-            return false;
+            return Enumerable.Empty<IVoxelInfoVisualizer>();
         }
+     
     }
 }

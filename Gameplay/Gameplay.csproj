@@ -191,8 +191,14 @@
     <Compile Include="GodGame\Internal\IVoxelHandle.cs" />
     <Compile Include="GodGame\Internal\SimpleWorldRenderer.cs" />
     <Compile Include="GodGame\Internal\TickSimulator.cs" />
+    <Compile Include="GodGame\Internal\IVoxelInfoVisualizer.cs" />
+    <Compile Include="GodGame\Types\MinerType.cs" />
+    <Compile Include="GodGame\Types\OreType.cs" />
     <Compile Include="GodGame\Types\HoleType.cs" />
     <Compile Include="GodGame\Types\MonumentType.cs" />
+    <Compile Include="GodGame\VoxelInfoVisualizers\InventoryVisualizer.cs" />
+    <Compile Include="GodGame\VoxelInfoVisualizers\HighlightVoxelsVisualizer.cs" />
+    <Compile Include="GodGame\VoxelInfoVisualizers\RangeVisualizer.cs" />
     <Compile Include="GodGame\Types\WarehouseType.cs" />
     <Compile Include="GodGame\Types\VillageType.cs" />
     <Compile Include="GodGame\Types\ForestType.cs" />

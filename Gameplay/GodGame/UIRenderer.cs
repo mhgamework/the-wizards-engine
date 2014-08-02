@@ -1,6 +1,9 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.GodGame._Tests;
 using MHGameWork.TheWizards.Scattered.GameLogic.Services;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
@@ -35,22 +38,27 @@ namespace MHGameWork.TheWizards.GodGame
         public void Simulate()
         {
             updateTextarea();
-            reticle.drawReticle();
+            updateSelectedVoxelVisualizers();
+            drawReticle();
             drawSelectedVoxel();
             drawWorldBoundingbox();
             drawDataValue();
         }
 
+
+
         private void updateTextarea()
         {
             textarea.Text = inputSim.ActiveHandler.Name;
         }
-
+        private void drawReticle()
+        {
+            reticle.drawReticle();
+        }
         private void drawWorldBoundingbox()
         {
             TW.Graphics.LineManager3D.AddBox(new BoundingBox(new Vector3(0, 0, 0), new Vector3(world.VoxelSize.X * world.WorldSize, 1, world.VoxelSize.Y * world.WorldSize)), new Color4(0, 0, 0));
         }
-
         private void drawSelectedVoxel()
         {
             var v = inputSim.GetTargetedVoxel();
@@ -61,11 +69,7 @@ namespace MHGameWork.TheWizards.GodGame
             TW.Graphics.LineManager3D.AddBox(bb, Color.Yellow.dx());
         }
 
-
-
-
         private TextRectangle dataValueRectangle = new TextRectangle();
-
         private void drawDataValue()
         {
             var target = inputSim.GetTargetedVoxel();
@@ -80,6 +84,27 @@ namespace MHGameWork.TheWizards.GodGame
             dataValueRectangle.Radius = 3;
             dataValueRectangle.Update();
 
+        }
+
+
+        private List<IVoxelInfoVisualizer> visualizers = new List<IVoxelInfoVisualizer>();
+        private GameVoxel visualizedVoxel = null;
+        private GameVoxelType visualizedType = null;
+        private void updateSelectedVoxelVisualizers()
+        {
+            var voxel = inputSim.GetTargetedVoxel();
+            if (voxel != visualizedVoxel || voxel.Type != visualizedType)
+            {
+                foreach (var v in visualizers) v.Hide();
+                visualizers.Clear();
+                visualizers.AddRange(voxel.Type.GetInfoVisualizers(new IVoxelHandle(world, voxel)));
+                visualizedVoxel = voxel;
+                visualizedType = voxel.Type;
+                foreach (var v in visualizers) v.Show();
+
+            }
+
+            foreach (var v in visualizers) v.Update();
         }
     }
 }

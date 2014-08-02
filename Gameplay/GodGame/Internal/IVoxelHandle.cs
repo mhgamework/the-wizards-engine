@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DirectX11;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Types;
+using MHGameWork.TheWizards.Scattered.Model;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
@@ -16,10 +17,15 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             this.world = world;
             Seeder = new Seeder(0);
         }
-
         public IVoxelHandle(World world, GameVoxel gameVoxel) : this(world)
         {
             CurrentVoxel = gameVoxel;
+        }
+        private IVoxelHandle encapsulate(GameVoxel v)
+        {
+            var ret = new IVoxelHandle(world); // TODO: use pool, or is this solved by gc?
+            ret.CurrentVoxel = v;
+            return ret;
         }
 
         /// <summary>
@@ -34,11 +40,21 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             set { currentVoxel = value; }
         }
 
+        /// <summary>
+        /// DO NOT USE THIS IN GAMEPLAY LAYER!
+        /// Simply exists because some design issues are to time consuming and not relevant enough to solve.
+        /// </summary>
+        /// <returns></returns>
+        public GameVoxel GetInternalVoxel()
+        {
+            return currentVoxel;
+        }
+
+        #region Spatial
         public IEnumerable<IVoxelHandle> Get8Connected()
         {
             return world.Get8Connected(CurrentVoxel.Coord).Select(encapsulate);
         }
-      
         public IEnumerable<IVoxelHandle> Get4Connected()
         {
             var ret = new IVoxelHandle[4];
@@ -48,11 +64,18 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             ret[3] = GetRelative(new Point2(0, -1));
             return ret;
         }
+        public IEnumerable<IVoxelHandle> GetRange(int radius)
+        {
+            return world.GetRange(CurrentVoxel, radius).Select(encapsulate);
+        }
+        public IVoxelHandle GetRelative(Point2 p)
+        {
+            return encapsulate(world.GetVoxel(CurrentVoxel.Coord + p));
+        }
+        #endregion
 
-        public Seeder Seeder { get; private set; }
 
         public float TickLength { get { return TW.Graphics.Elapsed; } }
-
         public float TotalTime { get { return TW.Graphics.TotalRunTime; } }
 
         /// <summary>
@@ -68,31 +91,14 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             Seeder.EachRandomInterval(averageInterval, action, TickLength);
         }
 
-        public IEnumerable<IVoxelHandle> GetRange(int radius)
-        {
-            return world.GetRange(CurrentVoxel, radius).Select(encapsulate);
-        }
-
         public VoxelData Data { get { return currentVoxel.Data; } }
 
-
-        public IVoxelHandle GetRelative(Point2 p)
-        {
-            return encapsulate(world.GetVoxel(CurrentVoxel.Coord + p));
-        }
-
-        private IVoxelHandle encapsulate(GameVoxel v)
-        {
-            var ret = new IVoxelHandle(world); // TODO: use pool, or is this solved by gc?
-            ret.CurrentVoxel = v;
-            return ret;
-        }
+        public Seeder Seeder { get; private set; }
 
         public void ChangeType(GameVoxelType air)
         {
             currentVoxel.ChangeType(air);
         }
-
         public GameVoxelType Type
         {
             get { return currentVoxel.Type; }

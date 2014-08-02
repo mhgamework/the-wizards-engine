@@ -50,6 +50,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             yield return createTypeInput(GameVoxelType.Monument);
             yield return createTypeInput(GameVoxelType.Water);
             yield return createTypeInput(GameVoxelType.Hole);
+            yield return createOreInput();
+            yield return createTypeInput(GameVoxelType.Miner);
         }
 
         private static DelegatePlayerInputHandler createTypeInput(GameVoxelType type)
@@ -60,6 +62,19 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                 {
                     if (v.Type == GameVoxelType.Land)
                         v.ChangeType(type);
+                });
+        }
+        private static DelegatePlayerInputHandler createOreInput()
+        {
+            return new DelegatePlayerInputHandler(GameVoxelType.Ore.Name,
+                v => v.ChangeType(GameVoxelType.Land),
+                v =>
+                {
+                    if (v.Type == GameVoxelType.Land)
+                    {
+                        v.ChangeType(GameVoxelType.Ore);
+                        v.Data.DataValue = 3;
+                    }
                 });
         }
     }
