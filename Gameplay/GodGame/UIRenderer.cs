@@ -99,12 +99,14 @@ namespace MHGameWork.TheWizards.GodGame
                 visualizers.Clear();
 
                 visualizedVoxel = null;
-                visualizedVoxel = null;
-                
-                visualizedVoxel = voxel;
-                visualizedType = voxel.Type;
-                visualizers.AddRange(voxel.Type.GetInfoVisualizers(new IVoxelHandle(world, voxel)));
-                foreach (var v in visualizers) v.Show();
+                visualizedType = null;
+                if (visualizedVoxel != null)
+                {
+                    visualizedVoxel = voxel;
+                    visualizedType = voxel.Type;
+                    visualizers.AddRange(voxel.Type.GetInfoVisualizers(new IVoxelHandle(world, voxel)));
+                    foreach (var v in visualizers) v.Show();
+                }
 
             }
 
