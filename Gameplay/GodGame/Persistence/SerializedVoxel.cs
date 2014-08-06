@@ -3,7 +3,7 @@ using System.Diagnostics;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Types;
 
-namespace MHGameWork.TheWizards.GodGame
+namespace MHGameWork.TheWizards.GodGame.Persistence
 {
     /// <summary>
     /// TODO: inventory
