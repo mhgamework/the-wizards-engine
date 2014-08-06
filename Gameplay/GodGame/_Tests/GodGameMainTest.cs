@@ -3,6 +3,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Types;
+using MHGameWork.TheWizards.Scattered.Model;
 using NUnit.Framework;
 using SlimDX;
 using System.Linq;
@@ -34,13 +35,19 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                 });
 
 
-            var worldPersister = new WorldPersister(getTypeFromName);
-            var ret = new GodGameMain(EngineFactory.CreateEngine(), 
+            var worldPersister = new WorldPersister(getTypeFromName, getItemFromName);
+            var ret = new GodGameMain(EngineFactory.CreateEngine(),
                 world,
                 new PlayerInputSimulator(createPlayerInputs(world).ToArray(), world, worldPersister),
                 worldPersister);
 
             return ret;
+        }
+
+        private static ItemType getItemFromName(string arg)
+        {
+            //TODO: make this real
+            return GameVoxelType.Ore.GetOreItemType(null);
         }
 
         private static GameVoxelType getTypeFromName(string name)
@@ -65,7 +72,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
         private static DelegatePlayerInputHandler createTypeInput(GameVoxelType type)
         {
-            return new DelegatePlayerInputHandler(type.Name, 
+            return new DelegatePlayerInputHandler(type.Name,
                 v => v.ChangeType(GameVoxelType.Land),
                 v =>
                 {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.GodGame.Types;
+using MHGameWork.TheWizards.Scattered.Model;
 
 namespace MHGameWork.TheWizards.GodGame.Persistence
 {
@@ -19,12 +20,12 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
             world.ForEach((v, p) => sWorld.Voxels.Add(SerializedVoxel.FromVoxel(v)));
             return sWorld;
         }
-        public void ToWorld(Internal.World world, Func<string, GameVoxelType> typeFactory)
+        public void ToWorld(Internal.World world, Func<string, GameVoxelType> typeFactory, Func<string, ItemType> itemFactory)
         {
             foreach (var el in Voxels)
             {
                 var v = world.GetVoxel(new Point2(el.X, el.Y));
-                el.ToVoxel(v, typeFactory);
+                el.ToVoxel(v, typeFactory,itemFactory);
             }
         }
 

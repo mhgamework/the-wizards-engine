@@ -20,9 +20,14 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public override void Tick(IVoxelHandle handle)
         {
+
             handle.Data.Inventory.ChangeCapacity(1);
 
-            handle.EachRandomInterval(0.5f, () => tryTransfer(handle));
+            handle.Data.DataValue += (int)(handle.TickLength * 1000);
+            if (handle.Data.DataValue < 500) return;
+
+            handle.Data.DataValue = 0;
+            tryTransfer(handle);
 
         }
 
@@ -123,5 +128,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 };
             yield return inv;
         }
+
+        public override bool DontShowDataValue { get { return true; } }
     }
 }

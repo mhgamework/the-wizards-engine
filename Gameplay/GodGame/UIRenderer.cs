@@ -73,7 +73,11 @@ namespace MHGameWork.TheWizards.GodGame
         private void drawDataValue()
         {
             var target = inputSim.GetTargetedVoxel();
-            if (target == null || target.DataValue == 0) return;
+            if (target == null || target.DataValue == 0 || target.Type.DontShowDataValue)
+            {
+                dataValueRectangle.Position = new Vector3(0, 10000, 0);
+                return;
+            }
             var max = target.GetBoundingBox().Maximum;
             var min = target.GetBoundingBox().Minimum;
             var pos = (max + min) * 0.5f + new Vector3(0, 6.5f, 0);
@@ -87,7 +91,7 @@ namespace MHGameWork.TheWizards.GodGame
         }
 
 
-        private List<IVoxelInfoVisualizer> visualizers = new List<IVoxelInfoVisualizer>();  
+        private List<IVoxelInfoVisualizer> visualizers = new List<IVoxelInfoVisualizer>();
         private GameVoxel visualizedVoxel = null;
         private GameVoxelType visualizedType = null;
         private void updateSelectedVoxelVisualizers()

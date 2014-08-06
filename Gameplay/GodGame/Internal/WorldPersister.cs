@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Debugging;
 using MHGameWork.TheWizards.GodGame.Persistence;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.IO;
+using MHGameWork.TheWizards.Scattered.Model;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
@@ -16,10 +17,12 @@ namespace MHGameWork.TheWizards.GodGame.Internal
     public class WorldPersister
     {
         private Func<string, GameVoxelType> typeFactory;
+        private Func<string, ItemType> itemFactory;
 
-        public WorldPersister(Func<string, GameVoxelType> typeFactory)
+        public WorldPersister(Func<string, GameVoxelType> typeFactory, Func<string, ItemType> itemFactory)
         {
             this.typeFactory = typeFactory;
+            this.itemFactory = itemFactory;
         }
 
         public void Save(World world, FileInfo file)
@@ -44,9 +47,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal
                 DI.Get<IErrorLogger>().Log(ex,"WorldPersister");
                 return;
             }
-           
 
-            sWorld.ToWorld(world,typeFactory);
+
+            sWorld.ToWorld(world,typeFactory,itemFactory);
         }
 
         private static XmlSerializer createXmlSerializer()

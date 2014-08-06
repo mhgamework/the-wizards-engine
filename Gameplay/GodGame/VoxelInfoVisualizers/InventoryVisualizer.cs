@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             var radius = handle.GetBoundingBox().Maximum.X - handle.GetBoundingBox().Minimum.X;
             var angle = MathHelper.TwoPi / handle.Data.Inventory.ItemCount * i;
-            return Matrix.Translation( new Vector3(Math.Cos(angle).ToF(), 0.5f, Math.Sin(angle).ToF()) * radius);
+            return Matrix.Translation(new Vector3(Math.Cos(angle).ToF(), 0.5f, Math.Sin(angle).ToF()) * radius);
         }
 
 
@@ -47,11 +47,13 @@ namespace MHGameWork.TheWizards.GodGame.Types
             var center = handle.GetBoundingBox().GetCenter();
             var items = handle.Data.Inventory.Items.ToArray();
 
+            entityCache.Where(e => e != null).ForEach(e => e.Visible = false);
             for (int i = 0; i < items.Length; i++)
             {
                 var ent = getEntity(i);
                 ent.Mesh = items[i].Mesh;
                 ent.WorldMatrix = ItemRelativeTransformationProvider(i) * Matrix.Translation(center);
+                ent.Visible = true;
             }
 
         }

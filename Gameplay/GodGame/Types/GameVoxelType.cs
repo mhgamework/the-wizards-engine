@@ -101,6 +101,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public bool NoMesh { get; private set; }
 
+        public virtual bool DontShowDataValue { get { return false; } }
+
         private void searchSuggestedMeshes()
         {
             var tilesFolder = TWDir.GameData.GetChild("Scattered").GetChild("GodGame").GetChild("Tiles");
