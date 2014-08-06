@@ -34,10 +34,18 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                 });
 
 
-
-            var ret = new GodGameMain(EngineFactory.CreateEngine(), world, new PlayerInputSimulator(createPlayerInputs(world).ToArray(), world));
+            var worldPersister = new WorldPersister(getTypeFromName);
+            var ret = new GodGameMain(EngineFactory.CreateEngine(), 
+                world,
+                new PlayerInputSimulator(createPlayerInputs(world).ToArray(), world, worldPersister),
+                worldPersister);
 
             return ret;
+        }
+
+        private static GameVoxelType getTypeFromName(string name)
+        {
+            return GameVoxelType.AllTypes.First(t => t.Name == name);
         }
 
         private static IEnumerable<IPlayerInputHandler> createPlayerInputs(Internal.World world)

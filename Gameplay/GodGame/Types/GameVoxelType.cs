@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
@@ -26,8 +28,34 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public static MinerType Miner = new MinerType();
         public static RoadType Road = new RoadType();
 
+        private static List<GameVoxelType> allTypes = new List<GameVoxelType>();
+        public static IEnumerable<GameVoxelType> AllTypes { get { return allTypes; } }
+
         static GameVoxelType()
         {
+            allTypes.Add(Air);
+            allTypes.Add(Land);
+            allTypes.Add(Infestation);
+            allTypes.Add(Forest);
+            allTypes.Add(Village);
+            allTypes.Add(Warehouse);
+            allTypes.Add(Monument);
+            allTypes.Add(Water);
+            allTypes.Add(Hole);
+            allTypes.Add(Ore);
+            allTypes.Add(Miner);
+            allTypes.Add(Road);
+
+            var voxelTypes =
+                Assembly.GetExecutingAssembly().GetTypes().Where(t => (typeof(GameVoxelType)).IsAssignableFrom(t)
+                                                                      && t != typeof(GameVoxelType));
+            foreach (var type in voxelTypes)
+            {
+                if (AllTypes.All(it => it.GetType() != type))
+                    throw new InvalidOperationException(
+                        "There exists a subtype of GameVoxelType, which is not added to the list of GameVoxelType.AllTypes " + type.Name);
+            }
+
         }
         public GameVoxelType(string name)
         {
@@ -142,7 +170,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public virtual IEnumerable<IVoxelInfoVisualizer> GetCustomVisualizers(IVoxelHandle handle)
         {
-          yield break;
+            yield break;
         }
     }
 }

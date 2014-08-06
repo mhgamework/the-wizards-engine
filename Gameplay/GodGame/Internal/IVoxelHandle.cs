@@ -99,6 +99,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         public void ChangeType(GameVoxelType air)
         {
             currentVoxel.ChangeType(air);
+
         }
         public GameVoxelType Type
         {

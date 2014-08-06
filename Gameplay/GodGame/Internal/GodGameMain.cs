@@ -1,5 +1,7 @@
-﻿using MHGameWork.TheWizards.Engine;
+﻿using System.IO;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.IO;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
@@ -8,12 +10,14 @@ namespace MHGameWork.TheWizards.GodGame.Internal
     /// </summary>
     public class GodGameMain
     {
+        private readonly WorldPersister persister;
         public World World { get; private set; }
 
 
 
-        public GodGameMain(TWEngine engine, World world, PlayerInputSimulator playerInputSimulator)
+        public GodGameMain(TWEngine engine, World world, PlayerInputSimulator playerInputSimulator, WorldPersister persister)
         {
+            this.persister = persister;
             World = world;
             engine.AddSimulator(playerInputSimulator);
 
@@ -22,6 +26,18 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             engine.AddSimulator(new SimpleWorldRenderer(world));
             engine.AddSimulator(new ClearWorldChangesSimulator(world));
             engine.AddSimulator(new WorldRenderingSimulator());
+
+
+            loadSave();
+
         }
+
+        private void loadSave()
+        {
+            if (!persister.GetDefaultSaveFile().Exists) return;
+            persister.Load(World, persister.GetDefaultSaveFile());
+        }
+
+       
     }
 }

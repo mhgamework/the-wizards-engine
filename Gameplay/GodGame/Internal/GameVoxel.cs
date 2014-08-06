@@ -24,6 +24,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         {
             Type = air;
             Data = new VoxelData();
+
         }
 
         public GameVoxelType Type

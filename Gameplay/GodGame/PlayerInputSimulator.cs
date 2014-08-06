@@ -11,13 +11,15 @@ namespace MHGameWork.TheWizards.GodGame
     {
         private readonly IEnumerable<IPlayerInputHandler> handlers;
         private Internal.World world;
+        private readonly WorldPersister worldPersister;
 
         public IPlayerInputHandler ActiveHandler { get; private set; }
 
-        public PlayerInputSimulator(IEnumerable<IPlayerInputHandler> handlers, Internal.World world)
+        public PlayerInputSimulator(IEnumerable<IPlayerInputHandler> handlers, Internal.World world, WorldPersister worldPersister)
         {
             this.handlers = handlers;
             this.world = world;
+            this.worldPersister = worldPersister;
             ActiveHandler = handlers.First();
         }
 
@@ -25,7 +27,18 @@ namespace MHGameWork.TheWizards.GodGame
         public void Simulate()
         {
             scrollActiveHandler();
+            simulateSave();
+            simulateTargetingInput();
+        }
 
+        private void simulateSave()
+        {
+            if (!TW.Graphics.Keyboard.IsKeyPressed(Key.O)) return;
+            worldPersister.Save(world,worldPersister.GetDefaultSaveFile());
+        }
+
+        private void simulateTargetingInput()
+        {
             var target = GetTargetedVoxel();
             if (target == null) return;
 

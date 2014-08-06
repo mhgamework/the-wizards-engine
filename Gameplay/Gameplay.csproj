@@ -189,11 +189,13 @@
     <Compile Include="GodGame\Internal\CustomVoxelsRenderer.cs" />
     <Compile Include="GodGame\Internal\GameVoxel.cs" />
     <Compile Include="GodGame\Internal\GodGameMain.cs" />
+    <Compile Include="GodGame\Internal\WorldPersister.cs" />
     <Compile Include="GodGame\IPlayerInputHandler.cs" />
     <Compile Include="GodGame\Internal\IVoxelHandle.cs" />
     <Compile Include="GodGame\Internal\SimpleWorldRenderer.cs" />
     <Compile Include="GodGame\Internal\TickSimulator.cs" />
     <Compile Include="GodGame\Internal\IVoxelInfoVisualizer.cs" />
+    <Compile Include="GodGame\SerializedVoxel.cs" />
     <Compile Include="GodGame\Types\RoadType.cs" />
     <Compile Include="GodGame\Types\MinerType.cs" />
     <Compile Include="GodGame\Types\OreType.cs" />
