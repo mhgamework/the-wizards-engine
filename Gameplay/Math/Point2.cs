@@ -142,5 +142,10 @@ namespace DirectX11
                 return result;
             }
         }
+
+        public float GetLength()
+        {
+            return (float)Math.Sqrt(X * X + Y * Y);
+        }
     }
 }

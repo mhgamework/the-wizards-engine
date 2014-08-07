@@ -28,10 +28,12 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             var world = new Internal.World(40, 10);
             world.ForEach((v, p) =>
                 {
-                    if (Vector2.Distance(p, new Vector2(10, 10)) > 6)
-                        v.ChangeType(GameVoxelType.Air);
-                    else
+                    if (Vector2.Distance(p, new Vector2(8, 8)) < 7)
                         v.ChangeType(GameVoxelType.Land);
+                    else if (Vector2.Distance(p, new Vector2(25, 25)) < 15)
+                        v.ChangeType(GameVoxelType.Infestation);
+                    else
+                        v.ChangeType(GameVoxelType.Air);
                 });
 
 
@@ -79,7 +81,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                     if (v.Type == GameVoxelType.Land)
                         v.ChangeType(type);
                 });
-        }
+        }   
         private static DelegatePlayerInputHandler createOreInput()
         {
             return new DelegatePlayerInputHandler(GameVoxelType.Ore.Name,
@@ -89,7 +91,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                     if (v.Type == GameVoxelType.Land)
                     {
                         v.ChangeType(GameVoxelType.Ore);
-                        v.Data.DataValue = 3;
+                        v.Data.DataValue = 20;
                     }
                 });
         }

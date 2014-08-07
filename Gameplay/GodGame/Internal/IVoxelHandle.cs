@@ -15,7 +15,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         public IVoxelHandle(World world)
         {
             this.world = world;
-            Seeder = new Seeder(0);
+            Seeder = new Seeder((new Random()).Next());
         }
         public IVoxelHandle(World world, GameVoxel gameVoxel)
             : this(world)
@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         #region Spatial
         public IEnumerable<IVoxelHandle> Get8Connected()
         {
-            return world.Get8Connected(CurrentVoxel.Coord).Select(encapsulate);
+            return world.Get8Connected(CurrentVoxel.Coord).Where(s => s != null).Select(encapsulate);
         }
         public IEnumerable<IVoxelHandle> Get4Connected()
         {
@@ -63,7 +63,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             ret[1] = GetRelative(new Point2(-1, 0));
             ret[2] = GetRelative(new Point2(0, 1));
             ret[3] = GetRelative(new Point2(0, -1));
-            return ret;
+            return ret.Where(s => s != null);
         }
         public IEnumerable<IVoxelHandle> GetRange(int radius)
         {
@@ -122,12 +122,17 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((IVoxelHandle) obj);
+            return Equals((IVoxelHandle)obj);
         }
 
         public override int GetHashCode()
         {
             return (currentVoxel != null ? currentVoxel.GetHashCode() : 0);
+        }
+
+        public float DistanceTo(IVoxelHandle handle)
+        {
+            return (handle.currentVoxel.Coord - currentVoxel.Coord).GetLength();
         }
     }
 }

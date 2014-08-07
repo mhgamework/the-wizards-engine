@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             var i = handle.Seeder.NextInt(0, possible.Length - 1);
 
             var target = possible[i];
-
+            if (target.Data.MagicLevel > 10) return;
             target.Data.MagicLevel--;
             if (target.Data.MagicLevel < 0)
             {

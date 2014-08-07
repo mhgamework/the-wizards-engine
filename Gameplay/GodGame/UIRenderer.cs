@@ -42,7 +42,8 @@ namespace MHGameWork.TheWizards.GodGame
             drawReticle();
             drawSelectedVoxel();
             drawWorldBoundingbox();
-            drawDataValue();
+            //drawDataValue();
+            drawMagicValue();
         }
 
 
@@ -73,23 +74,47 @@ namespace MHGameWork.TheWizards.GodGame
         private void drawDataValue()
         {
             var target = inputSim.GetTargetedVoxel();
+
             if (target == null || target.DataValue == 0 || target.Type.DontShowDataValue)
             {
-                dataValueRectangle.Position = new Vector3(0, 10000, 0);
+                hideDataValueRect();
                 return;
             }
+
+            showDataValueRect(target, target.DataValue);
+
+        }
+        private void drawMagicValue()
+        {
+            var target = inputSim.GetTargetedVoxel();
+
+            if (target == null )//|| target.MagicLevel == 0)
+            {
+                hideDataValueRect();
+                return;
+            }
+
+            showDataValueRect(target, target.MagicLevel);
+
+        }
+
+        private void hideDataValueRect()
+        {
+            dataValueRectangle.Position = new Vector3(0, 10000, 0);
+
+        }
+        private void showDataValueRect(GameVoxel target, int value)
+        {
             var max = target.GetBoundingBox().Maximum;
             var min = target.GetBoundingBox().Minimum;
             var pos = (max + min) * 0.5f + new Vector3(0, 6.5f, 0);
 
             dataValueRectangle.Position = pos;
             dataValueRectangle.IsBillboard = true;
-            dataValueRectangle.Text = target.DataValue.ToString();
+            dataValueRectangle.Text = value.ToString();// target.DataValue.ToString();
             dataValueRectangle.Radius = 3;
             dataValueRectangle.Update();
-
         }
-
 
         private List<IVoxelInfoVisualizer> visualizers = new List<IVoxelInfoVisualizer>();
         private GameVoxel visualizedVoxel = null;
