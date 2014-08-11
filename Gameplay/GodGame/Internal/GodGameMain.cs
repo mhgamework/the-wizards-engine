@@ -13,8 +13,6 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private readonly WorldPersister persister;
         public World World { get; private set; }
 
-
-
         public GodGameMain(TWEngine engine, World world, PlayerInputSimulator playerInputSimulator, WorldPersister persister, SimpleWorldRenderer simpleWorldRenderer)
         {
             this.persister = persister;

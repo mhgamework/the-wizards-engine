@@ -6,6 +6,7 @@ namespace MHGameWork.TheWizards.Networking.Client
 {
     /// <summary>
     /// Provides methods do send synchronously and receive synchronously. Asynchronous methods are currently not provided, since it is easier to make the actual game logic asynchronous than the packet sending.
+    /// TODO: try convert to ISingleEndpointPacketManager and the server one to IMultipleEndpointPacketManager, also try to better name PacketManager
     /// </summary>
     public interface IClientPacketManager
     {

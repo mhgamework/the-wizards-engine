@@ -75,6 +75,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
             renderLines();
         }
         
+        [TWProfile]
         private void drawDeferred()
         {
             TW.Graphics.Camera = info.ActiveCamera;

@@ -186,9 +186,14 @@
   <ItemGroup>
     <Compile Include="GodGame\DelegatePlayerInputHandler.cs" />
     <Compile Include="GodGame\Internal\ClearWorldChangesSimulator.cs" />
+    <Compile Include="GodGame\Internal\GodGameServer.cs" />
+    <Compile Include="GodGame\Internal\GodGameUser.cs" />
     <Compile Include="GodGame\Internal\CustomVoxelsRenderer.cs" />
     <Compile Include="GodGame\Internal\GameVoxel.cs" />
     <Compile Include="GodGame\Internal\GodGameMain.cs" />
+    <Compile Include="GodGame\Networking\NetworkedInputHandler.cs" />
+    <Compile Include="GodGame\Networking\NetworkSimulator.cs" />
+    <Compile Include="GodGame\Networking\Facade\RemoteMethodTransporter.cs" />
     <Compile Include="GodGame\Persistence\SerializedWorld.cs" />
     <Compile Include="GodGame\Internal\WorldPersister.cs" />
     <Compile Include="GodGame\IPlayerInputHandler.cs" />

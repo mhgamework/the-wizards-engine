@@ -48,13 +48,18 @@ namespace MHGameWork.TheWizards.GodGame.Types
             var center = handle.GetBoundingBox().GetCenter();
             var items = handle.Data.Inventory.Items.ToArray();
 
-            entityCache.Where(e => e != null).ForEach(e => e.Visible = false);
             for (int i = 0; i < items.Length; i++)
             {
                 var ent = getEntity(i);
                 ent.Mesh = items[i].Mesh;
                 ent.WorldMatrix = ItemRelativeTransformationProvider(i) * Matrix.Translation(center);
                 ent.Visible = true;
+            }
+            for (int i = items.Length; i < entityCache.Length; i++)
+            {
+                var ent = getEntity(i);
+                if (ent == null) continue;
+                ent.Visible = false;
             }
 
         }
