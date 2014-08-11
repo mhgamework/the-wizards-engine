@@ -73,8 +73,8 @@ namespace MHGameWork.TheWizards.Engine
             //if (sim.GetType().GetConstructor(new Type[] { }) == null)
             //    Console.WriteLine("Simulator found without empty constructor, hotloading will fail! " + sim.GetType().FullName);
 
-            sim = new ProfilingDecoratorSimulator(sim);
             sim = new ContextDecoratorSimulator(sim, EngineErrorLogger);
+            sim = new ProfilingDecoratorSimulator(sim);
             sim = new TracingDecoratorSimulator(TraceLogger, sim);
 
             simulators.Add(sim);

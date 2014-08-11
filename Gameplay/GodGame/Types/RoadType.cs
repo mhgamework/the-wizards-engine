@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             handle.Data.Inventory.ChangeCapacity(1);
 
             handle.Data.DataValue += (int)(handle.TickLength * 1000);
-            if (handle.Data.DataValue < 500) return;
+            if (handle.Data.DataValue < 200) return;
 
             handle.Data.DataValue = 0;
             tryTransfer(handle);

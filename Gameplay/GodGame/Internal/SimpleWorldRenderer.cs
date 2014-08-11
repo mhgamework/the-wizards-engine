@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 {
     public class SimpleWorldRenderer : ISimulator
     {
-        public const int RenderSize = 20;
+        public const int RenderSize = 10;
         private World world;
 
         private Array2D<Entity> entities;

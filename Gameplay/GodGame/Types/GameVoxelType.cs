@@ -120,7 +120,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 int dataVal;
                 if (!int.TryParse(dataValStr, out dataVal)) continue;
 
-                datavalueMeshes[dataVal] = TW.Assets.LoadMesh("Scattered\\GodGame\\Tiles\\" + Name + dataVal.ToString());
+                datavalueMeshes[dataVal] = MeshBuilder.Transform(TW.Assets.LoadMesh("Scattered\\GodGame\\Tiles\\" + Name + dataVal.ToString()), Matrix.Scaling(0.1f, 0.1f, 0.1f));
             }
         }
 
