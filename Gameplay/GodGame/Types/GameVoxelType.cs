@@ -27,6 +27,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public static OreType Ore = new OreType();
         public static MinerType Miner = new MinerType();
         public static RoadType Road = new RoadType();
+        public static CropType Crop = new CropType();
 
         private static List<GameVoxelType> allTypes = new List<GameVoxelType>();
         public static IEnumerable<GameVoxelType> AllTypes { get { return allTypes; } }
@@ -45,6 +46,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             allTypes.Add(Ore);
             allTypes.Add(Miner);
             allTypes.Add(Road);
+            allTypes.Add(Crop);
 
             var voxelTypes =
                 Assembly.GetExecutingAssembly().GetTypes().Where(t => (typeof(GameVoxelType)).IsAssignableFrom(t)
