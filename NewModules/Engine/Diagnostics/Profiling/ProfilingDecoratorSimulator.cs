@@ -11,10 +11,10 @@ namespace MHGameWork.TheWizards.Engine.Diagnostics.Profiling
         private readonly ISimulator decorated;
         private ProfilingPoint profilingPoint;
 
-        public ProfilingDecoratorSimulator(ISimulator decorated)
+        public ProfilingDecoratorSimulator(ISimulator decorated, string printName)
         {
             this.decorated = decorated;
-            profilingPoint = Profiler.CreateElement("Simulator: " + decorated.GetType().Name);
+            profilingPoint = Profiler.CreateElement("Simulator: " + printName);
         }
 
 
