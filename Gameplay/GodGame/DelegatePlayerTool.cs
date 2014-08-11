@@ -3,13 +3,13 @@ using MHGameWork.TheWizards.GodGame.Internal;
 
 namespace MHGameWork.TheWizards.GodGame
 {
-    class DelegatePlayerInputHandler : IPlayerInputHandler
+    class DelegatePlayerTool : IPlayerTool
     {
         private readonly Action<GameVoxel> onLeftClick;
         private readonly Action<GameVoxel> onRightClick;
         public string Name { get; private set; }
 
-        public DelegatePlayerInputHandler(string name, Action<GameVoxel> onLeftClick, Action<GameVoxel> onRightClick)
+        public DelegatePlayerTool(string name, Action<GameVoxel> onLeftClick, Action<GameVoxel> onRightClick)
         {
             this.onLeftClick = onLeftClick;
             this.onRightClick = onRightClick;

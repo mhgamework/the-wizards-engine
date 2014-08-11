@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Scattered.Model;
 using NUnit.Framework;
 using SlimDX;
 using System.Linq;
+using Autofac;
 
 namespace MHGameWork.TheWizards.GodGame._Tests
 {
@@ -20,12 +21,70 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         public void TestMainGame()
         {
             var game = CreateGame();
+            game.LoadSave();
 
         }
+
+        [Test]
+        public void TestServerGame()
+        {
+            var builder = new Autofac.ContainerBuilder();
+
+            builder.RegisterType<GodGameServer>().SingleInstance();
+            builder.RegisterType<WorldPersister>().SingleInstance();
+            builder.RegisterType<PlayerInputSimulator>().SingleInstance();
+            builder.RegisterType<TickSimulator>().SingleInstance();
+            
+            builder.Register(c => new PlayerInputHandler(
+                createPlayerInputs(c.Resolve<Internal.World>()), 
+                c.Resolve<Internal.World>(), 
+                c.Resolve<WorldPersister>(), 
+                c.Resolve<PlayerState>())).SingleInstance();
+            builder.RegisterInstance(new WorldPersister(getTypeFromName, getItemFromName));
+
+            builder.RegisterInstance(EngineFactory.CreateEngine());
+            builder.RegisterInstance(new PlayerState());
+
+            var world = new Internal.World(40, 10);
+            buildDemoWorld(world);
+
+            builder.RegisterInstance(world);
+
+
+            builder.Register(c => new GameState(c.Resolve<Internal.World>()).Alter(g => g.AddPlayer(c.Resolve<PlayerState>())));
+
+
+            // Until here goes the non-networked registration
+
+
+
+
+            
+            var container = builder.Build();
+            var server = container.Resolve<GodGameServer>();
+
+        }
+
 
         public static GodGameMain CreateGame()
         {
             var world = new Internal.World(40, 10);
+            var gameState = new GameState(world);
+
+            buildDemoWorld(world);
+
+
+            var worldPersister = new WorldPersister(getTypeFromName, getItemFromName);
+            var ret = new GodGameMain(EngineFactory.CreateEngine(),
+                gameState,
+                new PlayerInputSimulator(world, new PlayerInputHandler(createPlayerInputs(world), world, worldPersister, new PlayerState())),
+                worldPersister);
+
+            return ret;
+        }
+
+        private static void buildDemoWorld(Internal.World world)
+        {
             world.ForEach((v, p) =>
                 {
                     if (Vector2.Distance(p, new Vector2(8, 8)) < 7)
@@ -59,9 +118,9 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             return GameVoxelType.AllTypes.First(t => t.Name == name);
         }
 
-        private static IEnumerable<IPlayerInputHandler> createPlayerInputs(Internal.World world)
+        private static IEnumerable<IPlayerTool> createPlayerInputs(Internal.World world)
         {
-            yield return new CreateLandInputHandler(world);
+            yield return new CreateLandTool(world);
             yield return createTypeInput(GameVoxelType.Forest);
             yield return createTypeInput(GameVoxelType.Village);
             yield return createTypeInput(GameVoxelType.Warehouse);

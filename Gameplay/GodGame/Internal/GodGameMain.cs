@@ -13,24 +13,22 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private readonly WorldPersister persister;
         public World World { get; private set; }
 
-        public GodGameMain(TWEngine engine, World world, PlayerInputSimulator playerInputSimulator, WorldPersister persister, SimpleWorldRenderer simpleWorldRenderer)
+        public GodGameMain(TWEngine engine, GameState state, PlayerInputSimulator playerInputSimulator, WorldPersister persister)
         {
             this.persister = persister;
-            World = world;
+            var world = state.World;
             engine.AddSimulator(playerInputSimulator);
 
             engine.AddSimulator(new TickSimulator(world));
-            engine.AddSimulator(new UIRenderer(world, playerInputSimulator));
-            engine.AddSimulator(simpleWorldRenderer);
-            engine.AddSimulator(new ClearWorldChangesSimulator(world));
+            engine.AddSimulator(new UIRenderer(world, new PlayerState(), playerInputSimulator));
+            engine.AddSimulator(new SimpleWorldRenderer(world));
+            engine.AddSimulator(new ClearStateChangesSimulator(state));
             engine.AddSimulator(new WorldRenderingSimulator());
 
 
-            loadSave();
-
         }
 
-        private void loadSave()
+        public void LoadSave()
         {
             if (!persister.GetDefaultSaveFile().Exists) return;
             persister.Load(World, persister.GetDefaultSaveFile());

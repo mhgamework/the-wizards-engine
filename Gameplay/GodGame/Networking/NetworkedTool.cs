@@ -5,10 +5,10 @@ using MHGameWork.TheWizards.Networking.Client;
 
 namespace MHGameWork.TheWizards.GodGame.Networking
 {
-    public class NetworkedInputHandler : IPlayerInputHandler
+    public class NetworkedTool : IPlayerTool
     {
         private RemoteMethodTransporter transporter;
-        public NetworkedInputHandler(string name, RemoteMethodTransporter transporter)
+        public NetworkedTool(string name, RemoteMethodTransporter transporter)
         {
             Name = name;
             this.transporter = transporter;

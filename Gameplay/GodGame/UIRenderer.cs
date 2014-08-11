@@ -18,13 +18,15 @@ namespace MHGameWork.TheWizards.GodGame
     public class UIRenderer : ISimulator
     {
         private readonly Internal.World world;
+        private readonly PlayerState localPlayerState;
         private readonly PlayerInputSimulator inputSim;
         private TargetingReticle reticle;
         private Textarea textarea;
 
-        public UIRenderer(Internal.World world, PlayerInputSimulator inputSim)
+        public UIRenderer(Internal.World world, PlayerState localPlayerState, PlayerInputSimulator inputSim)
         {
             this.world = world;
+            this.localPlayerState = localPlayerState;
             this.inputSim = inputSim;
 
             reticle = new TargetingReticle();
@@ -50,7 +52,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         private void updateTextarea()
         {
-            textarea.Text = inputSim.ActiveHandler.Name;
+            textarea.Text =localPlayerState.ActiveTool == null ? "NO TOOL" : localPlayerState.ActiveTool.Name;
         }
         private void drawReticle()
         {

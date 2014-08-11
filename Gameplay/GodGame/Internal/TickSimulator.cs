@@ -1,8 +1,6 @@
-﻿using MHGameWork.TheWizards.Engine;
-
-namespace MHGameWork.TheWizards.GodGame.Internal
+﻿namespace MHGameWork.TheWizards.GodGame.Internal
 {
-    public class TickSimulator : ISimulator
+    public class TickSimulator : ITickSimulator
     {
         private readonly World world;
         private IVoxelHandle handle;

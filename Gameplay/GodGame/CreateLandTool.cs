@@ -3,11 +3,11 @@ using MHGameWork.TheWizards.GodGame.Types;
 
 namespace MHGameWork.TheWizards.GodGame
 {
-    public class CreateLandInputHandler : IPlayerInputHandler
+    public class CreateLandTool : IPlayerTool
     {
         private readonly Internal.World world;
 
-        public CreateLandInputHandler(Internal.World world)
+        public CreateLandTool(Internal.World world)
         {
             this.world = world;
         }

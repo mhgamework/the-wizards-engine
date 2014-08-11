@@ -2,7 +2,7 @@
 
 namespace MHGameWork.TheWizards.GodGame
 {
-    public interface IPlayerInputHandler
+    public interface IPlayerTool
     {
         string Name { get; }
         void OnLeftClick(GameVoxel voxel);

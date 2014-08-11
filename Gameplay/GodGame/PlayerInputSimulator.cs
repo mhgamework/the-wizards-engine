@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using MHGameWork.TheWizards.Engine;
+﻿using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal;
@@ -11,32 +10,34 @@ namespace MHGameWork.TheWizards.GodGame
 {
     public class PlayerInputSimulator : ISimulator
     {
-        private readonly IEnumerable<IPlayerInputHandler> handlers;
         private Internal.World world;
-        private readonly WorldPersister worldPersister;
+        private PlayerInputHandler inputHandler;
         private readonly SimpleWorldRenderer renderer;
 
-        public IPlayerInputHandler ActiveHandler { get; private set; }
+        //public IPlayerTool ActiveHandler { get; private set; }
 
-        public PlayerInputSimulator(IEnumerable<IPlayerInputHandler> handlers, Internal.World world, WorldPersister worldPersister, SimpleWorldRenderer renderer)
+        public PlayerInputSimulator(Internal.World world, PlayerInputHandler inputHandler)
         {
-            this.handlers = handlers;
             this.world = world;
-            this.worldPersister = worldPersister;
+            this.inputHandler = inputHandler;
+            //ActiveHandler = handlers.First();
             this.renderer = renderer;
-            ActiveHandler = handlers.First();
         }
 
 
         public void Simulate()
         {
-            scrollActiveHandler();
-            simulateSave();
-
-
-            if (trySimulateUIControls()) return;
+            if (TW.Graphics.Mouse.RelativeScrollWheel < 0 || TW.Graphics.Keyboard.IsKeyPressed(Key.UpArrow))
+                inputHandler.OnPreviousTool();
+            if (TW.Graphics.Mouse.RelativeScrollWheel > 0 || TW.Graphics.Keyboard.IsKeyPressed(Key.DownArrow))
+                inputHandler.OnNextTool();
+            
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.O))
+                inputHandler.OnSave();
+            
+if (trySimulateUIControls()) return;
             simulateTargetingInput();
-        }
+}
 
         private bool trySimulateUIControls()
         {
@@ -47,52 +48,13 @@ namespace MHGameWork.TheWizards.GodGame
             }
             return false;
         }
-
-        private void simulateSave()
-        {
-            if (!TW.Graphics.Keyboard.IsKeyPressed(Key.O)) return;
-            worldPersister.Save(world, worldPersister.GetDefaultSaveFile());
-        }
-
-        private void simulateTargetingInput()
-        {
             var target = GetTargetedVoxel();
             if (target == null) return;
 
-            if (tryVoxelInteract(target)) return;
-
             if (TW.Graphics.Mouse.LeftMouseJustPressed)
-                ActiveHandler.OnLeftClick(target);
-            else if (TW.Graphics.Mouse.RightMouseJustPressed)
-                ActiveHandler.OnRightClick(target);
-        }
-
-        private bool tryVoxelInteract(GameVoxel target)
-        {
-            var handle = new IVoxelHandle(world);
-            handle.CurrentVoxel = target;
-
-            var ret = target.Type.Interact(handle);
-
-            handle.CurrentVoxel = null;
-
-            return ret;
-        }
-
-        private void scrollActiveHandler()
-        {
-            var playerInputHandlers = handlers.Concat(handlers);
-            if (TW.Graphics.Mouse.RelativeScrollWheel < 0 || TW.Graphics.Keyboard.IsKeyPressed(Key.UpArrow))
-            {
-                var inputHandlers = handlers.SkipWhile(el => el != ActiveHandler);
-                var skipWhile = inputHandlers.Concat(handlers);
-                ActiveHandler = skipWhile.Skip(1).First();
-            }
-            if (TW.Graphics.Mouse.RelativeScrollWheel > 0 || TW.Graphics.Keyboard.IsKeyPressed(Key.DownArrow))
-            {
-                var inputHandlers = playerInputHandlers.TakeWhile((el, i) => el != ActiveHandler || i == 0);
-                ActiveHandler = inputHandlers.Last();
-            }
+                inputHandler.OnLeftClick(target);
+            if (TW.Graphics.Mouse.RightMouseJustPressed)
+                inputHandler.OnRightClick(target);
         }
 
         public GameVoxel GetTargetedVoxel()
