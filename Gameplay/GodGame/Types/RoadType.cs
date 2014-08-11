@@ -11,11 +11,17 @@ namespace MHGameWork.TheWizards.GodGame.Types
 {
     public class RoadType : GameVoxelType
     {
+        private FourWayModelBuilder meshBuilder;
+
         public RoadType()
             : base("Road")
         {
-
-
+            meshBuilder = new FourWayModelBuilder
+            {
+                BaseMesh = datavalueMeshes.ContainsKey(0) ? datavalueMeshes[0] : null,
+                WayMesh = datavalueMeshes.ContainsKey(1) ? datavalueMeshes[1] : null,
+                NoWayMesh = datavalueMeshes.ContainsKey(2) ? datavalueMeshes[2] : null
+            };
         }
 
         public override void Tick(IVoxelHandle handle)
@@ -130,5 +136,16 @@ namespace MHGameWork.TheWizards.GodGame.Types
         }
 
         public override bool DontShowDataValue { get { return true; } }
+
+        public override IMesh GetMesh(IVoxelHandle handle)
+        {
+            var conn = handle.Get4Connected().ToArray();
+            return meshBuilder.CreateMesh(isConnectedType(conn[0]), isConnectedType(conn[1]), isConnectedType(conn[2]), isConnectedType(conn[3]));
+        }
+
+        private bool isConnectedType(IVoxelHandle handle)
+        {
+            return handle.Type is RoadType;
+        }
     }
 }
