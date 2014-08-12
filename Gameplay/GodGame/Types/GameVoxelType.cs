@@ -29,6 +29,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public static RoadType Road = new RoadType();
         public static CropType Crop = new CropType();
         public static FarmType Farm = new FarmType();
+        public static MarketType Market = new MarketType();
 
         private static List<GameVoxelType> allTypes = new List<GameVoxelType>();
         public static IEnumerable<GameVoxelType> AllTypes { get { return allTypes; } }
@@ -49,6 +50,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             allTypes.Add(Road);
             allTypes.Add(Crop);
             allTypes.Add(Farm);
+            allTypes.Add(Market);
 
             var voxelTypes =
                 Assembly.GetExecutingAssembly().GetTypes().Where(t => (typeof(GameVoxelType)).IsAssignableFrom(t)
@@ -169,11 +171,22 @@ namespace MHGameWork.TheWizards.GodGame.Types
             yield return new InventoryVisualizer(handle);
         }
 
+        /// <summary>
+        /// Should return true when the voxel can accept a single item of given type.
+        /// </summary>
+        /// <param name="voxelHandle"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public virtual bool CanAcceptItemType(IVoxelHandle voxelHandle, ItemType type)
         {
             return false;
         }
 
+        /// <summary>
+        /// Should provide visualizers which are enabled whenever the voxel is visible.
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <returns></returns>
         public virtual IEnumerable<IVoxelInfoVisualizer> GetCustomVisualizers(IVoxelHandle handle)
         {
             yield break;

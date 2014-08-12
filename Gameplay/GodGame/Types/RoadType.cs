@@ -10,6 +10,10 @@ using System.Linq;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
+    /// <summary>
+    /// TODO: add item destination
+    /// TODO: add kanban and return when clogged system
+    /// </summary>
     public class RoadType : GameVoxelType
     {
         private FourWayModelBuilder meshBuilder;
@@ -64,7 +68,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             var neighbours = getNeighbourRoads(handle);
             var options = neighbours.Select(
                 n =>
-                new { Road = n, Target = findConnectedInventories(n, type).OrderBy(t => t.Item2).FirstOrDefault() });
+                new { Road = n, Target = FindConnectedInventories(n, type).OrderBy(t => t.Item2).FirstOrDefault() });
             var target = options.Where(o => o.Target != null).OrderBy(o => o.Target.Item2).FirstOrDefault().With(v => v.Road);
 
             if (target == null)
@@ -76,13 +80,24 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public override bool CanAcceptItemType(IVoxelHandle voxelHandle, ItemType type)
         {
-            var potentialTargets = findConnectedInventories(voxelHandle, type).ToArray();
+            var potentialTargets = FindConnectedInventories(voxelHandle, type).ToArray();
             if (!potentialTargets.Any()) return false;
 
             return true;
         }
+        /// <summary>
+        /// Returns a list of connected inventories ordered by proximity. Each tuple contains (inventory, distance).
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public IEnumerable<Tuple<IVoxelHandle, int>> FindConnectedInventories(IVoxelHandle start, ItemType type)
+        {
+            return FindConnectedVoxels(start, v => v.CanAcceptItemType(type));
+        }
 
-        private IEnumerable<Tuple<IVoxelHandle, int>> findConnectedInventories(IVoxelHandle start, ItemType type)
+
+        public IEnumerable<Tuple<IVoxelHandle, int>> FindConnectedVoxels(IVoxelHandle start, Func<IVoxelHandle, bool> predicate)
         {
             var toVisit = new Queue<Tuple<IVoxelHandle, int>>();
             var visited = new HashSet<IVoxelHandle>();
@@ -102,7 +117,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
                     toVisit.Enqueue(new Tuple<IVoxelHandle, int>(neighbour, currentDist + 1));
                 }
 
-                foreach (var target in getNeighbourValidInventories(type, curr))
+                foreach (var target in curr.Get4Connected().Where(v => !(v.Type is RoadType) && predicate(v)))
                     yield return new Tuple<IVoxelHandle, int>(target, currentDist);
 
             }
