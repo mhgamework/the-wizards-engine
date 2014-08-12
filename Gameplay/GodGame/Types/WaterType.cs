@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Rendering;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 

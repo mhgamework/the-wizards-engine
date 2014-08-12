@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Rendering;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
 using SlimDX;
@@ -145,7 +146,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private bool isConnectedType(IVoxelHandle handle)
         {
-            return handle.Type is RoadType;
+            return handle.Type is RoadType || handle.Type is FarmType || handle.Type is WarehouseType || handle.Type is MinerType;
         }
     }
 }

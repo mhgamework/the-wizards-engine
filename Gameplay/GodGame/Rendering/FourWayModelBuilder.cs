@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.GodGame.Types
+namespace MHGameWork.TheWizards.GodGame.Rendering
 {
     public class FourWayModelBuilder
     {
