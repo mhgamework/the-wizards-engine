@@ -222,6 +222,7 @@
     <Compile Include="Networking\INetworkPacket.cs" />
     <Compile Include="Networking\INetworkPacketCustomSerializable.cs" />
     <Compile Include="Networking\INetworkPacketFactory.cs" />
+    <Compile Include="Networking\NetworkingUtilities.cs" />
     <Compile Include="Networking\NetworkPacketAttribute.cs" />
     <Compile Include="Networking\NetworkPacketFactoryCodeGenerater.cs" />
     <Compile Include="Networking\NetworkPacketIgnoreAttribute.cs" />
