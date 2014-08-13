@@ -55,7 +55,7 @@ Namespace Networking
 
 
         ''' <summary>
-        ''' 
+        ''' Note: goes into infinite failure loop when trying to close the tcp connection locally
         ''' </summary>
         ''' <remarks>Not Thread safe! draait niet in main thread</remarks>
         Private Sub ReceiveMessages()

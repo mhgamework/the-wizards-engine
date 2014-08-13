@@ -7,7 +7,7 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame
 {
-    public class PlayerInputHandler
+    public class PlayerInputHandler : IPlayerInputHandler
     {
         private readonly IEnumerable<IPlayerTool> handlers;
         private Internal.World world;

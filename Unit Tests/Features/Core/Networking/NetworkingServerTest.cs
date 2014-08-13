@@ -117,7 +117,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Core.Networking
 
                 t.Send(new DataPacket("Helloooo!", 564));
                 var p = t2.Receive();
-
+                
                 Assert.AreEqual(p.Text, "Hi there");
 
                 success.Set();

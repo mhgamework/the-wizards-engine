@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             builder.RegisterType<GodGameServer>().SingleInstance();
             builder.RegisterType<WorldPersister>().SingleInstance();
             builder.RegisterType<PlayerInputSimulator>().SingleInstance();
-            builder.RegisterType<TickSimulator>().SingleInstance();
+            builder.RegisterType<TickSimulator>().SingleInstance().AsSelf().AsImplementedInterfaces();
             
             builder.Register(c => new PlayerInputHandler(
                 createPlayerInputs(c.Resolve<Internal.World>()), 
@@ -64,6 +64,47 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             var server = container.Resolve<GodGameServer>();
 
         }
+
+        [Test]
+        public void TestClientGame()
+        {
+            var builder = new Autofac.ContainerBuilder();
+
+            builder.RegisterType<GodGameClient>().SingleInstance();
+            builder.RegisterType<WorldPersister>().SingleInstance();
+            builder.RegisterType<PlayerInputSimulator>().SingleInstance();
+            builder.RegisterType<TickSimulator>().SingleInstance().AsSelf().AsImplementedInterfaces();
+
+            builder.Register(c => new PlayerInputHandler(
+                createPlayerInputs(c.Resolve<Internal.World>()),
+                c.Resolve<Internal.World>(),
+                c.Resolve<WorldPersister>(),
+                c.Resolve<PlayerState>())).SingleInstance();
+            builder.RegisterInstance(new WorldPersister(getTypeFromName, getItemFromName));
+
+            builder.RegisterInstance(EngineFactory.CreateEngine());
+            builder.RegisterInstance(new PlayerState());
+
+            var world = new Internal.World(40, 10);
+            buildDemoWorld(world);
+
+            builder.RegisterInstance(world);
+
+
+            builder.Register(c => new GameState(c.Resolve<Internal.World>()).Alter(g => g.AddPlayer(c.Resolve<PlayerState>())));
+
+
+            // Until here goes the non-networked registration
+
+
+
+
+
+            var container = builder.Build();
+            var server = container.Resolve<GodGameClient>();
+
+        }
+
 
 
         public static GodGameMain CreateGame()

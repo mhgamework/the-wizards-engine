@@ -23,7 +23,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         {
             players.Add(player);
         }
-
-
+        public void RemovePlayer(PlayerState player)
+        {
+            players.Remove(player);
+        }
     }
 }

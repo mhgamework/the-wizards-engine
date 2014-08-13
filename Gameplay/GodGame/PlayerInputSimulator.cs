@@ -11,12 +11,12 @@ namespace MHGameWork.TheWizards.GodGame
     public class PlayerInputSimulator : ISimulator
     {
         private Internal.World world;
-        private PlayerInputHandler inputHandler;
+        private IPlayerInputHandler inputHandler;
         private readonly SimpleWorldRenderer renderer;
 
         //public IPlayerTool ActiveHandler { get; private set; }
 
-        public PlayerInputSimulator(Internal.World world, PlayerInputHandler inputHandler)
+        public PlayerInputSimulator(Internal.World world, IPlayerInputHandler inputHandler)
         {
             this.world = world;
             this.inputHandler = inputHandler;

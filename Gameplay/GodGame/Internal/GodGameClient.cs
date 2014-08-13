@@ -13,41 +13,21 @@ using MHGameWork.TheWizards.Rendering;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
-    public class GodGameServer
+    public class GodGameClient
     {
         private readonly GameState state;
         private readonly WorldPersister persister;
         //public World World { get; private set; }
 
-        public GodGameServer(TWEngine engine, GameState state, WorldPersister persister, ISimulator tickSimulator, PlayerState localPlayer)
+        public GodGameClient(TWEngine engine, GameState state, WorldPersister persister, ISimulator tickSimulator, PlayerState localPlayer)
         {
             this.state = state;
             this.persister = persister;
-
-
-            var connector = new NetworkConnectorServer(15005, 15006);
-            IEnumerable<IPlayerTool> playerTools = new[] { new CreateLandTool(state.World) };
-            var networkedPlayerFactory = new NetworkedPlayerFactory((transporter, handler) => new NetworkedInputReceiver(transporter, handler, state.World), playerState => new PlayerInputHandler(playerTools, state.World, persister, playerState), state);
-            var scl = new ServerPlayerListener(connector
-                , networkedPlayerFactory);
-
-
-            Thread.Sleep(100);
 
             var clientConnector = new NetworkConnectorClient();
             clientConnector.Connect("127.0.0.1", 15005);
 
             var playerInputSimulator = new PlayerInputSimulator(state.World, new ProxyPlayerInputHandler(clientConnector.UserInputTransporter));
-
-
-            engine.AddSimulator(new BasicSimulator(() =>
-                {
-                    scl.UpdateConnectedClients();
-                    foreach (var client in scl.Clients)
-                    {
-                        client.NetworkedInputReceiver.HandleReceivedInputs();
-                    }
-                }));
 
             engine.AddSimulator(playerInputSimulator);
             engine.AddSimulator(tickSimulator);
@@ -55,6 +35,13 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.AddSimulator(new ClearStateChangesSimulator(state));
 
+        }
+
+
+        private void loadSave()
+        {
+            if (!persister.GetDefaultSaveFile().Exists) return;
+            persister.Load(state.World, persister.GetDefaultSaveFile());
         }
 
 

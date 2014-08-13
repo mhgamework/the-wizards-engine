@@ -1,0 +1,40 @@
+﻿using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.Networking.Client;
+
+namespace MHGameWork.TheWizards.GodGame.Networking
+{
+    public class ProxyPlayerInputHandler : IPlayerInputHandler
+    {
+        private readonly IClientPacketTransporter<UserInputPacket> transporter;
+
+        public ProxyPlayerInputHandler(IClientPacketTransporter<UserInputPacket> transporter)
+        {
+            this.transporter = transporter;
+        }
+
+        public void OnSave()
+        {
+            transporter.Send(new UserInputPacket("OnSave"));
+        }
+
+        public void OnRightClick(GameVoxel target)
+        {
+            transporter.Send(new UserInputPacket("OnRightClick", target.Coord));
+        }
+
+        public void OnLeftClick(GameVoxel target)
+        {
+            transporter.Send(new UserInputPacket("OnLeftClick", target.Coord));
+        }
+
+        public void OnNextTool()
+        {
+            transporter.Send(new UserInputPacket("OnNextTool"));
+        }
+
+        public void OnPreviousTool()
+        {
+            transporter.Send(new UserInputPacket("OnPreviousTool"));
+        }
+    }
+}
