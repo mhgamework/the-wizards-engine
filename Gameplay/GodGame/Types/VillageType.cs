@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal;
@@ -14,15 +15,17 @@ namespace MHGameWork.TheWizards.GodGame.Types
     /// </summary>
     public class VillageType : GameVoxelType
     {
-        private int nbResourceTypesNeeded = 1;
-        private int nbResourcesPerTypeNeeded = 3;
-        private float consummationRate = 5;
+        private const int nbResourcesPerTypeNeeded = 3;
+        private const float consummationRate = 5; //average time to consume one resource
+
+        private List<ItemType> neededResourceTypes;
 
         private Random rnd;
 
         public VillageType()
             : base("Village")
         {
+            neededResourceTypes = new[] { Market.ProcessedCropType, Market.ProcessedFishType }.ToList();
             rnd = new Random();
         }
 
@@ -31,7 +34,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             //handle.EachRandomInterval(1, () => doWork(handle));
 
             //todo: should not be done every tick??
-            handle.Data.Inventory.ChangeCapacity(nbResourceTypesNeeded * nbResourcesPerTypeNeeded); //should be done at start
+            handle.Data.Inventory.ChangeCapacity(neededResourceTypes.Count * nbResourcesPerTypeNeeded); //should be done at start
             checkResourceLevels(handle); //should be done at start and after each consume
 
             handle.EachRandomInterval(consummationRate, () => consume(handle));
@@ -39,18 +42,20 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private void checkResourceLevels(IVoxelHandle handle)
         {
-            if (checkResourceLevel(Market.ProcessedCropType, handle))
-                handle.Data.DataValue = 0; //supplied
+            foreach (var resourceType in neededResourceTypes)
+            {
+                if (!checkResourceLevel(resourceType, handle))
+                {
+                    handle.Data.DataValue = 1; //not supplied
+                    return;
+                }
+            }
+            handle.Data.DataValue = 0; //all supplied
         }
 
         private bool checkResourceLevel(ItemType type, IVoxelHandle handle)
         {
-            if (handle.Data.Inventory.GetAmountOfType(type) == 0)
-            {
-                handle.Data.DataValue = 1; //not supplied
-                return false;
-            }
-            return true;
+            return handle.Data.Inventory.GetAmountOfType(type) != 0;
         }
 
         private void consume(IVoxelHandle handle)
@@ -63,14 +68,16 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public override bool CanAcceptItemType(IVoxelHandle handle, Scattered.Model.ItemType type)
         {
-            //todo add other types
-            if (type != Market.ProcessedCropType) return false;
+            if (!neededResourceTypes.Contains(type)) return false;
 
             return handle.Data.Inventory.GetAmountOfType(type) < nbResourcesPerTypeNeeded;
         }
 
 
-
+        /// <summary>
+        /// Old village code
+        /// </summary>
+        /// <param name="handle"></param>
         private void doWork(IVoxelHandle handle)
         {
             var warehouse =

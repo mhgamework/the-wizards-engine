@@ -73,6 +73,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             yield return createTypeInput(GameVoxelType.Crop);
             yield return createTypeInput(GameVoxelType.Farm);
             yield return createTypeInput(GameVoxelType.Market);
+            yield return createTypeInput(GameVoxelType.Fishery);
         }
 
         private static DelegatePlayerInputHandler createTypeInput(GameVoxelType type)

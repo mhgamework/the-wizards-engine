@@ -143,6 +143,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
             return true;
         }
+
         /// <summary>
         /// Returns a list of connected inventories ordered by proximity. Each tuple contains (inventory, distance).
         /// </summary>
@@ -221,7 +222,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private bool isConnectedType(IVoxelHandle handle)
         {
-            return handle.Type is RoadType || handle.Type is FarmType || handle.Type is WarehouseType || handle.Type is MinerType;
+            return handle.Type is RoadType || handle.Type is FarmType || handle.Type is WarehouseType || handle.Type is MinerType || handle.Type is FisheryType || handle.Type is MarketType;
         }
 
         public struct RoadData

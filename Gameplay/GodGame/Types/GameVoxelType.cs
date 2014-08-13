@@ -25,7 +25,6 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public static GameVoxelType Land = new GameVoxelType("Land") { Color = Color.SandyBrown };
         public static InfestationVoxelType Infestation = new InfestationVoxelType();
         public static ForestType Forest = new ForestType();
-        public static VillageType Village = new VillageType();
         public static WarehouseType Warehouse = new WarehouseType();
         public static MonumentType Monument = new MonumentType();
         public static WaterType Water = new WaterType();
@@ -35,7 +34,9 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public static RoadType Road = new RoadType();
         public static CropType Crop = new CropType();
         public static FarmType Farm = new FarmType();
-        public static MarketType Market = new MarketType();
+        public static FisheryType Fishery = new FisheryType();
+        public static MarketType Market = new MarketType(); //order of construction important
+        public static VillageType Village = new VillageType(); //order of construction important
 
         private static List<GameVoxelType> allTypes = new List<GameVoxelType>();
         public static IEnumerable<GameVoxelType> AllTypes { get { return allTypes; } }
@@ -57,6 +58,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             allTypes.Add(Crop);
             allTypes.Add(Farm);
             allTypes.Add(Market);
+            allTypes.Add(Fishery);
 
             var voxelTypes =
                 Assembly.GetExecutingAssembly().GetTypes().Where(t => (typeof(GameVoxelType)).IsAssignableFrom(t)

@@ -4,14 +4,22 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Scattered.Model;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
+    /// <summary>
+    /// The market collects items that need to be supplied to villages.
+    /// After collection, the items are transformed into 'processed' variants, which are suited to distribute to houses.
+    /// For each item type to distribute, the market has a number of inventory spaces reserved.
+    /// When there is free space, the market tries to get the needed items from a nearby warehouse (must be within range).
+    /// The market regularly checks houses in range if they need processed resources.
+    /// </summary>
     public class MarketType : GameVoxelType
     {
         private int totalCapacity;
-        private int nbItemTypes = 1;
         private int capacityPerType = 5;
         private int distributionRange = 3;
         private int collectRange = 10;
@@ -21,16 +29,21 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private Random rnd;
 
         public ItemType ProcessedCropType { get; private set; }
+        public ItemType ProcessedFishType { get; private set; }
 
         public MarketType()
             : base("Market")
         {
             Color = Color.Orange;
-            totalCapacity = nbItemTypes * capacityPerType;
+
 
             itemProcessingDictionary = new Dictionary<ItemType, ItemType>();
-            ProcessedCropType = new ItemType();
+            ProcessedCropType = new ItemType { Name = "ProcessedCrop", Mesh = UtilityMeshes.CreateBoxColored(Color.Orange, new Vector3(1)) };
             itemProcessingDictionary.Add(GameVoxelType.Crop.GetCropItemType(), ProcessedCropType);
+            ProcessedFishType = new ItemType { Name = "ProcessedFish", Mesh = UtilityMeshes.CreateBoxColored(Color.DeepSkyBlue, new Vector3(1)) };
+            itemProcessingDictionary.Add(Fishery.GetFishItemType(), ProcessedFishType);
+
+            totalCapacity = itemProcessingDictionary.Count * capacityPerType;
 
             rnd = new Random();
         }
@@ -46,11 +59,11 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public override bool CanAcceptItemType(IVoxelHandle handle, ItemType type)
         {
-            if (type != GameVoxelType.Crop.GetCropItemType()) return false;
+            if (!itemProcessingDictionary.ContainsKey(type)) return false;
 
             return handle.Data.Inventory.AvailableSlots > 0 && handle.Data.Inventory.GetAmountOfType(type) < capacityPerType;
         }
-        
+
         private void tryCollect(IVoxelHandle handle)
         {
             if (handle.Data.Inventory.ItemCount == totalCapacity) return;
@@ -65,10 +78,14 @@ namespace MHGameWork.TheWizards.GodGame.Types
             }
         }
 
+        /// <summary>
+        /// Checks if there is a road connected.
+        /// Checks if there are houses reachable via that road that need processedItem and that are in distributionRange.
+        /// If so, outputs processedItem to the road.
+        /// </summary>
+        /// <param name="handle"></param>
         private void tryDistribute(IVoxelHandle handle)
         {
-            //todo: check road connection
-
             if (handle.Data.Inventory.ItemCount == 0) return;
 
             var itemToTransport = handle.Data.Inventory.Items.ToArray()[rnd.Next(handle.Data.Inventory.ItemCount)];
@@ -76,13 +93,16 @@ namespace MHGameWork.TheWizards.GodGame.Types
             itemProcessingDictionary.TryGetValue(itemToTransport, out itemToTransportProcessed);
             if (itemToTransportProcessed == null) return;
 
-            var houses = handle.GetRange(distributionRange).Where(e => e.Type is VillageType);
-            foreach (var house in houses.Where(house => house.CanAcceptItemType(itemToTransportProcessed)))
-            {
-                handle.Data.Inventory.DestroyItems(itemToTransport, 1);
-                house.Data.Inventory.AddNewItems(itemToTransportProcessed, 1);
-                return;
-            }
+            var road = handle.Get4Connected().FirstOrDefault(v => v.CanAcceptItemType(itemToTransportProcessed) && v.Type is RoadType);
+            if (road == null) return;
+
+            var housesInRange = handle.GetRange(distributionRange).Where(e => e.Type is VillageType);
+            var houses = Road.FindConnectedInventories(road, itemToTransportProcessed).Select(e => e.Item1).Where(housesInRange.Contains);
+            if (!houses.Any()) return;
+
+            handle.Data.Inventory.DestroyItems(itemToTransport, 1);
+            road.Data.Inventory.AddNewItems(itemToTransportProcessed, 1);
+
         }
     }
 }
