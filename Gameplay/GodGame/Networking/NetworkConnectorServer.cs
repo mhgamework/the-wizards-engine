@@ -6,6 +6,9 @@ using MHGameWork.TheWizards.Networking.Server;
 
 namespace MHGameWork.TheWizards.GodGame.Networking
 {
+    /// <summary>
+    /// Responsible for the network connection on the server side
+    /// </summary>
     public class NetworkConnectorServer
     {
         private ServerPacketManagerNetworked spm;

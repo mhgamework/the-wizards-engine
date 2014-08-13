@@ -235,14 +235,14 @@
     <Compile Include="GodGame\Internal\World.cs" />
     <Compile Include="GodGame\Types\GameVoxelType.cs" />
     <Compile Include="GodGame\VoxelData.cs" />
-    <Compile Include="GodGame\Networking\ClientNetworkManager.cs" />
     <Compile Include="GodGame\Networking\NetworkConnectorClient.cs" />
+    <Compile Include="GodGame\_Tests\NetworkedPlayerInputTest.cs" />
     <Compile Include="GodGame\_Tests\GodGameMainTest.cs" />
     <Compile Include="GodGame\CreateLandTool.cs" />
     <Compile Include="GodGame\PlayerInputSimulator.cs" />
     <Compile Include="GodGame\_Engine\ListObserver.cs" />
-    <Compile Include="GodGame\_Tests\MultiplayerTest.cs" />
-    <Compile Include="GodGame\Networking\NetworkedInputReceiver.cs" />
+    <Compile Include="GodGame\_Tests\ServerClientListenerTest.cs" />
+    <Compile Include="GodGame\Networking\NetworkPlayerInputForwarder.cs" />
     <Compile Include="GodGame\Networking\NetworkedPlayer.cs" />
     <Compile Include="GodGame\_Tests\RendererTest.cs" />
     <Compile Include="GodGame\_Tests\UITest.cs" />

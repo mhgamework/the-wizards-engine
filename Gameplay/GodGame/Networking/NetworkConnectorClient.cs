@@ -6,6 +6,9 @@ using MHGameWork.TheWizards.Networking.Client;
 
 namespace MHGameWork.TheWizards.GodGame.Networking
 {
+    /// <summary>
+    /// Responsible for the network connection on the Client side
+    /// </summary>
     public class NetworkConnectorClient
     {
         public ClientPacketManagerNetworked.ClientPacketTransporterNetworked<UserInputPacket> UserInputTransporter { get; private set; }

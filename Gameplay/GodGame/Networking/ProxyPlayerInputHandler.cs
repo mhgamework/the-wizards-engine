@@ -3,6 +3,9 @@ using MHGameWork.TheWizards.Networking.Client;
 
 namespace MHGameWork.TheWizards.GodGame.Networking
 {
+    /// <summary>
+    /// Implements a PlayerInputHandler which proxies inputs over the network
+    /// </summary>
     public class ProxyPlayerInputHandler : IPlayerInputHandler
     {
         private readonly IClientPacketTransporter<UserInputPacket> transporter;

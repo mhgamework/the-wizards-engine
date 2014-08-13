@@ -4,13 +4,13 @@ namespace MHGameWork.TheWizards.GodGame.Networking
 {
     public class NetworkedPlayer
     {
-        public NetworkedInputReceiver NetworkedInputReceiver { get; private set; }
+        public NetworkPlayerInputForwarder NetworkPlayerInputForwarder { get; private set; }
         public IClient NetworkClient { get; private set; }
         public PlayerState Player { get; private set; }
 
-        public NetworkedPlayer(NetworkedInputReceiver networkedInputReceiver, IClient networkClient, PlayerState player)
+        public NetworkedPlayer(NetworkPlayerInputForwarder networkPlayerInputForwarder, IClient networkClient, PlayerState player)
         {
-            NetworkedInputReceiver = networkedInputReceiver;
+            NetworkPlayerInputForwarder = networkPlayerInputForwarder;
             NetworkClient = networkClient;
             Player = player;
         }

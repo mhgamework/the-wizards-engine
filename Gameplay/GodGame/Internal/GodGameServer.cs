@@ -27,7 +27,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             var connector = new NetworkConnectorServer(15005, 15006);
             IEnumerable<IPlayerTool> playerTools = new[] { new CreateLandTool(state.World) };
-            var networkedPlayerFactory = new NetworkedPlayerFactory((transporter, handler) => new NetworkedInputReceiver(transporter, handler, state.World), playerState => new PlayerInputHandler(playerTools, state.World, persister, playerState), state);
+            var networkedPlayerFactory = new NetworkedPlayerFactory((transporter, handler) => new NetworkPlayerInputForwarder(transporter, handler, state.World), playerState => new PlayerInputHandler(playerTools, state.World, persister, playerState), state);
             var scl = new ServerPlayerListener(connector
                 , networkedPlayerFactory);
 
@@ -42,10 +42,10 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             engine.AddSimulator(new BasicSimulator(() =>
                 {
-                    scl.UpdateConnectedClients();
-                    foreach (var client in scl.Clients)
+                    scl.UpdateConnectedPlayers();
+                    foreach (var client in scl.Players)
                     {
-                        client.NetworkedInputReceiver.HandleReceivedInputs();
+                        client.NetworkPlayerInputForwarder.ForwardReceivedInputs();
                     }
                 }));
 

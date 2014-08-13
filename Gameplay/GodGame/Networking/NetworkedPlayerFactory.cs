@@ -8,11 +8,11 @@ namespace MHGameWork.TheWizards.GodGame.Networking
     public class NetworkedPlayerFactory
     {
 
-        private Func<IClientPacketTransporter<UserInputPacket>, IPlayerInputHandler, NetworkedInputReceiver> createNetworkedInputReceiver;
+        private Func<IClientPacketTransporter<UserInputPacket>, IPlayerInputHandler, NetworkPlayerInputForwarder> createNetworkedInputReceiver;
         private Func<PlayerState, IPlayerInputHandler> createInputHandler;
         private readonly GameState gameState;
 
-        public NetworkedPlayerFactory(Func<IClientPacketTransporter<UserInputPacket>, IPlayerInputHandler, NetworkedInputReceiver> createNetworkedInputReceiver, Func<PlayerState, IPlayerInputHandler> createInputHandler, GameState gameState)
+        public NetworkedPlayerFactory(Func<IClientPacketTransporter<UserInputPacket>, IPlayerInputHandler, NetworkPlayerInputForwarder> createNetworkedInputReceiver, Func<PlayerState, IPlayerInputHandler> createInputHandler, GameState gameState)
         {
             this.createNetworkedInputReceiver = createNetworkedInputReceiver;
             this.createInputHandler = createInputHandler;

@@ -4,20 +4,23 @@ using MHGameWork.TheWizards.Networking.Client;
 
 namespace MHGameWork.TheWizards.GodGame.Networking
 {
-    public class NetworkedInputReceiver
+    /// <summary>
+    /// Responsible for forwarding user inputs received over the network from a client, to the correct PlayerInputHandler
+    /// </summary>
+    public class NetworkPlayerInputForwarder
     {
         private readonly IClientPacketTransporter<UserInputPacket> transporter;
         private readonly IPlayerInputHandler handler;
         private readonly Internal.World world;
 
-        public NetworkedInputReceiver(IClientPacketTransporter<UserInputPacket> transporter, IPlayerInputHandler handler, Internal.World world)
+        public NetworkPlayerInputForwarder(IClientPacketTransporter<UserInputPacket> transporter, IPlayerInputHandler handler, Internal.World world)
         {
             this.transporter = transporter;
             this.handler = handler;
             this.world = world;
         }
 
-        public void HandleReceivedInputs()
+        public void ForwardReceivedInputs()
         {
             while (transporter.PacketAvailable)
             {
