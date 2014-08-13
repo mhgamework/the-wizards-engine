@@ -9,7 +9,8 @@ using MHGameWork.TheWizards.Scattered.Model;
 namespace MHGameWork.TheWizards.GodGame.Persistence
 {
     /// <summary>
-    /// TODO: inventory
+    /// Represents the configuration for converting a GameVoxel to an value type format.
+    /// (Decides how and what to convert to get a gamevoxel representation which is valid outside of a running application)
     /// </summary>
     public class SerializedVoxel
     {

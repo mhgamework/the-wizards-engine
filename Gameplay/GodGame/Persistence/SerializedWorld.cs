@@ -7,7 +7,8 @@ using MHGameWork.TheWizards.Scattered.Model;
 namespace MHGameWork.TheWizards.GodGame.Persistence
 {
     /// <summary>
-    /// TODO: implement this so that it works using the xmlserailizer
+    /// Represents the configuration for converting a World to an value type format.
+    /// (Decides how and what to convert to get a World representation which is valid outside of a running application)
     /// </summary>
     public class SerializedWorld
     {
