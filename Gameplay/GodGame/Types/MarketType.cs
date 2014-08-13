@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using DirectX11;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -20,11 +21,10 @@ namespace MHGameWork.TheWizards.GodGame.Types
     public class MarketType : GameVoxelType
     {
         private int totalCapacity;
-        private const int capacityPerType = 5;
         private const int distributionRange = 3;
         private const int collectRange = 10;
 
-        private List<MarketResourceType> marketInventory;
+        private List<MarketResourceType> marketInventory; //add maximum 4 different types, otherwise, resource-renderer doesn't work
 
         private struct MarketResourceType
         {
@@ -41,7 +41,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public MarketType()
             : base("Market")
         {
-            Color = Color.Orange;
+            Color = Color.Gray;
 
             ProcessedFishType = new ItemType { Name = "ProcessedFish", Mesh = UtilityMeshes.CreateBoxColored(Color.DeepSkyBlue, new Vector3(1)) };
             ProcessedCropType = new ItemType { Name = "ProcessedCrop", Mesh = UtilityMeshes.CreateBoxColored(Color.Orange, new Vector3(1)) };
@@ -52,13 +52,13 @@ namespace MHGameWork.TheWizards.GodGame.Types
                         {
                             ItemType = Crop.GetCropItemType(),
                             ProcessedItemType = ProcessedCropType,
-                            MaxResourceLevel = 5
+                            MaxResourceLevel = 15
                         },
                     new MarketResourceType
                         {
                             ItemType = Fishery.GetFishItemType(),
                             ProcessedItemType = ProcessedFishType,
-                            MaxResourceLevel = 8
+                            MaxResourceLevel = 24
                         }
                 };
 
@@ -84,7 +84,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             if (!marketInventory.Any(e => e.ItemType == type)) return false;
 
-            return handle.Data.Inventory.AvailableSlots > 0 && handle.Data.Inventory.GetAmountOfType(type) < capacityPerType;
+            return handle.Data.Inventory.AvailableSlots > 0 && handle.Data.Inventory.GetAmountOfType(type) < marketInventory.First(e => e.ItemType == type).MaxResourceLevel;
         }
 
         private void tryCollect(IVoxelHandle handle)
@@ -128,19 +128,51 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         }
 
+        private IEnumerable<IVoxelHandle> getWareHousesInRange(IVoxelHandle handle)
+        {
+            return handle.GetRange(collectRange).Where(v => v.Type is WarehouseType);
+        }
+
+
         public override IEnumerable<IVoxelInfoVisualizer> GetInfoVisualizers(IVoxelHandle handle)
         {
-            foreach (var e in base.GetInfoVisualizers(handle))
-                yield return e;
-
             yield return new RangeVisualizer(handle, distributionRange);
             yield return new HighlightVoxelsVisualizer(handle, getWareHousesInRange);
         }
 
+        private readonly List<Vector2> itemStackPositions = new[] { new Vector2(-1, 1), new Vector2(1, 1), new Vector2(-1, -1), new Vector2(1, -1) }.ToList();
 
-        private IEnumerable<IVoxelHandle> getWareHousesInRange(IVoxelHandle handle)
+        public override IEnumerable<IVoxelInfoVisualizer> GetCustomVisualizers(IVoxelHandle handle)
         {
-            return handle.GetRange(collectRange).Where(v => v.Type is WarehouseType);
+            var inv = new InventoryVisualizer(handle);
+            inv.ItemRelativeTransformationProvider = i =>
+                {
+                    var currentInventory = handle.Data.Inventory.Items.ToList();
+                    var itemTypeList = marketInventory.Select(e => e.ItemType).ToList();
+                    var itemI = currentInventory[i];
+                    var itemTypeIndex = itemTypeList.IndexOf(itemI);
+
+                    if (itemTypeIndex == -1) return Matrix.Identity;
+
+                    var itemTypeI = itemTypeList[itemTypeIndex];
+                    var nbItemsOfTypeUntillI = 0;
+                    for (int j = 0; j < i; j++)
+                    {
+                        nbItemsOfTypeUntillI += currentInventory[j] == itemTypeI ? 1 : 0;
+                    }
+
+                    const int stackWidth = 3;
+                    const float stackSpacing = 2.5f;
+                    var stackOffsetX = itemStackPositions[itemTypeIndex].X * stackSpacing;
+                    var stackOffsetZ = itemStackPositions[itemTypeIndex].Y * stackSpacing;
+                    const float scaling = 0.5f;
+                    var x = (float)Math.Floor((float)nbItemsOfTypeUntillI % (stackWidth * stackWidth) / stackWidth) * 1.1f * scaling * 2f - stackWidth * 0.5f * scaling * 2f + scaling;
+                    var y = (float)Math.Floor((float)nbItemsOfTypeUntillI / (stackWidth * stackWidth)) * 1.1f * scaling * 2f + 1f;
+                    var z = nbItemsOfTypeUntillI % stackWidth * 1.1f * scaling * 2f - 0.5f * stackWidth * scaling * 2f + scaling;
+
+                    return Matrix.Scaling(MathHelper.One * scaling) * Matrix.Translation(x + stackOffsetX, y, z + stackOffsetZ);
+                };
+            yield return inv;
         }
     }
 }
