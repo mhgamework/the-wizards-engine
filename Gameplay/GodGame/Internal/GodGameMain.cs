@@ -38,6 +38,6 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             persister.Load(World, persister.GetDefaultSaveFile());
         }
 
-       
+
     }
 }

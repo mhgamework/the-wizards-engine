@@ -15,17 +15,35 @@ namespace MHGameWork.TheWizards.GodGame.Types
     /// </summary>
     public class VillageType : GameVoxelType
     {
-        private const int nbResourcesPerTypeNeeded = 3;
-        private const float consummationRate = 5; //average time to consume one resource
+        private int totalResourceCapacity;
 
-        private List<ItemType> neededResourceTypes;
+        private struct VillageResource
+        {
+            public ItemType ItemType;
+            public int MaxResourceLevel; //max nb of resources of this type this village can store
+            public int MinResourceLevel; //min nb of resources of this type this village needs to operate
+            public int ConsummationRate; //average time to consume one resource of this type
+        }
+
+        private List<VillageResource> neededResources;
 
         private Random rnd;
 
         public VillageType()
             : base("Village")
         {
-            neededResourceTypes = new[] { Market.ProcessedCropType, Market.ProcessedFishType }.ToList();
+            neededResources = new[]
+                {
+                    new VillageResource { ItemType = Market.ProcessedCropType, MaxResourceLevel = 3, MinResourceLevel = 1, ConsummationRate = 10}, 
+                    new VillageResource { ItemType = Market.ProcessedFishType, MaxResourceLevel = 2, MinResourceLevel = 1, ConsummationRate = 5}
+                }.ToList();
+
+            totalResourceCapacity = 0;
+            foreach (var res in neededResources)
+            {
+                totalResourceCapacity += res.MaxResourceLevel;
+            }
+
             rnd = new Random();
         }
 
@@ -34,17 +52,21 @@ namespace MHGameWork.TheWizards.GodGame.Types
             //handle.EachRandomInterval(1, () => doWork(handle));
 
             //todo: should not be done every tick??
-            handle.Data.Inventory.ChangeCapacity(neededResourceTypes.Count * nbResourcesPerTypeNeeded); //should be done at start
-            checkResourceLevels(handle); //should be done at start and after each consume
+            handle.Data.Inventory.ChangeCapacity(totalResourceCapacity); //should be done at start
+            checkResourceLevels(handle); //should be done at start (and is also done after each consume)
 
-            handle.EachRandomInterval(consummationRate, () => consume(handle));
+            foreach (var resource in neededResources)
+            {
+                handle.EachRandomInterval(resource.ConsummationRate, () => consume(resource, handle));
+            }
+
         }
 
         private void checkResourceLevels(IVoxelHandle handle)
         {
-            foreach (var resourceType in neededResourceTypes)
+            foreach (var resource in neededResources)
             {
-                if (!checkResourceLevel(resourceType, handle))
+                if (!hasEnough(resource, handle))
                 {
                     handle.Data.DataValue = 1; //not supplied
                     return;
@@ -53,24 +75,25 @@ namespace MHGameWork.TheWizards.GodGame.Types
             handle.Data.DataValue = 0; //all supplied
         }
 
-        private bool checkResourceLevel(ItemType type, IVoxelHandle handle)
+        private bool hasEnough(VillageResource resource, IVoxelHandle handle)
         {
-            return handle.Data.Inventory.GetAmountOfType(type) != 0;
+            return handle.Data.Inventory.GetAmountOfType(resource.ItemType) >= resource.MinResourceLevel;
         }
 
-        private void consume(IVoxelHandle handle)
+        private void consume(VillageResource resource, IVoxelHandle handle)
         {
-            if (handle.Data.Inventory.ItemCount == 0) return;
+            if (handle.Data.Inventory.GetAmountOfType(resource.ItemType) == 0) return;
 
-            var itemToConsume = handle.Data.Inventory.Items.ToArray()[rnd.Next(handle.Data.Inventory.ItemCount)];
-            handle.Data.Inventory.DestroyItems(itemToConsume, 1);
+            //var itemToConsume = handle.Data.Inventory.Items.ToArray()[rnd.Next(handle.Data.Inventory.ItemCount)];
+            handle.Data.Inventory.DestroyItems(resource.ItemType, 1);
+            checkResourceLevels(handle);
         }
 
-        public override bool CanAcceptItemType(IVoxelHandle handle, Scattered.Model.ItemType type)
+        public override bool CanAcceptItemType(IVoxelHandle handle, ItemType type)
         {
-            if (!neededResourceTypes.Contains(type)) return false;
+            if (!neededResources.Any(e => e.ItemType == type)) return false;
 
-            return handle.Data.Inventory.GetAmountOfType(type) < nbResourcesPerTypeNeeded;
+            return handle.Data.Inventory.GetAmountOfType(type) < neededResources.First(e => e.ItemType == type).MaxResourceLevel;
         }
 
 

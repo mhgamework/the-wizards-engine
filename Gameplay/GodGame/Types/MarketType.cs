@@ -20,11 +20,18 @@ namespace MHGameWork.TheWizards.GodGame.Types
     public class MarketType : GameVoxelType
     {
         private int totalCapacity;
-        private int capacityPerType = 5;
-        private int distributionRange = 3;
-        private int collectRange = 10;
+        private const int capacityPerType = 5;
+        private const int distributionRange = 3;
+        private const int collectRange = 10;
 
-        private Dictionary<ItemType, ItemType> itemProcessingDictionary;
+        private List<MarketResourceType> marketInventory;
+
+        private struct MarketResourceType
+        {
+            public ItemType ItemType;
+            public ItemType ProcessedItemType;
+            public int MaxResourceLevel; //max nb of this resourcetype to store in market
+        }
 
         private Random rnd;
 
@@ -36,19 +43,35 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             Color = Color.Orange;
 
-
-            itemProcessingDictionary = new Dictionary<ItemType, ItemType>();
-            ProcessedCropType = new ItemType { Name = "ProcessedCrop", Mesh = UtilityMeshes.CreateBoxColored(Color.Orange, new Vector3(1)) };
-            itemProcessingDictionary.Add(GameVoxelType.Crop.GetCropItemType(), ProcessedCropType);
             ProcessedFishType = new ItemType { Name = "ProcessedFish", Mesh = UtilityMeshes.CreateBoxColored(Color.DeepSkyBlue, new Vector3(1)) };
-            itemProcessingDictionary.Add(Fishery.GetFishItemType(), ProcessedFishType);
+            ProcessedCropType = new ItemType { Name = "ProcessedCrop", Mesh = UtilityMeshes.CreateBoxColored(Color.Orange, new Vector3(1)) };
 
-            totalCapacity = itemProcessingDictionary.Count * capacityPerType;
+            marketInventory = new List<MarketResourceType>
+                {
+                    new MarketResourceType
+                        {
+                            ItemType = Crop.GetCropItemType(),
+                            ProcessedItemType = ProcessedCropType,
+                            MaxResourceLevel = 5
+                        },
+                    new MarketResourceType
+                        {
+                            ItemType = Fishery.GetFishItemType(),
+                            ProcessedItemType = ProcessedFishType,
+                            MaxResourceLevel = 8
+                        }
+                };
+
+            totalCapacity = 0;
+            foreach (var resourceType in marketInventory)
+            {
+                totalCapacity += resourceType.MaxResourceLevel;
+            }
 
             rnd = new Random();
         }
 
-        public override void Tick(Internal.IVoxelHandle handle)
+        public override void Tick(IVoxelHandle handle)
         {
             //todo: should not be done every tick??
             handle.Data.Inventory.ChangeCapacity(totalCapacity);
@@ -59,7 +82,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public override bool CanAcceptItemType(IVoxelHandle handle, ItemType type)
         {
-            if (!itemProcessingDictionary.ContainsKey(type)) return false;
+            if (!marketInventory.Any(e => e.ItemType == type)) return false;
 
             return handle.Data.Inventory.AvailableSlots > 0 && handle.Data.Inventory.GetAmountOfType(type) < capacityPerType;
         }
@@ -67,12 +90,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private void tryCollect(IVoxelHandle handle)
         {
             if (handle.Data.Inventory.ItemCount == totalCapacity) return;
-            var warehousesInRange = handle.GetRange(collectRange).Where(e => e.Type == Warehouse);
-            foreach (var itemType in itemProcessingDictionary.Keys.Where(itemType => handle.Data.Inventory.GetAmountOfType(itemType) <= capacityPerType))
+            var warehousesInRange = getWareHousesInRange(handle);
+            foreach (var marketResource in marketInventory.Where(e => handle.Data.Inventory.GetAmountOfType(e.ItemType) < e.MaxResourceLevel))
             {
-                foreach (var warehouse in warehousesInRange.Where(warehouse => warehouse.Data.Inventory.GetAmountOfType(itemType) > 0))
+                foreach (var warehouse in warehousesInRange.Where(warehouse => warehouse.Data.Inventory.GetAmountOfType(marketResource.ItemType) > 0))
                 {
-                    warehouse.Data.Inventory.TransferItemsTo(handle.Data.Inventory, itemType, 1);
+                    warehouse.Data.Inventory.TransferItemsTo(handle.Data.Inventory, marketResource.ItemType, 1);
                     break;
                 }
             }
@@ -89,9 +112,9 @@ namespace MHGameWork.TheWizards.GodGame.Types
             if (handle.Data.Inventory.ItemCount == 0) return;
 
             var itemToTransport = handle.Data.Inventory.Items.ToArray()[rnd.Next(handle.Data.Inventory.ItemCount)];
-            ItemType itemToTransportProcessed;
-            itemProcessingDictionary.TryGetValue(itemToTransport, out itemToTransportProcessed);
-            if (itemToTransportProcessed == null) return;
+            var marketResource = marketInventory.Where(e => e.ItemType == itemToTransport);
+            if (!marketResource.Any()) return;
+            var itemToTransportProcessed = marketResource.First().ProcessedItemType;
 
             var road = handle.Get4Connected().FirstOrDefault(v => v.CanAcceptItemType(itemToTransportProcessed) && v.Type is RoadType);
             if (road == null) return;
@@ -103,6 +126,21 @@ namespace MHGameWork.TheWizards.GodGame.Types
             handle.Data.Inventory.DestroyItems(itemToTransport, 1);
             road.Data.Inventory.AddNewItems(itemToTransportProcessed, 1);
 
+        }
+
+        public override IEnumerable<IVoxelInfoVisualizer> GetInfoVisualizers(IVoxelHandle handle)
+        {
+            foreach (var e in base.GetInfoVisualizers(handle))
+                yield return e;
+
+            yield return new RangeVisualizer(handle, distributionRange);
+            yield return new HighlightVoxelsVisualizer(handle, getWareHousesInRange);
+        }
+
+
+        private IEnumerable<IVoxelHandle> getWareHousesInRange(IVoxelHandle handle)
+        {
+            return handle.GetRange(collectRange).Where(v => v.Type is WarehouseType);
         }
     }
 }
