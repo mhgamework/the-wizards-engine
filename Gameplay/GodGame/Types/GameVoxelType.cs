@@ -193,6 +193,18 @@ namespace MHGameWork.TheWizards.GodGame.Types
         }
 
         /// <summary>
+        /// Should return true when the voxel can accept a single item of given type from given handle.
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <param name="deliveringHandle"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public virtual bool CanAcceptItemType(IVoxelHandle handle, IVoxelHandle deliveringHandle, ItemType type)
+        {
+            return false;
+        }
+
+        /// <summary>
         /// Should provide visualizers which are enabled whenever the voxel is visible.
         /// </summary>
         /// <param name="handle"></param>

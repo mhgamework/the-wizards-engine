@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             : base("Crop")
         {
             cropItemType = new ItemType() { Name = "Crop" };
-            cropItemType.Mesh = UtilityMeshes.CreateBoxColored(Color.Yellow, new Vector3(1));
+            cropItemType.Mesh = UtilityMeshes.CreateBoxColored(Color.Orange, new Vector3(1));
         }
 
         public override void Tick(Internal.IVoxelHandle handle)

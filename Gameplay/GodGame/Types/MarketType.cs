@@ -29,35 +29,26 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private struct MarketResourceType
         {
             public ItemType ItemType;
-            public ItemType ProcessedItemType;
             public int MaxResourceLevel; //max nb of this resourcetype to store in market
         }
 
         private Random rnd;
-
-        public ItemType ProcessedCropType { get; private set; }
-        public ItemType ProcessedFishType { get; private set; }
 
         public MarketType()
             : base("Market")
         {
             Color = Color.Gray;
 
-            ProcessedFishType = new ItemType { Name = "ProcessedFish", Mesh = UtilityMeshes.CreateBoxColored(Color.DeepSkyBlue, new Vector3(1)) };
-            ProcessedCropType = new ItemType { Name = "ProcessedCrop", Mesh = UtilityMeshes.CreateBoxColored(Color.Orange, new Vector3(1)) };
-
             marketInventory = new List<MarketResourceType>
                 {
                     new MarketResourceType
                         {
                             ItemType = Crop.GetCropItemType(),
-                            ProcessedItemType = ProcessedCropType,
                             MaxResourceLevel = 15
                         },
                     new MarketResourceType
                         {
                             ItemType = Fishery.GetFishItemType(),
-                            ProcessedItemType = ProcessedFishType,
                             MaxResourceLevel = 24
                         }
                 };
@@ -80,23 +71,28 @@ namespace MHGameWork.TheWizards.GodGame.Types
             handle.EachRandomInterval(0.1f, () => tryDistribute(handle));
         }
 
-        public override bool CanAcceptItemType(IVoxelHandle handle, ItemType type)
+        //market should get its resources on its own
+        /*public override bool CanAcceptItemType(IVoxelHandle handle, ItemType type)
         {
             if (!marketInventory.Any(e => e.ItemType == type)) return false;
 
             return handle.Data.Inventory.AvailableSlots > 0 && handle.Data.Inventory.GetAmountOfType(type) < marketInventory.First(e => e.ItemType == type).MaxResourceLevel;
-        }
+        }*/
 
         private void tryCollect(IVoxelHandle handle)
         {
             if (handle.Data.Inventory.ItemCount == totalCapacity) return;
             var warehousesInRange = getWareHousesInRange(handle);
-            foreach (var marketResource in marketInventory.Where(e => handle.Data.Inventory.GetAmountOfType(e.ItemType) < e.MaxResourceLevel))
+            foreach (var marketResource in marketInventory.Where(e => getNbItemsOfTypeOrKanban(handle.Data.Inventory, e.ItemType) < e.MaxResourceLevel))
             {
                 foreach (var warehouse in warehousesInRange.Where(warehouse => warehouse.Data.Inventory.GetAmountOfType(marketResource.ItemType) > 0))
                 {
-                    warehouse.Data.Inventory.TransferItemsTo(handle.Data.Inventory, marketResource.ItemType, 1);
-                    break;
+                    var road = Road.IsConnected(warehouse, handle);
+                    if (road != null)
+                    {
+                        Road.DeliverItem(road, warehouse, handle, marketResource.ItemType);
+                        break;
+                    }
                 }
             }
         }
@@ -109,23 +105,29 @@ namespace MHGameWork.TheWizards.GodGame.Types
         /// <param name="handle"></param>
         private void tryDistribute(IVoxelHandle handle)
         {
-            if (handle.Data.Inventory.ItemCount == 0) return;
-
-            var itemToTransport = handle.Data.Inventory.Items.ToArray()[rnd.Next(handle.Data.Inventory.ItemCount)];
-            var marketResource = marketInventory.Where(e => e.ItemType == itemToTransport);
-            if (!marketResource.Any()) return;
-            var itemToTransportProcessed = marketResource.First().ProcessedItemType;
-
-            var road = handle.Get4Connected().FirstOrDefault(v => v.CanAcceptItemType(itemToTransportProcessed) && v.Type is RoadType);
-            if (road == null) return;
+            if (getAvailableResources(handle).Count == 0) return;
 
             var housesInRange = handle.GetRange(distributionRange).Where(e => e.Type is VillageType);
-            var houses = Road.FindConnectedInventories(road, itemToTransportProcessed).Select(e => e.Item1).Where(housesInRange.Contains);
-            if (!houses.Any()) return;
+            foreach (var house in housesInRange)
+            {
+                var roadPiece = Road.IsConnected(handle, house);
+                if (roadPiece == null) continue;
 
-            handle.Data.Inventory.DestroyItems(itemToTransport, 1);
-            road.Data.Inventory.AddNewItems(itemToTransportProcessed, 1);
+                var availableResources = getAvailableResources(handle);
+                if (availableResources.Count == 0) return;
+                var itemToTransport = availableResources[rnd.Next(availableResources.Count)];
+                if (house.CanAcceptItemType(handle, itemToTransport))
+                {
+                    Road.DeliverItem(roadPiece, handle, house, itemToTransport);
+                }
 
+            }
+
+        }
+
+        private List<ItemType> getAvailableResources(IVoxelHandle handle)
+        {
+            return handle.Data.Inventory.Items.Where(e => !Road.IsKanban(e)).ToList();
         }
 
         private IEnumerable<IVoxelHandle> getWareHousesInRange(IVoxelHandle handle)
@@ -150,16 +152,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
                     var currentInventory = handle.Data.Inventory.Items.ToList();
                     var itemTypeList = marketInventory.Select(e => e.ItemType).ToList();
                     var itemI = currentInventory[i];
-                    var itemTypeIndex = itemTypeList.IndexOf(itemI);
+                    var itemTypeIndex = getItemTypeIndex(itemI, itemTypeList);
 
                     if (itemTypeIndex == -1) return Matrix.Identity;
 
                     var itemTypeI = itemTypeList[itemTypeIndex];
-                    var nbItemsOfTypeUntillI = 0;
-                    for (int j = 0; j < i; j++)
-                    {
-                        nbItemsOfTypeUntillI += currentInventory[j] == itemTypeI ? 1 : 0;
-                    }
+                    var nbItemsOfTypeUntillI = getNbItemOfTypeUntilIndex(i, itemTypeI, currentInventory);
 
                     const int stackWidth = 3;
                     const float stackSpacing = 2.5f;
@@ -173,6 +171,30 @@ namespace MHGameWork.TheWizards.GodGame.Types
                     return Matrix.Scaling(MathHelper.One * scaling) * Matrix.Translation(x + stackOffsetX, y, z + stackOffsetZ);
                 };
             yield return inv;
+        }
+
+        private int getItemTypeIndex(ItemType type, List<ItemType> typeList)
+        {
+            for (int i = 0; i < typeList.Count; i++)
+            {
+                if (Road.IsItemOrKanbanOfType(type, typeList[i])) return i;
+            }
+            return -1;
+        }
+
+        private int getNbItemOfTypeUntilIndex(int index, ItemType type, List<ItemType> inventory)
+        {
+            var nbItemsOfTypeUntillIndex = 0;
+            for (int i = 0; i < index; i++)
+            {
+                nbItemsOfTypeUntillIndex += Road.IsItemOrKanbanOfType(type, inventory[i]) ? 1 : 0;
+            }
+            return nbItemsOfTypeUntillIndex;
+        }
+
+        private int getNbItemsOfTypeOrKanban(Inventory inventory, ItemType type)
+        {
+            return inventory.Items.Sum(item => Road.IsItemOrKanbanOfType(type, item) ? 1 : 0);
         }
     }
 }

@@ -78,6 +78,33 @@ namespace MHGameWork.TheWizards.GodGame.Types
             return ret;
         }
 
+        /// <summary>
+        /// Returns whether give itemtype is real or a kanban version.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public bool IsKanban(ItemType type)
+        {
+            return kanbanTypes.Any(e => e.IncomingKanban == type || e.OutgoingKanban == type);
+        }
+
+        /// <summary>
+        /// Returns true if type (or one of its kanban variants) equals type01 (or one of its kanban variants).
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public bool IsItemOrKanbanOfType(ItemType type, ItemType type01)
+        {
+            var ret = type == type01 || type == Road.GetIncomingKanban(type01) ||
+                   type == Road.GetOutgoingKanban(type01);
+
+            if (ret)
+                return true;
+
+            return type01 == type || type01 == Road.GetIncomingKanban(type) ||
+                   type01 == Road.GetOutgoingKanban(type);
+        }
+
         #endregion Kanban Construction
 
 

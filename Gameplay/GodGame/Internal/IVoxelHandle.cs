@@ -119,6 +119,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             return Type.CanAcceptItemType(this, type);
         }
 
+        public bool CanAcceptItemType(IVoxelHandle deliveryHandle, ItemType type)
+        {
+            return Type.CanAcceptItemType(this, deliveryHandle, type);
+        }
+
 
         protected bool Equals(IVoxelHandle other)
         {

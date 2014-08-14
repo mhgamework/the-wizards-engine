@@ -34,8 +34,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             neededResources = new[]
                 {
-                    new VillageResource { ItemType = Market.ProcessedCropType, MaxResourceLevel = 3, MinResourceLevel = 1, ConsummationRate = 10}, 
-                    new VillageResource { ItemType = Market.ProcessedFishType, MaxResourceLevel = 2, MinResourceLevel = 1, ConsummationRate = 5}
+                    new VillageResource { ItemType = Crop.GetCropItemType(), MaxResourceLevel = 3, MinResourceLevel = 0, ConsummationRate = 10}, 
+                    new VillageResource { ItemType = Fishery.GetFishItemType(), MaxResourceLevel = 2, MinResourceLevel = 0, ConsummationRate = 10}
                 }.ToList();
 
             totalResourceCapacity = 0;
@@ -89,13 +89,18 @@ namespace MHGameWork.TheWizards.GodGame.Types
             checkResourceLevels(handle);
         }
 
-        public override bool CanAcceptItemType(IVoxelHandle handle, ItemType type)
+        public override bool CanAcceptItemType(IVoxelHandle handle, IVoxelHandle deliveryHandle, ItemType type)
         {
+            if (!(deliveryHandle.Type is MarketType)) return false;
             if (!neededResources.Any(e => e.ItemType == type)) return false;
 
-            return handle.Data.Inventory.GetAmountOfType(type) < neededResources.First(e => e.ItemType == type).MaxResourceLevel;
+            return getNbItemsOfTypeOrKanban(handle.Data.Inventory, type) < neededResources.First(e => e.ItemType == type).MaxResourceLevel;
         }
 
+        private int getNbItemsOfTypeOrKanban(Inventory inventory, ItemType type)
+        {
+            return inventory.Items.Sum(item => Road.IsItemOrKanbanOfType(type, item) ? 1 : 0);
+        }
 
         /// <summary>
         /// Old village code
