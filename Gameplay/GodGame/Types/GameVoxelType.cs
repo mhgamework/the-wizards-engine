@@ -35,7 +35,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public static CropType Crop = new CropType();
         public static FarmType Farm = new FarmType();
         public static FisheryType Fishery = new FisheryType();
-        public static BuildingSiteType FisheryBuildSite = new BuildingSiteType(Fishery, new[] { new BuildingSiteType.ItemAmount { Type = Crop.GetCropItemType(), Amount = 6 } }.ToList());
+        public static BuildingSiteType FisheryBuildSite = new BuildingSiteType(Fishery, new[] { new BuildingSiteType.ItemAmount { Type = Crop.GetCropItemType(), Amount = 20 } }.ToList());
         public static MarketType Market = new MarketType(); //order of construction important
         public static VillageType Village = new VillageType(); //order of construction important
 

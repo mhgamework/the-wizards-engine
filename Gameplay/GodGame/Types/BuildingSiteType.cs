@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public override void Tick(IVoxelHandle handle)
         {
-            handle.EachRandomInterval(0.25f, () =>
+            handle.EachRandomInterval(0.5f, () =>
             {
                 tryGatherResources(handle);
                 updateAppearance(handle);
@@ -47,14 +47,25 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private void tryGatherResources(IVoxelHandle handle)
         {
             var warehousesInRange = getWareHousesInRange(handle, 100);
-            foreach (var resAmnt in neededResources.Where(e => handle.Data.Inventory.GetAmountOfType(e.Type) < e.Amount))
+            foreach (var resAmnt in neededResources.Where(e => countResourcesIncludingKanban(e.Type, handle) < e.Amount))
             {
                 foreach (var warehouse in warehousesInRange.Where(warehouse => warehouse.Data.Inventory.GetAmountOfType(resAmnt.Type) > 0))
                 {
-                    warehouse.Data.Inventory.TransferItemsTo(handle.Data.Inventory, resAmnt.Type, 1);
-                    break;
+                    var road = Road.IsConnected(warehouse, handle);
+                    if (road != null)
+                    {
+                        Road.DeliverItem(road, warehouse, handle, resAmnt.Type);
+                        break;
+                    }
+
                 }
             }
+        }
+
+        private int countResourcesIncludingKanban(ItemType type, IVoxelHandle handle)
+        {
+            var inventory = handle.Data.Inventory;
+            return inventory.GetAmountOfType(type) + inventory.GetAmountOfType(Road.GetIncomingKanban(type)) + inventory.GetAmountOfType(Road.GetOutgoingKanban(type));
         }
 
         private IEnumerable<IVoxelHandle> getWareHousesInRange(IVoxelHandle handle, int range)

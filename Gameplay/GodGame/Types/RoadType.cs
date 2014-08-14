@@ -17,8 +17,16 @@ namespace MHGameWork.TheWizards.GodGame.Types
     public class RoadType : GameVoxelType
     {
         private FourWayModelBuilder meshBuilder;
-        private ItemType outgoingKanbanType;
-        private ItemType incomingKanbanType;
+        //private ItemType outgoingKanbanType;
+        //private ItemType incomingKanbanType;
+
+        private struct ItemTypeKanbans
+        {
+            public ItemType ItemType;
+            public ItemType IncomingKanban;
+            public ItemType OutgoingKanban;
+        }
+        private List<ItemTypeKanbans> kanbanTypes;
 
         public RoadType()
             : base("Road")
@@ -30,15 +38,48 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 NoWayMesh = datavalueMeshes.ContainsKey(2) ? datavalueMeshes[2] : null
             };
 
-            outgoingKanbanType = new ItemType() { Name = "OutgoingKanban" };
+            /*outgoingKanbanType = new ItemType() { Name = "OutgoingKanban" };
             outgoingKanbanType.Mesh = UtilityMeshes.CreateBoxColored(Color.Red, new Vector3(0.5f));
 
             incomingKanbanType = new ItemType() { Name = "IncomingKanban" };
-            incomingKanbanType.Mesh = UtilityMeshes.CreateBoxColored(Color.Green, new Vector3(0.5f));
+            incomingKanbanType.Mesh = UtilityMeshes.CreateBoxColored(Color.Green, new Vector3(0.5f));*/
 
-
+            kanbanTypes = new List<ItemTypeKanbans>();
 
         }
+
+        #region Kanban Construction
+
+        public ItemType GetIncomingKanban(ItemType type)
+        {
+            if (!kanbanTypes.Any(e => e.ItemType == type))
+                return createKanbanTypes(type).IncomingKanban;
+
+            return kanbanTypes.First(e => e.ItemType == type).IncomingKanban;
+        }
+
+        public ItemType GetOutgoingKanban(ItemType type)
+        {
+            if (!kanbanTypes.Any(e => e.ItemType == type))
+                return createKanbanTypes(type).OutgoingKanban;
+
+            return kanbanTypes.First(e => e.ItemType == type).OutgoingKanban;
+        }
+
+        private ItemTypeKanbans createKanbanTypes(ItemType type)
+        {
+            var ret = new ItemTypeKanbans
+                {
+                    ItemType = type,
+                    IncomingKanban = new ItemType { Name = type.Name + "IncomingKanban", Mesh = UtilityMeshes.CreateBoxColored(Color.Green, new Vector3(0.5f)) },
+                    OutgoingKanban = new ItemType { Name = type.Name + "OutgoingKanban", Mesh = UtilityMeshes.CreateBoxColored(Color.Red, new Vector3(0.5f)) }
+                };
+            kanbanTypes.Add(ret);
+            return ret;
+        }
+
+        #endregion Kanban Construction
+
 
         public void DeliverItemClosest(IVoxelHandle startRoad, IVoxelHandle sourceInventory, ItemType type)
         {
@@ -53,8 +94,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
             if (!FindConnectedVoxels(startRoad, v => v.Equals(targetInventory)).Any()) throw new InvalidOperationException("Target is not connected to given startRoad");
 
             sourceInventory.Data.Inventory.TransferItemsTo(startRoad.Data.Inventory, type, 1);
-            sourceInventory.Data.Inventory.AddNewItems(outgoingKanbanType, 1);
-            targetInventory.Data.Inventory.AddNewItems(incomingKanbanType, 1);
+            sourceInventory.Data.Inventory.AddNewItems(GetOutgoingKanban(type), 1);
+            targetInventory.Data.Inventory.AddNewItems(GetIncomingKanban(type), 1);
 
             startRoad.Data.Road.Items.Add(new TargetedItem(sourceInventory.GetInternalVoxel(), type, targetInventory.GetInternalVoxel()));
 
@@ -96,16 +137,16 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private void destroyTargetedItem(IVoxelHandle handle, TargetedItem item)
         {
             handle.Data.Inventory.DestroyItems(item.ItemType, 1);
-            item.Source.Data.Inventory.DestroyItems(outgoingKanbanType, 1);
-            item.Destination.Data.Inventory.DestroyItems(incomingKanbanType, 1);
+            item.Source.Data.Inventory.DestroyItems(GetOutgoingKanban(item.ItemType), 1);
+            item.Destination.Data.Inventory.DestroyItems(GetIncomingKanban(item.ItemType), 1);
         }
 
         private bool tryTransferToDestination(IVoxelHandle road, TargetedItem item)
         {
             if (!road.Get4Connected().Contains(haxorIVoxelHandelize(road, item.Destination))) return false;
 
-            item.Source.Data.Inventory.DestroyItems(outgoingKanbanType, 1);
-            item.Destination.Data.Inventory.DestroyItems(incomingKanbanType, 1);
+            item.Source.Data.Inventory.DestroyItems(GetOutgoingKanban(item.ItemType), 1);
+            item.Destination.Data.Inventory.DestroyItems(GetIncomingKanban(item.ItemType), 1);
             road.Data.Inventory.TransferItemsTo(item.Destination.Data.Inventory, item.ItemType, 1);
             road.Data.Road.Items.Remove(item);
             return true;
@@ -136,8 +177,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public override bool CanAcceptItemType(IVoxelHandle voxelHandle, ItemType type)
         {
-            if (type == incomingKanbanType) return false;
-            if (type == outgoingKanbanType) return false;
+            if (kanbanTypes.Any(e => e.IncomingKanban == type || e.OutgoingKanban == type)) return false;
             var potentialTargets = FindConnectedInventories(voxelHandle, type).ToArray();
             if (!potentialTargets.Any()) return false;
 
@@ -155,6 +195,25 @@ namespace MHGameWork.TheWizards.GodGame.Types
             return FindConnectedVoxels(start, v => v.CanAcceptItemType(type));
         }
 
+        /// <summary>
+        /// Checks whether two voxelhandles are connected via roads, returning the roadpiece neighbouring the source handle that connects the given handles (or null if not connected).
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public IVoxelHandle IsConnected(IVoxelHandle source, IVoxelHandle target)
+        {
+            //TODO: return roadpiece of shortest route
+            var connRoads = source.Get4Connected().Where(e => e.Type is RoadType);
+            if (!connRoads.Any()) return null;
+
+            foreach (var roadPiece in connRoads)
+            {
+                if (FindConnectedVoxels(roadPiece, handle => handle.Equals(target)).Any())
+                    return roadPiece;
+            }
+            return null;
+        }
 
         public IEnumerable<Tuple<IVoxelHandle, int>> FindConnectedVoxels(IVoxelHandle startRoad, Func<IVoxelHandle, bool> predicate)
         {

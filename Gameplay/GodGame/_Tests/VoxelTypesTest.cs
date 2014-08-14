@@ -43,7 +43,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             var game = GodGameMainTest.CreateGame();
             game.World.GetVoxel(new Point2(5, 5)).ChangeType(GameVoxelType.Warehouse);
             var wareHouse01 = new IVoxelHandle(game.World, game.World.GetVoxel(new Point2(5, 5)));
-            wareHouse01.Data.Inventory.AddNewItems(GameVoxelType.Crop.GetCropItemType(), 10);
+            wareHouse01.Data.Inventory.AddNewItems(GameVoxelType.Crop.GetCropItemType(), 25);
         }
 
     }
