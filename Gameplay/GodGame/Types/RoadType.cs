@@ -222,7 +222,13 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private bool isConnectedType(IVoxelHandle handle)
         {
-            return handle.Type is RoadType || handle.Type is FarmType || handle.Type is WarehouseType || handle.Type is MinerType || handle.Type is FisheryType || handle.Type is MarketType;
+            return handle.Type is RoadType
+                || handle.Type is FarmType
+                || handle.Type is WarehouseType
+                || handle.Type is MinerType
+                || handle.Type is FisheryType
+                || handle.Type is MarketType
+                || handle.Type is BuildingSiteType;
         }
 
         public struct RoadData

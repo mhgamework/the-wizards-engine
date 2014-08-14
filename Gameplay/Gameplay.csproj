@@ -197,6 +197,7 @@
     <Compile Include="GodGame\Internal\TickSimulator.cs" />
     <Compile Include="GodGame\Internal\IVoxelInfoVisualizer.cs" />
     <Compile Include="GodGame\Persistence\SerializedVoxel.cs" />
+    <Compile Include="GodGame\Types\BuildingSiteType.cs" />
     <Compile Include="GodGame\Types\CropType.cs" />
     <Compile Include="GodGame\Types\FarmType.cs" />
     <Compile Include="GodGame\Rendering\FourWayModelBuilder.cs" />

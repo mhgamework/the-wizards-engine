@@ -1,4 +1,5 @@
 ﻿using DirectX11;
+using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Types;
 using NUnit.Framework;
 
@@ -35,6 +36,14 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             game.World.GetVoxel(new Point2(10, 12)).ChangeType(GameVoxelType.Hole);
             game.World.GetVoxel(new Point2(11, 11)).ChangeType(GameVoxelType.Hole);
             game.World.GetVoxel(new Point2(12, 12)).ChangeType(GameVoxelType.Hole);
+        }
+        [Test]
+        public void TestStartResources()
+        {
+            var game = GodGameMainTest.CreateGame();
+            game.World.GetVoxel(new Point2(5, 5)).ChangeType(GameVoxelType.Warehouse);
+            var wareHouse01 = new IVoxelHandle(game.World, game.World.GetVoxel(new Point2(5, 5)));
+            wareHouse01.Data.Inventory.AddNewItems(GameVoxelType.Crop.GetCropItemType(), 10);
         }
 
     }

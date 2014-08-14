@@ -35,6 +35,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public static CropType Crop = new CropType();
         public static FarmType Farm = new FarmType();
         public static FisheryType Fishery = new FisheryType();
+        public static BuildingSiteType FisheryBuildSite = new BuildingSiteType(Fishery, new[] { new BuildingSiteType.ItemAmount { Type = Crop.GetCropItemType(), Amount = 6 } }.ToList());
         public static MarketType Market = new MarketType(); //order of construction important
         public static VillageType Village = new VillageType(); //order of construction important
 
@@ -59,6 +60,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             allTypes.Add(Farm);
             allTypes.Add(Market);
             allTypes.Add(Fishery);
+            allTypes.Add(FisheryBuildSite);
 
             var voxelTypes =
                 Assembly.GetExecutingAssembly().GetTypes().Where(t => (typeof(GameVoxelType)).IsAssignableFrom(t)
