@@ -26,13 +26,14 @@ namespace MHGameWork.TheWizards.GodGame.Types
             // IDEA: should autoconvert between the gameplay voxel type and the rendering voxel type
             this.handle = handle.GetInternalVoxel();
 
-            ItemRelativeTransformationProvider = getItemCircleTransformation;
+            ItemRelativeTransformationProvider = i => getItemCircleTransformation(i, this.handle, 1);
         }
 
-        private Matrix getItemCircleTransformation(int i)
+        public static Matrix getItemCircleTransformation(int i, GameVoxel targetVoxel, float radiusScale)
         {
-            var radius = handle.GetBoundingBox().Maximum.X - handle.GetBoundingBox().Minimum.X;
-            var angle = MathHelper.TwoPi / handle.Data.Inventory.ItemCount * i;
+            var radius = targetVoxel.GetBoundingBox().Maximum.X - targetVoxel.GetBoundingBox().Minimum.X;
+            radius *= radiusScale;
+            var angle = MathHelper.TwoPi / targetVoxel.Data.Inventory.ItemCount * i;
             return Matrix.Translation(new Vector3(Math.Cos(angle).ToF(), 0.5f, Math.Sin(angle).ToF()) * radius);
         }
 

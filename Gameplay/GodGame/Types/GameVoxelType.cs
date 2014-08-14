@@ -13,6 +13,12 @@ using MHGameWork.TheWizards.IO;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
+    /// <summary>
+    /// Idea: generate RoadVoxel from RoadType, where it has wrappers for the roadtype methods taking a gamevoxel. 
+    /// This way, logic can again be written on voxels instead of types
+    /// Another idea: generate RoadType methods from RoadVoxel?
+    /// http://www.hanselman.com/blog/T4TextTemplateTransformationToolkitCodeGenerationBestKeptVisualStudioSecret.aspx
+    /// </summary>
     public class GameVoxelType
     {
         public static GameVoxelType Air = new GameVoxelType("Air") { NoMesh = true };

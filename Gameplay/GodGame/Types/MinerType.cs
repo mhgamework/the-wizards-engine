@@ -38,7 +38,10 @@ namespace MHGameWork.TheWizards.GodGame.Types
             {
                 if (!target.CanAcceptItemType(type)) break;
                 if (handle.Data.Inventory[type] == 0) break;
-                handle.Data.Inventory.TransferItemsTo(target.Data.Inventory, type, 1);
+                if (target.Type is RoadType)
+                    Road.DeliverItemClosest(target, handle, type);
+                else
+                    handle.Data.Inventory.TransferItemsTo(target.Data.Inventory, type, 1);
             }
 
         }

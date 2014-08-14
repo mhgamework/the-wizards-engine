@@ -7,6 +7,10 @@ using MHGameWork.TheWizards.Scattered.Model;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
+    /// <summary>
+    /// TODO: maybe add an IVoxelHandle property to each GameVoxel?
+    /// The problem now is that we cannot hold references to IVoxelHandles, since the objects themselves are flyweights and thus cannot be used to identify voxels
+    /// </summary>
     public class IVoxelHandle
     {
         private readonly World world;

@@ -62,8 +62,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
             if (target.Data.DataValue < HarvestDataVal) return;
             var type = GetCropItemType();
 
-            var numAdded = inventory.AddNewItems(type, 1);
-            target.Data.DataValue = numAdded > 0 ? 0 : target.Data.DataValue;
+            if (inventory.CanAdd(type, 1))
+            {
+                inventory.AddNewItems(type, 1);
+                target.Data.DataValue = 0;
+            }
+
         }
     }
 }

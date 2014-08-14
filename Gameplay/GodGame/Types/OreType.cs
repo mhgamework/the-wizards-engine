@@ -28,9 +28,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
             if (target.Data.DataValue > 0)
             {
                 var type = GetOreItemType(target);
+                if (inventory.CanAdd(type, 1))
+                {
+                    inventory.AddNewItems(type, 1);
+                    target.Data.DataValue -= 1;    
+                }
                 
-                var numAdded = inventory.AddNewItems(type, 1);
-                target.Data.DataValue -= numAdded;
             }
 
             if (target.Data.DataValue == 0)

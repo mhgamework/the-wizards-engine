@@ -47,25 +47,37 @@ namespace MHGameWork.TheWizards.Scattered.Model
             return ret;
         }
 
-        public int AddNewItems(ItemType type, int amount)
+        public void AddNewItems(ItemType type, int amount)
         {
-            var effectiveChange = changeAmountOfType(type, amount);
-            return effectiveChange;
+            if (!CanAdd(type,amount)) throw new InvalidOperationException("Cannot add new items!");
+            changeAmountOfType(type, amount);
+            //var effectiveChange = changeAmountOfType(type, amount);
+            //return effectiveChange;
         }
 
 
+        /// <summary>
+        /// Returns the number of items transferred, untested
+        /// </summary>
+        /// <param name="targetInventory"></param>
+        /// <param name="type"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
         public void TransferItemsTo(Inventory targetInventory, ItemType type, int amount)
         {
-            if (this.GetAmountOfType(type) < amount) throw new InvalidOperationException("The source inventory does not contain enough items");
-            amount = targetInventory.changeAmountOfType(type, amount);
+            if (!targetInventory.CanAdd(type, amount)) throw new InvalidOperationException("Cannot add new items!");
+            if (!CanRemove(type,amount)) throw new InvalidOperationException("Cannot remove items!");
+            
+            targetInventory.changeAmountOfType(type, amount);//amount = targetInventory.changeAmountOfType(type, amount);
             this.changeAmountOfType(type, -amount);
+            //return amount;
         }
 
         public int GetAmountOfType(ItemType type)
         {
             return itemAmounts.GetOrCreate(type, () => 0);
         }
-        private int changeAmountOfType(ItemType type, int relativeChange)
+        private void changeAmountOfType(ItemType type, int relativeChange)
         {
             if (ItemCount + relativeChange > Capacity)
                 relativeChange = Capacity - ItemCount;
@@ -76,9 +88,13 @@ namespace MHGameWork.TheWizards.Scattered.Model
             if (curr == 0) itemAmounts.Remove(type);
             itemAmounts[type] = curr;
 
-            return relativeChange;
+            //return relativeChange;
         }
 
+        /// <summary>
+        /// TODO: probably doesn't work properly
+        /// </summary>
+        /// <param name="inventory"></param>
         public void TakeAll(Inventory inventory)
         {
             foreach (var el in new Dictionary<ItemType, int>(inventory.itemAmounts))
@@ -92,6 +108,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public void DestroyItems(ItemType type, int amount)
         {
+            if (!CanRemove(type,amount)) throw new InvalidOperationException("Cannot remove given amount of items");
             changeAmountOfType(type, -amount);
         }
 
@@ -117,6 +134,15 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public int AvailableSlots
         {
             get { return Capacity - ItemCount; }
+        }
+
+        public bool CanAdd(ItemType type, int i)
+        {
+            return AvailableSlots >= i;
+        }
+        public bool CanRemove(ItemType type, int i)
+        {
+            return this[type] >= i;
         }
     }
 }

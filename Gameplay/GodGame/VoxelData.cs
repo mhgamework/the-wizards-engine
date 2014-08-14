@@ -1,4 +1,5 @@
 ﻿using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.Scattered.Model;
 
 namespace MHGameWork.TheWizards.GodGame
@@ -8,6 +9,8 @@ namespace MHGameWork.TheWizards.GodGame
         public VoxelData()
         {
             Inventory = new Inventory();
+            Road = RoadType.RoadData.Empty;
+
         }
 
         public int DataValue { get; set; }
@@ -18,7 +21,8 @@ namespace MHGameWork.TheWizards.GodGame
         /// </summary>
         public Inventory Inventory { get; private set; }
 
+        public RoadType.RoadData Road { get; private set; }
 
-
+       
     }
 }
