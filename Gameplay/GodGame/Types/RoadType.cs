@@ -128,15 +128,38 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         }
 
+        private float prevFrameTime;
+        private float nextTick;
+
+        private bool isTickFrame = false;
+
         public override void Tick(IVoxelHandle handle)
         {
-            handle.Data.DataValue += (int)(handle.TickLength * 1000);
-            if (handle.Data.DataValue < 500) return;
+            if (prevFrameTime != handle.TotalTime)
+            {
+                //This is the first tick on a road this frame
+                if (nextTick < handle.TotalTime)
+                {
+                    isTickFrame = true;
+                    nextTick = handle.TotalTime + 0.5f;
+                }
+                else
+                {
+                    isTickFrame = false;
+                }
 
-            handle.Data.DataValue = 0;
+                prevFrameTime = handle.TotalTime;
+
+            }
+            if (!isTickFrame) return;
 
             foreach (var targetedItem in handle.Data.Road.Items.ToArray())
+            {
+                if (targetedItem.LastMoveTime == handle.TotalTime) continue;
+                targetedItem.LastMoveTime = handle.TotalTime;
                 tryTransfer(handle, targetedItem);
+                
+            }
 
 
         }
@@ -332,6 +355,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public GameVoxel Source;
         public ItemType ItemType;
         public GameVoxel Destination;
+        public float LastMoveTime { get; set; }
 
         public TargetedItem(GameVoxel source, ItemType itemType, GameVoxel destination)
         {
