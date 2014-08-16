@@ -3,16 +3,23 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Timers;
 using MHGameWork.TheWizards.GodGame.Internal;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
     public class FarmType : GameVoxelType
     {
+        private static int counter = 0;
+        private Timer myTimer;
+
         public FarmType()
             : base("Farm")
         {
             Color = Color.Purple;
+            myTimer = new Timer(100);
+            myTimer.Elapsed += incrementCounter;
+            myTimer.Enabled = true;
         }
 
         public override void Tick(Internal.IVoxelHandle handle)
@@ -25,6 +32,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
                     tryHarvest(handle);
                     tryOutput(handle);
                 });
+
+            updateDataVal(handle);
         }
 
         private void tryOutput(IVoxelHandle handle)
@@ -54,6 +63,18 @@ namespace MHGameWork.TheWizards.GodGame.Types
             var target = toHarvest.First();
 
             ((CropType)target.Type).Harvest(target, handle.Data.Inventory);
+        }
+
+        private static void incrementCounter(Object source, ElapsedEventArgs e)
+        {
+            counter++;
+            if (counter >= 6)
+                counter = 0;
+        }
+
+        private void updateDataVal(IVoxelHandle handle)
+        {
+            handle.Data.DataValue = counter;
         }
 
         private IEnumerable<IVoxelHandle> getHarvestableVoxels(IVoxelHandle handle)

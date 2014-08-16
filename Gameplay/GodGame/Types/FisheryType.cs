@@ -13,6 +13,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
     public class FisheryType : GameVoxelType
     {
         private ItemType fishType;
+        private int maxItemCount = 4;
 
         public FisheryType()
             : base("Fishery")
@@ -28,20 +29,28 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public override void Tick(IVoxelHandle handle)
         {
-            handle.Data.Inventory.ChangeCapacity(1);
-            handle.EachRandomInterval(1f, () => tryFish(handle));
-            handle.EachRandomInterval(1f, () => tryOutput(handle));
+            handle.Data.Inventory.ChangeCapacity(maxItemCount);
+            handle.EachRandomInterval(1f, () =>
+            {
+                tryFish(handle);
+                updateDataVal(handle);
+            });
+            handle.EachRandomInterval(1f, () => { tryOutput(handle); updateDataVal(handle); });
         }
 
         private void tryOutput(IVoxelHandle handle)
         {
-            if (handle.Data.Inventory[fishType] == 0) return;
+            if (handle.Data.Inventory[fishType] < maxItemCount) return;
 
             var target = handle.Get4Connected().FirstOrDefault(v => v.CanAcceptItemType(fishType));
             if (target == null || !target.CanAcceptItemType(fishType)) return;
 
-            if (target.Type is RoadType)
-                Road.DeliverItemClosest(target, handle, fishType);
+            for (int i = 0; i < maxItemCount; i++)
+            {
+                if (handle.Data.Inventory[fishType] == 0) break;
+                if (target.Type is RoadType)
+                    Road.DeliverItemClosest(target, handle, fishType);
+            }
         }
 
         private void tryFish(IVoxelHandle handle)
@@ -51,10 +60,11 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
             if (handle.Data.Inventory.CanAdd(fishType, 1))
                 handle.Data.Inventory.AddNewItems(fishType, 1);
+        }
 
-
-
-
+        private void updateDataVal(IVoxelHandle handle)
+        {
+            handle.Data.DataValue = handle.Data.Inventory.GetAmountOfType(fishType);
         }
     }
 }
