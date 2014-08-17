@@ -47,6 +47,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
             for (int i = 0; i < maxItemCount; i++)
             {
+                if (!target.CanAcceptItemType(fishType)) break;
                 if (handle.Data.Inventory[fishType] == 0) break;
                 if (target.Type is RoadType)
                     Road.DeliverItemClosest(target, handle, fishType);

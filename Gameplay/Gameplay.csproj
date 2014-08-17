@@ -203,6 +203,7 @@
     <Compile Include="GodGame\Rendering\FourWayModelBuilder.cs" />
     <Compile Include="GodGame\Types\FisheryType.cs" />
     <Compile Include="GodGame\Types\MarketType.cs" />
+    <Compile Include="GodGame\Types\QuarryType.cs" />
     <Compile Include="GodGame\Types\RoadType.cs" />
     <Compile Include="GodGame\Types\MinerType.cs" />
     <Compile Include="GodGame\Types\OreType.cs" />

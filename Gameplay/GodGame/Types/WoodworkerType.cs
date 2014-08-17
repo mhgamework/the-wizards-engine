@@ -58,6 +58,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
             for (int i = 0; i < inventorySize; i++)
             {
+                if (!target.CanAcceptItemType(itemType)) break;
                 if (handle.Data.Inventory[itemType] == 0) break;
                 if (target.Type is RoadType)
                     Road.DeliverItemClosest(target, handle, itemType);
