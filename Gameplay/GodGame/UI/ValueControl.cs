@@ -13,9 +13,8 @@ namespace MHGameWork.TheWizards.GodGame.UI
     /// TODO: maybe build a tree, where a value control consists of 2 buttons
     /// TODO: use scene graph
     /// </summary>
-    public class ValueControl
+    public class ValueControl : IRenderable
     {
-        private Renderable valueControlRenderable;
         //TODO: public BoundingBox BoundingBox { get; set; }
         public Matrix WorldMatrix { get; set; }
 
@@ -30,8 +29,9 @@ namespace MHGameWork.TheWizards.GodGame.UI
             MaxValue = 10;
             minBox = new Vector3(-1, 0, 0).ToBoundingBox(new Vector3(0.7f));
             plusBox = new Vector3(1, 0, 0).ToBoundingBox(new Vector3(0.7f));
-            valueControlRenderable = new Renderable(this);
             WorldMatrix = Matrix.Identity;
+
+            initRendering();
         }
 
         public bool TryLeftClick(Ray ray)
@@ -68,73 +68,62 @@ namespace MHGameWork.TheWizards.GodGame.UI
             return true;
         }
 
- 
 
 
-        public IRenderable GetRenderable()
+        private TextRectangle text;
+        private Entity plusBoxEnt;
+        private Entity minBoxEnt;
+
+        public void initRendering()
         {
-            return valueControlRenderable;
+            text = new TextRectangle();
+            text.Radius = 0.7f;
+            text.IsBillboard = true;
+            plusBoxEnt = new Entity();
+            minBoxEnt = new Entity();
+
+            plusBoxEnt.Mesh = UtilityMeshes.CreateMeshWithText(0.5f, "+", TW.Graphics);
+            minBoxEnt.Mesh = UtilityMeshes.CreateMeshWithText(0.5f, "-", TW.Graphics);
+
+            Update();
+            Hide();
+
+        }
+        public void Show()
+        {
+            text.Entity.Visible = true;
+            plusBoxEnt.Visible = true;
+            minBoxEnt.Visible = true;
         }
 
-        private class Renderable : IRenderable
+        public void Update()
         {
-            private readonly ValueControl control;
-            private TextRectangle text;
-            private Entity plusBox;
-            private Entity minBox;
+            text.Text = Value.ToString();
+            text.Position = WorldMatrix.GetTranslation() + new Vector3(0, 1.5f, 0);
 
-            public Renderable(ValueControl control)
-            {
-                this.control = control;
-                text = new TextRectangle();
-                text.Radius = 0.7f;
-                text.IsBillboard = true;
-                plusBox = new Entity();
-                minBox = new Entity();
+            text.Update();
 
-                plusBox.Mesh = UtilityMeshes.CreateMeshWithText(0.5f, "+", TW.Graphics);
-                minBox.Mesh = UtilityMeshes.CreateMeshWithText(0.5f, "-", TW.Graphics);
+            plusBoxEnt.WorldMatrix = Matrix.Scaling(plusBox.GetSize()) *
+                                  Matrix.Translation(plusBox.GetCenter()) * WorldMatrix;
+            minBoxEnt.WorldMatrix = Matrix.Scaling(minBox.GetSize()) *
+                                  Matrix.Translation(minBox.GetCenter()) * WorldMatrix;
 
-                Update();
-                Hide();
-
-            }
-            public void Show()
-            {
-                text.Entity.Visible = true;
-                plusBox.Visible = true;
-                minBox.Visible = true;
-            }
-
-            public void Update()
-            {
-                text.Text = control.Value.ToString();
-                text.Position = control.WorldMatrix.GetTranslation() + new Vector3(0, 1.5f, 0);
-
-                text.Update();
-
-                plusBox.WorldMatrix = Matrix.Scaling(control.plusBox.GetSize()) *
-                                      Matrix.Translation(control.plusBox.GetCenter()) * control.WorldMatrix;
-                minBox.WorldMatrix = Matrix.Scaling(control.minBox.GetSize()) *
-                                      Matrix.Translation(control.minBox.GetCenter()) * control.WorldMatrix;
-
-                var old = TW.Graphics.LineManager3D.WorldMatrix;
-                TW.Graphics.LineManager3D.WorldMatrix = control.WorldMatrix;
-                if (control.intersectsBox(TW.Data.Get<CameraInfo>().GetCenterScreenRay(), control.minBox))
-                    TW.Graphics.LineManager3D.AddBox(control.minBox, Color.Yellow.dx());
-                if (control.intersectsBox(TW.Data.Get<CameraInfo>().GetCenterScreenRay(), control.plusBox))
-                    TW.Graphics.LineManager3D.AddBox(control.plusBox, Color.Yellow.dx());
-                TW.Graphics.LineManager3D.WorldMatrix = old;
+            var old = TW.Graphics.LineManager3D.WorldMatrix;
+            TW.Graphics.LineManager3D.WorldMatrix = WorldMatrix;
+            if (intersectsBox(TW.Data.Get<CameraInfo>().GetCenterScreenRay(), minBox))
+                TW.Graphics.LineManager3D.AddBox(minBox, Color.Yellow.dx());
+            if (intersectsBox(TW.Data.Get<CameraInfo>().GetCenterScreenRay(), plusBox))
+                TW.Graphics.LineManager3D.AddBox(plusBox, Color.Yellow.dx());
+            TW.Graphics.LineManager3D.WorldMatrix = old;
 
 
-            }
+        }
 
-            public void Hide()
-            {
-                text.Entity.Visible = false;
-                plusBox.Visible = false;
-                minBox.Visible = false;
-            }
+        public void Hide()
+        {
+            text.Entity.Visible = false;
+            plusBoxEnt.Visible = false;
+            minBoxEnt.Visible = false;
         }
     }
 }

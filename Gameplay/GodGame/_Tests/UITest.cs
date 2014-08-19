@@ -24,11 +24,11 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                     else if (TW.Graphics.Mouse.RightMouseJustPressed)
                         control.TryRightClick(TW.Data.Get<CameraInfo>().GetCenterScreenRay());
 
-                    control.GetRenderable().Update();
+                    control.Update();
                 }));
             engine.AddSimulator(new WorldRenderingSimulator());
 
-            control.GetRenderable().Show();
+            control.Show();
         }
          
     }
