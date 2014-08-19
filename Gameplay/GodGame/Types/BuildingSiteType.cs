@@ -4,7 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
@@ -13,6 +15,9 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private GameVoxelType building;
         private List<ItemAmount> neededResources;
         private int totalNbNeededResources;
+        private int nbBuildingSiteModels = 4;
+
+        private List<IMesh> meshes;
 
         public struct ItemAmount
         {
@@ -21,7 +26,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         }
 
         public BuildingSiteType(GameVoxelType building, List<ItemAmount> neededResources)
-            : base(building.Name + "BuildingSite")
+            : base("BuildingSite")
         {
             this.building = building;
             this.neededResources = neededResources;
@@ -32,6 +37,15 @@ namespace MHGameWork.TheWizards.GodGame.Types
             }
 
             Color = Color.White;
+
+            meshes = new List<IMesh>();
+            for (int i = 0; i < nbBuildingSiteModels; i++)
+            {
+                var baseMesh = datavalueMeshes[i];
+                MeshBuilder.AppendMeshTo(building.GetDataValueMesh(0), baseMesh, Matrix.Identity);
+                meshes.Add(baseMesh);
+            }
+
         }
 
         public override void Tick(IVoxelHandle handle)
@@ -42,6 +56,11 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 updateAppearance(handle);
                 checkComplete(handle);
             });
+        }
+
+        public override IMesh GetMesh(IVoxelHandle handle)
+        {
+            return meshes[handle.Data.DataValue];
         }
 
         private void tryGatherResources(IVoxelHandle handle)
@@ -77,6 +96,11 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             var nbStoredRes = handle.Data.Inventory.ItemCount;
             var completionRate = (float)nbStoredRes / (float)totalNbNeededResources;
+
+            var newDataVal = (int)Math.Floor(completionRate * nbBuildingSiteModels);
+            if (newDataVal >= nbBuildingSiteModels)
+                newDataVal = nbBuildingSiteModels - 1;
+            handle.Data.DataValue = newDataVal;
 
             //todo update dataVal instead, make models
             if (completionRate < 0.2f)
