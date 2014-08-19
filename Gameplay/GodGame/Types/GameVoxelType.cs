@@ -41,6 +41,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public static VillageType Village = new VillageType(); //order of construction important
         public static WoodworkerType Woodworker = new WoodworkerType();
         public static QuarryType Quarry = new QuarryType();
+        public static GrinderType Grinder = new GrinderType();
 
         private static List<GameVoxelType> allTypes = new List<GameVoxelType>();
         public static IEnumerable<GameVoxelType> AllTypes { get { return allTypes; } }
@@ -66,6 +67,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             allTypes.Add(FisheryBuildSite);
             allTypes.Add(Woodworker);
             allTypes.Add(Quarry);
+            allTypes.Add(Grinder);
 
             var voxelTypes =
                 Assembly.GetExecutingAssembly().GetTypes().Where(t => (typeof(GameVoxelType)).IsAssignableFrom(t)

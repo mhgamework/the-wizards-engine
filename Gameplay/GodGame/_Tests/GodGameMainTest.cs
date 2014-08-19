@@ -78,6 +78,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             yield return createTypeInput(GameVoxelType.FisheryBuildSite, "FisheryBuildSite");
             yield return createTypeInput(GameVoxelType.Woodworker);
             yield return createTypeInput(GameVoxelType.Quarry);
+            yield return createTypeInput(GameVoxelType.Grinder);
         }
 
         private static DelegatePlayerInputHandler createTypeInput(GameVoxelType type, string name)

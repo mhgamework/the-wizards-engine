@@ -315,7 +315,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
                    || handle.Type is FisheryType
                    || handle.Type is MarketType
                    || handle.Type is BuildingSiteType
-                   || handle.Type is WoodworkerType;
+                   || handle.Type is WoodworkerType
+                   || handle.Type is GrinderType;
         }
 
         public struct RoadData
