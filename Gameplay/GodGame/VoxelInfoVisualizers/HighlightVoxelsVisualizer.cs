@@ -7,7 +7,7 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
-    public class HighlightVoxelsVisualizer : IVoxelInfoVisualizer
+    public class HighlightVoxelsVisualizer : IRenderable
     {
         private readonly Func<IVoxelHandle, IEnumerable<IVoxelHandle>> getHighlights;
         private readonly GameVoxel handle;

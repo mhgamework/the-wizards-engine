@@ -79,7 +79,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             handle.Data.DataValue = dataVal;
         }
 
-        public override IEnumerable<IVoxelInfoVisualizer> GetInfoVisualizers(IVoxelHandle handle)
+        public override IEnumerable<IRenderable> GetInfoVisualizers(IVoxelHandle handle)
         {
             foreach (var e in base.GetInfoVisualizers(handle))
                 yield return e;

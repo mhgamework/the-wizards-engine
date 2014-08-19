@@ -6,7 +6,7 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
-    public class RangeVisualizer : IVoxelInfoVisualizer
+    public class RangeVisualizer : IRenderable
     {
         private readonly GameVoxel handle;
         private readonly int range;

@@ -116,7 +116,7 @@ namespace MHGameWork.TheWizards.GodGame
             dataValueRectangle.Update();
         }
 
-        private List<IVoxelInfoVisualizer> visualizers = new List<IVoxelInfoVisualizer>();
+        private List<IRenderable> visualizers = new List<IRenderable>();
         private GameVoxel visualizedVoxel = null;
         private GameVoxelType visualizedType = null;
         private void updateSelectedVoxelVisualizers()

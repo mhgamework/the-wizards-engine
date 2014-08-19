@@ -82,7 +82,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             return handle.Get8Connected().Where(v => v.Type is CropType && v.Data.DataValue >= CropType.HarvestDataVal);
         }
 
-        public override IEnumerable<IVoxelInfoVisualizer> GetInfoVisualizers(IVoxelHandle handle)
+        public override IEnumerable<IRenderable> GetInfoVisualizers(IVoxelHandle handle)
         {
             foreach (var e in base.GetInfoVisualizers(handle))
                 yield return e;

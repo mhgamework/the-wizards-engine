@@ -62,7 +62,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             return handle.GetRange(mineRadius).Where(v => v.Type is OreType);
         }
 
-        public override IEnumerable<IVoxelInfoVisualizer> GetInfoVisualizers(IVoxelHandle handle)
+        public override IEnumerable<IRenderable> GetInfoVisualizers(IVoxelHandle handle)
         {
             foreach (var e in base.GetInfoVisualizers(handle))
                 yield return e;

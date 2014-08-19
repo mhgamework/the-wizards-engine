@@ -1,6 +1,6 @@
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
-    public interface IVoxelInfoVisualizer
+    public interface IRenderable
     {
         void Show();
         void Update();

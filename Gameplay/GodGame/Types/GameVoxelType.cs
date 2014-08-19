@@ -190,7 +190,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         /// NOTE: the list of returned visualizers should remain the same for each voxel+type combination throughout the application,
         /// otherwise the list might not get updated as expected.
         /// </summary>
-        public virtual IEnumerable<IVoxelInfoVisualizer> GetInfoVisualizers(IVoxelHandle handle)
+        public virtual IEnumerable<IRenderable> GetInfoVisualizers(IVoxelHandle handle)
         {
             yield return new InventoryVisualizer(handle);
         }
@@ -223,7 +223,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         /// </summary>
         /// <param name="handle"></param>
         /// <returns></returns>
-        public virtual IEnumerable<IVoxelInfoVisualizer> GetCustomVisualizers(IVoxelHandle handle)
+        public virtual IEnumerable<IRenderable> GetCustomVisualizers(IVoxelHandle handle)
         {
             yield break;
         }

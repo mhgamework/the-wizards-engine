@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
     /// <summary>
     /// Displays a max of 50 items from the inventory
     /// </summary>
-    public class InventoryVisualizer : IVoxelInfoVisualizer
+    public class InventoryVisualizer : IRenderable
     {
         private readonly GameVoxel handle;
         private Entity[] entityCache = new Entity[50];

@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             engine.AddSimulator(new WorldRenderingSimulator());
 
 
-            //loadSave();
+            loadSave();
 
         }
 

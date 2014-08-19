@@ -305,12 +305,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
 
 
-        public override IEnumerable<IVoxelInfoVisualizer> GetInfoVisualizers(IVoxelHandle handle)
+        public override IEnumerable<IRenderable> GetInfoVisualizers(IVoxelHandle handle)
         {
             yield break;
         }
 
-        public override System.Collections.Generic.IEnumerable<IVoxelInfoVisualizer> GetCustomVisualizers(IVoxelHandle handle)
+        public override System.Collections.Generic.IEnumerable<IRenderable> GetCustomVisualizers(IVoxelHandle handle)
         {
 
             var inv = new InventoryVisualizer(handle);

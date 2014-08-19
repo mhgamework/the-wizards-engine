@@ -136,7 +136,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         }
 
 
-        public override IEnumerable<IVoxelInfoVisualizer> GetInfoVisualizers(IVoxelHandle handle)
+        public override IEnumerable<IRenderable> GetInfoVisualizers(IVoxelHandle handle)
         {
             yield return new RangeVisualizer(handle, distributionRange);
             yield return new HighlightVoxelsVisualizer(handle, getWareHousesInRange);
@@ -144,7 +144,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private readonly List<Vector2> itemStackPositions = new[] { new Vector2(-1, 1), new Vector2(1, 1), new Vector2(-1, -1), new Vector2(1, -1) }.ToList();
 
-        public override IEnumerable<IVoxelInfoVisualizer> GetCustomVisualizers(IVoxelHandle handle)
+        public override IEnumerable<IRenderable> GetCustomVisualizers(IVoxelHandle handle)
         {
             var inv = new InventoryVisualizer(handle);
             inv.ItemRelativeTransformationProvider = i =>

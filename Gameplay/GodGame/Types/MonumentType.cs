@@ -89,7 +89,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             return Ore.GetOreItemType(null);
         }
 
-        public override IEnumerable<IVoxelInfoVisualizer> GetInfoVisualizers(IVoxelHandle handle)
+        public override IEnumerable<IRenderable> GetInfoVisualizers(IVoxelHandle handle)
         {
             foreach (var v in base.GetInfoVisualizers(handle))
                 yield return v;

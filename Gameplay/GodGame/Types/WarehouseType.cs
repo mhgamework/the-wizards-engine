@@ -23,12 +23,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
             return voxelHandle.Data.Inventory.AvailableSlots > 0;
         }
 
-        public override System.Collections.Generic.IEnumerable<IVoxelInfoVisualizer> GetInfoVisualizers(IVoxelHandle handle)
+        public override System.Collections.Generic.IEnumerable<IRenderable> GetInfoVisualizers(IVoxelHandle handle)
         {
             yield break;
         }
 
-        public override System.Collections.Generic.IEnumerable<IVoxelInfoVisualizer> GetCustomVisualizers(IVoxelHandle handle)
+        public override System.Collections.Generic.IEnumerable<IRenderable> GetCustomVisualizers(IVoxelHandle handle)
         {
             var inv = new InventoryVisualizer(handle);
             inv.ItemRelativeTransformationProvider = i =>
