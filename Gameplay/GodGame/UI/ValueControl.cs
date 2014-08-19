@@ -77,7 +77,6 @@ namespace MHGameWork.TheWizards.GodGame.UI
         public void initRendering()
         {
             text = new TextRectangle();
-            text.Radius = 0.7f;
             text.IsBillboard = true;
             plusBoxEnt = new Entity();
             minBoxEnt = new Entity();
@@ -99,7 +98,8 @@ namespace MHGameWork.TheWizards.GodGame.UI
         public void Update()
         {
             text.Text = Value.ToString();
-            text.Position = WorldMatrix.GetTranslation() + new Vector3(0, 1.5f, 0);
+            text.Position = Vector3.TransformCoordinate(new Vector3(0, 1.5f, 0), WorldMatrix);
+            text.Radius = 0.7f * Vector3.TransformNormal(Vector3.Normalize(new Vector3(1, 1, 1)), WorldMatrix).Length();
 
             text.Update();
 
@@ -111,9 +111,9 @@ namespace MHGameWork.TheWizards.GodGame.UI
             var old = TW.Graphics.LineManager3D.WorldMatrix;
             TW.Graphics.LineManager3D.WorldMatrix = WorldMatrix;
             if (intersectsBox(TW.Data.Get<CameraInfo>().GetCenterScreenRay(), minBox))
-                TW.Graphics.LineManager3D.AddBox(minBox, Color.Yellow.dx());
+                TW.Graphics.LineManager3D.AddBox(minBox, Color.Black.dx());
             if (intersectsBox(TW.Data.Get<CameraInfo>().GetCenterScreenRay(), plusBox))
-                TW.Graphics.LineManager3D.AddBox(plusBox, Color.Yellow.dx());
+                TW.Graphics.LineManager3D.AddBox(plusBox, Color.Black.dx());
             TW.Graphics.LineManager3D.WorldMatrix = old;
 
 

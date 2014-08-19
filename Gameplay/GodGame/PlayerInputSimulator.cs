@@ -3,6 +3,8 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Types;
+using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame
@@ -12,14 +14,16 @@ namespace MHGameWork.TheWizards.GodGame
         private readonly IEnumerable<IPlayerInputHandler> handlers;
         private Internal.World world;
         private readonly WorldPersister worldPersister;
+        private readonly SimpleWorldRenderer renderer;
 
         public IPlayerInputHandler ActiveHandler { get; private set; }
 
-        public PlayerInputSimulator(IEnumerable<IPlayerInputHandler> handlers, Internal.World world, WorldPersister worldPersister)
+        public PlayerInputSimulator(IEnumerable<IPlayerInputHandler> handlers, Internal.World world, WorldPersister worldPersister, SimpleWorldRenderer renderer)
         {
             this.handlers = handlers;
             this.world = world;
             this.worldPersister = worldPersister;
+            this.renderer = renderer;
             ActiveHandler = handlers.First();
         }
 
@@ -28,13 +32,26 @@ namespace MHGameWork.TheWizards.GodGame
         {
             scrollActiveHandler();
             simulateSave();
+
+
+            if (trySimulateUIControls()) return;
             simulateTargetingInput();
+        }
+
+        private bool trySimulateUIControls()
+        {
+            //TODO: does not raycast closest
+            foreach (var vcv in renderer.VisibleCustomRenderables.OfType<ValueControlVisualizer>())
+            {
+                if (vcv.TryProcessUserInput(TW.Data.Get<CameraInfo>().GetCenterScreenRay())) return true;
+            }
+            return false;
         }
 
         private void simulateSave()
         {
             if (!TW.Graphics.Keyboard.IsKeyPressed(Key.O)) return;
-            worldPersister.Save(world,worldPersister.GetDefaultSaveFile());
+            worldPersister.Save(world, worldPersister.GetDefaultSaveFile());
         }
 
         private void simulateTargetingInput()

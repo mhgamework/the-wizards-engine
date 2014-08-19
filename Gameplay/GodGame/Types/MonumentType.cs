@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Drawing;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
-using SlimDX;
 using System.Linq;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
     public class MonumentType : GameVoxelType
     {
-        private int radius = 7;
-
         public MonumentType()
             : base("Monument")
         {
@@ -20,15 +19,34 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         }
 
+        private float prevFrameTime;
+        private float nextTick;
+
+        private bool isTickFrame = false;
 
         public override void Tick(IVoxelHandle handle)
         {
-            var nextInfuse = handle.Data.DataValue / 1000;
+            if (prevFrameTime != handle.TotalTime)
+            {
+                //This is the first tick on a road this frame
+                if (nextTick < handle.TotalTime)
+                {
+                    isTickFrame = true;
+                    nextTick = handle.TotalTime + 0.1f;
+                }
+                else
+                {
+                    isTickFrame = false;
+                }
 
-            if (nextInfuse > handle.TotalTime) return;
-            handle.Data.DataValue = (int)((handle.TotalTime + 1) * 1000);
+                prevFrameTime = handle.TotalTime;
+
+            }
+            if (!isTickFrame) return;
 
             tryInfuse(handle);
+
+
         }
 
         /// <summary>
@@ -39,7 +57,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             if (!hasAccessToCrystal(handle)) return;
 
-            foreach (var v in handle.GetRange(radius).Where(v => handle.DistanceTo(v) <= 7).OrderBy(handle.DistanceTo))
+            foreach (var v in handle.GetRange(getRadius(handle)).Where(v => handle.DistanceTo(v) <= getRadius(handle)).OrderBy(handle.DistanceTo))
             {
                 if (v.Type != Infestation || v.Data.MagicLevel > 2)
                     continue;
@@ -48,6 +66,11 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 cureInfestation(v);
                 return;
             }
+        }
+
+        private int getRadius(IVoxelHandle handle)
+        {
+            return handle.Data.DataValue;
         }
 
         private void takeAndConsumeCrystal(IVoxelHandle voxelHandle)
@@ -93,11 +116,16 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             foreach (var v in base.GetInfoVisualizers(handle))
                 yield return v;
-            yield return new RangeVisualizer(handle, radius);
+            yield return new RangeVisualizer(handle, getRadius(handle));
 
         }
 
         public override bool DontShowDataValue { get { return true; } }
 
+        public override IEnumerable<IRenderable> GetCustomVisualizers(IVoxelHandle handle)
+        {
+            yield return new ValueControlVisualizer(handle, () => handle.Data.DataValue, v => handle.Data.DataValue = v,
+                  Matrix.Scaling(0.3f, 0.3f, 0.3f) * Matrix.Translation(0, 2, 0)).Alter(v => v.ValueControl.MaxValue = 50);
+        }
     }
 }

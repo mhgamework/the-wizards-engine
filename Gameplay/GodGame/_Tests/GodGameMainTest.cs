@@ -38,10 +38,12 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
 
             var worldPersister = new WorldPersister(getTypeFromName, getItemFromName);
+            var simpleWorldRenderer = new SimpleWorldRenderer(world);
             var ret = new GodGameMain(EngineFactory.CreateEngine(),
                 world,
-                new PlayerInputSimulator(createPlayerInputs(world).ToArray(), world, worldPersister),
-                worldPersister);
+                new PlayerInputSimulator(createPlayerInputs(world).ToArray(), world, worldPersister, simpleWorldRenderer),
+                worldPersister,
+                simpleWorldRenderer);
 
             return ret;
         }

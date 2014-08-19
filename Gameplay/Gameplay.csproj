@@ -210,6 +210,7 @@
     <Compile Include="GodGame\Types\OreType.cs" />
     <Compile Include="GodGame\Types\HoleType.cs" />
     <Compile Include="GodGame\Types\MonumentType.cs" />
+    <Compile Include="GodGame\VoxelInfoVisualizers\ValueControlVisualizer.cs" />
     <Compile Include="GodGame\Types\WoodworkerType.cs" />
     <Compile Include="GodGame\UI\ValueControl.cs" />
     <Compile Include="GodGame\VoxelInfoVisualizers\InventoryVisualizer.cs" />

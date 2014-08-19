@@ -10,16 +10,16 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 {
     public class CustomVoxelsRenderer
     {
-        private SimpleWorldRenderer simpleWorldRenderer;
         private HashSet<GameVoxel> visibleVoxels = new HashSet<GameVoxel>();
 
         private Dictionary<GameVoxel, RenderData> visualizers = new Dictionary<GameVoxel, RenderData>();
 
         private World world;
 
-        public CustomVoxelsRenderer(SimpleWorldRenderer simpleWorldRenderer, World world)
+        public IEnumerable<IRenderable> VisibleCustomRenderables { get { return visualizers.Values.SelectMany(v => v.Visualizers); } }
+
+        public CustomVoxelsRenderer(World world)
         {
-            this.simpleWorldRenderer = simpleWorldRenderer;
             this.world = world;
         }
 

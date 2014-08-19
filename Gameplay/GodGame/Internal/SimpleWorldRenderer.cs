@@ -24,6 +24,10 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private SpotLight light2;
 
         private readonly CustomVoxelsRenderer customVoxelsRenderer;
+        public IEnumerable<IRenderable> VisibleCustomRenderables
+        {
+            get { return customVoxelsRenderer.VisibleCustomRenderables; }
+        }
 
         public SimpleWorldRenderer(World world)
         {
@@ -37,7 +41,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             light1 = TW.Graphics.AcquireRenderer().CreateSpotLight();
             light2 = TW.Graphics.AcquireRenderer().CreateSpotLight();
-            customVoxelsRenderer = new CustomVoxelsRenderer(this, world);
+            customVoxelsRenderer = new CustomVoxelsRenderer(world);
         }
 
         private void configureLight(SpotLight light, Vector3 spotTarget, Vector3 offset)
