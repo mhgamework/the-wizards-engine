@@ -142,12 +142,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
             return handle.GetRange(range).Where(v => v.Type is WarehouseType);
         }
 
-        public override IEnumerable<IVoxelInfoVisualizer> GetInfoVisualizers(IVoxelHandle handle)
+        public override IEnumerable<IRenderable> GetInfoVisualizers(IVoxelHandle handle)
         {
             yield break;
         }
 
-        public override IEnumerable<IVoxelInfoVisualizer> GetCustomVisualizers(IVoxelHandle handle)
+        public override IEnumerable<IRenderable> GetCustomVisualizers(IVoxelHandle handle)
         {
             var inv = new InventoryVisualizer(handle);
             inv.ItemRelativeTransformationProvider = i =>
