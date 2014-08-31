@@ -188,6 +188,7 @@
     <Compile Include="GodGame\Internal\GameState.cs" />
     <Compile Include="GodGame\Internal\ITickSimulator.cs" />
     <Compile Include="GodGame\IPlayerInputHandler.cs" />
+    <Compile Include="GodGame\LightGodPowerInputHandler.cs" />
     <Compile Include="GodGame\Networking\NetworkedPlayerFactory.cs" />
     <Compile Include="GodGame\Networking\ProxyPlayerInputHandler.cs" />
     <Compile Include="GodGame\PlayerInputHandler.cs" />

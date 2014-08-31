@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal;
@@ -44,6 +45,22 @@ namespace MHGameWork.TheWizards.GodGame.Types
             if (arg.Type is InfestationVoxelType) return false;
             if (arg.Type == GameVoxelType.Air) return false;
             return true;
+        }
+
+        public void CureInfestation(IVoxelHandle v)
+        {
+            if (v.Type != Infestation) throw new InvalidOperationException();
+
+            if (v.Seeder.NextFloat(0, 1) < 0.2f)
+            {
+                v.ChangeType(Ore);
+                v.Data.DataValue = 20;
+            }
+            else
+                v.ChangeType(Land);
+
+            v.Data.MagicLevel = 10;
+
         }
     }
 }

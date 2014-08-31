@@ -178,6 +178,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             yield return createTypeInput(GameVoxelType.Woodworker);
             yield return createTypeInput(GameVoxelType.Quarry);
             yield return createTypeInput(GameVoxelType.Grinder);
+            yield return new LightGodPowerInputHandler();
         }
 
         private static IPlayerTool createTypeInput(GameVoxelType type, string name)

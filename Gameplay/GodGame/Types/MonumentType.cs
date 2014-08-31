@@ -63,7 +63,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
                     continue;
 
                 takeAndConsumeCrystal(handle);
-                cureInfestation(v);
+                Infestation.CureInfestation(v);
                 return;
             }
         }
@@ -81,21 +81,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             warehouse.Data.Inventory.DestroyItems(getCrystalType(), 1);
         }
 
-        private static void cureInfestation(IVoxelHandle v)
-        {
-            if (v.Type != Infestation) throw new InvalidOperationException();
 
-            if (v.Seeder.NextFloat(0, 1) < 0.2f)
-            {
-                v.ChangeType(Ore);
-                v.Data.DataValue = 20;
-            }
-            else
-                v.ChangeType(Land);
-
-            v.Data.MagicLevel = 10;
-
-        }
 
         private bool hasAccessToCrystal(IVoxelHandle handle)
         {

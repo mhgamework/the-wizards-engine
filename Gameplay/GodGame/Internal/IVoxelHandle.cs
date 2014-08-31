@@ -16,15 +16,21 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private readonly World world;
         private GameVoxel currentVoxel;
 
+        private static Seeder staticSeeder = new Seeder((new Random()).Next());
+
         public IVoxelHandle(World world)
         {
             this.world = world;
-            Seeder = new Seeder((new Random()).Next());
+            Seeder = staticSeeder;//TODO: Warning: possible problems!  //new Seeder((new Random()).Next());
         }
         public IVoxelHandle(World world, GameVoxel gameVoxel)
             : this(world)
         {
             CurrentVoxel = gameVoxel;
+        }
+        public IVoxelHandle(GameVoxel gameVoxel)
+            : this(gameVoxel.World, gameVoxel)
+        {
         }
         private IVoxelHandle encapsulate(GameVoxel v)
         {
@@ -76,6 +82,10 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         public IEnumerable<IVoxelHandle> GetRange(int radius)
         {
             return world.GetRange(CurrentVoxel, radius).Select(encapsulate);
+        }
+        public IEnumerable<IVoxelHandle> GetRangeCircle(int radius)
+        {
+            return world.GetRange(CurrentVoxel, radius).Where(v => (v.Coord - currentVoxel.Coord).GetLength() <= radius).Select(encapsulate);
         }
         public IVoxelHandle GetRelative(Point2 p)
         {
