@@ -26,12 +26,14 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             var clientConnector = new NetworkConnectorClient();
             clientConnector.Connect("127.0.0.1", 15005);
+            World world = state.World;
+            var simpleWorldRenderer = new SimpleWorldRenderer(world);
 
-            var playerInputSimulator = new PlayerInputSimulator(state.World, new ProxyPlayerInputHandler(clientConnector.UserInputTransporter));
+            var playerInputSimulator = new PlayerInputSimulator(state.World, new ProxyPlayerInputHandler(clientConnector.UserInputTransporter), simpleWorldRenderer);
 
             engine.AddSimulator(playerInputSimulator);
             engine.AddSimulator(tickSimulator);
-            engine.AddSimulator(new GodGameRenderingSimulator(state.World, playerInputSimulator, localPlayer));
+            engine.AddSimulator(new GodGameRenderingSimulator(world, playerInputSimulator, localPlayer, simpleWorldRenderer));
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.AddSimulator(new ClearStateChangesSimulator(state));
 

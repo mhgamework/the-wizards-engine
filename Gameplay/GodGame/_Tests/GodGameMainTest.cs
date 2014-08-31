@@ -17,6 +17,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
     [TestFixture]
     public class GodGameMainTest
     {
+        private static SimpleWorldRenderer simpleWorldRenderer;
+
         [Test]
         public void TestMainGame()
         {
@@ -34,11 +36,11 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             builder.RegisterType<WorldPersister>().SingleInstance();
             builder.RegisterType<PlayerInputSimulator>().SingleInstance();
             builder.RegisterType<TickSimulator>().SingleInstance().AsSelf().AsImplementedInterfaces();
-            
+
             builder.Register(c => new PlayerInputHandler(
-                createPlayerInputs(c.Resolve<Internal.World>()), 
-                c.Resolve<Internal.World>(), 
-                c.Resolve<WorldPersister>(), 
+                createPlayerInputs(c.Resolve<Internal.World>()),
+                c.Resolve<Internal.World>(),
+                c.Resolve<WorldPersister>(),
                 c.Resolve<PlayerState>())).SingleInstance();
             builder.RegisterInstance(new WorldPersister(getTypeFromName, getItemFromName));
 
@@ -59,7 +61,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
 
 
-            
+
             var container = builder.Build();
             var server = container.Resolve<GodGameServer>();
 
@@ -110,16 +112,11 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         public static GodGameMain CreateGame()
         {
             var world = new Internal.World(40, 10);
-            var gameState = new GameState(world);
-
             buildDemoWorld(world);
 
-
             var worldPersister = new WorldPersister(getTypeFromName, getItemFromName);
-            var ret = new GodGameMain(EngineFactory.CreateEngine(),
-                gameState,
-                new PlayerInputSimulator(world, new PlayerInputHandler(createPlayerInputs(world), world, worldPersister, new PlayerState())),
-                worldPersister);
+
+            var ret = new GodGameMain(EngineFactory.CreateEngine(), world, worldPersister, createPlayerInputs(world));
 
             return ret;
         }
@@ -137,7 +134,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                 });
 
 
-            var worldPersister = new WorldPersister(getTypeFromName, getItemFromName);
+            /*var worldPersister = new WorldPersister(getTypeFromName, getItemFromName);
             var simpleWorldRenderer = new SimpleWorldRenderer(world);
             var ret = new GodGameMain(EngineFactory.CreateEngine(),
                 world,
@@ -145,7 +142,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                 worldPersister,
                 simpleWorldRenderer);
 
-            return ret;
+            return ret;*/
         }
 
         private static ItemType getItemFromName(string arg)
@@ -183,9 +180,9 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             yield return createTypeInput(GameVoxelType.Grinder);
         }
 
-        private static DelegatePlayerInputHandler createTypeInput(GameVoxelType type, string name)
+        private static IPlayerTool createTypeInput(GameVoxelType type, string name)
         {
-            return new DelegatePlayerInputHandler(name,
+            return new DelegatePlayerTool(name,
                 v => v.ChangeType(GameVoxelType.Land),
                 v =>
                 {
@@ -193,13 +190,13 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                         v.ChangeType(type);
                 });
         }
-        private static DelegatePlayerInputHandler createTypeInput(GameVoxelType type)
+        private static IPlayerTool createTypeInput(GameVoxelType type)
         {
             return createTypeInput(type, type.Name);
         }
-        private static DelegatePlayerInputHandler createOreInput()
+        private static IPlayerTool createOreInput()
         {
-            return new DelegatePlayerInputHandler(GameVoxelType.Ore.Name,
+            return new DelegatePlayerTool(GameVoxelType.Ore.Name,
                 v => v.ChangeType(GameVoxelType.Land),
                 v =>
                 {

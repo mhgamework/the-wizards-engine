@@ -7,10 +7,10 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private UIRenderer uiRenderer;
         private SimpleWorldRenderer simpleWorldRenderer;
 
-        public GodGameRenderingSimulator(World world, PlayerInputSimulator playerInputSimulator, PlayerState localPlayer)
+        public GodGameRenderingSimulator(World world, PlayerInputSimulator playerInputSimulator, PlayerState localPlayer, SimpleWorldRenderer worldRenderer)
         {
             uiRenderer = new UIRenderer(world, localPlayer, playerInputSimulator);
-            simpleWorldRenderer = new SimpleWorldRenderer(world);
+            simpleWorldRenderer = worldRenderer;
         }
 
         public void Simulate()

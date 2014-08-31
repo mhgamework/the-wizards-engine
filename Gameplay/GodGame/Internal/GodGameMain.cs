@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.IO;
@@ -13,17 +14,41 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private readonly WorldPersister persister;
         public World World { get; private set; }
 
-        public GodGameMain(TWEngine engine, GameState state, PlayerInputSimulator playerInputSimulator, WorldPersister persister)
+        public GodGameMain(TWEngine engine, World world, WorldPersister persister, IEnumerable<IPlayerTool> playerInputs)
         {
             this.persister = persister;
-            var world = state.World;
-            engine.AddSimulator(playerInputSimulator);
+            World = world;
 
-            engine.AddSimulator(new TickSimulator(world));
-            engine.AddSimulator(new UIRenderer(world, new PlayerState(), playerInputSimulator));
-            engine.AddSimulator(new SimpleWorldRenderer(world));
-            engine.AddSimulator(new ClearStateChangesSimulator(state));
-            engine.AddSimulator(new WorldRenderingSimulator());
+
+            // Game state
+            var gameState = new GameState(world);
+            var localPlayerState = new PlayerState();
+
+            gameState.AddPlayer(localPlayerState);
+
+
+            // Rendering
+            var simpleWorldRenderer = new SimpleWorldRenderer(world);
+
+            // Input
+
+            var playerInputHandler = new PlayerInputHandler(playerInputs, world, persister, localPlayerState);
+
+            // Simulators
+
+            var playerInputSimulator = new PlayerInputSimulator(world, playerInputHandler, simpleWorldRenderer);
+            var tickSimulator = new TickSimulator(world);
+            var uiRenderer = new UIRenderer(world, localPlayerState, playerInputSimulator);
+            var clearStateChangesSimulator = new ClearStateChangesSimulator(gameState);
+            var worldRenderingSimulator = new WorldRenderingSimulator();
+
+
+            engine.AddSimulator(playerInputSimulator);
+            engine.AddSimulator(tickSimulator);
+            engine.AddSimulator(uiRenderer);
+            engine.AddSimulator(simpleWorldRenderer);
+            engine.AddSimulator(clearStateChangesSimulator);
+            engine.AddSimulator(worldRenderingSimulator);
 
 
         }

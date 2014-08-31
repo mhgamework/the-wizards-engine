@@ -37,7 +37,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             var clientConnector = new NetworkConnectorClient();
             clientConnector.Connect("127.0.0.1", 15005);
 
-            var playerInputSimulator = new PlayerInputSimulator(state.World, new ProxyPlayerInputHandler(clientConnector.UserInputTransporter));
+            var playerInputSimulator = new PlayerInputSimulator(state.World, new ProxyPlayerInputHandler(clientConnector.UserInputTransporter),null); //TODO: null!!
 
 
             engine.AddSimulator(new BasicSimulator(() =>
@@ -51,7 +51,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             engine.AddSimulator(playerInputSimulator);
             engine.AddSimulator(tickSimulator);
-            engine.AddSimulator(new GodGameRenderingSimulator(state.World, playerInputSimulator, localPlayer));
+            World world = state.World;
+            engine.AddSimulator(new GodGameRenderingSimulator(world, playerInputSimulator, localPlayer, new SimpleWorldRenderer(world)));
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.AddSimulator(new ClearStateChangesSimulator(state));
 

@@ -7,6 +7,9 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame
 {
+    /// <summary>
+    /// Handles player input commands and applies them onto the game state
+    /// </summary>
     public class PlayerInputHandler : IPlayerInputHandler
     {
         private readonly IEnumerable<IPlayerTool> handlers;

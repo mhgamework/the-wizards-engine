@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         //public IPlayerTool ActiveHandler { get; private set; }
 
-        public PlayerInputSimulator(Internal.World world, IPlayerInputHandler inputHandler)
+        public PlayerInputSimulator(Internal.World world, IPlayerInputHandler inputHandler,SimpleWorldRenderer renderer)
         {
             this.world = world;
             this.inputHandler = inputHandler;
@@ -31,13 +31,20 @@ namespace MHGameWork.TheWizards.GodGame
                 inputHandler.OnPreviousTool();
             if (TW.Graphics.Mouse.RelativeScrollWheel > 0 || TW.Graphics.Keyboard.IsKeyPressed(Key.DownArrow))
                 inputHandler.OnNextTool();
-            
+
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.O))
                 inputHandler.OnSave();
+
+            if (trySimulateUIControls()) return;
             
-if (trySimulateUIControls()) return;
-            simulateTargetingInput();
-}
+            var target = GetTargetedVoxel();
+            if (target == null) return;
+
+            if (TW.Graphics.Mouse.LeftMouseJustPressed)
+                inputHandler.OnLeftClick(target);
+            if (TW.Graphics.Mouse.RightMouseJustPressed)
+                inputHandler.OnRightClick(target);
+        }
 
         private bool trySimulateUIControls()
         {
@@ -48,15 +55,6 @@ if (trySimulateUIControls()) return;
             }
             return false;
         }
-            var target = GetTargetedVoxel();
-            if (target == null) return;
-
-            if (TW.Graphics.Mouse.LeftMouseJustPressed)
-                inputHandler.OnLeftClick(target);
-            if (TW.Graphics.Mouse.RightMouseJustPressed)
-                inputHandler.OnRightClick(target);
-        }
-
         public GameVoxel GetTargetedVoxel()
         {
             var groundPos = TW.Data.Get<CameraInfo>().GetGroundplanePosition();
