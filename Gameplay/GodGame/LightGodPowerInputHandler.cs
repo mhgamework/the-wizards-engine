@@ -21,13 +21,14 @@ namespace MHGameWork.TheWizards.GodGame
 
         public void OnRightClick(GameVoxel voxel)
         {
+            int radius = 3;
             if (prevVoxel != null)
             {
-                new IVoxelHandle(prevVoxel).GetRangeCircle(6).ForEach(v => v.Data.MagicLevel = 0);
+                new IVoxelHandle(prevVoxel).GetRangeCircle(radius).ForEach(v => v.Data.MagicLevel = 0);
             }
 
             var handle = new IVoxelHandle(voxel);
-            handle.GetRangeCircle(6).Where(v => v.Type is InfestationVoxelType).ForEach(removeInfestation);
+            handle.GetRangeCircle(radius).Where(v => v.Type is InfestationVoxelType).ForEach(removeInfestation);
             prevVoxel = voxel;
         }
 

@@ -20,8 +20,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
         }
         public override void Tick(IVoxelHandle handle)
         {
-            
-                
+
+
             if (handle.Seeder.NextFloat(0, 100) > 1) return;
             handle.Data.DataValue = handle.Seeder.NextInt(1, 4);
             var possible = handle.Get8Connected().Where(isInfecteable).ToArray();
@@ -34,8 +34,20 @@ namespace MHGameWork.TheWizards.GodGame.Types
             if (target.Data.MagicLevel < 0)
             {
                 target.Data.MagicLevel = 0;
-                target.ChangeType(GameVoxelType.Infestation);
+                InfestVoxel(target);
             }
+        }
+
+        public void InfestVoxel(IVoxelHandle target)
+        {
+            if (target.Type == Monument) return;
+            var data = new InfestationData()
+                {
+                    OriginalType = target.Type,
+                    OriginalDataValue = target.Data.DataValue
+                };
+            target.ChangeType(Infestation);
+            target.Data.Infestation = data;
         }
 
         private bool isInfecteable(IVoxelHandle arg)
@@ -51,16 +63,26 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             if (v.Type != Infestation) throw new InvalidOperationException();
 
-            if (v.Seeder.NextFloat(0, 1) < 0.2f)
-            {
-                v.ChangeType(Ore);
-                v.Data.DataValue = 20;
-            }
-            else
-                v.ChangeType(Land);
+            var data = v.Data.Infestation;
+
+            v.ChangeType(data.OriginalType ?? Land);
+            v.Data.DataValue = data.OriginalDataValue;
 
             v.Data.MagicLevel = 10;
 
+        }
+
+
+        public class InfestationData
+        {
+            public GameVoxelType OriginalType;
+
+            public int OriginalDataValue;
+
+            public static InfestationData Emtpy
+            {
+                get { return new InfestationData(); }
+            }
         }
     }
 }

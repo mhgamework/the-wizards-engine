@@ -1,3 +1,4 @@
+using System;
 using DirectX11;
 using MHGameWork.TheWizards.GodGame.Types;
 using SlimDX;
@@ -22,6 +23,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         public void ChangeType(GameVoxelType air)
         {
+            if(air == null) throw new InvalidOperationException("Cannot set null type!!");
             Type = air;
             Data = new VoxelData();
 

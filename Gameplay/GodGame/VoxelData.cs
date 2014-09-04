@@ -10,6 +10,7 @@ namespace MHGameWork.TheWizards.GodGame
         {
             Inventory = new Inventory();
             Road = RoadType.RoadData.Empty;
+            Infestation = InfestationVoxelType.InfestationData.Emtpy;
 
         }
 
@@ -23,6 +24,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         public RoadType.RoadData Road { get; private set; }
 
-       
+        public InfestationVoxelType.InfestationData Infestation { get; set; }
+
     }
 }
