@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using SlimDX;
@@ -35,7 +36,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             checkerTextureRV = new ShaderResourceView(game.Device, checkerTexture);
         }
 
-
+        [TWProfile]
         public void InitMeshRenderData(MeshRenderData data)
         {
             var materials = new List<MeshRenderMaterial>();
@@ -116,6 +117,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         }
 
+        
 
         public Buffer CreateMeshPartVertexBuffer(IMeshPart meshPart)
         {

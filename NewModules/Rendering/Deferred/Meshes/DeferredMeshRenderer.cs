@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using DirectX11;
 using MHGameWork.TheWizards.Common.Core;
+using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
@@ -95,11 +96,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             return ret;
         }
 
-
+        //[TWProfile]
         public DeferredMeshRenderElement AddMesh(IMesh mesh)
         {
 
-            var el = new DeferredMeshRenderElement(this, mesh,bbFactory);
+            var el = new DeferredMeshRenderElement(this, mesh, bbFactory);
 
 
             var data = getRenderData(mesh);
@@ -126,6 +127,12 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             Elements.Remove(el);
 
+            
+            //TODO: not sure this works
+            var index = renderDataDict[el.Mesh].Elements.IndexOf(el);
+            renderDataDict[el.Mesh].Elements.RemoveAt(index);
+            renderDataDict[el.Mesh].WorldMatrices.RemoveAt(index);
+
 
         }
 
@@ -139,7 +146,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         }
 
 
-        
+
 
         private void initialize(TexturePool texturePool)
         {
@@ -187,7 +194,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         {
             public Matrix WorldMatrix;
         }
-
+        //[TWProfile]
         public void Draw()
         {
             drawCalls = 0;
@@ -263,6 +270,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private EffectTechnique coloredTechnique;
         private EffectTechnique texturedTechnique;
 
+        //[TWProfile]
         private void renderMesh(MeshRenderData data, Matrix world)
         {
             for (int i = 0; i < data.Materials.Length; i++)
@@ -284,7 +292,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                     {
                         texturedTechnique.GetPassByIndex(0).Apply(context);
                         context.PixelShader.SetShaderResource(mat.DiffuseTexture, 0);
-                        
+
                     }
                     else
                     {
@@ -293,7 +301,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                   .Set(mat.Material.DiffuseColor.ToVector3().dx());
                         coloredTechnique.GetPassByIndex(0).Apply(context);
                     }
-                    
+
 
                     drawMeshPart(part, world);
                     Performance.SetMarker(new Color4(System.Drawing.Color.Orange), "DrawMeshElement");
@@ -363,6 +371,21 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         }
 
 
+        /// <summary>
+        /// Removes a mesh from the gpu cache
+        /// </summary>
+        /// <param name="mesh"></param>
+        //[TWProfile]
+        public void DisposeMesh(IMesh mesh)
+        {
+            var data = renderDataDict[mesh];
+            data.Elements.ForEach(el => el.Delete());
+            
+            data.Dispose();
+
+            renderDataDict.Remove(mesh);
+
+        }
 
     }
 }

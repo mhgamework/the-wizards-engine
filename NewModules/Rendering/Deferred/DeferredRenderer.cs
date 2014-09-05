@@ -582,6 +582,14 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             //TODO: texturepool.clear?
         }
 
+        /// <summary>
+        /// Removes all gpu data for given mesh
+        /// </summary>
+        public void ClearMeshCache(IMesh mesh)
+        {
+            meshRenderer.DisposeMesh(mesh);
+        }
+
     }
 
     public class DeferredLinesElement

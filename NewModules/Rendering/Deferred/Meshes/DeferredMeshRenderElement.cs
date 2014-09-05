@@ -6,7 +6,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 {
     public class DeferredMeshRenderElement : ICullable
     {
-        public DeferredMeshRenderElement(DeferredMeshRenderer renderer, IMesh mesh,MeshBoundingBoxFactory boundingBoxFactory)
+        public DeferredMeshRenderElement(DeferredMeshRenderer renderer, IMesh mesh, MeshBoundingBoxFactory boundingBoxFactory)
         {
             Renderer = renderer;
             Mesh = mesh;
@@ -49,14 +49,15 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             boundingBox = SlimDX.BoundingBox.FromPoints(Vector3.TransformCoordinate(cachedMeshCorners, ref worldMatrix));
         }
 
-      
+
 
         /// <summary>
         /// Removes this element from the renderer
         /// </summary>
         public void Delete()
         {
-            Renderer.DeleteMesh(this);
+            if (Renderer != null)
+                Renderer.DeleteMesh(this);
             Renderer = null;
             Mesh = null;
 
