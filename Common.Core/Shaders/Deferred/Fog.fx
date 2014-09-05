@@ -58,7 +58,7 @@ float4 FogPS ( VertexShaderOutput input ) : SV_TARGET0
 	float linearDepth = -position.z;
 	
 	float minDepth = 50;
-	float maxDepth = 400;
+	float maxDepth = 1500;
 	float3 fogColor = float3(180.0f/255.0f,224.0f/255.0f,227.0f/255.0f);
 
 	float factor = saturate( (linearDepth - minDepth) / maxDepth);
