@@ -23,19 +23,17 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             this.world = world;
         }
 
-        public void updateVoxelCustomRenderers(Point2 offset, Vector3 worldTranslation, Array2D<Entity> entities)
+        public void updateVoxelCustomRenderers(Point2 offset, Vector3 worldTranslation, Point2 visibleWindowSize)
         {
             var currVisibleVoxels = new HashSet<GameVoxel>();
-            entities.ForEach((e, p) =>
+            for (int x = 0; x < visibleWindowSize.X; x++)
+                for (int y = 0; y < visibleWindowSize.Y; y++)
                 {
+                    var p = new Point2(x, y);
                     var v = world.GetVoxel(p + new Point2(offset));
                     if (v != null)
                         currVisibleVoxels.Add(v);
-                    /*e.WorldMatrix = Matrix.Scaling(new Vector3(world.VoxelSize.X)) *
-                                Matrix.Translation(world.GetBoundingBox(p).GetCenter() + worldTranslation);
-                e.Visible = e.Mesh != null;*/
-                });
-
+                }
 
             var typeChangers = world.ChangedVoxels.Where(v => v.TypeChanged && currVisibleVoxels.Contains(v));
 

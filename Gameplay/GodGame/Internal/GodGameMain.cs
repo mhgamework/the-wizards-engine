@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
 
             // Rendering
-            var simpleWorldRenderer = new SimpleWorldRenderer(world);
+            var simpleWorldRenderer = new SimpleWorldRenderer(world, new ChunkedVoxelWorldRenderer(world));
 
             // Input
 

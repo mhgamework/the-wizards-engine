@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.GodGame;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
 {
@@ -14,6 +15,18 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
     {
         private T[,] arr;
         public Point2 Size { get; private set; }
+
+        public IEnumerable<T> Values
+        {
+            get
+            {
+                for (int x = 0; x < Size.X; x++)
+                    for (int y = 0; y < Size.Y; y++)
+                    {
+                        yield return arr[x, y];
+                    }
+            }
+        }
 
         public Array2D(Point2 size)
         {

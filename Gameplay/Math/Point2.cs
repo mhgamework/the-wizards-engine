@@ -147,5 +147,16 @@ namespace DirectX11
         {
             return (float)Math.Sqrt(X * X + Y * Y);
         }
+
+
+        public void ForEach(Action<Point2> func)
+        {
+            for (int x = 0; x < X; x++)
+                for (int y = 0; y < Y; y++)
+                {
+                    var pos = new Point2(x, y);
+                    func(pos);
+                }
+        }
     }
 }

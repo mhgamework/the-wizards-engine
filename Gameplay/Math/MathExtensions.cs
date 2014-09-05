@@ -22,7 +22,10 @@ namespace MHGameWork.TheWizards.Scattered._Engine
         }
 
 
-
+        public static Point2 Round(this Vector2 v)
+        {
+            return new Point2(v);
+        }
         public static Point2 Floor(this Vector2 v)
         {
             return Point2.Floor(v);

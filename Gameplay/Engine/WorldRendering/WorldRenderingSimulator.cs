@@ -65,12 +65,13 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
         public void Simulate()
         {
-            drawDeferred();
 
             entitySimulator.Simulate();
             wireframeSimulator.Simulate();
             pointLightSimulator.Simulate();
-            
+
+
+            drawDeferred();
 
             renderLines();
         }

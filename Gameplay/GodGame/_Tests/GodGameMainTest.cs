@@ -111,7 +111,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
         public static GodGameMain CreateGame()
         {
-            var world = new Internal.World(40, 10);
+            var world = new Internal.World(100, 10);
             buildDemoWorld(world);
 
             var worldPersister = new WorldPersister(getTypeFromName, getItemFromName);
@@ -125,10 +125,13 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         {
             world.ForEach((v, p) =>
                 {
-                    if (Vector2.Distance(p, new Vector2(8, 8)) < 7)
+                    if (Vector2.Distance(p, new Vector2(100, 100)) < 100)
+                        v.ChangeType(GameVoxelType.Land);
+                    else if (Vector2.Distance(p, new Vector2(8, 8)) < 7)
                         v.ChangeType(GameVoxelType.Land);
                     else if (Vector2.Distance(p, new Vector2(25, 25)) < 15)
-                        v.ChangeType(GameVoxelType.Infestation);
+                        v.ChangeType(GameVoxelType.Land);
+                        //v.ChangeType(GameVoxelType.Infestation);
                     else
                         v.ChangeType(GameVoxelType.Air);
                 });

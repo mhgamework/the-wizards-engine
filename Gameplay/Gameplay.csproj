@@ -184,9 +184,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GodGame\Internal\ChunkedVoxelWorldRenderer.cs" />
     <Compile Include="GodGame\Internal\GodGameClient.cs" />
     <Compile Include="GodGame\Internal\GameState.cs" />
     <Compile Include="GodGame\Internal\ITickSimulator.cs" />
+    <Compile Include="GodGame\Internal\IVoxelWorldRenderer.cs" />
+    <Compile Include="GodGame\Internal\PerEntityVoxelWorldRenderer.cs" />
     <Compile Include="GodGame\IPlayerInputHandler.cs" />
     <Compile Include="GodGame\LightGodPowerInputHandler.cs" />
     <Compile Include="GodGame\Networking\NetworkedPlayerFactory.cs" />

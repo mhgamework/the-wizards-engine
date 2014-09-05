@@ -16,10 +16,10 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 {
     public class SimpleWorldRenderer : ISimulator
     {
-        public const int RenderSize = 20;
+        public const int RenderSize = 64;
         private World world;
+        private readonly IVoxelWorldRenderer voxelWorldRenderer;
 
-        private Array2D<Entity> entities;
         private SpotLight light1;
         private SpotLight light2;
 
@@ -30,13 +30,18 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         }
 
         public SimpleWorldRenderer(World world)
+            : this(world, new PerEntityVoxelWorldRenderer(world, new Point2(RenderSize, RenderSize)))
+        {
+
+        }
+        public SimpleWorldRenderer(World world, IVoxelWorldRenderer voxelWorldRenderer)
         {
             this.world = world;
+            this.voxelWorldRenderer = voxelWorldRenderer;
 
             Debug.Assert(Math.Abs(world.VoxelSize.X - world.VoxelSize.Y) < 0.001f);
 
-            entities = new Array2D<Entity>(new Point2(RenderSize, RenderSize));
-            entities.ForEach((e, p) => entities[p] = new Entity());
+
 
 
             light1 = TW.Graphics.AcquireRenderer().CreateSpotLight();
@@ -75,33 +80,15 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             TW.Graphics.LineManager3D.AddBox(bb, new Color4(0, 0, 0));
 
             updateLights(bb);
+            TW.Graphics.SpectaterCamera.FarClip = 2000;
 
 
-
-
-            updateVoxelEntities(offset, worldTranslation);
-            customVoxelsRenderer.updateVoxelCustomRenderers(offset, worldTranslation, entities);
+            //TODO: join interfaces and make a single renderer using composite?
+            voxelWorldRenderer.UpdateWindow(offset, worldTranslation, new Point2(RenderSize, RenderSize));
+            customVoxelsRenderer.updateVoxelCustomRenderers(offset, worldTranslation, new Point2(RenderSize, RenderSize));
 
 
         }
-
-        private void updateVoxelEntities(Point2 offset, Vector3 worldTranslation)
-        {
-            entities.ForEach((e, p) =>
-                {
-                    var v = world.GetVoxel(p + new Point2(offset));
-                    if (v == null)
-                    {
-                        e.Visible = false;
-                        return;
-                    }
-                    e.Mesh = getMesh(v);
-                    e.WorldMatrix = Matrix.Scaling(new Vector3(world.VoxelSize.X)) *
-                                    Matrix.Translation(world.GetBoundingBox(p).GetCenter() + worldTranslation);
-                    e.Visible = e.Mesh != null;
-                });
-        }
-
 
 
         private void updateLights(BoundingBox visibleWorldBB)
@@ -111,19 +98,6 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             configureLight(light2, spotTarget, new Vector3(-50, 200, -50));
         }
 
-        /// <summary>
-        /// TODO: Use memoization pattern
-        /// </summary>
-        /// <param name="gameVoxel"></param>
-        /// <returns></returns>
-        private IMesh getMesh(GameVoxel gameVoxel)
-        {
-            if (gameVoxel.Type == null) return null;
 
-            var handle = new IVoxelHandle(world, gameVoxel);
-
-            return gameVoxel.Type.GetMesh(handle);
-
-        }
     }
 }
