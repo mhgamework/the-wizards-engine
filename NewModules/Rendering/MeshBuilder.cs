@@ -279,7 +279,7 @@ namespace MHGameWork.TheWizards.Rendering
                                                         {
                                                             MeshMaterial = part.MeshMaterial,
                                                             MeshPart = part.MeshPart,
-                                                            ObjectMatrix = worldMatrix.xna() * part.ObjectMatrix
+                                                            ObjectMatrix = part.ObjectMatrix * worldMatrix.xna()
                                                         });
             }
         }
@@ -296,7 +296,7 @@ namespace MHGameWork.TheWizards.Rendering
             ret.GetCoreData().Parts = mesh.GetCoreData().Parts.Select(p =>
                 {
                     var nPart = new MeshCoreData.Part();
-                    nPart.ObjectMatrix = p.ObjectMatrix*transform.xna();
+                    nPart.ObjectMatrix = p.ObjectMatrix * transform.xna();
                     nPart.MeshMaterial = p.MeshMaterial;
                     nPart.MeshPart = p.MeshPart;
                     return nPart;
