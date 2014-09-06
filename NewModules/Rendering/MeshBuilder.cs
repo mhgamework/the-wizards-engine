@@ -21,15 +21,34 @@ namespace MHGameWork.TheWizards.Rendering
     /// </summary>
     public class MeshBuilder
     {
-        private List<Microsoft.Xna.Framework.Vector3> positions = new List<Microsoft.Xna.Framework.Vector3>();
-        private List<Microsoft.Xna.Framework.Vector3> normals = new List<Microsoft.Xna.Framework.Vector3>();
-        private List<Microsoft.Xna.Framework.Vector2> texcoords = new List<Microsoft.Xna.Framework.Vector2>();
+        private Dictionary<MeshMaterial, MeshData> parts;
+        private MeshMaterial defaultMaterial;
 
+        public MeshBuilder()
+        {
+            parts = new Dictionary<MeshMaterial, MeshData>();
+            defaultMaterial = CreateMaterial();
+            defaultMaterial.DiffuseColor = Color.White;
+        }
+
+        public MeshMaterial CreateMaterial()
+        {
+            var ret = new MeshMaterial();
+            parts[ret] = new MeshData();
+            return ret;
+        }
         public void AddBox(Vector3 min, Vector3 max)
         {
+            AddBox(min, max, defaultMaterial);
+        }
+        public void AddBox(Vector3 min, Vector3 max, MeshMaterial material)
+        {
+            if (!parts.ContainsKey(material)) throw new InvalidOperationException("Material not created by the meshbuilder");
             TangentVertex[] vertices;
             short[] indices;
             BoxMesh.CreateUnitBoxVerticesAndIndices(out vertices, out indices);
+
+            var data = parts[material];
 
             for (int i = 0; i < indices.Length; i++)
             {
@@ -40,25 +59,35 @@ namespace MHGameWork.TheWizards.Rendering
                 pos.Y = pos.Y * (max.Y - min.Y);
                 pos.Z = pos.Z * (max.Z - min.Z);
 
-                positions.Add(pos + min.xna());
-                normals.Add(vertices[indices[i]].normal);
-                texcoords.Add(vertices[indices[i]].uv);
+                data.Positions.Add(pos + min.xna());
+                data.Normals.Add(vertices[indices[i]].normal);
+                data.Texcoords.Add(vertices[indices[i]].uv);
 
             }
         }
 
         public void AddCustom(Vector3[] nPositions, Vector3[] nNormals, Vector2[] nTexcoords)
         {
+            AddCustom(nPositions, nNormals, nTexcoords, defaultMaterial);
+        }
+        public void AddCustom(Vector3[] nPositions, Vector3[] nNormals, Vector2[] nTexcoords, MeshMaterial material)
+        {
+            if (!parts.ContainsKey(material)) throw new InvalidOperationException("Material not created by the meshbuilder");
             if (nPositions.Length != nNormals.Length) throw new ArgumentException();
             if (nPositions.Length != nTexcoords.Length) throw new ArgumentException();
-            positions.AddRange(nPositions.Select(v => v.xna()));
-            normals.AddRange(nNormals.Select(v => v.xna()));
-
-            texcoords.AddRange(nTexcoords.Select(t => new Microsoft.Xna.Framework.Vector2(t.X, t.Y)));
+            var data = parts[material];
+            data.Positions.AddRange(nPositions.Select(v => v.xna()));
+            data.Normals.AddRange(nNormals.Select(v => v.xna()));
+            data.Texcoords.AddRange(nTexcoords.Select(t => new Microsoft.Xna.Framework.Vector2(t.X, t.Y)));
         }
 
         public void AddSphere(int segments, float radius)
         {
+            AddSphere(segments, radius, defaultMaterial);
+        }
+        public void AddSphere(int segments, float radius, MeshMaterial material)
+        {
+            if (!parts.ContainsKey(material)) throw new InvalidOperationException("Material not created by the meshbuilder");
             TangentVertex[] vertices;
             short[] indices;
             // Source: http://local.wasp.uwa.edu.au/~pbourke/miscellaneous/sphere_cylinder/
@@ -174,48 +203,86 @@ namespace MHGameWork.TheWizards.Rendering
             }
 
 
+            var data = parts[material];
+
             foreach (var index in indices)
             {
-                this.positions.Add(vertices[index].pos * radius);
-                this.normals.Add(vertices[index].normal);
-                this.texcoords.Add(new Microsoft.Xna.Framework.Vector2());
+                data.Positions.Add(vertices[index].pos * radius);
+                data.Normals.Add(vertices[index].normal);
+                data.Texcoords.Add(new Microsoft.Xna.Framework.Vector2());
             }
 
         }
 
+        public void AddGeometryData(MeshPartGeometryData data, MeshMaterial material, Matrix transform)
+        {
+            if (!parts.ContainsKey(material)) throw new InvalidOperationException("Material not created by the meshbuilder");
+            var p = parts[material];
+
+            var xTransform = transform.xna();
+
+            var sPositions = data.GetSourceVector3(MeshPartGeometryData.Semantic.Position);
+            var sNormals = data.GetSourceVector3(MeshPartGeometryData.Semantic.Normal);
+            var sTexcoords = data.GetSourceVector2(MeshPartGeometryData.Semantic.Texcoord);
+
+            var nPositions = new XnaVector3[sPositions.Length];
+            var nNormals = new XnaVector3[sNormals.Length];
+            var nTexcoords = sTexcoords;
+
+            XnaVector3.Transform(sPositions, ref xTransform, nPositions);
+            XnaVector3.TransformNormal(sNormals, ref xTransform, nNormals);
+
+            p.Positions.AddRange(nPositions);
+            p.Normals.AddRange(nNormals);
+            p.Texcoords.AddRange(nTexcoords);
+        }
+
         public IMesh CreateMesh()
         {
-            var geom = new MeshPartGeometryData();
-            geom.Sources.Add(new MeshPartGeometryData.Source
-            {
-                DataVector3 = positions.ToArray(),
-                Number = 0,
-                Semantic = MeshPartGeometryData.Semantic.Position
-            });
-            geom.Sources.Add(new MeshPartGeometryData.Source
-            {
-                DataVector3 = normals.ToArray(),
-                Number = 0,
-                Semantic = MeshPartGeometryData.Semantic.Normal
-            });
-            geom.Sources.Add(new MeshPartGeometryData.Source
-            {
-                DataVector2 = texcoords.ToArray(),
-                Number = 0,
-                Semantic = MeshPartGeometryData.Semantic.Texcoord
-            });
-
-
-            var part = new RAMMeshPart();
-            part.SetGeometryData(geom);
 
             var mesh = new RAMMesh();
-            mesh.GetCoreData().Parts.Add(new MeshCoreData.Part
-                                             {
-                                                 MeshMaterial = new MeshCoreData.Material { DiffuseColor = Color.White },
-                                                 MeshPart = part,
-                                                 ObjectMatrix = Matrix.Identity.xna()
-                                             });
+
+            foreach (var pair in parts)
+            {
+                var mat = pair.Key;
+                var data = pair.Value;
+
+                if (data.Positions.Count == 0) continue;
+
+                var geom = new MeshPartGeometryData();
+                geom.Sources.Add(new MeshPartGeometryData.Source
+                {
+                    DataVector3 = data.Positions.ToArray(),
+                    Number = 0,
+                    Semantic = MeshPartGeometryData.Semantic.Position
+                });
+                geom.Sources.Add(new MeshPartGeometryData.Source
+                {
+                    DataVector3 = data.Normals.ToArray(),
+                    Number = 0,
+                    Semantic = MeshPartGeometryData.Semantic.Normal
+                });
+                geom.Sources.Add(new MeshPartGeometryData.Source
+                {
+                    DataVector2 = data.Texcoords.ToArray(),
+                    Number = 0,
+                    Semantic = MeshPartGeometryData.Semantic.Texcoord
+                });
+
+
+                var part = new RAMMeshPart();
+                part.SetGeometryData(geom);
+
+                mesh.GetCoreData().Parts.Add(new MeshCoreData.Part
+                                        {
+                                            MeshMaterial = mat.ToMeshCoreDataMaterial(),
+                                            MeshPart = part,
+                                            ObjectMatrix = Matrix.Identity.xna()
+                                        });
+            }
+
+
+
             return mesh;
         }
 
@@ -302,6 +369,39 @@ namespace MHGameWork.TheWizards.Rendering
                     return nPart;
                 }).ToList();
             return ret;
+        }
+
+
+        public class MeshData
+        {
+            public List<Microsoft.Xna.Framework.Vector3> Positions = new List<Microsoft.Xna.Framework.Vector3>();
+            public List<Microsoft.Xna.Framework.Vector3> Normals = new List<Microsoft.Xna.Framework.Vector3>();
+            public List<Microsoft.Xna.Framework.Vector2> Texcoords = new List<Microsoft.Xna.Framework.Vector2>();
+        }
+        public class MeshMaterial
+        {
+            public Color DiffuseColor;
+            public ITexture DiffuseMap;
+            public bool ColoredMaterial = false;
+
+            public MeshCoreData.Material ToMeshCoreDataMaterial()
+            {
+                return new MeshCoreData.Material()
+                    {
+                        ColoredMaterial = ColoredMaterial,
+                        DiffuseColor = DiffuseColor,
+                        DiffuseMap = DiffuseMap
+                    };
+            }
+
+            public void SetFromMeshCoreDataMaterial(MeshCoreData.Material mat)
+            {
+
+                DiffuseColor = mat.DiffuseColor;
+                DiffuseMap = mat.DiffuseMap;
+                ColoredMaterial = mat.ColoredMaterial;
+
+            }
         }
     }
 }

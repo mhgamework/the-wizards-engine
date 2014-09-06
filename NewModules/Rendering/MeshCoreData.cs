@@ -25,26 +25,28 @@ namespace MHGameWork.TheWizards.Rendering
             public bool ColoredMaterial = false;
             public string Name;
 
-            public bool Equals(Material other)
+            protected bool Equals(Material other)
             {
-                if (ReferenceEquals(null, other)) return false;
-                if (ReferenceEquals(this, other)) return true;
-                return other.DiffuseColor.Equals(DiffuseColor) && Equals(other.DiffuseMap, DiffuseMap) && Equals(other.Name, Name);
+                return DiffuseColor.Equals(other.DiffuseColor) && Equals(DiffuseMap, other.DiffuseMap) && ColoredMaterial.Equals(other.ColoredMaterial) && string.Equals(Name, other.Name);
             }
 
             public override bool Equals(object obj)
             {
                 if (ReferenceEquals(null, obj)) return false;
                 if (ReferenceEquals(this, obj)) return true;
-                if (obj.GetType() != typeof(Material)) return false;
-                return Equals((Material)obj);
+                if (obj.GetType() != this.GetType()) return false;
+                return Equals((Material) obj);
             }
 
             public override int GetHashCode()
             {
                 unchecked
                 {
-                    return (DiffuseColor.GetHashCode() * 397) ^ (DiffuseMap != null ? DiffuseMap.GetHashCode() : 0);
+                    int hashCode = DiffuseColor.GetHashCode();
+                    hashCode = (hashCode*397) ^ (DiffuseMap != null ? DiffuseMap.GetHashCode() : 0);
+                    hashCode = (hashCode*397) ^ ColoredMaterial.GetHashCode();
+                    hashCode = (hashCode*397) ^ (Name != null ? Name.GetHashCode() : 0);
+                    return hashCode;
                 }
             }
 
