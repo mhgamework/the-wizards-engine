@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 {
     public class SimpleWorldRenderer : ISimulator
     {
-        public const int RenderSize = 64;
+        public const int RenderSize = 32;
         private World world;
         private readonly IVoxelWorldRenderer voxelWorldRenderer;
 

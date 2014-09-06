@@ -18,6 +18,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private int numChunks;
 
         private Array2D<Entity> chunkEntities;
+        private HashSet<Point2> dirtyChunks = new HashSet<Point2>();
 
         public ChunkedVoxelWorldRenderer(World world)
         {
@@ -36,7 +37,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         [TWProfile]
         public void UpdateWindow(Point2 offset, Vector3 worldTranslation, Point2 windowSize)
         {
-            updateChangedChunks();
+            flagDirtyChunks();
 
             updateVisibleChunks(offset, windowSize);
         }
@@ -56,7 +57,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
                     var chunk = chunkEntities[p];
                     if (chunk == null) return;
                     visible.Add(chunkEntities[p]);
-                    if (chunk.Mesh == null) updateChunk(p);
+                    if (chunk.Mesh == null || dirtyChunks.Contains(p)) updateChunk(p);
                 });
 
             visible.ForEach(e => e.Visible = true);
@@ -64,17 +65,14 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         }
 
         [TWProfile]
-        private void updateChangedChunks()
+        private void flagDirtyChunks()
         {
-            var changedChunks = new HashSet<Point2>();
-
             //chunkEntities.ForEach((_, p) => changedChunks.Add(p));
             foreach (var v in world.ChangedVoxels)
             {
-                changedChunks.Add((v.Coord.ToVector2() / ChunkSize).Floor());
+                dirtyChunks.Add((v.Coord.ToVector2() / ChunkSize).Floor());
             }
 
-            changedChunks.ForEach(updateChunk);
         }
 
         private void updateChunk(Point2 p)
@@ -85,6 +83,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             chunkEntities[p].Mesh = BuildChunkMesh((p.ToVector2() * ChunkSize).Round(),
                                   new Point2(ChunkSize, ChunkSize));
+
+            dirtyChunks.Remove(p);
         }
 
         [TWProfile]

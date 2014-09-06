@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
 
             if (handle.Seeder.NextFloat(0, 100) > 1) return;
-            handle.Data.DataValue = handle.Seeder.NextInt(1, 4);
+            randomizeColor(handle);
             var possible = handle.Get8Connected().Where(isInfecteable).ToArray();
             if (possible.Length == 0) return;
             var i = handle.Seeder.NextInt(0, possible.Length - 1);
@@ -36,6 +36,15 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 target.Data.MagicLevel = 0;
                 InfestVoxel(target);
             }
+        }
+
+        private static void randomizeColor(IVoxelHandle handle)
+        {
+            var c = handle.Seeder.NextInt(1, 4);
+            if (handle.Data.DataValue == c) return;
+            handle.Data.DataValue = handle.Seeder.NextInt(1, 4);
+            handle.GetInternalVoxel().World.NotifyVoxelChanged(handle.GetInternalVoxel()); // Cheat!
+
         }
 
         public void InfestVoxel(IVoxelHandle target)
