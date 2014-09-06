@@ -40,6 +40,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private static void randomizeColor(IVoxelHandle handle)
         {
+            if (handle.Seeder.NextFloat(0, 100) > 1) return;
             var c = handle.Seeder.NextInt(1, 4);
             if (handle.Data.DataValue == c) return;
             handle.Data.DataValue = handle.Seeder.NextInt(1, 4);
