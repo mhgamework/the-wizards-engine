@@ -14,7 +14,7 @@ namespace MHGameWork.TheWizards.Data
     [MulticastAttributeUsage(MulticastTargets.Method)]
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
     [Serializable]
-    public sealed class TWProfileAttribute : MethodInterceptionAspect
+    public sealed class TWProfileAttribute : OnMethodBoundaryAspect
     {
         private readonly NameType nameType;
         private string name;
@@ -98,12 +98,18 @@ namespace MHGameWork.TheWizards.Data
             return base.CompileTimeValidate(method);
         }
 
-        [DebuggerStepThrough()]
-        public override void OnInvoke(MethodInterceptionArgs args)
+        public override void OnEntry(MethodExecutionArgs args)
         {
             el.Begin();
-            base.OnInvoke(args);
+
+            base.OnEntry(args);
+        }
+
+        public override void OnExit(MethodExecutionArgs args)
+        {
+            base.OnExit(args);
             el.End();
+
         }
     }
 
