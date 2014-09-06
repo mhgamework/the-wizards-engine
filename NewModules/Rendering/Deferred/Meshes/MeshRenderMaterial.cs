@@ -18,6 +18,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         {
             Material = null;
             DiffuseTexture = null;
+
+            if (Shader != null)
+                Shader.Dispose();
             Shader = null;
 
             if (PerObjectConstantBuffer != null)
