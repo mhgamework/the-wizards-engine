@@ -1,5 +1,8 @@
-﻿using MHGameWork.TheWizards.Rendering;
+﻿using System;
+using System.Diagnostics;
+using MHGameWork.TheWizards.Rendering;
 using NUnit.Framework;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.Tests.Features.Rendering
 {
@@ -17,6 +20,30 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
             var optimizer = new MeshOptimizer();
 
             var optimized = optimizer.CreateOptimized(mesh);
+        }
+        [Test]
+        public void TestOptimizeMeshManyParts()
+        {
+            var b = new MeshBuilder();
+            b.AddBox(new Vector3(0, 0, 0), new Vector3(1, 1, 1));
+            var partMesh = b.CreateMesh();
+
+            var unoptimized = new RAMMesh();
+            for (int i = 0; i < 1000; i++)
+                MeshBuilder.AppendMeshTo(partMesh, unoptimized, Matrix.Translation(i, 0, 0));
+
+            var optimizer = new MeshOptimizer();
+
+            var watch = new Stopwatch();
+            watch.Start();
+            for (int i = 0; i < 10; i++)
+            {
+                var optimized = optimizer.CreateOptimized(unoptimized);
+                Assert.AreEqual(1, optimized.GetCoreData().Parts.Count);
+
+            }
+            watch.Stop();
+            Console.WriteLine(watch.Elapsed.TotalMilliseconds / 10);
         }
     }
 }

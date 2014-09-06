@@ -13,8 +13,7 @@ namespace MHGameWork.TheWizards.Rendering
     public class MeshOptimizer
     {
 
-        private Dictionary<MeshCoreData.Material, IMeshPart> materials =
-            new Dictionary<MeshCoreData.Material, IMeshPart>();
+        private Dictionary<MeshCoreData.Material, MeshBuilder.MeshMaterial> materials = new Dictionary<MeshCoreData.Material, MeshBuilder.MeshMaterial>();
         private RAMMesh mesh;
 
 
@@ -25,18 +24,36 @@ namespace MHGameWork.TheWizards.Rendering
         /// <returns></returns>
         public IMesh CreateOptimized(IMesh original)
         {
-            clearBuffers();
+            materials.Clear();
+            var builder = new MeshBuilder();
 
-            mesh = new RAMMesh();
-            copyCollisionData(mesh, original);
 
             foreach (var oriPart in original.GetCoreData().Parts)
             {
-                var part = findOrCreatePart(oriPart.MeshMaterial);
-                addPartToPart(oriPart.MeshPart, part, oriPart.ObjectMatrix);
+
+                MeshBuilder.MeshMaterial meshMaterial = getMaterial(oriPart.MeshMaterial, builder);
+                builder.AddGeometryData(oriPart.MeshPart.GetGeometryData(), meshMaterial, oriPart.ObjectMatrix.dx());
             }
 
+            mesh = builder.CreateMesh() as RAMMesh;
+
+            copyCollisionData(mesh, original);
+
+
             return mesh;
+        }
+
+        private MeshBuilder.MeshMaterial getMaterial(MeshCoreData.Material meshMaterial, MeshBuilder builder)
+        {
+            MeshBuilder.MeshMaterial mat;
+            if (materials.TryGetValue(meshMaterial, out mat))
+                return mat;
+
+            mat = builder.CreateMaterial();
+            mat.SetFromMeshCoreDataMaterial(meshMaterial);
+            materials[meshMaterial] = mat;
+
+            return mat;
         }
 
         private void addPartToPart(IMeshPart source, IMeshPart dest, Matrix sourceTransform)
@@ -73,7 +90,7 @@ namespace MHGameWork.TheWizards.Rendering
             dest.GetGeometryData().SetSource(MeshPartGeometryData.Semantic.Texcoord, nTexcoords);
         }
 
-        private IMeshPart findOrCreatePart(MeshCoreData.Material original)
+        /*private IMeshPart findOrCreatePart(MeshCoreData.Material original)
         {
             foreach (var mat in materials)
                 if (isIdenticalMaterial(original, mat.Key)) return mat.Value;
@@ -84,7 +101,7 @@ namespace MHGameWork.TheWizards.Rendering
 
             return ret;
 
-        }
+        }*/
 
         private IMeshPart createPart(MeshCoreData.Material material)
         {
