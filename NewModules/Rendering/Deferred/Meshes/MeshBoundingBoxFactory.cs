@@ -33,5 +33,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                  part.MeshPart.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position))))
                     .Aggregate(new Microsoft.Xna.Framework.BoundingBox(), (current, t) => current.MergeWith(t)).dx();
         }
+
+        public void ClearCache(IMesh mesh)
+        {
+            cornersCache.Remove(mesh);
+        }
     }
 }

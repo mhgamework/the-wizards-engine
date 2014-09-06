@@ -95,7 +95,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             return ret;
         }
-
+         
         //[TWProfile]
         public DeferredMeshRenderElement AddMesh(IMesh mesh)
         {
@@ -384,6 +384,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             data.Dispose();
 
             renderDataDict.Remove(mesh);
+            renderDatas.Remove(data);
+            bbFactory.ClearCache(mesh);
+
 
         }
 
