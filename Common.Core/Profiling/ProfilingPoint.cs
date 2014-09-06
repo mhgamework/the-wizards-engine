@@ -67,6 +67,7 @@ namespace MHGameWork.TheWizards.Profiling
             ProfilingPoint prev = null;
             if (pointStack.Count != 0) prev = pointStack.Peek();
             pointStack.Push(this);
+            log.Add(this);
 
             checkNeedsReset(); // Check if the data needs a reset
 
@@ -79,13 +80,14 @@ namespace MHGameWork.TheWizards.Profiling
         }
 
 
-
+        private static List<object> log = new List<object>();
         public void End()
         {
             if (shouldSkip()) return;
 
             if (pointStack.Peek() != this) throw new InvalidOperationException(); // Bug in algo!
             pointStack.Pop();
+            
             depth--;
 
             if (depth == 0) endProfiling();
@@ -101,6 +103,7 @@ namespace MHGameWork.TheWizards.Profiling
         }
         private void endProfiling()
         {
+            log.Clear();
             // Now we are not inside another execution of this profiling area, store the elapsed
             tryExitRoot();
 
@@ -132,6 +135,8 @@ namespace MHGameWork.TheWizards.Profiling
 
             hasEnteredRoot = false;
             isRoot = false;
+
+            
         }
 
 
