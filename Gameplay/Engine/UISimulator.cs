@@ -16,7 +16,8 @@ namespace MHGameWork.TheWizards.Engine
 
         public UISimulator()
         {
-            SubSimulators.Add(new TextareaUpdater());
+            //SubSimulators.Add(new SlowTextareaUpdater());
+            SubSimulators.Add(new FastTextareaUpdater());
         }
 
         public void Simulate()

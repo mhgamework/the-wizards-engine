@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
         public string FontFamily { get; set; }
         /// <summary>
-        /// Font size in em
+        /// Font size in pt
         /// </summary>
         public float FontSize { get; set; }
         public string Text { get; set; }

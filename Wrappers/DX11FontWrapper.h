@@ -16,11 +16,13 @@ namespace MHGameWork
 	{
 	public:
 		DX11FontWrapper(SlimDX::Direct3D11::Device^ device);
-		void Draw(System::String^ str,float size,int x,int y,SlimDX::Color4 color);
+		DX11FontWrapper(SlimDX::Direct3D11::Device^ device, System::String^ family);
+		void Draw(System::String^ str,float size,float x,float y,SlimDX::Color4 color);
 
 	private:
 		SlimDX::Direct3D11::Device^ device;
 		IFW1FontWrapper* pFontWrapper;
+		void initialize(SlimDX::Direct3D11::Device^ device,LPCWSTR family);
 	};
 
 	}

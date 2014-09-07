@@ -4,6 +4,18 @@
 
 MHGameWork::TheWizards::DX11FontWrapper::DX11FontWrapper(SlimDX::Direct3D11::Device^ device)
 {
+	this->initialize(device,L"Arial");
+}
+
+MHGameWork::TheWizards::DX11FontWrapper::DX11FontWrapper(SlimDX::Direct3D11::Device^ device, System::String^ family)
+{
+	void* txt = (void*)Marshal::StringToHGlobalUni(family);
+	this->initialize(device,(LPCWSTR) txt);
+	Marshal::FreeHGlobal(System::IntPtr(txt));
+}
+
+void MHGameWork::TheWizards::DX11FontWrapper::initialize(SlimDX::Direct3D11::Device^ device,LPCWSTR family)
+{
 	this->device = device;
 
 	IFW1Factory *pFW1Factory;
@@ -20,7 +32,8 @@ MHGameWork::TheWizards::DX11FontWrapper::DX11FontWrapper(SlimDX::Direct3D11::Dev
 	this->pFontWrapper = pw;
 }
 
-void MHGameWork::TheWizards::DX11FontWrapper::Draw(System::String^ str,float size,int x,int y, SlimDX::Color4 color)
+
+void MHGameWork::TheWizards::DX11FontWrapper::Draw(System::String^ str,float size,float x,float y, SlimDX::Color4 color)
 {
 	ID3D11DeviceContext* pImmediateContext = (ID3D11DeviceContext*)this->device->ImmediateContext->ComPointer.ToPointer();
 	void* txt = (void*)Marshal::StringToHGlobalUni(str);
