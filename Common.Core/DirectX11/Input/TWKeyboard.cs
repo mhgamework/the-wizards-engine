@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.DirectX11.Input
@@ -24,6 +25,7 @@ namespace MHGameWork.TheWizards.DirectX11.Input
             keyboardState = nKeyboardState;
 
             if (prevKeyboardState == null) prevKeyboardState = keyboardState;
+            
         }
 
 
@@ -94,6 +96,28 @@ namespace MHGameWork.TheWizards.DirectX11.Input
             return keyboardState.PressedKeys.Contains(key);
         }
 
+        /// <summary>
+        /// Raw data of the keys which are currently not held down
+        /// </summary>
+        public IList<Key> ReleasedKeys
+        {
+            get { return keyboardState.ReleasedKeys; }
+        }
 
+        /// <summary>
+        /// Raw data of the keys which are currently held down
+        /// </summary>
+        public IList<Key> PressedKeys
+        {
+            get { return keyboardState.PressedKeys; }
+        }
+
+        /// <summary>
+        /// Not sure what this is :)
+        /// </summary>
+        public IList<Key> AllKeys
+        {
+            get { return keyboardState.AllKeys; }
+        }
     }
 }

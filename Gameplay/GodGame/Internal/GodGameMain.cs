@@ -44,8 +44,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             var clearStateChangesSimulator = new ClearStateChangesSimulator(gameState);
             var worldRenderingSimulator = new WorldRenderingSimulator();
 
-
-            engine.AddSimulator(playerInputSimulator);
+            //TODO: these simulators form some kind of configuration, so maybe try splitting them into configuration and features
+            //   Place the configuration code into methods in this class.
+            engine.AddSimulator(playerInputSimulator); 
             engine.AddSimulator(tickSimulator);
             engine.AddSimulator(uiRenderer);
             engine.AddSimulator(simpleWorldRenderer);
