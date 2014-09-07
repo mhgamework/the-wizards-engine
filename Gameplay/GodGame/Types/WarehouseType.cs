@@ -1,6 +1,9 @@
 ﻿using System.Drawing;
 using DirectX11;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Rendering;
+using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using MHGameWork.TheWizards.Scattered.Model;
 using SlimDX;
 

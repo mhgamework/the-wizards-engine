@@ -1,5 +1,6 @@
 ﻿using MHGameWork.TheWizards.GodGame.Internal;
 using System.Linq;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Types;
 
 namespace MHGameWork.TheWizards.GodGame

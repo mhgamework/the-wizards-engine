@@ -1,4 +1,4 @@
-namespace MHGameWork.TheWizards.GodGame.Internal
+namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
 {
     public interface IRenderable
     {

@@ -14,14 +14,14 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
     {
         public List<SerializedVoxel> Voxels = new List<SerializedVoxel>();
 
-        public static SerializedWorld FromWorld(Internal.World world)
+        public static SerializedWorld FromWorld(Internal.Model.World world)
         {
             var sWorld = new SerializedWorld();
 
             world.ForEach((v, p) => sWorld.Voxels.Add(SerializedVoxel.FromVoxel(v)));
             return sWorld;
         }
-        public void ToWorld(Internal.World world, Func<string, GameVoxelType> typeFactory, Func<string, ItemType> itemFactory)
+        public void ToWorld(Internal.Model.World world, Func<string, GameVoxelType> typeFactory, Func<string, ItemType> itemFactory)
         {
             foreach (var el in Voxels)
             {

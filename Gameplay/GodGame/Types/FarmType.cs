@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Timers;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Rendering;
+using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
@@ -22,7 +25,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             myTimer.Enabled = true;
         }
 
-        public override void Tick(Internal.IVoxelHandle handle)
+        public override void Tick(IVoxelHandle handle)
         {
             // TODO: should actually be done on type change of voxel, not every tick
             handle.Data.Inventory.ChangeCapacity(5);

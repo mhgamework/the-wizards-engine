@@ -2,6 +2,8 @@
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.Scattered.Model;
 using NUnit.Framework;
@@ -38,8 +40,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             builder.RegisterType<TickSimulator>().SingleInstance().AsSelf().AsImplementedInterfaces();
 
             builder.Register(c => new PlayerInputHandler(
-                createPlayerInputs(c.Resolve<Internal.World>()),
-                c.Resolve<Internal.World>(),
+                createPlayerInputs(c.Resolve<Internal.Model.World>()),
+                c.Resolve<Internal.Model.World>(),
                 c.Resolve<WorldPersister>(),
                 c.Resolve<PlayerState>())).SingleInstance();
             builder.RegisterInstance(new WorldPersister(getTypeFromName, getItemFromName));
@@ -47,13 +49,13 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             builder.RegisterInstance(EngineFactory.CreateEngine());
             builder.RegisterInstance(new PlayerState());
 
-            var world = new Internal.World(40, 10);
+            var world = new Internal.Model.World(40, 10);
             buildDemoWorld(world);
 
             builder.RegisterInstance(world);
 
 
-            builder.Register(c => new GameState(c.Resolve<Internal.World>()).Alter(g => g.AddPlayer(c.Resolve<PlayerState>())));
+            builder.Register(c => new GameState(c.Resolve<Internal.Model.World>()).Alter(g => g.AddPlayer(c.Resolve<PlayerState>())));
 
 
             // Until here goes the non-networked registration
@@ -78,8 +80,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             builder.RegisterType<TickSimulator>().SingleInstance().AsSelf().AsImplementedInterfaces();
 
             builder.Register(c => new PlayerInputHandler(
-                createPlayerInputs(c.Resolve<Internal.World>()),
-                c.Resolve<Internal.World>(),
+                createPlayerInputs(c.Resolve<Internal.Model.World>()),
+                c.Resolve<Internal.Model.World>(),
                 c.Resolve<WorldPersister>(),
                 c.Resolve<PlayerState>())).SingleInstance();
             builder.RegisterInstance(new WorldPersister(getTypeFromName, getItemFromName));
@@ -87,13 +89,13 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             builder.RegisterInstance(EngineFactory.CreateEngine());
             builder.RegisterInstance(new PlayerState());
 
-            var world = new Internal.World(40, 10);
+            var world = new Internal.Model.World(40, 10);
             buildDemoWorld(world);
 
             builder.RegisterInstance(world);
 
 
-            builder.Register(c => new GameState(c.Resolve<Internal.World>()).Alter(g => g.AddPlayer(c.Resolve<PlayerState>())));
+            builder.Register(c => new GameState(c.Resolve<Internal.Model.World>()).Alter(g => g.AddPlayer(c.Resolve<PlayerState>())));
 
 
             // Until here goes the non-networked registration
@@ -111,7 +113,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
         public static GodGameMain CreateGame()
         {
-            var world = new Internal.World(100, 10);
+            var world = new Internal.Model.World(100, 10);
             buildDemoWorld(world);
 
             var worldPersister = new WorldPersister(getTypeFromName, getItemFromName);
@@ -121,7 +123,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             return ret;
         }
 
-        private static void buildDemoWorld(Internal.World world)
+        private static void buildDemoWorld(Internal.Model.World world)
         {
             world.ForEach((v, p) =>
                 {
@@ -159,7 +161,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             return GameVoxelType.AllTypes.First(t => t.Name == name);
         }
 
-        private static IEnumerable<IPlayerTool> createPlayerInputs(Internal.World world)
+        private static IEnumerable<IPlayerTool> createPlayerInputs(Internal.Model.World world)
         {
             yield return new CreateLandTool(world);
             yield return createTypeInput(GameVoxelType.Forest);

@@ -61,7 +61,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
         private static void testInputHandler(IClientPacketTransporter<UserInputPacket> proxyTrans, IClientPacketTransporter<UserInputPacket> realTrans)
         {
-            var world = new Internal.World(20, 10);
+            var world = new Internal.Model.World(20, 10);
             var proxyHandler = new ProxyPlayerInputHandler(proxyTrans);
             var realHandler = Substitute.For<IPlayerInputHandler>();
             var inputReceiver = new NetworkPlayerInputForwarder(realTrans, realHandler, world);

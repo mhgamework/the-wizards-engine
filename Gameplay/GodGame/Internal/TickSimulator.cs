@@ -1,14 +1,16 @@
-﻿namespace MHGameWork.TheWizards.GodGame.Internal
+﻿using MHGameWork.TheWizards.GodGame.Internal.Model;
+
+namespace MHGameWork.TheWizards.GodGame.Internal
 {
     public class TickSimulator : ITickSimulator
     {
-        private readonly World world;
+        private readonly Model.World world;
         private IVoxelHandle handle;
 
         public const float TickInterval = 1 / 20f;
         private float nextTick;
 
-        public TickSimulator(World world)
+        public TickSimulator(Model.World world)
         {
             this.world = world;
 

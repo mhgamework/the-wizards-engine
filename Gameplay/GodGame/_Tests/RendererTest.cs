@@ -5,6 +5,7 @@ using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Types;
 using NUnit.Framework;
 
@@ -28,9 +29,9 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             engine.AddSimulator(new WorldRenderingSimulator());
         }
 
-        private Internal.World createTestWorld()
+        private Internal.Model.World createTestWorld()
         {
-            var ret = new Internal.World(5, 10);
+            var ret = new Internal.Model.World(5, 10);
 
             var typeRed = new GameVoxelType("Red") { Color = Color.Red };
             var typeGreen = new GameVoxelType("Green") { Color = Color.Green };

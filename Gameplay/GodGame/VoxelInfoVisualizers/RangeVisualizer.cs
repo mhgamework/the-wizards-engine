@@ -1,10 +1,10 @@
-using System;
 using System.Drawing;
-using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.Scattered._Engine;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.GodGame.Types
+namespace MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers
 {
     public class RangeVisualizer : IRenderable
     {

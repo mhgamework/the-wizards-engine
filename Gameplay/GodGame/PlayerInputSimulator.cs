@@ -2,6 +2,8 @@
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using SlimDX.DirectInput;
@@ -10,13 +12,13 @@ namespace MHGameWork.TheWizards.GodGame
 {
     public class PlayerInputSimulator : ISimulator
     {
-        private Internal.World world;
+        private Internal.Model.World world;
         private IPlayerInputHandler inputHandler;
         private readonly SimpleWorldRenderer renderer;
 
         //public IPlayerTool ActiveHandler { get; private set; }
 
-        public PlayerInputSimulator(Internal.World world, IPlayerInputHandler inputHandler,SimpleWorldRenderer renderer)
+        public PlayerInputSimulator(Internal.Model.World world, IPlayerInputHandler inputHandler,SimpleWorldRenderer renderer)
         {
             this.world = world;
             this.inputHandler = inputHandler;

@@ -1,5 +1,6 @@
 ﻿using DirectX11;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Types;
 using NUnit.Framework;
 

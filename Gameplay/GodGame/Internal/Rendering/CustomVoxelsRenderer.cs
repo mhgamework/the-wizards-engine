@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using DirectX11;
-using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Types;
-using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.GodGame.Internal
+namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
 {
     public class CustomVoxelsRenderer
     {
@@ -14,11 +13,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         private Dictionary<GameVoxel, RenderData> visualizers = new Dictionary<GameVoxel, RenderData>();
 
-        private World world;
+        private Model.World world;
 
         public IEnumerable<IRenderable> VisibleCustomRenderables { get { return visualizers.Values.SelectMany(v => v.Visualizers); } }
 
-        public CustomVoxelsRenderer(World world)
+        public CustomVoxelsRenderer(Model.World world)
         {
             this.world = world;
         }

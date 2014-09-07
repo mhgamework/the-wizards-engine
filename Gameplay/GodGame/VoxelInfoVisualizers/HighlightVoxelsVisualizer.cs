@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using MHGameWork.TheWizards.GodGame.Internal;
-using MHGameWork.TheWizards.Scattered._Engine;
-using SlimDX;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 
-namespace MHGameWork.TheWizards.GodGame.Types
+namespace MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers
 {
     public class HighlightVoxelsVisualizer : IRenderable
     {

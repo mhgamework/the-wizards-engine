@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MHGameWork.TheWizards.GodGame.Internal
+namespace MHGameWork.TheWizards.GodGame.Internal.Model
 {
     public class GameState
     {

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Networking;
 using MHGameWork.TheWizards.GodGame._Tests;
 using MHGameWork.TheWizards.IO;
@@ -26,7 +28,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             var clientConnector = new NetworkConnectorClient();
             clientConnector.Connect("127.0.0.1", 15005);
-            World world = state.World;
+            Model.World world = state.World;
             var simpleWorldRenderer = new SimpleWorldRenderer(world);
 
             var playerInputSimulator = new PlayerInputSimulator(state.World, new ProxyPlayerInputHandler(clientConnector.UserInputTransporter), simpleWorldRenderer);

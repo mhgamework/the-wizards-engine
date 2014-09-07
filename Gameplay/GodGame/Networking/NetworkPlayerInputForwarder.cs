@@ -11,9 +11,9 @@ namespace MHGameWork.TheWizards.GodGame.Networking
     {
         private readonly IClientPacketTransporter<UserInputPacket> transporter;
         private readonly IPlayerInputHandler handler;
-        private readonly Internal.World world;
+        private readonly Internal.Model.World world;
 
-        public NetworkPlayerInputForwarder(IClientPacketTransporter<UserInputPacket> transporter, IPlayerInputHandler handler, Internal.World world)
+        public NetworkPlayerInputForwarder(IClientPacketTransporter<UserInputPacket> transporter, IPlayerInputHandler handler, Internal.Model.World world)
         {
             this.transporter = transporter;
             this.handler = handler;

@@ -3,6 +3,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame
@@ -13,13 +14,13 @@ namespace MHGameWork.TheWizards.GodGame
     public class PlayerInputHandler : IPlayerInputHandler
     {
         private readonly IEnumerable<IPlayerTool> handlers;
-        private Internal.World world;
+        private Internal.Model.World world;
         private readonly WorldPersister worldPersister;
         private readonly PlayerState player;
 
         public IPlayerTool ActiveHandler { get { return player.ActiveTool; } private set { player.ActiveTool = value; } }
 
-        public PlayerInputHandler(IEnumerable<IPlayerTool> handlers, Internal.World world, WorldPersister worldPersister, PlayerState player)
+        public PlayerInputHandler(IEnumerable<IPlayerTool> handlers, Internal.Model.World world, WorldPersister worldPersister, PlayerState player)
         {
             this.handlers = handlers.ToArray();
             this.world = world;

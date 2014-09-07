@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Rendering;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
@@ -24,7 +25,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             }
         }
 
-        public override void Tick(Internal.IVoxelHandle handle)
+        public override void Tick(IVoxelHandle handle)
         {
             handle.EachRandomInterval(2, () =>
             {
@@ -42,7 +43,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             handle.EachRandomInterval(0.5f, () => { handle.Data.DataValue++; });
         }
 
-        public override IMesh GetMesh(Internal.IVoxelHandle handle)
+        public override IMesh GetMesh(IVoxelHandle handle)
         {
             var conn = handle.Get4Connected().ToArray();
             var index = handle.Data.DataValue;

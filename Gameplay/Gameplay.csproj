@@ -187,12 +187,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GodGame\Internal\ChunkedVoxelWorldRenderer.cs" />
+    <Compile Include="GodGame\Internal\Rendering\ChunkedVoxelWorldRenderer.cs" />
     <Compile Include="GodGame\Internal\GodGameClient.cs" />
-    <Compile Include="GodGame\Internal\GameState.cs" />
+    <Compile Include="GodGame\Internal\Model\GameState.cs" />
     <Compile Include="GodGame\Internal\ITickSimulator.cs" />
-    <Compile Include="GodGame\Internal\IVoxelWorldRenderer.cs" />
-    <Compile Include="GodGame\Internal\PerEntityVoxelWorldRenderer.cs" />
+    <Compile Include="GodGame\Internal\Rendering\IVoxelWorldRenderer.cs" />
+    <Compile Include="GodGame\Internal\Rendering\PerEntityVoxelWorldRenderer.cs" />
     <Compile Include="GodGame\IPlayerInputHandler.cs" />
     <Compile Include="GodGame\LightGodPowerInputHandler.cs" />
     <Compile Include="GodGame\Networking\NetworkedPlayerFactory.cs" />
@@ -200,18 +200,18 @@
     <Compile Include="GodGame\PlayerInputHandler.cs" />
     <Compile Include="GodGame\DelegatePlayerTool.cs" />
     <Compile Include="GodGame\Internal\ClearStateChangesSimulator.cs" />
-    <Compile Include="GodGame\Internal\GodGameRenderingSimulator.cs" />
+    <Compile Include="GodGame\Internal\Rendering\GodGameRenderingSimulator.cs" />
     <Compile Include="GodGame\Internal\GodGameServer.cs" />
-    <Compile Include="GodGame\Internal\CustomVoxelsRenderer.cs" />
-    <Compile Include="GodGame\Internal\GameVoxel.cs" />
+    <Compile Include="GodGame\Internal\Rendering\CustomVoxelsRenderer.cs" />
+    <Compile Include="GodGame\Internal\Model\GameVoxel.cs" />
     <Compile Include="GodGame\Internal\GodGameMain.cs" />
     <Compile Include="GodGame\Persistence\SerializedWorld.cs" />
     <Compile Include="GodGame\Internal\WorldPersister.cs" />
     <Compile Include="GodGame\IPlayerTool.cs" />
-    <Compile Include="GodGame\Internal\IVoxelHandle.cs" />
-    <Compile Include="GodGame\Internal\SimpleWorldRenderer.cs" />
+    <Compile Include="GodGame\Internal\Model\IVoxelHandle.cs" />
+    <Compile Include="GodGame\Internal\Rendering\SimpleWorldRenderer.cs" />
     <Compile Include="GodGame\Internal\TickSimulator.cs" />
-    <Compile Include="GodGame\Internal\IRenderable.cs" />
+    <Compile Include="GodGame\Internal\Rendering\IRenderable.cs" />
     <Compile Include="GodGame\Persistence\SerializedVoxel.cs" />
     <Compile Include="GodGame\Types\BuildingSiteType.cs" />
     <Compile Include="GodGame\Types\CropType.cs" />
@@ -239,7 +239,7 @@
     <Compile Include="GodGame\Types\InfestationVoxelType.cs" />
     <Compile Include="GodGame\Types\WaterType.cs" />
     <Compile Include="GodGame\UIRenderer.cs" />
-    <Compile Include="GodGame\Internal\World.cs" />
+    <Compile Include="GodGame\Internal\Model\World.cs" />
     <Compile Include="GodGame\Types\GameVoxelType.cs" />
     <Compile Include="GodGame\VoxelData.cs" />
     <Compile Include="GodGame\Networking\NetworkConnectorClient.cs" />

@@ -5,7 +5,7 @@ using System.Linq;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.Scattered.Model;
 
-namespace MHGameWork.TheWizards.GodGame.Internal
+namespace MHGameWork.TheWizards.GodGame.Internal.Model
 {
     /// <summary>
     /// TODO: maybe add an IVoxelHandle property to each GameVoxel?

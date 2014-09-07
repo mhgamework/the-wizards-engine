@@ -2,6 +2,7 @@
 using System.Drawing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Scattered._Engine;
 using SlimDX;

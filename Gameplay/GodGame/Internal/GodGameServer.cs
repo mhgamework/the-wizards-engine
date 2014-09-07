@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Networking;
 using MHGameWork.TheWizards.GodGame._Tests;
 using MHGameWork.TheWizards.IO;
@@ -51,7 +53,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             engine.AddSimulator(playerInputSimulator);
             engine.AddSimulator(tickSimulator);
-            World world = state.World;
+            Model.World world = state.World;
             engine.AddSimulator(new GodGameRenderingSimulator(world, playerInputSimulator, localPlayer, new SimpleWorldRenderer(world)));
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.AddSimulator(new ClearStateChangesSimulator(state));

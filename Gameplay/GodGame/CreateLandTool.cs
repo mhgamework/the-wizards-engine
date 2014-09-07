@@ -1,13 +1,14 @@
 ﻿using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Types;
 
 namespace MHGameWork.TheWizards.GodGame
 {
     public class CreateLandTool : IPlayerTool
     {
-        private readonly Internal.World world;
+        private readonly Internal.Model.World world;
 
-        public CreateLandTool(Internal.World world)
+        public CreateLandTool(Internal.Model.World world)
         {
             this.world = world;
         }

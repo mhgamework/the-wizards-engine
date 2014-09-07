@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Rendering;
 using MHGameWork.TheWizards.Rendering;
 
@@ -21,7 +22,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             };
         }
 
-        public override IMesh GetMesh(Internal.IVoxelHandle handle)
+        public override IMesh GetMesh(IVoxelHandle handle)
         {
             var conn = handle.Get4Connected().ToArray();
             return meshBuilder.CreateMesh(isConnectedType(conn[0]), isConnectedType(conn[1]), isConnectedType(conn[2]), isConnectedType(conn[3]));

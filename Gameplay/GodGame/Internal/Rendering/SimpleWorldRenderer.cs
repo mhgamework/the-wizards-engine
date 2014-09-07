@@ -5,19 +5,16 @@ using System.Drawing;
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
-using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
 using MHGameWork.TheWizards.Scattered._Engine;
-using System.Linq;
 
-namespace MHGameWork.TheWizards.GodGame.Internal
+namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
 {
     public class SimpleWorldRenderer : ISimulator
     {
         public const int RenderSize = 32;
-        private World world;
+        private Model.World world;
         private readonly IVoxelWorldRenderer voxelWorldRenderer;
 
         private SpotLight light1;
@@ -29,12 +26,12 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             get { return customVoxelsRenderer.VisibleCustomRenderables; }
         }
 
-        public SimpleWorldRenderer(World world)
+        public SimpleWorldRenderer(Model.World world)
             : this(world, new PerEntityVoxelWorldRenderer(world, new Point2(RenderSize, RenderSize)))
         {
 
         }
-        public SimpleWorldRenderer(World world, IVoxelWorldRenderer voxelWorldRenderer)
+        public SimpleWorldRenderer(Model.World world, IVoxelWorldRenderer voxelWorldRenderer)
         {
             this.world = world;
             this.voxelWorldRenderer = voxelWorldRenderer;

@@ -1,4 +1,5 @@
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
 {

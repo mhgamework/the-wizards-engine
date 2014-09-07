@@ -3,6 +3,8 @@ using System.Drawing;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.GodGame._Tests;
 using MHGameWork.TheWizards.Scattered.GameLogic.Services;
@@ -17,13 +19,13 @@ namespace MHGameWork.TheWizards.GodGame
     /// </summary>
     public class UIRenderer : ISimulator
     {
-        private readonly Internal.World world;
+        private readonly Internal.Model.World world;
         private readonly PlayerState localPlayerState;
         private readonly PlayerInputSimulator inputSim;
         private TargetingReticle reticle;
         private Textarea textarea;
 
-        public UIRenderer(Internal.World world, PlayerState localPlayerState, PlayerInputSimulator inputSim)
+        public UIRenderer(Internal.Model.World world, PlayerState localPlayerState, PlayerInputSimulator inputSim)
         {
             this.world = world;
             this.localPlayerState = localPlayerState;

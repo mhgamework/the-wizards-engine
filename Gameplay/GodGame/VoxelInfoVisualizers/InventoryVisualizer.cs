@@ -1,14 +1,13 @@
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using DirectX11;
 using MHGameWork.TheWizards.Engine.WorldRendering;
-using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.Scattered._Engine;
 using SlimDX;
 using System.Linq;
 
-namespace MHGameWork.TheWizards.GodGame.Types
+namespace MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers
 {
     /// <summary>
     /// Displays a max of 50 items from the inventory

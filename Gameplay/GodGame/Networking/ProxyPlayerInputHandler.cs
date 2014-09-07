@@ -1,4 +1,5 @@
 ﻿using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.Networking.Client;
 
 namespace MHGameWork.TheWizards.GodGame.Networking

@@ -2,6 +2,8 @@
 using System.IO;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.IO;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
@@ -12,9 +14,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal
     public class GodGameMain
     {
         private readonly WorldPersister persister;
-        public World World { get; private set; }
+        public Model.World World { get; private set; }
 
-        public GodGameMain(TWEngine engine, World world, WorldPersister persister, IEnumerable<IPlayerTool> playerInputs)
+        public GodGameMain(TWEngine engine, Model.World world, WorldPersister persister, IEnumerable<IPlayerTool> playerInputs)
         {
             this.persister = persister;
             World = world;

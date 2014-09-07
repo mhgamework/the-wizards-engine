@@ -1,26 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered._Engine;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
 using System.Linq;
 
-namespace MHGameWork.TheWizards.GodGame.Internal
+namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
 {
     public class ChunkedVoxelWorldRenderer : IVoxelWorldRenderer
     {
         public const int ChunkSize = 16;
-        private readonly World world;
+        private readonly Model.World world;
         private int numChunks;
 
         private Array2D<Entity> chunkEntities;
         private HashSet<Point2> dirtyChunks = new HashSet<Point2>();
 
-        public ChunkedVoxelWorldRenderer(World world)
+        public ChunkedVoxelWorldRenderer(Model.World world)
         {
             this.world = world;
 

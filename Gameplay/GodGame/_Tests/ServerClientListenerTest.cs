@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using DirectX11;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Networking;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
@@ -19,7 +20,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
     [TestFixture]
     public class ServerClientListenerTest
     {
-        private Internal.World world;
+        private Internal.Model.World world;
         private GameState gameState;
         private IPlayerInputHandler inputHandler;
         private NetworkedPlayerFactory npf;
@@ -27,7 +28,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [SetUp]
         public void Setup()
         {
-            world = new Internal.World(20, 10);
+            world = new Internal.Model.World(20, 10);
             gameState = new GameState(world);
 
             inputHandler = Substitute.For<IPlayerInputHandler>();

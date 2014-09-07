@@ -1,16 +1,17 @@
 ﻿using DirectX11;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.GodGame.Internal
+namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
 {
     public class PerEntityVoxelWorldRenderer : IVoxelWorldRenderer
     {
-        private readonly World world;
+        private readonly Model.World world;
 
-        public PerEntityVoxelWorldRenderer(World world, Point2 windowSize)
+        public PerEntityVoxelWorldRenderer(Model.World world, Point2 windowSize)
         {
             this.world = world;
             entities = new Array2D<Entity>(windowSize);

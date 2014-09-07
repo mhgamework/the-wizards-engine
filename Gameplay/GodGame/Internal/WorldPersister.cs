@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             this.itemFactory = itemFactory;
         }
 
-        public void Save(World world, FileInfo file)
+        public void Save(Model.World world, FileInfo file)
         {
             var serializer = createXmlSerializer();
             using (var fs = file.Create())
@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         }
 
-        public void Load(World world, FileInfo file)
+        public void Load(Model.World world, FileInfo file)
         {
             SerializedWorld sWorld;
 
