@@ -30,16 +30,16 @@ namespace MHGameWork.TheWizards.RTSTestCase1
             return CreateBoxWithTexture(texture, new SlimDX.Vector3(radius));
         }
 
-        public static IMesh CreateBoxColored(Color4 color, SlimDX.Vector3 dimensions)
+        public static IMesh CreateBoxColored(Color4 color, SlimDX.Vector3 radius)
         {
             var builder = new MeshBuilder();
-            builder.AddBox(-dimensions, dimensions);
+            builder.AddBox(-radius, radius);
             var mesh = builder.CreateMesh();
 
             mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseColor = color.xna();
             mesh.GetCoreData().Parts[0].MeshMaterial.ColoredMaterial = true;
 
-            addBoxCollisionData(dimensions, mesh);
+            addBoxCollisionData(radius, mesh);
 
             return mesh;
         }
