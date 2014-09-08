@@ -62,14 +62,14 @@ namespace MHGameWork.TheWizards.Engine
                 TW.Graphics.Mouse.CursorEnabled = !TW.Graphics.Mouse.CursorEnabled;
                 TW.Graphics.MouseInputDisabled = TW.Graphics.Mouse.CursorEnabled;
             }
-            
+
 
             updateMenu();
         }
 
         private void updateMenu()
         {
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.Backspace))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.Backspace) && TW.Graphics.Keyboard.IsKeyPressed(Key.RightControl))
             {
                 if (menuStack.Count == 0)
                     menuStack.Push(mainMenu);
@@ -100,7 +100,7 @@ namespace MHGameWork.TheWizards.Engine
         private void updateErrorArea()
         {
             if (data.ErrorArea == null) { data.ErrorArea = new Textarea(); }
-           
+
 
 
             data.ErrorArea.Visible = TW.Debug.LastException != null;
@@ -120,10 +120,10 @@ namespace MHGameWork.TheWizards.Engine
             data.ErrorArea.Text += "\n";
 
             Exception inner = TW.Debug.LastException;
-            while ( (inner = inner.InnerException) != null)
+            while ((inner = inner.InnerException) != null)
             {
                 data.ErrorArea.Text += inner.GetType().Name + " - " + inner.Message;
-                    //new string(inner.StackTrace.TakeWhile(c => c != '\n').ToArray());
+                //new string(inner.StackTrace.TakeWhile(c => c != '\n').ToArray());
 
             }
 
@@ -137,11 +137,11 @@ namespace MHGameWork.TheWizards.Engine
             }
 
             var t = data.ErrorArea;
-            var height = wrappedLines.Count * t.FontSize*2;
-            
+            var height = wrappedLines.Count * t.FontSize * 2;
+
             t.Position = new Vector2(10, 600 - 10 - height);
             t.Size = new Vector2(800 - 10 * 2, height);
-            t.BackgroundColor = new Color4(1, 1, 1,1);
+            t.BackgroundColor = new Color4(1, 1, 1, 1);
 
         }
 
@@ -160,14 +160,14 @@ namespace MHGameWork.TheWizards.Engine
             var lines = new List<string>();
 
             var oriLines = text.Split('\n');
-            
+
             foreach (var oriLine in oriLines)
             {
 
 
 
                 var words = oriLine.Split(' ');
-                
+
                 var currentLine = "";
 
                 foreach (var currentWord in words)
