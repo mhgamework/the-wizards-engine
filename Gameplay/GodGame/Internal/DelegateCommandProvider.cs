@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using MHGameWork.TheWizards.GodGame.Internal;
 using System.Linq;
 
-namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
+namespace MHGameWork.TheWizards.GodGame.Internal
 {
     public class DelegateCommandProvider : ICommandProvider
     {
@@ -41,25 +40,29 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
 
         public void addCommand(string name, Func<string> action)
         {
+            addCommand(name, 0, args => action());
+
+        }
+        public void addCommand(string name, Func<string, string> action)
+        {
+            addCommand(name, 1, args => action(args[0]));
+        }
+        public void addCommand(string name, Func<string, string, string> action)
+        {
+            addCommand(name, 2, args => action(args[0], args[1]));
+        }
+
+        public void addCommand(string name, int numArgs, Func<string[], string> action)
+        {
+            if (hasCommand(name)) throw new InvalidOperationException("Already a command with the name " + name);
             name = name.ToLower();
 
             commands[name] = args =>
             {
-                if (args.Length != 0) return "Invalid number of arguments, expected 0";
+                if (args.Length != numArgs) return "Invalid number of arguments, expected " + numArgs;
 
-                return action();
+                return action(args);
             };
-        }
-        public void addCommand(string name, Func<string, string> action)
-        {
-            name = name.ToLower();
-
-            commands[name] = args =>
-                {
-                    if (args.Length != 1) return "Invalid number of arguments, expected 1";
-
-                    return action(args[0]);
-                };
         }
 
         public IEnumerable<string> CommandNames { get { return commands.Keys; } }

@@ -12,19 +12,9 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
     {
         public AllCommandProvider(WorldPersister persister, Internal.Model.World world)
         {
-            addCommand("play", () => "Playing!");
-            addCommand("count", i => "I can count to " + i + "!");
+            addDummy();
 
-            addCommand("save", file =>
-                {
-                    persister.Save(world, TWDir.GameData.CreateChild("Saves\\GodGame").CreateFile(file + ".xml"));
-                    return "Saved world to " + "Saves\\GodGame\\" + file + ".xml";
-                });
-            addCommand("load", file =>
-            {
-                persister.Load(world, TWDir.GameData.CreateChild("Saves\\GodGame").CreateFile(file + ".xml"));
-                return "Loaded world to " + "Saves\\GodGame\\" + file + ".xml";
-            });
+            addPersistence(persister, world);
 
             addCommand("clearinfestation", () =>
                 {
@@ -37,7 +27,37 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
                     return "Cleared all infestation!";
                 });
 
+            addCommand("helpall", () =>
+            {
+                return "All Commands: " + string.Join(", ", CommandNames.ToArray());
+            });
+            addCommand("help", partialCommand =>
+                {
+                    return "Commands containing '" + partialCommand + "': " + string.Join(", ", CommandNames.Where(c => c.Contains(partialCommand)).ToArray());
+                });
+      
 
+
+        }
+
+        private void addDummy()
+        {
+            addCommand("play", () => "Playing!");
+            addCommand("count", i => "I can count to " + i + "!");
+        }
+
+        private void addPersistence(WorldPersister persister, Internal.Model.World world)
+        {
+            addCommand("save", file =>
+                {
+                    persister.Save(world, TWDir.GameData.CreateChild("Saves\\GodGame").CreateFile(file + ".xml"));
+                    return "Saved world to " + "Saves\\GodGame\\" + file + ".xml";
+                });
+            addCommand("load", file =>
+                {
+                    persister.Load(world, TWDir.GameData.CreateChild("Saves\\GodGame").CreateFile(file + ".xml"));
+                    return "Loaded world to " + "Saves\\GodGame\\" + file + ".xml";
+                });
         }
     }
 }
