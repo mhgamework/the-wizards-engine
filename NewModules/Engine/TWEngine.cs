@@ -179,9 +179,10 @@ namespace MHGameWork.TheWizards.Engine
 
         private void gameLoopStep()
         {
-            if (TW.Graphics.Keyboard.IsKeyReleased(Key.R) && TW.Graphics.Keyboard.IsKeyDown(Key.LeftControl)) ScheduleReload();
-            if (TW.Graphics.Keyboard.IsKeyReleased(Key.P) && TW.Graphics.Keyboard.IsKeyDown(Key.LeftControl)) debugTools.Show();
-            if (TW.Graphics.Keyboard.IsKeyReleased(Key.M) && TW.Graphics.Keyboard.IsKeyDown(Key.LeftControl)) debugTools.Profiler.TakeSnapshot();
+            if ((TW.Graphics.Keyboard.IsKeyReleased(Key.R) && TW.Graphics.Keyboard.IsKeyDown(Key.RightControl))
+                || TW.Graphics.Keyboard.IsKeyReleased(Key.F2)) ScheduleReload();
+            if (TW.Graphics.Keyboard.IsKeyReleased(Key.P) && TW.Graphics.Keyboard.IsKeyDown(Key.RightControl)) debugTools.Show();
+            if (TW.Graphics.Keyboard.IsKeyReleased(Key.M) && TW.Graphics.Keyboard.IsKeyDown(Key.RightControl)) debugTools.Profiler.TakeSnapshot();
             if (TW.Debug.NeedsReload) ScheduleReload();
             checkReload();
 
