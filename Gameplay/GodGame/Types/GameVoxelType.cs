@@ -163,9 +163,28 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public virtual IMesh GetMesh(IVoxelHandle gameVoxel)
         {
+            var tmp = mesh;
             if (datavalueMeshes.ContainsKey(gameVoxel.Data.DataValue))
-                return datavalueMeshes[gameVoxel.Data.DataValue];
-            return mesh;
+                tmp = datavalueMeshes[gameVoxel.Data.DataValue];
+
+            if (tmp != null)
+            {
+                var merged = GetDefaultGroundMesh(gameVoxel.Data.Height);
+                if (merged == null) return tmp;
+                MeshBuilder.AppendMeshTo(tmp, merged, Matrix.Identity);
+                return merged;
+            }
+            return tmp;
+        }
+
+        public IMesh GetDefaultGroundMesh(float height)
+        {
+            var meshheight = height * 0.1f;
+            if (meshheight <= 0)
+                return null;
+
+            var ret = UtilityMeshes.CreateBoxColored(Color.SaddleBrown, new Vector3(0.5f, meshheight, 0.5f));
+            return MeshBuilder.Transform(ret, Matrix.Translation(0, -meshheight - 0.1f, 0));
         }
 
         public IMesh GetDataValueMesh(int dataValue)

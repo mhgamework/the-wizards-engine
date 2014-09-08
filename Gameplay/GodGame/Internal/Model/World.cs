@@ -39,6 +39,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         public BoundingBox GetBoundingBox(Point2 gameVoxel)
         {
             var botLeft = Vector2.Modulate(gameVoxel, VoxelSize).ToXZ(0);
+            botLeft.Y += GetVoxel(gameVoxel).Data.Height;
             return new BoundingBox(botLeft, botLeft + VoxelSize.ToXZ(0.1f));
         }
 
