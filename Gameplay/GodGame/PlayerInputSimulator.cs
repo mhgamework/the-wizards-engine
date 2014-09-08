@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         //public IPlayerTool ActiveHandler { get; private set; }
 
-        public PlayerInputSimulator(Internal.Model.World world, IPlayerInputHandler inputHandler,SimpleWorldRenderer renderer)
+        public PlayerInputSimulator(Internal.Model.World world, IPlayerInputHandler inputHandler, SimpleWorldRenderer renderer)
         {
             this.world = world;
             this.inputHandler = inputHandler;
@@ -26,9 +26,12 @@ namespace MHGameWork.TheWizards.GodGame
             this.renderer = renderer;
         }
 
+        public bool UserInputDisabled { get; set; }
+
 
         public void Simulate()
         {
+            if (UserInputDisabled) return;
             if (TW.Graphics.Mouse.RelativeScrollWheel < 0 || TW.Graphics.Keyboard.IsKeyPressed(Key.UpArrow))
                 inputHandler.OnPreviousTool();
             if (TW.Graphics.Mouse.RelativeScrollWheel > 0 || TW.Graphics.Keyboard.IsKeyPressed(Key.DownArrow))
@@ -38,7 +41,7 @@ namespace MHGameWork.TheWizards.GodGame
                 inputHandler.OnSave();
 
             if (trySimulateUIControls()) return;
-            
+
             var target = GetTargetedVoxel();
             if (target == null) return;
 

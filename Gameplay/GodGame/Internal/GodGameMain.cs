@@ -2,6 +2,7 @@
 using System.IO;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.GodGame.DeveloperCommands;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.IO;
@@ -41,6 +42,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             var playerInputSimulator = new PlayerInputSimulator(world, playerInputHandler, simpleWorldRenderer);
             var tickSimulator = new TickSimulator(world);
             var uiRenderer = new UIRenderer(world, localPlayerState, playerInputSimulator);
+            var developerConsoleSimulator = new DeveloperConsoleSimulator(playerInputSimulator, new AllCommandProvider(persister,world));
             var clearStateChangesSimulator = new ClearStateChangesSimulator(gameState);
             var worldRenderingSimulator = new WorldRenderingSimulator();
 
@@ -49,6 +51,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             engine.AddSimulator(playerInputSimulator); 
             engine.AddSimulator(tickSimulator);
             engine.AddSimulator(uiRenderer);
+            engine.AddSimulator(developerConsoleSimulator);
             engine.AddSimulator(simpleWorldRenderer);
             engine.AddSimulator(clearStateChangesSimulator);
             engine.AddSimulator(worldRenderingSimulator);

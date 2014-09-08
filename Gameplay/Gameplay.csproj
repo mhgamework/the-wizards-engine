@@ -189,6 +189,9 @@
   <ItemGroup>
     <Compile Include="Engine\WorldRendering\FastTextareaUpdater.cs" />
     <Compile Include="Engine\WorldRendering\ITextareaUpdater.cs" />
+    <Compile Include="GodGame\DeveloperCommands\AllCommandProvider.cs" />
+    <Compile Include="GodGame\Internal\DelegateCommandProvider.cs" />
+    <Compile Include="GodGame\Internal\DeveloperConsoleSimulator.cs" />
     <Compile Include="GodGame\Internal\DeveloperConsoleUI.cs" />
     <Compile Include="GodGame\Internal\DirectInputTextBox.cs" />
     <Compile Include="GodGame\Internal\ICommandProvider.cs" />
