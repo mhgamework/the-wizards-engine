@@ -190,6 +190,8 @@
     <Compile Include="Engine\WorldRendering\FastTextareaUpdater.cs" />
     <Compile Include="Engine\WorldRendering\ITextareaUpdater.cs" />
     <Compile Include="GodGame\Internal\DeveloperConsoleUI.cs" />
+    <Compile Include="GodGame\Internal\DirectInputTextBox.cs" />
+    <Compile Include="GodGame\Internal\ICommandProvider.cs" />
     <Compile Include="GodGame\Internal\Rendering\ChunkedVoxelWorldRenderer.cs" />
     <Compile Include="GodGame\Internal\GodGameClient.cs" />
     <Compile Include="GodGame\Internal\Model\GameState.cs" />
@@ -246,6 +248,7 @@
     <Compile Include="GodGame\Types\GameVoxelType.cs" />
     <Compile Include="GodGame\VoxelData.cs" />
     <Compile Include="GodGame\Networking\NetworkConnectorClient.cs" />
+    <Compile Include="GodGame\_Tests\DirectInputTextboxTest.cs" />
     <Compile Include="GodGame\_Tests\DeveloperConsoleTest.cs" />
     <Compile Include="GodGame\_Tests\NetworkedPlayerInputTest.cs" />
     <Compile Include="GodGame\_Tests\GodGameMainTest.cs" />
