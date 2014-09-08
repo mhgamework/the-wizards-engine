@@ -2,11 +2,13 @@
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using System.Linq;
 using SlimDX;
+using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
     public class DeveloperConsoleUI
     {
+        private readonly ICommandProvider provider;
         private const int visibleLogLines = 10;
         private Textarea textarea = new Textarea();
 
@@ -21,6 +23,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         public DeveloperConsoleUI(ICommandProvider provider)
         {
+            this.provider = provider;
             for (int i = 0; i < visibleLogLines; i++)
             {
                 WriteLine("");
@@ -47,12 +50,32 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             textBox.ProcessUserInput(TW.Graphics.Keyboard);
 
+            updateTextarea();
+
+            tryExecuteCommand();
+
+        }
+
+        private void tryExecuteCommand()
+        {
+            if (!TW.Graphics.Keyboard.IsKeyPressed(Key.Return)) return;
+            if (Text == "") return;
+
+            var output = provider.Execute(Text);
+
+            output.Split('\n').ForEach(WriteLine);
+
+            Text = "";
+        }
+
+        private void updateTextarea()
+        {
             textarea.Text = "";
             textarea.Text += lines.Reverse().Take(visibleLogLines).Reverse().Aggregate((acc, el) => acc + "\n" + el) + "\n";
 
             textarea.Text += ">>> " + textBox.Text;
-
         }
+
 
         public void WriteLine(string line)
         {

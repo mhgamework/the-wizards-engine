@@ -72,58 +72,6 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         }
 
 
-        /// <summary>
-        /// Attempt to correctly convert directinput to ascii, but no success
-        /// </summary>
-        [Test]
-        public void TestPressKeys()
-        {
-            engine.AddSimulator(new BasicSimulator(() =>
-            {
-                TW.Graphics.Keyboard.PressedKeys.ForEach(k =>
-                    {
-                        string directInputName = Enum.GetName(typeof(Key), k);
-                        consoleUi.WriteLine("RawKey: " + directInputName + " ----- Code: " + (uint)k + " ----- MappedKey: " + convertKey((uint)k));
-                    });
-            }));
-
-        }
-
-        /// <summary>
-        /// Doesnt seem to work yet!
-        /// </summary>
-        /// <param name="scancode"></param>
-        /// <returns></returns>
-        private static string convertKey(uint scancode)
-        {
-            var layout = GetKeyboardLayout(0);
-            var State = new byte[256];
-
-            if (GetKeyboardState(State) == false)
-                return "Unkown";
-            var vk = MapVirtualKeyEx(scancode, 1, layout);
-
-            var builder = new StringBuilder();
-
-            ToAsciiEx(vk, scancode, State, builder, 0, layout);
-
-            return builder.ToString();
-        }
-
-        [DllImport("user32.dll")]
-        static extern IntPtr GetKeyboardLayout(uint idThread);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GetKeyboardState(byte[] lpKeyState);
-
-        [DllImport("user32.dll")]
-        private static extern uint MapVirtualKeyEx(uint uCode, uint uMapType, IntPtr dwhkl);
-
-        [DllImport("user32.dll")]
-        static extern int ToAsciiEx(uint uVirtKey, uint uScanCode, byte[] lpKeyState,
-           [Out] StringBuilder lpChar, uint uFlags, IntPtr hkl);
-
         private ICommandProvider createCommandProvider()
         {
             return new TestCommandProvider();
@@ -133,7 +81,13 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         {
             public string Execute(string command)
             {
-                return "Unknown command";
+                var parts = command.Split(' ');
+                if (parts.Length > 0 && parts[0].ToLower() == "play")
+                    return ">" + command + "\nPlaying the wizards!!!";
+
+                
+
+                return ">" + command + "\nUnknown command '" + command + "'";
             }
 
             public string AutoComplete(string partialCommand)
