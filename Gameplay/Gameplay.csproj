@@ -187,6 +187,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\WorldRendering\FastTextareaUpdater.cs" />
+    <Compile Include="Engine\WorldRendering\ITextareaUpdater.cs" />
     <Compile Include="GodGame\Internal\DeveloperConsoleUI.cs" />
     <Compile Include="GodGame\Internal\Rendering\ChunkedVoxelWorldRenderer.cs" />
     <Compile Include="GodGame\Internal\GodGameClient.cs" />
