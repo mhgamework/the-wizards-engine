@@ -85,7 +85,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         public DirectInputTextBox()
         {
-
+          
         }
         public void ProcessUserInput(TWKeyboard keyboard)
         {
@@ -117,26 +117,19 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         private bool isCharacter(Key arg)
         {
-            var name = Enum.GetName(typeof(Key), arg);
-            if ("abcdefghijklmnopqrstuvwxyz".ToUpper().Contains(name)) return true;
-            if (name.Contains("NumberPad"))
-            {
-                var digit = name.Substring("NumberPad".Length);
-                if ("1234567890".Contains(digit)) return true;
-                return false;
-            }
-            if (name.Contains("D"))
-            {
-                var digit = name.Substring("D".Length);
-                if ("1234567890".Contains(digit)) return true;
-                return false;
-            }
-            if (arg == Key.Space) return true;
-            return false;
+            return toCharacter(arg) != null;
         }
 
         private string toCharacter(Key arg)
         {
+            if (arg == Key.Semicolon) arg = Key.M;
+            else if (arg == Key.M) arg = Key.Semicolon;
+            else if (arg == Key.A) arg = Key.Q;
+            else if (arg == Key.Q) arg = Key.A;
+            else if (arg == Key.Z) arg = Key.W;
+            else if (arg == Key.W) arg = Key.Z;
+            
+
             var name = Enum.GetName(typeof(Key), arg);
             if ("abcdefghijklmnopqrstuvwxyz".ToUpper().Contains(name))
                 return isShiftPressed() ? name.ToUpper() : name.ToLower();
@@ -144,14 +137,33 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             {
                 var digit = name.Substring("NumberPad".Length);
                 if ("1234567890".Contains(digit)) return digit;
-                return null;
             }
             if (name.Contains("D"))
             {
                 var digit = name.Substring("D".Length);
-                if ("1234567890".Contains(digit)) return digit;
-                return null;
+                if ("1234567890".Contains(digit) && isShiftPressed()) return digit;
             }
+            if (arg == Key.D5&& !isShiftPressed())
+                return "(";
+            if (arg == Key.Minus&& !isShiftPressed())
+                return ")";
+            if (arg == Key.Comma && isShiftPressed())
+                return ".";
+            if (arg == Key.Semicolon && !isShiftPressed())
+                return ",";
+
+            if (arg == Key.NumberPadPeriod)
+                return ".";
+            if (arg == Key.NumberPadPlus)
+                return "+";
+            if (arg == Key.NumberPadMinus)
+                return "-";
+            if (arg == Key.NumberPadStar)
+                return "*";
+            if (arg == Key.NumberPadSlash)
+                return "/";
+            if (arg == Key.D8 && !isShiftPressed())
+                return "!";
             if (arg == Key.Space) return " ";
             return null;
         }

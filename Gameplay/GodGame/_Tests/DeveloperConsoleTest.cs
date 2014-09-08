@@ -39,6 +39,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
 
             }));
+
+            TW.Graphics.SpectaterCamera.EnableUserInput = false;
         }
 
         [Test]
