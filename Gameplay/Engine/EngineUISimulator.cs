@@ -69,7 +69,7 @@ namespace MHGameWork.TheWizards.Engine
 
         private void updateMenu()
         {
-            if (TW.Graphics.Keyboard.IsKeyPressed(Key.Backspace) && TW.Graphics.Keyboard.IsKeyPressed(Key.RightControl))
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.Backspace) && TW.Graphics.Keyboard.IsKeyDown(Key.RightControl))
             {
                 if (menuStack.Count == 0)
                     menuStack.Push(mainMenu);
