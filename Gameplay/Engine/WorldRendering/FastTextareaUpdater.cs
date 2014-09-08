@@ -29,8 +29,11 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
                 var pxSize = a.FontSize/12f*16f;
 
+                var txt = a.Text ?? ""; // Causes memory exception when string is null, could also be fixed in the C++ wrapepr
+
                 TW.Graphics.TextureRenderer.DrawColor(a.BackgroundColor, a.Position, a.Size);
-                fontWrapper.Draw(a.Text, pxSize , (int)a.Position.X, (int)a.Position.Y, a.Color);
+                
+                fontWrapper.Draw(txt, pxSize , (int)a.Position.X, (int)a.Position.Y, a.Color);
             }
         }
 
