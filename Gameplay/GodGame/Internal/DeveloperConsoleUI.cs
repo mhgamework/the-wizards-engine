@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MHGameWork.TheWizards.DirectX11.Input;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using System.Linq;
+using SlimDX;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
@@ -28,6 +29,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal
                 WriteLine("");
             }
             Hide();
+
+            textarea.BackgroundColor = new Color4(0.5f, 0.5f, 0.5f, 0.5f);
+            textarea.Size = new Vector2(TW.Graphics.Form.Form.ClientSize.Width, 200);
         }
         public void Show()
         {

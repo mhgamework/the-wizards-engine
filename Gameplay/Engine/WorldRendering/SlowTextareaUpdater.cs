@@ -36,6 +36,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
                 var pxSize = a.FontSize/12f*16f;
 
+                TW.Graphics.TextureRenderer.DrawColor(a.BackgroundColor, a.Position, a.Size);
                 fontWrapper.Draw(a.Text, pxSize , (int)a.Position.X, (int)a.Position.Y, a.Color);
             }
         }
