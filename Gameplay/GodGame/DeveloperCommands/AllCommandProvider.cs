@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
 {
     public class AllCommandProvider : DelegateCommandProvider
     {
-        public AllCommandProvider(WorldPersister persister, Internal.Model.World world)
+        public AllCommandProvider(WorldPersisterService persister, Internal.Model.World world)
         {
             addDummy();
 
@@ -46,7 +46,7 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
             addCommand("count", i => "I can count to " + i + "!");
         }
 
-        private void addPersistence(WorldPersister persister, Internal.Model.World world)
+        private void addPersistence(WorldPersisterService persister, Internal.Model.World world)
         {
             addCommand("save", file =>
                 {

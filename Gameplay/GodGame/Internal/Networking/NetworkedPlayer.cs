@@ -2,6 +2,9 @@
 
 namespace MHGameWork.TheWizards.GodGame.Networking
 {
+    /// <summary>
+    /// Holds the TCP/UDP network related objects for a player.
+    /// </summary>
     public class NetworkedPlayer
     {
         public NetworkPlayerInputForwarder NetworkPlayerInputForwarder { get; private set; }

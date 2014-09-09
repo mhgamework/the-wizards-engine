@@ -30,7 +30,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         private ContainerBuilder builder;
         private Internal.Model.World world;
         private Textarea textarea;
-        private WorldPersister worldPersister;
+        private WorldPersisterService worldPersister;
 
         [SetUp]
         public void Setup()
@@ -51,7 +51,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             }
 
             world = new Internal.Model.World(200, 10);
-            worldPersister = new WorldPersister(null, null);
+            worldPersister = new WorldPersisterService(null, null);
 
             builder.RegisterInstance(world);
             builder.RegisterInstance(worldPersister);

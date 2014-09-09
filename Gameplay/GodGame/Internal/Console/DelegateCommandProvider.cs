@@ -4,6 +4,10 @@ using System.Linq;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
+    /// <summary>
+    /// A command provider for the console that allows adding commands using delegates.
+    /// Each command is configured to have a fixed number of arguments.
+    /// </summary>
     public class DelegateCommandProvider : ICommandProvider
     {
         private Dictionary<string, Func<string[], string>> commands = new Dictionary<string, Func<string[], string>>();

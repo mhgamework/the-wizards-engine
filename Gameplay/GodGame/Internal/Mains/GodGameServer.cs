@@ -16,18 +16,21 @@ using MHGameWork.TheWizards.Rendering;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
+    /// <summary>
+    /// The server listens to clients and simulates a gamestate, receiving client input and sending updates.
+    /// </summary>
     public class GodGameServer
     {
         //public World World { get; private set; }
-        public TickSimulator tickSimulator;
+        public WorldSimulationService WorldSimulationService;
         private ServerPlayerListener serverPlayerListener;
-        private ClearStateChangesSimulator clearStateChangesSimulator;
+        private ClearGameStateChangesService clearStateChangesSimulator;
         private NetworkConnectorServer networkConnectorServer;
         public int TcpPort { get; private set; }
 
-        public GodGameServer(TickSimulator tickSimulator, NetworkedPlayerFactory networkedPlayerFactory, ClearStateChangesSimulator clearStateChangesSimulator)
+        public GodGameServer(WorldSimulationService WorldSimulationService, NetworkedPlayerFactory networkedPlayerFactory, ClearGameStateChangesService clearStateChangesSimulator)
         {
-            this.tickSimulator = tickSimulator;
+            this.WorldSimulationService = WorldSimulationService;
             this.clearStateChangesSimulator = clearStateChangesSimulator;
 
 
@@ -54,7 +57,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         {
             updateConnectedClients();
             processClientInputs();
-            tickSimulator.Simulate();
+            WorldSimulationService.Simulate();
             sendGameStateUpdates();
             clearStateChangesSimulator.Simulate();
 

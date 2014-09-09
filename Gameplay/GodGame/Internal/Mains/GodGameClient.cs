@@ -16,26 +16,30 @@ using MHGameWork.TheWizards.Rendering;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
+    /// <summary>
+    /// Represents a game client which communicates with a server over network
+    /// The client sends input to server and receives updates. The received gamestate is rendered
+    /// </summary>
     public class GodGameClient
     {
-        private PlayerInputSimulator playerInputSimulator;
-        private UIRenderer uiRenderer;
-        private DeveloperConsoleSimulator developerConsoleSimulator;
-        private ClearStateChangesSimulator clearStateChangesSimulator;
+        private UserInputProcessingService userInputProcessingService;
+        private UIRenderingService uiRenderingService;
+        private DeveloperConsoleService developerConsoleService;
+        private ClearGameStateChangesService clearStateChangesSimulator;
         private WorldRenderingSimulator worldRenderingSimulator;
-        private SimpleWorldRenderer simpleWorldRenderer;
+        private WorldRenderingService simpleWorldRenderer;
         private readonly NetworkConnectorClient networkConnectorClient;
 
-        public GodGameClient(PlayerInputSimulator playerInputSimulator, 
-            UIRenderer uiRenderer, 
-            DeveloperConsoleSimulator developerConsoleSimulator, 
-            ClearStateChangesSimulator clearStateChangesSimulator, 
+        public GodGameClient(UserInputProcessingService userInputProcessingService, 
+            UIRenderingService uiRenderingService, 
+            DeveloperConsoleService developerConsoleService, 
+            ClearGameStateChangesService clearStateChangesSimulator, 
             WorldRenderingSimulator worldRenderingSimulator, 
-            SimpleWorldRenderer simpleWorldRenderer, NetworkConnectorClient networkConnectorClient)
+            WorldRenderingService simpleWorldRenderer, NetworkConnectorClient networkConnectorClient)
         {
-            this.playerInputSimulator = playerInputSimulator;
-            this.uiRenderer = uiRenderer;
-            this.developerConsoleSimulator = developerConsoleSimulator;
+            this.userInputProcessingService = userInputProcessingService;
+            this.uiRenderingService = uiRenderingService;
+            this.developerConsoleService = developerConsoleService;
             this.clearStateChangesSimulator = clearStateChangesSimulator;
             this.worldRenderingSimulator = worldRenderingSimulator;
             this.simpleWorldRenderer = simpleWorldRenderer;
@@ -49,9 +53,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         }
         public void Tick()
         {
-            playerInputSimulator.Simulate();
-            uiRenderer.Simulate();
-            developerConsoleSimulator.Simulate();
+            userInputProcessingService.Simulate();
+            uiRenderingService.Simulate();
+            developerConsoleService.Simulate();
             simpleWorldRenderer.Simulate();
             clearStateChangesSimulator.Simulate();
             worldRenderingSimulator.Simulate();

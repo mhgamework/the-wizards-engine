@@ -10,15 +10,19 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame
 {
-    public class PlayerInputSimulator : ISimulator
+    /// <summary>
+    /// Service responsible for converting raw key input into player commands
+    /// Passes raw input to a IPlayerInputHandler
+    /// </summary>
+    public class UserInputProcessingService : ISimulator
     {
         private Internal.Model.World world;
         private IPlayerInputHandler inputHandler;
-        private readonly SimpleWorldRenderer renderer;
+        private readonly WorldRenderingService renderer;
 
         //public IPlayerTool ActiveHandler { get; private set; }
 
-        public PlayerInputSimulator(Internal.Model.World world, IPlayerInputHandler inputHandler, SimpleWorldRenderer renderer)
+        public UserInputProcessingService(Internal.Model.World world, IPlayerInputHandler inputHandler, WorldRenderingService renderer)
         {
             this.world = world;
             this.inputHandler = inputHandler;

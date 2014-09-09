@@ -10,14 +10,15 @@ using MHGameWork.TheWizards.IO;
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
     /// <summary>
-    /// Runs the godgame
+    /// Runs the godgame in offline mode, that is, without using the networking layer. 
+    /// The offline game uses a single 'gamestate' instead of a server and client gamestate
     /// </summary>
     public class GodGameOffline
     {
-        private readonly WorldPersister persister;
+        private readonly WorldPersisterService persister;
         public Model.World World { get; private set; }
 
-        public GodGameOffline(TWEngine engine, Model.World world, WorldPersister persister, IEnumerable<IPlayerTool> playerInputs)
+        public GodGameOffline(TWEngine engine, Model.World world, WorldPersisterService persister, IEnumerable<IPlayerTool> playerInputs)
         {
             this.persister = persister;
             World = world;
@@ -31,7 +32,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
 
             // Rendering
-            var simpleWorldRenderer = new SimpleWorldRenderer(world, new ChunkedVoxelWorldRenderer(world));
+            var simpleWorldRenderer = new WorldRenderingService(world, new ChunkedVoxelWorldRenderer(world));
 
             // Input
 
@@ -39,11 +40,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             // Simulators
 
-            var playerInputSimulator = new PlayerInputSimulator(world, playerInputHandler, simpleWorldRenderer);
-            var tickSimulator = new TickSimulator(world);
-            var uiRenderer = new UIRenderer(world, localPlayerState, playerInputSimulator);
-            var developerConsoleSimulator = new DeveloperConsoleSimulator(playerInputSimulator, new AllCommandProvider(persister,world));
-            var clearStateChangesSimulator = new ClearStateChangesSimulator(gameState);
+            var playerInputSimulator = new UserInputProcessingService(world, playerInputHandler, simpleWorldRenderer);
+            var tickSimulator = new WorldSimulationService(world);
+            var uiRenderer = new UIRenderingService(world, localPlayerState, playerInputSimulator);
+            var developerConsoleSimulator = new DeveloperConsoleService(playerInputSimulator, new AllCommandProvider(persister,world));
+            var clearStateChangesSimulator = new ClearGameStateChangesService(gameState);
             var worldRenderingSimulator = new WorldRenderingSimulator();
 
             //TODO: these simulators form some kind of configuration, so maybe try splitting them into configuration and features

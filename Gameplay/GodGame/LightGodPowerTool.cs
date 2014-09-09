@@ -5,10 +5,10 @@ using MHGameWork.TheWizards.GodGame.Types;
 
 namespace MHGameWork.TheWizards.GodGame
 {
-    public class LightGodPowerInputHandler : IPlayerTool
+    public class LightGodPowerTool : IPlayerTool
     {
 
-        public LightGodPowerInputHandler()
+        public LightGodPowerTool()
         {
         }
 

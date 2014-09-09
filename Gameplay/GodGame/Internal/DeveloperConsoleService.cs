@@ -4,14 +4,17 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
-    public class DeveloperConsoleSimulator : ISimulator
+    /// <summary>
+    /// Responsible for enabling/disabling and updating the developer console
+    /// </summary>
+    public class DeveloperConsoleService : ISimulator
     {
-        private readonly PlayerInputSimulator inputSimulator;
+        private readonly UserInputProcessingService inputProcessingService;
         private DeveloperConsoleUI console;
         private bool consoleVisible = false;
-        public DeveloperConsoleSimulator(PlayerInputSimulator inputSimulator, ICommandProvider provider)
+        public DeveloperConsoleService(UserInputProcessingService inputProcessingService, ICommandProvider provider)
         {
-            this.inputSimulator = inputSimulator;
+            this.inputProcessingService = inputProcessingService;
             console = new DeveloperConsoleUI(provider);
         }
 
@@ -25,7 +28,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
                 else
                     console.Hide();
 
-                inputSimulator.UserInputDisabled = consoleVisible;
+                inputProcessingService.UserInputDisabled = consoleVisible;
                 TW.Graphics.SpectaterCamera.EnableUserInput = !consoleVisible;
 
                 console.Update();

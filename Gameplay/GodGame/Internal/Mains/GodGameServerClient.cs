@@ -20,6 +20,10 @@ using MHGameWork.TheWizards.Rendering;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
+    /// <summary>
+    /// The serverclient combines a server and a client into a single window. This means that there exist 2 gamestates in parallel.
+    /// Should be extended to allow remote connecting via console etc.
+    /// </summary>
     public class GodGameServerClient
     {
 
@@ -40,8 +44,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             bServer.RegisterInstance(createWorld()).SingleInstance();
             bClient.RegisterInstance(createWorld()).SingleInstance();
 
-            bServer.RegisterInstance(new WorldPersister(null, null)).SingleInstance();
-            bClient.RegisterInstance(new WorldPersister(null, null)).SingleInstance();
+            bServer.RegisterInstance(new WorldPersisterService(null, null)).SingleInstance();
+            bClient.RegisterInstance(new WorldPersisterService(null, null)).SingleInstance();
 
 
             bServer.RegisterType<CreateLandTool>().As<IPlayerTool>().SingleInstance();

@@ -15,12 +15,12 @@ namespace MHGameWork.TheWizards.GodGame
     {
         private readonly IEnumerable<IPlayerTool> handlers;
         private Internal.Model.World world;
-        private readonly WorldPersister worldPersister;
+        private readonly WorldPersisterService worldPersister;
         private readonly PlayerState player;
 
         public IPlayerTool ActiveHandler { get { return player.ActiveTool; } private set { player.ActiveTool = value; } }
 
-        public PlayerInputHandler(IEnumerable<IPlayerTool> handlers, Internal.Model.World world, WorldPersister worldPersister, PlayerState player)
+        public PlayerInputHandler(IEnumerable<IPlayerTool> handlers, Internal.Model.World world, WorldPersisterService worldPersister, PlayerState player)
         {
             this.handlers = handlers.ToArray();
             this.world = world;

@@ -15,17 +15,18 @@ using SlimDX;
 namespace MHGameWork.TheWizards.GodGame
 {
     /// <summary>
+    /// Responsible for rendering the UI for a local player
     /// TODO: targetingreticle not working
     /// </summary>
-    public class UIRenderer : ISimulator
+    public class UIRenderingService : ISimulator
     {
         private readonly Internal.Model.World world;
         private readonly PlayerState localPlayerState;
-        private readonly PlayerInputSimulator inputSim;
+        private readonly UserInputProcessingService inputSim;
         private TargetingReticle reticle;
         private Textarea textarea;
 
-        public UIRenderer(Internal.Model.World world, PlayerState localPlayerState, PlayerInputSimulator inputSim)
+        public UIRenderingService(Internal.Model.World world, PlayerState localPlayerState, UserInputProcessingService inputSim)
         {
             this.world = world;
             this.localPlayerState = localPlayerState;

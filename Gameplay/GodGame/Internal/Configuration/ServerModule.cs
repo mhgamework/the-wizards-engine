@@ -8,6 +8,9 @@ using MHGameWork.TheWizards.GodGame.Networking;
 
 namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
 {
+    /// <summary>
+    /// Configures components for running the game as a networked server
+    /// </summary>
     public class ServerModule : Module
     {
         protected override void Load(ContainerBuilder builder)
@@ -17,8 +20,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
 
             builder.RegisterType<GameState>().SingleInstance();
 
-            builder.RegisterType<TickSimulator>().SingleInstance();
-            builder.RegisterType<ClearStateChangesSimulator>().SingleInstance();
+            builder.RegisterType<WorldSimulationService>().SingleInstance();
+            builder.RegisterType<ClearGameStateChangesService>().SingleInstance();
             builder.RegisterType<PlayerState>().SingleInstance();
 
             builder.Register(createNetworkedPlayerFactory).SingleInstance();

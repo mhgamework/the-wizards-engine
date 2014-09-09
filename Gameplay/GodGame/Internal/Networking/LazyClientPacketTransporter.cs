@@ -4,6 +4,12 @@ using MHGameWork.TheWizards.Networking.Client;
 
 namespace MHGameWork.TheWizards.GodGame.Networking
 {
+    /// <summary>
+    /// A clientpackettransporter which redirects calls to a proxied transporter. This class can be used if the
+    /// proxy transporter is to connected after it is dependency injected
+    /// TODO: probably somewhat haxor
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class LazyClientPacketTransporter<T> : IClientPacketTransporter<T> where T : INetworkPacket
     {
         private readonly Func<ClientPacketManagerNetworked.ClientPacketTransporterNetworked<T>> target;

@@ -11,7 +11,10 @@ using MHGameWork.TheWizards.Scattered._Engine;
 
 namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
 {
-    public class SimpleWorldRenderer : ISimulator
+    /// <summary>
+    /// Responsible for rendering a voxel world
+    /// </summary>
+    public class WorldRenderingService : ISimulator
     {
         public const int RenderSize = 32;
         private Model.World world;
@@ -26,12 +29,12 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
             get { return customVoxelsRenderer.VisibleCustomRenderables; }
         }
 
-        public SimpleWorldRenderer(Model.World world)
+        public WorldRenderingService(Model.World world)
             : this(world, new PerEntityVoxelWorldRenderer(world, new Point2(RenderSize, RenderSize)))
         {
 
         }
-        public SimpleWorldRenderer(Model.World world, IVoxelWorldRenderer voxelWorldRenderer)
+        public WorldRenderingService(Model.World world, IVoxelWorldRenderer voxelWorldRenderer)
         {
             this.world = world;
             this.voxelWorldRenderer = voxelWorldRenderer;

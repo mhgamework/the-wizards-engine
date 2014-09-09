@@ -45,7 +45,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             var world = new Internal.Model.World(100, 10);
             buildDemoWorld(world);
 
-            var worldPersister = new WorldPersister(getTypeFromName, getItemFromName);
+            var worldPersister = new WorldPersisterService(getTypeFromName, getItemFromName);
 
             var ret = new GodGameOffline(EngineFactory.CreateEngine(), world, worldPersister, createPlayerInputs(world));
 
@@ -72,7 +72,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             var simpleWorldRenderer = new SimpleWorldRenderer(world);
             var ret = new GodGameOffline(EngineFactory.CreateEngine(),
                 world,
-                new PlayerInputSimulator(createPlayerInputs(world).ToArray(), world, worldPersister, simpleWorldRenderer),
+                new UserInputProcessingService(createPlayerInputs(world).ToArray(), world, worldPersister, simpleWorldRenderer),
                 worldPersister,
                 simpleWorldRenderer);
 
@@ -112,7 +112,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             yield return createTypeInput(GameVoxelType.Woodworker);
             yield return createTypeInput(GameVoxelType.Quarry);
             yield return createTypeInput(GameVoxelType.Grinder);
-            yield return new LightGodPowerInputHandler();
+            yield return new LightGodPowerTool();
         }
 
         private static IPlayerTool createTypeInput(GameVoxelType type, string name)

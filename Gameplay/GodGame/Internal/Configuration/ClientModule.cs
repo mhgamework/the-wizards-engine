@@ -7,6 +7,9 @@ using MHGameWork.TheWizards.GodGame.Networking;
 
 namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
 {
+    /// <summary>
+    /// Configures components for running the game as a networked client
+    /// </summary>
     public class ClientModule:Module
     {
         protected override void Load(ContainerBuilder builder)
@@ -15,11 +18,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             builder.RegisterType<WorldRenderingSimulator>().SingleInstance();
 
 
-            builder.RegisterType<PlayerInputSimulator>().SingleInstance();
-            builder.RegisterType<UIRenderer>().SingleInstance();
-            builder.RegisterType<DeveloperConsoleSimulator>().SingleInstance();
-            builder.RegisterType<ClearStateChangesSimulator>().SingleInstance();
-            builder.RegisterType<SimpleWorldRenderer>().SingleInstance();
+            builder.RegisterType<UserInputProcessingService>().SingleInstance();
+            builder.RegisterType<UIRenderingService>().SingleInstance();
+            builder.RegisterType<DeveloperConsoleService>().SingleInstance();
+            builder.RegisterType<ClearGameStateChangesService>().SingleInstance();
+            builder.RegisterType<WorldRenderingService>().SingleInstance();
 
             builder.RegisterType<GameState>().SingleInstance();
             builder.RegisterType<PlayerState>().SingleInstance();

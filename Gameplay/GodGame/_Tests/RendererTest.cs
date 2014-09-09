@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         {
             var world = createTestWorld();
 
-            engine.AddSimulator(new SimpleWorldRenderer(world));
+            engine.AddSimulator(new WorldRenderingService(world));
             engine.AddSimulator(new WorldRenderingSimulator());
         }
 

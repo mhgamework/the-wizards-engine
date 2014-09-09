@@ -14,12 +14,12 @@ namespace MHGameWork.TheWizards.GodGame.Internal
     /// <summary>
     /// Converts the world to and from an xml serializable class structure
     /// </summary>
-    public class WorldPersister
+    public class WorldPersisterService
     {
         private Func<string, GameVoxelType> typeFactory;
         private Func<string, ItemType> itemFactory;
 
-        public WorldPersister(Func<string, GameVoxelType> typeFactory, Func<string, ItemType> itemFactory)
+        public WorldPersisterService(Func<string, GameVoxelType> typeFactory, Func<string, ItemType> itemFactory)
         {
             this.typeFactory = typeFactory;
             this.itemFactory = itemFactory;
