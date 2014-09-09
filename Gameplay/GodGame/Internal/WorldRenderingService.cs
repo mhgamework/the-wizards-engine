@@ -16,6 +16,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
     /// </summary>
     public class WorldRenderingService : ISimulator
     {
+        private readonly PlayerState localPlayer;
         public const int RenderSize = 32;
         private Model.World world;
         private readonly IVoxelWorldRenderer voxelWorldRenderer;
@@ -29,15 +30,18 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
             get { return customVoxelsRenderer.VisibleCustomRenderables; }
         }
 
-        public WorldRenderingService(Model.World world)
-            : this(world, new PerEntityVoxelWorldRenderer(world, new Point2(RenderSize, RenderSize)))
+        
+        public WorldRenderingService(Model.World world, PlayerState localPlayer)
+            : this(world, new PerEntityVoxelWorldRenderer(world, new Point2(RenderSize, RenderSize)), localPlayer)
         {
-
         }
-        public WorldRenderingService(Model.World world, IVoxelWorldRenderer voxelWorldRenderer)
+
+        
+        public WorldRenderingService(Model.World world, IVoxelWorldRenderer voxelWorldRenderer, PlayerState localPlayer)
         {
             this.world = world;
             this.voxelWorldRenderer = voxelWorldRenderer;
+            this.localPlayer = localPlayer;
 
             Debug.Assert(Math.Abs(world.VoxelSize.X - world.VoxelSize.Y) < 0.001f);
 
@@ -87,9 +91,22 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
             voxelWorldRenderer.UpdateWindow(offset, worldTranslation, new Point2(RenderSize, RenderSize));
             customVoxelsRenderer.updateVoxelCustomRenderers(offset, worldTranslation, new Point2(RenderSize, RenderSize));
 
+            updateSelectionBoundingBox(target.Value);
 
+            TW.Graphics.LineManager3D.AddBox(world.GetBoundingBox(world.GetVoxelAtGroundPos(target.Value).Coord), Color.Fuchsia.dx());
         }
 
+        private void updateSelectionBoundingBox(Vector3 groundPos)
+        {
+            if (!(localPlayer.ActiveTool is ChangeHeightTool)) return;
+            var selectedVoxel = world.GetVoxelAtGroundPos(groundPos);
+            if (selectedVoxel == null) return;
+
+            var size = ((ChangeHeightTool)localPlayer.ActiveTool).Size;
+            var baseBox = selectedVoxel.GetBoundingBox();
+            var newBox = new BoundingBox(baseBox.Minimum + new Vector3(-size * 10, 0, -size * 10), baseBox.Maximum + new Vector3(size * 10, 0, size * 10));
+            TW.Graphics.LineManager3D.AddBox(newBox, Color.White);
+        }
 
         private void updateLights(BoundingBox visibleWorldBB)
         {

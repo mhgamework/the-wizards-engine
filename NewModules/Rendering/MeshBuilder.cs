@@ -237,6 +237,17 @@ namespace MHGameWork.TheWizards.Rendering
             p.Texcoords.AddRange(nTexcoords);
         }
 
+        public void AddMesh(IMesh mesh, Matrix transform)
+        {
+            foreach (var p in mesh.GetCoreData().Parts)
+            {
+                var mat = CreateMaterial();
+                mat.SetFromMeshCoreDataMaterial(p.MeshMaterial);
+
+                AddGeometryData(p.MeshPart.GetGeometryData(), mat, p.ObjectMatrix.dx() * transform);
+            }
+        }
+
         public IMesh CreateMesh()
         {
 

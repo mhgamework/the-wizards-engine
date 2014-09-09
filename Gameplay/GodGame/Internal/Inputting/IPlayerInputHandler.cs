@@ -1,5 +1,6 @@
 ﻿using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame
 {
@@ -10,5 +11,6 @@ namespace MHGameWork.TheWizards.GodGame
         void OnLeftClick(GameVoxel target);
         void OnNextTool();
         void OnPreviousTool();
+        void OnKeyPressed(GameVoxel target, Key key);
     }
 }

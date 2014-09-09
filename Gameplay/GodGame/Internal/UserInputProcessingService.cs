@@ -53,6 +53,10 @@ namespace MHGameWork.TheWizards.GodGame
                 inputHandler.OnLeftClick(target);
             if (TW.Graphics.Mouse.RightMouseJustPressed)
                 inputHandler.OnRightClick(target);
+            foreach (var k in TW.Graphics.Keyboard.PressedKeys.Where(k => TW.Graphics.Keyboard.IsKeyPressed(k)))
+            {
+                inputHandler.OnKeyPressed(target, k);
+            }
         }
 
         private bool trySimulateUIControls()

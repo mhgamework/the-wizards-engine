@@ -99,7 +99,7 @@ namespace MHGameWork.TheWizards.GodGame
                 return;
             }
 
-            showDataValueRect(target, target.MagicLevel);
+            showDataValueRect(target, (int)target.Data.Height);
 
         }
 

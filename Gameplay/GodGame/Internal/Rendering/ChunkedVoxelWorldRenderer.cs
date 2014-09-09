@@ -98,7 +98,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
                 var mesh = getMesh(v);
                 if (mesh == null) return;
                 var vWorld = Matrix.Scaling(new Vector3(world.VoxelSize.X))
-                    * Matrix.Translation(world.GetBoundingBox(p).GetCenter());
+                             * Matrix.Translation(((p.ToVector2() + new Vector2(0.5f)) * world.VoxelSize.X).ToXZ(v.Data.Height));
                 MeshBuilder.AppendMeshTo(getMesh(v), batch, vWorld);
 
             });

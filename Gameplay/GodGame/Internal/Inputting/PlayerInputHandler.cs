@@ -73,5 +73,9 @@ namespace MHGameWork.TheWizards.GodGame
             ActiveHandler = skipWhile.Skip(1).First();
         }
 
+        public void OnKeyPressed(GameVoxel target, Key key)
+        {
+            ActiveHandler.OnKeypress(target, key);
+        }
     }
 }

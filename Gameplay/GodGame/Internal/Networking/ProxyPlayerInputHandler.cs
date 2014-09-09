@@ -1,6 +1,7 @@
 ﻿using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.Networking.Client;
+using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame.Networking
 {
@@ -39,6 +40,11 @@ namespace MHGameWork.TheWizards.GodGame.Networking
         public void OnPreviousTool()
         {
             transporter.Send(new UserInputPacket("OnPreviousTool"));
+        }
+
+        public void OnKeyPressed(GameVoxel target, Key key)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

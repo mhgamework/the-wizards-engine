@@ -1,6 +1,7 @@
 ﻿using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Types;
+using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame
 {
@@ -23,6 +24,12 @@ namespace MHGameWork.TheWizards.GodGame
         {
             voxel.ChangeType(GameVoxelType.Land);
         }
+
+        public void OnKeypress(GameVoxel voxel, Key key)
+        {
+            
+        }
+
         public override string ToString()
         {
             return "Handler: " + Name;
