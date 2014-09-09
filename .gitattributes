@@ -1,2 +1,3 @@
 *.csproj -text merge=union
 *.sln -text merge=union
+*.cs -text $ should disable end of line conversion
