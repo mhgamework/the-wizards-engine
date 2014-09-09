@@ -26,22 +26,22 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private ServerPlayerListener serverPlayerListener;
         private ClearGameStateChangesService clearStateChangesSimulator;
         private NetworkConnectorServer networkConnectorServer;
-        public int TcpPort { get; private set; }
 
-        public GodGameServer(WorldSimulationService WorldSimulationService, NetworkedPlayerFactory networkedPlayerFactory, ClearGameStateChangesService clearStateChangesSimulator)
+        public int TcpPort { get { return networkConnectorServer.TcpPort; } }
+
+        public GodGameServer(WorldSimulationService worldSimulationService, NetworkedPlayerFactory networkedPlayerFactory, ClearGameStateChangesService clearStateChangesSimulator, NetworkConnectorServer networkConnectorServer)
         {
-            this.WorldSimulationService = WorldSimulationService;
+            this.WorldSimulationService = worldSimulationService;
             this.clearStateChangesSimulator = clearStateChangesSimulator;
+            this.networkConnectorServer = networkConnectorServer;
 
 
-            TcpPort = 15005;
-            networkConnectorServer = new NetworkConnectorServer(TcpPort, 15006);
             serverPlayerListener = new ServerPlayerListener(networkConnectorServer, networkedPlayerFactory);
 
 
         }
 
-  
+
 
 
         public void Start()
@@ -53,18 +53,19 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             throw new NotImplementedException();
         }
 
-        public void Tick()
+        public void AddSimulatorsToEngine(TWEngine engine)
         {
-            updateConnectedClients();
-            processClientInputs();
-            WorldSimulationService.Simulate();
-            sendGameStateUpdates();
-            clearStateChangesSimulator.Simulate();
+            engine.AddSimulator(updateConnectedClients, "Server-UpdateConnectedClientsSim");
+            engine.AddSimulator(processClientInputs, "Server-PlayerInputProcessingSim");
+            engine.AddSimulator(WorldSimulationService, "Server-WorldSimulationSim");
+            engine.AddSimulator(sendGameStateUpdates, "Server-SendStateSim");
+            engine.AddSimulator(clearStateChangesSimulator, "Server-ClearChangesSim");
 
         }
 
         private void sendGameStateUpdates()
         {
+
         }
 
         private void processClientInputs()

@@ -60,7 +60,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             var engine = EngineFactory.CreateEngine();
 
-            engine.AddSimulator(new BasicSimulator(() => Simulate()));
+            server.AddSimulatorsToEngine(engine);
+            client.AddSimulatorsToEngine(engine);
+
+
+
         }
 
         private static Model.World createWorld()
@@ -69,16 +73,6 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             world.ForEach((v, _) => v.ChangeType(GameVoxelType.Land));
             return world;
-        }
-
-
-        public void Simulate()
-        {
-            server.Tick();
-
-            client.Tick();
-
-
         }
 
         public void ConnectLocal()

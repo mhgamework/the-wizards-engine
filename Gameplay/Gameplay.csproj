@@ -198,12 +198,14 @@
     <Compile Include="GodGame\Internal\Console\DeveloperConsoleUI.cs" />
     <Compile Include="GodGame\Internal\Console\DirectInputTextBox.cs" />
     <Compile Include="GodGame\Internal\Console\ICommandProvider.cs" />
+    <Compile Include="GodGame\Internal\Networking\GameStateDeltaPacket.cs" />
     <Compile Include="GodGame\Internal\Rendering\ChunkedVoxelWorldRenderer.cs" />
     <Compile Include="GodGame\Internal\Mains\GodGameClient.cs" />
     <Compile Include="GodGame\Internal\Model\GameState.cs" />
     <Compile Include="GodGame\Internal\Rendering\IVoxelWorldRenderer.cs" />
     <Compile Include="GodGame\Internal\Rendering\PerEntityVoxelWorldRenderer.cs" />
     <Compile Include="GodGame\Internal\Inputting\IPlayerInputHandler.cs" />
+    <Compile Include="GodGame\Internal\Networking\GameStateDeltaPacketBuilder.cs" />
     <Compile Include="GodGame\LightGodPowerTool.cs" />
     <Compile Include="GodGame\Internal\Networking\LazyClientPacketTransporter.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkedPlayerFactory.cs" />
@@ -218,7 +220,7 @@
     <Compile Include="GodGame\Persistence\SerializedWorld.cs" />
     <Compile Include="GodGame\Internal\WorldPersisterService.cs" />
     <Compile Include="GodGame\Internal\Inputting\IPlayerTool.cs" />
-    <Compile Include="GodGame\Internal\Model\IVoxelHandle.cs" />
+    <Compile Include="GodGame\Model\IVoxelHandle.cs" />
     <Compile Include="GodGame\Internal\WorldRenderingService.cs" />
     <Compile Include="GodGame\Internal\WorldSimulationService.cs" />
     <Compile Include="GodGame\Internal\Rendering\IRenderable.cs" />
@@ -251,7 +253,7 @@
     <Compile Include="GodGame\Internal\UIRenderingService.cs" />
     <Compile Include="GodGame\Internal\Model\World.cs" />
     <Compile Include="GodGame\Types\GameVoxelType.cs" />
-    <Compile Include="GodGame\VoxelData.cs" />
+    <Compile Include="GodGame\Model\IVoxelData.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkConnectorClient.cs" />
     <Compile Include="GodGame\_Tests\GodGameAutofacConfigTest.cs" />
     <Compile Include="GodGame\_Tests\DirectInputTextboxTest.cs" />

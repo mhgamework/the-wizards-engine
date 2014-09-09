@@ -27,6 +27,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             builder.Register(createNetworkedPlayerFactory).SingleInstance();
 
             builder.RegisterType<PlayerInputHandler>();
+
+            builder.RegisterInstance(new NetworkConnectorServer(15005, 15006));
+
         }
 
         private NetworkedPlayerFactory createNetworkedPlayerFactory(IComponentContext ctx)

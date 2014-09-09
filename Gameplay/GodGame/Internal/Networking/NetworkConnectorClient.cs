@@ -12,6 +12,7 @@ namespace MHGameWork.TheWizards.GodGame.Networking
     public class NetworkConnectorClient
     {
         public ClientPacketManagerNetworked.ClientPacketTransporterNetworked<UserInputPacket> UserInputTransporter { get; private set; }
+        public ClientPacketManagerNetworked.ClientPacketTransporterNetworked<GameStateDeltaPacket> GameStateDeltaTransporter { get; private set; }
 
         public NetworkConnectorClient()
         {
@@ -37,6 +38,7 @@ namespace MHGameWork.TheWizards.GodGame.Networking
 
             var gen = new NetworkPacketFactoryCodeGenerater(TWDir.Cache.CreateChild("GodGame").CreateFile("ClientPackets" + (new Random()).Next() + ".dll").FullName);
             UserInputTransporter = cpm.CreatePacketTransporter("UserInput", gen.GetFactory<UserInputPacket>(), PacketFlags.TCP);
+            GameStateDeltaTransporter = cpm.CreatePacketTransporter("GameStateDelta", gen.GetFactory<GameStateDeltaPacket>(), PacketFlags.TCP);
 
             gen.BuildFactoriesAssembly();
         }

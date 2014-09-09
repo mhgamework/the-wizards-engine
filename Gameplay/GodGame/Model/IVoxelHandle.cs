@@ -110,7 +110,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
             Seeder.EachRandomInterval(averageInterval, action, TickLength);
         }
 
-        public VoxelData Data { get { return currentVoxel.Data; } }
+        public IVoxelData Data { get { return currentVoxel.Data; } }
 
         public Seeder Seeder { get; private set; }
 

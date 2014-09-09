@@ -51,14 +51,14 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         {
             networkConnectorClient.Connect("127.0.0.1", 15005);
         }
-        public void Tick()
+        public void AddSimulatorsToEngine(TWEngine engine)
         {
-            userInputProcessingService.Simulate();
-            uiRenderingService.Simulate();
-            developerConsoleService.Simulate();
-            simpleWorldRenderer.Simulate();
-            clearStateChangesSimulator.Simulate();
-            worldRenderingSimulator.Simulate();
+            engine.AddSimulator(userInputProcessingService, "Client-UserInputProcessingSim");
+            engine.AddSimulator(uiRenderingService, "Client-UIRenderingSim");
+            engine.AddSimulator(developerConsoleService, "Client-DevConsoleSim");
+            engine.AddSimulator(simpleWorldRenderer, "Client-WorldRenderingSim");
+            engine.AddSimulator(clearStateChangesSimulator, "Client-ClearChangesSim");
+            engine.AddSimulator(worldRenderingSimulator, "Client-EngineWorldRenderingSimulator");
 
         }
 

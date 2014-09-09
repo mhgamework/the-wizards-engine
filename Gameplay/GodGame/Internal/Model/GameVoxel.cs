@@ -8,11 +8,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
     /// <summary>
     /// Split this class into a 'enginemodelobject' part, for data storage, and a 'domain model part', 
     /// which should be merged with the IVoxelHandle probably
+    /// Somewhat of a configuration class?
     /// </summary>
     public class GameVoxel
     {
         private readonly World world;
-        private GameVoxelType type;
         public Point2 Coord { get; private set; }
 
         public GameVoxel(World world, Point2 coord)
@@ -21,28 +21,29 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
             this.Coord = coord;
         }
 
-        public void ChangeType(GameVoxelType air)
+        public void ChangeType(GameVoxelType type)
         {
-            if(air == null) throw new InvalidOperationException("Cannot set null type!!");
-            Type = air;
-            Data = new VoxelData();
-
+            if (type == null) throw new InvalidOperationException("Cannot set null type!!");
+            
+            Data = new ObservableVoxelData(new VoxelDataStore(), () =>
+                {
+                    world.NotifyVoxelChanged(this);
+                    if (Type != oldType)
+                        TypeChanged = true;
+                });
+            Data.Type = type;
         }
 
         public GameVoxelType Type
         {
-            get { return type; }
-            private set
-            {
-                if (type == value) return; type = value;
-                TypeChanged = true;
-                world.NotifyVoxelChanged(this);
-            }
+            get { return Data.Type; }
+            private set { Data.Type = value; }
         }
 
+        private GameVoxelType oldType;
         public bool TypeChanged { get; set; }
 
-        public VoxelData Data { get; set; }
+        public IVoxelData Data { get; set; }
 
         public int MagicLevel
         {
