@@ -194,7 +194,7 @@
     <Compile Include="GodGame\Internal\Configuration\ServerModule.cs" />
     <Compile Include="GodGame\Internal\Mains\GodGameServer.cs" />
     <Compile Include="GodGame\Internal\Console\DelegateCommandProvider.cs" />
-    <Compile Include="GodGame\Internal\Console\DeveloperConsoleSimulator.cs" />
+    <Compile Include="GodGame\Internal\DeveloperConsoleService.cs" />
     <Compile Include="GodGame\Internal\Console\DeveloperConsoleUI.cs" />
     <Compile Include="GodGame\Internal\Console\DirectInputTextBox.cs" />
     <Compile Include="GodGame\Internal\Console\ICommandProvider.cs" />

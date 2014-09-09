@@ -9,12 +9,12 @@
         private readonly ISimulator sim;
         private string simulatorName;
 
-        public TracingDecoratorSimulator(ITraceLogger logger, ISimulator sim)
+        public TracingDecoratorSimulator(ITraceLogger logger, ISimulator sim, string name)
         {
             this.logger = logger;
             this.sim = sim;
 
-            simulatorName = sim.GetType().FullName;
+            simulatorName = name;
         }
 
         public void Simulate()

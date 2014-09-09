@@ -69,15 +69,23 @@ namespace MHGameWork.TheWizards.Engine
 
         public void AddSimulator(ISimulator sim)
         {
+            AddSimulator(sim, sim.GetType().Name);
+        }
+        public void AddSimulator(Action action, string name)
+        {
+            AddSimulator(new BasicSimulator(action), name);
+        }
+        public void AddSimulator(ISimulator sim, string name)
+        {
             //NOT a problem anymore:
             //if (sim.GetType().GetConstructor(new Type[] { }) == null)
             //    Console.WriteLine("Simulator found without empty constructor, hotloading will fail! " + sim.GetType().FullName);
 
             var oriSim = sim;
 
-            sim = new ContextDecoratorSimulator(sim, EngineErrorLogger);
-            sim = new ProfilingDecoratorSimulator(sim, oriSim.GetType().Name);
-            sim = new TracingDecoratorSimulator(TraceLogger, sim);
+            sim = new ContextDecoratorSimulator(sim, EngineErrorLogger, name);
+            sim = new ProfilingDecoratorSimulator(sim, name);
+            sim = new TracingDecoratorSimulator(TraceLogger, sim, name);
 
             simulators.Add(sim);
 
