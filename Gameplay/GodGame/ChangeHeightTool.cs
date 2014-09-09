@@ -15,6 +15,8 @@ namespace MHGameWork.TheWizards.GodGame
         private Internal.Model.World world;
         public HeightToolState State { get; private set; }
 
+        private float flattenHeight;
+
         public enum HeightToolState
         {
             DEFAULT, SMOOTH, FLATTEN
@@ -102,21 +104,26 @@ namespace MHGameWork.TheWizards.GodGame
             }
         }
 
+        private void DoFlatten(GameVoxel voxel, bool isLeftClick)
+        {
+            if (!isLeftClick)
+            {
+                flattenHeight = voxel.Data.Height;
+                return;
+            }
+
+            var voxels = GetVoxelsInRange(voxel);
+            foreach (var v in voxels)
+            {
+                v.Data.Height = flattenHeight;
+                world.NotifyVoxelChanged(v);
+            }
+        }
+
         private void CheckHeight(GameVoxel voxel)
         {
             if (voxel.Data.Height < 0)
                 voxel.Data.Height = 0;
-        }
-
-        private void DoFlatten(GameVoxel voxel, bool isLeftClick)
-        {
-            var voxels = GetVoxelsInRange(voxel);
-            var height = voxel.Data.Height;
-            foreach (var v in voxels)
-            {
-                v.Data.Height = height;
-                world.NotifyVoxelChanged(v);
-            }
         }
 
         private List<GameVoxel> GetVoxelsInRange(GameVoxel centerVoxel)
