@@ -16,6 +16,10 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
+    /// <summary>
+    /// A grinder accepts stone and outputs pigment items.
+    /// In order to work, the grinder must be next to a water voxel, with max height difference 10.
+    /// </summary>
     public class GrinderType : GameVoxelType
     {
         private int inventorySize = 5;
@@ -59,21 +63,40 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public override IMesh GetMesh(IVoxelHandle handle)
         {
-            var ret = (handle.Data.DataValue > datavalGrindRangeLow && handle.Data.DataValue < datavalGrindRangeHigh) ? GetDataValueMesh(counter) : GetDataValueMesh(0);
-            return MeshBuilder.Transform(ret, getYRot(handle));
+            IMesh tmp;
+            if (!hasWaterNeighbour(handle))
+                tmp = GetDataValueMesh(999);//error mesh
+            else
+            {
+                var ret = (handle.Data.DataValue > datavalGrindRangeLow && handle.Data.DataValue < datavalGrindRangeHigh) ? GetDataValueMesh(counter) : GetDataValueMesh(0);
+                tmp = MeshBuilder.Transform(ret, getYRot(handle));
+            }
+
+            var meshBuilder = new MeshBuilder();
+            meshBuilder.AddMesh(tmp, Matrix.Identity);
+            var groundMesh = GetDefaultGroundMesh(handle.Data.Height);
+            if (groundMesh == null) return tmp;
+            meshBuilder.AddMesh(groundMesh, Matrix.Identity);
+            return meshBuilder.CreateMesh();
         }
 
         private Matrix getYRot(IVoxelHandle handle)
         {
             var yRot = Matrix.Identity;
             var neigbours = handle.Get4Connected().ToList();
-            if (neigbours[0].Type is WaterType)
+            if (checkIsAccesibleWater(handle, neigbours[0]))
                 yRot = Matrix.RotationY((float)Math.PI * 0.5f);
-            if (neigbours[2].Type is WaterType)
+            if (checkIsAccesibleWater(handle, neigbours[2]))
                 yRot = Matrix.RotationY(-(float)Math.PI * 0.5f);
-            if (neigbours[3].Type is WaterType)
+            if (checkIsAccesibleWater(handle, neigbours[3]))
                 yRot = Matrix.RotationY((float)Math.PI);
             return yRot;
+        }
+
+        private bool checkIsAccesibleWater(IVoxelHandle currentHandle, IVoxelHandle handleToCheck)
+        {
+            return handleToCheck.Type is WaterType &&
+                   Math.Abs(Math.Abs(handleToCheck.Data.Height - currentHandle.Data.Height) - 0f) < 0.001f;
         }
 
         private void tryGatherResources(IVoxelHandle handle)
@@ -131,7 +154,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private bool hasWaterNeighbour(IVoxelHandle handle)
         {
-            return handle.Get4Connected().Any(e => e.Type is WaterType);
+            return handle.Get4Connected().Any(e => checkIsAccesibleWater(handle, e));
         }
 
         private int countResourcesIncludingKanban(ItemType type, IVoxelHandle handle)
