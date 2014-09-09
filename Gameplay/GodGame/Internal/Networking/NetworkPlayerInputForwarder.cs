@@ -1,6 +1,7 @@
 ﻿using System;
 using DirectX11;
 using MHGameWork.TheWizards.Networking.Client;
+using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame.Networking
 {
@@ -45,6 +46,10 @@ namespace MHGameWork.TheWizards.GodGame.Networking
 
                     case "OnRightClick":
                         handler.OnRightClick(world.GetVoxel(new Point2(p.VoxelCoordX, p.VoxelCoordY)));
+                        break;
+
+                    case "OnKeyPressed":
+                        handler.OnKeyPressed(world.GetVoxel(new Point2(p.VoxelCoordX, p.VoxelCoordY)), (Key)p.Key);
                         break;
                     default:
                         throw new InvalidOperationException("Unknown input method: " + p.Method);

@@ -134,7 +134,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         private static IEnumerable<IPlayerTool> createPlayerInputs(Internal.Model.World world)
         {
             yield return new CreateLandTool(world);
-            yield return new ChangeHeightTool();
+            yield return new ChangeHeightTool(world);
             yield return createTypeInput(GameVoxelType.Forest);
             yield return createTypeInput(GameVoxelType.Village);
             yield return createTypeInput(GameVoxelType.Warehouse);

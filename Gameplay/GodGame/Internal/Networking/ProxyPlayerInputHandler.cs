@@ -44,7 +44,7 @@ namespace MHGameWork.TheWizards.GodGame.Networking
 
         public void OnKeyPressed(GameVoxel target, Key key)
         {
-            throw new System.NotImplementedException();
+            transporter.Send(new UserInputPacket("OnKeyPressed", target.Coord) { Key = (int)key });
         }
     }
 }

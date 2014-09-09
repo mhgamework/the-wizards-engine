@@ -12,6 +12,8 @@ namespace MHGameWork.TheWizards.GodGame.Networking
         public int VoxelCoordX;
         public int VoxelCoordY;
 
+        public int Key;
+
         public UserInputPacket(string method)
             : this()
         {
@@ -19,6 +21,7 @@ namespace MHGameWork.TheWizards.GodGame.Networking
         }
 
         public UserInputPacket(string method, Point2 voxelCoord)
+            : this()
         {
             Method = method;
             VoxelCoordX = voxelCoord.X;
