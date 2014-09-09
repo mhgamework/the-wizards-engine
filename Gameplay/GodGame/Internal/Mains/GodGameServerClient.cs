@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         private GodGameServer server;
         private GodGameClient client;
-        public GodGameServerClient()
+        public GodGameServerClient(bool virtualConnection)
         {
 
 
@@ -42,7 +42,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             bServer.RegisterModule<ServerModule>();
             bServer.RegisterInstance(createWorld()).SingleInstance();
 
-            bServer.RegisterInstance(virtualNetworkConnectorServer).As<INetworkConnectorServer>().SingleInstance();
+            if (virtualConnection)
+                bServer.RegisterInstance(virtualNetworkConnectorServer).As<INetworkConnectorServer>().SingleInstance();
 
 
             var bClient = new ContainerBuilder();
@@ -50,7 +51,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             bClient.RegisterModule<ClientModule>();
             bClient.RegisterInstance(createWorld()).SingleInstance();
 
-            bClient.RegisterInstance(virtualNetworkConnectorClient).As<INetworkConnectorClient>().SingleInstance();
+            if (virtualConnection)
+                bClient.RegisterInstance(virtualNetworkConnectorClient).As<INetworkConnectorClient>().SingleInstance();
 
 
 
@@ -89,7 +91,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             Thread.Sleep(1000);
 
-            client.ConnectToServer("localhost", server.TcpPort);
+            client.ConnectToServer("127.0.0.1", server.TcpPort);
         }
 
     }

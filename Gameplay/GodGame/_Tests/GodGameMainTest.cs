@@ -42,7 +42,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             var client = bClient.Build().Resolve<GodGameClient>();
             client.AddSimulatorsToEngine(EngineFactory.CreateEngine());
 
-            client.ConnectToServer("localhost", 15005);
+            client.ConnectToServer("127.0.0.1", 15005);
 
         }
         [Test]
@@ -73,7 +73,14 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [Test]
         public void TestServerClientGame()
         {
-            new GodGameServerClient();
+            new GodGameServerClient(false);
+
+        }
+
+        [Test]
+        public void TestServerClientGameVirtual()
+        {
+            new GodGameServerClient(true);
 
         }
 
