@@ -46,17 +46,17 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
         /// </summary>
         /// <param name="voxel"></param>
         /// <param name="typeFactory"></param>
-        public void ToVoxel(GameVoxel voxel, Func<string, GameVoxelType> typeFactory, Func<string, ItemType> itemFactory)
+        public void ToVoxel(GameVoxel voxel, GameplayObjectsSerializer gameplayObjectsSerializer)
         {
             Debug.Assert(voxel.Coord.X == X);
             Debug.Assert(voxel.Coord.Y == Y);
-            voxel.ChangeType(typeFactory(this.TypeName));
+            voxel.ChangeType(gameplayObjectsSerializer.GetVoxelType(this.TypeName));
             voxel.MagicLevel = MagicLevel;
             voxel.DataValue = DataValue;
 
             if (InventoryItems != null)
                 foreach (var item in InventoryItems)
-                    voxel.Data.Inventory.AddNewItems(itemFactory(item), 1);
+                    voxel.Data.Inventory.AddNewItems(gameplayObjectsSerializer.GetItemType(item), 1);
         }
 
 

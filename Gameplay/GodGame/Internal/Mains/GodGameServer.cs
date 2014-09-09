@@ -25,15 +25,22 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         public WorldSimulationService WorldSimulationService;
         private ServerPlayerListener serverPlayerListener;
         private ClearGameStateChangesService clearStateChangesSimulator;
-        private NetworkConnectorServer networkConnectorServer;
+        private INetworkConnectorServer networkConnectorServer;
+        private GameStateDeltaPacketBuilder deltaPacketBuilder;
+
 
         public int TcpPort { get { return networkConnectorServer.TcpPort; } }
 
-        public GodGameServer(WorldSimulationService worldSimulationService, NetworkedPlayerFactory networkedPlayerFactory, ClearGameStateChangesService clearStateChangesSimulator, NetworkConnectorServer networkConnectorServer)
+        public GodGameServer(WorldSimulationService worldSimulationService,
+            NetworkedPlayerFactory networkedPlayerFactory,
+            ClearGameStateChangesService clearStateChangesSimulator,
+            INetworkConnectorServer networkConnectorServer,
+            GameStateDeltaPacketBuilder deltaPacketBuilder)
         {
             this.WorldSimulationService = worldSimulationService;
             this.clearStateChangesSimulator = clearStateChangesSimulator;
             this.networkConnectorServer = networkConnectorServer;
+            this.deltaPacketBuilder = deltaPacketBuilder;
 
 
             serverPlayerListener = new ServerPlayerListener(networkConnectorServer, networkedPlayerFactory);
@@ -65,7 +72,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         private void sendGameStateUpdates()
         {
-
+            var p = deltaPacketBuilder.CreateDeltaPacket();
+            networkConnectorServer.GameStateDeltaTransporter.SendAll(p);
         }
 
         private void processClientInputs()

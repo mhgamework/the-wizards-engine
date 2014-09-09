@@ -7,6 +7,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Core.Networking
 {
     /// <summary>
     /// Warning: This is not a full duplex class. You cannot send and receive at the same time at the same end of the connection
+    /// Note: not thread safe!!
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class SimpleClientPacketTransporter<T> : IClientPacketTransporter<T> where T : INetworkPacket

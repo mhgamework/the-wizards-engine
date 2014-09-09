@@ -51,7 +51,6 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             }
 
             world = new Internal.Model.World(200, 10);
-            worldPersister = new WorldPersisterService(null, null);
 
             builder.RegisterInstance(world);
             builder.RegisterInstance(worldPersister);
@@ -62,6 +61,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [Test]
         public void TestServerConfiguration()
         {
+            builder.RegisterModule<CommonModule>();
             builder.RegisterModule<ServerModule>();
 
             var container = builder.Build();
@@ -74,6 +74,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [Test]
         public void TestClientConfiguration()
         {
+            builder.RegisterModule<CommonModule>();
             builder.RegisterModule<ClientModule>();
 
             var container = builder.Build();

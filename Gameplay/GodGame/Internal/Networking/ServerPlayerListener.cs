@@ -11,13 +11,13 @@ namespace MHGameWork.TheWizards.GodGame.Networking
     /// </summary>
     public class ServerPlayerListener
     {
-        private readonly NetworkConnectorServer networkConnectorServer;
+        private readonly INetworkConnectorServer networkConnectorServer;
         private readonly NetworkedPlayerFactory factory;
 
         private ListObserver<IClient> clients = new ListObserver<IClient>();
         private List<NetworkedPlayer> networkedPlayers = new List<NetworkedPlayer>();
 
-        public ServerPlayerListener(NetworkConnectorServer networkConnectorServer, NetworkedPlayerFactory factory)
+        public ServerPlayerListener(INetworkConnectorServer networkConnectorServer, NetworkedPlayerFactory factory)
         {
             this.networkConnectorServer = networkConnectorServer;
             this.factory = factory;

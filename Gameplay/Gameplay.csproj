@@ -191,6 +191,7 @@
     <Compile Include="Engine\WorldRendering\ITextareaUpdater.cs" />
     <Compile Include="GodGame\DeveloperCommands\AllCommandProvider.cs" />
     <Compile Include="GodGame\Internal\Configuration\ClientModule.cs" />
+    <Compile Include="GodGame\Internal\Configuration\CommonModule.cs" />
     <Compile Include="GodGame\Internal\Configuration\ServerModule.cs" />
     <Compile Include="GodGame\Internal\Mains\GodGameServer.cs" />
     <Compile Include="GodGame\Internal\Console\DelegateCommandProvider.cs" />
@@ -199,6 +200,10 @@
     <Compile Include="GodGame\Internal\Console\DirectInputTextBox.cs" />
     <Compile Include="GodGame\Internal\Console\ICommandProvider.cs" />
     <Compile Include="GodGame\Internal\Networking\GameStateDeltaPacket.cs" />
+    <Compile Include="GodGame\Internal\Networking\INetworkConnectorClient.cs" />
+    <Compile Include="GodGame\Internal\Networking\INetworkConnectorServer.cs" />
+    <Compile Include="GodGame\Internal\Networking\VirtualNetworkConnectorClient.cs" />
+    <Compile Include="GodGame\Internal\Networking\VirtualNetworkConnectorServer.cs" />
     <Compile Include="GodGame\Internal\Rendering\ChunkedVoxelWorldRenderer.cs" />
     <Compile Include="GodGame\Internal\Mains\GodGameClient.cs" />
     <Compile Include="GodGame\Internal\Model\GameState.cs" />
@@ -217,6 +222,7 @@
     <Compile Include="GodGame\Internal\Rendering\CustomVoxelsRenderer.cs" />
     <Compile Include="GodGame\Internal\Model\GameVoxel.cs" />
     <Compile Include="GodGame\Internal\Mains\GodGameOffline.cs" />
+    <Compile Include="GodGame\Persistence\GameplayObjectsSerializer.cs" />
     <Compile Include="GodGame\Persistence\SerializedWorld.cs" />
     <Compile Include="GodGame\Internal\WorldPersisterService.cs" />
     <Compile Include="GodGame\Internal\Inputting\IPlayerTool.cs" />

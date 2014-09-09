@@ -8,11 +8,12 @@ namespace MHGameWork.TheWizards.GodGame.Networking
 {
     /// <summary>
     /// Responsible for the network connection on the Client side
+    /// Actual implementation using TCP
     /// </summary>
-    public class NetworkConnectorClient
+    public class NetworkConnectorClient : INetworkConnectorClient
     {
-        public ClientPacketManagerNetworked.ClientPacketTransporterNetworked<UserInputPacket> UserInputTransporter { get; private set; }
-        public ClientPacketManagerNetworked.ClientPacketTransporterNetworked<GameStateDeltaPacket> GameStateDeltaTransporter { get; private set; }
+        public IClientPacketTransporter<UserInputPacket> UserInputTransporter { get; private set; }
+        public IClientPacketTransporter<GameStateDeltaPacket> GameStateDeltaTransporter { get; private set; }
 
         public NetworkConnectorClient()
         {

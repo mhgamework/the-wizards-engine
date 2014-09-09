@@ -28,12 +28,12 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             builder.RegisterType<PlayerState>().SingleInstance();
             builder.Register(ctx =>
             {
-                var connector = ctx.Resolve<NetworkConnectorClient>();
+                var connector = ctx.Resolve<INetworkConnectorClient>();
                 return new ProxyPlayerInputHandler(new LazyClientPacketTransporter<UserInputPacket>(() => connector.UserInputTransporter));
             }).As<IPlayerInputHandler>().SingleInstance();
 
 
-            builder.RegisterType<NetworkConnectorClient>().SingleInstance();
+            builder.RegisterType<NetworkConnectorClient>().As<INetworkConnectorClient>().SingleInstance();
             builder.RegisterType<ChunkedVoxelWorldRenderer>().As<IVoxelWorldRenderer>().SingleInstance();
 
             builder.RegisterType<AllCommandProvider>().As<ICommandProvider>().SingleInstance();

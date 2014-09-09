@@ -8,6 +8,8 @@ namespace MHGameWork.TheWizards.GodGame.Networking
     /// </summary>
     public struct GameStateDeltaPacket : INetworkPacket
     {
-        public int[] Coords;
+        public int[] CoordsX;
+        public int[] CoordsY;
+        public string[] Types;
     }
 }

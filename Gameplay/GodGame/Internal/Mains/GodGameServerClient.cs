@@ -32,20 +32,28 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         public GodGameServerClient()
         {
 
-            var bServer = new ContainerBuilder();
-            bServer.RegisterModule<ServerModule>();
 
+            var virtualNetworkConnectorServer = new VirtualNetworkConnectorServer();
+            var virtualNetworkConnectorClient = virtualNetworkConnectorServer.CreateClient();
+
+
+            var bServer = new ContainerBuilder();
+            bServer.RegisterModule<CommonModule>();
+            bServer.RegisterModule<ServerModule>();
+            bServer.RegisterInstance(createWorld()).SingleInstance();
+
+            bServer.RegisterInstance(virtualNetworkConnectorServer).As<INetworkConnectorServer>().SingleInstance();
 
 
             var bClient = new ContainerBuilder();
+            bClient.RegisterModule<CommonModule>();
             bClient.RegisterModule<ClientModule>();
-
-
-            bServer.RegisterInstance(createWorld()).SingleInstance();
             bClient.RegisterInstance(createWorld()).SingleInstance();
 
-            bServer.RegisterInstance(new WorldPersisterService(null, null)).SingleInstance();
-            bClient.RegisterInstance(new WorldPersisterService(null, null)).SingleInstance();
+            bClient.RegisterInstance(virtualNetworkConnectorClient).As<INetworkConnectorClient>().SingleInstance();
+
+
+
 
 
             bServer.RegisterType<CreateLandTool>().As<IPlayerTool>().SingleInstance();

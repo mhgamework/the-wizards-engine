@@ -16,13 +16,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal
     /// </summary>
     public class WorldPersisterService
     {
-        private Func<string, GameVoxelType> typeFactory;
-        private Func<string, ItemType> itemFactory;
+        private readonly GameplayObjectsSerializer gameplayObjectsSerializer;
 
-        public WorldPersisterService(Func<string, GameVoxelType> typeFactory, Func<string, ItemType> itemFactory)
+        public WorldPersisterService(GameplayObjectsSerializer gameplayObjectsSerializer)
         {
-            this.typeFactory = typeFactory;
-            this.itemFactory = itemFactory;
+            this.gameplayObjectsSerializer = gameplayObjectsSerializer;
         }
 
         public void Save(Model.World world, FileInfo file)
@@ -49,7 +47,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             }
 
 
-            sWorld.ToWorld(world,typeFactory,itemFactory);
+            sWorld.ToWorld(world, gameplayObjectsSerializer);
         }
 
         private static XmlSerializer createXmlSerializer()

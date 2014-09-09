@@ -6,9 +6,11 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Configuration;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Networking;
+using MHGameWork.TheWizards.GodGame.Persistence;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.Scattered.Model;
 using NSubstitute;
@@ -26,9 +28,52 @@ namespace MHGameWork.TheWizards.GodGame._Tests
     public class GodGameMainTest
     {
         [Test]
+        public void TestClientGame()
+        {
+            var world = new Internal.Model.World(100, 10);
+            buildDemoWorld(world);
+
+            var bClient = new ContainerBuilder();
+            bClient.RegisterModule<CommonModule>();
+            bClient.RegisterModule<ClientModule>();
+            bClient.RegisterInstance(world).SingleInstance();
+
+
+            var client = bClient.Build().Resolve<GodGameClient>();
+            client.AddSimulatorsToEngine(EngineFactory.CreateEngine());
+
+            client.ConnectToServer("localhost", 15005);
+
+        }
+        [Test]
+        public void TestServerGame()
+        {
+            var world = new Internal.Model.World(100, 10);
+            buildDemoWorld(world);
+
+            var bServer = new ContainerBuilder();
+            bServer.RegisterModule<CommonModule>();
+            bServer.RegisterModule<ServerModule>();
+            bServer.RegisterInstance(world).SingleInstance();
+
+
+            bServer.RegisterType<CreateLandTool>().As<IPlayerTool>().SingleInstance();
+            bServer.RegisterType<CreateLandTool>().As<IPlayerTool>().SingleInstance();
+
+            var server = bServer.Build().Resolve<GodGameServer>();
+
+
+            server.AddSimulatorsToEngine(EngineFactory.CreateEngine());
+
+
+            server.Start();
+
+        }
+
+        [Test]
         public void TestServerClientGame()
         {
-            var game = new GodGameServerClient();
+            new GodGameServerClient();
 
         }
 
@@ -45,7 +90,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             var world = new Internal.Model.World(100, 10);
             buildDemoWorld(world);
 
-            var worldPersister = new WorldPersisterService(getTypeFromName, getItemFromName);
+            var worldPersister = new WorldPersisterService(new GameplayObjectsSerializer());
 
             var ret = new GodGameOffline(EngineFactory.CreateEngine(), world, worldPersister, createPlayerInputs(world));
 
@@ -77,17 +122,6 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                 simpleWorldRenderer);
 
             return ret;*/
-        }
-
-        private static ItemType getItemFromName(string arg)
-        {
-            //TODO: make this real
-            return GameVoxelType.Ore.GetOreItemType(null);
-        }
-
-        private static GameVoxelType getTypeFromName(string name)
-        {
-            return GameVoxelType.AllTypes.First(t => t.Name == name);
         }
 
         private static IEnumerable<IPlayerTool> createPlayerInputs(Internal.Model.World world)

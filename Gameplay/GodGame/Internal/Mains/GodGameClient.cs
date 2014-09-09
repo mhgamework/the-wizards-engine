@@ -28,14 +28,17 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private ClearGameStateChangesService clearStateChangesSimulator;
         private WorldRenderingSimulator worldRenderingSimulator;
         private WorldRenderingService simpleWorldRenderer;
-        private readonly NetworkConnectorClient networkConnectorClient;
+        private readonly INetworkConnectorClient networkConnectorClient;
+        private readonly GameStateDeltaPacketBuilder gameStateDeltaPacketBuilder;
 
         public GodGameClient(UserInputProcessingService userInputProcessingService, 
             UIRenderingService uiRenderingService, 
             DeveloperConsoleService developerConsoleService, 
             ClearGameStateChangesService clearStateChangesSimulator, 
             WorldRenderingSimulator worldRenderingSimulator, 
-            WorldRenderingService simpleWorldRenderer, NetworkConnectorClient networkConnectorClient)
+            WorldRenderingService simpleWorldRenderer, 
+            INetworkConnectorClient networkConnectorClient,
+            GameStateDeltaPacketBuilder gameStateDeltaPacketBuilder)
         {
             this.userInputProcessingService = userInputProcessingService;
             this.uiRenderingService = uiRenderingService;
@@ -44,7 +47,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             this.worldRenderingSimulator = worldRenderingSimulator;
             this.simpleWorldRenderer = simpleWorldRenderer;
             this.networkConnectorClient = networkConnectorClient;
-
+            this.gameStateDeltaPacketBuilder = gameStateDeltaPacketBuilder;
         }
 
         public void ConnectToServer(string ip, int port)
@@ -54,6 +57,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         public void AddSimulatorsToEngine(TWEngine engine)
         {
             engine.AddSimulator(userInputProcessingService, "Client-UserInputProcessingSim");
+            engine.AddSimulator(applyServerStateChanges, "Client-applyServerStateChangesSim");
             engine.AddSimulator(uiRenderingService, "Client-UIRenderingSim");
             engine.AddSimulator(developerConsoleService, "Client-DevConsoleSim");
             engine.AddSimulator(simpleWorldRenderer, "Client-WorldRenderingSim");
@@ -62,5 +66,13 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         }
 
+        private void applyServerStateChanges()
+        {
+            while (networkConnectorClient.GameStateDeltaTransporter.PacketAvailable)
+            {
+                var p = networkConnectorClient.GameStateDeltaTransporter.Receive();
+                gameStateDeltaPacketBuilder.ApplyDeltaPacket(p);
+            }
+        }
     }
 }

@@ -15,10 +15,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterInstance(EngineFactory.CreateEngine()).SingleInstance();
             builder.RegisterType<GodGameServer>().SingleInstance();
-
-            builder.RegisterType<GameState>().SingleInstance();
 
             builder.RegisterType<WorldSimulationService>().SingleInstance();
             builder.RegisterType<ClearGameStateChangesService>().SingleInstance();
@@ -28,7 +25,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
 
             builder.RegisterType<PlayerInputHandler>();
 
-            builder.RegisterInstance(new NetworkConnectorServer(15005, 15006));
+            builder.RegisterInstance(new NetworkConnectorServer(15005, 15006)).As<INetworkConnectorServer>();
 
         }
 

@@ -21,12 +21,12 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
             world.ForEach((v, p) => sWorld.Voxels.Add(SerializedVoxel.FromVoxel(v)));
             return sWorld;
         }
-        public void ToWorld(Internal.Model.World world, Func<string, GameVoxelType> typeFactory, Func<string, ItemType> itemFactory)
+        public void ToWorld(Internal.Model.World world, GameplayObjectsSerializer gameplayObjectsSerializer)
         {
             foreach (var el in Voxels)
             {
                 var v = world.GetVoxel(new Point2(el.X, el.Y));
-                el.ToVoxel(v, typeFactory,itemFactory);
+                el.ToVoxel(v,  gameplayObjectsSerializer);
             }
         }
 
