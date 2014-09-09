@@ -205,9 +205,6 @@
     <Compile Include="GodGame\Internal\Networking\VirtualNetworkConnectorClient.cs" />
     <Compile Include="GodGame\Internal\Networking\VirtualNetworkConnectorServer.cs" />
     <Compile Include="GodGame\ChangeHeightTool.cs" />
-    <Compile Include="GodGame\Internal\DeveloperConsoleUI.cs" />
-    <Compile Include="GodGame\Internal\DirectInputTextBox.cs" />
-    <Compile Include="GodGame\Internal\ICommandProvider.cs" />
     <Compile Include="GodGame\Internal\Rendering\ChunkedVoxelWorldRenderer.cs" />
     <Compile Include="GodGame\Internal\Mains\GodGameClient.cs" />
     <Compile Include="GodGame\Internal\Model\GameState.cs" />
@@ -276,7 +273,6 @@
     <Compile Include="GodGame\_Tests\ServerClientListenerTest.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkPlayerInputForwarder.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkedPlayer.cs" />
-    <Compile Include="GodGame\_Tests\RendererTest.cs" />
     <Compile Include="GodGame\_Tests\UITest.cs" />
     <Compile Include="GodGame\Internal\Networking\UserInputPacket.cs" />
     <Compile Include="GodGame\Internal\Networking\ServerPlayerListener.cs" />

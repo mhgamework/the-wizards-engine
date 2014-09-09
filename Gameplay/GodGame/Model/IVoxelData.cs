@@ -11,6 +11,7 @@ namespace MHGameWork.TheWizards.GodGame
         GameVoxelType Type { get; set; }
         int DataValue { get; set; }
         int MagicLevel { get; set; }
+        float Height { get; set; }
 
         /// <summary>
         /// TODO: could be optimized to not always store an inventory
@@ -35,6 +36,7 @@ namespace MHGameWork.TheWizards.GodGame
         public GameVoxelType Type { get; set; }
         public int DataValue { get; set; }
         public int MagicLevel { get; set; }
+        public float Height { get; set; }
 
         /// <summary>
         /// TODO: could be optimized to not always store an inventory
@@ -69,8 +71,6 @@ namespace MHGameWork.TheWizards.GodGame
             }
         }
 
-        
-
         public int DataValue
         {
             get { return decorated.DataValue; }
@@ -87,6 +87,18 @@ namespace MHGameWork.TheWizards.GodGame
             get { return decorated.MagicLevel; }
             set { decorated.MagicLevel = value; }
         }
+
+        public float Height
+        {
+            get { return decorated.Height; }
+            set
+            {
+                if (decorated.Height != value)
+                    onChange();
+                decorated.Height = value;
+            }
+        }
+
 
         public Inventory Inventory
         {
