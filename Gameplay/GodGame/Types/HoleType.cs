@@ -17,8 +17,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
             meshBuilder = new FourWayModelBuilder
             {
                 BaseMesh = datavalueMeshes.ContainsKey(0) ? datavalueMeshes[0] : null,
-                WayMesh = datavalueMeshes.ContainsKey(1) ? datavalueMeshes[1] : null,
-                NoWayMesh = datavalueMeshes.ContainsKey(2) ? datavalueMeshes[2] : null
+                //WayMesh = datavalueMeshes.ContainsKey(1) ? datavalueMeshes[1] : null,
+                //NoWayMesh = datavalueMeshes.ContainsKey(2) ? datavalueMeshes[2] : null
             };
         }
 
