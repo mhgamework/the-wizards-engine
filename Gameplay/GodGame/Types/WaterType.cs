@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
             for (int i = 0; i <= maxDataVal; i++)
             {
-                meshBuilders.Add(new FourWayModelBuilder { BaseMesh = MeshBuilder.Transform(mesh, Matrix.Translation(0, -0.9f + (0.9f / maxDataVal) * i, 0)), NoWayMesh = datavalueMeshes[999] });
+                meshBuilders.Add(new FourWayModelBuilder { BaseMesh = MeshBuilder.Transform(mesh, Matrix.Translation(0, -0.9f + (0.9f / maxDataVal) * i, 0)), /*NoWayMesh = datavalueMeshes[999]*/ });
             }
         }
 

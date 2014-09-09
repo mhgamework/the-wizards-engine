@@ -181,12 +181,13 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public IMesh GetDefaultGroundMesh(float height)
         {
+            const float groundHeight = 15f * 0.1f;
             var meshheight = height * 0.1f;
-            if (meshheight <= 0)
+            if (meshheight < 0)
                 return null;
 
-            var ret = UtilityMeshes.CreateBoxColored(Color.SaddleBrown, new Vector3(0.5f, meshheight, 0.5f));
-            return MeshBuilder.Transform(ret, Matrix.Translation(0, -meshheight - 0.1f, 0));
+            var ret = UtilityMeshes.CreateBoxColored(Color.SaddleBrown, new Vector3(0.5f, meshheight + groundHeight, 0.5f));
+            return MeshBuilder.Transform(ret, Matrix.Translation(0, -meshheight - 0.1f - groundHeight, 0));
         }
 
         public IMesh GetDataValueMesh(int dataValue)
