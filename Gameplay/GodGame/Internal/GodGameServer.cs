@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -17,47 +18,63 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 {
     public class GodGameServer
     {
-        private readonly GameState state;
-        private readonly WorldPersister persister;
         //public World World { get; private set; }
+        public TickSimulator tickSimulator;
+        private ServerPlayerListener serverPlayerListener;
+        private ClearStateChangesSimulator clearStateChangesSimulator;
+        private NetworkConnectorServer networkConnectorServer;
+        public int TcpPort { get; private set; }
 
-        public GodGameServer(TWEngine engine, GameState state, WorldPersister persister, ISimulator tickSimulator, PlayerState localPlayer)
+        public GodGameServer(TickSimulator tickSimulator, NetworkedPlayerFactory networkedPlayerFactory, ClearStateChangesSimulator clearStateChangesSimulator)
         {
-            this.state = state;
-            this.persister = persister;
+            this.tickSimulator = tickSimulator;
+            this.clearStateChangesSimulator = clearStateChangesSimulator;
 
 
-            var connector = new NetworkConnectorServer(15005, 15006);
-            IEnumerable<IPlayerTool> playerTools = new[] { new CreateLandTool(state.World) };
-            var networkedPlayerFactory = new NetworkedPlayerFactory((transporter, handler) => new NetworkPlayerInputForwarder(transporter, handler, state.World), playerState => new PlayerInputHandler(playerTools, state.World, persister, playerState), state);
-            var scl = new ServerPlayerListener(connector
-                , networkedPlayerFactory);
+            TcpPort = 15005;
+            networkConnectorServer = new NetworkConnectorServer(TcpPort, 15006);
+            serverPlayerListener = new ServerPlayerListener(networkConnectorServer, networkedPlayerFactory);
 
 
-            Thread.Sleep(100);
+        }
 
-            var clientConnector = new NetworkConnectorClient();
-            clientConnector.Connect("127.0.0.1", 15005);
-
-            var playerInputSimulator = new PlayerInputSimulator(state.World, new ProxyPlayerInputHandler(clientConnector.UserInputTransporter),null); //TODO: null!!
+  
 
 
-            engine.AddSimulator(new BasicSimulator(() =>
-                {
-                    scl.UpdateConnectedPlayers();
-                    foreach (var client in scl.Players)
-                    {
-                        client.NetworkPlayerInputForwarder.ForwardReceivedInputs();
-                    }
-                }));
+        public void Start()
+        {
+            networkConnectorServer.StartListening();
+        }
+        public void Stop()
+        {
+            throw new NotImplementedException();
+        }
 
-            engine.AddSimulator(playerInputSimulator);
-            engine.AddSimulator(tickSimulator);
-            Model.World world = state.World;
-            engine.AddSimulator(new GodGameRenderingSimulator(world, playerInputSimulator, localPlayer, new SimpleWorldRenderer(world)));
-            engine.AddSimulator(new WorldRenderingSimulator());
-            engine.AddSimulator(new ClearStateChangesSimulator(state));
+        public void Tick()
+        {
+            updateConnectedClients();
+            processClientInputs();
+            tickSimulator.Simulate();
+            sendGameStateUpdates();
+            clearStateChangesSimulator.Simulate();
 
+        }
+
+        private void sendGameStateUpdates()
+        {
+        }
+
+        private void processClientInputs()
+        {
+            foreach (var client in serverPlayerListener.Players)
+            {
+                client.NetworkPlayerInputForwarder.ForwardReceivedInputs();
+            }
+        }
+
+        private void updateConnectedClients()
+        {
+            serverPlayerListener.UpdateConnectedPlayers();
         }
 
 

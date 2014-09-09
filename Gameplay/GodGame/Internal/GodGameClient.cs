@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.GodGame.DeveloperCommands;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Networking;
@@ -17,37 +18,45 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 {
     public class GodGameClient
     {
-        private readonly GameState state;
-        private readonly WorldPersister persister;
-        //public World World { get; private set; }
+        private PlayerInputSimulator playerInputSimulator;
+        private UIRenderer uiRenderer;
+        private DeveloperConsoleSimulator developerConsoleSimulator;
+        private ClearStateChangesSimulator clearStateChangesSimulator;
+        private WorldRenderingSimulator worldRenderingSimulator;
+        private SimpleWorldRenderer simpleWorldRenderer;
+        private readonly NetworkConnectorClient networkConnectorClient;
 
-        public GodGameClient(TWEngine engine, GameState state, WorldPersister persister, ISimulator tickSimulator, PlayerState localPlayer)
+        public GodGameClient(PlayerInputSimulator playerInputSimulator, 
+            UIRenderer uiRenderer, 
+            DeveloperConsoleSimulator developerConsoleSimulator, 
+            ClearStateChangesSimulator clearStateChangesSimulator, 
+            WorldRenderingSimulator worldRenderingSimulator, 
+            SimpleWorldRenderer simpleWorldRenderer, NetworkConnectorClient networkConnectorClient)
         {
-            this.state = state;
-            this.persister = persister;
-
-            var clientConnector = new NetworkConnectorClient();
-            clientConnector.Connect("127.0.0.1", 15005);
-            Model.World world = state.World;
-            var simpleWorldRenderer = new SimpleWorldRenderer(world);
-
-            var playerInputSimulator = new PlayerInputSimulator(state.World, new ProxyPlayerInputHandler(clientConnector.UserInputTransporter), simpleWorldRenderer);
-
-            engine.AddSimulator(playerInputSimulator);
-            engine.AddSimulator(tickSimulator);
-            engine.AddSimulator(new GodGameRenderingSimulator(world, playerInputSimulator, localPlayer, simpleWorldRenderer));
-            engine.AddSimulator(new WorldRenderingSimulator());
-            engine.AddSimulator(new ClearStateChangesSimulator(state));
+            this.playerInputSimulator = playerInputSimulator;
+            this.uiRenderer = uiRenderer;
+            this.developerConsoleSimulator = developerConsoleSimulator;
+            this.clearStateChangesSimulator = clearStateChangesSimulator;
+            this.worldRenderingSimulator = worldRenderingSimulator;
+            this.simpleWorldRenderer = simpleWorldRenderer;
+            this.networkConnectorClient = networkConnectorClient;
 
         }
 
-
-        private void loadSave()
+        public void ConnectToServer(string ip, int port)
         {
-            if (!persister.GetDefaultSaveFile().Exists) return;
-            persister.Load(state.World, persister.GetDefaultSaveFile());
+            networkConnectorClient.Connect("127.0.0.1", 15005);
         }
+        public void Tick()
+        {
+            playerInputSimulator.Simulate();
+            uiRenderer.Simulate();
+            developerConsoleSimulator.Simulate();
+            simpleWorldRenderer.Simulate();
+            clearStateChangesSimulator.Simulate();
+            worldRenderingSimulator.Simulate();
 
+        }
 
     }
 }

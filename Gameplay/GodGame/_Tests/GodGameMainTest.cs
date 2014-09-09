@@ -1,11 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Autofac.Core;
 using MHGameWork.TheWizards.Engine;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
+using MHGameWork.TheWizards.GodGame.Networking;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.Scattered.Model;
+using NSubstitute;
 using NUnit.Framework;
 using SlimDX;
 using System.Linq;
@@ -19,106 +25,29 @@ namespace MHGameWork.TheWizards.GodGame._Tests
     [TestFixture]
     public class GodGameMainTest
     {
-        private static SimpleWorldRenderer simpleWorldRenderer;
+        [Test]
+        public void TestServerClientGame()
+        {
+            var game = new GodGameServerClient();
+
+        }
 
         [Test]
-        public void TestMainGame()
+        public void TestOfflineGame()
         {
             var game = CreateGame();
             game.LoadSave();
 
         }
 
-        [Test]
-        public void TestServerGame()
-        {
-            var builder = new Autofac.ContainerBuilder();
-
-            builder.RegisterType<GodGameServer>().SingleInstance();
-            builder.RegisterType<WorldPersister>().SingleInstance();
-            builder.RegisterType<PlayerInputSimulator>().SingleInstance();
-            builder.RegisterType<TickSimulator>().SingleInstance().AsSelf().AsImplementedInterfaces();
-
-            builder.Register(c => new PlayerInputHandler(
-                createPlayerInputs(c.Resolve<Internal.Model.World>()),
-                c.Resolve<Internal.Model.World>(),
-                c.Resolve<WorldPersister>(),
-                c.Resolve<PlayerState>())).SingleInstance();
-            builder.RegisterInstance(new WorldPersister(getTypeFromName, getItemFromName));
-
-            builder.RegisterInstance(EngineFactory.CreateEngine());
-            builder.RegisterInstance(new PlayerState());
-
-            var world = new Internal.Model.World(40, 10);
-            buildDemoWorld(world);
-
-            builder.RegisterInstance(world);
-
-
-            builder.Register(c => new GameState(c.Resolve<Internal.Model.World>()).Alter(g => g.AddPlayer(c.Resolve<PlayerState>())));
-
-
-            // Until here goes the non-networked registration
-
-
-
-
-
-            var container = builder.Build();
-            var server = container.Resolve<GodGameServer>();
-
-        }
-
-        [Test]
-        public void TestClientGame()
-        {
-            var builder = new Autofac.ContainerBuilder();
-
-            builder.RegisterType<GodGameClient>().SingleInstance();
-            builder.RegisterType<WorldPersister>().SingleInstance();
-            builder.RegisterType<PlayerInputSimulator>().SingleInstance();
-            builder.RegisterType<TickSimulator>().SingleInstance().AsSelf().AsImplementedInterfaces();
-
-            builder.Register(c => new PlayerInputHandler(
-                createPlayerInputs(c.Resolve<Internal.Model.World>()),
-                c.Resolve<Internal.Model.World>(),
-                c.Resolve<WorldPersister>(),
-                c.Resolve<PlayerState>())).SingleInstance();
-            builder.RegisterInstance(new WorldPersister(getTypeFromName, getItemFromName));
-
-            builder.RegisterInstance(EngineFactory.CreateEngine());
-            builder.RegisterInstance(new PlayerState());
-
-            var world = new Internal.Model.World(40, 10);
-            buildDemoWorld(world);
-
-            builder.RegisterInstance(world);
-
-
-            builder.Register(c => new GameState(c.Resolve<Internal.Model.World>()).Alter(g => g.AddPlayer(c.Resolve<PlayerState>())));
-
-
-            // Until here goes the non-networked registration
-
-
-
-
-
-            var container = builder.Build();
-            var server = container.Resolve<GodGameClient>();
-
-        }
-
-
-
-        public static GodGameMain CreateGame()
+        public static GodGameOffline CreateGame()
         {
             var world = new Internal.Model.World(100, 10);
             buildDemoWorld(world);
 
             var worldPersister = new WorldPersister(getTypeFromName, getItemFromName);
 
-            var ret = new GodGameMain(EngineFactory.CreateEngine(), world, worldPersister, createPlayerInputs(world));
+            var ret = new GodGameOffline(EngineFactory.CreateEngine(), world, worldPersister, createPlayerInputs(world));
 
             return ret;
         }
@@ -133,7 +62,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                         v.ChangeType(GameVoxelType.Land);
                     else if (Vector2.Distance(p, new Vector2(25, 25)) < 15)
                         v.ChangeType(GameVoxelType.Land);
-                        //v.ChangeType(GameVoxelType.Infestation);
+                    //v.ChangeType(GameVoxelType.Infestation);
                     else
                         v.ChangeType(GameVoxelType.Air);
                 });
@@ -141,7 +70,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
             /*var worldPersister = new WorldPersister(getTypeFromName, getItemFromName);
             var simpleWorldRenderer = new SimpleWorldRenderer(world);
-            var ret = new GodGameMain(EngineFactory.CreateEngine(),
+            var ret = new GodGameOffline(EngineFactory.CreateEngine(),
                 world,
                 new PlayerInputSimulator(createPlayerInputs(world).ToArray(), world, worldPersister, simpleWorldRenderer),
                 worldPersister,

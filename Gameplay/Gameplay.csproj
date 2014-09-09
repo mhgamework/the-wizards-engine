@@ -190,6 +190,9 @@
     <Compile Include="Engine\WorldRendering\FastTextareaUpdater.cs" />
     <Compile Include="Engine\WorldRendering\ITextareaUpdater.cs" />
     <Compile Include="GodGame\DeveloperCommands\AllCommandProvider.cs" />
+    <Compile Include="GodGame\Internal\Configuration\ClientModule.cs" />
+    <Compile Include="GodGame\Internal\Configuration\ServerModule.cs" />
+    <Compile Include="GodGame\Internal\GodGameServer.cs" />
     <Compile Include="GodGame\Internal\DelegateCommandProvider.cs" />
     <Compile Include="GodGame\Internal\DeveloperConsoleSimulator.cs" />
     <Compile Include="GodGame\Internal\DeveloperConsoleUI.cs" />
@@ -203,16 +206,16 @@
     <Compile Include="GodGame\Internal\Rendering\PerEntityVoxelWorldRenderer.cs" />
     <Compile Include="GodGame\IPlayerInputHandler.cs" />
     <Compile Include="GodGame\LightGodPowerInputHandler.cs" />
+    <Compile Include="GodGame\Networking\LazyClientPacketTransporter.cs" />
     <Compile Include="GodGame\Networking\NetworkedPlayerFactory.cs" />
     <Compile Include="GodGame\Networking\ProxyPlayerInputHandler.cs" />
     <Compile Include="GodGame\PlayerInputHandler.cs" />
     <Compile Include="GodGame\DelegatePlayerTool.cs" />
     <Compile Include="GodGame\Internal\ClearStateChangesSimulator.cs" />
-    <Compile Include="GodGame\Internal\Rendering\GodGameRenderingSimulator.cs" />
-    <Compile Include="GodGame\Internal\GodGameServer.cs" />
+    <Compile Include="GodGame\Internal\GodGameServerClient.cs" />
     <Compile Include="GodGame\Internal\Rendering\CustomVoxelsRenderer.cs" />
     <Compile Include="GodGame\Internal\Model\GameVoxel.cs" />
-    <Compile Include="GodGame\Internal\GodGameMain.cs" />
+    <Compile Include="GodGame\Internal\GodGameOffline.cs" />
     <Compile Include="GodGame\Persistence\SerializedWorld.cs" />
     <Compile Include="GodGame\Internal\WorldPersister.cs" />
     <Compile Include="GodGame\IPlayerTool.cs" />
@@ -251,6 +254,7 @@
     <Compile Include="GodGame\Types\GameVoxelType.cs" />
     <Compile Include="GodGame\VoxelData.cs" />
     <Compile Include="GodGame\Networking\NetworkConnectorClient.cs" />
+    <Compile Include="GodGame\_Tests\GodGameAutofacConfigTest.cs" />
     <Compile Include="GodGame\_Tests\DirectInputTextboxTest.cs" />
     <Compile Include="GodGame\_Tests\DeveloperConsoleTest.cs" />
     <Compile Include="GodGame\_Tests\NetworkedPlayerInputTest.cs" />

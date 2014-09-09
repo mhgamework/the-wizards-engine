@@ -12,12 +12,12 @@ namespace MHGameWork.TheWizards.GodGame.Internal
     /// <summary>
     /// Runs the godgame
     /// </summary>
-    public class GodGameMain
+    public class GodGameOffline
     {
         private readonly WorldPersister persister;
         public Model.World World { get; private set; }
 
-        public GodGameMain(TWEngine engine, Model.World world, WorldPersister persister, IEnumerable<IPlayerTool> playerInputs)
+        public GodGameOffline(TWEngine engine, Model.World world, WorldPersister persister, IEnumerable<IPlayerTool> playerInputs)
         {
             this.persister = persister;
             World = world;

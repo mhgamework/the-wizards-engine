@@ -24,6 +24,10 @@ namespace MHGameWork.TheWizards.GodGame.Networking
             UserInputTransporter = spm.CreatePacketTransporter("UserInput", gen.GetFactory<UserInputPacket>(), PacketFlags.TCP);
             gen.BuildFactoriesAssembly();
 
+        }
+
+        public void StartListening()
+        {
             spm.Start();
         }
     }

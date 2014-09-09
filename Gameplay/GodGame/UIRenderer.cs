@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         private void updateTextarea()
         {
-            textarea.Text =localPlayerState.ActiveTool == null ? "NO TOOL" : localPlayerState.ActiveTool.Name;
+            textarea.Text = localPlayerState.ActiveTool == null ? "NO TOOL" : localPlayerState.ActiveTool.Name;
         }
         private void drawReticle()
         {
@@ -92,7 +92,7 @@ namespace MHGameWork.TheWizards.GodGame
         {
             var target = inputSim.GetTargetedVoxel();
 
-            if (target == null )//|| target.MagicLevel == 0)
+            if (target == null)//|| target.MagicLevel == 0)
             {
                 hideDataValueRect();
                 return;
@@ -133,7 +133,7 @@ namespace MHGameWork.TheWizards.GodGame
 
                 visualizedVoxel = null;
                 visualizedType = null;
-                if (voxel != null)
+                if (voxel != null && voxel.Type != null)
                 {
                     visualizedVoxel = voxel;
                     visualizedType = voxel.Type;
