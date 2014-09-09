@@ -92,8 +92,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
             customVoxelsRenderer.updateVoxelCustomRenderers(offset, worldTranslation, new Point2(RenderSize, RenderSize));
 
             updateSelectionBoundingBox(target.Value);
-
-            TW.Graphics.LineManager3D.AddBox(world.GetBoundingBox(world.GetVoxelAtGroundPos(target.Value).Coord), Color.Fuchsia.dx());
+            //TW.Graphics.LineManager3D.AddBox(world.GetBoundingBox(world.GetVoxelAtGroundPos(target.Value).Coord), Color.Fuchsia.dx());
         }
 
         private void updateSelectionBoundingBox(Vector3 groundPos)
@@ -105,7 +104,14 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
             var size = ((ChangeHeightTool)localPlayer.ActiveTool).Size;
             var baseBox = selectedVoxel.GetBoundingBox();
             var newBox = new BoundingBox(baseBox.Minimum + new Vector3(-size * 10, 0, -size * 10), baseBox.Maximum + new Vector3(size * 10, 0, size * 10));
-            TW.Graphics.LineManager3D.AddBox(newBox, Color.White);
+
+            var color = Color.White;
+            if (((ChangeHeightTool)localPlayer.ActiveTool).State == ChangeHeightTool.HeightToolState.SMOOTH)
+                color = Color.DeepSkyBlue;
+            if (((ChangeHeightTool)localPlayer.ActiveTool).State == ChangeHeightTool.HeightToolState.FLATTEN)
+                color = Color.Orange;
+
+            TW.Graphics.LineManager3D.AddBox(newBox, color);
         }
 
         private void updateLights(BoundingBox visibleWorldBB)
