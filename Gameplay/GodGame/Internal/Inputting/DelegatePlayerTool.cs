@@ -7,28 +7,28 @@ namespace MHGameWork.TheWizards.GodGame
 {
     class DelegatePlayerTool : IPlayerTool
     {
-        private readonly Action<GameVoxel> onLeftClick;
-        private readonly Action<GameVoxel> onRightClick;
+        private readonly Action<IVoxelHandle> onLeftClick;
+        private readonly Action<IVoxelHandle> onRightClick;
         public string Name { get; private set; }
 
-        public DelegatePlayerTool(string name, Action<GameVoxel> onLeftClick, Action<GameVoxel> onRightClick)
+        public DelegatePlayerTool(string name, Action<IVoxelHandle> onLeftClick, Action<IVoxelHandle> onRightClick)
         {
             this.onLeftClick = onLeftClick;
             this.onRightClick = onRightClick;
             Name = name;
         }
 
-        public void OnLeftClick(GameVoxel voxel)
+        public void OnLeftClick(IVoxelHandle voxel)
         {
             onLeftClick(voxel);
         }
 
-        public void OnRightClick(GameVoxel voxel)
+        public void OnRightClick(IVoxelHandle voxel)
         {
             onRightClick(voxel);
         }
 
-        public void OnKeypress(GameVoxel voxel, Key key)
+        public void OnKeypress(IVoxelHandle voxel, Key key)
         {
             
         }

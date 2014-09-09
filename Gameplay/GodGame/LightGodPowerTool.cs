@@ -14,14 +14,14 @@ namespace MHGameWork.TheWizards.GodGame
         }
 
         public string Name { get { return "Let there be light!"; } }
-        public void OnLeftClick(GameVoxel voxel)
+        public void OnLeftClick(IVoxelHandle voxel)
         {
 
         }
 
         private GameVoxel prevVoxel;
 
-        public void OnRightClick(GameVoxel voxel)
+        public void OnRightClick(IVoxelHandle voxel)
         {
             int radius = 3;
             if (prevVoxel != null)
@@ -29,12 +29,12 @@ namespace MHGameWork.TheWizards.GodGame
                 new IVoxelHandle(prevVoxel).GetRangeCircle(radius).ForEach(v => v.Data.MagicLevel = 0);
             }
 
-            var handle = new IVoxelHandle(voxel);
+            var handle = voxel;
             handle.GetRangeCircle(radius).Where(v => v.Type is InfestationVoxelType).ForEach(removeInfestation);
-            prevVoxel = voxel;
+            prevVoxel = voxel.GetInternalVoxel();
         }
 
-        public void OnKeypress(GameVoxel voxel, Key key)
+        public void OnKeypress(IVoxelHandle voxel, Key key)
         {
             
         }

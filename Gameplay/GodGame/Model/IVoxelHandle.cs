@@ -113,10 +113,13 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         public IVoxelData Data { get { return currentVoxel.Data; } }
 
         public Seeder Seeder { get; private set; }
-
-        public void ChangeType(GameVoxelType air)
+        
+        public void ChangeType(GameVoxelType type)
         {
-            currentVoxel.ChangeType(air);
+            //note: put gameplay-related changes here
+            var prevHeight = currentVoxel.Data.Height;
+            currentVoxel.ChangeType(type);
+            currentVoxel.Data.Height = prevHeight;
 
         }
         public GameVoxelType Type

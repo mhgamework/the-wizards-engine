@@ -29,18 +29,18 @@ namespace MHGameWork.TheWizards.GodGame
         }
 
         public string Name { get { return "ChangeHeight"; } }
-        public void OnLeftClick(GameVoxel voxel)
+        public void OnLeftClick(IVoxelHandle voxel)
         {
             ProcessClick(voxel, true);
 
         }
 
-        public void OnRightClick(GameVoxel voxel)
+        public void OnRightClick(IVoxelHandle voxel)
         {
             ProcessClick(voxel, false);
         }
 
-        public void OnKeypress(GameVoxel voxel, Key key)
+        public void OnKeypress(IVoxelHandle voxel, Key key)
         {
             if (key == Key.NumberPadPlus)
                 Size++;
@@ -59,7 +59,7 @@ namespace MHGameWork.TheWizards.GodGame
             }
         }
 
-        private void ProcessClick(GameVoxel voxel, bool isLeftClick)
+        private void ProcessClick(IVoxelHandle voxel, bool isLeftClick)
         {
             switch (State)
             {
@@ -75,18 +75,18 @@ namespace MHGameWork.TheWizards.GodGame
             }
         }
 
-        private void DoDefault(GameVoxel voxel, bool isLeftClick)
+        private void DoDefault(IVoxelHandle voxel, bool isLeftClick)
         {
             var change = isLeftClick ? 1 : -1;
             foreach (var v in GetVoxelsInRange(voxel))
             {
                 v.Data.Height += change;
                 CheckHeight(v);
-                world.NotifyVoxelChanged(v);
+                world.NotifyVoxelChanged(v.GetInternalVoxel());
             }
         }
 
-        private void DoSmooth(GameVoxel voxel, bool isLeftClick)
+        private void DoSmooth(IVoxelHandle voxel, bool isLeftClick)
         {
             var change = isLeftClick ? 1 : -1;
             var voxels = GetVoxelsInRange(voxel);
@@ -100,11 +100,11 @@ namespace MHGameWork.TheWizards.GodGame
                     v.Data.Height += change;
 
                 CheckHeight(v);
-                world.NotifyVoxelChanged(v);
+                world.NotifyVoxelChanged(v.GetInternalVoxel());
             }
         }
 
-        private void DoFlatten(GameVoxel voxel, bool isLeftClick)
+        private void DoFlatten(IVoxelHandle voxel, bool isLeftClick)
         {
             if (!isLeftClick)
             {
@@ -116,19 +116,19 @@ namespace MHGameWork.TheWizards.GodGame
             foreach (var v in voxels)
             {
                 v.Data.Height = flattenHeight;
-                world.NotifyVoxelChanged(v);
+                world.NotifyVoxelChanged(v.GetInternalVoxel());
             }
         }
 
-        private void CheckHeight(GameVoxel voxel)
+        private void CheckHeight(IVoxelHandle voxel)
         {
             if (voxel.Data.Height < 0)
                 voxel.Data.Height = 0;
         }
 
-        private List<GameVoxel> GetVoxelsInRange(GameVoxel centerVoxel)
+        private List<IVoxelHandle> GetVoxelsInRange(IVoxelHandle centerVoxel)
         {
-            return world.GetRange(centerVoxel, Size).ToList();
+            return world.GetRange(centerVoxel.GetInternalVoxel(), Size).Select(e => new IVoxelHandle(e)).ToList();
         }
     }
 }

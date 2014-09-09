@@ -7,9 +7,9 @@ namespace MHGameWork.TheWizards.GodGame
     public interface IPlayerTool
     {
         string Name { get; }
-        void OnLeftClick(GameVoxel voxel);
-        void OnRightClick(GameVoxel voxel);
-        void OnKeypress(GameVoxel voxel, Key key);
+        void OnLeftClick(IVoxelHandle voxel);
+        void OnRightClick(IVoxelHandle voxel);
+        void OnKeypress(IVoxelHandle voxel, Key key);
 
 
     }
