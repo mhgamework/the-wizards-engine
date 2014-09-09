@@ -52,7 +52,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         public void ConnectToServer(string ip, int port)
         {
-            networkConnectorClient.Connect("127.0.0.1", 15005);
+            networkConnectorClient.Connect(ip, 15005);
         }
         public void AddSimulatorsToEngine(TWEngine engine)
         {
