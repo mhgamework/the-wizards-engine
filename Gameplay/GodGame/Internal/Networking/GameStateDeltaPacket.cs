@@ -8,6 +8,11 @@ namespace MHGameWork.TheWizards.GodGame.Networking
     /// </summary>
     public struct GameStateDeltaPacket : INetworkPacket
     {
+        /// <summary>
+        /// The name of the player this packet is to be send to
+        /// </summary>
+        public string TargetPlayerName;
+
         public int[] CoordsX;
         public int[] CoordsY;
         public string[] Types;

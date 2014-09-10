@@ -5,6 +5,7 @@ using System.Drawing;
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.GodGame.Internal.Networking;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
 using MHGameWork.TheWizards.Scattered._Engine;
@@ -31,17 +32,17 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
         }
 
         
-        public WorldRenderingService(Model.World world, PlayerState localPlayer)
-            : this(world, new PerEntityVoxelWorldRenderer(world, new Point2(RenderSize, RenderSize)), localPlayer)
+        public WorldRenderingService(Model.World world, LocalPlayerService localPlayerS)
+            : this(world, new PerEntityVoxelWorldRenderer(world, new Point2(RenderSize, RenderSize)), localPlayerS)
         {
         }
 
-        
-        public WorldRenderingService(Model.World world, IVoxelWorldRenderer voxelWorldRenderer, PlayerState localPlayer)
+
+        public WorldRenderingService(Model.World world, IVoxelWorldRenderer voxelWorldRenderer, LocalPlayerService localPlayerS)
         {
             this.world = world;
             this.voxelWorldRenderer = voxelWorldRenderer;
-            this.localPlayer = localPlayer;
+            this.localPlayer = localPlayerS.Player;
 
             Debug.Assert(Math.Abs(world.VoxelSize.X - world.VoxelSize.Y) < 0.001f);
 

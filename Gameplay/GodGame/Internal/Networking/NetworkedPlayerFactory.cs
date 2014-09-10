@@ -20,11 +20,13 @@ namespace MHGameWork.TheWizards.GodGame.Networking
             this.gameState = gameState;
         }
 
+        private int nextId = 0;
         public NetworkedPlayer CreatePlayer(IClient client, IClientPacketTransporter<UserInputPacket> inputTransporter)
         {
             //Note: This could go to a networkedplayerfactory
             var state = new PlayerState();
             gameState.AddPlayer(state);
+            state.Name = "Player" + (nextId++).ToString();
             var handler = createInputHandler(state);
             var nInputReceiver = createNetworkedInputReceiver(inputTransporter, handler);
 

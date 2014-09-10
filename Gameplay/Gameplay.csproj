@@ -202,6 +202,7 @@
     <Compile Include="GodGame\Internal\Networking\GameStateDeltaPacket.cs" />
     <Compile Include="GodGame\Internal\Networking\INetworkConnectorClient.cs" />
     <Compile Include="GodGame\Internal\Networking\INetworkConnectorServer.cs" />
+    <Compile Include="GodGame\Internal\Networking\LocalPlayerService.cs" />
     <Compile Include="GodGame\Internal\Networking\VirtualNetworkConnectorClient.cs" />
     <Compile Include="GodGame\Internal\Networking\VirtualNetworkConnectorServer.cs" />
     <Compile Include="GodGame\ChangeHeightTool.cs" />

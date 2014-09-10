@@ -4,6 +4,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Networking;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.GodGame._Tests;
@@ -26,10 +27,10 @@ namespace MHGameWork.TheWizards.GodGame
         private TargetingReticle reticle;
         private Textarea textarea;
 
-        public UIRenderingService(Internal.Model.World world, PlayerState localPlayerState, UserInputProcessingService inputSim)
+        public UIRenderingService(Internal.Model.World world, LocalPlayerService localPlayerService, UserInputProcessingService inputSim)
         {
             this.world = world;
-            this.localPlayerState = localPlayerState;
+            this.localPlayerState = localPlayerService.Player;
             this.inputSim = inputSim;
 
             reticle = new TargetingReticle();

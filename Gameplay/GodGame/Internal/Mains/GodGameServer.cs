@@ -79,7 +79,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private void sendGameStateUpdates()
         {
             var p = deltaPacketBuilder.CreateDeltaPacket();
-            networkConnectorServer.GameStateDeltaTransporter.SendAll(p);
+            foreach (var player in serverPlayerListener.Players)
+            {
+                p.TargetPlayerName = player.Player.Name;
+                networkConnectorServer.GameStateDeltaTransporter.SendTo(player.NetworkClient, p);
+            }
         }
 
         private void processClientInputs()
@@ -100,6 +104,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             var p = deltaPacketBuilder.CreateDeltaPacket(all);
             foreach (var addedClient in serverPlayerListener.ClientsObserver.Added)
             {
+                p.TargetPlayerName = serverPlayerListener.Players.First(k => k.NetworkClient == addedClient).Player.Name;
                 networkConnectorServer.GameStateDeltaTransporter.SendTo(addedClient, p);
             }
         }

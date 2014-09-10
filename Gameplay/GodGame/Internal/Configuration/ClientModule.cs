@@ -2,6 +2,7 @@
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame.DeveloperCommands;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Networking;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Networking;
 
@@ -25,13 +26,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             builder.RegisterType<WorldRenderingService>().SingleInstance();
 
             builder.RegisterType<GameState>().SingleInstance();
-            builder.Register(ctx =>
-                {
-                    var state = ctx.Resolve<GameState>();
-                    var p = new PlayerState();
-                    state.AddPlayer(p);
-                    return p;
-                }).SingleInstance();
+            builder.RegisterType<LocalPlayerService>().SingleInstance();
             builder.Register(ctx =>
             {
                 var connector = ctx.Resolve<INetworkConnectorClient>();

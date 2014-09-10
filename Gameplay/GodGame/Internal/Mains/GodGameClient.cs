@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame.DeveloperCommands;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Networking;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Networking;
 using MHGameWork.TheWizards.GodGame._Tests;
@@ -30,6 +31,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private WorldRenderingService simpleWorldRenderer;
         private readonly INetworkConnectorClient networkConnectorClient;
         private readonly GameStateDeltaPacketBuilder gameStateDeltaPacketBuilder;
+        private readonly LocalPlayerService localPlayerService;
 
         public GodGameClient(UserInputProcessingService userInputProcessingService, 
             UIRenderingService uiRenderingService, 
@@ -38,7 +40,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             WorldRenderingSimulator worldRenderingSimulator, 
             WorldRenderingService simpleWorldRenderer, 
             INetworkConnectorClient networkConnectorClient,
-            GameStateDeltaPacketBuilder gameStateDeltaPacketBuilder)
+            GameStateDeltaPacketBuilder gameStateDeltaPacketBuilder,
+            LocalPlayerService localPlayerService)
         {
             this.userInputProcessingService = userInputProcessingService;
             this.uiRenderingService = uiRenderingService;
@@ -48,6 +51,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             this.simpleWorldRenderer = simpleWorldRenderer;
             this.networkConnectorClient = networkConnectorClient;
             this.gameStateDeltaPacketBuilder = gameStateDeltaPacketBuilder;
+            this.localPlayerService = localPlayerService;
         }
 
         public void ConnectToServer(string ip, int port)
@@ -71,6 +75,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             while (networkConnectorClient.GameStateDeltaTransporter.PacketAvailable)
             {
                 var p = networkConnectorClient.GameStateDeltaTransporter.Receive();
+                localPlayerService.Player.Name = p.TargetPlayerName; // Set the correct player name for the local player
+
+
                 gameStateDeltaPacketBuilder.ApplyDeltaPacket(p);
             }
         }

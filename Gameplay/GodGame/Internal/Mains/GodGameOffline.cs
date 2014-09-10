@@ -4,6 +4,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame.DeveloperCommands;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Networking;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.Persistence;
@@ -27,17 +28,14 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             // Game state
             var gameState = new GameState(world);
-            var localPlayerState = new PlayerState();
-
-            gameState.AddPlayer(localPlayerState);
-
+            var localPlayerService = new LocalPlayerService(gameState);
 
             // Rendering
-            var simpleWorldRenderer = new WorldRenderingService(world, new ChunkedVoxelWorldRenderer(world),localPlayerState);
+            var simpleWorldRenderer = new WorldRenderingService(world, new ChunkedVoxelWorldRenderer(world), localPlayerService);
 
             // Input
             var toolsFactory = new PlayerToolsFactory(world);
-            var playerInputHandler = new PlayerInputHandler(toolsFactory, world, persister, localPlayerState);
+            var playerInputHandler = new PlayerInputHandler(toolsFactory, world, persister, localPlayerService.Player);
 
             // Persistance
             persister = new WorldPersisterService(new GameplayObjectsSerializer(toolsFactory));
@@ -45,7 +43,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             var playerInputSimulator = new UserInputProcessingService(world, playerInputHandler, simpleWorldRenderer);
             var tickSimulator = new WorldSimulationService(world);
-            var uiRenderer = new UIRenderingService(world, localPlayerState, playerInputSimulator);
+            var uiRenderer = new UIRenderingService(world, localPlayerService, playerInputSimulator);
             var developerConsoleSimulator = new DeveloperConsoleService(playerInputSimulator, new AllCommandProvider(persister,world));
             var clearStateChangesSimulator = new ClearGameStateChangesService(gameState);
             var worldRenderingSimulator = new WorldRenderingSimulator();
