@@ -56,11 +56,17 @@ namespace MHGameWork.TheWizards.GodGame.Types
             if (index > 4)
                 index = 4;
 
-            IMesh ret;
-            datavalueMeshes.TryGetValue(index, out ret);
-            if (ret == null)
-                return UtilityMeshes.CreateBoxColored(Color.Gray, new Vector3(0.5f, 0.05f, 0.5f));
-            return ret;
+            IMesh tmp;
+            datavalueMeshes.TryGetValue(index, out tmp);
+            if (tmp == null)
+                tmp = UtilityMeshes.CreateBoxColored(Color.FromArgb(255, 86, 86, 86), new Vector3(0.5f, 0.05f, 0.5f));
+
+            var meshBuilder = new MeshBuilder();
+            meshBuilder.AddMesh(tmp, Matrix.Identity);
+            var groundMesh = GetDefaultGroundMesh(handle.Data.Height, Color.FromArgb(255, 86, 86, 86));
+            if (groundMesh == null) return tmp;
+            meshBuilder.AddMesh(groundMesh, Matrix.Translation(0, -0.9f, 0));
+            return meshBuilder.CreateMesh();
         }
 
         private void tryExcavate(IVoxelHandle handle)
