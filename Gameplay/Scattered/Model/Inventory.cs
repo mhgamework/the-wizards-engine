@@ -11,7 +11,10 @@ namespace MHGameWork.TheWizards.Scattered.Model
     public class Inventory
     {
         public int Capacity { get; private set; }
+
         private Dictionary<ItemType, int> itemAmounts = new Dictionary<ItemType, int>();
+
+        public event Action Changed;
 
         public Inventory()
         {
@@ -49,7 +52,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public void AddNewItems(ItemType type, int amount)
         {
-            if (!CanAdd(type,amount)) throw new InvalidOperationException("Cannot add new items!");
+            if (!CanAdd(type, amount)) throw new InvalidOperationException("Cannot add new items!");
             changeAmountOfType(type, amount);
             //var effectiveChange = changeAmountOfType(type, amount);
             //return effectiveChange;
@@ -66,8 +69,8 @@ namespace MHGameWork.TheWizards.Scattered.Model
         public void TransferItemsTo(Inventory targetInventory, ItemType type, int amount)
         {
             if (!targetInventory.CanAdd(type, amount)) throw new InvalidOperationException("Cannot add new items!");
-            if (!CanRemove(type,amount)) throw new InvalidOperationException("Cannot remove items!");
-            
+            if (!CanRemove(type, amount)) throw new InvalidOperationException("Cannot remove items!");
+
             targetInventory.changeAmountOfType(type, amount);//amount = targetInventory.changeAmountOfType(type, amount);
             this.changeAmountOfType(type, -amount);
             //return amount;
@@ -88,6 +91,7 @@ namespace MHGameWork.TheWizards.Scattered.Model
             if (curr == 0) itemAmounts.Remove(type);
             itemAmounts[type] = curr;
 
+            if (Changed != null) Changed();
             //return relativeChange;
         }
 
@@ -108,13 +112,16 @@ namespace MHGameWork.TheWizards.Scattered.Model
 
         public void DestroyItems(ItemType type, int amount)
         {
-            if (!CanRemove(type,amount)) throw new InvalidOperationException("Cannot remove given amount of items");
+            if (!CanRemove(type, amount)) throw new InvalidOperationException("Cannot remove given amount of items");
             changeAmountOfType(type, -amount);
         }
 
         public void Clear()
         {
+            var changed = itemAmounts.Values.Sum() > 0;
             itemAmounts.Clear();
+            if (changed && Changed != null) Changed();
+
         }
 
         public IEnumerable<ItemType> Items

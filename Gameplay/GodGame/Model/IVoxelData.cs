@@ -58,6 +58,9 @@ namespace MHGameWork.TheWizards.GodGame
         {
             this.decorated = decorated;
             this.onChange = onChange;
+
+            //Warning: assumes inventory object does not change in the decorated data
+            decorated.Inventory.Changed += onChange;
         }
 
         public GameVoxelType Type
@@ -104,7 +107,6 @@ namespace MHGameWork.TheWizards.GodGame
         {
             get
             {
-                onChange();
                 return decorated.Inventory;
             }
         }
