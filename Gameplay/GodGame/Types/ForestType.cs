@@ -21,11 +21,11 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
             woodItem = new ItemType { Name = "Wood", Mesh = UtilityMeshes.CreateBoxColored(Color.SaddleBrown, new Vector3(1)) };
 
-            for (int i = 0; i < HarvestDataValue; i++)
+            /*for (int i = 0; i < HarvestDataValue; i++)
             {
                 var scale = 0.1f + (i / (float)HarvestDataValue * 0.9f);
                 datavalueMeshes[i] = MeshBuilder.Transform(mesh, Matrix.Scaling(1, scale, 1));
-            }
+            }*/
 
         }
 
