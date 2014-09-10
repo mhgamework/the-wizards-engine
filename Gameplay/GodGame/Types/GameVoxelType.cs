@@ -116,7 +116,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         protected IMesh createColoredMesh(Color color1)
         {
-            return UtilityMeshes.CreateBoxColored(color1, new Vector3(0.5f, 0.05f, 0.5f));
+            return MeshBuilder.Transform(UtilityMeshes.CreateBoxColored(color1, new Vector3(0.5f, 0.05f, 0.5f)), Matrix.Translation(0, -0.05f, 0));
         }
 
         public bool ColoredBaseMesh
