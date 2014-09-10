@@ -14,14 +14,14 @@ namespace MHGameWork.TheWizards.GodGame
         }
 
         public string Name { get { return "Let there be light!"; } }
-        public void OnLeftClick(IVoxelHandle voxel)
+        public void OnLeftClick(PlayerState player, IVoxelHandle voxel)
         {
 
         }
 
         private GameVoxel prevVoxel;
 
-        public void OnRightClick(IVoxelHandle voxel)
+        public void OnRightClick(PlayerState player, IVoxelHandle voxel)
         {
             int radius = 3;
             if (prevVoxel != null)
@@ -34,7 +34,7 @@ namespace MHGameWork.TheWizards.GodGame
             prevVoxel = voxel.GetInternalVoxel();
         }
 
-        public void OnKeypress(IVoxelHandle voxel, Key key)
+        public void OnKeypress(PlayerState player, IVoxelHandle voxel, Key key)
         {
             
         }

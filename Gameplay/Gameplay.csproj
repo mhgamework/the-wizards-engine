@@ -223,6 +223,7 @@
     <Compile Include="GodGame\Internal\Rendering\CustomVoxelsRenderer.cs" />
     <Compile Include="GodGame\Internal\Model\GameVoxel.cs" />
     <Compile Include="GodGame\Internal\Mains\GodGameOffline.cs" />
+    <Compile Include="GodGame\Model\PlayerToolsFactory.cs" />
     <Compile Include="GodGame\Persistence\GameplayObjectsSerializer.cs" />
     <Compile Include="GodGame\Persistence\SerializedWorld.cs" />
     <Compile Include="GodGame\Internal\WorldPersisterService.cs" />

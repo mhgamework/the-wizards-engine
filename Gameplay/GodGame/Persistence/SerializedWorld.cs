@@ -26,7 +26,12 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
             foreach (var el in Voxels)
             {
                 var v = world.GetVoxel(new Point2(el.X, el.Y));
-                el.ToVoxel(v,  gameplayObjectsSerializer);
+                if (v == null)
+                {
+                    //Console.WriteLine("Deserializing voxel but world to small: " + el.X + ", " + el.Y);
+                    continue;
+                }
+                el.ToVoxel(v, gameplayObjectsSerializer);
             }
         }
 

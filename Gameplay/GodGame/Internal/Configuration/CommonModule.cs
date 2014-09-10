@@ -4,6 +4,7 @@ using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.GodGame.DeveloperCommands;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
+using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.Networking;
 using MHGameWork.TheWizards.GodGame.Persistence;
 
@@ -23,6 +24,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             // Gamestate
             builder.RegisterType<GameState>().SingleInstance();
             builder.RegisterType<ClearGameStateChangesService>().SingleInstance();
+
+            // Tools
+            builder.RegisterType<PlayerToolsFactory>().SingleInstance();
 
 
             // Shared networking

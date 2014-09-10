@@ -16,16 +16,16 @@ namespace MHGameWork.TheWizards.GodGame
 
         public string Name { get { return "CreateLand"; } }
 
-        public void OnLeftClick(IVoxelHandle voxel)
+        public void OnLeftClick(PlayerState player, IVoxelHandle voxel)
         {
             voxel.ChangeType(GameVoxelType.Air);
         }
-        public void OnRightClick(IVoxelHandle voxel)
+        public void OnRightClick(PlayerState player, IVoxelHandle voxel)
         {
             voxel.ChangeType(GameVoxelType.Land);
         }
 
-        public void OnKeypress(IVoxelHandle voxel, Key key)
+        public void OnKeypress(PlayerState player, IVoxelHandle voxel, Key key)
         {
             
         }

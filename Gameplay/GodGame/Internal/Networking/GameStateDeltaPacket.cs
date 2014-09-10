@@ -11,5 +11,15 @@ namespace MHGameWork.TheWizards.GodGame.Networking
         public int[] CoordsX;
         public int[] CoordsY;
         public string[] Types;
+        public int[] DataValues;
+        public float[] Heights;
+        public int[] MagicLevels;
+
+
+
+
+        // Gamestate except world 
+        public byte[] SerializedGamestate;
+
     }
 }

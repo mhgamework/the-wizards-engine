@@ -7,6 +7,7 @@ using Autofac;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.GodGame.DeveloperCommands;
 using MHGameWork.TheWizards.GodGame.Internal.Configuration;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
@@ -32,10 +33,12 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         public GodGameServerClient(bool virtualConnection)
         {
 
+            // Virtual connection setup
 
             var virtualNetworkConnectorServer = new VirtualNetworkConnectorServer();
             var virtualNetworkConnectorClient = virtualNetworkConnectorServer.CreateClient();
 
+            // Server
 
             var bServer = new ContainerBuilder();
             bServer.RegisterModule<CommonModule>();
@@ -46,27 +49,25 @@ namespace MHGameWork.TheWizards.GodGame.Internal
                 bServer.RegisterInstance(virtualNetworkConnectorServer).As<INetworkConnectorServer>().SingleInstance();
 
 
+            server = bServer.Build().Resolve<GodGameServer>();
+
+            //Client
+
             var bClient = new ContainerBuilder();
             bClient.RegisterModule<CommonModule>();
             bClient.RegisterModule<ClientModule>();
             bClient.RegisterInstance(createWorld()).SingleInstance();
+            bClient.Register(ctx => new AllCommandProvider(ctx.Resolve<WorldPersisterService>(), server.World)).As<ICommandProvider>();
 
             if (virtualConnection)
                 bClient.RegisterInstance(virtualNetworkConnectorClient).As<INetworkConnectorClient>().SingleInstance();
 
-
-
-
-
-            bServer.RegisterType<CreateLandTool>().As<IPlayerTool>().SingleInstance();
-            bServer.RegisterType<CreateLandTool>().As<IPlayerTool>().SingleInstance();
-
-            server = bServer.Build().Resolve<GodGameServer>();
             client = bClient.Build().Resolve<GodGameClient>();
 
-
-
             ConnectLocal();
+
+
+            // Initialize gameloop
 
             var engine = EngineFactory.CreateEngine();
 
@@ -75,11 +76,13 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
 
 
+            
+
         }
 
         private static Model.World createWorld()
         {
-            var world = new Model.World(200, 10);
+            var world = new Model.World(100, 10);
 
             world.ForEach((v, _) => v.ChangeType(GameVoxelType.Land));
             return world;

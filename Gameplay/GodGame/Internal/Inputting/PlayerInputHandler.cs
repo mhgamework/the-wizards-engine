@@ -4,6 +4,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Model;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame
@@ -20,9 +21,9 @@ namespace MHGameWork.TheWizards.GodGame
 
         public IPlayerTool ActiveHandler { get { return player.ActiveTool; } private set { player.ActiveTool = value; } }
 
-        public PlayerInputHandler(IEnumerable<IPlayerTool> handlers, Internal.Model.World world, WorldPersisterService worldPersister, PlayerState player)
+        public PlayerInputHandler(PlayerToolsFactory factory, Internal.Model.World world, WorldPersisterService worldPersister, PlayerState player)
         {
-            this.handlers = handlers.ToArray();
+            this.handlers = factory.Tools.ToArray();
             this.world = world;
             this.worldPersister = worldPersister;
             this.player = player;
@@ -38,7 +39,7 @@ namespace MHGameWork.TheWizards.GodGame
         {
             if (tryVoxelInteract(target)) return;
 
-            ActiveHandler.OnRightClick(new IVoxelHandle(target));
+            ActiveHandler.OnRightClick(player, new IVoxelHandle(target));
         }
         private bool tryVoxelInteract(GameVoxel target)
         {
@@ -54,7 +55,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         public void OnLeftClick(GameVoxel target)
         {
-            ActiveHandler.OnLeftClick(new IVoxelHandle(target));
+            ActiveHandler.OnLeftClick(player, new IVoxelHandle(target));
         }
 
 
@@ -75,7 +76,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         public void OnKeyPressed(GameVoxel target, Key key)
         {
-            ActiveHandler.OnKeypress(new IVoxelHandle(target), key);
+            ActiveHandler.OnKeypress(player, new IVoxelHandle(target), key);
         }
     }
 }

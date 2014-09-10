@@ -26,13 +26,13 @@ namespace MHGameWork.TheWizards.GodGame.Networking
 
         public void UpdateConnectedPlayers()
         {
-            clients.UpdateList(networkConnectorServer.Clients.Where(c => c.IsReady));
+            ClientsObserver.UpdateList(networkConnectorServer.Clients.Where(c => c.IsReady));
 
-            foreach (var cl in clients.Added)
+            foreach (var cl in ClientsObserver.Added)
             {
                 networkedPlayers.Add(factory.CreatePlayer(cl, networkConnectorServer.UserInputTransporter.GetTransporterForClient(cl)));
             }
-            foreach (var cl in clients.Removed)
+            foreach (var cl in ClientsObserver.Removed)
             {
                 var toRemove = networkedPlayers.First(n => n.NetworkClient == cl);
                 factory.DestroyPlayer(toRemove);
@@ -43,6 +43,12 @@ namespace MHGameWork.TheWizards.GodGame.Networking
         public IEnumerable<NetworkedPlayer> Players
         {
             get { return networkedPlayers; }
+        }
+
+        public ListObserver<IClient> ClientsObserver
+        {
+            get { return clients; }
+            set { clients = value; }
         }
     }
 }

@@ -18,17 +18,17 @@ namespace MHGameWork.TheWizards.GodGame
             Name = name;
         }
 
-        public void OnLeftClick(IVoxelHandle voxel)
+        public void OnLeftClick(PlayerState player, IVoxelHandle voxel)
         {
             onLeftClick(voxel);
         }
 
-        public void OnRightClick(IVoxelHandle voxel)
+        public void OnRightClick(PlayerState player, IVoxelHandle voxel)
         {
             onRightClick(voxel);
         }
 
-        public void OnKeypress(IVoxelHandle voxel, Key key)
+        public void OnKeypress(PlayerState player, IVoxelHandle voxel, Key key)
         {
             
         }

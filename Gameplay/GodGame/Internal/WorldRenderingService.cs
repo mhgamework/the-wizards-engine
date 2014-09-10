@@ -101,14 +101,14 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
             var selectedVoxel = world.GetVoxelAtGroundPos(groundPos);
             if (selectedVoxel == null) return;
 
-            var size = ((ChangeHeightTool)localPlayer.ActiveTool).Size;
+            var size = localPlayer.HeightToolSize;
             var baseBox = selectedVoxel.GetBoundingBox();
             var newBox = new BoundingBox(baseBox.Minimum + new Vector3(-size * 10, 0, -size * 10), baseBox.Maximum + new Vector3(size * 10, 0, size * 10));
 
             var color = Color.White;
-            if (((ChangeHeightTool)localPlayer.ActiveTool).State == ChangeHeightTool.HeightToolState.SMOOTH)
+            if (localPlayer.HeightToolState == ChangeHeightToolPerPlayer.HeightToolState.SMOOTH)
                 color = Color.DeepSkyBlue;
-            if (((ChangeHeightTool)localPlayer.ActiveTool).State == ChangeHeightTool.HeightToolState.FLATTEN)
+            if (localPlayer.HeightToolState == ChangeHeightToolPerPlayer.HeightToolState.FLATTEN)
                 color = Color.Orange;
 
             TW.Graphics.LineManager3D.AddBox(newBox, color);

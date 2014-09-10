@@ -25,7 +25,13 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             builder.RegisterType<WorldRenderingService>().SingleInstance();
 
             builder.RegisterType<GameState>().SingleInstance();
-            builder.RegisterType<PlayerState>().SingleInstance();
+            builder.Register(ctx =>
+                {
+                    var state = ctx.Resolve<GameState>();
+                    var p = new PlayerState();
+                    state.AddPlayer(p);
+                    return p;
+                }).SingleInstance();
             builder.Register(ctx =>
             {
                 var connector = ctx.Resolve<INetworkConnectorClient>();

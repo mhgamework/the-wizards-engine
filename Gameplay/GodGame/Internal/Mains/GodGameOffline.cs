@@ -5,6 +5,8 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame.DeveloperCommands;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
+using MHGameWork.TheWizards.GodGame.Model;
+using MHGameWork.TheWizards.GodGame.Persistence;
 using MHGameWork.TheWizards.IO;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
@@ -18,9 +20,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private readonly WorldPersisterService persister;
         public Model.World World { get; private set; }
 
-        public GodGameOffline(TWEngine engine, Model.World world, WorldPersisterService persister, IEnumerable<IPlayerTool> playerInputs)
+        public GodGameOffline(TWEngine engine, Model.World world)
         {
-            this.persister = persister;
             World = world;
 
 
@@ -35,9 +36,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             var simpleWorldRenderer = new WorldRenderingService(world, new ChunkedVoxelWorldRenderer(world),localPlayerState);
 
             // Input
+            var toolsFactory = new PlayerToolsFactory(world, localPlayerState);
+            var playerInputHandler = new PlayerInputHandler(toolsFactory, world, persister, localPlayerState);
 
-            var playerInputHandler = new PlayerInputHandler(playerInputs, world, persister, localPlayerState);
-
+            // Persistance
+            persister = new WorldPersisterService(new GameplayObjectsSerializer(toolsFactory));
             // Simulators
 
             var playerInputSimulator = new UserInputProcessingService(world, playerInputHandler, simpleWorldRenderer);

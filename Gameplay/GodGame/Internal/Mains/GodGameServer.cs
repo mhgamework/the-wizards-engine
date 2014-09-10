@@ -21,6 +21,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
     /// </summary>
     public class GodGameServer
     {
+        public Model.World World { get; private set; }
         //public World World { get; private set; }
         public WorldSimulationService WorldSimulationService;
         private ServerPlayerListener serverPlayerListener;
@@ -35,8 +36,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             NetworkedPlayerFactory networkedPlayerFactory,
             ClearGameStateChangesService clearStateChangesSimulator,
             INetworkConnectorServer networkConnectorServer,
-            GameStateDeltaPacketBuilder deltaPacketBuilder)
+            GameStateDeltaPacketBuilder deltaPacketBuilder,
+            Model.World world,
+            WorldPersisterService persisterService)
         {
+            World = world;
             this.WorldSimulationService = worldSimulationService;
             this.clearStateChangesSimulator = clearStateChangesSimulator;
             this.networkConnectorServer = networkConnectorServer;
@@ -45,6 +49,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             serverPlayerListener = new ServerPlayerListener(networkConnectorServer, networkedPlayerFactory);
 
+
+            persisterService.Load(world, TWDir.GameData.GetChild("Saves/GodGame").CreateFile("auto.xml"));
 
         }
 
@@ -87,7 +93,18 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private void updateConnectedClients()
         {
             serverPlayerListener.UpdateConnectedPlayers();
+
+            if (serverPlayerListener.ClientsObserver.Added.Count() == 0) return;
+            var all = new List<GameVoxel>();
+            World.ForEach((v, _) => all.Add(v));
+            var p = deltaPacketBuilder.CreateDeltaPacket(all);
+            foreach (var addedClient in serverPlayerListener.ClientsObserver.Added)
+            {
+                networkConnectorServer.GameStateDeltaTransporter.SendTo(addedClient, p);
+            }
         }
+
+
 
 
     }

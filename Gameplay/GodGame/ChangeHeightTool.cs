@@ -6,14 +6,49 @@ using DirectX11;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using SlimDX;
 using SlimDX.DirectInput;
+using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 
 namespace MHGameWork.TheWizards.GodGame
 {
     public class ChangeHeightTool : IPlayerTool
     {
-        public int Size { get; private set; }
+        private Dictionary<PlayerState, ChangeHeightToolPerPlayer> tools =
+            new Dictionary<PlayerState, ChangeHeightToolPerPlayer>();
+
         private Internal.Model.World world;
-        public HeightToolState State { get; private set; }
+
+        public ChangeHeightTool(Internal.Model.World world)
+        {
+            this.world = world;
+        }
+
+        public string Name { get { return "ChangeHeight"; } }
+        public void OnLeftClick(PlayerState player, IVoxelHandle voxel)
+        {
+            getTool(player).OnLeftClick(voxel);
+        }
+
+        public void OnRightClick(PlayerState player, IVoxelHandle voxel)
+        {
+            getTool(player).OnRightClick(voxel);
+        }
+
+        public void OnKeypress(PlayerState player, IVoxelHandle voxel, Key key)
+        {
+            getTool(player).OnKeypress(voxel, key);
+        }
+
+        private ChangeHeightToolPerPlayer getTool(PlayerState player)
+        {
+            return tools.GetOrCreate(player, () => new ChangeHeightToolPerPlayer(world, player));
+        }
+    }
+    public class ChangeHeightToolPerPlayer
+    {
+        private Internal.Model.World world;
+        private readonly PlayerState player;
+        public int Size { get { return player.HeightToolSize; } set { player.HeightToolSize = value; } }
+        public HeightToolState State { get { return player.HeightToolState; } set { player.HeightToolState = value; } }
 
         private float flattenHeight;
 
@@ -22,13 +57,13 @@ namespace MHGameWork.TheWizards.GodGame
             DEFAULT, SMOOTH, FLATTEN
         }
 
-        public ChangeHeightTool(Internal.Model.World world)
+        public ChangeHeightToolPerPlayer(Internal.Model.World world, PlayerState player)
         {
             this.world = world;
+            this.player = player;
             State = HeightToolState.DEFAULT;
         }
 
-        public string Name { get { return "ChangeHeight"; } }
         public void OnLeftClick(IVoxelHandle voxel)
         {
             ProcessClick(voxel, true);
