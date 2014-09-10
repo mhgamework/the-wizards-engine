@@ -26,8 +26,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
             public int Amount;
         }
 
-        public BuildingSiteType(GameVoxelType building, List<ItemAmount> neededResources)
-            : base("BuildingSite")
+        public BuildingSiteType(GameVoxelType building, List<ItemAmount> neededResources, string name)
+            : base("BuildingSite" + name)
         {
             this.building = building;
             this.neededResources = neededResources;
@@ -37,6 +37,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 totalNbNeededResources += res.Amount;
             }
 
+            searchSuggestedMeshes("BuildingSite");
             Color = Color.White;
 
             meshes = new List<IMesh>();
@@ -61,7 +62,14 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public override IMesh GetMesh(IVoxelHandle handle)
         {
-            return meshes[handle.Data.DataValue];
+            var tmp = meshes[handle.Data.DataValue];
+
+            var meshBuilder = new MeshBuilder();
+            meshBuilder.AddMesh(tmp, Matrix.Identity);
+            var groundMesh = GetDefaultGroundMesh(handle.Data.Height);
+            if (groundMesh == null) return tmp;
+            meshBuilder.AddMesh(groundMesh, Matrix.Identity);
+            return meshBuilder.CreateMesh();
         }
 
         private void tryGatherResources(IVoxelHandle handle)

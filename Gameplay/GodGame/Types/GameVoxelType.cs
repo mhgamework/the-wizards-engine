@@ -38,9 +38,9 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public static CropType Crop = new CropType();
         public static FarmType Farm = new FarmType();
         public static FisheryType Fishery = new FisheryType();
-        public static BuildingSiteType FisheryBuildSite = new BuildingSiteType(Fishery, new[] { new BuildingSiteType.ItemAmount { Type = Crop.GetCropItemType(), Amount = 10 } }.ToList());
+        public static BuildingSiteType FisheryBuildSite = new BuildingSiteType(Fishery, new[] { new BuildingSiteType.ItemAmount { Type = Crop.GetCropItemType(), Amount = 10 } }.ToList(), "Fishery");
         public static MarketType Market = new MarketType(); //order of construction important
-        public static BuildingSiteType MarketBuildSite = new BuildingSiteType(Market, new[] { new BuildingSiteType.ItemAmount { Type = Crop.GetCropItemType(), Amount = 10 } }.ToList());
+        public static BuildingSiteType MarketBuildSite = new BuildingSiteType(Market, new[] { new BuildingSiteType.ItemAmount { Type = Crop.GetCropItemType(), Amount = 10 } }.ToList(), "Market");
         public static VillageType Village = new VillageType(); //order of construction important
         public static WoodworkerType Woodworker = new WoodworkerType();
         public static QuarryType Quarry = new QuarryType();
@@ -66,6 +66,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             allTypes.Add(Crop);
             allTypes.Add(Farm);
             allTypes.Add(Market);
+            allTypes.Add(MarketBuildSite);
             allTypes.Add(Fishery);
             allTypes.Add(FisheryBuildSite);
             allTypes.Add(Woodworker);
@@ -88,7 +89,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             Name = name;
             coloredBaseMesh = true;
 
-            searchSuggestedMeshes();
+            searchSuggestedMeshes(Name);
         }
 
         public string Name { get; private set; }
@@ -134,24 +135,27 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public virtual bool DontShowDataValue { get { return false; } }
 
-        private void searchSuggestedMeshes()
+        protected void searchSuggestedMeshes(string name)
         {
+            mesh = null;
+            datavalueMeshes.Clear();
+
             var tilesFolder = TWDir.GameData.GetChild("Scattered").GetChild("GodGame").GetChild("Tiles");
-            if (tilesFolder.CreateFile(Name + ".obj").Exists) // CreateFile is a misnomer
+            if (tilesFolder.CreateFile(name + ".obj").Exists) // CreateFile is a misnomer
             {
-                mesh = TW.Assets.LoadMesh("Scattered\\GodGame\\Tiles\\" + Name);
+                mesh = TW.Assets.LoadMesh("Scattered\\GodGame\\Tiles\\" + name);
                 mesh = MeshBuilder.Transform(mesh, Matrix.Scaling(0.1f, 0.1f, 0.1f));
                 ColoredBaseMesh = false;
             }
 
-            var meshes = tilesFolder.GetFiles(Name + "*.obj");
+            var meshes = tilesFolder.GetFiles(name + "*.obj");
             foreach (var f in meshes)
             {
-                var dataValStr = Path.GetFileNameWithoutExtension(f.FullName).Substring(Name.Length);
+                var dataValStr = Path.GetFileNameWithoutExtension(f.FullName).Substring(name.Length);
                 int dataVal;
                 if (!int.TryParse(dataValStr, out dataVal)) continue;
 
-                datavalueMeshes[dataVal] = MeshBuilder.Transform(TW.Assets.LoadMesh("Scattered\\GodGame\\Tiles\\" + Name + dataVal.ToString()), Matrix.Scaling(0.1f, 0.1f, 0.1f));
+                datavalueMeshes[dataVal] = MeshBuilder.Transform(TW.Assets.LoadMesh("Scattered\\GodGame\\Tiles\\" + name + dataVal.ToString()), Matrix.Scaling(0.1f, 0.1f, 0.1f));
             }
         }
 
