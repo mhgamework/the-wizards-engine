@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using DirectX11;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
@@ -8,6 +9,7 @@ using MHGameWork.TheWizards.GodGame.Networking;
 using MHGameWork.TheWizards.GodGame.Persistence;
 using MHGameWork.TheWizards.Networking.Server;
 using System.Linq;
+using PostSharp.Aspects.Serialization;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
@@ -69,10 +71,19 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private void applySerializedGamestate(byte[] serializedGamstate, GameState gameState)
         {
             var b = new BinaryFormatter();
+            b.Binder = new CustomBinder();
             using (var strm = new MemoryStream(serializedGamstate))
             {
                 var s = (SerializableGamestate)b.Deserialize(strm);
                 s.Apply(gameState, gameplayObjectsSerializer);
+            }
+        }
+
+        private class CustomBinder : SerializationBinder
+        {
+            public override Type BindToType(string assemblyName, string typeName)
+            {
+                return TW.Data.GameplayAssembly.GetTypes().First(t => t.FullName == typeName);
             }
         }
 
