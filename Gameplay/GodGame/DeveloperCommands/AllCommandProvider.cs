@@ -35,7 +35,12 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
                 {
                     return "Commands containing '" + partialCommand + "': " + string.Join(", ", CommandNames.Where(c => c.Contains(partialCommand)).ToArray());
                 });
-      
+            addCommand("clearWorld", () =>
+                {
+                    world.ForEach((v, _) => { v.ChangeType(GameVoxelType.Land); });
+                    return "World cleared!";
+                });
+
 
 
         }
