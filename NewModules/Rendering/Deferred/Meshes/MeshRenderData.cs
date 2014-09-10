@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SlimDX;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.Rendering.Deferred
 {
@@ -20,7 +21,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         public void Dispose()
         {
-            if (Elements.Count > 0) throw new InvalidOperationException("Cannot delete this mesh's cache since there are still elements using the renderdata.");
+            if (Elements.Any(el => !el.IsDeleted)) throw new InvalidOperationException("Cannot delete this mesh's cache since there are still elements using the renderdata.");
 
 
             foreach (var mat in Materials)

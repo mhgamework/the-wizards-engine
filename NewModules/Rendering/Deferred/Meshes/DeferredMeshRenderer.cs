@@ -129,9 +129,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             
             //TODO: not sure this works
-            var index = renderDataDict[el.Mesh].Elements.IndexOf(el);
+            // EDIT: this does not work, removing in the middle of a list changes later indexes, which breaks the system
+            /*var index = renderDataDict[el.Mesh].Elements.IndexOf(el);
             renderDataDict[el.Mesh].Elements.RemoveAt(index);
-            renderDataDict[el.Mesh].WorldMatrices.RemoveAt(index);
+            renderDataDict[el.Mesh].WorldMatrices.RemoveAt(index);*/
 
 
         }
