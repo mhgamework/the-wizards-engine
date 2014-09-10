@@ -43,9 +43,16 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 });
         }
 
-        public override IMesh GetMesh(IVoxelHandle gameVoxel)
+        public override IMesh GetMesh(IVoxelHandle handle)
         {
-            return datavalueMeshes[gameVoxel.Data.DataValue];
+            IMesh tmp = datavalueMeshes[handle.Data.DataValue];
+
+            var meshBuilder = new MeshBuilder();
+            meshBuilder.AddMesh(tmp, Matrix.Identity);
+            var groundMesh = GetDefaultGroundMesh(handle.Data.Height);
+            if (groundMesh == null) return tmp;
+            meshBuilder.AddMesh(groundMesh, Matrix.Identity);
+            return meshBuilder.CreateMesh();
         }
 
         private bool checkWaterInRange(IVoxelHandle handle)
