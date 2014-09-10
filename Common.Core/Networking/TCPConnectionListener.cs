@@ -80,7 +80,14 @@ namespace MHGameWork.TheWizards.Networking
         /// <remarks>Not Thread safe! draait niet in main thread</remarks>
         private void ListenForClients()
         {
-            Listener.Start();
+            try
+            {
+                Listener.Start();
+            }
+            catch (Exception ex)
+            {
+                OnListenerError(new ListenerErrorEventArgs(ex));
+            }
             while (Listening)
             {
                 TcpClient CL = null;
@@ -110,7 +117,7 @@ namespace MHGameWork.TheWizards.Networking
 
                     Listening = false;
                 }
-                    
+
 
                 if (CL != null)
                     OnClientConnected(new ClientConnectedEventArgs(CL));
