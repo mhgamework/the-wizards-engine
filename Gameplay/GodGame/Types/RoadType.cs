@@ -19,6 +19,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
     /// </summary>
     public class RoadType : GameVoxelType
     {
+        private const float maxHeightDiff = 2;
         private FourWayModelBuilder meshBuilder;
         //private ItemType outgoingKanbanType;
         //private ItemType incomingKanbanType;
@@ -38,7 +39,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
             {
                 BaseMesh = datavalueMeshes.ContainsKey(0) ? datavalueMeshes[0] : null,
                 WayMesh = datavalueMeshes.ContainsKey(1) ? datavalueMeshes[1] : null,
-                NoWayMesh = datavalueMeshes.ContainsKey(2) ? datavalueMeshes[2] : null
+                //NoWayMesh = datavalueMeshes.ContainsKey(2) ? datavalueMeshes[2] : null,
+                HeightWayMeshes = new[] { datavalueMeshes[2], datavalueMeshes[3] }.ToList(),
             };
 
             /*outgoingKanbanType = new ItemType() { Name = "OutgoingKanban" };
@@ -161,7 +163,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 if (targetedItem.LastMoveTime == handle.TotalTime) continue;
                 targetedItem.LastMoveTime = handle.TotalTime;
                 tryTransfer(handle, targetedItem);
-                
+
             }
 
 
@@ -303,7 +305,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private static IEnumerable<IVoxelHandle> getNeighbourRoads(IVoxelHandle curr)
         {
-            return curr.Get4Connected().Where(v => v.Type is RoadType);
+            return curr.Get4Connected().Where(v => v.Type is RoadType && isOnReachableHeight(curr, v));
         }
 
 
@@ -329,7 +331,40 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public override IMesh GetMesh(IVoxelHandle handle)
         {
             var conn = handle.Get4Connected().ToArray();
-            return meshBuilder.CreateMesh(isConnectedType(conn[0]), isConnectedType(conn[1]), isConnectedType(conn[2]), isConnectedType(conn[3]));
+            var tmp = meshBuilder.CreateMesh(isConnected(handle, conn[0]), clippedHeightDiff(handle, conn[0]),
+                isConnected(handle, conn[1]), clippedHeightDiff(handle, conn[1]),
+                isConnected(handle, conn[2]), clippedHeightDiff(handle, conn[2]),
+                isConnected(handle, conn[3]), clippedHeightDiff(handle, conn[3]));
+
+            var builder = new MeshBuilder();
+            builder.AddMesh(tmp, Matrix.Identity);
+            var groundMesh = GetDefaultGroundMesh(handle.Data.Height);
+            if (groundMesh == null) return tmp;
+            builder.AddMesh(groundMesh, Matrix.Identity);
+            return builder.CreateMesh();
+        }
+
+        /// <summary>
+        /// Returns targetHeight - currentHeight, 0 if negative
+        /// </summary>
+        /// <param name="currentHandle"></param>
+        /// <param name="targetHandle"></param>
+        /// <returns></returns>
+        private int clippedHeightDiff(IVoxelHandle currentHandle, IVoxelHandle targetHandle)
+        {
+            var ret = (int)Math.Floor(targetHandle.Data.Height - currentHandle.Data.Height);
+            return ret < 0 ? 0 : ret;
+        }
+
+        private static bool isOnReachableHeight(IVoxelHandle currentHandle, IVoxelHandle targetHandle)
+        {
+            var diff = Math.Abs(currentHandle.Data.Height - targetHandle.Data.Height);
+            return diff <= maxHeightDiff;
+        }
+
+        private bool isConnected(IVoxelHandle currentHandle, IVoxelHandle targetHandle)
+        {
+            return isConnectedType(targetHandle) && isOnReachableHeight(currentHandle, targetHandle);
         }
 
         private bool isConnectedType(IVoxelHandle handle)
