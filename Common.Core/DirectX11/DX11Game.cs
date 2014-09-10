@@ -73,11 +73,8 @@ namespace MHGameWork.TheWizards.DirectX11
             {
                 try
                 {
-                    builder.Clear();
-                    builder.Append(obj);
-                    builder.Append(" - ");
-                    builder.Append(1 / obj);
-                    game.Form.Form.Text = builder.ToString();
+                    // Show % of max frametime used with goal FPS of 60
+                    game.Form.Form.Text = string.Format("FPS: {0:#} - Used: {1:#}% = {2:#0.0}ms", obj, 1f / obj / (1f / 60f) * 100, 1f / obj * 1000);
 
                 }
                 catch (Exception party)
@@ -265,7 +262,7 @@ namespace MHGameWork.TheWizards.DirectX11
                 if (diMouse.Acquire().IsSuccess)
                     mouse.UpdateMouseState(diMouse.GetCurrentState());
             }
-            
+
 
             // Allows the game to exit
             if (EscapeExists && keyboard.IsKeyDown(Key.Escape))
