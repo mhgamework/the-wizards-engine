@@ -9,14 +9,12 @@ namespace MHGameWork.TheWizards.GodGame.Model
     public class PlayerToolsFactory
     {
         private readonly Internal.Model.World world;
-        private readonly PlayerState state;
         private List<IPlayerTool> tools = new List<IPlayerTool>();
         public IEnumerable<IPlayerTool> Tools { get { return tools; } }
 
-        public PlayerToolsFactory(Internal.Model.World world, PlayerState state)
+        public PlayerToolsFactory(Internal.Model.World world)
         {
             this.world = world;
-            this.state = state;
             tools.AddRange(createPlayerInputs());
         }
 
@@ -72,8 +70,10 @@ namespace MHGameWork.TheWizards.GodGame.Model
                         v.ChangeType(GameVoxelType.Ore);
                         v.Data.DataValue = 20;
                     }
+
                 });
         }
+
 
     }
 

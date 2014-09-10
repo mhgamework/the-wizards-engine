@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
 
             builder.RegisterType<WorldSimulationService>().SingleInstance();
             builder.RegisterType<ClearGameStateChangesService>().SingleInstance();
-            builder.RegisterType<PlayerState>();
+            //builder.RegisterType<PlayerState>();
 
             builder.Register(createNetworkedPlayerFactory).SingleInstance();
 

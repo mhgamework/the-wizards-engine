@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             var simpleWorldRenderer = new WorldRenderingService(world, new ChunkedVoxelWorldRenderer(world),localPlayerState);
 
             // Input
-            var toolsFactory = new PlayerToolsFactory(world, localPlayerState);
+            var toolsFactory = new PlayerToolsFactory(world);
             var playerInputHandler = new PlayerInputHandler(toolsFactory, world, persister, localPlayerState);
 
             // Persistance
