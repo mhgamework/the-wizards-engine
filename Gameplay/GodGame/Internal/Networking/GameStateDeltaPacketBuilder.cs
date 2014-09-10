@@ -37,14 +37,14 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         {
             var packet = new GameStateDeltaPacket();
 
-            packet.CoordsX = voxelsToSerialize.Select(v => v.Coord.X).ToArray();
+            /*packet.CoordsX = voxelsToSerialize.Select(v => v.Coord.X).ToArray();
             packet.CoordsY = voxelsToSerialize.Select(v => v.Coord.Y).ToArray();
             packet.Types = voxelsToSerialize.Select(v => gameplayObjectsSerializer.Serialize(v.Type)).ToArray();
             packet.DataValues = voxelsToSerialize.Select(v => v.Data.DataValue).ToArray();
             packet.MagicLevels = voxelsToSerialize.Select(v => v.Data.MagicLevel).ToArray();
-            packet.Heights = voxelsToSerialize.Select(v => v.Data.Height).ToArray();
+            packet.Heights = voxelsToSerialize.Select(v => v.Data.Height).ToArray();*/
 
-            packet.SerializedGamestate = createSerializedGamestate(state);
+            packet.SerializedGamestate = createSerializedGamestate(state, voxelsToSerialize);
 
             return packet;
         }
@@ -53,7 +53,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         public void ApplyDeltaPacket(GameStateDeltaPacket p)
         {
-            for (int i = 0; i < p.CoordsX.Length; i++)
+            /*for (int i = 0; i < p.CoordsX.Length; i++)
             {
                 var pos = new Point2(p.CoordsX[i], p.CoordsY[i]);
                 var v = world.GetVoxel(pos);
@@ -62,7 +62,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
                 v.Data.DataValue = p.DataValues[i];
                 v.Data.MagicLevel = p.MagicLevels[i];
                 v.Data.Height = p.Heights[i];
-            }
+            }*/
 
             applySerializedGamestate(p.SerializedGamestate, state);
 
@@ -76,6 +76,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             {
                 var s = (SerializableGamestate)b.Deserialize(strm);
                 s.Apply(gameState, gameplayObjectsSerializer);
+                s.ApplyVoxels(gameState.World, gameplayObjectsSerializer);
             }
         }
 
@@ -87,9 +88,10 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             }
         }
 
-        private byte[] createSerializedGamestate(GameState gameState)
+        private byte[] createSerializedGamestate(GameState gameState, IEnumerable<GameVoxel> changedVoxels)
         {
             var s = new SerializableGamestate();
+            s.SetVoxels(changedVoxels, gameplayObjectsSerializer);
             s.Set(gameState, gameplayObjectsSerializer);
 
             var b = new BinaryFormatter();
@@ -103,9 +105,23 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         [Serializable]
         private class SerializableGamestate
         {
+            public SerializedVoxel[] Voxels;
             public SerializablePlayerState[] Players;
             public SerializableGamestate()
             {
+            }
+
+            public void SetVoxels(IEnumerable<GameVoxel> voxels, GameplayObjectsSerializer objectSerializer)
+            {
+                Voxels = voxels.Select(SerializedVoxel.FromVoxel).ToArray();
+            }
+            public void ApplyVoxels(Model.World world, GameplayObjectsSerializer objectSerializer)
+            {
+                foreach (var voxel in Voxels)
+                {
+                    var target = world.GetVoxel(new Point2(voxel.X, voxel.Y));
+                    voxel.ToVoxel(target, objectSerializer);
+                }
             }
 
             public void Set(GameState state, GameplayObjectsSerializer objectSerializer)

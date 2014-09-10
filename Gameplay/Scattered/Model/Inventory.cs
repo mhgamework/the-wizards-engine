@@ -144,5 +144,6 @@ namespace MHGameWork.TheWizards.Scattered.Model
         {
             return this[type] >= i;
         }
+
     }
 }

@@ -102,7 +102,11 @@ namespace MHGameWork.TheWizards.GodGame
 
         public Inventory Inventory
         {
-            get { return decorated.Inventory; }
+            get
+            {
+                onChange();
+                return decorated.Inventory;
+            }
         }
 
         public RoadType.RoadData Road
@@ -116,6 +120,6 @@ namespace MHGameWork.TheWizards.GodGame
             set { decorated.Infestation = value; }
         }
     }
-    
-   
+
+
 }
