@@ -6,6 +6,7 @@ using System.Text;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.RTSTestCase1;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
 using SlimDX;
 
@@ -57,16 +58,39 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private void tryFish(IVoxelHandle handle)
         {
-            if (!handle.Get4Connected().Any(e => e.Type is WaterType))
+            if (!hasWaterNeighbour(handle))
                 return;
 
             if (handle.Data.Inventory.CanAdd(fishType, 1))
                 handle.Data.Inventory.AddNewItems(fishType, 1);
         }
 
+        public override IMesh GetMesh(IVoxelHandle handle)
+        {
+            IMesh tmp = GetDataValueMesh(!hasWaterNeighbour(handle) ? 999 : handle.Data.DataValue);
+
+            var meshBuilder = new MeshBuilder();
+            meshBuilder.AddMesh(tmp, Matrix.Identity);
+            var groundMesh = GetDefaultGroundMesh(handle.Data.Height);
+            if (groundMesh == null) return tmp;
+            meshBuilder.AddMesh(groundMesh, Matrix.Identity);
+            return meshBuilder.CreateMesh();
+        }
+
         private void updateDataVal(IVoxelHandle handle)
         {
             handle.Data.DataValue = handle.Data.Inventory.GetAmountOfType(fishType);
+        }
+
+        private bool hasWaterNeighbour(IVoxelHandle handle)
+        {
+            return handle.Get4Connected().Any(e => checkIsAccesibleWater(handle, e));
+        }
+
+        private bool checkIsAccesibleWater(IVoxelHandle currentHandle, IVoxelHandle handleToCheck)
+        {
+            return handleToCheck.Type is WaterType &&
+                   Math.Abs(Math.Abs(handleToCheck.Data.Height - currentHandle.Data.Height) - 0f) < 0.001f;
         }
     }
 }
