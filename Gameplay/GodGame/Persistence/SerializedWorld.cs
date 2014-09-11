@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DirectX11;
+using MHGameWork.TheWizards.Debugging;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.Scattered.Model;
 
@@ -31,7 +32,14 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
                     //Console.WriteLine("Deserializing voxel but world to small: " + el.X + ", " + el.Y);
                     continue;
                 }
-                el.ToVoxel(v, gameplayObjectsSerializer);
+                try
+                {
+                    el.ToVoxel(v, gameplayObjectsSerializer);
+                }
+                catch (Exception ex)
+                {
+                    DI.Get<IErrorLogger>().Log(ex, "Can't load voxel in serializedworld");
+                }
             }
         }
 
