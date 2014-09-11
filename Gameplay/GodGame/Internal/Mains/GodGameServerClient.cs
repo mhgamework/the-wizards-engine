@@ -41,9 +41,10 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             // Server
 
             var bServer = new ContainerBuilder();
+            bServer.RegisterModule<VoxelTypesModule>();
             bServer.RegisterModule<CommonModule>();
             bServer.RegisterModule<ServerModule>();
-            bServer.RegisterInstance(createWorld()).SingleInstance();
+            bServer.Register(ctx => createWorld(ctx.Resolve<LandType>())).SingleInstance();
 
             if (virtualConnection)
                 bServer.RegisterInstance(virtualNetworkConnectorServer).As<INetworkConnectorServer>().SingleInstance();
@@ -54,10 +55,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             //Client
 
             var bClient = new ContainerBuilder();
+            bClient.RegisterModule<VoxelTypesModule>();
             bClient.RegisterModule<CommonModule>();
             bClient.RegisterModule<ClientModule>();
-            bClient.RegisterInstance(createWorld()).SingleInstance();
-            bClient.Register(ctx => new AllCommandProvider(ctx.Resolve<WorldPersisterService>(), server.World)).As<ICommandProvider>();
+            bClient.Register(ctx => createWorld(ctx.Resolve<LandType>())).SingleInstance();
+            bClient.RegisterType<AllCommandProvider>().As<ICommandProvider>().WithParameter(TypedParameter.From(server.World));
 
             if (virtualConnection)
                 bClient.RegisterInstance(virtualNetworkConnectorClient).As<INetworkConnectorClient>().SingleInstance();
@@ -76,15 +78,15 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
 
 
-            
+
 
         }
 
-        private static Model.World createWorld()
+        private static Model.World createWorld(LandType landType)
         {
             var world = new Model.World(100, 10);
 
-            world.ForEach((v, _) => v.ChangeType(GameVoxelType.Land));
+            world.ForEach((v, _) => v.ChangeType(landType));
             return world;
         }
 

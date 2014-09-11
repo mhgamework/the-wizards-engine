@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -23,10 +24,10 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private int datavalOffset = 100;
         private int maxDataVal;
 
-        public QuarryType()
+        public QuarryType(ItemTypesFactory itemTypeFactory)
             : base("Quarry")
         {
-            stoneType = new ItemType { Name = "Stone", Mesh = UtilityMeshes.CreateBoxColored(Color.Gray, new Vector3(1)) };
+            stoneType = itemTypeFactory.StoneType;
             maxDataVal = datavalOffset + batchSize * 5;
         }
 

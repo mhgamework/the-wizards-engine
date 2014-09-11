@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -11,11 +12,10 @@ namespace MHGameWork.TheWizards.GodGame.Types
     public class OreType : GameVoxelType
     {
         private ItemType oreItemType;
-        public OreType()
+        public OreType(ItemTypesFactory factory)
             : base("Ore")
         {
-            oreItemType = new ItemType() { Name = "Crystal" };
-            oreItemType.Mesh = UtilityMeshes.CreateBoxColored(Color.LightBlue, new Vector3(1));
+            oreItemType = factory.CrystalType;
         }
 
 

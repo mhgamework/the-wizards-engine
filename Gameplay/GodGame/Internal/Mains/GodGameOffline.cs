@@ -25,6 +25,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         {
             World = world;
 
+            /*var typeFactory = new VoxelTypesFactory(null);//TODO
+
 
             // Game state
             var gameState = new GameState(world);
@@ -34,7 +36,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             var simpleWorldRenderer = new WorldRenderingService(world, new ChunkedVoxelWorldRenderer(world), localPlayerService);
 
             // Input
-            var toolsFactory = new PlayerToolsFactory(world);
+            var toolsFactory = new PlayerToolsFactory(world, typeFactory);
             var playerInputHandler = new PlayerInputHandler(toolsFactory, world, persister, localPlayerService.Player);
 
             // Persistance
@@ -44,19 +46,19 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             var playerInputSimulator = new UserInputProcessingService(world, playerInputHandler, simpleWorldRenderer);
             var tickSimulator = new WorldSimulationService(world);
             var uiRenderer = new UIRenderingService(world, localPlayerService, playerInputSimulator);
-            var developerConsoleSimulator = new DeveloperConsoleService(playerInputSimulator, new AllCommandProvider(persister,world));
+            var developerConsoleSimulator = new DeveloperConsoleService(playerInputSimulator, new AllCommandProvider(persister, world));
             var clearStateChangesSimulator = new ClearGameStateChangesService(gameState);
             var worldRenderingSimulator = new WorldRenderingSimulator();
 
             //TODO: these simulators form some kind of configuration, so maybe try splitting them into configuration and features
             //   Place the configuration code into methods in this class.
-            engine.AddSimulator(playerInputSimulator); 
+            engine.AddSimulator(playerInputSimulator);
             engine.AddSimulator(tickSimulator);
             engine.AddSimulator(uiRenderer);
             engine.AddSimulator(developerConsoleSimulator);
             engine.AddSimulator(simpleWorldRenderer);
             engine.AddSimulator(clearStateChangesSimulator);
-            engine.AddSimulator(worldRenderingSimulator);
+            engine.AddSimulator(worldRenderingSimulator);*/
 
 
         }

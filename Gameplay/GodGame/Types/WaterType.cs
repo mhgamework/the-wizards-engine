@@ -29,12 +29,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             handle.EachRandomInterval(2, () =>
             {
-                var possible = handle.Get4Connected().Where(e => e.Type == GameVoxelType.Hole).ToArray();
+                var possible = handle.Get4Connected().Where(e => e.Type == Hole).ToArray();
                 if (possible.Length == 0) return;
 
                 foreach (var b in possible)
                 {
-                    b.ChangeType(GameVoxelType.Water);
+                    b.ChangeType(Water);
                     b.Data.DataValue = 0;
                 }
             });

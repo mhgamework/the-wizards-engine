@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -20,11 +21,10 @@ namespace MHGameWork.TheWizards.GodGame.Types
         }
         private ItemType cropItemType;
 
-        public CropType()
+        public CropType(ItemTypesFactory factory)
             : base("Crop")
         {
-            cropItemType = new ItemType() { Name = "Crop" };
-            cropItemType.Mesh = UtilityMeshes.CreateBoxColored(Color.Orange, new Vector3(1));
+            cropItemType = factory.CropType;
         }
 
         public override void Tick(IVoxelHandle handle)

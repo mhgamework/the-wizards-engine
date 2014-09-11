@@ -9,65 +9,67 @@ namespace MHGameWork.TheWizards.GodGame.Model
     public class PlayerToolsFactory
     {
         private readonly Internal.Model.World world;
+        private readonly VoxelTypesFactory typesFactory;
         private List<IPlayerTool> tools = new List<IPlayerTool>();
         public IEnumerable<IPlayerTool> Tools { get { return tools; } }
 
-        public PlayerToolsFactory(Internal.Model.World world)
+        public PlayerToolsFactory(Internal.Model.World world, VoxelTypesFactory typesFactory)
         {
             this.world = world;
+            this.typesFactory = typesFactory;
             tools.AddRange(createPlayerInputs());
         }
 
 
         private IEnumerable<IPlayerTool> createPlayerInputs()
         {
-            yield return new CreateLandTool(world);
+            yield return new CreateLandTool(world, typesFactory.Get<AirType>());
             yield return new ChangeHeightTool(world);
-            yield return createTypeInput(GameVoxelType.Forest);
-            yield return createTypeInput(GameVoxelType.Village);
-            yield return createTypeInput(GameVoxelType.Warehouse);
-            yield return createTypeInput(GameVoxelType.Infestation);
-            yield return createTypeInput(GameVoxelType.Monument);
-            yield return createTypeInput(GameVoxelType.Water);
-            yield return createTypeInput(GameVoxelType.Hole);
+            yield return createTypeInput(typesFactory.Get<ForestType>());
+            yield return createTypeInput(typesFactory.Get<VillageType>());
+            yield return createTypeInput(typesFactory.Get<WarehouseType>());
+            yield return createTypeInput(typesFactory.Get<InfestationVoxelType>());
+            yield return createTypeInput(typesFactory.Get<MonumentType>());
+            yield return createTypeInput(typesFactory.Get<WaterType>());
+            yield return createTypeInput(typesFactory.Get<HoleType>());
             yield return createOreInput();
-            yield return createTypeInput(GameVoxelType.Miner);
-            yield return createTypeInput(GameVoxelType.Road);
-            yield return createTypeInput(GameVoxelType.Crop);
-            yield return createTypeInput(GameVoxelType.Farm);
-            yield return createTypeInput(GameVoxelType.Market);
-            yield return createTypeInput(GameVoxelType.MarketBuildSite, "MarketBuildSite");
-            yield return createTypeInput(GameVoxelType.Fishery);
-            yield return createTypeInput(GameVoxelType.FisheryBuildSite, "FisheryBuildSite");
-            yield return createTypeInput(GameVoxelType.Woodworker);
-            yield return createTypeInput(GameVoxelType.Quarry);
-            yield return createTypeInput(GameVoxelType.Grinder);
-            yield return new LightGodPowerTool();
+            yield return createTypeInput(typesFactory.Get<MinerType>());
+            yield return createTypeInput(typesFactory.Get<RoadType>());
+            yield return createTypeInput(typesFactory.Get<CropType>());
+            yield return createTypeInput(typesFactory.Get<FarmType>());
+            yield return createTypeInput(typesFactory.Get<MarketType>());
+            yield return createTypeInput(typesFactory.GetBuildingSite<MarketType>(), "MarketBuildSite");
+            yield return createTypeInput(typesFactory.Get<FisheryType>());
+            yield return createTypeInput(typesFactory.GetBuildingSite<FisheryType>(), "FisheryBuildSite");
+            yield return createTypeInput(typesFactory.Get<WoodworkerType>());
+            yield return createTypeInput(typesFactory.Get<QuarryType>());
+            yield return createTypeInput(typesFactory.Get<GrinderType>());
+            yield return new LightGodPowerTool(typesFactory.Get<InfestationVoxelType>());
         }
 
-        private static IPlayerTool createTypeInput(GameVoxelType type, string name)
+        private IPlayerTool createTypeInput(GameVoxelType type, string name)
         {
             return new DelegatePlayerTool(name,
-                v => v.ChangeType(GameVoxelType.Land),
+                v => v.ChangeType(typesFactory.Get<LandType>()),
                 v =>
                 {
-                    if (v.Type == GameVoxelType.Land)
+                    if (v.Type == typesFactory.Get<LandType>())
                         v.ChangeType(type);
                 });
         }
-        private static IPlayerTool createTypeInput(GameVoxelType type)
+        private IPlayerTool createTypeInput(GameVoxelType type)
         {
             return createTypeInput(type, type.Name);
         }
-        private static IPlayerTool createOreInput()
+        private IPlayerTool createOreInput()
         {
-            return new DelegatePlayerTool(GameVoxelType.Ore.Name,
-                v => v.ChangeType(GameVoxelType.Land),
+            return new DelegatePlayerTool(typesFactory.Get<OreType>().Name,
+                v => v.ChangeType(typesFactory.Get<LandType>()),
                 v =>
                 {
-                    if (v.Type == GameVoxelType.Land)
+                    if (v.Type == typesFactory.Get<LandType>())
                     {
-                        v.ChangeType(GameVoxelType.Ore);
+                        v.ChangeType(typesFactory.Get<OreType>());
                         v.Data.DataValue = 20;
                     }
 

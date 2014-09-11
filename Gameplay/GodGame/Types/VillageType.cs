@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.Scattered.Model;
 
 namespace MHGameWork.TheWizards.GodGame.Types
@@ -16,6 +17,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
     /// </summary>
     public class VillageType : GameVoxelType
     {
+        private readonly ItemTypesFactory itemTypesFactory;
         private int totalResourceCapacity;
 
         private struct VillageResource
@@ -30,13 +32,14 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private Random rnd;
 
-        public VillageType()
+        public VillageType(ItemTypesFactory itemTypesFactory)
             : base("Village")
         {
+            this.itemTypesFactory = itemTypesFactory;
             neededResources = new[]
                 {
-                    new VillageResource { ItemType = Crop.GetCropItemType(), MaxResourceLevel = 3, MinResourceLevel = 0, ConsummationRate = 10}, 
-                    new VillageResource { ItemType = Fishery.GetFishItemType(), MaxResourceLevel = 2, MinResourceLevel = 0, ConsummationRate = 10}
+                    new VillageResource { ItemType = itemTypesFactory.CropType, MaxResourceLevel = 3, MinResourceLevel = 0, ConsummationRate = 10}, 
+                    new VillageResource { ItemType = itemTypesFactory.FishType, MaxResourceLevel = 2, MinResourceLevel = 0, ConsummationRate = 10}
                 }.ToList();
 
             totalResourceCapacity = 0;
@@ -100,7 +103,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private int getNbItemsOfTypeOrKanban(Inventory inventory, ItemType type)
         {
-            return inventory.Items.Sum(item => Road.IsItemOrKanbanOfType(type, item) ? 1 : 0);
+            return inventory.Items.Sum(item => itemTypesFactory.IsItemOrKanbanOfType(type, item) ? 1 : 0);
         }
 
         /// <summary>

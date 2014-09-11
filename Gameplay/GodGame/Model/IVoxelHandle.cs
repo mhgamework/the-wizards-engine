@@ -121,7 +121,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
             currentVoxel.ChangeType(type);
             currentVoxel.Data.Height = prevHeight;
 
-            if (type == GameVoxelType.Water)
+            if (type is WaterType)
             {
                 var minHeight = Get4Connected().Min(e => e.Data.Height);
                 currentVoxel.Data.Height = minHeight;

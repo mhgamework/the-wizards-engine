@@ -7,6 +7,7 @@ using DirectX11;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
+using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -23,6 +24,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
     /// </summary>
     public class MarketType : GameVoxelType
     {
+        private readonly ItemTypesFactory itemTypesFactory;
         private int totalCapacity;
         private const int distributionRange = 3;
         private const int collectRange = 10;
@@ -37,21 +39,22 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private Random rnd;
 
-        public MarketType()
+        public MarketType(ItemTypesFactory itemTypesFactory)
             : base("Market")
         {
+            this.itemTypesFactory = itemTypesFactory;
             Color = Color.Gray;
 
             marketInventory = new List<MarketResourceType>
                 {
                     new MarketResourceType
                         {
-                            ItemType = Crop.GetCropItemType(),
+                            ItemType = itemTypesFactory.CropType,
                             MaxResourceLevel = 15
                         },
                     new MarketResourceType
                         {
-                            ItemType = Fishery.GetFishItemType(),
+                            ItemType = itemTypesFactory.FishType,
                             MaxResourceLevel = 24
                         }
                 };
@@ -130,7 +133,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private List<ItemType> getAvailableResources(IVoxelHandle handle)
         {
-            return handle.Data.Inventory.Items.Where(e => !Road.IsKanban(e)).ToList();
+            return handle.Data.Inventory.Items.Where(e => !itemTypesFactory.IsKanban(e)).ToList();
         }
 
         private IEnumerable<IVoxelHandle> getWareHousesInRange(IVoxelHandle handle)
@@ -180,7 +183,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             for (int i = 0; i < typeList.Count; i++)
             {
-                if (Road.IsItemOrKanbanOfType(type, typeList[i])) return i;
+                if (itemTypesFactory.IsItemOrKanbanOfType(type, typeList[i])) return i;
             }
             return -1;
         }
@@ -190,14 +193,14 @@ namespace MHGameWork.TheWizards.GodGame.Types
             var nbItemsOfTypeUntillIndex = 0;
             for (int i = 0; i < index; i++)
             {
-                nbItemsOfTypeUntillIndex += Road.IsItemOrKanbanOfType(type, inventory[i]) ? 1 : 0;
+                nbItemsOfTypeUntillIndex += itemTypesFactory.IsItemOrKanbanOfType(type, inventory[i]) ? 1 : 0;
             }
             return nbItemsOfTypeUntillIndex;
         }
 
         private int getNbItemsOfTypeOrKanban(Inventory inventory, ItemType type)
         {
-            return inventory.Items.Sum(item => Road.IsItemOrKanbanOfType(type, item) ? 1 : 0);
+            return inventory.Items.Sum(item => itemTypesFactory.IsItemOrKanbanOfType(type, item) ? 1 : 0);
         }
     }
 }

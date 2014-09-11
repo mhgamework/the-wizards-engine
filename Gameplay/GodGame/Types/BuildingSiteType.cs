@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
 using SlimDX;
@@ -15,6 +16,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
     {
         private GameVoxelType building;
         private List<ItemAmount> neededResources;
+        private readonly ItemTypesFactory itemTypesFactory;
         private int totalNbNeededResources;
         private int nbBuildingSiteModels = 4;
 
@@ -26,11 +28,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
             public int Amount;
         }
 
-        public BuildingSiteType(GameVoxelType building, List<ItemAmount> neededResources, string name)
+        public BuildingSiteType(GameVoxelType building, List<ItemAmount> neededResources, string name,ItemTypesFactory itemTypesFactory)
             : base("BuildingSite" + name)
         {
             this.building = building;
             this.neededResources = neededResources;
+            this.itemTypesFactory = itemTypesFactory;
             totalNbNeededResources = 0;
             foreach (var res in neededResources)
             {
@@ -93,7 +96,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private int countResourcesIncludingKanban(ItemType type, IVoxelHandle handle)
         {
             var inventory = handle.Data.Inventory;
-            return inventory.GetAmountOfType(type) + inventory.GetAmountOfType(Road.GetIncomingKanban(type)) + inventory.GetAmountOfType(Road.GetOutgoingKanban(type));
+            return inventory.GetAmountOfType(type) + inventory.GetAmountOfType(itemTypesFactory.GetIncomingKanban(type)) + inventory.GetAmountOfType(itemTypesFactory.GetOutgoingKanban(type));
         }
 
         private IEnumerable<IVoxelHandle> getWareHousesInRange(IVoxelHandle handle, int range)

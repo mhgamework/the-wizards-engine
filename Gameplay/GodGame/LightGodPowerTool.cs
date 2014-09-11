@@ -8,9 +8,11 @@ namespace MHGameWork.TheWizards.GodGame
 {
     public class LightGodPowerTool : IPlayerTool
     {
+        private readonly InfestationVoxelType infestationType;
 
-        public LightGodPowerTool()
+        public LightGodPowerTool(InfestationVoxelType infestationType)
         {
+            this.infestationType = infestationType;
         }
 
         public string Name { get { return "Let there be light!"; } }
@@ -41,7 +43,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         private void removeInfestation(IVoxelHandle obj)
         {
-            GameVoxelType.Infestation.CureInfestation(obj);
+            infestationType.CureInfestation(obj);
         }
     }
 }

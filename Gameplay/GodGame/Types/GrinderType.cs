@@ -8,6 +8,7 @@ using DirectX11;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
+using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
@@ -22,6 +23,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
     /// </summary>
     public class GrinderType : GameVoxelType
     {
+        private readonly ItemTypesFactory typesFactory;
         private int inventorySize = 5;
 
         private ItemType pigmentType;
@@ -33,11 +35,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private static int counter = 0;
         private Timer myTimer;
 
-        public GrinderType()
+        public GrinderType(ItemTypesFactory itemTypeFactory,ItemTypesFactory typesFactory)
             : base("Grinder")
         {
-            pigmentType = new ItemType { Name = "Pigment", Mesh = UtilityMeshes.CreateBoxColored(Color.DarkViolet, new Vector3(1)) };
-            oreType = Ore.GetOreItemType(null);
+            this.typesFactory = typesFactory;
+            pigmentType = itemTypeFactory.PigmentType;
+            oreType = itemTypeFactory.CrystalType;
             datavalGrindRangeHigh = datavalGrindRangeLow + inventorySize;
 
             myTimer = new Timer(100);
@@ -160,7 +163,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private int countResourcesIncludingKanban(ItemType type, IVoxelHandle handle)
         {
             var inventory = handle.Data.Inventory;
-            return inventory.GetAmountOfType(type) + inventory.GetAmountOfType(Road.GetIncomingKanban(type)) + inventory.GetAmountOfType(Road.GetOutgoingKanban(type));
+            return inventory.GetAmountOfType(type) + inventory.GetAmountOfType(typesFactory.GetIncomingKanban(type)) + inventory.GetAmountOfType(typesFactory.GetOutgoingKanban(type));
         }
 
         private IEnumerable<IVoxelHandle> getWareHousesInRange(IVoxelHandle handle, int range)

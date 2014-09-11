@@ -7,10 +7,13 @@ using System.Reflection;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
+using MHGameWork.TheWizards.GodGame.Model;
+using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
+using MHGameWork.TheWizards.SkyMerchant._Tests.Ideas;
 using SlimDX;
 using MHGameWork.TheWizards.IO;
 
@@ -24,34 +27,46 @@ namespace MHGameWork.TheWizards.GodGame.Types
     /// </summary>
     public class GameVoxelType
     {
-        public static GameVoxelType Air = new GameVoxelType("Air") { NoMesh = true };
-        public static GameVoxelType Land = new GameVoxelType("Land") { Color = Color.SandyBrown };
-        public static InfestationVoxelType Infestation = new InfestationVoxelType();
-        public static ForestType Forest = new ForestType();
-        public static WarehouseType Warehouse = new WarehouseType();
-        public static MonumentType Monument = new MonumentType();
-        public static WaterType Water = new WaterType();
-        public static HoleType Hole = new HoleType();
-        public static OreType Ore = new OreType();
-        public static MinerType Miner = new MinerType();
-        public static RoadType Road = new RoadType();
-        public static CropType Crop = new CropType();
-        public static FarmType Farm = new FarmType();
-        public static FisheryType Fishery = new FisheryType();
-        public static BuildingSiteType FisheryBuildSite = new BuildingSiteType(Fishery, new[] { new BuildingSiteType.ItemAmount { Type = Crop.GetCropItemType(), Amount = 10 } }.ToList(), "Fishery");
-        public static MarketType Market = new MarketType(); //order of construction important
-        public static BuildingSiteType MarketBuildSite = new BuildingSiteType(Market, new[] { new BuildingSiteType.ItemAmount { Type = Crop.GetCropItemType(), Amount = 10 } }.ToList(), "Market");
-        public static VillageType Village = new VillageType(); //order of construction important
-        public static WoodworkerType Woodworker = new WoodworkerType();
-        public static QuarryType Quarry = new QuarryType();
-        public static GrinderType Grinder = new GrinderType();
+        protected GameVoxelType Air { get { return typesFactory.Get<AirType>(); } }
+        protected GameVoxelType Land { get { return typesFactory.Get<LandType>(); } }
+        protected InfestationVoxelType Infestation { get { return typesFactory.Get<InfestationVoxelType>(); } }
+        protected ForestType Forest { get { return typesFactory.Get<ForestType>(); } }
+        protected WarehouseType Warehouse { get { return typesFactory.Get<WarehouseType>(); } }
+        protected MonumentType Monument { get { return typesFactory.Get<MonumentType>(); } }
+        protected WaterType Water { get { return typesFactory.Get<WaterType>(); } }
+        protected HoleType Hole { get { return typesFactory.Get<HoleType>(); } }
+        protected OreType Ore { get { return typesFactory.Get<OreType>(); } }
+        protected MinerType Miner { get { return typesFactory.Get<MinerType>(); } }
+        protected RoadType Road { get { return typesFactory.Get<RoadType>(); } }
+        protected CropType Crop { get { return typesFactory.Get<CropType>(); } }
+        protected FarmType Farm { get { return typesFactory.Get<FarmType>(); } }
+        protected FisheryType Fishery { get { return typesFactory.Get<FisheryType>(); } }
+        protected MarketType Market { get { return typesFactory.Get<MarketType>(); } } //order of construction important
+        protected VillageType Village { get { return typesFactory.Get<VillageType>(); } } //order of construction important
+        protected WoodworkerType Woodworker { get { return typesFactory.Get<WoodworkerType>(); } }
+        protected QuarryType Quarry { get { return typesFactory.Get<QuarryType>(); } }
+        protected GrinderType Grinder { get { return typesFactory.Get<GrinderType>(); } }
 
-        private static List<GameVoxelType> allTypes = new List<GameVoxelType>();
-        public static IEnumerable<GameVoxelType> AllTypes { get { return allTypes; } }
+
+        protected BuildingSiteType FisheryBuildSite { get { return typesFactory.GetBuildingSite<FisheryType>(); } }
+        protected BuildingSiteType MarketBuildSite { get { return typesFactory.GetBuildingSite<MarketType>(); } }
+        
+        /// <summary>
+        /// This types factory is used for legacy access to the voxel types in the gamevoxeltype.
+        /// It is injected on creation of the type,
+        /// </summary>
+        protected VoxelTypesFactory typesFactory { get; private set; }
+        public void InjectVoxelTypesFactory(VoxelTypesFactory factory)
+        {
+            typesFactory = factory;
+        }
+
+        /*private static List<GameVoxelType> allTypes = new List<GameVoxelType>();
+        public static IEnumerable<GameVoxelType> AllTypes { get { return allTypes; } }*/
 
         static GameVoxelType()
         {
-            allTypes.Add(Air);
+            /*allTypes.Add(Air);
             allTypes.Add(Land);
             allTypes.Add(Infestation);
             allTypes.Add(Forest);
@@ -81,7 +96,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 if (AllTypes.All(it => it.GetType() != type))
                     throw new InvalidOperationException(
                         "There exists a subtype of GameVoxelType, which is not added to the list of GameVoxelType.AllTypes " + type.Name);
-            }
+            }*/
 
         }
         public GameVoxelType(string name)
@@ -131,7 +146,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             }
         }
 
-        public bool NoMesh { get; private set; }
+        public bool NoMesh { get; protected set; }
 
         public virtual bool DontShowDataValue { get { return false; } }
 

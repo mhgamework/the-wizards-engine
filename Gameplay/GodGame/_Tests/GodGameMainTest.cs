@@ -31,13 +31,17 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [Test]
         public void TestClientGame()
         {
-            var world = new Internal.Model.World(100, 10);
-            buildDemoWorld(world);
+
 
             var bClient = new ContainerBuilder();
             bClient.RegisterModule<CommonModule>();
             bClient.RegisterModule<ClientModule>();
-            bClient.RegisterInstance(world).SingleInstance();
+            bClient.Register(ctx =>
+                {
+                    var world = new Internal.Model.World(100, 10);
+                    buildDemoWorld(world, ctx.Resolve<VoxelTypesFactory>());
+                    return world;
+                }).SingleInstance();
 
 
             var client = bClient.Build().Resolve<GodGameClient>();
@@ -49,13 +53,15 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [Test]
         public void TestServerGame()
         {
-            var world = new Internal.Model.World(100, 10);
-            buildDemoWorld(world);
-
             var bServer = new ContainerBuilder();
             bServer.RegisterModule<CommonModule>();
             bServer.RegisterModule<ServerModule>();
-            bServer.RegisterInstance(world).SingleInstance();
+            bServer.Register(ctx =>
+            {
+                var world = new Internal.Model.World(100, 10);
+                buildDemoWorld(world, ctx.Resolve<VoxelTypesFactory>());
+                return world;
+            }).SingleInstance();
 
 
             bServer.RegisterType<CreateLandTool>().As<IPlayerTool>().SingleInstance();
@@ -85,15 +91,15 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
         }
 
-        [Test]
+        /*[Test]
         public void TestOfflineGame()
         {
             var game = CreateGame();
             game.LoadSave();
 
-        }
+        }*/
 
-        public static GodGameOffline CreateGame()
+        /*public static GodGameOffline CreateGame()
         {
             var world = new Internal.Model.World(100, 10);
             buildDemoWorld(world);
@@ -104,21 +110,21 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             var ret = new GodGameOffline(EngineFactory.CreateEngine(), world);
 
             return ret;
-        }
+        }*/
 
-        private static void buildDemoWorld(Internal.Model.World world)
+        private static void buildDemoWorld(Internal.Model.World world, VoxelTypesFactory typesFactory)
         {
             world.ForEach((v, p) =>
                 {
                     if (Vector2.Distance(p, new Vector2(100, 100)) < 100)
-                        v.ChangeType(GameVoxelType.Land);
+                        v.ChangeType(typesFactory.Get<LandType>());
                     else if (Vector2.Distance(p, new Vector2(8, 8)) < 7)
-                        v.ChangeType(GameVoxelType.Land);
+                        v.ChangeType(typesFactory.Get<LandType>());
                     else if (Vector2.Distance(p, new Vector2(25, 25)) < 15)
-                        v.ChangeType(GameVoxelType.Land);
+                        v.ChangeType(typesFactory.Get<LandType>());
                     //v.ChangeType(GameVoxelType.Infestation);
                     else
-                        v.ChangeType(GameVoxelType.Air);
+                        v.ChangeType(typesFactory.Get<LandType>());
                 });
 
 
@@ -133,6 +139,6 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             return ret;*/
         }
 
-        
+
     }
 }

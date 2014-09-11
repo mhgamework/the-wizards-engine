@@ -6,6 +6,9 @@ using MHGameWork.TheWizards.GodGame.Internal.Model;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
+    /// <summary>
+    /// TODO: rename InfestationType
+    /// </summary>
     public class InfestationVoxelType : GameVoxelType
     {
         public InfestationVoxelType()
@@ -66,7 +69,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             if (arg == null) return false;
             if (arg.Type == null) return false;
             if (arg.Type is InfestationVoxelType) return false;
-            if (arg.Type == GameVoxelType.Air) return false;
+            if (arg.Type == Air) return false;
             return true;
         }
 

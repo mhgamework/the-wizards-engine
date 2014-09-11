@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -17,11 +18,11 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private ItemType fishType;
         private int maxItemCount = 4;
 
-        public FisheryType()
+        public FisheryType(ItemTypesFactory factory)
             : base("Fishery")
         {
             Color = Color.Blue;
-            fishType = new ItemType { Name = "Fish", Mesh = UtilityMeshes.CreateBoxColored(Color.DeepSkyBlue, new Vector3(1)) };
+            fishType = factory.FishType;
         }
 
         public ItemType GetFishItemType()

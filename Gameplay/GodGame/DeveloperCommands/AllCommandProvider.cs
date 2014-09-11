@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MHGameWork.TheWizards.GodGame.Internal;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.IO;
 
@@ -10,8 +11,11 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
 {
     public class AllCommandProvider : DelegateCommandProvider
     {
-        public AllCommandProvider(WorldPersisterService persister, Internal.Model.World world)
+        private readonly VoxelTypesFactory typesFactory;
+
+        public AllCommandProvider(WorldPersisterService persister, Internal.Model.World world,VoxelTypesFactory typesFactory)
         {
+            this.typesFactory = typesFactory;
             addDummy();
 
             addPersistence(persister, world);
@@ -20,8 +24,8 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
                 {
                     world.ForEach((v, _) =>
                         {
-                            if (v.Type != GameVoxelType.Infestation) return;
-                            GameVoxelType.Infestation.CureInfestation(new IVoxelHandle(v));
+                            if (v.Type != typesFactory.Get<InfestationVoxelType>()) return;
+                            typesFactory.Get<InfestationVoxelType>().CureInfestation(new IVoxelHandle(v));
                         });
 
                     return "Cleared all infestation!";
@@ -37,7 +41,7 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
                 });
             addCommand("clearWorld", () =>
                 {
-                    world.ForEach((v, _) => { v.ChangeType(GameVoxelType.Land); });
+                    world.ForEach((v, _) => { v.ChangeType(typesFactory.Get<LandType>()); });
                     return "World cleared!";
                 });
             addCommand("listsaves", () =>

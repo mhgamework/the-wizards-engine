@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -14,12 +15,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public const int ResetDataValue = 0;
         private ItemType woodItem;
 
-        public ForestType()
+        public ForestType(ItemTypesFactory factory)
             : base("Forest")
         {
             Color = Color.Green;
 
-            woodItem = new ItemType { Name = "Wood", Mesh = UtilityMeshes.CreateBoxColored(Color.SaddleBrown, new Vector3(1)) };
+            woodItem = factory.WoodType;
 
             /*for (int i = 0; i < HarvestDataValue; i++)
             {

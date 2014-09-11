@@ -4,6 +4,7 @@ using System.Drawing;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
+using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -14,11 +15,13 @@ namespace MHGameWork.TheWizards.GodGame.Types
 {
     public class MonumentType : GameVoxelType
     {
-        public MonumentType()
+        private ItemType crystalType;
+        public MonumentType(ItemTypesFactory typesFactory)
             : base("Monument")
         {
             Color = Color.Green;
 
+            crystalType = typesFactory.CrystalType;
         }
 
         private float prevFrameTime;
@@ -95,9 +98,9 @@ namespace MHGameWork.TheWizards.GodGame.Types
             return handle.Get4Connected().Where(w => w.Data.Inventory[getCrystalType()] > 0);
         }
 
-        private static ItemType getCrystalType()
+        private ItemType getCrystalType()
         {
-            return Ore.GetOreItemType(null);
+            return crystalType;
         }
 
         public override IEnumerable<IRenderable> GetInfoVisualizers(IVoxelHandle handle)
