@@ -25,8 +25,9 @@ namespace MHGameWork.TheWizards.GodGame.Model
         private BuildingSiteType CreateBuildingSite<T>(IEnumerable<BuildingSiteType.ItemAmount> amounts) where T : GameVoxelType
         {
             if (buildingSites.ContainsKey(Get<T>())) throw new InvalidOperationException("Already added a building site for type " + typeof(T).Name);
-            var ret = new BuildingSiteType(Get<T>(), amounts.ToList(), itemTypes);
+            var ret = new BuildingSiteType(Get<T>(), amounts.ToList(), Get<T>().Name, itemTypes);
             buildingSites[Get<T>()] = ret;
+            ret.InjectVoxelTypesFactory(this);
             return ret;
         }
 
