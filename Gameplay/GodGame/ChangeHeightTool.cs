@@ -50,7 +50,9 @@ namespace MHGameWork.TheWizards.GodGame
         public int Size { get { return player.HeightToolSize; } set { player.HeightToolSize = value; } }
         public HeightToolState State { get { return player.HeightToolState; } set { player.HeightToolState = value; } }
 
-        private float flattenHeight;
+        public float FlattenHeight { get { return player.HeightToolFlattenHeight; } set { player.HeightToolFlattenHeight = value; } }
+        public float StandardDeviation { get { return player.HeightToolStandardDeviation; } set { player.HeightToolStandardDeviation = value; } }
+        public float Amplitude { get { return player.HeightToolAmplitude; } set { player.HeightToolAmplitude = value; } }
 
         public enum HeightToolState
         {
@@ -62,12 +64,13 @@ namespace MHGameWork.TheWizards.GodGame
             this.world = world;
             this.player = player;
             State = HeightToolState.DEFAULT;
+            StandardDeviation = 2;
+            Amplitude = 1;
         }
 
         public void OnLeftClick(IVoxelHandle voxel)
         {
             ProcessClick(voxel, true);
-
         }
 
         public void OnRightClick(IVoxelHandle voxel)
@@ -84,6 +87,20 @@ namespace MHGameWork.TheWizards.GodGame
             if (Size < 0)
                 Size = 0;
 
+            if (key == Key.NumberPad8)
+                Amplitude++;
+            if (key == Key.NumberPad2)
+                Amplitude--;
+            if (Amplitude < 1)
+                Amplitude = 1;
+
+            if (key == Key.NumberPad4)
+                StandardDeviation--;
+            if (key == Key.NumberPad6)
+                StandardDeviation++;
+            if (StandardDeviation < 1)
+                StandardDeviation = 1;
+
             if (key == Key.NumberPadStar)
             {
                 State = State == HeightToolState.SMOOTH ? HeightToolState.DEFAULT : HeightToolState.SMOOTH;
@@ -92,6 +109,9 @@ namespace MHGameWork.TheWizards.GodGame
             {
                 State = State == HeightToolState.FLATTEN ? HeightToolState.DEFAULT : HeightToolState.FLATTEN;
             }
+
+            if (key == Key.NumberPadEnter)
+                normalizeWorld();
         }
 
         private void ProcessClick(IVoxelHandle voxel, bool isLeftClick)
@@ -115,7 +135,7 @@ namespace MHGameWork.TheWizards.GodGame
             var change = isLeftClick ? 1 : -1;
             foreach (var v in GetVoxelsInRange(voxel))
             {
-                v.Data.Height += change;
+                v.Data.Height += getHeightGaussian(xDiff(voxel, v), yDiff(voxel, v), Amplitude * change, StandardDeviation);
                 CheckHeight(v);
                 world.NotifyVoxelChanged(v.GetInternalVoxel());
             }
@@ -125,32 +145,52 @@ namespace MHGameWork.TheWizards.GodGame
         {
             var change = isLeftClick ? 1 : -1;
             var voxels = GetVoxelsInRange(voxel);
-            var averageHeight = Math.Floor(voxels.Sum(e => e.Data.Height) / voxels.Count);
+            var averageHeight = voxels.Sum(e => e.Data.Height) / (float)voxels.Count;
 
             foreach (var v in voxels)
             {
                 if (v.Data.Height > averageHeight)
-                    v.Data.Height -= change;
+                    v.Data.Height = (float)Math.Floor(v.Data.Height - getHeightGaussian(xDiff(voxel, v), yDiff(voxel, v), Amplitude * change, StandardDeviation));
                 else if (v.Data.Height < averageHeight)
-                    v.Data.Height += change;
+                    v.Data.Height = (float)Math.Floor(v.Data.Height + getHeightGaussian(xDiff(voxel, v), yDiff(voxel, v), Amplitude * change, StandardDeviation));
 
                 CheckHeight(v);
                 world.NotifyVoxelChanged(v.GetInternalVoxel());
             }
         }
 
+        private float xDiff(IVoxelHandle h1, IVoxelHandle h2)
+        {
+            return Math.Abs(h1.GetInternalVoxel().Coord.X - h2.GetInternalVoxel().Coord.X);
+        }
+
+        private float yDiff(IVoxelHandle h1, IVoxelHandle h2)
+        {
+            return Math.Abs(h1.GetInternalVoxel().Coord.Y - h2.GetInternalVoxel().Coord.Y);
+        }
+
+        private float getHeightGaussian(float xDiff, float yDiff, float amplitude, float standardDev)
+        {
+            return (float)(amplitude * Math.Exp(-(xDiff * xDiff + yDiff * yDiff) / (2 * standardDev * standardDev)));
+        }
+
+        private void normalizeWorld()
+        {
+            world.ForEach((voxel, _) => voxel.Data.Height = (float)Math.Floor(voxel.Data.Height));
+        }
+
         private void DoFlatten(IVoxelHandle voxel, bool isLeftClick)
         {
             if (!isLeftClick)
             {
-                flattenHeight = voxel.Data.Height;
+                FlattenHeight = voxel.Data.Height;
                 return;
             }
 
             var voxels = GetVoxelsInRange(voxel);
             foreach (var v in voxels)
             {
-                v.Data.Height = flattenHeight;
+                v.Data.Height = FlattenHeight;
                 world.NotifyVoxelChanged(v.GetInternalVoxel());
             }
         }

@@ -6,7 +6,7 @@ namespace MHGameWork.TheWizards.GodGame
     {
         public PlayerState()
         {
-            
+
         }
         public string Name = "NOT SET";
         public IPlayerTool ActiveTool { get; set; }
@@ -14,6 +14,9 @@ namespace MHGameWork.TheWizards.GodGame
 
         public int HeightToolSize { get; set; }
         public ChangeHeightToolPerPlayer.HeightToolState HeightToolState { get; set; }
+        public float HeightToolFlattenHeight { get; set; }
+        public float HeightToolAmplitude { get; set; }
+        public float HeightToolStandardDeviation { get; set; }
 
     }
 }
