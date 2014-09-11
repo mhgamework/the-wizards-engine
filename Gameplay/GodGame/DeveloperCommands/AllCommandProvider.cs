@@ -40,7 +40,12 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
                     world.ForEach((v, _) => { v.ChangeType(GameVoxelType.Land); });
                     return "World cleared!";
                 });
-
+            addCommand("listsaves", () =>
+                {
+                    var saves = TWDir.GameData.CreateChild("Saves\\GodGame").GetFiles().ToList();
+                    var outputstring = String.Join("\n", saves.Select(e => e.Name));
+                    return "Saved games: \n" + outputstring;
+                });
 
 
         }
