@@ -53,7 +53,8 @@ namespace MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers
             if (TW.Graphics.Mouse.LeftMouseJustPressed && ValueControl.TryLeftClick(ray)) ret = true;
             else if (TW.Graphics.Mouse.RightMouseJustPressed && ValueControl.TryRightClick(ray)) ret = true;
 
-            setValue(ValueControl.Value);
+            if (getValue() != ValueControl.Value)//TODO: only call on change
+                setValue(ValueControl.Value);
 
             return ret;
         }

@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Networking;
+using MHGameWork.TheWizards.GodGame._Engine;
 using MHGameWork.TheWizards.GodGame._Tests;
 using MHGameWork.TheWizards.IO;
 using MHGameWork.TheWizards.Networking.Server;
@@ -28,6 +29,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private ClearGameStateChangesService clearStateChangesSimulator;
         private INetworkConnectorServer networkConnectorServer;
         private GameStateDeltaPacketBuilder deltaPacketBuilder;
+        private readonly UserInputService userInputService;
 
 
         public int TcpPort { get { return networkConnectorServer.TcpPort; } }
@@ -38,24 +40,20 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             INetworkConnectorServer networkConnectorServer,
             GameStateDeltaPacketBuilder deltaPacketBuilder,
             Model.World world,
-            WorldPersisterService persisterService)
+            WorldPersisterService persisterService,
+            UserInputService userInputService)
         {
             World = world;
             this.WorldSimulationService = worldSimulationService;
             this.clearStateChangesSimulator = clearStateChangesSimulator;
             this.networkConnectorServer = networkConnectorServer;
             this.deltaPacketBuilder = deltaPacketBuilder;
-
+            this.userInputService = userInputService;
 
             serverPlayerListener = new ServerPlayerListener(networkConnectorServer, networkedPlayerFactory);
-
-
             persisterService.Load(world, TWDir.GameData.GetChild("Saves/GodGame").CreateFile("auto.xml"));
 
         }
-
-
-
 
         public void Start()
         {
@@ -91,6 +89,13 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             foreach (var client in serverPlayerListener.Players)
             {
                 client.NetworkPlayerInputForwarder.ForwardReceivedInputs();
+            }
+
+            while (networkConnectorServer.UserInputTransporter.PacketAvailable)
+            {
+                IClient cl;
+                var p = networkConnectorServer.UserInputTransporter.Receive(out cl);
+                userInputService.ApplyInputs(World, SerializerHelper.Deserialize<UserInputService.Inputs>(p.data));
             }
         }
 

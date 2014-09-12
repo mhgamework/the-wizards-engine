@@ -6,6 +6,7 @@ namespace DirectX11
     /// <summary>
     /// This struct represents a discrete vector
     /// </summary>
+    [Serializable]
     public struct Point2
     {
         public int X;

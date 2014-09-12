@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MHGameWork.TheWizards.GodGame.Internal.Networking.Packets;
 using MHGameWork.TheWizards.IO;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Server;
@@ -15,7 +16,8 @@ namespace MHGameWork.TheWizards.GodGame.Networking
     {
         private SimpleServerPacketManager spm;
         public int TcpPort { get; private set; }
-        public IServerPacketTransporter<UserInputHandlerPacket> UserInputTransporter { get; private set; }
+        public IServerPacketTransporter<UserInputHandlerPacket> UserInputHandlerTransporter { get; private set; }
+        public IServerPacketTransporter<UserInputPacket> UserInputTransporter { get; private set; }
         public IServerPacketTransporter<GameStateDeltaPacket> GameStateDeltaTransporter { get; private set; }
         public IEnumerable<IClient> Clients { get { return spm.Clients; } }
 
@@ -31,9 +33,11 @@ namespace MHGameWork.TheWizards.GodGame.Networking
         public void StartListening()
         {
             var gen = new NetworkPacketFactoryCodeGenerater(TWDir.Cache.CreateChild("GodGame").CreateFile("ServerPackets" + (new Random()).Next() + ".dll").FullName);
-            UserInputTransporter = spm.CreatePacketTransporter("UserInput", gen.GetFactory<UserInputHandlerPacket>(), PacketFlags.TCP);
+            UserInputHandlerTransporter = spm.CreatePacketTransporter("UserHandlerInput", gen.GetFactory<UserInputHandlerPacket>(), PacketFlags.TCP);
+            UserInputTransporter = spm.CreatePacketTransporter("UserInput", gen.GetFactory<UserInputPacket>(), PacketFlags.TCP);
             GameStateDeltaTransporter = spm.CreatePacketTransporter("GameStateDelta", gen.GetFactory<GameStateDeltaPacket>(), PacketFlags.TCP);
             gen.BuildFactoriesAssembly();
+            UserInputTransporter.EnableReceiveMode();
         }
 
         public VirtualNetworkConnectorClient CreateClient()

@@ -200,10 +200,10 @@
     <Compile Include="GodGame\Internal\Console\DeveloperConsoleUI.cs" />
     <Compile Include="GodGame\Internal\Console\DirectInputTextBox.cs" />
     <Compile Include="GodGame\Internal\Console\ICommandProvider.cs" />
+    <Compile Include="GodGame\Internal\Networking\Packets\UserInputPacket.cs" />
     <Compile Include="GodGame\Internal\Networking\Packets\GameStateDeltaPacket.cs" />
-    <Compile Include="GodGame\Internal\Networking\INetworkConnectorClient.cs" />
-    <Compile Include="GodGame\Internal\Networking\INetworkConnectorServer.cs" />
     <Compile Include="GodGame\Internal\Networking\LocalPlayerService.cs" />
+    <Compile Include="GodGame\Internal\UserInputControlsService.cs" />
     <Compile Include="GodGame\Persistence\SerializedGameState.cs" />
     <Compile Include="GodGame\Persistence\SerializedPlayerState.cs" />
     <Compile Include="GodGame\Internal\Networking\VirtualNetworkConnectorClient.cs" />
@@ -272,6 +272,7 @@
     <Compile Include="GodGame\Model\IVoxelData.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkConnectorClientAndServer.cs" />
     <Compile Include="GodGame\VoxelInfoVisualizers\WorkerCountVisualizer.cs" />
+    <Compile Include="GodGame\_Engine\SerializerHelper.cs" />
     <Compile Include="GodGame\_Tests\GodGameAutofacConfigTest.cs" />
     <Compile Include="GodGame\_Tests\DirectInputTextboxTest.cs" />
     <Compile Include="GodGame\_Tests\DeveloperConsoleTest.cs" />

@@ -29,9 +29,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             builder.RegisterType<GameState>().SingleInstance();
             builder.RegisterType<ClearGameStateChangesService>().SingleInstance();
 
-            // Tools
+            // User input
             builder.RegisterType<PlayerToolsFactory>().SingleInstance();
-
+            builder.RegisterType<UserInputService>().SingleInstance();
 
             // Shared networking
             builder.RegisterType<GameStateDeltaPacketBuilder>().SingleInstance();

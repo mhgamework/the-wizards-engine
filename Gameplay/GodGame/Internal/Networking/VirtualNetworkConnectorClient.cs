@@ -1,4 +1,5 @@
 ﻿using System;
+using MHGameWork.TheWizards.GodGame.Internal.Networking.Packets;
 using MHGameWork.TheWizards.IO;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
@@ -15,12 +16,14 @@ namespace MHGameWork.TheWizards.GodGame.Networking
         public VirtualNetworkConnectorClient(SimpleClientPacketManager cpm)
         {
             var gen = new NetworkPacketFactoryCodeGenerater(TWDir.Cache.CreateChild("GodGame").CreateFile("ClientPackets" + (new Random()).Next() + ".dll").FullName);
-            UserInputHandlerTransporter = cpm.CreatePacketTransporter("UserInput", gen.GetFactory<UserInputHandlerPacket>(), PacketFlags.TCP);
+            UserInputHandlerTransporter = cpm.CreatePacketTransporter("UserInputHandler", gen.GetFactory<UserInputHandlerPacket>(), PacketFlags.TCP);
+            UserInputTransporter = cpm.CreatePacketTransporter("UserInput", gen.GetFactory<UserInputPacket>(), PacketFlags.TCP);
             GameStateDeltaTransporter = cpm.CreatePacketTransporter("GameStateDelta", gen.GetFactory<GameStateDeltaPacket>(), PacketFlags.TCP);
 
             gen.BuildFactoriesAssembly();
         }
 
+        public IClientPacketTransporter<UserInputPacket> UserInputTransporter { get; private set; }
         public IClientPacketTransporter<UserInputHandlerPacket> UserInputHandlerTransporter { get; private set; }
         public IClientPacketTransporter<GameStateDeltaPacket> GameStateDeltaTransporter { get; private set; }
         public void Connect(string ip, int port)

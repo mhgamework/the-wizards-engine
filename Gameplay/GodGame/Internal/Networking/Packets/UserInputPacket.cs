@@ -7,7 +7,6 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Networking.Packets
     /// </summary>
     public struct UserInputPacket : INetworkPacket
     {
-       
-
+        public byte[] data;
     }
 }

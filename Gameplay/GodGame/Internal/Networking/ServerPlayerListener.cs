@@ -30,7 +30,7 @@ namespace MHGameWork.TheWizards.GodGame.Networking
 
             foreach (var cl in ClientsObserver.Added)
             {
-                networkedPlayers.Add(factory.CreatePlayer(cl, networkConnectorServer.UserInputTransporter.GetTransporterForClient(cl)));
+                networkedPlayers.Add(factory.CreatePlayer(cl, networkConnectorServer.UserInputHandlerTransporter.GetTransporterForClient(cl)));
             }
             foreach (var cl in ClientsObserver.Removed)
             {

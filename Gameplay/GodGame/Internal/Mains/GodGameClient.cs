@@ -7,8 +7,10 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame.DeveloperCommands;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Networking;
+using MHGameWork.TheWizards.GodGame.Internal.Networking.Packets;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Networking;
+using MHGameWork.TheWizards.GodGame._Engine;
 using MHGameWork.TheWizards.GodGame._Tests;
 using MHGameWork.TheWizards.IO;
 using MHGameWork.TheWizards.Networking.Server;
@@ -32,16 +34,18 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private readonly INetworkConnectorClient networkConnectorClient;
         private readonly GameStateDeltaPacketBuilder gameStateDeltaPacketBuilder;
         private readonly LocalPlayerService localPlayerService;
+        private readonly UserInputService userInputService;
 
-        public GodGameClient(UserInputProcessingService userInputProcessingService, 
-            UIRenderingService uiRenderingService, 
-            DeveloperConsoleService developerConsoleService, 
-            ClearGameStateChangesService clearStateChangesSimulator, 
-            WorldRenderingSimulator worldRenderingSimulator, 
-            WorldRenderingService simpleWorldRenderer, 
+        public GodGameClient(UserInputProcessingService userInputProcessingService,
+            UIRenderingService uiRenderingService,
+            DeveloperConsoleService developerConsoleService,
+            ClearGameStateChangesService clearStateChangesSimulator,
+            WorldRenderingSimulator worldRenderingSimulator,
+            WorldRenderingService simpleWorldRenderer,
             INetworkConnectorClient networkConnectorClient,
             GameStateDeltaPacketBuilder gameStateDeltaPacketBuilder,
-            LocalPlayerService localPlayerService)
+            LocalPlayerService localPlayerService,
+            UserInputService userInputService)
         {
             this.userInputProcessingService = userInputProcessingService;
             this.uiRenderingService = uiRenderingService;
@@ -52,6 +56,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             this.networkConnectorClient = networkConnectorClient;
             this.gameStateDeltaPacketBuilder = gameStateDeltaPacketBuilder;
             this.localPlayerService = localPlayerService;
+            this.userInputService = userInputService;
         }
 
         public void ConnectToServer(string ip, int port)
@@ -78,7 +83,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         /// </summary>
         private void sendPlayerInputs()
         {
-            
+            var inputs = userInputService.BuildInputs();
+            var p = new UserInputPacket() { data = SerializerHelper.Serialize(inputs) };
+            networkConnectorClient.UserInputTransporter.Send(p);
         }
 
         private void applyServerStateChanges()

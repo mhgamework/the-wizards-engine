@@ -5,6 +5,7 @@ using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Model;
+using MHGameWork.TheWizards.GodGame.UI;
 using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -15,10 +16,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
 {
     public class MonumentType : GameVoxelType
     {
+        private readonly UserInputService inputService;
         private ItemType crystalType;
-        public MonumentType(ItemTypesFactory typesFactory)
+        public MonumentType(ItemTypesFactory typesFactory, UserInputService inputService)
             : base("Monument")
         {
+            this.inputService = inputService;
             Color = Color.Green;
 
             crystalType = typesFactory.CrystalType;
@@ -52,6 +55,11 @@ namespace MHGameWork.TheWizards.GodGame.Types
             tryInfuse(handle);
 
 
+        }
+
+        public void ApplyMonumentRangeInput(IVoxelHandle handle, int value)
+        {
+            handle.Data.DataValue = value;
         }
 
         /// <summary>
@@ -115,7 +123,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public override IEnumerable<IRenderable> GetCustomVisualizers(IVoxelHandle handle)
         {
-            yield return new ValueControlVisualizer(handle, () => handle.Data.DataValue, v => handle.Data.DataValue = v,
+            handle = new IVoxelHandle(handle.GetInternalVoxel()); // copy
+            yield return new ValueControlVisualizer(handle, () => handle.Data.DataValue, v => inputService.SendMonumentRangeInput(handle, v),
                   Matrix.Scaling(0.3f, 0.3f, 0.3f) * Matrix.Translation(0, 2, 0)).Alter(v => v.ValueControl.MaxValue = 50);
         }
     }

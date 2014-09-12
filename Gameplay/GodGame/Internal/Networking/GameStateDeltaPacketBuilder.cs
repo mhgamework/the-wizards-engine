@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Networking;
 using MHGameWork.TheWizards.GodGame.Persistence;
+using MHGameWork.TheWizards.GodGame._Engine;
 using MHGameWork.TheWizards.Networking.Server;
 using System.Linq;
 using PostSharp.Aspects.Serialization;
@@ -69,38 +70,23 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         private void applySerializedGamestate(byte[] serializedGamstate, GameState gameState)
         {
-            var b = new BinaryFormatter();
-            b.Binder = new CustomBinder();
-            using (var strm = new MemoryStream(serializedGamstate))
-            {
-                var s = (SerializedGameState)b.Deserialize(strm);
-                s.Apply(gameState, gameplayObjectsSerializer);
-                s.ApplyVoxels(gameState.World, gameplayObjectsSerializer);
-            }
+            var s = SerializerHelper.Deserialize<SerializedGameState>(serializedGamstate);
+
+            s.Apply(gameState, gameplayObjectsSerializer);
+            s.ApplyVoxels(gameState.World, gameplayObjectsSerializer);
         }
 
-        private class CustomBinder : SerializationBinder
-        {
-            public override Type BindToType(string assemblyName, string typeName)
-            {
-                return TW.Data.GameplayAssembly.GetTypes().First(t => t.FullName == typeName);
-            }
-        }
+       
 
         private byte[] createSerializedGamestate(GameState gameState, IEnumerable<GameVoxel> changedVoxels)
         {
+            
             var s = new SerializedGameState();
             s.SetVoxels(changedVoxels, gameplayObjectsSerializer);
             s.Set(gameState, gameplayObjectsSerializer);
-
-            var b = new BinaryFormatter();
-            using (var strm = new MemoryStream())
-            {
-                b.Serialize(strm, s);
-                return strm.ToArray();
-            }
+            return SerializerHelper.Serialize(s);
         }
 
-      
+
     }
 }
