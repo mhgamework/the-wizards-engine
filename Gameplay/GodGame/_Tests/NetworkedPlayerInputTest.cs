@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [Test]
         public void TestTransmitUserInputVirtual()
         {
-            var proxyTrans = new SimpleClientPacketTransporter<UserInputPacket>();
+            var proxyTrans = new SimpleClientPacketTransporter<UserInputHandlerPacket>();
             var realTrans = proxyTrans;
 
             testInputHandler(proxyTrans, realTrans);
@@ -42,8 +42,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             man2.DisableUDP();
             var gen = createPacketGen();
 
-            var proxyTrans = man1.CreatePacketTransporter("Test", gen.GetFactory<UserInputPacket>(), PacketFlags.TCP);
-            var realTrans = man2.CreatePacketTransporter("Test", gen.GetFactory<UserInputPacket>(), PacketFlags.TCP);
+            var proxyTrans = man1.CreatePacketTransporter("Test", gen.GetFactory<UserInputHandlerPacket>(), PacketFlags.TCP);
+            var realTrans = man2.CreatePacketTransporter("Test", gen.GetFactory<UserInputHandlerPacket>(), PacketFlags.TCP);
 
             gen.BuildFactoriesAssembly();
 
@@ -59,7 +59,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             return new NetworkPacketFactoryCodeGenerater(TWDir.Test.CreateChild("GodGame//ServerClientListenerTest").CreateFile("PacketsFactory.dll").FullName);
         }
 
-        private static void testInputHandler(IClientPacketTransporter<UserInputPacket> proxyTrans, IClientPacketTransporter<UserInputPacket> realTrans)
+        private static void testInputHandler(IClientPacketTransporter<UserInputHandlerPacket> proxyTrans, IClientPacketTransporter<UserInputHandlerPacket> realTrans)
         {
             var world = new Internal.Model.World(20, 10);
             var proxyHandler = new ProxyPlayerInputHandler(proxyTrans);

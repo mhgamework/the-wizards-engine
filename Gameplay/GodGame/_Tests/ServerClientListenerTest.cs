@@ -106,7 +106,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             var client = new NetworkConnectorClient();
             client.Connect("127.0.0.1", 15005);
 
-            var proxy = new ProxyPlayerInputHandler(client.UserInputTransporter);
+            var proxy = new ProxyPlayerInputHandler(client.UserInputHandlerTransporter);
 
             // Done setup
 

@@ -61,6 +61,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         public void AddSimulatorsToEngine(TWEngine engine)
         {
             engine.AddSimulator(userInputProcessingService, "Client-UserInputProcessingSim");
+            engine.AddSimulator(sendPlayerInputs, "Client-PlayerInputsSendingSim");
             engine.AddSimulator(applyServerStateChanges, "Client-applyServerStateChangesSim");
             engine.AddSimulator(uiRenderingService, "Client-UIRenderingSim");
             engine.AddSimulator(developerConsoleService, "Client-DevConsoleSim");
@@ -68,6 +69,16 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             engine.AddSimulator(clearStateChangesSimulator, "Client-ClearChangesSim");
             engine.AddSimulator(worldRenderingSimulator, "Client-EngineWorldRenderingSimulator");
 
+        }
+
+        /// <summary>
+        /// Responsible for sending player inputs to the server
+        /// Currently this does not include the userinputprocessingsimulator, these message are send on a seperate channel
+        /// but might be joined with this system at a later point
+        /// </summary>
+        private void sendPlayerInputs()
+        {
+            
         }
 
         private void applyServerStateChanges()

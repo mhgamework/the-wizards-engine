@@ -9,11 +9,11 @@ namespace MHGameWork.TheWizards.GodGame.Networking
     public class NetworkedPlayerFactory
     {
 
-        private Func<IClientPacketTransporter<UserInputPacket>, IPlayerInputHandler, NetworkPlayerInputForwarder> createNetworkedInputReceiver;
+        private Func<IClientPacketTransporter<UserInputHandlerPacket>, IPlayerInputHandler, NetworkPlayerInputForwarder> createNetworkedInputReceiver;
         private Func<PlayerState, IPlayerInputHandler> createInputHandler;
         private readonly GameState gameState;
 
-        public NetworkedPlayerFactory(Func<IClientPacketTransporter<UserInputPacket>, IPlayerInputHandler, NetworkPlayerInputForwarder> createNetworkedInputReceiver, Func<PlayerState, IPlayerInputHandler> createInputHandler, GameState gameState)
+        public NetworkedPlayerFactory(Func<IClientPacketTransporter<UserInputHandlerPacket>, IPlayerInputHandler, NetworkPlayerInputForwarder> createNetworkedInputReceiver, Func<PlayerState, IPlayerInputHandler> createInputHandler, GameState gameState)
         {
             this.createNetworkedInputReceiver = createNetworkedInputReceiver;
             this.createInputHandler = createInputHandler;
@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.GodGame.Networking
         }
 
         private int nextId = 0;
-        public NetworkedPlayer CreatePlayer(IClient client, IClientPacketTransporter<UserInputPacket> inputTransporter)
+        public NetworkedPlayer CreatePlayer(IClient client, IClientPacketTransporter<UserInputHandlerPacket> inputTransporter)
         {
             //Note: This could go to a networkedplayerfactory
             var state = new PlayerState();

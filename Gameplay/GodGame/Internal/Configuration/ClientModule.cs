@@ -30,7 +30,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             builder.Register(ctx =>
             {
                 var connector = ctx.Resolve<INetworkConnectorClient>();
-                return new ProxyPlayerInputHandler(new LazyClientPacketTransporter<UserInputPacket>(() => connector.UserInputTransporter));
+                return new ProxyPlayerInputHandler(new LazyClientPacketTransporter<UserInputHandlerPacket>(() => connector.UserInputHandlerTransporter));
             }).As<IPlayerInputHandler>().SingleInstance();
 
 

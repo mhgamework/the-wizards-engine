@@ -15,13 +15,13 @@ namespace MHGameWork.TheWizards.GodGame.Networking
         public VirtualNetworkConnectorClient(SimpleClientPacketManager cpm)
         {
             var gen = new NetworkPacketFactoryCodeGenerater(TWDir.Cache.CreateChild("GodGame").CreateFile("ClientPackets" + (new Random()).Next() + ".dll").FullName);
-            UserInputTransporter = cpm.CreatePacketTransporter("UserInput", gen.GetFactory<UserInputPacket>(), PacketFlags.TCP);
+            UserInputHandlerTransporter = cpm.CreatePacketTransporter("UserInput", gen.GetFactory<UserInputHandlerPacket>(), PacketFlags.TCP);
             GameStateDeltaTransporter = cpm.CreatePacketTransporter("GameStateDelta", gen.GetFactory<GameStateDeltaPacket>(), PacketFlags.TCP);
 
             gen.BuildFactoriesAssembly();
         }
 
-        public IClientPacketTransporter<UserInputPacket> UserInputTransporter { get; private set; }
+        public IClientPacketTransporter<UserInputHandlerPacket> UserInputHandlerTransporter { get; private set; }
         public IClientPacketTransporter<GameStateDeltaPacket> GameStateDeltaTransporter { get; private set; }
         public void Connect(string ip, int port)
         {

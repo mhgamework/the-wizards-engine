@@ -6,7 +6,7 @@ namespace MHGameWork.TheWizards.GodGame.Networking
     /// <summary>
     /// A network packet holding user input data produced by an IUserInputHandler
     /// </summary>
-    public struct UserInputPacket : INetworkPacket
+    public struct UserInputHandlerPacket : INetworkPacket
     {
         public string Method;
         public int VoxelCoordX;
@@ -14,13 +14,13 @@ namespace MHGameWork.TheWizards.GodGame.Networking
 
         public int Key;
 
-        public UserInputPacket(string method)
+        public UserInputHandlerPacket(string method)
             : this()
         {
             Method = method;
         }
 
-        public UserInputPacket(string method, Point2 voxelCoord)
+        public UserInputHandlerPacket(string method, Point2 voxelCoord)
             : this()
         {
             Method = method;
