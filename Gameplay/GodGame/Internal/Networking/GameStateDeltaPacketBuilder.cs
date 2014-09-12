@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using DirectX11;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Networking;
 using MHGameWork.TheWizards.GodGame.Persistence;
@@ -74,7 +73,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             b.Binder = new CustomBinder();
             using (var strm = new MemoryStream(serializedGamstate))
             {
-                var s = (SerializableGamestate)b.Deserialize(strm);
+                var s = (SerializedGameState)b.Deserialize(strm);
                 s.Apply(gameState, gameplayObjectsSerializer);
                 s.ApplyVoxels(gameState.World, gameplayObjectsSerializer);
             }
@@ -90,7 +89,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         private byte[] createSerializedGamestate(GameState gameState, IEnumerable<GameVoxel> changedVoxels)
         {
-            var s = new SerializableGamestate();
+            var s = new SerializedGameState();
             s.SetVoxels(changedVoxels, gameplayObjectsSerializer);
             s.Set(gameState, gameplayObjectsSerializer);
 
@@ -102,81 +101,6 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             }
         }
 
-        [Serializable]
-        private class SerializableGamestate
-        {
-            public SerializedVoxel[] Voxels;
-            public SerializablePlayerState[] Players;
-            public SerializableGamestate()
-            {
-            }
-
-            public void SetVoxels(IEnumerable<GameVoxel> voxels, GameplayObjectsSerializer objectSerializer)
-            {
-                Voxels = voxels.Select(SerializedVoxel.FromVoxel).ToArray();
-            }
-            public void ApplyVoxels(Model.World world, GameplayObjectsSerializer objectSerializer)
-            {
-                foreach (var voxel in Voxels)
-                {
-                    var target = world.GetVoxel(new Point2(voxel.X, voxel.Y));
-                    voxel.ToVoxel(target, objectSerializer);
-                }
-            }
-
-            public void Set(GameState state, GameplayObjectsSerializer objectSerializer)
-            {
-                Players = state.Players.Select(ps =>
-                    {
-                        var ret = new SerializablePlayerState();
-                        ret.Set(ps, objectSerializer);
-                        return ret;
-                    }).ToArray();
-            }
-
-            public void Apply(GameState state, GameplayObjectsSerializer objectSerializer)
-            {
-                foreach (var sp in Players)
-                {
-                    var player = state.Players.FirstOrDefault(k => k.Name == sp.Name);
-                    if (player == null)
-                    {
-                        player = new PlayerState();
-                        player.Name = sp.Name;
-                        state.AddPlayer(player);
-                    }
-                    sp.Apply(player, objectSerializer);
-                }
-            }
-
-
-        }
-        [Serializable]
-        private class SerializablePlayerState
-        {
-            public string Name;
-            public string ActiveToolName;
-            public int HeightToolSize;
-            public ChangeHeightToolPerPlayer.HeightToolState HeightToolState;
-
-            public SerializablePlayerState()
-            {
-            }
-
-            public void Set(PlayerState state, GameplayObjectsSerializer objectSerializer)
-            {
-                Name = state.Name;
-                ActiveToolName = objectSerializer.Serialize(state.ActiveTool);
-                HeightToolSize = (state.HeightToolSize);
-                HeightToolState = (state.HeightToolState);
-            }
-            public void Apply(PlayerState state, GameplayObjectsSerializer objectSerializer)
-            {
-                if (state.Name != Name) throw new InvalidOperationException("Deserializing on wrong or changed name player!");
-                state.ActiveTool = objectSerializer.GetPlayerTool(ActiveToolName);
-                state.HeightToolSize = HeightToolSize;
-                state.HeightToolState = HeightToolState;
-            }
-        }
+      
     }
 }
