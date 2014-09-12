@@ -4,7 +4,10 @@ using System.Drawing;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
-using MHGameWork.TheWizards.GodGame.Model;using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.GodGame.Internal.Rendering;
+using MHGameWork.TheWizards.GodGame.Model;
+using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
 using SlimDX;
 
@@ -27,7 +30,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private readonly ItemTypesFactory itemTypesFactory;
         private int totalResourceCapacity;
         private int maxNbWorkers = 10;
-        private int workerSupplyRange = 50;
+        private int workerSupplyRange = 10;
 
         private struct VillageResource
         {
@@ -45,8 +48,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
             this.itemTypesFactory = itemTypesFactory;
             neededResources = new[]
                 {
-                    new VillageResource { ItemType = itemTypesFactory.CropType, MaxResourceLevel = 3, MinResourceLevel = 0, ConsummationRate = 10}, 
-                    new VillageResource { ItemType = itemTypesFactory.FishType, MaxResourceLevel = 2, MinResourceLevel = 0, ConsummationRate = 10}
+                    new VillageResource { ItemType = itemTypesFactory.CropType, MaxResourceLevel = 3, MinResourceLevel = 1, ConsummationRate = 10}, 
+                    new VillageResource { ItemType = itemTypesFactory.FishType, MaxResourceLevel = 2, MinResourceLevel = 1, ConsummationRate = 10}
                 }.ToList();
 
             totalResourceCapacity = 0;
@@ -71,6 +74,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         }
 
+        #region workers
+
         private void trySupplyWorkers(IVoxelHandle handle)
         {
             if (getNbWorkersSupplied(handle) >= maxNbWorkers || !isSupplied(handle))
@@ -87,25 +92,11 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 }
             }
         }
-
+        
         private int getNbWorkersSupplied(IVoxelHandle handle)
         {
             var val = handle.Data.DataValue;
             return val == 0 ? 0 : val - 1;
-        }
-
-        private void checkResourceLevels(IVoxelHandle handle)
-        {
-            foreach (var resource in neededResources)
-            {
-                if (!hasEnough(resource, handle))
-                {
-                    removeSuppliedWorkers(handle);
-                    setSupplyState(handle, false); //not supplied
-                    return;
-                }
-            }
-            setSupplyState(handle, true); //all supplied
         }
 
         private void removeSuppliedWorkers(IVoxelHandle handle)
@@ -137,12 +128,36 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
             throw new Exception("Worker leak!!");
         }
+        
+        #endregion workers
 
+        #region resources
+
+        private void checkResourceLevels(IVoxelHandle handle)
+        {
+            foreach (var resource in neededResources)
+            {
+                if (!hasEnough(resource, handle))
+                {
+                    removeSuppliedWorkers(handle);
+                    setSupplyState(handle, false); //not supplied
+                    return;
+                }
+            }
+            setSupplyState(handle, true); //all supplied
+        }
+        
         private bool hasEnough(VillageResource resource, IVoxelHandle handle)
         {
             return handle.Data.Inventory.GetAmountOfType(resource.ItemType) >= resource.MinResourceLevel;
         }
-
+        
+        private void setSupplyState(IVoxelHandle handle, bool setSupplied)
+        {
+            if (isSupplied(handle) == setSupplied) return;
+            handle.Data.DataValue = setSupplied ? 1 : 0;
+        }
+        
         private void consume(VillageResource resource, IVoxelHandle handle)
         {
             if (handle.Data.Inventory.GetAmountOfType(resource.ItemType) == 0) return;
@@ -152,28 +167,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             checkResourceLevels(handle);
         }
 
-        public override IMesh GetMesh(IVoxelHandle handle)
-        {
-            var tmp = isSupplied(handle) ? datavalueMeshes[1] : datavalueMeshes[0];
-
-            var meshBuilder = new MeshBuilder();
-            meshBuilder.AddMesh(tmp, Matrix.Identity);
-            var groundMesh = GetDefaultGroundMesh(handle.Data.Height, Color.SaddleBrown);
-            if (groundMesh == null) return tmp;
-            meshBuilder.AddMesh(groundMesh, Matrix.Identity);
-            return meshBuilder.CreateMesh();
-        }
-
-        private bool isSupplied(IVoxelHandle handle)
-        {
-            return handle.Data.DataValue > 0;
-        }
-
-        private void setSupplyState(IVoxelHandle handle, bool setSupplied)
-        {
-            if (isSupplied(handle) == setSupplied) return;
-            handle.Data.DataValue = setSupplied ? 1 : 0;
-        }
+        #endregion resources
 
         public override bool CanAcceptItemType(IVoxelHandle handle, IVoxelHandle deliveryHandle, ItemType type)
         {
@@ -188,21 +182,26 @@ namespace MHGameWork.TheWizards.GodGame.Types
             return inventory.Items.Sum(item => itemTypesFactory.IsItemOrKanbanOfType(type, item) ? 1 : 0);
         }
 
-        /// <summary>
-        /// Old village code
-        /// </summary>
-        /// <param name="handle"></param>
-        private void doWork(IVoxelHandle handle)
+        private bool isSupplied(IVoxelHandle handle)
         {
-            var warehouse =
-                handle.GetRange(5).FirstOrDefault(v => v.Type == Warehouse && v.Data.DataValue < 20);
-            if (warehouse == null) return;
+            return handle.Data.DataValue > 0;
+        }
 
-            var forest = handle.GetRange(5).FirstOrDefault(v => v.Type == Forest && v.Data.DataValue > 0);
-            if (forest == null) return;
+        public override IMesh GetMesh(IVoxelHandle handle)
+        {
+            var tmp = isSupplied(handle) ? datavalueMeshes[1] : datavalueMeshes[0];
 
-            forest.Data.DataValue--;
-            warehouse.Data.DataValue++;
+            var meshBuilder = new MeshBuilder();
+            meshBuilder.AddMesh(tmp, Matrix.Identity);
+            var groundMesh = GetDefaultGroundMesh(handle.Data.Height, Color.SaddleBrown);
+            if (groundMesh == null) return tmp;
+            meshBuilder.AddMesh(groundMesh, Matrix.Identity);
+            return meshBuilder.CreateMesh();
+        }
+        
+        public override IEnumerable<IRenderable> GetInfoVisualizers(IVoxelHandle handle)
+        {
+            yield return new RangeVisualizer(handle, workerSupplyRange);
         }
     }
 }

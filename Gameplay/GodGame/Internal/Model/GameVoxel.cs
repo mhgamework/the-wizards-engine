@@ -30,6 +30,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
                     world.NotifyVoxelChanged(this);
                     if (Type != oldType)
                         TypeChanged = true;
+                    oldType = Type;
                 });
             Data.Type = type;
         }

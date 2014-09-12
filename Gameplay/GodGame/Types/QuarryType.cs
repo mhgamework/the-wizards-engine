@@ -39,12 +39,15 @@ namespace MHGameWork.TheWizards.GodGame.Types
             handle.Data.Inventory.ChangeCapacity(inventoryCapacity);
             handle.Data.DataValue = handle.Data.DataValue < datavalOffset ? datavalOffset : handle.Data.DataValue;
 
-            handle.EachRandomInterval(getEfficiency(handle, 1f, 1f * neededWorkerCount), () => tryExcavate(handle));
-            handle.EachRandomInterval(getEfficiency(handle, 5f, 5f * neededWorkerCount), () =>
+            if(handle.Data.WorkerCount > 0)
+            {
+                handle.EachRandomInterval(getEfficiency(handle, 1f, 1f * neededWorkerCount), () => tryExcavate(handle));
+                handle.EachRandomInterval(getEfficiency(handle, 5f, 5f * neededWorkerCount), () =>
                 {
                     tryOutput(handle);
                     checkIfDepleted(handle);
                 });
+            }
         }
 
         public override bool CanAddWorker(IVoxelHandle handle)
