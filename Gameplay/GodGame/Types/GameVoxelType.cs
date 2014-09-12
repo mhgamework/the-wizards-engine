@@ -281,5 +281,14 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             yield break;
         }
+
+        /// <summary>
+        /// Returns true if the voxel can accept a worker.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool CanAddWorker(IVoxelHandle handle)
+        {
+            return false;
+        }
     }
 }

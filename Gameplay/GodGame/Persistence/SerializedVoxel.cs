@@ -27,6 +27,7 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
         public int Y;
         public string[] InventoryItems;
         public float Height;
+        public int WorkerCount;
 
         public static SerializedVoxel FromVoxel(GameVoxel voxel)
         {
@@ -38,6 +39,7 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
             ret.Y = voxel.Coord.Y;
             ret.InventoryItems = voxel.Data.Inventory.Items.Select(i => i.Name).ToArray();
             ret.Height = voxel.Data.Height;
+            ret.WorkerCount = voxel.Data.WorkerCount;
 
             return ret;
         }
@@ -60,6 +62,7 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
                     voxel.Data.Inventory.AddNewItems(gameplayObjectsSerializer.GetItemType(item), 1);
 
             voxel.Data.Height = Height;
+            voxel.Data.WorkerCount = WorkerCount;
         }
 
 

@@ -23,12 +23,14 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private int batchSize = 10;
         private int datavalOffset = 100;
         private int maxDataVal;
+        private int neededWorkerCount;
 
         public QuarryType(ItemTypesFactory itemTypeFactory)
             : base("Quarry")
         {
             stoneType = itemTypeFactory.StoneType;
             maxDataVal = datavalOffset + batchSize * 5;
+            neededWorkerCount = 5;
         }
 
         public override void Tick(IVoxelHandle handle)
@@ -36,12 +38,17 @@ namespace MHGameWork.TheWizards.GodGame.Types
             handle.Data.Inventory.ChangeCapacity(inventoryCapacity);
             handle.Data.DataValue = handle.Data.DataValue < datavalOffset ? datavalOffset : handle.Data.DataValue;
 
-            handle.EachRandomInterval(1f, () => tryExcavate(handle));
-            handle.EachRandomInterval(5f, () =>
+            handle.EachRandomInterval(getEfficiency(handle, 1f, 1f * neededWorkerCount), () => tryExcavate(handle));
+            handle.EachRandomInterval(getEfficiency(handle, 5f, 5f * neededWorkerCount), () =>
                 {
                     tryOutput(handle);
                     checkIfDepleted(handle);
                 });
+        }
+
+        public override bool CanAddWorker(IVoxelHandle handle)
+        {
+            return handle.Data.WorkerCount < neededWorkerCount;
         }
 
         public ItemType GetStoneItemType()
@@ -68,6 +75,18 @@ namespace MHGameWork.TheWizards.GodGame.Types
             if (groundMesh == null) return tmp;
             meshBuilder.AddMesh(groundMesh, Matrix.Translation(0, -0.9f, 0));
             return meshBuilder.CreateMesh();
+        }
+
+        /// <summary>
+        /// efficiency values are times used for eachrandominterval. !! maxefficiency is less than or equal to minefficiency !!
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <param name="maxEfficiency"></param>
+        /// <param name="minEfficiency"></param>
+        /// <returns></returns>
+        private float getEfficiency(IVoxelHandle handle, float maxEfficiency, float minEfficiency)
+        {
+            return minEfficiency - (float)handle.Data.WorkerCount / (float)neededWorkerCount * (minEfficiency - maxEfficiency);
         }
 
         private void tryExcavate(IVoxelHandle handle)

@@ -143,6 +143,10 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
             return Type.CanAcceptItemType(this, deliveryHandle, type);
         }
 
+        public bool CanAddWorker()
+        {
+            return Type.CanAddWorker(this);
+        }
 
         protected bool Equals(IVoxelHandle other)
         {

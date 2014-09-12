@@ -12,6 +12,7 @@ namespace MHGameWork.TheWizards.GodGame
         int DataValue { get; set; }
         int MagicLevel { get; set; }
         float Height { get; set; }
+        int WorkerCount { get; set; }
 
         /// <summary>
         /// TODO: could be optimized to not always store an inventory
@@ -37,6 +38,7 @@ namespace MHGameWork.TheWizards.GodGame
         public int DataValue { get; set; }
         public int MagicLevel { get; set; }
         public float Height { get; set; }
+        public int WorkerCount { get; set; }
 
         /// <summary>
         /// TODO: could be optimized to not always store an inventory
@@ -88,7 +90,12 @@ namespace MHGameWork.TheWizards.GodGame
         public int MagicLevel
         {
             get { return decorated.MagicLevel; }
-            set { decorated.MagicLevel = value; }
+            set
+            {
+                if (decorated.MagicLevel != value)
+                    onChange();
+                decorated.MagicLevel = value;
+            }
         }
 
         public float Height
@@ -99,6 +106,17 @@ namespace MHGameWork.TheWizards.GodGame
                 if (decorated.Height != value)
                     onChange();
                 decorated.Height = value;
+            }
+        }
+
+        public int WorkerCount
+        {
+            get { return decorated.WorkerCount; }
+            set
+            {
+                if (decorated.WorkerCount != value)
+                    onChange();
+                decorated.WorkerCount = value;
             }
         }
 
@@ -113,13 +131,13 @@ namespace MHGameWork.TheWizards.GodGame
 
         public RoadType.RoadData Road
         {
-            get { return decorated.Road; }
+            get { return decorated.Road; } //todo onchange
         }
 
         public InfestationVoxelType.InfestationData Infestation
         {
             get { return decorated.Infestation; }
-            set { decorated.Infestation = value; }
+            set { decorated.Infestation = value; } //todo onchange
         }
     }
 

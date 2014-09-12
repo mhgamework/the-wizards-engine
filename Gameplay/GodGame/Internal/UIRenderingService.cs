@@ -100,7 +100,7 @@ namespace MHGameWork.TheWizards.GodGame
                 return;
             }
 
-            showDataValueRect(target, (int)target.Data.Height);
+            showDataValueRect(target, (int)target.Data.WorkerCount); //note: not showing magicval atm!!
 
         }
 

@@ -64,6 +64,22 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 handle.EachRandomInterval(resource.ConsummationRate, () => consume(resource, handle));
             }
 
+            handle.EachRandomInterval(1f, () => trySupplyWorkers(handle));
+
+        }
+
+        private void trySupplyWorkers(IVoxelHandle handle)
+        {
+            //todo keep track of nb workers supplied
+            var voxelsInRange = handle.GetRange(1000); //todo: want to have whole world actually....
+            foreach (var vh in voxelsInRange)
+            {
+                if (vh.CanAddWorker())
+                {
+                    vh.Data.WorkerCount++;
+                    return;
+                }
+            }
         }
 
         private void checkResourceLevels(IVoxelHandle handle)
