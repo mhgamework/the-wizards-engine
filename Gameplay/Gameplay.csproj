@@ -271,7 +271,6 @@
     <Compile Include="GodGame\Types\GameVoxelType.cs" />
     <Compile Include="GodGame\Model\IVoxelData.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkConnectorClient.cs" />
-    <Compile Include="GodGame\_Engine\ExceptionMessageAttribute.cs" />
     <Compile Include="GodGame\_Tests\GodGameAutofacConfigTest.cs" />
     <Compile Include="GodGame\_Tests\DirectInputTextboxTest.cs" />
     <Compile Include="GodGame\_Tests\DeveloperConsoleTest.cs" />

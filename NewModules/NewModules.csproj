@@ -241,6 +241,7 @@
     <Compile Include="Cogs\ICogComponent.cs" />
     <Compile Include="Cogs\StaticBox.cs" />
     <Compile Include="CompactQuadTree.cs" />
+    <Compile Include="Debugging\ExceptionMessageAttribute.cs" />
     <Compile Include="Debugging\IErrorLogger.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\Terrain\TaggedTerrain.cs">
       <SubType>Code</SubType>
