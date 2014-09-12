@@ -48,8 +48,8 @@ namespace MHGameWork.TheWizards.GodGame
             drawReticle();
             drawSelectedVoxel();
             drawWorldBoundingbox();
-            //drawDataValue();
-            drawMagicValue();
+            drawDataValue();
+            //drawMagicValue();
         }
 
 

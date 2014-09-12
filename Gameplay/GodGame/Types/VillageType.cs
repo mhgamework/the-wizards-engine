@@ -4,8 +4,9 @@ using System.Drawing;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
-using MHGameWork.TheWizards.GodGame.Model;
+using MHGameWork.TheWizards.GodGame.Model;using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
@@ -14,11 +15,19 @@ namespace MHGameWork.TheWizards.GodGame.Types
     /// Resources types can only be those processed by markets.
     /// Villages consume these resources over time.
     /// If no resources of a type are left, the village is disabled.
+    /// 
+    /// Dataval explanation:
+    /// dataval == 0 => not supplied
+    /// dataval > 0 => supplied
+    /// if(dataval > 1) 
+    ///     dataval - 1 == nb workers providing
     /// </summary>
     public class VillageType : GameVoxelType
     {
         private readonly ItemTypesFactory itemTypesFactory;
         private int totalResourceCapacity;
+        private int maxNbWorkers = 10;
+        private int workerSupplyRange = 50;
 
         private struct VillageResource
         {
@@ -29,8 +38,6 @@ namespace MHGameWork.TheWizards.GodGame.Types
         }
 
         private List<VillageResource> neededResources;
-
-        private Random rnd;
 
         public VillageType(ItemTypesFactory itemTypesFactory)
             : base("Village")
@@ -47,14 +54,10 @@ namespace MHGameWork.TheWizards.GodGame.Types
             {
                 totalResourceCapacity += res.MaxResourceLevel;
             }
-
-            rnd = new Random();
         }
 
         public override void Tick(IVoxelHandle handle)
         {
-            //handle.EachRandomInterval(1, () => doWork(handle));
-
             //todo: should not be done every tick??
             handle.Data.Inventory.ChangeCapacity(totalResourceCapacity); //should be done at start
             checkResourceLevels(handle); //should be done at start (and is also done after each consume)
@@ -70,16 +73,25 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private void trySupplyWorkers(IVoxelHandle handle)
         {
-            //todo keep track of nb workers supplied
-            var voxelsInRange = handle.GetRange(1000); //todo: want to have whole world actually....
+            if (getNbWorkersSupplied(handle) >= maxNbWorkers || !isSupplied(handle))
+                return;
+
+            var voxelsInRange = handle.GetRange(workerSupplyRange);
             foreach (var vh in voxelsInRange)
             {
                 if (vh.CanAddWorker())
                 {
                     vh.Data.WorkerCount++;
+                    handle.Data.DataValue++;
                     return;
                 }
             }
+        }
+
+        private int getNbWorkersSupplied(IVoxelHandle handle)
+        {
+            var val = handle.Data.DataValue;
+            return val == 0 ? 0 : val - 1;
         }
 
         private void checkResourceLevels(IVoxelHandle handle)
@@ -88,11 +100,42 @@ namespace MHGameWork.TheWizards.GodGame.Types
             {
                 if (!hasEnough(resource, handle))
                 {
-                    handle.Data.DataValue = 1; //not supplied
+                    removeSuppliedWorkers(handle);
+                    setSupplyState(handle, false); //not supplied
                     return;
                 }
             }
-            handle.Data.DataValue = 0; //all supplied
+            setSupplyState(handle, true); //all supplied
+        }
+
+        private void removeSuppliedWorkers(IVoxelHandle handle)
+        {
+            var nbWorkersSupplied = getNbWorkersSupplied(handle);
+
+            var voxelsInRange = handle.GetRange(workerSupplyRange);
+            foreach (var vh in voxelsInRange)
+            {
+                if (nbWorkersSupplied == 0)
+                    return;
+
+                var nbw = vh.Data.WorkerCount;
+                if (nbw <= 0) continue;
+                if (nbw > nbWorkersSupplied)
+                {
+                    vh.Data.WorkerCount -= nbWorkersSupplied;
+                    nbWorkersSupplied = 0;
+                }
+                else
+                {
+                    vh.Data.WorkerCount = 0;
+                    nbWorkersSupplied -= nbw;
+                }
+            }
+
+            if (nbWorkersSupplied == 0)
+                return;
+
+            throw new Exception("Worker leak!!");
         }
 
         private bool hasEnough(VillageResource resource, IVoxelHandle handle)
@@ -107,6 +150,29 @@ namespace MHGameWork.TheWizards.GodGame.Types
             //var itemToConsume = handle.Data.Inventory.Items.ToArray()[rnd.Next(handle.Data.Inventory.ItemCount)];
             handle.Data.Inventory.DestroyItems(resource.ItemType, 1);
             checkResourceLevels(handle);
+        }
+
+        public override IMesh GetMesh(IVoxelHandle handle)
+        {
+            var tmp = isSupplied(handle) ? datavalueMeshes[1] : datavalueMeshes[0];
+
+            var meshBuilder = new MeshBuilder();
+            meshBuilder.AddMesh(tmp, Matrix.Identity);
+            var groundMesh = GetDefaultGroundMesh(handle.Data.Height, Color.SaddleBrown);
+            if (groundMesh == null) return tmp;
+            meshBuilder.AddMesh(groundMesh, Matrix.Identity);
+            return meshBuilder.CreateMesh();
+        }
+
+        private bool isSupplied(IVoxelHandle handle)
+        {
+            return handle.Data.DataValue > 0;
+        }
+
+        private void setSupplyState(IVoxelHandle handle, bool setSupplied)
+        {
+            if (isSupplied(handle) == setSupplied) return;
+            handle.Data.DataValue = setSupplied ? 1 : 0;
         }
 
         public override bool CanAcceptItemType(IVoxelHandle handle, IVoxelHandle deliveryHandle, ItemType type)
