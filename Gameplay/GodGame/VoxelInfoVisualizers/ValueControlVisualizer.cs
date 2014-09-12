@@ -11,18 +11,20 @@ namespace MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers
     {
         private readonly Func<int> getValue;
         private readonly Action<int> setValue;
+        private readonly Matrix local;
         public ValueControl ValueControl { get; private set; }
-
+        private GameVoxel voxel;
         public ValueControlVisualizer(IVoxelHandle handle, Func<int> getValue, Action<int> setValue, Matrix local)
         {
             this.getValue = getValue;
             this.setValue = setValue;
+            this.local = local;
             ValueControl = new ValueControl();
 
+            voxel = handle.GetInternalVoxel();
 
-            var pos = handle.GetInternalVoxel().Coord.ToVector2().ToXZ() + new Vector2(0.5f).ToXZ();
 
-            ValueControl.WorldMatrix = local * Matrix.Translation(pos) * Matrix.Scaling(new Vector3(handle.GetInternalVoxel().World.VoxelSize.X));
+
         }
 
         public void Show()
@@ -33,6 +35,9 @@ namespace MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers
         public void Update()
         {
             ValueControl.Value = getValue();
+            var pos = voxel.GetBoundingBox().GetCenter() + new Vector2(0.5f).ToXZ();
+            ValueControl.WorldMatrix = local * Matrix.Translation(pos);
+            ValueControl.WorldMatrix = local * Matrix.Scaling(new Vector3(voxel.World.VoxelSize.X)) * Matrix.Translation(pos);
             ValueControl.Update();
         }
 
