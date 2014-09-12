@@ -9,11 +9,13 @@ namespace MHGameWork.TheWizards.GodGame
     {
         private readonly Internal.Model.World world;
         private readonly AirType air;
+        private readonly LandType land;
 
-        public CreateLandTool(Internal.Model.World world,AirType air)
+        public CreateLandTool(Internal.Model.World world, AirType air, LandType land)
         {
             this.world = world;
             this.air = air;
+            this.land = land;
         }
 
         public string Name { get { return "CreateLand"; } }
@@ -24,12 +26,12 @@ namespace MHGameWork.TheWizards.GodGame
         }
         public void OnRightClick(PlayerState player, IVoxelHandle voxel)
         {
-            voxel.ChangeType(air);
+            voxel.ChangeType(land);
         }
 
         public void OnKeypress(PlayerState player, IVoxelHandle voxel, Key key)
         {
-            
+
         }
 
         public override string ToString()

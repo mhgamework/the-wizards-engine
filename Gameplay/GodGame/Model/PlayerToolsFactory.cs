@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.GodGame.Model
 
         private IEnumerable<IPlayerTool> createPlayerInputs()
         {
-            yield return new CreateLandTool(world, typesFactory.Get<AirType>());
+            yield return new CreateLandTool(world, typesFactory.Get<AirType>(), typesFactory.Get<LandType>());
             yield return new ChangeHeightTool(world);
             yield return createTypeInput(typesFactory.Get<ForestType>());
             yield return createTypeInput(typesFactory.Get<VillageType>());
