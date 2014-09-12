@@ -5,7 +5,8 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
-using MHGameWork.TheWizards.GodGame.Model;
+using MHGameWork.TheWizards.GodGame.Model;using MHGameWork.TheWizards.GodGame.Internal.Rendering;
+using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -116,6 +117,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             if (handle.Data.DataValue >= maxDataVal && handle.Data.Inventory.ItemCount == 0)
                 handle.ChangeType(Hole);
+        }
+
+        public override IEnumerable<IRenderable> GetCustomVisualizers(IVoxelHandle handle)
+        {
+            var workerVis = new WorkerCountVisualizer(handle, neededWorkerCount);
+            yield return workerVis;
         }
     }
 }

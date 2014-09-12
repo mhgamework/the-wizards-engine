@@ -44,14 +44,38 @@ namespace MHGameWork.TheWizards.RTSTestCase1
             return mesh;
         }
 
-        private static void addBoxCollisionData(SlimDX.Vector3 dimensions, IMesh mesh)
+        public static IMesh CreateBoxColoredSize(Color4 color, SlimDX.Vector3 size)
+        {
+            var builder = new MeshBuilder();
+            builder.AddBox(new SlimDX.Vector3(), size);
+            var mesh = builder.CreateMesh();
+
+            mesh.GetCoreData().Parts[0].MeshMaterial.DiffuseColor = color.xna();
+            mesh.GetCoreData().Parts[0].MeshMaterial.ColoredMaterial = true;
+
+            addBoxCollisionDataSize(size, mesh);
+
+            return mesh;
+        }
+
+        private static void addBoxCollisionData(SlimDX.Vector3 radius, IMesh mesh)
         {
             var skin = 0.02f;
             mesh.GetCollisionData().Boxes.Add(new MeshCollisionData.Box()
                 {
-                    Dimensions = dimensions.xna() * 2 + Vector3.One * skin,
+                    Dimensions = radius.xna() * 2 + Vector3.One * skin,
                     Orientation = Matrix.Identity
                 });
+        }
+
+        private static void addBoxCollisionDataSize(SlimDX.Vector3 size, IMesh mesh)
+        {
+            var skin = 0.02f;
+            mesh.GetCollisionData().Boxes.Add(new MeshCollisionData.Box()
+            {
+                Dimensions = size.xna() + Vector3.One * skin,
+                Orientation = Matrix.Identity
+            });
         }
 
         public static IMesh CreateBoxWithTexture(ITexture texture, SlimDX.Vector3 dimensions)
