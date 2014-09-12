@@ -67,7 +67,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 float CalcShadowTermPCF(float fLightDepth, float2 vShadowTexCoord,float scaledBias)
 {
 	float fShadowTerm = 0.0f;
-
+	
 	// transform to texel space
 	float2 vShadowMapCoord = g_vShadowMapSize * vShadowTexCoord;
     
@@ -191,7 +191,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
 
 	shadowTerm = (shadowMapDepth< fLightDepth-0.001f) ? 0.0f: 1.0f;
 
-	float bias = depthVal*0.001;
+	float bias = depthVal*0.0001;
 
 	shadowTerm = CalcShadowTermPCF(fLightDepth,vShadowTexCoord,bias);
 	//return t(shadowTerm);
