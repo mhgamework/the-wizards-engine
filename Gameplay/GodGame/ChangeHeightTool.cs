@@ -122,7 +122,7 @@ namespace MHGameWork.TheWizards.GodGame
                     DoDefault(voxel, isLeftClick);
                     break;
                 case HeightToolState.SMOOTH:
-                    DoSmooth(voxel, isLeftClick);
+                        DoSmooth2(voxel, isLeftClick);
                     break;
                 case HeightToolState.FLATTEN:
                     DoFlatten(voxel, isLeftClick);
@@ -141,6 +141,34 @@ namespace MHGameWork.TheWizards.GodGame
             }
         }
 
+        private void DoSmooth2(IVoxelHandle voxel, bool isLeftClick)
+        {
+            var change = isLeftClick ? 1 : -1;
+            var voxels = GetVoxelsInRange(voxel);
+            var averageHeight = voxels.Sum(e => e.Data.Height) / (float)voxels.Count;
+
+            // using 1/4 of a 3x3 kernel
+            float[][] matrix = {
+                            new []{ 1/4f, 1/8f}, 
+                            new []{ 1/8f, 1/16f}};
+
+            foreach (var v in voxels)
+            {
+                var weightedSum = 0f;
+                foreach (var n in v.Get8Connected())
+                {
+                    weightedSum += matrix[(int)xDiff(n, v)][(int)yDiff(n, v)] * n.Data.Height;
+                }
+                weightedSum += matrix[0][0] * v.Data.Height;
+                v.Data.Height = weightedSum;
+                /*if (v.Data.Height > averageHeight)
+                    v.Data.Height = (float)Math.Floor(v.Data.Height - getHeightGaussian(xDiff(voxel, v), yDiff(voxel, v), Amplitude * change, StandardDeviation));
+                else if (v.Data.Height < averageHeight)
+                    v.Data.Height = (float)Math.Floor(v.Data.Height + getHeightGaussian(xDiff(voxel, v), yDiff(voxel, v), Amplitude * change, StandardDeviation));*/
+
+                CheckHeight(v);
+            }
+        }
         private void DoSmooth(IVoxelHandle voxel, bool isLeftClick)
         {
             var change = isLeftClick ? 1 : -1;
