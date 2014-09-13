@@ -170,5 +170,16 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         {
             return (handle.currentVoxel.Coord - currentVoxel.Coord).GetLength();
         }
+
+
+        public static implicit operator GameVoxel(IVoxelHandle handle)
+        {
+            return handle.GetInternalVoxel();
+        }
+
+        public static implicit operator IVoxelHandle(GameVoxel voxel)
+        {
+            return new IVoxelHandle(voxel);
+        }
     }
 }
