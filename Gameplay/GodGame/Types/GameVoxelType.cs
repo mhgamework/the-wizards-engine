@@ -224,6 +224,14 @@ namespace MHGameWork.TheWizards.GodGame.Types
         #endregion
 
         /// <summary>
+        /// Tick method called once each frame, before all voxel ticks
+        /// </summary>
+        public virtual void PerFrameTick()
+        {
+            
+        }
+
+        /// <summary>
         /// Called when a voxel should simulate its logic
         /// </summary>
         /// <param name="handle"></param>
