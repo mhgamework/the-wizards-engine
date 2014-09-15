@@ -40,15 +40,15 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public override IEnumerable<IRenderable> GetCustomVisualizers(IVoxelHandle handle)
         {
-            return getMonument(handle.GetInternalVoxel()).GetCustomVisualizers();
+            return getOrCreateMonument(handle.GetInternalVoxel()).GetCustomVisualizers();
         }
 
         private void updateMonumentsList()
         {
-            var added = world.ChangedVoxels.Where(v => v.Type == this && getMonument(v) == null);
-            var removed = world.ChangedVoxels.Where(v => v.Type != this && getMonument(v) != null);
+            var added = world.ChangedVoxels.Where(v => v.Type == this && getOrCreateMonument(v) == null);
+            var removed = world.ChangedVoxels.Where(v => v.Type != this && getOrCreateMonument(v) != null);
 
-            removed.Select(getMonument).ToArray()
+            removed.Select(getOrCreateMonument).ToArray()
                 .ForEach(m =>
                 {
                     m.Dispose();
@@ -57,27 +57,32 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
             added.ForEach(v =>
                 {
-                    var m = createMonumentVoxel(new IVoxelHandle(v));
-                    monuments.Add(m);
+                    getOrCreateMonument(v);//Should create if new
 
                 });
         }
 
-        private MonumentVoxel getMonument(GameVoxel v)
+        private MonumentVoxel getOrCreateMonument(GameVoxel v)
         {
-            return monuments.FirstOrDefault(m => v == m.Handle.GetInternalVoxel());
+            var ret = monuments.FirstOrDefault(m => v == m.Handle.GetInternalVoxel());
+            if (ret == null)
+            {
+                ret = createMonumentVoxel(new IVoxelHandle(v));
+                monuments.Add(ret);
+            }
+            return ret;
         }
 
 
         public override IEnumerable<IRenderable> GetInfoVisualizers(IVoxelHandle handle)
         {
-            return getMonument(handle).GetInfoVisualizers();
+            return getOrCreateMonument(handle).GetInfoVisualizers();
         }
 
 
         public void ApplyMonumentRangeInput(IVoxelHandle voxelHandle, int value)
         {
-            getMonument(voxelHandle).ApplyMonumentRangeInput(value);
+            getOrCreateMonument(voxelHandle).ApplyMonumentRangeInput(value);
         }
 
         public class MonumentVoxel
@@ -180,6 +185,6 @@ namespace MHGameWork.TheWizards.GodGame.Types
             }
         }
 
-        
+
     }
 }
