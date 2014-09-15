@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.GodGame.Networking
         public void StartListening()
         {
             var gen = new NetworkPacketFactoryCodeGenerater(TWDir.Cache.CreateChild("GodGame").CreateFile("ServerPackets" + (new Random()).Next() + ".dll").FullName);
-            UserInputHandlerTransporter = spm.CreatePacketTransporter("UserHandlerInput", gen.GetFactory<UserInputHandlerPacket>(), PacketFlags.TCP);
+            UserInputHandlerTransporter = spm.CreatePacketTransporter("UserInputHandler", gen.GetFactory<UserInputHandlerPacket>(), PacketFlags.TCP);
             UserInputTransporter = spm.CreatePacketTransporter("UserInput", gen.GetFactory<UserInputPacket>(), PacketFlags.TCP);
             GameStateDeltaTransporter = spm.CreatePacketTransporter("GameStateDelta", gen.GetFactory<GameStateDeltaPacket>(), PacketFlags.TCP);
             gen.BuildFactoriesAssembly();
