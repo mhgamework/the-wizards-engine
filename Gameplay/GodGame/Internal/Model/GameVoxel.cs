@@ -23,19 +23,19 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
             Data = new ObservableVoxelData(new VoxelDataStore(), () =>
             {
                 world.NotifyVoxelChanged(this);
-                if (Type != oldType)
+                if (Type != PreviousType)
                     TypeChanged = true;
-                oldType = Type;
+                PreviousType = Type;
             });
 
         }
 
+        public GameVoxelType PreviousType { get; set; }
         public GameVoxelType Type
         {
             get { return Data.Type; }
         }
 
-        private GameVoxelType oldType;
         public bool TypeChanged { get; set; }
 
         public IVoxel GetRelative(Point2 offset)
@@ -54,6 +54,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         {
             get { return world; }
         }
+
 
         public BoundingBox GetBoundingBox()
         {

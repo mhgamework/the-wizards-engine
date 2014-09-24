@@ -300,5 +300,19 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             return false;
         }
+
+
+
+
+        public bool ReceiveCreationEvents { get; protected set; }
+
+        public virtual void OnCreated(IVoxelHandle handle)
+        {
+            
+        }
+        public virtual void OnDestroyed(IVoxelHandle handle)
+        {
+            
+        }
     }
 }
