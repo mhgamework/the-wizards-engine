@@ -57,12 +57,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 });
         }
 
-        private MonumentVoxelBrain getOrCreateMonument(GameVoxel v)
+        private MonumentVoxelBrain getOrCreateMonument(IVoxelHandle v)
         {
             var ret = monuments.FirstOrDefault(m => v == m.Handle.GetInternalVoxel());
             if (ret == null)
             {
-                ret = createMonumentVoxel(new IVoxelHandle(v));
+                ret = createMonumentVoxel(v);
                 monuments.Add(ret);
             }
             return ret;

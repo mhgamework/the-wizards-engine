@@ -139,7 +139,7 @@ namespace MHGameWork.TheWizards.GodGame
                 {
                     visualizedVoxel = voxel;
                     visualizedType = voxel.Type;
-                    visualizers.AddRange(voxel.Type.GetInfoVisualizers(new IVoxelHandle((IVoxel) voxel)));
+                    visualizers.AddRange(voxel.Type.GetInfoVisualizers(voxel));
                     foreach (var v in visualizers) v.Show();
                 }
 

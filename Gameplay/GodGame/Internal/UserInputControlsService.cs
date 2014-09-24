@@ -35,7 +35,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
                 var v = world.GetVoxel(m.Coord);
                 if (!(v.Type is MonumentType))
                     continue; // Ignore input because it arrived to late or is invalid
-                ((MonumentType)v.Type).ApplyMonumentRangeInput(new IVoxelHandle(v), m.Value);
+                ((MonumentType)v.Type).ApplyMonumentRangeInput(v, m.Value);
             }
         }
 

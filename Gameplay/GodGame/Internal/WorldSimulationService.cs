@@ -49,10 +49,10 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             world.ChangedVoxels.ForEach(v =>
                 {
                     if (monitoringTypes.Contains(v.PreviousType))
-                        v.PreviousType.OnDestroyed(new IVoxelHandle(v));
+                        v.PreviousType.OnDestroyed(v);
 
                     if (monitoringTypes.Contains(v.Data.Type))
-                        v.Data.Type.OnCreated(new IVoxelHandle(v));
+                        v.Data.Type.OnCreated(v);
 
 
                 });
@@ -63,7 +63,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             world.ForEach((v, p) =>
                 {
                     if (v.Type == null) return;
-                    v.Type.Tick(new IVoxelHandle(v));
+                    v.Type.Tick(v);
                 });
         }
 

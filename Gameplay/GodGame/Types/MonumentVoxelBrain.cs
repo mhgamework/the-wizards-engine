@@ -102,7 +102,6 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public IEnumerable<IRenderable> GetCustomVisualizers()
         {
-            Handle = new IVoxelHandle(Handle.GetInternalVoxel()); // copy
             yield return new ValueControlVisualizer(Handle, () => Handle.Data.DataValue, v => inputService.SendMonumentRangeInput(Handle, v),
                                                     Matrix.Scaling(0.3f, 0.3f, 0.3f) * Matrix.Translation(0, 2, 0)).Alter(v => v.ValueControl.MaxValue = 50);
         }

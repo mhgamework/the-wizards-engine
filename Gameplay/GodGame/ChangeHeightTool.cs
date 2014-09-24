@@ -231,7 +231,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         private List<IVoxelHandle> GetVoxelsInRange(IVoxelHandle centerVoxel)
         {
-            return world.GetRange(centerVoxel.GetInternalVoxel(), Size).Select(e => new IVoxelHandle(e)).ToList();
+            return world.GetRange(centerVoxel.GetInternalVoxel(), Size).Cast<IVoxelHandle>().ToList();
         }
     }
 }

@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.GodGame
             int radius = 3;
             if (prevVoxel != null)
             {
-                new IVoxelHandle(prevVoxel).GetRangeCircle(radius).ForEach(v => v.Data.MagicLevel = 0);
+                prevVoxel.GetRangeCircle(radius).ForEach(v => v.Data.MagicLevel = 0);
             }
 
             var handle = voxel;

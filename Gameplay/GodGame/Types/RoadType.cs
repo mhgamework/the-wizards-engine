@@ -116,7 +116,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private IVoxelHandle haxorIVoxelHandelize(IVoxelHandle callingVoxel, GameVoxel voxel)
         {
-            return new IVoxelHandle((IVoxel) voxel);
+            return voxel;
 
         }
 

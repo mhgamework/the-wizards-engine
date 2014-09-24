@@ -26,7 +26,7 @@ namespace MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers
 
         public void Update()
         {
-            foreach (var highlight in getHighlights(new IVoxelHandle((IVoxel) handle)))
+            foreach (var highlight in getHighlights(handle))
             {
                 var t = highlight.GetInternalVoxel();
                 TW.Graphics.LineManager3D.AddBox(t.GetBoundingBox(), Color.Red.dx());

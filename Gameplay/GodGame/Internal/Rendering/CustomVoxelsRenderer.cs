@@ -62,7 +62,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
 
         private void createRenderData(GameVoxel added)
         {
-            var vizs = added.Type.GetCustomVisualizers(new IVoxelHandle((IVoxel) added)).ToArray();
+            var vizs = added.Type.GetCustomVisualizers(added).ToArray();
             if (!vizs.Any()) return;
             foreach (var v in vizs) v.Show();
 

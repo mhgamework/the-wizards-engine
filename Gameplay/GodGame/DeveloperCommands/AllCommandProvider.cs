@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
                     world.ForEach((v, _) =>
                         {
                             if (v.Type != typesFactory.Get<InfestationVoxelType>()) return;
-                            typesFactory.Get<InfestationVoxelType>().CureInfestation(new IVoxelHandle(v));
+                            typesFactory.Get<InfestationVoxelType>().CureInfestation(v);
                         });
 
                     return "Cleared all infestation!";

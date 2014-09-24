@@ -39,23 +39,18 @@ namespace MHGameWork.TheWizards.GodGame
         {
             if (tryVoxelInteract(target)) return;
 
-            ActiveHandler.OnRightClick(player, new IVoxelHandle(target));
+            ActiveHandler.OnRightClick(player, target);
         }
         private bool tryVoxelInteract(GameVoxel target)
         {
-            var handle = new IVoxelHandle();
-            handle.CurrentVoxel = target;
-
-            var ret = target.Type.Interact(handle);
-
-            handle.CurrentVoxel = null;
+            var ret = target.Type.Interact(target);
 
             return ret;
         }
 
         public void OnLeftClick(GameVoxel target)
         {
-            ActiveHandler.OnLeftClick(player, new IVoxelHandle(target));
+            ActiveHandler.OnLeftClick(player, target);
         }
 
 
@@ -76,7 +71,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         public void OnKeyPressed(GameVoxel target, Key key)
         {
-            ActiveHandler.OnKeypress(player, new IVoxelHandle(target), key);
+            ActiveHandler.OnKeypress(player, target, key);
         }
     }
 }
