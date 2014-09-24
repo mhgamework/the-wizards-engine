@@ -89,7 +89,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public class InfestationData
         {
-            public GameVoxelType OriginalType;
+            public IGameVoxelType OriginalType;
 
             public int OriginalDataValue;
 

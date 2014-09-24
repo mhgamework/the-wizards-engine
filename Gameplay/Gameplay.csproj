@@ -255,6 +255,7 @@
     <Compile Include="GodGame\Persistence\SerializedVoxel.cs" />
     <Compile Include="GodGame\Types\AirType.cs" />
     <Compile Include="GodGame\Types\BuildingSiteType.cs" />
+    <Compile Include="GodGame\Types\IGameVoxelType.cs" />
     <Compile Include="GodGame\Types\LandType.cs" />
     <Compile Include="GodGame\Types\CropType.cs" />
     <Compile Include="GodGame\Types\FarmType.cs" />

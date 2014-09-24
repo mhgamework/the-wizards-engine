@@ -27,9 +27,9 @@ namespace MHGameWork.TheWizards.GodGame.Types
     /// Another idea: generate RoadType methods from RoadVoxel?
     /// http://www.hanselman.com/blog/T4TextTemplateTransformationToolkitCodeGenerationBestKeptVisualStudioSecret.aspx
     /// </summary>
-    public class GameVoxelType
+    public class GameVoxelType : IGameVoxelType
     {
-        protected GameVoxelType Air { get { return typesFactory.Get<AirType>(); } }
+        protected IGameVoxelType Air { get { return typesFactory.Get<AirType>(); } }
         protected GameVoxelType Land { get { return typesFactory.Get<LandType>(); } }
         protected InfestationVoxelType Infestation { get { return typesFactory.Get<InfestationVoxelType>(); } }
         protected ForestType Forest { get { return typesFactory.Get<ForestType>(); } }

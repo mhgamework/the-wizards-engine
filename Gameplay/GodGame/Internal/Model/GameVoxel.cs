@@ -33,8 +33,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
 
         }
 
-        public GameVoxelType PreviousType { get; set; }
-        public GameVoxelType Type
+        public IGameVoxelType PreviousType { get; set; }
+        public IGameVoxelType Type
         {
             get { return Data.Type; }
         }
@@ -146,7 +146,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
 
         public Seeder Seeder { get; private set; }
 
-        public void ChangeType(GameVoxelType type)
+        public void ChangeType(IGameVoxelType type)
         {
             //note: put gameplay-related changes here
             var prevHeight = currentVoxel.Data.Height;
@@ -173,7 +173,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
 
         public bool CanAddWorker()
         {
-            return Type.CanAddWorker(this);
+            return ((GameVoxelType)Type).CanAddWorker(this);
         }
 
         public float DistanceTo(IVoxelHandle handle)

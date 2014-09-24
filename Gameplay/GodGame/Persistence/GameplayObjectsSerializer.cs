@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
         }
 
         [ExceptionMessage("VoxelType with name not found")]
-        public GameVoxelType GetVoxelType(string name)
+        public IGameVoxelType GetVoxelType(string name)
         {
             return typesFactory.AllTypes.First(t => t.Name == name);
         }
@@ -41,7 +41,7 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
             return allTools.First(t => t.Name == name);
         }
 
-        public string Serialize(GameVoxelType type)
+        public string Serialize(IGameVoxelType type)
         {
             return type.Name;
         }

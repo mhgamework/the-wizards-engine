@@ -44,7 +44,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         private void simulateCreateAndDestroy()
         {
-            var monitoringTypes = new HashSet<GameVoxelType>(voxelTypesFactory.AllTypes.Where(t => t.ReceiveCreationEvents).ToArray());
+            var monitoringTypes = new HashSet<IGameVoxelType>(voxelTypesFactory.AllTypes.Where(t => t.ReceiveCreationEvents).ToArray());
 
             world.ChangedVoxels.ForEach(v =>
                 {

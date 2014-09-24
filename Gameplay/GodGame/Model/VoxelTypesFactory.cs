@@ -10,11 +10,11 @@ namespace MHGameWork.TheWizards.GodGame.Model
     /// </summary>
     public class VoxelTypesFactory
     {
-        private readonly IEnumerable<GameVoxelType> rawTypes;
+        private readonly IEnumerable<IGameVoxelType> rawTypes;
         private readonly ItemTypesFactory itemTypes;
-        private Dictionary<GameVoxelType, BuildingSiteType> buildingSites = new Dictionary<GameVoxelType, BuildingSiteType>();
+        private Dictionary<IGameVoxelType, BuildingSiteType> buildingSites = new Dictionary<IGameVoxelType, BuildingSiteType>();
 
-        public VoxelTypesFactory(IEnumerable<GameVoxelType> rawTypes, ItemTypesFactory itemTypes)
+        public VoxelTypesFactory(IEnumerable<IGameVoxelType> rawTypes, ItemTypesFactory itemTypes)
         {
             this.rawTypes = rawTypes;
             this.itemTypes = itemTypes;
@@ -42,6 +42,6 @@ namespace MHGameWork.TheWizards.GodGame.Model
             return buildingSites[Get<T>()];
         }
 
-        public IEnumerable<GameVoxelType> AllTypes { get { return rawTypes.Union(buildingSites.Values); } }
+        public IEnumerable<IGameVoxelType> AllTypes { get { return rawTypes.Union(buildingSites.Values); } }
     }
 }

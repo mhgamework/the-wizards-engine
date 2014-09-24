@@ -81,7 +81,7 @@ namespace MHGameWork.TheWizards.GodGame
         {
             var target = inputSim.GetTargetedVoxel();
 
-            if (target == null || target.Data.DataValue == 0 || target.Type.DontShowDataValue)
+            if (target == null || target.Data.DataValue == 0)
             {
                 hideDataValueRect();
                 return;
@@ -124,7 +124,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         private List<IRenderable> visualizers = new List<IRenderable>();
         private GameVoxel visualizedVoxel = null;
-        private GameVoxelType visualizedType = null;
+        private IGameVoxelType visualizedType = null;
         private void updateSelectedVoxelVisualizers()
         {
             var voxel = inputSim.GetTargetedVoxel();

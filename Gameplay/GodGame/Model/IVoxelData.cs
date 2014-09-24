@@ -8,7 +8,7 @@ namespace MHGameWork.TheWizards.GodGame
 {
     public interface IVoxelData
     {
-        GameVoxelType Type { get; set; }
+        IGameVoxelType Type { get; set; }
         int DataValue { get; set; }
         int MagicLevel { get; set; }
         float Height { get; set; }
@@ -34,7 +34,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         }
 
-        public GameVoxelType Type { get; set; }
+        public IGameVoxelType Type { get; set; }
         public int DataValue { get; set; }
         public int MagicLevel { get; set; }
         public float Height { get; set; }
@@ -65,7 +65,7 @@ namespace MHGameWork.TheWizards.GodGame
             decorated.Inventory.Changed += onChange;
         }
 
-        public GameVoxelType Type
+        public IGameVoxelType Type
         {
             get { return decorated.Type; }
             set

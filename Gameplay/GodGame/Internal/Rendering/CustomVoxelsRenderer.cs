@@ -81,9 +81,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
         private class RenderData
         {
             public IRenderable[] Visualizers;
-            public GameVoxelType Type;
+            public IGameVoxelType Type;
 
-            public RenderData(IRenderable[] visualizers, GameVoxelType type)
+            public RenderData(IRenderable[] visualizers, IGameVoxelType type)
             {
                 Visualizers = visualizers;
                 Type = type;

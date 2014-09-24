@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         float TotalTime { get; }
         IVoxelData Data { get; }
         Seeder Seeder { get; }
-        GameVoxelType Type { get; }
+        IGameVoxelType Type { get; }
 
         /// <summary>
         /// DO NOT USE THIS IN GAMEPLAY LAYER!
@@ -45,7 +45,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         /// <returns></returns>
         void EachRandomInterval(float averageInterval, Action action);
 
-        void ChangeType(GameVoxelType type);
+        void ChangeType(IGameVoxelType type);
         bool CanAcceptItemType(ItemType type);
         bool CanAcceptItemType(IVoxelHandle deliveryHandle, ItemType type);
         bool CanAddWorker();
