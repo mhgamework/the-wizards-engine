@@ -173,6 +173,18 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.2.5\lib\net40\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\net40\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net40\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net40\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xaml" />
@@ -248,6 +260,7 @@
     <Compile Include="GodGame\Types\FisheryType.cs" />
     <Compile Include="GodGame\Types\GrinderType.cs" />
     <Compile Include="GodGame\Types\MarketType.cs" />
+    <Compile Include="GodGame\Types\MonumentVoxelBrain.cs" />
     <Compile Include="GodGame\Types\QuarryType.cs" />
     <Compile Include="GodGame\Internal\Model\PlayerState.cs" />
     <Compile Include="GodGame\Types\RoadType.cs" />
@@ -287,6 +300,8 @@
     <Compile Include="GodGame\_Tests\UITest.cs" />
     <Compile Include="GodGame\Internal\Networking\Packets\UserInputHandlerPacket.cs" />
     <Compile Include="GodGame\Internal\Networking\ServerPlayerListener.cs" />
+    <Compile Include="GodGame\Internal\VoxelChangeListener.cs" />
+    <Compile Include="GodGame\_Tests\VoxelChangeListenerTest.cs" />
     <Compile Include="GodGame\_Tests\VoxelTypesTest.cs" />
     <Compile Include="IO\IOExtensions.cs" />
     <Compile Include="Math\GeometrySampler.cs" />
@@ -689,6 +704,7 @@
     <Content Include="_Features\_doc.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="GodGame\Internal\Simulation\" />
     <Folder Include="SkyMerchant\Gameplay\AirCurrents\" />
     <Folder Include="SkyMerchant\_Tests\Broken\" />
   </ItemGroup>

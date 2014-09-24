@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
                 .OnActivated(o => ((GameVoxelType)o.Instance).InjectVoxelTypesFactory(o.Context.Resolve<VoxelTypesFactory>()))
                 .SingleInstance();
 
-            builder.RegisterType<MonumentType.MonumentVoxel>();
+            builder.RegisterType<MonumentVoxelBrain>();
 
             builder.RegisterType<VoxelTypesFactory>().SingleInstance();
 

@@ -9,6 +9,10 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
 {
     /// <summary>
     /// World starts at 0,0 and grows in positive direction
+    /// Responsible for
+    ///     - GameVoxel data structure, defining coords and neighbours
+    ///     - World to voxel coords
+    ///     - Storing a list of changes to gamevoxels
     /// </summary>
     public class World
     {
