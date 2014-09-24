@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
         {
             if (gameVoxel.Type == null) return null;
 
-            var handle = new IVoxelHandle(world, gameVoxel);
+            var handle = new IVoxelHandle((IVoxel) gameVoxel);
 
             return gameVoxel.Type.GetMesh(handle);
 

@@ -8,33 +8,27 @@ using MHGameWork.TheWizards.Scattered.Model;
 namespace MHGameWork.TheWizards.GodGame.Internal.Model
 {
     /// <summary>
-    /// TODO: maybe add an IVoxelHandle property to each GameVoxel?
     /// The problem now is that we cannot hold references to IVoxelHandles, since the objects themselves are flyweights and thus cannot be used to identify voxels
     /// </summary>
+    [Obsolete]
     public class IVoxelHandle
     {
-        private readonly World world;
-        private GameVoxel currentVoxel;
+        private IVoxel currentVoxel;
 
         private static Seeder staticSeeder = new Seeder((new Random()).Next());
 
-        public IVoxelHandle(World world)
+        public IVoxelHandle()
         {
-            this.world = world;
             Seeder = staticSeeder;//TODO: Warning: possible problems!  //new Seeder((new Random()).Next());
         }
-        public IVoxelHandle(World world, GameVoxel gameVoxel)
-            : this(world)
+        public IVoxelHandle(IVoxel gameVoxel)
+            : this()
         {
             CurrentVoxel = gameVoxel;
         }
-        public IVoxelHandle(GameVoxel gameVoxel)
-            : this(gameVoxel.World, gameVoxel)
+        private IVoxelHandle encapsulate(IVoxel v)
         {
-        }
-        private IVoxelHandle encapsulate(GameVoxel v)
-        {
-            var ret = new IVoxelHandle(world); // TODO: use pool, or is this solved by gc?
+            var ret = new IVoxelHandle(); // TODO: use pool, or is this solved by gc?
             ret.CurrentVoxel = v;
             return ret;
         }
@@ -42,7 +36,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         /// <summary>
         /// Internal use only!
         /// </summary>
-        public GameVoxel CurrentVoxel
+        public IVoxel CurrentVoxel
         {
             private get
             {
@@ -58,13 +52,13 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         /// <returns></returns>
         public GameVoxel GetInternalVoxel()
         {
-            return currentVoxel;
+            return (GameVoxel)currentVoxel;
         }
 
         #region Spatial
         public IEnumerable<IVoxelHandle> Get8Connected()
         {
-            return world.Get8Connected(CurrentVoxel.Coord).Where(s => s != null).Select(encapsulate);
+            return currentVoxel.Get8Connected().Select(encapsulate);
         }
         /// <summary>
         /// Return order: (1,0) (0,1) (-1,0) (0,-1)
@@ -72,25 +66,26 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         /// <returns></returns>
         public IEnumerable<IVoxelHandle> Get4Connected()
         {
-            var ret = new IVoxelHandle[4];
-            ret[0] = GetRelative(new Point2(1, 0));
-            ret[1] = GetRelative(new Point2(0, 1));
-            ret[2] = GetRelative(new Point2(-1, 0));
-            ret[3] = GetRelative(new Point2(0, -1));
-            return ret.Where(s => s != null);
+            return currentVoxel.Get4Connected().Select(encapsulate);
         }
         public IEnumerable<IVoxelHandle> GetRange(int radius)
         {
-            return world.GetRange(CurrentVoxel, radius).Select(encapsulate);
+            return currentVoxel.GetRange(radius).Select(encapsulate);
         }
         public IEnumerable<IVoxelHandle> GetRangeCircle(int radius)
         {
-            return world.GetRange(CurrentVoxel, radius).Where(v => (v.Coord - currentVoxel.Coord).GetLength() <= radius).Select(encapsulate);
+            return currentVoxel.GetRangeCircle(radius).Select(encapsulate);
         }
         public IVoxelHandle GetRelative(Point2 p)
         {
-            return encapsulate(world.GetVoxel(CurrentVoxel.Coord + p));
+            return encapsulate(currentVoxel.GetRelative(p));
         }
+
+        public Point2 GetOffset(IVoxel other)
+        {
+            return currentVoxel.GetOffset(other);
+        }
+
         #endregion
 
 
@@ -118,7 +113,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         {
             //note: put gameplay-related changes here
             var prevHeight = currentVoxel.Data.Height;
-            currentVoxel.ChangeType(type);
+            currentVoxel.Data.Type = type;
             currentVoxel.Data.Height = prevHeight;
 
             if (type is WaterType)
@@ -130,7 +125,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         }
         public GameVoxelType Type
         {
-            get { return currentVoxel.Type; }
+            get { return currentVoxel.Data.Type; }
         }
 
         public bool CanAcceptItemType(ItemType type)
@@ -168,13 +163,13 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
 
         public float DistanceTo(IVoxelHandle handle)
         {
-            return (handle.currentVoxel.Coord - currentVoxel.Coord).GetLength();
+            return handle.GetInternalVoxel().GetOffset(handle.GetInternalVoxel()).GetLength();
         }
 
 
         public static implicit operator GameVoxel(IVoxelHandle handle)
         {
-            return handle.GetInternalVoxel();
+            return (GameVoxel)handle.GetInternalVoxel();
         }
 
         public static implicit operator IVoxelHandle(GameVoxel voxel)

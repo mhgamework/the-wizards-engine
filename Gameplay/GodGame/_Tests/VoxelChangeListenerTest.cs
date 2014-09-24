@@ -26,9 +26,9 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
             s.RegisterAdjacentChange(target, _ => count++);
 
-            world.GetVoxel(new Point2(4, 5)).ChangeType(new GameVoxelType("Type1"));
-            world.GetVoxel(new Point2(5, 4)).ChangeType(new GameVoxelType("Type3"));
-            world.GetVoxel(new Point2(5, 7)).ChangeType(new GameVoxelType("Type2"));
+            world.GetVoxel(new Point2(4, 5)).Data.Type = new GameVoxelType("Type1");
+            world.GetVoxel(new Point2(5, 4)).Data.Type = new GameVoxelType("Type3");
+            world.GetVoxel(new Point2(5, 7)).Data.Type = new GameVoxelType("Type2");
 
             s.ProcessChanges(world);
             world.ClearChangedFlags();
@@ -36,9 +36,9 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
             s.UnRegisterAdjacentChange(target);
 
-            world.GetVoxel(new Point2(4, 5)).ChangeType(new GameVoxelType("Type1"));
-            world.GetVoxel(new Point2(5, 4)).ChangeType(new GameVoxelType("Type3"));
-            world.GetVoxel(new Point2(5, 7)).ChangeType(new GameVoxelType("Type2"));
+            world.GetVoxel(new Point2(4, 5)).Data.Type = new GameVoxelType("Type1");
+            world.GetVoxel(new Point2(5, 4)).Data.Type = new GameVoxelType("Type3");
+            world.GetVoxel(new Point2(5, 7)).Data.Type = new GameVoxelType("Type2");
 
             s.ProcessChanges(world);
             world.ClearChangedFlags();
@@ -59,9 +59,9 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
             var d = s.ChangedVoxels.Subscribe(_ => count++);
 
-            world.GetVoxel(new Point2(4, 5)).ChangeType(new GameVoxelType("Type1"));
-            world.GetVoxel(new Point2(5, 4)).ChangeType(new GameVoxelType("Type3"));
-            world.GetVoxel(new Point2(5, 7)).ChangeType(new GameVoxelType("Type2"));
+            world.GetVoxel(new Point2(4, 5)).Data.Type = new GameVoxelType("Type1");
+            world.GetVoxel(new Point2(5, 4)).Data.Type = new GameVoxelType("Type3");
+            world.GetVoxel(new Point2(5, 7)).Data.Type = new GameVoxelType("Type2");
 
             s.ProcessChanges(world);
             world.ClearChangedFlags();
@@ -69,9 +69,9 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
             d.Dispose();
 
-            world.GetVoxel(new Point2(4, 5)).ChangeType(new GameVoxelType("Type1"));
-            world.GetVoxel(new Point2(5, 4)).ChangeType(new GameVoxelType("Type3"));
-            world.GetVoxel(new Point2(5, 7)).ChangeType(new GameVoxelType("Type2"));
+            world.GetVoxel(new Point2(4, 5)).Data.Type = new GameVoxelType("Type1");
+            world.GetVoxel(new Point2(5, 4)).Data.Type = new GameVoxelType("Type3");
+            world.GetVoxel(new Point2(5, 7)).Data.Type = new GameVoxelType("Type2");
 
             s.ProcessChanges(world);
             world.ClearChangedFlags();

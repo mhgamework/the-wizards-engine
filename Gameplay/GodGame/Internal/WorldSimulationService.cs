@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             this.world = world;
             this.voxelTypesFactory = voxelTypesFactory;
 
-            handle = new IVoxelHandle(world);
+            handle = new IVoxelHandle();
 
             nextTick = TW.Graphics.TotalRunTime + TickInterval;
         }
@@ -30,7 +30,26 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         {
             if (nextTick > TW.Graphics.TotalRunTime) return;
             nextTick += TickInterval; //TODO: Check for timing problems
-            voxelTypesFactory.AllTypes.ForEach(t => t.PerFrameTick());
+
+            simulatePerTypeTick();
+            
+            simulatePerVoxelTick();
+
+            simulateCreateAndDestroy();
+
+            simulateCreateAndDestroy();
+        }
+
+        private void simulateCreateAndDestroy()
+        {
+            world.ChangedVoxels.ForEach(v =>
+                {
+                    
+                });
+        }
+
+        private void simulatePerVoxelTick()
+        {
             world.ForEach((v, p) =>
                 {
                     if (v.Type == null) return;
@@ -41,6 +60,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
                     handle.CurrentVoxel = null;
                 });
+        }
+
+        private void simulatePerTypeTick()
+        {
+            voxelTypesFactory.AllTypes.ForEach(t => t.PerFrameTick());
         }
     }
 }

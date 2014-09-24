@@ -4,6 +4,7 @@ using DirectX11;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
 using MHGameWork.TheWizards.Scattered._Engine;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.GodGame.Internal.Model
 {
@@ -20,7 +21,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         private Array2D<GameVoxel> voxels;
         public int WorldSize { get { return voxels.Size.X; } }
 
-      
+
 
         public World(int size, float voxelSize)
         {
@@ -54,7 +55,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
 
         public IEnumerable<GameVoxel> Get8Connected(Point2 coord)
         {
-            return voxels.Get8Connected(coord);
+            return GetVoxel(coord).Get8Connected().Cast<GameVoxel>();
+            //return voxels.Get8Connected(coord);
         }
 
 

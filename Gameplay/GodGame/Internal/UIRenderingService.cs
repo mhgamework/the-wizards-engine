@@ -81,13 +81,13 @@ namespace MHGameWork.TheWizards.GodGame
         {
             var target = inputSim.GetTargetedVoxel();
 
-            if (target == null || target.DataValue == 0 || target.Type.DontShowDataValue)
+            if (target == null || target.Data.DataValue == 0 || target.Type.DontShowDataValue)
             {
                 hideDataValueRect();
                 return;
             }
 
-            showDataValueRect(target, target.DataValue);
+            showDataValueRect(target, target.Data.DataValue);
 
         }
         private void drawMagicValue()
@@ -139,7 +139,7 @@ namespace MHGameWork.TheWizards.GodGame
                 {
                     visualizedVoxel = voxel;
                     visualizedType = voxel.Type;
-                    visualizers.AddRange(voxel.Type.GetInfoVisualizers(new IVoxelHandle(world, voxel)));
+                    visualizers.AddRange(voxel.Type.GetInfoVisualizers(new IVoxelHandle((IVoxel) voxel)));
                     foreach (var v in visualizers) v.Show();
                 }
 

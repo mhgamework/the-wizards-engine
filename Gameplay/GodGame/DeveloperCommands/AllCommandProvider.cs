@@ -41,7 +41,10 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
                 });
             addCommand("clearWorld", () =>
                 {
-                    world.ForEach((v, _) => { v.ChangeType(typesFactory.Get<LandType>()); });
+                    world.ForEach((v, _) =>
+                        {
+                            v.Data.Type = typesFactory.Get<LandType>();
+                        });
                     return "World cleared!";
                 });
             addCommand("listsaves", () =>

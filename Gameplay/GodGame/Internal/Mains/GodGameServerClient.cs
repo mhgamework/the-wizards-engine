@@ -86,7 +86,10 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         {
             var world = new Model.World(100, 10);
 
-            world.ForEach((v, _) => v.ChangeType(landType));
+            world.ForEach((v, _) =>
+                {
+                    v.Data.Type = landType;
+                });
             return world;
         }
 

@@ -43,7 +43,7 @@ namespace MHGameWork.TheWizards.GodGame
         }
         private bool tryVoxelInteract(GameVoxel target)
         {
-            var handle = new IVoxelHandle(world);
+            var handle = new IVoxelHandle();
             handle.CurrentVoxel = target;
 
             var ret = target.Type.Interact(handle);

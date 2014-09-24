@@ -6,11 +6,11 @@ using SlimDX;
 namespace MHGameWork.TheWizards.GodGame.Internal.Model
 {
     /// <summary>
-    /// Split this class into a 'enginemodelobject' part, for data storage, and a 'domain model part', 
-    /// which should be merged with the IVoxelHandle probably
+    /// Represents a voxel in the world, identified by the coordinate.
+    /// The voxel contains a ITile which represents the contents of a voxel
     /// Somewhat of a configuration class?
     /// </summary>
-    public class GameVoxel
+    public class GameVoxel : IVoxel
     {
         private readonly World world;
         public Point2 Coord { get; private set; }
@@ -19,44 +19,36 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         {
             this.world = world;
             this.Coord = coord;
-        }
 
-        public void ChangeType(GameVoxelType type)
-        {
-            if (type == null) throw new InvalidOperationException("Cannot set null type!!");
-            
             Data = new ObservableVoxelData(new VoxelDataStore(), () =>
-                {
-                    world.NotifyVoxelChanged(this);
-                    if (Type != oldType)
-                        TypeChanged = true;
-                    oldType = Type;
-                });
-            Data.Type = type;
+            {
+                world.NotifyVoxelChanged(this);
+                if (Type != oldType)
+                    TypeChanged = true;
+                oldType = Type;
+            });
+
         }
 
         public GameVoxelType Type
         {
             get { return Data.Type; }
-            private set { Data.Type = value; }
         }
 
         private GameVoxelType oldType;
         public bool TypeChanged { get; set; }
 
+        public IVoxel GetRelative(Point2 offset)
+        {
+            return world.GetVoxel(Coord + offset);
+        }
+
+        public Point2 GetOffset(IVoxel other)
+        {
+            return ((GameVoxel) other).Coord - Coord;
+        }
+
         public IVoxelData Data { get; set; }
-
-        public int MagicLevel
-        {
-            get { return Data.MagicLevel; }
-            set { Data.MagicLevel = value; }
-        }
-
-        public int DataValue
-        {
-            get { return Data.DataValue; }
-            set { Data.DataValue = value; }
-        }
 
         public World World
         {

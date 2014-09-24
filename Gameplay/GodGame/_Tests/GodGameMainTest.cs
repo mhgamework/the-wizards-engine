@@ -117,14 +117,22 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             world.ForEach((v, p) =>
                 {
                     if (Vector2.Distance(p, new Vector2(100, 100)) < 100)
-                        v.ChangeType(typesFactory.Get<LandType>());
+                    {
+                        v.Data.Type = typesFactory.Get<LandType>();
+                    }
                     else if (Vector2.Distance(p, new Vector2(8, 8)) < 7)
-                        v.ChangeType(typesFactory.Get<LandType>());
+                    {
+                        v.Data.Type = typesFactory.Get<LandType>();
+                    }
                     else if (Vector2.Distance(p, new Vector2(25, 25)) < 15)
-                        v.ChangeType(typesFactory.Get<LandType>());
-                    //v.ChangeType(GameVoxelType.Infestation);
+                    {
+                        v.Data.Type = typesFactory.Get<LandType>();
+                    }
+                        //v.ChangeType(GameVoxelType.Infestation);
                     else
-                        v.ChangeType(typesFactory.Get<LandType>());
+                    {
+                        v.Data.Type = typesFactory.Get<LandType>();
+                    }
                 });
 
 

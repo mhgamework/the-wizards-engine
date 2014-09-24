@@ -20,6 +20,8 @@ using MHGameWork.TheWizards.IO;
 namespace MHGameWork.TheWizards.GodGame.Types
 {
     /// <summary>
+    /// Represents a type of voxel content, should better by named TileType
+    /// 
     /// Idea: generate RoadVoxel from RoadType, where it has wrappers for the roadtype methods taking a gamevoxel. 
     /// This way, logic can again be written on voxels instead of types
     /// Another idea: generate RoadType methods from RoadVoxel?

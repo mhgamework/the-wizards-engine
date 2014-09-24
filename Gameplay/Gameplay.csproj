@@ -212,9 +212,11 @@
     <Compile Include="GodGame\Internal\Console\DeveloperConsoleUI.cs" />
     <Compile Include="GodGame\Internal\Console\DirectInputTextBox.cs" />
     <Compile Include="GodGame\Internal\Console\ICommandProvider.cs" />
+    <Compile Include="GodGame\Internal\Model\ITile.cs" />
     <Compile Include="GodGame\Internal\Networking\Packets\UserInputPacket.cs" />
     <Compile Include="GodGame\Internal\Networking\Packets\GameStateDeltaPacket.cs" />
     <Compile Include="GodGame\Internal\Networking\LocalPlayerService.cs" />
+    <Compile Include="GodGame\Internal\Simulation\VoxelTileFactory.cs" />
     <Compile Include="GodGame\Internal\UserInputControlsService.cs" />
     <Compile Include="GodGame\Persistence\SerializedGameState.cs" />
     <Compile Include="GodGame\Persistence\SerializedPlayerState.cs" />
@@ -704,7 +706,6 @@
     <Content Include="_Features\_doc.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GodGame\Internal\Simulation\" />
     <Folder Include="SkyMerchant\Gameplay\AirCurrents\" />
     <Folder Include="SkyMerchant\_Tests\Broken\" />
   </ItemGroup>
