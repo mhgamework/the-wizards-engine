@@ -212,7 +212,8 @@
     <Compile Include="GodGame\Internal\Console\DeveloperConsoleUI.cs" />
     <Compile Include="GodGame\Internal\Console\DirectInputTextBox.cs" />
     <Compile Include="GodGame\Internal\Console\ICommandProvider.cs" />
-    <Compile Include="GodGame\Internal\Model\ITile.cs" />
+    <Compile Include="GodGame\Internal\Model\IVoxel.cs" />
+    <Compile Include="GodGame\Internal\Model\VoxelSpatialExtensions.cs" />
     <Compile Include="GodGame\Internal\Networking\Packets\UserInputPacket.cs" />
     <Compile Include="GodGame\Internal\Networking\Packets\GameStateDeltaPacket.cs" />
     <Compile Include="GodGame\Internal\Networking\LocalPlayerService.cs" />
