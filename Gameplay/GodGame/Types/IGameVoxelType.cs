@@ -9,7 +9,6 @@ namespace MHGameWork.TheWizards.GodGame.Types
     public interface IGameVoxelType
     {
         string Name { get; }
-        bool ReceiveCreationEvents { get; }
 
         /// <summary>
         /// Called when a voxel should simulate its logic
@@ -58,8 +57,30 @@ namespace MHGameWork.TheWizards.GodGame.Types
         /// <returns></returns>
         IEnumerable<IRenderable> GetCustomVisualizers(IVoxelHandle handle);
 
+        /// <summary>
+        /// When true the simulator will call the OnCreated and OnDestroyed methods
+        /// </summary>
+        bool ReceiveCreationEvents { get; }
+        /// <summary>
+        /// Called when argument voxel's type is changed to this voxel type
+        /// </summary>
+        /// <param name="handle"></param>
         void OnCreated(IVoxelHandle handle);
+        /// <summary>
+        /// Called when a voxel with this voxel type is changed to another type
+        /// </summary>
+        /// <param name="handle"></param>
         void OnDestroyed(IVoxelHandle handle);
+
+        /// <summary>
+        /// When enabled, the simulator calls the OnChanged method
+        /// </summary>
+        bool ReceiveChangeEvents { get; }
+        /// <summary>
+        /// Called when some part of the voxel's data changes
+        /// </summary>
+        void OnChanged(IVoxelHandle handle);
+
         IMesh GetMesh(IVoxelHandle gameVoxel);
 
         /// <summary>

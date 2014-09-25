@@ -40,19 +40,6 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         float Height { get; set; }*/
     }
 
-    public interface ITileType
-    {
-
-    }
-
-    /// <summary>
-    /// ?
-    /// </summary>
-    public interface IWorld
-    {
-
-    }
-
     public static class VoxelSpatialExtensions
     {
         public static IEnumerable<IVoxel> Get8Connected(this IVoxel v)

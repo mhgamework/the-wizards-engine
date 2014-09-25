@@ -182,6 +182,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private Color color;
         private bool coloredBaseMesh;
 
+
         public virtual IMesh GetMesh(IVoxelHandle gameVoxel)
         {
             var tmp = mesh;
@@ -313,6 +314,13 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public virtual void OnDestroyed(IVoxelHandle handle)
         {
             
+        }
+
+        public bool ReceiveChangeEvents { get; private set; }
+
+        public virtual void OnChanged(IVoxelHandle handle)
+        {
+
         }
     }
 }
