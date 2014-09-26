@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
             this.world = world;
             this.Coord = coord;
             initVoxelHandler();
-            Data = new ObservableVoxelData(new VoxelDataStore(), () =>
+            Data = new ObservableVoxelData(() =>
             {
                 world.NotifyVoxelChanged(this);
                 if (Type != PreviousType)
