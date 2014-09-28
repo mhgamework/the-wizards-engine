@@ -53,10 +53,16 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
         {
             Debug.Assert(voxel.Coord.X == X);
             Debug.Assert(voxel.Coord.Y == Y);
+            
+
+            voxel.ResetData(); // TODO: potential overhead
+
             voxel.Data.Type = gameplayObjectsSerializer.GetVoxelType(this.TypeName);
             voxel.Data.MagicLevel = MagicLevel;
             voxel.Data.DataValue = DataValue;
 
+
+            voxel.Data.Inventory.Clear();
             if (InventoryItems != null)
                 foreach (var item in InventoryItems)
                     voxel.Data.Inventory.AddNewItems(gameplayObjectsSerializer.GetItemType(item), 1);

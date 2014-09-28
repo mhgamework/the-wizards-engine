@@ -16,14 +16,22 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
     /// </summary>
     public class GameVoxel : IVoxel, IVoxelHandle
     {
-        private readonly World world;
+        private World world;
+        private readonly ProxyGenerator gen;
         public Point2 Coord { get; private set; }
 
         public GameVoxel(World world, Point2 coord, ProxyGenerator gen)
         {
             this.world = world;
+            this.gen = gen;
             this.Coord = coord;
             initVoxelHandler();
+            ResetData();
+
+        }
+
+        public void ResetData()
+        {
             Data = new ObservableVoxelData(() =>
                 {
                     if (Data == null) return; // Ignore changes in the observablevoxeldata constructor
@@ -32,7 +40,6 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
                         TypeChanged = true;
                     PreviousType = Type;
                 }, gen);
-
         }
 
         public IGameVoxelType PreviousType { get; set; }
@@ -153,6 +160,10 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         {
             //note: put gameplay-related changes here
             var prevHeight = currentVoxel.Data.Height;
+
+
+            ResetData();
+
             currentVoxel.Data.Type = type;
             currentVoxel.Data.Height = prevHeight;
 
@@ -161,6 +172,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
                 var minHeight = Get4Connected().Min(e => e.Data.Height);
                 currentVoxel.Data.Height = minHeight;
             }
+
 
         }
 
