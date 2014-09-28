@@ -222,6 +222,7 @@
     <Compile Include="GodGame\Internal\Networking\LocalPlayerService.cs" />
     <Compile Include="GodGame\Internal\Simulation\VoxelTileFactory.cs" />
     <Compile Include="GodGame\Internal\UserInputControlsService.cs" />
+    <Compile Include="Data\IntefaceToData\DataStorageInterceptor.cs" />
     <Compile Include="GodGame\Persistence\SerializedGameState.cs" />
     <Compile Include="GodGame\Persistence\SerializedPlayerState.cs" />
     <Compile Include="GodGame\Internal\Networking\VirtualNetworkConnectorClient.cs" />
@@ -292,6 +293,8 @@
     <Compile Include="GodGame\Model\IVoxelData.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkConnectorClientAndServer.cs" />
     <Compile Include="GodGame\VoxelInfoVisualizers\WorkerCountVisualizer.cs" />
+    <Compile Include="Data\IntefaceToData\IObjectStorage.cs" />
+    <Compile Include="Data\IntefaceToData\ObjectStorage.cs" />
     <Compile Include="GodGame\_Engine\SerializerHelper.cs" />
     <Compile Include="GodGame\_Tests\GodGameAutofacConfigTest.cs" />
     <Compile Include="GodGame\_Tests\DirectInputTextboxTest.cs" />
@@ -302,7 +305,7 @@
     <Compile Include="GodGame\Internal\UserInputProcessingService.cs" />
     <Compile Include="GodGame\_Engine\ListObserver.cs" />
     <Compile Include="GodGame\_Tests\ObservableVoxelDataTest.cs" />
-    <Compile Include="GodGame\_Tests\ObservervableDataInterceptorTest.cs" />
+    <Compile Include="GodGame\_Tests\InterfaceToData\DataStorageInterceptorTest.cs" />
     <Compile Include="GodGame\_Tests\ServerClientListenerTest.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkPlayerInputForwarder.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkedPlayer.cs" />

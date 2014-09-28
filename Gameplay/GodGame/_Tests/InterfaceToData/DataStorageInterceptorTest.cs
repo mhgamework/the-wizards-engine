@@ -1,14 +1,20 @@
 ﻿using System.Collections.Generic;
-using DirectX11;
-using MHGameWork.TheWizards.Engine.Persistence;
+using MHGameWork.TheWizards.GodGame._Engine.IntefaceToData;
 using NUnit.Framework;
 using System;
 
-namespace MHGameWork.TheWizards.GodGame._Tests
+namespace MHGameWork.TheWizards.GodGame._Tests.InterfaceToData
 {
     [TestFixture]
-    public class ObservervableDataInterceptorTest
+    public class DataStorageInterceptorTest
     {
+        private Dictionary<string, object> values = new Dictionary<string, object>();
+        private DataStorageInterceptor<ITestData> createObservable()
+        {
+            var dataStore = new ObjectStorage(s => values[s], (s, v) => values[s] = v);
+            var observable = DataStorageInterceptor<ITestData>.ImplementInterface<ITestData>(dataStore);
+            return observable;
+        }
         [Test]
         public void TestStoreRetrieve()
         {
@@ -27,8 +33,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
             data.Number = 5;
             data.Name = "MH";
-            Assert.AreEqual(5, dataStore["Number"]);
-            Assert.AreEqual("MH", dataStore["Name"]);
+            Assert.AreEqual(5, values["Number"]);
+            Assert.AreEqual("MH", values["Name"]);
         }
 
         [Test]
@@ -74,12 +80,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
         }
 
-        private static ObservervableDataInterceptor<ITestData> createObservable()
-        {
-            var dataStore = new Dictionary<string, object>();
-            var observable = ObservervableDataInterceptor<ITestData>.CreateObservervableData(TODO);
-            return observable;
-        }
+
 
         public interface ITestData
         {
