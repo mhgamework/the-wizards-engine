@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.GodGame._Engine.IntefaceToData;
 using MHGameWork.TheWizards.Reflection;
@@ -12,6 +13,8 @@ namespace MHGameWork.TheWizards.GodGame
     {
         private readonly Action onChange;
 
+        private IBasicVoxelDataExtension basicExtension { get { return Get<IBasicVoxelDataExtension>(); } }
+
         public ObservableVoxelData(Action onChange)
         {
             this.onChange = onChange;
@@ -19,9 +22,9 @@ namespace MHGameWork.TheWizards.GodGame
             //Warning: assumes inventory object does not change in the decorated data
 
 
-            inventory = new Inventory();
-            road = RoadType.RoadData.Empty;
-            Infestation = InfestationVoxelType.InfestationData.Emtpy;
+            basicExtension.Inventory = new Inventory();
+            basicExtension.Road = RoadType.RoadData.Empty;
+            basicExtension.Infestation = InfestationVoxelType.InfestationData.Emtpy;
 
             Inventory.Changed += onChange;
         }
@@ -73,90 +76,57 @@ namespace MHGameWork.TheWizards.GodGame
         }
 
 
+        #region "Basic extension"
 
-
-        private IGameVoxelType type;
         public IGameVoxelType Type
         {
-            get { return type; }
-            set
-            {
-                if (type != value)
-                    onChange();
-                type = value;
-            }
+            get { return basicExtension.Type; }
+            set { basicExtension.Type = value; }
         }
 
-        private int dataValue;
         public int DataValue
         {
-            get { return dataValue; }
-            set
-            {
-                if (dataValue != value)
-                    onChange();
-                dataValue = value;
-            }
+            get { return basicExtension.DataValue; }
+            set { basicExtension.DataValue = value; }
         }
 
-        private int magicLevel;
         public int MagicLevel
         {
-            get { return magicLevel; }
-            set
-            {
-                if (magicLevel != value)
-                    onChange();
-                magicLevel = value;
-            }
+            get { return basicExtension.MagicLevel; }
+            set { basicExtension.MagicLevel = value; }
         }
 
-        private float height;
         public float Height
         {
-            get { return height; }
-            set
-            {
-                if (height != value)
-                    onChange();
-                height = value;
-            }
+            get { return basicExtension.Height; }
+            set { basicExtension.Height = value; }
         }
 
-        private int workerCount;
         public int WorkerCount
         {
-            get { return workerCount; }
-            set
-            {
-                if (workerCount != value)
-                    onChange();
-                workerCount = value;
-            }
+            get { return basicExtension.WorkerCount; }
+            set { basicExtension.WorkerCount = value; }
         }
 
-
-        private Inventory inventory;
         public Inventory Inventory
         {
-            get
-            {
-                return inventory;
-            }
+            get { return basicExtension.Inventory; }
+            set { basicExtension.Inventory = value; }
         }
 
-        private RoadType.RoadData road;
         public RoadType.RoadData Road
         {
-            get { return road; } //todo onchange
+            get { return basicExtension.Road; }
+            set { basicExtension.Road = value; }
         }
 
-        private InfestationVoxelType.InfestationData infestation;
         public InfestationVoxelType.InfestationData Infestation
         {
-            get { return infestation; }
-            set { infestation = value; } //todo onchange
+            get { return basicExtension.Infestation; }
+            set { basicExtension.Infestation = value; }
         }
+
+        #endregion
 
 
 

@@ -223,6 +223,7 @@
     <Compile Include="GodGame\Internal\Simulation\VoxelTileFactory.cs" />
     <Compile Include="GodGame\Internal\UserInputControlsService.cs" />
     <Compile Include="Data\IntefaceToData\DataStorageInterceptor.cs" />
+    <Compile Include="GodGame\Model\IBasicVoxelDataExtension.cs" />
     <Compile Include="GodGame\Model\IVoxelDataExtension.cs" />
     <Compile Include="GodGame\Model\ObservableVoxelData.cs" />
     <Compile Include="GodGame\Persistence\SerializedGameState.cs" />
