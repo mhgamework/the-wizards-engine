@@ -301,6 +301,7 @@
     <Compile Include="GodGame\CreateLandTool.cs" />
     <Compile Include="GodGame\Internal\UserInputProcessingService.cs" />
     <Compile Include="GodGame\_Engine\ListObserver.cs" />
+    <Compile Include="GodGame\_Tests\ObservableVoxelDataTest.cs" />
     <Compile Include="GodGame\_Tests\ObservervableDataInterceptorTest.cs" />
     <Compile Include="GodGame\_Tests\ServerClientListenerTest.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkPlayerInputForwarder.cs" />
