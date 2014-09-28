@@ -9,16 +9,16 @@ namespace MHGameWork.TheWizards.GodGame._Tests.InterfaceToData
     public class DataStorageInterceptorTest
     {
         private Dictionary<string, object> values = new Dictionary<string, object>();
-        private DataStorageInterceptor<ITestData> createObservable()
+        private ITestData createData()
         {
             var dataStore = new ObjectStorage(s => values[s], (s, v) => values[s] = v);
-            var observable = DataStorageInterceptor<ITestData>.ImplementInterface<ITestData>(dataStore);
+            var observable = DataStorageInterceptor<ITestData>.ImplementInterface(dataStore);
             return observable;
         }
         [Test]
         public void TestStoreRetrieve()
         {
-            var data = createObservable().Target;
+            var data = createData();
 
             data.Number = 5;
             data.Name = "MH";
@@ -29,7 +29,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests.InterfaceToData
         [Test]
         public void TestDatastore()
         {
-            var data = createObservable().Target;
+            var data = createData();
 
             data.Number = 5;
             data.Name = "MH";
@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests.InterfaceToData
         [Test]
         public void TestStoreArray()
         {
-            var data = createObservable().Target;
+            var data = createData();
 
             data.Numbers = new int[5];
             data.Numbers[4] = 3;
@@ -52,7 +52,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests.InterfaceToData
         [Test]
         public void TestStoreStruct()
         {
-            var data = createObservable().Target;
+            var data = createData();
 
             data.Struct = new MyStruct() { Num1 = 1, Num2 = 2 };
 
@@ -64,23 +64,6 @@ namespace MHGameWork.TheWizards.GodGame._Tests.InterfaceToData
             Assert.AreEqual(1, data.Struct.Num1);
             Assert.AreEqual(200, data.Struct.Num2);
         }
-
-        [Test]
-        public void TestObserver()
-        {
-            var observable = createObservable();
-
-            var count = 0;
-            observable.Observable.Subscribe(_ => count++);
-
-            observable.Target.Name = "Hello";
-            observable.Target.Number = 5;
-
-            Assert.AreEqual(2, count);
-
-        }
-
-
 
         public interface ITestData
         {

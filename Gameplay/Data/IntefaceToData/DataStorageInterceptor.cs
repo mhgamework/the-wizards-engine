@@ -10,12 +10,12 @@ namespace MHGameWork.TheWizards.GodGame._Engine.IntefaceToData
     /// <summary>
     /// This interceptor allows redirecting all property reads and writes to an interface to a custom location
     /// The interface should only contain read-write properties. 
+    /// TODO: WARNING: this data structure does not have default values, and depends on the storage to ensure that a initial read returns a value
+    /// IDEA: on construction of the interceptor, set a default value on each property in the intercepted interface?
     /// </summary>
     public class DataStorageInterceptor<T> : Castle.DynamicProxy.IInterceptor
     {
         private readonly IObjectStorage storage;
-
-        public T Target { get; private set; }
 
         private Subject<string> obs = new Subject<string>();
         public IObservable<string> Observable { get { return obs; } }
@@ -25,13 +25,12 @@ namespace MHGameWork.TheWizards.GodGame._Engine.IntefaceToData
             this.storage = storage;
         }
 
-        public static DataStorageInterceptor<T> ImplementInterface<T>(IObjectStorage storage)
+        public static T ImplementInterface(IObjectStorage storage)
         {
             var generator = new ProxyGenerator();
             var interceptor = new DataStorageInterceptor<T>(storage);
             var proxy = (T)generator.CreateInterfaceProxyWithoutTarget(typeof(T), interceptor);
-            interceptor.Target = proxy;
-            return interceptor;
+            return proxy;
         }
 
         public void Intercept(Castle.DynamicProxy.IInvocation invocation)

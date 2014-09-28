@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
     public class ObservableVoxelDataTest
     {
         [Test]
-        public void TestDataValue()
+        public void TestObservableDataValue()
         {
             var count = 0;
             var data = new ObservableVoxelData(() => { count++; });
@@ -28,7 +28,24 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         }
 
         [Test]
-        public void TestExtensionChangesSimple()
+        public void TestExtensionReadWrite()
+        {
+            var data = new ObservableVoxelData(() => { });
+
+
+            data.Get<MyExtension>().Number = 5;
+            Assert.AreEqual(5, data.Get<MyExtension>().Number);
+
+            data.Get<MyExtension>().Number = 6;
+            Assert.AreEqual(6, data.Get<MyExtension>().Number);
+
+            data.Get<MyExtension>().Number = 7;
+            data.Get<MyExtension>().Number = 7;
+            Assert.AreEqual(7, data.Get<MyExtension>().Number);
+        }
+
+        [Test]
+        public void TestObservableExtensionSimple()
         {
             var count = 0;
             var data = new ObservableVoxelData(() => { count++; });
@@ -37,7 +54,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
             data.Get<MyExtension>().Number = 5;
             Assert.AreEqual(1, count);
-            
+
             data.Get<MyExtension>().Number = 6;
             Assert.AreEqual(2, count);
 
