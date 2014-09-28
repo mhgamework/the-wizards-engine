@@ -1,6 +1,8 @@
 ﻿using System;
+using Castle.DynamicProxy;
 using DirectX11;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Types;
 using NSubstitute;
 using NUnit.Framework;
@@ -18,7 +20,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         {
             var s = new VoxelChangeListener();
 
-            var world = new Internal.Model.World(10, 10);
+            var world = new Internal.Model.World(10, 10, (w,p) => new GameVoxel(w,p,new ProxyGenerator()));
 
             var target = world.GetVoxel(new Point2(5, 5));
 
@@ -53,7 +55,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         {
             var s = new VoxelChangeListener();
 
-            var world = new Internal.Model.World(10, 10);
+            var world = new Internal.Model.World(10, 10, (w, p) => new GameVoxel(w, p, new ProxyGenerator()));
 
             var count = 0;
 

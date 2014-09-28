@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Castle.DynamicProxy;
+using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.GodGame._Tests
 {
@@ -12,7 +13,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         public void TestObservableDataValue()
         {
             var count = 0;
-            var data = new ObservableVoxelData(() => { count++; });
+            var data = new ObservableVoxelData(() => { count++; }, new ProxyGenerator());
 
             Assert.AreEqual(0, count);
 
@@ -30,7 +31,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [Test]
         public void TestExtensionReadWrite()
         {
-            var data = new ObservableVoxelData(() => { });
+            var data = new ObservableVoxelData(() => { }, new ProxyGenerator());
 
 
             data.Get<MyExtension>().Number = 5;
@@ -48,7 +49,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         public void TestObservableExtensionSimple()
         {
             var count = 0;
-            var data = new ObservableVoxelData(() => { count++; });
+            var data = new ObservableVoxelData(() => { count++; }, new ProxyGenerator());
 
             Assert.AreEqual(0, count);
 

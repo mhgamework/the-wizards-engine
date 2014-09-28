@@ -8,7 +8,7 @@ namespace MHGameWork.TheWizards.GodGame.Model
     /// </summary>
     public interface IBasicVoxelDataExtension : IVoxelDataExtension
     {
-        IGameVoxelType Type { get; set; }
+        //NOTE: optimized to the observableVoxelData //IGameVoxelType Type { get; set; }
         int DataValue { get; set; }
         int MagicLevel { get; set; }
         float Height { get; set; }

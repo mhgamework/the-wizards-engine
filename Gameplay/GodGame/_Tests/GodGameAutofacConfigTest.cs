@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Autofac.Core;
+using Castle.DynamicProxy;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
@@ -50,7 +51,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                 }).As(type);
             }
 
-            world = new Internal.Model.World(200, 10);
+            world = new Internal.Model.World(200, 10, (w, p) => new GameVoxel(w, p, new ProxyGenerator()));
 
             builder.RegisterInstance(world);
             builder.RegisterInstance(worldPersister);

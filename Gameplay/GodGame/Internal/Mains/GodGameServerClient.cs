@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Autofac;
+using Castle.DynamicProxy;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
@@ -44,7 +45,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             bServer.RegisterModule<VoxelTypesModule>();
             bServer.RegisterModule<CommonModule>();
             bServer.RegisterModule<ServerModule>();
-            bServer.Register(ctx => createWorld(ctx.Resolve<LandType>())).SingleInstance();
+            bServer.Register(ctx => createWorld(ctx.Resolve<LandType>(), ctx.Resolve<ProxyGenerator>())).SingleInstance();
 
             if (virtualConnection)
                 bServer.RegisterInstance(virtualNetworkConnectorServer).As<INetworkConnectorServer>().SingleInstance();
@@ -58,7 +59,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             bClient.RegisterModule<VoxelTypesModule>();
             bClient.RegisterModule<CommonModule>();
             bClient.RegisterModule<ClientModule>();
-            bClient.Register(ctx => createWorld(ctx.Resolve<LandType>())).SingleInstance();
+            bClient.Register(ctx => createWorld(ctx.Resolve<LandType>(), ctx.Resolve<ProxyGenerator>())).SingleInstance();
             bClient.RegisterType<AllCommandProvider>().As<ICommandProvider>().WithParameter(TypedParameter.From(server.World));
 
             if (virtualConnection)
@@ -82,9 +83,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         }
 
-        private static Model.World createWorld(LandType landType)
+        private static Model.World createWorld(LandType landType, ProxyGenerator proxyGenerator)
         {
-            var world = new Model.World(100, 10);
+            var world = new Model.World(100, 10, (w, p) => new GameVoxel(w, p, proxyGenerator));
 
             world.ForEach((v, _) =>
                 {

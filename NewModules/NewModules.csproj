@@ -139,6 +139,9 @@
     <Reference Include="bbv.Common.StateMachine">
       <HintPath>..\packages\bbv.Common.StateMachine.7.4.12149.1635\lib\Net40\bbv.Common.StateMachine.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.3.1\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Dotway.WPF.Controls">
       <HintPath>..\_Libraries\Dotway.WPFLibraries\Dotway.WPF\Dotway.WPF.Controls.dll</HintPath>
     </Reference>

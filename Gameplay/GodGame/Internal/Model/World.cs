@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Castle.DynamicProxy;
 using DirectX11;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
@@ -23,11 +24,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
 
 
 
-        public World(int size, float voxelSize)
+        public World(int size, float voxelSize, Func<World, Point2, GameVoxel> createVoxel)
         {
             this.VoxelSize = new Vector2(voxelSize);
             voxels = new Array2D<GameVoxel>(new Point2(size, size));
-            voxels.ForEach((v, p) => voxels[p] = new GameVoxel(this, p));
+            voxels.ForEach((v, p) => voxels[p] = createVoxel(this, p));
         }
 
         public GameVoxel GetVoxelAtGroundPos(Vector3 groundPos)

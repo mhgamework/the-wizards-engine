@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Castle.DynamicProxy;
 using DirectX11;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
@@ -28,7 +29,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [SetUp]
         public void Setup()
         {
-            world = new Internal.Model.World(20, 10);
+            world = new Internal.Model.World(20, 10, (w, p) => new GameVoxel(w, p, new ProxyGenerator()));
             gameState = new GameState(world);
 
             inputHandler = Substitute.For<IPlayerInputHandler>();

@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.Types;
@@ -12,10 +13,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterTypes(ThisAssembly.GetTypes().Where(t => t.IsSubclassOf(typeof(GameVoxelType))).ToArray())
+            Type[] types = ThisAssembly.GetTypes().Where(t => t.IsSubclassOf(typeof (GameVoxelType))).ToArray();
+            builder.RegisterTypes(types)
                 .Except<BuildingSiteType>()
                 .AsSelf()
-                .As<GameVoxelType>()
+                .As<IGameVoxelType>()
                 .OnActivated(o => ((GameVoxelType)o.Instance).InjectVoxelTypesFactory(o.Context.Resolve<VoxelTypesFactory>()))
                 .SingleInstance();
 

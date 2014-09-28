@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Subjects;
 using System.Reflection;
@@ -20,14 +21,25 @@ namespace MHGameWork.TheWizards.GodGame._Engine.IntefaceToData
         private Subject<string> obs = new Subject<string>();
         public IObservable<string> Observable { get { return obs; } }
 
+        private Dictionary<MethodInfo, PropertyInfo> setters = new Dictionary<MethodInfo, PropertyInfo>();
+        private Dictionary<MethodInfo, PropertyInfo> getters = new Dictionary<MethodInfo, PropertyInfo>();
+
         private DataStorageInterceptor(IObjectStorage storage)
         {
             this.storage = storage;
+
+            setters = typeof(T).GetProperties().ToDictionary(p => p.GetSetMethod());
+            getters = typeof(T).GetProperties().ToDictionary(p => p.GetGetMethod());
         }
 
-        public static T ImplementInterface(IObjectStorage storage)
+        /// <summary>
+        /// TODO:IDEA: the intercepter can be shared for improved performance!
+        /// </summary>
+        /// <param name="storage"></param>
+        /// <param name="generator"></param>
+        /// <returns></returns>
+        public static T ImplementInterface(IObjectStorage storage, ProxyGenerator generator)
         {
-            var generator = new ProxyGenerator();
             var interceptor = new DataStorageInterceptor<T>(storage);
             var proxy = (T)generator.CreateInterfaceProxyWithoutTarget(typeof(T), interceptor);
             return proxy;
@@ -35,22 +47,18 @@ namespace MHGameWork.TheWizards.GodGame._Engine.IntefaceToData
 
         public void Intercept(Castle.DynamicProxy.IInvocation invocation)
         {
-            if (!ReflectionHelper.IsMethodFromProperty(invocation.Method))
-                invocation.Proceed(); //DataStorageInterceptor only implements properties, not methods
-
-            var property = ReflectionHelper.GetPropertyForMethod(invocation.Method);
-
-            if (invocation.Method == property.GetSetMethod())
+            if (setters.ContainsKey(invocation.Method))
             {
-                storage.Set(property.Name, invocation.Arguments[0]);
-                obs.OnNext(property.Name);
+                var prop = setters[invocation.Method];
+                storage.Set(prop.Name, invocation.Arguments[0]);
+                obs.OnNext(prop.Name);
             }
-            else if (invocation.Method == property.GetGetMethod())
+            else if (getters.ContainsKey(invocation.Method))
             {
-                invocation.ReturnValue = storage.Get(property.Name);
+                invocation.ReturnValue = storage.Get(getters[invocation.Method].Name);
             }
             else
-                throw new InvalidOperationException("Unforseen problem?");
+                invocation.Proceed(); //DataStorageInterceptor only implements properties, not methods
 
         }
 

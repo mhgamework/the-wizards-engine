@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Castle.DynamicProxy;
 using MHGameWork.TheWizards.GodGame._Engine.IntefaceToData;
 using NUnit.Framework;
 using System;
@@ -12,7 +13,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests.InterfaceToData
         private ITestData createData()
         {
             var dataStore = new ObjectStorage(s => values[s], (s, v) => values[s] = v);
-            var observable = DataStorageInterceptor<ITestData>.ImplementInterface(dataStore);
+            var observable = DataStorageInterceptor<ITestData>.ImplementInterface(dataStore, new ProxyGenerator());
             return observable;
         }
         [Test]

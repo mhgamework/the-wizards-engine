@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Castle.DynamicProxy;
 using DirectX11;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -18,18 +19,19 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         private readonly World world;
         public Point2 Coord { get; private set; }
 
-        public GameVoxel(World world, Point2 coord)
+        public GameVoxel(World world, Point2 coord, ProxyGenerator gen)
         {
             this.world = world;
             this.Coord = coord;
             initVoxelHandler();
             Data = new ObservableVoxelData(() =>
-            {
-                world.NotifyVoxelChanged(this);
-                if (Type != PreviousType)
-                    TypeChanged = true;
-                PreviousType = Type;
-            });
+                {
+                    if (Data == null) return; // Ignore changes in the observablevoxeldata constructor
+                    world.NotifyVoxelChanged(this);
+                    if (Type != PreviousType)
+                        TypeChanged = true;
+                    PreviousType = Type;
+                }, gen);
 
         }
 
@@ -73,6 +75,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         private void initVoxelHandler()
         {
             Seeder = staticSeeder;//TODO: Warning: possible problems!  //new Seeder((new Random()).Next());
+            currentVoxel = this;
         }
 
         /// <summary>

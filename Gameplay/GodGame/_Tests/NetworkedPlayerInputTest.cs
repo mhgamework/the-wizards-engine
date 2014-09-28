@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Castle.DynamicProxy;
 using DirectX11;
 using MHGameWork.TheWizards.GodGame.Internal;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Networking;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
@@ -61,7 +63,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
 
         private static void testInputHandler(IClientPacketTransporter<UserInputHandlerPacket> proxyTrans, IClientPacketTransporter<UserInputHandlerPacket> realTrans)
         {
-            var world = new Internal.Model.World(20, 10);
+            var world = new Internal.Model.World(20, 10, (w, p) => new GameVoxel(w, p, new ProxyGenerator()));
             var proxyHandler = new ProxyPlayerInputHandler(proxyTrans);
             var realHandler = Substitute.For<IPlayerInputHandler>();
             var inputReceiver = new NetworkPlayerInputForwarder(realTrans, realHandler, world);

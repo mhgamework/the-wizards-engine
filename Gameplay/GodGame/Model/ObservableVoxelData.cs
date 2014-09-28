@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Castle.DynamicProxy;
 using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.GodGame._Engine.IntefaceToData;
@@ -15,9 +16,10 @@ namespace MHGameWork.TheWizards.GodGame
 
         private IBasicVoxelDataExtension basicExtension { get { return Get<IBasicVoxelDataExtension>(); } }
 
-        public ObservableVoxelData(Action onChange)
+        public ObservableVoxelData(Action onChange, ProxyGenerator proxyGenerator)
         {
             this.onChange = onChange;
+            this.proxyGenerator = proxyGenerator;
 
             //Warning: assumes inventory object does not change in the decorated data
 
@@ -32,6 +34,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         private Dictionary<string, object> data = new Dictionary<string, object>();
         private Dictionary<Type, IVoxelDataExtension> extensionCache = new Dictionary<Type, IVoxelDataExtension>();
+        private ProxyGenerator proxyGenerator;
 
         public T Get<T>() where T : IVoxelDataExtension
         {
@@ -43,7 +46,7 @@ namespace MHGameWork.TheWizards.GodGame
             if (!IsValidExtension<T>()) throw new InvalidOperationException("Unsupported extension");
             T ext = default(T);
             var storage = new ObjectStorage(s => getData(ext, s), (s, v) => setData(ext, s, v));
-            ext = DataStorageInterceptor<T>.ImplementInterface(storage);
+            ext = DataStorageInterceptor<T>.ImplementInterface(storage, proxyGenerator);
 
             return ext;
         }
@@ -73,16 +76,21 @@ namespace MHGameWork.TheWizards.GodGame
         private string buildKey(IVoxelDataExtension ext, string field)
         {
             return ext.GetType().Name + "-" + field;
+            //return field;
         }
-
-
-        #region "Basic extension"
-
+        private IGameVoxelType type;
         public IGameVoxelType Type
         {
-            get { return basicExtension.Type; }
-            set { basicExtension.Type = value; }
+            get { return type; }
+            set
+            {
+                if (type != value)
+                    onChange();
+                type = value;
+            }
         }
+
+        #region "Basic extension"
 
         public int DataValue
         {
