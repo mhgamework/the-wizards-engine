@@ -32,15 +32,15 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private void tryOutput(IVoxelHandle handle)
         {
             if (handle.Data.Inventory.ItemCount == 0) return;
-            var type = handle.Data.Inventory.Items.First();
-            var target = handle.Get4Connected().FirstOrDefault(v => v.CanAcceptItemType(type));
-
-            if (target == null) return;
 
             for (int i = 0; i < 5; i++)
             {
-                if (!target.CanAcceptItemType(type)) break;
-                if (handle.Data.Inventory[type] == 0) break;
+                if (handle.Data.Inventory.ItemCount == 0) return;
+
+                var type = handle.Data.Inventory.Items.First();
+                var target = handle.Get4Connected().FirstOrDefault(v => v.CanAcceptItemType(type));
+                if (target == null) break;
+
                 if (target.Type is RoadType)
                     Road.DeliverItemClosest(target, handle, type);
                 else
