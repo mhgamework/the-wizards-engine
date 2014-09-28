@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using MHGameWork.TheWizards.Forms;
 
 namespace MHGameWork.TheWizards.Reflection
 {
     /// <summary>
-    /// This class provides methods to access fields and properties on a type like they are one and the same concept
+    /// Helper methods for c# reflection
+    /// 
+    /// Note: This class provides methods to access fields and properties on a type like they are one and the same concept
+    /// Note: also look at the postharp reflectionhelper for this functionality
     /// </summary>
     public static class ReflectionHelper
     {
@@ -55,6 +59,40 @@ namespace MHGameWork.TheWizards.Reflection
         {
            return type.GetInterfaces().First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IList<>)).GetGenericArguments()[0];
         }
+
+
+        /// <summary>
+        /// Returns the default value for type t
+        /// </summary>
+        public static object GetDefaultValue(Type t)
+        {
+            object val = null;
+            if (t.IsValueType)
+                val = Activator.CreateInstance(t);
+            return val;
+        }
+
+        /// <summary>
+        /// Returns whether the given method is a property getter or setter
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        public static bool IsMethodFromProperty(MethodInfo method)
+        {
+            return GetPropertyForMethod(method) != null;
+        }
+
+        /// <summary>
+        /// Returns the property corresponding to the given method setter or getter
+        /// returns null when method is not a property method
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        public static PropertyInfo GetPropertyForMethod(MethodInfo method)
+        {
+            return method.DeclaringType.GetProperties().FirstOrDefault((prop => prop.GetSetMethod() == method || prop.GetGetMethod() == method));
+        }
+
 
     }
 }
