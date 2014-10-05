@@ -274,7 +274,8 @@
     <Compile Include="GodGame\Types\MonumentVoxelBrain.cs" />
     <Compile Include="GodGame\Types\QuarryType.cs" />
     <Compile Include="GodGame\Internal\Model\PlayerState.cs" />
-    <Compile Include="GodGame\Types\RoadType.cs" />
+    <Compile Include="GodGame\Types\Transportation\RoadFilterType.cs" />
+    <Compile Include="GodGame\Types\Transportation\RoadType.cs" />
     <Compile Include="GodGame\Types\MinerType.cs" />
     <Compile Include="GodGame\Types\OreType.cs" />
     <Compile Include="GodGame\Types\HoleType.cs" />
@@ -299,6 +300,12 @@
     <Compile Include="Data\IntefaceToData\IObjectStorage.cs" />
     <Compile Include="Data\IntefaceToData\ObjectStorage.cs" />
     <Compile Include="GodGame\_Engine\SerializerHelper.cs" />
+    <Compile Include="GodGame\Internal\Data\IDataIdentifier.cs" />
+    <Compile Include="GodGame\Internal\Data\IDatastore.cs" />
+    <Compile Include="GodGame\Internal\Data\IObservableDatastore.cs" />
+    <Compile Include="GodGame\Internal\Data\ISerializableDatastore.cs" />
+    <Compile Include="GodGame\Internal\Networking\NetworkDeltaSyncer.cs" />
+    <Compile Include="GodGame\_Tests\NetworkSyncerTest.cs" />
     <Compile Include="GodGame\_Tests\GodGameAutofacConfigTest.cs" />
     <Compile Include="GodGame\_Tests\DirectInputTextboxTest.cs" />
     <Compile Include="GodGame\_Tests\DeveloperConsoleTest.cs" />
@@ -312,6 +319,7 @@
     <Compile Include="GodGame\_Tests\ServerClientListenerTest.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkPlayerInputForwarder.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkedPlayer.cs" />
+    <Compile Include="GodGame\Internal\Data\StringObjectDatastore.cs" />
     <Compile Include="GodGame\_Tests\UITest.cs" />
     <Compile Include="GodGame\Internal\Networking\Packets\UserInputHandlerPacket.cs" />
     <Compile Include="GodGame\Internal\Networking\ServerPlayerListener.cs" />
