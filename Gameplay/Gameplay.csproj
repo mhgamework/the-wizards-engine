@@ -392,12 +392,8 @@
     <Compile Include="Scattered\Model\Level.cs" />
     <Compile Include="Scattered\SceneGraphing\SceneGraphNode.cs" />
     <Compile Include="Scattered\Bindings\ScatteredRenderingSimulator.cs" />
-    <Compile Include="Scattered\Simulation\LevelSerializer.cs" />
     <Compile Include="Scattered\GameLogic\Services\ClusterFlightController.cs" />
     <Compile Include="Scattered\GameLogic\Services\ClusterPhysicsService.cs" />
-    <Compile Include="Scattered\Simulation\RoundState.cs" />
-    <Compile Include="Scattered\Simulation\IslandConnectionProvider.cs" />
-    <Compile Include="Scattered\Simulation\LoadLevelSimulator.cs" />
     <Compile Include="Scattered\_Engine\LinqExtensions.cs" />
     <Compile Include="Math\MathExtensions.cs" />
     <Compile Include="Math\RaycastExtensions.cs" />

@@ -6,7 +6,6 @@ using MHGameWork.TheWizards.Rendering.Lod;
 using MHGameWork.TheWizards.Scattered.Bindings;
 using MHGameWork.TheWizards.Scattered.GameLogic.Objects;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
-using MHGameWork.TheWizards.Scattered.Simulation;
 using MHGameWork.TheWizards.Simulation.Spatial;
 using SlimDX;
 using System.Linq;
