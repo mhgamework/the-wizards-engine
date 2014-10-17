@@ -314,11 +314,13 @@
     <Compile Include="Data\IntefaceToData\IObjectStorage.cs" />
     <Compile Include="Data\IntefaceToData\ObjectStorage.cs" />
     <Compile Include="GodGame\_Engine\SerializerHelper.cs" />
+    <Compile Include="GodGame\_Engine\AutofacDependencyLogger.cs" />
     <Compile Include="GodGame\Internal\Data\IDataIdentifier.cs" />
     <Compile Include="GodGame\Internal\Data\IDatastore.cs" />
     <Compile Include="GodGame\Internal\Data\IObservableDatastore.cs" />
     <Compile Include="GodGame\Internal\Data\ISerializableDatastore.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkDeltaSyncer.cs" />
+    <Compile Include="GodGame\_Engine\SerializerHelper.cs" />
     <Compile Include="GodGame\_Tests\NetworkSyncerTest.cs" />
     <Compile Include="GodGame\_Tests\GodGameAutofacConfigTest.cs" />
     <Compile Include="GodGame\_Tests\DirectInputTextboxTest.cs" />
@@ -327,7 +329,6 @@
     <Compile Include="GodGame\_Tests\GodGameMainTest.cs" />
     <Compile Include="GodGame\CreateLandTool.cs" />
     <Compile Include="GodGame\Internal\UserInputProcessingService.cs" />
-    <Compile Include="GodGame\_Engine\ListObserver.cs" />
     <Compile Include="GodGame\_Tests\ObservableVoxelDataTest.cs" />
     <Compile Include="GodGame\_Tests\InterfaceToData\DataStorageInterceptorTest.cs" />
     <Compile Include="GodGame\_Tests\ServerClientListenerTest.cs" />
@@ -341,7 +342,6 @@
     <Compile Include="GodGame\Internal\VoxelChangeListener.cs" />
     <Compile Include="GodGame\_Tests\VoxelChangeListenerTest.cs" />
     <Compile Include="GodGame\_Tests\VoxelTypesTest.cs" />
-    <Compile Include="IO\IOExtensions.cs" />
     <Compile Include="Math\GeometrySampler.cs" />
     <Compile Include="Rendering\Lod\IRenderable.cs" />
     <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />
@@ -413,7 +413,6 @@
     <Compile Include="Scattered\Simulation\RoundState.cs" />
     <Compile Include="Scattered\Simulation\IslandConnectionProvider.cs" />
     <Compile Include="Scattered\Simulation\LoadLevelSimulator.cs" />
-    <Compile Include="Scattered\_Engine\LinqExtensions.cs" />
     <Compile Include="Math\MathExtensions.cs" />
     <Compile Include="Math\RaycastExtensions.cs" />
     <Compile Include="Scattered\_Engine\RendererScene.cs" />
@@ -620,7 +619,6 @@
     <Compile Include="SkyMerchant\_Tests\Stable\BridgeTest.cs" />
     <Compile Include="Data\Array3D.cs" />
     <Compile Include="Data\Array2D.cs" />
-    <Compile Include="Data\DictionaryExtensions.cs" />
     <Compile Include="Simulation\Spatial\ChunkCoordinate.cs" />
     <Compile Include="SkyMerchant\Lod\IWorldOctree.cs" />
     <Compile Include="_Tests\_Manual\Rendering\LodTest.cs" />
@@ -773,6 +771,10 @@
     <ProjectReference Include="..\TestRunner\TestRunner.csproj">
       <Project>{ac6c51ce-96fb-401b-9b51-1302f273a52a}</Project>
       <Name>TestRunner</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{D4997503-5D85-4890-8B7A-B608C0A1CF27}</Project>
+      <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -797,6 +797,10 @@
       <Project>{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}</Project>
       <Name>Launcher</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{d4997503-5d85-4890-8b7a-b608c0a1cf27}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WPF\WPF.csproj">
       <Project>{8A52D3E0-5362-4D9F-A29E-32E24AD65EAF}</Project>
       <Name>WPF</Name>

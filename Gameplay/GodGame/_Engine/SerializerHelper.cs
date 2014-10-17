@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using MHGameWork.TheWizards.GodGame.Persistence;
 
 namespace MHGameWork.TheWizards.GodGame._Engine
 {
