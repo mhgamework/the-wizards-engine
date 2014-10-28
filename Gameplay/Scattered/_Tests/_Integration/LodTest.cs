@@ -15,6 +15,7 @@ using MHGameWork.TheWizards.Scattered.GameLogic.Objects;
 using MHGameWork.TheWizards.Scattered.GameLogic.Services;
 using MHGameWork.TheWizards.Scattered.Model;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
+using MHGameWork.TheWizards.Scattered.Simulation;
 using MHGameWork.TheWizards.Simulators;
 using NUnit.Framework;
 using SlimDX;

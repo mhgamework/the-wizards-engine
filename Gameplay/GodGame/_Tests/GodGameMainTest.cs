@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
 using Autofac.Core;
 using Castle.DynamicProxy;
 using MHGameWork.TheWizards.Engine;
@@ -9,6 +10,7 @@ using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Configuration;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Internal.Networking;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.Networking;
@@ -32,20 +34,9 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [Test]
         public void TestClientGame()
         {
+            var game = new GodGameServerClient();
+            var client = game.CreateClient(null);
 
-
-            var bClient = new ContainerBuilder();
-            bClient.RegisterModule<CommonModule>();
-            bClient.RegisterModule<ClientModule>();
-            bClient.Register(ctx =>
-                {
-                    var world = new Internal.Model.World(100, 10, (w, p) => new GameVoxel(w, p, new ProxyGenerator()));
-                    buildDemoWorld(world, ctx.Resolve<VoxelTypesFactory>());
-                    return world;
-                }).SingleInstance();
-
-
-            var client = bClient.Build().Resolve<GodGameClient>();
             client.AddSimulatorsToEngine(EngineFactory.CreateEngine());
 
             client.ConnectToServer("7.63.207.22", 15005);
@@ -54,25 +45,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [Test]
         public void TestServerGame()
         {
-            var bServer = new ContainerBuilder();
-            bServer.RegisterModule<CommonModule>();
-            bServer.RegisterModule<ServerModule>();
-            bServer.Register(ctx =>
-            {
-                var world = new Internal.Model.World(100, 10, (w, p) => new GameVoxel(w, p, new ProxyGenerator()));
-                buildDemoWorld(world, ctx.Resolve<VoxelTypesFactory>());
-                return world;
-            }).SingleInstance();
-
-
-            bServer.RegisterType<CreateLandTool>().As<IPlayerTool>().SingleInstance();
-            bServer.RegisterType<CreateLandTool>().As<IPlayerTool>().SingleInstance();
-
-            var server = bServer.Build().Resolve<GodGameServer>();
-
-
+            var server = new GodGameServerClient().CreateServer(null);
             server.AddSimulatorsToEngine(EngineFactory.CreateEngine());
-
 
             server.Start();
 
@@ -81,24 +55,78 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [Test]
         public void TestServerClientGame()
         {
-            new GodGameServerClient(false);
+            var game = new GodGameServerClient();
+
+            // Create
+            var server = game.CreateServer(null);
+            var client = game.CreateClient(null);
+
+            // Connect
+            server.Start();
+
+            Thread.Sleep(1000);
+
+            client.ConnectToServer("127.0.0.1", server.TcpPort);
+
+            // Initialize gameloop
+
+            var engine = EngineFactory.CreateEngine();
+
+            server.AddSimulatorsToEngine(engine);
+            client.AddSimulatorsToEngine(engine);
 
         }
 
         [Test]
         public void TestServerClientGameVirtual()
         {
-            new GodGameServerClient(true);
+            var game = new GodGameServerClient();
+
+            // Virtual connection setup
+
+            var virtualNetworkConnectorServer = new VirtualNetworkConnectorServer();
+            var virtualNetworkConnectorClient = virtualNetworkConnectorServer.CreateClient();
+
+            // Create
+            var server = game.CreateServer(virtualNetworkConnectorServer);
+            var client = game.CreateClient(virtualNetworkConnectorClient);
+
+            // Initialize gameloop
+
+            var engine = EngineFactory.CreateEngine();
+
+            server.AddSimulatorsToEngine(engine);
+            client.AddSimulatorsToEngine(engine);
 
         }
 
-        /*[Test]
+        [Test]
         public void TestOfflineGame()
         {
-            var game = CreateGame();
-            game.LoadSave();
+            var builder = new ContainerBuilder();
+            builder.RegisterModule<ExternalDependenciesModule>();
+            builder.RegisterModule<PersistenceModule>();
+            builder.RegisterModule<RenderingModule>();
+            builder.RegisterModule<SimulationModule>();
+            builder.RegisterModule<UserInputModule>();
+            builder.RegisterType<GodGameOffline>();
+            builder.Register(
+                ctx => GodGameServerClient.createWorld(ctx.Resolve<LandType>(), ctx.Resolve<ProxyGenerator>())).SingleInstance();
 
-        }*/
+            // Wire: register a single global playerstate
+            builder.RegisterType<LocalPlayerService>().SingleInstance();
+            builder.Register(ctx => ctx.Resolve<LocalPlayerService>().Player).SingleInstance();
+
+            //TODO: fix localplayerservice
+
+            var cont = builder.Build();
+
+            var offline = cont.Resolve<GodGameOffline>();
+
+            var engine = EngineFactory.CreateEngine();
+            offline.AddSimulatorsToEngine(engine);
+
+        }
 
         /*public static GodGameOffline CreateGame()
         {
@@ -129,7 +157,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                     {
                         v.Data.Type = typesFactory.Get<LandType>();
                     }
-                        //v.ChangeType(GameVoxelType.Infestation);
+                    //v.ChangeType(GameVoxelType.Infestation);
                     else
                     {
                         v.Data.Type = typesFactory.Get<LandType>();

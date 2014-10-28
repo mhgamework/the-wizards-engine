@@ -29,61 +29,52 @@ namespace MHGameWork.TheWizards.GodGame.Internal
     public class GodGameServerClient
     {
 
-        private GodGameServer server;
-        private GodGameClient client;
-        public GodGameServerClient(bool virtualConnection)
+        public GodGameServerClient()
         {
 
-            // Virtual connection setup
-
-            var virtualNetworkConnectorServer = new VirtualNetworkConnectorServer();
-            var virtualNetworkConnectorClient = virtualNetworkConnectorServer.CreateClient();
-
-            // Server
-
-            var bServer = new ContainerBuilder();
-            bServer.RegisterModule<VoxelTypesModule>();
-            bServer.RegisterModule<CommonModule>();
-            bServer.RegisterModule<ServerModule>();
-            bServer.Register(ctx => createWorld(ctx.Resolve<LandType>(), ctx.Resolve<ProxyGenerator>())).SingleInstance();
-
-            if (virtualConnection)
-                bServer.RegisterInstance(virtualNetworkConnectorServer).As<INetworkConnectorServer>().SingleInstance();
-
-
-            server = bServer.Build().Resolve<GodGameServer>();
-
-            //Client
-
+        }
+      
+        public GodGameClient CreateClient(VirtualNetworkConnectorClient virtualNetworkConnectorClient)
+        {
             var bClient = new ContainerBuilder();
-            bClient.RegisterModule<VoxelTypesModule>();
-            bClient.RegisterModule<CommonModule>();
-            bClient.RegisterModule<ClientModule>();
+            bClient.RegisterModule<ExternalDependenciesModule>();
+            bClient.RegisterModule<SimulationModule>();
+            bClient.RegisterModule<RenderingModule>();
+            bClient.RegisterModule<UserInputModule>();
+            bClient.RegisterModule<PersistenceModule>();
+            bClient.RegisterModule(NetworkedModule.CreateClient());
             bClient.Register(ctx => createWorld(ctx.Resolve<LandType>(), ctx.Resolve<ProxyGenerator>())).SingleInstance();
-            bClient.RegisterType<AllCommandProvider>().As<ICommandProvider>().WithParameter(TypedParameter.From(server.World));
+            
+            
+            //TODO: re-enable the hack to allow client console to access the server
+            // bClient.RegisterType<AllCommandProvider>().As<ICommandProvider>().WithParameter(TypedParameter.From(server.World));
 
-            if (virtualConnection)
+            if (virtualNetworkConnectorClient != null)
                 bClient.RegisterInstance(virtualNetworkConnectorClient).As<INetworkConnectorClient>().SingleInstance();
 
-            client = bClient.Build().Resolve<GodGameClient>();
-
-            ConnectLocal();
-
-
-            // Initialize gameloop
-
-            var engine = EngineFactory.CreateEngine();
-
-            server.AddSimulatorsToEngine(engine);
-            client.AddSimulatorsToEngine(engine);
-
-
-
-
+            return bClient.Build().Resolve<GodGameClient>();
 
         }
 
-        private static Model.World createWorld(LandType landType, ProxyGenerator proxyGenerator)
+        public GodGameServer CreateServer(VirtualNetworkConnectorServer virtualNetworkConnectorServer)
+        {
+            var bServer = new ContainerBuilder();
+            bServer.RegisterModule<ExternalDependenciesModule>();
+            bServer.RegisterModule<SimulationModule>();
+            bServer.RegisterModule<PersistenceModule>();
+            bServer.RegisterModule<UserInputModule>();
+            bServer.RegisterModule(NetworkedModule.CreateServer());
+            bServer.Register(ctx => createWorld(ctx.Resolve<LandType>(), ctx.Resolve<ProxyGenerator>())).SingleInstance();
+
+            if (virtualNetworkConnectorServer != null)
+                bServer.RegisterInstance(virtualNetworkConnectorServer).As<INetworkConnectorServer>().SingleInstance();
+
+
+            return bServer.Build().Resolve<GodGameServer>();
+        }
+
+
+        public static Model.World createWorld(LandType landType, ProxyGenerator proxyGenerator)
         {
             var world = new Model.World(100, 10, (w, p) => new GameVoxel(w, p, proxyGenerator));
 
@@ -92,15 +83,6 @@ namespace MHGameWork.TheWizards.GodGame.Internal
                     v.Data.Type = landType;
                 });
             return world;
-        }
-
-        public void ConnectLocal()
-        {
-            server.Start();
-
-            Thread.Sleep(1000);
-
-            client.ConnectToServer("127.0.0.1", server.TcpPort);
         }
 
     }

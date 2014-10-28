@@ -1,14 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame.DeveloperCommands;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Networking;
+using MHGameWork.TheWizards.GodGame.Internal.Networking.Packets;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Model;
+using MHGameWork.TheWizards.GodGame.Networking;
 using MHGameWork.TheWizards.GodGame.Persistence;
+using MHGameWork.TheWizards.GodGame._Engine;
 using MHGameWork.TheWizards.IO;
+using MHGameWork.TheWizards.Networking.Server;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
@@ -18,57 +24,69 @@ namespace MHGameWork.TheWizards.GodGame.Internal
     /// </summary>
     public class GodGameOffline
     {
-        private readonly WorldPersisterService persister;
         public Model.World World { get; private set; }
+        public WorldSimulationService WorldSimulationService;
 
-        public GodGameOffline(TWEngine engine, Model.World world)
+        private UserInputProcessingService userInputProcessingService;
+        private UIRenderingService uiRenderingService;
+        private DeveloperConsoleService developerConsoleService;
+        private ClearGameStateChangesService clearStateChangesSimulator;
+        private WorldRenderingSimulator worldRenderingSimulator;
+        private WorldRenderingService simpleWorldRenderer;
+
+
+        public GodGameOffline(WorldSimulationService worldSimulationService,
+            Model.World world,
+            WorldPersisterService persisterService,
+            UserInputProcessingService userInputProcessingService,
+            UIRenderingService uiRenderingService,
+            DeveloperConsoleService developerConsoleService,
+            ClearGameStateChangesService clearStateChangesSimulator,
+            WorldRenderingSimulator worldRenderingSimulator,
+            WorldRenderingService simpleWorldRenderer
+            )
         {
             World = world;
+            this.WorldSimulationService = worldSimulationService;
+            this.clearStateChangesSimulator = clearStateChangesSimulator;
 
-            /*var typeFactory = new VoxelTypesFactory(null);//TODO
 
 
-            // Game state
-            var gameState = new GameState(world);
-            var localPlayerService = new LocalPlayerService(gameState);
+             this.userInputProcessingService = userInputProcessingService;
+            this.uiRenderingService = uiRenderingService;
+            this.developerConsoleService = developerConsoleService;
+            this.clearStateChangesSimulator = clearStateChangesSimulator;
+            this.worldRenderingSimulator = worldRenderingSimulator;
+            this.simpleWorldRenderer = simpleWorldRenderer;
 
-            // Rendering
-            var simpleWorldRenderer = new WorldRenderingService(world, new ChunkedVoxelWorldRenderer(world), localPlayerService);
 
-            // Input
-            var toolsFactory = new PlayerToolsFactory(world, typeFactory);
-            var playerInputHandler = new PlayerInputHandler(toolsFactory, world, persister, localPlayerService.Player);
 
-            // Persistance
-            persister = new WorldPersisterService(new GameplayObjectsSerializer(toolsFactory));
-            // Simulators
-
-            var playerInputSimulator = new UserInputProcessingService(world, playerInputHandler, simpleWorldRenderer);
-            var tickSimulator = new WorldSimulationService(world);
-            var uiRenderer = new UIRenderingService(world, localPlayerService, playerInputSimulator);
-            var developerConsoleSimulator = new DeveloperConsoleService(playerInputSimulator, new AllCommandProvider(persister, world));
-            var clearStateChangesSimulator = new ClearGameStateChangesService(gameState);
-            var worldRenderingSimulator = new WorldRenderingSimulator();
-
-            //TODO: these simulators form some kind of configuration, so maybe try splitting them into configuration and features
-            //   Place the configuration code into methods in this class.
-            engine.AddSimulator(playerInputSimulator);
-            engine.AddSimulator(tickSimulator);
-            engine.AddSimulator(uiRenderer);
-            engine.AddSimulator(developerConsoleSimulator);
-            engine.AddSimulator(simpleWorldRenderer);
-            engine.AddSimulator(clearStateChangesSimulator);
-            engine.AddSimulator(worldRenderingSimulator);*/
-
+            persisterService.Load(world, TWDir.GameData.GetChild("Saves/GodGame").CreateFile("auto.xml"));
 
         }
 
-        public void LoadSave()
+
+
+        public void AddSimulatorsToEngine(TWEngine engine)
         {
-            if (!persister.GetDefaultSaveFile().Exists) return;
-            persister.Load(World, persister.GetDefaultSaveFile());
-        }
+            //engine.AddSimulator(updateConnectedClients, "Server-UpdateConnectedClientsSim");
+            //engine.AddSimulator(processClientInputs, "Server-PlayerInputProcessingSim");
+            
+            //engine.AddSimulator(sendGameStateUpdates, "Server-SendStateSim");
+            //engine.AddSimulator(clearStateChangesSimulator, "Server-ClearChangesSim");
 
+
+            engine.AddSimulator(userInputProcessingService, "Client-UserInputProcessingSim");
+            engine.AddSimulator(WorldSimulationService, "Server-WorldSimulationSim");
+            //engine.AddSimulator(sendPlayerInputs, "Client-PlayerInputsSendingSim");
+            //engine.AddSimulator(applyServerStateChanges, "Client-applyServerStateChangesSim");
+            engine.AddSimulator(uiRenderingService, "Client-UIRenderingSim");
+            engine.AddSimulator(developerConsoleService, "Client-DevConsoleSim");
+            engine.AddSimulator(simpleWorldRenderer, "Client-WorldRenderingSim");
+            engine.AddSimulator(clearStateChangesSimulator, "Client-ClearChangesSim");
+            engine.AddSimulator(worldRenderingSimulator, "Client-EngineWorldRenderingSimulator");
+
+        }
 
     }
 }

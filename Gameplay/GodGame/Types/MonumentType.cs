@@ -40,6 +40,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private void updateMonumentsList()
         {
+            return;
             var added = world.ChangedVoxels.Where(v => v.Type == this && getOrCreateMonument(v) == null);
             var removed = world.ChangedVoxels.Where(v => v.Type != this && getOrCreateMonument(v) != null);
 
