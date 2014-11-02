@@ -227,9 +227,11 @@
     <Compile Include="GodGame\Internal\Simulation\VoxelTileFactory.cs" />
     <Compile Include="GodGame\Internal\UserInputControlsService.cs" />
     <Compile Include="Data\IntefaceToData\DataStorageInterceptor.cs" />
+    <Compile Include="GodGame\Internal\Inputting\IPlayerToolPerPlayer.cs" />
     <Compile Include="GodGame\Model\IBasicVoxelDataExtension.cs" />
     <Compile Include="GodGame\Model\IVoxelDataExtension.cs" />
     <Compile Include="GodGame\Model\ObservableVoxelData.cs" />
+    <Compile Include="GodGame\Internal\Inputting\PerPlayerAdapterTool.cs" />
     <Compile Include="GodGame\Persistence\SerializedGameState.cs" />
     <Compile Include="GodGame\Persistence\SerializedPlayerState.cs" />
     <Compile Include="GodGame\Internal\Networking\VirtualNetworkConnectorClient.cs" />
@@ -283,6 +285,13 @@
     <Compile Include="GodGame\Types\MonumentVoxelBrain.cs" />
     <Compile Include="GodGame\Types\QuarryType.cs" />
     <Compile Include="GodGame\Internal\Model\PlayerState.cs" />
+    <Compile Include="GodGame\Types\Towns\House.cs" />
+    <Compile Include="GodGame\Types\Towns\IWorkerClient.cs" />
+    <Compile Include="GodGame\Types\Towns\Town.cs" />
+    <Compile Include="GodGame\Types\Towns\TownBorderTool.cs" />
+    <Compile Include="GodGame\Types\Towns\TownCenterService.cs" />
+    <Compile Include="GodGame\Types\Towns\WorkerClient.cs" />
+    <Compile Include="GodGame\Types\Towns\WorkersService.cs" />
     <Compile Include="GodGame\Types\Transportation\RoadFilterType.cs" />
     <Compile Include="GodGame\Types\Transportation\RoadType.cs" />
     <Compile Include="GodGame\Types\MinerType.cs" />

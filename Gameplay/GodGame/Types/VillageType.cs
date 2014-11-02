@@ -24,6 +24,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
     /// dataval > 0 => supplied
     /// if(dataval > 1) 
     ///     dataval - 1 == nb workers providing
+    /// TODO: rename to House
     /// </summary>
     public class VillageType : GameVoxelType
     {

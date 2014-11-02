@@ -29,6 +29,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             builder.RegisterType<WorldSimulationService>().SingleInstance();
 
 
+
             loadVoxelTypes(builder);
         }
 

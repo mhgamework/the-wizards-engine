@@ -6,44 +6,16 @@ using DirectX11;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using SlimDX;
 using SlimDX.DirectInput;
-using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 
 namespace MHGameWork.TheWizards.GodGame
 {
-    public class ChangeHeightTool : IPlayerTool
+    public class ChangeHeightTool: PerPlayerAdapterTool<ChangeHeightToolPerPlayer>
     {
-        private Dictionary<PlayerState, ChangeHeightToolPerPlayer> tools =
-            new Dictionary<PlayerState, ChangeHeightToolPerPlayer>();
-
-        private Internal.Model.World world;
-
-        public ChangeHeightTool(Internal.Model.World world)
+        public ChangeHeightTool(Internal.Model.World world) : base(p => new ChangeHeightToolPerPlayer(world,p))
         {
-            this.world = world;
-        }
-
-        public string Name { get { return "ChangeHeight"; } }
-        public void OnLeftClick(PlayerState player, IVoxelHandle voxel)
-        {
-            getTool(player).OnLeftClick(voxel);
-        }
-
-        public void OnRightClick(PlayerState player, IVoxelHandle voxel)
-        {
-            getTool(player).OnRightClick(voxel);
-        }
-
-        public void OnKeypress(PlayerState player, IVoxelHandle voxel, Key key)
-        {
-            getTool(player).OnKeypress(voxel, key);
-        }
-
-        private ChangeHeightToolPerPlayer getTool(PlayerState player)
-        {
-            return tools.GetOrCreate(player, () => new ChangeHeightToolPerPlayer(world, player));
         }
     }
-    public class ChangeHeightToolPerPlayer
+    public class ChangeHeightToolPerPlayer : IPlayerToolPerPlayer
     {
         private Internal.Model.World world;
         private readonly PlayerState player;
@@ -122,7 +94,7 @@ namespace MHGameWork.TheWizards.GodGame
                     DoDefault(voxel, isLeftClick);
                     break;
                 case HeightToolState.SMOOTH:
-                        DoSmooth2(voxel, isLeftClick);
+                    DoSmooth2(voxel, isLeftClick);
                     break;
                 case HeightToolState.FLATTEN:
                     DoFlatten(voxel, isLeftClick);

@@ -18,8 +18,8 @@ namespace MHGameWork.TheWizards.GodGame.Model
         {
             this.rawTypes = rawTypes;
             this.itemTypes = itemTypes;
-            CreateBuildingSite<FisheryType>(new[] { new BuildingSiteType.ItemAmount { Type = itemTypes.CropType, Amount = 10 } });
-            CreateBuildingSite<MarketType>(new[] { new BuildingSiteType.ItemAmount { Type = itemTypes.CropType, Amount = 10 } });
+            CreateBuildingSite<FisheryType>(new[] { new BuildingSiteType.ItemAmount { Type = itemTypes.WoodType, Amount = 10 } });
+            CreateBuildingSite<MarketType>(new[] { new BuildingSiteType.ItemAmount { Type = itemTypes.FishType, Amount = 20 } });
         }
 
         private BuildingSiteType CreateBuildingSite<T>(IEnumerable<BuildingSiteType.ItemAmount> amounts) where T : GameVoxelType

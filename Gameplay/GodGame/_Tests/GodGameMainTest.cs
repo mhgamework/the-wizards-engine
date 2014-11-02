@@ -103,6 +103,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [Test]
         public void TestOfflineGame()
         {
+
             var builder = new ContainerBuilder();
             builder.RegisterModule<ExternalDependenciesModule>();
             builder.RegisterModule<PersistenceModule>();
