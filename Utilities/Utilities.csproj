@@ -49,6 +49,8 @@
     <Compile Include="LinqExtensions.cs" />
     <Compile Include="ListObserver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecursionExtensions.cs" />
+    <Compile Include="RecursionExtensionsTest.cs" />
     <Compile Include="Reflection\FieldAttribute.cs" />
     <Compile Include="Reflection\IAttribute.cs" />
     <Compile Include="Reflection\InternalReflectionExtensions.cs" />
