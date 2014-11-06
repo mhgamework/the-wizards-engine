@@ -129,7 +129,19 @@ namespace MHGameWork.TheWizards.GodGame.Types
             throw new Exception("Worker leak!!");
         }
         
+
+        /// <summary>
+        /// Returns the number of workers this village is providing
+        /// </summary>
+        /// <param name="handle"></param>
+        public int GetWorkersProvided(IVoxelHandle handle)
+        {
+            return isSupplied(handle) ? maxNbWorkers : 0;
+        }
+
         #endregion workers
+
+        
 
         #region resources
 
