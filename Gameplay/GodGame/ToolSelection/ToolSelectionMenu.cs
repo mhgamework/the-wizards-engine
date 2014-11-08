@@ -10,12 +10,14 @@ namespace MHGameWork.TheWizards.GodGame.ToolSelection
 {
     public class ToolSelectionMenu
     {
-        private Textarea[] textAreas;
+        private readonly Textarea[] textAreas;
+        private readonly List<Key> keyList;
         private List<IToolSelectionItem> currentDisplayedItems;
+        private List<IToolSelectionItem> rootItems;
 
         private readonly int maxNbItems;
+        private bool initialized;
 
-        private List<Key> keyList;
 
         public ToolSelectionMenu()
         {
@@ -30,7 +32,7 @@ namespace MHGameWork.TheWizards.GodGame.ToolSelection
 
             currentDisplayedItems = new List<IToolSelectionItem>();
 
-            keyList = new List<Key> {Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9};
+            keyList = new List<Key> { Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9 };
             updateTextAreas();
         }
 
@@ -41,26 +43,23 @@ namespace MHGameWork.TheWizards.GodGame.ToolSelection
             {
                 if (kb.IsKeyPressed(keyList[i]))
                 {
-                    OnSelectItem(i);
+                    onSelectItem(i);
                     break;
                 }
             }
 
-            if(kb.PressedKeys.Any(e => !keyList.Contains(e)))
-                OnCancel();
-            
+            if (kb.PressedKeys.Any(e => !keyList.Contains(e)))
+                displayRootItems();
         }
 
-        private void OnSelectItem(int index)
+        private void onSelectItem(int index)
         {
+            if (!initialized)
+                throw new InvalidOperationException("ToolSelectionMenu not initialized!");
+
             if (currentDisplayedItems.Count <= index)
                 return;
             currentDisplayedItems[index].Select(this);
-        }
-
-        private void OnCancel()
-        {
-            //todo
         }
 
         private void updateTextAreas()
@@ -79,11 +78,31 @@ namespace MHGameWork.TheWizards.GodGame.ToolSelection
             return indexstr + (currentDisplayedItems[itemIndex] == null ? "" : currentDisplayedItems[itemIndex].GetDisplayName());
         }
 
-
         public void SetToolSelectionItem(List<IToolSelectionItem> selectionItems)
         {
             currentDisplayedItems = selectionItems.ToList();
             updateTextAreas();
+        }
+
+        public void Initialize(List<IToolSelectionItem> rootToolSelectionItems)
+        {
+            rootItems = rootToolSelectionItems;
+            SetToolSelectionItem(rootItems);
+            initialized = true;
+        }
+
+        private void displayRootItems()
+        {
+            if (!initialized)
+                throw new InvalidOperationException("ToolSelectionMenu not initialized!");
+
+            SetToolSelectionItem(rootItems);
+        }
+    
+        public void ActivateTool(IPlayerTool tool)
+        {
+            //todo: activate tool
+            displayRootItems();
         }
     }
 }

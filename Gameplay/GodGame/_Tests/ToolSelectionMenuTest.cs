@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [Test]
         public void TestShowToolSelectionMenu()
         {
-
+            //nothing to do, only initialization...
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                 itemList.Add(new ToolSelectionCategory { DisplayName = "Category " + (i + 1) });
             }
 
-            toolSelectionMenu.SetToolSelectionItem(itemList);
+            toolSelectionMenu.Initialize(itemList);
         }
 
         [Test]
@@ -61,8 +61,14 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                 }
                 itemList.Add(cat);
             }
-            toolSelectionMenu.SetToolSelectionItem(itemList);
+            toolSelectionMenu.Initialize(itemList);
         }
 
+        [Test]
+        public void TestToolSelectionMenu()
+        {
+            //todo: create categories, create tools, add to toolselectionmenu
+            throw new NotImplementedException("Simon doesn't know how to make tools!");
+        }
     }
 }

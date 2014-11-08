@@ -266,6 +266,7 @@
     <Compile Include="GodGame\ToolSelection\IToolSelectionItem.cs" />
     <Compile Include="GodGame\ToolSelection\ToolSelectionCategory.cs" />
     <Compile Include="GodGame\ToolSelection\ToolSelectionMenu.cs" />
+    <Compile Include="GodGame\ToolSelection\ToolSelectionTool.cs" />
     <Compile Include="GodGame\Types\AirType.cs" />
     <Compile Include="GodGame\Types\BuildingSiteType.cs" />
     <Compile Include="GodGame\Types\IGameVoxelType.cs" />
