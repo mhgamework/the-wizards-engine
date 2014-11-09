@@ -31,16 +31,16 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
         }
 
         // Data
-        public HashSet<GameVoxel> TownVoxels = new HashSet<GameVoxel>();
+        public HashSet<IVoxel> TownVoxels = new HashSet<IVoxel>();
 
 
         // Derived
         public HashSet<House> Houses { get { return service.GetHouses(this); } }
 
-        public bool IsAtBorder(GameVoxel voxel)
+        public bool IsAtBorder(IVoxel voxel)
         {
             if (TownVoxels.Contains(voxel)) return false;
-            if (!TownVoxels.Overlaps(voxel.Get4Connected().Cast<GameVoxel>())) return false;
+            if (!TownVoxels.Overlaps(voxel.Get4Connected())) return false;
             return true;
         }
 

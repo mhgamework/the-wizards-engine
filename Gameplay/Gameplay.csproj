@@ -289,6 +289,7 @@
     <Compile Include="GodGame\Types\Towns\Town.cs" />
     <Compile Include="GodGame\Types\Towns\TownBorderTool.cs" />
     <Compile Include="GodGame\Types\Towns\TownCenterService.cs" />
+    <Compile Include="GodGame\Types\Towns\TownBorderToolTest.cs" />
     <Compile Include="GodGame\Types\Transportation\RoadFilterType.cs" />
     <Compile Include="GodGame\Types\Transportation\RoadType.cs" />
     <Compile Include="GodGame\Types\MinerType.cs" />
