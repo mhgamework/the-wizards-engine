@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using System.Linq;
+using MHGameWork.TheWizards.GodGame.Types.Workers;
 
 namespace MHGameWork.TheWizards.GodGame.Types.Towns
 {
@@ -19,7 +21,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
     ///     This can be done Using AOP, and we can still configure what to inject at the container level
     ///     Use this to allow for persistence
     /// </summary>
-    public class Town
+    public class Town : Workers.ITown
     {
         private readonly TownCenterService service;
 
@@ -34,7 +36,6 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
 
         // Derived
         public HashSet<House> Houses { get { return service.GetHouses(this); } }
-        public HashSet<WorkerClient> WorkerClients { get { return service.WorkerClients(this); } }
 
         public bool IsAtBorder(GameVoxel voxel)
         {
@@ -42,5 +43,8 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
             if (!TownVoxels.Overlaps(voxel.Get4Connected().Cast<GameVoxel>())) return false;
             return true;
         }
+
+        public IEnumerable<WorkerProducer> Producers { get { throw new NotImplementedException(); } }
+        public IEnumerable<WorkerConsumer> Consumers { get { throw new NotImplementedException(); } }
     }
 }

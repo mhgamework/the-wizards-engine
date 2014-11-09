@@ -42,9 +42,5 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
             throw new NotImplementedException();
         }
 
-        public HashSet<WorkerClient> WorkerClients(Town town)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

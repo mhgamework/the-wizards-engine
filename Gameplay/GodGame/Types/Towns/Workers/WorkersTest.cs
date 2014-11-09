@@ -19,8 +19,8 @@ namespace MHGameWork.TheWizards.GodGame.Types.Workers
         [SetUp]
         public void Setup()
         {
-            town1 = new Town();
-            town2 = new Town();
+            town1 = new SimpleTown();
+            town2 = new SimpleTown();
 
             service = new WorkersService(new ITown[] { town1, town2 });
 
@@ -30,13 +30,13 @@ namespace MHGameWork.TheWizards.GodGame.Types.Workers
         private WorkerConsumer createConsumer(ITown town)
         {
             var ret = new WorkerConsumer();
-            ((Town)town).Consumers.Add(ret);
+            ((SimpleTown)town).Consumers.Add(ret);
             return ret;
         }
         private WorkerProducer createProducer(ITown town)
         {
             var ret = new WorkerProducer();
-            ((Town)town).Producers.Add(ret);
+            ((SimpleTown)town).Producers.Add(ret);
             return ret;
         }
 
@@ -183,7 +183,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Workers
 
     }
 
-    public class Town : ITown
+    public class SimpleTown : ITown
     {
         public List<WorkerProducer> Producers = new List<WorkerProducer>();
         public List<WorkerConsumer> Consumers = new List<WorkerConsumer>();
