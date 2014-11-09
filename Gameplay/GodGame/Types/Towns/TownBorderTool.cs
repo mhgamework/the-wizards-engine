@@ -4,9 +4,12 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame.Types.Towns
 {
+    /// <summary>
+    /// Implements the TownBorderTool player-independently
+    /// </summary>
     public class TownBorderTool : PerPlayerAdapterTool<TownBorderPlayerTool>
     {
-        public TownBorderTool(Internal.Model.World world) : base(p => new TownBorderPlayerTool(null))
+        public TownBorderTool(TownCenterService townCenterService) : base(p => new TownBorderPlayerTool(townCenterService))
         {
             throw new NotImplementedException();
         }
