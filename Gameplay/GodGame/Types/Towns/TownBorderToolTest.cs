@@ -1,6 +1,4 @@
-﻿using DirectX11;
-using MHGameWork.TheWizards.Collections;
-using MHGameWork.TheWizards.GodGame.Internal.Model;
+﻿using MHGameWork.TheWizards.GodGame.Internal.Model;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -106,63 +104,4 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
 
 
     }
-
-    /// <summary>
-    /// Voxel world for testing. 
-    /// </summary>
-    public class SimpleWorld
-    {
-        private DictionaryTwoWay<Point2, IVoxel> voxels = new DictionaryTwoWay<Point2, IVoxel>();
-        public IVoxel GetVoxel(int x, int y)
-        {
-            var p = new Point2(x, y);
-            return GetVoxel(p);
-        }
-
-        public IVoxel GetVoxel(Point2 p)
-        {
-            if (voxels.Contains(p))
-                return voxels[p];
-
-            var ret = new SimpleVoxel(this);
-            voxels.Add(p, ret);
-
-            return ret;
-        }
-
-        public Point2 GetPos(IVoxel voxel)
-        {
-            return voxels[voxel];
-        }
-    }
-    /// <summary>
-    /// IVoxel implementation for testing
-    /// </summary>
-    public class SimpleVoxel :IVoxel
-    {
-        private SimpleWorld world;
-
-        public SimpleVoxel(SimpleWorld world)
-        {
-            this.world = world;
-        }
-
-        public IVoxel GetRelative(Point2 offset)
-        {
-            return world.GetVoxel(world.GetPos(this) + offset);
-        }
-
-        public Point2 GetOffset(IVoxel other)
-        {
-            return world.GetPos(other) - world.GetPos(this);
-        }
-
-        public IVoxelData Data { get; private set; }
-
-        public override string ToString()
-        {
-            return world.GetPos(this).ToString();
-        }
-    }
-
 }
