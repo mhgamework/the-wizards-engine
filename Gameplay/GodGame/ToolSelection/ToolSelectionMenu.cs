@@ -31,7 +31,8 @@ namespace MHGameWork.TheWizards.GodGame.ToolSelection
             for (int i = 0; i < maxNbItems; i++)
             {
                 var ta = new Textarea();
-                ta.Position = new Vector2(i * 125, 25);
+                ta.Position = new Vector2(10 + i * 125, 25);
+                ta.BackgroundColor = new Color4(0.2f, 0.5f, 0.5f, 1f);
                 textAreas[i] = ta;
             }
 
@@ -103,7 +104,7 @@ namespace MHGameWork.TheWizards.GodGame.ToolSelection
 
             SetToolSelectionItem(rootItems);
         }
-    
-      
+
+
     }
 }
