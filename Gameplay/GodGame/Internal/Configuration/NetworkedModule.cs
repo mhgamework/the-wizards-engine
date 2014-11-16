@@ -78,7 +78,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
         {
             var state = ctx.Resolve<GameState>();
             var createPlayerInputHandler =
-                ctx.Resolve<Func<PlayerState, PlayerInputHandler>>();
+                ctx.Resolve<Func<PlayerState, ActiveToolInputHandler>>();
 
             return new NetworkedPlayerFactory((transporter, handler) => new NetworkPlayerInputForwarder(transporter, handler, state.World), createPlayerInputHandler, state);
         }

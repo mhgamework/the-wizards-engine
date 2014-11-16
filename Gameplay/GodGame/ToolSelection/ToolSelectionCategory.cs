@@ -8,7 +8,16 @@ namespace MHGameWork.TheWizards.GodGame.ToolSelection
     public class ToolSelectionCategory : IToolSelectionItem
     {
         public string DisplayName;
-        public List<IToolSelectionItem> SelectionItems = new List<IToolSelectionItem>(); 
+        public List<IToolSelectionItem> SelectionItems = new List<IToolSelectionItem>();
+
+        public ToolSelectionCategory()
+        {
+        }
+
+        public ToolSelectionCategory(string displayName)
+        {
+            DisplayName = displayName;
+        }
 
         public string GetDisplayName()
         {

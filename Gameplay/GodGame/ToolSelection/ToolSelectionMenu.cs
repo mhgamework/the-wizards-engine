@@ -8,6 +8,11 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame.ToolSelection
 {
+    /// <summary>
+    /// Responsible for display a text-based tool selection menu
+    /// Responsible for processing info for the menu
+    /// The menu consists of a list of actions for each D1 to d9 key.
+    /// </summary>
     public class ToolSelectionMenu
     {
         private readonly Textarea[] textAreas;
@@ -49,7 +54,7 @@ namespace MHGameWork.TheWizards.GodGame.ToolSelection
             }
 
             if (kb.PressedKeys.Any(e => !keyList.Contains(e)))
-                displayRootItems();
+                DisplayRootItems();
         }
 
         private void onSelectItem(int index)
@@ -91,7 +96,7 @@ namespace MHGameWork.TheWizards.GodGame.ToolSelection
             initialized = true;
         }
 
-        private void displayRootItems()
+        public void DisplayRootItems()
         {
             if (!initialized)
                 throw new InvalidOperationException("ToolSelectionMenu not initialized!");
@@ -99,10 +104,6 @@ namespace MHGameWork.TheWizards.GodGame.ToolSelection
             SetToolSelectionItem(rootItems);
         }
     
-        public void ActivateTool(IPlayerTool tool)
-        {
-            //todo: activate tool
-            displayRootItems();
-        }
+      
     }
 }
