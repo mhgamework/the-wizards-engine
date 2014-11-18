@@ -53,6 +53,11 @@ namespace MHGameWork.TheWizards
             return evaluator(o);
         }
 
+        public static string Print(this string str)
+        {
+            Console.WriteLine(str);
+            return str;
+        }
         public static IEnumerable<T> Print<T>(this IEnumerable<T> list)
         {
             foreach (var l in list)
