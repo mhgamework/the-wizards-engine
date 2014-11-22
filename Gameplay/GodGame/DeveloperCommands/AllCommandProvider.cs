@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
     {
         private readonly VoxelTypesFactory typesFactory;
 
-        public AllCommandProvider(WorldPersisterService persister, Internal.Model.World world,VoxelTypesFactory typesFactory)
+        public AllCommandProvider(WorldPersisterService persister, Internal.Model.World world, VoxelTypesFactory typesFactory)
         {
             this.typesFactory = typesFactory;
             addDummy();
@@ -50,7 +50,7 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
             addCommand("listsaves", () =>
                 {
                     var saves = TWDir.GameData.CreateChild("Saves\\GodGame").GetFiles().ToList();
-                    var outputstring = String.Join("\n", saves.Select(e => e.Name));
+                    var outputstring = String.Join(", ", saves.Select(e => e.Name.Substring(0, e.Name.Length - 4) )); // Drop extension
                     return "Saved games: \n" + outputstring;
                 });
 
