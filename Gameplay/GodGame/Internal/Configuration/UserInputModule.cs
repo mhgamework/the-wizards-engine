@@ -3,6 +3,7 @@ using Castle.DynamicProxy;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.GodGame.DeveloperCommands;
+using MHGameWork.TheWizards.GodGame.Internal.Inputting;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Model;
@@ -24,7 +25,13 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             builder.RegisterType<UserInputService>().SingleInstance();
             builder.RegisterType<UserInputProcessingService>().SingleInstance();
 
-            builder.RegisterType<PlayerInputHandler>().As<IPlayerInputHandler>();
+            builder.RegisterType<ActiveToolInputHandler>().As<IPlayerInputHandler>().AsSelf();
+
+            builder.RegisterModule<ToolSelectionMenuModule>();
+
+
+            builder.RegisterType<NullPlayerTool>();
+
 
         }
     }

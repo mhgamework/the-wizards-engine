@@ -4,6 +4,7 @@ using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
+using MHGameWork.TheWizards.GodGame.ToolSelection;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using SlimDX.DirectInput;
@@ -13,21 +14,22 @@ namespace MHGameWork.TheWizards.GodGame
     /// <summary>
     /// Service responsible for converting raw key input into player commands
     /// Passes raw input to a IPlayerInputHandler
+    /// Also simulates the ToolSelectionMenu
     /// </summary>
     public class UserInputProcessingService : ISimulator
     {
         private Internal.Model.World world;
         private IPlayerInputHandler inputHandler;
         private readonly WorldRenderingService renderer;
+        private readonly ToolSelectionMenu toolSelectionMenu;
 
-        //public IPlayerTool ActiveHandler { get; private set; }
 
-        public UserInputProcessingService(Internal.Model.World world, IPlayerInputHandler inputHandler, WorldRenderingService renderer)
+        public UserInputProcessingService(Internal.Model.World world, IPlayerInputHandler inputHandler, WorldRenderingService renderer,ToolSelectionMenu toolSelectionMenu)
         {
             this.world = world;
             this.inputHandler = inputHandler;
-            //ActiveHandler = handlers.First();
             this.renderer = renderer;
+            this.toolSelectionMenu = toolSelectionMenu;
         }
 
         public bool UserInputDisabled { get; set; }
@@ -36,10 +38,11 @@ namespace MHGameWork.TheWizards.GodGame
         public void Simulate()
         {
             if (UserInputDisabled) return;
-            if (TW.Graphics.Mouse.RelativeScrollWheel < 0 || TW.Graphics.Keyboard.IsKeyPressed(Key.UpArrow))
+            toolSelectionMenu.ProcessUserInput();
+            /*if (TW.Graphics.Mouse.RelativeScrollWheel < 0 || TW.Graphics.Keyboard.IsKeyPressed(Key.UpArrow))
                 inputHandler.OnPreviousTool();
             if (TW.Graphics.Mouse.RelativeScrollWheel > 0 || TW.Graphics.Keyboard.IsKeyPressed(Key.DownArrow))
-                inputHandler.OnNextTool();
+                inputHandler.OnNextTool();*/
 
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.O))
                 inputHandler.OnSave();

@@ -207,10 +207,12 @@
     <Compile Include="GodGame\DeveloperCommands\AllCommandProvider.cs" />
     <Compile Include="GodGame\Internal\Configuration\RenderingModule.cs" />
     <Compile Include="GodGame\Internal\Configuration\PersistenceModule.cs" />
+    <Compile Include="GodGame\Internal\Configuration\Gameplay\ToolSelectionMenuModule.cs" />
     <Compile Include="GodGame\Internal\Configuration\UserInputModule.cs" />
     <Compile Include="GodGame\Internal\Configuration\ExternalDependenciesModule.cs" />
     <Compile Include="GodGame\Internal\Configuration\SimulationModule.cs" />
     <Compile Include="GodGame\Internal\Configuration\NetworkedModule.cs" />
+    <Compile Include="GodGame\Internal\Inputting\NullPlayerTool.cs" />
     <Compile Include="GodGame\Internal\Mains\GodGameServer.cs" />
     <Compile Include="GodGame\Internal\Console\DelegateCommandProvider.cs" />
     <Compile Include="GodGame\Internal\DeveloperConsoleService.cs" />
@@ -244,7 +246,7 @@
     <Compile Include="GodGame\Internal\Networking\LazyClientPacketTransporter.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkedPlayerFactory.cs" />
     <Compile Include="GodGame\Internal\Networking\ProxyPlayerInputHandler.cs" />
-    <Compile Include="GodGame\Internal\Inputting\PlayerInputHandler.cs" />
+    <Compile Include="GodGame\Internal\Inputting\ActiveToolInputHandler.cs" />
     <Compile Include="GodGame\Internal\Inputting\DelegatePlayerTool.cs" />
     <Compile Include="GodGame\Internal\ClearGameStateChangesService.cs" />
     <Compile Include="GodGame\Internal\Mains\GodGameServerClient.cs" />
@@ -263,6 +265,11 @@
     <Compile Include="GodGame\Internal\WorldSimulationService.cs" />
     <Compile Include="GodGame\Internal\Rendering\IRenderable.cs" />
     <Compile Include="GodGame\Persistence\SerializedVoxel.cs" />
+    <Compile Include="GodGame\ToolMenuBuilder.cs" />
+    <Compile Include="GodGame\ToolSelection\IToolSelectionItem.cs" />
+    <Compile Include="GodGame\ToolSelection\ToolSelectionCategory.cs" />
+    <Compile Include="GodGame\ToolSelection\ToolSelectionMenu.cs" />
+    <Compile Include="GodGame\ToolSelection\ToolSelectionTool.cs" />
     <Compile Include="GodGame\Types\AirType.cs" />
     <Compile Include="GodGame\Types\BuildingSiteType.cs" />
     <Compile Include="GodGame\Types\IGameVoxelType.cs" />
@@ -327,6 +334,7 @@
     <Compile Include="GodGame\Internal\Networking\NetworkPlayerInputForwarder.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkedPlayer.cs" />
     <Compile Include="GodGame\Internal\Data\StringObjectDatastore.cs" />
+    <Compile Include="GodGame\_Tests\ToolSelectionMenuTest.cs" />
     <Compile Include="GodGame\_Tests\UITest.cs" />
     <Compile Include="GodGame\Internal\Networking\Packets\UserInputHandlerPacket.cs" />
     <Compile Include="GodGame\Internal\Networking\ServerPlayerListener.cs" />
