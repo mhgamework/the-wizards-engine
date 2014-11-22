@@ -32,7 +32,7 @@ namespace MHGameWork.TheWizards.GodGame.ToolSelection
             {
                 var ta = new Textarea();
                 ta.Position = new Vector2(10 + i * 125, 25);
-                ta.BackgroundColor = new Color4(0.2f, 0.5f, 0.5f, 1f);
+                //ta.BackgroundColor = new Color4(0.2f, 0.5f, 0.5f, 1f);
                 textAreas[i] = ta;
             }
 
