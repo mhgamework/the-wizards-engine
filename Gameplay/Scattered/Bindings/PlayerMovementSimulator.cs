@@ -49,7 +49,7 @@ namespace MHGameWork.TheWizards.Scattered.Bindings
             if (player.FlyingEngine.HasFuel)
             {
                 var flightController = new ClusterFlightController(TW.Graphics.Keyboard);
-                flightController.SimulateFlightStep(player.FlyingIsland, player.FlyingEngine.Node.Absolute.xna().Forward.dx(),player.FlyingEngine.Node.Position);
+                flightController.SimulateFlightStep(player.FlyingIsland, player.FlyingEngine.Node.Absolute.xna().Forward.dx(), player.FlyingEngine.Node.Position);
             }
 
 
@@ -84,7 +84,7 @@ namespace MHGameWork.TheWizards.Scattered.Bindings
             if (!NoclipMode)
             {
                 newPos = playerMovementService.PerformGameplayMovement(oldPlayerPos);
-                TW.Graphics.SpectaterCamera.ProcessMouseInput();
+                TW.Graphics.SpectaterCamera.ProcessMouseInput(TW.Graphics.Mouse.RelativeX, TW.Graphics.Mouse.RelativeY);
             }
 
             TW.Graphics.SpectaterCamera.EnableUserInput = NoclipMode;

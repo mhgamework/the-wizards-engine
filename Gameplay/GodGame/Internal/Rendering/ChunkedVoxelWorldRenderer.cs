@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine.WorldRendering;
@@ -80,8 +81,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
         private void updateChunk(Point2 p)
         {
             var oldMesh = chunkEntities[p].Mesh;
-            if (oldMesh != null)
-                TW.Graphics.AcquireRenderer().ClearMeshCache(oldMesh);
+            throw new NotImplementedException();
+            //if (oldMesh != null)
+                //TW.Graphics.AcquireRenderer().ClearMeshCache(oldMesh);
 
             chunkEntities[p].Mesh = BuildChunkMesh((p.ToVector2() * ChunkSize).Round(),
                                   new Point2(ChunkSize, ChunkSize));

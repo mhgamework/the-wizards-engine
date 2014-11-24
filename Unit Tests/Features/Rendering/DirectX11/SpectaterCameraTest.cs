@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
         [Test]
         public void TestSetDirection()
         {
-            var cam = new SpectaterCamera(null, null);
+            var cam = new SpectaterCamera();
 
             checkDirectionSet(cam, new Vector3(1, 0, 0));
             checkDirectionSet(cam, new Vector3(0, 1, 0));

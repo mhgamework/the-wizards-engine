@@ -31,7 +31,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         public FirstPersonCameraSimulator()
         {
             info = TW.Data.GetSingleton<CameraInfo>();
-            cam = new SpectaterCamera(TW.Graphics.Keyboard, TW.Graphics.Mouse);
+            cam = new SpectaterCamera();
             terrain = TW.Data.GetSingleton<VoxelTerrain>();
             camData = TW.Data.GetSingleton<FirstPersonCamera>();
 
@@ -78,7 +78,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
             info.ActiveCamera = cam;
 
-            cam.Update(TW.Graphics.Elapsed);
+            cam.Update(TW.Graphics.Elapsed, TW.Graphics.Keyboard, TW.Graphics.Mouse);
 
             var newPos = cam.CameraPosition;
             newPos += camData.JumpVelocity * TW.Graphics.Elapsed * Vector3.UnitY;

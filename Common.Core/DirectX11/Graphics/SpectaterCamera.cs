@@ -191,7 +191,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
                 AngleVertical = (float)Math.Acos(Vector3.Dot(groundProj, value));
 
                 if (value.Y < 0) AngleVertical = -AngleVertical;
-                
+
                 Vector3 source = new Vector3(0f, 0f, 1f);
                 float horizontal = (float)Math.Acos(Vector3.Dot(groundProj, source));
                 if (groundProj.X > 0) horizontal = -horizontal; // This is inverted since the angles are inverted in the angle properties to matrix conversion?
@@ -333,7 +333,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             if (!Enabled) return;
 
 
-            processUserInput(elapsed,keyboard,mouse);
+            processUserInput(elapsed, keyboard, mouse);
 
             UpdateCameraInfo();
         }
@@ -377,14 +377,14 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
 
 
 
-            ProcessMouseInput();
+            ProcessMouseInput(mouse.RelativeX, mouse.RelativeY);
         }
 
-        public void ProcessMouseInput()
+        public void ProcessMouseInput(float mouseRelativeX, float mouseRelativeY)
         {
-            if (mouse.RelativeX != 0)
+            if (mouseRelativeX != 0)
             {
-                AngleHorizontal += MathHelper.ToRadians(mouse.RelativeX);
+                AngleHorizontal += MathHelper.ToRadians(mouseRelativeX);
                 if (AngleHorizontal > MathHelper.TwoPi)
                 {
                     AngleHorizontal -= MathHelper.TwoPi;
@@ -394,14 +394,14 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
                     AngleHorizontal += MathHelper.TwoPi;
                 }
             }
-            if (mouse.RelativeY != 0)
+            if (mouseRelativeY != 0)
             {
                 //TODO: wasda hieronder
-                if (MathHelper.ToRadians(mouse.RelativeY) < MathHelper.PiOver2)
+                if (MathHelper.ToRadians(mouseRelativeY) < MathHelper.PiOver2)
                 {
                 }
                 ;
-                AngleVertical = MathHelper.Clamp(AngleVertical - MathHelper.ToRadians(mouse.RelativeY), -MathHelper.PiOver2,
+                AngleVertical = MathHelper.Clamp(AngleVertical - MathHelper.ToRadians(mouseRelativeY), -MathHelper.PiOver2,
                                                  MathHelper.PiOver2);
             }
         }
