@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
             this.root = rootNode;
             this.renderer = renderer;
             tree = new Tree(rootNode);
-            camera = new SpectaterCamera(TW.Graphics.Keyboard, TW.Graphics.Mouse, 1, 100);
+            camera = new SpectaterCamera( 1, 100);
 
         }
 
@@ -34,7 +34,7 @@ namespace MHGameWork.TheWizards.SkyMerchant.QuestEditor.InventoryCore
         public void Update()
         {
             TW.Data.Get<CameraInfo>().ActiveCamera = camera;
-            camera.Update(TW.Graphics.Elapsed);
+            camera.Update(TW.Graphics.Elapsed, TW.Graphics.Keyboard, TW.Graphics.Mouse);
             updateWireframeBoxes();
             updateCamera();
             renderItemLinesHighlight(tree.findBrowsingItem());

@@ -50,7 +50,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
             private readonly Entity entity;
             private readonly DeferredRenderer renderer;
 
-            private DeferredMeshRenderElement element;
+            private DeferredMeshElement element;
 
             public EntityRenderData(Entity entity, DeferredRenderer renderer)
             {

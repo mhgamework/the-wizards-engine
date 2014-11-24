@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.Rendering;
+﻿using System;
+using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 using SlimDX.Direct3D11;
 
@@ -24,7 +25,8 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 
         private void draw(ITexture tex, Vector2 pos, Vector2 size)
         {
-            TW.Graphics.TextureRenderer.Draw(TW.Graphics.AcquireRenderer().TexturePool.LoadTexture(tex), new Vector2(pos.X, pos.Y), new Vector2(size.X, size.Y));
+            throw new NotImplementedException();
+            //TW.Graphics.TextureRenderer.Draw(TW.Graphics.AcquireRenderer().TexturePool.LoadTexture(tex), new Vector2(pos.X, pos.Y), new Vector2(size.X, size.Y));
         }
     }
 }

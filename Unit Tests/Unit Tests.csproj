@@ -166,7 +166,6 @@
     <Compile Include="Features\Rendering\DirectX11\DX11PerformanceTest.cs" />
     <Compile Include="Features\Rendering\DirectX11\SpectaterCameraTest.cs" />
     <Compile Include="Features\Rendering\DX11FontWrapperTest.cs" />
-    <Compile Include="Features\Rendering\FiltersTest.cs" />
     <Compile Include="Features\Rendering\Postprocessing\FiltersTest.cs" />
     <Compile Include="Features\Rendering\RenderingTestsHelper.cs" />
     <Compile Include="Features\Simulation\Animation\AnimationTest.cs" />

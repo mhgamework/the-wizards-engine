@@ -108,7 +108,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         private class Batch : IDisposable
         {
             private List<Entity> entities = new List<Entity>();
-            private DeferredMeshRenderElement element;
+            private DeferredMeshElement element;
             public int EntityCount { get { return entities.Count; } }
 
             public Batch()

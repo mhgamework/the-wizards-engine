@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Rendering;
@@ -37,7 +38,8 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 
 
             var grayTexture = TW.Assets.LoadTexture("Scattered\\Models\\Maps\\DarkGrey.png");
-            grayTextureRv = TW.Graphics.AcquireRenderer().TexturePool.LoadTexture(grayTexture);
+            throw new NotImplementedException();
+            //grayTextureRv = TW.Graphics.AcquireRenderer().TexturePool.LoadTexture(grayTexture);
 
 
 
@@ -132,7 +134,8 @@ namespace MHGameWork.TheWizards.Scattered.GameLogic.Services
 
         private void draw(ITexture tex, float x, float y, float sizeX, float sizeY)
         {
-            draw(TW.Graphics.AcquireRenderer().TexturePool.LoadTexture(tex), x, y, sizeX, sizeY);
+            throw new NotImplementedException();
+            //draw(TW.Graphics.AcquireRenderer().TexturePool.LoadTexture(tex), x, y, sizeX, sizeY);
         }
 
         private void draw(ShaderResourceView rv, float x, float y, float sizeX, float sizeY)
