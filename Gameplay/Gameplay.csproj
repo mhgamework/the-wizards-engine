@@ -598,7 +598,6 @@
     <Compile Include="Engine\Worlding\Physical.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\EditorConfiguration.cs" />
     <Compile Include="RTSTestCase1\WorldInputting\EditorMenuConfiguration.cs" />
-    <Compile Include="Rendering\UtilityMeshes.cs" />
     <Compile Include="RTSTestCase1\_Tests\InputTest.cs" />
     <Compile Include="SkyMerchant\Gameplay\BridgeMeshBuilder.cs" />
     <Compile Include="SkyMerchant\QuestEditor\HotbarCore\Hotbar.cs" />

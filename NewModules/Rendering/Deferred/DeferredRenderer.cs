@@ -81,7 +81,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             gBuffer = new GBuffer(game.Device, width, height);
             texturePool = new TexturePool(game);
 
-            meshesRenderer = new DeferredMeshesRenderer(game, gBuffer, texturePool);
+            meshesRenderer = new DeferredMeshesRenderer(game, gBuffer, TexturePool);
 
             directionalLightRenderer = new DirectionalLightRenderer(game, gBuffer);
             spotLightRenderer = new SpotLightRenderer(game, gBuffer);
@@ -504,6 +504,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         public DeferredMeshesRenderer DebugMeshesRenderer { get { return meshesRenderer; } }
         public FrustumCuller DEBUG_FrustumCuller { get { return frustumCuller; } }
         public ICamera DEBUG_SeperateCullCamera { get; set; }
+
+        public TexturePool TexturePool
+        {
+            get { return texturePool; }
+        }
 
         /// <summary>
         /// Removes all elements, lights from the renderer

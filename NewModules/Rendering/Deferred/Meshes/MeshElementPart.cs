@@ -42,5 +42,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
 
             part.Draw(ctx);
         }
+
+        public void UpdateWorldMatrix(DeviceContext ctx, Matrix worldMatrix)
+        {
+            perObject.UpdatePerObjectBuffer(ctx, worldMatrix);
+
+        }
     }
 }

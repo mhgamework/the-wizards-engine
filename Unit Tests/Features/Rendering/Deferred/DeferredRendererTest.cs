@@ -1,9 +1,11 @@
-﻿using DirectX11;
+﻿using System;
+using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
+using MHGameWork.TheWizards.RTSTestCase1;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.DirectInput;
@@ -16,6 +18,67 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
     [TestFixture]
     public class DeferredRendererTest
     {
+
+        [Test]
+        public void TestRenderManyMeshes()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+
+            var renderer = new DeferredRenderer(game);
+            var mesh = UtilityMeshes.CreateBoxColored(new Color4(1, 0, 0), new Vector3(0.1f));
+
+            DeferredMeshElement[] elements = new DeferredMeshElement[100];
+
+            for (int i = 0; i < elements.Length; i++)
+            {
+                elements[i] = renderer.CreateMeshElement(mesh);
+                elements[i].WorldMatrix =
+                    Matrix.Translation((float)Math.Cos((float)i / elements.Length * MathHelper.TwoPi) * 5, 0,
+                        (float)Math.Sin((float)i / elements.Length * MathHelper.TwoPi) * 5);
+
+            }
+
+
+            game.GameLoopEvent += delegate
+            {
+                renderer.Draw();
+
+            };
+
+            game.Run();
+        }
+
+        [Test]
+        public void TestDeleteMeshNoMemoryLeak()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+
+            var renderer = new DeferredRenderer(game);
+            var mesh = UtilityMeshes.CreateBoxColored(new Color4(1, 0, 0), new Vector3(0.1f));
+
+            DeferredMeshElement[] elements = new DeferredMeshElement[100];
+
+            int i = 0;
+
+            game.GameLoopEvent += delegate
+            {
+                elements[i] = renderer.CreateMeshElement(mesh);
+                elements[i].WorldMatrix =
+                    Matrix.Translation((float)Math.Cos((float)i / elements.Length * MathHelper.TwoPi) * 5, 0,
+                        (float)Math.Sin((float)i / elements.Length * MathHelper.TwoPi) * 5);
+
+                i = (i + 1) % elements.Length;
+                //if (elements[i] != null) elements[i].Delete();
+
+                renderer.Draw();
+
+            };
+
+            game.Run();
+        }
+
         [Test]
         public void TestDeferredRendererLineElement()
         {
@@ -47,7 +110,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
             var renderer = new DeferredRenderer(game);
 
-            var otherCam = new SpectaterCamera( 1, 10000);
+            var otherCam = new SpectaterCamera(1, 10000);
 
             var mesh = RenderingTestsHelper.CreateMerchantsHouseMesh(new OBJToRAMMeshConverter(new RAMTextureFactory()));
 
