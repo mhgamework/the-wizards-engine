@@ -224,6 +224,11 @@
     <Compile Include="GodGame\Internal\Networking\Packets\UserInputPacket.cs" />
     <Compile Include="GodGame\Internal\Networking\Packets\GameStateDeltaPacket.cs" />
     <Compile Include="GodGame\Internal\Networking\LocalPlayerService.cs" />
+    <Compile Include="GodGame\Internal\Rendering\GameVoxelTypeMeshProvider.cs" />
+    <Compile Include="GodGame\Internal\Rendering\IMeshProvider.cs" />
+    <Compile Include="GodGame\Internal\Rendering\InGameMeshProvider.cs" />
+    <Compile Include="GodGame\Types\Towns\TownBordersMeshProvider.cs" />
+    <Compile Include="GodGame\Internal\Rendering\VisualizeChangesMeshProvider.cs" />
     <Compile Include="GodGame\Internal\Simulation\VoxelTileFactory.cs" />
     <Compile Include="GodGame\Internal\UserInputControlsService.cs" />
     <Compile Include="Data\IntefaceToData\DataStorageInterceptor.cs" />
@@ -304,6 +309,7 @@
     <Compile Include="GodGame\Types\Towns\Workers\WorkerProducer.cs" />
     <Compile Include="GodGame\Types\Towns\Workers\WorkersService.cs" />
     <Compile Include="GodGame\Types\Towns\Workers\WorkersTest.cs" />
+    <Compile Include="GodGame\Types\VoxelMeshBuilder.cs" />
     <Compile Include="GodGame\VoxelInfoVisualizers\ValueControlVisualizer.cs" />
     <Compile Include="GodGame\Types\WoodworkerType.cs" />
     <Compile Include="GodGame\UI\ValueControl.cs" />

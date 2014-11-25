@@ -9,6 +9,7 @@ using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Networking;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Networking;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
 {
@@ -27,6 +28,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             builder.RegisterType<WorldRenderingService>().SingleInstance();
 
             builder.RegisterType<ChunkedVoxelWorldRenderer>().As<IVoxelWorldRenderer>().SingleInstance();
+            builder.RegisterType<InGameMeshProvider>().As<IMeshProvider>();
+            builder.RegisterTypes(ThisAssembly.GetTypes().Where(t => t.IsAssignableTo<IMeshProvider>()).ToArray())
+                   .AsSelf();
 
         }
 

@@ -52,7 +52,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         protected BuildingSiteType FisheryBuildSite { get { return typesFactory.GetBuildingSite<FisheryType>(); } }
         protected BuildingSiteType MarketBuildSite { get { return typesFactory.GetBuildingSite<MarketType>(); } }
-        
+
         /// <summary>
         /// This types factory is used for legacy access to the voxel types in the gamevoxeltype.
         /// It is injected on creation of the type,
@@ -129,12 +129,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             if (NoMesh) mesh = null;
             if (!ColoredBaseMesh) return;
 
-            mesh = createColoredMesh(Color);
-        }
-
-        protected IMesh createColoredMesh(Color color1)
-        {
-            return MeshBuilder.Transform(UtilityMeshes.CreateBoxColored(color1, new Vector3(0.5f, 0.05f, 0.5f)), Matrix.Translation(0, -0.05f, 0));
+            mesh = VoxelMeshBuilder.createColoredMesh(Color);
         }
 
         public bool ColoredBaseMesh
@@ -231,7 +226,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         /// </summary>
         public virtual void PerFrameTick()
         {
-            
+
         }
 
         /// <summary>
@@ -309,11 +304,11 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public virtual void OnCreated(IVoxelHandle handle)
         {
-            
+
         }
         public virtual void OnDestroyed(IVoxelHandle handle)
         {
-            
+
         }
 
         public bool ReceiveChangeEvents { get; private set; }

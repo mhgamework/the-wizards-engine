@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.Rendering;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
@@ -15,12 +16,11 @@ namespace MHGameWork.TheWizards.GodGame.Types
             : base("InfestationVoxelType")
         {
             ColoredBaseMesh = false;
-            datavalueMeshes[0] = createColoredMesh(Color.FromArgb(5, 5, 5));
-            datavalueMeshes[1] = createColoredMesh(Color.FromArgb(5, 5, 5));
-            datavalueMeshes[2] = createColoredMesh(Color.FromArgb(20, 20, 20));
-            datavalueMeshes[3] = createColoredMesh(Color.FromArgb(25, 25, 25));
-            datavalueMeshes[4] = createColoredMesh(Color.FromArgb(50, 50, 50));
-
+            datavalueMeshes[0] = VoxelMeshBuilder.createColoredMesh(Color.FromArgb(5, 5, 5));
+            datavalueMeshes[1] = VoxelMeshBuilder.createColoredMesh(Color.FromArgb(5, 5, 5));
+            datavalueMeshes[2] = VoxelMeshBuilder.createColoredMesh(Color.FromArgb(20, 20, 20));
+            datavalueMeshes[3] = VoxelMeshBuilder.createColoredMesh(Color.FromArgb(25, 25, 25));
+            datavalueMeshes[4] = VoxelMeshBuilder.createColoredMesh(Color.FromArgb(50, 50, 50));
         }
         public override void Tick(IVoxelHandle handle)
         {

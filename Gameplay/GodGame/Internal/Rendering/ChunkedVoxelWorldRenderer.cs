@@ -19,9 +19,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
 
         private Array2D<Entity> chunkEntities;
         private HashSet<Point2> dirtyChunks = new HashSet<Point2>();
+        private readonly IMeshProvider meshProvider;
 
-        public ChunkedVoxelWorldRenderer(Model.World world)
+        public ChunkedVoxelWorldRenderer(IMeshProvider meshProvider, Model.World world)
         {
+            this.meshProvider = meshProvider;
             this.world = world;
 
             numChunks = world.WorldSize / ChunkSize + 1;
@@ -95,11 +97,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
             {
                 var v = world.GetVoxel(p + new Point2(offset));
                 if (v == null) return;
-                var mesh = getMesh(v);
+                var mesh = meshProvider.GetMesh(v);
                 if (mesh == null) return;
                 var vWorld = Matrix.Scaling(new Vector3(world.VoxelSize.X))
                              * Matrix.Translation(((p.ToVector2() + new Vector2(0.5f)) * world.VoxelSize.X).ToXZ(v.Data.Height));
-                MeshBuilder.AppendMeshTo(getMesh(v), batch, vWorld);
+                MeshBuilder.AppendMeshTo(meshProvider.GetMesh(v), batch, vWorld);
 
             });
 
@@ -108,17 +110,5 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
 
             return batch;
         }
-
-        private IMesh getMesh(GameVoxel gameVoxel)
-        {
-            if (gameVoxel.Type == null) return null;
-
-            var handle = gameVoxel;
-
-            return gameVoxel.Type.GetMesh(handle);
-
-        }
-
-
     }
 }
