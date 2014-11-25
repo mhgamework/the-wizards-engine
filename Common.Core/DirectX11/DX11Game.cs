@@ -91,7 +91,7 @@ namespace MHGameWork.TheWizards.DirectX11
 
         public bool CustomGameLoopDisabled { get; set; }
 
-        [TWProfile]
+        //[TWProfile]
         void gameLoopStep()
         {
             if (!running)

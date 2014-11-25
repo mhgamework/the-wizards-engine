@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.EntityOud.Editor;
 using SlimDX;
 using SlimDX.Direct3D11;
 using CullMode = SlimDX.Direct3D11.CullMode;
@@ -26,7 +27,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
         public DeferredMeshesRenderer(DX11Game game, GBuffer gBuffer, TexturePool texturePool)
         {
             this.game = game;
-            this.gBuffer = gBuffer;
             this.pool = texturePool;
             ctx = game.Device.ImmediateContext;
 
@@ -36,8 +36,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
 
 
         private readonly DX11Game game;
-        private readonly GBuffer gBuffer;
         private readonly TexturePool pool;
+
+        private Dictionary<DeferredMeshElement, MeshElementPart[]> meshRenderParts =
+            new Dictionary<DeferredMeshElement, MeshElementPart[]>();
 
 
         private List<DeferredMeshElement> elements = new List<DeferredMeshElement>();
@@ -68,45 +70,22 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
             set { rasterizerState = value; }
         }
 
-        private Dictionary<IMesh, MeshRenderData> renderDataDict = new Dictionary<IMesh, MeshRenderData>();
-        private List<MeshRenderData> renderDatas = new List<MeshRenderData>();
-
-        private MeshRenderData getRenderData(IMesh mesh)
-        {
-            MeshRenderData ret;
-            if (renderDataDict.TryGetValue(mesh, out ret)) return ret;
-
-            ret = new MeshRenderData(mesh);
-            renderDataDict[mesh] = ret;
-            renderDatas.Add(ret);
-
-            if (game != null)
-                renderDataFactory.InitMeshRenderData(ret);
-
-
-            return ret;
-        }
-
-
         public DeferredMeshElement AddMesh(IMesh mesh)
         {
             var el = new DeferredMeshElement(this, mesh);
-            //var data = getRenderData(mesh);
 
-            //el.ElementNumber = data.WorldMatrices.Count;
-            //data.WorldMatrices.Add(el.WorldMatrix);
-            //data.Elements.Add(el);
-
-            createParts(el);
+            var parts = createParts(el);
+            meshRenderParts[el] = parts;
             Elements.Add(el);
-            //if (Culler != null)
-            //Culler.AddCullable(el);
 
             return el;
         }
 
-        private void createParts(DeferredMeshElement el)
+        private MeshElementPart[] createParts(DeferredMeshElement el)
         {
+            var allParts = new MeshElementPart[el.Mesh.GetCoreData().Parts.Count];
+
+            var i = 0;
             foreach (var p in el.Mesh.GetCoreData().Parts)
             {
                 var mat = createMaterial(p);
@@ -116,7 +95,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
                 part.CreateBuffers(game);
                 part.perObject.UpdatePerObjectBuffer(ctx, p.ObjectMatrix.ToSlimDX() * el.WorldMatrix);
                 parts.Add(part);
+                allParts[i] = part;
+                i++;
             }
+            return allParts;
         }
 
         private MeshPartRenderData createRenderData(IMeshPart part)
@@ -144,23 +126,18 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
         {
             if (el.IsDeleted) throw new InvalidOperationException();
 
-            /*if (Culler != null)
-                Culler.RemoveCullable(el);*/ // culling is disabled
+
+            var parts = meshRenderParts[el];
+            meshRenderParts.Remove(el);
+
+            //TODO: dispose parts
+            //TODO: dipose mesh data?
 
             Elements.Remove(el);
 
 
-        }
-
-        public void UpdateWorldMatrix(DeferredMeshElement el)
-        {
-            renderDataDict[el.Mesh].WorldMatrices[el.ElementNumber] = el.WorldMatrix;
-
-            if (Culler != null)
-                Culler.UpdateCullable(el);
 
         }
-
 
         private void initialize(TexturePool texturePool)
         {
@@ -239,9 +216,12 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
         private int drawCalls;
 
 
-
-
-
-
+        public void UpdateWorldMatrix(DeferredMeshElement el)
+        {
+            foreach (var p in meshRenderParts[el])
+            {
+                p.UpdateWorldMatrix(game.Device.ImmediateContext, el.WorldMatrix);
+            }
+        }
     }
 }

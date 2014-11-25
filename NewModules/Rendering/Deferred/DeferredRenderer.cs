@@ -121,7 +121,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             gBuffer = new GBuffer(game.Device, width, height);
             texturePool = new TexturePool(game);
 
-            meshesRenderer = new DeferredMeshesRenderer(game, gBuffer, texturePool);
+            meshesRenderer = new DeferredMeshesRenderer(game, gBuffer, TexturePool);
 
             directionalLightRenderer = new DirectionalLightRenderer(game, GBuffer);
             spotLightRenderer = new SpotLightRenderer(game, GBuffer);
@@ -606,6 +606,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         public GBuffer GBuffer
         {
             get { return gBuffer; }
+        }
+
+        public TexturePool TexturePool
+        {
+            get { return texturePool; }
         }
 
         /// <summary>
