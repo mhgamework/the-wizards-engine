@@ -37,6 +37,9 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
         // Derived
         public HashSet<House> Houses { get { return service.GetHouses(this); } }
 
+        /// <summary>
+        /// Returns true when given voxel borders to the town (so not in the town
+        /// </summary>
         public bool IsAtBorder(IVoxel voxel)
         {
             if (TownVoxels.Contains(voxel)) return false;
@@ -46,5 +49,25 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
 
         public IEnumerable<WorkerProducer> Producers { get { throw new NotImplementedException(); } }
         public IEnumerable<WorkerConsumer> Consumers { get { throw new NotImplementedException(); } }
+
+        public bool CanRemove(IVoxel getInternalVoxel)
+        {
+            if (TownVoxels.Count == 1) return false;
+            var setWithout = new HashSet<IVoxel>(TownVoxels.Where(v => v != getInternalVoxel));
+            var removedSet = new HashSet<IVoxel>(TownVoxels.Where(v => v != getInternalVoxel));
+
+            // Note i think this is simplye the VisitOnce function in the Utilities dll on my work pc
+            var queue = new Queue<IVoxel>();
+            queue.Enqueue(removedSet.First());
+            while (queue.Count > 0)
+            {
+                var curr = queue.Dequeue();
+                if (!removedSet.Contains(curr)) continue;
+                removedSet.Remove(curr);
+                curr.Get4Connected().Intersect(setWithout).ForEach(queue.Enqueue);
+            }
+            return removedSet.Count == 0; // If the removedset is empty then all voxels are still conected when given voxel is removed.
+
+        }
     }
 }

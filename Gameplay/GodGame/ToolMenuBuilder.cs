@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
+using Autofac.Features.Indexed;
 using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.ToolSelection;
 using MHGameWork.TheWizards.GodGame.Types;
 using System.Linq;
+using MHGameWork.TheWizards.GodGame.Types.Towns;
 
 namespace MHGameWork.TheWizards.GodGame
 {
@@ -17,13 +19,16 @@ namespace MHGameWork.TheWizards.GodGame
         private Internal.Model.World world;
         private readonly Func<string, ToolSelectionCategory> createCategory;
         private readonly ToolSelectionTool.Factory createToolItem;
+        private readonly IIndex<Type, IPlayerTool> getPlayerTool;
 
-        public ToolMenuBuilder(VoxelTypesFactory typesFactory, Internal.Model.World world, Func<string, ToolSelectionCategory> createCategory, ToolSelectionTool.Factory createToolItem)
+        public ToolMenuBuilder(VoxelTypesFactory typesFactory, Internal.Model.World world, Func<string, ToolSelectionCategory> createCategory, ToolSelectionTool.Factory createToolItem,
+            IIndex<Type, IPlayerTool> getPlayerTool)
         {
             this.typesFactory = typesFactory;
             this.world = world;
             this.createCategory = createCategory;
             this.createToolItem = createToolItem;
+            this.getPlayerTool = getPlayerTool;
         }
 
         public List<IToolSelectionItem> BuildMenu()
@@ -51,7 +56,7 @@ namespace MHGameWork.TheWizards.GodGame
         private ToolSelectionCategory createCat(string name, IEnumerable<IPlayerTool> tools)
         {
             return createCategory(name).Alter(k => k.SelectionItems.AddRange(tools.Select(toToolItem)));
-            
+
         }
 
 
@@ -83,7 +88,7 @@ namespace MHGameWork.TheWizards.GodGame
         {
             yield return createTypeInput(typesFactory.Get<VillageType>());
             yield return createTypeInput(typesFactory.Get<MarketType>());
-
+            yield return getPlayerTool[typeof(TownBorderTool)];
         }
 
         private IEnumerable<IPlayerTool> createBuildingSiteInputs()

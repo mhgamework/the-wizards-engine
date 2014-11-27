@@ -3,6 +3,7 @@ using Autofac;
 using Autofac.Core;
 using MHGameWork.TheWizards.GodGame.ToolSelection;
 using MHGameWork.TheWizards.GodGame.Types;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
 {
@@ -18,6 +19,10 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             builder.RegisterType<ToolMenuBuilder>().SingleInstance();
             builder.RegisterType<ToolSelectionCategory>();
             builder.RegisterType<ToolSelectionTool>();
+
+            builder.RegisterTypes(ThisAssembly.GetTypes().Where(t => t.IsAssignableTo<IPlayerTool>()).ToArray())
+                   .AsSelf()
+                   .Keyed<IPlayerTool>(type => type);
         }
 
         private void initMenu(ToolSelectionMenu menu, IComponentContext context)

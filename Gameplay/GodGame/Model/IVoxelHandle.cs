@@ -50,6 +50,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         bool CanAcceptItemType(IVoxelHandle deliveryHandle, ItemType type);
         bool CanAddWorker();
         float DistanceTo(IVoxelHandle handle);
+        void MarkChanged();
     }
 
 }

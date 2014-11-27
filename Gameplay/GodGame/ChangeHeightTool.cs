@@ -9,9 +9,10 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame
 {
-    public class ChangeHeightTool: PerPlayerAdapterTool<ChangeHeightToolPerPlayer>
+    public class ChangeHeightTool : PerPlayerAdapterTool<ChangeHeightToolPerPlayer>
     {
-        public ChangeHeightTool(Internal.Model.World world) : base(p => new ChangeHeightToolPerPlayer(world,p))
+        public ChangeHeightTool(Internal.Model.World world)
+            : base("ChangeHeight", p => new ChangeHeightToolPerPlayer(world, p))
         {
         }
     }

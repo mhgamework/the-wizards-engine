@@ -9,9 +9,9 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
     /// </summary>
     public class TownBorderTool : PerPlayerAdapterTool<TownBorderPlayerTool>
     {
-        public TownBorderTool(TownCenterService townCenterService) : base(p => new TownBorderPlayerTool(townCenterService))
+        public TownBorderTool(TownCenterService townCenterService)
+            : base("TownBorderTool",p => new TownBorderPlayerTool(townCenterService))
         {
-            throw new NotImplementedException();
         }
     }
     /// <summary>
@@ -21,29 +21,46 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
     public class TownBorderPlayerTool : IPlayerToolPerPlayer
     {
         private readonly TownCenterService townCenterService;
-        private readonly Internal.Model.World world;
-        private readonly PlayerState playerState;
+
+        private Town ActiveTown;
 
         public TownBorderPlayerTool(TownCenterService townCenterService)
         {
             this.townCenterService = townCenterService;
-            this.world = world;
-            this.playerState = playerState;
         }
+
 
         public void OnLeftClick(IVoxelHandle voxel)
         {
-            throw new System.NotImplementedException();
+            var clickedTown = townCenterService.GetTownForVoxel(voxel.GetInternalVoxel());
+            if (clickedTown == null) return;
+            if (clickedTown.CanRemove(voxel.GetInternalVoxel()))
+            {
+                
+                clickedTown.TownVoxels.Remove(voxel.GetInternalVoxel());
+                voxel.MarkChanged();
+                voxel.Get8Connected().ForEach(v => v.MarkChanged());
+            }
         }
 
         public void OnRightClick(IVoxelHandle voxel)
         {
-            throw new System.NotImplementedException();
+            var clickedTown = townCenterService.GetTownForVoxel(voxel.GetInternalVoxel());
+
+            if (clickedTown == null && ActiveTown != null)
+            {
+                TryAddBorder(voxel.GetInternalVoxel(), ActiveTown);
+                voxel.MarkChanged();
+                voxel.Get8Connected().ForEach(v =>v.MarkChanged());
+            }
+            else if (clickedTown != null)
+            {
+                ActiveTown = clickedTown;
+            }
         }
 
         public void OnKeypress(IVoxelHandle voxel, Key key)
         {
-            throw new System.NotImplementedException();
         }
 
         /// <summary>

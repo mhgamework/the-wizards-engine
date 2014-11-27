@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
             builder = new FourWayModelBuilder();
 
             var mBuilder = new MeshBuilder();
-            mBuilder.AddBox(new Vector3(-0.5f, 0, -0.5f), new Vector3(0.5f, 0.1f, -0.4f));
+            mBuilder.AddBox(new Vector3(0.4f, 0, -0.5f), new Vector3(0.5f, 0.1f, 0.5f));
 
             builder.WayMesh = new RAMMesh();
             builder.NoWayMesh = mBuilder.CreateMesh();
@@ -37,7 +37,6 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
             var builder = new MeshBuilder();
             builder.AddMesh(baseMesh, Matrix.Identity);
             builder.AddMesh(this.builder.CreateMesh(p => town == townCenterService.GetTownForVoxel(gameVoxel.GetRelative(p))), Matrix.Identity);
-            builder.AddBox(new Vector3(-0.5f, 0, -0.5f), new Vector3(-0.4f, 0.1f, 0.5f));
             return builder.CreateMesh();
         }
     }

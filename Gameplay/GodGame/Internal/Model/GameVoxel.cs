@@ -203,6 +203,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
             return handle.GetInternalVoxel().GetOffset(handle.GetInternalVoxel()).GetLength();
         }
 
+        public void MarkChanged()
+        {
+            world.NotifyVoxelChanged(this);
+        }
+
         #endregion
     }
 }

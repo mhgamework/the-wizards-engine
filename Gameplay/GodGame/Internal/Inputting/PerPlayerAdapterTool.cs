@@ -11,17 +11,19 @@ namespace MHGameWork.TheWizards.GodGame
     /// </summary>
     public class PerPlayerAdapterTool<T> : IPlayerTool where T : IPlayerToolPerPlayer
     {
+        private readonly string name;
         private readonly Func<PlayerState, T> createPlayerTool;
 
         private Dictionary<PlayerState, T> tools =
             new Dictionary<PlayerState, T>();
 
-        public PerPlayerAdapterTool(Func<PlayerState, T> createPlayerTool)
+        public PerPlayerAdapterTool(string name, Func<PlayerState, T> createPlayerTool)
         {
+            this.name = name;
             this.createPlayerTool = createPlayerTool;
         }
 
-        public string Name { get { return "ChangeHeight"; } }
+        public string Name { get { return name; } }
         public void OnLeftClick(PlayerState player, IVoxelHandle voxel)
         {
             getTool(player).OnLeftClick(voxel);
