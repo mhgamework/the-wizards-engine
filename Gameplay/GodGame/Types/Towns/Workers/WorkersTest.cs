@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using MHGameWork.TheWizards.GodGame.Internal.Model;
-using MHGameWork.TheWizards.GodGame.Model;
-using NSubstitute;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.GodGame.Types.Workers
+namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
 {
     /// <summary>
     /// 

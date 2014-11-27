@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MHGameWork.TheWizards.GodGame.Types.Workers
+namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
 {
     public interface ITown
     {

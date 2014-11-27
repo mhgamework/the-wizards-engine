@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MHGameWork.TheWizards.GodGame.Types.Workers
+namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
 {
     public class WorkersService
     {

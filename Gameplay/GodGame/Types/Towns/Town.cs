@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using System.Linq;
-using MHGameWork.TheWizards.GodGame.Types.Workers;
+using MHGameWork.TheWizards.GodGame.Types.Towns.Workers;
 
 namespace MHGameWork.TheWizards.GodGame.Types.Towns
 {
