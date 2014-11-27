@@ -49,7 +49,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
                 doAdd(voxel, clickedTown);
         }
 
-        private void doAdd(IVoxelHandle voxel, Town clickedTown)
+        private void doAdd(IVoxelHandle voxel, Town clickedTown)    
         {
             if (clickedTown != null)
             {

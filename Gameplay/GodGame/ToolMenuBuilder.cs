@@ -106,13 +106,21 @@ namespace MHGameWork.TheWizards.GodGame
 
         private PlayerTool createTypeInput(GameVoxelType type, string name)
         {
-            return new DelegatePlayerTool(name,
-                v => v.ChangeType(typesFactory.Get<LandType>()),
-                v =>
+            var ret = new DelegatePlayerTool(name,
+                                          v => v.ChangeType(typesFactory.Get<LandType>()),
+                                          v =>
+                                          {
+                                              if (v.Type == typesFactory.Get<LandType>())
+                                                  v.ChangeType(type);
+                                          });
+            ret.onTargetChanged = (player, v, key, mouse) =>
                 {
-                    if (v.Type == typesFactory.Get<LandType>())
-                        v.ChangeType(type);
-                });
+                    if (mouse.LeftMousePressed)
+                        ret.onLeftClick(v);
+                    else if (mouse.RightMousePressed)
+                        ret.onRightClick(v);
+                };
+            return ret;
         }
         private ToolSelectionTool createTool(GameVoxelType type)
         {
