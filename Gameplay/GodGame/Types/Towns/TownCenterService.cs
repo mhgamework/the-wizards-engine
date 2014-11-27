@@ -17,6 +17,10 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
             ret.TownVoxels.Add(center);
             return ret;
         }
+        public void DestroyTown(Town town)
+        {
+            townCenters.Remove(town);
+        }
 
 
         public HashSet<House> GetHouses(Town town)

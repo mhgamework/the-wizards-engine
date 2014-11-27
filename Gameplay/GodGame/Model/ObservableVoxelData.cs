@@ -84,9 +84,9 @@ namespace MHGameWork.TheWizards.GodGame
             get { return type; }
             set
             {
-                if (type != value)
-                    onChange();
+                if (type == value) return;
                 type = value;
+                onChange();
             }
         }
 

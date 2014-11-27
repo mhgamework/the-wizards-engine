@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DirectX11;
 using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
@@ -8,13 +9,31 @@ namespace MHGameWork.TheWizards.GodGame.Rendering
     public class FourWayModelBuilder
     {
         public IMesh BaseMesh;
+        /// <summary>
+        /// MH: i think this is the mesh that is placed when there is a connection
+        /// </summary>
         public IMesh WayMesh; //must be aligned in (1,0) "left" direction
+        /// <summary>
+        /// MH: i think this is the mesh that is placed when there is no connection
+        /// </summary>
         public IMesh NoWayMesh; //must be aligned in (1,0) "left" direction
 
+        /// <summary>
+        /// No clue what this is
+        /// </summary>
         public List<IMesh> HeightWayMeshes;
 
         private Dictionary<string, IMesh> cachedMeshes = new Dictionary<string, IMesh>();
 
+        public IMesh CreateMesh(Func<Point2, bool> offsetPredicate)
+        {
+            //TODO: these offsets might be wrong
+            return CreateMesh(
+                offsetPredicate(new Point2(1, 0)),
+                offsetPredicate(new Point2(0, 1)),
+                offsetPredicate(new Point2(-1, 0)),
+                offsetPredicate(new Point2(0, -1)));
+        }
         public IMesh CreateMesh(bool hasLeft, bool hasTop, bool hasRight, bool hasBottom)
         {
             /*if (BaseMesh == null && (WayMesh == null || NoWayMesh == null))

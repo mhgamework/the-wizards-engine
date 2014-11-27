@@ -6,6 +6,7 @@ using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Model;
+using MHGameWork.TheWizards.GodGame.Types.Towns;
 using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -29,6 +30,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
     public class VillageType : GameVoxelType
     {
         private readonly ItemTypesFactory itemTypesFactory;
+        private readonly TownCenterService townCenterService;
         private int totalResourceCapacity;
         private int maxNbWorkers = 10;
         private int workerSupplyRange = 10;
@@ -43,10 +45,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private List<VillageResource> neededResources;
 
-        public VillageType(ItemTypesFactory itemTypesFactory)
+
+        public VillageType(ItemTypesFactory itemTypesFactory, TownCenterService townCenterService)
             : base("Village")
         {
             this.itemTypesFactory = itemTypesFactory;
+            this.townCenterService = townCenterService;
             neededResources = new[]
                 {
                     new VillageResource { ItemType = itemTypesFactory.CropType, MaxResourceLevel = 3, MinResourceLevel = 1, ConsummationRate = 10}, 
@@ -58,6 +62,18 @@ namespace MHGameWork.TheWizards.GodGame.Types
             {
                 totalResourceCapacity += res.MaxResourceLevel;
             }
+
+            ReceiveCreationEvents = true;
+
+        }
+
+        public override void OnCreated(IVoxelHandle handle)
+        {
+            townCenterService.CreateTown(handle.GetInternalVoxel());
+        }
+        public override void OnDestroyed(IVoxelHandle handle)
+        {
+            townCenterService.DestroyTown(townCenterService.GetTownForVoxel(handle.GetInternalVoxel()));
         }
 
         public override void Tick(IVoxelHandle handle)
@@ -93,7 +109,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 }
             }
         }
-        
+
         private int getNbWorkersSupplied(IVoxelHandle handle)
         {
             var val = handle.Data.DataValue;
@@ -129,7 +145,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
             throw new Exception("Worker leak!!");
         }
-        
+
 
         /// <summary>
         /// Returns the number of workers this village is providing
@@ -142,7 +158,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         #endregion workers
 
-        
+
 
         #region resources
 
@@ -159,18 +175,18 @@ namespace MHGameWork.TheWizards.GodGame.Types
             }
             setSupplyState(handle, true); //all supplied
         }
-        
+
         private bool hasEnough(VillageResource resource, IVoxelHandle handle)
         {
             return handle.Data.Inventory.GetAmountOfType(resource.ItemType) >= resource.MinResourceLevel;
         }
-        
+
         private void setSupplyState(IVoxelHandle handle, bool setSupplied)
         {
             if (isSupplied(handle) == setSupplied) return;
             handle.Data.DataValue = setSupplied ? 1 : 0;
         }
-        
+
         private void consume(VillageResource resource, IVoxelHandle handle)
         {
             if (handle.Data.Inventory.GetAmountOfType(resource.ItemType) == 0) return;
@@ -211,7 +227,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             meshBuilder.AddMesh(groundMesh, Matrix.Identity);
             return meshBuilder.CreateMesh();
         }
-        
+
         public override IEnumerable<IRenderable> GetInfoVisualizers(IVoxelHandle handle)
         {
             yield return new RangeVisualizer(handle, workerSupplyRange);

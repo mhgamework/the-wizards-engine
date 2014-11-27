@@ -32,16 +32,23 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
 
         public void ResetData()
         {
+            Data = null;
             Data = new ObservableVoxelData(() =>
                 {
                     if (Data == null) return; // Ignore changes in the observablevoxeldata constructor
                     world.NotifyVoxelChanged(this);
-                    if (Type != PreviousType)
-                        TypeChanged = true;
-                    PreviousType = Type;
+
+                    if (currentTrackedType != Data.Type)
+                    {
+                        TypeChanged = true; 
+                        PreviousType = currentTrackedType;
+                        currentTrackedType = Data.Type;
+                    }
+
                 }, gen);
         }
 
+        private IGameVoxelType currentTrackedType; // Type last detected on the data
         public IGameVoxelType PreviousType { get; set; }
         public IGameVoxelType Type
         {

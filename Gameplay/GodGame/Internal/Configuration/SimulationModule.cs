@@ -28,6 +28,14 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             // Other
             builder.RegisterType<WorldSimulationService>().SingleInstance();
 
+            // Register all types in the Types namespaces (should be renamed to gameplay namespace)
+            builder.RegisterTypes(
+                ThisAssembly.GetTypes()
+                            .Where(
+                                t =>
+                                t.Namespace != null && t.Namespace.StartsWith("MHGameWork.TheWizards.GodGame.Types")).ToArray())
+                   .AsSelf()
+                   .SingleInstance();
 
 
             loadVoxelTypes(builder);

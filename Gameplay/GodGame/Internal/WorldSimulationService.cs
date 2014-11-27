@@ -30,6 +30,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         public void Simulate()
         {
+            simulateCreateAndDestroy();
             if (nextTick > TW.Graphics.TotalRunTime) return;
             nextTick += TickInterval; //TODO: Check for timing problems
 
@@ -37,9 +38,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             simulatePerVoxelTick();
 
-            simulateCreateAndDestroy();
 
-            simulateCreateAndDestroy();
         }
 
         private void simulateCreateAndDestroy()
