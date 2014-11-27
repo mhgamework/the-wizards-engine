@@ -13,16 +13,6 @@ namespace MHGameWork.TheWizards.GodGame.Types.Workers
             this.allTowns = allTowns;
         }
 
-        public WorkerConsumer CreateWorkerConsumer()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public WorkerProducer CreateWorkerProducer()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public void UpdateWorkerDistribution()
         {
             foreach (var town in allTowns.ToArray())

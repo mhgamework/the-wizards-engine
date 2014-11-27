@@ -47,8 +47,8 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
             return true;
         }
 
-        public IEnumerable<WorkerProducer> Producers { get { throw new NotImplementedException(); } }
-        public IEnumerable<WorkerConsumer> Consumers { get { throw new NotImplementedException(); } }
+        public IEnumerable<IWorkerProducer> Producers { get { throw new NotImplementedException(); } }
+        public IEnumerable<IWorkerConsumer> Consumers { get { throw new NotImplementedException(); } }
 
         public bool CanRemove(IVoxel getInternalVoxel)
         {

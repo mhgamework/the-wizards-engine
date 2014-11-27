@@ -27,15 +27,15 @@ namespace MHGameWork.TheWizards.GodGame.Types.Workers
         }
 
 
-        private WorkerConsumer createConsumer(ITown town)
+        private SimpleWorkerConsumer createConsumer(ITown town)
         {
-            var ret = new WorkerConsumer();
+            var ret = new SimpleWorkerConsumer();
             ((SimpleTown)town).Consumers.Add(ret);
             return ret;
         }
-        private WorkerProducer createProducer(ITown town)
+        private SimpleWorkerProducer createProducer(ITown town)
         {
-            var ret = new WorkerProducer();
+            var ret = new SimpleWorkerProducer();
             ((SimpleTown)town).Producers.Add(ret);
             return ret;
         }
@@ -185,19 +185,28 @@ namespace MHGameWork.TheWizards.GodGame.Types.Workers
 
     public class SimpleTown : ITown
     {
-        public List<WorkerProducer> Producers = new List<WorkerProducer>();
-        public List<WorkerConsumer> Consumers = new List<WorkerConsumer>();
+        public List<IWorkerProducer> Producers = new List<IWorkerProducer>();
+        public List<IWorkerConsumer> Consumers = new List<IWorkerConsumer>();
 
-        IEnumerable<WorkerProducer> ITown.Producers
+        IEnumerable<IWorkerProducer> ITown.Producers
         {
             get { return Producers; }
         }
 
-        IEnumerable<WorkerConsumer> ITown.Consumers
+        IEnumerable<IWorkerConsumer> ITown.Consumers
         {
             get { return Consumers; }
         }
 
 
+    }
+    public class SimpleWorkerProducer : IWorkerProducer
+    {
+        public int ProvidedWorkersAmount { get; set; }
+    }
+    public class SimpleWorkerConsumer : IWorkerConsumer
+    {
+        public int RequestedWorkersCount { get; set; }
+        public int AllocatedWorkersCount { get; set; }
     }
 }
