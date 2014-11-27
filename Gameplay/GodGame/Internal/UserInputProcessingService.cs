@@ -34,7 +34,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         public bool UserInputDisabled { get; set; }
 
-
+        private IVoxel previousTarget;
         public void Simulate()
         {
             if (UserInputDisabled) return;
@@ -51,6 +51,9 @@ namespace MHGameWork.TheWizards.GodGame
 
             var target = GetTargetedVoxel();
             if (target == null) return;
+            if (target != previousTarget)
+                inputHandler.OnTargetChanged(target);
+            previousTarget = target;
 
             if (TW.Graphics.Mouse.LeftMouseJustPressed)
                 inputHandler.OnLeftClick(target);

@@ -266,7 +266,7 @@
     <Compile Include="GodGame\Persistence\GameplayObjectsSerializer.cs" />
     <Compile Include="GodGame\Persistence\SerializedWorld.cs" />
     <Compile Include="GodGame\Internal\WorldPersisterService.cs" />
-    <Compile Include="GodGame\Internal\Inputting\IPlayerTool.cs" />
+    <Compile Include="GodGame\Internal\Inputting\PlayerTool.cs" />
     <Compile Include="GodGame\Model\IVoxelHandle.cs" />
     <Compile Include="GodGame\Internal\WorldRenderingService.cs" />
     <Compile Include="GodGame\Internal\WorldSimulationService.cs" />

@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
     /// Implements the town border tool
     /// Provides binding of IPlayerTools to the town border tool
     /// </summary>
-    public class TownBorderPlayerTool : IPlayerToolPerPlayer
+    public class TownBorderPlayerTool : PlayerToolPerPlayer
     {
         private readonly TownCenterService townCenterService;
 
@@ -29,39 +29,62 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
             this.townCenterService = townCenterService;
         }
 
+        public override void OnLeftClick(IVoxelHandle voxel)
+        {
+            doRemove(voxel, townCenterService.GetTownForVoxel(voxel.GetInternalVoxel()));
+        }
 
-        public void OnLeftClick(IVoxelHandle voxel)
+        public override void OnRightClick(IVoxelHandle voxel)
+        {
+            doAdd(voxel, townCenterService.GetTownForVoxel(voxel.GetInternalVoxel()));
+        }
+
+        public override void OnTargetChanged(IVoxelHandle voxel, DirectX11.Input.TWKeyboard keyboard, DirectX11.Input.TWMouse mouse)
         {
             var clickedTown = townCenterService.GetTownForVoxel(voxel.GetInternalVoxel());
+
+            if (mouse.LeftMousePressed)
+                doRemove(voxel, clickedTown);
+            else if (mouse.RightMousePressed)
+                doAdd(voxel, clickedTown);
+        }
+
+        private void doAdd(IVoxelHandle voxel, Town clickedTown)
+        {
+            if (clickedTown != null)
+            {
+                ActiveTown = clickedTown;
+                return;
+            }
+            if (ActiveTown != null)
+            {
+                tryAdd(voxel, ActiveTown);
+            }
+        }
+
+        private static void doRemove(IVoxelHandle voxel, Town clickedTown)
+        {
             if (clickedTown == null) return;
             if (clickedTown.CanRemove(voxel.GetInternalVoxel()))
             {
-                
                 clickedTown.TownVoxels.Remove(voxel.GetInternalVoxel());
                 voxel.MarkChanged();
                 voxel.Get8Connected().ForEach(v => v.MarkChanged());
             }
         }
 
-        public void OnRightClick(IVoxelHandle voxel)
+        private void tryAdd(IVoxelHandle voxel, Town town)
         {
-            var clickedTown = townCenterService.GetTownForVoxel(voxel.GetInternalVoxel());
-
-            if (clickedTown == null && ActiveTown != null)
-            {
-                TryAddBorder(voxel.GetInternalVoxel(), ActiveTown);
-                voxel.MarkChanged();
-                voxel.Get8Connected().ForEach(v =>v.MarkChanged());
-            }
-            else if (clickedTown != null)
-            {
-                ActiveTown = clickedTown;
-            }
+            TryAddBorder(voxel.GetInternalVoxel(), town);
+            voxel.MarkChanged();
+            voxel.Get8Connected().ForEach(v => v.MarkChanged());
         }
 
-        public void OnKeypress(IVoxelHandle voxel, Key key)
+        private static void tryRemove(IVoxelHandle voxel, Town clickedTown)
         {
+           
         }
+
 
         /// <summary>
         /// Adds given voxel to the town border, and takes it from its current town if one exists

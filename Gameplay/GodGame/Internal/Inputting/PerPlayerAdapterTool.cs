@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards.GodGame
     /// <summary>
     /// Adapter for mapping per-player tool instances to a global tool instance
     /// </summary>
-    public class PerPlayerAdapterTool<T> : IPlayerTool where T : IPlayerToolPerPlayer
+    public class PerPlayerAdapterTool<T> : PlayerTool where T : IPlayerToolPerPlayer
     {
         private readonly string name;
         private readonly Func<PlayerState, T> createPlayerTool;
@@ -18,25 +18,28 @@ namespace MHGameWork.TheWizards.GodGame
             new Dictionary<PlayerState, T>();
 
         public PerPlayerAdapterTool(string name, Func<PlayerState, T> createPlayerTool)
+            : base(name)
         {
             this.name = name;
             this.createPlayerTool = createPlayerTool;
         }
-
-        public string Name { get { return name; } }
-        public void OnLeftClick(PlayerState player, IVoxelHandle voxel)
+        public override void OnLeftClick(PlayerState player, IVoxelHandle voxel)
         {
             getTool(player).OnLeftClick(voxel);
         }
 
-        public void OnRightClick(PlayerState player, IVoxelHandle voxel)
+        public override void OnRightClick(PlayerState player, IVoxelHandle voxel)
         {
             getTool(player).OnRightClick(voxel);
         }
 
-        public void OnKeypress(PlayerState player, IVoxelHandle voxel, Key key)
+        public override void OnKeypress(PlayerState player, IVoxelHandle voxel, Key key)
         {
             getTool(player).OnKeypress(voxel, key);
+        }
+        public override void OnTargetChanged(PlayerState player, IVoxelHandle voxel, DirectX11.Input.TWKeyboard keyboard, DirectX11.Input.TWMouse mouse)
+        {
+            getTool(player).OnTargetChanged(voxel, keyboard, mouse);
         }
 
         private T getTool(PlayerState player)

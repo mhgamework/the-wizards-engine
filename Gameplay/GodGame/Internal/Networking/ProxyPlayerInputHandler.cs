@@ -46,5 +46,10 @@ namespace MHGameWork.TheWizards.GodGame.Networking
         {
             transporter.Send(new UserInputHandlerPacket("OnKeyPressed", target.Coord) { Key = (int)key });
         }
+
+        public void OnTargetChanged(GameVoxel target)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

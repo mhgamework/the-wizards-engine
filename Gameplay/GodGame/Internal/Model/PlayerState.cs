@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         }
         public string Name = "NOT SET";
-        public IPlayerTool ActiveTool { get; set; }
+        public PlayerTool ActiveTool { get; set; }
         public BoundingBox SelectionBox { get; set; }
 
         public int HeightToolSize { get; set; }

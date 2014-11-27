@@ -14,7 +14,7 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
     {
         private readonly VoxelTypesFactory typesFactory;
         private readonly ItemTypesFactory itemTypesFactory;
-        private readonly IEnumerable<IPlayerTool> allTools;
+        private readonly IEnumerable<PlayerTool> allTools;
 
         public GameplayObjectsSerializer(PlayerToolsFactory toolsFactory, VoxelTypesFactory typesFactory, ItemTypesFactory itemTypesFactory)
         {
@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
         }
 
         [ExceptionMessage("PlayerTool with name not found")]
-        public IPlayerTool GetPlayerTool(string name)
+        public PlayerTool GetPlayerTool(string name)
         {
             return allTools.First(t => t.Name == name);
         }
@@ -51,7 +51,7 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
             return type.Name;
         }
 
-        public string Serialize(IPlayerTool tool)
+        public string Serialize(PlayerTool tool)
         {
             return tool.Name;
         }

@@ -15,8 +15,8 @@ namespace MHGameWork.TheWizards.GodGame.Model
     public class ItemTypesFactory
     {
         private readonly Internal.Model.World world;
-        private List<IPlayerTool> tools = new List<IPlayerTool>();
-        public IEnumerable<IPlayerTool> Tools { get { return tools; } }
+        private List<PlayerTool> tools = new List<PlayerTool>();
+        public IEnumerable<PlayerTool> Tools { get { return tools; } }
 
         private List<ItemType> rawTypes = new List<ItemType>();
 

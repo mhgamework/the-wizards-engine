@@ -3,20 +3,24 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame.Internal.Inputting
 {
-    public class NullPlayerTool : IPlayerTool
+    public class NullPlayerTool : PlayerTool
     {
-        public string Name { get { return "NullPlayerTool"; } }
+        public NullPlayerTool()
+            : base("NullPlayerTool")
+        {
+        }
 
-        public void OnLeftClick(PlayerState player, IVoxelHandle voxel)
+
+        public override void OnLeftClick(PlayerState player, IVoxelHandle voxel)
         {
 
         }
 
-        public void OnRightClick(PlayerState player, IVoxelHandle voxel)
+        public override void OnRightClick(PlayerState player, IVoxelHandle voxel)
         {
         }
 
-        public void OnKeypress(PlayerState player, IVoxelHandle voxel, Key key)
+        public override void OnKeypress(PlayerState player, IVoxelHandle voxel, Key key)
         {
         }
     }

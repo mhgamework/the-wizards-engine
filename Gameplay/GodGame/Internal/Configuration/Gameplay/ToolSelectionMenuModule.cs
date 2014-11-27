@@ -20,9 +20,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             builder.RegisterType<ToolSelectionCategory>();
             builder.RegisterType<ToolSelectionTool>();
 
-            builder.RegisterTypes(ThisAssembly.GetTypes().Where(t => t.IsAssignableTo<IPlayerTool>()).ToArray())
+            builder.RegisterTypes(ThisAssembly.GetTypes().Where(t => t.IsAssignableTo<PlayerTool>()).ToArray())
                    .AsSelf()
-                   .Keyed<IPlayerTool>(type => type);
+                   .Keyed<PlayerTool>(type => type);
         }
 
         private void initMenu(ToolSelectionMenu menu, IComponentContext context)

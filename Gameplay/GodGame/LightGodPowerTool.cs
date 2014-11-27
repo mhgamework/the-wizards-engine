@@ -6,24 +6,24 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame
 {
-    public class LightGodPowerTool : IPlayerTool
+    public class LightGodPowerTool : PlayerTool
     {
         private readonly InfestationVoxelType infestationType;
 
         public LightGodPowerTool(InfestationVoxelType infestationType)
+            : base("Let there be light!")
         {
             this.infestationType = infestationType;
         }
 
-        public string Name { get { return "Let there be light!"; } }
-        public void OnLeftClick(PlayerState player, IVoxelHandle voxel)
+        public override void OnLeftClick(PlayerState player, IVoxelHandle voxel)
         {
 
         }
 
         private GameVoxel prevVoxel;
 
-        public void OnRightClick(PlayerState player, IVoxelHandle voxel)
+        public override void OnRightClick(PlayerState player, IVoxelHandle voxel)
         {
             int radius = 3;
             if (prevVoxel != null)
@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.GodGame
             prevVoxel = voxel.GetInternalVoxel();
         }
 
-        public void OnKeypress(PlayerState player, IVoxelHandle voxel, Key key)
+        public override void OnKeypress(PlayerState player, IVoxelHandle voxel, Key key)
         {
             
         }

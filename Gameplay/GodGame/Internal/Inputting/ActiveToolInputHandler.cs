@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.GodGame
         private readonly WorldPersisterService worldPersister;
         private readonly PlayerState player;
 
-        public IPlayerTool ActivePlayerTool
+        public PlayerTool ActivePlayerTool
         {
             get { return player.ActiveTool; }
             set { player.ActiveTool = value; }
@@ -69,6 +69,11 @@ namespace MHGameWork.TheWizards.GodGame
         public void OnKeyPressed(GameVoxel target, Key key)
         {
             ActivePlayerTool.OnKeypress(player, target, key);
+        }
+
+        public void OnTargetChanged(GameVoxel target)
+        {
+            ActivePlayerTool.OnTargetChanged(player, target, TW.Graphics.Keyboard, TW.Graphics.Mouse);
         }
     }
 }

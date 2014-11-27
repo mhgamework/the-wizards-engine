@@ -6,20 +6,20 @@ using System.Text;
 namespace MHGameWork.TheWizards.GodGame.ToolSelection
 {
     /// <summary>
-    /// Toolselection menu item that actives an IPlayerTool when selected
+    /// Toolselection menu item that actives an PlayerTool when selected
     /// </summary>
     public class ToolSelectionTool : IToolSelectionItem
     {
         public string DisplayName;
-        private IPlayerTool playerTool;
+        private PlayerTool playerTool;
         private readonly ActiveToolInputHandler handler;
 
         /// <summary>
         /// For autofac
         /// </summary>
-        public delegate ToolSelectionTool Factory(IPlayerTool playerTool, string displayName);
+        public delegate ToolSelectionTool Factory(PlayerTool playerTool, string displayName);
 
-        public ToolSelectionTool(IPlayerTool playerTool, string displayName, ActiveToolInputHandler handler)
+        public ToolSelectionTool(PlayerTool playerTool, string displayName, ActiveToolInputHandler handler)
         {
 
             DisplayName = displayName;

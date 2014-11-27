@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.GodGame
         {
         }
     }
-    public class ChangeHeightToolPerPlayer : IPlayerToolPerPlayer
+    public class ChangeHeightToolPerPlayer : PlayerToolPerPlayer
     {
         private Internal.Model.World world;
         private readonly PlayerState player;
@@ -41,17 +41,17 @@ namespace MHGameWork.TheWizards.GodGame
             Amplitude = 1;
         }
 
-        public void OnLeftClick(IVoxelHandle voxel)
+        public override void OnLeftClick(IVoxelHandle voxel)
         {
             ProcessClick(voxel, true);
         }
 
-        public void OnRightClick(IVoxelHandle voxel)
+        public override void OnRightClick(IVoxelHandle voxel)
         {
             ProcessClick(voxel, false);
         }
 
-        public void OnKeypress(IVoxelHandle voxel, Key key)
+        public override void OnKeypress(IVoxelHandle voxel, Key key)
         {
             if (key == Key.NumberPadPlus)
                 Size++;

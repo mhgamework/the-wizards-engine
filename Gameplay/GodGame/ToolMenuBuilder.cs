@@ -19,10 +19,10 @@ namespace MHGameWork.TheWizards.GodGame
         private Internal.Model.World world;
         private readonly Func<string, ToolSelectionCategory> createCategory;
         private readonly ToolSelectionTool.Factory createToolItem;
-        private readonly IIndex<Type, IPlayerTool> getPlayerTool;
+        private readonly IIndex<Type, PlayerTool> getPlayerTool;
 
         public ToolMenuBuilder(VoxelTypesFactory typesFactory, Internal.Model.World world, Func<string, ToolSelectionCategory> createCategory, ToolSelectionTool.Factory createToolItem,
-            IIndex<Type, IPlayerTool> getPlayerTool)
+            IIndex<Type, PlayerTool> getPlayerTool)
         {
             this.typesFactory = typesFactory;
             this.world = world;
@@ -48,19 +48,19 @@ namespace MHGameWork.TheWizards.GodGame
             return ret;
         }
 
-        private ToolSelectionTool toToolItem(IPlayerTool arg)
+        private ToolSelectionTool toToolItem(PlayerTool arg)
         {
             return createToolItem(arg, arg.Name);
         }
 
-        private ToolSelectionCategory createCat(string name, IEnumerable<IPlayerTool> tools)
+        private ToolSelectionCategory createCat(string name, IEnumerable<PlayerTool> tools)
         {
             return createCategory(name).Alter(k => k.SelectionItems.AddRange(tools.Select(toToolItem)));
 
         }
 
 
-        private IEnumerable<IPlayerTool> createTerrainInputs()
+        private IEnumerable<PlayerTool> createTerrainInputs()
         {
             yield return new CreateLandTool(world, typesFactory.Get<AirType>(), typesFactory.Get<LandType>());
             yield return new ChangeHeightTool(world);
@@ -72,7 +72,7 @@ namespace MHGameWork.TheWizards.GodGame
             yield return createTypeInput(typesFactory.Get<MonumentType>());
         }
 
-        private IEnumerable<IPlayerTool> createBuildingIndustryInputs()
+        private IEnumerable<PlayerTool> createBuildingIndustryInputs()
         {
             yield return createTypeInput(typesFactory.Get<WarehouseType>());
             yield return createTypeInput(typesFactory.Get<MinerType>());
@@ -84,27 +84,27 @@ namespace MHGameWork.TheWizards.GodGame
             yield return createTypeInput(typesFactory.Get<WoodworkerType>());
 
         }
-        private IEnumerable<IPlayerTool> createBuildingVillageInputs()
+        private IEnumerable<PlayerTool> createBuildingVillageInputs()
         {
             yield return createTypeInput(typesFactory.Get<VillageType>());
             yield return createTypeInput(typesFactory.Get<MarketType>());
             yield return getPlayerTool[typeof(TownBorderTool)];
         }
 
-        private IEnumerable<IPlayerTool> createBuildingSiteInputs()
+        private IEnumerable<PlayerTool> createBuildingSiteInputs()
         {
             yield return createTypeInput(typesFactory.GetBuildingSite<MarketType>(), "MarketBuildSite");
             yield return createTypeInput(typesFactory.GetBuildingSite<FisheryType>(), "FisheryBuildSite");
 
         }
 
-        private IEnumerable<IPlayerTool> createGodpowerInputs()
+        private IEnumerable<PlayerTool> createGodpowerInputs()
         {
             yield return new LightGodPowerTool(typesFactory.Get<InfestationVoxelType>());
         }
 
 
-        private IPlayerTool createTypeInput(GameVoxelType type, string name)
+        private PlayerTool createTypeInput(GameVoxelType type, string name)
         {
             return new DelegatePlayerTool(name,
                 v => v.ChangeType(typesFactory.Get<LandType>()),
@@ -118,11 +118,11 @@ namespace MHGameWork.TheWizards.GodGame
         {
             return toToolItem(createTypeInput(type));
         }
-        private IPlayerTool createTypeInput(GameVoxelType type)
+        private PlayerTool createTypeInput(GameVoxelType type)
         {
             return createTypeInput(type, type.Name);
         }
-        private IPlayerTool createOreInput()
+        private PlayerTool createOreInput()
         {
             return new DelegatePlayerTool(typesFactory.Get<OreType>().Name,
                 v => v.ChangeType(typesFactory.Get<LandType>()),

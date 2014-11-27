@@ -56,7 +56,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
             builder.RegisterInstance(world);
             builder.RegisterInstance(worldPersister);
 
-            builder.Register(ctx => new IPlayerTool[0]).As<IEnumerable<IPlayerTool>>();
+            builder.Register(ctx => new PlayerTool[0]).As<IEnumerable<PlayerTool>>();
         }
 
         [Test]

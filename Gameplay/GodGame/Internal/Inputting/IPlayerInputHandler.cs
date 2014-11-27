@@ -12,5 +12,6 @@ namespace MHGameWork.TheWizards.GodGame
         void OnNextTool();
         void OnPreviousTool();
         void OnKeyPressed(GameVoxel target, Key key);
+        void OnTargetChanged(GameVoxel target);
     }
 }

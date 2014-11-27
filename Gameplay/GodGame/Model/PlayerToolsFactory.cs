@@ -8,10 +8,10 @@ namespace MHGameWork.TheWizards.GodGame.Model
     /// </summary>
     public class PlayerToolsFactory
     {
-        private IEnumerable<IPlayerTool> tools;
-        public IEnumerable<IPlayerTool> Tools { get { return tools; } }
+        private IEnumerable<PlayerTool> tools;
+        public IEnumerable<PlayerTool> Tools { get { return tools; } }
 
-        public PlayerToolsFactory(IEnumerable<IPlayerTool> tools)
+        public PlayerToolsFactory(IEnumerable<PlayerTool> tools)
         {
             this.tools = tools;
         }
