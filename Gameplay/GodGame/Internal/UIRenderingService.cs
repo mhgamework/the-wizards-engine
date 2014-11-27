@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Networking;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Types;
+using MHGameWork.TheWizards.GodGame.Types.Towns;
 using MHGameWork.TheWizards.GodGame._Tests;
 using MHGameWork.TheWizards.Scattered.GameLogic.Services;
 using MHGameWork.TheWizards.Scattered.SceneGraphing;
@@ -80,14 +81,19 @@ namespace MHGameWork.TheWizards.GodGame
         private void drawDataValue()
         {
             var target = inputSim.GetTargetedVoxel();
-
+            if (target != null && target.Data.Type is IIndustryBuildingType)
+            {
+                showDataValueRect(target, ((IIndustryBuildingType)target.Data.Type).GetWorkerConsumer((IVoxelHandle)target).AllocatedWorkersCount); //note: not showing magicval atm!!
+                return;
+            }
             if (target == null || target.Data.DataValue == 0)
             {
                 hideDataValueRect();
                 return;
             }
 
-            showDataValueRect(target, target.Data.DataValue);
+
+            showDataValueRect(target, target.Data.DataValue); //note: not showing magicval atm!!
 
         }
         private void drawMagicValue()
@@ -100,7 +106,10 @@ namespace MHGameWork.TheWizards.GodGame
                 return;
             }
 
-            showDataValueRect(target, (int)target.Data.WorkerCount); //note: not showing magicval atm!!
+            if (target.Data.Type is IIndustryBuildingType)
+                showDataValueRect(target, ((IIndustryBuildingType)target.Data.Type).GetWorkerConsumer((IVoxelHandle)target).AllocatedWorkersCount); //note: not showing magicval atm!!
+            else
+                showDataValueRect(target, (int)target.Data.WorkerCount); //note: not showing magicval atm!!
 
         }
 

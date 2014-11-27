@@ -6,22 +6,12 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
 {
     public class WorkersService
     {
-        private readonly IEnumerable<ITown> allTowns;
 
-        public WorkersService(IEnumerable<ITown> allTowns)
+        public WorkersService()
         {
-            this.allTowns = allTowns;
         }
 
-        public void UpdateWorkerDistribution()
-        {
-            foreach (var town in allTowns.ToArray())
-            {
-                UpdateWorkerDistribution(town);
-            }
-        }
-
-        private void UpdateWorkerDistribution(ITown town)
+        public void UpdateWorkerDistribution(ITown town)
         {
             var producers = town.Producers.ToArray();
             var consumer = town.Consumers.ToArray();

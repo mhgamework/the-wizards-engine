@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
             town1 = new SimpleTown();
             town2 = new SimpleTown();
 
-            service = new WorkersService(new ITown[] { town1, town2 });
+            service = new WorkersService();
 
         }
 
@@ -44,7 +44,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
             var cons1 = createConsumer(town1);
             cons1.RequestedWorkersCount = 5;
 
-            service.UpdateWorkerDistribution();
+            service.UpdateWorkerDistribution(town1);
 
             Assert.AreEqual(0, cons1.AllocatedWorkersCount);
         }
@@ -52,7 +52,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
         public void TestNoConsumers()
         {
             createProducer(town1).ProvidedWorkersAmount = 10;
-            service.UpdateWorkerDistribution();
+            service.UpdateWorkerDistribution(town1);
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
             var prod1 = createProducer(town1);
             prod1.ProvidedWorkersAmount = 0;
 
-            service.UpdateWorkerDistribution();
+            service.UpdateWorkerDistribution(town1);
 
             Assert.AreEqual(0, cons1.AllocatedWorkersCount);
         }
@@ -77,7 +77,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
             var prod1 = createProducer(town1);
             prod1.ProvidedWorkersAmount = 10;
 
-            service.UpdateWorkerDistribution();
+            service.UpdateWorkerDistribution(town1);
 
             Assert.AreEqual(0, cons1.AllocatedWorkersCount);
         }
@@ -90,7 +90,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
             var prod1 = createProducer(town1);
             prod1.ProvidedWorkersAmount = 0;
 
-            service.UpdateWorkerDistribution();
+            service.UpdateWorkerDistribution(town1);
 
             Assert.AreEqual(0, cons1.AllocatedWorkersCount);
         }
@@ -104,7 +104,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
             var prod1 = createProducer(town1);
             prod1.ProvidedWorkersAmount = 10;
 
-            service.UpdateWorkerDistribution();
+            service.UpdateWorkerDistribution(town1);
 
             Assert.AreEqual(5, cons1.AllocatedWorkersCount);
         }
@@ -117,7 +117,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
             var prod1 = createProducer(town1);
             prod1.ProvidedWorkersAmount = 10;
 
-            service.UpdateWorkerDistribution();
+            service.UpdateWorkerDistribution(town1);
 
             Assert.AreEqual(2, cons1.AllocatedWorkersCount);
         }
@@ -136,7 +136,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
             var prod3 = createProducer(town1);
             prod3.ProvidedWorkersAmount = 8;
 
-            service.UpdateWorkerDistribution();
+            service.UpdateWorkerDistribution(town1);
 
             Assert.AreEqual(28, cons1.AllocatedWorkersCount);
 
@@ -153,7 +153,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
             var prod1 = createProducer(town1);
             prod1.ProvidedWorkersAmount = 20;
 
-            service.UpdateWorkerDistribution();
+            service.UpdateWorkerDistribution(town1);
 
             Assert.AreEqual(3, cons1.AllocatedWorkersCount);
             Assert.AreEqual(7, cons2.AllocatedWorkersCount);
@@ -172,7 +172,8 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
 
             createProducer(town2).ProvidedWorkersAmount = 20;
 
-            service.UpdateWorkerDistribution();
+            service.UpdateWorkerDistribution(town1);
+            service.UpdateWorkerDistribution(town2);
 
             Assert.AreEqual(2, cons1.AllocatedWorkersCount);
             Assert.AreEqual(5, cons2.AllocatedWorkersCount);

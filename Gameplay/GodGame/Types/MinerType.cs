@@ -3,6 +3,8 @@ using System.Drawing;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
+using MHGameWork.TheWizards.GodGame.Types.Towns;
+using MHGameWork.TheWizards.GodGame.Types.Towns.Workers;
 using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -11,7 +13,7 @@ using System.Linq;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
-    public class MinerType : GameVoxelType
+    public class MinerType : GameVoxelType, IIndustryBuildingType
     {
         private int mineRadius = 3;
 
@@ -27,6 +29,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
             handle.EachRandomInterval(1, () => tryMine(handle));
             handle.EachRandomInterval(1, () => tryOutput(handle));
+            ReceiveCreationEvents = true;
         }
 
         private void tryOutput(IVoxelHandle handle)
@@ -75,6 +78,21 @@ namespace MHGameWork.TheWizards.GodGame.Types
             yield return new InventoryVisualizer(handle);
         }
 
+        private Dictionary<IVoxelHandle, IWorkerConsumer> workerConsumers =
+            new Dictionary<IVoxelHandle, IWorkerConsumer>();
+        public override void OnCreated(IVoxelHandle handle)
+        {
+            workerConsumers[handle] = new SimpleWorkerConsumer() { RequestedWorkersCount = 5 };
+        }
 
+        public override void OnDestroyed(IVoxelHandle handle)
+        {
+            workerConsumers.Remove(handle);
+        }
+
+        public IWorkerConsumer GetWorkerConsumer(IVoxelHandle handle)
+        {
+            return workerConsumers[handle];
+        }
     }
 }

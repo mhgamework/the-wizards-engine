@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.Types.Towns;
+using MHGameWork.TheWizards.GodGame.Types.Towns.Workers;
 using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
@@ -27,7 +28,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
     ///     dataval - 1 == nb workers providing
     /// TODO: rename to House
     /// </summary>
-    public class VillageType : GameVoxelType
+    public class HouseType : GameVoxelType
     {
         private readonly ItemTypesFactory itemTypesFactory;
         private readonly TownCenterService townCenterService;
@@ -46,8 +47,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private List<VillageResource> neededResources;
 
 
-        public VillageType(ItemTypesFactory itemTypesFactory, TownCenterService townCenterService)
-            : base("Village")
+        public HouseType(ItemTypesFactory itemTypesFactory, TownCenterService townCenterService)
+            : base("House")
         {
             this.itemTypesFactory = itemTypesFactory;
             this.townCenterService = townCenterService;
@@ -67,13 +68,20 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         }
 
+        private Dictionary<IVoxel, SimpleWorkerProducer> producers = new Dictionary<IVoxel, SimpleWorkerProducer>();
+
         public override void OnCreated(IVoxelHandle handle)
         {
-            townCenterService.CreateTown(handle.GetInternalVoxel());
+            producers[handle.GetInternalVoxel()] = new SimpleWorkerProducer() { ProvidedWorkersAmount = 10 };
         }
         public override void OnDestroyed(IVoxelHandle handle)
         {
-            townCenterService.DestroyTown(townCenterService.GetTownForVoxel(handle.GetInternalVoxel()));
+            producers.Remove(handle.GetInternalVoxel());
+        }
+
+        public IWorkerProducer GetWorkerProducer(IVoxelHandle handle)
+        {
+            return producers[handle.GetInternalVoxel()];
         }
 
         public override void Tick(IVoxelHandle handle)
@@ -232,5 +240,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             yield return new RangeVisualizer(handle, workerSupplyRange);
         }
+
+
     }
 }

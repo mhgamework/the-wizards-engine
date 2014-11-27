@@ -113,7 +113,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             if (getAvailableResources(handle).Count == 0) return;
 
-            var housesInRange = handle.GetRange(distributionRange).Where(e => e.Type is VillageType);
+            var housesInRange = handle.GetRange(distributionRange).Where(e => e.Type is HouseType);
             foreach (var house in housesInRange)
             {
                 var roadPiece = Road.IsConnected(handle, house);

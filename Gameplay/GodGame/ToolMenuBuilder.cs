@@ -86,7 +86,8 @@ namespace MHGameWork.TheWizards.GodGame
         }
         private IEnumerable<PlayerTool> createBuildingVillageInputs()
         {
-            yield return createTypeInput(typesFactory.Get<VillageType>());
+            yield return createTypeInput(typesFactory.Get<TownCenterType>());
+            yield return createTypeInput(typesFactory.Get<HouseType>());
             yield return createTypeInput(typesFactory.Get<MarketType>());
             yield return getPlayerTool[typeof(TownBorderTool)];
         }

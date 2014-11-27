@@ -34,9 +34,6 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
         public HashSet<IVoxel> TownVoxels = new HashSet<IVoxel>();
 
 
-        // Derived
-        public HashSet<House> Houses { get { return service.GetHouses(this); } }
-
         /// <summary>
         /// Returns true when given voxel borders to the town (so not in the town
         /// </summary>
@@ -47,8 +44,8 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
             return true;
         }
 
-        public IEnumerable<IWorkerProducer> Producers { get { throw new NotImplementedException(); } }
-        public IEnumerable<IWorkerConsumer> Consumers { get { throw new NotImplementedException(); } }
+        public IEnumerable<IWorkerProducer> Producers { get { return service.GetProducers(this); } }
+        public IEnumerable<IWorkerConsumer> Consumers { get { return service.GetConsumers(this); } }
 
         public bool CanRemove(IVoxel getInternalVoxel)
         {

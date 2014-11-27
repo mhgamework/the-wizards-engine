@@ -44,7 +44,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         protected FarmType Farm { get { return typesFactory.Get<FarmType>(); } }
         protected FisheryType Fishery { get { return typesFactory.Get<FisheryType>(); } }
         protected MarketType Market { get { return typesFactory.Get<MarketType>(); } } //order of construction important
-        protected VillageType Village { get { return typesFactory.Get<VillageType>(); } } //order of construction important
+        protected HouseType House { get { return typesFactory.Get<HouseType>(); } } //order of construction important
         protected WoodworkerType Woodworker { get { return typesFactory.Get<WoodworkerType>(); } }
         protected QuarryType Quarry { get { return typesFactory.Get<QuarryType>(); } }
         protected GrinderType Grinder { get { return typesFactory.Get<GrinderType>(); } }
@@ -72,7 +72,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             allTypes.Add(Land);
             allTypes.Add(Infestation);
             allTypes.Add(Forest);
-            allTypes.Add(Village);
+            allTypes.Add(House);
             allTypes.Add(Warehouse);
             allTypes.Add(Monument);
             allTypes.Add(Water);
