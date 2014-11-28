@@ -313,8 +313,6 @@
     <Compile Include="GodGame\VoxelInfoVisualizers\WorkerCountVisualizer.cs" />
     <Compile Include="Data\IntefaceToData\IObjectStorage.cs" />
     <Compile Include="Data\IntefaceToData\ObjectStorage.cs" />
-    <Compile Include="GodGame\_Engine\SerializerHelper.cs" />
-    <Compile Include="GodGame\_Engine\AutofacDependencyLogger.cs" />
     <Compile Include="GodGame\Internal\Data\IDataIdentifier.cs" />
     <Compile Include="GodGame\Internal\Data\IDatastore.cs" />
     <Compile Include="GodGame\Internal\Data\IObservableDatastore.cs" />
