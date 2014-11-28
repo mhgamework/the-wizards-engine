@@ -24,10 +24,14 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
     public class Town : Workers.ITown
     {
         private readonly TownCenterService service;
+        private readonly GenericDatastoreRecord datastoreRecord;
 
-        public Town(TownCenterService service)
+        public Town(TownCenterService service, GenericDatastoreRecord datastoreRecord)
         {
             this.service = service;
+            this.datastoreRecord = datastoreRecord;
+            TownVoxels = datastoreRecord.GetSet<IVoxel>("TownVoxels");
+            datastoreRecord.Bind(this);
         }
 
         // Data

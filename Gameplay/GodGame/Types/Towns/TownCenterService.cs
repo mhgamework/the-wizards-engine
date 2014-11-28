@@ -8,17 +8,21 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
 {
     public class TownCenterService
     {
-        private List<Town> townCenters = new List<Town>();
+        private IList<Town> townCenters;
         private Lazy<HouseType> houseType;
+        private readonly GenericDatastoreRecord datastoreRecord;
 
-        public TownCenterService(Lazy<HouseType> houseType)
+        public TownCenterService(Lazy<HouseType> houseType, GenericDatastoreRecord datastoreRecord)
         {
             this.houseType = houseType;
+            this.datastoreRecord = datastoreRecord;
+            townCenters = datastoreRecord.GetList<Town>("TownCenterService-Towns", r => new Town(this, r));
+
         }
 
         public Town CreateTown(IVoxel center)
         {
-            var ret = new Town(this);
+            var ret = new Town(this, datastoreRecord.CreateRecord());
             townCenters.Add(ret);
             ret.TownVoxels.Add(center);
             return ret;

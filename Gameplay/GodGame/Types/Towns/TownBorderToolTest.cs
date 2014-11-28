@@ -31,7 +31,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
             town2BorderToTown1 = world.GetVoxel(0, 1);
             town2center = world.GetVoxel(0, 2);
 
-            var service = new TownCenterService(null);
+            var service = new TownCenterService(null,new GenericDatastoreRecord(null,1));
             town1 = service.CreateTown(town1center);
             town2 = service.CreateTown(town2center);
 

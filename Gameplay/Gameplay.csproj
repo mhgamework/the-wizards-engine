@@ -228,6 +228,9 @@
     <Compile Include="GodGame\Internal\Rendering\IMeshProvider.cs" />
     <Compile Include="GodGame\Internal\Rendering\InGameMeshProvider.cs" />
     <Compile Include="GodGame\Types\TownCenterType.cs" />
+    <Compile Include="GodGame\Types\Towns\Data\GenericDatastore.cs" />
+    <Compile Include="GodGame\Types\Towns\Data\GenericDatastoreRecord.cs" />
+    <Compile Include="GodGame\Types\Towns\Data\GenericDatastoreTest.cs" />
     <Compile Include="GodGame\Types\Towns\IIndustryBuildingType.cs" />
     <Compile Include="GodGame\Types\Towns\TownBordersMeshProvider.cs" />
     <Compile Include="GodGame\Internal\Rendering\VisualizeChangesMeshProvider.cs" />
