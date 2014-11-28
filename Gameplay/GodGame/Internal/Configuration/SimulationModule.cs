@@ -36,7 +36,17 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
                                 t.Namespace != null && t.Namespace.StartsWith("MHGameWork.TheWizards.GodGame.Types")).ToArray())
                    .AsSelf()
                    .SingleInstance();
-
+            // Auto-load all modules in the types namespace
+            var gameplayModules = ThisAssembly.GetTypes()
+                           .Where(
+                               t =>
+                               t.Namespace != null && t.Namespace.StartsWith("MHGameWork.TheWizards.GodGame.Types"))
+                               .Where(t => t.IsAssignableTo<Module>()).ToArray();
+            foreach (var gameplayModule in gameplayModules)
+            {
+                var inst = (Module)Activator.CreateInstance(gameplayModule);
+                builder.RegisterModule(inst);
+            }
 
             loadVoxelTypes(builder);
         }

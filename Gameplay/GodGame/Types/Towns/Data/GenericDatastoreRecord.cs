@@ -7,6 +7,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using MHGameWork.TheWizards.GodGame.Types.Towns.Data;
+using MHGameWork.TheWizards.GodGame._Engine;
 using QuickGraph.Serialization;
 
 namespace MHGameWork.TheWizards.GodGame.Types.Towns
@@ -26,6 +27,9 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
         public object BoundObject { get; private set; }
 
         private Dictionary<string, object> entries = new Dictionary<string, object>();
+
+        private Dictionary<string, Func<GenericDatastoreRecord, object>> objectActivators =
+            new Dictionary<string, Func<GenericDatastoreRecord, object>>();
         private XElement loadedData;
 
         public GenericDatastoreRecord(GenericDatastore datastore, int id)
@@ -38,29 +42,36 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
         {
             if (entries.ContainsKey(name)) return (IList<T>)entries[name];
             var ret = new List<T>();
-            ret.AddRange(getElementsFromXml<T>(name, objectActivator));
+            ret.AddRange(getElementsFromXml(name, r => objectActivator(r)).Cast<T>());
 
             entries[name] = ret;
+            objectActivators[name] = r => objectActivator(r);
             return ret;
         }
 
-        private IEnumerable<T> getElementsFromXml<T>(string name, Func<GenericDatastoreRecord, T> objectActivator)
+        private IEnumerable getElementsFromXml(string name, Func<GenericDatastoreRecord, object> objectActivator)
         {
-            if (loadedData == null) return Enumerable.Empty<T>();
+            if (loadedData == null) return Enumerable.Empty<object>();
             var xData = loadedData.XPathSelectElement(name);
-            if (xData == null) return Enumerable.Empty<T>();
+            if (xData == null) return Enumerable.Empty<object>();
 
             return
                 xData.Elements()
                     .Select(e => datastore.DeserializeReference(e))
-                    .Select(e => e is GenericDatastoreRecord ? objectActivator((GenericDatastoreRecord)e) : e).Cast<T>();
+                    .Select(e =>
+                    {
+                        if (!(e is GenericDatastoreRecord)) return e;
+                        var rec = (GenericDatastoreRecord)e;
+                        if (rec.BoundObject != null) return rec.BoundObject;
+                        return objectActivator(rec);
+                    });
 
 
         }
 
         public HashSet<T> GetSet<T>(string name)
         {
-            var ret = new HashSet<T>(getElementsFromXml<T>(name, r => { throw new NotImplementedException(); }));
+            var ret = new HashSet<T>(getElementsFromXml(name, r => { throw new NotImplementedException(); }).Cast<T>());
             entries[name] = ret;
             return ret;
         }
@@ -105,6 +116,40 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
         public void DeserializeContent(XElement el)
         {
             this.loadedData = el;
+
+            // update data inside the entry list
+            foreach (var entry in entries)
+            {
+                if (entry.Value is IList)
+                {
+                    var val = (IList)entry.Value;
+                    val.Clear();
+
+                    Func<GenericDatastoreRecord, object> activator = r => { throw new NotImplementedException(); };
+                    objectActivators.TryGetValue(entry.Key, out activator);
+                    foreach (var listEl in getElementsFromXml(entry.Key, activator))
+                    {
+                        val.Add(listEl);
+                    }
+
+                }
+                else if (entry.Value.GetType().GetGenericTypeDefinition() == typeof(HashSet<>))
+                {
+                    var val = entry.Value;
+                    val.CallInternalMethodVoid("Clear");
+
+                    Func<GenericDatastoreRecord, object> activator = r => { throw new NotImplementedException(); };
+                    objectActivators.TryGetValue(entry.Key, out activator);
+                    foreach (var listEl in getElementsFromXml(entry.Key, activator))
+                    {
+                        val.CallInternalMethodVoid("Add", new object[] { listEl });
+                    }
+
+                }
+                else
+                    throw new InvalidOperationException("Unsupported entry type: " + entry.Value);
+
+            }
         }
     }
 }

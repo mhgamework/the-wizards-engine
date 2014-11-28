@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MHGameWork.TheWizards.Engine.Persistence;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Types.Towns.Data;
 using MHGameWork.TheWizards.GodGame.Types.Towns.Workers;
 
 namespace MHGameWork.TheWizards.GodGame.Types.Towns
@@ -12,10 +14,10 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
         private Lazy<HouseType> houseType;
         private readonly GenericDatastoreRecord datastoreRecord;
 
-        public TownCenterService(Lazy<HouseType> houseType, GenericDatastoreRecord datastoreRecord)
+        public TownCenterService(Lazy<HouseType> houseType, GenericDatastoreRecord store)
         {
             this.houseType = houseType;
-            this.datastoreRecord = datastoreRecord;
+            this.datastoreRecord = store;
             townCenters = datastoreRecord.GetList<Town>("TownCenterService-Towns", r => new Town(this, r));
 
         }

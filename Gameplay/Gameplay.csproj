@@ -303,6 +303,7 @@
     <Compile Include="GodGame\Types\Towns\TownBorderVisualizer.cs" />
     <Compile Include="GodGame\Types\Towns\TownCenterService.cs" />
     <Compile Include="GodGame\Types\Towns\TownBorderToolTest.cs" />
+    <Compile Include="GodGame\Types\Towns\TownsModule.cs" />
     <Compile Include="GodGame\Types\Transportation\RoadFilterType.cs" />
     <Compile Include="GodGame\Types\Transportation\RoadType.cs" />
     <Compile Include="GodGame\Types\MinerType.cs" />
