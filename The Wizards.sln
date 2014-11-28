@@ -429,6 +429,7 @@ Global
 		{D4997503-5D85-4890-8B7A-B608C0A1CF27}.DebugAll|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{D4997503-5D85-4890-8B7A-B608C0A1CF27}.DebugAll|Mixed Platforms.Build.0 = Debug|Any CPU
 		{D4997503-5D85-4890-8B7A-B608C0A1CF27}.DebugAll|x86.ActiveCfg = Debug|Any CPU
+		{D4997503-5D85-4890-8B7A-B608C0A1CF27}.DebugAll|x86.Build.0 = Debug|Any CPU
 		{D4997503-5D85-4890-8B7A-B608C0A1CF27}.DebugGameplay|Any CPU.ActiveCfg = Debug|Any CPU
 		{D4997503-5D85-4890-8B7A-B608C0A1CF27}.DebugGameplay|Any CPU.Build.0 = Debug|Any CPU
 		{D4997503-5D85-4890-8B7A-B608C0A1CF27}.DebugGameplay|Mixed Platforms.ActiveCfg = Debug|Any CPU
