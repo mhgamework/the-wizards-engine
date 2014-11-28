@@ -40,7 +40,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
 
                     if (currentTrackedType != Data.Type)
                     {
-                        TypeChanged = true; 
+                        TypeChanged = true;
                         PreviousType = currentTrackedType;
                         currentTrackedType = Data.Type;
                     }
@@ -209,5 +209,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return string.Format("Voxel ({0},{1}) - {2}", Coord.X, Coord.Y,
+                Data.Type == null ? "Nulltype" : Data.Type.Name);
+        }
     }
 }
