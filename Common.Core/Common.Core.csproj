@@ -127,7 +127,6 @@
     <Compile Include="Collada\TODO\ColladaMeshOud.cs" />
     <Compile Include="Collada\TODO\ColladaModelOud.cs" />
     <Compile Include="Collada\TODO\ColladaTextureOud.cs" />
-    <Compile Include="Core\Collections\DictionaryTwoWay.cs" />
     <Compile Include="CommonOld\DataStream.cs" />
     <Compile Include="CommonOld\Engine\IGameFile.cs" />
     <Compile Include="CommonOld\Engine\IGameFileManager.cs" />
@@ -241,10 +240,7 @@
     <Compile Include="Networking\TCPConnectionListener.cs" />
     <Compile Include="Networking\TCPPacketBuilder.cs" />
     <Compile Include="Networking\UDPConnection.cs" />
-    <Compile Include="Core\Reflection\FieldAttribute.cs" />
     <Compile Include="Core\Forms\GridElement.cs" />
-    <Compile Include="Core\Reflection\PropertyAttribute.cs" />
-    <Compile Include="Core\Reflection\IAttribute.cs" />
     <Compile Include="Core\Forms\IFormElement.cs" />
     <Compile Include="Core\Forms\ReadonlyElement.cs" />
     <Compile Include="Core\Forms\TextBoxElement.cs" />
@@ -406,15 +402,11 @@
     <Compile Include="Core\QuadTree.cs" />
     <Compile Include="Core\QuadTreeNodeData.cs" />
     <Compile Include="Core\QuadTreeVisualizerXNA.cs" />
-    <Compile Include="Core\Reflection\ReflectionHelper.cs" />
     <Compile Include="Core\Seeder.cs" />
     <Compile Include="Core\SlimDXConversion\SlimDXConversion.cs" />
     <Compile Include="Core\SlimDXConversion\BoundingFrustum.cs" />
     <Compile Include="Core\SlimDXConversion\MathHelper.cs" />
     <Compile Include="Core\TWDir.cs" />
-    <Compile Include="Core\Collections\AdvancedQueue.cs" />
-    <Compile Include="Core\Collections\EventList.cs" />
-    <Compile Include="Core\Collections\PrefilledList.cs" />
     <Compile Include="RequiresPostSharp.cs" />
     <Compile Include="Water\Camera.cs" />
     <Compile Include="Water\Mesh.cs" />
@@ -514,6 +506,10 @@
     <ProjectReference Include="..\TestRunner\TestRunner.csproj">
       <Project>{ac6c51ce-96fb-401b-9b51-1302f273a52a}</Project>
       <Name>TestRunner</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{d4997503-5d85-4890-8b7a-b608c0a1cf27}</Project>
+      <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

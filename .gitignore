@@ -114,3 +114,5 @@ Debug
 /_Scripts/TestResult.xml
 
 /The Wizards Gameplay/packages/PostSharp.3.0.26
+/bin/Utilities.dll
+/bin/Utilities.pdb
