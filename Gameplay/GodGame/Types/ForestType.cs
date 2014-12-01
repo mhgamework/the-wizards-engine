@@ -19,7 +19,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             : base("Forest")
         {
             Color = Color.Green;
-
+            //ColoredBaseMesh = true;
             woodItem = factory.WoodType;
 
             /*for (int i = 0; i < HarvestDataValue; i++)

@@ -18,15 +18,30 @@ namespace MHGameWork.TheWizards.GodGame.Model
         {
             this.rawTypes = rawTypes;
             this.itemTypes = itemTypes;
-            CreateBuildingSite<FisheryType>(new[] { new BuildingSiteType.ItemAmount { Type = itemTypes.WoodType, Amount = 10 } });
-            CreateBuildingSite<MarketType>(new[] { new BuildingSiteType.ItemAmount { Type = itemTypes.FishType, Amount = 20 } });
+            createBuildingSite<HouseType>(new[] { new BuildingSiteType.ItemAmount { Type = itemTypes.WoodType, Amount = 5 } });
+            createBuildingSite<WoodworkerType>(new[] { new BuildingSiteType.ItemAmount { Type = itemTypes.WoodType, Amount = 20 } });
+
+            createBuildingSite<MinerType>(new[] { new BuildingSiteType.ItemAmount { Type = itemTypes.WoodType, Amount = 20 } });
+
+            //TODO: worshipsite
+
+
+            createBuildingSite<TownCenterType>(new[] { new BuildingSiteType.ItemAmount { Type = itemTypes.WoodType, Amount = 20 } });
+
+            createBuildingSite<FisheryType>(new[] { new BuildingSiteType.ItemAmount { Type = itemTypes.WoodType, Amount = 10 } });
+            createBuildingSite<MarketType>(new[] { new BuildingSiteType.ItemAmount { Type = itemTypes.FishType, Amount = 20 } });
         }
 
-        private BuildingSiteType CreateBuildingSite<T>(IEnumerable<BuildingSiteType.ItemAmount> amounts) where T : GameVoxelType
+        private BuildingSiteType createBuildingSite<T>(IEnumerable<BuildingSiteType.ItemAmount> amounts)
+            where T : GameVoxelType
         {
-            if (buildingSites.ContainsKey(Get<T>())) throw new InvalidOperationException("Already added a building site for type " + typeof(T).Name);
-            var ret = new BuildingSiteType(Get<T>(), amounts.ToList(), Get<T>().Name, itemTypes);
-            buildingSites[Get<T>()] = ret;
+            return createBuildingSite(amounts, Get<T>());
+        }
+        private BuildingSiteType createBuildingSite(IEnumerable<BuildingSiteType.ItemAmount> amounts, GameVoxelType typeToBuild)
+        {
+            if (buildingSites.ContainsKey(typeToBuild)) throw new InvalidOperationException("Already added a building site for type " + typeToBuild.Name);
+            var ret = new BuildingSiteType(typeToBuild, amounts.ToList(), typeToBuild.Name, itemTypes);
+            buildingSites[typeToBuild] = ret;
             ret.InjectVoxelTypesFactory(this);
             return ret;
         }
@@ -39,7 +54,11 @@ namespace MHGameWork.TheWizards.GodGame.Model
         }
         public BuildingSiteType GetBuildingSite<T>() where T : GameVoxelType
         {
-            return buildingSites[Get<T>()];
+            return GetBuildingSite(Get<T>());
+        }
+        public BuildingSiteType GetBuildingSite(GameVoxelType typeToBuild)
+        {
+            return buildingSites[typeToBuild];
         }
 
         public IEnumerable<IGameVoxelType> AllTypes { get { return rawTypes.Union(buildingSites.Values); } }

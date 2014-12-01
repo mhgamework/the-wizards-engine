@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Autofac;
 using Autofac.Features.Indexed;
+using MHGameWork.TheWizards.DirectX11.Input;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.ToolSelection;
 using MHGameWork.TheWizards.GodGame.Types;
@@ -21,7 +23,10 @@ namespace MHGameWork.TheWizards.GodGame
         private readonly ToolSelectionTool.Factory createToolItem;
         private readonly IIndex<Type, PlayerTool> getPlayerTool;
 
-        public ToolMenuBuilder(VoxelTypesFactory typesFactory, Internal.Model.World world, Func<string, ToolSelectionCategory> createCategory, ToolSelectionTool.Factory createToolItem,
+        public ToolMenuBuilder(VoxelTypesFactory typesFactory,
+            Internal.Model.World world,
+            Func<string, ToolSelectionCategory> createCategory,
+            ToolSelectionTool.Factory createToolItem,
             IIndex<Type, PlayerTool> getPlayerTool)
         {
             this.typesFactory = typesFactory;
@@ -31,80 +36,121 @@ namespace MHGameWork.TheWizards.GodGame
             this.getPlayerTool = getPlayerTool;
         }
 
+        public bool CheatmodeEnabled { get; set; }
+
         public List<IToolSelectionItem> BuildMenu()
         {
+
             var ret = new List<IToolSelectionItem>();
 
-            ret.Add(createCategory("Terrain").Alter(c => c.SelectionItems.AddRange(createTerrainInputs().Select(toToolItem))));
+            ret.Add(getVoxelType<RoadType>());
+            ret.Add(createCat("Towns",
+                getBuildingSite<HouseType>(),
+                getBuildingSite<MarketType>(),
+                getBuildingSite<TownCenterType>(),
+                getTool<TownBorderTool>()
+                //getBuildingSite<WorshipSiteType>(),
+
+                ));
+            ret.Add(createCat("Industry",
+              getBuildingSite<WoodworkerType>(),
+              getBuildingSite<MinerType>()
+                //getBuildingSite<WorshipSiteType>(),
+
+              ));
+
+            ret.Add(createCategory("Terrain").Alter(c => c.SelectionItems.AddRange(new[]
+                {
+                    createTypeInput(typesFactory.Get<AirType>()),
+                    new ChangeHeightTool(world),
+                    createTypeInput(typesFactory.Get<ForestType>()),
+                    createTypeInput(typesFactory.Get<InfestationVoxelType>()),
+                    createTypeInput(typesFactory.Get<WaterType>()),
+                    createTypeInput(typesFactory.Get<HoleType>()),
+                    createOreInput(),
+                    createTypeInput(typesFactory.Get<MonumentType>())
+                }.Select(toToolItem))));
             ret.Add(createCategory("Buildings").Alter(c =>
                 {
-                    c.SelectionItems.Add(createTool(typesFactory.Get<RoadType>()));
-                    c.SelectionItems.Add(createCat("Industry", createBuildingIndustryInputs()));
-                    c.SelectionItems.Add(createCat("Village", createBuildingVillageInputs()));
+                    c.SelectionItems.Add(createCat("Industry", new[]
+                        {
+                            createTypeInput(typesFactory.Get<WarehouseType>()),
+                            createTypeInput(typesFactory.Get<MinerType>()),
+                            createTypeInput(typesFactory.Get<QuarryType>()),
+                            createTypeInput(typesFactory.Get<GrinderType>()),
+                            createTypeInput(typesFactory.Get<CropType>()),
+                            createTypeInput(typesFactory.Get<FarmType>()),
+                            createTypeInput(typesFactory.Get<FisheryType>()),
+                            createTypeInput(typesFactory.Get<WoodworkerType>())
+                        }));
+                    c.SelectionItems.Add(createCat("Village", new[]
+                        {
+                            createTypeInput(typesFactory.Get<TownCenterType>()),
+                            createTypeInput(typesFactory.Get<HouseType>()),
+                            createTypeInput(typesFactory.Get<MarketType>()),
+                            getPlayerTool[typeof (TownBorderTool)]
+                        }));
                 }));
-            ret.Add(createCategory("BuildingSites").Alter(c => c.SelectionItems.AddRange(createBuildingSiteInputs().Select(toToolItem))));
-            ret.Add(createCategory("Godpowers").Alter(c => c.SelectionItems.AddRange(createGodpowerInputs().Select(toToolItem))));
+            ret.Add(createCategory("BuildingSites").Alter(c => c.SelectionItems.AddRange(new[]
+                {
+                    createTypeInput(typesFactory.GetBuildingSite<MarketType>(), "MarketBuildSite"),
+                    createTypeInput(typesFactory.GetBuildingSite<FisheryType>(), "FisheryBuildSite")
+                }.Select(toToolItem))));
+            ret.Add(createCategory("Godpowers").Alter(c => c.SelectionItems.AddRange(new PlayerTool[] { new LightGodPowerTool(typesFactory.Get<InfestationVoxelType>()) }.Select(toToolItem))));
 
             return ret;
         }
+
+        private ToolSelectionTool getTool<T>() where T : PlayerTool
+        {
+            return toToolItem(getPlayerTool[typeof (T)]);
+        }
+        private ToolSelectionTool getVoxelType<T>() where T : GameVoxelType
+        {
+            return toToolItem(createTypeInput(typesFactory.Get<T>()));
+        }
+        private ToolSelectionTool getBuildingSite<T>() where T : GameVoxelType
+        {
+            var type = typesFactory.Get<T>();
+            return toToolItem(createBuildingSiteInput(type, "Build " + type.Name));
+        }
+
 
         private ToolSelectionTool toToolItem(PlayerTool arg)
         {
             return createToolItem(arg, arg.Name);
         }
 
+        private ToolSelectionCategory createCat(string name, params IToolSelectionItem[] items)
+        {
+            return createCategory(name).Alter(k => k.SelectionItems.AddRange(items));
+
+        }
+        private ToolSelectionCategory createCat(string name, params PlayerTool[] tools)
+        {
+            return createCat(name, (IEnumerable<PlayerTool>)tools);
+        }
         private ToolSelectionCategory createCat(string name, IEnumerable<PlayerTool> tools)
         {
             return createCategory(name).Alter(k => k.SelectionItems.AddRange(tools.Select(toToolItem)));
 
         }
 
-
-        private IEnumerable<PlayerTool> createTerrainInputs()
+        private PlayerTool createBuildingSiteInput(GameVoxelType type, string name)
         {
-            yield return new CreateLandTool(world, typesFactory.Get<AirType>(), typesFactory.Get<LandType>());
-            yield return new ChangeHeightTool(world);
-            yield return createTypeInput(typesFactory.Get<ForestType>());
-            yield return createTypeInput(typesFactory.Get<InfestationVoxelType>());
-            yield return createTypeInput(typesFactory.Get<WaterType>());
-            yield return createTypeInput(typesFactory.Get<HoleType>());
-            yield return createOreInput();
-            yield return createTypeInput(typesFactory.Get<MonumentType>());
+            var buildingSiteType = typesFactory.GetBuildingSite(type);
+            var ret = new DelegatePlayerTool(name,
+                                          v => v.ChangeType(typesFactory.Get<LandType>()),
+                                          v =>
+                                          {
+                                              if (v.Type != typesFactory.Get<LandType>()) return;
+                                              if (CheatmodeEnabled)
+                                                  v.ChangeType(type);
+                                              else
+                                                  v.ChangeType(buildingSiteType);
+                                          });
+            return ret;
         }
-
-        private IEnumerable<PlayerTool> createBuildingIndustryInputs()
-        {
-            yield return createTypeInput(typesFactory.Get<WarehouseType>());
-            yield return createTypeInput(typesFactory.Get<MinerType>());
-            yield return createTypeInput(typesFactory.Get<QuarryType>());
-            yield return createTypeInput(typesFactory.Get<GrinderType>());
-            yield return createTypeInput(typesFactory.Get<CropType>());
-            yield return createTypeInput(typesFactory.Get<FarmType>());
-            yield return createTypeInput(typesFactory.Get<FisheryType>());
-            yield return createTypeInput(typesFactory.Get<WoodworkerType>());
-
-        }
-        private IEnumerable<PlayerTool> createBuildingVillageInputs()
-        {
-            yield return createTypeInput(typesFactory.Get<TownCenterType>());
-            yield return createTypeInput(typesFactory.Get<HouseType>());
-            yield return createTypeInput(typesFactory.Get<MarketType>());
-            yield return getPlayerTool[typeof(TownBorderTool)];
-        }
-
-        private IEnumerable<PlayerTool> createBuildingSiteInputs()
-        {
-            yield return createTypeInput(typesFactory.GetBuildingSite<MarketType>(), "MarketBuildSite");
-            yield return createTypeInput(typesFactory.GetBuildingSite<FisheryType>(), "FisheryBuildSite");
-
-        }
-
-        private IEnumerable<PlayerTool> createGodpowerInputs()
-        {
-            yield return new LightGodPowerTool(typesFactory.Get<InfestationVoxelType>());
-        }
-
-
         private PlayerTool createTypeInput(GameVoxelType type, string name)
         {
             var ret = new DelegatePlayerTool(name,

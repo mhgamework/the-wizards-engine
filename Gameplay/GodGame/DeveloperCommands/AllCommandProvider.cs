@@ -12,10 +12,16 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
     public class AllCommandProvider : DelegateCommandProvider
     {
         private readonly VoxelTypesFactory typesFactory;
+        private readonly ItemTypesFactory itemTypesFactory;
 
-        public AllCommandProvider(WorldPersisterService persister, Internal.Model.World world, VoxelTypesFactory typesFactory)
+        public AllCommandProvider(WorldPersisterService persister,
+            Internal.Model.World world,
+            VoxelTypesFactory typesFactory,
+            ItemTypesFactory itemTypesFactory,
+            UserInputProcessingService userInputProcessingService)
         {
             this.typesFactory = typesFactory;
+            this.itemTypesFactory = itemTypesFactory;
             addDummy();
 
             addPersistence(persister, world);
@@ -50,10 +56,26 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
             addCommand("listsaves", () =>
                 {
                     var saves = TWDir.GameData.CreateChild("Saves\\GodGame").GetFiles().ToList();
-                    var outputstring = String.Join(", ", saves.Select(e => e.Name.Substring(0, e.Name.Length - 4) )); // Drop extension
+                    var outputstring = String.Join(", ", saves.Select(e => e.Name.Substring(0, e.Name.Length - 4))); // Drop extension
                     return "Saved games: \n" + outputstring;
                 });
 
+            addCommand("addresource", (typeStr, amountStr) =>
+                {
+                    var itemType = itemTypesFactory.AllTypes.FirstOrDefault(t => t.Name.ToLower() == typeStr.ToLower());
+                    if (itemType == null) return "Item type not found: " + typeStr;
+                    var amount = 0;
+                    if (!int.TryParse(amountStr, out amount)) return "Invalid item amount: " + amountStr;
+
+                    var target = userInputProcessingService.GetTargetedVoxel();
+                    if (target == null || target.Type != typesFactory.Get<WarehouseType>())
+                        return "Not targeting a warehouse";
+
+                    target.Data.Inventory.AddNewItems(itemType,amount);
+
+                    return "Added items!";
+
+                });
 
         }
 

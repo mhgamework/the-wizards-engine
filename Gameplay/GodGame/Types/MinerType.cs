@@ -25,8 +25,6 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public override void Tick(IVoxelHandle handle)
         {
             // TODO: should actually be done on type change of voxel, not every tick
-            handle.Data.Inventory.ChangeCapacity(5);
-
             handle.EachRandomInterval(1, () => tryMine(handle));
             handle.EachRandomInterval(1, () => tryOutput(handle));
             ReceiveCreationEvents = true;
@@ -82,6 +80,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             new Dictionary<IVoxelHandle, IWorkerConsumer>();
         public override void OnCreated(IVoxelHandle handle)
         {
+            handle.Data.Inventory.ChangeCapacity(5);
             workerConsumers[handle] = new SimpleWorkerConsumer() { RequestedWorkersCount = 5 };
         }
 
