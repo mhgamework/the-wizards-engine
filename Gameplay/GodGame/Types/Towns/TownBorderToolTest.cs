@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.GodGame.Internal.Model;
+﻿using System.Linq;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -35,9 +36,9 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
             town1 = service.CreateTown(town1center);
             town2 = service.CreateTown(town2center);
 
-            town1.TownVoxels.Add(town1center);
-            town2.TownVoxels.Add(town2center);
-            town2.TownVoxels.Add(town2BorderToTown1);
+            town1.AddVoxel(town1center);
+            town2.AddVoxel(town2center);
+            town2.AddVoxel(town2BorderToTown1);
 
             tool = new TownBorderPlayerTool(service);
 

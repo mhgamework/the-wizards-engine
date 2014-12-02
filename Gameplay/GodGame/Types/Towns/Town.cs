@@ -35,7 +35,8 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
         }
 
         // Data
-        public HashSet<IVoxel> TownVoxels = new HashSet<IVoxel>();
+        private HashSet<IVoxel> townVoxels = new HashSet<IVoxel>();
+        public IEnumerable<IVoxel> TownVoxels { get { return townVoxels; } }
 
 
         /// <summary>
@@ -43,19 +44,35 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
         /// </summary>
         public bool IsAtBorder(IVoxel voxel)
         {
-            if (TownVoxels.Contains(voxel)) return false;
-            if (!TownVoxels.Overlaps(voxel.Get4Connected())) return false;
+            if (townVoxels.Contains(voxel)) return false;
+            if (!townVoxels.Overlaps(voxel.Get4Connected())) return false;
             return true;
         }
 
         public IEnumerable<IWorkerProducer> Producers { get { return service.GetProducers(this); } }
         public IEnumerable<IWorkerConsumer> Consumers { get { return service.GetConsumers(this); } }
 
+        public void AddVoxel(IVoxel voxel)
+        {
+            townVoxels.Add(voxel);
+
+            ((IVoxelHandle)voxel).MarkChanged();
+            ((IVoxelHandle)voxel).Get8Connected().ForEach(v => v.MarkChanged());
+        }
+        public void RemoveVoxel(IVoxel voxel)
+        {
+            if (!CanRemove(voxel)) throw new InvalidOperationException();
+            townVoxels.Remove(voxel);
+
+            ((IVoxelHandle)voxel).MarkChanged();
+            ((IVoxelHandle)voxel).Get8Connected().ForEach(v => v.MarkChanged());
+        }
+
         public bool CanRemove(IVoxel getInternalVoxel)
         {
-            if (TownVoxels.Count == 1) return false;
-            var setWithout = new HashSet<IVoxel>(TownVoxels.Where(v => v != getInternalVoxel));
-            var removedSet = new HashSet<IVoxel>(TownVoxels.Where(v => v != getInternalVoxel));
+            if (townVoxels.Count == 1) return false;
+            var setWithout = new HashSet<IVoxel>(townVoxels.Where(v => v != getInternalVoxel));
+            var removedSet = new HashSet<IVoxel>(townVoxels.Where(v => v != getInternalVoxel));
 
             // Note i think this is simplye the VisitOnce function in the Utilities dll on my work pc
             var queue = new Queue<IVoxel>();

@@ -45,7 +45,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         {
             var monitoringTypes = new HashSet<IGameVoxelType>(voxelTypesFactory.AllTypes.Where(t => t.ReceiveCreationEvents).ToArray());
 
-            world.ChangedVoxels.ForEach(v =>
+            //TODO: if voxels are changed in the ondestroyed on oncreated events, then these events are not called for cet changes!!!
+            world.ChangedVoxels.ToArray().ForEach(v =>
                 {
                     if (monitoringTypes.Contains(v.PreviousType))
                         v.PreviousType.OnDestroyed(v);

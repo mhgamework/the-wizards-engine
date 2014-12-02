@@ -26,7 +26,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
         {
             var ret = new Town(this, datastoreRecord.CreateRecord());
             townCenters.Add(ret);
-            ret.TownVoxels.Add(center);
+            ret.AddVoxel(center);
             return ret;
         }
         public void DestroyTown(Town town)

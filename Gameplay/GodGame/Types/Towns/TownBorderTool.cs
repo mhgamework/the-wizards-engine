@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
     public class TownBorderTool : PerPlayerAdapterTool<TownBorderPlayerTool>
     {
         public TownBorderTool(TownCenterService townCenterService)
-            : base("TownBorderTool",p => new TownBorderPlayerTool(townCenterService))
+            : base("TownBorderTool", p => new TownBorderPlayerTool(townCenterService))
         {
         }
     }
@@ -49,7 +49,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
                 doAdd(voxel, clickedTown);
         }
 
-        private void doAdd(IVoxelHandle voxel, Town clickedTown)    
+        private void doAdd(IVoxelHandle voxel, Town clickedTown)
         {
             if (clickedTown != null)
             {
@@ -67,7 +67,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
             if (clickedTown == null) return;
             if (clickedTown.CanRemove(voxel.GetInternalVoxel()))
             {
-                clickedTown.TownVoxels.Remove(voxel.GetInternalVoxel());
+                clickedTown.RemoveVoxel(voxel.GetInternalVoxel());
                 voxel.MarkChanged();
                 voxel.Get8Connected().ForEach(v => v.MarkChanged());
             }
@@ -76,13 +76,12 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
         private void tryAdd(IVoxelHandle voxel, Town town)
         {
             TryAddBorder(voxel.GetInternalVoxel(), town);
-            voxel.MarkChanged();
-            voxel.Get8Connected().ForEach(v => v.MarkChanged());
+            
         }
 
         private static void tryRemove(IVoxelHandle voxel, Town clickedTown)
         {
-           
+
         }
 
 
@@ -97,10 +96,10 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
             var oldTown = townCenterService.GetTownForVoxel(voxel);
             if (oldTown != null)
             {
-                if (oldTown.TownVoxels.Count == 1) return false;//Do not remove last
-                oldTown.TownVoxels.Remove(voxel);
+                if (!oldTown.CanRemove(voxel)) return false;//Do not remove last
+                oldTown.RemoveVoxel(voxel);
             }
-            town.TownVoxels.Add(voxel);
+            town.AddVoxel(voxel);
 
             return true;
         }
