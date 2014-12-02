@@ -29,7 +29,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [SetUp]
         public void Setup()
         {
-            world = new Internal.Model.World(20, 10, (w, p) => new GameVoxel(w, p, new ProxyGenerator()));
+            world = new Internal.Model.World((w, p) => new GameVoxel(w, p, new ProxyGenerator()));
+            world.Initialize(20, 10);
             gameState = new GameState(world);
 
             inputHandler = Substitute.For<IPlayerInputHandler>();
@@ -75,7 +76,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         public void TestDisconnect()
         {
             var scl = new ServerPlayerListener(new NetworkConnectorServer(15005, 15006), npf);
-            
+
             // Done setup
 
             var client1 = new NetworkConnectorClient();

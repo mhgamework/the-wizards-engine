@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         {
 
         }
-      
+
         public GodGameClient CreateClient(VirtualNetworkConnectorClient virtualNetworkConnectorClient)
         {
             var bClient = new ContainerBuilder();
@@ -44,8 +44,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal
             bClient.RegisterModule<PersistenceModule>();
             bClient.RegisterModule(NetworkedModule.CreateClient());
             bClient.Register(ctx => createWorld(ctx.Resolve<LandType>(), ctx.Resolve<ProxyGenerator>())).SingleInstance();
-            
-            
+
+
             //TODO: re-enable the hack to allow client console to access the server
             // bClient.RegisterType<AllCommandProvider>().As<ICommandProvider>().WithParameter(TypedParameter.From(server.World));
 
@@ -76,7 +76,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         public static Model.World createWorld(LandType landType, ProxyGenerator proxyGenerator)
         {
-            var world = new Model.World(100, 10, (w, p) => new GameVoxel(w, p, proxyGenerator));
+            var world = new Model.World((w, p) => new GameVoxel(w, p, proxyGenerator));
+            world.Initialize(100, 10);
 
             world.ForEach((v, _) =>
                 {

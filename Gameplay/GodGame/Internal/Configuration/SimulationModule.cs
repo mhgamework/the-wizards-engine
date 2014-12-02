@@ -2,6 +2,7 @@
 using System.Linq;
 using Autofac;
 using Castle.DynamicProxy;
+using DirectX11;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.GodGame.DeveloperCommands;
@@ -24,6 +25,12 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             // Gamestate
             builder.RegisterType<GameState>().SingleInstance();
             builder.RegisterType<ClearGameStateChangesService>().SingleInstance();
+            //builder.RegisterType<Model.World>().SingleInstance();
+            builder.Register<Func<Model.World, Point2, GameVoxel>>(ctx =>
+                {
+                    var proxyGenerator = ctx.Resolve<ProxyGenerator>();
+                    return (w, p) => new GameVoxel(w, p, proxyGenerator);
+                }).AsSelf().SingleInstance();
 
             // Other
             builder.RegisterType<WorldSimulationService>().SingleInstance();

@@ -18,15 +18,21 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
     /// </summary>
     public class World
     {
+        private readonly Func<World, Point2, GameVoxel> createVoxel;
         public Vector2 VoxelSize { get; private set; }
         private Array2D<GameVoxel> voxels;
         public int WorldSize { get { return voxels.Size.X; } }
 
 
 
-        public World(int size, float voxelSize, Func<World, Point2, GameVoxel> createVoxel)
+        public World(Func<World, Point2, GameVoxel> createVoxel)
         {
-            this.VoxelSize = new Vector2(voxelSize);
+            this.createVoxel = createVoxel;
+        }
+
+        public void Initialize(int size, float voxelSize)
+        {
+            VoxelSize = new Vector2(voxelSize);
             voxels = new Array2D<GameVoxel>(new Point2(size, size));
             voxels.ForEach((v, p) => voxels[p] = createVoxel(this, p));
         }

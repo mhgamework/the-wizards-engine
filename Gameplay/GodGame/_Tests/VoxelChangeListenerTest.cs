@@ -20,7 +20,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         {
             var s = new VoxelChangeListener();
 
-            var world = new Internal.Model.World(10, 10, (w,p) => new GameVoxel(w,p,new ProxyGenerator()));
+            var world = new Internal.Model.World((w, p) => new GameVoxel(w, p, new ProxyGenerator()));
+            world.Initialize(10, 10);
 
             var target = world.GetVoxel(new Point2(5, 5));
 
@@ -55,8 +56,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         {
             var s = new VoxelChangeListener();
 
-            var world = new Internal.Model.World(10, 10, (w, p) => new GameVoxel(w, p, new ProxyGenerator()));
-
+            var world = new Internal.Model.World((w, p) => new GameVoxel(w, p, new ProxyGenerator()));
+            world.Initialize(10, 10);
             var count = 0;
 
             var d = s.ChangedVoxels.Subscribe(_ => count++);

@@ -9,6 +9,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Configuration;
+using MHGameWork.TheWizards.GodGame.Internal.Configuration.MainConfigurations;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Networking;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
@@ -105,20 +106,15 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         {
 
             var builder = new ContainerBuilder();
-            builder.RegisterModule<ExternalDependenciesModule>();
-            builder.RegisterModule<PersistenceModule>();
-            builder.RegisterModule<RenderingModule>();
-            builder.RegisterModule<SimulationModule>();
-            builder.RegisterModule<UserInputModule>();
-            builder.RegisterType<GodGameOffline>();
-            builder.Register(
-                ctx => GodGameServerClient.createWorld(ctx.Resolve<LandType>(), ctx.Resolve<ProxyGenerator>())).SingleInstance();
+            builder.RegisterModule<OfflineGameModule>();
+            builder.RegisterType<Internal.Model.World>().SingleInstance().AsSelf()
+                   .OnActivating(args =>
+                       {
+                           args.Instance.Initialize(100, 10);
 
-            // Wire: register a single global playerstate
-            builder.RegisterType<LocalPlayerService>().SingleInstance();
-            builder.Register(ctx => ctx.Resolve<LocalPlayerService>().Player).SingleInstance();
-
-            //TODO: fix localplayerservice
+                           var land = args.Context.Resolve<LandType>();
+                           args.Instance.ForEach((v, p) => v.ChangeType(land));
+                       });
 
             var cont = builder.Build();
 

@@ -205,6 +205,7 @@
     <Compile Include="Engine\WorldRendering\FastTextareaUpdater.cs" />
     <Compile Include="Engine\WorldRendering\ITextareaUpdater.cs" />
     <Compile Include="GodGame\DeveloperCommands\AllCommandProvider.cs" />
+    <Compile Include="GodGame\Internal\Configuration\MainConfigurations\OfflineGameModule.cs" />
     <Compile Include="GodGame\Internal\Configuration\RenderingModule.cs" />
     <Compile Include="GodGame\Internal\Configuration\PersistenceModule.cs" />
     <Compile Include="GodGame\Internal\Configuration\Gameplay\ToolSelectionMenuModule.cs" />
@@ -362,6 +363,8 @@
     <Compile Include="GodGame\Internal\VoxelChangeListener.cs" />
     <Compile Include="GodGame\_Tests\VoxelChangeListenerTest.cs" />
     <Compile Include="GodGame\_Tests\VoxelTypesTest.cs" />
+    <Compile Include="GodGame\_Tests\WorkersTest.cs" />
+    <Compile Include="IO\IOExtensions.cs" />
     <Compile Include="Math\GeometrySampler.cs" />
     <Compile Include="Rendering\Lod\IRenderable.cs" />
     <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />
