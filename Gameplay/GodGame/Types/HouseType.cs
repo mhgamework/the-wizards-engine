@@ -241,6 +241,11 @@ namespace MHGameWork.TheWizards.GodGame.Types
             yield return new RangeVisualizer(handle, workerSupplyRange);
         }
 
+        protected override string getDebugDescription(IVoxelHandle handle)
+        {
+            return "Workers: " + GetWorkerProducer(handle).ProvidedWorkersAmount;
+        }
+
 
     }
 }

@@ -307,8 +307,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
         /// </summary>
         public bool ReceiveCreationEvents
         {
-            get { return receiveCreationEvents || (addons.Count> 0); }
-            protected set { receiveCreationEvents  = value; }
+            get { return receiveCreationEvents || (addons.Count > 0); }
+            protected set { receiveCreationEvents = value; }
         }
 
         public virtual void OnCreated(IVoxelHandle handle)
@@ -343,19 +343,45 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public T GetAddon<T>(IVoxelHandle handle) where T : VoxelInstanceAddon
         {
-            configuredAddon = addons[typeof (T)];
-            
-            return (T) configuredAddon.Instances[handle];
+            configuredAddon = addons[typeof(T)];
+
+            return (T)configuredAddon.Instances[handle];
         }
 
         public bool HasAddon<T>(IVoxelHandle handle) where T : VoxelInstanceAddon
         {
 
-            if (! addons.ContainsKey(typeof (T))) return false;
+            if (!addons.ContainsKey(typeof(T))) return false;
 
             // This makes has addon return false when the addon instance has not yet been initialized
-            if (!addons[typeof (T)].Instances.ContainsKey(handle)) return false; 
+            if (!addons[typeof(T)].Instances.ContainsKey(handle)) return false;
             return true;
+        }
+
+        public string GetDebugDescription(IVoxelHandle handle)
+        {
+            var ret = "";
+            ret += "Type: " + Name + "\n";
+            ret += getDebugDescription(handle) + "\n";
+
+
+            var voxelAddons =
+                addons.Values.Where(v => v.Instances.ContainsKey(handle)).Select(v => v.Instances[handle]).ToArray();
+            if (voxelAddons.Length > 0)
+            {
+                foreach (var addon in voxelAddons)
+                {
+                    ret += "Addon: " + addon.GetType().Name + "\n";
+                    ret += addon.GetDebugDescription() + "\n";
+
+                }
+            }
+            return ret;
+        }
+
+        protected virtual string getDebugDescription(IVoxelHandle handle)
+        {
+            return "";
         }
 
         /// <summary>

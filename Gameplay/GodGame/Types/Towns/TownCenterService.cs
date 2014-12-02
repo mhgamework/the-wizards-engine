@@ -22,6 +22,8 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
 
         }
 
+        public IEnumerable<Town> Towns { get { return townCenters; } }
+
         public Town CreateTown(IVoxel center)
         {
             var ret = new Town(this, datastoreRecord.CreateRecord());
@@ -48,7 +50,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
         public IEnumerable<IWorkerConsumer> GetConsumers(Town town)
         {
             return town.TownVoxels.Cast<IVoxelHandle>().Where(v => v.Data.Type.HasAddon<IndustryBuildingAddon>(v))
-                .Select(v => v.Type.GetAddon<IndustryBuildingAddon>(v).WorkerConsumer);
+                .Select(v => v.Type.GetAddon<IndustryBuildingAddon>(v));
         }
     }
 }

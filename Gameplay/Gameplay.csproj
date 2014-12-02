@@ -297,7 +297,6 @@
     <Compile Include="GodGame\Types\MonumentVoxelBrain.cs" />
     <Compile Include="GodGame\Types\QuarryType.cs" />
     <Compile Include="GodGame\Internal\Model\PlayerState.cs" />
-    <Compile Include="GodGame\Types\Towns\House.cs" />
     <Compile Include="GodGame\Internal\Model\SimpleVoxel.cs" />
     <Compile Include="GodGame\Internal\Model\SimpleWorld.cs" />
     <Compile Include="GodGame\Types\Towns\Town.cs" />

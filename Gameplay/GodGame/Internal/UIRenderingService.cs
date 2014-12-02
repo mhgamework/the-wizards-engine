@@ -28,6 +28,8 @@ namespace MHGameWork.TheWizards.GodGame
         private TargetingReticle reticle;
         private Textarea textarea;
 
+        private Textarea debugTextarea;
+
         public UIRenderingService(Internal.Model.World world, LocalPlayerService localPlayerService, UserInputProcessingService inputSim)
         {
             this.world = world;
@@ -40,6 +42,10 @@ namespace MHGameWork.TheWizards.GodGame
             textarea.Position = new Vector2(TW.Graphics.Form.Form.ClientSize.Width - 120, 20);
             textarea.Size = new Vector2(100, 50);
 
+            debugTextarea = new Textarea();
+            debugTextarea.Position = new Vector2(TW.Graphics.Form.Form.ClientSize.Width - 200, 150);
+            debugTextarea.Size = new Vector2(180, 400);
+
         }
 
         public void Simulate()
@@ -49,10 +55,22 @@ namespace MHGameWork.TheWizards.GodGame
             drawReticle();
             drawSelectedVoxel();
             drawWorldBoundingbox();
-            drawDataValue();
+            //drawDataValue();
+            updateDebugTextarea();
             //drawMagicValue();
         }
 
+        private void updateDebugTextarea()
+        {
+            debugTextarea.Text = "";
+
+            var target = inputSim.GetTargetedVoxel();
+            if (target == null)
+            {
+                return;
+            }
+            debugTextarea.Text = target.Type.GetDebugDescription(target);
+        }
 
 
         private void updateTextarea()
@@ -109,7 +127,7 @@ namespace MHGameWork.TheWizards.GodGame
             /*if (target.Data.Type is IIndustryBuildingType)
                 showDataValueRect(target, ((IIndustryBuildingType)target.Data.Type).GetWorkerConsumer((IVoxelHandle)target).AllocatedWorkersCount); //note: not showing magicval atm!!
             else*/
-                showDataValueRect(target, (int)target.Data.WorkerCount); //note: not showing magicval atm!!
+            showDataValueRect(target, (int)target.Data.WorkerCount); //note: not showing magicval atm!!
 
         }
 

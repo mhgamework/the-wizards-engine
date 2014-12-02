@@ -90,5 +90,6 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         T GetAddon<T>(IVoxelHandle handle) where T : VoxelInstanceAddon;
         bool HasAddon<T>(IVoxelHandle handle) where T : VoxelInstanceAddon;
+        string GetDebugDescription(IVoxelHandle handle);
     }
 }

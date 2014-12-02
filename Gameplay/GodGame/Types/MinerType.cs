@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         public MinerType()
             : base("Miner")
         {
-            RegisterAddonType(v => new IndustryBuildingAddon());
+            RegisterAddonType(v => new IndustryBuildingAddon() { RequestedWorkersCount = 5 });
         }
         public override void Tick(IVoxelHandle handle)
         {

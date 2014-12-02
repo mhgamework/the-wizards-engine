@@ -19,5 +19,10 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
 
         }
+
+        public virtual string GetDebugDescription()
+        {
+            return "";
+        }
     }
 }

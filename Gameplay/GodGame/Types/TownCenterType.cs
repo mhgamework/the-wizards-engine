@@ -43,10 +43,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
             townCenterService.DestroyTown(townCenterService.GetTownForVoxel(handle.GetInternalVoxel()));
         }
 
-        public override void Tick(IVoxelHandle handle)
+        private float nextUpdate = 0;
+        public override void PerFrameTick()
         {
-            handle.EachRandomInterval(1f, () => workersService.UpdateWorkerDistribution(townCenterService.GetTownForVoxel(handle.GetInternalVoxel())));
-
+            if (TW.Graphics.TotalRunTime < nextUpdate) return;
+            nextUpdate = TW.Graphics.TotalRunTime + 1;
+            townCenterService.Towns.ForEach(t => workersService.UpdateWorkerDistribution(t));
         }
     }
 }

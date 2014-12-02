@@ -7,17 +7,27 @@ namespace MHGameWork.TheWizards.GodGame.Types
     /// Simulates common industry building behaviour for a single voxel
     /// Represents an addon object which is associated with each individual voxel that represents an industry building
     /// </summary>
-    public class IndustryBuildingAddon : VoxelInstanceAddon
+    public class IndustryBuildingAddon : VoxelInstanceAddon,IWorkerConsumer
     {
-        public IWorkerConsumer WorkerConsumer { get; private set; }
+        public IndustryBuildingAddon()
+        {
+            RequestedWorkersCount = 1;
+        }
         public override void OnCreated(IVoxelHandle handle)
         {
-            WorkerConsumer = new SimpleWorkerConsumer() { RequestedWorkersCount = 5 };
         }
 
         public override void OnDestroyed(IVoxelHandle handle)
         {
-            WorkerConsumer = null;
         }
+        public override string GetDebugDescription()
+        {
+            return string.Format("Workers: {0}/{1}", 
+                ((IWorkerConsumer) this).AllocatedWorkersCount,
+                                 RequestedWorkersCount);
+        }
+
+        public int RequestedWorkersCount { get; set; }
+        int IWorkerConsumer.AllocatedWorkersCount { get; set; }
     }
 }
