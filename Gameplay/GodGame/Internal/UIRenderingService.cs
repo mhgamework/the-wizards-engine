@@ -81,11 +81,11 @@ namespace MHGameWork.TheWizards.GodGame
         private void drawDataValue()
         {
             var target = inputSim.GetTargetedVoxel();
-            if (target != null && target.Data.Type is IIndustryBuildingType)
+            /*if (target != null && target.Data.Type is IIndustryBuildingType)
             {
                 showDataValueRect(target, ((IIndustryBuildingType)target.Data.Type).GetWorkerConsumer((IVoxelHandle)target).AllocatedWorkersCount); //note: not showing magicval atm!!
                 return;
-            }
+            }*/
             if (target == null || target.Data.DataValue == 0)
             {
                 hideDataValueRect();
@@ -106,9 +106,9 @@ namespace MHGameWork.TheWizards.GodGame
                 return;
             }
 
-            if (target.Data.Type is IIndustryBuildingType)
+            /*if (target.Data.Type is IIndustryBuildingType)
                 showDataValueRect(target, ((IIndustryBuildingType)target.Data.Type).GetWorkerConsumer((IVoxelHandle)target).AllocatedWorkersCount); //note: not showing magicval atm!!
-            else
+            else*/
                 showDataValueRect(target, (int)target.Data.WorkerCount); //note: not showing magicval atm!!
 
         }

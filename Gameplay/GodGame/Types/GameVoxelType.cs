@@ -9,6 +9,7 @@ using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.Types;
+using MHGameWork.TheWizards.GodGame.Types.Towns.Workers;
 using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
@@ -300,16 +301,81 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
 
 
-        public bool ReceiveCreationEvents { get; protected set; }
+        private bool receiveCreationEvents;
+        /// <summary>
+        /// True when creation events are requested by the type, either by the user or by addons
+        /// </summary>
+        public bool ReceiveCreationEvents
+        {
+            get { return receiveCreationEvents || (addons.Count> 0); }
+            protected set { receiveCreationEvents  = value; }
+        }
 
         public virtual void OnCreated(IVoxelHandle handle)
         {
-
+            foreach (var addon in addons.Values)
+            {
+                var inst = addon.CreateAddon(handle);
+                addon.Instances[handle] = inst;
+                inst.OnCreated(handle);
+            }
         }
         public virtual void OnDestroyed(IVoxelHandle handle)
         {
-
+            foreach (var addon in addons.Values)
+            {
+                var inst = addon.CreateAddon(handle);
+                addon.Instances[handle] = inst;
+                inst.OnDestroyed(handle);
+            }
         }
+
+
+        private Dictionary<Type, ConfiguredAddon> addons = new Dictionary<Type, ConfiguredAddon>();
+        private ConfiguredAddon configuredAddon;
+
+        protected void RegisterAddonType<T>(Func<IVoxelHandle, T> create) where T : VoxelInstanceAddon
+        {
+            if (addons.ContainsKey(typeof(T))) throw new InvalidOperationException("Already configured");
+
+            addons[typeof(T)] = new ConfiguredAddon(typeof(T), create);
+        }
+
+        public T GetAddon<T>(IVoxelHandle handle) where T : VoxelInstanceAddon
+        {
+            configuredAddon = addons[typeof (T)];
+            
+            return (T) configuredAddon.Instances[handle];
+        }
+
+        public bool HasAddon<T>(IVoxelHandle handle) where T : VoxelInstanceAddon
+        {
+
+            if (! addons.ContainsKey(typeof (T))) return false;
+
+            // This makes has addon return false when the addon instance has not yet been initialized
+            if (!addons[typeof (T)].Instances.ContainsKey(handle)) return false; 
+            return true;
+        }
+
+        /// <summary>
+        /// Represents a type of addon added to this gamevoxeltype
+        /// </summary>
+        private sealed class ConfiguredAddon
+        {
+            public Type AddonType { get; private set; }
+            public Func<IVoxelHandle, VoxelInstanceAddon> CreateAddon { get; private set; }
+
+            public Dictionary<IVoxelHandle, VoxelInstanceAddon> Instances =
+                new Dictionary<IVoxelHandle, VoxelInstanceAddon>();
+
+            public ConfiguredAddon(Type addonType, Func<IVoxelHandle, VoxelInstanceAddon> createAddon)
+            {
+                AddonType = addonType;
+                CreateAddon = createAddon;
+            }
+        }
+
 
         public bool ReceiveChangeEvents { get; private set; }
 

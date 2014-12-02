@@ -87,5 +87,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
         /// Tick method called once each frame, before all voxel ticks
         /// </summary>
         void PerFrameTick();
+
+        T GetAddon<T>(IVoxelHandle handle) where T : VoxelInstanceAddon;
+        bool HasAddon<T>(IVoxelHandle handle) where T : VoxelInstanceAddon;
     }
 }

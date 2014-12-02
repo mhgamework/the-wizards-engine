@@ -13,14 +13,14 @@ using System.Linq;
 
 namespace MHGameWork.TheWizards.GodGame.Types
 {
-    public class MinerType : GameVoxelType, IIndustryBuildingType
+    public class MinerType : GameVoxelType
     {
         private int mineRadius = 3;
 
         public MinerType()
             : base("Miner")
         {
-
+            RegisterAddonType(v => new IndustryBuildingAddon());
         }
         public override void Tick(IVoxelHandle handle)
         {
@@ -76,22 +76,5 @@ namespace MHGameWork.TheWizards.GodGame.Types
             yield return new InventoryVisualizer(handle);
         }
 
-        private Dictionary<IVoxelHandle, IWorkerConsumer> workerConsumers =
-            new Dictionary<IVoxelHandle, IWorkerConsumer>();
-        public override void OnCreated(IVoxelHandle handle)
-        {
-            handle.Data.Inventory.ChangeCapacity(5);
-            workerConsumers[handle] = new SimpleWorkerConsumer() { RequestedWorkersCount = 5 };
-        }
-
-        public override void OnDestroyed(IVoxelHandle handle)
-        {
-            workerConsumers.Remove(handle);
-        }
-
-        public IWorkerConsumer GetWorkerConsumer(IVoxelHandle handle)
-        {
-            return workerConsumers[handle];
-        }
     }
 }
