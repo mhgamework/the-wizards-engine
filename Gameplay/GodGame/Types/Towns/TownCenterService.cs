@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
 {
     public class TownCenterService
     {
-        private IList<Town> townCenters;
+        private IList<Town> towns;
         private Lazy<HouseType> houseType;
         private readonly GenericDatastoreRecord datastoreRecord;
 
@@ -18,28 +18,35 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
         {
             this.houseType = houseType;
             this.datastoreRecord = store;
-            townCenters = datastoreRecord.GetList<Town>("TownCenterService-Towns", r => new Town(this, r));
+            towns = datastoreRecord.GetList<Town>("TownCenterService-Towns", r => new Town(this, r));
 
         }
 
-        public IEnumerable<Town> Towns { get { return townCenters; } }
+        public IEnumerable<Town> Towns { get { return towns; } }
 
+        /// <summary>
+        /// Creates a new town for given towncenter
+        /// Returns existing town if already found
+        /// </summary>
         public Town CreateTown(IVoxel center)
         {
+            var existing = towns.FirstOrDefault(t => t.TownCenter == center);
+            if (existing != null) return existing;
             var ret = new Town(this, datastoreRecord.CreateRecord());
-            townCenters.Add(ret);
-            ret.AddVoxel(center);
+            towns.Add(ret);
+            ret.SetTownCenter(center);
             return ret;
+
         }
         public void DestroyTown(Town town)
         {
-            townCenters.Remove(town);
+            towns.Remove(town);
         }
 
 
         public Town GetTownForVoxel(IVoxel voxel)
         {
-            return townCenters.FirstOrDefault(t => t.TownVoxels.Contains(voxel));
+            return towns.FirstOrDefault(t => t.TownVoxels.Contains(voxel));
         }
 
         public IEnumerable<IWorkerProducer> GetProducers(Town town)

@@ -18,19 +18,25 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Data
 
         private static XElement serialize()
         {
-            var world = new Internal.Model.World(10, 10, (w, p) => new GameVoxel(w, p, new ProxyGenerator()));
+            var world = new Internal.Model.World((w, p) => new GameVoxel(w, p, new ProxyGenerator()));
+            world.Initialize(10, 10);
             var store = new GenericDatastore(world);
 
             var list = store.RootRecord.GetList("Towns", r => new Town(null, r));
 
-            var town = new Town(null, store.RootRecord.CreateRecord());
+            var town = new Town(createService(), store.RootRecord.CreateRecord());
+            town.SetTownCenter(world.GetVoxel(new Point2(3, 8)));
             list.Add(town);
 
-            town.TownVoxels.Add(world.GetVoxel(new Point2(3, 8)));
-            town.TownVoxels.Add(world.GetVoxel(new Point2(4, 1)));
+            town.AddVoxel(world.GetVoxel(new Point2(3, 7)));
 
             var doc = store.Serialize();
             return doc;
+        }
+
+        private static TownCenterService createService()
+        {
+            return new TownCenterService(null, new GenericDatastoreRecord(new GenericDatastore(null), 15));
         }
 
         [Test]
@@ -39,7 +45,8 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Data
             var el = serialize();
 
 
-            var world = new Internal.Model.World(10, 10, (w, p) => new GameVoxel(w, p, new ProxyGenerator()));
+            var world = new Internal.Model.World((w, p) => new GameVoxel(w, p, new ProxyGenerator()));
+            world.Initialize(10, 10);
             var store = new GenericDatastore(world);
 
 
@@ -48,6 +55,8 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Data
             var list = store.RootRecord.GetList("Towns", r => new Town(null, r));
 
             list.Print();
+            list[0].TownVoxels.Print();
+            list[0].TownCenter.ToString().Print();
 
 
         }

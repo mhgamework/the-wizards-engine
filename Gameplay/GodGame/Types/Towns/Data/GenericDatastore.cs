@@ -127,5 +127,17 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Data
             recordsMap[ret.Id] = ret;
             if (ret.Id > highestId) highestId = ret.Id;
         }
+
+        public void ClearAll()
+        {
+            foreach (var record in records)
+            {
+                record.Destroy();
+            }
+            records.Clear();
+            recordsMap.Clear();
+            boundRecords.Clear();
+            RootRecord = CreateNewRecord();
+        }
     }
 }

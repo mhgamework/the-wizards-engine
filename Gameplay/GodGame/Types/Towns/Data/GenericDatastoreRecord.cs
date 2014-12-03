@@ -6,6 +6,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Types.Towns.Data;
 using MHGameWork.TheWizards.GodGame._Engine;
 using QuickGraph.Serialization;
@@ -57,9 +58,9 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
 
             return
                 xData.Elements()
-                    .Select(e => datastore.DeserializeReference(e))
-                    .Select(e =>
+                    .Select(k =>
                     {
+                        var e = datastore.DeserializeReference(k);
                         if (!(e is GenericDatastoreRecord)) return e;
                         var rec = (GenericDatastoreRecord)e;
                         if (rec.BoundObject != null) return rec.BoundObject;
@@ -106,6 +107,10 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
                         el.Add(datastore.SerializeReference(listElement));
                     }
                 }
+                else if (entry.Value is GameVoxel)
+                {
+                    el.Add(datastore.SerializeReference(entry.Value));
+                }
                 else
                     throw new InvalidOperationException("Unsupported entry type: " + entry.Value);
             }
@@ -150,6 +155,37 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
                     throw new InvalidOperationException("Unsupported entry type: " + entry.Value);
 
             }
+        }
+
+        /// <summary>
+        /// Destroys this record so that it can no longer be used
+        /// Should probably be improved to a clear-like action, but to complex for now
+        /// </summary>
+        public void Destroy()
+        {
+            datastore = null;
+            entries = null;
+            loadedData = null;
+            objectActivators = null;
+        }
+
+        public T Get<T>(string name)
+        {
+            if (!entries.ContainsKey(name))
+            {
+                // Try loaded xml
+                if (loadedData == null) return default(T);
+                var xData = loadedData.XPathSelectElement(name);
+                if (xData == null) return default(T);
+                entries[name] = (T)datastore.DeserializeReference((XElement)xData.FirstNode); // This only supports gamevoxels atm
+            }
+            return (T)entries[name];
+
+        }
+
+        public void Set<T>(string name, T value)
+        {
+            entries[name] = value;
         }
     }
 }

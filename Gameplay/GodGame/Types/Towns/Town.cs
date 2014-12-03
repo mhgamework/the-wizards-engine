@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Types.Towns.Workers;
+using MHGameWork.TheWizards.SkyMerchant._Tests.Ideas;
 
 namespace MHGameWork.TheWizards.GodGame.Types.Towns
 {
@@ -30,17 +31,25 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
         {
             this.service = service;
             this.datastoreRecord = datastoreRecord;
-            TownVoxels = datastoreRecord.GetSet<IVoxel>("TownVoxels");
+            townVoxels = datastoreRecord.GetSet<IVoxel>("TownVoxels");
             datastoreRecord.Bind(this);
         }
 
         // Data
         private HashSet<IVoxel> townVoxels = new HashSet<IVoxel>();
         public IEnumerable<IVoxel> TownVoxels { get { return townVoxels; } }
+        public IVoxel TownCenter
+        {
+            get { return datastoreRecord.Get<IVoxel>("TownCenter"); }
+            set
+            {
+                datastoreRecord.Set<IVoxel>("TownCenter", value);
+            }
+        }
 
 
         /// <summary>
-        /// Returns true when given voxel borders to the town (so not in the town
+        /// Returns true when given voxel borders to the town (so not in the town)
         /// </summary>
         public bool IsAtBorder(IVoxel voxel)
         {
@@ -54,11 +63,21 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
 
         public void AddVoxel(IVoxel voxel)
         {
+            if (!CanAddVoxel(voxel)) throw new InvalidOperationException("Invalid voxel to add");
             townVoxels.Add(voxel);
 
             ((IVoxelHandle)voxel).MarkChanged();
             ((IVoxelHandle)voxel).Get8Connected().ForEach(v => v.MarkChanged());
         }
+
+        public bool CanAddVoxel(IVoxel voxel)
+        {
+            if (townVoxels.Contains(voxel)) return false;
+            if (!IsAtBorder(voxel)) return false;
+            if (service.GetTownForVoxel(voxel) != null) return false;
+            return true;
+        }
+
         public void RemoveVoxel(IVoxel voxel)
         {
             if (!CanRemove(voxel)) throw new InvalidOperationException();
@@ -86,6 +105,15 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
             }
             return removedSet.Count == 0; // If the removedset is empty then all voxels are still conected when given voxel is removed.
 
+        }
+
+        public void SetTownCenter(IVoxel center)
+        {
+            if (TownCenter != null) throw new InvalidOperationException("Changing town center is not supported");
+            TownCenter = center;
+            townVoxels.Add(center);
+            ((IVoxelHandle)center).MarkChanged();
+            ((IVoxelHandle)center).Get8Connected().ForEach(v => v.MarkChanged());
         }
     }
 }

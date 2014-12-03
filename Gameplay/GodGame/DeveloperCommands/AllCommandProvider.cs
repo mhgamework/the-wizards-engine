@@ -5,6 +5,7 @@ using System.Linq;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.Types;
+using MHGameWork.TheWizards.GodGame.Types.Towns.Data;
 using MHGameWork.TheWizards.IO;
 
 namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
@@ -13,15 +14,18 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
     {
         private readonly VoxelTypesFactory typesFactory;
         private readonly ItemTypesFactory itemTypesFactory;
+        private readonly GenericDatastore genericDatastore;
 
         public AllCommandProvider(WorldPersisterService persister,
             Internal.Model.World world,
             VoxelTypesFactory typesFactory,
             ItemTypesFactory itemTypesFactory,
-            UserInputProcessingService userInputProcessingService)
+            UserInputProcessingService userInputProcessingService,
+            GenericDatastore genericDatastore)
         {
             this.typesFactory = typesFactory;
             this.itemTypesFactory = itemTypesFactory;
+            this.genericDatastore = genericDatastore;
             addDummy();
 
             addPersistence(persister, world);
@@ -46,7 +50,8 @@ namespace MHGameWork.TheWizards.GodGame.DeveloperCommands
                     return "Commands containing '" + partialCommand + "': " + string.Join(", ", CommandNames.Where(c => c.Contains(partialCommand)).ToArray());
                 });
             addCommand("clearWorld", () =>
-                {
+            {
+                genericDatastore.ClearAll();
                     world.ForEach((v, _) =>
                         {
                             v.Data.Type = typesFactory.Get<LandType>();
