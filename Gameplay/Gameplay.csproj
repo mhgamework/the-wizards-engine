@@ -233,7 +233,6 @@
     <Compile Include="GodGame\Types\Towns\Data\GenericDatastore.cs" />
     <Compile Include="GodGame\Types\Towns\Data\GenericDatastoreRecord.cs" />
     <Compile Include="GodGame\Types\Towns\Data\GenericDatastoreTest.cs" />
-    <Compile Include="GodGame\Types\Towns\IIndustryBuildingType.cs" />
     <Compile Include="GodGame\Types\Towns\TownBordersMeshProvider.cs" />
     <Compile Include="GodGame\Internal\Rendering\VisualizeChangesMeshProvider.cs" />
     <Compile Include="GodGame\Internal\Simulation\VoxelTileFactory.cs" />
@@ -365,7 +364,6 @@
     <Compile Include="GodGame\_Tests\VoxelChangeListenerTest.cs" />
     <Compile Include="GodGame\_Tests\VoxelTypesTest.cs" />
     <Compile Include="GodGame\_Tests\WorkersTest.cs" />
-    <Compile Include="IO\IOExtensions.cs" />
     <Compile Include="Math\GeometrySampler.cs" />
     <Compile Include="Rendering\Lod\IRenderable.cs" />
     <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />
