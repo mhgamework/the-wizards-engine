@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using Castle.DynamicProxy;
 using DirectX11;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
@@ -83,14 +85,19 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         private HashSet<GameVoxel> changedVoxels = new HashSet<GameVoxel>();
         /// <summary>
         /// TODO: WARNING: this currently only works for type changes
+        /// TODO: remove this
         /// </summary>
         public IEnumerable<GameVoxel> ChangedVoxels
         {
             get { return changedVoxels; }
         }
+
+        private Subject<IVoxel> voxelChanged;
+        public IObservable<IVoxel> VoxelChanged { get { return voxelChanged.AsObservable(); } }
         public void NotifyVoxelChanged(GameVoxel v)
         {
             changedVoxels.Add(v);
+            voxelChanged.OnNext(v);
         }
 
         public void ClearChangedFlags()

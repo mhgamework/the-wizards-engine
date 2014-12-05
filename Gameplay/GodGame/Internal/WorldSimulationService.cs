@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reactive;
+using System.Reactive.Linq;
 using Castle.Components.DictionaryAdapter.Xml;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.Types;
 using System.Linq;
+using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.GodGame.Internal
 {
@@ -20,6 +23,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         public const float TickInterval = 1 / 20f;
         private float nextTick;
 
+        private HashSet<IVoxel> changedVoxels = new HashSet<IVoxel>();
+        //private List<> 
+
         public WorldSimulationService(Model.World world, VoxelTypesFactory voxelTypesFactory)
         {
             this.world = world;
@@ -27,6 +33,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
 
             nextTick = TW.Graphics.TotalRunTime + TickInterval;
+
+            world.VoxelChanged.Subscribe(v => changedVoxels.Add(v));
         }
 
         public void Simulate()
@@ -44,14 +52,15 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         /// <summary>
         /// Contains for each voxel, the type for which oncreated has been called
+        /// WARNING: this way of doing lifetime makes that when changing object types, they only come into correct existence on the next frame
+        /// This means that changing the type of a voxel and then directly manipulating it can cause problems!!
         /// </summary>
         private Dictionary<IVoxel, IGameVoxelType> initializedTypes = new Dictionary<IVoxel, IGameVoxelType>();
         private void simulateCreateAndDestroy()
         {
-            //var monitoringTypes = new HashSet<IGameVoxelType>(voxelTypesFactory.AllTypes.Where(t => t.ReceiveCreationEvents).ToArray());
-
-            //TODO: if voxels are changed in the ondestroyed on oncreated events, then these events are not called for cet changes!!!
-            world.ChangedVoxels.ToArray().ForEach(v =>
+            var gameVoxels = changedVoxels.Cast<GameVoxel>().ToArray();
+            changedVoxels.Clear(); // Clear so that we capture change events from within the oncreated and ondestroyed events
+            gameVoxels.ForEach(v =>
             {
                 IGameVoxelType current = null;
                 initializedTypes.TryGetValue(v, out current);
