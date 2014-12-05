@@ -51,8 +51,7 @@ namespace MHGameWork.TheWizards.GodGame._Tests
                 }).As(type);
             }
 
-            world = new Internal.Model.World((w, p) => new GameVoxel(w, p, new ProxyGenerator()));
-            world.Initialize(200, 10);
+            world = TestWorldBuilder.createTestWorld(100, 10); 
             builder.RegisterInstance(world);
             builder.RegisterInstance(worldPersister);
 

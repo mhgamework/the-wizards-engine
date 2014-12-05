@@ -5,6 +5,7 @@ using System.Drawing;
 using DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Networking;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
@@ -32,13 +33,13 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Rendering
         }
 
         
-        public WorldRenderingService(Model.World world, LocalPlayerService localPlayerS)
-            : this(world, new PerEntityVoxelWorldRenderer(world, new Point2(RenderSize, RenderSize)), localPlayerS)
+        public WorldRenderingService(Model.World world, LocalPlayerService localPlayerS, VoxelContentsFactory factory)
+            : this(world, new PerEntityVoxelWorldRenderer(world, new Point2(RenderSize, RenderSize)), localPlayerS,factory)
         {
         }
 
 
-        public WorldRenderingService(Model.World world, IVoxelWorldRenderer voxelWorldRenderer, LocalPlayerService localPlayerS)
+        public WorldRenderingService(Model.World world, IVoxelWorldRenderer voxelWorldRenderer, LocalPlayerService localPlayerS, VoxelContentsFactory factory)
         {
             this.world = world;
             this.voxelWorldRenderer = voxelWorldRenderer;

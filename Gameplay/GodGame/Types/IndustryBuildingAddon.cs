@@ -13,11 +13,11 @@ namespace MHGameWork.TheWizards.GodGame.Types
         {
             RequestedWorkersCount = 1;
         }
-        public override void OnCreated(IVoxelHandle handle)
+        public override void OnCreated(IVoxel handle)
         {
         }
 
-        public override void OnDestroyed(IVoxelHandle handle)
+        public override void OnDestroyed(IVoxel handle)
         {
         }
         public override string GetDebugDescription()

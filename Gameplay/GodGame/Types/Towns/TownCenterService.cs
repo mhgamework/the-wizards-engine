@@ -56,8 +56,8 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
 
         public IEnumerable<IWorkerConsumer> GetConsumers(Town town)
         {
-            return town.TownVoxels.Cast<IVoxelHandle>().Where(v => v.Data.Type.HasAddon<IndustryBuildingAddon>(v))
-                .Select(v => v.Type.GetAddon<IndustryBuildingAddon>(v));
+            return town.TownVoxels.Where(v => v.Data.Type.HasAddon<IndustryBuildingAddon>(v))
+                .Select(v => v.Data.Type.GetAddon<IndustryBuildingAddon>(v));
         }
     }
 }

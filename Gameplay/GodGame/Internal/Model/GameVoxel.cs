@@ -20,42 +20,20 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         private readonly ProxyGenerator gen;
         public Point2 Coord { get; private set; }
 
-        public GameVoxel(World world, Point2 coord, ProxyGenerator gen)
+        public GameVoxel(World world, Point2 coord)
         {
             this.world = world;
             this.gen = gen;
             this.Coord = coord;
             initVoxelHandler();
-            ResetData();
+            
 
         }
 
-        public void ResetData()
-        {
-            Data = null;
-            Data = new ObservableVoxelData(() =>
-                {
-                    if (Data == null) return; // Ignore changes in the observablevoxeldata constructor
-                    world.NotifyVoxelChanged(this);
-
-                    if (currentTrackedType != Data.Type)
-                    {
-                        TypeChanged = true;
-                        PreviousType = currentTrackedType;
-                        currentTrackedType = Data.Type;
-                    }
-
-                }, gen);
-        }
-
-        private IGameVoxelType currentTrackedType; // Type last detected on the data
-        public IGameVoxelType PreviousType { get; set; }
         public IGameVoxelType Type
         {
             get { return Data.Type; }
         }
-
-        public bool TypeChanged { get; set; }
 
         public IVoxel GetRelative(Point2 offset)
         {
@@ -165,20 +143,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
 
         public void ChangeType(IGameVoxelType type)
         {
-            //note: put gameplay-related changes here
-            var prevHeight = currentVoxel.Data.Height;
-
-
-            ResetData();
-
-            currentVoxel.Data.Type = type;
-            currentVoxel.Data.Height = prevHeight;
-
-            if (type is WaterType)
-            {
-                var minHeight = Get4Connected().Min(e => e.Data.Height);
-                currentVoxel.Data.Height = minHeight;
-            }
+            world.ChangeType(currentVoxel, type);
 
 
         }

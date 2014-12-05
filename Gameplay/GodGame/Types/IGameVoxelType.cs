@@ -58,19 +58,16 @@ namespace MHGameWork.TheWizards.GodGame.Types
         IEnumerable<IRenderable> GetCustomVisualizers(IVoxelHandle handle);
 
         /// <summary>
-        /// When true the simulator will call the OnCreated and OnDestroyed methods
-        /// </summary>
-        bool ReceiveCreationEvents { get; }
-        /// <summary>
         /// Called when argument voxel's type is changed to this voxel type
         /// </summary>
         /// <param name="handle"></param>
-        void OnCreated(IVoxelHandle handle);
+        void OnCreated(IVoxel handle);
+
         /// <summary>
         /// Called when a voxel with this voxel type is changed to another type
         /// </summary>
         /// <param name="handle"></param>
-        void OnDestroyed(IVoxelHandle handle);
+        void OnDestroyed(IVoxel handle);
 
         /// <summary>
         /// When enabled, the simulator calls the OnChanged method
@@ -88,8 +85,8 @@ namespace MHGameWork.TheWizards.GodGame.Types
         /// </summary>
         void PerFrameTick();
 
-        T GetAddon<T>(IVoxelHandle handle) where T : VoxelInstanceAddon;
-        bool HasAddon<T>(IVoxelHandle handle) where T : VoxelInstanceAddon;
+        T GetAddon<T>(IVoxel handle) where T : VoxelInstanceAddon;
+        bool HasAddon<T>(IVoxel handle) where T : VoxelInstanceAddon;
         string GetDebugDescription(IVoxelHandle handle);
     }
 }

@@ -34,13 +34,13 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         }
 
-        public override void OnCreated(IVoxelHandle handle)
+        public override void OnCreated(IVoxel handle)
         {
-            townCenterService.CreateTown(handle.GetInternalVoxel());
+            townCenterService.CreateTown(handle);
         }
-        public override void OnDestroyed(IVoxelHandle handle)
+        public override void OnDestroyed(IVoxel handle)
         {
-            townCenterService.DestroyTown(townCenterService.GetTownForVoxel(handle.GetInternalVoxel()));
+            townCenterService.DestroyTown(townCenterService.GetTownForVoxel(handle));
         }
 
         private float nextUpdate = 0;

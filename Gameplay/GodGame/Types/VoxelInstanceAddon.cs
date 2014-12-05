@@ -11,11 +11,11 @@ namespace MHGameWork.TheWizards.GodGame.Types
     /// </summary>
     public abstract class VoxelInstanceAddon
     {
-        public virtual void OnCreated(IVoxelHandle handle)
+        public virtual void OnCreated(IVoxel handle)
         {
 
         }
-        public virtual void OnDestroyed(IVoxelHandle handle)
+        public virtual void OnDestroyed(IVoxel handle)
         {
 
         }

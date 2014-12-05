@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         public const float TickInterval = 1 / 20f;
         private float nextTick;
 
-        private HashSet<IVoxel> changedVoxels = new HashSet<IVoxel>();
+        //private HashSet<IVoxel> changedVoxels = new HashSet<IVoxel>();
         //private List<> 
 
         public WorldSimulationService(Model.World world, VoxelTypesFactory voxelTypesFactory)
@@ -34,12 +34,12 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
             nextTick = TW.Graphics.TotalRunTime + TickInterval;
 
-            world.VoxelChanged.Subscribe(v => changedVoxels.Add(v));
+            //world.VoxelChanged.Subscribe(v => changedVoxels.Add(v));
         }
 
         public void Simulate()
         {
-            simulateCreateAndDestroy();
+            //simulateCreateAndDestroy();
             if (nextTick > TW.Graphics.TotalRunTime) return;
             nextTick += TickInterval; //TODO: Check for timing problems
 
@@ -49,7 +49,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
 
         }
-
+        /*
         /// <summary>
         /// Contains for each voxel, the type for which oncreated has been called
         /// WARNING: this way of doing lifetime makes that when changing object types, they only come into correct existence on the next frame
@@ -73,7 +73,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
                 initializedTypes[v] = v.Data.Type;
 
             });
-        }
+        }*/
 
         private void simulatePerVoxelTick()
         {

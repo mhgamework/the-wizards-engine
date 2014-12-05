@@ -47,17 +47,16 @@ namespace MHGameWork.TheWizards.GodGame.Persistence
         /// <summary>
         /// Should pass the correct voxel (with correct x and y coord)
         /// </summary>
-        /// <param name="voxel"></param>
-        /// <param name="typeFactory"></param>
         public void ToVoxel(GameVoxel voxel, GameplayObjectsSerializer gameplayObjectsSerializer)
         {
             Debug.Assert(voxel.Coord.X == X);
             Debug.Assert(voxel.Coord.Y == Y);
             
 
-            voxel.ResetData(); // TODO: potential overhead
+            voxel.World.ChangeType(voxel,gameplayObjectsSerializer.GetVoxelType(this.TypeName));
+            //voxel.ResetData(); // TODO: potential overhead
 
-            voxel.Data.Type = gameplayObjectsSerializer.GetVoxelType(this.TypeName);
+            //voxel.Data.Type = gameplayObjectsSerializer.GetVoxelType(this.TypeName);
             voxel.Data.MagicLevel = MagicLevel;
             voxel.Data.DataValue = DataValue;
 

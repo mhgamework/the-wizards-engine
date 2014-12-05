@@ -76,8 +76,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
 
         public static Model.World createWorld(LandType landType, ProxyGenerator proxyGenerator)
         {
-            var world = new Model.World((w, p) => new GameVoxel(w, p, proxyGenerator));
-            world.Initialize(100, 10);
+            var world = TestWorldBuilder.createTestWorld(100, 10);
 
             world.ForEach((v, _) =>
                 {

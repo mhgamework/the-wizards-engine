@@ -23,6 +23,14 @@ namespace MHGameWork.TheWizards.GodGame.Types
             {
                 meshBuilders.Add(new FourWayModelBuilder { BaseMesh = MeshBuilder.Transform(mesh, Matrix.Translation(0, -0.9f + (0.9f / maxDataVal) * i, 0)), /*NoWayMesh = datavalueMeshes[999]*/ });
             }
+
+            ReceiveCreationEvents = true;
+        }
+
+        public override void OnCreated(IVoxel handle)
+        {
+            var minHeight = handle.Get4Connected().Min(e => e.Data.Height);
+            handle.Data.Height = minHeight;
         }
 
         public override void Tick(IVoxelHandle handle)

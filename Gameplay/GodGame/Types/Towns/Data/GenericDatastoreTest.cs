@@ -18,8 +18,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Data
 
         private static XElement serialize()
         {
-            var world = new Internal.Model.World((w, p) => new GameVoxel(w, p, new ProxyGenerator()));
-            world.Initialize(10, 10);
+            var world = TestWorldBuilder.createTestWorld(10, 10);
             var store = new GenericDatastore(world);
 
             var list = store.RootRecord.GetList("Towns", r => new Town(null, r));
@@ -45,8 +44,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Data
             var el = serialize();
 
 
-            var world = new Internal.Model.World((w, p) => new GameVoxel(w, p, new ProxyGenerator()));
-            world.Initialize(10, 10);
+            var world = TestWorldBuilder.createTestWorld(10, 10); 
             var store = new GenericDatastore(world);
 
 

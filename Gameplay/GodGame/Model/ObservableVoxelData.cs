@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.GodGame
 
         public ObservableVoxelData(Action onChange, ProxyGenerator proxyGenerator)
         {
-            this.onChange = onChange;
+            this.onChange = () => { }; // Assign empty while constructing
             this.proxyGenerator = proxyGenerator;
 
             //Warning: assumes inventory object does not change in the decorated data
@@ -29,6 +29,8 @@ namespace MHGameWork.TheWizards.GodGame
             basicExtension.Infestation = InfestationVoxelType.InfestationData.Emtpy;
 
             Inventory.Changed += onChange;
+            this.onChange = onChange;// Assign last so that it is only called after construction
+
         }
 
 

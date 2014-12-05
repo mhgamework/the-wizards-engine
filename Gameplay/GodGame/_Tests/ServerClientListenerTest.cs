@@ -29,8 +29,8 @@ namespace MHGameWork.TheWizards.GodGame._Tests
         [SetUp]
         public void Setup()
         {
-            world = new Internal.Model.World((w, p) => new GameVoxel(w, p, new ProxyGenerator()));
-            world.Initialize(20, 10);
+            world = TestWorldBuilder.createTestWorld(20, 10);
+            
             gameState = new GameState(world);
 
             inputHandler = Substitute.For<IPlayerInputHandler>();

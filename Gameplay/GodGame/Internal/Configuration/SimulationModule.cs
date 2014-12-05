@@ -28,9 +28,11 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Configuration
             //builder.RegisterType<Model.World>().SingleInstance();
             builder.Register<Func<Model.World, Point2, GameVoxel>>(ctx =>
                 {
-                    var proxyGenerator = ctx.Resolve<ProxyGenerator>();
-                    return (w, p) => new GameVoxel(w, p, proxyGenerator);
+                    //var proxyGenerator = ctx.Resolve<ProxyGenerator>();
+                    return (w, p) => new GameVoxel(w, p);
                 }).AsSelf().SingleInstance();
+
+            builder.RegisterType<VoxelContentsFactory>().SingleInstance();
 
             // Other
             builder.RegisterType<WorldSimulationService>().SingleInstance();

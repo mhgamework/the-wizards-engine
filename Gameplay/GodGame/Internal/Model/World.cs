@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Castle.DynamicProxy;
 using DirectX11;
+using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
 using MHGameWork.TheWizards.Scattered._Engine;
@@ -17,19 +18,26 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
     ///     - GameVoxel data structure, defining coords and neighbours
     ///     - World to voxel coords
     ///     - Storing a list of changes to gamevoxels
+    /// 
+    /// Rethink of responsibilities:
+    ///     Responsible for lifecycle and manipulation of 'voxels'
+    ///     A voxel refers is a 'unit of space', this space can contain things
+    ///     The world is responsible for manipulating the state of this voxel unit of space
     /// </summary>
     public class World
     {
         private readonly Func<World, Point2, GameVoxel> createVoxel;
+        private readonly ProxyGenerator generator;
         public Vector2 VoxelSize { get; private set; }
         private Array2D<GameVoxel> voxels;
         public int WorldSize { get { return voxels.Size.X; } }
 
 
 
-        public World(Func<World, Point2, GameVoxel> createVoxel)
+        public World( Func<World, Point2, GameVoxel> createVoxel,ProxyGenerator generator)
         {
             this.createVoxel = createVoxel;
+            this.generator = generator;
         }
 
         public void Initialize(int size, float voxelSize)
@@ -92,19 +100,61 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
             get { return changedVoxels; }
         }
 
-        private Subject<IVoxel> voxelChanged;
+        private Subject<IVoxel> voxelChanged = new Subject<IVoxel>();
         public IObservable<IVoxel> VoxelChanged { get { return voxelChanged.AsObservable(); } }
-        public void NotifyVoxelChanged(GameVoxel v)
+        public void NotifyVoxelChanged(IVoxel v)
         {
-            changedVoxels.Add(v);
+            changedVoxels.Add((GameVoxel)v);
             voxelChanged.OnNext(v);
         }
 
         public void ClearChangedFlags()
         {
-            foreach (var voxel in ChangedVoxels)
-                voxel.TypeChanged = false;
             changedVoxels.Clear();
         }
+
+        /// <summary>
+        /// This method changes the type of the given voxel, changing its contents
+        /// </summary>
+        public void ChangeType(IVoxel currentVoxel, IGameVoxelType type)
+        {
+            DestroyVoxelContents(currentVoxel);
+            CreateVoxelContents(currentVoxel, type);
+
+        }
+
+        public void DestroyVoxelContents(IVoxel voxel)
+        {
+            if (voxel.Data != null && voxel.Data.Type != null)
+                voxel.Data.Type.OnDestroyed(voxel);
+
+            //Destroy contents, but height is not considered contents so keep that
+
+            //note: put gameplay-related changes here
+            var prevHeight = 0f;
+            if (voxel.Data != null) prevHeight = voxel.Data.Height;
+            ((GameVoxel)voxel).Data = new ObservableVoxelData(() =>
+            {
+                if (voxel.Data == null) return; // Ignore changes in the observablevoxeldata constructor
+                NotifyVoxelChanged(voxel);
+            }, generator);
+            voxel.Data.Height = prevHeight;
+        }
+
+        public void CreateVoxelContents(IVoxel voxel, IGameVoxelType type)
+        {
+            voxel.Data.Type = type;
+
+            type.OnCreated(voxel); // Maybe register this too as an event
+            created.OnNext(voxel);
+
+        }
+
+        private Subject<IVoxel> created = new Subject<IVoxel>();
+        /// <summary>
+        /// Observable for all voxels for which contents were created
+        /// </summary>
+        public IObservable<IVoxel> Created { get { return created.AsObservable(); } }
+
     }
 }

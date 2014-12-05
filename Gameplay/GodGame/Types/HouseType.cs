@@ -70,13 +70,13 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         private Dictionary<IVoxel, SimpleWorkerProducer> producers = new Dictionary<IVoxel, SimpleWorkerProducer>();
 
-        public override void OnCreated(IVoxelHandle handle)
+        public override void OnCreated(IVoxel handle)
         {
-            producers[handle.GetInternalVoxel()] = new SimpleWorkerProducer() { ProvidedWorkersAmount = 10 };
+            producers[handle] = new SimpleWorkerProducer() { ProvidedWorkersAmount = 10 };
         }
-        public override void OnDestroyed(IVoxelHandle handle)
+        public override void OnDestroyed(IVoxel handle)
         {
-            producers.Remove(handle.GetInternalVoxel());
+            producers.Remove(handle);
         }
 
         public IWorkerProducer GetWorkerProducer(IVoxelHandle handle)

@@ -311,7 +311,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
             protected set { receiveCreationEvents = value; }
         }
 
-        public virtual void OnCreated(IVoxelHandle handle)
+        public virtual void OnCreated(IVoxel handle)
         {
             foreach (var addon in addons.Values)
             {
@@ -320,7 +320,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
                 inst.OnCreated(handle);
             }
         }
-        public virtual void OnDestroyed(IVoxelHandle handle)
+        public virtual void OnDestroyed(IVoxel handle)
         {
             foreach (var addon in addons.Values)
             {
@@ -332,23 +332,22 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
 
         private Dictionary<Type, ConfiguredAddon> addons = new Dictionary<Type, ConfiguredAddon>();
-        private ConfiguredAddon configuredAddon;
 
-        protected void RegisterAddonType<T>(Func<IVoxelHandle, T> create) where T : VoxelInstanceAddon
+        protected void RegisterAddonType<T>(Func<IVoxel, T> create) where T : VoxelInstanceAddon
         {
             if (addons.ContainsKey(typeof(T))) throw new InvalidOperationException("Already configured");
 
             addons[typeof(T)] = new ConfiguredAddon(typeof(T), create);
         }
 
-        public T GetAddon<T>(IVoxelHandle handle) where T : VoxelInstanceAddon
+        public T GetAddon<T>(IVoxel handle) where T : VoxelInstanceAddon
         {
-            configuredAddon = addons[typeof(T)];
+            var configuredAddon = addons[typeof(T)];
 
             return (T)configuredAddon.Instances[handle];
         }
 
-        public bool HasAddon<T>(IVoxelHandle handle) where T : VoxelInstanceAddon
+        public bool HasAddon<T>(IVoxel handle) where T : VoxelInstanceAddon
         {
 
             if (!addons.ContainsKey(typeof(T))) return false;
@@ -366,7 +365,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
 
             var voxelAddons =
-                addons.Values.Where(v => v.Instances.ContainsKey(handle)).Select(v => v.Instances[handle]).ToArray();
+                addons.Values.Where(v => v.Instances.ContainsKey(handle.GetInternalVoxel())).Select(v => v.Instances[handle.GetInternalVoxel()]).ToArray();
             if (voxelAddons.Length > 0)
             {
                 foreach (var addon in voxelAddons)
@@ -390,12 +389,12 @@ namespace MHGameWork.TheWizards.GodGame.Types
         private sealed class ConfiguredAddon
         {
             public Type AddonType { get; private set; }
-            public Func<IVoxelHandle, VoxelInstanceAddon> CreateAddon { get; private set; }
+            public Func<IVoxel, VoxelInstanceAddon> CreateAddon { get; private set; }
 
-            public Dictionary<IVoxelHandle, VoxelInstanceAddon> Instances =
-                new Dictionary<IVoxelHandle, VoxelInstanceAddon>();
+            public Dictionary<IVoxel, VoxelInstanceAddon> Instances =
+                new Dictionary<IVoxel, VoxelInstanceAddon>();
 
-            public ConfiguredAddon(Type addonType, Func<IVoxelHandle, VoxelInstanceAddon> createAddon)
+            public ConfiguredAddon(Type addonType, Func<IVoxel, VoxelInstanceAddon> createAddon)
             {
                 AddonType = addonType;
                 CreateAddon = createAddon;
