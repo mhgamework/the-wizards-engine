@@ -102,6 +102,9 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
 
         private Subject<IVoxel> voxelChanged = new Subject<IVoxel>();
         public IObservable<IVoxel> VoxelChanged { get { return voxelChanged.AsObservable(); } }
+        /// <summary>
+        /// Idea: replace this with a 'Wake/Sleep mechanism?'
+        /// </summary>
         public void NotifyVoxelChanged(IVoxel v)
         {
             changedVoxels.Add((GameVoxel)v);
