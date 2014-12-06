@@ -50,5 +50,16 @@ namespace MHGameWork.TheWizards.GodGame.Types
             nextUpdate = TW.Graphics.TotalRunTime + 1;
             townCenterService.Towns.ForEach(t => workersService.UpdateWorkerDistribution(t));
         }
+
+        protected override string getDebugDescription(IVoxelHandle handle)
+        {
+            Town town = townCenterService.GetTownForVoxel((IVoxel) handle);
+            var totalWorkers = town.Producers.Sum(p => p.ProvidedWorkersAmount);
+            var assignedWorkers = town.Consumers.Sum(p => p.AllocatedWorkersCount);
+            return string.Format("Workers: {0:000} - Assigned: {1:000}\nNextUpdate: {2}",
+                                 totalWorkers,
+                                 assignedWorkers,
+                                 (nextUpdate - TW.Graphics.TotalRunTime).ToString("00.00"));
+        }
     }
 }
