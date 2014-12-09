@@ -205,6 +205,10 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
     public class SimpleWorkerConsumer : IWorkerConsumer
     {
         public int RequestedWorkersCount { get; set; }
-        public int AllocatedWorkersCount { get; set; }
+        public int AllocatedWorkersCount { get; private set; }
+        public void AllocateWorkers(int amount)
+        {
+            AllocatedWorkersCount = amount;
+        }
     }
 }

@@ -5,6 +5,7 @@ using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Scattered.Model;
+using MHGameWork.TheWizards.SkyMerchant._Tests.Ideas;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.GodGame.Types
@@ -16,29 +17,32 @@ namespace MHGameWork.TheWizards.GodGame.Types
             : base("Ore")
         {
             oreItemType = factory.CrystalType;
+            ReceiveCreationEvents = true;
+
+        }
+
+        public override void OnCreated(IVoxel handle)
+        {
+            handle.SetPart(new Ore() { ResourceCount = 1 });
+            base.OnCreated(handle);
+        }
+
+        public override void OnDestroyed(IVoxel handle)
+        {
+            handle.SetPart<Ore>(null);
+            base.OnDestroyed(handle);
+        }
+
+        public override void Tick(IVoxelHandle handle)
+        {
+            if (handle.GetInternalVoxel().GetPart<Ore>().IsDepleted())
+                handle.ChangeType(Land);
         }
 
 
         public ItemType GetOreItemType(IVoxelHandle target)
         {
             return oreItemType;
-        }
-
-        public void MineResource(IVoxelHandle target, Inventory inventory)
-        {
-            if (target.Data.DataValue > 0)
-            {
-                var type = GetOreItemType(target);
-                if (inventory.CanAdd(type, 1))
-                {
-                    inventory.AddNewItems(type, 1);
-                    target.Data.DataValue -= 1;    
-                }
-                
-            }
-
-            if (target.Data.DataValue == 0)
-                target.ChangeType(Land);
         }
 
     }

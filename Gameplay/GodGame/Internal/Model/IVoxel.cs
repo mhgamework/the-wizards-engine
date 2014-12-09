@@ -1,4 +1,5 @@
 ﻿using DirectX11;
+using NSubstitute.Routing.Handlers;
 
 namespace MHGameWork.TheWizards.GodGame.Internal.Model
 {
@@ -25,5 +26,18 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         /*ITileType Type { get; set; }
         ITile Tile { get; set; }
         float Height { get; set; }*/
+        /// <summary>
+        /// Check if the voxel has given contents
+        /// </summary>
+        bool HasPart<T>();
+        /// <summary>
+        /// Get contents of type T
+        /// </summary>
+        T GetPart<T>();
+
+        /// <summary>
+        /// Probably should not be on this interface, but inside a service
+        /// </summary>
+        void SetPart<T>(T value) where T : class;
     }
 }

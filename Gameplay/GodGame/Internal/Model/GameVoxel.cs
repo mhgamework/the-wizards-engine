@@ -26,7 +26,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
             this.gen = gen;
             this.Coord = coord;
             initVoxelHandler();
-            
+
 
         }
 
@@ -46,6 +46,27 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         }
 
         public IVoxelData Data { get; set; }
+
+        private Dictionary<Type, object> parts = new Dictionary<Type, object>();
+        public bool HasPart<T>()
+        {
+            return parts.ContainsKey(typeof(T));
+        }
+
+        public T GetPart<T>()
+        {
+            return (T)parts[typeof(T)];
+        }
+
+        public void SetPart<T>(T value) where T : class
+        {
+            if (value == null)
+            {
+                parts.Remove(typeof (T));
+                return;
+            }
+            parts[typeof(T)] = value;
+        }
 
         public World World
         {

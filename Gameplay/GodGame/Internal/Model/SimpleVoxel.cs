@@ -25,6 +25,20 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         }
 
         public IVoxelData Data { get; private set; }
+        public bool HasPart<T>()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public T GetPart<T>()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetPart<T>(T value) where T : class
+        {
+            throw new System.NotImplementedException();
+        }
 
         public override string ToString()
         {

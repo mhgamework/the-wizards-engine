@@ -27,7 +27,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
 
             foreach (var c in consumer)
             {
-                c.AllocatedWorkersCount = (int)Math.Floor(c.RequestedWorkersCount * availability);
+                c.AllocateWorkers((int)Math.Floor(c.RequestedWorkersCount * availability));
             }
 
             if (totalWorkers >= totalRequired) return;
@@ -41,7 +41,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns.Workers
                 if (c.AllocatedWorkersCount > c.RequestedWorkersCount)
                     continue;
                 if (unassigned == 0) break;
-                c.AllocatedWorkersCount++;
+                c.AllocateWorkers(c.AllocatedWorkersCount + 1);
                 unassigned--;
             }
 

@@ -4,6 +4,8 @@
     {
         int RequestedWorkersCount { get; }
 
-        int AllocatedWorkersCount { get; set; } //TODO: make set private
+        int AllocatedWorkersCount { get; }
+        void AllocateWorkers(int amount);
+
     }
 }
