@@ -59,7 +59,6 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public float CalculateEfficiency()
         {
-            return 1;
             return GetAllocatedWorkers() / (float)MaxWorkers;
         }
 
