@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Castle.DynamicProxy;
 using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.Types;
+using MHGameWork.TheWizards.GodGame.Types.Transportation;
 using MHGameWork.TheWizards.GodGame._Engine.IntefaceToData;
 using MHGameWork.TheWizards.Reflection;
 using MHGameWork.TheWizards.Scattered.Model;

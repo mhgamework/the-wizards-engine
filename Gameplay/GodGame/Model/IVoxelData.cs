@@ -1,6 +1,7 @@
 ﻿using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Types;
+using MHGameWork.TheWizards.GodGame.Types.Transportation;
 using MHGameWork.TheWizards.GodGame._Tests;
 using MHGameWork.TheWizards.Scattered.Model;
 

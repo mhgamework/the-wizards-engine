@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
+using MHGameWork.TheWizards.GodGame.Types.Transportation;
 using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.SkyMerchant._Tests.Ideas;

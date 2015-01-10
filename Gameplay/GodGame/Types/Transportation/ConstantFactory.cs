@@ -1,66 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame.Types.Transportation.Generic;
+using MHGameWork.TheWizards.GodGame.Types.Transportation.Services;
 using MHGameWork.TheWizards.Scattered.Model;
 using System.Linq;
 
-namespace MHGameWork.TheWizards.GodGame.Types
+namespace MHGameWork.TheWizards.GodGame.Types.Transportation
 {
-    public class ConstantFactory
+    public class ConstantFactory : ITickable
     {
-        public Inventory Inventory { get; private set; }
+        private readonly IVoxel handle;
 
-        public float Rate;
-        public ItemSet CreatedItemsSet;
-
-    }
-
-    /// <summary>
-    /// Immutable set of items
-    /// </summary>
-    public struct ItemSet
-    {
-        private ItemType[] items;
-
-        public ItemSet(IEnumerable<ItemType> items)
+        public ConstantFactory(IVoxel handle)
         {
-            this.items = items.ToArray();
+            this.handle = handle;
         }
 
-        public ItemSet(ItemType type, int amount)
+        public float Rate = 10;
+
+        public ItemType[] ItemsToGenerate = new ItemType[0];
+
+        public void MoveItemsIntoNearbyWarehouse(ItemType[] items)
         {
-            items = Enumerable.Repeat(type, amount).ToArray();
-        }
-
-        public ItemSet Add(ItemType type, int amount)
-        {
-            return new ItemSet(items.Concat(Enumerable.Repeat(type, amount)));
-
-
-        }
-        public ItemSet Subtract(ItemType type, int amount)
-        {
-            if (items.Count(i => i == type) < amount) throw new InvalidOperationException();
-            //TODO
-        }
-
-        public IEnumerable<ItemType> allItems()
-        {
-            //return entries.SelectMany(e => Enumerable.Repeat(e.Type, e.Amount));
-        }
-
-        public struct Entry
-        {
-            public ItemType Type { get; private set; }
-            public int Amount { get; private set; }
-
-            public Entry(ItemType type, int amount)
-                : this()
+            foreach (var i in items)
             {
-                Type = type;
-                Amount = amount;
+                var warehouse = handle.Get4Connected().FirstOrDefault(v => v.Data.Type is WarehouseType && v.Data.Inventory.AvailableSlots > 0);
+                if (warehouse == null) return;
+                warehouse.Data.Inventory.AddNewItems(i, 1);
             }
         }
+
+        private float nextTick;
+        public void Tick()
+        {
+            //TODO: use scheduler
+            if (nextTick > TW.Graphics.TotalRunTime) return;
+            nextTick = TW.Graphics.TotalRunTime + Rate;
+            TransportationService.MoveItemsIntoNearbyWarehouse(handle,ItemsToGenerate);
+        }
+
     }
-
-
 }

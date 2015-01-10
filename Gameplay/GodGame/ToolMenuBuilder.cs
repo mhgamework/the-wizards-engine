@@ -9,6 +9,9 @@ using MHGameWork.TheWizards.GodGame.ToolSelection;
 using MHGameWork.TheWizards.GodGame.Types;
 using System.Linq;
 using MHGameWork.TheWizards.GodGame.Types.Towns;
+using MHGameWork.TheWizards.GodGame.Types.Transportation;
+using MHGameWork.TheWizards.GodGame.Types.Transportation.Generic;
+using MHGameWork.TheWizards.Scattered.Model;
 
 namespace MHGameWork.TheWizards.GodGame
 {
@@ -22,18 +25,21 @@ namespace MHGameWork.TheWizards.GodGame
         private readonly Func<string, ToolSelectionCategory> createCategory;
         private readonly ToolSelectionTool.Factory createToolItem;
         private readonly IIndex<Type, PlayerTool> getPlayerTool;
+        private readonly ItemTypesFactory itemTypesFactory;
 
         public ToolMenuBuilder(VoxelTypesFactory typesFactory,
             Internal.Model.World world,
             Func<string, ToolSelectionCategory> createCategory,
             ToolSelectionTool.Factory createToolItem,
-            IIndex<Type, PlayerTool> getPlayerTool)
+            IIndex<Type, PlayerTool> getPlayerTool,
+            ItemTypesFactory itemTypesFactory)
         {
             this.typesFactory = typesFactory;
             this.world = world;
             this.createCategory = createCategory;
             this.createToolItem = createToolItem;
             this.getPlayerTool = getPlayerTool;
+            this.itemTypesFactory = itemTypesFactory;
         }
 
         public bool CheatmodeEnabled { get; set; }
@@ -42,6 +48,8 @@ namespace MHGameWork.TheWizards.GodGame
         {
 
             var ret = new List<IToolSelectionItem>();
+
+            ret.Add(createTransportation());
 
             ret.Add(getVoxelType<RoadType>());
             ret.Add(createCat("Towns",
@@ -101,9 +109,45 @@ namespace MHGameWork.TheWizards.GodGame
             return ret;
         }
 
+        private ToolSelectionCategory createTransportation()
+        {
+            GenericVoxelType<BasicFactory> basicFactory = new GenericVoxelType<BasicFactory>(v => new BasicFactory(v));
+            GenericVoxelType<ConstantFactory> constantFactory = new GenericVoxelType<ConstantFactory>(v => new ConstantFactory(v));
+
+
+            return createCat("Transportation",
+                             getVoxelType<RoadType>(),
+                             getVoxelType<WarehouseType>(),
+                             toToolItem(new DelegatePlayerTool("ConstantFood", v => v.ChangeType(typesFactory.Get<LandType>()), v
+                                                                                                                                =>
+                                 {
+                                     v.ChangeType(constantFactory);
+                                     var fact = ((IVoxel)v).GetPart<ConstantFactory>();
+                                     fact.Rate = 1;
+                                     fact.ItemsToGenerate = new[] { itemTypesFactory.CropType };
+
+                                 })),
+                             toToolItem(new DelegatePlayerTool("BasicFoodToPizza",
+                                                    v => v.ChangeType(typesFactory.Get<LandType>()), v =>
+                                                        {
+                                                            v.ChangeType(basicFactory);
+                                                            var fact = ((IVoxel)v).GetPart<BasicFactory>();
+                                                            fact.EfficiencySpeedMultiplier = 1;
+                                                            fact.Input = new[]
+                                                                {
+                                                                    itemTypesFactory.CropType, itemTypesFactory.CropType,
+                                                                    itemTypesFactory.CropType
+                                                                };
+                                                            fact.Output = new[] {itemTypesFactory.PigmentType};
+                                                        }))
+);
+
+
+        }
+
         private ToolSelectionTool getTool<T>() where T : PlayerTool
         {
-            return toToolItem(getPlayerTool[typeof (T)]);
+            return toToolItem(getPlayerTool[typeof(T)]);
         }
         private ToolSelectionTool getVoxelType<T>() where T : GameVoxelType
         {

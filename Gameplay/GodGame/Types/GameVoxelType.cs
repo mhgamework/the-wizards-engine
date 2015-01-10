@@ -10,6 +10,7 @@ using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.GodGame.Model;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.GodGame.Types.Towns.Workers;
+using MHGameWork.TheWizards.GodGame.Types.Transportation;
 using MHGameWork.TheWizards.GodGame.VoxelInfoVisualizers;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;

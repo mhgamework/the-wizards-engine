@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.Scattered.Model;
 
-namespace MHGameWork.TheWizards.GodGame.Types
+namespace MHGameWork.TheWizards.GodGame.Types.Transportation
 {
     public class RoadFilterType : GameVoxelType
     {

@@ -1,4 +1,5 @@
 ﻿using MHGameWork.TheWizards.GodGame.Types;
+using MHGameWork.TheWizards.GodGame.Types.Transportation;
 using MHGameWork.TheWizards.Scattered.Model;
 
 namespace MHGameWork.TheWizards.GodGame.Model
