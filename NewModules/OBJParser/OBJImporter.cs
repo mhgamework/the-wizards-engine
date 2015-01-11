@@ -109,7 +109,7 @@ namespace MHGameWork.TheWizards.OBJParser
                         Vector3 vt;
                         vt.X = float.Parse(pieces[dataStart + 0], culture.NumberFormat);
                         vt.Y = float.Parse(pieces[dataStart + 1], culture.NumberFormat);
-                        vt.Z = float.Parse(pieces[dataStart + 2], culture.NumberFormat);
+                        vt.Z = pieces.Length < 4 ? 0 : float.Parse(pieces[dataStart + 2], culture.NumberFormat);
                         TexCoords.Add(vt);
                         break;
                     case "g":
@@ -318,7 +318,7 @@ namespace MHGameWork.TheWizards.OBJParser
             {
                 fv.Normal = int.Parse(facePiece[2]);//TODO: This might need to bee texcoords
             }
-                
+
             return fv;
         }
 
