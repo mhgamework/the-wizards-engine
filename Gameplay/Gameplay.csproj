@@ -307,8 +307,11 @@
     <Compile Include="GodGame\Types\Towns\TownsModule.cs" />
     <Compile Include="GodGame\Types\Transportation\BasicFactory.cs" />
     <Compile Include="GodGame\Types\Transportation\ConstantFactory.cs" />
+    <Compile Include="GodGame\Types\Transportation\Puller.cs" />
     <Compile Include="GodGame\Types\Transportation\Generic\GenericVoxelType.cs" />
+    <Compile Include="GodGame\Types\Transportation\Generic\IRoadComponent.cs" />
     <Compile Include="GodGame\Types\Transportation\Generic\ITickable.cs" />
+    <Compile Include="GodGame\Types\Transportation\Pusher.cs" />
     <Compile Include="GodGame\Types\Transportation\RoadFilterType.cs" />
     <Compile Include="GodGame\Types\Transportation\RoadType.cs" />
     <Compile Include="GodGame\Types\MinerType.cs" />
@@ -320,7 +323,9 @@
     <Compile Include="GodGame\Types\Towns\Workers\IWorkerProducer.cs" />
     <Compile Include="GodGame\Types\Towns\Workers\WorkersService.cs" />
     <Compile Include="GodGame\Types\Towns\Workers\WorkersTest.cs" />
-    <Compile Include="GodGame\Types\Transportation\Services\TransportationService.cs" />
+    <Compile Include="GodGame\Types\Transportation\Services\RoadService.cs" />
+    <Compile Include="GodGame\Types\Transportation\Services\WarehouseService.cs" />
+    <Compile Include="GodGame\Types\Transportation\_Tests\FactoriesTest.cs" />
     <Compile Include="GodGame\Types\VoxelInstanceAddon.cs" />
     <Compile Include="GodGame\Types\VoxelMeshBuilder.cs" />
     <Compile Include="GodGame\VoxelInfoVisualizers\ValueControlVisualizer.cs" />

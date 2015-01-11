@@ -44,5 +44,13 @@ namespace MHGameWork.TheWizards.GodGame.Types.Transportation.Generic
             return ret;
         }
 
+        public override bool CanAcceptItemType(IVoxelHandle voxelHandle, Scattered.Model.ItemType type)
+        {
+            if (typeof(T).GetInterfaces().Contains(typeof(IRoadComponent)))
+                return ((IRoadComponent)((IVoxel)voxelHandle).GetPart<T>()).CanAcceptItem((IVoxel)voxelHandle, type);
+            else
+                return base.CanAcceptItemType(voxelHandle, type);
+        }
+
     }
 }

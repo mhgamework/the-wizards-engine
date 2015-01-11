@@ -6,9 +6,9 @@ using MHGameWork.TheWizards.Scattered.Model;
 
 namespace MHGameWork.TheWizards.GodGame.Types.Transportation.Services
 {
-    public class TransportationService
+    public static class WarehouseService
     {
-        public static void MoveItemsIntoNearbyWarehouse(IVoxel voxel, ItemType[] items)
+        public static void MoveToWarehouse(IVoxel voxel, ItemType[] items)
         {
             foreach (var i in items)
             {
@@ -18,7 +18,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Transportation.Services
             }
         }
 
-        public static bool CanStoreItemsInNearbyWarehouses(IVoxel voxel, ItemType[] output)
+        public static bool CanMoveToWarehouse(IVoxel voxel, ItemType[] output)
         {
             return GetConnectedWarehouses(voxel).Sum(v => v.Data.Inventory.AvailableSlots) >= output.Length;
         }
@@ -28,9 +28,9 @@ namespace MHGameWork.TheWizards.GodGame.Types.Transportation.Services
             return voxel.Get4Connected().Where(v => v.Data.Type is WarehouseType);
         }
 
-        public static void TakeItemsFromNearbyWarehouses(IVoxel voxel, ItemType[] input)
+        public static void TakeFromWarehouse(IVoxel voxel, ItemType[] input)
         {
-            if (!CanTakeItemsFromNearbyWarehouses(voxel, input)) throw new InvalidOperationException("Can't take items");
+            if (!CanTakeFromWarehouse(voxel, input)) throw new InvalidOperationException("Can't take items");
             foreach (var i in input)
             {
                 var warehouse = GetConnectedWarehouses(voxel).FirstOrDefault(v => v.Data.Inventory.Items.Contains(i));
@@ -39,15 +39,21 @@ namespace MHGameWork.TheWizards.GodGame.Types.Transportation.Services
             }
         }
 
-        public static bool CanTakeItemsFromNearbyWarehouses(IVoxel handle, ItemType[] input)
+        public static bool CanTakeFromWarehouse(IVoxel handle, ItemType[] input)
         {
             IEnumerable<ItemType> allInputs = GetConnectedWarehouses(handle).SelectMany(v => v.Data.Inventory.Items);
             var counts = getCounts(allInputs);
             foreach (var c in getCounts(input))
             {
+                if (!counts.ContainsKey(c.Key)) return false;
                 if (counts[c.Key] < c.Value) return false;
             }
             return true;
+        }
+
+        public static IEnumerable<ItemType> GetItemsInWarehouses(IVoxel handle)
+        {
+            return GetConnectedWarehouses(handle).SelectMany(w => w.Data.Inventory.Items);
         }
 
         private static Dictionary<ItemType, int> getCounts(IEnumerable<ItemType> input)

@@ -23,6 +23,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
 
         public override bool CanAcceptItemType(IVoxelHandle voxelHandle, ItemType type)
         {
+            return false;
             return voxelHandle.Data.Inventory.AvailableSlots > 0;
         }
 

@@ -53,8 +53,8 @@ namespace MHGameWork.TheWizards.GodGame.Types.Transportation
 
         private bool tryStartWork()
         {
-            if (!TransportationService.CanTakeItemsFromNearbyWarehouses(handle, Input)) return false;
-            TransportationService.TakeItemsFromNearbyWarehouses(handle, Input);
+            if (!WarehouseService.CanTakeFromWarehouse(handle, Input)) return false;
+            WarehouseService.TakeFromWarehouse(handle, Input);
             IsWorking = true;
             WorkCompleteAt = MathHelper.Lerp(ProcessingTime, ProcessingTime * EfficiencySpeedMultiplier, Efficiency) + TW.Graphics.TotalRunTime;
             return true;
@@ -63,8 +63,8 @@ namespace MHGameWork.TheWizards.GodGame.Types.Transportation
         private bool doWork()
         {
             if (TW.Graphics.TotalRunTime < WorkCompleteAt) return false;
-            if (!TransportationService.CanStoreItemsInNearbyWarehouses(handle, Output)) return false;
-            TransportationService.MoveItemsIntoNearbyWarehouse(handle, Output);
+            if (!WarehouseService.CanMoveToWarehouse(handle, Output)) return false;
+            WarehouseService.MoveToWarehouse(handle, Output);
             IsWorking = false;
             return true;
         }

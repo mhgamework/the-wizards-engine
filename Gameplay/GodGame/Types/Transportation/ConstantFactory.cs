@@ -35,7 +35,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Transportation
             //TODO: use scheduler
             if (nextTick > TW.Graphics.TotalRunTime) return;
             nextTick = TW.Graphics.TotalRunTime + Rate;
-            TransportationService.MoveItemsIntoNearbyWarehouse(handle,ItemsToGenerate);
+            WarehouseService.MoveToWarehouse(handle,ItemsToGenerate);
         }
 
     }

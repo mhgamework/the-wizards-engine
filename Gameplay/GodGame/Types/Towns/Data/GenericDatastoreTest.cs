@@ -2,6 +2,7 @@
 using Castle.DynamicProxy;
 using DirectX11;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.GodGame._Tests;
 using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.GodGame.Types.Towns.Data

@@ -71,5 +71,10 @@ namespace MHGameWork.TheWizards
             foreach (var l in list)
                 action(l);
         }
+
+        public static T[] Single<T>(this T obj)
+        {
+            return new[] {obj};
+        }
     }
 }

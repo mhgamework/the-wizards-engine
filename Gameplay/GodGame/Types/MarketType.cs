@@ -78,7 +78,7 @@ namespace MHGameWork.TheWizards.GodGame.Types
         }
 
         //market should get its resources on its own
-        /*public override bool CanAcceptItemType(IVoxelHandle handle, ItemType type)
+        /*public override bool CanAcceptItem(IVoxelHandle handle, ItemType type)
         {
             if (!marketInventory.Any(e => e.ItemType == type)) return false;
 
