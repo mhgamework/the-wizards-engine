@@ -113,6 +113,8 @@ namespace MHGameWork.TheWizards.GodGame
         {
             GenericVoxelType<BasicFactory> basicFactory = new GenericVoxelType<BasicFactory>(v => new BasicFactory(v));
             GenericVoxelType<ConstantFactory> constantFactory = new GenericVoxelType<ConstantFactory>(v => new ConstantFactory(v));
+            GenericVoxelType<Puller> puller = new GenericVoxelType<Puller>(v => new Puller(v));
+            GenericVoxelType<Pusher> pusher = new GenericVoxelType<Pusher>(v => new Pusher(v));
 
 
             return createCat("Transportation",
@@ -139,7 +141,11 @@ namespace MHGameWork.TheWizards.GodGame
                                                                     itemTypesFactory.CropType
                                                                 };
                                                             fact.Output = new[] {itemTypesFactory.PigmentType};
-                                                        }))
+                                                        })),
+                             toToolItem(createTypeInput(puller)),
+                             toToolItem(createTypeInput(pusher))
+                            
+
 );
 
 

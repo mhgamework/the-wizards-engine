@@ -5,11 +5,9 @@ using System.Linq;
 
 namespace MHGameWork.TheWizards.GodGame.Types.Transportation
 {
-    public class Pusher :ITickable
+    public class Pusher : ITickable
     {
         public float PushSpeed = 1;
-
-        
 
         private float nextTick = 0;
         private IVoxel voxel;
@@ -28,8 +26,8 @@ namespace MHGameWork.TheWizards.GodGame.Types.Transportation
             if (item == null) return;
             //TODO: if cant push first item, try items of other types too!
             if (!RoadService.CanPush(voxel, item)) return;
-            WarehouseService.TakeFromWarehouse(voxel,new []{item});
-            RoadService.Push(voxel,  item );
+            WarehouseService.TakeFromWarehouse(voxel, new[] { item });
+            RoadService.Push(voxel, item);
 
         }
     }

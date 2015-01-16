@@ -15,7 +15,7 @@ namespace MHGameWork.TheWizards
         [STAThread]
         public static void Main()
         {
-            Thread.Sleep(2000);
+            Thread.Sleep(2000); //TODO: why is this here?
             var eng = new Engine.TWEngine();
             //eng.GameplayDll = "..Gameplay.dll";
             eng.HotloadingEnabled = true;

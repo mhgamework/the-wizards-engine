@@ -50,8 +50,18 @@ namespace MHGameWork.TheWizards.GodGame.Internal
                 using (var fs = file.OpenRead())
                     sWorld = (SerializedWorld)createXmlSerializer().Deserialize(fs);
 
-                var doc = XDocument.Load(Path.ChangeExtension(file.FullName, "data.xml"));
-                genericDatastore.Deserialize(doc.Elements().First());
+                try
+                {
+                    var doc = XDocument.Load(Path.ChangeExtension(file.FullName, "data.xml"));
+                    genericDatastore.Deserialize(doc.Elements().First());
+                }
+                catch (Exception ex2)
+                {
+                    DI.Get<IErrorLogger>().Log(ex2, "Genericdatastore");
+
+                    
+                }
+        
 
             }
             catch (Exception ex)
