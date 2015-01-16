@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Castle.DynamicProxy;
 using DirectX11;
+using MHGameWork.TheWizards.GodGame.Persistence.POSystem;
 using MHGameWork.TheWizards.GodGame.Types;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
@@ -24,7 +25,8 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
     ///     A voxel refers is a 'unit of space', this space can contain things
     ///     The world is responsible for manipulating the state of this voxel unit of space
     /// </summary>
-    public class World
+    [PersistedObject]
+    public class World :IPOEventsReceiver
     {
         private readonly Func<World, Point2, GameVoxel> createVoxel;
         private readonly ProxyGenerator generator;
@@ -34,7 +36,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
 
 
 
-        public World( Func<World, Point2, GameVoxel> createVoxel,ProxyGenerator generator)
+        public World(Func<World, Point2, GameVoxel> createVoxel, ProxyGenerator generator)
         {
             this.createVoxel = createVoxel;
             this.generator = generator;
@@ -159,5 +161,14 @@ namespace MHGameWork.TheWizards.GodGame.Internal.Model
         /// </summary>
         public IObservable<IVoxel> Created { get { return created.AsObservable(); } }
 
+        public void OnBeforeSerialize()
+        {
+
+        }
+
+        public void OnAfterDeserialize()
+        {
+
+        }
     }
 }

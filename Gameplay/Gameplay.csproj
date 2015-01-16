@@ -229,6 +229,10 @@
     <Compile Include="GodGame\Internal\Rendering\GameVoxelTypeMeshProvider.cs" />
     <Compile Include="GodGame\Internal\Rendering\IMeshProvider.cs" />
     <Compile Include="GodGame\Internal\Rendering\InGameMeshProvider.cs" />
+    <Compile Include="GodGame\Persistence\POSystem\DoNotPersistAttribute.cs" />
+    <Compile Include="GodGame\Persistence\POSystem\IPOEventsReceiver.cs" />
+    <Compile Include="GodGame\Persistence\POSystem\PersistedObjectAttribute.cs" />
+    <Compile Include="GodGame\Persistence\POSystem\POSystemTest.cs" />
     <Compile Include="GodGame\Types\IndustryBuildingAddon.cs" />
     <Compile Include="GodGame\Types\TownCenterType.cs" />
     <Compile Include="GodGame\Types\Towns\Data\GenericDatastore.cs" />
@@ -363,6 +367,7 @@
     <Compile Include="GodGame\Internal\UserInputProcessingService.cs" />
     <Compile Include="GodGame\_Tests\ObservableVoxelDataTest.cs" />
     <Compile Include="GodGame\_Tests\InterfaceToData\DataStorageInterceptorTest.cs" />
+    <Compile Include="GodGame\_Tests\WinformsTest.cs" />
     <Compile Include="GodGame\_Tests\ServerClientListenerTest.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkPlayerInputForwarder.cs" />
     <Compile Include="GodGame\Internal\Networking\NetworkedPlayer.cs" />
