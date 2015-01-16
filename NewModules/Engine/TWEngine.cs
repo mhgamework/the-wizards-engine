@@ -257,6 +257,11 @@ namespace MHGameWork.TheWizards.Engine
             TW.Graphics.AcquireRenderer().ClearAll();
             TW.Physics.ClearAll();
             EngineErrorLogger.ClearLast();
+
+            try { TW.Engine.OnClearEngineState(); } // Executes user code, so execute after logger clear so that error can occur in log
+            catch (Exception ex) { EngineErrorLogger.Log(ex, "ClearStateCallback"); }
+
+            TW.Engine.ClearCallbacks();
         }
 
         /// <summary>

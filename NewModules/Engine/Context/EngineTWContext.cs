@@ -66,6 +66,7 @@ namespace MHGameWork.TheWizards.Engine
             Context.Audio = new AudioWrapper();
             Context.Assets = new AssetsWrapper();
             Context.Debug = new DebugWrapper(engine);
+            Context.Engine = new EngineWrapper();
             TW.SetContext(Context);
         }
 
