@@ -26,17 +26,34 @@ namespace MHGameWork.TheWizards.GodGame.Persistence.POSystem
             var s = serializer.Serialize(SimplePO.Default());
         }
         [Test]
-        public void TestDeserialize()
+        public void TestRoundtripAll()
+        {
+            testRountrip(SimplePO.Default());
+        }
+
+        [Test]
+        public void TestRoundtripNull()
+        {
+            testRountrip(new SimplePO());
+        }
+
+        [Test]
+        public void TestRoundtripCustom()
+        {
+            testRountrip(CustomPO.Default);
+        }
+        private static void testRountrip(object simplePo)
         {
             var serializer = new POSerializer();
-            var s = serializer.Serialize(SimplePO.Default());
+            var s = serializer.Serialize(simplePo);
 
             serializer = new POSerializer();
 
             var deserialized = serializer.Deserialize(s);
 
             Console.WriteLine(deserialized[0].ToString());
-            Assert.AreEqual(SimplePO.Default(), deserialized[0]);
+            Assert.AreEqual(simplePo.ToString(), deserialized[0].ToString());
+            Assert.AreEqual(simplePo, deserialized[0]);
         }
 
         [Test]
@@ -115,14 +132,13 @@ namespace MHGameWork.TheWizards.GodGame.Persistence.POSystem
 
             public override string ToString()
             {
-                return string.Format("Number: {0}, Text: {1}, Nested: {2}, List: {3}, Array: {4}, Dictionary: {5}, IgnoreInt: {6}, PrivateInt: {7}, Polymorf1: {8}, Polymorf2: {9}, Custom: {10}, Struct: {11}",
+                return string.Format("Number: {0}, Text: {1}, Nested: {2}, List: {3}, Array: {4}, Dictionary: {5}, PrivateInt: {6}, Polymorf1: {7}, Polymorf2: {8}, Custom: {9}, Struct: {10}",
                     Number,
                     Text,
                     Nested,
                     List == null ? "NULL" : string.Join(", ", List),
                     Array == null ? "NULL" : string.Join(", ", Array),
                     Dictionary,
-                    IgnoreInt,
                     PrivateInt,
                     Polymorf1,
                     Polymorf2,
@@ -135,9 +151,9 @@ namespace MHGameWork.TheWizards.GodGame.Persistence.POSystem
                 return Number == other.Number
                     && string.Equals(Text, other.Text)
                     && Equals(Nested, other.Nested)
-                    && ((List == null && other.List == null) || List.SequenceEqual(other.List))
-                    && ((Array == null && other.Array == null) || Array.SequenceEqual(other.Array))
-                    && Dictionary.All(e => other.Dictionary.ContainsKey(e.Key) && Equals(e.Value, other.Dictionary[e.Key]))
+                    && List == null ? other.List == null : List.SequenceEqual(other.List)
+                    && Array == null ? other.Array == null : Array.SequenceEqual(other.Array)
+                    && Dictionary == null ? other.Dictionary == null : Dictionary.All(e => other.Dictionary.ContainsKey(e.Key) && Equals(e.Value, other.Dictionary[e.Key]))
                     && PrivateInt == other.PrivateInt
                     && Equals(Polymorf1, other.Polymorf1)
                     && Equals(Polymorf2, other.Polymorf2)
@@ -319,6 +335,11 @@ namespace MHGameWork.TheWizards.GodGame.Persistence.POSystem
             public override int GetHashCode()
             {
                 return (Method != null ? Method.GetHashCode() : 0);
+            }
+
+            public override string ToString()
+            {
+                return string.Format("Method: {0}", Method);
             }
         }
     }

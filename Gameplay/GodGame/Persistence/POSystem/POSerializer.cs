@@ -44,6 +44,9 @@ namespace MHGameWork.TheWizards.GodGame.Persistence.POSystem
 
                 var fieldsToSerialize = getPoSerializeableFields(po);
 
+                var ev = po as IPOEventsReceiver;
+                if (ev!= null) ev.OnBeforeSerialize();
+
                 serialized.Add(new SerializedPO
                     {
                         Identifier = getPOIdentifier(po),
@@ -185,6 +188,8 @@ namespace MHGameWork.TheWizards.GodGame.Persistence.POSystem
                 var po = getOrCreatePO(serializedPo.Identifier, deserializeType(serializedPo.Type));
                 ret.Add(po);
                 setAttributesOnObject(po, serializedPo.Attributes);
+                var ev = po as IPOEventsReceiver;
+                if (ev != null) ev.OnAfterDeserialize();
             }
             return ret.ToArray();
         }
