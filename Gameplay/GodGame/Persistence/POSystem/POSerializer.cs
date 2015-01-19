@@ -19,8 +19,10 @@ namespace MHGameWork.TheWizards.GodGame.Persistence.POSystem
     {
 
         private StringSerializer stringSerializer;
-        public POSerializer()
+        private CustomizablePOFactory poFactory;
+        public POSerializer(CustomizablePOFactory poFactory)
         {
+            this.poFactory = poFactory;
             stringSerializer = StringSerializer.CreateSimpleTypes();
         }
 
@@ -278,7 +280,7 @@ namespace MHGameWork.TheWizards.GodGame.Persistence.POSystem
             //TODO: provide a way to remove objects from the cache?
             object po;
             if (pos.TryGetValue(getIdentifier(id.Guid), out po)) return po;
-            po = Activator.CreateInstance(t);
+            po = poFactory.Create(t);
             pos.Add(getIdentifier(id.Guid), po);
             ids.Add(po, getIdentifier(id.Guid));
             return po;

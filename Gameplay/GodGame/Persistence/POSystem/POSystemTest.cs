@@ -22,9 +22,15 @@ namespace MHGameWork.TheWizards.GodGame.Persistence.POSystem
         [Test]
         public void TestSerialize()
         {
-            var serializer = new POSerializer();
+            var serializer = createSerializer();
             var s = serializer.Serialize(SimplePO.Default());
         }
+
+        private static POSerializer createSerializer()
+        {
+            return new POSerializer(new CustomizablePOFactory());
+        }
+
         [Test]
         public void TestRoundtripAll()
         {
@@ -44,10 +50,10 @@ namespace MHGameWork.TheWizards.GodGame.Persistence.POSystem
         }
         private static void testRountrip(object simplePo)
         {
-            var serializer = new POSerializer();
+            var serializer = createSerializer();
             var s = serializer.Serialize(simplePo);
 
-            serializer = new POSerializer();
+            serializer = createSerializer();
 
             var deserialized = serializer.Deserialize(s);
 
@@ -57,9 +63,28 @@ namespace MHGameWork.TheWizards.GodGame.Persistence.POSystem
         }
 
         [Test]
+        public void TestFactoryOverride()
+        {
+            var fact = new CustomizablePOFactory();
+            fact.AddTypeOverride(typeof(NoDefaultConstructorPO), () => new NoDefaultConstructorPO(GetType().GetMethod("TestFactoryOverride")));
+
+
+            var target = new NoDefaultConstructorPO(GetType().GetMethod("TestFactoryOverride")) {Value = 99};
+
+            var serializer = new POSerializer(fact);
+            var s = serializer.Serialize(target);
+
+            serializer = new POSerializer(fact);
+
+            var deserialized = serializer.Deserialize(s);
+
+            Assert.AreEqual(target, deserialized[0]);
+        }
+
+        [Test]
         public void TestSerializeToXml()
         {
-            var serializer = new POSerializer();
+            var serializer = createSerializer();
             var s = serializer.Serialize(SimplePO.Default());
             var xSer = new XmlSerializer(typeof(SerializationResult));
             using (var memStrm = new MemoryStream())
@@ -68,17 +93,6 @@ namespace MHGameWork.TheWizards.GodGame.Persistence.POSystem
                 Console.WriteLine(Encoding.Default.GetString(memStrm.ToArray()));
             }
 
-        }
-
-        private static void serializeAndOutput(Object world)
-        {
-            var output = new MemoryStream();
-            var poSerialize = new POSerializer();
-
-            poSerialize.Serialize(world);
-            throw new NotImplementedException();
-
-            Console.WriteLine(Encoding.Default.GetString(output.ToArray()));
         }
 
         public void TestNulls()
@@ -90,6 +104,41 @@ namespace MHGameWork.TheWizards.GodGame.Persistence.POSystem
         public IEnumerable<TestCaseData> GetTargets()
         {
             yield return new TestCaseData(SimplePO.Default());
+        }
+
+        [PersistedObject]
+        public class NoDefaultConstructorPO
+        {
+            [DoNotPersist]
+            public MethodInfo Method;
+
+            public int Value;
+
+            public NoDefaultConstructorPO(MethodInfo method)
+            {
+                Method = method;
+            }
+
+            protected bool Equals(NoDefaultConstructorPO other)
+            {
+                return Equals(Method, other.Method) && Value == other.Value;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj)) return false;
+                if (ReferenceEquals(this, obj)) return true;
+                if (obj.GetType() != this.GetType()) return false;
+                return Equals((NoDefaultConstructorPO) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return ((Method != null ? Method.GetHashCode() : 0)*397) ^ Value;
+                }
+            }
         }
 
         [PersistedObject]

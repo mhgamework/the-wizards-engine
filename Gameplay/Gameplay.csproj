@@ -231,6 +231,7 @@
     <Compile Include="GodGame\Internal\Rendering\InGameMeshProvider.cs" />
     <Compile Include="GodGame\Persistence\POSystem\DoNotPersistAttribute.cs" />
     <Compile Include="GodGame\Persistence\POSystem\IPOEventsReceiver.cs" />
+    <Compile Include="GodGame\Persistence\POSystem\CustomizablePOFactory.cs" />
     <Compile Include="GodGame\Persistence\POSystem\PersistedObjectAttribute.cs" />
     <Compile Include="GodGame\Persistence\POSystem\POIdentifier.cs" />
     <Compile Include="GodGame\Persistence\POSystem\POSerializer.cs" />
