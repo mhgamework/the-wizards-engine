@@ -232,7 +232,14 @@
     <Compile Include="GodGame\Persistence\POSystem\DoNotPersistAttribute.cs" />
     <Compile Include="GodGame\Persistence\POSystem\IPOEventsReceiver.cs" />
     <Compile Include="GodGame\Persistence\POSystem\PersistedObjectAttribute.cs" />
+    <Compile Include="GodGame\Persistence\POSystem\POIdentifier.cs" />
+    <Compile Include="GodGame\Persistence\POSystem\POSerializer.cs" />
     <Compile Include="GodGame\Persistence\POSystem\POSystemTest.cs" />
+    <Compile Include="GodGame\Persistence\POSystem\DataModel\SerializationResult.cs" />
+    <Compile Include="GodGame\Persistence\POSystem\DataModel\SerializedAttribute.cs" />
+    <Compile Include="GodGame\Persistence\POSystem\DataModel\SerializedPO.cs" />
+    <Compile Include="GodGame\Persistence\POSystem\DataModel\SerializedType.cs" />
+    <Compile Include="GodGame\Persistence\POSystem\DataModel\SerializedValue.cs" />
     <Compile Include="GodGame\Types\IndustryBuildingAddon.cs" />
     <Compile Include="GodGame\Types\TownCenterType.cs" />
     <Compile Include="GodGame\Types\Towns\Data\GenericDatastore.cs" />
@@ -360,7 +367,7 @@
     <Compile Include="GodGame\_Tests\NetworkSyncerTest.cs" />
     <Compile Include="GodGame\_Tests\GodGameAutofacConfigTest.cs" />
     <Compile Include="GodGame\_Tests\DirectInputTextboxTest.cs" />
-    <Compile Include="GodGame\_Tests\DeveloperConsoleTest.cs" />
+    <Compile Include="GodGame\DeveloperConsoleTest.cs" />
     <Compile Include="GodGame\_Tests\NetworkedPlayerInputTest.cs" />
     <Compile Include="GodGame\_Tests\GodGameMainTest.cs" />
     <Compile Include="GodGame\CreateLandTool.cs" />

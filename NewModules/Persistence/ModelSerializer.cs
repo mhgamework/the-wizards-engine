@@ -15,6 +15,7 @@ using MHGameWork.TheWizards.Serialization;
 namespace MHGameWork.TheWizards.Persistence
 {
     /// <summary>
+    /// REPLACED BY THE POSystem
     /// This class serializes ModelObjects to a string file format, newline seperated
     /// It can also serialize an entire model.
     /// Dependencies between modelobjects are solved by late binding => the unresolvable dependencies are cached

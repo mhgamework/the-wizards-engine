@@ -1,12 +1,8 @@
-using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using MHGameWork.TheWizards.Engine.Features.Testing;
-using MHGameWork.TheWizards.Gameplay;
-using MHGameWork.TheWizards.GodGame._Tests;
 using NUnit.Framework;
 
-namespace MHGameWork.TheWizards.GodGame.Persistence.POSystem
+namespace MHGameWork.TheWizards.GodGame._Tests
 {
     [TestFixture]
     [EngineTest]

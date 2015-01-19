@@ -21,6 +21,18 @@ namespace MHGameWork.TheWizards.Serialization
 
         public static StringSerializer Create()
         {
+            var ret = CreateSimpleTypes();
+            ret.AddConditional(new ValueTypeSerializer());
+
+            return ret;
+
+        }
+        /// <summary>
+        /// Stringserializer for non nested types
+        /// </summary>
+        /// <returns></returns>
+        public static StringSerializer CreateSimpleTypes()
+        {
             var ret = new StringSerializer();
 
             ret.Add(o => o, s => s); // string :P
@@ -34,11 +46,10 @@ namespace MHGameWork.TheWizards.Serialization
             ret.Add(o => o.ToString(), double.Parse);
             ret.Add(o => o.ToString(), bool.Parse);
             ret.Add(o => o.ToString(), Guid.Parse);
-            ret.Add(Convert.ToBase64String,Convert.FromBase64String);
+            ret.Add(Convert.ToBase64String, Convert.FromBase64String);
 
 
             ret.AddConditional(new EnumSerializer());
-            ret.AddConditional(new ValueTypeSerializer());
 
             return ret;
 
@@ -69,6 +80,21 @@ namespace MHGameWork.TheWizards.Serialization
             if (logErrors)
                 Console.WriteLine("StringSerializer: no serializer for type {0}", type);
             return Unknown;
+        }
+        public bool CanSerialize(object obj, Type type)
+        {
+
+            if (serializers.ContainsKey(type)) return true;
+
+            foreach (var s in conditionalSerializers)
+            {
+                if (!s.CanOperate(type)) continue;
+
+                var ret = s.Serialize(obj, type, this);
+                if (ret != Unknown) return true;
+            }
+
+            return false;
         }
 
         public object Deserialize(string value, Type type)
