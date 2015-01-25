@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using DirectX11;
@@ -27,18 +28,23 @@ namespace MHGameWork.TheWizards.DualContouring
             var lines = new LineManager3DLines(TW.Graphics.Device);
             lines.SetMaxLines(100000);
 
+            //Func<Vector3, bool> isUpperLeft = v => v.X > 4.5f && v.Y > 4.5f && v.Z > 4.5f;
+            Func<Vector3, bool> isUpperLeft = v => v.X > 4.01f && v.Y > 4.01f && v.Z > 4.01f
+                                                   && v.X < 5.99f;
+
             var worldSize = 10f;
-            var subdivision = 8;
+            var subdivision = 10;
             var cellSize = worldSize / subdivision;
             for (int x = 0; x < subdivision + 1; x++)
                 for (int y = 0; y < subdivision + 1; y++)
                     for (int z = 0; z < subdivision + 1; z++)
                     {
                         var vertPos = new Vector3(x, y, z) * cellSize;
+                        if (!isUpperLeft(vertPos)) continue;
                         var sign = getVertSign(vertPos);
                         var color = sign ? Color.LightGray.dx() : Color.Green.dx();
-                        /*if (!sign)
-                        lines.AddCenteredBox(vertPos, cellSize * 0.1f, color);*/
+                        if (!sign)
+                            lines.AddCenteredBox(vertPos, cellSize * 0.1f, color);
 
 
 
@@ -46,11 +52,11 @@ namespace MHGameWork.TheWizards.DualContouring
 
                         foreach (var dir in dirs)
                         {
-                            var end = vertPos + dir*cellSize;
+                            var end = vertPos + dir * cellSize;
 
                             if (sign == getVertSign(end)) continue;
 
-                            lines.AddLine(vertPos,end,Color.Black.dx());
+                            lines.AddLine(vertPos, end, Color.Black.dx());
 
                             var edge = getEdgeData(vertPos, end);
                             var normal = edge.TakeXYZ();
@@ -61,19 +67,28 @@ namespace MHGameWork.TheWizards.DualContouring
 
                     }
 
+
+            var vertices = new List<Vector3>();
+            var indices = new List<int>();
+            TestGenSurface(vertices, indices, subdivision + 1, cellSize);
+
+            foreach (var v in vertices)
+            {
+                if (!isUpperLeft(v)) continue;
+                lines.AddCenteredBox(v, cellSize * 0.2f, Color.OrangeRed.dx());
+            }
+
+
             engine.AddSimulator(() => { TW.Graphics.LineManager3D.Render(lines, TW.Graphics.Camera); }, "linerenderer");
+
+
+
 
             //engine.AddSimulator(new WorldRenderingSimulator());
         }
 
-        [Test]
-        public void Test()
+        public void TestGenSurface(List<Vector3> vertices, List<int> indices, int numVertices, float cellSize)
         {
-            var size = 3;
-            var vertData = new Array3D<bool>(new Point3(size, size, size));
-            var edgeData = new Array3D<Vector4>(new Point3(size, size, size));
-            // Idea: dont use datastructure for now, use dictionary
-            // Better define datastructure, and adjust cube_edges to it
             var cube_verts = (from x in Enumerable.Range(0, 2)
                               from y in Enumerable.Range(0, 2)
                               from z in Enumerable.Range(0, 2)
@@ -93,18 +108,21 @@ namespace MHGameWork.TheWizards.DualContouring
                                       End = cube_verts.IndexOf(edge.End)
                                   }).ToList();
 
+            var cubeToVertexIndex = new Dictionary<Vector3, int>();
 
-            for (int x = 0; x < size - 1; x++)
-                for (int y = 0; y < size - 1; y++)
-                    for (int z = 0; z < size - 1; z++)
+
+            for (int x = 0; x < numVertices - 1; x++)
+                for (int y = 0; y < numVertices - 1; y++)
+                    for (int z = 0; z < numVertices - 1; z++)
                     {
-                        var curr = new Vector3(x, y, z);
+                        var curr = new Vector3(x, y, z) * cellSize;
                         var signs = (from offset in cube_verts
                                      select getVertSign((curr + offset))).ToArray();
                         if (signs.All(v => v) || !signs.Any(v => v)) continue; // no sign changes
 
                         var changingEdges =
-                            cube_edges.Where((e, i) => signs[edgeToVertices[i].Start] != signs[edgeToVertices[i].End]).ToArray();
+                            cube_edges.Where((e, i) => signs[edgeToVertices[i].Start] != signs[edgeToVertices[i].End])
+                            .Select(e => new { Start = e.Start + curr, End = e.End + curr }).ToArray();
                         var posses = changingEdges.Select(e => Vector3.Lerp(e.Start, e.End, getEdgeData(e.Start, e.End).W)).ToArray();
                         var normals = changingEdges.Select(e => getEdgeData(e.Start, e.End).TakeXYZ()).ToArray();
 
@@ -113,7 +131,21 @@ namespace MHGameWork.TheWizards.DualContouring
 
                         var leastsquares = CalculateQEF(A, b);
 
+                        cubeToVertexIndex[new Vector3(x, y, z)] = vertices.Count;
+                        vertices.Add(new Vector3(leastsquares[0], leastsquares[1], leastsquares[2]));
+
+
                     }
+
+              for (int x = 0; x < numVertices - 1; x++)
+                for (int y = 0; y < numVertices - 1; y++)
+                    for (int z = 0; z < numVertices - 1; z++)
+                    {
+                        if (!cubeToVertexIndex.ContainsKey(new Vector3(x, y, z))) continue;
+                        
+
+                    }
+
 
 
         }
@@ -132,7 +164,7 @@ namespace MHGameWork.TheWizards.DualContouring
             intersect = ray.xna().Intersects(sphere.xna());
             if (!intersect.HasValue || intersect.Value < 0.001 || intersect.Value > (end - start).Length())
             {
-                
+
                 //Try if inside of sphere   
                 ray = new Ray(end, Vector3.Normalize(start - end));
                 intersect = ray.xna().Intersects(sphere.xna());
