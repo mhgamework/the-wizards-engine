@@ -15,6 +15,7 @@ using MathNet.Numerics.LinearAlgebra.Factorization;
 using MathNet.Numerics.LinearAlgebra.Single;
 using NUnit.Framework;
 using SlimDX;
+using ContainmentType = Microsoft.Xna.Framework.ContainmentType;
 
 namespace MHGameWork.TheWizards.DualContouring
 {
@@ -85,13 +86,13 @@ namespace MHGameWork.TheWizards.DualContouring
             var mat = builder.CreateMaterial();
             mat.ColoredMaterial = true;
             mat.DiffuseColor = Color.Green.dx().xna();
-            builder.AddCustom(indices.Select(i => vertices[i]).ToArray(), indices.Select(i => Vector3.Normalize(vertices[i]-new Vector3(5))).ToArray(), indices.Select(i => new Vector2()).ToArray());
-            
+            builder.AddCustom(indices.Select(i => vertices[i]).ToArray(), indices.Select(i => Vector3.Normalize(vertices[i] - new Vector3(5))).ToArray(), indices.Select(i => new Vector2()).ToArray());
+
             var mesh = builder.CreateMesh();
             TW.Graphics.AcquireRenderer().CreateMeshElement(mesh);
 
 
-            
+
 
             engine.AddSimulator(new WorldRenderingSimulator());
 
@@ -158,8 +159,8 @@ namespace MHGameWork.TheWizards.DualContouring
 
                     }
 
-            
-              for (int x = 0; x < numVertices - 1; x++)
+
+            for (int x = 0; x < numVertices - 1; x++)
                 for (int y = 0; y < numVertices - 1; y++)
                     for (int z = 0; z < numVertices - 1; z++)
                     {
@@ -177,7 +178,7 @@ namespace MHGameWork.TheWizards.DualContouring
                             var a = o + p.Item1;
                             var b = o + p.Item2;
                             var ab = o + p.Item1 + p.Item2;
-                            if ( ! new []{a,b,ab}.All(vIndex.ContainsKey))
+                            if (!new[] { a, b, ab }.All(vIndex.ContainsKey))
                                 continue;
 
                             indices.AddRange(new[] { vIndex[o], vIndex[a], vIndex[ab] });
@@ -221,18 +222,21 @@ namespace MHGameWork.TheWizards.DualContouring
 
         public Vector<float> CalculateQEF(DenseMatrix A, DenseVector b)
         {
-            return A.QR().Solve(b);
-            /*// compute the SVD
-            Svd svd = A.Svd(true);
+           // return A.QR().Solve(b);
+            // compute the SVD
+            Svd<float> svd = A.Svd(true);
+
+            var m = A.RowCount;
+            var n = A.ColumnCount;
 
             // get matrix of left singular vectors with first n columns of U
-            Matrix<double> U1 = svd.U().SubMatrix(0, m, 0, n);
+            Matrix<float> U1 = svd.U.SubMatrix(0, m, 0, n);
             // get matrix of singular values
-            Matrix<double> S = newDiagonalMatrix(n, n, svd.S().ToArray());
+            Matrix<float> S = DenseMatrix.CreateDiagonal(n, n, i => svd.S.Select(v => v > 0.1 ? v : 0).ToArray()[i]);
             // get matrix of right singular vectors
-            Matrix<double> V = svd.VT().Transpose();
+            Matrix<float> V = svd.VT.Transpose();
 
-            x = V.Multiply(S.Inverse()).Multiply(U1.Transpose().Multiply(dataY));*/
+            return V.Multiply(S.Inverse()).Multiply(U1.Transpose().Multiply(b));
         }
 
 
