@@ -122,8 +122,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         {
             if (el.IsDeleted) throw new InvalidOperationException();
 
-            if (Culler != null)
-                Culler.RemoveCullable(el);
+            /*if (Culler != null)
+                Culler.RemoveCullable(el);*/ // culling is disabled
 
             Elements.Remove(el);
 
