@@ -219,6 +219,38 @@ namespace MHGameWork.TheWizards.DualContouring
             return new Vector4(Vector3.Normalize(pos - new Vector3(5)), (pos - start).Length() / (end - start).Length());
         }
 
+        /// <summary>
+        /// Does not seem to work any better
+        /// </summary>
+        private Vector4 getEdgeDataAlternative(Vector3 start, Vector3 end)
+        {
+            var ray = new Ray(start, Vector3.Normalize(end - start));
+            var sphere = new BoundingSphere(new Vector3(5), 4.001f);
+
+            if (getVertSign(start) == getVertSign(end)) throw new InvalidOperationException("Not a changing edge!");
+            // Should always intersect!
+            float intersect;
+            intersect = ray.xna().Intersects(sphere.xna()).Value;
+
+            if (intersect < 0.001) // check inside, so revert
+            {
+
+                //Try if inside of sphere   
+                ray = new Ray(end, Vector3.Normalize(start - end));
+                intersect = ray.xna().Intersects(sphere.xna()).Value;
+
+                intersect = (start - end).Length() - intersect;
+                ray = new Ray(start, Vector3.Normalize(end - start));
+
+            }
+
+            var pos = ray.GetPoint(intersect);
+
+            var ret = new Vector4(Vector3.Normalize(pos - new Vector3(5)), (pos - start).Length() / (end - start).Length());
+            //if (ret.W < -0.001 || ret.W > 1.0001) throw new InvalidOperationException("Algorithm error!");
+
+            return ret;
+        }
 
         public Vector<float> CalculateQEF(DenseMatrix A, DenseVector b)
         {
