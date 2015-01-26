@@ -36,7 +36,7 @@ namespace MHGameWork.TheWizards.DualContouring
             isUpperLeft = _ => true;
 
             var worldSize = 10f;
-            var subdivision = 3;
+            int subdivision = 50;
             var cellSize = worldSize / subdivision;
             for (int x = 0; x < subdivision + 1; x++)
                 for (int y = 0; y < subdivision + 1; y++)
@@ -198,12 +198,16 @@ namespace MHGameWork.TheWizards.DualContouring
 
         private bool getVertSign(Vector3 v)
         {
-            return getVertSignCube(v, new Vector3(5), 4);
+            if (!getVertSignCube(v, new Vector3(5, 7, 5), 2)) return true;
+            return getVertSignSphere(v);
         }
 
         private Vector4 getEdgeData(Vector3 start, Vector3 end)
         {
-            return getEdgeDataCube(start, end, new Vector3(5), 4);
+            if (getVertSignCube(start, new Vector3(5, 7, 5), 2)!= getVertSignCube(end, new Vector3(5, 7, 5), 2))
+                return getEdgeDataCube(start, end, new Vector3(5, 7, 5), 2);
+            //return getEdgeDataCube(start, end, new Vector3(5), 4);
+            return getEdgeDataSphere(start, end);
         }
         private bool getVertSignSphere(Vector3 v)
         {
