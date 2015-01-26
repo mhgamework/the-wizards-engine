@@ -85,13 +85,13 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             gBuffer = new GBuffer(game.Device, width, height);
             TexturePool = new TexturePool(game);
 
-            meshRenderer = new DeferredMeshRenderer(game, gBuffer, TexturePool);
+            meshRenderer = new DeferredMeshRenderer(game, GBuffer, TexturePool);
 
-            directionalLightRenderer = new DirectionalLightRenderer(game, gBuffer);
-            spotLightRenderer = new SpotLightRenderer(game, gBuffer);
-            pointLightRenderer = new PointLightRenderer(game, gBuffer);
+            directionalLightRenderer = new DirectionalLightRenderer(game, GBuffer);
+            spotLightRenderer = new SpotLightRenderer(game, GBuffer);
+            pointLightRenderer = new PointLightRenderer(game, GBuffer);
 
-            combineFinalRenderer = new CombineFinalRenderer(game, gBuffer);
+            combineFinalRenderer = new CombineFinalRenderer(game, GBuffer);
 
             var desc = new Texture2DDescription
             {
@@ -272,12 +272,12 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             resetDevice();
 
-            drawGBuffer(gBuffer);
-            drawLines(gBuffer);
+            drawGBuffer(GBuffer);
+            drawLines(GBuffer);
             drawLights(combineFinalRenderer);
             updateSSAO();
 
-            drawCombinedHdrImage(hdrImageRtv, gBuffer, combineFinalRenderer, skyColorRV, ssao.MSsaoBuffer.pSRV);
+            drawCombinedHdrImage(hdrImageRtv, GBuffer, combineFinalRenderer, skyColorRV, ssao.MSsaoBuffer.pSRV);
             updateTonemapLuminance(calculater);
 
             context.ClearState();
@@ -288,7 +288,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             context.ClearState();
             game.SetBackbuffer();
-            fogRenderer.PostProcessFog(postProcessRT1.RV, gBuffer, postProcessRT2.RTV);
+            fogRenderer.PostProcessFog(postProcessRT1.RV, GBuffer, postProcessRT2.RTV);
             context.ClearState();
             game.SetBackbuffer();
 
@@ -296,7 +296,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
             // TODO: currently cheat
-            context.OutputMerger.SetTargets(gBuffer.DepthStencilView, game.BackBufferRTV);
+            context.OutputMerger.SetTargets(GBuffer.DepthStencilView, game.BackBufferRTV);
 
             //game.TextureRenderer.Draw(hdrImageRV, new Vector2(10, 10), new Vector2(100, 100));
             //drawLines();
@@ -358,7 +358,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         private void updateSSAO()
         {
-            ssao.OnFrameRender(gBuffer.DepthRV, gBuffer.NormalRV);
+            ssao.OnFrameRender(GBuffer.DepthRV, GBuffer.NormalRV);
         }
 
         private void drawLights(CombineFinalRenderer finalRenderer)
@@ -559,6 +559,11 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         public DeferredMeshRenderer DEBUG_MeshRenderer { get { return meshRenderer; } }
         public FrustumCuller DEBUG_FrustumCuller { get { return frustumCuller; } }
         public ICamera DEBUG_SeperateCullCamera { get; set; }
+
+        public GBuffer GBuffer
+        {
+            get { return gBuffer; }
+        }
 
         /// <summary>
         /// Removes all elements, lights from the renderer
