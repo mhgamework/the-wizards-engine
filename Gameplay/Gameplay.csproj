@@ -208,6 +208,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DualContouring\DualContouringTest.cs" />
+    <Compile Include="DualContouring\HermiteDataGrid.cs" />
+    <Compile Include="DualContouring\QEFCalculator.cs" />
     <Compile Include="Engine\WorldRendering\FastTextareaUpdater.cs" />
     <Compile Include="Engine\WorldRendering\ITextareaUpdater.cs" />
     <Compile Include="GodGame\DeveloperCommands\AllCommandProvider.cs" />

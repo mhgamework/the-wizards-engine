@@ -11,7 +11,6 @@ using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Factorization;
 using MathNet.Numerics.LinearAlgebra.Single;
 using NUnit.Framework;
 using SlimDX;
@@ -37,6 +36,7 @@ namespace MHGameWork.TheWizards.DualContouring
 
             var worldSize = 10f;
             int subdivision = 50;
+
             var cellSize = worldSize / subdivision;
             for (int x = 0; x < subdivision + 1; x++)
                 for (int y = 0; y < subdivision + 1; y++)
@@ -73,7 +73,7 @@ namespace MHGameWork.TheWizards.DualContouring
 
             var vertices = new List<Vector3>();
             var indices = new List<int>();
-            TestGenSurface(vertices, indices, subdivision + 1, cellSize);
+            GenerateSurface(vertices, indices, subdivision + 1, cellSize);
 
             foreach (var v in vertices)
             {
@@ -109,26 +109,11 @@ namespace MHGameWork.TheWizards.DualContouring
             //engine.AddSimulator(new WorldRenderingSimulator());
         }
 
-        public void TestGenSurface(List<Vector3> vertices, List<int> indices, int numVertices, float cellSize)
+        public void GenerateSurface(List<Vector3> vertices, List<int> indices, int numVertices, float cellSize)
         {
-            var cube_verts = (from x in Enumerable.Range(0, 2)
-                              from y in Enumerable.Range(0, 2)
-                              from z in Enumerable.Range(0, 2)
-                              select new Vector3(x, y, z)).ToList();
+        
 
-            var cube_edges = (from v in cube_verts
-                              from offset in new[] { Vector3.UnitX, Vector3.UnitY, Vector3.UnitZ }
-                              where (v + offset).X < 1.5
-                              where (v + offset).Y < 1.5
-                              where (v + offset).Z < 1.5
-                              select new { Start = v, End = v + offset }).Distinct().ToList();
-
-            var edgeToVertices = (from edge in cube_edges
-                                  select new
-                                  {
-                                      Start = cube_verts.IndexOf(edge.Start),
-                                      End = cube_verts.IndexOf(edge.End)
-                                  }).ToList();
+           
 
             var vIndex = new Dictionary<Vector3, int>();
 
@@ -191,7 +176,7 @@ namespace MHGameWork.TheWizards.DualContouring
             var A = DenseMatrix.OfRowArrays(normals.Select(e => new[] { e.X, e.Y, e.Z }).ToArray());
             var b = DenseVector.OfArray(normals.Zip(posses.Select(p => p - preferredPosition), Vector3.Dot).ToArray());
 
-            var leastsquares = CalculateQEF(A, b);
+            var leastsquares = new QEFCalculator(). CalculateQEF(A, b);
             return leastsquares + DenseVector.OfArray(new[] { preferredPosition.X, preferredPosition.Y, preferredPosition.Z });
         }
 
@@ -199,6 +184,7 @@ namespace MHGameWork.TheWizards.DualContouring
         private bool getVertSign(Vector3 v)
         {
             if (!getVertSignCube(v, new Vector3(5, 7, 5), 2)) return true;
+            //return getVertSignCube(v, new Vector3(5, 7, 5), 2);
             return getVertSignSphere(v);
         }
 
@@ -297,35 +283,7 @@ namespace MHGameWork.TheWizards.DualContouring
             return ret;
         }
 
-        public Vector<float> CalculateQEF(DenseMatrix A, DenseVector b)
-        {
-
-            //return A.QR().Solve(b);
-
-            var pseudo = PseudoInverse(A);
-            return pseudo.Multiply(b);
-
-
-            // compute the SVD
-            /*Svd<float> svd = A.Svd(true);
-
-
-
-
-            var m = A.RowCount;
-            var n = A.ColumnCount;
-
-
-            // get matrix of left singular vectors with first n columns of U
-            Matrix<float> U1 = svd.U.SubMatrix(0, m, 0, n);
-            // get matrix of singular values
-            //TODO: not using absolute value to truncate!
-            Matrix<float> S = DenseMatrix.CreateDiagonal(n, n, i => svd.S.Select(v => v > 0.1 ? v : 0).ToArray()[i]);
-            // get matrix of right singular vectors
-            Matrix<float> V = svd.VT.Transpose();
-
-            return V.Multiply(S.Inverse()).Multiply(U1.Transpose().Multiply(b));*/
-        }
+        
 
         [Test]
         public void TestQEF_Simple()
@@ -351,36 +309,7 @@ namespace MHGameWork.TheWizards.DualContouring
 
 
 
-        /// <summary> 
-        /// Moore–Penrose pseudoinverse 
-        /// If A = U • Σ • VT is the singular value decomposition of A, then A† = V • Σ† • UT. 
-        /// For a diagonal matrix such as Σ, we get the pseudoinverse by taking the reciprocal of each non-zero element 
-        /// on the diagonal, leaving the zeros in place, and transposing the resulting matrix. 
-        /// In numerical computation, only elements larger than some small tolerance are taken to be nonzero, 
-        /// and the others are replaced by zeros. For example, in the MATLAB or NumPy function pinv, 
-        /// the tolerance is taken to be t = ε • max(m,n) • max(Σ), where ε is the machine epsilon. (Wikipedia) 
-        /// Edited by MH
-        /// </summary> 
-        /// <param name="M">The matrix to pseudoinverse</param> 
-        /// <returns>The pseudoinverse of this Matrix</returns> 
-        public static Matrix<float> PseudoInverse(Matrix<float> M)
-        {
-            Svd<float> D = M.Svd(true);
-            var W = (Matrix<float>)D.W;
-            var s = (Vector<float>)D.S;
-
-            for (int i = 0; i < s.Count; i++)
-            {
-                if (s[i] < 0.1) // Tolerance suggested by dc paper (TODO: can s be negative?)
-                    s[i] = 0;
-                else
-                    s[i] = 1 / s[i];
-            }
-            W.SetDiagonal(s);
-
-            // (U * W * VT)T is equivalent with V * WT * UT 
-            return (Matrix<float>)(D.U * W * D.VT).Transpose();
-        }
+        
 
     }
 }
