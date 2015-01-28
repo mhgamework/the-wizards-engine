@@ -8,7 +8,7 @@ namespace MHGameWork.TheWizards.DualContouring
 {
     public class DualContouringAlgorithm
     {
-        public void GenerateSurface(List<Vector3> vertices, List<int> indices, HermiteDataGrid grid)
+        public void GenerateSurface(List<Vector3> vertices, List<int> indices, AbstractHermiteGrid grid)
         {
             var vIndex = new Dictionary<Point3, int>();
 

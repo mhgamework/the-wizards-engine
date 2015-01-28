@@ -7,44 +7,27 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.DualContouring
 {
-    public class HermiteDataGrid
+    public class HermiteDataGrid : AbstractHermiteGrid
     {
-        private List<Point3> cube_verts;
-
         private Array3D<Vertex> cells;
-        private int[][] edgeToVertices;
 
         private List<Point3> dirs = new List<Point3>(new Point3[] { new Point3(1, 0, 0), new Point3(0, 1, 0), new Point3(0, 0, 1) });
-        private List<Point3[]> cubeEdges;
 
-        private HermiteDataGrid()
+        private HermiteDataGrid():base()
         {
-            cube_verts = (from x in Enumerable.Range(0, 2)
-                          from y in Enumerable.Range(0, 2)
-                          from z in Enumerable.Range(0, 2)
-                          select new Point3(x, y, z)).ToList();
-
-
-            cubeEdges = (from v in cube_verts
-                         from offset in new[] { new Point3(1, 0, 0), new Point3(0, 1, 0), new Point3(0, 0, 1) }
-                         where (v + offset).X < 1.5
-                         where (v + offset).Y < 1.5
-                         where (v + offset).Z < 1.5
-                         select new { Start = v, End = v + offset }).Distinct().Select(e => new[] { e.Start, e.End }).ToList();
-
-            edgeToVertices = cubeEdges.Select(edge => new int[] { cube_verts.IndexOf(edge[0]), cube_verts.IndexOf(edge[1]) }).ToArray();
+      
         }
 
-        public bool GetSign(Point3 pos)
+        public override bool GetSign(Point3 pos)
         {
             var v = cells[pos];
             if (cells == null) return false;
             return v.Sign;
         }
 
-        public bool[] GetCubeSigns(Point3 cube)
+        public override Point3 Dimensions
         {
-            return cube_verts.Select(offset => GetSign(cube + offset)).ToArray();
+            get { return cells.Size; }
         }
 
         private struct Vertex
@@ -54,42 +37,7 @@ namespace MHGameWork.TheWizards.DualContouring
         }
 
 
-        public void ForEachCube(Action<Point3> action)
-        {
-            for (int x = 0; x < cells.Size.X; x++)
-                for (int y = 0; y < cells.Size.Y; y++)
-                    for (int z = 0; z < cells.Size.Z; z++)
-                        action(new Point3(x, y, z));
-
-        }
-
-        public int[] GetAllEdgeIds()
-        {
-            return Enumerable.Range(0, 11).ToArray();
-        }
-        public int[] GetEdgeVertexIds(int edgeId)
-        {
-            return edgeToVertices[edgeId];
-        }
-
-        /// <summary>
-        /// Returns the intersection point on given edge, in cube local space
-        /// </summary>
-        /// <param name="arg"></param>
-        /// <returns></returns>
-        public Vector3 GetEdgeIntersectionCubeLocal(Point3 cube, int edgeId)
-        {
-            var start = cube_verts[GetEdgeVertexIds(edgeId)[0]];
-            var end = cube_verts[GetEdgeVertexIds(edgeId)[1]];
-
-            return Vector3.Lerp(start, end, getEdgeData(cube, edgeId).W);
-        }
-        public Vector3 GetEdgeNormal(Point3 curr, int i)
-        {
-            return getEdgeData(curr, i).TakeXYZ();
-        }
-
-        private Vector4 getEdgeData(Point3 cube, int edgeId)
+        public override Vector4 getEdgeData(Point3 cube, int edgeId)
         {
             var start = cube_verts[GetEdgeVertexIds(edgeId)[0]];
             var end = cube_verts[GetEdgeVertexIds(edgeId)[1]];
@@ -135,24 +83,6 @@ namespace MHGameWork.TheWizards.DualContouring
                 });
 
             return grid;
-        }
-
-
-        public int GetEdgeId(Point3 start, Point3 end)
-        {
-            if (start.X > end.X || start.Y > end.Y || start.Z > end.Z)
-                throw new InvalidOperationException();
-
-            end -= start;
-            start = new Point3();
-
-            var ret = cubeEdges.FindIndex(arr => (arr[0] == start) && (arr[1] == end));
-
-            if (ret == -1) throw new InvalidOperationException();
-
-            return ret;
-
-
         }
     }
 }

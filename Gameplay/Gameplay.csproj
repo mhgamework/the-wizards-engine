@@ -207,6 +207,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DualContouring\AbstractHermiteGrid.cs" />
+    <Compile Include="DualContouring\DifferenceGrid.cs" />
     <Compile Include="DualContouring\DualContouringAlgorithm.cs" />
     <Compile Include="DualContouring\DualContouringTest.cs" />
     <Compile Include="DualContouring\HermiteDataGrid.cs" />
@@ -214,6 +216,7 @@
     <Compile Include="DualContouring\IIntersectableObject.cs" />
     <Compile Include="DualContouring\IntersectableSphere.cs" />
     <Compile Include="DualContouring\QEFCalculator.cs" />
+    <Compile Include="DualContouring\UnionGrid.cs" />
     <Compile Include="Engine\WorldRendering\FastTextareaUpdater.cs" />
     <Compile Include="Engine\WorldRendering\ITextareaUpdater.cs" />
     <Compile Include="GodGame\DeveloperCommands\AllCommandProvider.cs" />
