@@ -5,6 +5,7 @@ using System.Linq;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
@@ -15,6 +16,7 @@ using MathNet.Numerics.LinearAlgebra.Single;
 using NUnit.Framework;
 using SlimDX;
 using ContainmentType = Microsoft.Xna.Framework.ContainmentType;
+using Matrix = SlimDX.Matrix;
 
 namespace MHGameWork.TheWizards.DualContouring
 {
@@ -22,63 +24,89 @@ namespace MHGameWork.TheWizards.DualContouring
     [EngineTest]
     public class DualContouringTest
     {
+        private float gridWorldSize;
+        private int subdivision;
+        private float cellSize;
+        private LineManager3DLines lines;
+
+        [SetUp]
+        public void Setup()
+        {
+            gridWorldSize = 10f;
+            subdivision = 20;
+            cellSize = gridWorldSize / subdivision;
+            lines = new LineManager3DLines(TW.Graphics.Device);
+        }
+
         [Test]
         public void TestRenderHermiteData()
         {
             var engine = EngineFactory.CreateEngine();
-            var lines = new LineManager3DLines(TW.Graphics.Device);
-            lines.SetMaxLines(100000);
+
 
             //Func<Vector3, bool> isUpperLeft = v => v.X > 4.5f && v.Y > 4.5f && v.Z > 4.5f;
-            Func<Vector3, bool> isUpperLeft = v => v.X > 4.01f && v.Y > 4.01f && v.Z > 4.01f
+            /*Func<Vector3, bool> isUpperLeft = v => v.X > 4.01f && v.Y > 4.01f && v.Z > 4.01f
                                                    && v.X < 5.99f;
-            isUpperLeft = _ => true;
-
-            var worldSize = 10f;
-            int subdivision = 50;
-
-            var cellSize = worldSize / subdivision;
-            for (int x = 0; x < subdivision + 1; x++)
-                for (int y = 0; y < subdivision + 1; y++)
-                    for (int z = 0; z < subdivision + 1; z++)
-                    {
-                        var vertPos = new Vector3(x, y, z) * cellSize;
-                        if (!isUpperLeft(vertPos)) continue;
-                        var sign = getVertSign(vertPos);
-                        var color = sign ? Color.LightGray.dx() : Color.Green.dx();
-                        //if (!sign)
-                        lines.AddCenteredBox(vertPos, cellSize * 0.1f, color);
+            isUpperLeft = _ => true;*/
 
 
+            var grid = HermiteDataGrid.FromIntersectableGeometry(gridWorldSize, subdivision, Matrix.Identity,
+                                                                 getVertSignSphere, getEdgeDataSphere);
 
-                        var dirs = new[] { Vector3.UnitX, Vector3.UnitY, Vector3.UnitZ };
+            this.lines.SetMaxLines(1000000);
 
-                        foreach (var dir in dirs)
+            addHermiteVertices(grid, cellSize, this.lines);
+            addHermiteNormals(grid, cellSize, this.lines);
+            var lines = this.lines;
+
+
+            engine.AddSimulator(new WorldRenderingSimulator());
+
+            addLinesSimulator(engine, lines);
+
+
+            //engine.AddSimulator(new WorldRenderingSimulator());
+        }
+
+        [Test]
+        public void TestGenSurface()
+        {
+            var cubeCenter = new Vector3(5, 7, 1.5f);
+            var cubeRadius = 2;
+            var grid = HermiteDataGrid.FromIntersectableGeometry(gridWorldSize, subdivision, Matrix.Identity,
+                //getVertSignSphere, getEdgeDataSphere);
+                //v => !getVertSignCube(v,cubeCenter, cubeRadius), (s, e) => getEdgeDataCube(s, e, cubeCenter, cubeRadius));
+                v =>
+                {
+                    if (!getVertSignCube(v, cubeCenter, cubeRadius)) return false;
+                    return getVertSignSphere(v);
+
+                }, (s, e) =>
                         {
-                            var end = vertPos + dir * cellSize;
-
-                            if (sign == getVertSign(end)) continue;
-
-                            //lines.AddLine(vertPos, end, Color.Black.dx());
-
-                            var edge = getEdgeData(vertPos, end);
-                            var normal = edge.TakeXYZ();
-                            var pos = Vector3.Lerp(vertPos, end, edge.W);
-                            lines.AddLine(pos, pos + normal * 0.4f * cellSize, Color.Blue);
-                        }
+                            if (getVertSignCube(s, cubeCenter, cubeRadius) != getVertSignCube(e, cubeCenter, cubeRadius))
+                            {
+                                // Currently use this if there is a cube sign change
+                                return getEdgeDataCube(s, e, cubeCenter, cubeRadius);
+                            }
+                            return getEdgeDataSphere(s, e);
+                        });
 
 
-                    }
 
+            this.lines.SetMaxLines(1000000);
+
+            //addHermiteVertices(grid, cellSize, this.lines);
+            addHermiteNormals(grid, cellSize, this.lines);
+            var lines = this.lines;
 
             var vertices = new List<Vector3>();
             var indices = new List<int>();
-            GenerateSurface(vertices, indices, subdivision + 1, cellSize);
+            var algo = new DualContouringAlgorithm();
+            algo.GenerateSurface(vertices, indices, grid);
 
             foreach (var v in vertices)
             {
-                if (!isUpperLeft(v)) continue;
-                lines.AddCenteredBox(v, cellSize * 0.2f, Color.OrangeRed.dx());
+                lines.AddCenteredBox(v * cellSize, cellSize * 0.2f, Color.OrangeRed.dx());
             }
 
 
@@ -89,116 +117,72 @@ namespace MHGameWork.TheWizards.DualContouring
             builder.AddCustom(indices.Select(i => vertices[i]).ToArray(), indices.Select(i => Vector3.Normalize(vertices[i] - new Vector3(5))).ToArray(), indices.Select(i => new Vector2()).ToArray());
 
             var mesh = builder.CreateMesh();
-            TW.Graphics.AcquireRenderer().CreateMeshElement(mesh);
+            var el = TW.Graphics.AcquireRenderer().CreateMeshElement(mesh);
+            el.WorldMatrix = Matrix.Scaling(new Vector3(cellSize));
 
-
-
+            var engine = EngineFactory.CreateEngine();
 
             engine.AddSimulator(new WorldRenderingSimulator());
 
+            addLinesSimulator(engine, lines);
+        }
+
+        private static void addLinesSimulator(TWEngine engine, LineManager3DLines lines)
+        {
             engine.AddSimulator(() =>
-            {
-                TW.Graphics.SetBackbuffer();
-                TW.Graphics.Device.ImmediateContext.OutputMerger.SetTargets(TW.Graphics.AcquireRenderer().GBuffer.DepthStencilView, TW.Graphics.Device.ImmediateContext.OutputMerger.GetRenderTargets(1));
-                TW.Graphics.LineManager3D.Render(lines, TW.Graphics.Camera);
+                {
+                    TW.Graphics.SetBackbuffer();
+                    TW.Graphics.Device.ImmediateContext.OutputMerger.SetTargets(
+                        TW.Graphics.AcquireRenderer().GBuffer.DepthStencilView,
+                        TW.Graphics.Device.ImmediateContext.OutputMerger.GetRenderTargets(1));
+                    TW.Graphics.LineManager3D.Render(lines, TW.Graphics.Camera);
 
-                TW.Graphics.SetBackbuffer();
-            }, "linerenderer");
-
-
-            //engine.AddSimulator(new WorldRenderingSimulator());
+                    TW.Graphics.SetBackbuffer();
+                }, "linerenderer");
         }
 
-        public void GenerateSurface(List<Vector3> vertices, List<int> indices, int numVertices, float cellSize)
+        private static void addHermiteNormals(HermiteDataGrid grid, float cellSize, LineManager3DLines lines)
         {
-        
+            grid.ForEachCube(p =>
+                {
+                    var sign = grid.GetSign(p);
+                    var dirs = new[] { new Point3(1, 0, 0), new Point3(0, 1, 0), new Point3(0, 0, 1) };
 
-           
 
-            var vIndex = new Dictionary<Vector3, int>();
-
-
-            for (int x = 0; x < numVertices - 1; x++)
-                for (int y = 0; y < numVertices - 1; y++)
-                    for (int z = 0; z < numVertices - 1; z++)
+                    foreach (var dir in dirs)
                     {
-                        var curr = new Vector3(x, y, z) * cellSize;
-                        var signs = (from offset in cube_verts
-                                     select getVertSign((curr + offset * cellSize))).ToArray();
-                        if (signs.All(v => v) || !signs.Any(v => v)) continue; // no sign changes
+                        if (sign == grid.GetSign(p + dir)) continue;
 
+                        //lines.AddLine(vertPos, end, Color.Black.dx());
 
-                        var changingEdges =
-                            cube_edges.Where((e, i) => signs[edgeToVertices[i].Start] != signs[edgeToVertices[i].End])
-                            .Select(e => new { Start = e.Start * cellSize + curr, End = e.End * cellSize + curr }).ToArray();
-                        var posses = changingEdges.Select(e => Vector3.Lerp(e.Start, e.End, getEdgeData(e.Start, e.End).W)).ToArray();
-                        var normals = changingEdges.Select(e => getEdgeData(e.Start, e.End).TakeXYZ()).ToArray();
+                        var edge = grid.GetEdgeId(p, p + dir);
 
-                        var leastsquares = calculateCubeQEF(normals, posses, posses.Aggregate((a, b) => a + b) * (1f / posses.Length));
+                        var normal = grid.GetEdgeNormal(p, edge);
+                        var pos = grid.GetEdgeIntersectionCubeLocal(p, edge);
 
-                        vIndex[new Vector3(x, y, z)] = vertices.Count;
-                        vertices.Add(new Vector3(leastsquares[0], leastsquares[1], leastsquares[2]));
-
-
+                        pos = (p + pos) * cellSize;
+                        lines.AddLine(pos, pos + normal * 0.4f * cellSize, Color.Blue);
                     }
-
-
-            for (int x = 0; x < numVertices - 1; x++)
-                for (int y = 0; y < numVertices - 1; y++)
-                    for (int z = 0; z < numVertices - 1; z++)
-                    {
-                        var o = new Vector3(x, y, z);
-                        if (!vIndex.ContainsKey(o)) continue;
-
-                        var pairs = new[]
-                        {
-                            new Tuple<Vector3,Vector3>(Vector3.UnitX, Vector3.UnitY),
-                            new Tuple<Vector3,Vector3>(Vector3.UnitY, Vector3.UnitZ),
-                            new Tuple<Vector3,Vector3>(Vector3.UnitZ, Vector3.UnitX)
-                        };
-                        foreach (var p in pairs)
-                        {
-                            var a = o + p.Item1;
-                            var b = o + p.Item2;
-                            var ab = o + p.Item1 + p.Item2;
-                            if (!new[] { a, b, ab }.All(vIndex.ContainsKey))
-                                continue;
-
-                            indices.AddRange(new[] { vIndex[o], vIndex[a], vIndex[ab] });
-                            indices.AddRange(new[] { vIndex[o], vIndex[ab], vIndex[b] });
-
-                        }
-                    }
+                });
         }
 
-        private Vector<float> calculateCubeQEF(Vector3[] normals, Vector3[] posses, Vector3 preferredPosition)
+        private static void addHermiteVertices(HermiteDataGrid grid, float cellSize, LineManager3DLines lines)
         {
-            var A = DenseMatrix.OfRowArrays(normals.Select(e => new[] { e.X, e.Y, e.Z }).ToArray());
-            var b = DenseVector.OfArray(normals.Zip(posses.Select(p => p - preferredPosition), Vector3.Dot).ToArray());
-
-            var leastsquares = new QEFCalculator(). CalculateQEF(A, b);
-            return leastsquares + DenseVector.OfArray(new[] { preferredPosition.X, preferredPosition.Y, preferredPosition.Z });
+            grid.ForEachCube(p =>
+                {
+                    var vertPos = p.ToVector3() * cellSize;
+                    var sign = grid.GetSign(p);
+                    var color = sign ? Color.Green.dx() : Color.LightGray.dx();
+                    //if (!sign)
+                    lines.AddCenteredBox(vertPos, cellSize * 0.1f, color);
+                });
         }
 
 
-        private bool getVertSign(Vector3 v)
-        {
-            if (!getVertSignCube(v, new Vector3(5, 7, 5), 2)) return true;
-            //return getVertSignCube(v, new Vector3(5, 7, 5), 2);
-            return getVertSignSphere(v);
-        }
-
-        private Vector4 getEdgeData(Vector3 start, Vector3 end)
-        {
-            if (getVertSignCube(start, new Vector3(5, 7, 5), 2)!= getVertSignCube(end, new Vector3(5, 7, 5), 2))
-                return getEdgeDataCube(start, end, new Vector3(5, 7, 5), 2);
-            //return getEdgeDataCube(start, end, new Vector3(5), 4);
-            return getEdgeDataSphere(start, end);
-        }
         private bool getVertSignSphere(Vector3 v)
         {
             v -= 5 * MathHelper.One;
-            return v.Length() > 4;
+            return v.Length() <= 4;
         }
 
         private Vector4 getEdgeDataSphere(Vector3 start, Vector3 end)
@@ -258,7 +242,7 @@ namespace MHGameWork.TheWizards.DualContouring
             var ray = new Ray(start, Vector3.Normalize(end - start));
             var sphere = new BoundingSphere(new Vector3(5), 4.001f);
 
-            if (getVertSign(start) == getVertSign(end)) throw new InvalidOperationException("Not a changing edge!");
+            if (getVertSignSphere(start) == getVertSignSphere(end)) throw new InvalidOperationException("Not a changing edge!");
             // Should always intersect!
             float intersect;
             intersect = ray.xna().Intersects(sphere.xna()).Value;
@@ -283,14 +267,14 @@ namespace MHGameWork.TheWizards.DualContouring
             return ret;
         }
 
-        
+
 
         [Test]
         public void TestQEF_Simple()
         {
             var normals = new[] { Vector3.UnitX, Vector3.UnitY, Vector3.UnitZ };
             var posses = new[] { Vector3.UnitX, Vector3.UnitY, Vector3.UnitZ };
-            var result = calculateCubeQEF(normals, posses, new Vector3(1, 1, 1)).ToArray();
+            var result = QEFCalculator.CalculateCubeQEF(normals, posses, new Vector3(1, 1, 1)).ToArray();
             result.Print();
             CollectionAssert.AreEqual(new float[] { 1, 1, 1 }, result);
         }
@@ -299,7 +283,7 @@ namespace MHGameWork.TheWizards.DualContouring
         {
             var normals = new[] { Vector3.UnitX, Vector3.UnitY, Vector3.UnitX, Vector3.UnitY };
             var posses = new[] { Vector3.UnitX * 2, Vector3.UnitY * 2, Vector3.UnitX * 2 + Vector3.UnitZ * 2, Vector3.UnitY * 2 + Vector3.UnitZ * 2 };
-            var result = calculateCubeQEF(normals, posses, new Vector3(1, 1, 1)).ToArray();
+            var result = QEFCalculator.CalculateCubeQEF(normals, posses, new Vector3(1, 1, 1)).ToArray();
             result.Print();
             CollectionAssert.AreEqual(new float[] { 2, 2, 1 }, result);
 
@@ -309,7 +293,7 @@ namespace MHGameWork.TheWizards.DualContouring
 
 
 
-        
+
 
     }
 }

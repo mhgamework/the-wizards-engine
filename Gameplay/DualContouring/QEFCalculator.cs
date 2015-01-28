@@ -1,12 +1,24 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+﻿using System.Linq;
+using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Factorization;
 using MathNet.Numerics.LinearAlgebra.Single;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.DualContouring
 {
-    public class QEFCalculator
+    public static class QEFCalculator
     {
-        public Vector<float> CalculateQEF(DenseMatrix A, DenseVector b)
+
+        public static Vector<float> CalculateCubeQEF(Vector3[] normals, Vector3[] posses, Vector3 preferredPosition)
+        {
+            var A = DenseMatrix.OfRowArrays(normals.Select(e => new[] { e.X, e.Y, e.Z }).ToArray());
+            var b = DenseVector.OfArray(normals.Zip(posses.Select(p => p - preferredPosition), Vector3.Dot).ToArray());
+
+            var leastsquares = CalculateQEF(A, b);
+            return leastsquares + DenseVector.OfArray(new[] { preferredPosition.X, preferredPosition.Y, preferredPosition.Z });
+        }
+
+        public static Vector<float> CalculateQEF(DenseMatrix A, DenseVector b)
         {
 
             //return A.QR().Solve(b);
