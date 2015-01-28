@@ -98,7 +98,7 @@ namespace MHGameWork.TheWizards.DualContouring
         }
 
 
-        public static HermiteDataGrid FromIntersectableGeometry(float gridWorldSize, int resolution, Matrix world, Func<Vector3, bool> isInside, Func<Vector3, Vector3, Vector4> intersect)
+        public static HermiteDataGrid FromIntersectableGeometry(float gridWorldSize, int resolution, Matrix world, IIntersectableObject obj)
         {
             var numCubes = new Point3(resolution, resolution, resolution);
             var grid = new HermiteDataGrid();
@@ -114,7 +114,7 @@ namespace MHGameWork.TheWizards.DualContouring
                 {
                     grid.cells[cube] = new Vertex()
                         {
-                            Sign = isInside(Vector3.TransformCoordinate(cube.ToVector3(), gridToGeometry)),
+                            Sign = obj.IsInside(Vector3.TransformCoordinate(cube.ToVector3(), gridToGeometry)),
                             EdgeData = new Vector4[3]
                         };
                 });
@@ -128,7 +128,7 @@ namespace MHGameWork.TheWizards.DualContouring
                     {
                         if (sign == grid.GetSign(cube + grid.dirs[i])) continue;
                         //sign difference
-                        var vector4 = intersect(Vector3.TransformCoordinate(cube, gridToGeometry), Vector3.TransformCoordinate(cube + grid.dirs[i], gridToGeometry));
+                        var vector4 = obj.GetIntersection(Vector3.TransformCoordinate(cube, gridToGeometry), Vector3.TransformCoordinate(cube + grid.dirs[i], gridToGeometry));
                         vector4 = new Vector4(Vector3.Normalize(Vector3.TransformNormal(vector4.TakeXYZ(), geometryToGrid)), vector4.W);
                         grid.cells[cube].EdgeData[i] = vector4;
                     }

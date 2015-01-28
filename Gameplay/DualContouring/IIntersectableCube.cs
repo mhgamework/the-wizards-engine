@@ -6,13 +6,13 @@ namespace MHGameWork.TheWizards.DualContouring
 {
     public class IntersectableCube : IIntersectableObject
     {
-        private Vector3 cubeCenter;
-        private float cubeRadius;
+        private Vector3 cubeCenter = new Vector3(0,0,0);
+        private float cubeRadius = 1;
 
         public bool IsInside(Vector3 v)
         {
             var bb = new BoundingBox(cubeCenter - new Vector3(cubeRadius), cubeCenter + new Vector3(cubeRadius));
-            return bb.xna().Contains(v.xna()) != ContainmentType.Contains;
+            return bb.xna().Contains(v.xna()) == ContainmentType.Contains;
         }
 
         public Vector4 GetIntersection(Vector3 start, Vector3 end)

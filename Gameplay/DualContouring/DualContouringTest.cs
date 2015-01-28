@@ -38,20 +38,24 @@ namespace MHGameWork.TheWizards.DualContouring
             lines = new LineManager3DLines(TW.Graphics.Device);
         }
 
+
         [Test]
-        public void TestRenderHermiteData()
+        public void TestHermiteCube()
+        {
+            showHermiteGrid(createCubeGrid());
+
+        }
+        [Test]
+        public void TestHermiteSphere()
+        {
+            showHermiteGrid(createSphereGrid());
+        }
+
+        private void showHermiteGrid(HermiteDataGrid hermiteGrid)
         {
             var engine = EngineFactory.CreateEngine();
 
-
-            //Func<Vector3, bool> isUpperLeft = v => v.X > 4.5f && v.Y > 4.5f && v.Z > 4.5f;
-            /*Func<Vector3, bool> isUpperLeft = v => v.X > 4.01f && v.Y > 4.01f && v.Z > 4.01f
-                                                   && v.X < 5.99f;
-            isUpperLeft = _ => true;*/
-
-
-            var grid = HermiteDataGrid.FromIntersectableGeometry(gridWorldSize, subdivision, Matrix.Identity,
-                                                                 getVertSignSphere, getEdgeDataSphere);
+            var grid = hermiteGrid; //createSphereGrid();
 
             this.lines.SetMaxLines(1000000);
 
@@ -63,33 +67,26 @@ namespace MHGameWork.TheWizards.DualContouring
             engine.AddSimulator(new WorldRenderingSimulator());
 
             addLinesSimulator(engine, lines);
-
-
-            //engine.AddSimulator(new WorldRenderingSimulator());
         }
 
         [Test]
         public void TestGenSurface()
         {
-            var cubeCenter = new Vector3(5, 7, 1.5f);
-            var cubeRadius = 2;
-            var grid = HermiteDataGrid.FromIntersectableGeometry(gridWorldSize, subdivision, Matrix.Identity,
-                //getVertSignSphere, getEdgeDataSphere);
-                //v => !getVertSignCube(v,cubeCenter, cubeRadius), (s, e) => getEdgeDataCube(s, e, cubeCenter, cubeRadius));
-                v =>
-                {
-                    if (!getVertSignCube(v, cubeCenter, cubeRadius)) return false;
-                    return getVertSignSphere(v);
+            var grid = createSphereGrid();
+            /*v =>
+            {
+                if (!getVertSignCube(v, cubeCenter, cubeRadius)) return false;
+                return getVertSignSphere(v);
 
-                }, (s, e) =>
+            }, (s, e) =>
+                    {
+                        if (getVertSignCube(s, cubeCenter, cubeRadius) != getVertSignCube(e, cubeCenter, cubeRadius))
                         {
-                            if (getVertSignCube(s, cubeCenter, cubeRadius) != getVertSignCube(e, cubeCenter, cubeRadius))
-                            {
-                                // Currently use this if there is a cube sign change
-                                return getEdgeDataCube(s, e, cubeCenter, cubeRadius);
-                            }
-                            return getEdgeDataSphere(s, e);
-                        });
+                            // Currently use this if there is a cube sign change
+                            return getEdgeDataCube(s, e, cubeCenter, cubeRadius);
+                        }
+                        return getEdgeDataSphere(s, e);
+                    });*/
 
 
 
@@ -104,10 +101,7 @@ namespace MHGameWork.TheWizards.DualContouring
             var algo = new DualContouringAlgorithm();
             algo.GenerateSurface(vertices, indices, grid);
 
-            foreach (var v in vertices)
-            {
-                lines.AddCenteredBox(v * cellSize, cellSize * 0.2f, Color.OrangeRed.dx());
-            }
+            foreach (var v in vertices) lines.AddCenteredBox(v * cellSize, cellSize * 0.2f, Color.OrangeRed.dx());
 
 
             var builder = new MeshBuilder();
@@ -125,6 +119,17 @@ namespace MHGameWork.TheWizards.DualContouring
             engine.AddSimulator(new WorldRenderingSimulator());
 
             addLinesSimulator(engine, lines);
+        }
+
+        private HermiteDataGrid createSphereGrid()
+        {
+            return HermiteDataGrid.FromIntersectableGeometry(gridWorldSize, subdivision, Matrix.Scaling(new Vector3(4)) * Matrix.Translation(5, 5, 5),
+                                                             new IntersectableSphere());
+        }
+        private HermiteDataGrid createCubeGrid()
+        {
+            return HermiteDataGrid.FromIntersectableGeometry(gridWorldSize, subdivision, Matrix.Scaling(new Vector3(4)) * Matrix.Translation(5, 5, 5),
+                                                             new IntersectableCube());
         }
 
         private static void addLinesSimulator(TWEngine engine, LineManager3DLines lines)
@@ -176,95 +181,6 @@ namespace MHGameWork.TheWizards.DualContouring
                     //if (!sign)
                     lines.AddCenteredBox(vertPos, cellSize * 0.1f, color);
                 });
-        }
-
-
-        private bool getVertSignSphere(Vector3 v)
-        {
-            v -= 5 * MathHelper.One;
-            return v.Length() <= 4;
-        }
-
-        private Vector4 getEdgeDataSphere(Vector3 start, Vector3 end)
-        {
-            var ray = new Ray(start, Vector3.Normalize(end - start));
-            var sphere = new BoundingSphere(new Vector3(5), 4);
-            float? intersect;
-            intersect = ray.xna().Intersects(sphere.xna());
-            if (!intersect.HasValue || intersect.Value < 0.001 || intersect.Value > (end - start).Length() + 0.0001)
-            {
-
-                //Try if inside of sphere   
-                ray = new Ray(end, Vector3.Normalize(start - end));
-                intersect = ray.xna().Intersects(sphere.xna());
-
-                if (!intersect.HasValue || intersect.Value < -0.001 || intersect.Value > (end - start).Length() + 0.0001)
-                    throw new InvalidOperationException();
-                intersect = (start - end).Length() - intersect.Value;
-                ray = new Ray(start, Vector3.Normalize(end - start));
-
-            }
-
-            var pos = ray.GetPoint(intersect.Value);
-
-            return new Vector4(Vector3.Normalize(pos - new Vector3(5)), (pos - start).Length() / (end - start).Length());
-        }
-
-        private bool getVertSignCube(Vector3 v, Vector3 cubeCenter, int cubeRadius)
-        {
-            var bb = new BoundingBox(cubeCenter - new Vector3(cubeRadius), cubeCenter + new Vector3(cubeRadius));
-            return bb.xna().Contains(v.xna()) != ContainmentType.Contains;
-        }
-
-        private Vector4 getEdgeDataCube(Vector3 start, Vector3 end, Vector3 cubeCenter, int cubeRadius)
-        {
-            start -= cubeCenter;
-            end -= cubeCenter;
-            // find which edge we are at
-            var dirs = new[] { Vector3.UnitX, Vector3.UnitY, Vector3.UnitZ };
-            foreach (var dir in dirs)
-            {
-                var e = Vector3.Dot(end, dir);
-                var s = Vector3.Dot(start, dir);
-                if (e > cubeRadius)
-                    return new Vector4(dir, (cubeRadius - s) / (e - s));
-                if (s < -cubeRadius)
-                    return new Vector4(-dir, (-cubeRadius - s) / (e - s));
-            }
-            throw new InvalidOperationException("Not a crossing edge!");
-        }
-
-        /// <summary>
-        /// Does not seem to work any better
-        /// </summary>
-        private Vector4 getEdgeDataSphereAlternative(Vector3 start, Vector3 end)
-        {
-            var ray = new Ray(start, Vector3.Normalize(end - start));
-            var sphere = new BoundingSphere(new Vector3(5), 4.001f);
-
-            if (getVertSignSphere(start) == getVertSignSphere(end)) throw new InvalidOperationException("Not a changing edge!");
-            // Should always intersect!
-            float intersect;
-            intersect = ray.xna().Intersects(sphere.xna()).Value;
-
-            if (intersect < 0.001) // check inside, so revert
-            {
-
-                //Try if inside of sphere   
-                ray = new Ray(end, Vector3.Normalize(start - end));
-                intersect = ray.xna().Intersects(sphere.xna()).Value;
-
-                intersect = (start - end).Length() - intersect;
-                ray = new Ray(start, Vector3.Normalize(end - start));
-
-            }
-
-            var pos = ray.GetPoint(intersect);
-
-            var ret = new Vector4(Vector3.Normalize(pos - new Vector3(5)), (pos - start).Length() / (end - start).Length());
-            //if (ret.W < -0.001 || ret.W > 1.0001) throw new InvalidOperationException("Algorithm error!");
-
-            return ret;
         }
 
 
