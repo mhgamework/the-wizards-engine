@@ -210,6 +210,9 @@
     <Compile Include="DualContouring\DualContouringAlgorithm.cs" />
     <Compile Include="DualContouring\DualContouringTest.cs" />
     <Compile Include="DualContouring\HermiteDataGrid.cs" />
+    <Compile Include="DualContouring\IIntersectableCube.cs" />
+    <Compile Include="DualContouring\IIntersectableObject.cs" />
+    <Compile Include="DualContouring\IntersectableSphere.cs" />
     <Compile Include="DualContouring\QEFCalculator.cs" />
     <Compile Include="Engine\WorldRendering\FastTextareaUpdater.cs" />
     <Compile Include="Engine\WorldRendering\ITextareaUpdater.cs" />
