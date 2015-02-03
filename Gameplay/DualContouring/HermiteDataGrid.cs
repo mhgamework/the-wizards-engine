@@ -13,9 +13,10 @@ namespace MHGameWork.TheWizards.DualContouring
 
         private List<Point3> dirs = new List<Point3>(new Point3[] { new Point3(1, 0, 0), new Point3(0, 1, 0), new Point3(0, 0, 1) });
 
-        private HermiteDataGrid():base()
+        private HermiteDataGrid()
+            : base()
         {
-      
+
         }
 
         public override bool GetSign(Point3 pos)
@@ -83,6 +84,26 @@ namespace MHGameWork.TheWizards.DualContouring
                 });
 
             return grid;
+        }
+
+        public static HermiteDataGrid CopyGrid(AbstractHermiteGrid grid)
+        {
+            var ret = new HermiteDataGrid();
+            ret.cells = new Array3D<Vertex>(grid.Dimensions);
+            ret.ForEachCube(p =>
+                {
+                    ret.cells[p] = new Vertex()
+                        {
+                            Sign = grid.GetSign(p),
+                            EdgeData = ret.dirs.Select(dir =>
+                                {
+                                    var edgeId = grid.GetEdgeId(p, p + dir);
+                                    return grid.HasEdgeData(p, edgeId) ? grid.getEdgeData(p, edgeId) : new Vector4();
+                                }).ToArray()
+                        };
+                });
+
+            return ret;
         }
     }
 }

@@ -107,13 +107,18 @@ namespace MHGameWork.TheWizards.DualContouring
         public bool[] GetEdgeSigns(Point3 cube, int edgeId)
         {
             var offsets = GetEdgeOffsets(edgeId);
-            return new[] {GetSign(cube + offsets[0]), GetSign(cube + offsets[1])};
+            return new[] { GetSign(cube + offsets[0]), GetSign(cube + offsets[1]) };
         }
 
         public bool HasEdgeData(Point3 cube, int edgeId)
         {
-            var signs = GetEdgeSigns(cube,edgeId);
+            var signs = GetEdgeSigns(cube, edgeId);
             return signs[0] != signs[1];
+        }
+
+        public Vector4 getEdgeData(Point3 cube, Point3 dir)
+        {
+            return getEdgeData(cube, GetEdgeId(cube, cube + dir));
         }
     }
 }

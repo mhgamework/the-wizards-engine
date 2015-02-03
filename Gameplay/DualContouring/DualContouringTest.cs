@@ -128,7 +128,7 @@ namespace MHGameWork.TheWizards.DualContouring
         
             this.lines.SetMaxLines(1000000);
 
-            //addHermiteVertices(grid, cellSize, this.lines);
+            addHermiteVertices(grid, cellSize, this.lines);
             addHermiteNormals(grid, cellSize, this.lines);
             var lines = this.lines;
 
@@ -168,7 +168,8 @@ namespace MHGameWork.TheWizards.DualContouring
                                              HermiteDataGrid.FromIntersectableGeometry(gridWorldSize, subdivision,
                                                                                        Matrix.Translation(point),
                                                                                        new IntersectableCube()));
-                        mesh =  buildMesh(grid);
+                        grid = HermiteDataGrid.CopyGrid(grid);
+                        mesh = buildMesh(grid);
                         el.Delete();
                         el = TW.Graphics.AcquireRenderer().CreateMeshElement(mesh);
                         el.WorldMatrix = Matrix.Scaling(new Vector3(cellSize));
@@ -179,11 +180,13 @@ namespace MHGameWork.TheWizards.DualContouring
                                              HermiteDataGrid.FromIntersectableGeometry(gridWorldSize, subdivision,
                                                                                        Matrix.Translation(point),
                                                                                        new IntersectableCube()));
+                        grid = HermiteDataGrid.CopyGrid(grid);
                         mesh = buildMesh(grid);
                         el.Delete();
                         el = TW.Graphics.AcquireRenderer().CreateMeshElement(mesh);
                         el.WorldMatrix = Matrix.Scaling(new Vector3(cellSize));
                     }
+
 
                 },"UserInput");
 
