@@ -403,6 +403,16 @@
     <Compile Include="GodGame\_Tests\VoxelChangeListenerTest.cs" />
     <Compile Include="GodGame\_Tests\VoxelTypesTest.cs" />
     <Compile Include="GodGame\_Tests\WorkersTest.cs" />
+    <Compile Include="LogicRTS\EngineGameObjects\SceneGraphComponent.cs" />
+    <Compile Include="LogicRTS\EngineGameObjects\StaticMeshComponent.cs" />
+    <Compile Include="LogicRTS\Engine\Scheduler.cs" />
+    <Compile Include="LogicRTS\Domain\Unit.cs" />
+    <Compile Include="LogicRTS\Domain\Soldier.cs" />
+    <Compile Include="LogicRTS\Domain\UnitSenses.cs" />
+    <Compile Include="LogicRTS\GameObjects\BaseGameComponent.cs" />
+    <Compile Include="LogicRTS\GameObjects\GameObject.cs" />
+    <Compile Include="LogicRTS\GameObjects\GameObjectFactory.cs" />
+    <Compile Include="LogicRTS\GameObjects\IGameComponent.cs" />
     <Compile Include="Math\GeometrySampler.cs" />
     <Compile Include="Rendering\Lod\IRenderable.cs" />
     <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />
