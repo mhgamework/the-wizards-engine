@@ -15,6 +15,9 @@ Contact me at mhgamework at gmail dot com
 ### Contributors ###
 
 Michiel Huygen: Lead developer, engine development
+
 Simon Chuptys: Artist, development
+
 Bart Philippe: Development (legacy tree engine, particle system, imposter engine)
+
 Japser Hilven: Gameplay code
