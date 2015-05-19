@@ -1,3 +1,5 @@
+(TODO merge with install guidelines and maybe add an installation guide to git)
+
 To compile => all solutions must be compiled!!
 
 Use BuildAll.bat to compile everything(this is a clean and build command for everything)
