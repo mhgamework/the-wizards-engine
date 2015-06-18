@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using DirectX11;
 using SlimDX;
@@ -52,7 +53,7 @@ namespace MHGameWork.TheWizards.DualContouring
 
         public int[] GetAllEdgeIds()
         {
-            return Enumerable.Range(0, 11).ToArray();
+            return Enumerable.Range(0, 12).ToArray();
         }
 
         public int[] GetEdgeVertexIds(int edgeId)
@@ -76,7 +77,12 @@ namespace MHGameWork.TheWizards.DualContouring
         {
             return UtilityExtensions.TakeXYZ(getEdgeData(curr, i));
         }
-
+        /// <summary>
+        /// Returns hermite grid normal data. xyz components are the normal, w component is the lerp factor 0..1 for the intersectionpoint between start and end of the edge
+        /// </summary>
+        /// <param name="cube"></param>
+        /// <param name="edgeId"></param>
+        /// <returns></returns>
         public abstract Vector4 getEdgeData(Point3 cube, int edgeId);
 
         public virtual int GetEdgeId(Point3 start, Point3 end)
@@ -120,5 +126,8 @@ namespace MHGameWork.TheWizards.DualContouring
         {
             return getEdgeData(cube, GetEdgeId(cube, cube + dir));
         }
+
+      
+        
     }
 }
