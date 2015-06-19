@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.DualContouring
         {
             var A = DenseMatrix.OfRowArrays(normals.Select(e => new[] { e.X, e.Y, e.Z }).ToArray());
             var b = DenseVector.OfArray(normals.Zip(posses.Select(p => p - preferredPosition), Vector3.Dot).ToArray());
-
+            //TODO: think about the fact that x-p is not normalized with respect to the normal vector
             var leastsquares = CalculateQEF(A, b);
             return leastsquares + DenseVector.OfArray(new[] { preferredPosition.X, preferredPosition.Y, preferredPosition.Z });
         }
