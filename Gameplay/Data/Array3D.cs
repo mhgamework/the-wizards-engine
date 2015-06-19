@@ -1,4 +1,5 @@
-﻿using DirectX11;
+﻿using System;
+using DirectX11;
 
 namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
 {
@@ -34,6 +35,17 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
                 if (pos[i] >= Size[i]) return false;
             }
             return true;
+        }
+
+        public void ForEach(Action<T, Point3> func)
+        {
+            for (int x = 0; x < Size.X; x++)
+                for (int y = 0; y < Size.Y; y++)
+                    for (int z = 0; z < Size.Z; z++)
+                    {
+                        var pos = new Point3(x, y, z);
+                        func(this[pos], pos);
+                    }
         }
     }
 }
