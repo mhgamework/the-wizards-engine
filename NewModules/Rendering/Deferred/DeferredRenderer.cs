@@ -57,6 +57,42 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private FogEffect fogRenderer;
         private int screenWidth = 100;//800;
         private int screenHeight = 100;//600;
+        private CullMode cullMode = CullMode.None;
+
+        private RasterizerState rasterizerState;
+        private bool wireframe;
+
+        public bool Wireframe
+        {
+            get { return wireframe; }
+            set
+            {
+                if (wireframe == value) return; wireframe = value;
+                updateRasterizerState();
+            }
+        }
+
+        public CullMode CullMode
+        {
+            get { return cullMode; }
+            set
+            {
+                if (cullMode == value) return; cullMode = value;
+                updateRasterizerState();
+
+            }
+        }
+
+        private void updateRasterizerState()
+        {
+            if (rasterizerState != null) rasterizerState.Dispose();
+
+            rasterizerState = RasterizerState.FromDescription(game.Device, new RasterizerStateDescription()
+                {
+                    CullMode = cullMode,
+                    FillMode = wireframe ? FillMode.Wireframe : FillMode.Solid
+                });
+        }
 
         public int DrawCalls { get { return meshRenderer.DrawCalls; } }
 
@@ -184,7 +220,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             });
 
             lineManager = new LineManager3D(game.Device);
-
+            updateRasterizerState();
         }
 
         public DirectionalLight CreateDirectionalLight()
@@ -457,6 +493,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             buffer.SetTargetsToOutputMerger();
 
             drawGBufferMeshes();
+
+
         }
 
         private void drawGBufferMeshes()
@@ -467,7 +505,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             //TODO: fix culling+removing of elements
             //gbufferView.UpdateVisibility(cullCam.ViewProjection);
             //setMeshRendererVisibles(gbufferView);
+            meshRenderer.RasterizerState = rasterizerState;
             meshRenderer.Draw();
+            context.Rasterizer.State = game.HelperStates.RasterizerShowAll;
+
         }
 
         private void setMeshRendererVisibles(FrustumCullerView view)
@@ -583,6 +624,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                     mesh.Delete();
             }
             meshElements.Clear();
+
+            Wireframe = false;
+            CullMode = CullMode.None;
 
             //TODO: texturepool.clear?
         }

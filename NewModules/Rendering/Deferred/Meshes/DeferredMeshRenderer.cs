@@ -77,6 +77,12 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             get { return drawCalls; }
         }
 
+        public RasterizerState RasterizerState
+        {
+            get { return rasterizerState; }
+            set { rasterizerState = value; }
+        }
+
         private Dictionary<IMesh, MeshRenderData> renderDataDict = new Dictionary<IMesh, MeshRenderData>();
         private List<MeshRenderData> renderDatas = new List<MeshRenderData>();
 
@@ -151,7 +157,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         private void initialize(TexturePool texturePool)
         {
-            rasterizerState = RasterizerState.FromDescription(game.Device, new RasterizerStateDescription
+            RasterizerState = RasterizerState.FromDescription(game.Device, new RasterizerStateDescription
                                                                                {
                                                                                    CullMode = CullMode.None,
                                                                                    FillMode = FillMode.Solid,
@@ -211,7 +217,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
             baseShader.Apply();
-            context.Rasterizer.State = rasterizerState;
+            context.Rasterizer.State = RasterizerState;
 
 
             for (int i = 0; i < renderDatas.Count; i++)
@@ -242,7 +248,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             baseShader.Effect.GetVariableByName("View").AsMatrix().SetMatrix(game.Camera.View);
             baseShader.Effect.GetVariableByName("Projection").AsMatrix().SetMatrix(game.Camera.Projection);
             baseShader.Apply();
-            context.Rasterizer.State = rasterizerState;
+            context.Rasterizer.State = RasterizerState;
 
             for (int i = 0; i < renderDatas.Count; i++)
             {

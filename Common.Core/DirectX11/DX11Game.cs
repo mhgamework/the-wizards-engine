@@ -418,6 +418,11 @@ namespace MHGameWork.TheWizards.DirectX11
                                                                                     CullMode = CullMode.None,
                                                                                     FillMode = FillMode.Solid
                                                                                 });
+                RasterizerWireframe = RasterizerState.FromDescription(device, new RasterizerStateDescription
+                {
+                    CullMode = CullMode.None,
+                    FillMode = FillMode.Wireframe
+                });
 
 
                 var blendStateDescription = new BlendStateDescription();
@@ -447,6 +452,8 @@ namespace MHGameWork.TheWizards.DirectX11
                 AlphaBlendPremultiplied = BlendState.FromDescription(device, blendStateDescription);
 
             }
+
+            public RasterizerState RasterizerWireframe { get; private set; }
 
             /// <summary>
             /// Culling is disabled and fillmode is solid
