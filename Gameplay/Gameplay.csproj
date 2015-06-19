@@ -208,6 +208,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DualContouring\AbstractHermiteGrid.cs" />
+    <Compile Include="DualContouring\DelegateHermiteGrid.cs" />
     <Compile Include="DualContouring\DifferenceGrid.cs" />
     <Compile Include="DualContouring\DualContouringAlgorithm.cs" />
     <Compile Include="DualContouring\DualContouringTest.cs" />
@@ -216,6 +217,8 @@
     <Compile Include="DualContouring\IIntersectableObject.cs" />
     <Compile Include="DualContouring\IntersectableSphere.cs" />
     <Compile Include="DualContouring\QEFCalculator.cs" />
+    <Compile Include="DualContouring\QEFTest.cs" />
+    <Compile Include="DualContouring\Terrain\VoxelTerrainGenerationTest.cs" />
     <Compile Include="DualContouring\UnionGrid.cs" />
     <Compile Include="Engine\WorldRendering\FastTextareaUpdater.cs" />
     <Compile Include="Engine\WorldRendering\ITextareaUpdater.cs" />
@@ -404,6 +407,7 @@
     <Compile Include="GodGame\_Tests\VoxelTypesTest.cs" />
     <Compile Include="GodGame\_Tests\WorkersTest.cs" />
     <Compile Include="Math\GeometrySampler.cs" />
+    <Compile Include="Math\GridHelper.cs" />
     <Compile Include="Rendering\Lod\IRenderable.cs" />
     <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />
     <Compile Include="Rendering\Particles\ColoredParticle.cs" />
@@ -777,6 +781,7 @@
     <Compile Include="_Unsorted\Simulators\ThirdPersonCameraSimulator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DualContouring\_doc.txt" />
     <Content Include="Engine\engine_architecture-1.jpg" />
     <Content Include="Engine\_Core\_doc.txt" />
     <Content Include="Engine\_doc.html" />

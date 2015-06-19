@@ -1,0 +1,10 @@
+﻿
+=== DC
+http://ngildea.blogspot.be/2014/11/implementing-dual-contouring.html
+http://www.cs.berkeley.edu/~jrs/meshpapers/SchaeferWarren2.pdf
+https://upvoid.com/devblog/2013/05/terrain-engine-part-1-dual-contouring/
+http://forum.unity3d.com/threads/tutorial-procedural-meshes-and-voxel-terrain-c.198651/
+
+
+=== Procedural terrain generation
+http://studentgamedev.blogspot.no/2013/09/unity-voxel-tutorial-part-3-perlin.html

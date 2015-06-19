@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using DirectX11;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
@@ -105,5 +106,26 @@ namespace MHGameWork.TheWizards.DualContouring
 
             return ret;
         }
+
+
+        public void Save(FileInfo fi)
+        {
+            using (var fs = new StreamWriter(fi.Create()))
+            {
+                cells.ForEach((v, p) =>
+                    {
+                        fs.WriteLine("Cell: " + p);
+                        fs.WriteLine(v.Sign);
+                        if (v.EdgeData != null)
+                        {
+                            foreach (var edge in v.EdgeData)
+                                fs.WriteLine(edge);
+
+                        }
+                    });
+            }
+
+        }
+
     }
 }
