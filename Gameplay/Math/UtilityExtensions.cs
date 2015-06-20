@@ -76,6 +76,10 @@ namespace MHGameWork.TheWizards
         {
             return new Point3(((int)Math.Round(v.X)), ((int)Math.Round(v.Y)), ((int)Math.Round(v.Z)));
         }
+        public static Point3 ToFloored(this Vector3 v)
+        {
+            return new Point3(((int)Math.Floor(v.X)), ((int)Math.Floor(v.Y)), ((int)Math.Floor(v.Z)));
+        }
 
 
 
