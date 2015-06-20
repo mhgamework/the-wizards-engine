@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using DirectX11;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.DualContouring
 {
+    [Serializable]
     public class HermiteDataGrid : AbstractHermiteGrid
     {
         private Array3D<Vertex> cells;
@@ -32,6 +34,7 @@ namespace MHGameWork.TheWizards.DualContouring
             get { return cells.Size; }
         }
 
+        [Serializable]
         private struct Vertex
         {
             public bool Sign;
@@ -96,21 +99,77 @@ namespace MHGameWork.TheWizards.DualContouring
                     ret.cells[p] = new Vertex()
                         {
                             Sign = grid.GetSign(p),
-                            EdgeData = ret.dirs.Select(dir =>
+                            /*EdgeData = ret.dirs.Select(dir =>
                                 {
                                     var edgeId = grid.GetEdgeId(p, p + dir);
                                     return grid.HasEdgeData(p, edgeId) ? grid.getEdgeData(p, edgeId) : new Vector4();
-                                }).ToArray()
+                                }).ToArray()*/
                         };
                 });
 
+            ret.ForEachCube(p =>
+            {
+                ret.cells[p] = new Vertex()
+                {
+                    Sign = ret.cells[p].Sign,
+                    EdgeData = ret.dirs.Select(dir =>
+                        {
+                            Point3 endPoint = p + dir;
+                            var edgeId = grid.GetEdgeId(p, endPoint);
+                            // Optimization: direclty read from already constructed data
+                            if (ret.cells[p].Sign == ret.cells[endPoint].Sign) return new Vector4();
+                            if (!ret.cells.InArray(endPoint)) return new Vector4();
+                            if (!grid.HasEdgeData(p, edgeId))
+                            {
+                                // This can normally not happen, since we check if there is a sign difference by looking at the already evaluated density points.
+                                //  If this would be true there is some problem with the manual determining of the existence of an edge.
+                                //throw new InvalidOperationException();
+                                return new Vector4();
+                            }
+                            return grid.getEdgeData(p, edgeId);
+                        }).ToArray()
+                };
+            });
+
+            return ret;
+        }
+
+        public static HermiteDataGrid LoadFromFile(FileInfo fi)
+        {
+            var ret = new HermiteDataGrid();
+            ret.Load(fi);
             return ret;
         }
 
 
         public void Save(FileInfo fi)
         {
-            using (var fs = new StreamWriter(fi.Create()))
+            using (var fs = new BinaryWriter(fi.Create()))
+            {
+                fs.Write("HermiteDataGrid format V1.00. Layout 3D array of (boolean sign, Vector4 edgedata) layout out in x,y,z for loop (so first z then y then x)");
+                fs.Write(cells.Size.X);
+                fs.Write(cells.Size.Y);
+                fs.Write(cells.Size.Z);
+                for (int x = 0; x < cells.Size.X; x++)
+                    for (int y = 0; y < cells.Size.Y; y++)
+                        for (int z = 0; z < cells.Size.Z; z++)
+                        {
+                            var val = cells[new Point3(x, y, z)];
+                            fs.Write(val.Sign);
+                            fs.Write(val.EdgeData.Length);
+                            for (int i = 0; i < val.EdgeData.Length; i++)
+                            {
+                                var edge = val.EdgeData[i];
+                                fs.Write(edge.X);
+                                fs.Write(edge.Y);
+                                fs.Write(edge.Z);
+                                fs.Write(edge.W);
+                            }
+                        }
+
+            }
+
+            /*using (var fs = new StreamWriter(fi.Create()))
             {
                 cells.ForEach((v, p) =>
                     {
@@ -123,8 +182,32 @@ namespace MHGameWork.TheWizards.DualContouring
 
                         }
                     });
-            }
+            }*/
 
+        }
+
+        public void Load(FileInfo fi)
+        {
+            using (var fs = new BinaryReader(fi.OpenRead()))
+            {
+                var format = fs.ReadString();
+                var size = new Point3(fs.ReadInt32(), fs.ReadInt32(), fs.ReadInt32());
+                cells = new Array3D<Vertex>(size);
+                for (int x = 0; x < cells.Size.X; x++)
+                    for (int y = 0; y < cells.Size.Y; y++)
+                        for (int z = 0; z < cells.Size.Z; z++)
+                        {
+                            var val = new Vertex();
+                            val.Sign = fs.ReadBoolean();
+                            val.EdgeData = new Vector4[fs.ReadInt32()];
+                            for (int i = 0; i < val.EdgeData.Length; i++)
+                            {
+                                val.EdgeData[i] = new Vector4(fs.ReadSingle(), fs.ReadSingle(), fs.ReadSingle(), fs.ReadSingle());
+                            }
+                            cells[new Point3(x, y, z)] = val;
+                        }
+
+            }
         }
 
     }

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.IO;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using NUnit.Framework;
 using SlimDX;
@@ -97,7 +99,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
                     var diff = p - new Vector3(10, 10, 10);
                     var l = Math.Abs(diff.X) + Math.Abs(diff.Y) + Math.Abs(diff.Z);
 
-                    return 8-l;
+                    return 8 - l;
 
                 };
 
@@ -111,7 +113,13 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             AbstractHermiteGrid grid = null;
 
             grid = createGridFromDensityFunction(densityFunction, dimensions);
+            grid = HermiteDataGrid.CopyGrid(grid);
 
+            showGrid(grid);
+        }
+
+        private void showGrid(AbstractHermiteGrid grid)
+        {
             this.lines.SetMaxLines(1000000);
 
             DualContouringTest.addHermiteVertices(grid, cellSize, this.lines);
@@ -139,7 +147,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             TW.Graphics.AcquireRenderer().CullMode = CullMode.Front;
         }
 
-        private static AbstractHermiteGrid createGridFromDensityFunction(Func<Vector3, float> densityFunction, Point3 dimensions)
+        public static AbstractHermiteGrid createGridFromDensityFunction(Func<Vector3, float> densityFunction, Point3 dimensions)
         {
             AbstractHermiteGrid grid = null;
             grid = new DelegateHermiteGrid(
@@ -268,35 +276,109 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         [Test]
         public void TestGenerateSinglePerlinNoise()
         {
-            Array3D<float> noise = generateNoise();
-            var seeder = new Seeder(0);
+            var densityFunction = createDensityFunction5Perlin(12);
 
-            Func<Vector3, float> densityFunction = v =>
-            {
-                var density = (float)10 - v.Y;
-                density += sampleTrilinear(noise, v);
-                return density;
-            };
-
-            var dimensions = new Point3(40, 40, 40);
+            int size = 16*4;
+            var dimensions = new Point3(size, size, size);
 
             testDensityFunction(densityFunction, dimensions);
 
         }
 
-        private float sampleTrilinear(Array3D<float> noise, Vector3 pos)
+        public static Func<Vector3, float> createDensityFunction5Perlin(int seed)
         {
-            pos.X %= noise.Size.X;
-            pos.Y %= noise.Size.Y;
-            pos.Z %= noise.Size.Z;
-            return noise[pos.ToPoint3Rounded()];
+            Array3D<float> noise = generateNoise(seed);
+            /*noise = new Array3D<float>(new Point3(2, 2, 2));
+            noise[new Point3(1, 1, 1)] = 3;
+            noise[new Point3(0, 0, 0)] = -3;*/
+            var seeder = new Seeder(0);
+            Func<Vector3, float> densityFunction = v =>
+                {
+                    var density = (float)10 - v.Y;
+                    v *= 1 / 8f;
+                    //v *= (1/8f);
+                    density += sampleTrilinear(noise, v * 4.03f) * 0.25f;
+                    density += sampleTrilinear(noise, v * 1.96f) * 0.5f;
+                    density += sampleTrilinear(noise, v * 1.01f) * 1;
+                    density += sampleTrilinear(noise, v * 0.55f) * 10;
+                    density += sampleTrilinear(noise, v * 0.21f) * 30;
+                    //density += noise.GetTiled(v.ToFloored());
+                    return density;
+                };
+            return densityFunction;
         }
 
-        private Array3D<float> generateNoise()
+        public static float sampleTrilinear(Array3D<float> noise, Vector3 pos)
+        {
+
+            var min = pos.ToFloored();
+            var f = pos - min;
+
+            var q000 = noise.GetTiled(new Point3(0, 0, 0) + min);
+            var q100 = noise.GetTiled(new Point3(1, 0, 0) + min);
+            var q010 = noise.GetTiled(new Point3(0, 1, 0) + min);
+            var q001 = noise.GetTiled(new Point3(0, 0, 1) + min);
+            var q110 = noise.GetTiled(new Point3(1, 1, 0) + min);
+            var q011 = noise.GetTiled(new Point3(0, 1, 1) + min);
+            var q101 = noise.GetTiled(new Point3(1, 0, 1) + min);
+            var q111 = noise.GetTiled(new Point3(1, 1, 1) + min);
+
+
+            var z = triLerp(f, q000, q100, q001, q101, q010, q110, q011, q111);
+            return z;
+
+
+            /*return triLerp(pos.X, pos.Y, pos.Z, q000, q001, q010, q011, q100, q101, q110, q111, min.X, min.X + 1, min.Y,
+                           min.Y + 1, min.Z, min.Z + 1);*/
+        }
+
+        public static float triLerp(Vector3 f, float q000, float q100, float q001, float q101, float q010, float q110,
+                                     float q011, float q111)
+        {
+            var x00 = MathHelper.Lerp(q000, q100, f.X);
+            var x01 = MathHelper.Lerp(q001, q101, f.X);
+            var x10 = MathHelper.Lerp(q010, q110, f.X);
+            var x11 = MathHelper.Lerp(q011, q111, f.X);
+
+            var y0 = MathHelper.Lerp(x00, x10, f.Y);
+            var y1 = MathHelper.Lerp(x01, x11, f.Y);
+
+
+            var z = MathHelper.Lerp(y0, y1, f.Z);
+            return z;
+        }
+
+        /*public static float lerp(float x, float x1, float x2, float q00, float q01)
+        {
+            return ((x2 - x) / (x2 - x1)) * q00 + ((x - x1) / (x2 - x1)) * q01;
+        }
+
+        public static float biLerp(float x, float y, float q11, float q12, float q21, float q22, float x1, float x2, float y1, float y2)
+        {
+            float r1 = lerp(x, x1, x2, q11, q21);
+            float r2 = lerp(x, x1, x2, q12, q22);
+
+            return lerp(y, y1, y2, r1, r2);
+        }
+
+        public static float triLerp(float x, float y, float z, float q000, float q001, float q010, float q011, float q100, float q101, float q110, float q111, float x1, float x2, float y1, float y2, float z1, float z2)
+        {
+            float x00 = lerp(x, x1, x2, q000, q100);
+            float x10 = lerp(x, x1, x2, q010, q110);
+            float x01 = lerp(x, x1, x2, q001, q101);
+            float x11 = lerp(x, x1, x2, q011, q111);
+            float r0 = lerp(y, y1, y2, x00, x01);
+            float r1 = lerp(y, y1, y2, x10, x11);
+
+            return lerp(z, z1, z2, r0, r1);
+        }*/
+
+
+        private static Array3D<float> generateNoise(int seed)
         {
             var ret = new Array3D<float>(new Point3(16, 16, 16));
 
-            var r = new Seeder(0);
+            var r = new Seeder(seed);
 
             ret.ForEach((val, p) =>
                 {
@@ -304,6 +386,27 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
                 });
 
             return ret;
+        }
+
+        [Test]
+        public void TestSaveGeneratedTerrain()
+        {
+            var dens = VoxelTerrainGenerationTest.createDensityFunction5Perlin(11);
+            var grid = VoxelTerrainGenerationTest.createGridFromDensityFunction(dens, new Point3(64, 64, 64));
+            var dataGrid = HermiteDataGrid.CopyGrid(grid);
+            dataGrid.Save(TWDir.Test.CreateSubdirectory("DualContouring").CreateFile("TerrainHermite64.txt"));
+
+        }
+
+        [Test]
+        public void TestLoadGeneratedTerrain()
+        {
+            var grid =
+                HermiteDataGrid.LoadFromFile(
+                    TWDir.Test.CreateSubdirectory("DualContouring").CreateFile("TerrainHermite64.txt"));
+
+            showGrid(grid);
+            
         }
     }
 }

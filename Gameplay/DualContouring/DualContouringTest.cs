@@ -298,6 +298,7 @@ namespace MHGameWork.TheWizards.DualContouring
             mat.DiffuseColor = Color.Green.dx().xna();
             builder.AddCustom(indices.Select(i => vertices[i]).ToArray(),
                               indices.Select((index,numIndex) => triangleNormals[numIndex / 3]).ToArray(),
+                              //indices.Select((index, numIndex) => Vector3.UnitY).ToArray(),
                               indices.Select(i => new Vector2()).ToArray());
 
             var mesh = builder.CreateMesh();

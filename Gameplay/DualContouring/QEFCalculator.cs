@@ -21,6 +21,9 @@ namespace MHGameWork.TheWizards.DualContouring
         public static Vector<float> CalculateQEF(DenseMatrix A, DenseVector b)
         {
 
+            //TODO: do as in dual contouring paper. Book at page 50 compact numerical methods for computers seems to talk about it:
+            //  https://www.dropbox.com/s/o7icpca43t1smfm/(1990)%20Compact%20Numerical%20Methods%20for%20Computers.pdf?dl=0
+
             //return A.QR().Solve(b);
 
             var pseudo = PseudoInverse(A);

@@ -218,6 +218,7 @@
     <Compile Include="DualContouring\IntersectableSphere.cs" />
     <Compile Include="DualContouring\QEFCalculator.cs" />
     <Compile Include="DualContouring\QEFTest.cs" />
+    <Compile Include="DualContouring\Terrain\PerformanceTest.cs" />
     <Compile Include="DualContouring\Terrain\VoxelTerrainGenerationTest.cs" />
     <Compile Include="DualContouring\UnionGrid.cs" />
     <Compile Include="Engine\WorldRendering\FastTextareaUpdater.cs" />
@@ -408,6 +409,8 @@
     <Compile Include="GodGame\_Tests\WorkersTest.cs" />
     <Compile Include="Math\GeometrySampler.cs" />
     <Compile Include="Math\GridHelper.cs" />
+    <Compile Include="Math\TWMath.cs" />
+    <Compile Include="Math\TWMathTest.cs" />
     <Compile Include="Rendering\Lod\IRenderable.cs" />
     <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />
     <Compile Include="Rendering\Particles\ColoredParticle.cs" />
