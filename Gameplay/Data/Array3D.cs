@@ -29,11 +29,9 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
 
         public bool InArray(Point3 pos)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                if (pos[i] < 0) return false;
-                if (pos[i] >= Size[i]) return false;
-            }
+            if (pos.X < 0 || pos.Y < 0 || pos.Z < 0) return false;
+            if (pos.X >= Size.X || pos.Y >= Size.Y || pos.Z >= Size.Z) return false;
+
             return true;
         }
 
@@ -47,5 +45,15 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
                         func(this[pos], pos);
                     }
         }
+
+        public T GetTiled(Point3 pos)
+        {
+            // Dont call the this[] directly, its about 20% slower when i tested it. Probably because of the out of bounds check
+            pos.X = TWMath.nfmod(pos.X, Size.X);
+            pos.Y = TWMath.nfmod(pos.Y, Size.Y);
+            pos.Z = TWMath.nfmod(pos.Z, Size.Z);
+            return arr[pos.X,pos.Y,pos.Z];
+        }
+       
     }
 }
