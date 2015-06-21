@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         public void TestGenerateTerrain20()
         {
             var dens = VoxelTerrainGenerationTest.createDensityFunction5Perlin(11);
-            var grid = VoxelTerrainGenerationTest.createGridFromDensityFunction(dens, new Point3(20, 20, 20));
+            var grid = (AbstractHermiteGrid) new DensityFunctionHermiteGrid(dens, new Point3(20, 20, 20));
 
             var times = 10;
             var s = new Stopwatch();
@@ -42,7 +42,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         public void TestGenerateTerrain80()
         {
             var dens = VoxelTerrainGenerationTest.createDensityFunction5Perlin(11);
-            var grid = VoxelTerrainGenerationTest.createGridFromDensityFunction(dens, new Point3(80, 80, 80));
+            var grid = (AbstractHermiteGrid) new DensityFunctionHermiteGrid(dens, new Point3(80, 80, 80));
 
             var times = 10;
             var s = new Stopwatch();
@@ -75,7 +75,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
                 });
 
             int size = 20;
-            var grid = VoxelTerrainGenerationTest.createGridFromDensityFunction(newDens, new Point3(size, size, size));
+            var grid = (AbstractHermiteGrid) new DensityFunctionHermiteGrid(newDens, new Point3(size, size, size));
 
 
             grid = HermiteDataGrid.CopyGrid(grid);
@@ -111,7 +111,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             for (int i = 0; i < times * 5; i++)// 5 trilerps per density lookup
             {
                 
-                float a = VoxelTerrainGenerationTest.triLerp(new Vector3(0.5f), 4, 7, 8, 6, 4, 8, 9, 7);
+                float a = TWMath.triLerp(new Vector3(0.5f), 4, 7, 8, 6, 4, 8, 9, 7);
             }
             s.Stop();
             var trilerp = s.Elapsed.TotalSeconds / times;

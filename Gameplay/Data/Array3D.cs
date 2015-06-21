@@ -49,6 +49,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
         public T GetTiled(Point3 pos)
         {
             // Dont call the this[] directly, its about 20% slower when i tested it. Probably because of the out of bounds check
+            // TODO: since this is always in bounds, maybe try using 'unsafe' and pointers to avoid the C# array bounds checking?
             pos.X = TWMath.nfmod(pos.X, Size.X);
             pos.Y = TWMath.nfmod(pos.Y, Size.Y);
             pos.Z = TWMath.nfmod(pos.Z, Size.Z);
