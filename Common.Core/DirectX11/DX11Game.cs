@@ -273,14 +273,25 @@ namespace MHGameWork.TheWizards.DirectX11
         {
             var nextFrameTime = SlimDX.Configuration.Timer.Elapsed;
             Elapsed = (float)(nextFrameTime - lastFrameTime).TotalSeconds;
-            lastFrameTime = nextFrameTime;
-            TotalRunTime += Elapsed;
 
             RealElapsed = Elapsed;
             if (Elapsed > 1 / 30f) Elapsed = 1 / 30f;
+            if (FixedTimeStepEnabled) Elapsed = fixedTimeStep;
+            
+            
+            lastFrameTime = nextFrameTime;
+            TotalRunTime += Elapsed; // WARNING: was edited, this used to be the REAL total runtime, now its the same timespace as elapsed
+
 
         }
 
+        public bool FixedTimeStepEnabled { get; set; }
+        private float fixedTimeStep = 1/30f;
+        public float FixedTimeStep
+        {
+            get { return fixedTimeStep; }
+            set { fixedTimeStep = value; }
+        }
 
         public Device Device { get { return Form.Device; } }
         public event Action<DX11Game> GameLoopEvent;
@@ -358,6 +369,7 @@ namespace MHGameWork.TheWizards.DirectX11
         public HelperStatesContainer HelperStates { get; private set; }
 
         private bool running;
+
         public bool Running
         {
             get { lock (this) return running; }

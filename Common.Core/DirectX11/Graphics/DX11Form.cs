@@ -164,7 +164,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
 
             backBuffer = Texture2D.FromSwapChain<Texture2D>(swapChain, 0);
 
-            renderTargetView = new RenderTargetView(device, backBuffer);
+            renderTargetView = new RenderTargetView(device, BackBuffer);
 
 
 
@@ -185,6 +185,11 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
             {
                 lock (this) active = value;
             }
+        }
+
+        public Texture2D BackBuffer
+        {
+            get { return backBuffer; }
         }
 
         void form_Deactivate(object sender, EventArgs e)
@@ -208,7 +213,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
         private void disposeResources()
         {
             renderTargetView.Dispose();
-            backBuffer.Dispose();
+            BackBuffer.Dispose();
             device.Dispose();
             swapChain.Dispose();
         }

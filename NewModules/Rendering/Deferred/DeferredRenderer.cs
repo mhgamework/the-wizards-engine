@@ -61,6 +61,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         private RasterizerState rasterizerState;
         private bool wireframe;
+        private Texture2D hdrImage;
 
         public bool Wireframe
         {
@@ -140,7 +141,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 SampleDescription = new SampleDescription(1, 0),
                 MipLevels = 1
             };
-            var hdrImage = new Texture2D(device, desc);
+            hdrImage = new Texture2D(device, desc);
 
             hdrImageRtv = new RenderTargetView(device, hdrImage);
             hdrImageRV = new ShaderResourceView(device, hdrImage);
@@ -328,7 +329,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             context.ClearState();
             game.SetBackbuffer();
 
-            game.TextureRenderer.Draw(GetLastRenderOutputRV(), new Vector2(0, 0), new Vector2(screenWidth, screenHeight));
+            game.TextureRenderer.Draw(postProcessRT2.RV, new Vector2(0, 0), new Vector2(screenWidth, screenHeight));
 
 
             // TODO: currently cheat
@@ -347,9 +348,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         }
 
-        private ShaderResourceView GetLastRenderOutputRV()
+        public Texture2D GetLastRenderOutputRV()
         {
-            return postProcessRT2.RV;
+            return postProcessRT2.Texture;
         }
 
 
