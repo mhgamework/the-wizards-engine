@@ -102,6 +102,14 @@ namespace DirectX11
         {
             return new Point3(-p.X, -p.Y, -p.Z);
         }
+        public static Point3 operator *(Point3 p, int num)
+        {
+            return new Point3(p.X * num, p.Y * num, p.Z * num);
+        }
+        public static Point3 operator /(Point3 p, int num)
+        {
+            return new Point3(p.X / num, p.Y / num, p.Z / num);
+        }
 
         public override string ToString()
         {
