@@ -328,7 +328,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             context.ClearState();
             game.SetBackbuffer();
 
-            game.TextureRenderer.Draw(postProcessRT2.RV, new Vector2(0, 0), new Vector2(screenWidth, screenHeight));
+            game.TextureRenderer.Draw(GetLastRenderOutputRV(), new Vector2(0, 0), new Vector2(screenWidth, screenHeight));
 
 
             // TODO: currently cheat
@@ -347,6 +347,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         }
 
+        private ShaderResourceView GetLastRenderOutputRV()
+        {
+            return postProcessRT2.RV;
+        }
 
 
         private void resetDevice()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using DirectX11;
@@ -26,6 +27,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
         private Vector3 RaycastedTriangleV2;
         private Vector3 RaycastedTriangleV3;
         private IMesh surfaceMesh;
+        private DualContouringMeshBuilder dcMeshBuilder = new DualContouringMeshBuilder();
         public Vector3 RaycastedPoint { get; private set; }
         public IIntersectableObject PlaceableObjectGrid { get; set; }
 
@@ -52,6 +54,9 @@ namespace MHGameWork.TheWizards.DualContouring._Test
 
         private bool dirty;
         private DeferredMeshRenderElement meshElement;
+        private TimeSpan lastSurfaceExtractionTime;
+        private Textarea statsArea;
+        private Textarea textarea;
 
         private void flagDirty()
         {
@@ -63,7 +68,13 @@ namespace MHGameWork.TheWizards.DualContouring._Test
             dirty = false;
 
             ((HermiteDataGrid)grid).Save(TWDir.Test.CreateSubdirectory("DualContouring").CreateFile("InteractiveGrid.txt"));
-            surfaceMesh = buildMesh(grid);
+
+
+            lastSurfaceExtractionTime = PerformanceHelper.Measure(() =>
+                {
+                    surfaceMesh = dcMeshBuilder.buildMesh(grid);
+                });
+
             if (meshElement != null)
                 meshElement.Delete();
             meshElement = TW.Graphics.AcquireRenderer().CreateMeshElement(surfaceMesh);
@@ -73,6 +84,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
             addHermiteVertices(grid, CellSize, this.lines);
             addQEFPoints(surfaceMesh, CellSize, this.lines);
             addHermiteNormals(grid, CellSize, this.lines);
+
         }
 
         public float CellSize
@@ -84,6 +96,8 @@ namespace MHGameWork.TheWizards.DualContouring._Test
             }
         }
 
+        public string AdditionalText { get; set; }
+
         public void AddToEngine(TWEngine engine)
         {
             TW.Graphics.SpectaterCamera.MovementSpeed = 0.5f;
@@ -92,8 +106,12 @@ namespace MHGameWork.TheWizards.DualContouring._Test
 
             //foreach (var v in vertices) lines.AddCenteredBox(v * cellSize, cellSize * 0.2f, Color.OrangeRed.dx());
 
-            var Helparea = new Textarea() { Position = new Vector2(10, 10), Size = new Vector2(200, 50), Text = "Mouse to place and remove, W: Wireframe, X:Lines" };
-            var textarea = new Textarea() { Position = new Vector2(10, 10 + 50), Size = new Vector2(200, 200) };
+            statsArea = new Textarea()
+                {
+                    Position = new Vector2(10, 10),
+                    Size = new Vector2(300, 200)
+                };
+            textarea = new Textarea() { Position = new Vector2(10, statsArea.Position.Y + statsArea.Size.Y), Size = new Vector2(200, 200) };
 
             engine.AddSimulator(() =>
                 {
@@ -107,7 +125,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
 
                     drawRaycastInfo();
                     drawHermiteInfoForCube((RaycastedPoint / cellSize).ToFloored(), textarea);
-
+                    updateStatsArea();
 
 
                 }, "UserInput");
@@ -117,6 +135,14 @@ namespace MHGameWork.TheWizards.DualContouring._Test
             addLinesSimulator(engine, this.lines);
 
             addCameraLightSimulator(engine);
+        }
+
+        private void updateStatsArea()
+        {
+            statsArea.Text = "";
+            statsArea.Text += "Mouse to place and remove, W: Wireframe, X:Lines\n\n\n";
+            statsArea.Text += "SurfaceExtraction: " + lastSurfaceExtractionTime.PrettyPrint() + "\n";
+            statsArea.Text += AdditionalText;
         }
 
         private void tryRemoveObject()
@@ -287,8 +313,9 @@ namespace MHGameWork.TheWizards.DualContouring._Test
             var algo = new DualContouringAlgorithm();
             algo.GenerateSurface(vertices, indices, grid);
 
+            var builder = new DualContouringMeshBuilder();
 
-            var triangleNormals = generateTriangleNormals(indices, vertices);
+            var triangleNormals =builder. generateTriangleNormals(indices, vertices);
 
             for (int i = 0; i < indices.Count; i += 3)
             {
@@ -299,48 +326,6 @@ namespace MHGameWork.TheWizards.DualContouring._Test
                 lines.AddCenteredBox(mean * cellSize, 0.05f, Color.DarkCyan);
                 lines.AddLine(mean * cellSize, (mean + triangleNormals[i / 3] * 0.5f) * cellSize, Color.Cyan);
             }
-        }
-
-        public static IMesh buildMesh(AbstractHermiteGrid grid)
-        {
-            var vertices = new List<Vector3>();
-            var indices = new List<int>();
-            var algo = new DualContouringAlgorithm();
-            algo.GenerateSurface(vertices, indices, grid);
-
-
-            var triangleNormals = generateTriangleNormals(indices, vertices);
-
-
-            var builder = new MeshBuilder();
-            var mat = builder.CreateMaterial();
-            mat.ColoredMaterial = true;
-            mat.DiffuseColor = Color.Green.dx().xna();
-            builder.AddCustom(indices.Select(i => vertices[i]).ToArray(),
-                              indices.Select((index, numIndex) => triangleNormals[numIndex / 3]).ToArray(),
-                //indices.Select((index, numIndex) => Vector3.UnitY).ToArray(),
-                              indices.Select(i => new Vector2()).ToArray());
-
-            var mesh = builder.CreateMesh();
-            return mesh;
-        }
-
-
-        private static List<Vector3> generateTriangleNormals(List<int> indices, List<Vector3> vertices)
-        {
-            var triangleNormals = new List<Vector3>();
-
-            // Loop all triangles to build normals
-            for (int i = 0; i < indices.Count; i += 3)
-            {
-                var v1 = vertices[indices[i]];
-                var v2 = vertices[indices[i + 1]];
-                var v3 = vertices[indices[i + 2]];
-
-                Vector3 normal = -Vector3.Normalize(Vector3.Cross(v3 - v1, v2 - v1));
-                triangleNormals.Add(normal);
-            }
-            return triangleNormals;
         }
 
 
