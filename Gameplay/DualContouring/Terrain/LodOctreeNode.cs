@@ -1,4 +1,5 @@
 ﻿using DirectX11;
+using MHGameWork.TheWizards.Rendering;
 
 namespace MHGameWork.TheWizards.DualContouring.Terrain
 {
@@ -8,6 +9,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         public int size;
         public int depth;
         public Point3 LowerLeft;
+        public IMesh Mesh;
 
         public LodOctreeNode(int size, int depth, Point3 lowerLeft)
         {

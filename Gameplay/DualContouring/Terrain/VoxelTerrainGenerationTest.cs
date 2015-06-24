@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DualContouring._Test;
@@ -43,7 +44,9 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
 
             testEnv.AdditionalText = "Terrain to Hermite: " + terrGen.PrettyPrint();
 
+
             testEnv.AddToEngine(EngineFactory.CreateEngine());
+
         }
 
 
