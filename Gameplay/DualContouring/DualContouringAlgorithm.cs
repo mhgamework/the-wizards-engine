@@ -7,6 +7,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.DualContouring
 {
+    /// <summary>
+    /// Generates a surface from a Hermite Grid as in the Dual Contouring algorithm.
+    /// </summary>
     public class DualContouringAlgorithm
     {
         public void GenerateSurface(List<Vector3> vertices, List<int> indices, AbstractHermiteGrid grid)
@@ -43,6 +46,7 @@ namespace MHGameWork.TheWizards.DualContouring
 
             grid.ForEachCube(o =>
                 {
+
                     if (!vIndex.ContainsKey(o)) return; // No sign changes so no relevant edges here
 
                     for (int i = 0; i < 3; i++)

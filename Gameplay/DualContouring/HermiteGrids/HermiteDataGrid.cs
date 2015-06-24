@@ -12,6 +12,9 @@ namespace MHGameWork.TheWizards.DualContouring
     [Serializable]
     public class HermiteDataGrid : AbstractHermiteGrid
     {
+        /// <summary>
+        /// There are Dimensions + 1 cells (for holding the normals on the boundaries)
+        /// </summary>
         private Array3D<Vertex> cells;
 
         private List<Point3> dirs = new List<Point3>(new Point3[] { new Point3(1, 0, 0), new Point3(0, 1, 0), new Point3(0, 0, 1) });
@@ -25,13 +28,13 @@ namespace MHGameWork.TheWizards.DualContouring
         public override bool GetSign(Point3 pos)
         {
             var v = cells[pos];
-            if (cells == null) return false;
+            if (cells == null) throw new InvalidOperationException("Outside of cell bounds!!");
             return v.Sign;
         }
 
         public override Point3 Dimensions
         {
-            get { return cells.Size; }
+            get { return cells.Size - new Point3(1, 1, 1); }
         }
 
         [Serializable]
@@ -63,7 +66,7 @@ namespace MHGameWork.TheWizards.DualContouring
 
             // Fill vertices
             grid.cells = new Array3D<Vertex>(numCubes + new Point3(1, 1, 1));
-            grid.ForEachCube(cube =>
+            grid.ForEachGridPoint(cube =>
                 {
                     grid.cells[cube] = new Vertex()
                         {
@@ -73,7 +76,7 @@ namespace MHGameWork.TheWizards.DualContouring
                 });
 
             // Find changing edges and calculate edge info
-            grid.ForEachCube(cube =>
+            grid.ForEachGridPoint(cube =>
                 {
                     var sign = grid.GetSign(cube);
 
@@ -93,8 +96,8 @@ namespace MHGameWork.TheWizards.DualContouring
         public static HermiteDataGrid CopyGrid(AbstractHermiteGrid grid)
         {
             var ret = new HermiteDataGrid();
-            ret.cells = new Array3D<Vertex>(grid.Dimensions);
-            ret.ForEachCube(p =>
+            ret.cells = new Array3D<Vertex>(grid.Dimensions + new Point3(1, 1, 1));
+            ret.ForEachGridPoint(p =>
                 {
                     ret.cells[p] = new Vertex()
                         {
@@ -107,7 +110,7 @@ namespace MHGameWork.TheWizards.DualContouring
                         };
                 });
 
-            ret.ForEachCube(p =>
+            ret.ForEachGridPoint(p =>
             {
                 ret.cells[p] = new Vertex()
                 {

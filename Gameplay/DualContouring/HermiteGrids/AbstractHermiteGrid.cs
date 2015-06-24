@@ -7,6 +7,10 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.DualContouring
 {
+    /// <summary>
+    /// Represents a hermite grid.
+    /// Note: the last edges in +x,+y and +z do NOT have to be available in the grid. Each grid cube only needs to have its 3 (0,0,0) adjacing edge info
+    /// </summary>
     public abstract class AbstractHermiteGrid
     {
         protected readonly List<Point3> cube_verts;
@@ -42,6 +46,22 @@ namespace MHGameWork.TheWizards.DualContouring
             return cube_verts.Select(offset => GetSign(cube + offset)).ToArray();
         }
 
+        /// <summary>
+        /// Enumerates each gridpoint. This does one extra point compared to ForEachCube
+        /// </summary>
+        /// <param name="action"></param>
+        public void ForEachGridPoint(Action<Point3> action)
+        {
+            for (int x = 0; x < Dimensions.X+1; x++)
+                for (int y = 0; y < Dimensions.Y+1; y++)
+                    for (int z = 0; z < Dimensions.Z+1; z++)
+                        action(new Point3(x, y, z));
+
+        }
+        /// <summary>
+        /// Enumerates each cube in the hermite grid, this is equal to Dimensions
+        /// </summary>
+        /// <param name="action"></param>
         public void ForEachCube(Action<Point3> action)
         {
             for (int x = 0; x < Dimensions.X; x++)
