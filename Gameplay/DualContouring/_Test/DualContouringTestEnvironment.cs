@@ -134,7 +134,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
 
             addLinesSimulator(engine, this.lines);
 
-            addCameraLightSimulator(engine);
+            engine.AddSimulator(new CameraLightSimulator());
         }
 
         private void updateStatsArea()
@@ -222,18 +222,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
             }
         }
 
-        public static void addCameraLightSimulator(TWEngine engine)
-        {
-            var light = TW.Graphics.AcquireRenderer().CreatePointLight();
-
-            engine.AddSimulator(new BasicSimulator(() =>
-                {
-                    light.LightIntensity = 2;
-                    light.LightRadius = 30;
-                    light.LightPosition = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.GetTranslation();
-                }));
-        }
-
+       
         public static void addLinesSimulator(TWEngine engine, LineManager3DLines lines)
         {
             bool visible = false;
@@ -262,7 +251,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
 
         public static void addHermiteNormals(AbstractHermiteGrid grid, float cellSize, LineManager3DLines lines)
         {
-            grid.ForEachCube(p =>
+            grid.ForEachGridPoint(p =>
                 {
                     var sign = grid.GetSign(p);
                     var dirs = new[] { new Point3(1, 0, 0), new Point3(0, 1, 0), new Point3(0, 0, 1) };
@@ -293,7 +282,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
 
         public static void addHermiteVertices(AbstractHermiteGrid grid, float cellSize, LineManager3DLines lines)
         {
-            grid.ForEachCube(p =>
+            grid.ForEachGridPoint(p =>
                 {
                     var sign = grid.GetSign(p);
                     if (GridHelper.OrthogonalDirections3D.All(dir => grid.GetSign(p + dir) == sign)) return;
