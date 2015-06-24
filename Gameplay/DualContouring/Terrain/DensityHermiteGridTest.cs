@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DualContouring._Test;
@@ -30,24 +31,29 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         [Test]
         public void TestFlatDensityFunction()
         {
-            Func<Vector3, float> densityFunction = p =>
-                {
-                    return 9.5f - p.Y;
-                };
+            Func<Vector3, float> densityFunction = p => PlaneDensityFunction(p, 9.5f);
 
             var dimensions = new Point3(20, 20, 20);
             testDensityFunction(densityFunction, dimensions);
         }
+
+        public static float PlaneDensityFunction(Vector3 p, float height)
+        {
+            return height - p.Y;
+        }
+
         [Test]
         public void TestSlopeDensityFunction()
         {
-            Func<Vector3, float> densityFunction = p =>
-            {
-                return 2.5f - p.Y + p.X;
-            };
+            Func<Vector3, float> densityFunction = SlopeDensityFunction;
 
             var dimensions = new Point3(20, 20, 20);
             testDensityFunction(densityFunction, dimensions);
+        }
+
+        public static float SlopeDensityFunction(Vector3 p)
+        {
+            return 2.5f - p.Y + p.X;
         }
 
         /// <summary>
@@ -56,47 +62,52 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         [Test]
         public void TestSineDensityFunction()
         {
-            Func<Vector3, float> densityFunction = p =>
-                {
-                    var dens = 9.5f - p.Y;
-                    dens += (float)Math.Sin((p.X + p.Z) * 0.5f);
-                    return dens;
-                };
+            Func<Vector3, float> densityFunction = p => SineXzDensityFunction(p, 0.5f, 9.5f, 1);
 
             var dimensions = new Point3(20, 20, 20);
 
             testDensityFunction(densityFunction, dimensions);
+        }
+
+        public static float SineXzDensityFunction(Vector3 p, float waveLengthMultiplier, float height, float amplitude)
+        {
+            var dens = height - p.Y;
+            dens += amplitude * (float)Math.Sin((p.X + p.Z) * waveLengthMultiplier);
+            return dens;
         }
 
 
         [Test]
         public void TestSphereDensityFunction()
         {
-            Func<Vector3, float> densityFunction = p =>
-                {
-                    return -Vector3.Distance(p, new Vector3(10, 10, 10)) + 5;
-                };
+            Func<Vector3, float> densityFunction = p => SphereDensityFunction(p, 5, new Vector3(10, 10, 10));
 
             var dimensions = new Point3(20, 20, 20);
 
             testDensityFunction(densityFunction, dimensions);
         }
 
+        public static float SphereDensityFunction(Vector3 p, int radius, Vector3 center)
+        {
+            return -Vector3.Distance(p, center) + radius;
+        }
+
         [Test]
         public void TestDiamondDensityFunction()
         {
-            Func<Vector3, float> densityFunction = p =>
-                {
-                    var diff = p - new Vector3(10, 10, 10);
-                    var l = Math.Abs(diff.X) + Math.Abs(diff.Y) + Math.Abs(diff.Z);
-
-                    return 8 - l;
-
-                };
+            Func<Vector3, float> densityFunction = p => DiamondDensityFunction(p, new Vector3(10, 10, 10), 8);
 
             var dimensions = new Point3(20, 20, 20);
 
             testDensityFunction(densityFunction, dimensions);
+        }
+
+        public static float DiamondDensityFunction(Vector3 p, Vector3 center, int radius)
+        {
+            var diff = p - center;
+            var l = Math.Abs(diff.X) + Math.Abs(diff.Y) + Math.Abs(diff.Z);
+
+            return radius - l;
         }
 
         private void testDensityFunction(Func<Vector3, float> densityFunction, Point3 dimensions)
@@ -106,13 +117,18 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             grid = createGridFromDensityFunction(densityFunction, dimensions);
             grid = HermiteDataGrid.CopyGrid(grid);
 
+
             showGrid(grid);
+
+
         }
 
         private void showGrid(AbstractHermiteGrid grid)
         {
             var testEnv = new DualContouringTestEnvironment();
             testEnv.Grid = grid;
+            EngineFactory.CreateEngine().AddSimulator(() => TW.Graphics.LineManager3D.AddBox(new BoundingBox(new Vector3(0), grid.Dimensions.ToVector3() * testEnv.CellSize), Color.Black), "BoundingBox");
+
             testEnv.AddToEngine(EngineFactory.CreateEngine());
 
         }
