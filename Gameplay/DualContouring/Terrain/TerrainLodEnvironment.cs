@@ -1,15 +1,23 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
+using System.Threading;
+using System.Threading.Tasks;
 using DirectX11;
+using MHGameWork.TheWizards.Debugging;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Rendering.Deferred;
+using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
 using Debug = System.Diagnostics.Debug;
+using System.Linq;
 
 namespace MHGameWork.TheWizards.DualContouring.Terrain
 {
@@ -18,30 +26,67 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
     /// </summary>
     public class TerrainLodEnvironment
     {
-        public DualContouringMeshBuilder meshBuilder = new DualContouringMeshBuilder();
+        public LodOctreeMeshBuilder meshBuilder = new LodOctreeMeshBuilder();
         private LodOctree tree;
         private LodOctreeNode rootNode;
         private Func<Vector3, float> density;
         private float angle = 0;
         private DensityFunctionHermiteGrid densityGrid;
+        private float globalScaling = .1f;
         private readonly int minNodeSize;
         private Vector3 octreeOffset;
 
+        private bool cameraControlled = false;
+        private bool automaticMovement = false;
+        private Vector3 eyePosition = new Vector3(0, 0, 0);
+        private Textarea TextOutput = new Textarea() { Position = new Vector2(10, 10), Size = new Vector2(300, 200) };
+
         public TerrainLodEnvironment()
         {
-            //octreeOffset = new Vector3(0, 300, 0);
-            octreeOffset = new Vector3(0, 0, 0);
 
             tree = new LodOctree();
 
-            var size = 32 * (1 << 2);
+            var size = 32 * (1 << 10);
             rootNode = tree.Create(size, size);
+
+            //octreeOffset = new Vector3(0, size, 0);
+            octreeOffset = new Vector3(0, 0, 0);
 
 
             density = VoxelTerrainGenerationTest.createDensityFunction5Perlin(17, size / 2);
-            density = v => DensityHermiteGridTest.SineXzDensityFunction(v, 1/5f, size/2, 3);
+            //density = v => DensityHermiteGridTest.SineXzDensityFunction(v, 1/5f, size/2, 3);
+            density = densityFunction;
             densityGrid = new DensityFunctionHermiteGrid(density, new Point3(size, size, size));
-            minNodeSize = 8;
+            minNodeSize = 16;
+
+            // Autostops when engine hotloads
+            new Thread(generateMeshesJob).Alter(f => f.Name = "GenerateLodMeshes").Alter(f => f.IsBackground = true).Start();
+            new Thread(meshBuilderJob).Alter(f => f.Name = "MeshBuildJob1").Alter(f => f.IsBackground = true).Start();
+            new Thread(meshBuilderJob).Alter(f => f.Name = "MeshBuildJob2").Alter(f => f.IsBackground = true).Start();
+            new Thread(meshBuilderJob).Alter(f => f.Name = "MeshBuildJob3").Alter(f => f.IsBackground = true).Start();
+
+        }
+        Array3D<float> noise = VoxelTerrainGenerationTest.generateNoise(15);
+
+        public float densityFunction(Vector3 v)
+        {
+            v *= globalScaling;
+            /*noise = new Array3D<float>(new Point3(2, 2, 2));
+            noise[new Point3(1, 1, 1)] = 3;
+            noise[new Point3(0, 0, 0)] = -3;*/
+            var sampler = new Array3DSampler<float>();
+            var density = (float)(rootNode.size / 2 * globalScaling) - v.Y;
+            v *= 1 / 8f;
+            //v *= (1/8f);
+            density += sampler.sampleTrilinear(noise, v * 4.03f) * 0.25f;
+            density += sampler.sampleTrilinear(noise, v * 1.96f) * 0.5f;
+            density += sampler.sampleTrilinear(noise, v * 1.01f) * 1;
+            density += sampler.sampleTrilinear(noise, v * 0.55f) * 10;
+            density += sampler.sampleTrilinear(noise, v * 0.21f) * 30;
+            density += sampler.sampleTrilinear(noise, v * 0.05f) * 100;
+            density += sampler.sampleTrilinear(noise, v * 0.01f) * 400;
+            //density += noise.GetTiled(v.ToFloored());
+            return density;
         }
 
         public void LoadIntoEngine(TWEngine engine)
@@ -49,130 +94,267 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             //TW.Graphics.FixedTimeStepEnabled = true;
             //TW.Graphics.FixedTimeStep = 1 / 10f;
             TW.Graphics.SpectaterCamera.FarClip = 5000;
+            engine.AddSimulator(ProcessUserInput, "ProcessUserInput");
             engine.AddSimulator(UpdateQuadtreeClipmaps, "UpdateClipmaps");
-            engine.AddSimulator(DrawQuadtreeLines, "UpdateLines");
+            engine.AddSimulator(DrawDebugOutput, "UpdateLines");
+            engine.AddSimulator(CreateUpdatedMeshElements, "CreateMeshElements");
             engine.AddSimulator(new WorldRenderingSimulator());
             engine.AddSimulator(new RecordingSimulator());
 
         }
 
-        public void DrawQuadtreeLines()
+        public void ProcessUserInput()
         {
-            TW.Graphics.LineManager3D.WorldMatrix = Matrix.Translation(octreeOffset);
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.F))
+                automaticMovement = !automaticMovement;
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.C))
+                cameraControlled = !cameraControlled;
+            if (automaticMovement)
+            {
+                var radius = rootNode.size * 0.4f;
+                angle += TW.Graphics.Elapsed * 1f / radius;
+                var pos = new Vector3(rootNode.size / 2f);
+                pos += new Vector3((float)Math.Sin(angle), 0, (float)Math.Cos(angle)) * radius;
+                eyePosition = pos;
+            }
+            /*else
+            {
+                eyePosition = new Vector3(rootNode.size / 2f);
+
+            }*/
+            if (cameraControlled)
+                eyePosition = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.GetTranslation();
+
+            //UpdateQuadtreeClipmaps(rootNode, TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.xna().Translation.dx());
+
+
+            //pos += new Vector3((float)Math.Sin(angle), (float)Math.Sin(angle), (float)Math.Cos(angle)) * rootNode.size * 0.4f;
+
+
             TW.Graphics.LineManager3D.DrawGroundShadows = true;
-            tree.DrawLines(rootNode, TW.Graphics.LineManager3D);
+
+            TW.Graphics.LineManager3D.AddCenteredBox(eyePosition.ChangeY(0), 4, Color.Red);
+            TW.Graphics.LineManager3D.WorldMatrix = Matrix.Translation(octreeOffset) * Matrix.Scaling(new Vector3(globalScaling));
+            TW.Graphics.LineManager3D.AddCenteredBox(eyePosition, 16, Color.Red);
+
+        }
+
+        public void DrawDebugOutput()
+        {
+            TW.Graphics.LineManager3D.WorldMatrix = Matrix.Translation(octreeOffset) * Matrix.Scaling(new Vector3(globalScaling));
+            TW.Graphics.LineManager3D.DrawGroundShadows = true;
+            //tree.DrawLines(rootNode, TW.Graphics.LineManager3D);
             TW.Graphics.LineManager3D.DrawGroundShadows = false;
 
+            TW.Graphics.LineManager3D.WorldMatrix = Matrix.Identity;
+            //tree.DrawLines(rootNode, TW.Graphics.LineManager3D, n => n.Mesh == null, n => Color.Red);
+            TextOutput.Text = "Dirty nodes: " + dirtyNodesCount;
         }
 
         public void UpdateQuadtreeClipmaps()
         {
-            angle += TW.Graphics.Elapsed * 1f;
-            //UpdateQuadtreeClipmaps(rootNode, TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.xna().Translation.dx());
-
-            var pos = new Vector3(rootNode.size / 2f);
-
-            //pos += new Vector3((float)Math.Sin(angle), (float)Math.Sin(angle), (float)Math.Cos(angle)) * rootNode.size * 0.4f;
-            pos += new Vector3((float)Math.Sin(angle), 0, (float)Math.Cos(angle)) * rootNode.size * 0.4f;
-
-
-            if (!TW.Graphics.Keyboard.IsKeyDown(Key.F))
-                pos = new Vector3(rootNode.size / 2f);
-            TW.Graphics.LineManager3D.DrawGroundShadows = true;
-
-            TW.Graphics.LineManager3D.AddCenteredBox(pos.ChangeY(0), 4, Color.Red);
-            TW.Graphics.LineManager3D.WorldMatrix = Matrix.Translation(octreeOffset);
-            TW.Graphics.LineManager3D.AddCenteredBox(pos, 16, Color.Red);
 
 
             lock (rootNode)
             {
-                UpdateQuadtreeClipmaps(rootNode, pos);
+                tree.UpdateQuadtreeClipmaps(rootNode, eyePosition / globalScaling, minNodeSize);
             }
-            generateMissingMeshes();
+        }
+
+        public void CreateUpdatedMeshElements()
+        {
+            /* LodOctreeNode node;
+             while (nodesWithUpdatedMesh.TryDequeue(out node))
+             {
+                 if (node.IsDestroyed) return;
+                 if (node.RenderElement != null) node.RenderElement.Delete();
+                 node.RenderElement = meshBuilder.CreateRenderElementForNode(node, minNodeSize, node.Mesh);
+
+             }*/
+            UpdateCanRenderWithoutHoles(rootNode);
+            UpdateMeshElements(rootNode);
 
         }
-        public void UpdateQuadtreeClipmaps(LodOctreeNode node, Vector3 cameraPosition)
+        public void UpdateCanRenderWithoutHoles(LodOctreeNode node)
         {
-            var center = node.LowerLeft.ToVector3() + new Vector3(1) * node.size * 0.5f;
-            var dist = Vector3.Distance(cameraPosition, center);
-
-            if (dist > node.size * 2f)
+            if (node.Children == null)
             {
-                // This is a valid node size at this distance, so remove all children
-                tree.Merge(node);
+                node.CanRenderWithoutHoles = node.Mesh != null;
+                /*if (!node.CanRenderWithoutHoles)
+                {
+                    TW.Graphics.LineManager3D.WorldMatrix = Matrix.Identity;
+                    tree.DrawSingleNode(node, TW.Graphics.LineManager3D, Color.Orange);
+
+                }*/
+                return;
+            }
+
+            var canRenderChildrenWithoutHoles = true;
+            for (int i = 0; i < 8; i++)
+            {
+                var child = node.Children[i];
+                UpdateCanRenderWithoutHoles(child);
+                if (!child.CanRenderWithoutHoles)
+                    canRenderChildrenWithoutHoles = false;
+            }
+            // only render when children cant and i have mesh
+            node.CanRenderWithoutHoles = canRenderChildrenWithoutHoles || node.Mesh != null;
+
+        }
+        public void UpdateMeshElements(LodOctreeNode node)
+        {
+            if (node.Children == null)
+            {
+                if (node.Mesh != null)
+                    ensureMeshElementCreated(node);
+                return;
+            }
+            if (node.CanRenderWithoutHoles)
+            {
+                var canRenderChildrenWithoutHoles = true;
+                for (int i = 0; i < 8; i++)
+                {
+                    var child = node.Children[i];
+                    UpdateCanRenderWithoutHoles(child);
+                    if (!child.CanRenderWithoutHoles)
+                        canRenderChildrenWithoutHoles = false;
+                }
+                if (canRenderChildrenWithoutHoles)
+                {
+                    //Render children
+                    DestroyMeshElement(node);
+                    for (int i = 0; i < 8; i++)
+                    {
+                        UpdateMeshElements(node.Children[i]);
+                    }
+                }
+                else
+                {
+                    ensureMeshElementCreated(node);
+                    if (node.Children != null)
+                        for (int i = 0; i < 8; i++) DestroyMeshElementRecursive(node.Children[i]);
+                }
             }
             else
             {
-                if (node.Children == null)
-                    tree.Split(node, false, minNodeSize);
-
-                if (node.Children == null) return; // Minlevel
-
-                for (int i = 0; i < 8; i++)
-                {
-                    UpdateQuadtreeClipmaps(node.Children[i], cameraPosition);
-                }
+                DestroyMeshElementRecursive(node);
+                /*DestroyMeshElement(node);
+                if (node.Children != null)
+                    for (int i = 0; i < 8; i++) UpdateMeshElements(node.Children[i]);*/
             }
+
+
         }
 
-
-        public void generateMeshesJob()
+        private void DestroyMeshElementRecursive(LodOctreeNode node)
         {
-            bool stop = false;
-            TW.Engine.RegisterOnClearEngineState(() => stop = true);
+            DestroyMeshElement(node);
 
-            while (!stop)
-            {
-                generateMissingMeshes();
-            }
-        }
-
-        private void generateMissingMeshes()
-        {
-            var meshLessNodes = new List<LodOctreeNode>();
-
-            lock (rootNode)
-            {
-                addMeshLessNodes(rootNode, meshLessNodes);
-            }
-            foreach (var node in meshLessNodes)
-            {
-                if (node.Children != null) continue;
-                node.Mesh = calculateNodeMesh(node);
-                var el = TW.Graphics.AcquireRenderer().CreateMeshElement(node.Mesh);
-                float setApart = 1.1f;
-                setApart = 1; // Disable spacing between cells
-                el.WorldMatrix = Matrix.Scaling(new Vector3(node.size / minNodeSize)) * Matrix.Translation(node.LowerLeft.ToVector3()*setApart);
-
-            }
-        }
-
-        private IMesh calculateNodeMesh(LodOctreeNode node)
-        {
-            var currScaling = node.size / minNodeSize;
-
-            // Then we add another +1 to be able to connect the gaps between the hermite grids
-            //TODO: do lod stitching here
-            var gridSize = minNodeSize + 1; 
-
-            var grid = HermiteDataGrid.CopyGrid(
-                new DensityFunctionHermiteGrid(v => density(v * currScaling + node.LowerLeft.ToVector3()),
-                                               new Point3(gridSize, gridSize, gridSize)));
-            var mesh = meshBuilder.buildMesh(grid);
-
-            return mesh;
-        }
-
-        private void addMeshLessNodes(LodOctreeNode n, List<LodOctreeNode> list)
-        {
-            if (n.Mesh == null) list.Add(n);
-
-            if (n.Children == null) return;
+            if (node.Children == null) return;
             for (int i = 0; i < 8; i++)
             {
-                addMeshLessNodes(n.Children[i], list);
+                DestroyMeshElementRecursive(node.Children[i]);
             }
         }
+
+        private static void DestroyMeshElement(LodOctreeNode node)
+        {
+            if (node.RenderElement != null) node.RenderElement.Delete();
+            node.RenderElement = null;
+        }
+
+        private void ensureMeshElementCreated(LodOctreeNode node)
+        {
+            /*TW.Graphics.LineManager3D.WorldMatrix = Matrix.Identity;
+            tree.DrawSingleNode(node, TW.Graphics.LineManager3D, Color.Red);*/
+            var mesh = node.Mesh;
+            if (mesh == null) throw new InvalidOperationException("Cannot ensure!");
+            if (node.RenderElement == null)
+            {
+                node.RenderElement = meshBuilder.CreateRenderElementForNode(node, minNodeSize, mesh);
+                node.RenderElement.WorldMatrix *= Matrix.Scaling(new Vector3(globalScaling));
+            }
+        }
+
+
+        //private ConcurrentQueue<LodOctreeNode> nodesWithUpdatedMesh = new ConcurrentQueue<LodOctreeNode>();
+        private ConcurrentQueue<LodOctreeNode> nodesToProcess = new ConcurrentQueue<LodOctreeNode>();
+        private volatile int dirtyNodesCount;
+        public void generateMeshesJob()
+        {
+            try
+            {
+
+
+                bool stop = false;
+
+                TW.Engine.RegisterOnClearEngineState(() => stop = true);
+
+
+                var meshLessNodes = new List<LodOctreeNode>();
+
+                while (!stop)
+                {
+                    meshLessNodes.Clear();
+                    lock (rootNode)
+                    {
+                        meshBuilder.ListMeshLessNodes(rootNode, meshLessNodes);
+                    }
+                    dirtyNodesCount = meshLessNodes.Count;
+                    var nodes = meshLessNodes.Where(m => m.BuildingMesh == false).ToArray();
+                    if (nodes.Length == 0)
+                    {
+                        Thread.Sleep(100);
+                        continue;
+                    }
+                    nodes = nodes.OrderBy(n => n.depth).ToArray();
+                    //var eye = eyePosition;
+
+
+                    //nodes = nodes.OrderBy(n => Vector3.DistanceSquared(eye, n.LowerLeft + new Point3(1, 1, 1) * n.size)).ToArray();
+
+                    for (int i = 0; i < Math.Min(nodes.Length, 30); i++)
+                    {
+                        nodes[i].BuildingMesh = true;
+                        nodesToProcess.Enqueue(nodes[i]);
+                    }
+                    //nodesWithUpdatedMesh.Enqueue(node);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                DI.Get<IErrorLogger>().Log(ex, "GeneratedMeshesJob");
+            }
+        }
+
+        public void meshBuilderJob()
+        {
+            try
+            {
+
+
+                bool stop = false;
+
+                TW.Engine.RegisterOnClearEngineState(() => stop = true);
+
+                while (!stop)
+                {
+                    LodOctreeNode node;
+                    if (nodesToProcess.TryDequeue(out node))
+                    {
+                        if (node.IsDestroyed) continue;
+                        node.Mesh = meshBuilder.CalculateNodeMesh(node, minNodeSize, density);
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                DI.Get<IErrorLogger>().Log(ex, "GeneratedMeshesJob");
+            }
+        }
+
     }
 }

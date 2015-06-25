@@ -146,5 +146,11 @@ namespace MHGameWork.TheWizards.DualContouring
                 }
             }
         }
+
+
+        public HermiteDataGrid ToDataGrid()
+        {
+            return null;
+        }
     }
 }

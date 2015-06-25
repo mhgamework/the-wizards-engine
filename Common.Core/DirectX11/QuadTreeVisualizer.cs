@@ -4,10 +4,9 @@ namespace MHGameWork.TheWizards.DirectX11
 {
     public class QuadTreeVisualizer
     {
+        public static readonly Color4[] levelColor4s;
 
-        private readonly Color4[] levelColor4s;
-
-        public QuadTreeVisualizer()
+        static QuadTreeVisualizer()
         {
 
             levelColor4s = new Color4[8];

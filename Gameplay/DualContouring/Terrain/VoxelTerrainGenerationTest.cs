@@ -53,9 +53,10 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         [Test]
         public void TestGenerateSinglePerlinNoise()
         {
-            var densityFunction = createDensityFunction5Perlin(112, 10);
 
             int size = 16 * 4;
+            var densityFunction = createDensityFunction5Perlin(112, size / 2);
+
             var dimensions = new Point3(size, size, size);
 
             testDensityFunction(densityFunction, dimensions);
@@ -87,7 +88,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         }
 
 
-        private static Array3D<float> generateNoise(int seed)
+        public static Array3D<float> generateNoise(int seed)
         {
             var ret = new Array3D<float>(new Point3(16, 16, 16));
 
@@ -179,6 +180,32 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         {
             var env = new TerrainLodEnvironment();
             env.LoadIntoEngine(EngineFactory.CreateEngine());
+        }
+
+        [Test]
+        public void TestGenerateLodTerrainMeshes()
+        {
+            var tree = new LodOctree();
+            var size = 128;
+            var root = tree.Create(size, size);
+            tree.UpdateQuadtreeClipmaps(root, new Vector3(size / 2, size / 2, size / 2), 8);
+
+            var density = new Func<Vector3, float>(v => DensityHermiteGridTest.SineXzDensityFunction(v, 1 / 5f, size / 2, 3));
+            var builder = new LodOctreeMeshBuilder();
+            var list = new List<LodOctreeNode>();
+            builder.ListMeshLessNodes(root, list);
+            list.ForEach(n =>
+                {
+                    if (n.Children != null) return;
+                    var mesh = builder.CalculateNodeMesh(n, 8, density);
+                    n.Mesh = mesh; // This is flakey
+
+                    builder.CreateRenderElementForNode(n, 8, mesh);
+                });
+
+            EngineFactory.CreateEngine().AddSimulator(() => { tree.DrawLines(root, TW.Graphics.LineManager3D); }, "Octreelines");
+
+            VisualTestingEnvironment.Load();
         }
     }
 }

@@ -12,6 +12,7 @@ namespace MHGameWork.TheWizards.DualContouring
 
         public static TimeSpan Measure(Action act)
         {
+            w.Reset();
             w.Start();
             act();
             w.Stop();
