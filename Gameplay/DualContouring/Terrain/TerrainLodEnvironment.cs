@@ -39,7 +39,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         private bool cameraControlled = false;
         private bool automaticMovement = false;
         private Vector3 eyePosition = new Vector3(0, 0, 0);
-        private Textarea TextOutput = new Textarea() { Position = new Vector2(10, 10), Size = new Vector2(300, 200) };
+        private Textarea TextOutput;
 
         public TerrainLodEnvironment()
         {
@@ -57,13 +57,10 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             //density = v => DensityHermiteGridTest.SineXzDensityFunction(v, 1/5f, size/2, 3);
             density = densityFunction;
             densityGrid = new DensityFunctionHermiteGrid(density, new Point3(size, size, size));
-            minNodeSize = 16;
+            minNodeSize = 32;
 
-            // Autostops when engine hotloads
-            new Thread(generateMeshesJob).Alter(f => f.Name = "GenerateLodMeshes").Alter(f => f.IsBackground = true).Start();
-            new Thread(meshBuilderJob).Alter(f => f.Name = "MeshBuildJob1").Alter(f => f.IsBackground = true).Start();
-            new Thread(meshBuilderJob).Alter(f => f.Name = "MeshBuildJob2").Alter(f => f.IsBackground = true).Start();
-            new Thread(meshBuilderJob).Alter(f => f.Name = "MeshBuildJob3").Alter(f => f.IsBackground = true).Start();
+
+
 
         }
         Array3D<float> noise = VoxelTerrainGenerationTest.generateNoise(15);
@@ -78,9 +75,9 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             var density = (float)(rootNode.size / 2 * globalScaling) - v.Y;
             v *= 1 / 8f;
             //v *= (1/8f);
-            density += sampler.sampleTrilinear(noise, v * 4.03f) * 0.25f;
+            //density += sampler.sampleTrilinear(noise, v * 4.03f) * 0.25f;
             density += sampler.sampleTrilinear(noise, v * 1.96f) * 0.5f;
-            density += sampler.sampleTrilinear(noise, v * 1.01f) * 1;
+            //density += sampler.sampleTrilinear(noise, v * 1.01f) * 1;
             density += sampler.sampleTrilinear(noise, v * 0.55f) * 10;
             density += sampler.sampleTrilinear(noise, v * 0.21f) * 30;
             density += sampler.sampleTrilinear(noise, v * 0.05f) * 100;
@@ -91,6 +88,13 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
 
         public void LoadIntoEngine(TWEngine engine)
         {
+            TextOutput = new Textarea() { Position = new Vector2(10, 10), Size = new Vector2(300, 200) };
+            // Autostops when engine hotloads
+            new Thread(generateMeshesJob).Alter(f => f.Name = "GenerateLodMeshes").Alter(f => f.IsBackground = true).Start();
+            new Thread(meshBuilderJob).Alter(f => f.Name = "MeshBuildJob1").Alter(f => f.IsBackground = true).Start();
+            new Thread(meshBuilderJob).Alter(f => f.Name = "MeshBuildJob2").Alter(f => f.IsBackground = true).Start();
+            new Thread(meshBuilderJob).Alter(f => f.Name = "MeshBuildJob3").Alter(f => f.IsBackground = true).Start();
+
             //TW.Graphics.FixedTimeStepEnabled = true;
             //TW.Graphics.FixedTimeStep = 1 / 10f;
             TW.Graphics.SpectaterCamera.FarClip = 5000;
@@ -148,7 +152,11 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
 
             TW.Graphics.LineManager3D.WorldMatrix = Matrix.Identity;
             //tree.DrawLines(rootNode, TW.Graphics.LineManager3D, n => n.Mesh == null, n => Color.Red);
-            TextOutput.Text = "Dirty nodes: " + dirtyNodesCount;
+            var leafNodeCount = 0;
+            tree.VisitDepthFirst(rootNode, n => { if (n.Children == null) leafNodeCount++; });
+            TextOutput.Text = "Dirty nodes: " + dirtyNodesCount + "\n"
+                + "MeshElements: " + visibleMeshes + "\n"
+                + "LeafNodes: " + leafNodeCount;
         }
 
         public void UpdateQuadtreeClipmaps()
@@ -171,6 +179,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
                  node.RenderElement = meshBuilder.CreateRenderElementForNode(node, minNodeSize, node.Mesh);
 
              }*/
+            visibleMeshes = 0;
             UpdateCanRenderWithoutHoles(rootNode);
             UpdateMeshElements(rootNode);
 
@@ -263,8 +272,10 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             node.RenderElement = null;
         }
 
+        private int visibleMeshes = 0;
         private void ensureMeshElementCreated(LodOctreeNode node)
         {
+            visibleMeshes++;
             /*TW.Graphics.LineManager3D.WorldMatrix = Matrix.Identity;
             tree.DrawSingleNode(node, TW.Graphics.LineManager3D, Color.Red);*/
             var mesh = node.Mesh;

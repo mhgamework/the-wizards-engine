@@ -6,7 +6,7 @@ namespace MHGameWork.TheWizards.DualContouring
     /// <summary>
     /// Utility functions for measuring performance.
     /// </summary>
-    public class PerformanceHelper
+    public static class PerformanceHelper
     {
         public static Stopwatch w = new Stopwatch();
 
@@ -18,5 +18,12 @@ namespace MHGameWork.TheWizards.DualContouring
             w.Stop();
             return w.Elapsed;
         }
+
+        public static TimeSpan Multiply(this TimeSpan t, double amount)
+        {
+            return new TimeSpan((long)(t.Ticks * amount));
+
+        }
+
     }
 }

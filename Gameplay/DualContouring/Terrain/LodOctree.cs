@@ -97,5 +97,14 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             }
         }
 
+        public void VisitDepthFirst(LodOctreeNode rootNode, Action<LodOctreeNode> action)
+        {
+            action(rootNode);
+            if (rootNode.Children == null) return;
+            for (int i = 0; i < 8; i++)
+            {
+                VisitDepthFirst(rootNode.Children[i], action);
+            }
+        }
     }
 }

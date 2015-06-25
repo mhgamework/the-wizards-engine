@@ -13,12 +13,12 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
     [EngineTest]
     public class PerformanceTest
     {
-    
+
         /// <summary>
         /// Time to build a hermite grid (to data representation) from a density function
         /// </summary>
         [Test]
-        public void TestGenerateTerrain([Values(16,32,64)] int size)
+        public void TestGenerateTerrain([Values(16, 32, 64)] int size)
         {
             var dens = VoxelTerrainGenerationTest.createDensityFunction5Perlin(11, 10);
             var densityGrid = (AbstractHermiteGrid)new DensityFunctionHermiteGrid(dens, new Point3(size, size, size));
@@ -32,8 +32,8 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
                 var grid = HermiteDataGrid.CopyGrid(densityGrid);
             }
             s.Stop();
-            Console.WriteLine("Time per copy:" + s.Elapsed.TotalSeconds / times);
-            Console.WriteLine("Time per cell: {0:0.00} microsec:", s.Elapsed.TotalSeconds / times / (size * size * size) * 1000 * 1000);
+            Console.WriteLine("Time per copy:" + s.Elapsed.Multiply(1f / times).PrettyPrint());
+            Console.WriteLine("Time per cell: " + s.Elapsed.Multiply(1f / times / (size * size * size)).PrettyPrint());
 
 
         }
@@ -119,6 +119,44 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         }
 
 
+        /// <summary>
+        /// I estimated (by running the lodenv) that on average you need 500 meshes of 16x16x16 to render a terrain of size 32*1024
+        ///    So lets measure and extrapolate!
+        /// This is somewhat of the minimum we can achieve using CPU, so use it to see the necessity of going GPU
+        /// </summary>
+        [Test]
+        public void EstimateLodDensitySamplingPerformance()
+        {
+            var env = new TerrainLodEnvironment();
 
+
+            // At the moment of writing we averaged 3 densities per cell for 16x16x16, but lets assume its 1 (when alot of single material chunks exist)
+
+            var numMeshes = 500;
+            var numIts = 32;
+
+            var extraSimulate = 10; // Do the test 'extraSimulate' times to make it more accurate, but this is again subtracted from total later
+            estimateSamplingPerformance(extraSimulate, numIts, env, numMeshes);
+        }
+
+        private static void estimateSamplingPerformance(int extraSimulate, int numIts, TerrainLodEnvironment env, int numMeshes)
+        {
+            var perf = PerformanceHelper.Measure(() =>
+                {
+                    for (int j = 0; j < extraSimulate; j++)
+                    {
+                        for (int x = 0; x < numIts; x++)
+                            for (int y = 0; y < numIts; y++)
+                                for (int z = 0; z < numIts; z++)
+                                {
+                                    var value = env.densityFunction(new Vector3(x, y, z));
+                                }
+                    }
+                });
+
+
+            Console.WriteLine("Time for {0}x{0}x{0}: {1}", numIts, perf.Multiply(1f / extraSimulate).PrettyPrint());
+            Console.WriteLine("Time for 32*1024 with lod: " + perf.Multiply((float)numMeshes / extraSimulate).PrettyPrint());
+        }
     }
 }
