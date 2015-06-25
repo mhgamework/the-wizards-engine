@@ -11,14 +11,20 @@ namespace MHGameWork.TheWizards
         /// </summary>
         public static int nfmod(int a, int b)
         {
-            return (a - b * (int)Math.Floor(a / (double)b));
+            // Test shows this is fastest
+            var r = a % b;
+            return r < 0 ? r + b : r;
+            //return (a - b * (int)Math.Floor(a / (double)b));
         }
         /// <summary>
         /// Looparound modulo, works with negative numbers
-        /// </summary>
+        /// </summary>  
         public static float nfmod(float a, float b)
         {
-            return (float)(a - b * Math.Floor(a / b));
+            // Test shows this is fastest
+            var r = a % b;
+            return r < 0 ? r + b : r;
+            //return (float)(a - b * Math.Floor(a / b));
         }
 
 
