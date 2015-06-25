@@ -82,7 +82,18 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
             });
             Console.WriteLine("arr3d.GetTiled:" + arr3DTiled.PrettyPrint());
 
-            var arr3DTiledManual = PerformanceHelper.Measure(() =>
+            var arr3DTiledFast = PerformanceHelper.Measure(() =>
+            {
+                for (int j = 0; j < times; j++)
+                    for (int i = 0; i < size - 2; i++)
+                    {
+                        var val = arr3d.GetTiledFast(i, i + 1, i + 2);
+                        var val2 = arr3d.GetTiledFast(i, i + 2, i + 1);
+                    }
+            });
+            Console.WriteLine("arr3d.GetTiledFast:" + arr3DTiledFast.PrettyPrint());
+
+            var arr3DTiledCacheSize = PerformanceHelper.Measure(() =>
             {
                 for (int j = 0; j < times; j++)
                     for (int i = 0; i < size - 2; i++)
@@ -97,7 +108,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
                         var val2 = arr3d.GetFast(a4, a5, a6);
                     }
             });
-            Console.WriteLine("arr3d.GetTiledManual:" + arr3DTiledManual.PrettyPrint());
+            Console.WriteLine("arr3d.GetTiledCacheSize:" + arr3DTiledCacheSize.PrettyPrint());
 
 
             var internalArr = arr3d.GetInternalField<float[, ,]>("arr");
