@@ -9,7 +9,7 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
     /// <typeparam name="T"></typeparam>
     public class Array3D<T>
     {
-        private T[, ,] arr;
+        public T[, ,] arr;
         public Point3 Size { get; private set; }
 
         public Array3D(Point3 size)
@@ -26,6 +26,18 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
             }
             set { arr[pos.X, pos.Y, pos.Z] = value; }
         }
+        public T Get(Point3 pos)
+        {
+            return arr[pos.X, pos.Y, pos.Z];
+        }
+        /// <summary>
+        /// Very fast get operation, no bounds checking
+        /// </summary>
+        public T GetFast(int x, int y, int z)
+        {
+            return arr[x, y, z];
+        }
+
 
         public bool InArray(Point3 pos)
         {
@@ -46,15 +58,26 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
                     }
         }
 
+        public T GetTiledFast(int x, int y, int z)
+        {
+            // Dont call the this[] directly, its about 20% slower when i tested it. Probably because of the out of bounds check
+            // TODO: since this is always in bounds, maybe try using 'unsafe' and pointers to avoid the C# array bounds checking?
+            Point3 point3 = Size; // Reading this out is a bit faster
+             x = TWMath.nfmod(x, point3.X);
+             y = TWMath.nfmod(y, point3.Y);
+             z = TWMath.nfmod(z, point3.Z);
+            return arr[x, y, z];
+        }
         public T GetTiled(Point3 pos)
         {
             // Dont call the this[] directly, its about 20% slower when i tested it. Probably because of the out of bounds check
             // TODO: since this is always in bounds, maybe try using 'unsafe' and pointers to avoid the C# array bounds checking?
-            pos.X = TWMath.nfmod(pos.X, Size.X);
-            pos.Y = TWMath.nfmod(pos.Y, Size.Y);
-            pos.Z = TWMath.nfmod(pos.Z, Size.Z);
-            return arr[pos.X,pos.Y,pos.Z];
+            Point3 point3 = Size; // Reading this out is a bit faster
+            var x = TWMath.nfmod(pos.X, point3.X);
+            var y = TWMath.nfmod(pos.Y, point3.Y);
+            var z = TWMath.nfmod(pos.Z, point3.Z);
+            return arr[x, y, z];
         }
-       
+
     }
 }
