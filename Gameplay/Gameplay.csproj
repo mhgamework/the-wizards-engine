@@ -211,6 +211,8 @@
     <Compile Include="DualContouring\Array3DSampler.cs" />
     <Compile Include="DualContouring\CameraLightSimulator.cs" />
     <Compile Include="DualContouring\DualContouringMeshBuilder.cs" />
+    <Compile Include="DualContouring\GPU\GPUTest.cs" />
+    <Compile Include="DualContouring\GPU\GPUTexture3D.cs" />
     <Compile Include="DualContouring\HermiteGrids\AbstractHermiteGrid.cs" />
     <Compile Include="DualContouring\HermiteGrids\DelegateHermiteGrid.cs" />
     <Compile Include="DualContouring\HermiteGrids\DensityFunctionHermiteGrid.cs" />
