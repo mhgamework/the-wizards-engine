@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.DualContouring.GPU
             csX = loadComputeShader(CompiledShaderCache.Current.RootShaderPath + "DualContouring\\HermiteTerrain.hlsl", "CSGridSigns");
             csIntersections = loadComputeShader(CompiledShaderCache.Current.RootShaderPath + "DualContouring\\HermiteTerrain.hlsl", "CSCalcIntersections");
 
-            var random = new Random();
+            var random = new Random(0);
 
             var noiseSize = 64;
             var data = new float[noiseSize * noiseSize * noiseSize];

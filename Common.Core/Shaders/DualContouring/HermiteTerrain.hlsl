@@ -24,7 +24,7 @@ SamplerState TrilinearRepeat : register (s0);/*{
 #define size_y 8
 #define size_z 8
 
-#define fullSize 64
+#define fullSize 128
 #define noiseSize 64.0
 #define noiseTexel 1/noiseSize
 
@@ -50,14 +50,22 @@ float sampleNoise(float3 coord)
 	float q110 = PerlinNoise.SampleLevel(TrilinearRepeat,coord + float3(1,1,0)*noiseTexel,0);
 	float q111 = PerlinNoise.SampleLevel(TrilinearRepeat,coord + float3(1,1,1)*noiseTexel,0);
 
-
-	float x00 = lerp(q000,q100,f.x);
+	//I wrote this vector based lerp in the hopes that it is faster
+	float4 x0 = float4(q000,q001,q010,q011);
+	float4 x1 = float4(q100,q101,q110,q111);
+	float4 xLerp = lerp(x0,x1,f.x);
+	float2 y0 = xLerp.xy;
+	float2 y1 = xLerp.zw;
+	float2 yLerp = lerp(y0,y1,f.y);
+	return lerp(yLerp.x,yLerp.y,f.z);
+	//this is the original trilerp which works
+	/*float x00 = lerp(q000,q100,f.x);
 	float x01 = lerp(q001,q101,f.x);
 	float x10 = lerp(q010,q110,f.x);
 	float x11 = lerp(q011,q111,f.x);
 	float y0 = lerp(x00,x10,f.y);
 	float y1 = lerp(x01,x11,f.y);
-	return lerp(y0,y1,f.z);
+	return lerp(y0,y1,f.z);*/
 
 	//coord = frac(coord);
 	//return (coord.x*2-1+coord.z*2-1)/2.0;
