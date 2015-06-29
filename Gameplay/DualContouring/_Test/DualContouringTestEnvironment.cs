@@ -40,6 +40,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
 
             PlaceableObjectGrid = new IntersectableCube();
 
+            cameraLightSimulator = new CameraLightSimulator();
         }
 
         public AbstractHermiteGrid Grid
@@ -57,6 +58,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
         private TimeSpan lastSurfaceExtractionTime;
         private Textarea statsArea;
         private Textarea textarea;
+        private CameraLightSimulator cameraLightSimulator;
 
         private void flagDirty()
         {
@@ -98,6 +100,11 @@ namespace MHGameWork.TheWizards.DualContouring._Test
 
         public string AdditionalText { get; set; }
 
+        public CameraLightSimulator CameraLightSimulator
+        {
+            get { return cameraLightSimulator; }
+        }
+
         public void AddToEngine(TWEngine engine)
         {
             TW.Graphics.SpectaterCamera.MovementSpeed = 0.5f;
@@ -134,7 +141,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
 
             addLinesSimulator(engine, this.lines);
 
-            engine.AddSimulator(new CameraLightSimulator());
+            engine.AddSimulator(CameraLightSimulator);
         }
 
         private void updateStatsArea()
@@ -320,6 +327,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
 
         public static void addQEFPoints(IMesh mesh, float scale, LineManager3DLines lineManager3DLines)
         {
+            if (mesh.GetCoreData().Parts.Count == 0) return;
             foreach (var p in mesh.GetCoreData().Parts[0].MeshPart.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position))
             {
                 lineManager3DLines.AddCenteredBox(p.dx() * scale, 0.05f, Color.Orange);

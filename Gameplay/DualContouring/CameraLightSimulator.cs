@@ -15,6 +15,13 @@ namespace MHGameWork.TheWizards.DualContouring
         public CameraLightSimulator()
         {
             light = TW.Graphics.AcquireRenderer().CreatePointLight();
+            Light.LightIntensity = 2;
+            Light.LightRadius = 30;
+        }
+
+        public PointLight Light
+        {
+            get { return light; }
         }
 
         public static void addCameraLightSimulator(TWEngine engine)
@@ -28,9 +35,8 @@ namespace MHGameWork.TheWizards.DualContouring
 
         public void Simulate()
         {
-            light.LightIntensity = 2;
-            light.LightRadius = 30;
-            light.LightPosition = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.GetTranslation();
+         
+            Light.LightPosition = TW.Data.Get<CameraInfo>().ActiveCamera.ViewInverse.GetTranslation();
         }
     }
 }

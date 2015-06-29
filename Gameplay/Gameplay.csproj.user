@@ -6,5 +6,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <StartAction>Program</StartAction>
     <StartProgram>C:\_MHData\1 - Projecten\The Wizards\_Source\bin\Binaries\ServerClient.exe</StartProgram>
+    <EnableUnmanagedDebugging>true</EnableUnmanagedDebugging>
   </PropertyGroup>
 </Project>

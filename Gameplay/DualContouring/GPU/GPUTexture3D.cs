@@ -23,17 +23,21 @@ namespace MHGameWork.TheWizards.DualContouring.GPU
         }
 
 
+        public GPUTexture3D(Texture3D resource, ShaderResourceView view, UnorderedAccessView unorderedAccessView)
+        {
+            Resource = resource;
+            View = view;
+        }
 
         private GPUTexture3D(DX11Game game, Texture3DDescription desc)
         {
-            initialize(new Texture3D(game.Device, desc));
-        }
-        private GPUTexture3D(Texture3D resource)
-        {
-            initialize(resource);
+            Texture3D resource = new Texture3D(game.Device, desc);
+            Resource = resource;
+            View = new ShaderResourceView(resource.Device, Resource);
+
         }
 
-        private void initialize(Texture3D resource)
+        private GPUTexture3D(Texture3D resource)
         {
             Resource = resource;
             View = new ShaderResourceView(resource.Device, Resource);
@@ -76,6 +80,40 @@ namespace MHGameWork.TheWizards.DualContouring.GPU
             tex.Device.ImmediateContext.UnmapSubresource(tex, 0);
         }
 
+        /// <summary>
+        /// Gets given raw byte[] array of the resource
+        /// </summary>
+        public byte[] GetRawData()
+        {
+            var tex = Resource;
+
+            var width = tex.Description.Width;
+            var height = tex.Description.Height;
+            var depth = tex.Description.Depth;
+
+
+            var box = tex.Device.ImmediateContext.MapSubresource(tex, 0, 0, MapMode.Read,
+                SlimDX.Direct3D11.MapFlags.None);
+
+            var ret = new byte[width * height * depth * 4];
+
+
+            for (int iSlice = 0; iSlice < height; iSlice++)
+            {
+                for (int iRow = 0; iRow < height; iRow++)
+                {
+                    // The driver can add padding after each row, this code fixes those padding errors
+                    box.Data.Seek(iSlice * box.SlicePitch + iRow * box.RowPitch, SeekOrigin.Begin);
+                    box.Data.Read(ret, iSlice * 4 * height * width + iRow * 4 * width, width * 4);
+                }
+            }
+
+
+            tex.Device.ImmediateContext.UnmapSubresource(tex, 0);
+
+            return ret;
+        }
+
 
 
         public static GPUTexture3D CreateCPUWritable(DX11Game game, int width, int height, int depth, Format format)
@@ -101,14 +139,26 @@ namespace MHGameWork.TheWizards.DualContouring.GPU
             return desc;
         }
 
-        public static GPUTexture3D CreateUAV(DX11Game game, int width, int height, int depth, Format format)
+        public static GPUTexture3D CreateUAV(DX11Game game, int width, int height, int depth, Format format, Format viewFormat)
         {
             var desc = getBaseDesc(width, height, depth, format);
             desc.Usage = ResourceUsage.Default;
             desc.CpuAccessFlags = CpuAccessFlags.None;
             desc.BindFlags = BindFlags.ShaderResource | BindFlags.UnorderedAccess;
 
-            return new GPUTexture3D(game, desc);
+            var resource = new Texture3D(game.Device, desc);
+
+            var uav = new UnorderedAccessView(resource.Device, resource, new UnorderedAccessViewDescription()
+            {
+                Format = viewFormat,
+                Dimension = UnorderedAccessViewDimension.Texture3D,
+                ArraySize = -1,
+                DepthSliceCount = -1,
+                ElementCount = -1,
+            });
+            var tex = new GPUTexture3D(resource, null, uav);
+
+            return tex;
 
         }
 
@@ -142,6 +192,26 @@ namespace MHGameWork.TheWizards.DualContouring.GPU
                     dir.FullName + "/" + i + ".bmp");
             }
 
+        }
+
+        public static GPUTexture3D CreateCPUReadable(DX11Game game, int width, int height, int depth, Format format)
+        {
+            var desc = getBaseDesc(width, height, depth, format);
+            desc.Usage = ResourceUsage.Staging;
+            desc.CpuAccessFlags = CpuAccessFlags.Read;
+            desc.BindFlags = BindFlags.None;
+
+            return new GPUTexture3D(new Texture3D(game.Device, desc), null, null);
+        }
+
+        public static GPUTexture3D CreateDefault(DX11Game game, int width, int height, int depth, Format format)
+        {
+            var desc = getBaseDesc(width, height, depth, format);
+            desc.Usage = ResourceUsage.Default;
+            desc.CpuAccessFlags = CpuAccessFlags.None;
+            desc.BindFlags = BindFlags.ShaderResource;
+
+            return new GPUTexture3D(game, desc);
         }
     }
 }
