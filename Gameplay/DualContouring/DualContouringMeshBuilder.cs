@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.DualContouring
@@ -11,6 +12,20 @@ namespace MHGameWork.TheWizards.DualContouring
 
         public IMesh buildMesh(AbstractHermiteGrid grid)
         {
+            var rawMesh = buildRawMesh(grid);
+
+            var builder = new MeshBuilder();
+            var mat = builder.CreateMaterial();
+            mat.ColoredMaterial = true;
+            mat.DiffuseColor = Color.Green.dx().xna();
+            builder.AddCustom(rawMesh.Positions, rawMesh.Normals, rawMesh.Texcoords);
+
+            var mesh = builder.CreateMesh();
+            return mesh;
+        }
+
+        public RawMeshData buildRawMesh(AbstractHermiteGrid grid)
+        {
             var vertices = new List<Vector3>();
             var indices = new List<int>();
             var algo = new DualContouringAlgorithm();
@@ -19,18 +34,12 @@ namespace MHGameWork.TheWizards.DualContouring
 
             var triangleNormals = generateTriangleNormals(indices, vertices);
 
+            var ret = new RawMeshData(indices.Select(i => vertices[i]).ToArray(),
+                indices.Select((index, numIndex) => triangleNormals[numIndex / 3]).ToArray(),
+                indices.Select(i => new Vector2()).ToArray(),
+                indices.Select(i => new Vector3()).ToArray());
 
-            var builder = new MeshBuilder();
-            var mat = builder.CreateMaterial();
-            mat.ColoredMaterial = true;
-            mat.DiffuseColor = Color.Green.dx().xna();
-            builder.AddCustom(indices.Select(i => vertices[i]).ToArray(),
-                              indices.Select((index, numIndex) => triangleNormals[numIndex / 3]).ToArray(),
-                //indices.Select((index, numIndex) => Vector3.UnitY).ToArray(),
-                              indices.Select(i => new Vector2()).ToArray());
-
-            var mesh = builder.CreateMesh();
-            return mesh;
+            return ret;
         }
 
 
@@ -50,6 +59,6 @@ namespace MHGameWork.TheWizards.DualContouring
             }
             return triangleNormals;
         }
- 
+
     }
 }

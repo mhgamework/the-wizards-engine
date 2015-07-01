@@ -1,6 +1,9 @@
 ﻿using DirectX11;
 using MHGameWork.TheWizards.DualContouring.Terrain;
 using MHGameWork.TheWizards.Engine.Features.Testing;
+using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Rendering.Deferred;
 using NUnit.Framework;
 using SlimDX;
 
@@ -13,7 +16,19 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
         [Test]
         public void TestSphere()
         {
-            createSphereGrid();
+            var grid = createSphereGrid();
+
+            var dRenderer = TW.Graphics.AcquireRenderer();
+            var surfaceRenderer = new VoxelCustomRenderer(TW.Graphics,
+                dRenderer,
+                new DualContouringMeshBuilder(),
+                new DualContouringAlgorithm(), 
+                new MeshRenderDataFactory(TW.Graphics,null,dRenderer.TexturePool));
+            dRenderer.AddCustomGBufferRenderer(surfaceRenderer);
+
+            surfaceRenderer.CreateSurface( grid, Matrix.Identity );
+
+            EngineFactory.CreateEngine().AddSimulator( new WorldRenderingSimulator() );
         }
 
         private AbstractHermiteGrid createSphereGrid()

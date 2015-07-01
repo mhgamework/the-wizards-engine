@@ -58,7 +58,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
             return mesh;
         }
 
-        private static RAMTexture loadTexture(string file)
+        public static RAMTexture loadTexture(string file)
         {
             var tex = new RAMTexture();
 

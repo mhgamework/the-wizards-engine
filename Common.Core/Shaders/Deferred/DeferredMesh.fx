@@ -1,4 +1,3 @@
-﻿
 #include <TestHelper.fx>
 #include <GBuffer.fx>
 
