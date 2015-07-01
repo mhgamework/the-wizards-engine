@@ -20,7 +20,6 @@ obj/
 # The /bin folder
 
 /bin/GameData/*
-!/bin/GameData/Core/
 !/bin/Scripts/
 /bin/Binaries/*
 /bin/BinariesGame/*
