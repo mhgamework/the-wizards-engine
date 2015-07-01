@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Rendering.Deferred;
 using Microsoft.Xna.Framework;
 
 namespace MHGameWork.TheWizards.Rendering
@@ -190,6 +192,14 @@ namespace MHGameWork.TheWizards.Rendering
             data.Sources.Add(texcoords);
 
             return data;
+        }
+
+        public RawMeshData ToRawMeshData()
+        {
+            return new RawMeshData( GetSourceVector3( MeshPartGeometryData.Semantic.Position ).Select( v => v.dx() ).ToArray(),
+                GetSourceVector3(MeshPartGeometryData.Semantic.Normal).Select(v => v.dx()).ToArray(),
+                GetSourceVector2(MeshPartGeometryData.Semantic.Texcoord).Select(v => v.dx()).ToArray(),
+                GetSourceVector3(MeshPartGeometryData.Semantic.Tangent).Select(v => v.dx()).ToArray());
         }
     }
 }

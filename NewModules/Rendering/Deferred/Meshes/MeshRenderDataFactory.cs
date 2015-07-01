@@ -85,8 +85,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                     var renderPart = new MeshRenderPart();
                     renderMat.Parts[j] = renderPart;
 
-                    renderPart.IndexBuffer = CreateMeshPartIndexBuffer(part.MeshPart);
-                    renderPart.VertexBuffer = CreateMeshPartVertexBuffer(part.MeshPart);
+                    var rawData = geomData.ToRawMeshData();
+
+                    renderPart.IndexBuffer = CreateMeshPartIndexBuffer(rawData.Positions);
+                    renderPart.VertexBuffer = CreateMeshPartVertexBuffer(rawData.Positions,rawData.Normals,rawData.Texcoords,rawData.Tangents);
                     renderPart.ObjectMatrix = part.ObjectMatrix.dx();
 
 
@@ -120,15 +122,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         }
 
-        
 
-        public Buffer CreateMeshPartVertexBuffer(IMeshPart meshPart)
+
+        public Buffer CreateMeshPartVertexBuffer(Vector3[] positions, Vector3[] normals, Vector2[] texcoords, Vector3[] tangents)
         {
-            var geomData = meshPart.GetGeometryData();
-            var positions = geomData.GetSourceVector3(MeshPartGeometryData.Semantic.Position);
-            var normals = geomData.GetSourceVector3(MeshPartGeometryData.Semantic.Normal);
-            var texcoords = geomData.GetSourceVector2(MeshPartGeometryData.Semantic.Texcoord);
-            var tangents = geomData.GetSourceVector3(MeshPartGeometryData.Semantic.Tangent);
             // This might not work when no texcoords
 
             var vertices = new DeferredMeshVertex[positions.Length];
@@ -138,16 +135,16 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
                 // Discretize vertex positions, to decrease rounding errors
 
-                var pos = positions[j].ToSlimDX();
+                var pos = positions[j];
                 pos.X = (int)(pos.X * 1000) * 0.001f;
                 pos.Y = (int)(pos.Y * 1000) * 0.001f;
                 pos.Z = (int)(pos.Z * 1000) * 0.001f;
 
                 vertices[j].Pos = new Vector4(pos, 1);
 
-                vertices[j].Normal = normals[j].ToSlimDX();
-                if (texcoords != null) vertices[j].UV = texcoords[j].ToSlimDX();
-                if (tangents != null) vertices[j].Tangent = new Vector4(tangents[j].ToSlimDX(), 1);
+                vertices[j].Normal = normals[j];
+                if (texcoords != null) vertices[j].UV = texcoords[j];
+                if (tangents != null) vertices[j].Tangent = new Vector4(tangents[j], 1);
             }
             Buffer vb;
             using (var strm = new DataStream(vertices, true, false))
@@ -165,11 +162,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             return vb;
         }
 
-        public Buffer CreateMeshPartIndexBuffer(IMeshPart meshPart)
+        public Buffer CreateMeshPartIndexBuffer(Vector3[] positions)
         {
-            var geomData = meshPart.GetGeometryData();
-            var positions = geomData.GetSourceVector3(MeshPartGeometryData.Semantic.Position);
-
             var indices = new int[positions.Length];
             for (int j = 0; j < indices.Length; j++)
                 indices[j] = j;
@@ -192,14 +186,17 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
         public MeshPartRenderData CreateMeshPartData(IMeshPart part)
         {
+            return CreateMeshPartData(part.GetGeometryData().ToRawMeshData());
+        }
+        public MeshPartRenderData CreateMeshPartData(RawMeshData rawMeshData)
+        {
             var data = new MeshPartRenderData();
 
-            var geomData = part.GetGeometryData();
-            int vertCount = geomData.GetSourceVector3(MeshPartGeometryData.Semantic.Position).Length;
+            int vertCount = rawMeshData.Positions.Length;
             if (vertCount == 0) throw new InvalidOperationException();
 
-            data.IndexBuffer = CreateMeshPartIndexBuffer(part);
-            data.VertexBuffer = CreateMeshPartVertexBuffer(part);
+            data.IndexBuffer = CreateMeshPartIndexBuffer(rawMeshData.Positions);
+            data.VertexBuffer = CreateMeshPartVertexBuffer(rawMeshData.Positions, rawMeshData.Normals, rawMeshData.Texcoords, rawMeshData.Tangents);
 
             //data.VertexCount = vertCount;
             data.PrimitiveCount = vertCount / 3;

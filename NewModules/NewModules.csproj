@@ -324,6 +324,7 @@
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderDataFactory.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderMaterial.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshRenderPart.cs" />
+    <Compile Include="Rendering\Deferred\Meshes\RawMeshData.cs" />
     <Compile Include="Rendering\MeshOptimizer.cs" />
     <Compile Include="Rendering\RAMMesh.cs">
       <SubType>Code</SubType>

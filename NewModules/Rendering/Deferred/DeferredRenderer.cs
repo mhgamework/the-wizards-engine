@@ -60,6 +60,12 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         private FogEffect fogRenderer;
         private CullMode cullMode = CullMode.None;
 
+        private List<ICustomGBufferRenderer> customGBufferRenderers = new List<ICustomGBufferRenderer>();
+
+        public void AddCustomGBufferRenderer( ICustomGBufferRenderer renderer )
+        {
+            customGBufferRenderers.Add( renderer );
+        }
         public int DrawCalls { get { return meshesRenderer.DrawCalls; } }
         private RasterizerState rasterizerState;
         private bool wireframe;
@@ -510,6 +516,10 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             //setMeshRendererVisibles(gbufferView);
             meshesRenderer.RasterizerState = rasterizerState;
             meshesRenderer.Draw();
+            foreach ( var renderer in customGBufferRenderers )
+            {
+                renderer.Draw();
+            }
             context.Rasterizer.State = game.HelperStates.RasterizerShowAll;
 
         }
@@ -538,7 +548,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             }
         }
 
-        private T readPixel<T>(Resource resource) where T : struct
+        public T readPixel<T>(Resource resource) where T : struct
         {
             context.CopySubresourceRegion(resource, Resource.CalculateSubresourceIndex(0, 0, 1),
                                           new ResourceRegion(0, 0, 0, 1, 1, 1), tempTex,
@@ -635,6 +645,12 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
             Wireframe = false;
             CullMode = CullMode.None;
+
+            foreach ( var renderer in customGBufferRenderers )
+            {
+                renderer.Dispose();
+            }
+            customGBufferRenderers.Clear();
 
             //TODO: texturepool.clear?
         }

@@ -112,7 +112,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
         {
             private Buffer perObjectBuffer;
             private DataStream perObjectStrm;
-            private DataBox perObjectBox;
 
             public PerObjectConstantBuffer(DX11Game game)
             {
@@ -128,7 +127,6 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
 
                 //perObjectStrm = new DataStream(baseShader.Effect.GetConstantBufferByName("perObject").ConstantBuffer.Description.SizeInBytes, false, true);
                 perObjectStrm = new DataStream(Marshal.SizeOf(typeof(Data)), false, true);
-                perObjectBox = new DataBox(0, 0, perObjectStrm);
             }
 
             public Buffer Buffer
@@ -152,9 +150,25 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
             {
                 public Matrix WorldMatrix;
             }
+
+            public void Dispose()
+            {
+                perObjectBuffer.Dispose();
+                perObjectStrm.Dispose();
+                perObjectBuffer = null;
+                perObjectStrm = null;
+            }
         }
 
 
-     
+        public void Dispose()
+        {
+            baseShader.Dispose();
+            baseShader = null;
+            inputLayout.Dispose();
+            inputLayout = null;
+            sampler.Dispose();
+            sampler = null;
+        }
     }
 }
