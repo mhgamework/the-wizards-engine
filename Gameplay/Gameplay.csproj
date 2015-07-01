@@ -221,6 +221,9 @@
     <Compile Include="DualContouring\HermiteGrids\DifferenceGrid.cs" />
     <Compile Include="DualContouring\DualContouringAlgorithm.cs" />
     <Compile Include="DualContouring\Octrees\DCOctree.cs" />
+    <Compile Include="DualContouring\Rendering\RenderingTest.cs" />
+    <Compile Include="DualContouring\Rendering\SurfaceMaterial.cs" />
+    <Compile Include="DualContouring\Rendering\VoxelCustomRenderer.cs" />
     <Compile Include="DualContouring\Terrain\LodOctreeMeshBuilder.cs" />
     <Compile Include="DualContouring\PerformanceHelper.cs" />
     <Compile Include="DualContouring\PrettyPrintExtensions.cs" />

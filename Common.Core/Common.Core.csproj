@@ -518,6 +518,7 @@
   <ItemGroup>
     <None Include="Shaders\Deferred\Fog.fx" />
     <Content Include="Shaders\Deferred\TODO\RandomNormals.png" />
+    <None Include="Shaders\DualContouring\Surface.fx" />
     <Content Include="Shaders\DualContouring\HermiteTerrain.hlsl" />
     <Content Include="Shaders\Filters\GaussianBlurCS.hlsl" />
   </ItemGroup>

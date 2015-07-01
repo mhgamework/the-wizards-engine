@@ -13,6 +13,8 @@ namespace MHGameWork.TheWizards.Shaders
     public class ShaderFiles
     {
         public static readonly FileInfo DeferredMesh = c("Deferred\\DeferredMesh.fx");
+        public static readonly FileInfo DCHermiteTerrain = c("DualContouring\\HermiteTerrain.fx");
+        public static readonly FileInfo DCSurface = c("DualContouring\\Surface.fx");
 
         private static FileInfo c(string name)
         {
