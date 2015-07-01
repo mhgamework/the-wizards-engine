@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             new Dictionary<NodeIdentifier, HermiteDataGrid>();
 
         public DualContouringMeshBuilder meshBuilder = new DualContouringMeshBuilder();
-        public DeferredMeshRenderElement CreateRenderElementForNode(LodOctreeNode node, int minNodeSize, IMesh mesh)
+        public DeferredMeshElement CreateRenderElementForNode(LodOctreeNode node, int minNodeSize, IMesh mesh)
         {
             var el = TW.Graphics.AcquireRenderer().CreateMeshElement(mesh);
             float setApart = 1.1f;

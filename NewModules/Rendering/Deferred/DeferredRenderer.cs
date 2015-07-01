@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.DirectX11.Rendering.CSM;
 using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.Rendering.SSAO;
+using MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DXGI;
@@ -507,7 +508,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
             //TODO: fix culling+removing of elements
             //gbufferView.UpdateVisibility(cullCam.ViewProjection);
             //setMeshRendererVisibles(gbufferView);
-            meshRenderer.RasterizerState = rasterizerState;
+            meshesRenderer.RasterizerState = rasterizerState;
             meshesRenderer.Draw();
             context.Rasterizer.State = game.HelperStates.RasterizerShowAll;
 
@@ -643,7 +644,8 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
         /// </summary>
         public void ClearMeshCache(IMesh mesh)
         {
-            meshRenderer.DisposeMesh(mesh);
+            throw new NotImplementedException();
+            //meshesRenderer.DisposeMesh(mesh);
         }
 
     }

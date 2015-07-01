@@ -184,7 +184,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
 
 
             //baseShader.Apply();
-            context.Rasterizer.State = RasterizerState;
+            ctx.Rasterizer.State = RasterizerState;
 
 
 

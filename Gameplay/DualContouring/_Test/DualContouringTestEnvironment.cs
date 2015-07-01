@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
         }
 
         private bool dirty;
-        private DeferredMeshRenderElement meshElement;
+        private DeferredMeshElement meshElement;
         private TimeSpan lastSurfaceExtractionTime;
         private Textarea statsArea;
         private Textarea textarea;
