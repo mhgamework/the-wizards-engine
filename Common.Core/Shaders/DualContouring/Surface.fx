@@ -42,7 +42,7 @@ GBuffer VoxelSurfacePS(VertexShaderOutput input)
 
 	// Originally from GPUgems3 chapter 1
 
-	float tex_scale = 0.5;
+	float tex_scale = -0.5;
 	// Determine the blend weights for the 3 planar projections.  
 	// N_orig is the vertex-interpolated normal vector.  
 	float3 blend_weights = abs(input.NormalWS.xyz);   // Tighten up the blending zone:  

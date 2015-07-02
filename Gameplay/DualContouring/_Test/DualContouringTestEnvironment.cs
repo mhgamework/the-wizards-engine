@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.DualContouring.Rendering;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
@@ -26,7 +27,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
         private Vector3 RaycastedTriangleV1;
         private Vector3 RaycastedTriangleV2;
         private Vector3 RaycastedTriangleV3;
-        private IMesh surfaceMesh;
+        private RawMeshData surfaceMesh;
         private DualContouringMeshBuilder dcMeshBuilder = new DualContouringMeshBuilder();
         public Vector3 RaycastedPoint { get; private set; }
         public IIntersectableObject PlaceableObjectGrid { get; set; }
@@ -41,6 +42,14 @@ namespace MHGameWork.TheWizards.DualContouring._Test
             PlaceableObjectGrid = new IntersectableCube();
 
             cameraLightSimulator = new CameraLightSimulator();
+
+
+            surfaceRenderer = new VoxelCustomRenderer(TW.Graphics,
+                                                      TW.Graphics.AcquireRenderer(),
+                                                      new DualContouringMeshBuilder(),
+                                                      new DualContouringAlgorithm(),
+                                                      new MeshRenderDataFactory(TW.Graphics, null, TW.Graphics.AcquireRenderer().TexturePool));
+            TW.Graphics.AcquireRenderer().AddCustomGBufferRenderer(surfaceRenderer);
         }
 
         public AbstractHermiteGrid Grid
@@ -54,11 +63,12 @@ namespace MHGameWork.TheWizards.DualContouring._Test
         }
 
         private bool dirty;
-        private DeferredMeshElement meshElement;
+        private VoxelSurface meshElement;
         private TimeSpan lastSurfaceExtractionTime;
         private Textarea statsArea;
         private Textarea textarea;
         private CameraLightSimulator cameraLightSimulator;
+        private VoxelCustomRenderer surfaceRenderer;
 
         private void flagDirty()
         {
@@ -74,12 +84,12 @@ namespace MHGameWork.TheWizards.DualContouring._Test
 
             lastSurfaceExtractionTime = PerformanceHelper.Measure(() =>
                 {
-                    surfaceMesh = dcMeshBuilder.buildMesh(grid);
+                    surfaceMesh = dcMeshBuilder.buildRawMesh(grid);
                 });
 
             if (meshElement != null)
                 meshElement.Delete();
-            meshElement = TW.Graphics.AcquireRenderer().CreateMeshElement(surfaceMesh);
+            meshElement=surfaceRenderer.CreateSurface(grid, Matrix.Identity);
             meshElement.WorldMatrix = Matrix.Scaling(new Vector3(CellSize));
 
             this.lines.ClearAllLines();
@@ -180,7 +190,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
             Vector3 v3;
             var ray = TW.Data.Get<CameraInfo>().GetCenterScreenRay();
             ray = ray.Transform(Matrix.Invert(meshElement.WorldMatrix));
-            var dist = MeshRaycaster.RaycastMesh(surfaceMesh, ray, out v1, out v2, out v3);
+            var dist = MeshRaycaster.RaycastMeshPart(surfaceMesh.Positions.Select(p => p.xna()).ToArray(), ray, out v1, out v2, out v3);
             if (!dist.HasValue)
             {
                 // Could set a flag indicating no raycast
@@ -229,7 +239,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
             }
         }
 
-       
+
         public static void addLinesSimulator(TWEngine engine, LineManager3DLines lines)
         {
             bool visible = false;
@@ -311,7 +321,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
 
             var builder = new DualContouringMeshBuilder();
 
-            var triangleNormals =builder. generateTriangleNormals(indices, vertices);
+            var triangleNormals = builder.generateTriangleNormals(indices, vertices);
 
             for (int i = 0; i < indices.Count; i += 3)
             {
@@ -325,12 +335,12 @@ namespace MHGameWork.TheWizards.DualContouring._Test
         }
 
 
-        public static void addQEFPoints(IMesh mesh, float scale, LineManager3DLines lineManager3DLines)
+        public static void addQEFPoints(RawMeshData mesh, float scale, LineManager3DLines lineManager3DLines)
         {
-            if (mesh.GetCoreData().Parts.Count == 0) return;
-            foreach (var p in mesh.GetCoreData().Parts[0].MeshPart.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position))
+            if (mesh.Positions.Length == 0) return;
+            foreach (var p in mesh.Positions)
             {
-                lineManager3DLines.AddCenteredBox(p.dx() * scale, 0.05f, Color.Orange);
+                lineManager3DLines.AddCenteredBox(p * scale, 0.05f, Color.Orange);
             }
         }
     }

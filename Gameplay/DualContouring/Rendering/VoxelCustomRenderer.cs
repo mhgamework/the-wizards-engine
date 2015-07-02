@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.IO;
@@ -69,23 +70,54 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
             objectBuffer.Dispose();
         }
 
-        public void CreateSurface(AbstractHermiteGrid grid, Matrix world)
+        public VoxelSurface CreateSurface(AbstractHermiteGrid grid, Matrix world)
         {
 
             var rawData = dcMeshBuilder.buildRawMesh(grid);
 
-            var ret = new VoxelSurface();
+            var ret = new VoxelSurface(this,renderDataFactory.CreateMeshPartData(rawData));
 
             ret.WorldMatrix = world;
-            ret.RenderData = renderDataFactory.CreateMeshPartData(rawData);
             surfaces.Add(ret);
+            return ret;
+        }
+
+        public void deleteInternal( VoxelSurface voxelSurface )
+        {
+            if (!voxelSurface.IsDestroyed) throw new InvalidOperationException();
+            surfaces.Remove( voxelSurface );
         }
     }
 
     public class VoxelSurface
     {
+        public VoxelSurface(VoxelCustomRenderer customRenderer, MeshPartRenderData renderData )
+        {
+            _customRenderer = customRenderer;
+            _renderData = renderData;
+        }
+
         public Matrix WorldMatrix;
-        public MeshPartRenderData RenderData;
+        private VoxelCustomRenderer _customRenderer;
+        private MeshPartRenderData _renderData;
+
+        public MeshPartRenderData RenderData
+        {
+            get { return _renderData; }
+        }
+
+        public bool IsDestroyed { get { return _customRenderer == null; } }
+
+        public void Delete()
+        {
+            if ( IsDestroyed ) return;
+            var r = _customRenderer;
+            _renderData.Dispose();
+            _renderData = null;
+            _customRenderer = null;
+            r.deleteInternal(this);
+
+        }
     }
 
 }

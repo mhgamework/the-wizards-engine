@@ -43,7 +43,7 @@ namespace MHGameWork.TheWizards
             TW.Graphics.MouseInputDisabled = true;
             TW.Graphics.Mouse.CursorEnabled = true;
 
-            var fs = new EngineFileSystem(TWDir.GameData.FullName + "\\EngineFS");
+            var fs = new EngineFileSystem(TWDir.Cache.FullName + "\\EngineFS");
             DI.Set<IEngineFilesystem>(fs);
             DI.Set<EngineTestState>(new EngineTestState(fs));
             DI.Set<TestSceneBuilder>(new TestSceneBuilder(DI.Get<EngineTestState>()));

@@ -1,12 +1,14 @@
-﻿using SlimDX;
+﻿using System;
+using SlimDX;
 using SlimDX.Direct3D11;
+using Buffer = SlimDX.Direct3D11.Buffer;
 
 namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
 {
     /// <summary>
     /// Responsible for executing a draw call for a meshpart 
     /// </summary>
-    public class MeshPartRenderData
+    public class MeshPartRenderData:IDisposable
     {
         public Buffer VertexBuffer;
         public Buffer IndexBuffer;
@@ -24,6 +26,14 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
 
             context.DrawIndexed(PrimitiveCount * 3, 0, 0);
             //drawCalls = DrawCalls + 1;
+        }
+
+        public void Dispose()
+        {
+            VertexBuffer.Dispose();
+            IndexBuffer.Dispose();
+            VertexBuffer = null;
+            IndexBuffer = null;
         }
     }
 }

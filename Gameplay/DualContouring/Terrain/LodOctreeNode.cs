@@ -1,4 +1,5 @@
 ﻿using DirectX11;
+using MHGameWork.TheWizards.DualContouring.Rendering;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
 
@@ -12,7 +13,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         public Point3 LowerLeft;
         public IMesh Mesh;
         public bool BuildingMesh;
-        public DeferredMeshElement RenderElement;
+        public VoxelSurface RenderElement;
         public bool IsDestroyed { get; private set; }
         public bool CanRenderWithoutHoles;
 

@@ -15,8 +15,8 @@ namespace MHGameWork.TheWizards.DualContouring
         public CameraLightSimulator()
         {
             light = TW.Graphics.AcquireRenderer().CreatePointLight();
-            Light.LightIntensity = 2;
-            Light.LightRadius = 30;
+            Light.LightIntensity = 1;
+            Light.LightRadius = 200;
         }
 
         public PointLight Light
