@@ -83,6 +83,14 @@ namespace MHGameWork.TheWizards.DualContouring
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gridWorldSize">Size of the grid in world space</param>
+        /// <param name="resolution">Aka the subdivision of the grid</param>
+        /// <param name="world">Worldmatrix of the object</param>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public static HermiteDataGrid FromIntersectableGeometry(float gridWorldSize, int resolution, Matrix world, IIntersectableObject obj)
         {
             var numCubes = new Point3(resolution, resolution, resolution);
@@ -111,10 +119,19 @@ namespace MHGameWork.TheWizards.DualContouring
 
                     for (int i = 0; i < grid.dirs.Length; i++)
                     {
-                        if (sign == grid.GetSign(cube + grid.dirs[i])) continue;
+                        Point3 start = cube;
+                        Point3 end = cube + grid.dirs[i];
+                        if (sign == grid.GetSign(end)) continue;
                         //sign difference
-                        var vector4 = obj.GetIntersection(Vector3.TransformCoordinate(cube, gridToGeometry), Vector3.TransformCoordinate(cube + grid.dirs[i], gridToGeometry));
-                        vector4 = new Vector4(Vector3.Normalize(Vector3.TransformNormal(vector4.TakeXYZ(), geometryToGrid)), vector4.W);
+
+
+                        Vector3 startT = Vector3.TransformCoordinate(start, gridToGeometry);
+                        Vector3 endT = Vector3.TransformCoordinate(end, gridToGeometry);
+                        var vector4 = obj.GetIntersection(startT, endT);
+                        var intersectionPoint = Vector3.TransformCoordinate(Vector3.Lerp(startT, endT, vector4.W), geometryToGrid);
+                        var realLerp = Vector3.Distance(start, intersectionPoint); // /1
+                        Debug.Assert( Math.Abs( Vector3.Distance(start, end) -1) < 0.001 ); // Algo check
+                        vector4 = new Vector4(Vector3.Normalize(Vector3.TransformNormal(vector4.TakeXYZ(), geometryToGrid)), realLerp);
                         grid.cells[cube].EdgeData[i] = vector4;
                     }
                 });
@@ -270,5 +287,24 @@ namespace MHGameWork.TheWizards.DualContouring
             }
         }
 
+        public static AbstractHermiteGrid Empty(Point3 dimensions)
+        {
+            var ret = new HermiteDataGrid();
+            Point3 storageSize = dimensions + new Point3(1, 1, 1);
+            ret.cells = new Array3D<Vertex>(storageSize);
+
+            for (int x = 0; x < storageSize.X; x++)
+                for (int y = 0; y < storageSize.Y; y++)
+                    for (int z = 0; z < storageSize.Z; z++)
+                    {
+                        var p = new Point3(x, y, z);
+                        ret.cells[p] = new Vertex()
+                        {
+                            Sign = false,
+                            EdgeData =  new Vector4[3]
+                        };
+                    }
+            return ret;
+        }
     }
 }

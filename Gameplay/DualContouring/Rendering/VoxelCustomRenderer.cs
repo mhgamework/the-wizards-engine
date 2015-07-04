@@ -46,7 +46,7 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
             data.Assembly = Assembly.GetExecutingAssembly();
             data.AssemblyResourceName = "MHGameWork.TheWizards.Tests.OBJParser.Files.maps.BrickRound0030_7_S.jpg";*/
 
-            mat = new SurfaceMaterial(game,dRenderer.TexturePool.LoadTexture( tex ));
+            mat = new SurfaceMaterial(game, dRenderer.TexturePool.LoadTexture(tex));
             objectBuffer = DeferredMaterial.CreatePerObjectCB(game);
         }
 
@@ -59,6 +59,7 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
 
             foreach (var surface in surfaces)
             {
+                if ( surface.RenderData == null ) return;
                 objectBuffer.UpdatePerObjectBuffer(game.Device.ImmediateContext, surface.WorldMatrix);
                 surface.RenderData.Draw(game.Device.ImmediateContext);
             }
@@ -75,33 +76,37 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
         {
 
             var rawData = dcMeshBuilder.buildRawMesh(grid);
-            var ret = new VoxelSurface(this,renderDataFactory.CreateMeshPartData(rawData));
+            if (rawData.Positions.Length == 0)
+            {
+                return new VoxelSurface(this, null) { WorldMatrix = world };
+            }
+            var ret = new VoxelSurface(this, renderDataFactory.CreateMeshPartData(rawData));
             ret.Mesh = rawData;
             ret.WorldMatrix = world;
             surfaces.Add(ret);
             return ret;
         }
 
-        public void deleteInternal( VoxelSurface voxelSurface )
+        public void deleteInternal(VoxelSurface voxelSurface)
         {
             if (!voxelSurface.IsDestroyed) throw new InvalidOperationException();
-            surfaces.Remove( voxelSurface );
+            surfaces.Remove(voxelSurface);
         }
 
-        public static VoxelCustomRenderer CreateDefault( GraphicsWrapper game )
+        public static VoxelCustomRenderer CreateDefault(GraphicsWrapper game)
         {
-            return new VoxelCustomRenderer( game,
+            return new VoxelCustomRenderer(game,
                                             game.AcquireRenderer(),
                                             new DualContouringMeshBuilder(),
                                             new DualContouringAlgorithm(),
-                                            new MeshRenderDataFactory( game, null,
-                                                                       game.AcquireRenderer().TexturePool ) );
+                                            new MeshRenderDataFactory(game, null,
+                                                                       game.AcquireRenderer().TexturePool));
         }
     }
 
     public class VoxelSurface
     {
-        public VoxelSurface(VoxelCustomRenderer customRenderer, MeshPartRenderData renderData )
+        public VoxelSurface(VoxelCustomRenderer customRenderer, MeshPartRenderData renderData)
         {
             _customRenderer = customRenderer;
             _renderData = renderData;
@@ -121,9 +126,10 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
 
         public void Delete()
         {
-            if ( IsDestroyed ) return;
+            if (IsDestroyed) return;
             var r = _customRenderer;
-            _renderData.Dispose();
+            if (_renderData != null)
+                _renderData.Dispose();
             _renderData = null;
             _customRenderer = null;
             r.deleteInternal(this);

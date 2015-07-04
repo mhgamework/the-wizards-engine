@@ -60,12 +60,12 @@ namespace MHGameWork.TheWizards.DualContouring
             environment.Grid = createSphereGrid();
         }
 
-        private HermiteDataGrid createSphereGrid()
+        public HermiteDataGrid createSphereGrid()
         {
             return HermiteDataGrid.FromIntersectableGeometry(gridWorldSize, subdivision, Matrix.Scaling(new Vector3(4)) * Matrix.Translation(5, 5, 5),
                                                              new IntersectableSphere());
         }
-        private HermiteDataGrid createCubeGrid()
+        public HermiteDataGrid createCubeGrid()
         {
             return HermiteDataGrid.FromIntersectableGeometry(gridWorldSize, subdivision, Matrix.Scaling(new Vector3(4)) * Matrix.Translation(5, 5, 5),
                                                              new IntersectableCube());

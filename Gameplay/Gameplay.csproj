@@ -209,6 +209,10 @@
   <ItemGroup>
     <Compile Include="Data\Array3DTest.cs" />
     <Compile Include="DualContouring\Array3DSampler.cs" />
+    <Compile Include="DualContouring\BasicShapeBuilder.cs" />
+    <Compile Include="DualContouring\Building\BuilderConfiguration.cs" />
+    <Compile Include="DualContouring\Building\Chunk.cs" />
+    <Compile Include="DualContouring\Building\Raycaster.cs" />
     <Compile Include="DualContouring\CameraLightSimulator.cs" />
     <Compile Include="DualContouring\DualContouringMeshBuilder.cs" />
     <Compile Include="DualContouring\GPU\GPUHermiteCalculator.cs" />
@@ -232,7 +236,8 @@
     <Compile Include="DualContouring\Terrain\LodOctreeNode.cs" />
     <Compile Include="DualContouring\Terrain\TerrainLodEnvironment.cs" />
     <Compile Include="DualContouring\Terrain\VisualTestingEnvironment.cs" />
-    <Compile Include="DualContouring\_Test\DualContouringBuilderTest.cs" />
+    <Compile Include="DualContouring\Building\DualContouringBuilderTest.cs" />
+    <Compile Include="DualContouring\_Test\CSGTest.cs" />
     <Compile Include="DualContouring\_Test\DualContouringTest.cs" />
     <Compile Include="DualContouring\HermiteGrids\HermiteDataGrid.cs" />
     <Compile Include="DualContouring\IntersectableCube.cs" />

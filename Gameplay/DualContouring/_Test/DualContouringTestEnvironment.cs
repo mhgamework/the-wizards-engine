@@ -44,7 +44,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
             cameraLightSimulator = new CameraLightSimulator();
 
 
-            surfaceRenderer = VoxelCustomRenderer.CreateDefault( TW.Graphics );
+            surfaceRenderer = VoxelCustomRenderer.CreateDefault(TW.Graphics);
             TW.Graphics.AcquireRenderer().AddCustomGBufferRenderer(surfaceRenderer);
         }
 
@@ -85,13 +85,15 @@ namespace MHGameWork.TheWizards.DualContouring._Test
 
             if (meshElement != null)
                 meshElement.Delete();
-            meshElement=surfaceRenderer.CreateSurface(grid, Matrix.Identity);
+            meshElement = surfaceRenderer.CreateSurface(grid, Matrix.Identity);
             meshElement.WorldMatrix = Matrix.Scaling(new Vector3(CellSize));
 
             this.lines.ClearAllLines();
             addHermiteVertices(grid, CellSize, this.lines);
             addQEFPoints(surfaceMesh, CellSize, this.lines);
             addHermiteNormals(grid, CellSize, this.lines);
+
+            lines.AddBox(new BoundingBox(new Vector3(), grid.Dimensions.ToVector3()*cellSize), Color.Black);
 
         }
 
@@ -161,7 +163,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
         private void tryRemoveObject()
         {
             if (!TW.Graphics.Mouse.RightMouseJustPressed) return;
-            Grid = new DifferenceGrid(grid, HermiteDataGrid.FromIntersectableGeometry(10, 20, Matrix.Translation(RaycastedPoint), PlaceableObjectGrid));
+            Grid = new DifferenceGrid(grid, HermiteDataGrid.FromIntersectableGeometry(10, 20, Matrix.Translation(RaycastedPoint), PlaceableObjectGrid) );
             Grid = HermiteDataGrid.CopyGrid(grid);
         }
 

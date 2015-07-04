@@ -24,7 +24,9 @@ namespace MHGameWork.TheWizards.DualContouring
 
         public override bool GetSign(Point3 pos)
         {
-            return a.GetSign(pos) || b.GetSign(pos + _offset);
+            var offsetPos = pos - _offset;
+            if ( offsetPos.X < 0 || offsetPos.Y < 0 || offsetPos.Z < 0 ) return a.GetSign( pos );
+            return a.GetSign(pos) || b.GetSign(pos - _offset);
         }
 
         public override Point3 Dimensions
@@ -34,12 +36,16 @@ namespace MHGameWork.TheWizards.DualContouring
 
         public override Vector4 getEdgeData(Point3 cube, int edgeId)
         {
+
             var signs = a.GetEdgeSigns(cube, edgeId);
             if (signs[0] != signs[1])
                 return a.getEdgeData(cube, edgeId);
-            signs = b.GetEdgeSigns(cube + _offset, edgeId);
+
+
+
+            signs = b.GetEdgeSigns(cube - _offset, edgeId);
             if (signs[0] != signs[1])
-                return b.getEdgeData(cube + _offset, edgeId);
+                return b.getEdgeData(cube - _offset, edgeId);
 
 
             throw new InvalidOperationException("No crossing edge here!");

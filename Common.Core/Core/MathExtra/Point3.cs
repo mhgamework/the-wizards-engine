@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using SlimDX;
 
 namespace DirectX11
@@ -67,6 +68,7 @@ namespace DirectX11
             }
         }
 
+        [Pure]
         public Vector3 ToVector3()
         {
             return new Vector3(X, Y, Z);
