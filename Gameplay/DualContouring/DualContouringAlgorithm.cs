@@ -16,21 +16,13 @@ namespace MHGameWork.TheWizards.DualContouring
         {
             var vIndex = new Dictionary<Point3, int>();
 
+            createQEFVertices(vertices, grid, vIndex);
 
-            grid.ForEachCube(curr =>
-                {
-                    var signs = grid.GetCubeSigns(curr);
-                    if (signs.All(v => v) || !signs.Any(v => v)) return; // no sign changes
+            buildTriangleIndices(indices, grid, vIndex);
+        }
 
-
-                    var qefPoint = calculateQefPoint(grid, signs, curr);
-
-                    vIndex[curr] = vertices.Count;
-                    vertices.Add(qefPoint + curr.ToVector3());
-
-
-                });
-
+        private static void buildTriangleIndices(List<int> indices, AbstractHermiteGrid grid, Dictionary<Point3, int> vIndex)
+        {
             // Possible quads
             var offsets = new[] { Point3.UnitX(), Point3.UnitY(), Point3.UnitZ(), };
             var rights = new[] { Point3.UnitY(), Point3.UnitZ(), Point3.UnitX(), };
@@ -41,12 +33,10 @@ namespace MHGameWork.TheWizards.DualContouring
             {
                 Debug.Assert(grid.GetEdgeOffsets(unitEdges[i])[0] == new Point3());
                 Debug.Assert(grid.GetEdgeOffsets(unitEdges[i])[1] == offsets[i]);
-
             }
 
             grid.ForEachCube(o =>
                 {
-
                     if (!vIndex.ContainsKey(o)) return; // No sign changes so no relevant edges here
 
                     for (int i = 0; i < 3; i++)
@@ -81,17 +71,46 @@ namespace MHGameWork.TheWizards.DualContouring
                 });
         }
 
+        private static void createQEFVertices(List<Vector3> vertices, AbstractHermiteGrid grid, Dictionary<Point3, int> vIndex)
+        {
+            var cubeSigns = new bool[8];
+
+            grid.ForEachCube(curr =>
+                {
+                    grid.GetCubeSigns(curr, cubeSigns);
+                    bool allTrue = true;
+                    bool allFalse = true;
+                    for (int i = 0; i < 8; i++)
+                    {
+                        var sign = cubeSigns[i];
+                        allTrue = sign && allTrue;
+                        allFalse = !sign && allFalse;
+                    }
+                    if (allTrue || allFalse) return;// no sign changes
+                    //if ( cubeSigns.All( v => v ) || !cubeSigns.Any( v => v ) ) return; // no sign changes
+
+
+                    var qefPoint = calculateQefPoint(grid, cubeSigns, curr);
+
+                    vIndex[curr] = vertices.Count;
+                    vertices.Add(qefPoint + curr.ToVector3());
+                });
+        }
+
         public static Vector3 calculateQefPoint(AbstractHermiteGrid grid, Point3 cube)
         {
             return calculateQefPoint(grid, grid.GetCubeSigns(cube), cube);
         }
         private static Vector3 calculateQefPoint(AbstractHermiteGrid grid, bool[] signs, Point3 cube)
         {
+            //TODO: this can be optimized probably!
             var changingEdges = grid.GetAllEdgeIds().Where(e =>
                 {
                     var ids = grid.GetEdgeVertexIds(e);
                     return signs[ids[0]] != signs[ids[1]];
                 }).ToArray();
+
+
             var positions = changingEdges.Select(e => grid.GetEdgeIntersectionCubeLocal(cube, e)).ToArray();
             var normals = changingEdges.Select(e => grid.GetEdgeNormal(cube, e)).ToArray();
 

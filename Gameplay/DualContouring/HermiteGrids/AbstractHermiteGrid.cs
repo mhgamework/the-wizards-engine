@@ -19,7 +19,6 @@ namespace MHGameWork.TheWizards.DualContouring
 
         public abstract bool GetSign(Point3 pos);
 
-
         protected AbstractHermiteGrid()
         {
             cube_verts = (from x in Enumerable.Range(0, 2)
@@ -40,10 +39,18 @@ namespace MHGameWork.TheWizards.DualContouring
 
         public abstract Point3 Dimensions { get; }
 
-
+        public void GetCubeSigns(Point3 cube,bool[] output)
+        {
+            for ( int i = 0; i < 8; i++ )
+            {
+                output[ i ] = GetSign( cube_verts[ i ] + cube );
+            }
+        }
         public bool[] GetCubeSigns(Point3 cube)
         {
-            return cube_verts.Select(offset => GetSign(cube + offset)).ToArray();
+            var ret = new bool[8];
+            GetCubeSigns(cube, ret);
+            return ret;
         }
 
         /// <summary>
@@ -52,12 +59,19 @@ namespace MHGameWork.TheWizards.DualContouring
         /// <param name="action"></param>
         public void ForEachGridPoint(Action<Point3> action)
         {
-            for (int x = 0; x < Dimensions.X+1; x++)
-                for (int y = 0; y < Dimensions.Y+1; y++)
-                    for (int z = 0; z < Dimensions.Z+1; z++)
+            int maxX = Dimensions.X + 1;
+            int maxY = Dimensions.Y + 1;
+            int maxZ = Dimensions.Z + 1;
+            for (int x = 0; x < maxX; x++)
+            {
+                for (int y = 0; y < maxY; y++)
+                {
+                    for (int z = 0; z < maxZ; z++)
                         action(new Point3(x, y, z));
-
+                }
+            }
         }
+
         /// <summary>
         /// Enumerates each cube in the hermite grid, this is equal to Dimensions
         /// </summary>
@@ -147,7 +161,7 @@ namespace MHGameWork.TheWizards.DualContouring
             return getEdgeData(cube, GetEdgeId(cube, cube + dir));
         }
 
-      
-        
+
+
     }
 }

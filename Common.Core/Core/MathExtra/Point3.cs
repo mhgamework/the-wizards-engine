@@ -92,7 +92,7 @@ namespace DirectX11
         }
         public static Point3 operator -(Point3 p, Point3 p2)
         {
-            return p + -p2;
+            return new Point3(p.X -p2.X,p.Y -p2.Y,p.Z -p2.Z);
         }
         public static Point3 operator +(Point3 p, Point3 p2)
         {

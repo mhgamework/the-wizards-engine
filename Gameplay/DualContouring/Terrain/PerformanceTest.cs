@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using DirectX11;
 using MHGameWork.TheWizards.Engine.Features.Testing;
@@ -13,6 +14,72 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
     [EngineTest]
     public class PerformanceTest
     {
+        [Test]
+        public void TestExtractSurfaceAllEdges()
+        {
+            int size = 32;
+            var srcGrid = new DelegateHermiteGrid(p => p.X % 2 == 0 || p.Y % 2 == 0 || p.Z % 2 == 0, (p, i) => new Vector4(), new Point3(size, size, size));
+            testExtractSurface(srcGrid);
+        }
+        [Test]
+        public void TestExtractSurfaceNoEdges()
+        {
+            //TODO: serious optimization idea: store all signs for each cube 
+            int size = 32;
+            var srcGrid = new DelegateHermiteGrid(p => true, (p, i) => new Vector4(), new Point3(size, size, size));
+            testExtractSurface(srcGrid);
+        }
+
+        private static void testExtractSurface( DelegateHermiteGrid srcGrid )
+        {
+            var grid = HermiteDataGrid.CopyGrid( srcGrid );
+            int times = 5;
+
+            var vertices = new List<Vector3>( 10*1000*1000 );
+            var indices = new List<int>( 10*1000*1000 );
+            var extractor = new DualContouringAlgorithm();
+
+            Console.WriteLine( PerformanceHelper.Measure( () =>
+                {
+                    for ( int i = 0; i < times; i++ )
+                    {
+                        vertices.Clear();
+                        indices.Clear();
+                        extractor.GenerateSurface( vertices, indices, srcGrid );
+                    }
+                } ).Multiply( 1f/times ).PrettyPrint() );
+        }
+
+        [Test]
+        public void TestHermiteCopyingNoEdges()
+        {
+            int size = 32;
+            var srcGrid = new DelegateHermiteGrid(p => true, (p, i) => new Vector4(), new Point3(size, size, size));
+            int times = 50;
+
+            Console.WriteLine(PerformanceHelper.Measure(() =>
+                {
+                    for (int i = 0; i < times; i++)
+                    {
+                        HermiteDataGrid.CopyGrid(srcGrid);
+                    }
+                }).Multiply(1f / times).PrettyPrint());
+        }
+        [Test]
+        public void TestHermiteCopyingAllEdges()
+        {
+            int size = 32;
+            var srcGrid = new DelegateHermiteGrid(p => p.X % 2 == 0 || p.Y % 2 == 0 || p.Z % 2 == 0, (p, i) => new Vector4(), new Point3(size, size, size));
+            int times = 100;
+
+            Console.WriteLine(PerformanceHelper.Measure(() =>
+            {
+                for (int i = 0; i < times; i++)
+                {
+                    HermiteDataGrid.CopyGrid(srcGrid);
+                }
+            }).Multiply(1f / times).PrettyPrint());
+        }
 
         /// <summary>
         /// Time to build a hermite grid (to data representation) from a density function

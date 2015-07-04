@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -9,6 +10,9 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.DualContouring
 {
+    /// <summary>
+    /// //TODO: serious optimization idea: store all signs for each cube in each cube, this is the limiting factor in the QEF calculation
+    /// </summary>
     [Serializable]
     public class HermiteDataGrid : AbstractHermiteGrid
     {
@@ -17,12 +21,26 @@ namespace MHGameWork.TheWizards.DualContouring
         /// </summary>
         private Array3D<Vertex> cells;
 
-        private List<Point3> dirs = new List<Point3>(new Point3[] { new Point3(1, 0, 0), new Point3(0, 1, 0), new Point3(0, 0, 1) });
-
+        private Point3[] dirs = new Point3[] { new Point3(1, 0, 0), new Point3(0, 1, 0), new Point3(0, 0, 1) };
+        private OffsetInfo[] offsetInfos;
         private HermiteDataGrid()
             : base()
         {
+            // Construct offset info
+            offsetInfos = GetAllEdgeIds().Select(edgeId =>
+                {
+                    var offsets = GetEdgeOffsets(edgeId);
 
+                    var dir = offsets[1] - offsets[0];
+                    if (dir.X == 1 && dir.Y == 0 && dir.Z == 0)
+                        edgeId = 0;
+                    else if (dir.X == 0 && dir.Y == 1 && dir.Z == 0)
+                        edgeId = 1;
+                    else if (dir.X == 0 && dir.Y == 0 && dir.Z == 1)
+                        edgeId = 2;
+                    else throw new InvalidOperationException();
+                    return new OffsetInfo() { Offset = offsets[0], dataEdgeId = edgeId };
+                }).ToArray();
         }
 
         public override bool GetSign(Point3 pos)
@@ -43,14 +61,25 @@ namespace MHGameWork.TheWizards.DualContouring
             public bool Sign;
             public Vector4[] EdgeData;
         }
+        /// <summary>
+        /// THe offset to apply on the given (cube+edgeID), to get the cube on which we can read the data by reading 'dataedgeid'
+        /// </summary>
+        private struct OffsetInfo
+        {
+
+            public Point3 Offset;
+            public int dataEdgeId;
+        }
 
 
         public override Vector4 getEdgeData(Point3 cube, int edgeId)
         {
-            var start = cube_verts[GetEdgeVertexIds(edgeId)[0]];
+            var offsetInfo = offsetInfos[edgeId];
+            return cells[cube + offsetInfo.Offset].EdgeData[offsetInfo.dataEdgeId];
+            /*var start = cube_verts[GetEdgeVertexIds(edgeId)[0]];
             var end = cube_verts[GetEdgeVertexIds(edgeId)[1]];
 
-            return cells[cube + start].EdgeData[dirs.IndexOf(end - start)];
+            return cells[cube + start].EdgeData[dirs.IndexOf(end - start)];*/
         }
 
 
@@ -80,7 +109,7 @@ namespace MHGameWork.TheWizards.DualContouring
                 {
                     var sign = grid.GetSign(cube);
 
-                    for (int i = 0; i < grid.dirs.Count; i++)
+                    for (int i = 0; i < grid.dirs.Length; i++)
                     {
                         if (sign == grid.GetSign(cube + grid.dirs[i])) continue;
                         //sign difference
@@ -96,10 +125,15 @@ namespace MHGameWork.TheWizards.DualContouring
         public static HermiteDataGrid CopyGrid(AbstractHermiteGrid grid)
         {
             var ret = new HermiteDataGrid();
-            ret.cells = new Array3D<Vertex>(grid.Dimensions + new Point3(1, 1, 1));
-            ret.ForEachGridPoint(p =>
-                {
-                    ret.cells[p] = new Vertex()
+            Point3 storageSize = grid.Dimensions + new Point3(1, 1, 1);
+            ret.cells = new Array3D<Vertex>(storageSize);
+
+            for (int x = 0; x < storageSize.X; x++)
+                for (int y = 0; y < storageSize.Y; y++)
+                    for (int z = 0; z < storageSize.Z; z++)
+                    {
+                        var p = new Point3(x, y, z);
+                        ret.cells[p] = new Vertex()
                         {
                             Sign = grid.GetSign(p),
                             /*EdgeData = ret.dirs.Select(dir =>
@@ -108,31 +142,54 @@ namespace MHGameWork.TheWizards.DualContouring
                                     return grid.HasEdgeData(p, edgeId) ? grid.getEdgeData(p, edgeId) : new Vector4();
                                 }).ToArray()*/
                         };
-                });
+                    }
+
+            //ret.ForEachGridPoint(p =>
+            //    {
+            //        ret.cells[p] = new Vertex()
+            //            {
+            //                Sign = grid.GetSign(p),
+            //                /*EdgeData = ret.dirs.Select(dir =>
+            //                    {
+            //                        var edgeId = grid.GetEdgeId(p, p + dir);
+            //                        return grid.HasEdgeData(p, edgeId) ? grid.getEdgeData(p, edgeId) : new Vector4();
+            //                    }).ToArray()*/
+            //            };
+            //    });
+
+
+            var dirs = ret.dirs;
+            var dirEdges = dirs.Select(i => ret.GetEdgeId(new Point3(), i)).ToArray();
 
             ret.ForEachGridPoint(p =>
-            {
-                ret.cells[p] = new Vertex()
                 {
-                    Sign = ret.cells[p].Sign,
-                    EdgeData = ret.dirs.Select(dir =>
+                    var gridPointP = ret.cells.GetFast(p.X, p.Y, p.Z);
+                    gridPointP.EdgeData = new Vector4[3];
+                    for (int i = 0; i < 3; i++)
+                    {
+                        var dir = dirs[i];
+                        var edgeId = dirEdges[i];
+
+                        Point3 endPoint = p + dir;
+                        // Optimization: direclty read from already constructed data
+                        if (!ret.cells.InArray(endPoint)) continue;
+                        if (gridPointP.Sign == ret.cells.GetFast(endPoint.X, endPoint.Y, endPoint.Z).Sign) continue;
+                        if (!grid.HasEdgeData(p, edgeId))
                         {
-                            Point3 endPoint = p + dir;
-                            var edgeId = grid.GetEdgeId(p, endPoint);
-                            // Optimization: direclty read from already constructed data
-                            if (ret.cells[p].Sign == ret.cells[endPoint].Sign) return new Vector4();
-                            if (!ret.cells.InArray(endPoint)) return new Vector4();
-                            if (!grid.HasEdgeData(p, edgeId))
-                            {
-                                // This can normally not happen, since we check if there is a sign difference by looking at the already evaluated density points.
-                                //  If this would be true there is some problem with the manual determining of the existence of an edge.
-                                //throw new InvalidOperationException();
-                                return new Vector4();
-                            }
-                            return grid.getEdgeData(p, edgeId);
-                        }).ToArray()
-                };
-            });
+                            // This can normally not happen, since we check if there is a sign difference by looking at the already evaluated density points.
+                            //  If this would be true there is some problem with the manual determining of the existence of an edge.
+                            //throw new InvalidOperationException();
+                            continue;
+                        }
+                        gridPointP.EdgeData[i] = grid.getEdgeData(p, edgeId);
+                    }
+                    /*val.EdgeData = ret.dirs.Select( dir =>
+                        {
+                         
+                        } ).ToArray();*/
+
+                    ret.cells[p] = gridPointP;
+                });
 
             return ret;
         }
