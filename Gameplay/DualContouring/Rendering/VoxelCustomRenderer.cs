@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.IO;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
@@ -40,7 +41,7 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
 
             var data = tex.GetCoreData();
             data.StorageType = TextureCoreData.TextureStorageType.Disk;
-            data.DiskFilePath = TWDir.GameData.CreateSubdirectory(@"Rendering\UVChecker-map\UVCheckerMaps").GetFile("UVCheckerMap13-512.png").FullName;
+            data.DiskFilePath = TWDir.GameData.CreateSubdirectory(@"Rendering\UVChecker-map\UVCheckerMaps").GetFile("UVCheckerMap10-512.png").FullName;
             /*data.StorageType = TextureCoreData.TextureStorageType.Assembly;
             data.Assembly = Assembly.GetExecutingAssembly();
             data.AssemblyResourceName = "MHGameWork.TheWizards.Tests.OBJParser.Files.maps.BrickRound0030_7_S.jpg";*/
@@ -74,9 +75,8 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
         {
 
             var rawData = dcMeshBuilder.buildRawMesh(grid);
-
             var ret = new VoxelSurface(this,renderDataFactory.CreateMeshPartData(rawData));
-
+            ret.Mesh = rawData;
             ret.WorldMatrix = world;
             surfaces.Add(ret);
             return ret;
@@ -86,6 +86,16 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
         {
             if (!voxelSurface.IsDestroyed) throw new InvalidOperationException();
             surfaces.Remove( voxelSurface );
+        }
+
+        public static VoxelCustomRenderer CreateDefault( GraphicsWrapper game )
+        {
+            return new VoxelCustomRenderer( game,
+                                            game.AcquireRenderer(),
+                                            new DualContouringMeshBuilder(),
+                                            new DualContouringAlgorithm(),
+                                            new MeshRenderDataFactory( game, null,
+                                                                       game.AcquireRenderer().TexturePool ) );
         }
     }
 
@@ -100,6 +110,7 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
         public Matrix WorldMatrix;
         private VoxelCustomRenderer _customRenderer;
         private MeshPartRenderData _renderData;
+        public RawMeshData Mesh;
 
         public MeshPartRenderData RenderData
         {

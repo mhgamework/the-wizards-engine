@@ -44,11 +44,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
             cameraLightSimulator = new CameraLightSimulator();
 
 
-            surfaceRenderer = new VoxelCustomRenderer(TW.Graphics,
-                                                      TW.Graphics.AcquireRenderer(),
-                                                      new DualContouringMeshBuilder(),
-                                                      new DualContouringAlgorithm(),
-                                                      new MeshRenderDataFactory(TW.Graphics, null, TW.Graphics.AcquireRenderer().TexturePool));
+            surfaceRenderer = VoxelCustomRenderer.CreateDefault( TW.Graphics );
             TW.Graphics.AcquireRenderer().AddCustomGBufferRenderer(surfaceRenderer);
         }
 

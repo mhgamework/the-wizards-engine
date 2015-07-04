@@ -6,8 +6,18 @@ namespace MHGameWork.TheWizards.DualContouring
 {
     public class IntersectableCube : IIntersectableObject
     {
-        private Vector3 cubeCenter = new Vector3(0,0,0);
+        private Vector3 cubeCenter = new Vector3(0, 0, 0);
         private float cubeRadius = 1;
+
+        public IntersectableCube()
+        {
+            
+        }
+        public IntersectableCube(Vector3 cubeCenter, float cubeRadius)
+        {
+            this.cubeCenter = cubeCenter;
+            this.cubeRadius = cubeRadius;
+        }
 
         public bool IsInside(Vector3 v)
         {

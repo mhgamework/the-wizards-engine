@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         public Point3 LowerLeft;
         public IMesh Mesh;
         public bool BuildingMesh;
-        public VoxelSurface RenderElement;
+        public DeferredMeshElement RenderElement;
         public bool IsDestroyed { get; private set; }
         public bool CanRenderWithoutHoles;
 

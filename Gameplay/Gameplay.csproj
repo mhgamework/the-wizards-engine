@@ -232,6 +232,7 @@
     <Compile Include="DualContouring\Terrain\LodOctreeNode.cs" />
     <Compile Include="DualContouring\Terrain\TerrainLodEnvironment.cs" />
     <Compile Include="DualContouring\Terrain\VisualTestingEnvironment.cs" />
+    <Compile Include="DualContouring\_Test\DualContouringBuilderTest.cs" />
     <Compile Include="DualContouring\_Test\DualContouringTest.cs" />
     <Compile Include="DualContouring\HermiteGrids\HermiteDataGrid.cs" />
     <Compile Include="DualContouring\IntersectableCube.cs" />
