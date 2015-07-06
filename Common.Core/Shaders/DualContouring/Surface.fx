@@ -43,6 +43,7 @@ GBuffer VoxelSurfacePS(VertexShaderOutput input)
 	// Originally from GPUgems3 chapter 1
 
 	float tex_scale = -0.5;
+	float3 tex_offset = -float3(1,1,1)*(1/8.0)*0.5; // offset for 0.1 voxel size
 	// Determine the blend weights for the 3 planar projections.  
 	// N_orig is the vertex-interpolated normal vector.  
 	float3 blend_weights = abs(input.NormalWS.xyz);   // Tighten up the blending zone:  
@@ -57,9 +58,10 @@ GBuffer VoxelSurfacePS(VertexShaderOutput input)
 	{*/
 		// Compute the UV coords for each of the 3 planar projections.  
 		// tex_scale (default ~ 1.0) determines how big the textures appear.  
-	float2 coord1 = input.PositionWS.yz * tex_scale;
-		float2 coord2 = input.PositionWS.zx * tex_scale;
-		float2 coord3 = input.PositionWS.xy * tex_scale;
+		float3 inputTexCoord = input.PositionWS  + tex_offset;
+	float2 coord1 = inputTexCoord.yz * tex_scale;
+		float2 coord2 = inputTexCoord.zx * tex_scale;
+		float2 coord3 = inputTexCoord.xy * tex_scale;
 			// This is where you would apply conditional displacement mapping.  
 			//if (blend_weights.x > 0) coord1 = . . .  
 			//if (blend_weights.y > 0) coord2 = . . .  

@@ -32,6 +32,7 @@ namespace MHGameWork.TheWizards.Engine.Raycasting
         public Vector3 V1 { get; set; }
         public Vector3 V2 { get; set; }
         public Vector3 V3 { get; set; }
+        public Vector3 HitNormal { get; set; }
 
 
 

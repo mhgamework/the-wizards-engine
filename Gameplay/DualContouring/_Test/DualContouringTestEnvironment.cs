@@ -163,7 +163,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
         private void tryRemoveObject()
         {
             if (!TW.Graphics.Mouse.RightMouseJustPressed) return;
-            Grid = new DifferenceGrid(grid, HermiteDataGrid.FromIntersectableGeometry(10, 20, Matrix.Translation(RaycastedPoint), PlaceableObjectGrid) );
+            Grid = new DifferenceGrid(grid, HermiteDataGrid.FromIntersectableGeometry(10, 20, Matrix.Translation(RaycastedPoint), PlaceableObjectGrid));
             Grid = HermiteDataGrid.CopyGrid(grid);
         }
 

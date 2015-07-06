@@ -51,9 +51,15 @@ namespace MHGameWork.TheWizards.Raycasting
             return closestIntersection;
         }
 
-        public static float? RaycastMeshPart(Vector3[] vertices, Ray ray, out Vector3 vertex1, out Vector3 vertex2, out Vector3 vertex3)
+        public static float? RaycastMeshPart(Vector3[] vertices, Ray ray, out Vector3 vertex1, out Vector3 vertex2,
+                                              out Vector3 vertex3)
         {
-            vertex1 = vertex2 = vertex3 = Vector3.Zero;
+            Vector3 normal;
+            return RaycastMeshPart(vertices, ray, out vertex1, out vertex2, out vertex3, out normal);
+        }
+        public static float? RaycastMeshPart(Vector3[] vertices, Ray ray, out Vector3 vertex1, out Vector3 vertex2, out Vector3 vertex3, out Vector3 normal)
+        {
+            vertex1 = vertex2 = vertex3 = normal = Vector3.Zero;
 
             float? closestIntersection = null;
 
@@ -81,6 +87,7 @@ namespace MHGameWork.TheWizards.Raycasting
                 vertex1 = vertices[i];
                 vertex2 = vertices[i + 1];
                 vertex3 = vertices[i + 2];
+                normal = Vector3.Normalize(Microsoft.Xna.Framework.Vector3.Cross(vert2 - vert0, vert1 - vert0).dx());
 
 
             }

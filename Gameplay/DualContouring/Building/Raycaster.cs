@@ -15,7 +15,8 @@ namespace MHGameWork.TheWizards.DualContouring.Building
             Vector3 v0;
             Vector3 v1;
             Vector3 v2;
-            var dist = MeshRaycaster.RaycastMeshPart(vertices, localRay, out v0, out v1, out v2);
+            Vector3 normal;
+            var dist = MeshRaycaster.RaycastMeshPart(vertices, localRay, out v0, out v1, out v2, out normal);
             if (!dist.HasValue) return;
             var point = Vector3.TransformCoordinate(localRay.GetPoint(dist.Value), world);
             cache.Set(Vector3.Distance(ray.Position, point), obj);
@@ -24,6 +25,7 @@ namespace MHGameWork.TheWizards.DualContouring.Building
             closest.V1 = Vector3.TransformCoordinate(v0, world);
             closest.V2 = Vector3.TransformCoordinate(v1, world);
             closest.V3 = Vector3.TransformCoordinate(v2, world);
+            closest.HitNormal = Vector3.TransformNormal(normal, world);
         }
 
         public void AddIntersection(float? dist, T obj)

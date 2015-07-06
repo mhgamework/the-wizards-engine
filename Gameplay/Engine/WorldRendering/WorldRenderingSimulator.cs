@@ -1,8 +1,9 @@
 ﻿using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
+using SlimDX.DirectInput;
 
-    
+
 namespace MHGameWork.TheWizards.Engine.WorldRendering
 {
     /// <summary>
@@ -66,7 +67,10 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         public void Simulate()
         {
 
-            entitySimulator.Simulate();
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.Z))
+                TW.Graphics.AcquireRenderer().Wireframe = !TW.Graphics.AcquireRenderer().Wireframe; entitySimulator.Simulate();
+
+
             wireframeSimulator.Simulate();
             pointLightSimulator.Simulate();
 
