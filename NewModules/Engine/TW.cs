@@ -16,6 +16,7 @@ namespace MHGameWork.TheWizards
     public static class TW
     {
         private static Context ctx;
+        public static Context.InternalCls Internal { get { return ctx.Internal; } }
 
         public static AssetsWrapper Assets { get { return ctx.Assets; } }
         public static GraphicsWrapper Graphics { get { return ctx.Graphics; } }
@@ -40,6 +41,7 @@ namespace MHGameWork.TheWizards
             public Context()
             {
                 Debug = new DebugWrapper(null);
+                Internal = new InternalCls();
             }
             public GraphicsWrapper Graphics { get; set; }
             public DataWrapper Data { get; set; }
@@ -48,6 +50,7 @@ namespace MHGameWork.TheWizards
             public DebugWrapper Debug { get; set; }
             public AssetsWrapper Assets { get; set; }
             public EngineWrapper Engine { get; set; }
+            public InternalCls Internal { get; set; }
 
 
             private Dictionary<Type, object> services = new Dictionary<Type, object>();
@@ -61,6 +64,15 @@ namespace MHGameWork.TheWizards
                 if (!typeof(T).IsAssignableFrom(obj.GetType()))
                     throw new InvalidOperationException();
                 services[typeof(T)] = obj;
+            }
+
+            public class InternalCls
+            {
+                public ISimulator ActiveSimulator { get; private set; }
+                public void SetActiveSimulator( ISimulator sim )
+                {
+                    ActiveSimulator = sim;
+                }
             }
         }
     }

@@ -2,6 +2,7 @@
 using System.Drawing;
 using DirectX11;
 using MHGameWork.TheWizards.DualContouring.Rendering;
+using MHGameWork.TheWizards.DualContouring._Test;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
@@ -26,7 +27,7 @@ namespace MHGameWork.TheWizards.DualContouring.Building
         private Point3 NumChunks;
         private Array3D<Chunk> chunks;
         private int placementGridSize = 5;
-
+        private InteractiveTestingEnvironment interactiveTestingEnv;
         public DualContouringBuilderTest()
         {
             chunkSize = BuilderConfiguration.ChunkNumVoxels;
@@ -38,7 +39,12 @@ namespace MHGameWork.TheWizards.DualContouring.Building
             initDefaultWorld();
 
             EngineFactory.CreateEngine().AddSimulator(processUserInput, "UserInput");
+            interactiveTestingEnv = new InteractiveTestingEnvironment();
+            interactiveTestingEnv.LoadIntoEngine(EngineFactory.CreateEngine());
             EngineFactory.CreateEngine().AddSimulator(new WorldRenderingSimulator());
+
+
+            //TODO: add commands!
 
             //PlaceInWorld(createUnitBox(), new Point3(0, 20, 0));
         }

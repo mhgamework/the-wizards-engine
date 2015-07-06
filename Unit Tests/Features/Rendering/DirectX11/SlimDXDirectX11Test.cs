@@ -322,7 +322,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
         public void TestDirectX11SpecaterCamera()
         {
 
-            var keyboard = new TWKeyboard();
+            var keyboard = new SlimDXTWKeyboard();
             var dev = new SlimDX.DirectInput.DirectInput();
             var kb = new SlimDX.DirectInput.Keyboard(dev);
             kb.Acquire();
@@ -455,7 +455,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
         public void TestLineManager3D()
         {
 
-            var keyboard = new TWKeyboard();
+            var keyboard = new SlimDXTWKeyboard();
             var dev = new SlimDX.DirectInput.DirectInput();
             var kb = new SlimDX.DirectInput.Keyboard(dev);
             kb.Acquire();
@@ -564,7 +564,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
         [Test]
         public void TestKeyboard()
         {
-            var keyboard = new TWKeyboard();
+            var keyboard = new SlimDXTWKeyboard();
             var dev = new SlimDX.DirectInput.DirectInput();
             var kb = new SlimDX.DirectInput.Keyboard(dev);
             kb.Acquire();

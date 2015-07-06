@@ -3,12 +3,12 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.DirectX11.Input
 {
-    public class TWKeyboard
+    public class SlimDXTWKeyboard : TWKeyboard
     {
         private KeyboardState prevKeyboardState;
         private KeyboardState keyboardState;
 
-        public TWKeyboard()
+        public SlimDXTWKeyboard()
         {
             prevKeyboardState = new KeyboardState();
             keyboardState = new KeyboardState();

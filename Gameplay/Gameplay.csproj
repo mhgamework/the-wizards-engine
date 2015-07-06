@@ -250,6 +250,7 @@
     <Compile Include="DualContouring\Terrain\VoxelTerrainGenerationTest.cs" />
     <Compile Include="DualContouring\HermiteGrids\UnionGrid.cs" />
     <Compile Include="DualContouring\_Test\DualContouringTestEnvironment.cs" />
+    <Compile Include="DualContouring\_Test\InteractiveTestingEnvironment.cs" />
     <Compile Include="Engine\WorldRendering\FastTextareaUpdater.cs" />
     <Compile Include="Engine\WorldRendering\ITextareaUpdater.cs" />
     <Compile Include="GodGame\DeveloperCommands\AllCommandProvider.cs" />

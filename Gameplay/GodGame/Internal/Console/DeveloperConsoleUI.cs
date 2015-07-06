@@ -15,6 +15,7 @@ namespace MHGameWork.TheWizards.GodGame.Internal
         private DirectInputTextBox textBox = new DirectInputTextBox();
         private Queue<string> lines = new QuickGraph.Collections.Queue<string>();
 
+        public bool Visible { get { return textarea.Visible; } }
         public string Text
         {
             get { return textBox.Text; }

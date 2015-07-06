@@ -196,8 +196,12 @@ namespace MHGameWork.TheWizards.Engine
 
             TW.Debug.NeedsReload = false;
 
-            foreach (var sim in simulators)
+            foreach ( var sim in simulators )
+            {
+                TW.Internal.SetActiveSimulator( sim );
                 sim.Simulate();
+                TW.Internal.SetActiveSimulator(null);
+            }
 
             TW.Data.ClearDirty();
             updatePhysics();

@@ -183,6 +183,7 @@
     <Compile Include="DirectX11\Graphics\SpectaterCamera.cs" />
     <Compile Include="DirectX11\Graphics\TextureRenderer.cs" />
     <Compile Include="DirectX11\Graphics\ThirdPersonCamera.cs" />
+    <Compile Include="DirectX11\Input\ITWKeyboard.cs" />
     <Compile Include="DirectX11\Input\TWKeyboard.cs" />
     <Compile Include="DirectX11\Input\TWMouse.cs" />
     <Compile Include="Core\MathExtra\Point3.cs" />

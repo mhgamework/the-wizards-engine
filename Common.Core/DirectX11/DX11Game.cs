@@ -296,7 +296,7 @@ namespace MHGameWork.TheWizards.DirectX11
         public Device Device { get { return Form.Device; } }
         public event Action<DX11Game> GameLoopEvent;
         private TimeSpan lastFrameTime;
-        private TWKeyboard keyboard;
+        private SlimDXTWKeyboard keyboard;
         private TWMouse mouse;
         private DX11Form form;
         private Keyboard diKeyboard;
@@ -320,7 +320,7 @@ namespace MHGameWork.TheWizards.DirectX11
             Form.InitDirectX();
 
 
-            keyboard = new TWKeyboard();
+            keyboard = new SlimDXTWKeyboard();
 
 
             diDevice = new SlimDX.DirectInput.DirectInput();
@@ -376,12 +376,12 @@ namespace MHGameWork.TheWizards.DirectX11
             private set { lock (this) running = value; }
         }
 
-        public TWKeyboard Keyboard
+        public virtual TWKeyboard Keyboard
         {
             get { return keyboard; }
         }
 
-        public TWMouse Mouse
+        public virtual TWMouse Mouse
         {
             get { return mouse; }
         }
