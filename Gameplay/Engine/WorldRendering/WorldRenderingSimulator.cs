@@ -24,10 +24,11 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
             deferred = TW.Graphics.AcquireRenderer();
 
-            deferred.SSAO.MNumDirs = 8;
-            deferred.SSAO.MNumSteps = 2;
-            deferred.SSAO.MContrast = 2;
-            deferred.SSAO.MRadiusMultiplier = 2;
+            //deferred.SSAO.MRadiusMultiplier = 10;
+            //deferred.SSAO.MNumDirs = 8;
+            //deferred.SSAO.MNumSteps = 2;
+            //deferred.SSAO.MContrast = 2;
+            deferred.SSAO.MRadiusMultiplier = 0.5f;
             deferred.PointLightRenderer.ShadowUpdateInterval = 240;
 
             var data = TW.Data.GetSingleton<Data>();
@@ -35,7 +36,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
             {
                 var light = deferred.CreateDirectionalLight();
                 light.LightDirection = Vector3.Normalize(new Vector3(1, -1, 1));
-                light.ShadowsEnabled = false;
+                light.ShadowsEnabled = true;
                 data.LightCreated = true;
 
                 //var light = deferred.CreateSpotLight();
