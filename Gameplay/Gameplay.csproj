@@ -214,6 +214,8 @@
     <Compile Include="DualContouring\Building\Chunk.cs" />
     <Compile Include="DualContouring\Building\Raycaster.cs" />
     <Compile Include="DualContouring\CameraLightSimulator.cs" />
+    <Compile Include="DualContouring\DCFiles.cs" />
+    <Compile Include="DualContouring\DCVoxelMaterial.cs" />
     <Compile Include="DualContouring\DualContouringMeshBuilder.cs" />
     <Compile Include="DualContouring\GPU\GPUHermiteCalculator.cs" />
     <Compile Include="DualContouring\GPU\GPUTexture3DTest.cs" />

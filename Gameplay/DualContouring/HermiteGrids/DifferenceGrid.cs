@@ -58,6 +58,10 @@ namespace MHGameWork.TheWizards.DualContouring
 
         }
 
-
+        public override DCVoxelMaterial GetMaterial( Point3 cube )
+        {
+            if ( !b.GetSign( cube - offset ) ) return a.GetMaterial( cube );
+            return null;
+        }
     }
 }

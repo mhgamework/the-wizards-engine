@@ -14,40 +14,49 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
     [EngineTest]
     public class PerformanceTest
     {
+        /// <summary>
+        /// 45ms
+        /// </summary>
         [Test]
         public void TestExtractSurfaceAllEdges()
         {
-            int size = 32;
+            int size = 16;
             var srcGrid = new DelegateHermiteGrid(p => p.X % 2 == 0 || p.Y % 2 == 0 || p.Z % 2 == 0, (p, i) => new Vector4(), new Point3(size, size, size));
             testExtractSurface(srcGrid);
         }
+        /// <summary>
+        /// 2 ms
+        /// </summary>
         [Test]
         public void TestExtractSurfaceNoEdges()
         {
             //TODO: serious optimization idea: store all signs for each cube 
-            int size = 32;
+            int size = 16;
             var srcGrid = new DelegateHermiteGrid(p => true, (p, i) => new Vector4(), new Point3(size, size, size));
             testExtractSurface(srcGrid);
         }
 
-        private static void testExtractSurface( DelegateHermiteGrid srcGrid )
+        private static void testExtractSurface(DelegateHermiteGrid srcGrid)
         {
-            var grid = HermiteDataGrid.CopyGrid( srcGrid );
-            int times = 5;
+            var grid = HermiteDataGrid.CopyGrid(srcGrid);
+            int times = 40;
 
-            var vertices = new List<Vector3>( 10*1000*1000 );
-            var indices = new List<int>( 10*1000*1000 );
+            var vertices = new List<Vector3>(10 * 1000 * 1000);
+            var indices = new List<int>(10 * 1000 * 1000);
             var extractor = new DualContouringAlgorithm();
 
-            Console.WriteLine( PerformanceHelper.Measure( () =>
+            var time = PerformanceHelper.Measure(() =>
                 {
-                    for ( int i = 0; i < times; i++ )
+                    for (int i = 0; i < times; i++)
                     {
                         vertices.Clear();
                         indices.Clear();
-                        extractor.GenerateSurface( vertices, indices, srcGrid );
+                        extractor.GenerateSurface(vertices, indices, srcGrid);
                     }
-                } ).Multiply( 1f/times ).PrettyPrint() );
+                });
+
+            Console.WriteLine("Time: " + time.Multiply(1f / times).PrettyPrint());
+            Console.WriteLine("{0:#.0}x{0:#.0}x{0:#.0} grid per second", Math.Pow(srcGrid.Dimensions.X * srcGrid.Dimensions.Y * srcGrid.Dimensions.Z / (time.TotalSeconds / times), 1 / 3f));
         }
 
         [Test]

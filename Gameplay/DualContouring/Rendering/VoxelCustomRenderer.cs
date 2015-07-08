@@ -8,6 +8,7 @@ using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
 using SlimDX;
+using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 
 namespace MHGameWork.TheWizards.DualContouring.Rendering
 {
@@ -21,17 +22,21 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
     public class VoxelCustomRenderer : ICustomGBufferRenderer
     {
         private readonly DX11Game game;
+        private readonly DeferredRenderer dRenderer;
         private readonly DualContouringMeshBuilder dcMeshBuilder;
         private readonly DualContouringAlgorithm dcAlgo;
         private readonly MeshRenderDataFactory renderDataFactory;
 
         private List<VoxelSurface> surfaces = new List<VoxelSurface>();
-        private SurfaceMaterial mat;
         private DeferredMaterial.PerObjectConstantBuffer objectBuffer;
+
+        public Dictionary<DCVoxelMaterial, MaterialInstance> matToInstances = new Dictionary<DCVoxelMaterial, MaterialInstance>();
+        private DCVoxelMaterial defaultMaterial;
 
         public VoxelCustomRenderer(DX11Game game, DeferredRenderer dRenderer, DualContouringMeshBuilder dcMeshBuilder, DualContouringAlgorithm dcAlgo, MeshRenderDataFactory renderDataFactory)
         {
             this.game = game;
+            this.dRenderer = dRenderer;
             this.dcMeshBuilder = dcMeshBuilder;
             this.dcAlgo = dcAlgo;
             this.renderDataFactory = renderDataFactory;
@@ -39,52 +44,77 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
 
             var tex = new RAMTexture();
 
-            var data = tex.GetCoreData();
-            data.StorageType = TextureCoreData.TextureStorageType.Disk;
-            data.DiskFilePath = TWDir.GameData.CreateSubdirectory(@"Rendering\UVChecker-map\UVCheckerMaps").GetFile("UVCheckerMap10-512.png").FullName;
-            /*data.StorageType = TextureCoreData.TextureStorageType.Assembly;
-            data.Assembly = Assembly.GetExecutingAssembly();
-            data.AssemblyResourceName = "MHGameWork.TheWizards.Tests.OBJParser.Files.maps.BrickRound0030_7_S.jpg";*/
+            defaultMaterial = new DCVoxelMaterial() {Texture = DCFiles.UVCheckerMap11_512};
 
-            mat = new SurfaceMaterial(game, dRenderer.TexturePool.LoadTexture(tex));
             objectBuffer = DeferredMaterial.CreatePerObjectCB(game);
         }
 
 
         public void Draw()
         {
-            mat.SetCamera(game.Camera.View, game.Camera.Projection);
-            mat.SetToContext(game.Device.ImmediateContext);
-            mat.SetPerObjectBuffer(game.Device.ImmediateContext, objectBuffer);
-
-            foreach (var surface in surfaces)
+            foreach (var inst in matToInstances.Values)
             {
-                if ( surface.RenderData == null ) return;
-                objectBuffer.UpdatePerObjectBuffer(game.Device.ImmediateContext, surface.WorldMatrix);
-                surface.RenderData.Draw(game.Device.ImmediateContext);
+                var mat = inst.Shader;
+                mat.SetCamera(game.Camera.View, game.Camera.Projection);
+                mat.SetToContext(game.Device.ImmediateContext);
+                mat.SetPerObjectBuffer(game.Device.ImmediateContext, objectBuffer);
+                foreach (var surface in inst.Parts)
+                {
+                    objectBuffer.UpdatePerObjectBuffer(game.Device.ImmediateContext, surface.World);
+                    surface.RenderData.Draw(game.Device.ImmediateContext);
+                }
             }
+
         }
 
 
         public void Dispose()
         {
-            mat.Dispose();
+            //TODO: 
+            //mat.Dispose();
             objectBuffer.Dispose();
         }
 
         public VoxelSurface CreateSurface(AbstractHermiteGrid grid, Matrix world)
         {
+            var vertices = new List<Vector3>();
+            var indices = new List<int>();
+            var materials = new List<DCVoxelMaterial>();
 
-            var rawData = dcMeshBuilder.buildRawMesh(grid);
-            if (rawData.Positions.Length == 0)
-            {
-                return new VoxelSurface(this, null) { WorldMatrix = world };
-            }
-            var ret = new VoxelSurface(this, renderDataFactory.CreateMeshPartData(rawData));
-            ret.Mesh = rawData;
+            var algo = new DualContouringAlgorithm();
+            algo.GenerateSurface(vertices, indices, materials, grid);
+
+
+            var triangleNormals = dcMeshBuilder.generateTriangleNormals(indices, vertices);
+
+            var uniqueMaterials = materials.Distinct().ToArray();
+
+            if (!uniqueMaterials.Any())
+                return new VoxelSurface(this) { WorldMatrix = world };
+
+
+            var ret = new VoxelSurface(this);
             ret.WorldMatrix = world;
             surfaces.Add(ret);
+
+            foreach (var imat in uniqueMaterials)
+            {
+                var mat = imat;
+                if ( mat == null ) mat = defaultMaterial;
+                var matInstance = matToInstances.GetOrCreate(mat, () => new MaterialInstance(mat, dRenderer, game));
+
+                var mesh = new RawMeshData(
+                    indices.Where((i, index) => materials[index / 3] == mat).Select(i => vertices[i]).ToArray(),
+                    indices.Select( (i,index) => triangleNormals[index/3] ).Where((i, index) => materials[index / 3] == mat).ToArray(),
+                    indices.Where((i, index) => materials[index / 3] == mat).Select(i => new Vector2()).ToArray(),
+                    indices.Where((i, index) => materials[index / 3] == mat).Select(i => new Vector3()).ToArray()
+                    );
+
+                matInstance.Parts.Add(new TransformedMeshData() { RenderData = renderDataFactory.CreateMeshPartData(mesh), World = world });
+            }
+
             return ret;
+
         }
 
         public void deleteInternal(VoxelSurface voxelSurface)
@@ -102,25 +132,40 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
                                             new MeshRenderDataFactory(game, null,
                                                                        game.AcquireRenderer().TexturePool));
         }
+
+
+        public class MaterialInstance
+        {
+            public DCVoxelMaterial Material;
+            public List<TransformedMeshData> Parts = new List<TransformedMeshData>();
+            public SurfaceMaterial Shader;
+
+            public MaterialInstance(DCVoxelMaterial material, DeferredRenderer dRenderer, DX11Game gamez)
+            {
+                Material = material;
+                Shader = new SurfaceMaterial(gamez, dRenderer.TexturePool.LoadTexture(material.Texture));
+            }
+        }
+
+        public class TransformedMeshData
+        {
+            public Matrix World;
+            public MeshPartRenderData RenderData;
+
+        }
     }
 
     public class VoxelSurface
     {
-        public VoxelSurface(VoxelCustomRenderer customRenderer, MeshPartRenderData renderData)
+        public VoxelSurface(VoxelCustomRenderer customRenderer)
         {
             _customRenderer = customRenderer;
-            _renderData = renderData;
         }
 
         public Matrix WorldMatrix;
         private VoxelCustomRenderer _customRenderer;
-        private MeshPartRenderData _renderData;
-        public RawMeshData Mesh;
+        //public RawMeshData Mesh;
 
-        public MeshPartRenderData RenderData
-        {
-            get { return _renderData; }
-        }
 
         public bool IsDestroyed { get { return _customRenderer == null; } }
 
@@ -128,9 +173,6 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
         {
             if (IsDestroyed) return;
             var r = _customRenderer;
-            if (_renderData != null)
-                _renderData.Dispose();
-            _renderData = null;
             _customRenderer = null;
             r.deleteInternal(this);
 

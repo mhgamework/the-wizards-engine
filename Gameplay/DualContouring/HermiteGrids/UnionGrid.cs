@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.DualContouring
         public override bool GetSign(Point3 pos)
         {
             var offsetPos = pos - _offset;
-            if ( offsetPos.X < 0 || offsetPos.Y < 0 || offsetPos.Z < 0 ) return a.GetSign( pos );
+            if (offsetPos.X < 0 || offsetPos.Y < 0 || offsetPos.Z < 0) return a.GetSign(pos);
             return a.GetSign(pos) || b.GetSign(pos - _offset);
         }
 
@@ -51,6 +51,11 @@ namespace MHGameWork.TheWizards.DualContouring
             throw new InvalidOperationException("No crossing edge here!");
         }
 
-
+        public override DCVoxelMaterial GetMaterial(Point3 cube)
+        {
+            if (a.GetSign(cube)) return a.GetMaterial(cube);
+            if (b.GetSign(cube - _offset)) return b.GetMaterial(cube - _offset);
+            return null;
+        }
     }
 }

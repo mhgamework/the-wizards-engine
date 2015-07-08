@@ -1,3 +1,4 @@
+using System;
 using DirectX11;
 using MHGameWork.TheWizards.DualContouring.Rendering;
 using SlimDX;
@@ -45,14 +46,14 @@ namespace MHGameWork.TheWizards.DualContouring.Building
             SurfaceDirty = true;
         }
 
-        public void Raycast( Raycaster<Chunk> raycaster, Ray ray )
+        public void Raycast(Raycaster<Chunk> raycaster, Ray ray)
         {
             float? dist = ray.xna().Intersects(Box.xna());
             if (!dist.HasValue) return;
             if (surface == null) return;
-
-            if ( surface.Mesh == null ) return;
-            raycaster.AddIntersection(ray, surface.Mesh.Positions, surface.WorldMatrix, this);
+            throw new NotImplementedException();
+            //if (surface.Mesh == null) return;
+            //raycaster.AddIntersection(ray, surface.Mesh.Positions, surface.WorldMatrix, this);
         }
 
 

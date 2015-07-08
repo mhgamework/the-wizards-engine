@@ -161,7 +161,6 @@ namespace MHGameWork.TheWizards.DualContouring
             return getEdgeData(cube, GetEdgeId(cube, cube + dir));
         }
 
-
-
+        public abstract DCVoxelMaterial GetMaterial( Point3 cube );
     }
 }

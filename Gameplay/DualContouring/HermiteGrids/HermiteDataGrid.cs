@@ -59,6 +59,7 @@ namespace MHGameWork.TheWizards.DualContouring
         private struct Vertex
         {
             public bool Sign;
+            public DCVoxelMaterial Material;
             public Vector4[] EdgeData;
         }
         /// <summary>
@@ -80,6 +81,11 @@ namespace MHGameWork.TheWizards.DualContouring
             var end = cube_verts[GetEdgeVertexIds(edgeId)[1]];
 
             return cells[cube + start].EdgeData[dirs.IndexOf(end - start)];*/
+        }
+
+        public override DCVoxelMaterial GetMaterial(Point3 cube)
+        {
+            return cells[cube].Material;
         }
 
 
@@ -130,7 +136,7 @@ namespace MHGameWork.TheWizards.DualContouring
                         var vector4 = obj.GetIntersection(startT, endT);
                         var intersectionPoint = Vector3.TransformCoordinate(Vector3.Lerp(startT, endT, vector4.W), geometryToGrid);
                         var realLerp = Vector3.Distance(start, intersectionPoint); // /1
-                        Debug.Assert( Math.Abs( Vector3.Distance(start, end) -1) < 0.001 ); // Algo check
+                        Debug.Assert(Math.Abs(Vector3.Distance(start, end) - 1) < 0.001); // Algo check
                         vector4 = new Vector4(Vector3.Normalize(Vector3.TransformNormal(vector4.TakeXYZ(), geometryToGrid)), realLerp);
                         grid.cells[cube].EdgeData[i] = vector4;
                     }
@@ -153,6 +159,7 @@ namespace MHGameWork.TheWizards.DualContouring
                         ret.cells[p] = new Vertex()
                         {
                             Sign = grid.GetSign(p),
+                            Material = grid.GetMaterial(p)
                             /*EdgeData = ret.dirs.Select(dir =>
                                 {
                                     var edgeId = grid.GetEdgeId(p, p + dir);
@@ -301,7 +308,7 @@ namespace MHGameWork.TheWizards.DualContouring
                         ret.cells[p] = new Vertex()
                         {
                             Sign = false,
-                            EdgeData =  new Vector4[3]
+                            EdgeData = new Vector4[3]
                         };
                     }
             return ret;

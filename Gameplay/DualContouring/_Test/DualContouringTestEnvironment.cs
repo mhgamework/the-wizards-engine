@@ -231,7 +231,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
 
                 if (hasEdge)
                 {
-                    var qef = DualContouringAlgorithm.calculateQefPoint(grid, gridPoint);
+                    var qef = (Vector3) DualContouringAlgorithm.calculateQefPoint(grid, grid.GetCubeSigns(gridPoint), gridPoint);
                     TW.Graphics.LineManager3D.AddCenteredBox((gridPoint.ToVector3() + qef) * CellSize, 0.05f, Color.Orange.dx());
                 }
             }

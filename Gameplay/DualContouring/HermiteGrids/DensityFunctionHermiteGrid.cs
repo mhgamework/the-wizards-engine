@@ -1,5 +1,8 @@
 ﻿using System;
 using DirectX11;
+using MHGameWork.TheWizards.IO;
+using MHGameWork.TheWizards.Rendering;
+using MHGameWork.TheWizards.ServerClient;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.DualContouring
@@ -12,11 +15,22 @@ namespace MHGameWork.TheWizards.DualContouring
     {
         private readonly Func<Vector3, float> densityFunction;
         private readonly Point3 dimensions;
+        private Func<Vector3, DCVoxelMaterial> getMaterial;
+
+        public DensityFunctionHermiteGrid( Func<Vector3, float> densityFunction, Point3 dimensions, Func<Vector3, DCVoxelMaterial> getMaterial )
+        {
+            this.densityFunction = densityFunction;
+            this.dimensions = dimensions;
+            this.getMaterial = getMaterial;
+        }
 
         public DensityFunctionHermiteGrid(Func<Vector3, float> densityFunction, Point3 dimensions)
         {
             this.densityFunction = densityFunction;
             this.dimensions = dimensions;
+            
+            var mat = new DCVoxelMaterial() {Texture = DCFiles.UVCheckerMap10_512};
+            getMaterial = p => mat;
         }
 
         public override bool GetSign(Point3 p)
@@ -49,6 +63,11 @@ namespace MHGameWork.TheWizards.DualContouring
             normal.Normalize();
             normal = -normal; // This is since we want it to point to the negative side of the density field, eg air
             return new Vector4(normal, zeroFactor);
+        }
+
+        public override DCVoxelMaterial GetMaterial( Point3 cube )
+        {
+            return getMaterial( cube );
         }
 
         /// <summary>

@@ -26,7 +26,7 @@ namespace MHGameWork.TheWizards.DualContouring.Building
         private float voxelSize = -1;
         private Point3 NumChunks;
         private Array3D<Chunk> chunks;
-        private int placementGridSize = 5;
+        private int placementGridSize = 4;
         private InteractiveTestingEnvironment interactiveTestingEnv;
         public DualContouringBuilderTest()
         {
