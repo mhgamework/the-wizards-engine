@@ -12,6 +12,79 @@ namespace MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures
     public class Array3DTest
     {
         [Test]
+        public void TestCacheTrashingByteArray()
+        {
+            var size = 100;
+            var arr = new Array3D<byte[]>(new Point3(size, size, size));
+            arr.ForEach((v, p) => arr[p] = new byte[1024]);
+
+
+            byte add = 2;
+
+            PerformanceHelper.Measure(() =>
+                {
+                    for (int x = 0; x < size; x++)
+                        for (int y = 0; y < size; y++)
+                            for (int z = 0; z < size; z++)
+                            {
+                                var value = arr.GetFast(x, y, z);
+                                for (int i = 0; i < value.Length; i++)
+                                {
+                                    add += value[i];
+                                }
+                            }
+                }).PrettyPrint().With(s => Console.WriteLine("xyz: " + s));
+
+            PerformanceHelper.Measure(() =>
+            {
+                for (int z = 0; z < size; z++)
+                    for (int y = 0; y < size; y++)
+                        for (int x = 0; x < size; x++)
+                        {
+                            var value = arr.GetFast(x, y, z);
+                            for (int i = 0; i < value.Length; i++)
+                            {
+                                add += value[i];
+                            }
+                        }
+            }).PrettyPrint().With(s => Console.WriteLine("zyx: " + s));
+
+        }
+        [Test]
+        public void TestCacheTrashing()
+        {
+            var size = 100*2;
+            var arr = new Array3D<int>(new Point3(size, size, size));
+            arr.ForEach((v, p) => arr[p] = p.X + p.Y + p.Z);
+
+
+            int add = 2;
+
+            PerformanceHelper.Measure(() =>
+            {
+                for (int x = 0; x < size; x++)
+                    for (int y = 0; y < size; y++)
+                        for (int z = 0; z < size; z++)
+                        {
+                            var value = arr.GetFast(x, y, z);
+                            add = (add + value) % 1654654;
+                        }
+            }).PrettyPrint().With(s => Console.WriteLine("xyz: " + s));
+
+            PerformanceHelper.Measure(() =>
+            {
+                for (int z = 0; z < size; z++)
+                    for (int y = 0; y < size; y++)
+                        for (int x = 0; x < size; x++)
+                        {
+                            var value = arr.GetFast(x, y, z);
+                            add = (add + value) % 1654654;
+                        }
+            }).PrettyPrint().With(s => Console.WriteLine("zyx: " + s));
+
+        }
+
+        [Test]
         public void TestAccessPerformance()
         {
             var size = 100;
