@@ -1,0 +1,14 @@
+imposter design
+
+- in the end we must have one vertexbuffer with one texture.
+in this vertexbuffer and texture there are several imposters stored.
+
+when ever you make a render engine that must store a lot of data.
+these renderData must be presented by imposter to get the proper speed.
+when ever you create an new ImposterObject this must be added to the imposter engine.
+this engine keeps track of them all and says when to update which one,
+when you wanna render all the data you just say ImposterEngine. render
+
+
+
+- we have to create a way where we can update one imposter without effecting the other but still try to keep them in the same mesh and texture

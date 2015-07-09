@@ -1,0 +1,715 @@
+gamasutra:http://www.gamasutra.com/view/feature/2501/dynamic_2d_imposters_a_simple_.php?page=2
+
+/// Initialise the render texture.
+bool RenderTexture::Init(int width, int height)
+{
+	LPDIRECT3DDEVICE9 pD3DDevice = DXUTGetD3DDevice();
+	int mipLevels = 1;
+	DWORD usage = D3DUSAGE_RENDERTARGET;
+	D3DFORMAT fmt = D3DFMT_A8R8G8B8;
+	D3DPOOL pool = D3DPOOL_DEFAULT;
+
+	HRESULT hr;
+	hr = D3DXCreateTexture(pD3DDevice, width, height, mipLevels, 
+				   usage, fmt, pool, &m_pTexture);
+	if (FAILED(hr))
+	{
+		DXUTReportD3DError(hr);
+		return false;
+	}C:\The Wizards\TreeGenerater\TreeGenerator\Imposter\imposter gamesutra.txt
+
+	bool createZBuffer = true;
+	D3DFORMAT depthStencilFmt = D3DFMT_D16;
+	hr = D3DXCreateRenderToSurface(pD3DDevice, width, height, fmt, 
+				           createZBuffer, depthStencilFmt, &m_pRenderSurface);
+	if (FAILED(hr))
+	{
+		ReportD3DError(hr);
+		return false;
+	}	
+
+	return true;
+}
+
+
+
+
+
+/// Begin render to texture. 
+/// Call this instead of pD3DDevice->BeginScene().
+bool RenderTexture::BeginScene()
+{
+	HRESULT hr;
+	LPDIRECT3DSURFACE9 pTextureSurface = NULL;
+	hr = m_pTexture->GetSurfaceLevel(0, &pTextureSurface);
+	if (FAILED(hr))
+	{
+		ReportD3DError(hr);
+		return false;
+	}
+
+	hr = m_pRenderSurface->BeginScene(pTextureSurface, NULL);
+	if (FAILED(hr))
+	{
+		ReportD3DError(hr);
+		return false;
+	}
+
+	SAFE_RELEASE(pTextureSurface);
+
+	return true;
+}
+
+/// Begin render to texture. 
+/// Call this instead of pD3DDevice->EndScene().
+void RenderTexture::EndScene()
+{
+	HRESULT hr;
+	hr = m_pRenderSurface->EndScene(D3DX_DEFAULT);
+	if (FAILED(hr))
+	{
+		ReportD3DError(hr);
+	}
+}
+
+
+
+const int NUM_IMPOSTER_VERTS = 6;
+
+/// Defines a vertex in an imposter billboard.
+struct ImposterVertex
+{
+	D3DXVECTOR3 pos;
+	D3DCOLOR colour;
+	D3DXVECTOR2 uv;
+};
+
+/// Represents an imposter.
+struct Imposter
+{
+	// The vertices that comprise the imposter billboard.
+	ImposterVertex verts[NUM_IMPOSTER_VERTS];		
+
+	// Centre position of the imposter billboard.
+	D3DXVECTOR3 centre;			
+
+	// Direction vector from imposter centre to camera position.
+	D3DXVECTOR3 cameraDir;		
+
+	/// The offset of the imposter in the render texture.
+	D3DXVECTOR2 uvOffset;
+
+	// Set to ‘true’ when this imposter needs to be regenerated.
+	bool requiresRegeneration;
+
+	// The time the im	poster was created.
+	float startTime;
+
+	// The time the imposter was last generated.
+	float lastGeneratedTime;
+
+	/// Set to 'true' when an imposter is active.
+	bool active;
+
+	/// Set to 'true' when an imposter is generated.
+	bool generated;
+
+	// The current imposter camera distance, computed each time imposters are rendered.
+	// This is used for depth sorting alpha-blended imposters.
+	float cameraDistSq;
+
+};
+
+
+
+
+/// Construct a world-space billboard that (in screen-space) 
+/// fully covers the input bounding box.
+void ImposterSystem::CreateImposterBillboard(
+			const D3DXVECTOR3& curCameraPos,
+			const D3DXMATRIX& viewMatrix, const D3DXMATRIX& projMatrix,
+			const D3DXMATRIX& worldTransform, 
+			D3DXVECTOR3 boundingBoxVerts[NUM_BOX_VERTS],
+			float boundingRadius,
+			Imposter* pImposter, float& imposterNearPlane, float& imposterFarPlane)
+{
+	int stride = sizeof(D3DXVECTOR3);
+	D3DXVECTOR3 screenVerts[NUM_BOX_VERTS];
+	RECT rect = DXUTGetWindowClientRect();
+	int screenWidth = rect.right - rect.left;
+	int screenHeight = rect.bottom - rect.top;
+	D3DVIEWPORT9 viewport = { 0, 0, screenWidth, screenHeight, 0, 1 };
+	
+	// Project bounding box into screen space.
+	D3DXVec3ProjectArray(screenVerts, stride, boundingBoxVerts, stride, 
+                            &viewport, &projMatrix, &viewMatrix, &worldTransform,
+                            NUM_BOX_VERTS);
+
+	// Determine the smallest screen-space quad that encompasses the bounding box.
+
+	float minX = screenVerts[0].x;
+	float maxX = screenVerts[0].x;
+	float minY = screenVerts[0].y;
+	float maxY = screenVerts[0].y;
+	float minZ = screenVerts[0].z;
+	for (int i = 1; i < NUM_BOX_VERTS; ++i)
+	{
+		minX = min(screenVerts[i].x, minX);
+		maxX = max(screenVerts[i].x, maxX);
+		minY = min(screenVerts[i].y, minY);
+		maxY = max(screenVerts[i].y, maxY);
+		minZ = min(screenVerts[i].z, minZ);
+	}
+
+	// Add extra vertices here to compute the near plane and far plane positions.
+
+	const int NUM_VERTS = 4;
+	D3DXVECTOR3 screenSpaceVerts[NUM_VERTS] =
+	{
+		D3DXVECTOR3(minX, minY, minZ),
+		D3DXVECTOR3(maxX, minY, minZ),
+		D3DXVECTOR3(maxX, maxY, minZ),
+		D3DXVECTOR3(minX, maxY, minZ)
+	};
+		
+	// Unproject the screen-space quad into world-space.
+
+D3DXMATRIX identity;
+	D3DXMatrixIdentity(&identity);
+
+	D3DXVECTOR3 worldSpaceVerts[NUM_VERTS];
+
+	D3DXVec3UnprojectArray(worldSpaceVerts, stride, screenSpaceVerts, stride, 
+                              &viewport, &projMatrix, &viewMatrix, &identity,
+                              NUM_VERTS); 
+
+	// Save the imposter vertices for later.
+
+	pImposter->verts[0].pos = worldSpaceVerts[0];
+	pImposter->verts[1].pos = worldSpaceVerts[1];
+	pImposter->verts[2].pos = worldSpaceVerts[3];
+	pImposter->verts[3].pos = worldSpaceVerts[1];
+	pImposter->verts[4].pos = worldSpaceVerts[2];
+	pImposter->verts[5].pos = worldSpaceVerts[3];
+	pImposter->centre = (worldSpaceVerts[0] + worldSpaceVerts[1] + 
+worldSpaceVerts[2] + worldSpaceVerts[3]) * 0.25f;
+	pImposter->cameraDir = curCameraPos - pImposter->centre;
+	D3DXVec3Normalize(&pImposter->cameraDir, &pImposter->cameraDir);
+
+	// Calculate near and far planes.
+		
+	D3DXVECTOR3 nearPlaneVec = pImposter->centre - curCameraPos;
+	imposterNearPlane = D3DXVec3Length(&nearPlaneVec);
+	imposterFarPlane = imposterNearPlane + (boundingRadius * 2.0f);
+}
+
+
+
+
+
+// Create view and projection matrices, based on the current camera and 
+// using the imposter quad as the viewing plane.
+void ImposterSystem::CreateMatrices(
+			const D3DXVECTOR3& curCameraPos,
+			const D3DXVECTOR3& curCameraUp,
+			D3DXMATRIX& imposterViewMatrix, D3DXMATRIX& imposterProjMatrix,
+   			Imposter* pImposter, float imposterNearPlane, float imposterFarPlane)
+{
+	D3DXMatrixLookAtLH(&imposterViewMatrix, &curCameraPos, 
+                         &pImposter->centre, &curCameraUp);
+
+	D3DXVECTOR3 widthVec = pImposter->verts[1].pos - pImposter->verts[0].pos;
+	D3DXVECTOR3 heightVec = pImposter->verts[5].pos - pImposter->verts[0].pos;
+	float viewWidth = D3DXVec3Length(&widthVec);
+	float viewHeight = D3DXVec3Length(&heightVec);
+	D3DXMatrixPerspectiveLH(&imposterProjMatrix, viewWidth, viewHeight, 
+				    imposterNearPlane, imposterFarPlane);
+}
+
+
+
+
+
+
+/// Generate a single imposter.
+/// ** BEWARE ** this is the inefficient imposter generation method and is for example only.
+bool GenerateImposter(const D3DXVECTOR3& curCameraPos, const D3DXVECTOR3& curCameraUp, 
+			  const D3DXMATRIX& viewMatrix, const D3DXMATRIX& projMatrix,
+			  const D3DXMATRIX& worldTransform, Mesh* pMesh, 
+			  RenderTexture* pImposterRenderTexture, Imposter* pImposter)
+{
+	if (!pImposterRenderTexture->BeginScene())
+	{
+		return false;
+	}
+
+	D3DXVECTOR3 boundingBoxVerts[NUM_BOX_VERTS];
+
+	pMesh->GetBoundingBoxVerts(boundingBoxVerts);
+
+	// Create the imposter geometry, view and projection matrices.
+
+	float nearPlane, farPlane;
+	g_pImposterSystem->CreateImposterBillboard(
+curCameraPos, viewMatrix, projMatrix, 
+				worldTransform, boundingBoxVerts, 
+pMesh->GetBoundingSphere().radius,
+				pImposter, nearPlane, farPlane);
+
+	// Initialise texture coordinates for imposter billboard.
+
+	pImposter->verts[0].uv = D3DXVECTOR2(0, 0);
+	pImposter->verts[1].uv = D3DXVECTOR2(1, 0);
+	pImposter->verts[2].uv = D3DXVECTOR2(0, 1);
+	pImposter->verts[3].uv = D3DXVECTOR2(1, 0);
+	pImposter->verts[4].uv = D3DXVECTOR2(1, 1);
+	pImposter->verts[5].uv = D3DXVECTOR2(0, 1);
+
+	D3DXMATRIX imposterViewMatrix, imposterProjMatrix;
+	g_pImposterSystem->CreateMatrices(curCameraPos, curCameraUp,
+						imposterViewMatrix, imposterProjMatrix,
+             					pImposter, nearPlane, farPlane);
+
+	// Initialise DirectX transforms.
+
+	LPDIRECT3DDEVICE9 pD3DDevice = DXUTGetD3DDevice();
+	pD3DDevice->SetTransform(D3DTS_VIEW, &imposterViewMatrix);
+	pD3DDevice->SetTransform(D3DTS_PROJECTION, &imposterProjMatrix);
+
+	// Set the world transform for the model.
+
+	pD3DDevice->SetTransform(D3DTS_WORLD, &worldTransform);
+
+	// Setup render state.
+
+	pD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	pD3DDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+
+	// Clear the texture.
+
+D3DCOLOR color = D3DCOLOR_RGBA(0, 0, 0, 0);
+	pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, color, 1.0f, 0);
+
+	// Render the mesh to the imposter.
+
+	pMesh->Render();  
+
+	pImposterRenderTexture->EndScene();
+
+	return true;
+}
+
+
+
+
+
+
+
+/// Render the imposter.
+/// ** BEWARE ** this is the inefficient imposter rendering method and is for example only.
+void RenderImposter(RenderTexture* pImposterRenderTexture, Imposter* pImposter)
+{
+	// Bind the imposter texture.
+
+	LPDIRECT3DDEVICE9 pD3DDevice = DXUTGetD3DDevice();
+	pD3DDevice->SetTexture(0, pImposterRenderTexture->GetD3DTexture());
+
+	// Set world-tranform to identity (imposter billboard is already in world-space).
+
+	D3DXMATRIX identity;
+	D3DXMatrixIdentity(&identity);
+	pD3DDevice->SetTransform(D3DTS_WORLD, &identity);
+
+	// Setup render state.
+
+	pD3DDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_COLOR1);
+	pD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	pD3DDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
+	pD3DDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_EXP2);
+	pD3DDevice->SetRenderState(D3DRS_FOGCOLOR, FOG_COLOUR);
+	pD3DDevice->SetRenderState(D3DRS_FOGDENSITY, FloatToDWORD(FOG_DENSITY));
+	pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+	pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TEXTURE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TEXTURE);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+
+	// Render the imposter
+
+	int vertFVF = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1;
+	int stride = sizeof(ImposterVertex);
+	pD3DDevice->SetFVF(vertFVF);
+	pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, 2, pImposter->verts, stride);
+}
+
+
+
+-----------------------------------------------------------------efficient way of doing this------------------------------------------------------------------------------------------------------
+
+
+/// Pre allocate imposters and calculate texture coordinates.
+void ImposterSystem::AllocImposters(int numImpostersU, int numImpostersV)
+{
+	// Pre-allocate all imposters in an array.
+
+	m_NumImpostersU = numImpostersU;
+	m_NumImpostersV = numImpostersV;
+	m_MaxNumImposters = numImpostersU * numImpostersV;
+	m_pImposters = new Imposter[m_MaxNumImposters];
+	m_pSortBuffer = new Imposter*[m_MaxNumImposters];
+
+	float uWidth = 1.0f / (float) numImpostersU;
+	float vWidth = 1.0f / (float) numImpostersV;
+
+	// Initialise imposters and divide up the imposter render texture 
+	// among all of them.
+
+	int i = 0;
+	for (int u = 0; u < numImpostersU; ++u)
+	{
+		for (int v = 0; v < numImpostersV; ++v)
+		{
+			Imposter* pImposter = &m_pImposters[i];
+			
+			// Initialise imposter members.
+
+			pImposter->requiresRegeneration = true;
+			pImposter->startTime = 0;
+			pImposter->endTime = FLT_MAX;
+			pImposter->lastGeneratedTime = 0;
+			pImposter->active = false;
+			pImposter->generated = false;
+			pImposter->cameraDistSq = 0.0f;
+
+			// Calculate texture coordinates.
+
+			float u1 = (float) u * uWidth;
+			float v1 = (float) v * vWidth;
+			float u2 = u1 + uWidth;
+			float v2 = v1 + vWidth;
+			pImposter->uvOffset.x = u1;
+			pImposter->uvOffset.y = v1;
+			pImposter->verts[0].uv = D3DXVECTOR2(u1, v1);
+			pImposter->verts[1].uv = D3DXVECTOR2(u2, v1);
+			pImposter->verts[2].uv = D3DXVECTOR2(u1, v2);
+			pImposter->verts[3].uv = D3DXVECTOR2(u2, v1);
+			pImposter->verts[4].uv = D3DXVECTOR2(u2, v2);
+			pImposter->verts[5].uv = D3DXVECTOR2(u1, v2);
+			++i;
+		}
+	}			
+}
+
+
+
+/// Initialise a D3D viewport for rendering a poster into a render texture sub-region.
+void ImposterSystem::InitImposterViewport(int textureWidth, int textureHeight,
+                                          const D3DXVECTOR2& imposterUVOffset, 
+                                          const D3DXVECTOR2& imposterUVScale)
+{
+	D3DVIEWPORT9 viewport;
+	viewport.X = (DWORD) (textureWidth * imposterUVOffset.x);
+	viewport.Y = (DWORD) (textureHeight * imposterUVOffset.y);
+	viewport.Width = (DWORD) (textureWidth * imposterUVScale.x);
+	viewport.Height = (DWORD) (textureHeight * imposterUVScale.y);
+	viewport.MinZ = 0.0f;
+	viewport.MaxZ = 1.0f;
+	LPDIRECT3DDEVICE9 pD3DDevice = DXUTGetD3DDevice();
+	pD3DDevice->SetViewport(&viewport);
+}
+
+
+
+
+
+/// Efficiently generate multiple imposters packed into a single render texture.
+bool GenerateImposters(const D3DXVECTOR3& curCameraPos, const D3DXVECTOR3& curCameraUp, 
+			   const D3DXMATRIX& viewMatrix, const D3DXMATRIX& projMatrix,
+			   RenderTexture* pImposterRenderTexture)
+{
+	// Note that calling BeginScene (changing render target) is the 
+// expensive part and is only done
+	// once to generate multiple of imposters.
+
+	if (!pImposterRenderTexture->BeginScene())
+	{
+		return false;
+	}
+
+	// Setup render state.
+
+	LPDIRECT3DDEVICE9 pD3DDevice = DXUTGetD3DDevice();
+	pD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	pD3DDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TEXTURE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TEXTURE);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP
+	pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+
+	// Calculate the uv scale for render texture sub-regions.
+
+	float imposterDistSq = IMPOSTER_DIST * IMPOSTER_DIST;
+	D3DXVECTOR2 imposterUVScale(1.0f / (float) g_pImposterSystem->GetNumImpostersU(),
+		                     1.0f / (float) g_pImposterSystem->GetNumImpostersV());
+
+	// Get the bounding box for the mesh that is being impostered.
+	D3DXVECTOR3 boundingBoxVerts[NUM_BOX_VERTS];
+
+	g_pMesh->GetBoundingBoxVerts(boundingBoxVerts);
+
+	int numMeshs = g_RenderLoadsOfMeshes ? NUM_MESHES : 1;
+
+	for (int i = 0; i < numMeshs; ++i)
+	{
+		Imposter* pImposter = g_pImposterSystem->GetImposter(i);
+
+		if (!pImposter->requiresRegeneration)
+		{
+			// This imposter does not need to be regenerated at the moment.
+			continue;
+		}
+
+		// Create the imposter geometry, view and projection matrices.
+
+		float nearPlane, farPlane;
+		g_pImposterSystem->CreateImposterBillboard(curCameraPos, 
+viewMatrix, projMatrix, g_WorldMatrices[i],
+boundingBoxVerts,
+g_pMesh->GetBoundingSphere().radius,
+pImposter, nearPlane, farPlane);
+
+		D3DXMATRIX imposterViewMatrix, imposterProjMatrix;
+		g_pImposterSystem->CreateMatrices(curCameraPos, curCameraUp,
+							imposterViewMatrix, imposterProjMatrix,
+             						pImposter, nearPlane, farPlane);
+
+		// Set viewport for rendering to the sub-region of the render texture.
+
+		g_pImposterSystem->InitImposterViewport(
+pImposterRenderTexture->GetWidth(),
+						pImposterRenderTexture->GetHeight(),
+						pImposter->uvOffset, imposterUVScale);
+
+		// Initialise DirectX transforms.
+
+		pD3DDevice->SetTransform(D3DTS_VIEW, &imposterViewMatrix);
+		pD3DDevice->SetTransform(D3DTS_PROJECTION, &imposterProjMatrix);
+
+		// Set the world transform for the Mesh.
+
+		pD3DDevice->SetTransform(D3DTS_WORLD, &g_WorldMatrices[i]);
+
+		// Clear the texture.
+
+		D3DCOLOR color = D3DCOLOR_RGBA(0, 0, 0, 0);
+		pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, color, 1.0f, 0);
+
+		// Render the mesh to the imposter.
+
+		g_pMesh->Render();  
+
+		pImposter->requiresRegeneration = false;
+		pImposter->lastGeneratedTime = (float) DXUTGetTime();
+	}
+
+	pImposterRenderTexture->EndScene();
+
+	return true;
+}
+
+
+/// Initialise a dynamic vertex buffer for rendering imposters.
+bool ImposterSystem::InitVertexBuffer()
+{
+	int vertexSize = sizeof(ImposterVertex);
+	int vertexBufferSize = m_MaxNumImposters * NUM_IMPOSTER_VERTS * vertexSize;
+	int usage = D3DUSAGE_WRITEONLY | D3DUSAGE_DYNAMIC;
+	int vertFVF = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1;
+	HRESULT hr;
+	LPDIRECT3DDEVICE9 pD3DDevice = DXUTGetD3DDevice();
+	hr = pD3DDevice->CreateVertexBuffer(vertexBufferSize, usage, 
+						   vertFVF, D3DPOOL_DEFAULT,
+						   &m_pVertexBuffer, NULL);
+	if (FAILED(hr))
+	{
+		ReportD3DError(hr);
+		return false;
+	}
+
+	return true;
+}
+
+
+
+
+/// Efficiently render multiple imposter billboards in one DirectX draw call.
+void ImposterSystem::RenderImposterBillboards(
+RenderTexture* pImposterRenderTexture, 
+				const D3DXVECTOR3& curCameraPos, 
+				bool enableFog, D3DCOLOR fogColor, float fogDensity)
+{
+	if (m_NumImposters == 0)
+	{
+		// No imposters to render.
+
+		return;
+	}
+
+    	int numActiveImposters = DepthSortImposters(curCameraPos);
+    	if (numActiveImposters == 0)
+    	{
+       	// There are no active imposters.
+        
+        return;
+    	}
+
+	// Bind the imposter texture.
+
+	LPDIRECT3DDEVICE9 pD3DDevice = DXUTGetD3DDevice();
+	pD3DDevice->SetTexture(0, pImposterRenderTexture->GetD3DTexture());
+
+	// Set world-tranform to identity (imposter billboard is already in world-space).
+
+	D3DXMATRIX identity;
+	D3DXMatrixIdentity(&identity);
+	pD3DDevice->SetTransform(D3DTS_WORLD, &identity);
+
+	// Setup render state.
+
+	pD3DDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_COLOR1);
+	pD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	pD3DDevice->SetRenderState(D3DRS_FOGENABLE, enableFog);
+	pD3DDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_EXP2);
+	pD3DDevice->SetRenderState(D3DRS_FOGCOLOR, fogColor);
+	pD3DDevice->SetRenderState(D3DRS_FOGDENSITY, FloatToDWORD(fogDensity));
+	pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pD3DDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+	pD3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TEXTURE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TEXTURE);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+	pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+
+	// Initialise vertex buffer.
+
+	int vertSize = sizeof(ImposterVertex);
+	int numImposterVerts = m_NumImposters * NUM_IMPOSTER_VERTS;
+	int sizeToLock = numImposterVerts * vertSize;
+
+	unsigned char* pVertexBufferMem;
+	m_pVertexBuffer->Lock(0, sizeToLock, (void **) &pVertexBufferMem, 
+				  D3DLOCK_NOSYSLOCK | D3DLOCK_DISCARD);
+					      
+int imposterVertsSize = vertSize * NUM_IMPOSTER_VERTS;
+
+	for (int i = 0; i < numActiveImposters; ++i)
+    	{
+		Imposter* pImposter = m_pSortBuffer[i];
+		if (!pImposter->active)
+		{
+			continue;
+		}
+
+		// Copy verts to vertex buffer.
+
+		memcpy(pVertexBufferMem, pImposter->verts, imposterVertsSize);
+		pVertexBufferMem += imposterVertsSize;
+    	}	
+
+    	m_pVertexBuffer->Unlock();
+
+int vertFVF = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1;
+	int numPrimitives = numActiveImposters * 2;
+	pD3DDevice->SetFVF(vertFVF);
+	pD3DDevice->SetStreamSource(0, m_pVertexBuffer, 0, vertSize);
+	pD3DDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, numPrimitives);
+}
+
+
+
+
+
+
+
+
+
+
+
+/// Determine if an imposter requires regeneration.
+bool ImposterSystem::UpdateImposter(const D3DXVECTOR3& curCameraPos, Imposter* pImposter)
+{
+	if (pImposter->requiresRegeneration)
+	{
+		// This imposter already requires regeneration, don't bother with anymore tests.
+
+		return true;
+	}
+	
+	// Test the age of the imposter.
+  
+    	float curTime = (float) DXUTGetTime();
+	float age = curTime - pImposter->lastGeneratedTime;
+    	if (age > MAX_IMPOSTER_AGE)
+    	{
+       	// Imposter has expired.
+        
+        	pImposter->requiresRegeneration = true;
+        	return true;
+    	}
+    
+    	// Test the angle between the current camera vector and the camera vector at the
+    	// time the imposter was last generated.
+
+    	D3DXVECTOR3 curCameraDir = curCameraPos - pImposter->centre;
+    	D3DXVec3Normalize(&curCameraDir, &curCameraDir);
+    	float viewAngle = D3DXVec3Dot(&curCameraDir, &pImposter->cameraDir);
+    	if (viewAngle <= VIEW_ANGLE_THRESHOLD)
+    	{
+       	// The camera view angle has become to extreme.
+        
+pImposter->requiresRegeneration = true;
+return true;
+    	}
+    
+return false;
+}
+
+
+
+
+
+
+

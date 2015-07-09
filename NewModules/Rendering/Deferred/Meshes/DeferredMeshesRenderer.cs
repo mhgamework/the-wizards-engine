@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
-using MHGameWork.TheWizards.EntityOud.Editor;
 using SlimDX;
 using SlimDX.Direct3D11;
 using CullMode = SlimDX.Direct3D11.CullMode;

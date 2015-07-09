@@ -62,6 +62,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphics.Xna", "Graphics.Xn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Core.Temp", "Common.Core.Temp\Common.Core.Temp.csproj", "{99E0CA65-D4C1-408D-85E6-A9A147B10698}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeGeneration", "TreeGeneration\TreeGeneration.csproj", "{D9F15B30-7B01-4E97-8288-05CE578F1769}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -668,6 +670,41 @@ Global
 		{99E0CA65-D4C1-408D-85E6-A9A147B10698}.Tools|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{99E0CA65-D4C1-408D-85E6-A9A147B10698}.Tools|Mixed Platforms.Build.0 = Release|Any CPU
 		{99E0CA65-D4C1-408D-85E6-A9A147B10698}.Tools|x86.ActiveCfg = Release|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.DebugAll|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.DebugAll|Any CPU.Build.0 = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.DebugAll|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.DebugAll|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.DebugAll|x86.ActiveCfg = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.DebugGameplay|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.DebugGameplay|Any CPU.Build.0 = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.DebugGameplay|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.DebugGameplay|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.DebugGameplay|x86.ActiveCfg = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.DocumentationHelper|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.DocumentationHelper|Any CPU.Build.0 = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.DocumentationHelper|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.DocumentationHelper|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.DocumentationHelper|x86.ActiveCfg = Debug|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Profile|Any CPU.ActiveCfg = Release|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Profile|Any CPU.Build.0 = Release|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Profile|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Profile|Mixed Platforms.Build.0 = Release|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Profile|x86.ActiveCfg = Release|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Release|x86.ActiveCfg = Release|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Tools|Any CPU.ActiveCfg = Release|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Tools|Any CPU.Build.0 = Release|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Tools|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Tools|Mixed Platforms.Build.0 = Release|Any CPU
+		{D9F15B30-7B01-4E97-8288-05CE578F1769}.Tools|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -264,6 +264,10 @@
       <Project>{ac6c51ce-96fb-401b-9b51-1302f273a52a}</Project>
       <Name>TestRunner</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TreeGeneration\TreeGeneration.csproj">
+      <Project>{D9F15B30-7B01-4E97-8288-05CE578F1769}</Project>
+      <Name>TreeGeneration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WPF\WPF.csproj">
       <Project>{8a52d3e0-5362-4d9f-a29e-32e24ad65eaf}</Project>
       <Name>WPF</Name>
