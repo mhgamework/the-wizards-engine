@@ -628,7 +628,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Client\Client.cd" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Rendering\Deferred\Files\AmbientOcclusion.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\Blur.fx" />

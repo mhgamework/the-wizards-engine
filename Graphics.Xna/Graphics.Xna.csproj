@@ -140,6 +140,13 @@
     <Compile Include="Graphics\XNAGame.cs" />
     <Compile Include="Graphics\XNAGameFiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Water\Camera.cs" />
+    <Compile Include="Water\Mesh.cs" />
+    <Compile Include="Water\SubGrid.cs" />
+    <Compile Include="Water\Utils.cs" />
+    <Compile Include="Water\Vertex.cs" />
+    <Compile Include="Water\Water.cs" />
+    <Compile Include="Water\WaterTest.cs" />
     <Compile Include="Wpf\IWindowFactory.cs" />
     <Compile Include="Wpf\SimpleWindowFactory.cs" />
     <Compile Include="Wpf\XNAGameWpf.cs" />

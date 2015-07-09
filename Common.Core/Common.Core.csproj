@@ -185,8 +185,6 @@
       <DependentUpon>InputBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\IntervalCaller.cs" />
-    <Compile Include="Core\IO\ByteReader.cs" />
-    <Compile Include="Core\IO\ByteWriter.cs" />
     <Compile Include="Core\IQuadTreeNode.cs" />
     <Compile Include="Core\MathExtra\Function.cs" />
     <Compile Include="Core\MathExtra\Functions.cs" />
