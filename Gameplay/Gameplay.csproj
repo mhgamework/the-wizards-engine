@@ -149,8 +149,9 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="ProceduralBuilder">
-      <HintPath>..\_Libraries\ProcBuilder\ProceduralBuilder.exe</HintPath>
+    <Reference Include="ProceduralBuilder, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\Binaries\ProceduralBuilder.exe</HintPath>
     </Reference>
     <Reference Include="QuickGraph, Version=3.6.61114.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -456,6 +457,7 @@
     <Compile Include="Scattered\GameLogic\SpellCasting\BurstSpellEffect.cs" />
     <Compile Include="Scattered\GameLogic\SpellCasting\BeamSpellEffect.cs" />
     <Compile Include="Scattered\GameLogic\SpellCasting\ImpactSpellEffect.cs" />
+    <Compile Include="Scattered\ProcBuilder\IslandGenerator.cs" />
     <Compile Include="Scattered\_Tests\GameLogic\SpellCastingEffectsTest.cs" />
     <Compile Include="Scattered\_Tests\ManualIoCTestLoader.cs" />
     <Compile Include="Scattered\_Tests\_Integration\LodTest.cs" />
@@ -496,7 +498,6 @@
     <Compile Include="Scattered\GameLogic\Services\WorldGenerationService.cs" />
     <Compile Include="Scattered\ProcBuilder\CachedIslandGenerator.cs" />
     <Compile Include="Scattered\ProcBuilder\IIslandGenerator.cs" />
-    <Compile Include="Scattered\ProcBuilder\IslandGenerator.cs" />
     <Compile Include="Scattered\ProcBuilder\ProcUtilities.cs" />
     <Compile Include="Scattered\SceneGraphing\TextPanelNode.cs" />
     <Compile Include="Scattered\SceneGraphing\EntityInteractableNode.cs" />
@@ -856,6 +857,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common.Core.Temp\Common.Core.Temp.csproj">
+      <Project>{99E0CA65-D4C1-408D-85E6-A9A147B10698}</Project>
+      <Name>Common.Core.Temp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
       <Project>{372ff145-4b2d-40a4-b171-cfff159e4c91}</Project>
       <Name>Common.Core</Name>
@@ -871,6 +876,10 @@
     <ProjectReference Include="..\NewModules\NewModules.csproj">
       <Project>{9543ac00-cde5-4759-bd98-2d031d16dfd4}</Project>
       <Name>NewModules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Physics\Physics.csproj">
+      <Project>{94AED3BF-CEFB-414D-BAAE-C0E685FDDAEB}</Project>
+      <Name>Physics</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestRunner\TestRunner.csproj">
       <Project>{ac6c51ce-96fb-401b-9b51-1302f273a52a}</Project>

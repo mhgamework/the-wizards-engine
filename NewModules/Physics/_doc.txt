@@ -1,7 +1,0 @@
-﻿Partial documentation! added later
-
-in Client.Physics is the logic to enable/disable objects using a quadtree.
-
-Objects are divided in 2 categories: Static and Dynamic. Dynamic objects are objects that force other objects to enable their physics when the dynamic objects are in range. Static objects cannot move!!
-
-The MeshPhysicsElementFactory seems to be the core class. You can make static and/or dynamic elements there

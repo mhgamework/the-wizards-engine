@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CA70CDCB-5E1A-44C3-BE71-11E75E0FEAFA}</ProjectGuid>
+    <ProjectGuid>{94AED3BF-CEFB-414D-BAAE-C0E685FDDAEB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Geomipmap.Tests</RootNamespace>
-    <AssemblyName>Geomipmap.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>Physics</RootNamespace>
+    <AssemblyName>Physics</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
     <SkipPostSharp>True</SkipPostSharp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -21,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,15 +35,13 @@
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
-    </Reference>
+    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
     <Reference Include="StillDesign.PhysX.Net">
-      <HintPath>..\bin\Binaries\StillDesign.PhysX.Net.dll</HintPath>
+      <HintPath>..\_Libraries\PhysX.Net\References\Debug\XNA 2.0\StillDesign.PhysX.Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,11 +49,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\ClientPhysicsQuadTreeNode.cs" />
+    <Compile Include="Client\ClientPhysicsTestSphere.cs" />
+    <Compile Include="Client\ClientXNAGameService.cs" />
+    <Compile Include="Client\IClientPhysicsObject.cs" />
+    <Compile Include="Physics\CustomContactReport.cs" />
+    <Compile Include="Physics\MeshDynamicPhysicsElement.cs" />
+    <Compile Include="Physics\MeshPhysicsActorBuilder.cs" />
+    <Compile Include="Physics\MeshPhysicsElementFactory.cs" />
+    <Compile Include="Physics\MeshPhysicsFactoryXNA.cs" />
+    <Compile Include="Physics\MeshPhysicsPool.cs" />
+    <Compile Include="Physics\MeshStaticPhysicsElement.cs" />
+    <Compile Include="Physics\PhysicsDebugRenderer.cs" />
+    <Compile Include="Physics\PhysicsDebugRendererXNA.cs" />
+    <Compile Include="Physics\PhysicsEngine.cs" />
+    <Compile Include="Physics\PhysicsHelper.cs" />
+    <Compile Include="Physics\PhysicsService.cs" />
+    <Compile Include="Physics\Temp\Camera.cs" />
+    <Compile Include="Physics\Temp\Engine.cs" />
+    <Compile Include="Physics\Temp\Math.cs" />
+    <Compile Include="Physics\Temp\Vertex Grid.cs" />
+    <Compile Include="Physics\User Output.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Terrain\SimpleTerrain.cs" />
-    <Compile Include="Terrain\SimpleTerrainBlock.cs" />
-    <Compile Include="Terrain\TerrainClientTest.cs" />
-    <Compile Include="Terrain\TerrainRenderingTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Physics\_doc.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Core.Temp\Common.Core.Temp.csproj">
@@ -64,30 +84,10 @@
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Geomipmap\Geomipmap.csproj">
-      <Project>{563F65AF-EE18-480E-A699-48A6AF95B08B}</Project>
-      <Name>Geomipmap</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Graphics.Xna\Graphics.Xna.csproj">
       <Project>{121ED163-A998-44E3-9738-EBF88AF2C29D}</Project>
       <Name>Graphics.Xna</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NewModules\NewModules.csproj">
-      <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
-      <Name>NewModules</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Physics\Physics.csproj">
-      <Project>{94AED3BF-CEFB-414D-BAAE-C0E685FDDAEB}</Project>
-      <Name>Physics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Unit Tests\Unit Tests.csproj">
-      <Project>{C79FDAC0-960D-4E13-981D-7A9D2CA3B6A8}</Project>
-      <Name>Unit Tests</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

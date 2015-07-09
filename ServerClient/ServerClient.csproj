@@ -286,6 +286,10 @@
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
       <Name>NewModules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Physics\Physics.csproj">
+      <Project>{94AED3BF-CEFB-414D-BAAE-C0E685FDDAEB}</Project>
+      <Name>Physics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TestRunner\TestRunner.csproj">
       <Project>{ac6c51ce-96fb-401b-9b51-1302f273a52a}</Project>
       <Name>TestRunner</Name>

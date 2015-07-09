@@ -13,7 +13,7 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.Scattered.ProcBuilder
 {
-    public class IslandGenerator : IIslandGenerator
+    public class IslandGenerator
     {
         private const string startSemId = "IslandFace";
 
@@ -26,7 +26,7 @@ namespace MHGameWork.TheWizards.Scattered.ProcBuilder
             return startShapes;
         }
 
-        public IMesh GetIslandMesh(List<IBuildingElement> islandBase, int seed)
+        public object GetIslandMesh(List<IBuildingElement> islandBase, int seed)
         {
             IMesh ret;
             List<IBuildingElement> temp01;
@@ -80,9 +80,7 @@ namespace MHGameWork.TheWizards.Scattered.ProcBuilder
                 meshBuilder.Build(shapesToMesh, meshGen.Generate(), seed);
             }
 
-            //islandMesh = meshDummyRenderer.GetBatchedMesh();
-            throw new NotImplementedException("TODO: map the IMesh from old Newmodules1.0, to the IMesh in the new location, or even better, dont use IMesh");
-            islandMesh = null;
+            islandMesh = meshDummyRenderer.GetBatchedMesh();
             navMesh = allStructureShapes.Where(e => ((Face)e).GetSemanticId() == walkableSemId).ToList();
             buildMesh = allStructureShapes.Where(e => ((Face)e).GetSemanticId() == buildableSemId).ToList();
             borderMesh = allStructureShapes.Where(e => ((Face)e).GetSemanticId() == borderSemId).ToList();
