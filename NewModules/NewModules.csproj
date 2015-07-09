@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MHGameWork.TheWizards</RootNamespace>
     <AssemblyName>NewModules</AssemblyName>
@@ -107,7 +107,8 @@
     <PostSharpOptimizationMode>OptimizeForBuildTime</PostSharpOptimizationMode>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>MHGameWork.TheWizards.Program</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Profile|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -227,39 +228,6 @@
     <Compile Include="Cogs\ICogComponent.cs" />
     <Compile Include="Cogs\StaticBox.cs" />
     <Compile Include="CompactQuadTree.cs" />
-    <Compile Include="Debugging\ExceptionMessageAttribute.cs" />
-    <Compile Include="Debugging\IErrorLogger.cs" />
-    <Compile Include="Engine\AssemblyHotloader.cs" />
-    <Compile Include="Engine\CodeLoading\RestartCodeLoader.cs" />
-    <Compile Include="Engine\CodeLoading\PersistentCodeLoader.cs" />
-    <Compile Include="Engine\Context\AssetsWrapper.cs" />
-    <Compile Include="Engine\Context\AudioWrapper.cs" />
-    <Compile Include="Engine\CatchExceptionsAttribute.cs" />
-    <Compile Include="Engine\Context\DataWrapper.cs" />
-    <Compile Include="Engine\Context\DebugWrapper.cs" />
-    <Compile Include="Engine\Diagnostics\DiagnosticsController.cs" />
-    <Compile Include="Engine\Diagnostics\EngineDataComponent.cs" />
-    <Compile Include="Engine\Diagnostics\EngineErrorLogger.cs" />
-    <Compile Include="Engine\Diagnostics\GPUResourcesComponent.cs" />
-    <Compile Include="Engine\Diagnostics\IDiagnosticsComponent.cs" />
-    <Compile Include="Engine\Diagnostics\OutputComponent.cs" />
-    <Compile Include="Engine\Diagnostics\Profiling\ProfilerComponent.cs" />
-    <Compile Include="Engine\Context\EngineAssetFactory.cs" />
-    <Compile Include="Engine\Context\EngineMeshFactory.cs" />
-    <Compile Include="Engine\Context\EngineTWContext.cs" />
-    <Compile Include="Engine\Diagnostics\Profiling\ProfilingDecoratorSimulator.cs" />
-    <Compile Include="Engine\Diagnostics\Tracing\ITraceLogger.cs" />
-    <Compile Include="Engine\Diagnostics\Tracing\TracingDecoratorSimulator.cs" />
-    <Compile Include="Engine\EngineDebugTools.cs" />
-    <Compile Include="Engine\Diagnostics\Tracing\EngineTraceLogger.cs" />
-    <Compile Include="Engine\ContextDecoratorSimulator.cs" />
-    <Compile Include="Engine\CodeLoading\ICodeLoader.cs" />
-    <Compile Include="Engine\Serialization\FilebasedAssetSerializer.cs" />
-    <Compile Include="Engine\Context\GraphicsWrapper.cs" />
-    <Compile Include="Engine\Data\PersistanceScopeAttribute.cs" />
-    <Compile Include="Engine\Context\PhysicsWrapper.cs" />
-    <Compile Include="Engine\Services\WPFApplicationService.cs" />
-    <Compile Include="Injection\DI.cs" />
     <Compile Include="Networking\SimpleClientPacketManager.cs" />
     <Compile Include="Networking\SimpleClientPacketTransporter.cs" />
     <Compile Include="Networking\SimpleServerPacketManager.cs" />
@@ -267,12 +235,6 @@
     <Compile Include="Pathing\IAI.cs" />
     <Compile Include="Pathing\IAIMover.cs" />
     <Compile Include="Pathing\SimpleAIMover.cs" />
-    <Compile Include="Persistence\AssetSerializer.cs" />
-    <Compile Include="Persistence\ListSerializer.cs" />
-    <Compile Include="Persistence\ModelObjectSerializer.cs" />
-    <Compile Include="Persistence\ModelSerializer.cs" />
-    <Compile Include="Persistence\MyObjectDictionary.cs" />
-    <Compile Include="Persistence\PersistAttribute.cs" />
     <Compile Include="Raycasting\MeshRaycaster.cs" />
     <Compile Include="Rendering\Deferred\ICustomGBufferRenderer.cs" />
     <Compile Include="Rendering\Deferred\Meshes\MeshBoundingBoxFactory.cs" />
@@ -291,20 +253,6 @@
     <Compile Include="Rendering\RAMMeshPart.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Engine\Data\EngineModelObject.cs" />
-    <Compile Include="Engine\BasicSimulator.cs" />
-    <Compile Include="Engine\TWEngine.cs" />
-    <Compile Include="Engine\IGameplayPlugin.cs" />
-    <Compile Include="Data\SimpleModelObject.cs" />
-    <Compile Include="Data\IModelObject.cs" />
-    <Compile Include="Engine\Data\IModelObjectAddon.cs" />
-    <Compile Include="Engine\ISimulator.cs" />
-    <Compile Include="Data\ModelChange.cs" />
-    <Compile Include="Data\ModelContainer.cs" />
-    <Compile Include="Data\ModelObjectChangedAttribute.cs" />
-    <Compile Include="Engine\Data\AddonAttacher.cs" />
-    <Compile Include="Engine\TW.cs" />
-    <Compile Include="Engine\Data\TypelessModel.cs" />
     <Compile Include="Particles\BallParticalCreater.cs" />
     <Compile Include="Particles\EmitterParameters.cs" />
     <Compile Include="Particles\FlameParticalCreater.cs" />
@@ -317,7 +265,6 @@
     <Compile Include="ProceduralTerrainGeneration\NoiseGenerater\SimpleTerrain.cs" />
     <Compile Include="ProceduralTerrainGeneration\TerrrainGeneration\HeigthMapGenerater.cs" />
     <Compile Include="ProceduralTerrainGeneration\TerrrainGeneration\ProceduralHeigthGenerater.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Rendering\Culling\CullerNoCull.cs" />
     <Compile Include="Rendering\DebugVisualizer.cs" />
     <Compile Include="Rendering\Default\DefaultModelMaterialTextured.cs" />
@@ -367,19 +314,10 @@
     <Compile Include="Rendering\Text\Unused\TextBlockRenderer.cs" />
     <Compile Include="Rendering\Text\DrawingToD3D11Conversion.cs" />
     <Compile Include="Rendering\Text\Unused\TextRendererSharedResource.cs" />
-    <Compile Include="Rendering\UtilityMeshes.cs" />
     <Compile Include="Rendering\VertexDeclarationPool.cs" />
     <Compile Include="RequiresPostSharp.cs" />
     <Compile Include="Scripting\ScriptLoader.cs" />
     <Compile Include="Scripting\ScriptWrapper.cs" />
-    <Compile Include="Serialization\CustomStringSerializerAttribute.cs" />
-    <Compile Include="Serialization\EnumSerializer.cs" />
-    <Compile Include="Serialization\IConditionalSerializer.cs" />
-    <Compile Include="Serialization\SectionedStreamReader.cs" />
-    <Compile Include="Serialization\SectionedStreamWriter.cs" />
-    <Compile Include="Serialization\StringSerializer.cs" />
-    <Compile Include="Serialization\TypeSerializer.cs" />
-    <Compile Include="Serialization\ValueTypeSerializer.cs" />
     <Compile Include="ServerclientDeprecated\DiskLoaderService.cs" />
     <Compile Include="ServerclientDeprecated\DiskSerializerService.cs" />
     <Compile Include="ServerclientDeprecated\IDiskSerializer.cs" />
@@ -466,10 +404,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
     <EmbeddedResource Include="Rendering\Deferred\Files\AmbientOcclusion.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\Blur.fx" />
@@ -488,13 +422,10 @@
     <EmbeddedResource Include="Rendering\Deferred\Files\RandomNormals.png" />
     <EmbeddedResource Include="Rendering\Files\Checker.png" />
     <Content Include="Audio\_doc.txt" />
-    <Content Include="Engine\_doc.txt" />
-    <Content Include="Persistence\_doc.txt" />
     <Content Include="Rendering\Default\_doc.txt" />
     <Content Include="Rendering\Deferred\Meshes\_doc.txt" />
     <Content Include="Rendering\Text\_doc.txt" />
     <Content Include="Rendering\_doc.txt" />
-    <Content Include="Serialization\_doc.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\UndoBig.png" />
@@ -545,7 +476,6 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\_doc.txt" />
     <Content Include="Scripting\_doc.txt" />
     <Content Include="Voxelization\_doc.txt" />
     <Content Include="_doc.txt" />

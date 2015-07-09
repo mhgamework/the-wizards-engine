@@ -865,6 +865,10 @@
       <Project>{372ff145-4b2d-40a4-b171-cfff159e4c91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EngineEnvironment\EngineEnvironment.csproj">
+      <Project>{5BB25FD1-4B7B-4E6E-B4E9-9D66BFEBF8D6}</Project>
+      <Name>EngineEnvironment</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Graphics.Xna\Graphics.Xna.csproj">
       <Project>{121ED163-A998-44E3-9738-EBF88AF2C29D}</Project>
       <Name>Graphics.Xna</Name>

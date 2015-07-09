@@ -118,7 +118,7 @@ namespace MHGameWork.TheWizards.RTSTestCase1
 
             if (!File.Exists(file))
             {
-                var tex = new TextTexture(TW.Graphics, texSize, texSize);
+                var tex = new TextTexture(game, texSize, texSize);
 
                 tex.SetFont("Arial", fontSize);
 

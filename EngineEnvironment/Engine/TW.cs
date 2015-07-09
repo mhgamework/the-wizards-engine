@@ -6,7 +6,6 @@ using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using StillDesign.PhysX;
 
 namespace MHGameWork.TheWizards
 {

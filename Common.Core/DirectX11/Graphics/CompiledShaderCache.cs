@@ -17,18 +17,19 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
     /// </summary>
     public class CompiledShaderCache
     {
-        private const string GlobalShaderPath = "../../Common.Core/Shaders/";
+        private static string GlobalShaderPath;
 
         static CompiledShaderCache()
         {
+            GlobalShaderPath = new DirectoryInfo("../../Common.Core/Shaders/").FullName;
             Current = new CompiledShaderCache();
             Current.disableCache = true; //TODO: test this with autoreloading...
+
         }
         public static CompiledShaderCache Current { get; private set; }
 
         private CompiledShaderCache()
         {
-
         }
 
         private bool disableCache = false;

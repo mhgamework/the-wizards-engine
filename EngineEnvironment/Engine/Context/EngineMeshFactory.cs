@@ -6,7 +6,6 @@ using System.Text;
 
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.ServerClient.Water;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.WorldRendering
