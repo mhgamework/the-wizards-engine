@@ -50,6 +50,7 @@
     <Compile Include="Editor\FromEditorProject\Temp\Terrain\TaggedTerrain.cs" />
     <Compile Include="Editor\FromEditorProject\Temp\Terrain\TerrainManagerService.cs" />
     <Compile Include="Editor\FromEditorProject\TODO\EditorTerrainAlphaMap.cs" />
+    <Compile Include="Engine\IGameFile.cs" />
     <Compile Include="GeoMipMap\Buffer2D.cs" />
     <Compile Include="GeoMipMap\FilePointer.cs" />
     <Compile Include="GeoMipMap\HeightMap.cs" />
@@ -84,6 +85,9 @@
     <Compile Include="Terrain\Rendering\TODO\TerrainTexture.cs" />
     <Compile Include="Terrain\Rendering\TODO\TerrainWeightMap.cs" />
     <Compile Include="Terrain\TerrainFullData.cs" />
+    <Compile Include="Wereld\IQuadtreeNode.cs" />
+    <Compile Include="Wereld\QuadtreeChildDirection.cs" />
+    <Compile Include="Wereld\QuadTreeNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Terrain\Client\TerrainClient.cd" />

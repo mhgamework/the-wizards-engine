@@ -127,16 +127,6 @@
     <Compile Include="Collada\TODO\ColladaMeshOud.cs" />
     <Compile Include="Collada\TODO\ColladaModelOud.cs" />
     <Compile Include="Collada\TODO\ColladaTextureOud.cs" />
-    <Compile Include="CommonOld\DataStream.cs" />
-    <Compile Include="CommonOld\Engine\IGameFile.cs" />
-    <Compile Include="CommonOld\Engine\IGameFileManager.cs" />
-    <Compile Include="CommonOld\GameClientData.cs" />
-    <Compile Include="CommonOld\GameIniFile.cs" />
-    <Compile Include="CommonOld\IGameEngine.cs" />
-    <Compile Include="CommonOld\PlayerInputData.cs" />
-    <Compile Include="CommonOld\Wereld\IQuadtreeNode.cs" />
-    <Compile Include="CommonOld\Wereld\QuadtreeChildDirection.cs" />
-    <Compile Include="CommonOld\Wereld\QuadTreeNode.cs" />
     <Compile Include="Core\SlimDXMathExtensions.cs" />
     <Compile Include="Core\Database\Database.cs" />
     <Compile Include="Core\Database\IGameObject.cs" />
