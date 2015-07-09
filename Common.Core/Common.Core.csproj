@@ -500,9 +500,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Deprecated\CommonVB\CommonVB.vbproj">
-      <Project>{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}</Project>
-      <Name>CommonVB</Name>
+    <ProjectReference Include="..\Networking.VB\Networking.VB.vbproj">
+      <Project>{3a751275-16f7-48c0-ba5f-510b10d70e1b}</Project>
+      <Name>Networking.VB</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestRunner\TestRunner.csproj">
       <Project>{ac6c51ce-96fb-401b-9b51-1302f273a52a}</Project>
