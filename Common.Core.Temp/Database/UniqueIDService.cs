@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
 
 namespace MHGameWork.TheWizards.ServerClient.Database
 {
@@ -39,7 +40,7 @@ namespace MHGameWork.TheWizards.ServerClient.Database
 
                 //TODO: WARNING: debugmode only!!!
 
-                System.Windows.Forms.MessageBox.Show( "There is no application ID set in the settings.ini file!!!!" );
+                MessageBox.Show( "There is no application ID set in the settings.ini file!!!!" );
                 string temp = InputBox.ShowInputBox( "Enter a UNIQUE applicationID:", "Enter application id! (DEBUG)" );
                 if ( !int.TryParse( temp, out uniqueApplicationID ) )
                 {

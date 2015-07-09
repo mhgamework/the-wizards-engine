@@ -736,9 +736,17 @@
     <Folder Include="TreeGenerator\Rendering\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common.Core.Temp\Common.Core.Temp.csproj">
+      <Project>{99E0CA65-D4C1-408D-85E6-A9A147B10698}</Project>
+      <Name>Common.Core.Temp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Xna\Graphics.Xna.csproj">
+      <Project>{121ed163-a998-44e3-9738-ebf88af2c29d}</Project>
+      <Name>Graphics.Xna</Name>
     </ProjectReference>
     <ProjectReference Include="..\Launcher\Launcher.csproj">
       <Project>{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}</Project>

@@ -98,6 +98,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common.Core.Temp\Common.Core.Temp.csproj">
+      <Project>{99E0CA65-D4C1-408D-85E6-A9A147B10698}</Project>
+      <Name>Common.Core.Temp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
@@ -105,6 +109,10 @@
     <ProjectReference Include="..\Geomipmap\Geomipmap.csproj">
       <Project>{563F65AF-EE18-480E-A699-48A6AF95B08B}</Project>
       <Name>Geomipmap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Xna\Graphics.Xna.csproj">
+      <Project>{121ED163-A998-44E3-9738-EBF88AF2C29D}</Project>
+      <Name>Graphics.Xna</Name>
     </ProjectReference>
     <ProjectReference Include="..\NewModules\NewModules.csproj">
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>

@@ -104,46 +104,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Animation\AMCParser.cs" />
-    <Compile Include="Animation\AMCSample.cs" />
-    <Compile Include="Animation\AMCSegment.cs" />
-    <Compile Include="Animation\Animation.cs" />
-    <Compile Include="Animation\AnimationControllerSkeleton.cs" />
-    <Compile Include="Animation\ASFJoint.cs" />
-    <Compile Include="Animation\ASFParser.cs" />
-    <Compile Include="Animation\Joint.cs" />
-    <Compile Include="Animation\Skeleton.cs" />
-    <Compile Include="Animation\SkeletonVisualizer.cs" />
-    <Compile Include="Collada\ColladaAsset.cs" />
-    <Compile Include="Collada\ColladaBone.cs" />
-    <Compile Include="Collada\ColladaMaterial.cs" />
-    <Compile Include="Collada\ColladaMesh.cs" />
-    <Compile Include="Collada\ColladaModel.cs" />
-    <Compile Include="Collada\ColladaScene.cs" />
-    <Compile Include="Collada\ColladaSource.cs" />
-    <Compile Include="Collada\ColladaTexture.cs" />
-    <Compile Include="Collada\SkinnedModelBuilder.cs" />
-    <Compile Include="Collada\TODO\ColladaMaterialOud.cs" />
-    <Compile Include="Collada\TODO\ColladaMeshOud.cs" />
-    <Compile Include="Collada\TODO\ColladaModelOud.cs" />
-    <Compile Include="Collada\TODO\ColladaTextureOud.cs" />
+    <Compile Include="AverageFPSCalculater.cs" />
     <Compile Include="Core\SlimDXMathExtensions.cs" />
-    <Compile Include="Core\Database\Database.cs" />
-    <Compile Include="Core\Database\IGameObject.cs" />
-    <Compile Include="Core\Database\IGameService.cs" />
-    <Compile Include="Core\Database\ISimpleTag.cs" />
-    <Compile Include="Core\Database\ITag.cs" />
-    <Compile Include="Core\Database\ITagged.cs" />
-    <Compile Include="Core\Database\ITagGenerater.cs" />
-    <Compile Include="Core\Database\SettingsService.cs" />
-    <Compile Include="Core\Database\SimpleTagGenerater.cs" />
-    <Compile Include="Core\Database\TagManager.cs" />
-    <Compile Include="Core\Database\TagManagerObject.cs" />
-    <Compile Include="Core\Database\UniqueIDService.cs" />
     <Compile Include="Core\EmbeddedFile.cs" />
     <Compile Include="Core\FileHelper.cs" />
-    <Compile Include="Core\Forms\ClassForm.cs" />
-    <Compile Include="Core\Forms\ColorElement.cs" />
     <Compile Include="DirectX11\DX11Game.cs" />
     <Compile Include="DirectX11\Filters\GaussianBlurFilter.cs" />
     <Compile Include="DirectX11\Graphics\BasicShader.cs" />
@@ -175,8 +139,6 @@
     <Compile Include="DirectX11\Rendering\Deferred\PointLightRenderer.cs" />
     <Compile Include="DirectX11\Rendering\Deferred\SpotLightRenderer.cs" />
     <Compile Include="DirectX11\Rendering\Deferred\ToneMapRenderer.cs" />
-    <Compile Include="DirectX11\SlimDXConversion\ConversionCameraDX.cs" />
-    <Compile Include="DirectX11\SlimDXConversion\ConversionCameraXNA.cs" />
     <Compile Include="Networking\AssemblyBuilder.cs" />
     <Compile Include="Networking\Client\BasicPacketTransporter.cs" />
     <Compile Include="Networking\Client\ClientPacketManagerNetworked.cs" />
@@ -216,145 +178,6 @@
     <Compile Include="Networking\TCPConnectionListener.cs" />
     <Compile Include="Networking\TCPPacketBuilder.cs" />
     <Compile Include="Networking\UDPConnection.cs" />
-    <Compile Include="Core\Forms\GridElement.cs" />
-    <Compile Include="Core\Forms\IFormElement.cs" />
-    <Compile Include="Core\Forms\ReadonlyElement.cs" />
-    <Compile Include="Core\Forms\TextBoxElement.cs" />
-    <Compile Include="Core\Graphics\AttributeSystem.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Cursor.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\DrawEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiAlign.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiButton.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiControl.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiControlCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiGraphics.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiImage.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiListBox.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiListBoxBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiServiceXNA.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiWindow.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\GuiWindowBorder.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\IGuiContainer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\IGuiService.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\IHandelable.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\MouseEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\Gui\TileSet.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\DEPRECATED\ICursor.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\FullScreenQuad.cs" />
-    <Compile Include="Core\Graphics\PlaneMesh.cs" />
-    <Compile Include="Core\Graphics\SphereMesh.cs" />
-    <Compile Include="Core\Graphics\ColladaShader.cs" />
-    <Compile Include="Core\Graphics\Curve3D.cs" />
-    <Compile Include="Core\Graphics\CustomCamera.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\GameFile.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\ICamera.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\IGameFile.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\IRenderPrimitives.cs" />
-    <Compile Include="Core\Graphics\IXNAGame.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\IXNAObject.cs" />
-    <Compile Include="Core\Graphics\Keyboard.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\LineManager3D.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\LineManager3DLines.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\Mouse.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\OrthographicCamera.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\Primitives.cs" />
-    <Compile Include="Core\Graphics\BasicShader.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\SkinnedBone.cs" />
-    <Compile Include="Core\Graphics\SkinnedMesh.cs" />
-    <Compile Include="Core\Graphics\SkinnedModel.cs" />
-    <Compile Include="Core\Graphics\SkinnedShader.cs" />
-    <Compile Include="Core\Graphics\SkinnedTangentVertex.cs" />
-    <Compile Include="Core\Graphics\SpectaterCamera.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\TangentVertex.cs" />
-    <Compile Include="Core\Graphics\TestXNAGame.cs" />
-    <Compile Include="Core\Graphics\Texture.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\TODO\ColorHelper.cs" />
-    <Compile Include="Core\Graphics\TODO\FileHelper.cs" />
-    <Compile Include="Core\Graphics\TODO\Material.cs" />
-    <Compile Include="Core\Graphics\TODO\ShaderEffect.cs" />
-    <Compile Include="Core\Graphics\TODO\StringHelper.cs" />
-    <Compile Include="Core\Graphics\TODO\TangentVertex.cs" />
-    <Compile Include="Core\Graphics\TODO\TextureBookengine.cs" />
-    <Compile Include="Core\Graphics\TODO\XmlHelper.cs" />
-    <Compile Include="Core\Graphics\Transformation.cs" />
-    <Compile Include="Core\Graphics\VertexElementAttribute.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\VertexMultitextured.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\XNAGame.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Graphics\XNAGameFiles.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Core\InputBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -377,7 +200,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\QuadTree.cs" />
     <Compile Include="Core\QuadTreeNodeData.cs" />
-    <Compile Include="Core\QuadTreeVisualizerXNA.cs" />
     <Compile Include="Core\Seeder.cs" />
     <Compile Include="Core\SlimDXConversion\SlimDXConversion.cs" />
     <Compile Include="Core\SlimDXConversion\BoundingFrustum.cs" />
@@ -385,38 +207,9 @@
     <Compile Include="Core\TWDir.cs" />
     <Compile Include="RequiresPostSharp.cs" />
     <Compile Include="Shaders\ShaderFiles.cs" />
-    <Compile Include="Water\Camera.cs" />
-    <Compile Include="Water\Mesh.cs" />
-    <Compile Include="Water\SubGrid.cs" />
-    <Compile Include="Water\Utils.cs" />
-    <Compile Include="Water\Vertex.cs" />
-    <Compile Include="Water\Water.cs" />
-    <Compile Include="Water\WaterTest.cs" />
-    <Compile Include="Core\Wpf\IWindowFactory.cs" />
-    <Compile Include="Core\Wpf\SimpleWindowFactory.cs" />
-    <Compile Include="Core\Wpf\XNAGameWpf.cs" />
-    <Compile Include="Core\XML\XmlNode.cs" />
-    <Compile Include="Core\XML\XMLSerializer.cs" />
     <Compile Include="Core\XnaMathExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Core\Graphics\Files\LineRendering.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Core\Graphics\Files\ColladaModel.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Collada\Files\SimpleBones001.DAE" />
-    <EmbeddedResource Include="Collada\Files\SimpleCharacterAnim001.DAE" />
-    <EmbeddedResource Include="Collada\Files\test_man_baked.DAE" />
-    <EmbeddedResource Include="Collada\Files\TriangleBones001.DAE" />
-    <EmbeddedResource Include="Collada\Files\Wall001.DAE" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Core\Graphics\Files\SkinnedNormalMapping.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Core\Graphics\Files\ColladaModelNew.fx" />
     <EmbeddedResource Include="Core\InputBox.resx">
       <SubType>Designer</SubType>
       <DependentUpon>InputBox.cs</DependentUpon>
@@ -425,9 +218,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Core\Core.cd" />
-    <EmbeddedResource Include="Core\Graphics\Files\Calibri.xnb" />
-    <Compile Include="Core\Graphics\AverageFPSCalculater.cs" />
-    <Compile Include="Core\Graphics\BoxMesh.cs" />
     <None Include="packages.config" />
     <None Include="Shaders\Common.fx" />
     <None Include="Shaders\CSM\CSM.fx" />
@@ -489,9 +279,7 @@
       <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Raycast\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Shaders\Deferred\Fog.fx" />
     <Content Include="Shaders\Deferred\TODO\RandomNormals.png" />

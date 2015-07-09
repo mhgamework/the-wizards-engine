@@ -174,7 +174,7 @@ namespace MHGameWork.TheWizards.Graphics
 
             graphics = new GraphicsDeviceManager(this);
             graphics.PreparingDeviceSettings += new EventHandler<PreparingDeviceSettingsEventArgs>(graphics_PreparingDeviceSettings);
-            Content.RootDirectory = System.Windows.Forms.Application.StartupPath + "\\";
+            Content.RootDirectory = Application.StartupPath + "\\";
 
             //Content.RootDirectory = "Content";
 
