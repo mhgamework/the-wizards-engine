@@ -103,7 +103,6 @@
     <Import Include="System.Windows" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ByteOps\ByteConverter.vb" />
     <Compile Include="ByteOps\ByteReader.vb" />
     <Compile Include="ByteOps\ByteWriter.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
