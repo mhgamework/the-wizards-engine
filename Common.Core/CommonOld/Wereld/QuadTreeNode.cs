@@ -15,7 +15,7 @@ namespace MHGameWork.TheWizards.Common.Wereld
         protected QuadTreeNode parent;
         protected BoundingBox boundingBox = new BoundingBox();
         protected bool isStatic = false;
-        protected Common.GeoMipMap.TerrainBlock terrainBlock;
+        protected object terrainBlock;
 
         public enum ChildDir
         {
@@ -528,7 +528,8 @@ namespace MHGameWork.TheWizards.Common.Wereld
             }
         }
 
-        public Common.GeoMipMap.TerrainBlock TerrainBlock
+        // Was: Common.GeoMipMap.TerrainBlock
+        public object TerrainBlock
         {
             get { return terrainBlock; }
             set

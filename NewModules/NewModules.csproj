@@ -252,15 +252,6 @@
     <Compile Include="CompactQuadTree.cs" />
     <Compile Include="Debugging\ExceptionMessageAttribute.cs" />
     <Compile Include="Debugging\IErrorLogger.cs" />
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\TaggedTerrain.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Editor\FromEditorProject\Temp\Terrain\TerrainManagerService.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Editor\FromEditorProject\TODO\EditorTerrainAlphaMap.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Engine\AssemblyHotloader.cs" />
     <Compile Include="Engine\CodeLoading\RestartCodeLoader.cs" />
     <Compile Include="Engine\CodeLoading\PersistentCodeLoader.cs" />
@@ -355,7 +346,6 @@
     <Compile Include="Particles\SimpleParticleCreater.cs" />
     <Compile Include="Particles\SparkelParticleCreater.cs" />
     <Compile Include="Physics\PhysicsDebugRenderer.cs" />
-    <Compile Include="ProceduralTerrainGeneration\Grass\GrassMesh.cs" />
     <Compile Include="ProceduralTerrainGeneration\NoiseGenerater\PerlinNoiseGenerater.cs" />
     <Compile Include="ProceduralTerrainGeneration\NoiseGenerater\SimpleTerrain.cs" />
     <Compile Include="ProceduralTerrainGeneration\TerrrainGeneration\HeigthMapGenerater.cs" />
@@ -439,38 +429,6 @@
     <Compile Include="ServerclientDeprecated\QuadTreeNode.cs" />
     <Compile Include="Server\Launcher\LauncherServer.cs" />
     <Compile Include="Spatial\GridTraverser.cs" />
-    <Compile Include="Terrain\Editor\TerrainRaiseTool.cs" />
-    <Compile Include="Terrain\Geomipmap\HeightmapNormalCalculator.cs" />
-    <Compile Include="Terrain\Geomipmap\IndexBufferBuilder.cs" />
-    <Compile Include="Terrain\Geomipmap\ITerrainBlock.cs" />
-    <Compile Include="Terrain\Geomipmap\MinDistanceCalculator.cs" />
-    <Compile Include="Terrain\Rendering\TerrainShaderNew.cs" />
-    <Compile Include="Terrain\Rendering\TODO\ITerrainBlockRenderable.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Terrain\Rendering\TODO\TerrainBlock.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Terrain\Rendering\TODO\TerrainGeomipmapRenderData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Terrain\Rendering\TODO\TerrainMaterial.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Terrain\Rendering\TODO\TerrainQuadTreeNodeData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Terrain\Rendering\TODO\TerrainStatistics.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Terrain\Rendering\TODO\TerrainTexture.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Terrain\Rendering\TODO\TerrainWeightMap.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Terrain\TerrainFullData.cs" />
-    <Compile Include="Terrain\HeightMap.cs" />
     <Compile Include="OBJParser\OBJToRAMMeshConverter.cs" />
     <Compile Include="Particles\Emitter.cs" />
     <Compile Include="Physics\CustomContactReport.cs" />
@@ -641,9 +599,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Terrain\Client\TerrainBlockClientPhysics.cs" />
-    <Compile Include="Terrain\Client\TerrainBlockHeightfieldBuilder.cs" />
-    <Compile Include="Terrain\Client\TerrainClientPhysics.cs" />
     <Compile Include="WorldDatabase\DataElementFactoryIdentifier.cs" />
     <Compile Include="WorldDatabase\DataElementIdentifier.cs" />
     <Compile Include="WorldDatabase\DataElementXMLFactory.cs" />
@@ -675,24 +630,6 @@
     </None>
     <None Include="Client\Client.cd" />
     <None Include="packages.config" />
-    <None Include="ProceduralTerrainGeneration\Grass\GrassShaderNewDesign.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ProceduralTerrainGeneration\Grass\Textures\GrassTextures\flower001%28purple%29.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ProceduralTerrainGeneration\Grass\Textures\GrassTextures\flower002%28orange%29.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ProceduralTerrainGeneration\Grass\Textures\GrassTextures\grass.tga">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ProceduralTerrainGeneration\Grass\Textures\GrassTextures\m_grassblades.tga">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ProceduralTerrainGeneration\Grass\Textures\GrassTextures\textureAtlas01.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <EmbeddedResource Include="Rendering\Deferred\Files\AmbientOcclusion.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\Blur.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\ClearGBuffer.fx" />
@@ -707,8 +644,6 @@
     <EmbeddedResource Include="Rendering\Files\DefaultModelShader.fx" />
     <None Include="Rendering\Text\Unused\SharedResourceShader.fx" />
     <None Include="Rendering\Text\Unused\SpriteShader.fx" />
-    <None Include="Terrain\Client\TerrainClient.cd" />
-    <EmbeddedResource Include="Terrain\Rendering\Files\TerrainGeomipmap.fx" />
     <None Include="TreeGenerator\app.config" />
     <None Include="TreeGenerator\Clouds\shader\BasicTestShader.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -827,36 +762,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\_doc.txt" />
-    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\densityValueTest.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\DifferentGrasstypesTest.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\DifferentGrasstypesTest2.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\FirstGrassMap.bmp">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\GrassDensityMoreAdvancedTesting1.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\GrassMap2.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\GrassMap3.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ProceduralTerrainGeneration\Grass\Textures\DesityTextures\GrassMap4.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ProceduralTerrainGeneration\Grass\Textures\GrassTextures\Diffuse_grass_.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ProceduralTerrainGeneration\Grass\Textures\GrassTextures\textureAtlas01.XML">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Scripting\_doc.txt" />
     <Content Include="TreeGenerator\Clouds\CloudsTileset.jpg" />
     <Content Include="TreeGenerator\Clouds\Design.txt" />
