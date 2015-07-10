@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 
-
-namespace MHGameWork.TheWizards.ServerClient
+namespace MHGameWork.TheWizards.Graphics.Xna.XML
 {
     /// <summary>
     /// Created by MHGameWork, part of The Wizards, Revision 138

@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics.DEPRECATED;
+using MHGameWork.TheWizards.Graphics.Xna.XML;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MHGameWork.TheWizards.Graphics;

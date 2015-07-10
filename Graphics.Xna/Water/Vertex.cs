@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
+//using Color = System.Drawing.Color;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-//using Color = System.Drawing.Color;
-using MHGameWork.TheWizards.ServerClient.Graphics;
 
-namespace MHGameWork.TheWizards.ServerClient.Water
+namespace MHGameWork.TheWizards.Graphics.Xna.Water
 {
     struct TerrainVertex
     {
@@ -43,11 +39,11 @@ namespace MHGameWork.TheWizards.ServerClient.Water
 
     public struct WaterDMapVertex
     {
-        [VertexElementAttribute( VertexElementUsage.Position )]
+        [VertexElement( VertexElementUsage.Position )]
         public Vector3 pos;
-        [VertexElementAttribute( VertexElementUsage.TextureCoordinate )]
+        [VertexElement( VertexElementUsage.TextureCoordinate )]
         public Vector2 scaledTexC;     // [a, b]
-        [VertexElementAttribute( VertexElementUsage.TextureCoordinate )]
+        [VertexElement( VertexElementUsage.TextureCoordinate )]
         public Vector2 normalizedTexC; // [0, 1]
 
 

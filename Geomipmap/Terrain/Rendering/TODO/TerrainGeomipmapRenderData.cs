@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO;
 using MHGameWork.TheWizards.ServerClient.TWClient;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using MHGameWork.TheWizards.Common.GeoMipMap;
 using System.Xml;
-using MHGameWork.TheWizards.ServerClient.TWXNAEngine;
 using IBinaryFile = MHGameWork.TheWizards.ServerClient.Database.IBinaryFile;
 
 namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
@@ -547,7 +548,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         //    get { return vertexDeclaration; }
         //    set { vertexDeclaration = value; }
         //}
-        public Engine.ShaderEffect effect;
+        public ShaderEffect effect;
 
   
         private int id;

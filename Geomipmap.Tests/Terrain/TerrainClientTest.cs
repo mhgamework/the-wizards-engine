@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.ServerClient.Terrain;
 using MHGameWork.TheWizards.Terrain;

@@ -1,7 +1,7 @@
 ﻿using System;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.ServerClient.Terrain.Rendering;
-using MHGameWork.TheWizards.ServerClient.TWXNAEngine;
 using MHGameWork.TheWizards.Terrain;
 using MHGameWork.TheWizards.Terrain.Geomipmap;
 using Microsoft.Xna.Framework;

@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Xml;
-using System.Globalization;
-using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.ServerClient.Engine
+namespace MHGameWork.TheWizards.Graphics.Xna.Collada.TODO
 {
     public class ColladaModelOud
     {

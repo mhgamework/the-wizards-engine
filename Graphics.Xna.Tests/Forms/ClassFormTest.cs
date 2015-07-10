@@ -2,9 +2,10 @@
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
-using MHGameWork.TheWizards.Forms;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Wpf;
+using MHGameWork.TheWizards.Graphics.Xna.Forms;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Wpf;
 using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.Tests.Features.Data.Forms

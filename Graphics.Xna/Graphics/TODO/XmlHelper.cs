@@ -7,16 +7,15 @@
 // Generated with Commenter by abi.exDream.com
 
 #region Using directives
+
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Text;
-using System.Threading;
 using System.Xml;
+
 #endregion
 
-namespace MHGameWork.TheWizards.ServerClient.Engine
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO
 {
 	/// <summary>
 	/// Xml helper

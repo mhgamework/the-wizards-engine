@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using MHGameWork.TheWizards.Reflection;
 
-namespace MHGameWork.TheWizards.Forms
+namespace MHGameWork.TheWizards.Graphics.Xna.Forms
 {
     public class GridElement : IFormElement
     {

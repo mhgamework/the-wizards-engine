@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using Graphics.Xna.Graphics;
 using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.Common.Core.Collada;
-using MHGameWork.TheWizards.Common.Core.Graphics;
 using TreeGenerator.Clouds;
 using Seeder = TreeGenerator.help.Seeder;
 
@@ -179,7 +177,7 @@ namespace TreeGenerator.TreeEngine
         private void InitializeAsBillBoardedLeafs(IXNAGame _game, string texture)
         {
             game = _game;
-            TWTexture TextureImage = TWTexture.FromImageFile(game,new MHGameWork.TheWizards.ServerClient.GameFile(texture));
+            TWTexture TextureImage = TWTexture.FromImageFile(game,new GameFile(texture));
 
             BillBoardShader = BasicShader.LoadFromEmbeddedFile(game, Assembly.GetExecutingAssembly(), "TreeGenerator.TreeEngine.BillBoardShader.fx", "..\\..\\..\\TreeEngine\\BillBoardShader.fx", new EffectPool());
             BillBoardShader.SetTechnique("Billboard");

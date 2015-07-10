@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using StringHelper = MHGameWork.TheWizards.ServerClient.Engine.StringHelper;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO;
 
-
-namespace MHGameWork.TheWizards.ServerClient
+namespace MHGameWork.TheWizards.Graphics.Xna.Collada
 {
     public class ColladaTexture
     {

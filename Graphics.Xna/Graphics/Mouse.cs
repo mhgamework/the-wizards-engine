@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
-namespace MHGameWork.TheWizards.ServerClient
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     /// <summary>
     /// TODO: when in cursorEnabled mode, clicking outside the window should probably

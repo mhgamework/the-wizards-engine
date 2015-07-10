@@ -1,5 +1,6 @@
 ﻿using MHGameWork.TheWizards.Cogs;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;

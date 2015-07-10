@@ -1,5 +1,6 @@
 ﻿using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.Physics;
 
 namespace MHGameWork.TheWizards.Tests.Features.Simulation.Physics

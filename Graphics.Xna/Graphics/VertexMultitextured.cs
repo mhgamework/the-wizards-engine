@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.ServerClient.TWXNAEngine
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
 	public struct VertexMultitextured
 	{

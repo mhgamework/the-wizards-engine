@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
 using MHGameWork.TheWizards.Networking.Server;

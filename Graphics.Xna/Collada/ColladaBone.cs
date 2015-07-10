@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.ServerClient
+namespace MHGameWork.TheWizards.Graphics.Xna.Collada
 {
     public class ColladaBone
     {

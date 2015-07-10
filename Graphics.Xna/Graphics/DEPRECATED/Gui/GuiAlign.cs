@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace MHGameWork.TheWizards.ServerClient.Gui
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics.DEPRECATED.Gui
 {
     [Flags]
     public enum GuiAlign

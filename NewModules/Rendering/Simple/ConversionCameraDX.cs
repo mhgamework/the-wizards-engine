@@ -2,11 +2,11 @@
 
 namespace MHGameWork.TheWizards.DirectX11.SlimDXConversion
 {
-    public class ConversionCameraDX : MHGameWork.TheWizards.ServerClient.ICamera, ICamera
+    public class ConversionCameraDX : Graphics.Xna.Graphics.ICamera, ICamera
     {
-        private readonly ServerClient.ICamera cam;
+        private readonly Graphics.Xna.Graphics.ICamera cam;
 
-        public ConversionCameraDX(ServerClient.ICamera cam)
+        public ConversionCameraDX(Graphics.Xna.Graphics.ICamera cam)
         {
             this.cam = cam;
         }
@@ -47,32 +47,32 @@ namespace MHGameWork.TheWizards.DirectX11.SlimDXConversion
 
         #region ICamera Members
 
-        Microsoft.Xna.Framework.Matrix ServerClient.ICamera.View
+        Microsoft.Xna.Framework.Matrix Graphics.Xna.Graphics.ICamera.View
         {
             get { return cam.View; }
         }
 
-        Microsoft.Xna.Framework.Matrix ServerClient.ICamera.Projection
+        Microsoft.Xna.Framework.Matrix Graphics.Xna.Graphics.ICamera.Projection
         {
             get { return cam.Projection; }
         }
 
-        Microsoft.Xna.Framework.Matrix ServerClient.ICamera.ViewProjection
+        Microsoft.Xna.Framework.Matrix Graphics.Xna.Graphics.ICamera.ViewProjection
         {
             get { return cam.ViewProjection; }
         }
 
-        Microsoft.Xna.Framework.Matrix ServerClient.ICamera.ViewInverse
+        Microsoft.Xna.Framework.Matrix Graphics.Xna.Graphics.ICamera.ViewInverse
         {
             get { return cam.ViewInverse; }
         }
 
-        float ServerClient.ICamera.NearClip
+        float Graphics.Xna.Graphics.ICamera.NearClip
         {
             get { return cam.NearClip; }
         }
 
-        float ServerClient.ICamera.FarClip
+        float Graphics.Xna.Graphics.ICamera.FarClip
         {
             get { return cam.FarClip; }
         }

@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using MHGameWork.TheWizards.ServerClient;
+using MHGameWork.TheWizards.Graphics.Xna.XML;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.Graphics
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     /// <summary>
     /// This class supports automatic reloading

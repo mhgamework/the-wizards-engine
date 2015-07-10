@@ -8,17 +8,13 @@
 
 #region Using directives
 
-using MHGameWork.TheWizards.Graphics;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using MHGameWork.TheWizards.ServerClient.Graphics;
+
 #endregion
 
-namespace MHGameWork.TheWizards.ServerClient.Engine
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     /// <summary>
     /// Skinned tangent vertex, similar to TangentVertex, but adds the
@@ -30,36 +26,36 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
         /// <summary>
         /// Position
         /// </summary>
-        [VertexElementAttribute(VertexElementUsage.Position)]
+        [VertexElement(VertexElementUsage.Position)]
         public Vector3 pos;
 
         /// <summary>
         /// 3 weights of each bone (often just 1, 0, 0 to use only 1 bone)
         /// </summary>
-        [VertexElementAttribute(VertexElementUsage.BlendWeight)]
+        [VertexElement(VertexElementUsage.BlendWeight)]
         public Vector3 blendWeights;
         /// <summary>
         /// Indices for used bones. Just floats because shader expect that and
         /// we can't use UByte4 for lower than vs_2_0 hardware. Uses just int
         /// values really.
         /// </summary>
-        [VertexElementAttribute(VertexElementUsage.BlendIndices)]
+        [VertexElement(VertexElementUsage.BlendIndices)]
         public Vector3 blendIndices;
 
         /// <summary>
         /// Texture coordinates
         /// </summary>
-        [VertexElementAttribute(VertexElementUsage.TextureCoordinate)]
+        [VertexElement(VertexElementUsage.TextureCoordinate)]
         public Vector2 uv;
         /// <summary>
         /// Normal
         /// </summary>
-        [VertexElementAttribute(VertexElementUsage.Normal)]
+        [VertexElement(VertexElementUsage.Normal)]
         public Vector3 normal;
         /// <summary>
         /// Tangent
         /// </summary>
-        [VertexElementAttribute(VertexElementUsage.Tangent)]
+        [VertexElement(VertexElementUsage.Tangent)]
         public Vector3 tangent;
 
         /// <summary>

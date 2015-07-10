@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
-using MHGameWork.TheWizards.ServerClient.Graphics;
-using MHGameWork.TheWizards.Common.Core.Collada;
-using MHGameWork.TheWizards.ServerClient.Entity.Rendering;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.Common.Core.Graphics
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     public class SkinnedMesh
     {

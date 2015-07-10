@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows;
-using MHGameWork.TheWizards.Forms;
-using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Forms;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 
-namespace MHGameWork.TheWizards.Wpf
+namespace MHGameWork.TheWizards.Graphics.Xna.Wpf
 {
     public class XNAGameWpf : IWindowFactory, IXNAObject
     {

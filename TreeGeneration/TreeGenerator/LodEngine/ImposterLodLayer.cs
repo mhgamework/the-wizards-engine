@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Graphics.Xna.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.ServerClient;
 using TreeGenerator.TreeEngine;
 using Microsoft.Xna.Framework.Graphics;
 using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework;
 using TreeGenerator.Imposter;
-using TangentVertex = MHGameWork.TheWizards.ServerClient.Engine.TangentVertex;
+using TangentVertex = MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO.TangentVertex;
 
 namespace TreeGenerator.LodEngine
 {

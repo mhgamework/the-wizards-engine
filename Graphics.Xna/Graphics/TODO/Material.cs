@@ -3,13 +3,11 @@
 //using NUnit.Framework;
 #endif
 using System;
-using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework.Graphics;
+
 #endregion
 
-namespace MHGameWork.TheWizards.ServerClient.Engine
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO
 {
 	/// <summary>
 	/// Material class for DirectX materials used for Models. Consists of

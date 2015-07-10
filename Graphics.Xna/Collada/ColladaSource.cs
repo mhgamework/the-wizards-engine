@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
 using System.Xml;
-using XmlHelper = MHGameWork.TheWizards.ServerClient.Engine.XmlHelper;
-using StringHelper = MHGameWork.TheWizards.ServerClient.Engine.StringHelper;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO;
+using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.ServerClient
+namespace MHGameWork.TheWizards.Graphics.Xna.Collada
 {
     public abstract class ColladaSource
     {

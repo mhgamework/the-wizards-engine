@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MHGameWork.TheWizards.Rendering.Default

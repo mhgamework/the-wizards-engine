@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Graphics.Xna.Graphics;
 using MHGameWork.TheWizards;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.XML;
 using MHGameWork.TheWizards.Terrain;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.Common.Core.Collada;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Database;
 using MHGameWork.TheWizards.ServerClient.Database;

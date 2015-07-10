@@ -18,7 +18,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.ServerClient.CascadedShadowMaps
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     /// <summary>
     /// TODO: promote this to a MHGameWork.TheWizards.Graphics class

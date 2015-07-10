@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using MHGameWork.TheWizards.Graphics.Xna.XML;
 using MHGameWork.TheWizards.ServerClient;
 using MHGameWork.TheWizards.Xml;
 using Microsoft.Xna.Framework;

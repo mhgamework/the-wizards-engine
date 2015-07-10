@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Graphics.Xna.Graphics;
-using MHGameWork.TheWizards.Graphics;
+using System.Globalization;
+using System.Xml;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Xml;
-using System.Globalization;
 
-
-namespace MHGameWork.TheWizards.ServerClient.Engine
+namespace MHGameWork.TheWizards.Graphics.Xna.Collada.TODO
 {
     public class ColladaMeshOud
     {
@@ -146,7 +144,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
         }
 
 
-        public List<TangentVertex> vertices = new List<TangentVertex>();
+        public List<Graphics.TODO.TangentVertex> vertices = new List<Graphics.TODO.TangentVertex>();
         public List<SkinnedTangentVertex> verticesSkinned = new List<SkinnedTangentVertex>();
 
         public int numOfVertices = 0,
@@ -377,7 +375,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
                 ////    position, blendWeights, blendIndices, u, v, normal, tangent ) );
 
                 //vertices.Add( new TangentVertex( position, u, v, normal, tangent ) );
-                vertices.Add( new TangentVertex( position, texcoord.X, texcoord.Y, normal, tangent ) );
+                vertices.Add( new Graphics.TODO.TangentVertex( position, texcoord.X, texcoord.Y, normal, tangent ) );
                 // Remember pos for optimizing the vertices later more easily.
                 reuseVertexPositions[ i ] = GetPositionIndex( i );// pos / 3;
                 reverseReuseVertexPositions[ GetPositionIndex( i ) ].Add( i );
@@ -659,8 +657,8 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
         /// <returns>ushort array for the optimized indices</returns>
         private ushort[] OptimizeVertexBuffer()
         {
-            List<TangentVertex> newVertices =
-                new List<TangentVertex>();
+            List<Graphics.TODO.TangentVertex> newVertices =
+                new List<Graphics.TODO.TangentVertex>();
             List<ushort> newIndices = new List<ushort>();
 
             // Helper to only search already added newVertices and for checking the
@@ -671,7 +669,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
             for ( int num = 0; num < vertices.Count; num++ )
             {
                 // Get current vertex
-                TangentVertex currentVertex = vertices[ num ];
+                Graphics.TODO.TangentVertex currentVertex = vertices[ num ];
                 bool reusedExistingVertex = false;
 
                 // Find out which position index was used, then we can compare
@@ -688,7 +686,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
                         newIndices[ otherVertexIndex ] < newVertices.Count &&
                         // Then finally compare vertices (this call is slow, but thanks to
                         // all the other optimizations we don't have to call it that often)
-                        TangentVertex.NearlyEquals(
+                        Graphics.TODO.TangentVertex.NearlyEquals(
                         currentVertex, newVertices[ newIndices[ otherVertexIndex ] ] ) )
                     {
                         // Reuse the existing vertex, don't add it again, just
@@ -739,7 +737,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
             vertexBuffer = new VertexBuffer(
                 game.GraphicsDevice,
                 //typeof( SkinnedTangentVertex ),
-                typeof( TangentVertex ),
+                typeof( Graphics.TODO.TangentVertex ),
                 vertices.Count, BufferUsage.WriteOnly );
             //ResourceUsage.WriteOnly,
             //ResourceManagementMode.Automatic );
@@ -1046,7 +1044,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
 
 
             game.GraphicsDevice.Vertices[ 0 ].SetSource( vertexBuffer, 0,
-                TangentVertex.SizeInBytes );
+                Graphics.TODO.TangentVertex.SizeInBytes );
             game.GraphicsDevice.Indices = indexBuffer;
             game.GraphicsDevice.DrawIndexedPrimitives(
                 PrimitiveType.TriangleList,

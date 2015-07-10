@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MHGameWork.TheWizards.ServerClient.Entity.Rendering
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     public interface IRenderPrimitives
     {

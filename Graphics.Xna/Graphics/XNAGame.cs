@@ -2,18 +2,18 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using System.Windows.Forms;
-using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.Wpf;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using System.IO;
+using System.Windows.Forms;
 using MHGameWork.TheWizards.Common.Core;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics.DEPRECATED;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics.DEPRECATED.Gui;
+using MHGameWork.TheWizards.Graphics.Xna.Wpf;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
-namespace MHGameWork.TheWizards.Graphics
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     /// <summary>
     /// This is the main type for your game
@@ -105,10 +105,10 @@ namespace MHGameWork.TheWizards.Graphics
         /// </summary>
         private bool flagFirstDraw = true;
 
-        private ServerClient.Gui.GuiServiceXNA guiService;
+        private GuiServiceXNA guiService;
 
         [Obsolete("Not supported anymore!")]
-        public ServerClient.Gui.GuiServiceXNA GuiService
+        public GuiServiceXNA GuiService
         {
             get { return guiService; }
             set { guiService = value; }
@@ -188,7 +188,7 @@ namespace MHGameWork.TheWizards.Graphics
             spectaterCamera = new SpectaterCamera(this);
             SetCamera(spectaterCamera);
 
-            guiService = new MHGameWork.TheWizards.ServerClient.Gui.GuiServiceXNA(this);
+            guiService = new GuiServiceXNA(this);
 
             averageFPSCalculater = new AverageFPSCalculater();
             //cursor = new Cursor( this, EngineFiles.DefaultCursor, new Vector2( 10, 10 ) );

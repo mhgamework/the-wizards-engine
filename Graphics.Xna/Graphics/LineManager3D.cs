@@ -1,13 +1,8 @@
 using System;
-using System.Collections;
-using System.Text;
-using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using MHGameWork.TheWizards.Common.Core;
 
-namespace MHGameWork.TheWizards.Graphics
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     /// <summary>
     /// This is used by the XNAGame to render lines, or boxes, triangles, … as lines.

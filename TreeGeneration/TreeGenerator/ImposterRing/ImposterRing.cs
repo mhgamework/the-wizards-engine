@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
@@ -10,7 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MHGameWork.TheWizards.Graphics;
 using TreeGenerator.Imposter;
 using TreeGenerator.Morph;
-using ImposterRingVertex = MHGameWork.TheWizards.ServerClient.Engine.TangentVertex;
+using ImposterRingVertex = MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO.TangentVertex;
 
 namespace TreeGenerator.ImposterRing
 {

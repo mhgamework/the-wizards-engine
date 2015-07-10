@@ -1,13 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using Graphics.Xna.Graphics;
-using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MHGameWork.TheWizards.Common.Core.Graphics;
-namespace MHGameWork.TheWizards.Graphics
+
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     /// <summary>
     /// Represents a box that starts at 0,0,0 and extends in the axis directions with a length

@@ -2,7 +2,7 @@ using System;
 using MHGameWork.TheWizards.MathExtra;
 using Microsoft.Xna.Framework;
 
-namespace MHGameWork.TheWizards.Graphics
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     public struct Transformation
     {

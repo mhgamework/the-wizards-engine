@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards.Graphics.Xna.XML;
 using MHGameWork.TheWizards.ServerClient;
 
 namespace TreeGenerator

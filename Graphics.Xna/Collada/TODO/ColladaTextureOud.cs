@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
-using Microsoft.Xna.Framework;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 
-
-namespace MHGameWork.TheWizards.ServerClient.Engine
+namespace MHGameWork.TheWizards.Graphics.Xna.Collada.TODO
 {
     public class ColladaTextureOud
     {

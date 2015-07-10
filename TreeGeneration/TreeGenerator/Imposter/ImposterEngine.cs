@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Graphics.Xna.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.ServerClient.CascadedShadowMaps;
 using Microsoft.Xna.Framework.Graphics;
-using MHGameWork.TheWizards.Common.Core.Collada;
 using Microsoft.Xna.Framework;
 using MHGameWork.TheWizards.Graphics;
 
@@ -257,7 +255,7 @@ namespace TreeGenerator.Imposter
         public void UpdateImposter(int index)
         {
             ImposterStruct imp = Imposters[index];
-            MHGameWork.TheWizards.ServerClient.ICamera beginCamera = game.Camera;
+            ICamera beginCamera = game.Camera;
             Vector3[] impostorVerts = new Vector3[8];
 
             Vector3 cameraPosition = game.Camera.ViewInverse.Translation;

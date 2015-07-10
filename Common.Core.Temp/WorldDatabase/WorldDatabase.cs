@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TWXmlNode = MHGameWork.TheWizards.ServerClient.TWXmlNode;
+using TWXmlNode = MHGameWork.TheWizards.Graphics.Xna.XML.TWXmlNode;
 
 namespace MHGameWork.TheWizards.WorldDatabase
 {

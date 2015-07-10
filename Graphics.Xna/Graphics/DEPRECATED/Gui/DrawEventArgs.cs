@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.ServerClient.Gui
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics.DEPRECATED.Gui
 {
     public class DrawEventArgs : EventArgs, IHandelable
     {

@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards;
-using MHGameWork.TheWizards.Common.Core.Collada;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
 

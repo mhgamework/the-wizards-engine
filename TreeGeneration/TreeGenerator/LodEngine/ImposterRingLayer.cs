@@ -4,6 +4,7 @@ using System.Text;
 using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework.Graphics;
@@ -118,7 +119,7 @@ namespace TreeGenerator.LodEngine
            this.renderData = renderData;
        }
 
-       public void Initialize(MHGameWork.TheWizards.Graphics.IXNAGame game)
+       public void Initialize(IXNAGame game)
         {
             renderData.Initialize();
             boundingBox= Microsoft.Xna.Framework.BoundingBox .CreateFromPoints(renderData.BoundingBoxData);

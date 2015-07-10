@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using MHGameWork.TheWizards.Graphics.Xna.XML;
 using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Files;
 using MHGameWork.TheWizards.Networking.Server;

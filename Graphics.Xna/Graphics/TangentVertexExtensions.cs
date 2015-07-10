@@ -1,7 +1,6 @@
-﻿using MHGameWork.TheWizards.Graphics;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace Graphics.Xna.Graphics
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     public static class TangentVertexExtensions
     {

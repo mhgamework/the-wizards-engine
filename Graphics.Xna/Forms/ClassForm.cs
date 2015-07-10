@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using MHGameWork.TheWizards.Graphics.Xna.Wpf;
 using MHGameWork.TheWizards.Reflection;
-using MHGameWork.TheWizards.Wpf;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.Forms
+namespace MHGameWork.TheWizards.Graphics.Xna.Forms
 {
     public class ClassForm<T> : IClassForm
     {

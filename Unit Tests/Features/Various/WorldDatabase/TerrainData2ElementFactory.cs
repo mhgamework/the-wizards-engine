@@ -1,4 +1,5 @@
 using System;
+using MHGameWork.TheWizards.Graphics.Xna.XML;
 using MHGameWork.TheWizards.ServerClient;
 using MHGameWork.TheWizards.WorldDatabase;
 

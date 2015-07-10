@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-namespace MHGameWork.TheWizards.ServerClient
+
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics.DEPRECATED
 {
     public class Cursor : ICursor
     {

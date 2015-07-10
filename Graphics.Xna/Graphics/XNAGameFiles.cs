@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Common.Core;
 using System.Reflection;
+using MHGameWork.TheWizards.Common.Core;
 
-namespace MHGameWork.TheWizards.ServerClient
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     /// <summary>
     /// DEPRECATED, to say, old use is deprecated. Now unsure, maybe only folder access?

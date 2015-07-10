@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Collada.TODO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using XnaTexture = Microsoft.Xna.Framework.Graphics.Texture2D;
 
-namespace MHGameWork.TheWizards.ServerClient.Engine
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO
 {
     public class ShaderEffect
     {
@@ -170,7 +167,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
         /// <param name="lastUsedValue">Last used value</param>
         /// <param name="newValue">New value</param>
         private void SetValue( EffectParameter param,
-            ref XnaTexture lastUsedValue, XnaTexture newValue )
+            ref Texture2D lastUsedValue, Texture2D newValue )
         {
             if ( param != null &&
                 lastUsedValue != newValue )
@@ -305,7 +302,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
             } // set
         } // SpecularPower
 
-        protected XnaTexture lastUsedDiffuseTexture = null;
+        protected Texture2D lastUsedDiffuseTexture = null;
         /// <summary>
         /// Set diffuse texture
         /// </summary>
@@ -318,7 +315,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
             } // set
         } // DiffuseTexture
 
-        public XnaTexture DiffuseTextureMHGW
+        public Texture2D DiffuseTextureMHGW
         {
             set
             {
@@ -327,7 +324,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
             } // set
         } // DiffuseTexture
 
-        protected XnaTexture lastUsedNormalTexture = null;
+        protected Texture2D lastUsedNormalTexture = null;
         /// <summary>
         /// Set normal texture for normal mapping
         /// </summary>
@@ -341,7 +338,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
         } // NormalTexture
 
 
-        public XnaTexture NormalTextureMHGW
+        public Texture2D NormalTextureMHGW
         {
             set
             {

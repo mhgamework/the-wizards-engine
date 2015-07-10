@@ -1,16 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using MHGameWork.TheWizards.Common.Core;
-using MHGameWork.TheWizards.ServerClient.Graphics;
-using MHGameWork.TheWizards.Common.Core.Graphics;
-using MHGameWork.TheWizards.ServerClient;
-using Microsoft.Xna.Framework.Graphics;
-using System.Windows.Forms;
 using Microsoft.Xna.Framework;
-using MHGameWork.TheWizards.ServerClient.Entity.Rendering;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.Graphics
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     /// <summary>
     /// This should be called something else, since this is a general Colored/Textured/Normal renderer. (could add parallax)

@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
-
-namespace MHGameWork.TheWizards.ServerClient.Water
+namespace MHGameWork.TheWizards.Graphics.Xna.Water
 {
     public class SubGrid : IComparable<SubGrid>
     {

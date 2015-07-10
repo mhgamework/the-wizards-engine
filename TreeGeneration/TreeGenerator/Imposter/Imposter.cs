@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Graphics.Xna.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using Microsoft.Xna;
 using Microsoft.Xna.Framework.Graphics;
 using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
-using MHGameWork.TheWizards.Common.Core.Collada;
 using MHGameWork.TheWizards.Graphics;
 
 namespace TreeGenerator.Imposter
@@ -84,7 +83,7 @@ namespace TreeGenerator.Imposter
 
         public void UpdateImposter()
         {
-            MHGameWork.TheWizards.ServerClient.ICamera beginCamera = game.Camera;
+            ICamera beginCamera = game.Camera;
 
             //for testing
             //model = TWModel.FromColladaModel(game, ColladaModel.LoadWall001());

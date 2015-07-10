@@ -1,13 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using XnaTexture = Microsoft.Xna.Framework.Graphics.Texture2D;
 
-
-namespace MHGameWork.TheWizards.ServerClient
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     /// <summary>
     /// DEPRECATED
@@ -15,8 +9,8 @@ namespace MHGameWork.TheWizards.ServerClient
     [Obsolete( "This class is now used, but is to be removed/changed in the future" )]
     public class TWTexture
     {
-        private XnaTexture xnaTexture;
-        public XnaTexture XnaTexture
+        private Texture2D xnaTexture;
+        public Texture2D XnaTexture
         {
             get
             {

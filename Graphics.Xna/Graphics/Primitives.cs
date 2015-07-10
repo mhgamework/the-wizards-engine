@@ -1,14 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.ServerClient.Entity.Rendering;
-using Microsoft.Xna.Framework.Graphics;
-using MHGameWork.TheWizards.Common.Core.Collada;
 using Microsoft.Xna.Framework;
-using MHGameWork.TheWizards.ServerClient;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.Common.Core.Graphics
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     /// <summary>
     /// TODO: the WorldMatrix field should be deprecated here!

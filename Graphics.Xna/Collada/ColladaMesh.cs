@@ -1,21 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Graphics.Xna.Graphics;
-using MHGameWork.TheWizards.Graphics;
+using System.Globalization;
+using System.Xml;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Xml;
-using System.Globalization;
-using XmlHelper = MHGameWork.TheWizards.ServerClient.Engine.XmlHelper;
-using StringHelper = MHGameWork.TheWizards.ServerClient.Engine.StringHelper;
-using ColorHelper = MHGameWork.TheWizards.ServerClient.Engine.ColorHelper;
-using ShaderEffect = MHGameWork.TheWizards.ServerClient.Engine.ShaderEffect;
-using SkinnedTangentVertex = MHGameWork.TheWizards.ServerClient.Engine.SkinnedTangentVertex;
-using TangentVertex = MHGameWork.TheWizards.ServerClient.Engine.TangentVertex;
 
-
-namespace MHGameWork.TheWizards.ServerClient
+namespace MHGameWork.TheWizards.Graphics.Xna.Collada
 {
     public class ColladaMesh
     {
@@ -1285,7 +1277,7 @@ namespace MHGameWork.TheWizards.ServerClient
         /// with the DiffuseSpecular20 technique.
         /// </summary>
         /// <param name="renderMatrix">Render matrix</param>
-        public void Render( Matrix renderMatrix, Engine.ShaderEffect effect )
+        public void Render( Matrix renderMatrix, ShaderEffect effect )
         {
             if ( vertexBuffer == null || indexBuffer == null ) return;
 
@@ -1445,7 +1437,7 @@ namespace MHGameWork.TheWizards.ServerClient
             }
         } // Render(renderMatrix)
 
-        public void SetBoneMatrices( Engine.ShaderEffect effect, Matrix[] matrices )
+        public void SetBoneMatrices( ShaderEffect effect, Matrix[] matrices )
         {
 
             Vector4[] values = new Vector4[ matrices.Length * 3 ];

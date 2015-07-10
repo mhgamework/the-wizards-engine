@@ -11,15 +11,14 @@
 //using NUnit.Framework;
 #endif
 using System;
-using System.Text;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Globalization;
-using System.Diagnostics;
-using System.Collections.Generic;
+using System.Text;
+
 #endregion
 
-namespace MHGameWork.TheWizards.ServerClient.Engine
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO
 {
     /// <summary>
     /// StringHelper: Provides additional or simplified string functions.

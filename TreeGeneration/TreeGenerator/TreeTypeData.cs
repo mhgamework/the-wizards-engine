@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.Assets;
+using MHGameWork.TheWizards.Graphics.Xna.XML;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.ServerClient;
 

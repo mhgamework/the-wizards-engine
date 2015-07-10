@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.ServerClient;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.Common.Core.Collada;
-using MHGameWork.TheWizards.Common.Core.Graphics;
 using TreeGenerator.Imposter;
 using MHGameWork.TheWizards.Graphics;
 namespace TreeGenerator.TreeEngine

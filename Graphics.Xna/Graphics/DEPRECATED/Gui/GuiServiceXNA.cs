@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework;
 
-
-namespace MHGameWork.TheWizards.ServerClient.Gui
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics.DEPRECATED.Gui
 {
     public class GuiServiceXNA : IGuiService
     {

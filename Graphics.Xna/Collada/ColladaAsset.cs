@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.ServerClient;
+using MHGameWork.TheWizards.Graphics.Xna.XML;
 
-namespace MHGameWork.TheWizards.Collada
+namespace MHGameWork.TheWizards.Graphics.Xna.Collada
 {
     public class ColladaAsset
     {

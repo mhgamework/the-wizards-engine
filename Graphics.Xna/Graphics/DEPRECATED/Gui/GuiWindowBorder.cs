@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MHGameWork.TheWizards.ServerClient.Gui
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics.DEPRECATED.Gui
 {
     /// <summary>
     /// This class is only used by the window internally. It is created when the borders of the window are dragged.

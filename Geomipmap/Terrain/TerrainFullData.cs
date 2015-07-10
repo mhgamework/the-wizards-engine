@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards.Graphics.Xna.XML;
 using MHGameWork.TheWizards.ServerClient.Database;
 using MHGameWork.TheWizards.ServerClient.Editor;
 using MHGameWork.TheWizards.Terrain;

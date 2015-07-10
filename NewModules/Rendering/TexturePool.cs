@@ -5,6 +5,7 @@ using System.Text;
 using MHGameWork.TheWizards.Common.Core;
 
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MHGameWork.TheWizards.Rendering

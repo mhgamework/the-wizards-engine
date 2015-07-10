@@ -1,16 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.Common.Core.Graphics;
 using System.IO;
-using MHGameWork.TheWizards.ServerClient;
-using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.ServerClient.Collada;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using Microsoft.Xna.Framework;
-using MHGameWork.TheWizards.ServerClient.Engine;
-using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.Collada
+namespace MHGameWork.TheWizards.Graphics.Xna.Collada
 {
     public class SkinnedModelBuilder
     {

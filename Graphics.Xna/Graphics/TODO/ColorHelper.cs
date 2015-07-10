@@ -7,14 +7,13 @@
 // Generated with Commenter by abi.exDream.com
 
 #region Using directives
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 #endregion
 
-namespace MHGameWork.TheWizards.ServerClient.Engine
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO
 {
 	/// <summary>
 	/// Color helper, just to convert colors to different formats and providing

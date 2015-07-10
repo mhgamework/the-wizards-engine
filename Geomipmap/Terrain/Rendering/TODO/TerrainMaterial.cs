@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO;
 using MHGameWork.TheWizards.ServerClient.Terrain.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -371,7 +373,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
         //private Terrain terrain;
 
 
-        private Engine.ShaderEffect[] effects;
+        private ShaderEffect[] effects;
 
 
 

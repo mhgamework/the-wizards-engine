@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using MHGameWork.TheWizards.Graphics.Xna.XML;
 using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
 

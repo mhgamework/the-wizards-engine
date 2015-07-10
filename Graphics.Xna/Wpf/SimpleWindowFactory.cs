@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace MHGameWork.TheWizards.Wpf
+namespace MHGameWork.TheWizards.Graphics.Xna.Wpf
 {
     /// <summary>
     /// Simply creates a new window in this thread, using application.Current

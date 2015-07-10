@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using Microsoft.Xna.Framework;
 using MHGameWork.TheWizards.Graphics;

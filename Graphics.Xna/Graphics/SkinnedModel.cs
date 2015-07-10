@@ -1,16 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using MHGameWork.TheWizards.ServerClient;
+using MHGameWork.TheWizards.Graphics.Xna.Collada;
 using Microsoft.Xna.Framework;
-using MHGameWork.TheWizards.Common.Core.Collada;
-using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework.Graphics;
-using MHGameWork.TheWizards.Collada;
-using MHGameWork.TheWizards.ServerClient.Graphics;
-using MHGameWork.TheWizards.ServerClient.Engine;
 
-namespace MHGameWork.TheWizards.Common.Core.Graphics
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     /// <summary>
     /// TODO: Lighting does not appear to be correct!

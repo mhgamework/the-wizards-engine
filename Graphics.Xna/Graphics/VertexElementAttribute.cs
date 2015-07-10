@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.ServerClient.Graphics
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     [AttributeUsage( AttributeTargets.Field | AttributeTargets.Property )]
     public class VertexElementAttribute : Attribute

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace MHGameWork.TheWizards.Forms
+namespace MHGameWork.TheWizards.Graphics.Xna.Forms
 {
     public interface IFormElement
     {

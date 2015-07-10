@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
-using System.Reflection;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace MHGameWork.TheWizards.ServerClient.Graphics
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics
 {
     /// <summary>
     /// Momentarily only for creating a vertexdeclaration in a cool way!

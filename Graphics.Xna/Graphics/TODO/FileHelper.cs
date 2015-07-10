@@ -7,16 +7,15 @@
 // Generated with Commenter by abi.exDream.com
 
 #region Using directives
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Storage;
-using System;
+
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Threading;
+using Microsoft.Xna.Framework.Storage;
+
 #endregion
 
-namespace MHGameWork.TheWizards.ServerClient.Engine
+namespace MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO
 {
 	/// <summary>
 	/// File helper class to get text lines, number of text lines, etc.

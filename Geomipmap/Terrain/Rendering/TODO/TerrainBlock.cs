@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards.Common.Wereld;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.ServerClient.TWClient;
 using MHGameWork.TheWizards.Terrain;
 using Microsoft.Xna.Framework;
@@ -9,7 +10,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MHGameWork.TheWizards.Common.GeoMipMap;
 using System.IO;
 using MHGameWork.TheWizards.Common;
-using MHGameWork.TheWizards.ServerClient.TWXNAEngine;
 
 namespace MHGameWork.TheWizards.ServerClient.Terrain.Rendering
 {

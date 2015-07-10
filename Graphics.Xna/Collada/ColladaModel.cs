@@ -1,22 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Xml;
-using System.Globalization;
-using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.ServerClient.Collada;
+using MHGameWork.TheWizards.Common.Core;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics.TODO;
+using MHGameWork.TheWizards.Graphics.Xna.XML;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using XmlHelper = MHGameWork.TheWizards.ServerClient.Engine.XmlHelper;
-using StringHelper = MHGameWork.TheWizards.ServerClient.Engine.StringHelper;
-using ColorHelper = MHGameWork.TheWizards.ServerClient.Engine.ColorHelper;
-using ShaderEffect = MHGameWork.TheWizards.ServerClient.Engine.ShaderEffect;
-using SkinnedTangentVertex = MHGameWork.TheWizards.ServerClient.Engine.SkinnedTangentVertex;
-using MHGameWork.TheWizards.Common.Core;
-using MHGameWork.TheWizards.Collada;
 
-namespace MHGameWork.TheWizards.ServerClient
+namespace MHGameWork.TheWizards.Graphics.Xna.Collada
 {
     public class ColladaModel
     {
@@ -1475,7 +1468,7 @@ namespace MHGameWork.TheWizards.ServerClient
         //} // LoadMeshGeometry(geometry)
 
 
-        public void Render( Matrix renderMatrix, Engine.ShaderEffect effect )
+        public void Render( Matrix renderMatrix, ShaderEffect effect )
         {
             for ( int i = 0; i < meshes.Count; i++ )
             {

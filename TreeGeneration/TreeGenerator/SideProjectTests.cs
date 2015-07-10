@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics.DEPRECATED;
 using NUnit.Framework;
 using MHGameWork.TheWizards.Graphics;
 using TreeGenerator.AtlasTool;
