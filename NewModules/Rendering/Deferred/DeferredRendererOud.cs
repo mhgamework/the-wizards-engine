@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.Common.Core;
 
 using MHGameWork.TheWizards.Graphics;
@@ -155,7 +156,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
 
 
             fullScreenQuad = new FullScreenQuad(GraphicsDevice);
-            tangentVertexDeclaration = TangentVertex.CreateVertexDeclaration(game);
+            tangentVertexDeclaration = TangentVertexExtensions.CreateVertexDeclaration(game);
 
 
             mesh = merchantsHouseMesh;

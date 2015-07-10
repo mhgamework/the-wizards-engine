@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Graphics.Xna.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -151,7 +152,7 @@ namespace TreeGenerator.help
         public void CreateMeshCross( IXNAGame game )
         {
 
-            decl = TangentVertex.CreateVertexDeclaration( game );
+            decl = TangentVertexExtensions.CreateVertexDeclaration( game );
             vertexStride = TangentVertex.SizeInBytes;
             vertexCount = vertices.Count;
             triangleCount = 4;
@@ -220,7 +221,7 @@ namespace TreeGenerator.help
         public void CreateMeshAround( IXNAGame game )
         {
 
-            decl = TangentVertex.CreateVertexDeclaration( game );
+            decl = TangentVertexExtensions.CreateVertexDeclaration( game );
             vertexStride = TangentVertex.SizeInBytes;
             vertexCount = vertices.Count;
             triangleCount = vertexCount / 3;

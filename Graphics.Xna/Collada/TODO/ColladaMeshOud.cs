@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -986,7 +987,7 @@ namespace MHGameWork.TheWizards.ServerClient.Engine
                 worldMatrix = objectMatrix * worldMatrix;
                 effect.WorldMatrix = worldMatrix;
                 effect.WorldViewProjMatrix = worldMatrix * model.Game.Camera.ViewProjection;
-                if ( vertexDeclaration != null ) vertexDeclaration = TangentVertex.CreateVertexDeclaration( game.GraphicsDevice );
+                if ( vertexDeclaration != null ) vertexDeclaration = TangentVertexExtensions.CreateVertexDeclaration( game );
                 game.GraphicsDevice.VertexDeclaration = vertexDeclaration;
 
                 if ( material.DiffuseTexture == null )

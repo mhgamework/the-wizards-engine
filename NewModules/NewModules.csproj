@@ -216,12 +216,21 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animation\AMCParser.cs" />
+    <Compile Include="Animation\AMCSample.cs" />
+    <Compile Include="Animation\AMCSegment.cs" />
+    <Compile Include="Animation\Animation.cs" />
+    <Compile Include="Animation\AnimationControllerSkeleton.cs" />
+    <Compile Include="Animation\ASFJoint.cs" />
+    <Compile Include="Animation\ASFParser.cs" />
+    <Compile Include="Animation\Joint.cs" />
+    <Compile Include="Animation\Skeleton.cs" />
+    <Compile Include="Animation\SkeletonVisualizer.cs" />
     <Compile Include="Audio\AudioEngine.cs" />
     <Compile Include="Audio\DiskSound.cs" />
     <Compile Include="Audio\DiskSoundFactory.cs" />
     <Compile Include="Audio\ISound.cs" />
     <Compile Include="Audio\ISoundFactory.cs" />
-    <Compile Include="CompactQuadTree.cs" />
     <Compile Include="Networking\SimpleClientPacketManager.cs" />
     <Compile Include="Networking\SimpleClientPacketTransporter.cs" />
     <Compile Include="Networking\SimpleServerPacketManager.cs" />
@@ -230,16 +239,6 @@
     <Compile Include="Pathing\IAIMover.cs" />
     <Compile Include="Pathing\SimpleAIMover.cs" />
     <Compile Include="Raycasting\MeshRaycaster.cs" />
-    <Compile Include="Rendering\Deferred\ICustomGBufferRenderer.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshBoundingBoxFactory.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\DeferredMaterial.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshElementPart.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshesRenderer.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshPartRenderData.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshRenderData.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshRenderDataFactory.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshRenderMaterial.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshRenderPart.cs" />
     <Compile Include="Rendering\MeshOptimizer.cs" />
     <Compile Include="Rendering\RAMMesh.cs">
       <SubType>Code</SubType>
@@ -259,7 +258,6 @@
     <Compile Include="ProceduralTerrainGeneration\NoiseGenerater\SimpleTerrain.cs" />
     <Compile Include="ProceduralTerrainGeneration\TerrrainGeneration\HeigthMapGenerater.cs" />
     <Compile Include="ProceduralTerrainGeneration\TerrrainGeneration\ProceduralHeigthGenerater.cs" />
-    <Compile Include="Rendering\Culling\CullerNoCull.cs" />
     <Compile Include="Rendering\DebugVisualizer.cs" />
     <Compile Include="Rendering\Default\DefaultModelMaterialTextured.cs" />
     <Compile Include="Rendering\Default\DefaultModelRenderable.cs" />
@@ -267,24 +265,13 @@
     <Compile Include="Rendering\Default\DefaultModelShader.cs" />
     <Compile Include="Rendering\Default\DefaultRenderElement.cs" />
     <Compile Include="Rendering\Default\DefaultRenderer.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\DeferredMeshElement.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\DeferredMeshesRenderer.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\DeferredMeshVertex.cs" />
-    <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
     <Compile Include="Rendering\Deferred\DeferredRendererOud.cs" />
-    <Compile Include="Rendering\Deferred\DirectionalLight.cs" />
-    <Compile Include="Rendering\Deferred\PointLight.cs" />
-    <Compile Include="Rendering\Deferred\SpotLight.cs" />
-    <Compile Include="Rendering\Deferred\TexturePool.cs" />
     <Compile Include="Rendering\DiskRenderingAssetFactory.cs" />
-    <Compile Include="Rendering\Culling\FrustumCuller.cs" />
-    <Compile Include="Rendering\Culling\FrustumCullerSimple.cs" />
-    <Compile Include="Rendering\Culling\FrustumCullerView.cs" />
-    <Compile Include="Rendering\Culling\ICullable.cs" />
     <Compile Include="Rendering\Default\IDefaultModelMaterial.cs" />
     <Compile Include="Rendering\Default\IDefaultRenderable.cs" />
     <Compile Include="Rendering\IMeshFactory.cs" />
     <Compile Include="Rendering\IMeshRenderElement.cs" />
+    <Compile Include="Rendering\Simple\ConversionCameraDX.cs" />
     <Compile Include="Rendering\Simple\ISimpleMeshRenderer.cs" />
     <Compile Include="Rendering\Simple\ISimpleRenderable.cs" />
     <Compile Include="Rendering\MeshAdditionalData.cs" />
@@ -297,17 +284,8 @@
     <Compile Include="Rendering\Simple\SimpleMeshRenderElement.cs" />
     <Compile Include="Rendering\Simple\SimpleMeshRenderer.cs" />
     <Compile Include="Rendering\Simple\SimpleRenderer.cs" />
-    <Compile Include="Rendering\SSAO\HorizonSSAORenderer.cs" />
     <Compile Include="Rendering\TangentSolver.cs" />
-    <Compile Include="Rendering\TextureMapping\SphericalMapping.cs" />
     <Compile Include="Rendering\TexturePool.cs" />
-    <Compile Include="Rendering\Text\TextTexture.cs" />
-    <Compile Include="Rendering\Text\Unused\Helpers.cs" />
-    <Compile Include="Rendering\Text\Unused\SpriteRenderer.cs" />
-    <Compile Include="Rendering\Text\Unused\Structs.cs" />
-    <Compile Include="Rendering\Text\Unused\TextBlockRenderer.cs" />
-    <Compile Include="Rendering\Text\DrawingToD3D11Conversion.cs" />
-    <Compile Include="Rendering\Text\Unused\TextRendererSharedResource.cs" />
     <Compile Include="Rendering\VertexDeclarationPool.cs" />
     <Compile Include="RequiresPostSharp.cs" />
     <Compile Include="Scripting\ScriptLoader.cs" />
@@ -377,14 +355,10 @@
     <EmbeddedResource Include="Rendering\Deferred\Files\ShadowMap.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\SpotLight.fx" />
     <EmbeddedResource Include="Rendering\Files\DefaultModelShader.fx" />
-    <None Include="Rendering\Text\Unused\SharedResourceShader.fx" />
-    <None Include="Rendering\Text\Unused\SpriteShader.fx" />
     <EmbeddedResource Include="Rendering\Deferred\Files\RandomNormals.png" />
     <EmbeddedResource Include="Rendering\Files\Checker.png" />
     <Content Include="Audio\_doc.txt" />
     <Content Include="Rendering\Default\_doc.txt" />
-    <Content Include="Rendering\Deferred\Meshes\_doc.txt" />
-    <Content Include="Rendering\Text\_doc.txt" />
     <Content Include="Rendering\_doc.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -406,6 +380,10 @@
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.SlimDX\Graphics.SlimDX.csproj">
+      <Project>{AE1D68F4-5306-47F9-942F-A86F113D23D8}</Project>
+      <Name>Graphics.SlimDX</Name>
     </ProjectReference>
     <ProjectReference Include="..\Graphics.Xna\Graphics.Xna.csproj">
       <Project>{121ed163-a998-44e3-9738-ebf88af2c29d}</Project>

@@ -105,40 +105,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AverageFPSCalculater.cs" />
+    <Compile Include="CompactQuadTree.cs" />
     <Compile Include="Core\SlimDXMathExtensions.cs" />
     <Compile Include="Core\EmbeddedFile.cs" />
     <Compile Include="Core\FileHelper.cs" />
-    <Compile Include="DirectX11\DX11Game.cs" />
-    <Compile Include="DirectX11\Filters\GaussianBlurFilter.cs" />
-    <Compile Include="DirectX11\Graphics\BasicShader.cs" />
-    <Compile Include="DirectX11\Graphics\CompiledShaderCache.cs" />
-    <Compile Include="DirectX11\Graphics\CustomCamera.cs" />
-    <Compile Include="DirectX11\Graphics\DX11Form.cs" />
-    <Compile Include="DirectX11\Graphics\FullScreenQuad.cs" />
-    <Compile Include="DirectX11\Graphics\GPUTexture.cs" />
-    <Compile Include="DirectX11\Graphics\ICamera.cs" />
-    <Compile Include="DirectX11\Graphics\IGraphicsManager.cs" />
-    <Compile Include="DirectX11\Graphics\LineManager3D.cs" />
-    <Compile Include="DirectX11\Graphics\LineManager3DLines.cs" />
-    <Compile Include="DirectX11\Graphics\SpectaterCamera.cs" />
-    <Compile Include="DirectX11\Graphics\TextureRenderer.cs" />
-    <Compile Include="DirectX11\Graphics\ThirdPersonCamera.cs" />
-    <Compile Include="DirectX11\Input\ITWKeyboard.cs" />
-    <Compile Include="DirectX11\Input\TWKeyboard.cs" />
-    <Compile Include="DirectX11\Input\TWMouse.cs" />
     <Compile Include="Core\MathExtra\Point3.cs" />
-    <Compile Include="DirectX11\QuadTreeVisualizer.cs" />
-    <Compile Include="DirectX11\Rendering\CSM\CSMRenderer.cs" />
-    <Compile Include="DirectX11\Rendering\CSM\Light.cs" />
-    <Compile Include="DirectX11\Rendering\CSM\OrthographicCamera.cs" />
-    <Compile Include="DirectX11\Rendering\Deferred\AverageLuminanceCalculater.cs" />
-    <Compile Include="DirectX11\Rendering\Deferred\CombineFinalRenderer.cs" />
-    <Compile Include="DirectX11\Rendering\Deferred\DirectionalLightRenderer.cs" />
-    <Compile Include="DirectX11\Rendering\Deferred\FogEffect.cs" />
-    <Compile Include="DirectX11\Rendering\Deferred\GBuffer.cs" />
-    <Compile Include="DirectX11\Rendering\Deferred\PointLightRenderer.cs" />
-    <Compile Include="DirectX11\Rendering\Deferred\SpotLightRenderer.cs" />
-    <Compile Include="DirectX11\Rendering\Deferred\ToneMapRenderer.cs" />
     <Compile Include="Networking\AssemblyBuilder.cs" />
     <Compile Include="Networking\Client\BasicPacketTransporter.cs" />
     <Compile Include="Networking\Client\ClientPacketManagerNetworked.cs" />
@@ -203,8 +174,21 @@
     <Compile Include="Core\SlimDXConversion\BoundingFrustum.cs" />
     <Compile Include="Core\SlimDXConversion\MathHelper.cs" />
     <Compile Include="Core\TWDir.cs" />
+    <Compile Include="Rendering\IAsset.cs" />
+    <Compile Include="Rendering\IAssetFactory.cs" />
+    <Compile Include="Rendering\IDataElement.cs" />
+    <Compile Include="Rendering\IMesh.cs" />
+    <Compile Include="Rendering\IMeshPart.cs" />
+    <Compile Include="Rendering\ITexture.cs" />
+    <Compile Include="Rendering\ITextureFactory.cs" />
+    <Compile Include="Rendering\MeshCollisionData.cs" />
+    <Compile Include="Rendering\MeshCoreData.cs" />
+    <Compile Include="Rendering\MeshPartAdditionalData.cs" />
+    <Compile Include="Rendering\MeshPartGeometryData.cs" />
+    <Compile Include="Rendering\RawMeshData.cs" />
+    <Compile Include="Rendering\TangentVertex.cs" />
+    <Compile Include="Rendering\TextureCoreData.cs" />
     <Compile Include="RequiresPostSharp.cs" />
-    <Compile Include="Shaders\ShaderFiles.cs" />
     <Compile Include="Core\XnaMathExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -217,34 +201,6 @@
     <None Include="app.config" />
     <None Include="Core\Core.cd" />
     <None Include="packages.config" />
-    <None Include="Shaders\Common.fx" />
-    <None Include="Shaders\CSM\CSM.fx" />
-    <None Include="Shaders\CSM\CSMCommon.fx" />
-    <None Include="Shaders\Deferred\CombineFinal.fx" />
-    <None Include="Shaders\Deferred\DeferredMesh.fx" />
-    <None Include="Shaders\Deferred\DirectionalLight.fx" />
-    <None Include="Shaders\Deferred\Luminance.fx" />
-    <None Include="Shaders\Deferred\PointLight.fx" />
-    <None Include="Shaders\Deferred\RenderGBuffer.fx" />
-    <None Include="Shaders\Deferred\RenderTessellated.fx" />
-    <None Include="Shaders\Deferred\SpotLight.fx" />
-    <None Include="Shaders\Deferred\TODO\AmbientOcclusion.fx" />
-    <None Include="Shaders\Deferred\TODO\Blur.fx" />
-    <None Include="Shaders\Deferred\TODO\CombineFinalOld.fx" />
-    <None Include="Shaders\Deferred\TODO\Downsample.fx" />
-    <None Include="Shaders\Deferred\TODO\ShadowMap.fx" />
-    <None Include="Shaders\Deferred\ToneMap.fx" />
-    <None Include="Shaders\FullScreenQuad.fx" />
-    <None Include="Shaders\GBuffer.fx" />
-    <None Include="Shaders\IncludeTest.fx" />
-    <None Include="Shaders\LineRendering.fx" />
-    <None Include="Shaders\MiniTri.fx" />
-    <None Include="Shaders\Particles\BasicParticleAnimation.fx" />
-    <None Include="Shaders\Particles\BillBoardShader.fx" />
-    <None Include="Shaders\SSAO\HorizonSSAO.fx" />
-    <None Include="Shaders\TestAutoReload.fx" />
-    <None Include="Shaders\TestHelper.fx" />
-    <None Include="Shaders\TextureRenderer.fx" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -278,13 +234,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <None Include="Shaders\Deferred\Fog.fx" />
-    <Content Include="Shaders\Deferred\TODO\RandomNormals.png" />
-    <None Include="Shaders\DualContouring\Surface.fx" />
-    <Content Include="Shaders\DualContouring\HermiteTerrain.hlsl" />
-    <Content Include="Shaders\Filters\GaussianBlurCS.hlsl" />
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\PostSharp.3.0.35\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.3.0.35\tools\PostSharp.targets')" />

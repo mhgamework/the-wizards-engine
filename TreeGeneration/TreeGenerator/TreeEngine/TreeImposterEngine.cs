@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.ServerClient;
 using MHGameWork.TheWizards.ServerClient.CascadedShadowMaps;
@@ -156,7 +157,7 @@ namespace TreeGenerator.TreeEngine
 
             Shader.Technique = ColladaShader.TechniqueType.Textured;
 
-            declOne = TangentVertex.CreateVertexDeclaration( game );
+            declOne = TangentVertexExtensions.CreateVertexDeclaration( game );
             vertexStrideOne = TangentVertex.SizeInBytes;
             vertexCountOne = VertOne.Length;
             triangleCountOne = vertexCountOne / 3;
@@ -164,14 +165,14 @@ namespace TreeGenerator.TreeEngine
             vertexBufferOne = new DynamicVertexBuffer( device, typeof( TangentVertex ), vertexCountOne, BufferUsage.WriteOnly );
 
 
-            declTwo = TangentVertex.CreateVertexDeclaration( game );
+            declTwo = TangentVertexExtensions.CreateVertexDeclaration( game );
             vertexStrideTwo = TangentVertex.SizeInBytes;
             vertexCountTwo = VertTwo.Length;
             triangleCountTwo = vertexCountTwo / 3;
 
             vertexBufferTwo = new DynamicVertexBuffer( device, typeof( TangentVertex ), vertexCountTwo, BufferUsage.WriteOnly );
 
-            declThree = TangentVertex.CreateVertexDeclaration( game );
+            declThree = TangentVertexExtensions.CreateVertexDeclaration( game );
             vertexStrideThree = TangentVertex.SizeInBytes;
             vertexCountThree = VertThree.Length;
             vertexBufferThree = new DynamicVertexBuffer( device, typeof( TangentVertex ), vertexCountThree, BufferUsage.WriteOnly );

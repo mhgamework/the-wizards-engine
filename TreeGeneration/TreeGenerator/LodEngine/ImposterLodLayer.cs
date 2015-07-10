@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.ServerClient;
 using TreeGenerator.TreeEngine;
 using Microsoft.Xna.Framework.Graphics;
@@ -77,7 +78,7 @@ namespace TreeGenerator.LodEngine
 
             Shader.Technique = ColladaShader.TechniqueType.Textured;
             Shader.DiffuseTexture = texture;
-            decl = TangentVertex.CreateVertexDeclaration(device);
+            decl = TangentVertexExtensions.CreateVertexDeclaration(game);
             vertexStride = TangentVertex.SizeInBytes;
             vertexBuffer = new DynamicVertexBuffer(device, typeof(TangentVertex), vertexCount, BufferUsage.WriteOnly);//TODO DYnamic vertexbuffer performance error 
             depthBuffer = new DepthStencilBuffer(device,imposterPixelSize, imposterPixelSize, device.DepthStencilBuffer.Format);

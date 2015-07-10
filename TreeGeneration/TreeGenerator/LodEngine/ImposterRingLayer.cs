@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework.Graphics;
+using SlimDX;
 using TreeGenerator.ImposterRing;
 using TreeGenerator.TreeEngine;
-using Microsoft.Xna.Framework;
+using BoundingBox = Microsoft.Xna.Framework.BoundingBox;
 
 namespace TreeGenerator.LodEngine
 {
@@ -118,7 +120,7 @@ namespace TreeGenerator.LodEngine
        public void Initialize(MHGameWork.TheWizards.Graphics.IXNAGame game)
         {
             renderData.Initialize();
-            boundingBox= BoundingBox.CreateFromPoints(renderData.BoundingBoxData);
+            boundingBox= Microsoft.Xna.Framework.BoundingBox .CreateFromPoints(renderData.BoundingBoxData);
             
         }
 
@@ -137,9 +139,12 @@ namespace TreeGenerator.LodEngine
 
         #region ICullable Members
        
-        public Microsoft.Xna.Framework.BoundingBox BoundingBox
+        public SlimDX.BoundingBox BoundingBox
         {
-            get { return boundingBox; }
+            get
+            {
+                return boundingBox.dx();
+            }
         }
 
        private int visibleRefrenceCount;

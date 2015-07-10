@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
@@ -130,7 +131,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
 
             game.InitializeEvent += delegate
             {
-                decl = TangentVertex.CreateVertexDeclaration(game);
+                decl = TangentVertexExtensions.CreateVertexDeclaration(game);
                 shader = new DefaultModelShader(game, new EffectPool());
 
                 shader.DiffuseColor = Color.Red.ToVector4();
@@ -229,7 +230,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
             XNAGame game = new XNAGame();
             game.InitializeEvent += delegate
             {
-                decl = TangentVertex.CreateVertexDeclaration(game);
+                decl = TangentVertexExtensions.CreateVertexDeclaration(game);
                 TangentVertex[] vertices = new TangentVertex[4];
 
 
@@ -584,7 +585,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
                     game.LineManager3D.AddViewFrustum(new BoundingFrustum(cullCam.ViewProjection), Color.Black);
                     for (int i = 0; i < cullObjects.Count; i++)
                     {
-                        game.LineManager3D.AddBox(cullObjects[i].BoundingBox, Color.Red);
+                        game.LineManager3D.AddBox(cullObjects[i].BoundingBox.xna(), Color.Red);
                     }
                     visualizer.RenderNodeGroundBoundig(game, culler.RootNode,
                         delegate(FrustumCuller.CullNode node, out Color col)
@@ -640,9 +641,9 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
 
             #region ICullable Members
 
-            public BoundingBox BoundingBox
+            public SlimDX.BoundingBox BoundingBox
             {
-                get { return boundingBox; }
+                get { return boundingBox.dx(); }
             }
 
             #endregion

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MHGameWork.TheWizards.DirectX11.SlimDXConversion;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.ServerClient;
-using Microsoft.Xna.Framework;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.Rendering
 {
@@ -137,6 +137,8 @@ namespace MHGameWork.TheWizards.Rendering
 
         private IXNAGame game;
         private int visibleReferenceCount;
+        BoundingBox ICullable.BoundingBox { get { return base.BoundingBox.dx(); } }
+
         public int VisibleReferenceCount
         {
             get { return visibleReferenceCount; }
@@ -175,6 +177,8 @@ namespace MHGameWork.TheWizards.Rendering
             get { return visibleReferenceCount; }
             set { visibleReferenceCount = value; }
         }
+        BoundingBox ICullable.BoundingBox { get { return base.BoundingBox.dx(); } }
+
 
         #region ISimpleRenderable Members
 
@@ -206,6 +210,8 @@ namespace MHGameWork.TheWizards.Rendering
             get { return visibleReferenceCount; }
             set { visibleReferenceCount = value; }
         }
+        BoundingBox ICullable.BoundingBox { get { return base.BoundingBox.dx(); } }
+
 
         #region ISimpleRenderable Members
 

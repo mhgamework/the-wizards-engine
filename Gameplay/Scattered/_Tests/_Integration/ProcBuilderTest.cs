@@ -56,7 +56,8 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             deferredRenderer = TW.Graphics.AcquireRenderer();
 
             var boxRenderer = BoxRenderer.Instance;
-            boxRenderer.SetGame(game);
+            throw new NotImplementedException();
+            //boxRenderer.SetGame(game);
 
             if (hideAxes)
             {
@@ -125,7 +126,8 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             #region init
 
             initializeTW();
-            var renderer = new TWRenderWrapper(deferredRenderer, game);
+            throw new NotImplementedException();
+            TWRenderWrapper renderer = null;//= new TWRenderWrapper(deferredRenderer, game);
 
             const string startSemId = "Start";
             const bool hideMeshes = false;
@@ -368,7 +370,7 @@ namespace MHGameWork.TheWizards.Scattered._Tests
 
             return new RuleBase { Rules = rules };
         }
-        
+
         [Test]
         public void TestIslandGenerator()
         {
@@ -389,11 +391,12 @@ namespace MHGameWork.TheWizards.Scattered._Tests
         public void TestIslandParts()
         {
             var seed = 1;
-            
+
             #region init
             hideAxes = true;
             initializeTW();
-            var renderer = new TWRenderWrapper(deferredRenderer, game);
+            throw new NotImplementedException();
+            TWRenderWrapper renderer = null;// = new TWRenderWrapper(deferredRenderer, game);
             renderer.DrawFaceUnitAxes = false;
             rnd.Reset(seed);
             #endregion init
@@ -406,9 +409,9 @@ namespace MHGameWork.TheWizards.Scattered._Tests
             List<IBuildingElement> borderMesh;
             generator.GetIslandParts(startShapes, seed, true, out islandMesh, out navMesh, out buildMesh, out borderMesh);
 
-            var allFaces = navMesh.Select(element => ((Face) element).ExtraTransform(Matrix.Translation(0, 0, 0.25f), "nav")).ToList();
-            allFaces.AddRange(buildMesh.Select(element => ((Face) element).ExtraTransform(Matrix.Translation(0, 0, 4), "build")));
-            allFaces.AddRange(borderMesh.Select(element => ((Face) element).ExtraTransform(Matrix.Translation(0, 0, 8), "border")));
+            var allFaces = navMesh.Select(element => ((Face)element).ExtraTransform(Matrix.Translation(0, 0, 0.25f), "nav")).ToList();
+            allFaces.AddRange(buildMesh.Select(element => ((Face)element).ExtraTransform(Matrix.Translation(0, 0, 4), "build")));
+            allFaces.AddRange(borderMesh.Select(element => ((Face)element).ExtraTransform(Matrix.Translation(0, 0, 8), "border")));
 
             var builder = new Builder(renderer);
             builder.Build(allFaces, new RuleBase(), seed);

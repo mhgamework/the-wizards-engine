@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.ServerClient;
 using MHGameWork.TheWizards.ServerClient.CascadedShadowMaps;
 using Microsoft.Xna.Framework.Graphics;
@@ -617,7 +618,7 @@ namespace TreeGenerator.Imposter
             //set up every thing for rendering the plain
             if (vertexCount != Vertices.Count)
             {
-                decl = TangentVertex.CreateVertexDeclaration(game);
+                decl = TangentVertexExtensions.CreateVertexDeclaration(game);
                 vertexStride = TangentVertex.SizeInBytes;
                 vertexCount = Vertices.Count;
                 triangleCount = vertexCount / 3;

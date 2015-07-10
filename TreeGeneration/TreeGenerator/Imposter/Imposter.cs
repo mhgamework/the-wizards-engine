@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Graphics.Xna.Graphics;
 using Microsoft.Xna;
 using Microsoft.Xna.Framework.Graphics;
 using MHGameWork.TheWizards;
@@ -194,7 +195,7 @@ namespace TreeGenerator.Imposter
             #region setup to render plain
             CreatePlain();
             //set up every thing for rendering the plain
-            decl = TangentVertex.CreateVertexDeclaration(game);
+            decl = TangentVertexExtensions.CreateVertexDeclaration(game);
             vertexStride = TangentVertex.SizeInBytes;
             vertexCount = PlainVertices.Length;
             triangleCount = vertexCount / 3;

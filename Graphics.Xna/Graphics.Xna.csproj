@@ -123,7 +123,7 @@
     <Compile Include="Graphics\SkinnedTangentVertex.cs" />
     <Compile Include="Graphics\SpectaterCamera.cs" />
     <Compile Include="Graphics\SphereMesh.cs" />
-    <Compile Include="Graphics\TangentVertex.cs" />
+    <Compile Include="Graphics\TangentVertexExtensions.cs" />
     <Compile Include="Graphics\TestXNAGame.cs" />
     <Compile Include="Graphics\Texture.cs" />
     <Compile Include="Graphics\TODO\ColorHelper.cs" />

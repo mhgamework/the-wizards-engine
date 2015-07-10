@@ -58,7 +58,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Culling
                 {
                     for (int i = 0; i < cullObjects.Count; i++)
                     {
-                        game.LineManager3D.AddBox(cullObjects[i].BoundingBox.dx(), Color.Red.dx());
+                        game.LineManager3D.AddBox(cullObjects[i].BoundingBox, Color.Red.dx());
                     }
                     visualizer.RenderNodeGroundBoundig(game, culler.RootNode,
                         delegate(FrustumCuller.CullNode node, out Color4 col)
@@ -163,7 +163,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Culling
                     game.LineManager3D.AddViewFrustum(new global::DirectX11.BoundingFrustum(cullCam.ViewProjection), Color.Black.dx());
                     for (int i = 0; i < cullObjects.Count; i++)
                     {
-                        game.LineManager3D.AddBox(cullObjects[i].BoundingBox.dx(), Color.Red.dx());
+                        game.LineManager3D.AddBox(cullObjects[i].BoundingBox, Color.Red.dx());
                     }
                     visualizer.RenderNodeGroundBoundig(game, culler.RootNode,
                         delegate(FrustumCuller.CullNode node, out Color4 col)
@@ -269,7 +269,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Culling
                     game.LineManager3D.AddViewFrustum(new BoundingFrustum(viewProjection), Color.Black.dx());
                     for (int i = 0; i < cullObjects.Count; i++)
                     {
-                        game.LineManager3D.AddBox(cullObjects[i].BoundingBox.dx(), Color.Red.dx());
+                        game.LineManager3D.AddBox(cullObjects[i].BoundingBox, Color.Red.dx());
                     }
 
 
@@ -430,7 +430,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Culling
                     game.LineManager3D.AddViewFrustum(new BoundingFrustum(cullCam.ViewProjection), Color.White.dx());
                     for (int i = 0; i < visibleCullables.Count; i++)
                     {
-                        game.LineManager3D.AddBox(visibleCullables[i].BoundingBox.dx(), Color.Red.dx());
+                        game.LineManager3D.AddBox(visibleCullables[i].BoundingBox, Color.Red.dx());
                     }
                     visualizer.RenderNodeGroundBoundig(game, culler.RootNode,
                         delegate(FrustumCuller.CullNode node, out Color4 col)
@@ -489,9 +489,9 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Culling
 
             #region ICullable Members
 
-            public Microsoft.Xna.Framework.BoundingBox BoundingBox
+            public BoundingBox BoundingBox
             {
-                get { return boundingBox; }
+                get { return boundingBox.dx(); }
             }
 
             #endregion

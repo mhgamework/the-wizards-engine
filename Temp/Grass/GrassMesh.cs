@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Graphics.Xna.Graphics;
 using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.Terrain;
 using Microsoft.Xna.Framework.Graphics;
@@ -301,7 +302,7 @@ namespace TreeGenerator.Grass
             vertexBuffer1.SetData(Verts1.ToArray());
             Verts1 = null;
             device = vertexBuffer1.GraphicsDevice;
-            decl1 = TangentVertex.CreateVertexDeclaration(game);
+            decl1 = TangentVertexExtensions.CreateVertexDeclaration(game);
             if (grass2)
             {
                 vertexCount2 = Verts2.Count; //Verts.Length;
@@ -311,7 +312,7 @@ namespace TreeGenerator.Grass
                 vertexBuffer2.SetData(Verts2.ToArray());
                 Verts2 = null;
                 device = vertexBuffer2.GraphicsDevice;
-                decl2 = TangentVertex.CreateVertexDeclaration(game);
+                decl2 = TangentVertexExtensions.CreateVertexDeclaration(game);
             }
             if (grass3)
             {
@@ -323,7 +324,7 @@ namespace TreeGenerator.Grass
                 vertexBuffer3.SetData(Verts3.ToArray());
                 Verts3 = null;
                 device = vertexBuffer1.GraphicsDevice;
-                decl3 = TangentVertex.CreateVertexDeclaration(game);
+                decl3 = TangentVertexExtensions.CreateVertexDeclaration(game);
             }
 
         }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using Graphics.Xna.Graphics;
 using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework;
@@ -82,7 +83,7 @@ namespace TreeGenerator.TreeEngine
         private void initializeWithoutTexture(IXNAGame _game)
         {
             game = _game;
-            decl = TangentVertex.CreateVertexDeclaration(game);
+            decl = TangentVertexExtensions.CreateVertexDeclaration(game);
             vertexStride = TangentVertex.SizeInBytes;
             vertexCount = Vertices1.Count;
             triangleCount = vertexCount / 3;
@@ -112,7 +113,7 @@ namespace TreeGenerator.TreeEngine
         {
 
             game = _game;
-            decl = TangentVertex.CreateVertexDeclaration(game);
+            decl = TangentVertexExtensions.CreateVertexDeclaration(game);
             vertexStride = TangentVertex.SizeInBytes;
             vertexCount = Vertices1.Count;
             triangleCount = vertexCount / 3;
@@ -150,7 +151,7 @@ namespace TreeGenerator.TreeEngine
             game = _game;
 
 
-            decl = TangentVertex.CreateVertexDeclaration(game);
+            decl = TangentVertexExtensions.CreateVertexDeclaration(game);
             vertexStride = TangentVertex.SizeInBytes;
             vertexCount = Vertices1.Count;
             triangleCount = vertexCount / 3;

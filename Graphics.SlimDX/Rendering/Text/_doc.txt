@@ -1,0 +1,6 @@
+﻿Ways to implement font rendering:
+ - use DirectWrite -> Direct3D10 -> Direct3D11
+ - Use Font glyphs: [[http://sdxspritetext.codeplex.com/|SlimDX SpriteTextRenderer]] (bugged)
+ - Create text using GDI and then create a texture from it ==> currently implemented in TW (class: TextTexture)
+
+

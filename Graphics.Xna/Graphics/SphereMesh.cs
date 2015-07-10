@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -105,7 +106,7 @@ namespace MHGameWork.TheWizards.Graphics
 
             ReloadShader(game);
 
-            vertexDeclaration = TangentVertex.CreateVertexDeclaration(game);
+            vertexDeclaration = TangentVertexExtensions.CreateVertexDeclaration(game);
 
 
         }

@@ -230,6 +230,10 @@
       <Project>{7E925CCA-6E37-4712-AD86-EE3AA2ADDAFC}</Project>
       <Name>GoblinSimulator</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Graphics.SlimDX\Graphics.SlimDX.csproj">
+      <Project>{AE1D68F4-5306-47F9-942F-A86F113D23D8}</Project>
+      <Name>Graphics.SlimDX</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Graphics.Xna.Tests\Graphics.Xna.Tests.csproj">
       <Project>{B6FB510A-4603-499B-A168-8C5FC5E4C903}</Project>
       <Name>Graphics.Xna.Tests</Name>
