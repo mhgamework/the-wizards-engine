@@ -4,6 +4,7 @@ using System.Threading;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Profiling;
 using NUnit.Framework;
+using SlimDX;
 
 namespace MHGameWork.TheWizards.Tests.Features.Core.Profiling
 {
@@ -39,7 +40,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Core.Profiling
         [Test]
         public void TestRecursive()
         {
-            var time = SlimDX.Configuration.Timer.Elapsed;
+            var time = Configuration.Timer.Elapsed;
             Root.Begin();
             for (int i = 0; i < 100; i++) { recursive(5); }
 

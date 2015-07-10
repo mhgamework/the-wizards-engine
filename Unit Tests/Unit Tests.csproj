@@ -71,8 +71,6 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Utils.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraBars.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\_Libraries\SharpZipLib_0860_Bin\net-20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -81,10 +79,6 @@
     <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="PostSharp, Version=3.0.35.9, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PostSharp.3.0.35\lib\net20\PostSharp.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -115,9 +109,6 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Features\Core\Diagnostics\ProfilerComponentTest.cs" />
-    <Compile Include="Features\Core\SeederTest.cs" />
-    <Compile Include="Features\Data\SectionedStreamTest.cs" />
     <Compile Include="Features\Rendering\DX11FontWrapperTest.cs" />
     <Compile Include="Features\Simulation\Animation\AnimationTest.cs" />
     <Compile Include="Features\Various\Client\ClientTest.cs" />
@@ -128,7 +119,6 @@
     <Compile Include="Features\Generation\ProceduralTerrainGeneration\NoiseTests.cs" />
     <Compile Include="Features\Generation\ProceduralTerrainGeneration\TerrainConverter.cs" />
     <Compile Include="Features\Generation\ProceduralTerrainGeneration\TerrainGenerationTests.cs" />
-    <Compile Include="Features\Core\Profiling\ProfilingTest.cs" />
     <Compile Include="Features\Rendering\Data\MeshOptimizerTest.cs" />
     <Compile Include="Features\Rendering\Text\TextRenderingFunctionalityTest.cs" />
     <Compile Include="Features\Rendering\Data\MeshLoaderTest.cs" />
@@ -143,7 +133,6 @@
     <Compile Include="Features\Various\Utilities\UtilitiesTest.cs" />
     <Compile Include="Features\Various\Versioning\VersioningTest.cs" />
     <Compile Include="Features\Generation\Voxelization\VoxelizerTest.cs" />
-    <Compile Include="Features\Simulation\WorldSimulation\WorldSimulationTests.cs" />
     <Compile Include="Features\Various\World\Static\SimpleStaticWorldObject.cs" />
     <Compile Include="Features\Various\World\Static\SimpleStaticWorldObjectFactory.cs" />
     <Compile Include="Features\Various\World\SimpleWorldEntity.cs" />
@@ -157,14 +146,6 @@
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EngineEnvironment\EngineEnvironment.csproj">
-      <Project>{5BB25FD1-4B7B-4E6E-B4E9-9D66BFEBF8D6}</Project>
-      <Name>EngineEnvironment</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GoblinSimulator\GoblinSimulator.csproj">
-      <Project>{7E925CCA-6E37-4712-AD86-EE3AA2ADDAFC}</Project>
-      <Name>GoblinSimulator</Name>
     </ProjectReference>
     <ProjectReference Include="..\Graphics.SlimDX\Graphics.SlimDX.csproj">
       <Project>{AE1D68F4-5306-47F9-942F-A86F113D23D8}</Project>
@@ -197,10 +178,6 @@
     <ProjectReference Include="..\TestRunner\TestRunner.csproj">
       <Project>{ac6c51ce-96fb-401b-9b51-1302f273a52a}</Project>
       <Name>TestRunner</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WPF\WPF.csproj">
-      <Project>{8a52d3e0-5362-4d9f-a29e-32e24ad65eaf}</Project>
-      <Name>WPF</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -253,7 +230,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Features\Core\" />
+    <Folder Include="Features\Simulation\WorldSimulation\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\PostSharp.3.0.35\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.3.0.35\tools\PostSharp.targets')" />

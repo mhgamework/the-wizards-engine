@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
 using MHGameWork.TheWizards.WorldSimulation;
 using MHGameWork.TheWizards.WorldSimulation.Actions;

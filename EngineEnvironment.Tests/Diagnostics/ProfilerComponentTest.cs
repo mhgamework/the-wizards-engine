@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.Diagnostics
         [Test]
         public void TestUserControl()
         {
-            var disp = new Diagnostics.Profiling.ProfilerDisplay();
+            var disp = new ProfilerDisplay();
             var app = new Application();
 
             app.Run(new Window { Content = disp });
