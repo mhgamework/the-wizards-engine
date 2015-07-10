@@ -3,7 +3,6 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using MHGameWork.TheWizards.Physics;
-using MHGameWork.TheWizards.ServerClientMain;
 using MHGameWork.TheWizards.TestRunner;
 using Microsoft.Xna.Framework;
 using StillDesign.PhysX;
@@ -22,82 +21,6 @@ namespace MHGameWork.TheWizards.ServerClient
         {
             (new TWBootstrapper()).Run();
             //runOldTestRunner(args);
-        }
-
-        private static void runOldTestRunner(string[] args)
-        {
-            var fi = new FileInfo("Console.log");
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
-
-            OudMain();
-
-            var oldstrm = Console.Out;
-
-
-
-            using (var redir = new ConsoleRedir(oldstrm, fi.Open(FileMode.Append, FileAccess.Write, FileShare.ReadWrite)))
-            {
-                redir.WriteLine("--------------------Start Logging!");
-                Console.SetOut(redir);
-
-                TestRunnerGUI runnerGui = new TestRunnerGUI(Assembly.LoadFrom("Unit Tests.dll"));
-                //runner.RunTestNewProcessPath = "\"" + Assembly.GetExecutingAssembly().Location + "\"" + " -test {0}";
-
-
-                if (args.Length == 2 && args[0] == "-test")
-                {
-                    runnerGui.RunTestByName(args[1]);
-                }
-                else
-                {
-                    runnerGui.Run();
-
-                }
-
-
-
-
-
-                redir.WriteLine("--------------------End Logging!");
-            }
-            Console.SetOut(oldstrm);
-        }
-
-
-        private static void runNormal(string[] args)
-        {
-            //args = new string[] {"-editor"};
-            //args = new string[] { "-server" };
-            args = new string[] { "-serverclient" };
-
-            if (args.Length > 0 && args[0].Equals("-server"))
-            {
-                //TheWizardsServer server = new TheWizardsServer();
-                //server.Start();
-
-            }
-            else if (args.Length > 0 && args[0].Equals("-serverclient"))
-            {
-                TheWizardsServerClient serverClient = new TheWizardsServerClient();
-                serverClient.Run();
-
-
-            }
-            else if (args.Length > 0 && args[0].Equals("-editor"))
-            {
-                //WizardsEditorFormDevcomponents.RunWorldEditor();
-                //WizardsEditor.TestRunEditorDevcomponents();
-                //WizardsEditor.TestRunEditor();
-                //EditorMain.TheWizardsEditor editor = new MHGameWork.TheWizards.EditorMain.TheWizardsEditor();
-                //editor.Run();
-
-            }
-            else
-            {
-                //TheWizardsClient client = new TheWizardsClient();
-                //client.Run();
-                //RunGame();
-            }
         }
 
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
