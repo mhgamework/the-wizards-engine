@@ -8,7 +8,6 @@ using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
 using MHGameWork.TheWizards.IO;
 using Microsoft.SqlServer.Server;
-using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.DirectInput;

@@ -13,13 +13,10 @@ using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using MHGameWork.TheWizards.Raycasting;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
-using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Single;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
-using ContainmentType = Microsoft.Xna.Framework.ContainmentType;
 using Matrix = SlimDX.Matrix;
 using MHGameWork.TheWizards.IO;
 
