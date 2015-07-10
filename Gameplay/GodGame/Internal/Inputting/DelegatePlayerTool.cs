@@ -1,7 +1,7 @@
 ﻿using System;
-using MHGameWork.TheWizards.DirectX11.Input;
 using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Input;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame
@@ -38,7 +38,7 @@ namespace MHGameWork.TheWizards.GodGame
             if (onKeypress != null)
                 onKeypress(player, voxel, key);
         }
-        public override void OnTargetChanged(PlayerState player, IVoxelHandle voxel, DirectX11.Input.TWKeyboard keyboard, DirectX11.Input.TWMouse mouse)
+        public override void OnTargetChanged(PlayerState player, IVoxelHandle voxel, TWKeyboard keyboard, TWMouse mouse)
         {
             if (onTargetChanged != null)
                 onTargetChanged(player, voxel, TW.Graphics.Keyboard, TW.Graphics.Mouse);

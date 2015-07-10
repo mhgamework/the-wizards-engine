@@ -2,16 +2,19 @@
 using System.IO;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
-using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.DirectInput;
+using TexturePool = MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.TexturePool;
 
 namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 {
@@ -30,7 +33,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
             var mesh = RenderingTestsHelper.CreateSimpleTestMesh();
 
-            var texturePool = new TheWizards.Rendering.Deferred.TexturePool(game);
+            var texturePool = new TexturePool(game);
 
             var gBuffer = new GBuffer(game.Device, 800, 600);
 
@@ -234,7 +237,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
             var mesh = RenderingTestsHelper.CreateSimpleTestMesh();
 
-            var texturePool = new TheWizards.Rendering.Deferred.TexturePool(game);
+            var texturePool = new TexturePool(game);
 
             var gBuffer = new GBuffer(game.Device, 800, 600);
 
@@ -286,7 +289,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
         public static DeferredMeshesRenderer InitDefaultMeshRenderer(DX11Game game, GBuffer gBuffer)
         {
-            var texturePool = new TheWizards.Rendering.Deferred.TexturePool(game);
+            var texturePool = new TexturePool(game);
 
             var renderer = new DeferredMeshesRenderer(game, gBuffer, texturePool);
 

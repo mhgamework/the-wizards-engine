@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Rendering.Deferred
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes
 {
     /// <summary>
     /// Responsible for calculating and caching bounding boxes for meshes

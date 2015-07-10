@@ -1,9 +1,9 @@
-﻿using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
+﻿using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX;
 using SlimDX.Direct3D11;
 
-namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes
 {
     /// <summary>
     /// Responsible for holding render data for a part of the scene with a single material.

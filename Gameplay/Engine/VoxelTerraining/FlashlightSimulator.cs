@@ -2,7 +2,7 @@
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
-using PointLight = MHGameWork.TheWizards.Rendering.Deferred.PointLight;
+using PointLight = MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.PointLight;
 
 namespace MHGameWork.TheWizards.Engine.VoxelTerraining
 {

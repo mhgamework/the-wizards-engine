@@ -2,7 +2,7 @@
 using SlimDX;
 using Buffer = SlimDX.Direct3D11.Buffer;
 
-namespace MHGameWork.TheWizards.Rendering.Deferred
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes
 {
     public class MeshRenderPart :IDisposable
     {

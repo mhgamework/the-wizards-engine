@@ -16,7 +16,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
         {
             XNAGame game = new XNAGame();
 
-            Curve3D curve = CreateTestCurve();
+            Curve3D curve = Curve3D.CreateTestCurve();
 
             game.SpectaterCamera.CameraDirection = Vector3.Normalize( new Vector3( -0.2f, -1f, -0.4f ) );
             BoundingSphere sphere = curve.CalculateBoundingSphere();
@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
                         game.SpectaterCamera.CameraDirection = Vector3.Normalize( new Vector3( -0.2f, -1f, -0.4f ) );
                         
                     }
-                    curve.Render( game, Color.Red );
+                    Render(curve, game, Color.Red );
                     game.LineManager3D.AddCenteredBox( curve.Evaluate( time ), 0.2f, Color.Green );
                     time += game.Elapsed;
                 };
@@ -42,21 +42,24 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
             game.Run();
         }
 
-        public static Curve3D CreateTestCurve()
+      
+        public void Render(Curve3D curve, IXNAGame game, Color color)
         {
-            Curve3D curve = new Curve3D();
+            float segmentLength = 0.1f;
 
-            curve.PreLoop = CurveLoopType.Constant;
-            curve.PostLoop = CurveLoopType.Cycle;
+            float start = curve.GetStart();
+            float end = curve.GetEnd();
 
-            curve.AddKey( 0, new Vector3( 2, 2, 2 ) );
-            curve.AddKey( 1, new Vector3( 4, 0, 2 ) );
-            curve.AddKey( 5, new Vector3( 8, 0, 7 ) );
-            curve.AddKey( 7, new Vector3( 2, 1, 5 ) );
-            curve.AddKey( 9, new Vector3( 2, 2, 2 ) );
+            Vector3 lastPoint = curve.Evaluate(start);
 
-            curve.SetTangents();
-            return curve;
+            for (float i = start + segmentLength; i < end; i += segmentLength)
+            {
+                Vector3 newPoint = curve.Evaluate(i);
+                game.LineManager3D.AddLine(lastPoint, newPoint, color);
+                lastPoint = newPoint;
+            }
+
+            game.LineManager3D.AddLine(lastPoint, curve.Evaluate(end), color);
         }
     }
 }

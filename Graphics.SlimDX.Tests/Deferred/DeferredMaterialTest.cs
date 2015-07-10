@@ -1,14 +1,16 @@
 ﻿using System;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.Direct3D11;
+using TexturePool = MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.TexturePool;
 
 namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 {
@@ -83,9 +85,9 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 
 
 
-        private static TheWizards.Rendering.Deferred.TexturePool createTexturePool(DX11Game game)
+        private static TexturePool createTexturePool(DX11Game game)
         {
-            return new TheWizards.Rendering.Deferred.TexturePool(game);
+            return new TexturePool(game);
         }
 
         private static GBuffer createGBuffer(DX11Game game1)

@@ -110,6 +110,7 @@
     <Compile Include="Core\EmbeddedFile.cs" />
     <Compile Include="Core\FileHelper.cs" />
     <Compile Include="Core\MathExtra\Point3.cs" />
+    <Compile Include="Curve3D.cs" />
     <Compile Include="Networking\AssemblyBuilder.cs" />
     <Compile Include="Networking\Client\BasicPacketTransporter.cs" />
     <Compile Include="Networking\Client\ClientPacketManagerNetworked.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Core\SlimDXConversion\BoundingFrustum.cs" />
     <Compile Include="Core\SlimDXConversion\MathHelper.cs" />
     <Compile Include="Core\TWDir.cs" />
+    <Compile Include="Rendering\GeometryHelper.cs" />
     <Compile Include="Rendering\IAsset.cs" />
     <Compile Include="Rendering\IAssetFactory.cs" />
     <Compile Include="Rendering\IDataElement.cs" />

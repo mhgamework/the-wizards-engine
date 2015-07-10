@@ -1,7 +1,7 @@
 ﻿using DirectX11;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
-using PointLight = MHGameWork.TheWizards.Rendering.Deferred.PointLight;
+using PointLight = MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.PointLight;
 
 namespace MHGameWork.TheWizards.DualContouring
 {

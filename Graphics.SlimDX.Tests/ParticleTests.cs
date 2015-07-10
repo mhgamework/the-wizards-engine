@@ -1,10 +1,11 @@
 ﻿using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
 using MHGameWork.TheWizards.Particles;
 using MHGameWork.TheWizards.Rendering;
 using NUnit.Framework;
 using SlimDX;
-using TexturePool = MHGameWork.TheWizards.Rendering.Deferred.TexturePool;
+using TexturePool = MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.TexturePool;
 
 //using MHGameWork.TheWizards.Tests.Graphics;
 
@@ -89,7 +90,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
             emit = new Emitter(texPool, game, param,800,600);//note: again screen size
             //game.Wpf.CreateClassForm(param);
             Seeder seed = new Seeder(54);
-            var curve = Curve3DTester.CreateTestCurve();
+            var curve = Curve3D.CreateTestCurve();
            
             
 
@@ -150,7 +151,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
             emit = new Emitter(texPool, game, param,800,600);
             Seeder seed = new Seeder(54);
 
-            var curve = Curve3DTester.CreateTestCurve();
+            var curve = Curve3D.CreateTestCurve();
 
             
                 //texPool.Initialize(game);

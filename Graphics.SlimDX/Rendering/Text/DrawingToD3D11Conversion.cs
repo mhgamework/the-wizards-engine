@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.DirectX11.Graphics;
-using SlimDX;
-using SlimDX.Direct3D11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX.DXGI;
 
-namespace MHGameWork.TheWizards.Rendering.Text
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Text
 {
     /// <summary>
     /// Responsible for System.Drawing -> DirectD11 conversion

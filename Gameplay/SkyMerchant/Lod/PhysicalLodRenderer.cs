@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using System.Linq;
 using Castle.Core.Internal;
 using MHGameWork.TheWizards.Engine.Worlding;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using MHGameWork.TheWizards.Simulation.Spatial;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;

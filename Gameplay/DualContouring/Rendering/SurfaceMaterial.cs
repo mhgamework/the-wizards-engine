@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
-using MHGameWork.TheWizards.Shaders;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes;
+using MHGameWork.TheWizards.Graphics.SlimDX.Shaders;
 using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;

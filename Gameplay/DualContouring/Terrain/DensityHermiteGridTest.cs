@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DualContouring._Test;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;

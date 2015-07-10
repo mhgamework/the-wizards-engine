@@ -86,7 +86,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Data.Xml
         {
             var converter = new OBJToRAMMeshConverter(new RAMTextureFactory());
 
-            var mesh = RenderingTest.CreateMerchantsHouseMesh(converter);
+            var mesh = DefaultMeshes.CreateMerchantsHouseMesh(converter);
 
             var data = mesh.GetCoreData();
 

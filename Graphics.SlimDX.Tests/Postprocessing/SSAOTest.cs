@@ -1,16 +1,18 @@
 ﻿using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.SSAO;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
-using MHGameWork.TheWizards.Rendering.SSAO;
 using MHGameWork.TheWizards.Tests.Features.Rendering.Deferred;
 using MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11;
 using MHGameWork.TheWizards.Tests.Features.Rendering.XNA;
 using NUnit.Framework;
 using SlimDX.DirectInput;
+using TexturePool = MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.TexturePool;
 
 namespace MHGameWork.TheWizards.Tests.Features.Rendering.Postprocessing
 {
@@ -22,14 +24,14 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Postprocessing
         {
             var c = new OBJToRAMMeshConverter(new RAMTextureFactory());
 
-            var mesh = RenderingTest.CreateMerchantsHouseMesh(c);
+            var mesh = DefaultMeshes.CreateMerchantsHouseMesh(c);
 
             var game = new DX11Game();
             game.InitDirectX();
             var context = game.Device.ImmediateContext;
 
 
-            var texturePool = new TheWizards.Rendering.Deferred.TexturePool(game);
+            var texturePool = new TexturePool(game);
 
             var gBuffer = new GBuffer(game.Device, 800, 600);
 

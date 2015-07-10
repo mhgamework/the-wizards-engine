@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Animation

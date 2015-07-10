@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
+﻿using System.Linq;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling;
+using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Rendering.Deferred
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes
 {
     /// <summary>
     /// Responsible for providing a facade to a mesh element in the deferred renderer
@@ -57,7 +57,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                 part.MeshPart.GetGeometryData().GetSourceVector3(MeshPartGeometryData.Semantic.Position))))
                 .Aggregate(new Microsoft.Xna.Framework.BoundingBox(), (current, t) => current.MergeWith(t)).dx();
 
-            boundingBox = SlimDX.BoundingBox.FromPoints(Vector3.TransformCoordinate(boundingBox.GetCorners(), ref worldMatrix));
+            boundingBox = global::SlimDX.BoundingBox.FromPoints(Vector3.TransformCoordinate(boundingBox.GetCorners(), ref worldMatrix));
 
 
         }

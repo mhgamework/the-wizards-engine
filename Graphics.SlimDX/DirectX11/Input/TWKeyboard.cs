@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.DirectX11.Input
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Input
 {
     public class SlimDXTWKeyboard : TWKeyboard
     {

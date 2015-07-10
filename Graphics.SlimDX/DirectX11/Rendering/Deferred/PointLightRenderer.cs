@@ -1,11 +1,11 @@
 ﻿using System;
 using DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 
-namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred
 {
     /// <summary>
     /// This draws light accumulation from a directional light (full screen)
@@ -83,13 +83,13 @@ namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
                                                               BindFlags =
                                                                   BindFlags.DepthStencil | BindFlags.ShaderResource,
                                                               CpuAccessFlags = CpuAccessFlags.None,
-                                                              Format = SlimDX.DXGI.Format.R32_Typeless,
+                                                              Format = global::SlimDX.DXGI.Format.R32_Typeless,
                                                               Height = shadowMapSize,
                                                               Width = shadowMapSize,
                                                               MipLevels = 1,
                                                               OptionFlags = ResourceOptionFlags.TextureCube,
                                                               SampleDescription =
-                                                                  new SlimDX.DXGI.SampleDescription(1, 0),
+                                                                  new global::SlimDX.DXGI.SampleDescription(1, 0),
                                                               Usage = ResourceUsage.Default
                                                           });
             depthStencilViewFaces = new DepthStencilView[6];
@@ -109,7 +109,7 @@ namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
                                                                                                    DepthStencilViewFlags
                                                                                                    .None,
                                                                                                Format =
-                                                                                                   SlimDX.DXGI.Format.
+                                                                                                   global::SlimDX.DXGI.Format.
                                                                                                    D32_Float,
                                                                                                MipSlice = 0
                                                                                            });
@@ -131,7 +131,7 @@ namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
                                                                                     Dimension = ShaderResourceViewDimension.TextureCube,
                                                                                     MostDetailedMip = 0,
                                                                                     MipLevels = 1,
-                                                                                    Format = SlimDX.DXGI.Format.R32_Float
+                                                                                    Format = global::SlimDX.DXGI.Format.R32_Float
                                                                                 });
 
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.DualContouring.Terrain

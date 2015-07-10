@@ -1,5 +1,6 @@
 ﻿using DirectX11;
 using MHGameWork.TheWizards.DualContouring.Rendering;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
 

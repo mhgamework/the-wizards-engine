@@ -4,17 +4,20 @@ using System.IO;
 using System.Xml.Serialization;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
-using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.Tests.Features.Rendering.Deferred;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
+using TexturePool = MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.TexturePool;
 
 namespace MHGameWork.TheWizards.Tests.Features.Rendering.Showcase
 {
@@ -24,9 +27,11 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Showcase
     [TestFixture]
     public class ShowcaseTest
     {
+        public static readonly string ShowcaseOBJ = TWDir.GameData + @"\Rendering\Showcase\Merged\Showcase.obj";
+        public static readonly string ShowcaseMTL = TWDir.GameData + @"\Rendering\Showcase\Merged\Showcase.mtl";
+
         private const string ShowcaseCamera = "../../Unit Tests/Features/Rendering/Showcase/camera.xml";
 
-        [Xunit.Fact]
         [Test]
         public void TestCompleteShowcase()
         {
@@ -56,13 +61,11 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Showcase
             return new XmlSerializer(typeof(SpectaterCamera));
         }
 
-        [Xunit.Fact]
         public void test()
         {
             var p = new ObjImporter();
         }
 
-        [Xunit.Fact]
         [Test]
         public void TestShowcaseSingleFrame()
         {
@@ -101,9 +104,9 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Showcase
         [Test]
         public void TestShowcaseGBuffer()   
         {
-            drawMeshTest(RenderingTestsHelper.CreateMeshFromObj(new OBJToRAMMeshConverter(new RAMTextureFactory()),
-                                                                  RenderingTestsHelper.ShowcaseOBJ,
-                                                                  RenderingTestsHelper.ShowcaseMTL), Matrix.Scaling(1, 1, 1));
+            drawMeshTest(DefaultMeshes.CreateMeshFromObj(new OBJToRAMMeshConverter(new RAMTextureFactory()),
+                                                                  ShowcaseOBJ,
+                                                                  ShowcaseMTL), Matrix.Scaling(1, 1, 1));
         }
 
 
@@ -200,9 +203,9 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Showcase
             return ret;
         }
 
-        private static TheWizards.Rendering.Deferred.TexturePool createTexturePool(DX11Game game)
+        private static TexturePool createTexturePool(DX11Game game)
         {
-            return new TheWizards.Rendering.Deferred.TexturePool(game);
+            return new TexturePool(game);
         }
 
         private static GBuffer createGBuffer(DX11Game game1)

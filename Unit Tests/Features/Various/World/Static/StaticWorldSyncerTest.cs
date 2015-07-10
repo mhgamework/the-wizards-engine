@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various.World.Static
             var renderer = new SimpleMeshRenderer(texturePool, meshPartPool, vertexDeclarationPool);
 
             var mesh =
-                RenderingTest.CreateGuildHouseMesh(
+                DefaultMeshes.CreateGuildHouseMesh(
                     new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
 
             var meshFactory = new SimpleMeshFactory();

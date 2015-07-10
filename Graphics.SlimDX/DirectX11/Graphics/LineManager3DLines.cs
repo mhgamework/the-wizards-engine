@@ -4,7 +4,7 @@ using SlimDX;
 using SlimDX.Direct3D11;
 using Buffer = SlimDX.Direct3D11.Buffer;
 
-namespace MHGameWork.TheWizards.DirectX11.Graphics
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics
 {
     /// <summary>
     /// This class can be used to store lines for rendering with the LineManager3D. 

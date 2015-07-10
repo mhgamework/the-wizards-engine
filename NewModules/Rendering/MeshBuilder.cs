@@ -5,7 +5,7 @@ using System.Text;
 using DirectX11;
 
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Rendering.TextureMapping;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.TextureMapping;
 using Microsoft.Xna.Framework.Graphics;
 using SlimDX;
 using XnaVector3 = Microsoft.Xna.Framework.Vector3;

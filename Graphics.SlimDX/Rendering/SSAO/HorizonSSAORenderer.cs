@@ -1,14 +1,13 @@
 ﻿using System;
 using DirectX11;
-using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX;
-using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 using SlimDX.DXGI;
 using Device = SlimDX.Direct3D11.Device;
 
-namespace MHGameWork.TheWizards.Rendering.SSAO
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.SSAO
 {
     /// <summary>
     /// From NVIDIA D3D10 SDK

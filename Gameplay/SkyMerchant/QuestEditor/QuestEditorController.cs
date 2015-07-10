@@ -1,5 +1,4 @@
 ﻿using System;
-using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.SkyMerchant.Prototype;
 using MHGameWork.TheWizards.SkyMerchant.QuestEditor.HotbarCore;

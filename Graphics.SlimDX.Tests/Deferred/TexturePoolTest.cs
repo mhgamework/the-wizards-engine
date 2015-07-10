@@ -1,7 +1,9 @@
 ﻿using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
 using MHGameWork.TheWizards.Rendering;
 using NUnit.Framework;
 using SlimDX;
+using TexturePool = MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.TexturePool;
 
 namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 {
@@ -15,7 +17,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
         public void TestLoadTexture()
         {
             DX11Game game = new DX11Game();
-            var pool = new TheWizards.Rendering.Deferred.TexturePool(game);
+            var pool = new TexturePool(game);
 
             RAMTexture tex = RenderingTestsHelper.GetTestTexture();
 

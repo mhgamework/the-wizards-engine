@@ -21,7 +21,7 @@ using SlimDX.DXGI;
 using Buffer = SlimDX.Direct3D11.Buffer;
 using Device = SlimDX.Direct3D11.Device;
 
-namespace MHGameWork.TheWizards.DirectX11.Graphics
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics
 {
     /// <summary>
     /// TODO: promote this to a MHGameWork.TheWizards.Graphics class

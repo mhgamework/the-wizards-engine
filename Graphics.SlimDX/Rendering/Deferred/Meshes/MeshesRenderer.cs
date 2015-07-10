@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
+﻿using System.Collections.Generic;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
+using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 using SlimDX.Direct3D11;
-using Buffer = SlimDX.Direct3D11.Buffer;
 
-namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes
 {
     /// <summary>
     /// Responsible for rendering a set of meshes.

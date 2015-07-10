@@ -1,5 +1,7 @@
 ﻿using System;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.Rendering.Deferred;
 
 namespace MHGameWork.TheWizards.Engine.WorldRendering

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-/*
+﻿/*
 * Dx11TriangleText
 * Requires SlimDX (slimdx.org)
 * Intended as an unofficial Tutorial 4
@@ -23,19 +18,17 @@ using System.Text;
 * All I ask is that I be given credit if you use as a tutorial or for educational purposes.
 *
 */
-
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 using SlimDX.DXGI;
 using SlimDX.Windows;
-using Device = SlimDX.Direct3D11.Device;
-using Resource = SlimDX.Direct3D11.Resource;
-using System.Runtime.InteropServices;
 using Buffer = SlimDX.Direct3D11.Buffer;
+using Resource = SlimDX.Direct3D11.Resource;
 
-namespace MHGameWork.TheWizards.Rendering.Text
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Text.Unused
 {
     /// <summary>
     /// Code copied from article, NOT USED
@@ -92,7 +85,7 @@ namespace MHGameWork.TheWizards.Rendering.Text
 
         public static void Main()
         {
-            SlimDX.Direct3D11.Device device11;
+            global::SlimDX.Direct3D11.Device device11;
             SwapChain swapChain;
  
             // DirectX DXGI 1.1 factory
@@ -115,7 +108,7 @@ namespace MHGameWork.TheWizards.Rendering.Text
                 SwapEffect = SwapEffect.Discard
             };
  
-            SlimDX.Direct3D11.Device.CreateWithSwapChain(adapter1, DeviceCreationFlags.Debug, description, out device11, out swapChain);
+            global::SlimDX.Direct3D11.Device.CreateWithSwapChain(adapter1, DeviceCreationFlags.Debug, description, out device11, out swapChain);
  
             // create a view of our render target, which is the backbuffer of the swap chain we just created
             RenderTargetView renderTarget;
@@ -131,18 +124,18 @@ namespace MHGameWork.TheWizards.Rendering.Text
             // A DirectX 10.1 device is required because DirectWrite/Direct2D are unable
             // to access DirectX11.  BgraSupport is required for DXGI interaction between
             // DirectX10/Direct2D/DirectWrite.
-            SlimDX.Direct3D10_1.Device1 device10_1 = new SlimDX.Direct3D10_1.Device1(
+            global::SlimDX.Direct3D10_1.Device1 device10_1 = new global::SlimDX.Direct3D10_1.Device1(
                 adapter1,
-                SlimDX.Direct3D10.DriverType.Hardware,
-                SlimDX.Direct3D10.DeviceCreationFlags.BgraSupport | SlimDX.Direct3D10.DeviceCreationFlags.Debug,
-                SlimDX.Direct3D10_1.FeatureLevel.Level_10_0
+                global::SlimDX.Direct3D10.DriverType.Hardware,
+                global::SlimDX.Direct3D10.DeviceCreationFlags.BgraSupport | global::SlimDX.Direct3D10.DeviceCreationFlags.Debug,
+                global::SlimDX.Direct3D10_1.FeatureLevel.Level_10_0
             );
  
             // Create the DirectX11 texture2D.  This texture will be shared with the DirectX10
             // device.  The DirectX10 device will be used to render text onto this texture.  DirectX11
             // will then draw this texture (blended) onto the screen.
             // The KeyedMutex flag is required in order to share this resource.
-            SlimDX.Direct3D11.Texture2D textureD3D11 = new Texture2D(device11, new Texture2DDescription
+            global::SlimDX.Direct3D11.Texture2D textureD3D11 = new Texture2D(device11, new Texture2DDescription
             {
                 Width = form.Width,
                 Height = form.Height,
@@ -157,8 +150,8 @@ namespace MHGameWork.TheWizards.Rendering.Text
             });
  
             // A DirectX10 Texture2D sharing the DirectX11 Texture2D
-            SlimDX.DXGI.Resource sharedResource = new SlimDX.DXGI.Resource(textureD3D11);
-            SlimDX.Direct3D10.Texture2D textureD3D10 = device10_1.OpenSharedResource<SlimDX.Direct3D10.Texture2D>(sharedResource.SharedHandle);
+            global::SlimDX.DXGI.Resource sharedResource = new global::SlimDX.DXGI.Resource(textureD3D11);
+            global::SlimDX.Direct3D10.Texture2D textureD3D10 = device10_1.OpenSharedResource<global::SlimDX.Direct3D10.Texture2D>(sharedResource.SharedHandle);
  
             // The KeyedMutex is used just prior to writing to textureD3D11 or textureD3D10.
             // This is how DirectX knows which DirectX (10 or 11) is supposed to be writing
@@ -168,41 +161,41 @@ namespace MHGameWork.TheWizards.Rendering.Text
             KeyedMutex mutexD3D11 = new KeyedMutex(textureD3D11);
  
             // Direct2D Factory
-            SlimDX.Direct2D.Factory d2Factory = new SlimDX.Direct2D.Factory(
-                SlimDX.Direct2D.FactoryType.SingleThreaded,
-                SlimDX.Direct2D.DebugLevel.Information
+            global::SlimDX.Direct2D.Factory d2Factory = new global::SlimDX.Direct2D.Factory(
+                global::SlimDX.Direct2D.FactoryType.SingleThreaded,
+                global::SlimDX.Direct2D.DebugLevel.Information
             );
  
             // Direct Write factory
-            SlimDX.DirectWrite.Factory dwFactory = new SlimDX.DirectWrite.Factory(
-                SlimDX.DirectWrite.FactoryType.Isolated
+            global::SlimDX.DirectWrite.Factory dwFactory = new global::SlimDX.DirectWrite.Factory(
+                global::SlimDX.DirectWrite.FactoryType.Isolated
             );
  
             // The textFormat we will use to draw text with
-            SlimDX.DirectWrite.TextFormat textFormat = new SlimDX.DirectWrite.TextFormat(
+            global::SlimDX.DirectWrite.TextFormat textFormat = new global::SlimDX.DirectWrite.TextFormat(
                 dwFactory,
                 "Arial",
-                SlimDX.DirectWrite.FontWeight.Normal,
-                SlimDX.DirectWrite.FontStyle.Normal,
-                SlimDX.DirectWrite.FontStretch.Normal,
+                global::SlimDX.DirectWrite.FontWeight.Normal,
+                global::SlimDX.DirectWrite.FontStyle.Normal,
+                global::SlimDX.DirectWrite.FontStretch.Normal,
                 24,
                 "en-US"
             );
-            textFormat.TextAlignment = SlimDX.DirectWrite.TextAlignment.Center;
-            textFormat.ParagraphAlignment = SlimDX.DirectWrite.ParagraphAlignment.Center;
+            textFormat.TextAlignment = global::SlimDX.DirectWrite.TextAlignment.Center;
+            textFormat.ParagraphAlignment = global::SlimDX.DirectWrite.ParagraphAlignment.Center;
  
             // Query for a IDXGISurface.
             // DirectWrite and DirectX10 can interoperate thru DXGI.
             Surface surface = textureD3D10.AsSurface();
-            SlimDX.Direct2D.RenderTargetProperties rtp = new SlimDX.Direct2D.RenderTargetProperties();
-            rtp.MinimumFeatureLevel = SlimDX.Direct2D.FeatureLevel.Direct3D10;
-            rtp.Type = SlimDX.Direct2D.RenderTargetType.Hardware;
-            rtp.Usage = SlimDX.Direct2D.RenderTargetUsage.None;
-            rtp.PixelFormat = new SlimDX.Direct2D.PixelFormat(Format.Unknown, SlimDX.Direct2D.AlphaMode.Premultiplied);
-            SlimDX.Direct2D.RenderTarget dwRenderTarget = SlimDX.Direct2D.RenderTarget.FromDXGI(d2Factory, surface, rtp);
+            global::SlimDX.Direct2D.RenderTargetProperties rtp = new global::SlimDX.Direct2D.RenderTargetProperties();
+            rtp.MinimumFeatureLevel = global::SlimDX.Direct2D.FeatureLevel.Direct3D10;
+            rtp.Type = global::SlimDX.Direct2D.RenderTargetType.Hardware;
+            rtp.Usage = global::SlimDX.Direct2D.RenderTargetUsage.None;
+            rtp.PixelFormat = new global::SlimDX.Direct2D.PixelFormat(Format.Unknown, global::SlimDX.Direct2D.AlphaMode.Premultiplied);
+            global::SlimDX.Direct2D.RenderTarget dwRenderTarget = global::SlimDX.Direct2D.RenderTarget.FromDXGI(d2Factory, surface, rtp);
  
             // Brush used to DrawText
-            SlimDX.Direct2D.SolidColorBrush brushSolidWhite = new SlimDX.Direct2D.SolidColorBrush(
+            global::SlimDX.Direct2D.SolidColorBrush brushSolidWhite = new global::SlimDX.Direct2D.SolidColorBrush(
                 dwRenderTarget,
                 new Color4(1, 1, 1, 1)
             );

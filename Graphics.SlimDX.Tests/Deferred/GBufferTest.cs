@@ -1,6 +1,7 @@
 ﻿using System;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred;
 using NUnit.Framework;
 using SlimDX;
 

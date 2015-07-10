@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using MHGameWork.TheWizards.DirectX11.Graphics;
 using System.Linq;
 using MHGameWork.TheWizards.Engine.Worlding;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using MHGameWork.TheWizards.Simulation.Spatial;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX;

@@ -1,7 +1,6 @@
-using System;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Rendering
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling
 {
     public interface ICullable
     {

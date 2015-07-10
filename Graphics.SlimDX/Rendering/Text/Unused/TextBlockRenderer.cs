@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SlimDX.DirectWrite;
-using SlimDX.Direct2D;
-using SlimDX.DXGI;
-using System.Globalization;
 using System.Drawing;
-using SlimDX.Direct3D10;
+using System.Globalization;
 using SlimDX;
+using SlimDX.Direct2D;
+using SlimDX.Direct3D10;
+using SlimDX.DirectWrite;
+using SlimDX.DXGI;
 
-namespace SpriteTextRenderer
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Text.Unused
 {
     /// <summary>
     /// Defines how a text is aligned in a rectangle. Use OR-combinations of vertical and horizontal alignment.
@@ -57,13 +55,13 @@ namespace SpriteTextRenderer
     public class TextBlockRenderer : IDisposable
     {
         private static int ReferenceCount;
-        private static SlimDX.Direct3D10_1.Device1 D3DDevice10 = null;
-        private SlimDX.Direct3D11.Device D3DDevice11 = null;
+        private static global::SlimDX.Direct3D10_1.Device1 D3DDevice10 = null;
+        private global::SlimDX.Direct3D11.Device D3DDevice11 = null;
         private SpriteRenderer Sprite;
 
         private TextFormat Font;
-        private static SlimDX.DirectWrite.Factory WriteFactory;
-        private static SlimDX.Direct2D.Factory D2DFactory;
+        private static global::SlimDX.DirectWrite.Factory WriteFactory;
+        private static global::SlimDX.Direct2D.Factory D2DFactory;
         private RenderTargetProperties rtp;
 
         private float _FontSize;
@@ -103,7 +101,7 @@ namespace SpriteTextRenderer
         /// <param name="FontStretch">Font stretch parameter</param>
         /// <param name="FontStyle">Font style parameter</param>
         /// <param name="FontWeight">Font weight parameter</param>
-        public TextBlockRenderer(SpriteRenderer Sprite, String FontName, SlimDX.DirectWrite.FontWeight FontWeight, SlimDX.DirectWrite.FontStyle FontStyle, FontStretch FontStretch, float FontSize)
+        public TextBlockRenderer(SpriteRenderer Sprite, String FontName, global::SlimDX.DirectWrite.FontWeight FontWeight, global::SlimDX.DirectWrite.FontStyle FontStyle, FontStretch FontStretch, float FontSize)
         {
             AssertDevice();
             ReferenceCount++;
@@ -173,13 +171,13 @@ namespace SpriteTextRenderer
             };
             var Texture = new Texture2D(D3DDevice10, TexDesc);
             var rtv = new RenderTargetView(D3DDevice10, Texture);
-            D3DDevice10.ClearRenderTargetView(rtv, new SlimDX.Color4(0, 1, 1, 1));
+            D3DDevice10.ClearRenderTargetView(rtv, new global::SlimDX.Color4(0, 1, 1, 1));
             //D3DDevice10.ClearRenderTargetView(rtv, new SlimDX.Color4(1, 0, 0, 0));
             Surface Surface = Texture.AsSurface();
             Surface1 s1;
 
             var Target = RenderTarget.FromDXGI(D2DFactory, Surface, rtp);
-            var Color = new SolidColorBrush(Target, new SlimDX.Color4(1, 1, 1, 1));
+            var Color = new SolidColorBrush(Target, new global::SlimDX.Color4(1, 1, 1, 1));
 
             Target.BeginDraw();
             Line = 0; XPos = 0; YPos = 0;
@@ -230,29 +228,29 @@ namespace SpriteTextRenderer
             Color.Dispose();
 
             System.Threading.Monitor.Enter(D3DDevice11);
-            var DXGIResource = new SlimDX.DXGI.Resource(Texture);
-            SlimDX.Direct3D11.Texture2D Texture11;
+            var DXGIResource = new global::SlimDX.DXGI.Resource(Texture);
+            global::SlimDX.Direct3D11.Texture2D Texture11;
             if (PixCompatible)
             {
-                Texture11 = new SlimDX.Direct3D11.Texture2D(D3DDevice11, new SlimDX.Direct3D11.Texture2DDescription()
+                Texture11 = new global::SlimDX.Direct3D11.Texture2D(D3DDevice11, new global::SlimDX.Direct3D11.Texture2DDescription()
                     {
                         ArraySize = 1,
-                        BindFlags = SlimDX.Direct3D11.BindFlags.ShaderResource | SlimDX.Direct3D11.BindFlags.RenderTarget,
-                        CpuAccessFlags = SlimDX.Direct3D11.CpuAccessFlags.None,
+                        BindFlags = global::SlimDX.Direct3D11.BindFlags.ShaderResource | global::SlimDX.Direct3D11.BindFlags.RenderTarget,
+                        CpuAccessFlags = global::SlimDX.Direct3D11.CpuAccessFlags.None,
                         Format = Format.R8G8B8A8_UNorm,
                         Height = SizeY,
                         Width = SizeX,
                         MipLevels = 1,
-                        OptionFlags = SlimDX.Direct3D11.ResourceOptionFlags.Shared,
+                        OptionFlags = global::SlimDX.Direct3D11.ResourceOptionFlags.Shared,
                         SampleDescription = new SampleDescription(1, 0),
-                        Usage = SlimDX.Direct3D11.ResourceUsage.Default
+                        Usage = global::SlimDX.Direct3D11.ResourceUsage.Default
                     });
             }
             else
             {
-                Texture11 = D3DDevice11.OpenSharedResource <SlimDX.Direct3D11.Texture2D>(DXGIResource.SharedHandle);
+                Texture11 = D3DDevice11.OpenSharedResource <global::SlimDX.Direct3D11.Texture2D>(DXGIResource.SharedHandle);
             }
-            var SRV = new SlimDX.Direct3D11.ShaderResourceView(D3DDevice11, Texture11);
+            var SRV = new global::SlimDX.Direct3D11.ShaderResourceView(D3DDevice11, Texture11);
             TableDesc.Texture = Texture11;
             TableDesc.SRV = SRV;
             rtv.Dispose();
@@ -410,7 +408,7 @@ namespace SpriteTextRenderer
         {
             Metrics = new StringMetrics();
             Vector2 StartPosition = Position;
-            float scalY = CoordinateType == SpriteTextRenderer.CoordinateType.SNorm ? -1 : 1;
+            float scalY = CoordinateType == CoordinateType.SNorm ? -1 : 1;
             foreach (char c in text)
             {
                 var CD = GetCharDescription(c);
@@ -452,9 +450,9 @@ namespace SpriteTextRenderer
         {
             if (D3DDevice10 != null)
                 return;
-            D3DDevice10 = new SlimDX.Direct3D10_1.Device1(DeviceCreationFlags.BgraSupport | DeviceCreationFlags.Debug, SlimDX.Direct3D10_1.FeatureLevel.Level_10_0);
-            WriteFactory = new SlimDX.DirectWrite.Factory(SlimDX.DirectWrite.FactoryType.Shared);
-            D2DFactory = new SlimDX.Direct2D.Factory(SlimDX.Direct2D.FactoryType.SingleThreaded);
+            D3DDevice10 = new global::SlimDX.Direct3D10_1.Device1(DeviceCreationFlags.BgraSupport | DeviceCreationFlags.Debug, global::SlimDX.Direct3D10_1.FeatureLevel.Level_10_0);
+            WriteFactory = new global::SlimDX.DirectWrite.Factory(global::SlimDX.DirectWrite.FactoryType.Shared);
+            D2DFactory = new global::SlimDX.Direct2D.Factory(global::SlimDX.Direct2D.FactoryType.SingleThreaded);
         }
 
         #region IDisposable Support

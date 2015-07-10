@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Default;
@@ -18,54 +19,6 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
     [TestFixture]
     public class RenderingTest
     {
-
-        public static RAMMesh CreateMerchantsHouseMeshOLD()
-        {
-            ObjImporter importer = new ObjImporter();
-
-
-            importer.AddMaterialFileStream("MerchantsHouse.mtl", new FileStream(TestFiles.MerchantsHouseMtl, FileMode.Open));
-            importer.ImportObjFile(TestFiles.MerchantsHouseObj);
-
-            var textureFactory = new RAMTextureFactory();
-            /*textureFactory.AddAssemblyResolvePath(typeof(ObjImporter).Assembly,
-                                                  "MHGameWork.TheWizards.OBJParser.Files.maps");*/
-            var conv = new OBJToRAMMeshConverter(textureFactory);
-            return conv.CreateMesh(importer);
-        }
-        public static RAMMesh CreateMerchantsHouseMesh(OBJToRAMMeshConverter c)
-        {
-            ObjImporter importer;
-            importer = new ObjImporter();
-            importer.AddMaterialFileStream("MerchantsHouse.mtl", File.OpenRead(TestFiles.MerchantsHouseMtl));
-            importer.ImportObjFile(TestFiles.MerchantsHouseObj);
-
-            return c.CreateMesh(importer);
-        }
-        public static RAMMesh CreateGuildHouseMesh(OBJToRAMMeshConverter c)
-        {
-            ObjImporter importer;
-            importer = new ObjImporter();
-            importer.AddMaterialFileStream("GuildHouse01.mtl", File.OpenRead(TestFiles.GuildHouseMtl));
-            importer.ImportObjFile(TestFiles.GuildHouseObj);
-
-            return c.CreateMesh(importer);
-        }
-
-        public static RAMMesh CreateMeshFromObj(OBJToRAMMeshConverter c, string obj, string mtl)
-        {
-            var fi = new FileInfo(mtl);
-            ObjImporter importer;
-            importer = new ObjImporter();
-            importer.AddMaterialFileStream(fi.Name, File.OpenRead(mtl));
-            importer.ImportObjFile(obj);
-
-            return c.CreateMesh(importer);
-        }
-
-
-
-
         [Test]
         [RequiresThread(ApartmentState.STA)]
         public void TestLoadTexture()
@@ -75,7 +28,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
             game.AddXNAObject(pool);
             game.DrawFps = true;
 
-            RAMTexture tex = GetTestTexture();
+            RAMTexture tex = DefaultMeshes.GetTestTexture();
 
 
             game.DrawEvent += delegate
@@ -97,19 +50,6 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
             };
 
             game.Run();
-        }
-
-        public static RAMTexture GetTestTexture()
-        {
-            var tex = new RAMTexture();
-
-            var data = tex.GetCoreData();
-            data.StorageType = TextureCoreData.TextureStorageType.Disk;
-            data.DiskFilePath = TestFiles.BrickRoundJPG;
-            /*data.StorageType = TextureCoreData.TextureStorageType.Assembly;
-            data.Assembly = Assembly.GetExecutingAssembly();
-            data.AssemblyResourceName = "MHGameWork.TheWizards.Tests.OBJParser.Files.maps.BrickRound0030_7_S.jpg";*/
-            return tex;
         }
 
         [Test]
@@ -293,7 +233,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
         [RequiresThread(ApartmentState.STA)]
         public void TestMeshRendererSimple()
         {
-            var mesh = CreateSimpleTestMesh();
+            var mesh = DefaultMeshes.CreateSimpleTestMesh();
 
             var texturePool = new TexturePool();
             var meshpartPool = new MeshPartPool();
@@ -352,10 +292,10 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
 
             var mesh = c.CreateMesh(importer);
 
-            RAMMesh mesh2 = CreateMerchantsHouseMesh(c);
+            RAMMesh mesh2 = DefaultMeshes.CreateMerchantsHouseMesh(c);
 
 
-            RAMMesh mesh3 = CreateGuildHouseMesh(c);
+            RAMMesh mesh3 = DefaultMeshes.CreateGuildHouseMesh(c);
 
             SimpleMeshRenderer renderer = InitDefaultMeshRenderer(game);
 
@@ -445,7 +385,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
         {
             var factory = new DiskRenderingAssetFactory();
             factory.SaveDir = TWDir.Test.CreateSubdirectory("Rendering\\DiskFactory");
-            var mesh = CreateGuildHouseMesh(new OBJToRAMMeshConverter(factory));
+            var mesh = DefaultMeshes.CreateGuildHouseMesh(new OBJToRAMMeshConverter(factory));
             factory.AddAsset(mesh);
 
             factory.SaveAllAssets();
@@ -647,29 +587,6 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
             }
 
             #endregion
-        }
-
-
-
-        public static IMesh CreateSimpleTestMesh()
-        {
-            IMesh mesh;
-
-            mesh = new RAMMesh();
-
-            var part = new MeshCoreData.Part();
-            part.ObjectMatrix = Matrix.Identity;
-            part.MeshPart = new RAMMeshPart();
-            ((RAMMeshPart)part.MeshPart).SetGeometryData(MeshPartGeometryData.CreateTestSquare());
-
-            var mat = new MeshCoreData.Material();
-
-            mat.DiffuseMap = GetTestTexture();
-
-            part.MeshMaterial = mat;
-            mesh.GetCoreData().Parts.Add(part);
-
-            return mesh;
         }
     }
 }

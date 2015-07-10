@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DirectX11;
+﻿using DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Rendering.Deferred
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred
 {
     public class SpotLight
     {

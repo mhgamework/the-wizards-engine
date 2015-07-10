@@ -1,8 +1,10 @@
-﻿using MHGameWork.TheWizards.DirectX11.Graphics;
+﻿using System;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
+using MHGameWork.TheWizards.Rendering;
 using SlimDX.Direct3D11;
-using IDisposable = System.IDisposable;
+using Buffer = SlimDX.Direct3D11.Buffer;
 
-namespace MHGameWork.TheWizards.Rendering.Deferred
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes
 {
     public class MeshRenderMaterial : IDisposable
     {

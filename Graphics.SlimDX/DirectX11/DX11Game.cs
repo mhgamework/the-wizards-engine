@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Threading;
-using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.DirectX11.Graphics;
-using MHGameWork.TheWizards.DirectX11.Input;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Input;
 using MHGameWork.TheWizards.Profiling;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
 using Device = SlimDX.Direct3D11.Device;
 
-namespace MHGameWork.TheWizards.DirectX11
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11
 {
     /// <summary>
     /// This is actually a helper class used in testing. It can be used across all classes to simplify development.
@@ -271,7 +269,7 @@ namespace MHGameWork.TheWizards.DirectX11
 
         private void updateElapsed()
         {
-            var nextFrameTime = SlimDX.Configuration.Timer.Elapsed;
+            var nextFrameTime = global::SlimDX.Configuration.Timer.Elapsed;
             Elapsed = (float)(nextFrameTime - lastFrameTime).TotalSeconds;
 
             RealElapsed = Elapsed;
@@ -323,14 +321,14 @@ namespace MHGameWork.TheWizards.DirectX11
             keyboard = new SlimDXTWKeyboard();
 
 
-            diDevice = new SlimDX.DirectInput.DirectInput();
-            diKeyboard = new SlimDX.DirectInput.Keyboard(diDevice);
+            diDevice = new global::SlimDX.DirectInput.DirectInput();
+            diKeyboard = new global::SlimDX.DirectInput.Keyboard(diDevice);
             diKeyboard.SetCooperativeLevel(Form.Form, CooperativeLevel.Nonexclusive | CooperativeLevel.Foreground);
             diKeyboard.Acquire();
 
 
             mouse = new TWMouse();
-            diMouse = new SlimDX.DirectInput.Mouse(new DirectInput());
+            diMouse = new global::SlimDX.DirectInput.Mouse(new DirectInput());
             diMouse.SetCooperativeLevel(Form.Form, CooperativeLevel.Exclusive | CooperativeLevel.Foreground);
 
             SpectaterCamera = new SpectaterCamera();

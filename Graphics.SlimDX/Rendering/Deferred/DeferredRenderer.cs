@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using DirectX11;
-using MHGameWork.TheWizards.Data;
-using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
-using MHGameWork.TheWizards.DirectX11.Rendering.CSM;
-using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
-using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
-using MHGameWork.TheWizards.Rendering.SSAO;
-using MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.CSM;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.SSAO;
+using MHGameWork.TheWizards.Rendering;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DXGI;
 using Device = SlimDX.Direct3D11.Device;
-using MapFlags = SlimDX.DXGI.MapFlags;
 using Resource = SlimDX.Direct3D11.Resource;
 
 //[assembly: TWProfile(TWProfileAttribute.NameType.Method, AttributeTargetTypes = "MHGameWork.TheWizards.DirectX11.*", AttributeTargetMembers = "*")]
 //[assembly: TWProfile(TWProfileAttribute.NameType.Method, AttributeTargetTypes = "MHGameWork.TheWizards.Rendering.*", AttributeTargetMembers = "*")]
-namespace MHGameWork.TheWizards.Rendering.Deferred
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred
 {
     /// <summary>
     /// This is the facade class for the Deferred Renderer. This hides the DirectX11 layer.
@@ -555,7 +553,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred
                                           Resource.CalculateSubresourceIndex(0, 0, 1), 0, 0, 0);
             var data = context.MapSubresource(tempTex,
                                               Resource.CalculateSubresourceIndex(0, 0, 1), 4, MapMode.Read,
-                                              SlimDX.Direct3D11.MapFlags.None);
+                                              global::SlimDX.Direct3D11.MapFlags.None);
 
             var ret = data.Data.Read<T>();
             context.UnmapSubresource(tempTex, Resource.CalculateSubresourceIndex(0, 0, 1));

@@ -11,6 +11,7 @@ using MHGameWork.TheWizards.Engine.Diagnostics;
 using MHGameWork.TheWizards.Engine.Diagnostics.Profiling;
 using MHGameWork.TheWizards.Engine.Diagnostics.Tracing;
 using MHGameWork.TheWizards.Engine.Services;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
 using MHGameWork.TheWizards.Persistence;
 using MHGameWork.TheWizards.Profiling;
 using MHGameWork.TheWizards.Serialization;

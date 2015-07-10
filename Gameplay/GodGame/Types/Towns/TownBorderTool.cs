@@ -1,5 +1,6 @@
 ﻿using System;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Input;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame.Types.Towns
@@ -39,7 +40,7 @@ namespace MHGameWork.TheWizards.GodGame.Types.Towns
             doAdd(voxel, townCenterService.GetTownForVoxel(voxel.GetInternalVoxel()));
         }
 
-        public override void OnTargetChanged(IVoxelHandle voxel, DirectX11.Input.TWKeyboard keyboard, DirectX11.Input.TWMouse mouse)
+        public override void OnTargetChanged(IVoxelHandle voxel, TWKeyboard keyboard, TWMouse mouse)
         {
             var clickedTown = townCenterService.GetTownForVoxel(voxel.GetInternalVoxel());
 

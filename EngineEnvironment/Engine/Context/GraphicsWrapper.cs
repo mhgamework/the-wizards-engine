@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Input;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Input;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX.DirectInput;
 
@@ -27,7 +29,7 @@ namespace MHGameWork.TheWizards.Engine
 
         private NullKeyboard nullKeyboard = new NullKeyboard();
 
-        public override DirectX11.Input.TWKeyboard Keyboard
+        public override TWKeyboard Keyboard
         {
             get
             {

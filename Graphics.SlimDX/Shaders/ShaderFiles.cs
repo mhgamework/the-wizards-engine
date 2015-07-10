@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.DirectX11.Graphics;
+﻿using System.IO;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 
-namespace MHGameWork.TheWizards.Shaders
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Shaders
 {
     /// <summary>
     /// Responsible for statically typing the shader files into the code

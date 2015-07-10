@@ -1,10 +1,8 @@
 using System;
-using System.Diagnostics;
-using MHGameWork.TheWizards.DirectX11.Graphics;
-using MHGameWork.TheWizards.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Rendering
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling
 {
     public interface ICuller
     {

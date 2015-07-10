@@ -5,10 +5,8 @@ using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 using SlimDX.DXGI;
 using Device = SlimDX.Direct3D11.Device;
-using Effect = SlimDX.Direct3D11.Effect;
-using EffectPass = SlimDX.Direct3D11.EffectPass;
 
-namespace MHGameWork.TheWizards.DirectX11.Graphics
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics
 {
     /// <summary>
     /// This is used by the XNAGame to render lines, or boxes, triangles, … as lines.

@@ -9,7 +9,7 @@ using SlimDX.DXGI;
 using SlimDX.Windows;
 using Device = SlimDX.Direct3D11.Device;
 
-namespace MHGameWork.TheWizards.DirectX11.Graphics
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics
 {
     //TODO: WARNING no depthbuffer has been initialized yet!!
     /// <summary>

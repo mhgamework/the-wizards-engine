@@ -1,11 +1,11 @@
 ﻿using DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
-using MHGameWork.TheWizards.DirectX11.Rendering.CSM;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.CSM;
 using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 
-namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred
 {
     /// <summary>
     /// This draws light accumulation from a directional light (full screen)

@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Runtime.InteropServices;
 using SlimDX;
 using SlimDX.Direct3D11;
-using System.Runtime.InteropServices;
 
-namespace SpriteTextRenderer
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Text.Unused
 {
     internal class SpriteVertexLayout
     {
         internal static InputElement[] Description = {
-            new InputElement("TEXCOORD", 0, SlimDX.DXGI.Format.R32G32_Float, 0, 0),
-            new InputElement("TEXCOORDSIZE", 0, SlimDX.DXGI.Format.R32G32_Float, 8, 0),
-            new InputElement("POSITION", 0, SlimDX.DXGI.Format.R32G32_Float, 16, 0),
-            new InputElement("SIZE", 0, SlimDX.DXGI.Format.R32G32_Float, 24, 0),
-            new InputElement("COLOR", 0, SlimDX.DXGI.Format.B8G8R8A8_UNorm, 32, 0)};
+            new InputElement("TEXCOORD", 0, global::SlimDX.DXGI.Format.R32G32_Float, 0, 0),
+            new InputElement("TEXCOORDSIZE", 0, global::SlimDX.DXGI.Format.R32G32_Float, 8, 0),
+            new InputElement("POSITION", 0, global::SlimDX.DXGI.Format.R32G32_Float, 16, 0),
+            new InputElement("SIZE", 0, global::SlimDX.DXGI.Format.R32G32_Float, 24, 0),
+            new InputElement("COLOR", 0, global::SlimDX.DXGI.Format.B8G8R8A8_UNorm, 32, 0)};
 
         internal struct Struct
         {

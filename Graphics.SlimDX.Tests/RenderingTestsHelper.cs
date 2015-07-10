@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.Tests.Features.Rendering.Deferred;
 using MHGameWork.TheWizards.Tests.Features.Rendering.XNA;
 using Microsoft.Xna.Framework;
@@ -24,17 +24,17 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
 
         public static RAMMesh CreateMerchantsHouseMesh(OBJToRAMMeshConverter c)
         {
-            return RenderingTest.CreateMerchantsHouseMesh(c);
+            return DefaultMeshes.CreateMerchantsHouseMesh(c);
         }
 
         public static RAMMesh CreateGuildHouseMesh(OBJToRAMMeshConverter c)
         {
-            return RenderingTest.CreateGuildHouseMesh(c);
+            return DefaultMeshes.CreateGuildHouseMesh(c);
         }
 
         public static RAMMesh CreateMeshFromObj(OBJToRAMMeshConverter c, string obj, string mtl)
         {
-            return RenderingTest.CreateMeshFromObj(c, obj, mtl);
+            return DefaultMeshes.CreateMeshFromObj(c, obj, mtl);
         }
 
         public static IMesh CreateSimpleTestMesh()
@@ -80,8 +80,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
         public static RAMTexture GetNormalMapAlpha() { return loadTexture(TWDir.GameData + @"\Rendering\Ivy\Ivy_NRM.png"); }
         public static RAMTexture GetSpecularMapAlpha() { return loadTexture(TWDir.GameData + @"\Rendering\Ivy\Ivy_SPEC.png"); }
 
-        public static readonly string ShowcaseOBJ = TWDir.GameData +  @"\Rendering\Showcase\Merged\Showcase.obj";
-        public static readonly string ShowcaseMTL = TWDir.GameData + @"\Rendering\Showcase\Merged\Showcase.mtl";
+        
 
         public static IMesh CreateSphere(ITexture diffuse, ITexture normal, ITexture specular)
         {

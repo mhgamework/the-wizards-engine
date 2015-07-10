@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using SlimDX.Direct3D11;
 using SlimDX.DXGI;
 
-namespace MHGameWork.TheWizards.DirectX11.Graphics
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics
 {
     /// <summary>
     /// Helper class for working with D3D11 texture resources;
@@ -63,7 +60,7 @@ namespace MHGameWork.TheWizards.DirectX11.Graphics
 
 
             var box = tex.Device.ImmediateContext.MapSubresource(tex, 0, 0, MapMode.WriteDiscard,
-                                                                  SlimDX.Direct3D11.MapFlags.None);
+                                                                  global::SlimDX.Direct3D11.MapFlags.None);
 
             for (int iRow = 0; iRow < height; iRow++)
             {

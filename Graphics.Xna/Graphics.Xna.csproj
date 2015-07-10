@@ -81,7 +81,6 @@
     <Compile Include="Graphics\BasicShader.cs" />
     <Compile Include="Graphics\BoxMesh.cs" />
     <Compile Include="Graphics\ColladaShader.cs" />
-    <Compile Include="Graphics\Curve3D.cs" />
     <Compile Include="Graphics\CustomCamera.cs" />
     <Compile Include="Graphics\DEPRECATED\Cursor.cs" />
     <Compile Include="Graphics\DEPRECATED\Gui\DrawEventArgs.cs" />

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 
-namespace MHGameWork.TheWizards.DirectX11.Filters
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Filters
 {
     /// <summary>
     /// Responsible for implementing a Gaussian Blur on the GPU using ComputeShader

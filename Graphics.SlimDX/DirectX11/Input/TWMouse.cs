@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.DirectX11.Input
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Input
 {
     /// <summary>
     /// TODO: when in cursorEnabled mode, clicking outside the window should probably

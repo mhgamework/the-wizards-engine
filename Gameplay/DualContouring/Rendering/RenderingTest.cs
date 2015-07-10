@@ -3,6 +3,7 @@ using MHGameWork.TheWizards.DualContouring.Terrain;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using NUnit.Framework;
 using SlimDX;

@@ -1,9 +1,8 @@
 ﻿using System;
-using SlimDX;
 using SlimDX.Direct3D11;
 using Buffer = SlimDX.Direct3D11.Buffer;
 
-namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes
 {
     /// <summary>
     /// Responsible for executing a draw call for a meshpart 
@@ -21,7 +20,7 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
         public void Draw( DeviceContext context )
         {
             context.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleList;
-            context.InputAssembler.SetIndexBuffer(IndexBuffer, SlimDX.DXGI.Format.R32_UInt, 0); //Using int indexbuffers
+            context.InputAssembler.SetIndexBuffer(IndexBuffer, global::SlimDX.DXGI.Format.R32_UInt, 0); //Using int indexbuffers
             context.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(VertexBuffer, DeferredMeshVertex.SizeInBytes, 0));
 
             context.DrawIndexed(PrimitiveCount * 3, 0, 0);

@@ -1,10 +1,10 @@
 using System;
 using DirectX11;
-using MHGameWork.TheWizards.DirectX11.Input;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Input;
 using SlimDX;
 using SlimDX.DirectInput;
 
-namespace MHGameWork.TheWizards.DirectX11.Graphics
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics
 {
     /// <summary>
     /// Responsible for interpreting user input for a spectator camera

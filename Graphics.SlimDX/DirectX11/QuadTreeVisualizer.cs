@@ -1,6 +1,6 @@
 using SlimDX;
 
-namespace MHGameWork.TheWizards.DirectX11
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11
 {
     public class QuadTreeVisualizer
     {

@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using SlimDX.Direct3D11;
-using SlimDX.D3DCompiler;
 using SlimDX;
+using SlimDX.D3DCompiler;
+using SlimDX.Direct3D11;
 using Buffer = SlimDX.Direct3D11.Buffer;
 
-namespace SpriteTextRenderer
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Text.Unused
 {
     /// <summary>
     /// Specifies, how coordinates are interpreted.
@@ -217,7 +216,7 @@ namespace SpriteTextRenderer
                     Coordinate.X = Coordinate.X / ScreenSize.X * 2 - 1;
                     Coordinate.Y = -(Coordinate.Y / ScreenSize.Y * 2 - 1);
                     return Coordinate;
-                case SpriteTextRenderer.CoordinateType.Absolute:                   
+                case CoordinateType.Absolute:                   
                     Coordinate.X = Coordinate.X / Viewport.Width * 2 - 1;
                     Coordinate.Y = -(Coordinate.Y / Viewport.Height * 2 - 1);
                     return Coordinate;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
 using MHGameWork.TheWizards.IO;
 using Microsoft.SqlServer.Server;
 using Microsoft.Xna.Framework.Graphics;

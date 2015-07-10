@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Rendering
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling
 {
     /// <summary>
     /// TODO: the height of the treenodes should be updated to encapsulate the cullables height

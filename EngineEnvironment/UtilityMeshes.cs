@@ -2,9 +2,10 @@
 using System.IO;
 using System.Text;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Text;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Rendering.Text;
 using SlimDX;
 using SlimDX.Direct3D11;
 using MathHelper = DirectX11.MathHelper;

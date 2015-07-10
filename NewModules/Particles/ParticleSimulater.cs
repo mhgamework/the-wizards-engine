@@ -6,7 +6,8 @@ using System.Reflection;
 using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
@@ -24,7 +25,7 @@ namespace MHGameWork.TheWizards.Particles
         private RenderTargetView velocityTarget2;
 
 
-        private DirectX11.Graphics.FullScreenQuad quad;
+        private FullScreenQuad quad;
         Viewport newPort = new Viewport();
 
         private Texture2D positionTex;

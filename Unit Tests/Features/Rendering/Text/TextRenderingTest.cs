@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
-using MHGameWork.TheWizards.Rendering.Text;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Text;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.DXGI;

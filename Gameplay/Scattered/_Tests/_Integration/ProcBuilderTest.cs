@@ -8,9 +8,11 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Text;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.Rendering.Text;
 using MHGameWork.TheWizards.Scattered.ProcBuilder;
 using NUnit.Framework;
 using ProceduralBuilder.Building;
@@ -22,7 +24,7 @@ using ProceduralBuilder.Rules;
 using ProceduralBuilder.Shapes;
 using SlimDX;
 using SlimDX.DirectInput;
-using PointLight = MHGameWork.TheWizards.Rendering.Deferred.PointLight;
+using PointLight = MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.PointLight;
 
 namespace MHGameWork.TheWizards.Scattered._Tests
 {

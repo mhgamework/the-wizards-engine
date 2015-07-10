@@ -3,13 +3,13 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.Rendering.Text;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Text.Unused;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DirectWrite;
 using SlimDX.DXGI;
-using SpriteTextRenderer;
 using Font = System.Drawing.Font;
 using FontStyle = SlimDX.DirectWrite.FontStyle;
 

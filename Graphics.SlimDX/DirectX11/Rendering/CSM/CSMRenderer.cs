@@ -1,12 +1,12 @@
 using System;
 using System.IO;
+using System.Linq;
 using DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX;
 using SlimDX.Direct3D11;
-using System.Linq;
 
-namespace MHGameWork.TheWizards.DirectX11.Rendering.CSM
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.CSM
 {
     public enum ShadowFilteringType
     {
@@ -98,8 +98,8 @@ namespace MHGameWork.TheWizards.DirectX11.Rendering.CSM
                                                       MipLevels = 1,
                                                       ArraySize = 1,
                                                       BindFlags = BindFlags.DepthStencil | BindFlags.ShaderResource,
-                                                      Format = SlimDX.DXGI.Format.R32_Typeless,
-                                                      SampleDescription = new SlimDX.DXGI.SampleDescription(1, 0)
+                                                      Format = global::SlimDX.DXGI.Format.R32_Typeless,
+                                                      SampleDescription = new global::SlimDX.DXGI.SampleDescription(1, 0)
 
                                                   });
 
@@ -108,7 +108,7 @@ namespace MHGameWork.TheWizards.DirectX11.Rendering.CSM
                                                                            ArraySize = 1,
                                                                            Dimension = DepthStencilViewDimension.Texture2D,
                                                                            Flags = DepthStencilViewFlags.None,
-                                                                           Format = SlimDX.DXGI.Format.D32_Float,
+                                                                           Format = global::SlimDX.DXGI.Format.D32_Float,
                                                                            MipSlice = 0
                                                                        });
             ShadowMapRV = new ShaderResourceView(device, shadowMap, new ShaderResourceViewDescription
@@ -117,7 +117,7 @@ namespace MHGameWork.TheWizards.DirectX11.Rendering.CSM
                                                                     Dimension = ShaderResourceViewDimension.Texture2D,
                                                                     MipLevels = 1,
                                                                     MostDetailedMip = 0,
-                                                                    Format = SlimDX.DXGI.Format.R32_Float
+                                                                    Format = global::SlimDX.DXGI.Format.R32_Float
                                                                 });
 
 

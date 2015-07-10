@@ -7,7 +7,7 @@
     <ProjectGuid>{AE1D68F4-5306-47F9-942F-A86F113D23D8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Graphics.SlimDX</RootNamespace>
+    <RootNamespace>MHGameWork.TheWizards.Graphics.SlimDX</RootNamespace>
     <AssemblyName>Graphics.SlimDX</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

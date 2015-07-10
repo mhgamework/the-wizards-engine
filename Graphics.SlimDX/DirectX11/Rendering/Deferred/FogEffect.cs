@@ -1,10 +1,8 @@
-using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
-using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX;
 using SlimDX.Direct3D11;
 
-namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred
 {
     public class FogEffect
     {
@@ -39,7 +37,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
 
         public void PostProcessFog(ShaderResourceView input, GBuffer gBuffer, RenderTargetView target)
         {
-            SlimDX.Performance.BeginEvent(new Color4(), "Fog!");
+            global::SlimDX.Performance.BeginEvent(new Color4(), "Fog!");
             context.OutputMerger.SetTargets(target);
             shader.Effect.GetVariableByName("inputMap").AsResource().SetResource(input);
             shader.Effect.GetVariableByName("InvertProjection").AsMatrix().SetMatrix(
@@ -54,7 +52,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11
             shader.Effect.GetVariableByName("inputMap").AsResource().SetResource(null);
             shader.Apply();
 
-            SlimDX.Performance.EndEvent();
+            global::SlimDX.Performance.EndEvent();
         }
     }
 }

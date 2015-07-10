@@ -1,6 +1,6 @@
 ﻿using SlimDX.Direct3D11;
 
-namespace MHGameWork.TheWizards.DirectX11.Graphics
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics
 {
     public interface IGraphicsManager
     {

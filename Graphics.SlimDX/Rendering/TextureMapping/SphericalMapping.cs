@@ -2,7 +2,7 @@
 using DirectX11;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Rendering.TextureMapping
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.TextureMapping
 {
     public class SphericalMapping
     {

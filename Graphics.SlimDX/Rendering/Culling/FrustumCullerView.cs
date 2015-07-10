@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DirectX11;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.Rendering
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling
 {
     public class FrustumCullerView
     {

@@ -1,11 +1,11 @@
 ﻿using System;
 using DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 
-namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred
 {
     /// <summary>
     /// This draws light accumulation from a directional light (full screen)
@@ -86,24 +86,24 @@ namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
                                                       ArraySize = 1,
                                                       BindFlags = BindFlags.DepthStencil | BindFlags.ShaderResource,
                                                       CpuAccessFlags = CpuAccessFlags.None,
-                                                      Format = SlimDX.DXGI.Format.R32_Typeless,
+                                                      Format = global::SlimDX.DXGI.Format.R32_Typeless,
                                                       Width = shadowMapSize,
                                                       Height = shadowMapSize,
                                                       MipLevels = 1,
                                                       Usage = ResourceUsage.Default,
-                                                      SampleDescription = new SlimDX.DXGI.SampleDescription(1, 0)
+                                                      SampleDescription = new global::SlimDX.DXGI.SampleDescription(1, 0)
                                                   });
             shadowMapRV = new ShaderResourceView(device, shadowMap, new ShaderResourceViewDescription
                                                                         {
                                                                             Dimension = ShaderResourceViewDimension.Texture2D,
-                                                                            Format = SlimDX.DXGI.Format.R32_Float,
+                                                                            Format = global::SlimDX.DXGI.Format.R32_Float,
                                                                             MipLevels = 1,
                                                                             MostDetailedMip = 0
                                                                         });
             shadowMapDSV = new DepthStencilView(device, shadowMap, new DepthStencilViewDescription
                                                                        {
                                                                            Dimension = DepthStencilViewDimension.Texture2D,
-                                                                           Format = SlimDX.DXGI.Format.D32_Float
+                                                                           Format = global::SlimDX.DXGI.Format.D32_Float
                                                                        });
 
             LightCamera = new CustomCamera();

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+﻿using System.Drawing;
 using SlimDX;
 
-namespace SpriteTextRenderer
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Text.Unused
 {
     /// <summary>
     /// Collection of helper methods for the SpriteRenderer and TextRenderer

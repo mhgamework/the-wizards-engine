@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
+using System.IO;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
-using MHGameWork.TheWizards.Tests.Features.Data.OBJParser;
 using NUnit.Framework;
 using SlimDX;
+using TexturePool = MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.TexturePool;
 
 namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
 {
@@ -17,11 +17,26 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
     [TestFixture]
     public class MeshesRendererTest
     {
+        public static RAMMesh GetBarrelMesh(OBJToRAMMeshConverter c)
+        {
+            var fsMat = new FileStream(TestFiles.BarrelMtl, FileMode.Open);
+
+            var importer = new ObjImporter();
+            importer.AddMaterialFileStream("Barrel01.mtl", fsMat);
+
+            importer.ImportObjFile(TestFiles.BarrelObj);
+
+            var meshes = c.CreateMeshesFromObjects(importer);
+
+            fsMat.Close();
+
+            return meshes[0];
+        }
 
         [Test]
         public void TestSphere() { drawMeshTest(RenderingTestsHelper.CreateSphere(RenderingTestsHelper.GetDiffuseMap(), RenderingTestsHelper.GetNormalMap(), RenderingTestsHelper.GetSpecularMap()), Matrix.Identity); }
         [Test]
-        public void TestBarrel() { drawMeshTest(OBJParserTest.GetBarrelMesh(new OBJToRAMMeshConverter(new RAMTextureFactory())), Matrix.Identity); }
+        public void TestBarrel() { drawMeshTest(GetBarrelMesh(new OBJToRAMMeshConverter(new RAMTextureFactory())), Matrix.Identity); }
         [Test]
 
 
@@ -69,9 +84,9 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
             return ret;
         }
 
-        private static TheWizards.Rendering.Deferred.TexturePool createTexturePool(DX11Game game)
+        private static TexturePool createTexturePool(DX11Game game)
         {
-            return new TheWizards.Rendering.Deferred.TexturePool(game);
+            return new TexturePool(game);
         }
 
         private static GBuffer createGBuffer(DX11Game game1)

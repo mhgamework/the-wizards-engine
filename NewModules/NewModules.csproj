@@ -239,6 +239,7 @@
     <Compile Include="Pathing\IAIMover.cs" />
     <Compile Include="Pathing\SimpleAIMover.cs" />
     <Compile Include="Raycasting\MeshRaycaster.cs" />
+    <Compile Include="Rendering\DefaultMeshes.cs" />
     <Compile Include="Rendering\MeshOptimizer.cs" />
     <Compile Include="Rendering\RAMMesh.cs">
       <SubType>Code</SubType>

@@ -1,6 +1,6 @@
 using System;
 
-namespace MHGameWork.TheWizards.Rendering.Deferred
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred
 {
     public interface ICustomGBufferRenderer : IDisposable
     {

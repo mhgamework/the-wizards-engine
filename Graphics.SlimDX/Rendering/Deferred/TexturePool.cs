@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using DirectX11;
 using MHGameWork.TheWizards.Common.Core;
-using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Rendering;
 using SlimDX.Direct3D11;
 
-namespace MHGameWork.TheWizards.Rendering.Deferred
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred
 {
     /// <summary>
     /// This currently uses a very simple caching algorithm. This class could therefore be made an abstract factory.

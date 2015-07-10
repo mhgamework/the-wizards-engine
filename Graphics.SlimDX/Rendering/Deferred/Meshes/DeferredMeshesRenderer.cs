@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
-using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
-using SlimDX;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling;
+using MHGameWork.TheWizards.Rendering;
 using SlimDX.Direct3D11;
-using CullMode = SlimDX.Direct3D11.CullMode;
-using FillMode = SlimDX.Direct3D11.FillMode;
 
-namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes
 {
     //TODO: call UpdateCullable in the correct places
 

@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX;
-using SlimDX.Direct3D11;
 using SlimDX.DXGI;
 
-namespace MHGameWork.TheWizards.Rendering.Text
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Text
 {
     /// <summary>
     /// This class is responsible for building a Texture2D from provided text

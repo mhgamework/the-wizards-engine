@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using MHGameWork.TheWizards.Rendering.Particles;
 using MHGameWork.TheWizards.Simulation.ActionScheduling;
 using SlimDX;

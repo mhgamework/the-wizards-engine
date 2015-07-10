@@ -2,10 +2,10 @@
 using System.IO;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.DualContouring._Test;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
 using MHGameWork.TheWizards.IO;
 using Microsoft.SqlServer.Server;
 using Microsoft.Xna.Framework.Graphics;

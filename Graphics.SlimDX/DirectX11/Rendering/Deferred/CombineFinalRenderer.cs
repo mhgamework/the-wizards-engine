@@ -1,9 +1,9 @@
-﻿using MHGameWork.TheWizards.DirectX11.Graphics;
+﻿using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DXGI;
 
-namespace MHGameWork.TheWizards.DirectX11.Rendering.Deferred
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred
 {
     /// <summary>
     /// </summary>

@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Engine.Worlding;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using MHGameWork.TheWizards.SkyMerchant.Prototype.Parts;
 using MHGameWork.TheWizards.SkyMerchant.Worlding;
 using MHGameWork.TheWizards.SkyMerchant._GameplayInterfacing;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
 using NUnit.Framework;
 using SlimDX;
 

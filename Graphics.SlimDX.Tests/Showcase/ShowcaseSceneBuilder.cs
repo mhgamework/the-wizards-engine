@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
@@ -149,8 +150,8 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Showcase
         private void loadShowcaseScene()
         {
             importer = new ObjImporter();
-            importer.AddMaterialFileStream(Path.GetFileName(RenderingTestsHelper.ShowcaseMTL), File.OpenRead(RenderingTestsHelper.ShowcaseMTL));
-            importer.ImportObjFile(RenderingTestsHelper.ShowcaseOBJ);
+            importer.AddMaterialFileStream(Path.GetFileName(ShowcaseTest.ShowcaseMTL), File.OpenRead(ShowcaseTest.ShowcaseMTL));
+            importer.ImportObjFile(ShowcaseTest.ShowcaseOBJ);
             interpreter = new OBJInterpreter(importer, new RAMTextureFactory());
 
         }

@@ -1,4 +1,4 @@
-﻿using MHGameWork.TheWizards.DirectX11.Graphics;
+﻿using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using NUnit.Framework;
 using SlimDX;
 

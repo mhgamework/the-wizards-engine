@@ -2,7 +2,7 @@ using System.Diagnostics;
 using DirectX11;
 using SlimDX;
 
-namespace MHGameWork.TheWizards.DirectX11.Graphics
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics
 {
     public class ThirdPersonCamera : ICamera
     {

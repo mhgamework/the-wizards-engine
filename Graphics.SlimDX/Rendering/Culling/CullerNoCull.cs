@@ -1,6 +1,6 @@
-﻿using MHGameWork.TheWizards.DirectX11.Graphics;
+﻿using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 
-namespace MHGameWork.TheWizards.Rendering
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling
 {
     /// <summary>
     /// A culler that doesnt cull 

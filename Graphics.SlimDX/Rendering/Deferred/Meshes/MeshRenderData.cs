@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using SlimDX;
 using System.Linq;
+using MHGameWork.TheWizards.Rendering;
+using SlimDX;
 
-namespace MHGameWork.TheWizards.Rendering.Deferred
+namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes
 {
     public class MeshRenderData : IDisposable
     {

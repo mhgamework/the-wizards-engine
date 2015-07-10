@@ -2,10 +2,12 @@
 using System.IO;
 using System.Linq;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
-using MHGameWork.TheWizards.DirectX11.Rendering.CSM;
-using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.CSM;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11;
 using NUnit.Framework;
 using SlimDX;
@@ -13,7 +15,7 @@ using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
 using SlimDX.DXGI;
-using BasicShader = MHGameWork.TheWizards.DirectX11.Graphics.BasicShader;
+using BasicShader = MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics.BasicShader;
 using Buffer = SlimDX.Direct3D11.Buffer;
 using Device = SlimDX.Direct3D11.Device;
 using Resource = SlimDX.Direct3D11.Resource;
@@ -1202,7 +1204,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.Deferred
                 layout = new InputLayout(device, signature, Vertex.Elements);
                 TangentVertex[] vertices;
                 short[] indices;
-                BoxMesh.CreateUnitBoxVerticesAndIndices(out vertices, out indices);
+                GeometryHelper.CreateUnitBoxVerticesAndIndices(out vertices, out indices);
 
                 var verts = vertices.Select(v => new Vertex
                 {

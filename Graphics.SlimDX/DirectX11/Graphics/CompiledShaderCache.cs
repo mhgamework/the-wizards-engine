@@ -7,7 +7,7 @@ using System.Text;
 using SlimDX;
 using SlimDX.D3DCompiler;
 
-namespace MHGameWork.TheWizards.DirectX11.Graphics
+namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics
 {
     /// <summary>
     /// This class provides compiled shader code. It uses shader filename, fx effect, and macros to parameterize a shader. These parameters are hashed and used

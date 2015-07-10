@@ -1,4 +1,5 @@
 ﻿using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using NUnit.Framework;
 
@@ -13,7 +14,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering.XNA
         {
             var game = new XNAGame();
 
-            var renderer = new DeferredRendererOud(RenderingTest.CreateMerchantsHouseMeshOLD(), TestFiles.WoodPlanksBareJPG);
+            var renderer = new DeferredRendererOud(DefaultMeshes.CreateMerchantsHouseMeshOLD(), TestFiles.WoodPlanksBareJPG);
 
             renderer.OutputMode = DeferredRendererOud.DeferredOutputMode.Diffuse;
 

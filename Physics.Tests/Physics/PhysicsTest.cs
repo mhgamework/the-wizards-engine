@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.DirectX11;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;
 using Microsoft.Xna.Framework;

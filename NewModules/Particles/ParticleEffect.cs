@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
 

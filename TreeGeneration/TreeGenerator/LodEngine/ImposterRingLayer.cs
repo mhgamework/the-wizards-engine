@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.ServerClient;
 using Microsoft.Xna.Framework.Graphics;
