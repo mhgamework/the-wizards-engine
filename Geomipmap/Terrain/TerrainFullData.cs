@@ -139,7 +139,7 @@ namespace MHGameWork.TheWizards.ServerClient.Terrain
 
             //TerrainFullData data = this;
 
-            //XMLSerializer.WriteVector3( node.CreateChildNode( "Position" ), data.Position );
+            //XMLSerializerXna.WriteVector3( node.CreateChildNode( "Position" ), data.Position );
             //node.AddChildNode( "SizeX", data.SizeX.ToString() );
             //node.AddChildNode( "SizeZ", data.SizeZ.ToString() );
 

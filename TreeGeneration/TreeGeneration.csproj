@@ -285,9 +285,9 @@
     <Folder Include="TreeGenerator\Rendering\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.Core.Temp\Common.Core.Temp.csproj">
+    <ProjectReference Include="..\AssetSynchronization\AssetSynchronization.csproj">
       <Project>{99E0CA65-D4C1-408D-85E6-A9A147B10698}</Project>
-      <Name>Common.Core.Temp</Name>
+      <Name>AssetSynchronization</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>

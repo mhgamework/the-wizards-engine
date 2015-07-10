@@ -153,6 +153,13 @@
     <Compile Include="Rendering\TextureCoreData.cs" />
     <Compile Include="RequiresPostSharp.cs" />
     <Compile Include="Core\XnaMathExtensions.cs" />
+    <Compile Include="Xml\FastArraySerializer.cs" />
+    <Compile Include="Xml\ICustomElementSerializer.cs" />
+    <Compile Include="Xml\ICustomSerializer.cs" />
+    <Compile Include="Xml\IInternalSerializer.cs" />
+    <Compile Include="Xml\TWXmlSerializer.cs" />
+    <Compile Include="Xml\XmlNode.cs" />
+    <Compile Include="Xml\XMLSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Core\InputBox.resx">

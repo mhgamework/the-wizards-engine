@@ -813,10 +813,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.Core.Temp\Common.Core.Temp.csproj">
-      <Project>{99E0CA65-D4C1-408D-85E6-A9A147B10698}</Project>
-      <Name>Common.Core.Temp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
       <Project>{372ff145-4b2d-40a4-b171-cfff159e4c91}</Project>
       <Name>Common.Core</Name>

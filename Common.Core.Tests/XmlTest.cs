@@ -6,8 +6,6 @@ using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Graphics.Xna.XML;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Tests.Features.Rendering;
-using MHGameWork.TheWizards.Tests.Features.Rendering.XNA;
 using MHGameWork.TheWizards.Xml;
 using MHGameWork.TheWizards.XML;
 using Microsoft.Xna.Framework;

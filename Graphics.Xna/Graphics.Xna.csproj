@@ -149,8 +149,7 @@
     <Compile Include="Wpf\IWindowFactory.cs" />
     <Compile Include="Wpf\SimpleWindowFactory.cs" />
     <Compile Include="Wpf\XNAGameWpf.cs" />
-    <Compile Include="XML\XmlNode.cs" />
-    <Compile Include="XML\XMLSerializer.cs" />
+    <Compile Include="XML\XMLSerializerXna.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Graphics\Files\Calibri.xnb" />
