@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MHGameWork.TheWizards.ServerClient.Terrain
 {
-    public class TerrainFullData : Database.ISimpleTag<TaggedTerrain>
+    public class TerrainFullData : ISimpleTag<TaggedTerrain>
     {
         private TaggedTerrain taggedTerrain;
 

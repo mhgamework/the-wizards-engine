@@ -4,7 +4,6 @@ using MHGameWork.TheWizards.DirectX11.SlimDXConversion;
 using MHGameWork.TheWizards.Graphics;
 using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling;
 using MHGameWork.TheWizards.Graphics.Xna.Graphics;
-using MHGameWork.TheWizards.ServerClient;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Rendering

@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using MHGameWork.TheWizards.ServerClient;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.Database;
 using MHGameWork.TheWizards.ServerClient.Database;
 using MHGameWork.TheWizards.ServerClient.Terrain;
 using MHGameWork.TheWizards.Terrain.Editor;
@@ -711,7 +710,7 @@ namespace TreeGenerator.Grass
 
 
         }
-        private Database loadDatabaseServices()
+        /*private Database loadDatabaseServices()
         {
             throw new NotImplementedException();
             //Database database = new Database();
@@ -721,7 +720,7 @@ namespace TreeGenerator.Grass
             //database.AddService(new UniqueIDService(database));
 
             //return database;
-        }
+        }*/
         private void LoadHeightData()
         {
             int texWidth = GrassMap.XnaTexture.Width;

@@ -82,6 +82,10 @@
       <Project>{94AED3BF-CEFB-414D-BAAE-C0E685FDDAEB}</Project>
       <Name>Physics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TaggedDataSystem\TaggedDataSystem.csproj">
+      <Project>{A280E325-7217-4713-A930-2C24FB253D38}</Project>
+      <Name>TaggedDataSystem</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Unit Tests\Unit Tests.csproj">
       <Project>{C79FDAC0-960D-4E13-981D-7A9D2CA3B6A8}</Project>
       <Name>Unit Tests</Name>

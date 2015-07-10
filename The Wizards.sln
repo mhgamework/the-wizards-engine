@@ -98,6 +98,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Various", "Various", "{384B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Physics", "Physics", "{95DE6F8C-996F-4C05-B575-3870B3BA7A86}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaggedDataSystem", "TaggedDataSystem\TaggedDataSystem.csproj", "{A280E325-7217-4713-A930-2C24FB253D38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1432,6 +1434,48 @@ Global
 		{52D3BE4A-BD92-46C8-838F-C393D8DA951C}.Tools|Mixed Platforms.Build.0 = Release|Any CPU
 		{52D3BE4A-BD92-46C8-838F-C393D8DA951C}.Tools|Win32.ActiveCfg = Release|Any CPU
 		{52D3BE4A-BD92-46C8-838F-C393D8DA951C}.Tools|x86.ActiveCfg = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DebugAll|Any CPU.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DebugAll|Any CPU.Build.0 = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DebugAll|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DebugAll|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DebugAll|Win32.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DebugAll|x86.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DebugGameplay|Any CPU.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DebugGameplay|Any CPU.Build.0 = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DebugGameplay|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DebugGameplay|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DebugGameplay|Win32.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DebugGameplay|x86.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DocumentationHelper|Any CPU.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DocumentationHelper|Any CPU.Build.0 = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DocumentationHelper|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DocumentationHelper|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DocumentationHelper|Win32.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.DocumentationHelper|x86.ActiveCfg = Debug|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Profile|Any CPU.ActiveCfg = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Profile|Any CPU.Build.0 = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Profile|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Profile|Mixed Platforms.Build.0 = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Profile|Win32.ActiveCfg = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Profile|x86.ActiveCfg = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Release|Win32.ActiveCfg = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Release|x86.ActiveCfg = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Tools|Any CPU.ActiveCfg = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Tools|Any CPU.Build.0 = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Tools|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Tools|Mixed Platforms.Build.0 = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Tools|Win32.ActiveCfg = Release|Any CPU
+		{A280E325-7217-4713-A930-2C24FB253D38}.Tools|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -143,12 +143,6 @@
     <Compile Include="Features\Various\Utilities\UtilitiesTest.cs" />
     <Compile Include="Features\Various\Versioning\VersioningTest.cs" />
     <Compile Include="Features\Generation\Voxelization\VoxelizerTest.cs" />
-    <Compile Include="Features\Various\WorldDatabase\WorldDatabaseTest.cs" />
-    <Compile Include="Features\Various\WorldDatabase\TerrainData2Element.cs" />
-    <Compile Include="Features\Various\WorldDatabase\TerrainData2ElementFactory.cs" />
-    <Compile Include="Features\Various\WorldDatabase\TerrainData3Element.cs" />
-    <Compile Include="Features\Various\WorldDatabase\TerrainDataElement.cs" />
-    <Compile Include="Features\Various\WorldDatabase\TerrainDataElementFactory.cs" />
     <Compile Include="Features\Simulation\WorldSimulation\WorldSimulationTests.cs" />
     <Compile Include="Features\Various\World\Static\SimpleStaticWorldObject.cs" />
     <Compile Include="Features\Various\World\Static\SimpleStaticWorldObjectFactory.cs" />

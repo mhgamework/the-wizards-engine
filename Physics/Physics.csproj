@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="Client\ClientPhysicsQuadTreeNode.cs" />
     <Compile Include="Client\ClientPhysicsTestSphere.cs" />
-    <Compile Include="Client\ClientXNAGameService.cs" />
     <Compile Include="Client\IClientPhysicsObject.cs" />
     <Compile Include="Cogs\BarCog.cs" />
     <Compile Include="Cogs\Cog.cs" />
@@ -97,6 +96,10 @@
     <ProjectReference Include="..\Graphics.Xna\Graphics.Xna.csproj">
       <Project>{121ED163-A998-44E3-9738-EBF88AF2C29D}</Project>
       <Name>Graphics.Xna</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaggedDataSystem\TaggedDataSystem.csproj">
+      <Project>{A280E325-7217-4713-A930-2C24FB253D38}</Project>
+      <Name>TaggedDataSystem</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

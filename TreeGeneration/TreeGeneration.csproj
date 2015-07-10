@@ -313,6 +313,10 @@
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
       <Name>NewModules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TaggedDataSystem\TaggedDataSystem.csproj">
+      <Project>{A280E325-7217-4713-A930-2C24FB253D38}</Project>
+      <Name>TaggedDataSystem</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
