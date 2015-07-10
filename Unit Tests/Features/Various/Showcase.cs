@@ -22,6 +22,7 @@ using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.DirectInput;
+using BoundingBox = Microsoft.Xna.Framework.BoundingBox;
 using MathHelper = DirectX11.MathHelper;
 using Matrix = Microsoft.Xna.Framework.Matrix;
 using TexturePool = MHGameWork.TheWizards.Rendering.TexturePool;
@@ -62,7 +63,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
             var engine = new PhysicsEngine();
             PhysicsDebugRendererXNA debugRenderer = null;
 
-            var root = PhysicsMeshTest.CreatePhysicsQuadtree(20, 5);
+            var root = CreatePhysicsQuadtree(20, 5);
 
             var physicsElementFactoryXNA = new MeshPhysicsFactoryXNA(engine, root);
             var physicsElementFactory = physicsElementFactoryXNA.Factory;
@@ -233,7 +234,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
             var engine = new PhysicsEngine();
             PhysicsDebugRendererXNA debugRenderer = null;
 
-            var root = PhysicsMeshTest.CreatePhysicsQuadtree(16, 4);
+            var root = CreatePhysicsQuadtree(16, 4);
 
             var physicsElementFactoryXNA = new MeshPhysicsFactoryXNA(engine, root);
             var physicsElementFactory = physicsElementFactoryXNA.Factory;
@@ -340,7 +341,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
             var engine = new PhysicsEngine();
             PhysicsDebugRendererXNA debugRenderer = null;
 
-            var root = PhysicsMeshTest.CreatePhysicsQuadtree(16, 4);
+            var root = CreatePhysicsQuadtree(16, 4);
 
             var physicsElementFactoryXNA = new MeshPhysicsFactoryXNA(engine, root);
             var physicsElementFactory = physicsElementFactoryXNA.Factory;
@@ -658,6 +659,20 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
 
 
             game.Run();
+        }
+
+
+
+        public static ClientPhysicsQuadTreeNode CreatePhysicsQuadtree(int numNodes, int numSplits)
+        {
+            TheWizards.Client.ClientPhysicsQuadTreeNode root;
+            root = new ClientPhysicsQuadTreeNode(
+                new BoundingBox(
+                    new Vector3(-numNodes * numNodes / 2f, -100, -numNodes * numNodes / 2f),
+                    new Vector3(numNodes * numNodes / 2f, 100, numNodes * numNodes / 2f)));
+
+            QuadTree.Split(root, numSplits);
+            return root;
         }
     }
 }

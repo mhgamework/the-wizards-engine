@@ -221,12 +221,6 @@
     <Compile Include="Audio\DiskSoundFactory.cs" />
     <Compile Include="Audio\ISound.cs" />
     <Compile Include="Audio\ISoundFactory.cs" />
-    <Compile Include="Cogs\BarCog.cs" />
-    <Compile Include="Cogs\Cog.cs" />
-    <Compile Include="Cogs\CogEngine.cs" />
-    <Compile Include="Cogs\CogRaycastReport.cs" />
-    <Compile Include="Cogs\ICogComponent.cs" />
-    <Compile Include="Cogs\StaticBox.cs" />
     <Compile Include="CompactQuadTree.cs" />
     <Compile Include="Networking\SimpleClientPacketManager.cs" />
     <Compile Include="Networking\SimpleClientPacketTransporter.cs" />

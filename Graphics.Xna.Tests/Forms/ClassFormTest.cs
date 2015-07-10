@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 using MHGameWork.TheWizards.Forms;
@@ -39,7 +40,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Data.Forms
         {
             var w = new XNAGameWpf();
             var win = w.CreateWindow();
-            Application.Current.Dispatcher.Invoke(win.Show);
+            Application.Current.Dispatcher.Invoke(new Action( win.Show ));
 
             while (true)
             {

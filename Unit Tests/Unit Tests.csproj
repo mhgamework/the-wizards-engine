@@ -73,12 +73,6 @@
   <ItemGroup>
     <Reference Include="DevExpress.Utils.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraBars.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="envdte80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\_Libraries\SharpZipLib_0860_Bin\net-20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -94,17 +88,11 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Rhino.Mocks">
-      <HintPath>..\_Libraries\Rhino.Mocks-3.6-Build-21\Rhino.Mocks.dll</HintPath>
-    </Reference>
     <Reference Include="SharpDX">
       <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.D3DCompiler">
       <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.D3DCompiler.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Direct2D1">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.Direct2D1.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D11">
       <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.Direct3D11.dll</HintPath>
@@ -114,9 +102,6 @@
     </Reference>
     <Reference Include="SharpDX.DXGI">
       <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.DXGI.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Error">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.Error.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.XAPO">
       <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.XAPO.dll</HintPath>
@@ -135,13 +120,15 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="Wrappers, Version=1.0.5668.31445, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\Binaries\Wrappers.dll</HintPath>
+    </Reference>
     <Reference Include="xunit">
       <HintPath>..\_Libraries\xunit-1.9.1\xunit.dll</HintPath>
     </Reference>
@@ -177,11 +164,9 @@
     <Compile Include="Features\Rendering\DirectX11\SlimDXDirectX11Test.cs" />
     <Compile Include="Features\Rendering\DirectX11\TessellationTest.cs" />
     <Compile Include="Features\Various\FileHelperTest.cs" />
-    <Compile Include="Features\Data\Forms\ClassFormTest.cs" />
     <Compile Include="Features\Various\TestRootObjectTable.cs" />
     <Compile Include="Features\Various\VSIntegrationTest.cs" />
     <Compile Include="Features\Rendering\XNA\ParticleTests.cs" />
-    <Compile Include="Features\Simulation\Physics\TestSphereShooter.cs" />
     <Compile Include="Features\Generation\ProceduralTerrainGeneration\NoiseTests.cs" />
     <Compile Include="Features\Generation\ProceduralTerrainGeneration\TerrainConverter.cs" />
     <Compile Include="Features\Generation\ProceduralTerrainGeneration\TerrainGenerationTests.cs" />
@@ -195,11 +180,7 @@
     <Compile Include="Features\Various\Launcher\LauncherTest.cs" />
     <Compile Include="Features\Core\Networking\NetworkingFilesTest.cs" />
     <Compile Include="Features\Core\Networking\NetworkingServerTest.cs" />
-    <Compile Include="Features\Simulation\Physics\CogTest.cs" />
-    <Compile Include="Features\Simulation\Physics\PhysicsMeshTest.cs" />
     <Compile Include="Features\Rendering\XNA\DeferredRenderingOudTest.cs" />
-    <Compile Include="Features\Rendering\XNA\Curve3DTester.cs" />
-    <Compile Include="Features\Rendering\XNA\GraphicsTest.cs" />
     <Compile Include="Features\Core\Networking\DataPacket.cs" />
     <Compile Include="Features\Core\Networking\DataPacketFactory.cs" />
     <Compile Include="Features\Core\Networking\ErrorPacket.cs" />
@@ -207,7 +188,6 @@
     <Compile Include="Features\Core\Networking\NetworkingClientTest.cs" />
     <Compile Include="Features\Core\Networking\NetworkingTest.cs" />
     <Compile Include="Features\Data\OBJParser\OBJParserTest.cs" />
-    <Compile Include="Features\Simulation\Physics\PhysicsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Features\Rendering\XNA\RenderingTest.cs" />
     <Compile Include="Features\Rendering\Text\TextRenderingTest.cs" />
@@ -250,6 +230,10 @@
       <Project>{7E925CCA-6E37-4712-AD86-EE3AA2ADDAFC}</Project>
       <Name>GoblinSimulator</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Graphics.Xna.Tests\Graphics.Xna.Tests.csproj">
+      <Project>{B6FB510A-4603-499B-A168-8C5FC5E4C903}</Project>
+      <Name>Graphics.Xna.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Graphics.Xna\Graphics.Xna.csproj">
       <Project>{121ED163-A998-44E3-9738-EBF88AF2C29D}</Project>
       <Name>Graphics.Xna</Name>
@@ -274,25 +258,10 @@
       <Project>{ac6c51ce-96fb-401b-9b51-1302f273a52a}</Project>
       <Name>TestRunner</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TreeGeneration\TreeGeneration.csproj">
-      <Project>{D9F15B30-7B01-4E97-8288-05CE578F1769}</Project>
-      <Name>TreeGeneration</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WPF\WPF.csproj">
       <Project>{8a52d3e0-5362-4d9f-a29e-32e24ad65eaf}</Project>
       <Name>WPF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Wrappers\Wrappers.vcxproj">
-      <Project>{d1e82bbb-8426-4451-ba37-792822e0fe6e}</Project>
-      <Name>Wrappers</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Features\Simulation\Physics\Files\Cog16.obj" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Features\Simulation\Physics\Files\CollisionModelBoxes001.mtl" />
-    <EmbeddedResource Include="Features\Simulation\Physics\Files\CollisionModelBoxes001.obj" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Features\Rendering\XNA\Files\TestShader.fx" />

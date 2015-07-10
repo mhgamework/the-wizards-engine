@@ -9,7 +9,6 @@ using MHGameWork.TheWizards.Diagnostics.Profiling;
 using MHGameWork.TheWizards.Profiling;
 using MHGameWork.TheWizards.Tests.Features.Core.Profiling;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace MHGameWork.TheWizards.Diagnostics
 {

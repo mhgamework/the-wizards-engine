@@ -17,7 +17,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
         {
             var game = new DX11Game();
             game.InitDirectX();
-            var wrapper = new MHGameWork.TheWizards.DX11FontWrapper(game.Device);
+            var wrapper = new DX11FontWrapper(game.Device);
 
             game.GameLoopEvent += delegate
                 {
