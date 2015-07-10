@@ -72,6 +72,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{922C4FD9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoblinSimulator", "GoblinSimulator\GoblinSimulator.csproj", "{7E925CCA-6E37-4712-AD86-EE3AA2ADDAFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeGeneration.Tests", "TreeGeneration.Tests\TreeGeneration.Tests.csproj", "{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -818,12 +820,47 @@ Global
 		{7E925CCA-6E37-4712-AD86-EE3AA2ADDAFC}.Tools|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7E925CCA-6E37-4712-AD86-EE3AA2ADDAFC}.Tools|Mixed Platforms.Build.0 = Release|Any CPU
 		{7E925CCA-6E37-4712-AD86-EE3AA2ADDAFC}.Tools|x86.ActiveCfg = Release|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.DebugAll|Any CPU.ActiveCfg = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.DebugAll|Any CPU.Build.0 = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.DebugAll|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.DebugAll|Mixed Platforms.Build.0 = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.DebugAll|x86.ActiveCfg = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.DebugGameplay|Any CPU.ActiveCfg = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.DebugGameplay|Any CPU.Build.0 = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.DebugGameplay|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.DebugGameplay|Mixed Platforms.Build.0 = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.DebugGameplay|x86.ActiveCfg = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.DocumentationHelper|Any CPU.ActiveCfg = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.DocumentationHelper|Any CPU.Build.0 = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.DocumentationHelper|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.DocumentationHelper|Mixed Platforms.Build.0 = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.DocumentationHelper|x86.ActiveCfg = Debug|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Profile|Any CPU.ActiveCfg = Release|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Profile|Any CPU.Build.0 = Release|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Profile|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Profile|Mixed Platforms.Build.0 = Release|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Profile|x86.ActiveCfg = Release|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Release|x86.ActiveCfg = Release|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Tools|Any CPU.ActiveCfg = Release|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Tools|Any CPU.Build.0 = Release|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Tools|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Tools|Mixed Platforms.Build.0 = Release|Any CPU
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5}.Tools|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{372FF145-4B2D-40A4-B171-CFFF159E4C91} = {09EEFDED-5485-4947-B9ED-CBB4FE8224C1}
+		{AC6C51CE-96FB-401B-9B51-1302F273A52A} = {09EEFDED-5485-4947-B9ED-CBB4FE8224C1}
 		{2A46A64E-C224-49E2-9DC3-D6FA72E2C599} = {09EEFDED-5485-4947-B9ED-CBB4FE8224C1}
 		{563F65AF-EE18-480E-A699-48A6AF95B08B} = {09EEFDED-5485-4947-B9ED-CBB4FE8224C1}
 		{CA70CDCB-5E1A-44C3-BE71-11E75E0FEAFA} = {09EEFDED-5485-4947-B9ED-CBB4FE8224C1}
@@ -833,6 +870,7 @@ Global
 		{5BB25FD1-4B7B-4E6E-B4E9-9D66BFEBF8D6} = {09EEFDED-5485-4947-B9ED-CBB4FE8224C1}
 		{922C4FD9-42C2-42FB-B823-879C9A4C3FFB} = {09EEFDED-5485-4947-B9ED-CBB4FE8224C1}
 		{7E925CCA-6E37-4712-AD86-EE3AA2ADDAFC} = {922C4FD9-42C2-42FB-B823-879C9A4C3FFB}
+		{57CB05BB-FFF5-41F2-BBB9-D7B6A31FC1A5} = {09EEFDED-5485-4947-B9ED-CBB4FE8224C1}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = The Wizards.vsmdi
