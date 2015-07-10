@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using MHGameWork.TheWizards.Assets;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
 using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.Tests.Features.Core.Networking;
@@ -140,7 +141,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Generation.Treegenerater
             TreeLodEngine lodEngine = new TreeLodEngine();
             ModelLodLayer layer = new ModelLodLayer(0, renderer, gen, 100);
 
-            var conn = NetworkingClientTest.ConnectTCP(15000, "5.184.242.77");
+            var conn = NetworkingUtilities.ConnectTCP(15000, "5.184.242.77");
             conn.Receiving = true;
             var packetManagerC = new ClientPacketManagerNetworked(conn);
             ClientAssetSyncer syncer = new ClientAssetSyncer(packetManagerC, TWDir.Test.CreateSubdirectory("TreeGeneratorClient"));

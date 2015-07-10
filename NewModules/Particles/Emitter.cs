@@ -11,7 +11,6 @@ using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.ServerClient;
-using Microsoft.SqlServer.Server;
 using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;

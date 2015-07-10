@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Linq;
+using System.Windows.Forms;
 using MHGameWork.TheWizards.Common.Networking;
 using MHGameWork.TheWizards.Networking;
 using NUnit.Framework;
@@ -187,7 +188,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Core.Networking
         public void TestGenerateMultiple()
         {
             NetworkPacketFactoryCodeGenerater gen = new NetworkPacketFactoryCodeGenerater(
-             System.Windows.Forms.Application.StartupPath + "\\Test\\Networking\\TestGenerateMultiple.dll");
+             Application.StartupPath + "\\Test\\Networking\\TestGenerateMultiple.dll");
 
             INetworkPacketFactory<PacketFieldsTest> factory1 = gen.GetFactory<PacketFieldsTest>();
             INetworkPacketFactory<PacketPropertiesTest> factory2 = gen.GetFactory<PacketPropertiesTest>();
