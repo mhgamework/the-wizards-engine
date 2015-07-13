@@ -122,13 +122,11 @@
     <Compile Include="Features\Rendering\Data\MeshOptimizerTest.cs" />
     <Compile Include="Features\Rendering\Text\TextRenderingFunctionalityTest.cs" />
     <Compile Include="Features\Rendering\Data\MeshLoaderTest.cs" />
-    <Compile Include="Features\Various\Launcher\LauncherTest.cs" />
     <Compile Include="Features\Rendering\XNA\DeferredRenderingOudTest.cs" />
     <Compile Include="Features\Data\OBJParser\OBJParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Features\Rendering\XNA\RenderingTest.cs" />
     <Compile Include="Features\Rendering\Text\TextRenderingTest.cs" />
-    <Compile Include="Features\Various\Server\LauncherServerTest.cs" />
     <Compile Include="Features\Various\Showcase.cs" />
     <Compile Include="Features\Various\Utilities\UtilitiesTest.cs" />
     <Compile Include="Features\Various\Versioning\VersioningTest.cs" />
@@ -162,10 +160,6 @@
     <ProjectReference Include="..\Graphics.Xna\Graphics.Xna.csproj">
       <Project>{121ED163-A998-44E3-9738-EBF88AF2C29D}</Project>
       <Name>Graphics.Xna</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Launcher\Launcher.csproj">
-      <Project>{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}</Project>
-      <Name>Launcher</Name>
     </ProjectReference>
     <ProjectReference Include="..\Networking.VB\Networking.VB.vbproj">
       <Project>{3A751275-16F7-48C0-BA5F-510B10D70E1B}</Project>

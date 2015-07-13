@@ -89,48 +89,10 @@ namespace MHGameWork.TheWizards.Tests.Features.Data.Xml
             var data = mesh.GetCoreData();
 
             //serializeCoreData(data);
-            serializeGeometryData(data);
+            //serializeGeometryData(data);
         }
 
-        private void serializeCoreData(MeshCoreData data)
-        {
-            var serializer = new TWXmlSerializer<MeshCoreData>();
-            serializer.AddCustomSerializer(AssetSerializer.CreateSerializer());
-
-            string path = TWDir.Test.CreateSubdirectory("XmlTest") + "\\CoreData.xml";
-
-            using (var fs = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.Delete))
-            {
-                serializer.Serialize(data, fs);
-            }
-
-            /*serializer = new TWXmlSerializer<MeshCoreData>();
-            serializer.AddCustomSerializer(AssetSerializer.CreateDeserializer(new ClientRenderingAssetFactory()));
-
-            var tRead = new MeshCoreData();
-            using (var fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                serializer.Deserialize(tRead, fs);
-            }*/
-        }
-        private void serializeGeometryData(MeshCoreData data)
-        {
-            var serializer = new TWXmlSerializer<MeshPartGeometryData>();
-            serializer.AddCustomSerializer(AssetSerializer.CreateSerializer());
-
-            string path = TWDir.Test.CreateSubdirectory("XmlTest") + "\\GeometryData.xml";
-
-            using (var fs = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.Delete))
-            {
-                serializer.Serialize(data.Parts[0].MeshPart.GetGeometryData(), fs);
-            }
-
-            /*var tRead = new MeshCoreData();
-            using (var fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                serializer.Deserialize(tRead, fs);
-            }*/
-        }
+     
 
 
         public class TestSerializeClass
