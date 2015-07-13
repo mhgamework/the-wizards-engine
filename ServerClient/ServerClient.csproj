@@ -172,9 +172,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="TWBootstrapper.cs" />
-    <Compile Include="TWConfig.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="TWConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FW1FontWrapper.dll">
@@ -183,10 +181,10 @@
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
     <Content Include="TWConfig.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="App.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
     <None Include="Microsoft.VC90.DebugCRT.manifest">

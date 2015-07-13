@@ -139,19 +139,19 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Grass\Textures\GrassTextures\flower001%28purple%29.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Grass\Textures\GrassTextures\flower002%28orange%29.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Grass\Textures\GrassTextures\grass.tga">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Grass\Textures\GrassTextures\m_grassblades.tga">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Grass\Textures\GrassTextures\textureAtlas01.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="TreeGenerator\app.config" />
@@ -161,11 +161,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TreeGenerator\Clouds\SingleCloud001.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TreeGenerator\Clouds\SingleCloud001.psd" />
     <None Include="TreeGenerator\Morph\butterfly.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TreeGenerator\TODO\help\ClassDiagram1.cd" />
   </ItemGroup>
@@ -177,77 +177,77 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Grass\GrassShaderNewDesign.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="Grass\Textures\DesityTextures\densityValueTest.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Grass\Textures\DesityTextures\DifferentGrasstypesTest.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Grass\Textures\DesityTextures\DifferentGrasstypesTest2.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Grass\Textures\DesityTextures\FirstGrassMap.bmp">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Grass\Textures\DesityTextures\GrassDensityMoreAdvancedTesting1.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Grass\Textures\DesityTextures\GrassMap2.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Grass\Textures\DesityTextures\GrassMap3.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Grass\Textures\DesityTextures\GrassMap4.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Grass\Textures\GrassTextures\Diffuse_grass_.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Grass\Textures\GrassTextures\textureAtlas01.XML">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TreeGenerator\Clouds\CloudsTileset.jpg" />
     <Content Include="TreeGenerator\Clouds\Design.txt" />
     <Content Include="TreeGenerator\Clouds\SingleCloud001-5.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TreeGenerator\Design tree generater.txt" />
     <Content Include="TreeGenerator\Engine\Depth.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TreeGenerator\Game.ico" />
     <Content Include="TreeGenerator\GameThumbnail.png" />
     <Content Include="TreeGenerator\Morph\butterflyTexture\butterfly4.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TreeGenerator\Morph\butterflyTexture\transparentButterfly.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TreeGenerator\todo.txt" />
     <Content Include="TreeGenerator\TODO\help\TreeEngineDesign.txt" />
     <None Include="TreeGenerator\TreeEngine\PointSpritePerspectiveShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TreeGenerator\TreeEngine\PointSpritePerspectiveDepthShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TreeGenerator\TreeEngine\LeafMotionShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <EmbeddedResource Include="TreeGenerator\TreeEngine\BillBoardShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="TreeGenerator\Shaders\ShadowMap.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TreeGenerator\Morph\MorphShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TreeGenerator\ImposterRing\ImposterRingShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="TreeGenerator\Imposter\imposter design.txt" />
     <Content Include="TreeGenerator\Imposter\imposter gamesutra.txt" />
@@ -268,16 +268,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TreeGenerator\Clouds\shader\CloudShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TreeGenerator\Clouds\shader\BillBoardShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TreeGenerator\Clouds\shader\BasicTestShaderAll.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TreeGenerator\Clouds\shader\BasicTestShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

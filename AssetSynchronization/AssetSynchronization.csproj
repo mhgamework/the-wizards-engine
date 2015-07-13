@@ -45,9 +45,6 @@
     <Reference Include="Microsoft.Xna.Framework.Game">
       <HintPath>..\..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Xna.Framework.Game\2.0.0.0__6d5c3888ef60e27d\Microsoft.Xna.Framework.Game.dll</HintPath>
     </Reference>
-    <Reference Include="NewModules">
-      <HintPath>..\bin\Binaries\NewModules.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -104,6 +101,10 @@
     <ProjectReference Include="..\Networking\Networking.csproj">
       <Project>{E0F8F002-7DF0-41D3-8237-6179255BE7D5}</Project>
       <Name>Networking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NewModules\NewModules.csproj">
+      <Project>{9543ac00-cde5-4759-bd98-2d031d16dfd4}</Project>
+      <Name>NewModules</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.csproj">
       <Project>{D4997503-5D85-4890-8B7A-B608C0A1CF27}</Project>
