@@ -50,7 +50,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
 
 
             var grid = HermiteDataGrid.CopyGrid(
-                new DensityFunctionHermiteGrid(v => density(v * currScaling + node.LowerLeft.ToVector3()),
+                new DensityFunctionHermiteGrid(v => density(v * currScaling + (Vector3)node.LowerLeft.ToVector3()),
                                                new Point3(gridSize, gridSize, gridSize)));
             cachedGrids[nId] = grid;
             return grid;

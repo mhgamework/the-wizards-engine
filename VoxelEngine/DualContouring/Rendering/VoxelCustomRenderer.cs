@@ -107,10 +107,10 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
                 var matInstance = matToInstances.GetOrCreate(mat, () => new MaterialInstance(mat, dRenderer, game));
 
                 var mesh = new RawMeshData(
-                    indices.Where((i, index) => materials[index / 3] == mat).Select(i => vertices[i]).ToArray(),
-                    indices.Select( (i,index) => triangleNormals[index/3] ).Where((i, index) => materials[index / 3] == mat).ToArray(),
-                    indices.Where((i, index) => materials[index / 3] == mat).Select(i => new Vector2()).ToArray(),
-                    indices.Where((i, index) => materials[index / 3] == mat).Select(i => new Vector3()).ToArray()
+                    indices.Where((i, index) => materials[index / 3] == mat).Select(i => vertices[i].dx()).ToArray(),
+                    indices.Select((i, index) => triangleNormals[index / 3].dx()).Where((i, index) => materials[index / 3] == mat).ToArray(),
+                    indices.Where((i, index) => materials[index / 3] == mat).Select(i => new Vector2().dx()).ToArray(),
+                    indices.Where((i, index) => materials[index / 3] == mat).Select(i => new Vector3().dx()).ToArray()
                     );
 
                 matInstance.Parts.Add(new TransformedMeshData() { RenderData = renderDataFactory.CreateMeshPartData(mesh), World = world });

@@ -41,7 +41,7 @@ namespace MHGameWork.TheWizards.DualContouring
             var q101 = noise.GetFast(x1, y0, z1);
             var q111 = noise.GetFast(x1, y1, z1);
 
-            var ret = TWMath.triLerp(f, q000, q100, q001, q101, q010, q110, q011, q111);
+            var ret = TWMath.triLerp(f.dx(), q000, q100, q001, q101, q010, q110, q011, q111);
             return ret;
         }
     }

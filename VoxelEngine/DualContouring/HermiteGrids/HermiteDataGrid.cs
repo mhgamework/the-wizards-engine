@@ -6,7 +6,6 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using DirectX11;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
-using SlimDX;
 
 namespace MHGameWork.TheWizards.DualContouring
 {

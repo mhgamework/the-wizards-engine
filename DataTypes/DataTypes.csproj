@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <SkipPostSharp>True</SkipPostSharp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,11 +44,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes\BoundingBox.cs" />
+    <Compile Include="DataTypes\BoundingSphere.cs" />
     <Compile Include="DataTypes\ContainmentType.cs" />
     <Compile Include="DataTypes\Matrix.cs" />
     <Compile Include="DataTypes\Plane.cs" />
+    <Compile Include="DataTypes\Ray.cs" />
+    <Compile Include="DataTypes\UtilityExtensions.cs" />
+    <Compile Include="DataTypes\Vector2.cs" />
+    <Compile Include="DataTypes\Vector4.cs" />
     <Compile Include="DataTypes\Vector3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Core\Common.Core.csproj">
+      <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
+      <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gameplay\Gameplay.csproj">
+      <Project>{2bf84fef-fc3a-4e1a-9e4b-d3003e02c5b8}</Project>
+      <Name>Gameplay</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

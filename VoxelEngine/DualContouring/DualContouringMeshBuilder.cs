@@ -34,10 +34,10 @@ namespace MHGameWork.TheWizards.DualContouring
 
             var triangleNormals = generateTriangleNormals(indices, vertices);
 
-            var ret = new RawMeshData(indices.Select(i => vertices[i]).ToArray(),
-                indices.Select((index, numIndex) => triangleNormals[numIndex / 3]).ToArray(),
-                indices.Select(i => new Vector2()).ToArray(),
-                indices.Select(i => new Vector3()).ToArray());
+            var ret = new RawMeshData(indices.Select(i => vertices[i].dx()).ToArray(),
+                indices.Select((index, numIndex) => triangleNormals[numIndex / 3].dx()).ToArray(),
+                indices.Select(i => new Vector2().dx()).ToArray(),
+                indices.Select(i => new Vector3().dx()).ToArray());
 
             return ret;
         }

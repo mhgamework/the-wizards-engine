@@ -104,7 +104,7 @@ namespace MHGameWork.TheWizards.DualContouring
         {
             var offsets = GetEdgeOffsets(edgeId);
 
-            return Vector3.Lerp(offsets[0], offsets[1], getEdgeData(cube, edgeId).W);
+            return Vector3.Lerp(offsets[0].ToVector3(), offsets[1].ToVector3(), getEdgeData(cube, edgeId).W);
         }
 
         public Vector3 GetEdgeNormal(Point3 curr, int i)

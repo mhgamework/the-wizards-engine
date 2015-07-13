@@ -1,6 +1,5 @@
 ﻿using System;
 using SlimDX;
-using ContainmentType = Microsoft.Xna.Framework.ContainmentType;
 
 namespace MHGameWork.TheWizards.DualContouring
 {
@@ -22,7 +21,7 @@ namespace MHGameWork.TheWizards.DualContouring
         public bool IsInside(Vector3 v)
         {
             var bb = new BoundingBox(cubeCenter - new Vector3(cubeRadius), cubeCenter + new Vector3(cubeRadius));
-            return bb.xna().Contains(v.xna()) == ContainmentType.Contains;
+            return bb.Contains(v) == ContainmentType.Contains;
         }
 
         public Vector4 GetIntersection(Vector3 start, Vector3 end)

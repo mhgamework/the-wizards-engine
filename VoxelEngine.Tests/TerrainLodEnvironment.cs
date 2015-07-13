@@ -283,7 +283,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             if (node.RenderElement == null)
             {
                 node.RenderElement = meshBuilder.CreateRenderElementForNode(node, minNodeSize, mesh);
-                node.RenderElement.WorldMatrix *= Matrix.Scaling(new Vector3(globalScaling));
+                node.RenderElement.WorldMatrix = (Matrix)node.RenderElement.WorldMatrix * Matrix.Scaling(new Vector3(globalScaling));
             }
         }
 

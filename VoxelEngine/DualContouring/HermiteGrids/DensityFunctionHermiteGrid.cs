@@ -67,7 +67,7 @@ namespace MHGameWork.TheWizards.DualContouring
 
         public override DCVoxelMaterial GetMaterial( Point3 cube )
         {
-            return getMaterial( cube );
+            return getMaterial( cube.ToVector3() );
         }
 
         /// <summary>

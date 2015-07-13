@@ -155,7 +155,7 @@ namespace MHGameWork.TheWizards.DualContouring
                     }
 
                     vIndex[curr] = vertices.Count;
-                    vertices.Add(qefPoint1 + curr.ToVector3());
+                    vertices.Add(qefPoint1 + (Vector3)curr.ToVector3());
                 });
         }
 

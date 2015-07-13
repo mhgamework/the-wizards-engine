@@ -183,9 +183,9 @@ namespace MHGameWork.TheWizards.DualContouring._Test
         private void updateRaycastInfo()
         {
             if (meshElement == null || surfaceMesh == null) return;
-            Vector3 v1;
-            Vector3 v2;
-            Vector3 v3;
+            SlimDX.Vector3 v1;
+            SlimDX.Vector3 v2;
+            SlimDX.Vector3 v3;
             var ray = TW.Data.Get<CameraInfo>().GetCenterScreenRay();
             ray = ray.Transform(Matrix.Invert(meshElement.WorldMatrix));
             var dist = MeshRaycaster.RaycastMeshPart(surfaceMesh.Positions.Select(p => p.xna()).ToArray(), ray, out v1, out v2, out v3);
@@ -232,7 +232,7 @@ namespace MHGameWork.TheWizards.DualContouring._Test
                 if (hasEdge)
                 {
                     var qef = (Vector3) DualContouringAlgorithm.calculateQefPoint(grid, grid.GetCubeSigns(gridPoint), gridPoint);
-                    TW.Graphics.LineManager3D.AddCenteredBox((gridPoint.ToVector3() + qef) * CellSize, 0.05f, Color.Orange.dx());
+                    TW.Graphics.LineManager3D.AddCenteredBox(((Vector3)gridPoint.ToVector3() + qef) * CellSize, 0.05f, Color.Orange.dx());
                 }
             }
         }

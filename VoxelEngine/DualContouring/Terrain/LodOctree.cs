@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using DirectX11;
 using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX;
@@ -8,7 +9,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
 {
     public class LodOctree
     {
-        public static Point3[] ChildOffsets = GridHelper.UnitCubeCorners;
+        public static Point3[] ChildOffsets = GridHelper.UnitCubeCorners.Cast<Point3>().ToArray();
 
 
         public LodOctreeNode Create(int size, int leafCellSize, int depth = 0, Point3 pos = new Point3())
@@ -46,7 +47,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
 
         public void DrawSingleNode(LodOctreeNode node, LineManager3D lm, Color col)
         {
-            lm.AddBox(new BoundingBox(node.LowerLeft.ToVector3(), node.LowerLeft.ToVector3() + node.size * new Vector3(1)),
+            lm.AddBox(new BoundingBox(node.LowerLeft.ToVector3(), (Vector3)node.LowerLeft.ToVector3() + node.size * new Vector3(1)),
                       col);
         }
 
@@ -74,7 +75,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
 
         public void UpdateQuadtreeClipmaps(LodOctreeNode node, Vector3 cameraPosition, int minNodeSize)
         {
-            var center = node.LowerLeft.ToVector3() + new Vector3(1) * node.size * 0.5f;
+            var center = (Vector3)node.LowerLeft.ToVector3() + new Vector3(1) * node.size * 0.5f;
             var dist = Vector3.Distance(cameraPosition, center);
 
             // Should take into account the fact that if minNodeSize changes, the quality of far away nodes changes so the threshold maybe should change too

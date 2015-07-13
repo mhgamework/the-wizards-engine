@@ -92,6 +92,10 @@
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataTypes\DataTypes.csproj">
+      <Project>{fd8146d2-d659-4ea8-88c9-cd88d5e3c099}</Project>
+      <Name>DataTypes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EngineEnvironment\EngineEnvironment.csproj">
       <Project>{5BB25FD1-4B7B-4E6E-B4E9-9D66BFEBF8D6}</Project>
       <Name>EngineEnvironment</Name>

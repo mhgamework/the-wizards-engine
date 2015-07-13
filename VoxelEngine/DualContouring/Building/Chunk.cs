@@ -48,7 +48,7 @@ namespace MHGameWork.TheWizards.DualContouring.Building
 
         public void Raycast(Raycaster<Chunk> raycaster, Ray ray)
         {
-            float? dist = ray.xna().Intersects(Box.xna());
+            float? dist = ray.Intersects(Box);
             if (!dist.HasValue) return;
             if (surface == null) return;
             throw new NotImplementedException();

@@ -77,7 +77,7 @@ namespace MHGameWork.TheWizards.DualContouring.Building
 
                 var halfVoxel = new Vector3(voxelSize / 2);
                 var placementWorldSize = placementGridSize * voxelSize;
-                var targetBoundingBox = new BoundingBox(targetCube.ToVector3() * placementWorldSize + halfVoxel,
+                var targetBoundingBox = new BoundingBox((Vector3)targetCube.ToVector3() * placementWorldSize + halfVoxel,
                     (targetCube + new Vector3(1, 1, 1)) * placementWorldSize + halfVoxel);
 
                 TW.Graphics.LineManager3D.AddBox(targetBoundingBox, Color.GreenYellow);
@@ -156,7 +156,7 @@ namespace MHGameWork.TheWizards.DualContouring.Building
                         {
                             var grid = HermiteDataGrid.CopyGrid(new DensityFunctionHermiteGrid(v =>
                                 {
-                                    v += p.ToVector3() * chunkSize;
+                                    v += (Vector3)p.ToVector3() * chunkSize;
                                     return 20 - v.Y;
                                 }, new Point3(chunkSize + 1, chunkSize + 1, chunkSize + 1)));
 
