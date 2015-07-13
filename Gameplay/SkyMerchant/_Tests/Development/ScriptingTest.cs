@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;

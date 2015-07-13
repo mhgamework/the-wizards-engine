@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D9F15B30-7B01-4E97-8288-05CE578F1769}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TreeGeneration</RootNamespace>
+    <AssemblyName>TreeGeneration</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SkipPostSharp>True</SkipPostSharp>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Grass\GrassMesh.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TreeGenerator\AtlasTool\TextureAtlasCreater.cs" />
+    <Compile Include="TreeGenerator\AtlasTool\TextureForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TreeGenerator\AtlasTool\TextureForm.Designer.cs">
+      <DependentUpon>TextureForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TreeGenerator\AtlasTool\TextureUnit.cs" />
+    <Compile Include="TreeGenerator\Clouds\BaseCloudElement.cs" />
+    <Compile Include="TreeGenerator\Clouds\BillBoards.cs" />
+    <Compile Include="TreeGenerator\Directions.cs" />
+    <Compile Include="TreeGenerator\EditorMesh.cs" />
+    <Compile Include="TreeGenerator\EditorMeshPart.cs" />
+    <Compile Include="TreeGenerator\EngineSynchronisation\ClientAssetTreeTypeFactory.cs" />
+    <Compile Include="TreeGenerator\EngineSynchronisation\ClientTreeSyncer.cs" />
+    <Compile Include="TreeGenerator\EngineSynchronisation\ClientTreeTypeAsset.cs" />
+    <Compile Include="TreeGenerator\EngineSynchronisation\RAMTreeType.cs" />
+    <Compile Include="TreeGenerator\EngineSynchronisation\ServerTreeSyncer.cs" />
+    <Compile Include="TreeGenerator\EngineSynchronisation\ServerTreeTypeAsset.cs" />
+    <Compile Include="TreeGenerator\EngineSynchronisation\TreePacket.cs" />
+    <Compile Include="TreeGenerator\ImposterRing\IDelayedRenderProvider.cs" />
+    <Compile Include="TreeGenerator\ImposterRing\ImposterRing.cs" />
+    <Compile Include="TreeGenerator\Imposter\Imposter.cs" />
+    <Compile Include="TreeGenerator\Imposter\ImposterCamera.cs" />
+    <Compile Include="TreeGenerator\Imposter\ImposterEngine.cs" />
+    <Compile Include="TreeGenerator\ITreeType.cs" />
+    <Compile Include="TreeGenerator\ITreeTypeFactory.cs" />
+    <Compile Include="TreeGenerator\LodEngine\ImposterLodLayer.cs" />
+    <Compile Include="TreeGenerator\LodEngine\ImposterRingLayer.cs" />
+    <Compile Include="TreeGenerator\LodEngine\IRenderable.cs" />
+    <Compile Include="TreeGenerator\LodEngine\ISimpleRendrable.cs" />
+    <Compile Include="TreeGenerator\LodEngine\ITreeLodLayer.cs" />
+    <Compile Include="TreeGenerator\LodEngine\LodEngineTest.cs" />
+    <Compile Include="TreeGenerator\LodEngine\ModelLodLayer.cs" />
+    <Compile Include="TreeGenerator\LodEngine\TreeLodEngine.cs" />
+    <Compile Include="TreeGenerator\LodEngine\TreeLodEntity.cs" />
+    <Compile Include="TreeGenerator\LodEngine\TWRenderElement.cs" />
+    <Compile Include="TreeGenerator\LodEngine\TWRenderer.cs" />
+    <Compile Include="TreeGenerator\Morph\Butterfly.cs" />
+    <Compile Include="TreeGenerator\Morph\MorphModel.cs" />
+    <Compile Include="TreeGenerator\ObjExporter.cs" />
+    <Compile Include="TreeGenerator\ObjImporter.cs" />
+    <Compile Include="TreeGenerator\Program.cs" />
+    <Compile Include="TreeGenerator\Range.cs" />
+    <Compile Include="TreeGenerator\RangeSpreading.cs" />
+    <Compile Include="TreeGenerator\Seeder.cs" />
+    <Compile Include="TreeGenerator\SideProjectTests.cs" />
+    <Compile Include="TreeGenerator\SimpleTextureFactory.cs" />
+    <Compile Include="TreeGenerator\SimpleTreeTypeFactory.cs" />
+    <Compile Include="TreeGenerator\TODO\Game1.cs" />
+    <Compile Include="TreeGenerator\TODO\help\Branch.cs" />
+    <Compile Include="TreeGenerator\TODO\help\leaves.cs" />
+    <Compile Include="TreeGenerator\TODO\help\MeshCreator.cs" />
+    <Compile Include="TreeGenerator\TODO\help\Segment.cs" />
+    <Compile Include="TreeGenerator\TODO\help\structs.cs" />
+    <Compile Include="TreeGenerator\TODO\help\Tree.cs" />
+    <Compile Include="TreeGenerator\TODO\help\TreestructureGenerator.cs" />
+    <Compile Include="TreeGenerator\TODO\help\TreeStructureLevel.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\EngineRenderDataPart.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\EngineTree.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\EngineTreeRenderData.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\EngineTreeRenderDataGenerater.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\EngineTreeRenderDataImp.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\EngineTreeType.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\TestVolumetricLeafShader.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\TreeEngine.cs" />
+    <Compile Include="TreeGenerator\TreeEngine\TreeImposterEngine.cs" />
+    <Compile Include="TreeGenerator\TreeFlowerType.cs" />
+    <Compile Include="TreeGenerator\TreeLeafType.cs" />
+    <Compile Include="TreeGenerator\TreeLineRenderer.cs" />
+    <Compile Include="TreeGenerator\TreeRenderManager.cs" />
+    <Compile Include="TreeGenerator\TreeStructure.cs" />
+    <Compile Include="TreeGenerator\TreeStructureBranch.cs" />
+    <Compile Include="TreeGenerator\TreeStructureBranchSegment.cs" />
+    <Compile Include="TreeGenerator\TreeStructureFlower.cs" />
+    <Compile Include="TreeGenerator\TreeStructureGenerater.cs" />
+    <Compile Include="TreeGenerator\TreeStructureLeaf.cs" />
+    <Compile Include="TreeGenerator\TreeStructureLeafGenerater.cs" />
+    <Compile Include="TreeGenerator\TreeStructureSegment.cs" />
+    <Compile Include="TreeGenerator\TreeTypeData.cs" />
+    <Compile Include="TreeGenerator\TreeTypeLevel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Grass\Textures\GrassTextures\flower001%28purple%29.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Grass\Textures\GrassTextures\flower002%28orange%29.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Grass\Textures\GrassTextures\grass.tga">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Grass\Textures\GrassTextures\m_grassblades.tga">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Grass\Textures\GrassTextures\textureAtlas01.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+    <None Include="TreeGenerator\app.config" />
+    <None Include="TreeGenerator\Clouds\SingleCloud001-2.dds" />
+    <None Include="TreeGenerator\Clouds\SingleCloud001-3.dds" />
+    <None Include="TreeGenerator\Clouds\SingleCloud001-4.tga">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Clouds\SingleCloud001.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Clouds\SingleCloud001.psd" />
+    <None Include="TreeGenerator\Morph\butterfly.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\TODO\help\ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TreeGenerator\AtlasTool\TextureForm.resx">
+      <DependentUpon>TextureForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Grass\GrassShaderNewDesign.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Grass\Textures\DesityTextures\densityValueTest.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Grass\Textures\DesityTextures\DifferentGrasstypesTest.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Grass\Textures\DesityTextures\DifferentGrasstypesTest2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Grass\Textures\DesityTextures\FirstGrassMap.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Grass\Textures\DesityTextures\GrassDensityMoreAdvancedTesting1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Grass\Textures\DesityTextures\GrassMap2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Grass\Textures\DesityTextures\GrassMap3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Grass\Textures\DesityTextures\GrassMap4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Grass\Textures\GrassTextures\Diffuse_grass_.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Grass\Textures\GrassTextures\textureAtlas01.XML">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TreeGenerator\Clouds\CloudsTileset.jpg" />
+    <Content Include="TreeGenerator\Clouds\Design.txt" />
+    <Content Include="TreeGenerator\Clouds\SingleCloud001-5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TreeGenerator\Design tree generater.txt" />
+    <Content Include="TreeGenerator\Engine\Depth.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TreeGenerator\Game.ico" />
+    <Content Include="TreeGenerator\GameThumbnail.png" />
+    <Content Include="TreeGenerator\Morph\butterflyTexture\butterfly4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TreeGenerator\Morph\butterflyTexture\transparentButterfly.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TreeGenerator\todo.txt" />
+    <Content Include="TreeGenerator\TODO\help\TreeEngineDesign.txt" />
+    <None Include="TreeGenerator\TreeEngine\PointSpritePerspectiveShader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\TreeEngine\PointSpritePerspectiveDepthShader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\TreeEngine\LeafMotionShader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <EmbeddedResource Include="TreeGenerator\TreeEngine\BillBoardShader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Include="TreeGenerator\Shaders\ShadowMap.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Morph\MorphShader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\ImposterRing\ImposterRingShader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="TreeGenerator\Imposter\imposter design.txt" />
+    <Content Include="TreeGenerator\Imposter\imposter gamesutra.txt" />
+    <Content Include="TreeGenerator\Imposter\RenderTargetBart.txt" />
+    <EmbeddedResource Include="TreeGenerator\Files\TestTree.XML" />
+    <EmbeddedResource Include="TreeGenerator\Files\PalmTestTree.XML" />
+    <None Include="TreeGenerator\Engine\Model.fx" />
+    <None Include="TreeGenerator\Engine\LineRendering.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Engine\Habel_2007_IAG-grass_shader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Engine\GrassShader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Engine\ColladaModel.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Clouds\shader\CloudShader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Clouds\shader\BillBoardShader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Clouds\shader\BasicTestShaderAll.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TreeGenerator\Clouds\shader\BasicTestShader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TreeGenerator\Clouds\Textures\" />
+    <Folder Include="TreeGenerator\Rendering\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AssetSynchronization\AssetSynchronization.csproj">
+      <Project>{99E0CA65-D4C1-408D-85E6-A9A147B10698}</Project>
+      <Name>AssetSynchronization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.Core\Common.Core.csproj">
+      <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
+      <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Geomipmap\Geomipmap.csproj">
+      <Project>{563F65AF-EE18-480E-A699-48A6AF95B08B}</Project>
+      <Name>Geomipmap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Rendering.SlimDX\Graphics.Rendering.SlimDX.csproj">
+      <Project>{CF457374-B3BC-4256-AB1E-109D15BA82DA}</Project>
+      <Name>Graphics.Rendering.SlimDX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Rendering\Graphics.Rendering.csproj">
+      <Project>{58EEF2DC-E13E-4A04-B8F7-496B400D341D}</Project>
+      <Name>Graphics.Rendering</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.SlimDX\Graphics.SlimDX.csproj">
+      <Project>{AE1D68F4-5306-47F9-942F-A86F113D23D8}</Project>
+      <Name>Graphics.SlimDX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Xna\Graphics.Xna.csproj">
+      <Project>{121ED163-A998-44E3-9738-EBF88AF2C29D}</Project>
+      <Name>Graphics.Xna</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Networking\Networking.csproj">
+      <Project>{E0F8F002-7DF0-41D3-8237-6179255BE7D5}</Project>
+      <Name>Networking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NewModules\NewModules.csproj">
+      <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
+      <Name>NewModules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaggedDataSystem\TaggedDataSystem.csproj">
+      <Project>{A280E325-7217-4713-A930-2C24FB253D38}</Project>
+      <Name>TaggedDataSystem</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
-using MHGameWork.TheWizards.ServerClient;
+using MHGameWork.TheWizards.Graphics.Xna.XML;
 
 namespace MHGameWork.TheWizards.World
 {

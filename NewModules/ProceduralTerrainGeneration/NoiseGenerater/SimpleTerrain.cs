@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -21,7 +22,7 @@ namespace TreeGenerator.NoiseGenerater
         public int vertexCountWidth;
         private Matrix World = Matrix.Identity;
 
-        public SimpleTerrain(MHGameWork.TheWizards.Graphics.XNAGame game, List<Microsoft.Xna.Framework.Vector3> positions, List<Color> colors, int vertexCountWidth, int vertexCountHeigth)
+        public SimpleTerrain(XNAGame game, List<Microsoft.Xna.Framework.Vector3> positions, List<Color> colors, int vertexCountWidth, int vertexCountHeigth)
         {
             vertices = new List<VertexPositionNormalColor>();
             this.game = game;
@@ -54,7 +55,7 @@ namespace TreeGenerator.NoiseGenerater
             triangleCount = vertexCount / 3;
             vertexStride = VertexPositionNormalColor.SizeInBytes;
         }
-        public SimpleTerrain(MHGameWork.TheWizards.Graphics.XNAGame game, List<Microsoft.Xna.Framework.Vector3> positions, List<Color> colors, int vertexCountWidth, int vertexCountHeigth, Matrix world)
+        public SimpleTerrain(XNAGame game, List<Microsoft.Xna.Framework.Vector3> positions, List<Color> colors, int vertexCountWidth, int vertexCountHeigth, Matrix world)
         {
             World = world;
             vertices = new List<VertexPositionNormalColor>();

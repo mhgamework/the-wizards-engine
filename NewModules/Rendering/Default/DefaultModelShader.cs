@@ -1,6 +1,6 @@
 ﻿using MHGameWork.TheWizards.Common.Core;
 using MHGameWork.TheWizards.Graphics;
-using MHGameWork.TheWizards.ServerClient.Entity.Rendering;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 

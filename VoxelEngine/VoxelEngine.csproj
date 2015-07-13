@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BB9D98D5-BE68-4D99-819B-F904656BC6DD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VoxelEngine</RootNamespace>
+    <AssemblyName>VoxelEngine</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <SkipPostSharp>True</SkipPostSharp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\packages\MathNet.Numerics.3.5.0\lib\net40\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
+    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Wrappers">
+      <HintPath>..\bin\Binaries\Wrappers.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DualContouring\Array3DSampler.cs" />
+    <Compile Include="DualContouring\BasicShapeBuilder.cs" />
+    <Compile Include="DualContouring\Building\BuilderConfiguration.cs" />
+    <Compile Include="DualContouring\Building\Chunk.cs" />
+    <Compile Include="DualContouring\Building\Raycaster.cs" />
+    <Compile Include="DualContouring\CameraLightSimulator.cs" />
+    <Compile Include="DualContouring\DCFiles.cs" />
+    <Compile Include="DualContouring\DCVoxelMaterial.cs" />
+    <Compile Include="DualContouring\DualContouringAlgorithm.cs" />
+    <Compile Include="DualContouring\DualContouringMeshBuilder.cs" />
+    <Compile Include="DualContouring\GPU\GPUHermiteCalculator.cs" />
+    <Compile Include="DualContouring\GPU\GPUTexture3D.cs" />
+    <Compile Include="DualContouring\HermiteGrids\AbstractHermiteGrid.cs" />
+    <Compile Include="DualContouring\HermiteGrids\DelegateHermiteGrid.cs" />
+    <Compile Include="DualContouring\HermiteGrids\DensityFunctionHermiteGrid.cs" />
+    <Compile Include="DualContouring\HermiteGrids\DifferenceGrid.cs" />
+    <Compile Include="DualContouring\HermiteGrids\HermiteDataGrid.cs" />
+    <Compile Include="DualContouring\HermiteGrids\UnionGrid.cs" />
+    <Compile Include="DualContouring\IIntersectableObject.cs" />
+    <Compile Include="DualContouring\IntersectableCube.cs" />
+    <Compile Include="DualContouring\IntersectableSphere.cs" />
+    <Compile Include="DualContouring\Octrees\DCOctree.cs" />
+    <Compile Include="DualContouring\QEFCalculator.cs" />
+    <Compile Include="DualContouring\RecordingSimulator.cs" />
+    <Compile Include="DualContouring\Rendering\SurfaceMaterial.cs" />
+    <Compile Include="DualContouring\Rendering\VoxelCustomRenderer.cs" />
+    <Compile Include="DualContouring\Terrain\LodOctree.cs" />
+    <Compile Include="DualContouring\Terrain\LodOctreeMeshBuilder.cs" />
+    <Compile Include="DualContouring\Terrain\LodOctreeNode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DualContouring\_doc.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Core\Common.Core.csproj">
+      <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
+      <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataTypes\DataTypes.csproj">
+      <Project>{fd8146d2-d659-4ea8-88c9-cd88d5e3c099}</Project>
+      <Name>DataTypes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EngineEnvironment\EngineEnvironment.csproj">
+      <Project>{5BB25FD1-4B7B-4E6E-B4E9-9D66BFEBF8D6}</Project>
+      <Name>EngineEnvironment</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gameplay\Gameplay.csproj">
+      <Project>{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}</Project>
+      <Name>Gameplay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Rendering.SlimDX\Graphics.Rendering.SlimDX.csproj">
+      <Project>{CF457374-B3BC-4256-AB1E-109D15BA82DA}</Project>
+      <Name>Graphics.Rendering.SlimDX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Rendering\Graphics.Rendering.csproj">
+      <Project>{58EEF2DC-E13E-4A04-B8F7-496B400D341D}</Project>
+      <Name>Graphics.Rendering</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.SlimDX\Graphics.SlimDX.csproj">
+      <Project>{AE1D68F4-5306-47F9-942F-A86F113D23D8}</Project>
+      <Name>Graphics.SlimDX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NewModules\NewModules.csproj">
+      <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
+      <Name>NewModules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{D4997503-5D85-4890-8B7A-B608C0A1CF27}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

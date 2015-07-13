@@ -2,9 +2,9 @@
 using DirectX11;
 using MHGameWork.TheWizards.Engine.PhysX;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using MHGameWork.TheWizards._XNA.Gameplay;
 using MHGameWork.TheWizards.Client;
-using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.MathExtra;

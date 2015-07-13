@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
@@ -11,21 +12,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various.Client
     [TestFixture]
     public class ClientTest
     {
-        /// <summary>
-        /// This test is obsolete, since the class it test is not used in the current implementation
-        /// </summary>
-        [Test]
-        [RequiresThread( System.Threading.ApartmentState.STA )]
-        public void TestRunClientXNAGameService()
-        {
-            Database.Database db = new MHGameWork.TheWizards.Database.Database();
-            ClientXNAGameService cg = new ClientXNAGameService( db );
-            cg.XNAGame.DrawEvent += delegate { cg.XNAGame.Exit(); };
-
-
-            cg.XNAGame.Run();
-        }
-
+      
 
         public static ClientPhysicsQuadTreeNode CreateTestClientPhysicsQuadtree()
         {

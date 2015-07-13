@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{94AED3BF-CEFB-414D-BAAE-C0E685FDDAEB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Physics</RootNamespace>
+    <AssemblyName>Physics</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SkipPostSharp>True</SkipPostSharp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
+    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
+    <Reference Include="StillDesign.PhysX.Net">
+      <HintPath>..\_Libraries\PhysX.Net\References\Debug\XNA 2.0\StillDesign.PhysX.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Client\ClientPhysicsQuadTreeNode.cs" />
+    <Compile Include="Client\ClientPhysicsTestSphere.cs" />
+    <Compile Include="Client\IClientPhysicsObject.cs" />
+    <Compile Include="Cogs\BarCog.cs" />
+    <Compile Include="Cogs\Cog.cs" />
+    <Compile Include="Cogs\CogEngine.cs" />
+    <Compile Include="Cogs\CogRaycastReport.cs" />
+    <Compile Include="Cogs\ICogComponent.cs" />
+    <Compile Include="Cogs\StaticBox.cs" />
+    <Compile Include="Physics\CustomContactReport.cs" />
+    <Compile Include="Physics\MeshDynamicPhysicsElement.cs" />
+    <Compile Include="Physics\MeshPhysicsActorBuilder.cs" />
+    <Compile Include="Physics\MeshPhysicsElementFactory.cs" />
+    <Compile Include="Physics\MeshPhysicsFactoryXNA.cs" />
+    <Compile Include="Physics\MeshPhysicsPool.cs" />
+    <Compile Include="Physics\MeshStaticPhysicsElement.cs" />
+    <Compile Include="Physics\PhysicsDebugRenderer.cs" />
+    <Compile Include="Physics\PhysicsDebugRendererXNA.cs" />
+    <Compile Include="Physics\PhysicsEngine.cs" />
+    <Compile Include="Physics\PhysicsHelper.cs" />
+    <Compile Include="Physics\PhysicsService.cs" />
+    <Compile Include="Physics\Temp\Camera.cs" />
+    <Compile Include="Physics\Temp\Engine.cs" />
+    <Compile Include="Physics\Temp\Math.cs" />
+    <Compile Include="Physics\Temp\Vertex Grid.cs" />
+    <Compile Include="Physics\User Output.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Physics\_doc.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Core\Common.Core.csproj">
+      <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
+      <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Rendering\Graphics.Rendering.csproj">
+      <Project>{58EEF2DC-E13E-4A04-B8F7-496B400D341D}</Project>
+      <Name>Graphics.Rendering</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.SlimDX\Graphics.SlimDX.csproj">
+      <Project>{AE1D68F4-5306-47F9-942F-A86F113D23D8}</Project>
+      <Name>Graphics.SlimDX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Xna\Graphics.Xna.csproj">
+      <Project>{121ED163-A998-44E3-9738-EBF88AF2C29D}</Project>
+      <Name>Graphics.Xna</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaggedDataSystem\TaggedDataSystem.csproj">
+      <Project>{A280E325-7217-4713-A930-2C24FB253D38}</Project>
+      <Name>TaggedDataSystem</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

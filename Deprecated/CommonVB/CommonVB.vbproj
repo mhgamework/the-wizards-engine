@@ -103,9 +103,6 @@
     <Import Include="System.Windows" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ByteOps\ByteConverter.vb" />
-    <Compile Include="ByteOps\ByteReader.vb" />
-    <Compile Include="ByteOps\ByteWriter.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -121,11 +118,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Networking\BaseByteReader.vb" />
-    <Compile Include="Networking\BaseByteWriter.vb" />
-    <Compile Include="Networking\BaseConnection.vb" />
-    <Compile Include="Networking\DataStream.vb" />
-    <Compile Include="Networking\INetworkSerializable.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

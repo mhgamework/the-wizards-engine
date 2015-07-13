@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MHGameWork.TheWizards.Rendering;
@@ -79,7 +80,9 @@ namespace MHGameWork.TheWizards.Scattered.ProcBuilder
                 meshBuilder.Build(shapesToMesh, meshGen.Generate(), seed);
             }
 
-            islandMesh = meshDummyRenderer.GetBatchedMesh();
+            //islandMesh = meshDummyRenderer.GetBatchedMesh();
+            throw new NotImplementedException("TODO: map the IMesh from old Newmodules1.0, to the IMesh in the new location, or even better, dont use IMesh");
+            islandMesh = null;
             navMesh = allStructureShapes.Where(e => ((Face)e).GetSemanticId() == walkableSemId).ToList();
             buildMesh = allStructureShapes.Where(e => ((Face)e).GetSemanticId() == buildableSemId).ToList();
             borderMesh = allStructureShapes.Where(e => ((Face)e).GetSemanticId() == borderSemId).ToList();

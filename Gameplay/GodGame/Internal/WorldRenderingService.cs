@@ -7,6 +7,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
 using MHGameWork.TheWizards.GodGame.Internal.Networking;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
 using MHGameWork.TheWizards.Scattered._Engine;

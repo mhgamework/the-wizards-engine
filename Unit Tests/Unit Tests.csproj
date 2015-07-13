@@ -71,14 +71,6 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Utils.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraBars.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=940cfcde86f32efd, processorArchitecture=MSIL" />
-    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="envdte80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\_Libraries\SharpZipLib_0860_Bin\net-20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -88,42 +80,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="PostSharp, Version=3.0.35.9, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PostSharp.3.0.35\lib\net20\PostSharp.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Rhino.Mocks">
-      <HintPath>..\_Libraries\Rhino.Mocks-3.6-Build-21\Rhino.Mocks.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.D3DCompiler">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.D3DCompiler.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Direct2D1">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.Direct2D1.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Direct3D11">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.Direct3D11.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.DirectSound">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.DirectSound.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.DXGI">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.DXGI.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Error">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.Error.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.XAPO">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.XAPO.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.XAudio2">
-      <HintPath>..\_Libraries\SharpDX\Bin\SharpDX.XAudio2.dll</HintPath>
-    </Reference>
     <Reference Include="SlimDX, Version=4.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
@@ -135,15 +93,14 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
-    <Reference Include="xunit">
-      <HintPath>..\_Libraries\xunit-1.9.1\xunit.dll</HintPath>
+    <Reference Include="Wrappers, Version=1.0.5668.31445, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\Binaries\Wrappers.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -152,90 +109,36 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Features\Core\Diagnostics\ProfilerComponentTest.cs" />
-    <Compile Include="Features\Core\SeederTest.cs" />
-    <Compile Include="Features\Data\SectionedStreamTest.cs" />
-    <Compile Include="Features\Rendering\Showcase\ShowcaseSceneBuilder.cs" />
-    <Compile Include="Features\Rendering\Showcase\ShowcaseTest.cs" />
-    <Compile Include="Features\Rendering\Deferred\DeferredMaterialTest.cs" />
-    <Compile Include="Features\Rendering\Deferred\DeferredMeshRendererTest.cs" />
-    <Compile Include="Features\Rendering\Deferred\DeferredRendererTest.cs" />
-    <Compile Include="Features\Rendering\Deferred\GBufferTest.cs" />
-    <Compile Include="Features\Rendering\Deferred\MeshesRendererTest.cs" />
-    <Compile Include="Features\Rendering\Deferred\TexturePoolTest.cs" />
-    <Compile Include="Features\Rendering\DirectX11\DX11PerformanceTest.cs" />
-    <Compile Include="Features\Rendering\DirectX11\SpectaterCameraTest.cs" />
     <Compile Include="Features\Rendering\DX11FontWrapperTest.cs" />
-    <Compile Include="Features\Rendering\Postprocessing\FiltersTest.cs" />
-    <Compile Include="Features\Rendering\RenderingTestsHelper.cs" />
     <Compile Include="Features\Simulation\Animation\AnimationTest.cs" />
     <Compile Include="Features\Various\Client\ClientTest.cs" />
     <Compile Include="Features\Data\CoreTest.cs" />
-    <Compile Include="Features\Rendering\DirectX11\XAudio2Test.cs" />
-    <Compile Include="Features\Rendering\Deferred\DeferredTest.cs" />
-    <Compile Include="Features\Rendering\DirectX11\SharpDXTest.cs" />
-    <Compile Include="Features\Rendering\DirectX11\SlimDXDirectX11Test.cs" />
-    <Compile Include="Features\Rendering\DirectX11\TessellationTest.cs" />
     <Compile Include="Features\Various\FileHelperTest.cs" />
-    <Compile Include="Features\Data\Forms\ClassFormTest.cs" />
     <Compile Include="Features\Various\TestRootObjectTable.cs" />
     <Compile Include="Features\Various\VSIntegrationTest.cs" />
-    <Compile Include="Features\Rendering\XNA\ParticleTests.cs" />
-    <Compile Include="Features\Simulation\Physics\TestSphereShooter.cs" />
     <Compile Include="Features\Generation\ProceduralTerrainGeneration\NoiseTests.cs" />
     <Compile Include="Features\Generation\ProceduralTerrainGeneration\TerrainConverter.cs" />
     <Compile Include="Features\Generation\ProceduralTerrainGeneration\TerrainGenerationTests.cs" />
-    <Compile Include="Features\Core\Profiling\ProfilingTest.cs" />
     <Compile Include="Features\Rendering\Data\MeshOptimizerTest.cs" />
     <Compile Include="Features\Rendering\Text\TextRenderingFunctionalityTest.cs" />
-    <Compile Include="Features\Rendering\Culling\CullingTest.cs" />
-    <Compile Include="Features\Rendering\Deferred\DeferredRenderingTest.cs" />
     <Compile Include="Features\Rendering\Data\MeshLoaderTest.cs" />
-    <Compile Include="Features\Rendering\Postprocessing\SSAOTest.cs" />
     <Compile Include="Features\Various\Launcher\LauncherTest.cs" />
-    <Compile Include="Features\Core\Networking\NetworkingFilesTest.cs" />
-    <Compile Include="Features\Core\Networking\NetworkingServerTest.cs" />
-    <Compile Include="Features\Simulation\Physics\CogTest.cs" />
-    <Compile Include="Features\Simulation\Physics\PhysicsMeshTest.cs" />
     <Compile Include="Features\Rendering\XNA\DeferredRenderingOudTest.cs" />
-    <Compile Include="Features\Rendering\XNA\Curve3DTester.cs" />
-    <Compile Include="Features\Rendering\XNA\GraphicsTest.cs" />
-    <Compile Include="Features\Core\Networking\DataPacket.cs" />
-    <Compile Include="Features\Core\Networking\DataPacketFactory.cs" />
-    <Compile Include="Features\Core\Networking\ErrorPacket.cs" />
-    <Compile Include="Features\Core\Networking\ErrorPacketFactory.cs" />
-    <Compile Include="Features\Core\Networking\NetworkingClientTest.cs" />
-    <Compile Include="Features\Core\Networking\NetworkingTest.cs" />
     <Compile Include="Features\Data\OBJParser\OBJParserTest.cs" />
-    <Compile Include="Features\Simulation\Physics\PhysicsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Features\Rendering\XNA\RenderingTest.cs" />
     <Compile Include="Features\Rendering\Text\TextRenderingTest.cs" />
     <Compile Include="Features\Various\Server\LauncherServerTest.cs" />
     <Compile Include="Features\Various\Showcase.cs" />
-    <Compile Include="Features\Rendering\XNA\Terrain\SimpleTerrain.cs" />
-    <Compile Include="Features\Rendering\XNA\Terrain\SimpleTerrainBlock.cs" />
-    <Compile Include="Features\Rendering\XNA\Terrain\TerrainClientTest.cs" />
-    <Compile Include="Features\Rendering\XNA\Terrain\TerrainRenderingTest.cs" />
-    <Compile Include="Features\Generation\Treegenerater\Tests.cs" />
-    <Compile Include="Features\Generation\Treegenerater\TreeSynchronisationTest.cs" />
     <Compile Include="Features\Various\Utilities\UtilitiesTest.cs" />
     <Compile Include="Features\Various\Versioning\VersioningTest.cs" />
     <Compile Include="Features\Generation\Voxelization\VoxelizerTest.cs" />
-    <Compile Include="Features\Various\WorldDatabase\WorldDatabaseTest.cs" />
-    <Compile Include="Features\Various\WorldDatabase\TerrainData2Element.cs" />
-    <Compile Include="Features\Various\WorldDatabase\TerrainData2ElementFactory.cs" />
-    <Compile Include="Features\Various\WorldDatabase\TerrainData3Element.cs" />
-    <Compile Include="Features\Various\WorldDatabase\TerrainDataElement.cs" />
-    <Compile Include="Features\Various\WorldDatabase\TerrainDataElementFactory.cs" />
-    <Compile Include="Features\Simulation\WorldSimulation\WorldSimulationTests.cs" />
     <Compile Include="Features\Various\World\Static\SimpleStaticWorldObject.cs" />
     <Compile Include="Features\Various\World\Static\SimpleStaticWorldObjectFactory.cs" />
     <Compile Include="Features\Various\World\SimpleWorldEntity.cs" />
     <Compile Include="Features\Various\World\Static\StaticWorldSyncerTest.cs" />
     <Compile Include="Features\Various\World\TestSyncedActor.cs" />
     <Compile Include="Features\Various\World\WorldTest.cs" />
-    <Compile Include="Features\Data\Xml\XmlTest.cs" />
     <Compile Include="Features\Various\ZipTest.cs" />
     <Compile Include="RequiresPostSharp.cs" />
   </ItemGroup>
@@ -244,37 +147,46 @@
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Deprecated\CommonVB\CommonVB.vbproj">
-      <Project>{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}</Project>
-      <Name>CommonVB</Name>
+    <ProjectReference Include="..\Graphics.Rendering.SlimDX\Graphics.Rendering.SlimDX.csproj">
+      <Project>{CF457374-B3BC-4256-AB1E-109D15BA82DA}</Project>
+      <Name>Graphics.Rendering.SlimDX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Rendering\Graphics.Rendering.csproj">
+      <Project>{58EEF2DC-E13E-4A04-B8F7-496B400D341D}</Project>
+      <Name>Graphics.Rendering</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.SlimDX\Graphics.SlimDX.csproj">
+      <Project>{AE1D68F4-5306-47F9-942F-A86F113D23D8}</Project>
+      <Name>Graphics.SlimDX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Xna\Graphics.Xna.csproj">
+      <Project>{121ED163-A998-44E3-9738-EBF88AF2C29D}</Project>
+      <Name>Graphics.Xna</Name>
     </ProjectReference>
     <ProjectReference Include="..\Launcher\Launcher.csproj">
       <Project>{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}</Project>
       <Name>Launcher</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Networking.VB\Networking.VB.vbproj">
+      <Project>{3A751275-16F7-48C0-BA5F-510B10D70E1B}</Project>
+      <Name>Networking.VB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Networking\Networking.csproj">
+      <Project>{E0F8F002-7DF0-41D3-8237-6179255BE7D5}</Project>
+      <Name>Networking</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NewModules\NewModules.csproj">
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
       <Name>NewModules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Physics\Physics.csproj">
+      <Project>{94AED3BF-CEFB-414D-BAAE-C0E685FDDAEB}</Project>
+      <Name>Physics</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestRunner\TestRunner.csproj">
       <Project>{ac6c51ce-96fb-401b-9b51-1302f273a52a}</Project>
       <Name>TestRunner</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WPF\WPF.csproj">
-      <Project>{8a52d3e0-5362-4d9f-a29e-32e24ad65eaf}</Project>
-      <Name>WPF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Wrappers\Wrappers.vcxproj">
-      <Project>{d1e82bbb-8426-4451-ba37-792822e0fe6e}</Project>
-      <Name>Wrappers</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Features\Simulation\Physics\Files\Cog16.obj" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Features\Simulation\Physics\Files\CollisionModelBoxes001.mtl" />
-    <EmbeddedResource Include="Features\Simulation\Physics\Files\CollisionModelBoxes001.obj" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Features\Rendering\XNA\Files\TestShader.fx" />
@@ -295,9 +207,6 @@
     <EmbeddedResource Include="Features\Rendering\XNA\Files\TestShaderInclude.fx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Features\Rendering\DirectX11\MiniTri.fx" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
@@ -307,8 +216,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Features\Generation\Voxelization\_doc.txt" />
-    <Content Include="Features\Rendering\DirectX11\_Doc.txt" />
-    <Content Include="Features\Rendering\Showcase\camera.xml" />
     <Content Include="msvcm90d.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -331,7 +238,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Features\Core\" />
+    <Folder Include="Features\Simulation\WorldSimulation\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\PostSharp.3.0.35\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.3.0.35\tools\PostSharp.targets')" />

@@ -1,7 +1,7 @@
-﻿using MHGameWork.TheWizards.DirectX11.Graphics;
-using MHGameWork.TheWizards.Engine;
+﻿using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Data;
 using MHGameWork.TheWizards.Engine.WorldRendering;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using MHGameWork.TheWizards.WorldRendering;
 using SlimDX;
 

@@ -6,10 +6,10 @@ using System.Text;
 using System.Windows.Media.Animation;
 using DirectX11;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.ServerClient;
-using Microsoft.SqlServer.Server;
 using SlimDX;
 using SlimDX.D3DCompiler;
 using SlimDX.Direct3D11;
@@ -22,7 +22,7 @@ namespace MHGameWork.TheWizards.Particles
 {
     public class Emitter
     {
-        private readonly Rendering.Deferred.TexturePool texturePool;
+        private readonly TexturePool texturePool;
         //private readonly VertexDeclarationPool declarationPool;
         private readonly DX11Game game;
         public float[] particles;

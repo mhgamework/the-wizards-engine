@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Input;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX.DirectInput;
 
@@ -37,7 +38,7 @@ namespace MHGameWork.TheWizards.GodGame
         {
             getTool(player).OnKeypress(voxel, key);
         }
-        public override void OnTargetChanged(PlayerState player, IVoxelHandle voxel, DirectX11.Input.TWKeyboard keyboard, DirectX11.Input.TWMouse mouse)
+        public override void OnTargetChanged(PlayerState player, IVoxelHandle voxel, TWKeyboard keyboard, TWMouse mouse)
         {
             getTool(player).OnTargetChanged(voxel, keyboard, mouse);
         }

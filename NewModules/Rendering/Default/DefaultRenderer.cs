@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MHGameWork.TheWizards.Rendering.Default
@@ -85,7 +86,7 @@ namespace MHGameWork.TheWizards.Rendering.Default
         {
             // Buffer the vertexdeclarations + return decl for given type T
 
-            return TangentVertex.CreateVertexDeclaration(game);
+            return TangentVertexExtensions.CreateVertexDeclaration(game);
         }
 
         public DefaultRenderElement CreateRenderElement(IDefaultRenderable renderable)

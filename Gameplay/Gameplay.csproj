@@ -149,8 +149,9 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="ProceduralBuilder">
-      <HintPath>..\_Libraries\ProcBuilder\ProceduralBuilder.exe</HintPath>
+    <Reference Include="ProceduralBuilder, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\Binaries\ProceduralBuilder.exe</HintPath>
     </Reference>
     <Reference Include="QuickGraph, Version=3.6.61114.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -208,51 +209,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Array3DTest.cs" />
-    <Compile Include="DualContouring\Array3DSampler.cs" />
-    <Compile Include="DualContouring\BasicShapeBuilder.cs" />
-    <Compile Include="DualContouring\Building\BuilderConfiguration.cs" />
-    <Compile Include="DualContouring\Building\Chunk.cs" />
-    <Compile Include="DualContouring\Building\Raycaster.cs" />
-    <Compile Include="DualContouring\CameraLightSimulator.cs" />
-    <Compile Include="DualContouring\DCFiles.cs" />
-    <Compile Include="DualContouring\DCVoxelMaterial.cs" />
-    <Compile Include="DualContouring\DualContouringMeshBuilder.cs" />
-    <Compile Include="DualContouring\GPU\GPUHermiteCalculator.cs" />
-    <Compile Include="DualContouring\GPU\GPUTexture3DTest.cs" />
-    <Compile Include="DualContouring\GPU\GPUTest.cs" />
-    <Compile Include="DualContouring\GPU\GPUTexture3D.cs" />
-    <Compile Include="DualContouring\HermiteGrids\AbstractHermiteGrid.cs" />
-    <Compile Include="DualContouring\HermiteGrids\DelegateHermiteGrid.cs" />
-    <Compile Include="DualContouring\HermiteGrids\DensityFunctionHermiteGrid.cs" />
-    <Compile Include="DualContouring\HermiteGrids\DifferenceGrid.cs" />
-    <Compile Include="DualContouring\DualContouringAlgorithm.cs" />
-    <Compile Include="DualContouring\Octrees\DCOctree.cs" />
-    <Compile Include="DualContouring\Rendering\RenderingTest.cs" />
-    <Compile Include="DualContouring\Rendering\SurfaceMaterial.cs" />
-    <Compile Include="DualContouring\Rendering\VoxelCustomRenderer.cs" />
-    <Compile Include="DualContouring\Terrain\LodOctreeMeshBuilder.cs" />
-    <Compile Include="DualContouring\PerformanceHelper.cs" />
-    <Compile Include="DualContouring\PrettyPrintExtensions.cs" />
-    <Compile Include="DualContouring\RecordingSimulator.cs" />
-    <Compile Include="DualContouring\Terrain\LodOctree.cs" />
-    <Compile Include="DualContouring\Terrain\LodOctreeNode.cs" />
-    <Compile Include="DualContouring\Terrain\TerrainLodEnvironment.cs" />
-    <Compile Include="DualContouring\Terrain\VisualTestingEnvironment.cs" />
-    <Compile Include="DualContouring\Building\DualContouringBuilderTest.cs" />
-    <Compile Include="DualContouring\_Test\CSGTest.cs" />
-    <Compile Include="DualContouring\_Test\DualContouringTest.cs" />
-    <Compile Include="DualContouring\HermiteGrids\HermiteDataGrid.cs" />
-    <Compile Include="DualContouring\IntersectableCube.cs" />
-    <Compile Include="DualContouring\IIntersectableObject.cs" />
-    <Compile Include="DualContouring\IntersectableSphere.cs" />
-    <Compile Include="DualContouring\QEFCalculator.cs" />
-    <Compile Include="DualContouring\QEFTest.cs" />
-    <Compile Include="DualContouring\Terrain\DensityHermiteGridTest.cs" />
-    <Compile Include="DualContouring\Terrain\PerformanceTest.cs" />
-    <Compile Include="DualContouring\Terrain\VoxelTerrainGenerationTest.cs" />
-    <Compile Include="DualContouring\HermiteGrids\UnionGrid.cs" />
-    <Compile Include="DualContouring\_Test\DualContouringTestEnvironment.cs" />
-    <Compile Include="DualContouring\_Test\InteractiveTestingEnvironment.cs" />
     <Compile Include="Engine\WorldRendering\FastTextareaUpdater.cs" />
     <Compile Include="Engine\WorldRendering\ITextareaUpdater.cs" />
     <Compile Include="GodGame\DeveloperCommands\AllCommandProvider.cs" />
@@ -441,8 +397,14 @@
     <Compile Include="GodGame\_Tests\WorkersTest.cs" />
     <Compile Include="Math\GeometrySampler.cs" />
     <Compile Include="Math\GridHelper.cs" />
+    <Compile Include="Math\IterateExtensions.cs" />
+    <Compile Include="Math\MathExtensions.cs" />
+    <Compile Include="Math\Point2.cs" />
     <Compile Include="Math\TWMath.cs" />
     <Compile Include="Math\TWMathTest.cs" />
+    <Compile Include="Math\UtilityExtensions.cs" />
+    <Compile Include="PerformanceHelper.cs" />
+    <Compile Include="PrettyPrintExtensions.cs" />
     <Compile Include="Rendering\Lod\IRenderable.cs" />
     <Compile Include="Rendering\Lod\LinebasedLodRenderer.cs" />
     <Compile Include="Rendering\Particles\ColoredParticle.cs" />
@@ -456,6 +418,7 @@
     <Compile Include="Scattered\GameLogic\SpellCasting\BurstSpellEffect.cs" />
     <Compile Include="Scattered\GameLogic\SpellCasting\BeamSpellEffect.cs" />
     <Compile Include="Scattered\GameLogic\SpellCasting\ImpactSpellEffect.cs" />
+    <Compile Include="Scattered\ProcBuilder\IslandGenerator.cs" />
     <Compile Include="Scattered\_Tests\GameLogic\SpellCastingEffectsTest.cs" />
     <Compile Include="Scattered\_Tests\ManualIoCTestLoader.cs" />
     <Compile Include="Scattered\_Tests\_Integration\LodTest.cs" />
@@ -496,7 +459,6 @@
     <Compile Include="Scattered\GameLogic\Services\WorldGenerationService.cs" />
     <Compile Include="Scattered\ProcBuilder\CachedIslandGenerator.cs" />
     <Compile Include="Scattered\ProcBuilder\IIslandGenerator.cs" />
-    <Compile Include="Scattered\ProcBuilder\IslandGenerator.cs" />
     <Compile Include="Scattered\ProcBuilder\ProcUtilities.cs" />
     <Compile Include="Scattered\SceneGraphing\TextPanelNode.cs" />
     <Compile Include="Scattered\SceneGraphing\EntityInteractableNode.cs" />
@@ -513,7 +475,6 @@
     <Compile Include="Scattered\Simulation\RoundState.cs" />
     <Compile Include="Scattered\Simulation\IslandConnectionProvider.cs" />
     <Compile Include="Scattered\Simulation\LoadLevelSimulator.cs" />
-    <Compile Include="Math\MathExtensions.cs" />
     <Compile Include="Math\RaycastExtensions.cs" />
     <Compile Include="Scattered\_Engine\RendererScene.cs" />
     <Compile Include="Scattered\_Engine\TextRectangle.cs" />
@@ -662,9 +623,6 @@
     <Compile Include="Engine\Persistence\PersistenceUI.cs" />
     <Compile Include="Engine\PhysX\BarrelShooterSimulator.cs" />
     <Compile Include="Engine\PhysX\PhysXData.cs" />
-    <Compile Include="Math\IterateExtensions.cs" />
-    <Compile Include="Math\Point2.cs" />
-    <Compile Include="Math\UtilityExtensions.cs" />
     <Compile Include="RequiresPostSharp.cs" />
     <Compile Include="Simulation\BehaviourTrees\BehaviourTreeAgent.cs" />
     <Compile Include="Simulation\BehaviourTrees\ConcurrentSelector.cs" />
@@ -815,7 +773,6 @@
     <Compile Include="_Unsorted\Simulators\ThirdPersonCameraSimulator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DualContouring\_doc.txt" />
     <Content Include="Engine\engine_architecture-1.jpg" />
     <Content Include="Engine\_Core\_doc.txt" />
     <Content Include="Engine\_doc.html" />
@@ -860,13 +817,41 @@
       <Project>{372ff145-4b2d-40a4-b171-cfff159e4c91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Deprecated\CommonVB\CommonVB.vbproj">
-      <Project>{35A4FAF6-A439-4BC9-B47D-3CEE167A8926}</Project>
-      <Name>CommonVB</Name>
+    <ProjectReference Include="..\EngineEnvironment\EngineEnvironment.csproj">
+      <Project>{5BB25FD1-4B7B-4E6E-B4E9-9D66BFEBF8D6}</Project>
+      <Name>EngineEnvironment</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Rendering.SlimDX\Graphics.Rendering.SlimDX.csproj">
+      <Project>{CF457374-B3BC-4256-AB1E-109D15BA82DA}</Project>
+      <Name>Graphics.Rendering.SlimDX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Rendering\Graphics.Rendering.csproj">
+      <Project>{58EEF2DC-E13E-4A04-B8F7-496B400D341D}</Project>
+      <Name>Graphics.Rendering</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.SlimDX\Graphics.SlimDX.csproj">
+      <Project>{AE1D68F4-5306-47F9-942F-A86F113D23D8}</Project>
+      <Name>Graphics.SlimDX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Xna\Graphics.Xna.csproj">
+      <Project>{121ED163-A998-44E3-9738-EBF88AF2C29D}</Project>
+      <Name>Graphics.Xna</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Networking.VB\Networking.VB.vbproj">
+      <Project>{3A751275-16F7-48C0-BA5F-510B10D70E1B}</Project>
+      <Name>Networking.VB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Networking\Networking.csproj">
+      <Project>{E0F8F002-7DF0-41D3-8237-6179255BE7D5}</Project>
+      <Name>Networking</Name>
     </ProjectReference>
     <ProjectReference Include="..\NewModules\NewModules.csproj">
       <Project>{9543ac00-cde5-4759-bd98-2d031d16dfd4}</Project>
       <Name>NewModules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Physics\Physics.csproj">
+      <Project>{94AED3BF-CEFB-414D-BAAE-C0E685FDDAEB}</Project>
+      <Name>Physics</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestRunner\TestRunner.csproj">
       <Project>{ac6c51ce-96fb-401b-9b51-1302f273a52a}</Project>

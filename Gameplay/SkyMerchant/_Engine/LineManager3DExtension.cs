@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MHGameWork.TheWizards.DirectX11.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.SkyMerchant._Engine

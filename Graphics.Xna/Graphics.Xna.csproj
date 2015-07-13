@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{121ED163-A998-44E3-9738-EBF88AF2C29D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MHGameWork.TheWizards.Core</RootNamespace>
+    <AssemblyName>Graphics.Xna</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SkipPostSharp>True</SkipPostSharp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dotway.WPF.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Libraries\Dotway.WPFLibraries\Dotway.WPF\Dotway.WPF.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game">
+      <HintPath>..\..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Xna.Framework.Game\2.0.0.0__6d5c3888ef60e27d\Microsoft.Xna.Framework.Game.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\PresentationCore.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Presentation" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collada\ColladaAsset.cs" />
+    <Compile Include="Collada\ColladaBone.cs" />
+    <Compile Include="Collada\ColladaMaterial.cs" />
+    <Compile Include="Collada\ColladaMesh.cs" />
+    <Compile Include="Collada\ColladaModel.cs" />
+    <Compile Include="Collada\ColladaScene.cs" />
+    <Compile Include="Collada\ColladaSource.cs" />
+    <Compile Include="Collada\ColladaTexture.cs" />
+    <Compile Include="Collada\SkinnedModelBuilder.cs" />
+    <Compile Include="Collada\TODO\ColladaMaterialOud.cs" />
+    <Compile Include="Collada\TODO\ColladaMeshOud.cs" />
+    <Compile Include="Collada\TODO\ColladaModelOud.cs" />
+    <Compile Include="Collada\TODO\ColladaTextureOud.cs" />
+    <Compile Include="Forms\ClassForm.cs" />
+    <Compile Include="Forms\ColorElement.cs" />
+    <Compile Include="Forms\GridElement.cs" />
+    <Compile Include="Forms\IFormElement.cs" />
+    <Compile Include="Forms\ReadonlyElement.cs" />
+    <Compile Include="Forms\TextBoxElement.cs" />
+    <Compile Include="Graphics\AttributeSystem.cs" />
+    <Compile Include="Graphics\BasicShader.cs" />
+    <Compile Include="Graphics\BoxMesh.cs" />
+    <Compile Include="Graphics\ColladaShader.cs" />
+    <Compile Include="Graphics\CustomCamera.cs" />
+    <Compile Include="Graphics\DEPRECATED\Cursor.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\DrawEventArgs.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiAlign.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiButton.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiControl.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiControlCollection.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiGraphics.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiImage.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiListBox.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiListBoxBase.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiServiceXNA.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiWindow.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\GuiWindowBorder.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\IGuiContainer.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\IGuiService.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\IHandelable.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\MouseEventArgs.cs" />
+    <Compile Include="Graphics\DEPRECATED\Gui\TileSet.cs" />
+    <Compile Include="Graphics\DEPRECATED\ICursor.cs" />
+    <Compile Include="Graphics\FullScreenQuad.cs" />
+    <Compile Include="Graphics\GameFile.cs" />
+    <Compile Include="Graphics\ICamera.cs" />
+    <Compile Include="Graphics\IGameFile.cs" />
+    <Compile Include="Graphics\IRenderPrimitives.cs" />
+    <Compile Include="Graphics\IXNAGame.cs" />
+    <Compile Include="Graphics\IXNAObject.cs" />
+    <Compile Include="Graphics\Keyboard.cs" />
+    <Compile Include="Graphics\LineManager3D.cs" />
+    <Compile Include="Graphics\LineManager3DLines.cs" />
+    <Compile Include="Graphics\Mouse.cs" />
+    <Compile Include="Graphics\OrthographicCamera.cs" />
+    <Compile Include="Graphics\PlaneMesh.cs" />
+    <Compile Include="Graphics\Primitives.cs" />
+    <Compile Include="Graphics\SkinnedBone.cs" />
+    <Compile Include="Graphics\SkinnedMesh.cs" />
+    <Compile Include="Graphics\SkinnedModel.cs" />
+    <Compile Include="Graphics\SkinnedShader.cs" />
+    <Compile Include="Graphics\SkinnedTangentVertex.cs" />
+    <Compile Include="Graphics\SpectaterCamera.cs" />
+    <Compile Include="Graphics\SphereMesh.cs" />
+    <Compile Include="Graphics\TangentVertexExtensions.cs" />
+    <Compile Include="Graphics\TestXNAGame.cs" />
+    <Compile Include="Graphics\Texture.cs" />
+    <Compile Include="Graphics\TODO\ColorHelper.cs" />
+    <Compile Include="Graphics\TODO\FileHelper.cs" />
+    <Compile Include="Graphics\TODO\Material.cs" />
+    <Compile Include="Graphics\TODO\ShaderEffect.cs" />
+    <Compile Include="Graphics\TODO\StringHelper.cs" />
+    <Compile Include="Graphics\TODO\TangentVertex.cs" />
+    <Compile Include="Graphics\TODO\TextureBookengine.cs" />
+    <Compile Include="Graphics\TODO\XmlHelper.cs" />
+    <Compile Include="Graphics\Transformation.cs" />
+    <Compile Include="Graphics\VertexElementAttribute.cs" />
+    <Compile Include="Graphics\VertexMultitextured.cs" />
+    <Compile Include="Graphics\XNAGame.cs" />
+    <Compile Include="Graphics\XNAGameFiles.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Water\Camera.cs" />
+    <Compile Include="Water\Mesh.cs" />
+    <Compile Include="Water\SubGrid.cs" />
+    <Compile Include="Water\Utils.cs" />
+    <Compile Include="Water\Vertex.cs" />
+    <Compile Include="Water\Water.cs" />
+    <Compile Include="Water\WaterTest.cs" />
+    <Compile Include="Wpf\IWindowFactory.cs" />
+    <Compile Include="Wpf\SimpleWindowFactory.cs" />
+    <Compile Include="Wpf\XNAGameWpf.cs" />
+    <Compile Include="XML\XMLSerializerXna.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\Files\Calibri.xnb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\Files\ColladaModel.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\Files\ColladaModelNew.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\Files\LineRendering.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\Files\SkinnedNormalMapping.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Core\Common.Core.csproj">
+      <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
+      <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Rendering\Graphics.Rendering.csproj">
+      <Project>{58EEF2DC-E13E-4A04-B8F7-496B400D341D}</Project>
+      <Name>Graphics.Rendering</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{D4997503-5D85-4890-8B7A-B608C0A1CF27}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Collada\Files\SimpleBones001.DAE" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Collada\Files\SimpleCharacterAnim001.DAE" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Collada\Files\test_man_baked.DAE" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Collada\Files\TriangleBones001.DAE" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Collada\Files\Wall001.DAE" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

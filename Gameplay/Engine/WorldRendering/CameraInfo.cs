@@ -1,6 +1,6 @@
 ﻿using DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
 using MHGameWork.TheWizards.Engine.Synchronization;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Engine.WorldRendering

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MHGameWork.TheWizards.Rendering.Text;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Text;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Engine.WorldRendering

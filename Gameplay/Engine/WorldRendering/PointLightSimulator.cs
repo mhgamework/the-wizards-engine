@@ -7,7 +7,7 @@
     {
         public class Data : IModelObjectAddon<PointLight>
         {
-            private Rendering.Deferred.PointLight el;
+            private Graphics.SlimDX.Rendering.Deferred.PointLight el;
 
             public void Update(PointLight light)
             {

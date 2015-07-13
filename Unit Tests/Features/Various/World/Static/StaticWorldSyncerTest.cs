@@ -1,4 +1,5 @@
 ﻿using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Tests.Features.Core.Networking;
 using MHGameWork.TheWizards.Tests.Features.Rendering;
@@ -28,7 +29,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various.World.Static
             var renderer = new SimpleMeshRenderer(texturePool, meshPartPool, vertexDeclarationPool);
 
             var mesh =
-                RenderingTest.CreateGuildHouseMesh(
+                DefaultMeshes.CreateGuildHouseMesh(
                     new TheWizards.OBJParser.OBJToRAMMeshConverter(new RAMTextureFactory()));
 
             var meshFactory = new SimpleMeshFactory();

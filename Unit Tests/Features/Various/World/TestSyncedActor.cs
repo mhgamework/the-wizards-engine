@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
+using MHGameWork.TheWizards.Networking;
 using MHGameWork.TheWizards.Networking.Client;
 using MHGameWork.TheWizards.Networking.Server;
 using MHGameWork.TheWizards.Physics;
@@ -188,7 +190,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various.World
 
             server.Start();
 
-            var conn = NetworkingClientTest.ConnectTCP(10045, "127.0.0.1");
+            var conn = NetworkingUtilities.ConnectTCP(10045, "127.0.0.1");
             conn.Receiving = true;
             var client = new ClientPacketManagerNetworked(conn);
 
@@ -325,7 +327,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various.World
         [Test]
         public void TestSyncOnlineClient()
         {
-            var conn = NetworkingClientTest.ConnectTCP(10045, "5.149.17.16");
+            var conn = NetworkingUtilities.ConnectTCP(10045, "5.149.17.16");
             //var conn = NetworkingClientTest.ConnectTCP(10045, "127.0.0.1");
             conn.Receiving = true;
             var client = new ClientPacketManagerNetworked(conn);

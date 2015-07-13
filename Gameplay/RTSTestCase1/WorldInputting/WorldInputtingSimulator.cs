@@ -4,7 +4,6 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Placing;
 using MHGameWork.TheWizards.RTSTestCase1.WorldInputting.Selecting;
 using MHGameWork.TheWizards.RTSTestCase1._Tests;
-using MHGameWork.TheWizards.Rendering.Text;
 using SlimDX;
 using SlimDX.DirectInput;
 

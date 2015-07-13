@@ -1,0 +1,31 @@
+Initialize
+
+ shadowMap = new RenderTarget2D( graphicsDevice,
+                                            sizeX,
+                                            sizeY,
+                                            1,
+                                            SurfaceFormat.Single,
+                                            RenderTargetUsage.DiscardContents );
+
+Render
+
+graphicsDevice.SetRenderTarget( 0, shadowMap );
+
+Dinges renderen
+
+graphicsDevice.SetRenderTarget( 0, null );
+
+shadowMap.GetTexture()
+
+da weet ik ma in het article zeggen ze da al u rendercalls het ook enorm vertraagt da ge in 1 texture meerdere ilposters steekt
+ja wel maar als ge een update moet ge ze allemaal update of zo ietni?
+
+GraphicsDevice.Viewport ok ma da is voor later ok ik denk da ik verder kan
+weet ge dea met die unit tests ik die physx ni kan lade
+
+ok ma da is goed voor nu kan ik vezrder ma later moet ik verschilledde textures i neen steken zwant anders heeft imposters ni zoveel bnut
+
+
+ model = TWModel.FromColladaModel(game, ColladaModel.LoadWall001());
+
+            model.Render();

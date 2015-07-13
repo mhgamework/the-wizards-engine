@@ -2,7 +2,6 @@
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.RTSTestCase1;
 using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Rendering.Text;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Scattered._Engine

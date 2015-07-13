@@ -1,8 +1,0 @@
-﻿This class contains the crossover code from the NewModules to the Gameplay project
-
-The Wrapper classes provide access to the NewModules API features and are accessible trough a statically, but contextually scoped variable 'TW'.
-
-The Engine is the core class that wraps functionality and manages all resources (caches for graphics, GPU, seperate gameplay datastorage)
-
-Note that this namespaces is NOT a feature namespace, like all the other NewModules namespaces. 
-It contains full AL for the engine, and a wrapper for the features in NewModules that are used in the engine

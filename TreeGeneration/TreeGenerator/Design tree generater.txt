@@ -1,0 +1,31 @@
+Core:
+TreeType
+-TreeType: -TreeTypeLevel
+
+Tree
+-TreeStructure:
+    -Trunk
+    -Branch
+    -Leaf
+    
+TreeStructureGenerater
+
+Client:
+-TreeRenderData
+
+Preprocesser:
+-TreePreprocesser
+
+Editor:
+
+
+
+-EditorTreeRenderData
+
+
+
+
+TODO:
+
+eerst structure line renderer maken
+Function TreeStructureGenerater.Generate : basic dingke 

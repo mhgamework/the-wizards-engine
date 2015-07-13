@@ -1,5 +1,6 @@
 ﻿using DirectX11;
 using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using SlimDX;
 

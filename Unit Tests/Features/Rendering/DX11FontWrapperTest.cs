@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
 using NUnit.Framework;
 using SlimDX;
 
@@ -17,7 +18,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Rendering
         {
             var game = new DX11Game();
             game.InitDirectX();
-            var wrapper = new MHGameWork.TheWizards.DX11FontWrapper(game.Device);
+            var wrapper = new DX11FontWrapper(game.Device);
 
             game.GameLoopEvent += delegate
                 {

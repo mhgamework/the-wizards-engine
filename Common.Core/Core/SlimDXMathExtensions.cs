@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using DirectX11;
 using SlimDX;
 
@@ -19,7 +20,7 @@ namespace MHGameWork.TheWizards
             Vector3[] corners = box.GetCorners();
             Vector3[] ret = new Vector3[8];
             Vector3.TransformCoordinate(corners, ref mat, ret);
-            return BoundingBox.FromPoints(ret);
+            return BoundingBox.FromPoints(ret.Cast<SlimDX.Vector3>().ToArray());
 
             /*Vector3 min = Vector3.Transform(box.Min, mat);
             Vector3 max = Vector3.Transform(box.Max, mat);

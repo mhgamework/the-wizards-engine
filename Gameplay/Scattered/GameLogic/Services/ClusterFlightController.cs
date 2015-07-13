@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MHGameWork.TheWizards.DirectX11.Input;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Input;
 using MHGameWork.TheWizards.Scattered.GameLogic.Objects;
 using MHGameWork.TheWizards.Scattered.Model;
 using SlimDX;

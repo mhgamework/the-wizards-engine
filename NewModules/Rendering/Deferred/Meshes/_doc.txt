@@ -1,8 +1,0 @@
-﻿
-=== Defferred Mesh Rendering ===
--> Layers
-Mesh elements (DeferredRendererMeshes)
-Culling
-Mesh elements -> Parts: Batching, instancing, normal
-Mesh -> Parts
-Parts -> IB, VB, Material

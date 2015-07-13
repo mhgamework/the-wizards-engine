@@ -3,18 +3,18 @@ using System.IO;
 using System.Threading;
 using MHGameWork.TheWizards.Client;
 using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DirectX11.Graphics;
-using MHGameWork.TheWizards.DirectX11.Rendering.Deferred;
-
 using MHGameWork.TheWizards.Graphics;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes;
+using MHGameWork.TheWizards.Graphics.Xna.Graphics;
 using MHGameWork.TheWizards.OBJParser;
 using MHGameWork.TheWizards.Physics;
 using MHGameWork.TheWizards.Rendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
-using MHGameWork.TheWizards.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.Tests.Features.Data.OBJParser;
-using MHGameWork.TheWizards.Tests.Features.Rendering.Deferred;
-using MHGameWork.TheWizards.Tests.Features.Rendering.DirectX11;
 using MHGameWork.TheWizards.Tests.Features.Simulation.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,8 +22,10 @@ using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.DirectInput;
+using BoundingBox = Microsoft.Xna.Framework.BoundingBox;
 using MathHelper = DirectX11.MathHelper;
 using Matrix = Microsoft.Xna.Framework.Matrix;
+using SpectaterCamera = MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics.SpectaterCamera;
 using TexturePool = MHGameWork.TheWizards.Rendering.TexturePool;
 using Vector3 = Microsoft.Xna.Framework.Vector3;
 
@@ -62,7 +64,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
             var engine = new PhysicsEngine();
             PhysicsDebugRendererXNA debugRenderer = null;
 
-            var root = PhysicsMeshTest.CreatePhysicsQuadtree(20, 5);
+            var root = CreatePhysicsQuadtree(20, 5);
 
             var physicsElementFactoryXNA = new MeshPhysicsFactoryXNA(engine, root);
             var physicsElementFactory = physicsElementFactoryXNA.Factory;
@@ -233,7 +235,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
             var engine = new PhysicsEngine();
             PhysicsDebugRendererXNA debugRenderer = null;
 
-            var root = PhysicsMeshTest.CreatePhysicsQuadtree(16, 4);
+            var root = CreatePhysicsQuadtree(16, 4);
 
             var physicsElementFactoryXNA = new MeshPhysicsFactoryXNA(engine, root);
             var physicsElementFactory = physicsElementFactoryXNA.Factory;
@@ -340,7 +342,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
             var engine = new PhysicsEngine();
             PhysicsDebugRendererXNA debugRenderer = null;
 
-            var root = PhysicsMeshTest.CreatePhysicsQuadtree(16, 4);
+            var root = CreatePhysicsQuadtree(16, 4);
 
             var physicsElementFactoryXNA = new MeshPhysicsFactoryXNA(engine, root);
             var physicsElementFactory = physicsElementFactoryXNA.Factory;
@@ -476,61 +478,7 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
         }
 
 
-        [Test]
-        [RequiresThread(ApartmentState.STA)]
-        public void TestDeferredMeshRendererRenderCity()
-        {
-            var c = new OBJToRAMMeshConverter(new RAMTextureFactory());
-
-
-            var importer = new ObjImporter();
-            importer.AddMaterialFileStream("Town001.mtl", new FileStream("../../bin/GameData/Core/Town/OBJ03/Town001.mtl", FileMode.Open));
-            importer.ImportObjFile("../../bin/GameData/Core/Town/OBJ03/Town001.obj");
-
-            var mesh = c.CreateMesh(importer);
-
-            var game = new DX11Game();
-            game.InitDirectX();
-            var context = game.Device.ImmediateContext;
-
-
-            var texturePool = new TheWizards.Rendering.Deferred.TexturePool(game);
-
-            var gBuffer = new GBuffer(game.Device, 800, 600);
-
-            var renderer = new DeferredMeshesRenderer(game, gBuffer, texturePool);
-
-
-
-            var el = renderer.AddMesh(mesh);
-            el.WorldMatrix = SlimDX.Matrix.Translation(MathHelper.Right * 0 * 2 + SlimDX.Vector3.UnitZ * 0 * 2);
-
-
-            game.GameLoopEvent += delegate
-                                  {
-
-
-
-
-
-                                      gBuffer.Clear();
-                                      gBuffer.SetTargetsToOutputMerger();
-
-                                      renderer.Draw();
-
-                                      context.ClearState();
-                                      game.SetBackbuffer();
-
-                                      GBufferTest.DrawGBuffer(game, gBuffer);
-
-                                  };
-            SlimDX.Configuration.EnableObjectTracking = false;
-
-            game.Run();
-
-        }
-
-
+       
         [Test]
         public void TestDeferredRendererCity()
         {
@@ -658,6 +606,20 @@ namespace MHGameWork.TheWizards.Tests.Features.Various
 
 
             game.Run();
+        }
+
+
+
+        public static ClientPhysicsQuadTreeNode CreatePhysicsQuadtree(int numNodes, int numSplits)
+        {
+            TheWizards.Client.ClientPhysicsQuadTreeNode root;
+            root = new ClientPhysicsQuadTreeNode(
+                new BoundingBox(
+                    new Vector3(-numNodes * numNodes / 2f, -100, -numNodes * numNodes / 2f),
+                    new Vector3(numNodes * numNodes / 2f, 100, numNodes * numNodes / 2f)));
+
+            QuadTree.Split(root, numSplits);
+            return root;
         }
     }
 }

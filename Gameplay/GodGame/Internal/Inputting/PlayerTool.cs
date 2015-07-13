@@ -1,6 +1,6 @@
-﻿using MHGameWork.TheWizards.DirectX11.Input;
-using MHGameWork.TheWizards.GodGame.Internal;
+﻿using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.GodGame.Internal.Model;
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Input;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.GodGame
