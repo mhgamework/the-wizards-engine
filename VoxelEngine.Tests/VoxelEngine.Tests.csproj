@@ -83,6 +83,14 @@
       <Project>{2BF84FEF-FC3A-4E1A-9E4B-D3003E02C5B8}</Project>
       <Name>Gameplay</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Graphics.Rendering.SlimDX\Graphics.Rendering.SlimDX.csproj">
+      <Project>{CF457374-B3BC-4256-AB1E-109D15BA82DA}</Project>
+      <Name>Graphics.Rendering.SlimDX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics.Rendering\Graphics.Rendering.csproj">
+      <Project>{58EEF2DC-E13E-4A04-B8F7-496B400D341D}</Project>
+      <Name>Graphics.Rendering</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Graphics.SlimDX\Graphics.SlimDX.csproj">
       <Project>{AE1D68F4-5306-47F9-942F-A86F113D23D8}</Project>
       <Name>Graphics.SlimDX</Name>

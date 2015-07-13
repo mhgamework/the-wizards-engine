@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
-using MHGameWork.TheWizards.ServerClient;
 using MHGameWork.TheWizards.WorldDatabase;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

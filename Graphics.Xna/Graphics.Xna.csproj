@@ -171,6 +171,10 @@
       <Project>{372FF145-4B2D-40A4-B171-CFFF159E4C91}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Graphics.Rendering\Graphics.Rendering.csproj">
+      <Project>{58EEF2DC-E13E-4A04-B8F7-496B400D341D}</Project>
+      <Name>Graphics.Rendering</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.csproj">
       <Project>{D4997503-5D85-4890-8B7A-B608C0A1CF27}</Project>
       <Name>Utilities</Name>

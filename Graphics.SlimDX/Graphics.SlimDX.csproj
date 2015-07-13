@@ -84,31 +84,7 @@
     <Compile Include="DirectX11\Rendering\Deferred\SpotLightRenderer.cs" />
     <Compile Include="DirectX11\Rendering\Deferred\ToneMapRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rendering\Culling\CullerNoCull.cs" />
-    <Compile Include="Rendering\Culling\FrustumCuller.cs" />
-    <Compile Include="Rendering\Culling\FrustumCullerSimple.cs" />
-    <Compile Include="Rendering\Culling\FrustumCullerView.cs" />
-    <Compile Include="Rendering\Culling\ICullable.cs" />
-    <Compile Include="Rendering\Deferred\DeferredRenderer.cs" />
-    <Compile Include="Rendering\Deferred\DirectionalLight.cs" />
-    <Compile Include="Rendering\Deferred\ICustomGBufferRenderer.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\DeferredMaterial.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\DeferredMeshElement.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\DeferredMeshesRenderer.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\DeferredMeshVertex.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshBoundingBoxFactory.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshElementPart.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshesRenderer.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshPartRenderData.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshRenderData.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshRenderDataFactory.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshRenderMaterial.cs" />
-    <Compile Include="Rendering\Deferred\Meshes\MeshRenderPart.cs" />
-    <Compile Include="Rendering\Deferred\PointLight.cs" />
-    <Compile Include="Rendering\Deferred\SpotLight.cs" />
-    <Compile Include="Rendering\Deferred\TexturePool.cs" />
     <Compile Include="Rendering\SSAO\HorizonSSAORenderer.cs" />
-    <Compile Include="Rendering\TextureMapping\SphericalMapping.cs" />
     <Compile Include="Rendering\Text\DrawingToD3D11Conversion.cs" />
     <Compile Include="Rendering\Text\TextTexture.cs" />
     <Compile Include="Rendering\Text\Unused\Helpers.cs" />
@@ -120,7 +96,6 @@
     <Compile Include="Shaders\ShaderFiles.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Rendering\Deferred\Meshes\_doc.txt" />
     <Content Include="Shaders\Deferred\TODO\RandomNormals.png" />
     <Content Include="Shaders\DualContouring\HermiteTerrain.hlsl" />
     <Content Include="Shaders\Filters\GaussianBlurCS.hlsl" />

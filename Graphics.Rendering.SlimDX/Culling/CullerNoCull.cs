@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
+﻿
+using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics;
 
 namespace MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Culling
 {
