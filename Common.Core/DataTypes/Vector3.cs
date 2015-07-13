@@ -1,0 +1,99 @@
+﻿using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+
+namespace MHGameWork.TheWizards
+{
+    [DebuggerDisplay("V({X},{Y},{Z})")]
+    [StructLayout(LayoutKind.Sequential)]
+    public struct Vector3
+    {
+        public Vector3(float x, float y, float z)
+            : this()
+        {
+            X = x;
+            Y = y;
+            Z = z;
+        }
+
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
+
+        public float Length()
+        {
+            return (float)Math.Sqrt(X * X + Y * Y + Z * Z);
+        }
+
+        public float LengthSquared()
+        {
+            return X * X + Y * Y + Z * Z;
+        }
+
+        public void Normalize()
+        {
+            var len = Length();
+            X /= len;
+            Y /= len;
+            Z /= len;
+        }
+
+        public bool Equals(SlimDX.Vector3 other)
+        {
+            return X == other.X && Y == other.Y && Z == other.Z;
+        }
+
+        public float this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0:
+                        return X;
+                    case 1:
+                        return Y;
+                    case 2:
+                        return Z;
+                    default: throw new InvalidOperationException();
+                }
+            }
+            set
+            {
+                switch (index)
+                {
+                    case 0:
+                        X = value;
+                        break;
+                    case 1:
+                        Y = value;
+                        break;
+                    case 2:
+                        Z = value;
+                        break;
+                    default: throw new InvalidOperationException();
+                }
+            }
+        }
+
+
+        public static implicit operator SlimDX.Vector3(Vector3 v)
+        {
+            return new SlimDX.Vector3(v.X, v.Y, v.Z);
+        }
+        public static implicit operator Vector3(SlimDX.Vector3 v)
+        {
+            return new Vector3(v.X, v.Y, v.Z);
+        }
+        public static implicit operator Microsoft.Xna.Framework.Vector3(Vector3 v)
+        {
+            return new Microsoft.Xna.Framework.Vector3(v.X, v.Y, v.Z);
+        }
+        public static implicit operator Vector3(Microsoft.Xna.Framework.Vector3 v)
+        {
+            return new Vector3(v.X, v.Y, v.Z);
+        }
+
+
+    }
+}

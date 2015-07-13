@@ -124,6 +124,7 @@
     <Compile Include="Core\MathExtra\Polynomial.cs" />
     <Compile Include="Core\MathExtra\Polynomial4.cs" />
     <Compile Include="Core\MathExtra\SolvePolynomial.cs" />
+    <Compile Include="DataTypes\Vector3.cs" />
     <Compile Include="Profiling\Profiler.cs" />
     <Compile Include="Profiling\ProfilingPoint.cs" />
     <Compile Include="Profiling\ProfilingStringGenerator.cs" />
