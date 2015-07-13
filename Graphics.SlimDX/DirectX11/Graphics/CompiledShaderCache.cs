@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.Graphics.SlimDX.DirectX11.Graphics
 
         static CompiledShaderCache()
         {
-            GlobalShaderPath = new DirectoryInfo("../../Common.Core/Shaders/").FullName;
+            GlobalShaderPath = new DirectoryInfo("../../Graphics.SlimDX/Shaders/").FullName;
             Current = new CompiledShaderCache();
             Current.disableCache = true; //TODO: test this with autoreloading...
 

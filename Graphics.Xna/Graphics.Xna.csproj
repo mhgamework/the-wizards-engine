@@ -7,7 +7,7 @@
     <ProjectGuid>{121ED163-A998-44E3-9738-EBF88AF2C29D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MHGameWork.TheWizards.Graphics.Xna</RootNamespace>
+    <RootNamespace>MHGameWork.TheWizards.Core</RootNamespace>
     <AssemblyName>Graphics.Xna</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
