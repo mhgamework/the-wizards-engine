@@ -124,7 +124,6 @@
     <Compile Include="Core\MathExtra\Polynomial.cs" />
     <Compile Include="Core\MathExtra\Polynomial4.cs" />
     <Compile Include="Core\MathExtra\SolvePolynomial.cs" />
-    <Compile Include="DataTypes\Vector3.cs" />
     <Compile Include="Profiling\Profiler.cs" />
     <Compile Include="Profiling\ProfilingPoint.cs" />
     <Compile Include="Profiling\ProfilingStringGenerator.cs" />
@@ -189,7 +188,9 @@
       <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DataTypes\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\PostSharp.3.0.35\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.3.0.35\tools\PostSharp.targets')" />

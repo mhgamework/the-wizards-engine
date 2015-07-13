@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using SlimDX;
 
 namespace MHGameWork.TheWizards
 {
@@ -77,6 +78,29 @@ namespace MHGameWork.TheWizards
         }
 
 
+        public static Vector3 operator +(Vector3 a, Vector3 b)
+        {
+            return new Vector3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+        }
+        public static Vector3 operator -(Vector3 a, Vector3 b)
+        {
+            return new Vector3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+        }
+        public static Vector3 operator *(Vector3 a, float b)
+        {
+            return new Vector3(a.X * b, a.Y * b, a.Z * b);
+        }
+        public static Vector3 operator /(Vector3 a, float b)
+        {
+            b = 1f / b;
+            return new Vector3(a.X * b, a.Y * b, a.Z * b);
+        }
+        public static Vector3 operator -(Vector3 a)
+        {
+            return new Vector3(-a.X, -a.Y, -a.Z);
+        }
+
+
         public static implicit operator SlimDX.Vector3(Vector3 v)
         {
             return new SlimDX.Vector3(v.X, v.Y, v.Z);
@@ -95,5 +119,26 @@ namespace MHGameWork.TheWizards
         }
 
 
+        public static void TransformCoordinate(Vector3[] corners, ref Matrix mat, Vector3[] outCorners)
+        {
+            for (int i = 0; i < corners.Length; i++)
+            {
+                outCorners[i] = TransformCoordinate(corners[i], mat);
+            }
+        }
+        public static Vector3 TransformCoordinate(Vector3 coord, Matrix mat)
+        {
+            return SlimDX.Vector3.TransformCoordinate(coord, mat);
+        }
+
+        public static double Dot(Vector3 sourceDir, Vector3 targetDir)
+        {
+            return SlimDX.Vector3.Dot(sourceDir, targetDir);
+        }
+
+        public static object Cross(Vector3 sourceDir, Vector3 targetDir)
+        {
+            return SlimDX.Vector3.Cross(sourceDir, targetDir);
+        }
     }
 }

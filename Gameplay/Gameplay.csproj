@@ -397,8 +397,12 @@
     <Compile Include="GodGame\_Tests\WorkersTest.cs" />
     <Compile Include="Math\GeometrySampler.cs" />
     <Compile Include="Math\GridHelper.cs" />
+    <Compile Include="Math\IterateExtensions.cs" />
+    <Compile Include="Math\MathExtensions.cs" />
+    <Compile Include="Math\Point2.cs" />
     <Compile Include="Math\TWMath.cs" />
     <Compile Include="Math\TWMathTest.cs" />
+    <Compile Include="Math\UtilityExtensions.cs" />
     <Compile Include="PerformanceHelper.cs" />
     <Compile Include="PrettyPrintExtensions.cs" />
     <Compile Include="Rendering\Lod\IRenderable.cs" />
@@ -471,7 +475,6 @@
     <Compile Include="Scattered\Simulation\RoundState.cs" />
     <Compile Include="Scattered\Simulation\IslandConnectionProvider.cs" />
     <Compile Include="Scattered\Simulation\LoadLevelSimulator.cs" />
-    <Compile Include="Math\MathExtensions.cs" />
     <Compile Include="Math\RaycastExtensions.cs" />
     <Compile Include="Scattered\_Engine\RendererScene.cs" />
     <Compile Include="Scattered\_Engine\TextRectangle.cs" />
@@ -620,9 +623,6 @@
     <Compile Include="Engine\Persistence\PersistenceUI.cs" />
     <Compile Include="Engine\PhysX\BarrelShooterSimulator.cs" />
     <Compile Include="Engine\PhysX\PhysXData.cs" />
-    <Compile Include="Math\IterateExtensions.cs" />
-    <Compile Include="Math\Point2.cs" />
-    <Compile Include="Math\UtilityExtensions.cs" />
     <Compile Include="RequiresPostSharp.cs" />
     <Compile Include="Simulation\BehaviourTrees\BehaviourTreeAgent.cs" />
     <Compile Include="Simulation\BehaviourTrees\ConcurrentSelector.cs" />
