@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using MHGameWork.TheWizards.Graphics.Xna.Graphics;
-using MHGameWork.TheWizards.ServerClient;
 using MHGameWork.TheWizards.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

@@ -251,10 +251,6 @@
       <Project>{121ED163-A998-44E3-9738-EBF88AF2C29D}</Project>
       <Name>Graphics.Xna</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Launcher\Launcher.csproj">
-      <Project>{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}</Project>
-      <Name>Launcher</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NewModules\NewModules.csproj">
       <Project>{9543AC00-CDE5-4759-BD98-2D031D16DFD4}</Project>
       <Name>NewModules</Name>

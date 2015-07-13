@@ -233,7 +233,6 @@
     <Compile Include="RequiresPostSharp.cs" />
     <Compile Include="Scripting\ScriptLoader.cs" />
     <Compile Include="Scripting\ScriptWrapper.cs" />
-    <Compile Include="Server\Launcher\LauncherServer.cs" />
     <Compile Include="Spatial\GridTraverser.cs" />
     <Compile Include="OBJParser\OBJToRAMMeshConverter.cs" />
     <Compile Include="Particles\Emitter.cs" />
@@ -335,10 +334,6 @@
     <ProjectReference Include="..\Graphics.Xna\Graphics.Xna.csproj">
       <Project>{121ed163-a998-44e3-9738-ebf88af2c29d}</Project>
       <Name>Graphics.Xna</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Launcher\Launcher.csproj">
-      <Project>{4F8CD191-ECE8-4A05-9721-1EBCF03A31B6}</Project>
-      <Name>Launcher</Name>
     </ProjectReference>
     <ProjectReference Include="..\Networking.VB\Networking.VB.vbproj">
       <Project>{3A751275-16F7-48C0-BA5F-510B10D70E1B}</Project>
