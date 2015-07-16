@@ -168,6 +168,11 @@ namespace MHGameWork.TheWizards.Engine
 
         private void checkReload()
         {
+            if ( !HotloadingEnabled )
+            {
+                ReloadScheduled = false;
+                return;
+            }
             if (!ReloadScheduled) return;
             codeLoader.Reload();
             ReloadScheduled = false;

@@ -63,7 +63,7 @@ namespace MHGameWork.TheWizards.Engine
             Context.Graphics = game;
             Context.Data = container;
             Context.Physics = physX;
-            Context.Audio = new AudioWrapper();
+            //Context.Audio = new AudioWrapper();
             Context.Assets = new AssetsWrapper();
             Context.Debug = new DebugWrapper(engine);
             Context.Engine = new EngineWrapper();

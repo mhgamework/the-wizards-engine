@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
 using DirectX11;
 using MHGameWork.TheWizards.DualContouring._Test;
+using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
@@ -19,21 +21,35 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
     [TestFixture]
     public class DensityHermiteGridTest
     {
+        private TWEngine engine;
+
+        public DensityHermiteGridTest()
+        {
+           
+        }
+
         [SetUp]
         public void Setup()
         {
+            engine = EngineFactory.CreateEngine();
+            engine.DontLoadPlugin = true;
+
+            engine.Initialize();
         }
 
         /// <summary>
         /// Should test point and normal generation from density function, since the plane is at 9.5 in between the 9th and 10th point
         /// </summary>
         [Test]
+        [RequiresThread(ApartmentState.STA)]
         public void TestFlatDensityFunction()
         {
             Func<Vector3, float> densityFunction = p => PlaneDensityFunction(p, 9.5f);
 
             var dimensions = new Point3(20, 20, 20);
             testDensityFunction(densityFunction, dimensions);
+
+            TW.Graphics.Run();
         }
 
         public static float PlaneDensityFunction(Vector3 p, float height)
@@ -126,9 +142,9 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         {
             var testEnv = new DualContouringTestEnvironment();
             testEnv.Grid = grid;
-            EngineFactory.CreateEngine().AddSimulator(() => TW.Graphics.LineManager3D.AddBox(new BoundingBox(new Vector3(0), grid.Dimensions.ToVector3() * testEnv.CellSize), Color.Black), "BoundingBox");
+            engine.AddSimulator(() => TW.Graphics.LineManager3D.AddBox(new BoundingBox(new Vector3(0), grid.Dimensions.ToVector3() * testEnv.CellSize), Color.Black), "BoundingBox");
 
-            testEnv.AddToEngine(EngineFactory.CreateEngine());
+            testEnv.AddToEngine(engine);
 
         }
 
