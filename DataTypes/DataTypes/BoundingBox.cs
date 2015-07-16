@@ -23,52 +23,52 @@ namespace MHGameWork.TheWizards
 
         public Vector3[] GetCorners()
         {
-            throw new NotImplementedException();
+            return dx().GetCorners().Cast<Vector3>().ToArray();
         }
 
-        public static BoundingBox FromPoints(SlimDX.Vector3[] toArray)
+        public static BoundingBox FromPoints(Vector3[] toArray)
         {
-            throw new NotImplementedException();
+            return SlimDX.BoundingBox.FromPoints(toArray.Select(v => v.dx()).ToArray());
         }
 
         public static BoundingBox Merge(BoundingBox box1, BoundingBox box2)
         {
-            throw new NotImplementedException();
+            return SlimDX.BoundingBox.Merge(box1, box2);
         }
 
         public static implicit operator Microsoft.Xna.Framework.BoundingBox(BoundingBox m)
         {
-        throw new NotImplementedException();
+            return new Microsoft.Xna.Framework.BoundingBox(m.Minimum.xna(), m.Maximum.xna());
         }
         public static implicit operator BoundingBox(Microsoft.Xna.Framework.BoundingBox v)
         {
-            throw new NotImplementedException();
+            return new BoundingBox(v.Min, v.Max);
 
         }
         public static implicit operator SlimDX.BoundingBox(BoundingBox m)
         {
-            throw new NotImplementedException();
+            return new SlimDX.BoundingBox(m.Minimum, m.Maximum);
 
         }
         public static implicit operator BoundingBox(SlimDX.BoundingBox m)
         {
-            throw new NotImplementedException();
+            return new BoundingBox(m.Minimum, m.Maximum);
 
         }
 
         public Microsoft.Xna.Framework.BoundingBox xna() { return this; }
         public SlimDX.BoundingBox dx() { return this; }
 
-        public ContainmentType Contains( Vector3 vector3 )
+        public ContainmentType Contains(Vector3 vector3)
         {
             var c = xna().Contains(vector3.dx().xna());
-            switch ( c )
+            switch (c)
             {
-                    case Microsoft.Xna.Framework.ContainmentType.Contains:
+                case Microsoft.Xna.Framework.ContainmentType.Contains:
                     return ContainmentType.Contains;
-                    case Microsoft.Xna.Framework.ContainmentType.Disjoint:
+                case Microsoft.Xna.Framework.ContainmentType.Disjoint:
                     return ContainmentType.Disjoint;
-                    case Microsoft.Xna.Framework.ContainmentType.Intersects:
+                case Microsoft.Xna.Framework.ContainmentType.Intersects:
                     return ContainmentType.Intersects;
                 default:
                     throw new InvalidOperationException();

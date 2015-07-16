@@ -101,7 +101,7 @@ namespace MHGameWork.TheWizards
         }
         public static Vector3 operator -(Vector3 a, Vector3 b)
         {
-            return new Vector3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+            return new Vector3(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
         }
         public static Vector3 operator *(Vector3 a, float b)
         {
@@ -169,12 +169,12 @@ namespace MHGameWork.TheWizards
 
         public static SlimDX.Vector3 TransformNormal(Vector3 normal, Matrix world)
         {
-            throw new NotImplementedException();
+            return SlimDX.Vector3.TransformNormal(normal, world);
         }
 
         public static float Distance(Vector3 position, Vector3 point)
         {
-            throw new NotImplementedException();
+            return SlimDX.Vector3.Distance(position, point);
         }
 
         public static Vector3 Lerp(Vector3 a, Vector3 b, float f)
