@@ -55,16 +55,27 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
 
         public void Draw()
         {
-            foreach (var inst in matToInstances.Values)
+            var materials =
+                surfaces.SelectMany( s => s.MeshesWithMaterial )
+                    .Select(
+                        p =>
+                            matToInstances.GetOrCreate( p.material,
+                                () => new MaterialInstance( p.material, dRenderer, game ) ) )
+                    .Distinct();
+            foreach (var inst in materials)
             {
                 var mat = inst.Shader;
                 mat.SetCamera(game.Camera.View, game.Camera.Projection);
                 mat.SetToContext(game.Device.ImmediateContext);
                 mat.SetPerObjectBuffer(game.Device.ImmediateContext, objectBuffer);
-                foreach (var surface in inst.Parts)
+                foreach ( var surface in surfaces )
                 {
-                    objectBuffer.UpdatePerObjectBuffer(game.Device.ImmediateContext, surface.World);
-                    surface.RenderData.Draw(game.Device.ImmediateContext);
+                    foreach (var part in surface.MeshesWithMaterial)
+                    {
+                        if (part.material != inst.Material) continue;
+                        objectBuffer.UpdatePerObjectBuffer(game.Device.ImmediateContext, surface.WorldMatrix);
+                    part.renderData.Draw(game.Device.ImmediateContext);
+                    }
                 }
             }
 
@@ -100,14 +111,11 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
             ret.WorldMatrix = world;
             surfaces.Add(ret);
 
-            var meshes = new List<RawMeshData>();
 
             foreach (var imat in uniqueMaterials)
             {
                 var mat = imat;
-                var actualMat = mat;
-                if (actualMat == null) actualMat = defaultMaterial;
-                var matInstance = matToInstances.GetOrCreate(actualMat, () => new MaterialInstance(actualMat, dRenderer, game));
+             
 
                 var mesh = new RawMeshData(
                     indices.Where((i, index) => materials[index / 3] == mat).Select(i => vertices[i].dx()).ToArray(),
@@ -115,10 +123,11 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
                     indices.Where((i, index) => materials[index / 3] == mat).Select(i => new Vector2().dx()).ToArray(),
                     indices.Where((i, index) => materials[index / 3] == mat).Select(i => new Vector3().dx()).ToArray()
                     );
-                meshes.Add( mesh );
-                matInstance.Parts.Add(new TransformedMeshData() { RenderData = renderDataFactory.CreateMeshPartData(mesh), Surface = ret });
+
+                var actualMat = mat;
+                if (actualMat == null) actualMat = defaultMaterial;
+                ret.MeshesWithMaterial.Add( new MeshWithMaterial( mesh,actualMat,renderDataFactory.CreateMeshPartData(mesh) ) );
             }
-            ret.Meshes = meshes.ToArray();
 
             return ret;
 
@@ -144,7 +153,6 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
         public class MaterialInstance
         {
             public DCVoxelMaterial Material;
-            public List<TransformedMeshData> Parts = new List<TransformedMeshData>();
             public SurfaceMaterial Shader;
 
             public MaterialInstance(DCVoxelMaterial material, DeferredRenderer dRenderer, DX11Game gamez)
@@ -172,7 +180,9 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
 
         public Matrix WorldMatrix;
         private VoxelCustomRenderer _customRenderer;
-        public RawMeshData[] Meshes = new RawMeshData[0];
+        public IEnumerable<RawMeshData> Meshes { get { return MeshesWithMaterial.Select(p => p.meshData); } }
+        public List<MeshWithMaterial> MeshesWithMaterial = new List<MeshWithMaterial>();
+
         //public RawMeshData Mesh;
 
 
@@ -181,11 +191,27 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
         public void Delete()
         {
             if (IsDestroyed) return;
+            MeshesWithMaterial = null;
             var r = _customRenderer;
             _customRenderer = null;
             r.deleteInternal(this);
 
         }
+
     }
 
+    public class MeshWithMaterial
+    {
+        public RawMeshData meshData;
+        public DCVoxelMaterial material;
+        public MeshPartRenderData renderData;
+
+        public MeshWithMaterial( RawMeshData meshData, DCVoxelMaterial material, MeshPartRenderData renderData )
+        {
+            this.meshData = meshData;
+            this.material = material;
+            this.renderData = renderData;
+        }
+
+    }
 }
