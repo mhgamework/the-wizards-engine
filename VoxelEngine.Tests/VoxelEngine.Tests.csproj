@@ -54,21 +54,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CSGTest.cs" />
-    <Compile Include="DensityHermiteGridTest.cs" />
-    <Compile Include="DualContouringBuilderTest.cs" />
-    <Compile Include="DualContouringTest.cs" />
-    <Compile Include="EngineTestFixture.cs" />
-    <Compile Include="GPUTest.cs" />
-    <Compile Include="GPUTexture3DTest.cs" />
-    <Compile Include="PerformanceTest.cs" />
+    <Compile Include="VoxelEngine\DensityHermiteGridTest.cs" />
+    <Compile Include="VoxelEngine\DualContouringBuilderTest.cs" />
+    <Compile Include="VoxelEngine\DualContouringTest.cs" />
+    <Compile Include="Engine\EngineTestFixture.cs" />
+    <Compile Include="VoxelEngine\GPUTest.cs" />
+    <Compile Include="Engine\GPUTexture3DTest.cs" />
+    <Compile Include="VoxelEngine\PerformanceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QEFTest.cs" />
-    <Compile Include="RenderingTest.cs" />
-    <Compile Include="DualContouringTestEnvironment.cs" />
-    <Compile Include="InteractiveTestingEnvironment.cs" />
-    <Compile Include="TerrainLodEnvironment.cs" />
-    <Compile Include="VisualTestingEnvironment.cs" />
-    <Compile Include="VoxelTerrainGenerationTest.cs" />
+    <Compile Include="VoxelEngine\QEFTest.cs" />
+    <Compile Include="VoxelEngine\RenderingTest.cs" />
+    <Compile Include="Environments\DualContouringTestEnvironment.cs" />
+    <Compile Include="Environments\InteractiveTestingEnvironment.cs" />
+    <Compile Include="Environments\TerrainLodEnvironment.cs" />
+    <Compile Include="Environments\VisualTestingEnvironment.cs" />
+    <Compile Include="VoxelEngine\VoxelTerrainGenerationTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">

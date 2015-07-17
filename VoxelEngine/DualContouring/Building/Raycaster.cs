@@ -17,7 +17,7 @@ namespace MHGameWork.TheWizards.DualContouring.Building
             SlimDX.Vector3 v1;
             SlimDX.Vector3 v2;
             SlimDX.Vector3 normal;
-            var dist = MeshRaycaster.RaycastMeshPart(vertices.Cast<SlimDX.Vector3>().ToArray(), localRay.dx(), out v0, out v1, out v2, out normal);
+            var dist = MeshRaycaster.RaycastMeshPart(vertices.Select(v => v.dx()).ToArray(), localRay.dx(), out v0, out v1, out v2, out normal);
             if (!dist.HasValue) return;
             var point = Vector3.TransformCoordinate(localRay.GetPoint(dist.Value), world);
             cache.Set(Vector3.Distance(ray.Position, point), obj);

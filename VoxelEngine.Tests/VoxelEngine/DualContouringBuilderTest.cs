@@ -10,6 +10,7 @@ using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using NUnit.Framework;
 using SlimDX;
 using SlimDX.DirectInput;
+using VoxelEngine.Tests;
 using ContainmentType = Microsoft.Xna.Framework.ContainmentType;
 
 namespace MHGameWork.TheWizards.DualContouring.Building
@@ -17,9 +18,7 @@ namespace MHGameWork.TheWizards.DualContouring.Building
     /// <summary>
     /// Showcase for building with the dual contouring algorithm!
     /// </summary>
-    [TestFixture]
-    [EngineTest]
-    public class DualContouringBuilderTest
+    public class DualContouringBuilderTest : EngineTestFixture
     {
         private VoxelCustomRenderer surfaceRenderer;
         private int chunkSize = -1;
@@ -28,7 +27,8 @@ namespace MHGameWork.TheWizards.DualContouring.Building
         private Array3D<Chunk> chunks;
         private int placementGridSize = 4;
         private InteractiveTestingEnvironment interactiveTestingEnv;
-        public DualContouringBuilderTest()
+        [SetUp]
+        public void SetUp()
         {
             chunkSize = BuilderConfiguration.ChunkNumVoxels;
             voxelSize = BuilderConfiguration.VoxelSize;
@@ -86,7 +86,7 @@ namespace MHGameWork.TheWizards.DualContouring.Building
 
                 if (TW.Graphics.Mouse.LeftMouseJustPressed)
                 {
-                    var addCube = CalculatePlacementCube( hitpoint + normal*0.06f, placementGridSize );
+                    var addCube = CalculatePlacementCube(hitpoint + normal * 0.06f, placementGridSize);
                     Point3 placeOffset = (addCube.ToVector3() * placementWorldSize / voxelSize).ToPoint3Rounded();
 
                     var placer = new BasicShapeBuilder().CreateCube(placementGridSize);

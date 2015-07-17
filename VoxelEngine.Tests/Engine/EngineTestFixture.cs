@@ -32,11 +32,16 @@ namespace VoxelEngine.Tests
             engine.Initialize();
 
             EngineFactory.Instance = new EngineContext(engine);
+
+            engine.AddSimulator(new EngineUISimulator());
         }
 
         [TearDown]
         public void RunEngine()
         {
+            //engine.AddSimulator(new TestUISimulator());
+            engine.AddSimulator(new UISimulator());
+
             TW.Graphics.Run();
         }
 

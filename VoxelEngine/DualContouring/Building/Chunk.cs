@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using DirectX11;
 using MHGameWork.TheWizards.DualContouring.Rendering;
 using SlimDX;
@@ -51,9 +52,11 @@ namespace MHGameWork.TheWizards.DualContouring.Building
             float? dist = ray.Intersects(Box);
             if (!dist.HasValue) return;
             if (surface == null) return;
-            throw new NotImplementedException();
-            //if (surface.Mesh == null) return;
-            //raycaster.AddIntersection(ray, surface.Mesh.Positions, surface.WorldMatrix, this);
+            foreach ( var mesh in surface.Meshes )
+            {
+                raycaster.AddIntersection(ray, mesh.Positions.Select( v => (Vector3)v).ToArray(), surface.WorldMatrix, this);
+                
+            }
         }
 
 

@@ -100,6 +100,8 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
             ret.WorldMatrix = world;
             surfaces.Add(ret);
 
+            var meshes = new List<RawMeshData>();
+
             foreach (var imat in uniqueMaterials)
             {
                 var mat = imat;
@@ -113,9 +115,10 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
                     indices.Where((i, index) => materials[index / 3] == mat).Select(i => new Vector2().dx()).ToArray(),
                     indices.Where((i, index) => materials[index / 3] == mat).Select(i => new Vector3().dx()).ToArray()
                     );
-
+                meshes.Add( mesh );
                 matInstance.Parts.Add(new TransformedMeshData() { RenderData = renderDataFactory.CreateMeshPartData(mesh), Surface = ret });
             }
+            ret.Meshes = meshes.ToArray();
 
             return ret;
 
@@ -169,6 +172,7 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
 
         public Matrix WorldMatrix;
         private VoxelCustomRenderer _customRenderer;
+        public RawMeshData[] Meshes = new RawMeshData[0];
         //public RawMeshData Mesh;
 
 
