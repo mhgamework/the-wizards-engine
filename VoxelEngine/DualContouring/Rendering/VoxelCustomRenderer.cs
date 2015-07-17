@@ -103,8 +103,9 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
             foreach (var imat in uniqueMaterials)
             {
                 var mat = imat;
-                if (mat == null) mat = defaultMaterial;
-                var matInstance = matToInstances.GetOrCreate(mat, () => new MaterialInstance(mat, dRenderer, game));
+                var actualMat = mat;
+                if (actualMat == null) actualMat = defaultMaterial;
+                var matInstance = matToInstances.GetOrCreate(actualMat, () => new MaterialInstance(actualMat, dRenderer, game));
 
                 var mesh = new RawMeshData(
                     indices.Where((i, index) => materials[index / 3] == mat).Select(i => vertices[i].dx()).ToArray(),
