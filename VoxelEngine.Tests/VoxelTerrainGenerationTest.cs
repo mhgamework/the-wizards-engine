@@ -13,12 +13,13 @@ using NUnit.Framework;
 using SlimDX;
 using SlimDX.Direct3D11;
 using TreeGenerator.NoiseGenerater;
+using VoxelEngine.Tests;
 
 namespace MHGameWork.TheWizards.DualContouring.Terrain
 {
-    [EngineTest]
-    [TestFixture]
-    public class VoxelTerrainGenerationTest
+    
+    
+    public class VoxelTerrainGenerationTest : EngineTestFixture
     {
 
         [SetUp]

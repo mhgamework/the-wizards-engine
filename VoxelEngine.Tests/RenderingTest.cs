@@ -7,12 +7,11 @@ using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes;
 using MHGameWork.TheWizards.Rendering.Deferred;
 using NUnit.Framework;
 using SlimDX;
+using VoxelEngine.Tests;
 
 namespace MHGameWork.TheWizards.DualContouring.Rendering
 {
-    [EngineTest]
-    [TestFixture]
-    public class RenderingTest
+    public class RenderingTest:EngineTestFixture
     {
         private VoxelCustomRenderer surfaceRenderer;
 

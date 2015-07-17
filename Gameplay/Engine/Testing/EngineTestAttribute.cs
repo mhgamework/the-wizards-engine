@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MHGameWork.TheWizards.Engine.Features.Testing
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = true)]
     public class EngineTestAttribute : Attribute
     {
     }
