@@ -47,7 +47,7 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
 
             var tex = new RAMTexture();
 
-            defaultMaterial = new DCVoxelMaterial() {Texture = DCFiles.UVCheckerMap11_512};
+            defaultMaterial = new DCVoxelMaterial() { Texture = DCFiles.UVCheckerMap11_512 };
 
             objectBuffer = DeferredMaterial.CreatePerObjectCB(game);
         }
@@ -103,7 +103,7 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
             foreach (var imat in uniqueMaterials)
             {
                 var mat = imat;
-                if ( mat == null ) mat = defaultMaterial;
+                if (mat == null) mat = defaultMaterial;
                 var matInstance = matToInstances.GetOrCreate(mat, () => new MaterialInstance(mat, dRenderer, game));
 
                 var mesh = new RawMeshData(
@@ -113,7 +113,7 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
                     indices.Where((i, index) => materials[index / 3] == mat).Select(i => new Vector3().dx()).ToArray()
                     );
 
-                matInstance.Parts.Add(new TransformedMeshData() { RenderData = renderDataFactory.CreateMeshPartData(mesh), World = world });
+                matInstance.Parts.Add(new TransformedMeshData() { RenderData = renderDataFactory.CreateMeshPartData(mesh), Surface = ret });
             }
 
             return ret;
@@ -152,8 +152,9 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
 
         public class TransformedMeshData
         {
-            public Matrix World;
+            public Matrix World { get { return Surface.WorldMatrix; } }
             public MeshPartRenderData RenderData;
+            public VoxelSurface Surface;
 
         }
     }

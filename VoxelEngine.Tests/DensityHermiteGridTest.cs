@@ -14,34 +14,31 @@ using NUnit.Framework;
 using SlimDX;
 using SlimDX.Direct3D11;
 using TreeGenerator.NoiseGenerater;
+using VoxelEngine.Tests;
 
 namespace MHGameWork.TheWizards.DualContouring.Terrain
 {
-    [EngineTest]
-    [TestFixture]
-    public class DensityHermiteGridTest
-    {
-        private TWEngine engine;
 
+
+    [EngineTest]
+
+    public class DensityHermiteGridTest : EngineTestFixture
+    {
         public DensityHermiteGridTest()
         {
-           
+
         }
 
         [SetUp]
         public void Setup()
         {
-            engine = EngineFactory.CreateEngine();
-            engine.DontLoadPlugin = true;
 
-            engine.Initialize();
         }
 
         /// <summary>
         /// Should test point and normal generation from density function, since the plane is at 9.5 in between the 9th and 10th point
         /// </summary>
         [Test]
-        [RequiresThread(ApartmentState.STA)]
         public void TestFlatDensityFunction()
         {
             Func<Vector3, float> densityFunction = p => PlaneDensityFunction(p, 9.5f);
@@ -49,7 +46,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             var dimensions = new Point3(20, 20, 20);
             testDensityFunction(densityFunction, dimensions);
 
-            TW.Graphics.Run();
+
         }
 
         public static float PlaneDensityFunction(Vector3 p, float height)

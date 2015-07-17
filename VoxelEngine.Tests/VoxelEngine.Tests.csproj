@@ -53,11 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="CSGTest.cs" />
     <Compile Include="DensityHermiteGridTest.cs" />
     <Compile Include="DualContouringBuilderTest.cs" />
     <Compile Include="DualContouringTest.cs" />
+    <Compile Include="EngineTestFixture.cs" />
     <Compile Include="GPUTest.cs" />
     <Compile Include="GPUTexture3DTest.cs" />
     <Compile Include="PerformanceTest.cs" />

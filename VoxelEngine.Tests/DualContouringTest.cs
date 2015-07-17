@@ -17,6 +17,7 @@ using NUnit.Framework;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
+using VoxelEngine.Tests;
 using Matrix = SlimDX.Matrix;
 using MHGameWork.TheWizards.IO;
 
@@ -24,7 +25,7 @@ namespace MHGameWork.TheWizards.DualContouring
 {
     [TestFixture]
     [EngineTest]
-    public class DualContouringTest
+    public class DualContouringTest:EngineTestFixture
     {
         private float gridWorldSize;
         private int subdivision;
