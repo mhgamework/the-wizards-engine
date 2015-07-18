@@ -5,8 +5,11 @@ using MHGameWork.TheWizards.DualContouring.Terrain;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.GodGame.Internal;
 using MHGameWork.TheWizards.Tests.Gameplay;
 using NUnit.Framework;
+using SlimDX.DirectInput;
+using VoxelEngine.Tests.Engine;
 
 namespace VoxelEngine.Tests
 {
@@ -34,6 +37,9 @@ namespace VoxelEngine.Tests
             EngineFactory.Instance = new EngineContext(engine);
 
             engine.AddSimulator(new EngineUISimulator());
+            engine.AddSimulator( new DeveloperConsoleSimulator( new DelegateCommandProvider() ) );
+
+
         }
 
         [TearDown]

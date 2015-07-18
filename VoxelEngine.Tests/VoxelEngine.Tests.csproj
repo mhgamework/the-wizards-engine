@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\DeveloperConsoleSimulator.cs" />
     <Compile Include="VoxelEngine\CSGTest.cs" />
     <Compile Include="VoxelEngine\DensityHermiteGridTest.cs" />
     <Compile Include="VoxelEngine\DualContouringBuilderTest.cs" />
@@ -65,7 +66,6 @@
     <Compile Include="VoxelEngine\QEFTest.cs" />
     <Compile Include="VoxelEngine\RenderingTest.cs" />
     <Compile Include="Environments\DualContouringTestEnvironment.cs" />
-    <Compile Include="Environments\InteractiveTestingEnvironment.cs" />
     <Compile Include="Environments\TerrainLodEnvironment.cs" />
     <Compile Include="Environments\VisualTestingEnvironment.cs" />
     <Compile Include="VoxelEngine\VoxelTerrainGenerationTest.cs" />

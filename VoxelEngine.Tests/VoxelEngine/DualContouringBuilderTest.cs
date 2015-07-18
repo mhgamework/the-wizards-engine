@@ -26,7 +26,6 @@ namespace MHGameWork.TheWizards.DualContouring.Building
         private Point3 NumChunks;
         private Array3D<Chunk> chunks;
         private int placementGridSize = 4;
-        private InteractiveTestingEnvironment interactiveTestingEnv;
         [SetUp]
         public void SetUp()
         {
@@ -39,8 +38,6 @@ namespace MHGameWork.TheWizards.DualContouring.Building
             initDefaultWorld();
 
             EngineFactory.CreateEngine().AddSimulator(processUserInput, "UserInput");
-            interactiveTestingEnv = new InteractiveTestingEnvironment();
-            interactiveTestingEnv.LoadIntoEngine(EngineFactory.CreateEngine());
             EngineFactory.CreateEngine().AddSimulator(new WorldRenderingSimulator());
 
 
