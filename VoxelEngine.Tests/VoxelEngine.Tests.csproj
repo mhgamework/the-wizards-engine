@@ -53,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CSGTest.cs" />
+    <Compile Include="VoxelEngine\CSGTest.cs" />
     <Compile Include="VoxelEngine\DensityHermiteGridTest.cs" />
     <Compile Include="VoxelEngine\DualContouringBuilderTest.cs" />
     <Compile Include="VoxelEngine\DualContouringTest.cs" />

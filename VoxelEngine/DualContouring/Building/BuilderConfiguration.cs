@@ -7,6 +7,6 @@ namespace MHGameWork.TheWizards.DualContouring.Building
         public static float VoxelSize = 1/8f;
         public static int ChunkNumVoxels = 16;
 
-        public static Point3 NumChunks = new Point3(5, 5, 5);
+        public static Point3 NumChunks = new Point3(10, 10, 10);
     }
 }

@@ -222,11 +222,11 @@
     <Compile Include="GodGame\Internal\Configuration\NetworkedModule.cs" />
     <Compile Include="GodGame\Internal\Inputting\NullPlayerTool.cs" />
     <Compile Include="GodGame\Internal\Mains\GodGameServer.cs" />
-    <Compile Include="GodGame\Internal\Console\DelegateCommandProvider.cs" />
+    <Compile Include="Console\DelegateCommandProvider.cs" />
     <Compile Include="GodGame\Internal\DeveloperConsoleService.cs" />
-    <Compile Include="GodGame\Internal\Console\DeveloperConsoleUI.cs" />
-    <Compile Include="GodGame\Internal\Console\DirectInputTextBox.cs" />
-    <Compile Include="GodGame\Internal\Console\ICommandProvider.cs" />
+    <Compile Include="Console\DeveloperConsoleUI.cs" />
+    <Compile Include="Console\DirectInputTextBox.cs" />
+    <Compile Include="Console\ICommandProvider.cs" />
     <Compile Include="GodGame\Internal\Model\IVoxel.cs" />
     <Compile Include="GodGame\Internal\Model\VoxelContentsFactory.cs" />
     <Compile Include="GodGame\Internal\Model\VoxelSpatialExtensions.cs" />
@@ -373,8 +373,8 @@
     <Compile Include="GodGame\_Engine\SerializerHelper.cs" />
     <Compile Include="GodGame\_Tests\NetworkSyncerTest.cs" />
     <Compile Include="GodGame\_Tests\GodGameAutofacConfigTest.cs" />
-    <Compile Include="GodGame\_Tests\DirectInputTextboxTest.cs" />
-    <Compile Include="GodGame\DeveloperConsoleTest.cs" />
+    <Compile Include="Console\DirectInputTextboxTest.cs" />
+    <Compile Include="Console\DeveloperConsoleTest.cs" />
     <Compile Include="GodGame\_Tests\NetworkedPlayerInputTest.cs" />
     <Compile Include="GodGame\_Tests\GodGameMainTest.cs" />
     <Compile Include="GodGame\CreateLandTool.cs" />
