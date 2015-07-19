@@ -7,19 +7,19 @@ namespace VoxelEngine.Tests.Engine
 {
     public class DeveloperConsoleSimulator : ISimulator
     {
-        private DeveloperConsoleUI consoleUi;
+        public DeveloperConsoleUI ConsoleUi { get; private set; }
         private bool visible = false;
 
         public DeveloperConsoleSimulator(ICommandProvider commandProvider)
         {
-            consoleUi = new DeveloperConsoleUI(commandProvider);
+            ConsoleUi = new DeveloperConsoleUI(commandProvider);
 
         }
 
         public void Simulate()
         {
             tryToggleConsole();
-            consoleUi.Update();
+            ConsoleUi.Update();
         }
 
 
@@ -27,14 +27,14 @@ namespace VoxelEngine.Tests.Engine
         {
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.Grave))
             {
-                if (consoleUi.Visible)
+                if (ConsoleUi.Visible)
                 {
-                    consoleUi.Hide();
+                    ConsoleUi.Hide();
                     TW.Graphics.ReleaseExclusiveKeyboardAccess();
                 }
                 else
                 {
-                    consoleUi.Show();
+                    ConsoleUi.Show();
                     TW.Graphics.RequestExclusiveKeyboardAccess();
                 }
             }

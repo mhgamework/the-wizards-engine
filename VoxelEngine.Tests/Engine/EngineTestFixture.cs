@@ -10,6 +10,7 @@ using MHGameWork.TheWizards.Tests.Gameplay;
 using NUnit.Framework;
 using SlimDX.DirectInput;
 using VoxelEngine.Tests.Engine;
+using VoxelEngine.Tests.Engine.FacadesImplementation;
 
 namespace VoxelEngine.Tests
 {
@@ -25,6 +26,7 @@ namespace VoxelEngine.Tests
     public class EngineTestFixture
     {
         protected TWEngine engine;
+        private DeveloperConsole developerConsole;
 
         [SetUp]
         public void InitializeEngine()
@@ -34,11 +36,16 @@ namespace VoxelEngine.Tests
 
             engine.Initialize();
 
+
+            // This is somewhat of the DI wiring part
+
             EngineFactory.Instance = new EngineContext(engine);
 
             engine.AddSimulator(new EngineUISimulator());
-            engine.AddSimulator( new DeveloperConsoleSimulator( new DelegateCommandProvider() ) );
+            var developerConsoleSimulator = new DeveloperConsoleSimulator(new DelegateCommandProvider());
+            engine.AddSimulator(developerConsoleSimulator);
 
+            developerConsole = new DeveloperConsole(developerConsoleSimulator.ConsoleUi);
 
         }
 
@@ -49,6 +56,14 @@ namespace VoxelEngine.Tests
             engine.AddSimulator(new UISimulator());
 
             TW.Graphics.Run();
+        }
+
+        public T Resolve<T>() where T : class
+        {
+            if (typeof(T) == typeof(IDeveloperConsole))
+                return developerConsole as T;
+
+            throw new Exception("Dependency not found!");
         }
 
         private class EngineContext : EngineFactory.EngineFactoryContext

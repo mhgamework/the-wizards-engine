@@ -11,6 +11,7 @@ using NUnit.Framework;
 using SlimDX;
 using SlimDX.DirectInput;
 using VoxelEngine.Tests;
+using VoxelEngine.Tests.Engine;
 using ContainmentType = Microsoft.Xna.Framework.ContainmentType;
 
 namespace MHGameWork.TheWizards.DualContouring.Building
@@ -29,6 +30,7 @@ namespace MHGameWork.TheWizards.DualContouring.Building
         [SetUp]
         public void SetUp()
         {
+
             chunkSize = BuilderConfiguration.ChunkNumVoxels;
             voxelSize = BuilderConfiguration.VoxelSize;
             NumChunks = BuilderConfiguration.NumChunks;
@@ -50,9 +52,11 @@ namespace MHGameWork.TheWizards.DualContouring.Building
         {
             var ray = TW.Data.Get<CameraInfo>().GetCenterScreenRay();
 
-            if (TW.Graphics.Mouse.RelativeScrollWheel > 0) placementGridSize *= 2;
-            if (TW.Graphics.Mouse.RelativeScrollWheel < 0) placementGridSize /= 2;
-            placementGridSize = (int)MathHelper.Clamp(placementGridSize, 1, 20);
+            if (TW.Graphics.Mouse.RelativeScrollWheel > 0) { placementGridSize *= 2; Resolve<IDeveloperConsole>().WriteLine("Tool size: " + placementGridSize); }
+            if (TW.Graphics.Mouse.RelativeScrollWheel < 0) { placementGridSize /= 2; Resolve<IDeveloperConsole>().WriteLine("Tool size: " + placementGridSize); }
+
+
+            placementGridSize = (int)MathHelper.Clamp(placementGridSize, 1, 32);
 
             var raycaster = new Raycaster<Chunk>();
 
@@ -88,6 +92,7 @@ namespace MHGameWork.TheWizards.DualContouring.Building
 
                     var placer = new BasicShapeBuilder().CreateCube(placementGridSize);
                     PlaceInWorld(placer, placeOffset);
+
 
                 }
                 if (TW.Graphics.Mouse.RightMouseJustPressed)
