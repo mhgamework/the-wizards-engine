@@ -27,6 +27,7 @@ namespace MHGameWork.TheWizards.DualContouring.Building
         private Point3 NumChunks;
         private Array3D<Chunk> chunks;
         private int placementGridSize = 4;
+        private bool drawChunks = false;
         [SetUp]
         public void SetUp()
         {
@@ -46,6 +47,11 @@ namespace MHGameWork.TheWizards.DualContouring.Building
             //TODO: add commands!
 
             //PlaceInWorld(createUnitBox(), new Point3(0, 20, 0));
+            Resolve<IDeveloperConsole>().AddCommand("toggleDrawChunks", 0, _ =>
+            {
+                drawChunks = !drawChunks;
+                return "drawChunks = " + drawChunks;
+            });
         }
 
         private void processUserInput()
@@ -62,7 +68,8 @@ namespace MHGameWork.TheWizards.DualContouring.Building
 
             chunks.ForEach((c, p) =>
                 {
-                    TW.Graphics.LineManager3D.AddBox(c.Box, Color.Black);
+                    if (drawChunks)
+                        TW.Graphics.LineManager3D.AddBox(c.Box, Color.Black);
                     c.Raycast(raycaster, ray);
                 });
             if (raycaster.GetClosest().IsHit)

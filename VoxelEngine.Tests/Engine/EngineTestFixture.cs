@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using MHGameWork.TheWizards;
 using MHGameWork.TheWizards.DualContouring.Terrain;
@@ -42,11 +43,30 @@ namespace VoxelEngine.Tests
             EngineFactory.Instance = new EngineContext(engine);
 
             engine.AddSimulator(new EngineUISimulator());
-            var developerConsoleSimulator = new DeveloperConsoleSimulator(new DelegateCommandProvider());
+            addConsoleSim();
+        }
+
+        private void addConsoleSim()
+        {
+            var delegateCommandProvider = new DelegateCommandProvider();
+            delegateCommandProvider.addCommand("helpall",
+                                                () =>
+                                                {
+                                                    return "All Commands: " +
+                                                           string.Join(", ", delegateCommandProvider.CommandNames.ToArray());
+                                                });
+            delegateCommandProvider.addCommand("help",
+                                                partialCommand =>
+                                                {
+                                                    return "Commands containing '" + partialCommand + "': " +
+                                                           string.Join(", ",
+                                                                        delegateCommandProvider.CommandNames.Where(
+                                                                            c => c.Contains(partialCommand)).ToArray());
+                                                });
+            var developerConsoleSimulator = new DeveloperConsoleSimulator(delegateCommandProvider);
             engine.AddSimulator(developerConsoleSimulator);
 
-            developerConsole = new DeveloperConsole(developerConsoleSimulator.ConsoleUi);
-
+            developerConsole = new DeveloperConsole(developerConsoleSimulator.ConsoleUi, delegateCommandProvider);
         }
 
         [TearDown]
