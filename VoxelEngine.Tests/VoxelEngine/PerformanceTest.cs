@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using DirectX11;
+using MHGameWork.TheWizards.DualContouring;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
+using MHGameWork.TheWizards.VoxelEngine.Environments;
 using NUnit.Framework;
-using SlimDX;
-using MHGameWork.TheWizards.IO;
 
-namespace MHGameWork.TheWizards.DualContouring.Terrain
+namespace MHGameWork.TheWizards.VoxelEngine
 {
     [TestFixture]
     [EngineTest]

@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Drawing;
 using DirectX11;
+using MHGameWork.TheWizards.DualContouring;
+using MHGameWork.TheWizards.DualContouring.Building;
 using MHGameWork.TheWizards.DualContouring.Rendering;
-using MHGameWork.TheWizards.DualContouring._Test;
-using MHGameWork.TheWizards.Engine.Features.Testing;
+using MHGameWork.TheWizards.Engine.Tests;
+using MHGameWork.TheWizards.Engine.Tests.Facades;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using NUnit.Framework;
-using SlimDX;
-using SlimDX.DirectInput;
-using VoxelEngine.Tests;
-using VoxelEngine.Tests.Engine;
 using ContainmentType = Microsoft.Xna.Framework.ContainmentType;
 
-namespace MHGameWork.TheWizards.DualContouring.Building
+namespace MHGameWork.TheWizards.VoxelEngine
 {
     /// <summary>
     /// Showcase for building with the dual contouring algorithm!

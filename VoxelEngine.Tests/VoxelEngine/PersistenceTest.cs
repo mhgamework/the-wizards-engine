@@ -1,10 +1,10 @@
 ﻿using System.IO;
 using DirectX11;
-using MHGameWork.TheWizards;
+using MHGameWork.TheWizards.Engine.Tests;
 using NUnit.Framework;
 using MHGameWork.TheWizards.IO;
 
-namespace VoxelEngine.Tests.VoxelEngine
+namespace MHGameWork.TheWizards.VoxelEngine
 {
     public class PersistenceTest : TWTestFixture
     {

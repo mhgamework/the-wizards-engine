@@ -7,7 +7,7 @@
     <ProjectGuid>{52D3BE4A-BD92-46C8-838F-C393D8DA951C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VoxelEngine.Tests</RootNamespace>
+    <RootNamespace>MHGameWork.TheWizards</RootNamespace>
     <AssemblyName>VoxelEngine.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -53,24 +53,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\DeveloperConsoleSimulator.cs" />
-    <Compile Include="Engine\FacadesImplementation\DeveloperConsole.cs" />
-    <Compile Include="Engine\Facades\IDeveloperConsole.cs" />
+    <Compile Include="Engine.Tests\DeveloperConsoleSimulator.cs" />
+    <Compile Include="Engine.Tests\FacadesImplementation\DeveloperConsole.cs" />
+    <Compile Include="Engine.Tests\Facades\IDeveloperConsole.cs" />
     <Compile Include="VoxelEngine\CSGTest.cs" />
     <Compile Include="VoxelEngine\DensityHermiteGridTest.cs" />
     <Compile Include="VoxelEngine\DualContouringBuilderTest.cs" />
     <Compile Include="VoxelEngine\DualContouringTest.cs" />
-    <Compile Include="Engine\EngineTestFixture.cs" />
+    <Compile Include="Engine.Tests\EngineTestFixture.cs" />
     <Compile Include="VoxelEngine\GPUTest.cs" />
-    <Compile Include="Engine\GPUTexture3DTest.cs" />
+    <Compile Include="Engine.Tests\GPUTexture3DTest.cs" />
     <Compile Include="VoxelEngine\PerformanceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VoxelEngine\PersistenceTest.cs" />
     <Compile Include="VoxelEngine\QEFTest.cs" />
     <Compile Include="VoxelEngine\RenderingTest.cs" />
-    <Compile Include="Environments\DualContouringTestEnvironment.cs" />
-    <Compile Include="Environments\TerrainLodEnvironment.cs" />
-    <Compile Include="Environments\VisualTestingEnvironment.cs" />
+    <Compile Include="VoxelEngine\Environments\DualContouringTestEnvironment.cs" />
+    <Compile Include="VoxelEngine\Environments\TerrainLodEnvironment.cs" />
+    <Compile Include="VoxelEngine\Environments\VisualTestingEnvironment.cs" />
     <Compile Include="VoxelEngine\VoxelTerrainGenerationTest.cs" />
   </ItemGroup>
   <ItemGroup>

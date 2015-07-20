@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VoxelEngine.Tests.Engine
+namespace MHGameWork.TheWizards.Engine.Tests.Facades
 {
     /// <summary>
     /// Developer console service, provides ability to add commands and to write to console

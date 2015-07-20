@@ -1,9 +1,7 @@
-﻿using MHGameWork.TheWizards;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.GodGame.Internal;
+﻿using MHGameWork.TheWizards.GodGame.Internal;
 using SlimDX.DirectInput;
 
-namespace VoxelEngine.Tests.Engine
+namespace MHGameWork.TheWizards.Engine.Tests
 {
     public class DeveloperConsoleSimulator : ISimulator
     {

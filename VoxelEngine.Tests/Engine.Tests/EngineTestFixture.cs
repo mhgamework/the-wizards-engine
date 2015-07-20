@@ -1,20 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using MHGameWork.TheWizards;
-using MHGameWork.TheWizards.DualContouring.Terrain;
-using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Features.Testing;
+using MHGameWork.TheWizards.Engine.Tests.Facades;
+using MHGameWork.TheWizards.Engine.Tests.FacadesImplementation;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.GodGame.Internal;
-using MHGameWork.TheWizards.Tests.Gameplay;
 using NUnit.Framework;
-using SlimDX.DirectInput;
-using VoxelEngine.Tests.Engine;
-using VoxelEngine.Tests.Engine.FacadesImplementation;
 
-namespace VoxelEngine.Tests
+namespace MHGameWork.TheWizards.Engine.Tests
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = true)]
     public class CustomStaAttribute : RequiresSTAAttribute

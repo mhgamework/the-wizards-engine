@@ -1,25 +1,19 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Threading;
-using System.Threading.Tasks;
 using DirectX11;
 using MHGameWork.TheWizards.Debugging;
+using MHGameWork.TheWizards.DualContouring;
+using MHGameWork.TheWizards.DualContouring.Terrain;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
-using MHGameWork.TheWizards.GodGame.Internal.Rendering;
-using MHGameWork.TheWizards.Rendering;
-using MHGameWork.TheWizards.Rendering.Deferred;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
-using SlimDX;
-using SlimDX.Direct3D11;
 using SlimDX.DirectInput;
-using Debug = System.Diagnostics.Debug;
 using System.Linq;
 
-namespace MHGameWork.TheWizards.DualContouring.Terrain
+namespace MHGameWork.TheWizards.VoxelEngine.Environments
 {
     /// <summary>
     /// Shows a terrain with lod based on clipmaps but with an octree like procworld (so no stitching chunks or continuous scrolling)

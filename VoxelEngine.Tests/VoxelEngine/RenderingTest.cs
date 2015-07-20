@@ -1,15 +1,13 @@
 ﻿using DirectX11;
-using MHGameWork.TheWizards.DualContouring.Terrain;
-using MHGameWork.TheWizards.Engine.Features.Testing;
+using MHGameWork.TheWizards.DualContouring;
+using MHGameWork.TheWizards.DualContouring.Rendering;
+using MHGameWork.TheWizards.Engine.Tests;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes;
-using MHGameWork.TheWizards.Rendering.Deferred;
 using NUnit.Framework;
-using SlimDX;
-using VoxelEngine.Tests;
 
-namespace MHGameWork.TheWizards.DualContouring.Rendering
+namespace MHGameWork.TheWizards.VoxelEngine
 {
     public class RenderingTest:EngineTestFixture
     {

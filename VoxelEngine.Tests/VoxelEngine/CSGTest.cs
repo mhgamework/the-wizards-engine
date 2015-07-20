@@ -1,9 +1,10 @@
 ﻿using DirectX11;
+using MHGameWork.TheWizards.DualContouring;
 using MHGameWork.TheWizards.Gameplay;
+using MHGameWork.TheWizards.VoxelEngine.Environments;
 using NUnit.Framework;
-using SlimDX;
 
-namespace MHGameWork.TheWizards.DualContouring._Test
+namespace MHGameWork.TheWizards.VoxelEngine
 {
     [TestFixture]
     public class CSGTest

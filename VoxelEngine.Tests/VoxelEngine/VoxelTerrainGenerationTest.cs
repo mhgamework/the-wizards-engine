@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using DirectX11;
-using MHGameWork.TheWizards.DualContouring._Test;
-using MHGameWork.TheWizards.Engine;
-using MHGameWork.TheWizards.Engine.Features.Testing;
+using MHGameWork.TheWizards.DualContouring;
+using MHGameWork.TheWizards.DualContouring.Terrain;
+using MHGameWork.TheWizards.Engine.Tests;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.IO;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
+using MHGameWork.TheWizards.VoxelEngine.Environments;
 using NUnit.Framework;
-using SlimDX;
-using SlimDX.Direct3D11;
-using TreeGenerator.NoiseGenerater;
-using VoxelEngine.Tests;
 
-namespace MHGameWork.TheWizards.DualContouring.Terrain
+namespace MHGameWork.TheWizards.VoxelEngine
 {
     
     

@@ -1,9 +1,8 @@
-﻿using MHGameWork.TheWizards.Engine;
+﻿using MHGameWork.TheWizards.DualContouring;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
-using MHGameWork.TheWizards.GodGame.Internal.Rendering;
 
-namespace MHGameWork.TheWizards.DualContouring.Terrain
+namespace MHGameWork.TheWizards.VoxelEngine.Environments
 {
     /// <summary>
     /// Base class meant to load basic testing/development utilities into the engine, with the purpose of doing visual testing.

@@ -1,16 +1,12 @@
 ﻿using System;
-using System.IO;
-using MHGameWork.TheWizards.DirectX11;
+using MHGameWork.TheWizards.DualContouring.GPU;
 using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
 using MHGameWork.TheWizards.IO;
-using Microsoft.SqlServer.Server;
 using NUnit.Framework;
-using SlimDX;
+using SlimDX.Direct3D11;
 using Format = SlimDX.DXGI.Format;
-using ImageFileFormat = SlimDX.Direct3D11.ImageFileFormat;
-using Texture3D = SlimDX.Direct3D11.Texture3D;
 
-namespace MHGameWork.TheWizards.DualContouring.GPU
+namespace MHGameWork.TheWizards.Engine.Tests
 {
     [TestFixture]
     public class GPUTexture3DTest

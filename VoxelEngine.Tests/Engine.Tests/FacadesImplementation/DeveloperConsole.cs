@@ -1,7 +1,8 @@
 ﻿using System;
+using MHGameWork.TheWizards.Engine.Tests.Facades;
 using MHGameWork.TheWizards.GodGame.Internal;
 
-namespace VoxelEngine.Tests.Engine.FacadesImplementation
+namespace MHGameWork.TheWizards.Engine.Tests.FacadesImplementation
 {
     public class DeveloperConsole : IDeveloperConsole
     {

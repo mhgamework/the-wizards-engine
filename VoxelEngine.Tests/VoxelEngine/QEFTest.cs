@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
+using MHGameWork.TheWizards.DualContouring;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using NUnit.Framework;
-using SlimDX;
 
-namespace MHGameWork.TheWizards.DualContouring
+namespace MHGameWork.TheWizards.VoxelEngine
 {
     [EngineTest]
     [TestFixture]

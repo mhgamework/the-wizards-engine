@@ -1,20 +1,15 @@
 ﻿using System;
-using System.IO;
 using DirectX11;
-using MHGameWork.TheWizards.DirectX11;
-using MHGameWork.TheWizards.DualContouring._Test;
+using MHGameWork.TheWizards.DualContouring;
+using MHGameWork.TheWizards.DualContouring.GPU;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
-using MHGameWork.TheWizards.IO;
-using Microsoft.SqlServer.Server;
+using MHGameWork.TheWizards.VoxelEngine.Environments;
 using NUnit.Framework;
-using SlimDX;
 using SlimDX.DirectInput;
-using ImageFileFormat = SlimDX.Direct3D11.ImageFileFormat;
-using Texture3D = SlimDX.Direct3D11.Texture3D;
 
-namespace MHGameWork.TheWizards.DualContouring.GPU
+namespace MHGameWork.TheWizards.VoxelEngine
 {
     [EngineTest]
     [TestFixture]
