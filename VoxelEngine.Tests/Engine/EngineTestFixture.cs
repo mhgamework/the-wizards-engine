@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using MHGameWork.TheWizards;
@@ -20,14 +21,25 @@ namespace VoxelEngine.Tests
     {
 
     }
-    [EngineTest]
-    [TestFixture]
-    [CustomSta]
 
-    public class EngineTestFixture
+    [TestFixture]
+    public class TWTestFixture
+    {
+        public DirectoryInfo TestDirectory { get { return TWDir.Test.CreateSubdirectory(TestContext.CurrentContext.Test.FullName); } }
+
+    }
+
+    /// <summary>
+    /// Base test fixture that initializes the engine and provides TW testing functionality
+    /// </summary>
+    [EngineTest]
+    
+    [CustomSta]
+    public class EngineTestFixture : TWTestFixture
     {
         protected TWEngine engine;
         private DeveloperConsole developerConsole;
+
 
         [SetUp]
         public void InitializeEngine()
@@ -44,6 +56,8 @@ namespace VoxelEngine.Tests
 
             engine.AddSimulator(new EngineUISimulator());
             addConsoleSim();
+
+            //TestContext.CurrentContext.TestDirectory
         }
 
         private void addConsoleSim()

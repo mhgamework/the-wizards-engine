@@ -65,6 +65,7 @@
     <Compile Include="Engine\GPUTexture3DTest.cs" />
     <Compile Include="VoxelEngine\PerformanceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VoxelEngine\PersistenceTest.cs" />
     <Compile Include="VoxelEngine\QEFTest.cs" />
     <Compile Include="VoxelEngine\RenderingTest.cs" />
     <Compile Include="Environments\DualContouringTestEnvironment.cs" />
