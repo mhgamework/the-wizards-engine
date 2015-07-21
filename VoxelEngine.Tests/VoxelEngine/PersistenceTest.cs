@@ -1,6 +1,7 @@
-﻿using System.IO;
-using DirectX11;
+﻿using DirectX11;
+using MHGameWork.TheWizards.DualContouring;
 using MHGameWork.TheWizards.Engine.Tests;
+using MHGameWork.TheWizards.VoxelEngine.Persistence;
 using NUnit.Framework;
 using MHGameWork.TheWizards.IO;
 
@@ -10,57 +11,73 @@ namespace MHGameWork.TheWizards.VoxelEngine
     {
 
         [Test]
-        public void TestSaveLoad()
+        public void TestSaveLoadSimple()
         {
             var persister = new HermiteDataPersister();
             var hermiteData = createExampleData();
-            using (var fs = TestDirectory.CreateFile("SaveLoad").OpenWrite())
+            using (var fs = TestDirectory.CreateFile("out.txt").Alter(f => f.Delete()).OpenWrite())
                 persister.Save(hermiteData, fs);
 
             IHermiteData loadedGrid;
-            using (var fs = TestDirectory.CreateFile("SaveLoad").OpenRead())
-                loadedGrid = persister.Load(fs);
+            using (var fs = TestDirectory.CreateFile("out.txt").OpenRead())
+                loadedGrid = persister.Load(fs, p => HermiteDataGrid.Empty(p));
 
+            assertHermiteEqual(hermiteData, loadedGrid);
+        }
+        [Test]
+        public void TestSaveLoadSmallCube()
+        {
+            var persister = new HermiteDataPersister();
+            var hermiteData = new BasicShapeBuilder().CreateCube(1);
+            using (var fs = TestDirectory.CreateFile("out.txt").Alter(f => f.Delete()).OpenWrite())
+                persister.Save(hermiteData, fs);
+
+            IHermiteData loadedGrid;
+            using (var fs = TestDirectory.CreateFile("out.txt").OpenRead())
+                loadedGrid = persister.Load(fs, p => HermiteDataGrid.Empty(p));
+
+            assertHermiteEqual(hermiteData, loadedGrid);
+        }
+
+        [Test]
+        public void TestSaveLoadCube()
+        {
+            var persister = new HermiteDataPersister();
+            var hermiteData = createCube();
+            using (var fs = TestDirectory.CreateFile("out.txt").Alter(f => f.Delete()).OpenWrite())
+                persister.Save(hermiteData, fs);
+
+            IHermiteData loadedGrid;
+            using (var fs = TestDirectory.CreateFile("out.txt").OpenRead())
+                loadedGrid = persister.Load(fs, p => HermiteDataGrid.Empty(p));
+
+            assertHermiteEqual(hermiteData, loadedGrid);
         }
 
         private IHermiteData createExampleData()
         {
-            return null;
+            var size = 32;
+            return HermiteDataGrid.Empty(new Point3(size, size, size));
         }
-    }
-
-    public class HermiteDataPersister
-    {
-        public void Save(IHermiteData hermiteData, FileStream fs)
+        private IHermiteData createCube()
         {
+            var size = 32;
+            return new BasicShapeBuilder().CreateCube(size);
         }
 
-        public IHermiteData Load(FileStream fs)
+        private void assertHermiteEqual(IHermiteData a, IHermiteData b)
         {
-            return null;
+            Assert.AreEqual(a.NumCells, b.NumCells);
+            Point3.ForEach(a.NumCells + new Point3(1, 1, 1), p =>
+                {
+                    Assert.AreEqual(a.GetMaterial(p), b.GetMaterial(p));
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Assert.AreEqual(a.GetIntersection(p, i), b.GetIntersection(p, i));
+                        Assert.AreEqual(a.GetNormal(p, i), b.GetNormal(p, i));
+                    }
+
+                });
         }
-    }
-
-    /// <summary>
-    /// Signs go from 0,0,0 to NumCells,NumCells,NumCells
-    /// </summary>
-    public interface IHermiteData
-    {
-        Point3 NumCells { get; }
-        /// <summary>
-        /// Get intersection point between cell (0) and cell + dir (1), as a lerp factor between 0 and 1
-        /// </summary>
-        /// <param name="cell"></param>
-        /// <param name="dir">X:0,Y:1,Z:2</param>
-        /// <returns></returns>
-        float GetIntersection(Point3 cell, int dir);
-        Vector3 GetNormal(Point3 cell, int dir);
-
-        /// <summary>
-        /// Air is null
-        /// </summary>
-        object GetMaterial(Point3 cell);
-
-
     }
 }

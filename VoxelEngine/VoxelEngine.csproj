@@ -75,6 +75,8 @@
     <Compile Include="DualContouring\IntersectableCube.cs" />
     <Compile Include="DualContouring\IntersectableSphere.cs" />
     <Compile Include="DualContouring\Octrees\DCOctree.cs" />
+    <Compile Include="Persistence\HermiteDataPersister.cs" />
+    <Compile Include="Persistence\IHermiteData.cs" />
     <Compile Include="DualContouring\QEFCalculator.cs" />
     <Compile Include="DualContouring\RecordingSimulator.cs" />
     <Compile Include="DualContouring\Rendering\SurfaceMaterial.cs" />
@@ -129,9 +131,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DualContouring\Persistence\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

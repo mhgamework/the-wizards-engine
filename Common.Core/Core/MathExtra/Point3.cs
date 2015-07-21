@@ -94,7 +94,7 @@ namespace DirectX11
         }
         public static Point3 operator -(Point3 p, Point3 p2)
         {
-            return new Point3(p.X -p2.X,p.Y -p2.Y,p.Z -p2.Z);
+            return new Point3(p.X - p2.X, p.Y - p2.Y, p.Z - p2.Z);
         }
         public static Point3 operator +(Point3 p, Point3 p2)
         {
@@ -151,6 +151,29 @@ namespace DirectX11
                 result = (result * 397) ^ Y;
                 result = (result * 397) ^ Z;
                 return result;
+            }
+        }
+
+        public int[] ToArray()
+        {
+            return new[] { X, Y, Z };
+        }
+        public static Point3 FromArray(int[] arr)
+        {
+            return new Point3(arr[0], arr[1], arr[2]);
+        }
+
+        public static void ForEach(Point3 maxExclusive, Action<Point3> act)
+        {
+            for (int x = 0; x < maxExclusive.X; x++)
+            {
+                for (int y = 0; y < maxExclusive.Y; y++)
+                {
+                    for (int z = 0; z < maxExclusive.Z; z++)
+                    {
+                        act(new Point3(x, y, z));
+                    }
+                }
             }
         }
     }

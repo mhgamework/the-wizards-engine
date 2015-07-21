@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using DirectX11;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
+using MHGameWork.TheWizards.VoxelEngine.Persistence;
 
 namespace MHGameWork.TheWizards.DualContouring
 {
@@ -13,7 +14,7 @@ namespace MHGameWork.TheWizards.DualContouring
     /// //TODO: serious optimization idea: store all signs for each cube in each cube, this is the limiting factor in the QEF calculation
     /// </summary>
     [Serializable]
-    public class HermiteDataGrid : AbstractHermiteGrid
+    public class HermiteDataGrid : AbstractHermiteGrid, IHermiteData
     {
         /// <summary>
         /// There are Dimensions + 1 cells (for holding the normals on the boundaries)
@@ -293,7 +294,7 @@ namespace MHGameWork.TheWizards.DualContouring
             }
         }
 
-        public static AbstractHermiteGrid Empty(Point3 dimensions)
+        public static HermiteDataGrid Empty(Point3 dimensions)
         {
             var ret = new HermiteDataGrid();
             Point3 storageSize = dimensions + new Point3(1, 1, 1);
@@ -311,6 +312,61 @@ namespace MHGameWork.TheWizards.DualContouring
                         };
                     }
             return ret;
+        }
+
+
+
+        Point3 IHermiteData.NumCells
+        {
+            get { return Dimensions; }
+        }
+
+        float IHermiteData.GetIntersection(Point3 cell, int dir)
+        {
+            return getEdgeData(cell, dirs[dir]).W;
+        }
+
+        Vector3 IHermiteData.GetNormal(Point3 cell, int dir)
+        {
+            return getEdgeData(cell, dirs[dir]).TakeXYZ();
+        }
+
+        public static DCVoxelMaterial DefaultMaterial = new DCVoxelMaterial();
+        object IHermiteData.GetMaterial(Point3 cell)
+        {
+            if ( !GetSign( cell ) ) return null;
+            var mat = GetMaterial(cell);
+            if ( mat == null ) return DefaultMaterial;
+            return mat;
+        }
+        void IHermiteData.SetMaterial(Point3 cell, object material)
+        {
+            var v = cells[ cell ];
+            cells[cell] = new Vertex()
+                {
+                    EdgeData = v.EdgeData,
+                    Material = (DCVoxelMaterial)material,
+                    Sign = material != null
+                };
+        }
+
+
+
+        void IHermiteData.SetIntersection(Point3 cell, int dir, float intersect)
+        {
+            var v = cells[cell];
+            throw new NotImplementedException();
+            cells[cell] = new Vertex()
+            {
+                EdgeData = v.EdgeData,
+                Material = v.Material,
+                Sign = v.Sign
+            };
+        }
+
+        void IHermiteData.SetNormal(Point3 flattenedCoord, int dir, Vector3 normal)
+        {
+            throw new NotImplementedException();
         }
     }
 }

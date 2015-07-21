@@ -103,5 +103,14 @@ namespace MHGameWork.TheWizards
             return Math.Abs(a.X - b.X) < 0.0001f
                    && Math.Abs(a.Y - b.Y) < 0.0001f;
         }
+
+        public static Vector3 ToVector3(this float[] arr)
+        {
+            return new Vector3(arr[0], arr[1], arr[2]);
+        }
+        public static float[] ToArray(this Vector3 v)
+        {
+            return new float[] { v.X, v.Y, v.Z };
+        }
     }
 }
