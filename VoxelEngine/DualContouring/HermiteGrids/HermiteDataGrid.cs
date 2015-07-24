@@ -339,7 +339,7 @@ namespace MHGameWork.TheWizards.DualContouring
             if ( mat == null ) return DefaultMaterial;
             return mat;
         }
-        void IHermiteData.SetMaterial(Point3 cell, object material)
+        public void SetMaterial(Point3 cell, object material)
         {
             var v = cells[ cell ];
             cells[cell] = new Vertex()

@@ -61,7 +61,6 @@
     <Compile Include="DualContouring\Building\FiniteWorldRenderer.cs" />
     <Compile Include="DualContouring\Building\Raycaster.cs" />
     <Compile Include="DualContouring\Building\FiniteWorld.cs" />
-    <Compile Include="DualContouring\Building\Tools.cs" />
     <Compile Include="DualContouring\CameraLightSimulator.cs" />
     <Compile Include="DualContouring\DCFiles.cs" />
     <Compile Include="DualContouring\DCVoxelMaterial.cs" />

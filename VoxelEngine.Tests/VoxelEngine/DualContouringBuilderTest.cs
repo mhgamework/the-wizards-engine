@@ -41,6 +41,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
             engine.AddSimulator(renderer.UpdateRenderer, "SurfaceUpdating");
             engine.AddSimulator(DrawDebug, "DrawDebug");
             engine.AddSimulator(new WorldRenderingSimulator());
+            engine.AddSimulator(builderUi.DrawUI, "DrawUI");
 
             Resolve<IDeveloperConsole>().AddCommand("toggleDrawChunks", 0, _ =>
             {
