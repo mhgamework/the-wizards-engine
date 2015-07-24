@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
             world = new FiniteWorld();
             world.InitDefaultWorld();
-            builderUi = new BuilderUserInterface(Resolve<IDeveloperConsole>(), world);
+            builderUi = new BuilderUserInterface(world);
             var renderer = new FiniteWorldRenderer( world, surfaceRenderer );
 
 

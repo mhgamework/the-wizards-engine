@@ -10,87 +10,62 @@ using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 
 namespace MHGameWork.TheWizards.DualContouring.Building
 {
+    /// <summary>
+    /// Displays the user interface and processes user input
+    /// </summary>
     public class BuilderUserInterface
     {
-        private readonly IDeveloperConsole devConsole;
         private readonly FiniteWorld world;
-        private VoxelCustomRenderer surfaceRenderer;
 
         private float voxelSize { get { return BuilderConfiguration.VoxelSize; } }
 
+        public Vector3 HitPoint { get; private set; }
+
         private int placementGridSize = 4;
-        public BuilderUserInterface(IDeveloperConsole devConsole, FiniteWorld world)
+        private int MinPlacementSize = 1;
+        private int MaxPlacementSize = 32;
+        public Vector3 HitNormal { get; private set; }
+
+        public ITool ActiveTool { get; set; }
+
+        public BuilderUserInterface(FiniteWorld world)
         {
-            this.devConsole = devConsole;
             this.world = world;
 
-            
+            ActiveTool = new GridPlacerTool();
 
-            //TODO: add commands!
-
-            //PlaceInWorld(createUnitBox(), new Point3(0, 20, 0));
-       
         }
 
         public void processUserInput()
         {
             var ray = TW.Data.Get<CameraInfo>().GetCenterScreenRay();
 
-            if (TW.Graphics.Mouse.RelativeScrollWheel > 0) { placementGridSize *= 2; devConsole.WriteLine("Tool size: " + placementGridSize); }
-            if (TW.Graphics.Mouse.RelativeScrollWheel < 0) { placementGridSize /= 2; devConsole.WriteLine("Tool size: " + placementGridSize); }
+            if (TW.Graphics.Mouse.RelativeScrollWheel > 0) { placementGridSize *= 2; }
+            if (TW.Graphics.Mouse.RelativeScrollWheel < 0) { placementGridSize /= 2; }
 
-
-            placementGridSize = (int)MathHelper.Clamp(placementGridSize, 1, 32);
+            placementGridSize = (int)MathHelper.Clamp(placementGridSize, MinPlacementSize, MaxPlacementSize);
 
             var raycaster = new Raycaster<Chunk>();
-            world.Chunks.ForEach((c, p) => c.Raycast(raycaster, ray) );
-         
-            if (raycaster.GetClosest().IsHit)
-            {
-                Vector3 hitpoint = ray.GetPoint(raycaster.GetClosest().Distance);
-                Vector3 normal = -raycaster.GetClosest().HitNormal; //TODO: invert hack
-
-                TW.Graphics.LineManager3D.AddCenteredBox(hitpoint, 0.02f, Color.Yellow);
-                TW.Graphics.LineManager3D.AddLine(hitpoint, hitpoint + normal * 0.06f, Color.CadetBlue);
-
-
-                var targetCube = CalculatePlacementCube(hitpoint - normal * voxelSize * 0.1f, placementGridSize);
-
-                var halfVoxel = new Vector3(voxelSize / 2);
-                var placementWorldSize = placementGridSize * voxelSize;
-                var targetBoundingBox = new BoundingBox((Vector3)targetCube.ToVector3() * placementWorldSize + halfVoxel,
-                    (targetCube + new Vector3(1, 1, 1)) * placementWorldSize + halfVoxel);
-
-                TW.Graphics.LineManager3D.AddBox(targetBoundingBox, Color.GreenYellow);
+            world.Chunks.ForEach((c, p) => c.Raycast(raycaster, ray));
 
 
 
-                if (TW.Graphics.Mouse.LeftMouseJustPressed)
-                {
-                    var addCube = CalculatePlacementCube(hitpoint + normal * 0.06f, placementGridSize);
-                    Point3 placeOffset = (addCube.ToVector3() * placementWorldSize / voxelSize).ToPoint3Rounded();
+            if (!raycaster.GetClosest().IsHit) return;
 
-                    var placer = new BasicShapeBuilder().CreateCube(placementGridSize);
-                    PlaceInWorld(placer, placeOffset);
+            HitPoint = ray.GetPoint(raycaster.GetClosest().Distance);
+            HitNormal = -raycaster.GetClosest().HitNormal;
+
+            TW.Graphics.LineManager3D.AddCenteredBox(HitPoint, 0.02f, Color.Yellow);
+            TW.Graphics.LineManager3D.AddLine(HitPoint, HitPoint + HitNormal * 0.06f, Color.CadetBlue);
 
 
-                }
-                if (TW.Graphics.Mouse.RightMouseJustPressed)
-                {
-                    Point3 placeOffset = (targetCube.ToVector3() * placementWorldSize / voxelSize).ToPoint3Rounded();
-
-                    var placer = new BasicShapeBuilder().CreateCube(placementGridSize);
-                    RemoveFromWorld(placer, placeOffset);
-
-                }
-            }
-
+            ActiveTool.UpdateTool(world, this);
         }
 
-        public Point3 CalculatePlacementCube(Vector3 hitpoint, int cubeSize)
+        public Point3 AlignHitpointToGrid(Vector3 hitpoint, int gridCellSize)
         {
             var halfVoxel = new Vector3(voxelSize / 2);
-            var placementWorldSize = placementGridSize * voxelSize;
+            var placementWorldSize = gridCellSize * voxelSize;
             var placementCubeCoord = ((hitpoint - halfVoxel) / placementWorldSize).ToFloored().ToVector3();
             return placementCubeCoord.ToPoint3Rounded();
         }
@@ -123,6 +98,81 @@ namespace MHGameWork.TheWizards.DualContouring.Building
             });
         }
 
+
+        public interface ITool
+        {
+            void UpdateTool(FiniteWorld world, BuilderUserInterface ui);
+        }
+
+        public class SizeBasedGridPlacerTool : ITool
+        {
+            public void UpdateTool(FiniteWorld world, BuilderUserInterface ui)
+            {
+                var targetCube = ui.AlignHitpointToGrid(ui.HitPoint - ui.HitNormal * ui.voxelSize * 0.1f, ui.placementGridSize);
+
+                var halfVoxel = new Vector3(ui.voxelSize / 2);
+                var placementWorldSize = ui.placementGridSize * ui.voxelSize;
+                var targetBoundingBox = new BoundingBox((Vector3)targetCube.ToVector3() * placementWorldSize + halfVoxel,
+                                                         (targetCube + new Vector3(1, 1, 1)) * placementWorldSize + halfVoxel);
+
+                TW.Graphics.LineManager3D.AddBox(targetBoundingBox, Color.GreenYellow);
+
+
+                if (TW.Graphics.Mouse.LeftMouseJustPressed)
+                {
+                    var addCube = ui.AlignHitpointToGrid(ui.HitPoint + ui.HitNormal * 0.06f, ui.placementGridSize);
+                    Point3 placeOffset = (addCube.ToVector3() * placementWorldSize / ui.voxelSize).ToPoint3Rounded();
+
+                    var placer = new BasicShapeBuilder().CreateCube(ui.placementGridSize);
+                    ui.PlaceInWorld(placer, placeOffset);
+                }
+                if (TW.Graphics.Mouse.RightMouseJustPressed)
+                {
+                    Point3 placeOffset = (targetCube.ToVector3() * placementWorldSize / ui.voxelSize).ToPoint3Rounded();
+
+                    var placer = new BasicShapeBuilder().CreateCube(ui.placementGridSize);
+                    ui.RemoveFromWorld(placer, placeOffset);
+                }
+            }
+        }
+
+        public class GridPlacerTool : ITool
+        {
+            public void UpdateTool(FiniteWorld world, BuilderUserInterface ui)
+            {
+                var targetCube = ui.AlignHitpointToGrid(ui.HitPoint - ui.HitNormal * ui.voxelSize * 0.1f, ui.MinPlacementSize);
+
+                var halfVoxel = new Vector3(ui.voxelSize / 2);
+                var placementWorldSize = ui.placementGridSize * ui.voxelSize;
+                var minPlacamentWorldSize = ui.MinPlacementSize*ui.voxelSize;
+                var targetBoundingBox = new BoundingBox((Vector3)targetCube.ToVector3() * minPlacamentWorldSize + halfVoxel,
+                                                         (Vector3)targetCube.ToVector3() * minPlacamentWorldSize + new Vector3(1, 1, 1) * placementWorldSize + halfVoxel);
+
+                TW.Graphics.LineManager3D.AddBox(targetBoundingBox, Color.GreenYellow);
+
+
+                if (TW.Graphics.Mouse.LeftMouseJustPressed)
+                {
+                    var addCube = ui.AlignHitpointToGrid(ui.HitPoint + ui.HitNormal * 0.06f, ui.MinPlacementSize);
+                    Point3 placeOffset = (addCube.ToVector3() * minPlacamentWorldSize / ui.voxelSize).ToPoint3Rounded();
+
+                    var placer = createShape(ui);
+                    ui.PlaceInWorld(placer, placeOffset);
+                }
+                if (TW.Graphics.Mouse.RightMouseJustPressed)
+                {
+                    Point3 placeOffset = (targetCube.ToVector3() * minPlacamentWorldSize / ui.voxelSize).ToPoint3Rounded();
+
+                    var placer = createShape(ui);
+                    ui.RemoveFromWorld(placer, placeOffset);
+                }
+            }
+
+            private static HermiteDataGrid createShape(BuilderUserInterface ui)
+            {
+                return new BasicShapeBuilder().CreateCube(ui.placementGridSize);
+            }
+        }
 
 
     }
