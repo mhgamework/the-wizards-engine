@@ -120,6 +120,7 @@
     <Compile Include="Engine\Services\WPFApplicationService.cs" />
     <Compile Include="Engine\TW.cs" />
     <Compile Include="Engine\TWEngine.cs" />
+    <Compile Include="Facades\IDeveloperConsole.cs" />
     <Compile Include="Injection\DI.cs" />
     <Compile Include="Persistence\AssetSerializer.cs" />
     <Compile Include="Persistence\ListSerializer.cs" />
@@ -212,6 +213,9 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Facades\Facades\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">

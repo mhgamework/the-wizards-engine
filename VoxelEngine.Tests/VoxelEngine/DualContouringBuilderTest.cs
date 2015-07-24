@@ -19,167 +19,44 @@ namespace MHGameWork.TheWizards.VoxelEngine
     /// </summary>
     public class DualContouringBuilderTest : EngineTestFixture
     {
-        private VoxelCustomRenderer surfaceRenderer;
-        private int chunkSize = -1;
-        private float voxelSize = -1;
-        private Point3 NumChunks;
-        private Array3D<Chunk> chunks;
-        private int placementGridSize = 4;
-        private bool drawChunks = false;
-        [SetUp]
-        public void SetUp()
-        {
+        private BuilderUserInterface builderUi;
+        private FiniteWorld world;
 
-            chunkSize = BuilderConfiguration.ChunkNumVoxels;
-            voxelSize = BuilderConfiguration.VoxelSize;
-            NumChunks = BuilderConfiguration.NumChunks;
-            surfaceRenderer = VoxelCustomRenderer.CreateDefault(TW.Graphics);
+        private bool drawChunks = false;
+
+
+        [SetUp]
+        public void Setup()
+        {
+            var surfaceRenderer = VoxelCustomRenderer.CreateDefault(TW.Graphics);
             TW.Graphics.AcquireRenderer().AddCustomGBufferRenderer(surfaceRenderer);
 
-            initDefaultWorld();
+            world = new FiniteWorld();
+            world.InitDefaultWorld();
+            builderUi = new BuilderUserInterface(Resolve<IDeveloperConsole>(), world);
+            var renderer = new FiniteWorldRenderer( world, surfaceRenderer );
 
-            EngineFactory.CreateEngine().AddSimulator(processUserInput, "UserInput");
-            EngineFactory.CreateEngine().AddSimulator(new WorldRenderingSimulator());
 
+            engine.AddSimulator(builderUi.processUserInput, "UserInput");
+            engine.AddSimulator(renderer.UpdateRenderer, "SurfaceUpdating");
+            engine.AddSimulator(DrawDebug, "DrawDebug");
+            engine.AddSimulator(new WorldRenderingSimulator());
 
-            //TODO: add commands!
-
-            //PlaceInWorld(createUnitBox(), new Point3(0, 20, 0));
             Resolve<IDeveloperConsole>().AddCommand("toggleDrawChunks", 0, _ =>
             {
                 drawChunks = !drawChunks;
                 return "drawChunks = " + drawChunks;
             });
+
         }
 
-        private void processUserInput()
+        public void DrawDebug()
         {
-            var ray = TW.Data.Get<CameraInfo>().GetCenterScreenRay();
-
-            if (TW.Graphics.Mouse.RelativeScrollWheel > 0) { placementGridSize *= 2; Resolve<IDeveloperConsole>().WriteLine("Tool size: " + placementGridSize); }
-            if (TW.Graphics.Mouse.RelativeScrollWheel < 0) { placementGridSize /= 2; Resolve<IDeveloperConsole>().WriteLine("Tool size: " + placementGridSize); }
-
-
-            placementGridSize = (int)MathHelper.Clamp(placementGridSize, 1, 32);
-
-            var raycaster = new Raycaster<Chunk>();
-
-            chunks.ForEach((c, p) =>
-                {
-                    if (drawChunks)
-                        TW.Graphics.LineManager3D.AddBox(c.Box, Color.Black);
-                    c.Raycast(raycaster, ray);
-                });
-            if (raycaster.GetClosest().IsHit)
+            world.Chunks.ForEach((c, p) =>
             {
-                Vector3 hitpoint = ray.GetPoint(raycaster.GetClosest().Distance);
-                Vector3 normal = -raycaster.GetClosest().HitNormal; //TODO: invert hack
-
-                TW.Graphics.LineManager3D.AddCenteredBox(hitpoint, 0.02f, Color.Yellow);
-                TW.Graphics.LineManager3D.AddLine(hitpoint, hitpoint + normal * 0.06f, Color.CadetBlue);
-
-
-                var targetCube = CalculatePlacementCube(hitpoint - normal * voxelSize * 0.1f, placementGridSize);
-
-                var halfVoxel = new Vector3(voxelSize / 2);
-                var placementWorldSize = placementGridSize * voxelSize;
-                var targetBoundingBox = new BoundingBox((Vector3)targetCube.ToVector3() * placementWorldSize + halfVoxel,
-                    (targetCube + new Vector3(1, 1, 1)) * placementWorldSize + halfVoxel);
-
-                TW.Graphics.LineManager3D.AddBox(targetBoundingBox, Color.GreenYellow);
-
-
-
-                if (TW.Graphics.Mouse.LeftMouseJustPressed)
-                {
-                    var addCube = CalculatePlacementCube(hitpoint + normal * 0.06f, placementGridSize);
-                    Point3 placeOffset = (addCube.ToVector3() * placementWorldSize / voxelSize).ToPoint3Rounded();
-
-                    var placer = new BasicShapeBuilder().CreateCube(placementGridSize);
-                    PlaceInWorld(placer, placeOffset);
-
-
-                }
-                if (TW.Graphics.Mouse.RightMouseJustPressed)
-                {
-                    Point3 placeOffset = (targetCube.ToVector3() * placementWorldSize / voxelSize).ToPoint3Rounded();
-
-                    var placer = new BasicShapeBuilder().CreateCube(placementGridSize);
-                    RemoveFromWorld(placer, placeOffset);
-
-                }
-            }
-
-        }
-
-        public Point3 CalculatePlacementCube(Vector3 hitpoint, int cubeSize)
-        {
-            var halfVoxel = new Vector3(voxelSize / 2);
-            var placementWorldSize = placementGridSize * voxelSize;
-            var placementCubeCoord = ((hitpoint - halfVoxel) / placementWorldSize).ToFloored().ToVector3();
-            return placementCubeCoord.ToPoint3Rounded();
-        }
-
-
-        public void PlaceInWorld(HermiteDataGrid source, Point3 offset)
-        {
-            var bb = new BoundingBox(offset.ToVector3() * BuilderConfiguration.VoxelSize, (offset + source.Dimensions).ToVector3() * BuilderConfiguration.VoxelSize);
-            /*var c = chunks[new Point3()];
-            //c.SetGrid(source);
-            c.SetGrid(HermiteDataGrid.CopyGrid(new UnionGrid(c.Grid, source, offset)));
-            c.UpdateSurface(surfaceRenderer);*/
-            chunks.ForEach((c, p) =>
-                {
-                    if (c.Box.xna().Contains(bb.xna()) == ContainmentType.Disjoint) return;
-                    c.SetGrid(HermiteDataGrid.CopyGrid(new UnionGrid(c.Grid, source, offset - c.ChunkCoord * BuilderConfiguration.ChunkNumVoxels)));
-                    c.UpdateSurface(surfaceRenderer);
-                });
-        }
-        public void RemoveFromWorld(HermiteDataGrid source, Point3 offset)
-        {
-            var bb = new BoundingBox(offset.ToVector3() * BuilderConfiguration.VoxelSize, (offset + source.Dimensions).ToVector3() * BuilderConfiguration.VoxelSize);
-            /*var c = chunks[new Point3()];
-            //c.SetGrid(source);
-            c.SetGrid(HermiteDataGrid.CopyGrid(new UnionGrid(c.Grid, source, offset)));
-            c.UpdateSurface(surfaceRenderer);*/
-            chunks.ForEach((c, p) =>
-            {
-                if (c.Box.xna().Contains(bb.xna()) == ContainmentType.Disjoint) return;
-                c.SetGrid(HermiteDataGrid.CopyGrid(new DifferenceGrid(c.Grid, source, offset - c.ChunkCoord * BuilderConfiguration.ChunkNumVoxels)));
-                c.UpdateSurface(surfaceRenderer);
+                if (drawChunks)
+                    TW.Graphics.LineManager3D.AddBox(c.Box, Color.Black);
             });
-        }
-
-        private void initDefaultWorld()
-        {
-            chunks = new Array3D<Chunk>(NumChunks);
-
-            var totalTime = new TimeSpan(0);
-            var i = 0;
-            chunks.ForEach((c, p) =>
-                {
-                    i++;
-                    totalTime.Add(PerformanceHelper.Measure(() =>
-                        {
-                            var grid = HermiteDataGrid.CopyGrid(new DensityFunctionHermiteGrid(v =>
-                                {
-                                    v += (Vector3)p.ToVector3() * chunkSize;
-                                    return 20 - v.Y;
-                                }, new Point3(chunkSize + 1, chunkSize + 1, chunkSize + 1)));
-
-                            var chunk = new Chunk(p);
-                            chunk.SetGrid(grid);
-                            chunk.UpdateSurface(surfaceRenderer);
-                            chunks[p] = chunk;
-
-
-                        }));
-
-
-                });
-            totalTime.Multiply(1f / i);
-
-
         }
 
         [Test]
@@ -187,5 +64,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
         {
 
         }
+
+
     }
 }
