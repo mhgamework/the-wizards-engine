@@ -102,6 +102,29 @@ namespace MHGameWork.TheWizards.DualContouring.Building
             TW.Graphics.TextureRenderer.Draw(TW.Graphics.AcquireRenderer().TexturePool.LoadTexture(materials[activeMaterial].Texture), new SlimDX.Vector2(10, 10), new SlimDX.Vector2(128, 128));
         }
 
+        /// <summary>
+        /// Returns the 0,0,0 voxel of the cube which contains worldPoint 
+        /// </summary>
+        /// <param name="worldPoint"></param>
+        /// <returns></returns>
+        public Point3 WorldToVoxelCoord(Vector3 worldPoint)
+        {
+            var halfVoxel = new Vector3(voxelSize / 2);
+            return ((worldPoint - halfVoxel) / voxelSize).ToFloored();
+        }
+        /// <summary>
+        /// Returns the world space position of given voxel coordinate
+        /// </summary>
+        /// <param name="voxelCoord"></param>
+        /// <returns></returns>
+        public Vector3 VoxelCoordToWorld(Point3 voxelCoord)
+        {
+            var halfVoxel = new Vector3(voxelSize / 2);
+            return (Vector3)voxelCoord.ToVector3() * voxelSize + halfVoxel;
+        }
+
+
+
         public Point3 AlignHitpointToGrid(Vector3 hitpoint, int gridCellSize)
         {
             var halfVoxel = new Vector3(voxelSize / 2);
@@ -232,35 +255,51 @@ namespace MHGameWork.TheWizards.DualContouring.Building
         {
             public void UpdateTool(FiniteWorld world, BuilderUserInterface ui)
             {
+                var placementWorldSize = ui.placementGridSize * ui.voxelSize;
+
+
                 var targetPoint = ui.HitPoint;
 
-                var halfVoxel = new Vector3(ui.voxelSize / 2);
-                var placementWorldSize = ui.placementGridSize * ui.voxelSize;
-                var minPlacamentWorldSize = ui.MinPlacementSize * ui.voxelSize;
-                var targetBoundingBox = new BoundingBox(targetPoint + halfVoxel, targetPoint + new Vector3(1, 1, 1) * placementWorldSize + halfVoxel);
+                var placementBB = new BoundingBox(targetPoint - new Vector3(placementWorldSize / 2f),
+                                                   targetPoint + new Vector3(placementWorldSize / 2f));
 
-                TW.Graphics.LineManager3D.AddBox(targetBoundingBox, Color.GreenYellow);
+                var minWorldVoxel = ui.WorldToVoxelCoord(placementBB.Minimum);
+                var maxWorldVoxel = ui.WorldToVoxelCoord(placementBB.Maximum) + new Point3(1, 1, 1); // this is to do a round up
 
+                var gridSize = maxWorldVoxel.X - minWorldVoxel.X;
+
+
+                var spherePosVoxelSpace = (targetPoint - ui.VoxelCoordToWorld(minWorldVoxel)) / ui.voxelSize;
+
+
+                var grid = HermiteDataGrid.FromIntersectableGeometry(gridSize, gridSize,
+                                                           Matrix.Scaling(new Vector3(ui.placementGridSize) / 2.0f) *
+                                                           Matrix.Translation(spherePosVoxelSpace),
+                                                           new IntersectableSphere());
+
+
+
+                TW.Graphics.LineManager3D.AddBox(new SlimDX.BoundingBox(ui.VoxelCoordToWorld(minWorldVoxel), ui.VoxelCoordToWorld(maxWorldVoxel)), Color.GreenYellow);
+                TW.Graphics.LineManager3D.AddBox(placementBB, Color.Red);
+
+                // add one since the 0,0,0 is not visible in a surface, and the (voxelcoord 0,0,0) corresponds to the 1,1,1 in the hermite grid
+                // TODO: this should be improved very complex
+                Point3 offset = minWorldVoxel + new Point3( 1, 1, 1 );
+                ui.ChangeMaterial(grid, ui.ActiveMaterial);
 
                 if (TW.Graphics.Mouse.LeftMouseJustPressed)
                 {
-                    Point3 placeOffset = (targetPoint / ui.voxelSize).ToPoint3Rounded();
-
-                    var placer = createShape(ui);
-                    ui.PlaceInWorld(placer, placeOffset);
+                    ui.PlaceInWorld(grid, offset); 
                 }
                 if (TW.Graphics.Mouse.RightMouseJustPressed)
                 {
-                    Point3 placeOffset = (targetPoint / ui.voxelSize).ToPoint3Rounded();
-
-                    var placer = createShape(ui);
-                    ui.RemoveFromWorld(placer, placeOffset);
+                    ui.RemoveFromWorld(grid, offset);
                 }
             }
 
             private static HermiteDataGrid createShape(BuilderUserInterface ui)
             {
-                var placer = new BasicShapeBuilder().CreateCube(ui.placementGridSize);
+                var placer = new BasicShapeBuilder().CreateSphere(ui.placementGridSize);
                 ui.ChangeMaterial(placer, ui.ActiveMaterial);
                 return placer;
             }

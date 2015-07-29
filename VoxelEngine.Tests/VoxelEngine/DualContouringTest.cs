@@ -1,4 +1,5 @@
-﻿using MHGameWork.TheWizards.DualContouring;
+﻿using DirectX11;
+using MHGameWork.TheWizards.DualContouring;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.Engine.Tests;
 using MHGameWork.TheWizards.Gameplay;
@@ -10,7 +11,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
 {
     [TestFixture]
     [EngineTest]
-    public class DualContouringTest:EngineTestFixture
+    public class DualContouringTest : EngineTestFixture
     {
         private float gridWorldSize;
         private int subdivision;
@@ -41,6 +42,20 @@ namespace MHGameWork.TheWizards.VoxelEngine
         public void TestIntersectableGeometrySphere()
         {
             environment.Grid = createSphereGrid();
+        }
+
+        [Test]
+        public void TestIntersectableSpherePrecise()
+        {
+            var grid = HermiteDataGrid.FromIntersectableGeometry(2, 2, Matrix.Scaling(0.5f, 0.5f, 0.5f) * Matrix.Translation(1, 1, 1), new IntersectableSphere());
+            Assert.AreEqual(2, grid.Dimensions.X);
+            Assert.AreEqual(true, grid.GetSign(new Point3(1, 1, 1)));
+            Assert.AreEqual(false, grid.GetSign(new Point3(0, 1, 1)));
+            Assert.AreEqual(false, grid.GetSign(new Point3(1, 0, 1)));
+
+            Assert.AreEqual(0.5, grid.getEdgeData(new Point3(1, 1, 1), new Point3(1, 0, 0)).W, 0.001);
+
+            environment.Grid = grid;
         }
 
         public HermiteDataGrid createSphereGrid()

@@ -56,6 +56,7 @@ namespace MHGameWork.TheWizards.DualContouring
         }
 
         [Serializable]
+        [DebuggerDisplay("VoxelCell({Sign})")]
         private struct Vertex
         {
             public bool Sign;

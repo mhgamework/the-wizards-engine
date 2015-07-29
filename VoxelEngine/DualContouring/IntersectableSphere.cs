@@ -3,6 +3,9 @@ using DirectX11;
 
 namespace MHGameWork.TheWizards.DualContouring
 {
+    /// <summary>
+    /// Note: this is a sphere at 0,0,0 with radius 1
+    /// </summary>
     public class IntersectableSphere :IIntersectableObject
     {
         public bool IsInside(Vector3 v)
