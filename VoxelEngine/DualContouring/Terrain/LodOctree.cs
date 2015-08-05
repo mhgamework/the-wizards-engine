@@ -7,14 +7,14 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.DualContouring.Terrain
 {
-    public class LodOctree
+    public class LodOctree<T> where T : IOctreeNode<T>, new()
     {
         public static Point3[] ChildOffsets = GridHelper.UnitCubeCorners.Cast<Point3>().ToArray();
 
 
-        public LodOctreeNode Create(int size, int leafCellSize, int depth = 0, Point3 pos = new Point3())
+        public T Create(int size, int leafCellSize, int depth = 0, Point3 pos = new Point3())
         {
-            var ret = new LodOctreeNode(size, depth, pos);
+            var ret = new T() {size = size, depth = depth, LowerLeft = pos};//(size, depth, pos);
 
             if (size <= leafCellSize) return ret; // Finest detail
 
@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
 
         }
 
-        public void DrawLines(LodOctreeNode node, LineManager3D lm, Func<LodOctreeNode, bool> isVisible, Func<LodOctreeNode, Color> getColor)
+        public void DrawLines(T node, LineManager3D lm, Func<T, bool> isVisible, Func<T, Color> getColor)
         {
             if (isVisible(node))
                 DrawSingleNode(node, lm, getColor(node));
@@ -35,7 +35,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
                 DrawLines(node.Children[i], lm, isVisible, getColor);
             }
         }
-        public void DrawLines(LodOctreeNode node, LineManager3D lm)
+        public void DrawLines(T node, LineManager3D lm)
         {
             DrawSingleNode(node, lm, Color.Black);
             if (node.Children == null) return;
@@ -45,35 +45,40 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             }
         }
 
-        public void DrawSingleNode(LodOctreeNode node, LineManager3D lm, Color col)
+        public void DrawSingleNode(T node, LineManager3D lm, Color col)
         {
             lm.AddBox(new BoundingBox(node.LowerLeft.ToVector3(), (Vector3)node.LowerLeft.ToVector3() + node.size * new Vector3(1)),
                       col);
         }
 
-        public void Split(LodOctreeNode ret, bool recurse = false, int minSize = 1)
+        public void Split(T ret, bool recurse = false, int minSize = 1)
         {
             if (ret.Children != null) throw new InvalidOperationException();
 
             var childSize = ret.size / 2;
             if (childSize < minSize) return;
 
-            ret.Children = new LodOctreeNode[8];
+            ret.Children = new T[8];
 
             for (int i = 0; i < 8; i++)
             {
-                ret.Children[i] = new LodOctreeNode(childSize, ret.depth + 1, ret.LowerLeft + ChildOffsets[i] * childSize);
+                var c = new T();
+                c.size = childSize;
+                c.depth = ret.depth + 1;
+                c.LowerLeft = ret.LowerLeft + ChildOffsets[i] * childSize;
+
+                ret.Children[i] = c;//new T(childSize, ret.depth + 1, ret.LowerLeft + ChildOffsets[i] * childSize);
             }
         }
 
-        public void Merge(LodOctreeNode node)
+        public void Merge(T node)
         {
             if (node.Children == null) return;
             for (int i = 0; i < 8; i++) node.Children[i].Destroy();
             node.Children = null;
         }
 
-        public void UpdateQuadtreeClipmaps(LodOctreeNode node, Vector3 cameraPosition, int minNodeSize)
+        public void UpdateQuadtreeClipmaps(T node, Vector3 cameraPosition, int minNodeSize)
         {
             var center = (Vector3)node.LowerLeft.ToVector3() + new Vector3(1) * node.size * 0.5f;
             var dist = Vector3.Distance(cameraPosition, center);
@@ -98,7 +103,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             }
         }
 
-        public void VisitDepthFirst(LodOctreeNode rootNode, Action<LodOctreeNode> action)
+        public void VisitDepthFirst(T rootNode, Action<T> action)
         {
             action(rootNode);
             if (rootNode.Children == null) return;

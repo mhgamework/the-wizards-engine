@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Environments
     public class TerrainLodEnvironment
     {
         public LodOctreeMeshBuilder meshBuilder = new LodOctreeMeshBuilder();
-        private LodOctree tree;
+        private LodOctree<LodOctreeNode> tree;
         private LodOctreeNode rootNode;
         private Func<Vector3, float> density;
         private float angle = 0;
@@ -38,7 +38,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Environments
         public TerrainLodEnvironment()
         {
 
-            tree = new LodOctree();
+            tree = new LodOctree<LodOctreeNode>();
 
             var size = 32 * (1 << 10);
             rootNode = tree.Create(size, size);

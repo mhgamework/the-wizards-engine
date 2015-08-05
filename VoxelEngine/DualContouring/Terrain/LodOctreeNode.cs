@@ -6,12 +6,13 @@ using MHGameWork.TheWizards.Rendering.Deferred;
 
 namespace MHGameWork.TheWizards.DualContouring.Terrain
 {
-    public class LodOctreeNode
+    public class LodOctreeNode:IOctreeNode<LodOctreeNode>
     {
-        public LodOctreeNode[] Children;
-        public int size;
-        public int depth;
-        public Point3 LowerLeft;
+        public LodOctreeNode[] Children { get; set; }
+        public Point3 LowerLeft { get; set; }
+
+        public int size { get;  set; }
+        public int depth { get; set; }
         public IMesh Mesh;
         public bool BuildingMesh;
         public DeferredMeshElement RenderElement;
@@ -19,11 +20,16 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         public bool CanRenderWithoutHoles;
 
 
-        public LodOctreeNode(int size, int depth, Point3 lowerLeft)
+        /*public LodOctreeNode(int size, int depth, Point3 lowerLeft)
         {
             this.size = size;
             this.depth = depth;
             LowerLeft = lowerLeft;
+        }*/
+
+        public void Initialize()
+        {
+            
         }
 
         public void Destroy()

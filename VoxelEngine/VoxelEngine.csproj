@@ -78,6 +78,7 @@
     <Compile Include="DualContouring\IntersectableCube.cs" />
     <Compile Include="DualContouring\IntersectableSphere.cs" />
     <Compile Include="DualContouring\Octrees\DCOctree.cs" />
+    <Compile Include="DualContouring\Terrain\IOctreeNode.cs" />
     <Compile Include="Persistence\HermiteDataPersister.cs" />
     <Compile Include="Persistence\IHermiteData.cs" />
     <Compile Include="DualContouring\QEFCalculator.cs" />
