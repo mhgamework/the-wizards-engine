@@ -55,12 +55,12 @@
   <ItemGroup>
     <Compile Include="DualContouring\Array3DSampler.cs" />
     <Compile Include="DualContouring\BasicShapeBuilder.cs" />
-    <Compile Include="DualContouring\Building\BuilderConfiguration.cs" />
-    <Compile Include="DualContouring\Building\BuilderUserInterface.cs" />
-    <Compile Include="DualContouring\Building\Chunk.cs" />
-    <Compile Include="DualContouring\Building\FiniteWorldRenderer.cs" />
-    <Compile Include="DualContouring\Building\Raycaster.cs" />
-    <Compile Include="DualContouring\Building\FiniteWorld.cs" />
+    <Compile Include="Building\BuilderConfiguration.cs" />
+    <Compile Include="Building\BuilderUserInterface.cs" />
+    <Compile Include="Building\Chunk.cs" />
+    <Compile Include="Building\FiniteWorldRenderer.cs" />
+    <Compile Include="Building\Raycaster.cs" />
+    <Compile Include="Building\FiniteWorld.cs" />
     <Compile Include="DualContouring\CameraLightSimulator.cs" />
     <Compile Include="DualContouring\DCFiles.cs" />
     <Compile Include="DualContouring\DCVoxelMaterial.cs" />
