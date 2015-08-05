@@ -13,20 +13,20 @@ namespace MHGameWork.TheWizards.DualContouring
     /// </summary>
     public class DensityFunctionHermiteGrid:AbstractHermiteGrid
     {
-        private readonly Func<Vector3, float> densityFunction;
+        public Func<Vector3, float> DensityFunction { get; private set; }
         private readonly Point3 dimensions;
         private Func<Vector3, DCVoxelMaterial> getMaterial;
 
         public DensityFunctionHermiteGrid( Func<Vector3, float> densityFunction, Point3 dimensions, Func<Vector3, DCVoxelMaterial> getMaterial )
         {
-            this.densityFunction = densityFunction;
+            this.DensityFunction = densityFunction;
             this.dimensions = dimensions;
             this.getMaterial = getMaterial;
         }
 
         public DensityFunctionHermiteGrid(Func<Vector3, float> densityFunction, Point3 dimensions)
         {
-            this.densityFunction = densityFunction;
+            this.DensityFunction = densityFunction;
             this.dimensions = dimensions;
             
             var mat = new DCVoxelMaterial() {Texture = DCFiles.UVCheckerMap10_512};
@@ -35,7 +35,7 @@ namespace MHGameWork.TheWizards.DualContouring
 
         public override bool GetSign(Point3 p)
         {
-            return densityFunction(p) > 0;
+            return DensityFunction(p) > 0;
         }
 
         public override Point3 Dimensions
@@ -48,7 +48,7 @@ namespace MHGameWork.TheWizards.DualContouring
             var startPos = GetEdgeOffsets(i)[0] + p;
             var endPos = GetEdgeOffsets(i)[1] + p;
             // search intersection point
-            var zeroFactor = FindZeroOnLineSubdivide(densityFunction, startPos, endPos, 8);
+            var zeroFactor = FindZeroOnLineSubdivide(DensityFunction, startPos, endPos, 8);
             var point = Vector3.Lerp(startPos, endPos, zeroFactor);
             //var zeroPos = FindZeroOnLineLinearApprox(densityFunction, startPos, endPos);
 
@@ -56,9 +56,9 @@ namespace MHGameWork.TheWizards.DualContouring
             //Note: upvoid uses analytical differentiation, im going approx style
             var normal = new Vector3();
             float stepSize = 0.01f;
-            normal.X = densityFunction(point + Vector3.UnitX * stepSize) - densityFunction(point - Vector3.UnitX * stepSize);
-            normal.Y = densityFunction(point + Vector3.UnitY * stepSize) - densityFunction(point - Vector3.UnitY * stepSize);
-            normal.Z = densityFunction(point + Vector3.UnitZ * stepSize) - densityFunction(point - Vector3.UnitZ * stepSize);
+            normal.X = DensityFunction(point + Vector3.UnitX * stepSize) - DensityFunction(point - Vector3.UnitX * stepSize);
+            normal.Y = DensityFunction(point + Vector3.UnitY * stepSize) - DensityFunction(point - Vector3.UnitY * stepSize);
+            normal.Z = DensityFunction(point + Vector3.UnitZ * stepSize) - DensityFunction(point - Vector3.UnitZ * stepSize);
 
             normal.Normalize();
             normal = -normal; // This is since we want it to point to the negative side of the density field, eg air

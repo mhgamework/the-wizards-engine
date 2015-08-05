@@ -56,11 +56,11 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
         public void Draw()
         {
             var materials =
-                surfaces.SelectMany( s => s.MeshesWithMaterial )
+                surfaces.SelectMany(s => s.MeshesWithMaterial)
                     .Select(
                         p =>
-                            matToInstances.GetOrCreate( p.material,
-                                () => new MaterialInstance( p.material, dRenderer, game ) ) )
+                            matToInstances.GetOrCreate(p.material,
+                                () => new MaterialInstance(p.material, dRenderer, game)))
                     .Distinct();
             foreach (var inst in materials)
             {
@@ -68,13 +68,13 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
                 mat.SetCamera(game.Camera.View, game.Camera.Projection);
                 mat.SetToContext(game.Device.ImmediateContext);
                 mat.SetPerObjectBuffer(game.Device.ImmediateContext, objectBuffer);
-                foreach ( var surface in surfaces )
+                foreach (var surface in surfaces)
                 {
                     foreach (var part in surface.MeshesWithMaterial)
                     {
                         if (part.material != inst.Material) continue;
                         objectBuffer.UpdatePerObjectBuffer(game.Device.ImmediateContext, surface.WorldMatrix);
-                    part.renderData.Draw(game.Device.ImmediateContext);
+                        part.renderData.Draw(game.Device.ImmediateContext);
                     }
                 }
             }
@@ -90,6 +90,41 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
         }
 
         public VoxelSurface CreateSurface(AbstractHermiteGrid grid, Matrix world)
+        {
+            VoxelSurface ret;
+            ret = CreateVoxelSurfaceAsync(grid, world);
+
+            AddSurface( ret );
+            return ret;
+
+        }
+
+        /// <summary>
+        /// Adds given voxelsurface to the renderer, throws if already added
+        /// </summary>
+        /// <param name="ret"></param>
+        public void AddSurface( VoxelSurface ret )
+        {
+            if ( surfaces.Contains( ret ) ) throw new InvalidOperationException();
+            foreach ( var m in ret.MeshesWithMaterial )
+            {
+                if ( m.renderData != null ) throw new InvalidOperationException();
+                m.CreateMeshData(renderDataFactory);
+                
+            }
+            surfaces.Add( ret );
+            ret.AddedToRenderer = true;
+        }
+
+
+        /// <summary>
+        /// Constructs a VoxelSurface that is not yet attached to the renderer, add it using AddSurface
+        /// Should be thread safe.
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="world"></param>
+        /// <returns></returns>
+        public VoxelSurface CreateVoxelSurfaceAsync(AbstractHermiteGrid grid, Matrix world)
         {
             var vertices = new List<Vector3>();
             var indices = new List<int>();
@@ -109,13 +144,12 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
 
             var ret = new VoxelSurface(this);
             ret.WorldMatrix = world;
-            surfaces.Add(ret);
 
 
             foreach (var imat in uniqueMaterials)
             {
                 var mat = imat;
-             
+
 
                 var mesh = new RawMeshData(
                     indices.Where((i, index) => materials[index / 3] == mat).Select(i => vertices[i].dx()).ToArray(),
@@ -126,11 +160,9 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
 
                 var actualMat = mat;
                 if (actualMat == null) actualMat = defaultMaterial;
-                ret.MeshesWithMaterial.Add( new MeshWithMaterial( mesh,actualMat,renderDataFactory.CreateMeshPartData(mesh) ) );
+                ret.MeshesWithMaterial.Add(new MeshWithMaterial(mesh, actualMat));
             }
-
             return ret;
-
         }
 
         public void deleteInternal(VoxelSurface voxelSurface)
@@ -187,6 +219,10 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
 
 
         public bool IsDestroyed { get { return _customRenderer == null; } }
+        /// <summary>
+        /// Internal set only
+        /// </summary>
+        public bool AddedToRenderer  { get; set; }
 
         public void Delete()
         {
@@ -206,11 +242,15 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
         public DCVoxelMaterial material;
         public MeshPartRenderData renderData;
 
-        public MeshWithMaterial( RawMeshData meshData, DCVoxelMaterial material, MeshPartRenderData renderData )
+        public MeshWithMaterial(RawMeshData meshData, DCVoxelMaterial material)
         {
             this.meshData = meshData;
             this.material = material;
-            this.renderData = renderData;
+        }
+
+        public void CreateMeshData(MeshRenderDataFactory renderDataFactory)
+        {
+            renderData = renderDataFactory.CreateMeshPartData(meshData);
         }
 
     }

@@ -6,10 +6,10 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
     {
         T[] Children { get; set; }
         Point3 LowerLeft { get; set; }
-        int size { get;set; }
-        int depth { get; set; }
+        int Size { get;set; }
+        int Depth { get; set; }
 
-        void Initialize();
+        void Initialize(T parent);
         void Destroy();
     }
 }

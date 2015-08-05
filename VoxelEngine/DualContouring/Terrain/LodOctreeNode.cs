@@ -11,8 +11,8 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         public LodOctreeNode[] Children { get; set; }
         public Point3 LowerLeft { get; set; }
 
-        public int size { get;  set; }
-        public int depth { get; set; }
+        public int Size { get;  set; }
+        public int Depth { get; set; }
         public IMesh Mesh;
         public bool BuildingMesh;
         public DeferredMeshElement RenderElement;
@@ -27,7 +27,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             LowerLeft = lowerLeft;
         }*/
 
-        public void Initialize()
+        public void Initialize(LodOctreeNode parent)
         {
             
         }

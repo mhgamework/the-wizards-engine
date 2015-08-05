@@ -66,7 +66,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Environments
             noise[new Point3(1, 1, 1)] = 3;
             noise[new Point3(0, 0, 0)] = -3;*/
             var sampler = new Array3DSampler<float>();
-            var density = (float)(rootNode.size / 2 * globalScaling) - v.Y;
+            var density = (float)(rootNode.Size / 2 * globalScaling) - v.Y;
             v *= 1 / 8f;
             //v *= (1/8f);
             //density += sampler.sampleTrilinear(noise, v * 4.03f) * 0.25f;
@@ -109,9 +109,9 @@ namespace MHGameWork.TheWizards.VoxelEngine.Environments
                 cameraControlled = !cameraControlled;
             if (automaticMovement)
             {
-                var radius = rootNode.size * 0.4f;
+                var radius = rootNode.Size * 0.4f;
                 angle += TW.Graphics.Elapsed * 1f / radius;
-                var pos = new Vector3(rootNode.size / 2f);
+                var pos = new Vector3(rootNode.Size / 2f);
                 pos += new Vector3((float)Math.Sin(angle), 0, (float)Math.Cos(angle)) * radius;
                 eyePosition = pos;
             }
@@ -312,7 +312,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Environments
                         Thread.Sleep(100);
                         continue;
                     }
-                    nodes = nodes.OrderBy(n => n.depth).ToArray();
+                    nodes = nodes.OrderBy(n => n.Depth).ToArray();
                     //var eye = eyePosition;
 
 

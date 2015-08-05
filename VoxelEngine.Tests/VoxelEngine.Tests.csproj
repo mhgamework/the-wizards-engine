@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Engine.Tests\DeveloperConsoleSimulator.cs" />
     <Compile Include="Engine.Tests\FacadesImplementation\DeveloperConsole.cs" />
+    <Compile Include="LargeWorldRendererTest.cs" />
     <Compile Include="VoxelEngine\CSGTest.cs" />
     <Compile Include="VoxelEngine\DensityHermiteGridTest.cs" />
     <Compile Include="VoxelEngine\DualContouringBuilderTest.cs" />

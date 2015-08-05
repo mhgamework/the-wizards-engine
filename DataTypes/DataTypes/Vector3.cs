@@ -20,14 +20,17 @@ namespace MHGameWork.TheWizards
         public Vector3(float x, float y, float z)
             : this()
         {
-            X = x;
-            Y = y;
-            Z = z;
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
         }
 
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Z { get; set; }
+        public float X;
+
+        public float Y;
+
+        public float Z;
+
         public static Vector3 UnitX { get { return new Vector3(1, 0, 0); } }
         public static Vector3 UnitY { get { return new Vector3(0, 1, 0); } }
         public static Vector3 UnitZ { get { return new Vector3(0, 0, 1); } }
@@ -56,9 +59,9 @@ namespace MHGameWork.TheWizards
             return new Vector3(v.X /= len, v.Y /= len, v.Z /= len);
         }
 
-        public bool Equals(SlimDX.Vector3 other)
+        public bool Equals(Vector3 other)
         {
-            return X == other.X && Y == other.Y && Z == other.Z;
+            return X == other.X && X == other.X && X == other.X;
         }
 
         public float this[int index]
@@ -130,9 +133,9 @@ namespace MHGameWork.TheWizards
         {
             return new Vector3(v.X, v.Y, v.Z);
         }
-        /*public static implicit operator Microsoft.Xna.Framework.Vector3(Vector3 v)
+        /*public static implicit operator Microsoft.xna.Framework.Vector3(Vector3 v)
         {
-            return new Microsoft.Xna.Framework.Vector3(v.X, v.Y, v.Z);
+            return new Microsoft.xna.Framework.Vector3(v.x, v.y, v.z);
         }*/
         public static implicit operator Vector3(Microsoft.Xna.Framework.Vector3 v)
         {

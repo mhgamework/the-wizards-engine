@@ -73,12 +73,15 @@
     <Compile Include="DualContouring\HermiteGrids\DensityFunctionHermiteGrid.cs" />
     <Compile Include="DualContouring\HermiteGrids\DifferenceGrid.cs" />
     <Compile Include="DualContouring\HermiteGrids\HermiteDataGrid.cs" />
+    <Compile Include="DualContouring\HermiteGrids\SubGrid.cs" />
     <Compile Include="DualContouring\HermiteGrids\UnionGrid.cs" />
     <Compile Include="DualContouring\IIntersectableObject.cs" />
     <Compile Include="DualContouring\IntersectableCube.cs" />
     <Compile Include="DualContouring\IntersectableSphere.cs" />
     <Compile Include="DualContouring\Octrees\DCOctree.cs" />
     <Compile Include="DualContouring\Terrain\IOctreeNode.cs" />
+    <Compile Include="DualContouring\Terrain\IOctreeNodeFactory.cs" />
+    <Compile Include="EngineServices\VoxelRenderingService.cs" />
     <Compile Include="Persistence\HermiteDataPersister.cs" />
     <Compile Include="Persistence\IHermiteData.cs" />
     <Compile Include="DualContouring\QEFCalculator.cs" />
@@ -89,6 +92,9 @@
     <Compile Include="DualContouring\Terrain\LodOctreeMeshBuilder.cs" />
     <Compile Include="DualContouring\Terrain\LodOctreeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Worlding\LargeWorldNodeFactory.cs" />
+    <Compile Include="Worlding\LargeWorldRenderer.cs" />
+    <Compile Include="Worlding\WorldNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DualContouring\_doc.txt" />

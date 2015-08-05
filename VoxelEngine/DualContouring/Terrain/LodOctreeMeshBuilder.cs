@@ -23,7 +23,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             var el = TW.Graphics.AcquireRenderer().CreateMeshElement(mesh);
             float setApart = 1.1f;
             setApart = 1; // Disable spacing between cells
-            el.WorldMatrix = Matrix.Scaling(new Vector3(node.size / minNodeSize)) *
+            el.WorldMatrix = Matrix.Scaling(new Vector3(node.Size / minNodeSize)) *
                              Matrix.Translation(node.LowerLeft.ToVector3() * setApart);
             return el;
         }
@@ -34,7 +34,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
 
             var mesh = meshBuilder.buildMesh(grid);
             if (mesh.GetCoreData().Parts.Count > 0)
-                mesh.GetCoreData().Parts[0].MeshMaterial = new MeshCoreData.Material() { ColoredMaterial = true, DiffuseColor = colors[node.depth % colors.Length].xna() };
+                mesh.GetCoreData().Parts[0].MeshMaterial = new MeshCoreData.Material() { ColoredMaterial = true, DiffuseColor = colors[node.Depth % colors.Length].xna() };
             return mesh;
         }
 
@@ -42,7 +42,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         {
             var nId = new NodeIdentifier(node);
             if (cachedGrids.ContainsKey(nId)) return cachedGrids[nId];
-            var currScaling = node.size / minNodeSize;
+            var currScaling = node.Size / minNodeSize;
 
             // Then we add another +1 to be able to connect the gaps between the hermite grids
             //TODO: do lod stitching here
@@ -75,7 +75,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             public NodeIdentifier(LodOctreeNode node)
             {
                 this.Pos = node.LowerLeft;
-                this.Size = node.size;
+                this.Size = node.Size;
             }
 
             public NodeIdentifier(Point3 pos, int size)
