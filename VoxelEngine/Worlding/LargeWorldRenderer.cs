@@ -44,7 +44,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
             this.voxelCustomRenderer = voxelCustomRenderer;
 
             tree = new LodOctree<WorldNode>(new LargeWorldNodeFactory());
-            minNodeSize = 8;
+            minNodeSize = 16;
 
             /*var size = 32 * (1 << 10);
             rootNode = tree.Create(size, size);
@@ -205,6 +205,9 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
                 }
             }
 
+
+            WorldNode deepestNode = rootNode;
+
             tree.VisitDepthFirst(rootNode, n =>
                 {
                     if (n.Children != null)
@@ -219,11 +222,16 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
                     }
                     if (n.VoxelSurface == null)
                     {
-                        launchAsyncSurfaceCalculation(n);
-                        return VisitOptions.AbortVisit;
+                        if (n.Depth > deepestNode.Depth)
+                            deepestNode = n;
+                        return VisitOptions.Continue;
                     }
                     return VisitOptions.Continue;
                 });
+
+            if (deepestNode.VoxelSurface == null)
+                launchAsyncSurfaceCalculation(deepestNode);
+
 
             /* LodOctreeNode node;
              while (nodesWithUpdatedMesh.TryDequeue(out node))
@@ -433,13 +441,13 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
 
         private bool asyncSurfaceCalculationReady()
         {
-            lock ( taskLock )
+            lock (taskLock)
                 return hasResult;
         }
 
         private void launchAsyncSurfaceCalculation(WorldNode n)
         {
-            lock ( taskLock )
+            lock (taskLock)
             {
                 if (hasTask) throw new InvalidOperationException();
 
@@ -448,7 +456,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
                 hasResult = false;
                 Monitor.Pulse(taskLock);
             }
-          
+
         }
 
         private struct SurfaceTaskData
@@ -480,14 +488,14 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
                     }
 
                     var ret = generateVoxelSurface(taskData.Node);
-                    lock ( taskLock )
+                    lock (taskLock)
                     {
-                        if ( !hasResult )
+                        if (!hasResult)
                         {
                             taskData.Surface = ret;
                             hasResult = true;
                         }
-                        
+
                     }
 
                     /*        meshLessNodes.Clear();
