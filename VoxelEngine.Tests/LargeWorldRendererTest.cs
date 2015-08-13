@@ -27,6 +27,18 @@ namespace MHGameWork.TheWizards
             engine.AddSimulator(new RecordingSimulator());
         }
 
+        [Test]
+        public void TestFlatTwoLevels()
+        {
+            largeWorldRenderer.LoadWorld(32, v => v.Y - 20);
+
+        }
+        [Test]
+        public void TestFlatThreeLevels()
+        {
+            largeWorldRenderer.LoadWorld(64, v => v.Y - 20);
+
+        }
 
         [Test]
         public void TestFlat()
@@ -43,7 +55,11 @@ namespace MHGameWork.TheWizards
         [Test]
         public void TestSinBIG()
         {
-            largeWorldRenderer.LoadWorld(512*16, v => v.Y - 100 + (float)Math.Sin(v.X * 0.3f) + (float)Math.Cos(v.Z * 0.3f));
+            largeWorldRenderer.LoadWorld(512*16, v => v.Y - 500
+                + (float)Math.Sin(v.X * 0.3f) + (float)Math.Cos(v.Z * 0.3f)
+                + 10 * (float)Math.Sin(v.X * 0.031f) + 10 * (float)Math.Cos(v.Z * 0.031f)
+                + 100 * (float)Math.Sin(v.X * 0.0029f) + 100 * (float)Math.Cos(v.Z * 0.0029f)
+                );
 
         }
     }

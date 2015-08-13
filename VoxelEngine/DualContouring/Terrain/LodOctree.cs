@@ -101,6 +101,8 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             if (node.Children == null) return;
             for (int i = 0; i < 8; i++)
             {
+                // Dispose and merge children
+                Merge(node.Children[i]);
                 node.Children[i].Destroy();
                 factory.Destroy(node.Children[i]);
             }
@@ -147,19 +149,30 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             }
         }
         /// <summary>
-        /// Visits the tree depth-first. If action returns false the visit is aborted.
+        /// Visits the tree depth-first. return value determines the visit behaviour
         /// </summary>
         /// <param name="rootNode"></param>
         /// <param name="action"></param>
-        public bool VisitDepthFirst(T rootNode, Func<T, bool> action)
+        public VisitOptions VisitDepthFirst(T rootNode, Func<T, VisitOptions> action)
         {
-            if (!action(rootNode)) return false;
-            if (rootNode.Children == null) return true;
+            var ac = action(rootNode);
+            if (ac != VisitOptions.Continue) return ac;
+            if (rootNode.Children == null) return VisitOptions.Continue;// No abort
             for (int i = 0; i < 8; i++)
             {
-                if ( !VisitDepthFirst( rootNode.Children[ i ], action ) ) return false;
+                var ret = VisitDepthFirst(rootNode.Children[i], action);
+                if (ret == VisitOptions.AbortVisit) return VisitOptions.AbortVisit;
             }
-            return true;
+            return VisitOptions.Continue; // No abort
         }
+
+      
     }
+    public enum VisitOptions
+    {
+        Continue,
+        SkipChildren,
+        AbortVisit
+    }
+
 }

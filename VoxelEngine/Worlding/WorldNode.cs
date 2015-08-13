@@ -18,7 +18,9 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
         }
         public void Destroy()
         {
+            Destroyed = true;
         }
+        public bool Destroyed { get; private set; }
 
         /// <summary>
         /// Stores the RenderElement, when loaded in renderer
@@ -39,6 +41,8 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
 
 
 
+
+        public BoundingBox BoundingBox { get { return new BoundingBox(LowerLeft, LowerLeft + new Point3(Size, Size, Size)); } }
 
         #region OctreeNode
 

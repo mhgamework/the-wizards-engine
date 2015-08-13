@@ -38,7 +38,9 @@ namespace MHGameWork.TheWizards.Rendering.Deferred.Meshes
 
 
             baseShader = BasicShader.LoadAutoreload(game, ShaderFiles.DCSurface, delegate { }, createShaderMacros());
+
             baseShader.SetTechnique("DCSurface");
+            //baseShader.DiffuseTexture = checkerTexture;
             //baseShader.DiffuseTexture = checkerTexture;
 
             var desc = new SamplerDescription()

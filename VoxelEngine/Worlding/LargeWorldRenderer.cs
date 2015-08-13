@@ -13,6 +13,7 @@ using MHGameWork.TheWizards.DualContouring.Terrain;
 using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
+using SlimDX;
 using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.VoxelEngine.Worlding
@@ -43,7 +44,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
             this.voxelCustomRenderer = voxelCustomRenderer;
 
             tree = new LodOctree<WorldNode>(new LargeWorldNodeFactory());
-            minNodeSize = 32;
+            minNodeSize = 8;
 
             /*var size = 32 * (1 << 10);
             rootNode = tree.Create(size, size);
@@ -58,6 +59,11 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
             densityGrid = new DensityFunctionHermiteGrid(density, new Point3(size, size, size));
             minNodeSize = 32;*/
 
+
+            var t = new Thread(generateMeshesJob);
+            t.Name = "GenerateMeshesJob";
+            t.IsBackground = false;
+            t.Start();
 
 
 
@@ -170,70 +176,54 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
             // Second priority, achieve error-to pixel ratio, by using better clipmapping division
 
 
-            if (generateVoxelSurfaceTask != null)
+            if (hasTask)
             {
-                tree.DrawSingleNode( generateVoxelSurfaceTaskNode, TW.Graphics.LineManager3D, Color.Orange );
-                if (!generateVoxelSurfaceTask.IsCompleted) return;
-                voxelCustomRenderer.AddSurface(generateVoxelSurfaceTask.Result);
-                generateVoxelSurfaceTaskNode.VoxelSurface = generateVoxelSurfaceTask.Result;
-                generateVoxelSurfaceTask = null;
-                generateVoxelSurfaceTaskNode = null;
+                tree.DrawSingleNode(taskData.Node, TW.Graphics.LineManager3D, Color.Orange);
+                if (!asyncSurfaceCalculationReady()) return;
+
+                var data = getAndClearResult();
+
+                if (!data.Node.Destroyed)
+                {
+                    voxelCustomRenderer.AddSurface(data.Surface);
+                    data.Node.VoxelSurface = data.Surface;
+                }
+
+            }
+            var cameraNode = getWorldNode(TW.Graphics.SpectaterCamera.CameraPosition);
+            if (cameraNode != null)
+            {
+                TW.Graphics.LineManager3D.AddBox(cameraNode.BoundingBox, Color.Yellow);
+                if (TW.Graphics.Keyboard.IsKeyPressed(Key.U))
+                {
+                    if (cameraNode.VoxelSurface != null) cameraNode.VoxelSurface.Delete();
+                    cameraNode.VoxelSurface = null;
+
+                    launchAsyncSurfaceCalculation(cameraNode);
+
+                    return;
+                }
             }
 
             tree.VisitDepthFirst(rootNode, n =>
-                                           {
-                                               if ( n.Children != null )
-                                               {
-                                                   if ( n.VoxelSurface != null )
-                                                   {
-                                                       n.VoxelSurface.Delete();
-                                                       n.VoxelSurface = null;
-                                                   }
+                {
+                    if (n.Children != null)
+                    {
+                        if (n.VoxelSurface != null)
+                        {
+                            n.VoxelSurface.Delete();
+                            n.VoxelSurface = null;
+                        }
 
-                                                   return true;
-                                               }
-                                               if (n.VoxelSurface == null)
-                                               {
-
-                                                   generateVoxelSurfaceTask = new Task<VoxelSurface>(() =>
-                                                   {
-                                                       try
-                                                       {
-                                                           if (n.VoxelSurface != null) return null;
-                                                           //var grid = n.VoxelData ?? n.VoxelDataGenerator;
-
-
-                                                           var resolution = n.Size / minNodeSize;
-                                                           // Hacktime, only works for densitygrids
-                                                           var g = (DensityFunctionHermiteGrid)n.VoxelDataGenerator;
-                                                           var offset = (Vector3)n.LowerLeft.ToVector3();
-                                                           
-                                                           var nGrid = new DensityFunctionHermiteGrid(
-                                                               v =>
-                                                               {
-                                                                   return g.DensityFunction((v - offset) * resolution);
-                                                               },
-                                                               new Point3(minNodeSize, minNodeSize, minNodeSize));
-
-
-
-                                                           var world = Matrix.Scaling(resolution, resolution, resolution) * Matrix.Translation(n.LowerLeft) * Matrix.Scaling(new Vector3(globalScaling));
-
-                                                           return voxelCustomRenderer.CreateVoxelSurfaceAsync(nGrid, world);
-                                                       }
-                                                       catch (Exception ex)
-                                                       {
-                                                           DI.Get<IErrorLogger>().Log(ex, "Generatevoxelsurface");
-                                                           throw;
-                                                       }
-
-                                                   });
-                                                   generateVoxelSurfaceTaskNode = n;
-                                                   generateVoxelSurfaceTask.Start();
-                                                   return false;
-                                               }
-                                               return true;
-                                           });
+                        return VisitOptions.Continue;
+                    }
+                    if (n.VoxelSurface == null)
+                    {
+                        launchAsyncSurfaceCalculation(n);
+                        return VisitOptions.AbortVisit;
+                    }
+                    return VisitOptions.Continue;
+                });
 
             /* LodOctreeNode node;
              while (nodesWithUpdatedMesh.TryDequeue(out node))
@@ -244,9 +234,71 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
 
              }*/
             visibleMeshes = 0;
-            ///UpdateCanRenderWithoutHoles(rootNode);
+            //UpdateCanRenderWithoutHoles(rootNode);
             //UpdateMeshElements(rootNode);
 
+        }
+
+
+
+        private WorldNode getWorldNode(Vector3 cameraPosition)
+        {
+            WorldNode ret = null;
+            cameraPosition /= globalScaling;
+
+            tree.VisitDepthFirst(rootNode, n =>
+                {
+                    if (n.BoundingBox.Contains(cameraPosition) == ContainmentType.Disjoint) return VisitOptions.SkipChildren;
+                    if (n.Children == null)
+                    {
+                        ret = n;
+                        return VisitOptions.AbortVisit;
+                    }
+                    return VisitOptions.Continue;
+                });
+            return ret;
+
+        }
+
+        private VoxelSurface generateVoxelSurface(WorldNode n)
+        {
+            try
+            {
+                if (n.VoxelSurface != null) return null;
+                //var grid = n.VoxelData ?? n.VoxelDataGenerator;
+
+
+                var resolution = n.Size / minNodeSize;
+                // Hacktime, only works for densitygrids
+                var g = (DensityFunctionHermiteGrid)n.VoxelDataGenerator;
+                var offset = (Vector3)n.LowerLeft.ToVector3() -
+                             new Vector3(0.5f) * resolution;
+
+                var nGrid = new DensityFunctionHermiteGrid(
+                    v =>
+                    {
+                        //Currently assume density in voxel space, which is probably not what we want in long term
+                        return
+                            g.DensityFunction((v * resolution + offset));
+                    },
+                    new Point3(minNodeSize + 1, minNodeSize + 1,
+                                minNodeSize + 1));
+
+
+                var world = Matrix.Translation(new Vector3(-0.5f)) *
+                            Matrix.Scaling(resolution, resolution,
+                                            resolution) *
+                            Matrix.Translation(n.LowerLeft) *
+                            Matrix.Scaling(new Vector3(globalScaling));
+
+                return voxelCustomRenderer.CreateVoxelSurfaceAsync(
+                    nGrid, world);
+            }
+            catch (Exception ex)
+            {
+                DI.Get<IErrorLogger>().Log(ex, "Generatevoxelsurface");
+                throw;
+            }
         }
 
 
@@ -357,55 +409,118 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
         //private ConcurrentQueue<LodOctreeNode> nodesWithUpdatedMesh = new ConcurrentQueue<LodOctreeNode>();
         private ConcurrentQueue<WorldNode> nodesToProcess = new ConcurrentQueue<WorldNode>();
         private volatile int dirtyNodesCount;
-        private Task<VoxelSurface> generateVoxelSurfaceTask;
-        private WorldNode generateVoxelSurfaceTaskNode;
+
+        private object taskLock = new object();
+        private bool hasTask = false;
+        private bool hasResult = false;
+        private SurfaceTaskData taskData;
+
+
+        private SurfaceTaskData getAndClearResult()
+        {
+
+            lock (taskLock)
+            {
+                if (!asyncSurfaceCalculationReady()) throw new InvalidOperationException();
+
+                var ret = taskData;
+                hasTask = false;
+                hasResult = false;
+                taskData = new SurfaceTaskData();
+                return ret;
+            }
+        }
+
+        private bool asyncSurfaceCalculationReady()
+        {
+            lock ( taskLock )
+                return hasResult;
+        }
+
+        private void launchAsyncSurfaceCalculation(WorldNode n)
+        {
+            lock ( taskLock )
+            {
+                if (hasTask) throw new InvalidOperationException();
+
+                taskData = new SurfaceTaskData() { Node = n };
+                hasTask = true;
+                hasResult = false;
+                Monitor.Pulse(taskLock);
+            }
+          
+        }
+
+        private struct SurfaceTaskData
+        {
+            public WorldNode Node;
+            public VoxelSurface Surface;
+
+        }
 
         public void generateMeshesJob()
         {
-            /*  try
-              {
+            try
+            {
 
 
-                  bool stop = false;
+                bool stop = false;
 
-                  TW.Engine.RegisterOnClearEngineState(() => stop = true);
-
-
-                  var meshLessNodes = new List<LodOctreeNode>();
-
-                  while (!stop)
-                  {
-                      meshLessNodes.Clear();
-                      lock (rootNode)
-                      {
-                          meshBuilder.ListMeshLessNodes(rootNode, meshLessNodes);
-                      }
-                      dirtyNodesCount = meshLessNodes.Count;
-                      var nodes = meshLessNodes.Where(m => m.BuildingMesh == false).ToArray();
-                      if (nodes.Length == 0)
-                      {
-                          Thread.Sleep(100);
-                          continue;
-                      }
-                      nodes = nodes.OrderBy(n => n.Depth).ToArray();
-                      //var eye = eyePosition;
+                TW.Engine.RegisterOnClearEngineState(() => stop = true);
 
 
-                      //nodes = nodes.OrderBy(n => Vector3.DistanceSquared(eye, n.LowerLeft + new Point3(1, 1, 1) * n.size)).ToArray();
+                //var meshLessNodes = new List<LodOctreeNode>();
 
-                      for (int i = 0; i < Math.Min(nodes.Length, 30); i++)
-                      {
-                          nodes[i].BuildingMesh = true;
-                          nodesToProcess.Enqueue(nodes[i]);
-                      }
-                      //nodesWithUpdatedMesh.Enqueue(node);
-                  }
+                while (!stop)
+                {
+                    lock (taskLock)
+                    {
+                        while (!hasTask || hasResult)
+                            Monitor.Wait(taskLock);
+                    }
 
-              }
-              catch (Exception ex)
-              {
-                  DI.Get<IErrorLogger>().Log(ex, "GeneratedMeshesJob");
-              }*/
+                    var ret = generateVoxelSurface(taskData.Node);
+                    lock ( taskLock )
+                    {
+                        if ( !hasResult )
+                        {
+                            taskData.Surface = ret;
+                            hasResult = true;
+                        }
+                        
+                    }
+
+                    /*        meshLessNodes.Clear();
+                            lock (rootNode)
+                            {
+                                meshBuilder.ListMeshLessNodes(rootNode, meshLessNodes);
+                            }
+                            dirtyNodesCount = meshLessNodes.Count;
+                            var nodes = meshLessNodes.Where(m => m.BuildingMesh == false).ToArray();
+                            if (nodes.Length == 0)
+                            {
+                                Thread.Sleep(100);
+                                continue;
+                            }
+                            nodes = nodes.OrderBy(n => n.Depth).ToArray();
+                            //var eye = eyePosition;
+
+
+                            //nodes = nodes.OrderBy(n => Vector3.DistanceSquared(eye, n.LowerLeft + new Point3(1, 1, 1) * n.size)).ToArray();
+
+                            for (int i = 0; i < Math.Min(nodes.Length, 30); i++)
+                            {
+                                nodes[i].BuildingMesh = true;
+                                nodesToProcess.Enqueue(nodes[i]);
+                            }*/
+                    //nodesWithUpdatedMesh.Enqueue(node);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                DI.Get<IErrorLogger>().Log(ex, "GenerateMeshesJob");
+            }
         }
 
         public void meshBuilderJob()
