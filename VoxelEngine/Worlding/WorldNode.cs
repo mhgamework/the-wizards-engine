@@ -26,6 +26,12 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
         /// Stores the RenderElement, when loaded in renderer
         /// </summary>
         public VoxelSurface VoxelSurface { get; set; }
+
+        /// <summary>
+        /// True when the VoxelSurfaces of leaf child nodes together cover this entirenode.
+        /// This means that this nodes surface can be hidden without creating holes.
+        /// </summary>
+        public bool ChildrenRenderEntireNode;
         /// <summary>
         /// Stores the surface mesh for this node, if calculated
         /// </summary>
@@ -38,7 +44,6 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
         /// Stores a voxel data generator, which can be evaluated to calculate voxel data for this node and or children
         /// </summary>
         public AbstractHermiteGrid VoxelDataGenerator { get; set; }
-
 
 
 

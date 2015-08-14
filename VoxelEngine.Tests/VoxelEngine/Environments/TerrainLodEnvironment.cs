@@ -147,7 +147,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Environments
             TW.Graphics.LineManager3D.WorldMatrix = Matrix.Identity;
             //tree.DrawLines(rootNode, TW.Graphics.LineManager3D, n => n.Mesh == null, n => Color.Red);
             var leafNodeCount = 0;
-            tree.VisitDepthFirst(rootNode, n => { if (n.Children == null) leafNodeCount++; });
+            tree.VisitTopDown(rootNode, n => { if (n.Children == null) leafNodeCount++; });
             TextOutput.Text = "Dirty nodes: " + dirtyNodesCount + "\n"
                 + "MeshElements: " + visibleMeshes + "\n"
                 + "LeafNodes: " + leafNodeCount;

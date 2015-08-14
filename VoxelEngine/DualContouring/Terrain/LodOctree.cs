@@ -135,32 +135,50 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         }
 
         /// <summary>
-        /// TODO: could implement using the Func(T,bool) variant
+        /// Walks the tree until finds a leaf, then does siblings (true depth first)
         /// </summary>
         /// <param name="rootNode"></param>
         /// <param name="action"></param>
         public void VisitDepthFirst(T rootNode, Action<T> action)
         {
+            if ( rootNode.Children != null )
+            {
+                for ( int i = 0; i < 8; i++ )
+                {
+                    VisitDepthFirst(rootNode.Children[i], action);
+                }
+            }
+            action(rootNode);
+
+        }
+
+        /// <summary>
+        /// TODO: could implement using the Func(T,bool) variant
+        /// </summary>
+        /// <param name="rootNode"></param>
+        /// <param name="action"></param>
+        public void VisitTopDown(T rootNode, Action<T> action)
+        {
             action(rootNode);
             if (rootNode.Children == null) return;
             for (int i = 0; i < 8; i++)
             {
-                VisitDepthFirst(rootNode.Children[i], action);
+                VisitTopDown(rootNode.Children[i], action);
             }
         }
         /// <summary>
-        /// Visits the tree depth-first. return value determines the visit behaviour
+        /// Visits the tree top-down, meaning that it traverses each node and than that nodes children before its siblings. return value determines the visit behaviour
         /// </summary>
         /// <param name="rootNode"></param>
         /// <param name="action"></param>
-        public VisitOptions VisitDepthFirst(T rootNode, Func<T, VisitOptions> action)
+        public VisitOptions VisitTopDown(T rootNode, Func<T, VisitOptions> action)
         {
             var ac = action(rootNode);
             if (ac != VisitOptions.Continue) return ac;
             if (rootNode.Children == null) return VisitOptions.Continue;// No abort
             for (int i = 0; i < 8; i++)
             {
-                var ret = VisitDepthFirst(rootNode.Children[i], action);
+                var ret = VisitTopDown(rootNode.Children[i], action);
                 if (ret == VisitOptions.AbortVisit) return VisitOptions.AbortVisit;
             }
             return VisitOptions.Continue; // No abort

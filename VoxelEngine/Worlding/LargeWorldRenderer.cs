@@ -149,7 +149,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
             TW.Graphics.LineManager3D.WorldMatrix = Matrix.Identity;
             //tree.DrawLines(rootNode, TW.Graphics.LineManager3D, n => n.Mesh == null, n => Color.Red);
             var leafNodeCount = 0;
-            tree.VisitDepthFirst(rootNode, n => { if (n.Children == null) leafNodeCount++; });
+            tree.VisitTopDown(rootNode, n => { if (n.Children == null) leafNodeCount++; });
             //TextOutput.Text = "Dirty nodes: " + dirtyNodesCount + "\n"
             //    + "MeshElements: " + visibleMeshes + "\n"
             //    + "LeafNodes: " + leafNodeCount;
@@ -187,6 +187,33 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
                 {
                     voxelCustomRenderer.AddSurface(data.Surface);
                     data.Node.VoxelSurface = data.Surface;
+
+
+                    // Update ChildrenRenderEntireNode
+                    tree.VisitDepthFirst(rootNode, n =>
+                        {
+                            if (n.Children == null)
+                                n.ChildrenRenderEntireNode = n.VoxelSurface != null;
+                            else
+                            {
+                                n.ChildrenRenderEntireNode = true;
+                                for (int i = 0; i < 8; i++)
+                                {
+                                    n.ChildrenRenderEntireNode &= n.Children[i].ChildrenRenderEntireNode;
+                                }
+
+                                if (n.ChildrenRenderEntireNode)
+                                {
+                                    if (n.VoxelSurface != null)
+                                    {
+                                        n.VoxelSurface.Delete();
+                                        n.VoxelSurface = null;
+                                    }
+                                }
+                            }
+
+                        });
+
                 }
 
             }
@@ -208,29 +235,20 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
 
             WorldNode deepestNode = rootNode;
 
-            tree.VisitDepthFirst(rootNode, n =>
-                {
-                    if (n.Children != null)
+
+
+            tree.VisitTopDown(rootNode, n =>
                     {
-                        if (n.VoxelSurface != null)
-                        {
-                            n.VoxelSurface.Delete();
-                            n.VoxelSurface = null;
-                        }
+                        if (n.Children != null) return VisitOptions.Continue;
+
+                        if (n.VoxelSurface == null && n.Depth > deepestNode.Depth) deepestNode = n;
 
                         return VisitOptions.Continue;
-                    }
-                    if (n.VoxelSurface == null)
-                    {
-                        if (n.Depth > deepestNode.Depth)
-                            deepestNode = n;
-                        return VisitOptions.Continue;
-                    }
-                    return VisitOptions.Continue;
-                });
+                    });
 
-            if (deepestNode.VoxelSurface == null)
-                launchAsyncSurfaceCalculation(deepestNode);
+            if (deepestNode != rootNode || rootNode.Children == null) // Only update rootnode when no children
+                if (deepestNode.VoxelSurface == null)
+                    launchAsyncSurfaceCalculation(deepestNode);
 
 
             /* LodOctreeNode node;
@@ -254,7 +272,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
             WorldNode ret = null;
             cameraPosition /= globalScaling;
 
-            tree.VisitDepthFirst(rootNode, n =>
+            tree.VisitTopDown(rootNode, n =>
                 {
                     if (n.BoundingBox.Contains(cameraPosition) == ContainmentType.Disjoint) return VisitOptions.SkipChildren;
                     if (n.Children == null)
