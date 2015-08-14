@@ -1,0 +1,10 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+      <!-- This does not work!! -->
+      <OutputPath>../bin/BinariesGame/</OutputPath>
+    </PropertyGroup>
+  
+    <Target Name="InitializeTWProperties" BeforeTargets="Build">
+      <Message Text="Loaded custom.targets in project $(ProjectDir)"/>
+    </Target>
+</Project>
