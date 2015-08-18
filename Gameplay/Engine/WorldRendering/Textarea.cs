@@ -1,4 +1,5 @@
 ﻿using MHGameWork.TheWizards.Data;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Text.Unused;
 using SlimDX;
 
 namespace MHGameWork.TheWizards.Engine.WorldRendering
@@ -21,7 +22,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
         public Vector2 Size { get; set; }
         public bool Visible { get; set; }
         public Color4 BackgroundColor { get; set; }
-
+        public bool AlignRight { get; set; }
 
         public Textarea()
         {

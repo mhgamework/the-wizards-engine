@@ -203,9 +203,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
-    <Reference Include="Wrappers">
-      <HintPath>..\bin\Binaries\Wrappers.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Array3DTest.cs" />
@@ -860,6 +857,10 @@
     <ProjectReference Include="..\Utilities\Utilities.csproj">
       <Project>{D4997503-5D85-4890-8B7A-B608C0A1CF27}</Project>
       <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wrappers\Wrappers.vcxproj">
+      <Project>{d1e82bbb-8426-4451-ba37-792822e0fe6e}</Project>
+      <Name>Wrappers</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

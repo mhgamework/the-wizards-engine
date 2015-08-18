@@ -32,8 +32,7 @@ void MHGameWork::TheWizards::DX11FontWrapper::initialize(SlimDX::Direct3D11::Dev
 	this->pFontWrapper = pw;
 }
 
-
-void MHGameWork::TheWizards::DX11FontWrapper::Draw(System::String^ str,float size,float x,float y, SlimDX::Color4 color)
+void MHGameWork::TheWizards::DX11FontWrapper::drawInternal(System::String^ str,float size,float x,float y, SlimDX::Color4 color, UINT flags)
 {
 	ID3D11DeviceContext* pImmediateContext = (ID3D11DeviceContext*)this->device->ImmediateContext->ComPointer.ToPointer();
 	void* txt = (void*)Marshal::StringToHGlobalUni(str);
@@ -43,6 +42,15 @@ void MHGameWork::TheWizards::DX11FontWrapper::Draw(System::String^ str,float siz
 
 	int colorArgb = color.ToArgb();
 
-	pFontWrapper->DrawString(pImmediateContext, (WCHAR*)txt, size, x, y, colorArgb, 	FW1_NOGEOMETRYSHADER);
+	pFontWrapper->DrawString(pImmediateContext, (WCHAR*)txt, size, x, y, colorArgb, 	FW1_NOGEOMETRYSHADER | flags );
 	Marshal::FreeHGlobal(System::IntPtr(txt));
+}
+
+void MHGameWork::TheWizards::DX11FontWrapper::DrawRight(System::String^ str,float size,float x,float y, SlimDX::Color4 color)
+{
+	this->drawInternal(str,size,x,y,color,FW1_RIGHT);
+}
+void MHGameWork::TheWizards::DX11FontWrapper::Draw(System::String^ str,float size,float x,float y, SlimDX::Color4 color)
+{
+	this->drawInternal(str,size,x,y,color,0);
 }

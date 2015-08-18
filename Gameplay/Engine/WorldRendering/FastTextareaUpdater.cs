@@ -12,7 +12,7 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
         public FastTextareaUpdater()
         {
-            fontWrapper = new DX11FontWrapper(TW.Graphics.Device,"Verdana");
+            fontWrapper = new DX11FontWrapper(TW.Graphics.Device, "Verdana");
         }
 
         public void Simulate()
@@ -27,13 +27,15 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
             {
                 if (!a.Visible) continue;
 
-                var pxSize = a.FontSize/12f*16f;
+                var pxSize = a.FontSize / 12f * 16f;
 
                 var txt = a.Text ?? ""; // Causes memory exception when string is null, could also be fixed in the C++ wrapepr
 
                 TW.Graphics.TextureRenderer.DrawColor(a.BackgroundColor, a.Position, a.Size);
-                
-                fontWrapper.Draw(txt, pxSize , (int)a.Position.X, (int)a.Position.Y, a.Color);
+                if (a.AlignRight)
+                    fontWrapper.DrawRight(txt, pxSize, (int)a.Position.X, (int)a.Position.Y, a.Color);
+                else
+                    fontWrapper.Draw(txt, pxSize, (int)a.Position.X, (int)a.Position.Y, a.Color);
             }
         }
 
