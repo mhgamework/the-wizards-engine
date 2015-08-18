@@ -33,9 +33,13 @@ namespace MHGameWork.TheWizards.DualContouring.Building
         public int activeMaterial = 0;
         public Vector3 HitNormal { get; private set; }
 
+        public bool SphereMode = false;
+
         public ITool ActiveTool { get; set; }
 
         public DCVoxelMaterial ActiveMaterial { get { return materials[activeMaterial]; } }
+
+        private Textarea Text;
 
         public BuilderUserInterface(FiniteWorld world)
         {
@@ -51,6 +55,7 @@ namespace MHGameWork.TheWizards.DualContouring.Building
                             name =>
                             new DCVoxelMaterial() { Texture = TW.Assets.LoadTexture("VoxelEngine\\Materials\\" + name) }).ToList();
 
+            Text = new Textarea();
         }
 
         public void processUserInput()
@@ -69,6 +74,8 @@ namespace MHGameWork.TheWizards.DualContouring.Building
                 ActiveTool = new GridPlacerTool();
             if (TW.Graphics.Keyboard.IsKeyPressed(Key.D3))
                 ActiveTool = new FreePlacerTool();
+            if (TW.Graphics.Keyboard.IsKeyPressed(Key.D4))
+                SphereMode = !SphereMode;
 
 
 
@@ -100,6 +107,9 @@ namespace MHGameWork.TheWizards.DualContouring.Building
         public void DrawUI()
         {
             TW.Graphics.TextureRenderer.Draw(TW.Graphics.AcquireRenderer().TexturePool.LoadTexture(materials[activeMaterial].Texture), new SlimDX.Vector2(10, 10), new SlimDX.Vector2(128, 128));
+            Text.Position = new SlimDX.Vector2(10, 128 + 10 + 10);
+            Text.Size = new SlimDX.Vector2(200,200);
+            Text.Text = "Tool: " + ActiveTool.GetType().Name + "\n" + "SphereMode: " + SphereMode;
         }
 
         /// <summary>
@@ -195,18 +205,27 @@ namespace MHGameWork.TheWizards.DualContouring.Building
                     var addCube = ui.AlignHitpointToGrid(ui.HitPoint + ui.HitNormal * 0.06f, ui.placementGridSize);
                     Point3 placeOffset = (addCube.ToVector3() * placementWorldSize / ui.voxelSize).ToPoint3Rounded();
 
-                    var placer = new BasicShapeBuilder().CreateCube(ui.placementGridSize);
-                    ui.ChangeMaterial(placer, ui.ActiveMaterial);
+                    var placer = createPlacer(ui);
                     ui.PlaceInWorld(placer, placeOffset);
                 }
                 if (TW.Graphics.Mouse.RightMouseJustPressed)
                 {
                     Point3 placeOffset = (targetCube.ToVector3() * placementWorldSize / ui.voxelSize).ToPoint3Rounded();
 
-                    var placer = new BasicShapeBuilder().CreateCube(ui.placementGridSize);
-                    ui.ChangeMaterial(placer, ui.ActiveMaterial);
+                    var placer = createPlacer(ui);
                     ui.RemoveFromWorld(placer, placeOffset);
                 }
+            }
+
+            private static HermiteDataGrid createPlacer(BuilderUserInterface ui)
+            {
+                HermiteDataGrid placer;
+                if (ui.SphereMode)
+                    placer = new BasicShapeBuilder().CreateSphere(ui.placementGridSize);
+                else
+                    placer = new BasicShapeBuilder().CreateCube(ui.placementGridSize);
+                ui.ChangeMaterial(placer, ui.ActiveMaterial);
+                return placer;
             }
         }
 
@@ -245,7 +264,11 @@ namespace MHGameWork.TheWizards.DualContouring.Building
 
             private static HermiteDataGrid createShape(BuilderUserInterface ui)
             {
-                var placer = new BasicShapeBuilder().CreateCube(ui.placementGridSize);
+                HermiteDataGrid placer;
+                if (ui.SphereMode)
+                    placer = new BasicShapeBuilder().CreateSphere(ui.placementGridSize);
+                else
+                    placer = new BasicShapeBuilder().CreateCube(ui.placementGridSize);
                 ui.ChangeMaterial(placer, ui.ActiveMaterial);
                 return placer;
             }
@@ -272,10 +295,16 @@ namespace MHGameWork.TheWizards.DualContouring.Building
                 var spherePosVoxelSpace = (targetPoint - ui.VoxelCoordToWorld(minWorldVoxel)) / ui.voxelSize;
 
 
+                IIntersectableObject shape;
+                if (ui.SphereMode)
+                    shape = new IntersectableSphere();
+                else
+                    shape = new IntersectableCube();
+
                 var grid = HermiteDataGrid.FromIntersectableGeometry(gridSize, gridSize,
                                                            Matrix.Scaling(new Vector3(ui.placementGridSize) / 2.0f) *
                                                            Matrix.Translation(spherePosVoxelSpace),
-                                                           new IntersectableSphere());
+                                                           shape);
 
 
 
@@ -284,12 +313,12 @@ namespace MHGameWork.TheWizards.DualContouring.Building
 
                 // add one since the 0,0,0 is not visible in a surface, and the (voxelcoord 0,0,0) corresponds to the 1,1,1 in the hermite grid
                 // TODO: this should be improved very complex
-                Point3 offset = minWorldVoxel + new Point3( 1, 1, 1 );
+                Point3 offset = minWorldVoxel + new Point3(1, 1, 1);
                 ui.ChangeMaterial(grid, ui.ActiveMaterial);
 
                 if (TW.Graphics.Mouse.LeftMouseJustPressed)
                 {
-                    ui.PlaceInWorld(grid, offset); 
+                    ui.PlaceInWorld(grid, offset);
                 }
                 if (TW.Graphics.Mouse.RightMouseJustPressed)
                 {

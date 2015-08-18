@@ -49,6 +49,17 @@ namespace MHGameWork.TheWizards.VoxelEngine
                 return "drawChunks = " + drawChunks;
             });
 
+            Resolve<TestInfoUserinterface>().Text = "Voxel building demo\n" +
+                                                    "===================\n\n" +
+                                                    "Left-click: place object\n" +
+                                                    "Right-click: remove object\n" +
+                                                    "1: Grid aligned placement\n" +
+                                                    "2: Fine-grained grid placement\n" +
+                                                    "3: Free placement\n" +
+                                                    "4: Switch between cube and sphere\n" +
+                                                    "Numpad +: Next texture\n" +
+                                                    "Numpad -: Previous texture\n";
+
         }
 
         public void DrawDebug()

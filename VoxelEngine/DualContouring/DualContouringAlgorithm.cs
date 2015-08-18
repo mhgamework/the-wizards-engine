@@ -133,26 +133,36 @@ namespace MHGameWork.TheWizards.DualContouring
 
 
                     var meanIntersectionPoint = new Vector3();
-                    for ( int i = 0; i < changingEdgeCount; i++ )
+                    for (int i = 0; i < changingEdgeCount; i++)
                     {
                         meanIntersectionPoint = meanIntersectionPoint + positions[i];
                     }
                     meanIntersectionPoint = meanIntersectionPoint * (1f / changingEdgeCount);
 
-                    var leastsquares = QEFCalculator.CalculateCubeQEF(normals, positions, changingEdgeCount, meanIntersectionPoint);
-
                     var qefPoint1 = new Vector3();
-                    qefPoint1 = new Vector3(leastsquares[0], leastsquares[1], leastsquares[2]);
 
-                    if (qefPoint1[0] < 0 || qefPoint1[1] < 0 || qefPoint1[2] < 0
-                        || qefPoint1[0] > 1 || qefPoint1[1] > 1 || qefPoint1[2] > 1)
+                    try
                     {
-                        qefPoint1 = meanIntersectionPoint; // I found someone online who does this too: http://ngildea.blogspot.be/2014/11/implementing-dual-contouring.html
-                        //TODO: should probably fix the QEF, maybe by removing singular values
+                        var leastsquares = QEFCalculator.CalculateCubeQEF(normals, positions, changingEdgeCount, meanIntersectionPoint);
+                        qefPoint1 = new Vector3(leastsquares[0], leastsquares[1], leastsquares[2]);
+                        if (qefPoint1[0] < 0 || qefPoint1[1] < 0 || qefPoint1[2] < 0
+                            || qefPoint1[0] > 1 || qefPoint1[1] > 1 || qefPoint1[2] > 1)
+                        {
+                            qefPoint1 = meanIntersectionPoint; // I found someone online who does this too: http://ngildea.blogspot.be/2014/11/implementing-dual-contouring.html
+                            //TODO: should probably fix the QEF, maybe by removing singular values
 
-                        //ERROR!
-                        //throw new InvalidOperationException("QEF returned solution outside of cube");
+                            //ERROR!
+                            //throw new InvalidOperationException("QEF returned solution outside of cube");
+                        }
                     }
+                    catch (Exception ex)
+                    {
+                        qefPoint1 = meanIntersectionPoint;
+                        // Ignore error for now!!!
+                    }
+
+
+
 
                     vIndex[curr] = vertices.Count;
                     vertices.Add(qefPoint1 + (Vector3)curr.ToVector3());

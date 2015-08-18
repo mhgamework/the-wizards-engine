@@ -33,7 +33,8 @@ namespace MHGameWork.TheWizards.Engine.WorldRendering
 
                 TW.Graphics.TextureRenderer.DrawColor(a.BackgroundColor, a.Position, a.Size);
                 if (a.AlignRight)
-                    fontWrapper.DrawRight(txt, pxSize, (int)a.Position.X, (int)a.Position.Y, a.Color);
+                    // When drawing right, the text writes from right to left, so use the right
+                    fontWrapper.DrawRight(txt, pxSize, (int)(a.Position.X+a.Size.X), (int)a.Position.Y, a.Color);
                 else
                     fontWrapper.Draw(txt, pxSize, (int)a.Position.X, (int)a.Position.Y, a.Color);
             }

@@ -27,12 +27,13 @@ namespace MHGameWork.TheWizards.Engine.Tests
     /// Base test fixture that initializes the engine and provides TW testing functionality
     /// </summary>
     [EngineTest]
-    
+
     [CustomSta]
     public class EngineTestFixture : TWTestFixture
     {
         protected TWEngine engine;
         private DeveloperConsole developerConsole;
+        private TestInfoUserinterface testInfoUserinterface;
 
 
         [SetUp]
@@ -51,6 +52,8 @@ namespace MHGameWork.TheWizards.Engine.Tests
             engine.AddSimulator(new EngineUISimulator());
             addConsoleSim();
 
+            testInfoUserinterface = new TestInfoUserinterface(TW.Graphics);
+            engine.AddSimulator(new BasicSimulator(testInfoUserinterface.Update), "TestInfoUserInterface");
             //TestContext.CurrentContext.TestDirectory
         }
 
@@ -90,6 +93,8 @@ namespace MHGameWork.TheWizards.Engine.Tests
         {
             if (typeof(T) == typeof(IDeveloperConsole))
                 return developerConsole as T;
+            if (typeof(T) == typeof(TestInfoUserinterface))
+                return testInfoUserinterface as T;
 
             throw new Exception("Dependency not found!");
         }
