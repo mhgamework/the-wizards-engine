@@ -75,6 +75,7 @@
     <Compile Include="VoxelEngine\Environments\TerrainLodEnvironment.cs" />
     <Compile Include="VoxelEngine\Environments\VisualTestingEnvironment.cs" />
     <Compile Include="VoxelEngine\VoxelTerrainGenerationTest.cs" />
+    <Compile Include="WrapperTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Core\Common.Core.csproj">
@@ -112,6 +113,10 @@
     <ProjectReference Include="..\Utilities\Utilities.csproj">
       <Project>{D4997503-5D85-4890-8B7A-B608C0A1CF27}</Project>
       <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VoxelEngine.Native\VoxelEngine.Native.vcxproj">
+      <Project>{5545d43a-d059-4743-80a5-5d4e29324a31}</Project>
+      <Name>VoxelEngine.Native</Name>
     </ProjectReference>
     <ProjectReference Include="..\VoxelEngine\VoxelEngine.csproj">
       <Project>{BB9D98D5-BE68-4D99-819B-F904656BC6DD}</Project>
