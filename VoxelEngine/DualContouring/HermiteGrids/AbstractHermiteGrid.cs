@@ -19,6 +19,49 @@ namespace MHGameWork.TheWizards.DualContouring
 
         public abstract bool GetSign(Point3 pos);
 
+        public class startend
+        {
+            private readonly Point3 start;
+            private readonly Point3 end;
+
+            public Point3 Start
+            {
+                get { return start; }
+            }
+
+            public Point3 End
+            {
+                get { return end; }
+            }
+
+            public startend( Point3 start, Point3 end )
+            {
+                this.start = start;
+                this.end = end;
+            }
+
+            protected bool Equals( startend other )
+            {
+                return start.Equals( other.start ) && end.Equals( other.end );
+            }
+
+            public override bool Equals( object obj )
+            {
+                if ( ReferenceEquals( null, obj ) ) return false;
+                if ( ReferenceEquals( this, obj ) ) return true;
+                if ( obj.GetType() != this.GetType() ) return false;
+                return Equals( (startend) obj );
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return ( start.GetHashCode()*397 ) ^ end.GetHashCode();
+                }
+            }
+        }
+
         protected AbstractHermiteGrid()
         {
             cube_verts = (from x in Enumerable.Range(0, 2)
@@ -32,7 +75,7 @@ namespace MHGameWork.TheWizards.DualContouring
                          where (v + offset).X < 1.5
                          where (v + offset).Y < 1.5
                          where (v + offset).Z < 1.5
-                         select new { Start = v, End = v + offset }).Distinct().Select(e => new[] { e.Start, e.End }).ToList();
+                         select new startend( v, v + offset )).Distinct().Select(e => new[] { e.Start, e.End }).ToList();
 
             edgeToVertices = cubeEdges.Select(edge => new int[] { cube_verts.IndexOf(edge[0]), cube_verts.IndexOf(edge[1]) }).ToArray();
         }
