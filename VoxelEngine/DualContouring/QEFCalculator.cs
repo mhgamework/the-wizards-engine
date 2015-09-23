@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Factorization;
@@ -108,6 +109,7 @@ namespace MHGameWork.TheWizards.DualContouring
 
             for (int i = 0; i < s.Count; i++)
             {
+                if ( s[ i ] < 0 ) throw new InvalidOperationException( "Was not expecting this in the implementation, could be dangrous!" );
                 if (s[i] < 0.1) // Tolerance suggested by dc paper (TODO: can s be negative?)
                     s[i] = 0;
                 else
