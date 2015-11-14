@@ -143,7 +143,8 @@ namespace MHGameWork.TheWizards.DualContouring
 
                     try
                     {
-                        var leastsquares = QEFCalculator.CalculateCubeQEF(normals, positions, changingEdgeCount, meanIntersectionPoint);
+                        //var leastsquares = QEFCalculator.CalculateCubeQEF(normals, positions, changingEdgeCount, meanIntersectionPoint);
+                        var leastsquares = QEFCalculator.CalculateCubeQEFIteratively(normals, positions, changingEdgeCount, meanIntersectionPoint);
                         qefPoint1 = new Vector3(leastsquares[0], leastsquares[1], leastsquares[2]);
                         if (qefPoint1[0] < 0 || qefPoint1[1] < 0 || qefPoint1[2] < 0
                             || qefPoint1[0] > 1 || qefPoint1[1] > 1 || qefPoint1[2] > 1)

@@ -12,7 +12,6 @@ namespace MHGameWork.TheWizards.VoxelEngine.EngineServices
     {
         private static bool initialized = false;
         public VoxelCustomRenderer VoxelRenderer { get; private set; }
-
         public VoxelRenderingService(GraphicsWrapper graphics)
         {
             if ( initialized ) throw new InvalidOperationException( "Service was already created!" );

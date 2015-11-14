@@ -1,13 +1,13 @@
 ﻿using DirectX11;
 using MHGameWork.TheWizards.DualContouring;
+using MHGameWork.TheWizards.Engine.Tests;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.VoxelEngine.Environments;
 using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.VoxelEngine
 {
-    [TestFixture]
-    public class CSGTest
+    public class CSGTest :EngineTestFixture
     {
         private DualContouringTestEnvironment env;
         private BasicShapeBuilder builder = new BasicShapeBuilder();

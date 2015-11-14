@@ -3,6 +3,8 @@ using DirectX11;
 using MHGameWork.TheWizards.DualContouring;
 using MHGameWork.TheWizards.DualContouring.GPU;
 using MHGameWork.TheWizards.Engine.Features.Testing;
+using MHGameWork.TheWizards.Engine.Tests;
+using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
 using MHGameWork.TheWizards.VoxelEngine.Environments;
@@ -11,9 +13,7 @@ using SlimDX.DirectInput;
 
 namespace MHGameWork.TheWizards.VoxelEngine
 {
-    [EngineTest]
-    [TestFixture]
-    public class GPUTest
+    public class GPUTest : EngineTestFixture
     {
         [Test]
         public void TestCalculateDensityGridSigns()
@@ -150,7 +150,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
             env.CameraLightSimulator.Light.LightRadius = 300;
             env.CameraLightSimulator.Light.LightIntensity = 1;
             env.Grid = grid;
-            env.AddToEngine(EngineFactory.CreateEngine());
+                env.AddToEngine(EngineFactory.CreateEngine());
         }
 
 
@@ -180,6 +180,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
         }
 
 
+        [Test]
         public void TestRender()
         {
             var size = 128;

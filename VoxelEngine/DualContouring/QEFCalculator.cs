@@ -104,7 +104,7 @@ namespace MHGameWork.TheWizards.DualContouring
             var curr = preferredPosition;
             var err = 0f;
 
-            for (int j = 0; j < 100; j++)
+            for (int j = 0; j < 1000; j++)
             {
                 err = 0;
                 //Debug.Log("Start");
