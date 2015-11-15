@@ -59,15 +59,15 @@ namespace MHGameWork.TheWizards.VoxelEngine.Persistence
         }
         private void readRunLength(int size, Action<int, Vector3> setData, StreamReader r)
         {
-            readRunLength(size, (i, s) => setData(i, s.Split(' ').Select(float.Parse).ToArray().ToVector3()), r);
+            readRunLength(size, (i, s) => setData(i, s.Split(',').Select(s1 => float.Parse(s1, CultureInfo.InvariantCulture)).ToArray().ToVector3()), r);
         }
         private void writeRunLength(int size, Func<int, Vector3> getData, StreamWriter wr)
         {
-            writeRunLength(size, i => string.Join(" ", getData(i).ToArray().Select(e => e.ToString(CultureInfo.InvariantCulture))), wr);
+            writeRunLength(size, i => string.Join(",", getData(i).ToArray().Select(e => e.ToString(CultureInfo.InvariantCulture))), wr);
         }
         private void readRunLength(int size, Action<int, float> setData, StreamReader r)
         {
-            readRunLength(size, (i, s) => setData(i, float.Parse(s)), r);
+            readRunLength(size, (i, s) => setData(i, float.Parse(s, CultureInfo.InvariantCulture)), r);
         }
         private void writeRunLength(int size, Func<int, float> getData, StreamWriter wr)
         {
@@ -75,7 +75,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Persistence
         }
         private void readRunLength(int size, Action<int, int> setData, StreamReader r)
         {
-            readRunLength(size, (i, s) => setData(i, int.Parse(s)), r);
+            readRunLength(size, (i, s) => setData(i, int.Parse(s,CultureInfo.InvariantCulture)), r);
         }
         private void writeRunLength(int size, Func<int, int> getData, StreamWriter wr)
         {

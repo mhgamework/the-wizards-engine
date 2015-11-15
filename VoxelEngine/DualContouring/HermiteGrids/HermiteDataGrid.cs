@@ -356,18 +356,23 @@ namespace MHGameWork.TheWizards.DualContouring
         void IHermiteData.SetIntersection(Point3 cell, int dir, float intersect)
         {
             var v = cells[cell];
-            throw new NotImplementedException();
-            cells[cell] = new Vertex()
-            {
-                EdgeData = v.EdgeData,
-                Material = v.Material,
-                Sign = v.Sign
-            };
+
+            var edgeData = v.EdgeData[dir];
+            edgeData.W = intersect;
+            v.EdgeData[ dir ] = edgeData;
+
+            cells[ cell ] = v;
         }
 
-        void IHermiteData.SetNormal(Point3 flattenedCoord, int dir, Vector3 normal)
+        void IHermiteData.SetNormal(Point3 cell, int dir, Vector3 normal)
         {
-            throw new NotImplementedException();
+            var v = cells[cell];
+
+            var edgeData = v.EdgeData[dir]; 
+            edgeData = new Vector4( normal, edgeData.W );
+            v.EdgeData[dir] = edgeData;
+
+            cells[cell] = v;
         }
     }
 }

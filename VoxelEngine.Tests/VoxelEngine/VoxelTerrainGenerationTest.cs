@@ -47,7 +47,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
 
         [Test]
-        public void TestGenerateSinglePerlinNoise()
+        public void TestGeneratePerlinNoise()
         {
 
             int size = 16 * 4;
@@ -58,6 +58,24 @@ namespace MHGameWork.TheWizards.VoxelEngine
             testDensityFunction(densityFunction, dimensions);
 
         }
+
+        public void TestGenerateAndSavePerlinNoise64()
+        {
+            int size = 16 * 4;
+            var densityFunction = createDensityFunction5Perlin(112, size / 2);
+
+            var dimensions = new Point3(size, size, size);
+
+            var grid = new DensityFunctionHermiteGrid(densityFunction, dimensions);
+            HermiteDataGrid dataGrid = null;
+            var terrGen = PerformanceHelper.Measure(() =>
+            {
+                dataGrid = HermiteDataGrid.CopyGrid(grid);
+            });
+
+            
+        }
+
 
         public static Func<Vector3, float> createDensityFunction5Perlin(int seed, int height)
         {

@@ -468,7 +468,7 @@ Global
 		{D1E82BBB-8426-4451-BA37-792822E0FE6E}.DebugAll|x86.ActiveCfg = Debug|Win32
 		{D1E82BBB-8426-4451-BA37-792822E0FE6E}.DebugAll|x86.Build.0 = Debug|Win32
 		{D1E82BBB-8426-4451-BA37-792822E0FE6E}.DebugGameplay|Any CPU.ActiveCfg = Debug|Win32
-		{D1E82BBB-8426-4451-BA37-792822E0FE6E}.DebugGameplay|Mixed Platforms.ActiveCfg = Debug|Win32
+		{D1E82BBB-8426-4451-BA37-792822E0FE6E}.DebugGameplay|Mixed Platforms.ActiveCfg = Release|Win32
 		{D1E82BBB-8426-4451-BA37-792822E0FE6E}.DebugGameplay|Win32.ActiveCfg = Debug|Win32
 		{D1E82BBB-8426-4451-BA37-792822E0FE6E}.DebugGameplay|Win32.Build.0 = Debug|Win32
 		{D1E82BBB-8426-4451-BA37-792822E0FE6E}.DebugGameplay|x86.ActiveCfg = Debug|Win32
