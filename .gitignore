@@ -116,3 +116,6 @@ Debug
 /bin/Utilities.dll
 /bin/Utilities.pdb
 /The Wizards.sln.DotSettings.user
+/VoxelEngine.Native/Release
+/Release
+/Wrappers/Release

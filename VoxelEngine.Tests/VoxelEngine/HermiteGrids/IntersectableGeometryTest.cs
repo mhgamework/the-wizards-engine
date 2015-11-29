@@ -11,7 +11,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
 {
     [TestFixture]
     [EngineTest]
-    public class DualContouringTest : EngineTestFixture
+    public class IntersectableGeometryTest : EngineTestFixture
     {
         private float gridWorldSize;
         private int subdivision;

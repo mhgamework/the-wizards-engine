@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.VoxelEngine
 {
-    public class RenderingTest:EngineTestFixture
+    public class MultiMaterialRenderingTest:EngineTestFixture
     {
         private VoxelCustomRenderer surfaceRenderer;
 

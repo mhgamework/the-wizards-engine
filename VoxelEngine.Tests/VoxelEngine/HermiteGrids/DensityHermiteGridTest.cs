@@ -9,10 +9,7 @@ using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.VoxelEngine
 {
-
-
     [EngineTest]
-
     public class DensityHermiteGridTest : EngineTestFixture
     {
         public DensityHermiteGridTest()

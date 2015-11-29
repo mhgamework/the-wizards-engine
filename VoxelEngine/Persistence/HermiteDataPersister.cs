@@ -11,6 +11,13 @@ namespace MHGameWork.TheWizards.VoxelEngine.Persistence
     public class HermiteDataPersister
     {
 
+        public void Save( IHermiteData hermiteData, FileInfo fi )
+        {
+            using ( var fs = fi.Create() )
+            {
+                Save( hermiteData, fs );
+            }
+        }
         public void Save(IHermiteData hermiteData, FileStream fs)
         {
             using (var mode = new WriteMode(fs))

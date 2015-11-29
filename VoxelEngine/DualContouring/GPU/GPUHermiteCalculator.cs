@@ -157,6 +157,7 @@ namespace MHGameWork.TheWizards.DualContouring.GPU
         public byte[] ReadDataThroughStageBuffer(GPUTexture3D texture)
         {
             //texture.SaveToImageSlices(game, TWDir.Test.CreateSubdirectory("Temp2"));
+            Console.WriteLine( "This leaks!!" );
 
             var cache = GPUTexture3D.CreateCPUReadable(game, texture.Resource.Description.Width, texture.Resource.Description.Height, texture.Resource.Description.Depth, texture.Resource.Description.Format);
 

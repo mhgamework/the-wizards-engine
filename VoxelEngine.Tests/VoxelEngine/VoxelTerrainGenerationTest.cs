@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using DirectX11;
 using MHGameWork.TheWizards.DualContouring;
 using MHGameWork.TheWizards.DualContouring.Terrain;
@@ -9,6 +10,7 @@ using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.IO;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using MHGameWork.TheWizards.VoxelEngine.Environments;
+using MHGameWork.TheWizards.VoxelEngine.Persistence;
 using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.VoxelEngine
@@ -59,6 +61,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
         }
 
+        [Test]
         public void TestGenerateAndSavePerlinNoise64()
         {
             int size = 16 * 4;
@@ -73,9 +76,27 @@ namespace MHGameWork.TheWizards.VoxelEngine
                 dataGrid = HermiteDataGrid.CopyGrid(grid);
             });
 
-            
-        }
+            Console.WriteLine( terrGen.PrettyPrint() );
 
+            var p = new HermiteDataPersister();
+            var fileInfo = TestDirectory.CreateFile( "PerlinNoise5-64.txt" );
+            p.Save( dataGrid, fileInfo );
+
+            HermiteDataGrid newGrid = null;
+
+            using ( var fs = fileInfo.OpenRead() )
+            {
+                newGrid = (HermiteDataGrid)p.Load(fs, dim => HermiteDataGrid.Empty(dim));
+            }
+
+            var testEnv = new DualContouringTestEnvironment();
+            testEnv.Grid = newGrid;
+
+            testEnv.AddToEngine(EngineFactory.CreateEngine());
+
+            //TODO: doesnt seem to load textures
+
+        }
 
         public static Func<Vector3, float> createDensityFunction5Perlin(int seed, int height)
         {

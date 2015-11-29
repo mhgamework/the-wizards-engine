@@ -25,6 +25,8 @@ SamplerState TrilinearRepeat : register (s0);/*{
 #define size_z 8
 
 #define fullSize 128
+//#define fullSize 8
+
 #define noiseSize 64.0
 #define noiseTexel 1/noiseSize
 
@@ -89,14 +91,16 @@ float getDensity(float3 ws)
 	//return density;
 
 
-	float scale =1.0f / 64;
+	float scale =1.0f / 64;	density = 30.4-ws.y;
+
+	//float scale =1.0f / 8; density = 4-ws.z;
 	float3 samplePos = ws*scale*0.05f + float3(0.3f,0.3f,0.3f);
 
 		float multiplier = 20;
 
 
 	//density = 50.0-ws.y;
-	density = 30.4-ws.y;
+	
 
 	/*float q000 = 1;
 	float q001 = -1;
@@ -127,11 +131,22 @@ float getDensity(float3 ws)
 	//density += sin(DispatchThreadID.z);
 	//density = density + PerlinNoise.SampleLevel(TrilinearRepeat, samplePos,0).x * 3;  
 
+
+
+
+
+
 	density += sampleNoise( samplePos*4.03f)*0.25f * multiplier;  
 	density += sampleNoise(samplePos*1.96f)*0.50f * multiplier;  
 	density += sampleNoise( samplePos*1.01)*1.00 * multiplier;  
 	density += sampleNoise( samplePos*0.49)*2.00 * multiplier;  
-	density += sampleNoise( samplePos*0.26)*4.00 * multiplier;  
+	density += sampleNoise( samplePos*0.26)*4.00 * multiplier;    
+
+
+
+
+
+
 	//density += sampleNoise( samplePos*0.120)*8.00 * multiplier;  
 	//density += sampleNoise( samplePos*0.061)*16.00 * multiplier;  
 

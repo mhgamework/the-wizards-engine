@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.VoxelEngine
 {
-    public class CSGTest :EngineTestFixture
+    public class BasicShapeBuilderTest :EngineTestFixture
     {
         private DualContouringTestEnvironment env;
         private BasicShapeBuilder builder = new BasicShapeBuilder();
@@ -42,20 +42,5 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
         }
 
-        [Test]
-        public void TestUnionEqualSize()
-        {
-            env.Grid = HermiteDataGrid.CopyGrid(new UnionGrid(HermiteDataGrid.Empty(new Point3(2, 2, 2)), builder.CreateCube(1)));
-        }
-        [Test]
-        public void TestUnionDifferentSize()
-        {
-            env.Grid = HermiteDataGrid.CopyGrid(new UnionGrid(HermiteDataGrid.Empty(new Point3(3, 3, 3)), builder.CreateCube(1)));
-        }
-        [Test]
-        public void TestUnionDifferentSizeOffset()
-        {
-            env.Grid = HermiteDataGrid.CopyGrid(new UnionGrid(HermiteDataGrid.Empty(new Point3(3, 3, 3)), builder.CreateCube(1), new Point3(1, 1, 1)));
-        }
     }
 }
