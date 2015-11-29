@@ -24,7 +24,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Environments
     public class MultithreadedTerrainLodDemo
     {
         public LodOctreeMeshBuilder meshBuilder = new LodOctreeMeshBuilder();
-        private LodOctree<LodOctreeNode> tree;
+        private ClipMapsOctree<LodOctreeNode> tree;
         private LodOctreeNode rootNode;
         private Func<Vector3, float> density;
         private float angle = 0;
@@ -41,7 +41,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Environments
         public MultithreadedTerrainLodDemo()
         {
 
-            tree = new LodOctree<LodOctreeNode>();
+            tree = new ClipMapsOctree<LodOctreeNode>();
 
             var size = 32 * (1 << 10);
             rootNode = tree.Create(size, size);

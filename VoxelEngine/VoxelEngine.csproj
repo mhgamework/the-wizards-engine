@@ -92,7 +92,7 @@
     <Compile Include="DualContouring\RecordingSimulator.cs" />
     <Compile Include="DualContouring\Rendering\SurfaceMaterial.cs" />
     <Compile Include="DualContouring\Rendering\VoxelCustomRenderer.cs" />
-    <Compile Include="DualContouring\Terrain\LodOctree.cs" />
+    <Compile Include="DualContouring\Terrain\ClipMapsOctree.cs" />
     <Compile Include="DualContouring\Terrain\LodOctreeMeshBuilder.cs" />
     <Compile Include="DualContouring\Terrain\LodOctreeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

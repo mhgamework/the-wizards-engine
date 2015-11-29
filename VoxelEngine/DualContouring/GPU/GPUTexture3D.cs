@@ -195,6 +195,16 @@ namespace MHGameWork.TheWizards.DualContouring.GPU
 
         }
 
+        /// <summary>
+        /// Creates cpu readable staging texture to copy sameAs into
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="sameAs"></param>
+        /// <returns></returns>
+        public static GPUTexture3D CreateStaging( DX11Game game, GPUTexture3D sameAs )
+        {
+            return GPUTexture3D.CreateCPUReadable(TW.Graphics, sameAs.Resource.Description.Width, sameAs.Resource.Description.Height, sameAs.Resource.Description.Depth, sameAs.Resource.Description.Format);
+        }
         public static GPUTexture3D CreateCPUReadable(DX11Game game, int width, int height, int depth, Format format)
         {
             var desc = getBaseDesc(width, height, depth, format);
@@ -213,6 +223,11 @@ namespace MHGameWork.TheWizards.DualContouring.GPU
             desc.BindFlags = BindFlags.ShaderResource;
 
             return new GPUTexture3D(game, desc);
+        }
+
+        public void CopyResourceFrom( GPUTexture3D signsTex )
+        {
+            TW.Graphics.Device.ImmediateContext.CopySubresourceRegion(signsTex.Resource, 0, this.Resource, 0, 0, 0, 0);
         }
     }
 }

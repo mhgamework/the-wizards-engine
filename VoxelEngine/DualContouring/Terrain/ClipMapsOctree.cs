@@ -7,12 +7,12 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.DualContouring.Terrain
 {
-    public class LodOctree<T> where T : class, IOctreeNode<T>
+    public class ClipMapsOctree<T> where T : class, IOctreeNode<T>
     {
         private readonly IOctreeNodeFactory<T> factory;
         public static Point3[] ChildOffsets = GridHelper.UnitCubeCorners.Cast<Point3>().ToArray();
 
-        public LodOctree()
+        public ClipMapsOctree()
         {
             factory = new EmptyConstructorFactory();
         }
@@ -33,7 +33,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             }
         }
 
-        public LodOctree(IOctreeNodeFactory<T> factory)
+        public ClipMapsOctree(IOctreeNodeFactory<T> factory)
         {
             this.factory = factory;
         }

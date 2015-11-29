@@ -71,7 +71,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
         [Test]
         public void TestLodOctree()
         {
-            var tree = new LodOctree<LodOctreeNode>();
+            var tree = new ClipMapsOctree<LodOctreeNode>();
             var root = tree.Create(32 * 4, 32);
 
             var engine = EngineFactory.CreateEngine();
@@ -93,7 +93,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
         [Test]
         public void TestGenerateLodTerrainMeshes()
         {
-            var tree = new LodOctree<LodOctreeNode>();
+            var tree = new ClipMapsOctree<LodOctreeNode>();
             var size = 128;
             var root = tree.Create(size, size);
             tree.UpdateQuadtreeClipmaps(root, new Vector3(size / 2, size / 2, size / 2), 8);

@@ -19,6 +19,14 @@ SamplerState TrilinearRepeat : register (s0);/*{
 											 };*/
 
 
+
+cbuffer Transform_Buffer : register(b0)
+{
+	float3 offset = float3(0,0,0);
+	float3 scale = float3(1,1,1);
+}
+
+
 // Image sizes
 #define size_x 8
 #define size_y 8
@@ -79,6 +87,8 @@ float sampleNoise(float3 coord)
 
 float getDensity(float3 ws)
 {
+	ws = ws * scale.xyz + offset.xyz;
+
 	//ws /= 64.0; //0-1
 	//return sampleNoise(ws) ;
 	float density;
@@ -91,7 +101,9 @@ float getDensity(float3 ws)
 	//return density;
 
 
-	float scale =1.0f / 64;	density = 30.4-ws.y;
+	//float scale =1.0f / 64;	density = 30.4-ws.y; // Testing default!
+	float scale =1.0f / 64;	density = 1000-ws.y;
+
 
 	//float scale =1.0f / 8; density = 4-ws.z;
 	float3 samplePos = ws*scale*0.05f + float3(0.3f,0.3f,0.3f);
@@ -99,6 +111,9 @@ float getDensity(float3 ws)
 		float multiplier = 20;
 
 
+
+
+	//return 64-ws.y;
 	//density = 50.0-ws.y;
 	
 
@@ -198,7 +213,9 @@ float helperFuncTestNoiseSamplingResolution(uint3 ws)
 [numthreads(size_x, size_y, size_z)]
 void CSGridSigns( uint3 GroupID : SV_GroupID, uint3 DispatchThreadID : SV_DispatchThreadID, uint3 GroupThreadID : SV_GroupThreadID, uint GroupIndex : SV_GroupIndex )
 {
-	uint3 ws = uint3(DispatchThreadID.x,fullSize -1 -DispatchThreadID.y,DispatchThreadID.z);
+	//WARNING: this next line was used for all testing previously, but it causes major issues when doing offsetting, so it was set back to something more, rational?
+	//uint3 ws = uint3(DispatchThreadID.x,fullSize -1 -DispatchThreadID.y,DispatchThreadID.z);
+	uint3 ws = uint3(DispatchThreadID.x,DispatchThreadID.y,DispatchThreadID.z);
 	float density = getDensity(ws);
 
 	float result = density>0 ? 0 : 1;

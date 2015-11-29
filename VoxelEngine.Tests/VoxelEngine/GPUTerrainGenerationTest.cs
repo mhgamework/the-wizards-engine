@@ -26,7 +26,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
         {
             var game = new DX11Game();
             game.InitDirectX();
-            var size = 512;
+            var size = 256;
             var offset = new Vector3(0, 0, 0);
             var scaling = new Vector3(1, 1, 1);
             var density = "20-v.y";
@@ -37,6 +37,41 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
 
             tex.SaveToImageSlices(game, TWDir.Test.CreateSubdirectory("DualContouring.GPU/Signs"));
+        }
+
+        [Test]
+        public void TestOffset()
+        {
+            var game = new DX11Game();
+            game.InitDirectX();
+            var size = 256;
+            var offset = new Vector3(0, 0, 0);
+            var scaling = new Vector3(1, 1, 1);
+            var density = "20-v.y";
+            var target = new GPUHermiteCalculator(game);
+
+            var tex = target.CreateDensitySignsTexture(size);
+            target.WriteHermiteSigns(size, offset, scaling, density, tex);
+
+            var signs1 = target.ReadDataThroughStageBuffer(tex);
+
+            target.WriteHermiteSigns(size, offset, scaling, density, tex);
+
+            var signs1_Same = target.ReadDataThroughStageBuffer(tex);
+
+            for (int i = 0; i < signs1.Length; i++)
+                Assert.AreEqual(signs1[i] ,signs1_Same[i]);
+
+            target.WriteHermiteSigns(size, new Vector3(1, 1, 1), scaling, density, tex);
+
+            var signs2 = target.ReadDataThroughStageBuffer(tex);
+
+            var same = true;
+
+            for ( int i = 0; i < signs1.Length; i++ )
+                same &= signs1[ i ] == signs2[ i ];
+            Assert.False( same );
+            //CollectionAssert.AreNotEqual(signs1, signs1_Same); // This test only works if terrain is actually differeing here
         }
 
         [Test]
@@ -296,11 +331,11 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
             //var signs = target.ReadDataThroughStageBuffer(signsTex);    
             var signs = cache.GetRawData();
-            var contents = toRunLengthString( signs.Where( ( k, i ) => i%4 == 0 ) );
+            var contents = toRunLengthString(signs.Where((k, i) => i % 4 == 0));
             File.WriteAllText(TestDirectory.CreateFile("TestRenderSimpleSigns.txt").FullName, contents);
 
             // Use -1 because we have a grid of size-1, with size number of corners = signs
-            var grid = new DelegateHermiteGrid(p => signs[(p.X + size * (p.Y + size * p.Z)) * 4] > 128, (p, i) => new Vector4(), new Point3(size-1, size-1, size-1)); 
+            var grid = target.CreateHermiteGrid(signs, size);
 
 
             var env = new DualContouringTestEnvironment();
@@ -316,33 +351,33 @@ namespace MHGameWork.TheWizards.VoxelEngine
         /// <param name="data"></param>
         /// <param name="runlengthThreshold">Only group after x equal entries</param>
         /// <returns></returns>
-        private static string toRunLengthString( IEnumerable<byte> data, int runlengthThreshold = 10 )
+        private static string toRunLengthString(IEnumerable<byte> data, int runlengthThreshold = 10)
         {
             var builder = new StringBuilder();
             var last = -1;
             var count = 0;
-            data.ForEach( b =>
+            data.ForEach(b =>
             {
-                if ( b == last ) count++;
+                if (b == last) count++;
                 else
                 {
-                    if ( last != -1 )
+                    if (last != -1)
                     {
-                        if ( count > runlengthThreshold )
-                            builder.Append( last ).Append( ':' ).Append( count ).Append( ' ' );
+                        if (count > runlengthThreshold)
+                            builder.Append(last).Append(':').Append(count).Append(' ');
                         else
-                            for ( int i = 0; i < count; i++ )
+                            for (int i = 0; i < count; i++)
                             {
-                                builder.Append( last ).Append( ' ' );
+                                builder.Append(last).Append(' ');
                             }
                     }
                     count = 1;
                     last = b;
                 }
-            } );
+            });
 
 
-            builder.Append( last ).Append( ':' ).Append( count ).Append( ' ' );
+            builder.Append(last).Append(':').Append(count).Append(' ');
             var contents = builder.ToString();
             return contents;
         }

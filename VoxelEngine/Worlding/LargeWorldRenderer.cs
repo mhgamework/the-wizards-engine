@@ -25,7 +25,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
     {
         private readonly VoxelCustomRenderer voxelCustomRenderer;
         public LodOctreeMeshBuilder meshBuilder = new LodOctreeMeshBuilder();
-        private LodOctree<WorldNode> tree;
+        private ClipMapsOctree<WorldNode> tree;
         private WorldNode rootNode;
         private Func<Vector3, float> density;
         private float angle = 0;
@@ -43,7 +43,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Worlding
         {
             this.voxelCustomRenderer = voxelCustomRenderer;
 
-            tree = new LodOctree<WorldNode>(new LargeWorldNodeFactory());
+            tree = new ClipMapsOctree<WorldNode>(new LargeWorldNodeFactory());
             minNodeSize = 16;
 
             /*var size = 32 * (1 << 10);
