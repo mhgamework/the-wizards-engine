@@ -12,6 +12,7 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Gameplay;
 using MHGameWork.TheWizards.Graphics.SlimDX.DirectX11;
 using MHGameWork.TheWizards.IO;
+using MHGameWork.TheWizards.VoxelEngine.DualContouring.Generation;
 using MHGameWork.TheWizards.VoxelEngine.Environments;
 using NUnit.Framework;
 using SlimDX.DirectInput;
@@ -248,7 +249,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
             // Should be roughly the same calculation if the gpu is alculating 5-noise
 
-            var dens = VoxelTerrainGenerationTest.createDensityFunction5Perlin(11, 10);
+            var dens = GenerationUtils.createDensityFunction5Perlin(11, 10);
 
 
             var outs = new bool[size * size * size];

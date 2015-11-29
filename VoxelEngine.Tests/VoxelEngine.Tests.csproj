@@ -58,7 +58,8 @@
     <Compile Include="Engine.Tests\DeveloperConsoleSimulator.cs" />
     <Compile Include="Engine.Tests\FacadesImplementation\DeveloperConsole.cs" />
     <Compile Include="Engine.Tests\TestInfoUserinterface.cs" />
-    <Compile Include="LargeWorldRendererTest.cs" />
+    <Compile Include="VoxelEngine\LargeWorldRendererTest.cs" />
+    <Compile Include="VoxelEngine\LodTest.cs" />
     <Compile Include="VoxelEngine\HermiteGrids\BasicShapeBuilderTest.cs" />
     <Compile Include="VoxelEngine\HermiteGrids\CSGTest.cs" />
     <Compile Include="VoxelEngine\HermiteGrids\DensityHermiteGridTest.cs" />
@@ -73,7 +74,6 @@
     <Compile Include="VoxelEngine\QEFTest.cs" />
     <Compile Include="VoxelEngine\MultiMaterialRenderingTest.cs" />
     <Compile Include="VoxelEngine\Environments\DualContouringTestEnvironment.cs" />
-    <Compile Include="VoxelEngine\Environments\TerrainLodEnvironment.cs" />
     <Compile Include="VoxelEngine\Environments\VisualTestingEnvironment.cs" />
     <Compile Include="VoxelEngine\VoxelTerrainGenerationTest.cs" />
     <Compile Include="WrapperTest.cs" />

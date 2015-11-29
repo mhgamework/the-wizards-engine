@@ -5,6 +5,7 @@ using DirectX11;
 using MHGameWork.TheWizards.DualContouring;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
+using MHGameWork.TheWizards.VoxelEngine.DualContouring.Generation;
 using MHGameWork.TheWizards.VoxelEngine.Environments;
 using NUnit.Framework;
 
@@ -96,7 +97,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
         [Test]
         public void TestGenerateTerrain([Values(16, 32, 64)] int size)
         {
-            var dens = VoxelTerrainGenerationTest.createDensityFunction5Perlin(11, 10);
+            var dens = GenerationUtils.createDensityFunction5Perlin(11, 10);
             var densityGrid = (AbstractHermiteGrid)new DensityFunctionHermiteGrid(dens, new Point3(size, size, size));
 
             var times = 10;
@@ -120,7 +121,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
         [Test]
         public void TestCountDensLookups20()
         {
-            var dens = VoxelTerrainGenerationTest.createDensityFunction5Perlin(11, 10);
+            var dens = GenerationUtils.createDensityFunction5Perlin(11, 10);
 
 
             var numLookups = 0;
@@ -146,7 +147,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
         [Test]
         public void TestDensityCalcPerformance()
         {
-            var dens = VoxelTerrainGenerationTest.createDensityFunction5Perlin(11, 10);
+            var dens = GenerationUtils.createDensityFunction5Perlin(11, 10);
 
             var times = 10000;
             var s = new Stopwatch();
@@ -203,7 +204,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
         [Test]
         public void EstimateLodDensitySamplingPerformance()
         {
-            var env = new TerrainLodEnvironment();
+            var env = new MultithreadedTerrainLodDemo();
 
 
             // At the moment of writing we averaged 3 densities per cell for 16x16x16, but lets assume its 1 (when alot of single material chunks exist)
@@ -215,7 +216,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
             estimateSamplingPerformance(extraSimulate, numIts, env, numMeshes);
         }
 
-        private static void estimateSamplingPerformance(int extraSimulate, int numIts, TerrainLodEnvironment env, int numMeshes)
+        private static void estimateSamplingPerformance(int extraSimulate, int numIts, MultithreadedTerrainLodDemo env, int numMeshes)
         {
             var perf = PerformanceHelper.Measure(() =>
                 {

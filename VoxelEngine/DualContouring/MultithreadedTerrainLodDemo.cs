@@ -12,13 +12,16 @@ using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using SlimDX.DirectInput;
 using System.Linq;
+using MHGameWork.TheWizards.VoxelEngine.DualContouring.Generation;
 
 namespace MHGameWork.TheWizards.VoxelEngine.Environments
 {
     /// <summary>
     /// Shows a terrain with lod based on clipmaps but with an octree like procworld (so no stitching chunks or continuous scrolling)
+    /// Multithreaded implementation, generates data on multiple threads
+    /// Older implementation
     /// </summary>
-    public class TerrainLodEnvironment
+    public class MultithreadedTerrainLodDemo
     {
         public LodOctreeMeshBuilder meshBuilder = new LodOctreeMeshBuilder();
         private LodOctree<LodOctreeNode> tree;
@@ -35,7 +38,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Environments
         private Vector3 eyePosition = new Vector3(0, 0, 0);
         private Textarea TextOutput;
 
-        public TerrainLodEnvironment()
+        public MultithreadedTerrainLodDemo()
         {
 
             tree = new LodOctree<LodOctreeNode>();
@@ -47,7 +50,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Environments
             octreeOffset = new Vector3(0, 0, 0);
 
 
-            density = VoxelTerrainGenerationTest.createDensityFunction5Perlin(17, size / 2);
+            density = GenerationUtils .createDensityFunction5Perlin(17, size / 2);
             //density = v => DensityHermiteGridTest.SineXzDensityFunction(v, 1/5f, size/2, 3);
             density = densityFunction;
             densityGrid = new DensityFunctionHermiteGrid(density, new Point3(size, size, size));
@@ -57,7 +60,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Environments
 
 
         }
-        Array3D<float> noise = VoxelTerrainGenerationTest.generateNoise(15);
+        Array3D<float> noise = GenerationUtils.generateNoise(15);
 
         public float densityFunction(Vector3 v)
         {
