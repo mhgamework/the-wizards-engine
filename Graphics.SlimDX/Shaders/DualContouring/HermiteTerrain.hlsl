@@ -1,7 +1,7 @@
 //
-// InvertColorCS.hlsl
+// Evaluate a signed density grid into signs, intersections and normals for dualcontouring
 //
-// Copyright (C) 2010  Jason Zink 
+// Shader Macro: DENSITY_FUNC
 
 // Declare the input and output resources
 Texture3D<float>        PerlinNoise : register( t0 );           
@@ -85,25 +85,11 @@ float sampleNoise(float3 coord)
 	return (PerlinNoise.SampleLevel(TrilinearRepeat, coord,0).x-0.5)*2.0;
 }
 
-float getDensity(float3 ws)
+float getDensityCaves(float3 ws)
 {
-	ws = ws * scale.xyz + offset.xyz;
-
-	//ws /= 64.0; //0-1
-	//return sampleNoise(ws) ;
-	float density;
-	//ws *= 0.25f;
-	//ws.y *=0.05;
-
-	//ws -= uint3(fullSize,fullSize,fullSize)/2;
-	//density = fullSize*0.4f - sqrt(ws.x*ws.x + ws.y*ws.y + ws.z*ws.z);
-	//density = fullSize*0.4f - abs(ws.x)-abs(ws.y) -abs(ws.z);
-	//return density;
-
-
-	//float scale =1.0f / 64;	density = 30.4-ws.y; // Testing default!
-	float scale =1.0f / 64;	density = 1000-ws.y;
-
+	float density = 0;
+	float scale =1.0f / 64;
+	//density = 0;
 
 	//float scale =1.0f / 8; density = 4-ws.z;
 	float3 samplePos = ws*scale*0.05f + float3(0.3f,0.3f,0.3f);
@@ -176,6 +162,201 @@ float getDensity(float3 ws)
 
 	return density;
 }
+
+float getDensityTerrain(float3 ws)
+{
+	float density;
+
+	float scale =1.0f / 64;	density = 1000-ws.y;
+
+	float3 samplePos = ws*scale*0.05f + float3(0.3f,0.3f,0.3f);
+
+	float multiplier = 20;
+
+	density += sampleNoise( samplePos*4.03f)*0.25f * multiplier;  
+	density += sampleNoise(samplePos*1.96f)*0.50f * multiplier;  
+	density += sampleNoise( samplePos*1.01)*1.00 * multiplier;  
+	density += sampleNoise( samplePos*0.49)*2.00 * multiplier;  
+	density += sampleNoise( samplePos*0.26)*4.00 * multiplier;    
+
+	return density;
+}
+float getDensityTerrainTesting(float3 ws)
+{
+	float density;
+
+	float scale =1.0f / 64;	density = 30.4-ws.y; // Testing default!
+
+	//float scale =1.0f / 8; density = 4-ws.z;
+	float3 samplePos = ws*scale*0.05f + float3(0.3f,0.3f,0.3f);
+
+		float multiplier = 20;
+
+
+
+
+	//return 64-ws.y;
+	//density = 50.0-ws.y;
+	
+
+	/*float q000 = 1;
+	float q001 = -1;
+	float q010 = -1;
+	float q011 = -1;
+	float q100 = -1;
+	float q101 = -1;
+	float q110 = -1;
+	float q111 = -1;
+
+	ws /= 64.0;
+	float x00 = lerp(q000,q100,ws.x);
+	float x01 = lerp(q001,q101,ws.x);
+	float x10 = lerp(q010,q110,ws.x);
+	float x11 = lerp(q011,q111,ws.x);
+	float y0 = lerp(x00,x10,ws.y);
+	float y1 = lerp(x01,x11,ws.y);
+	density = lerp(y0,y1,ws.z);
+	return density;*/
+	//density += sampleNoise( (ws+float3(0.5f,0.5f,0.5f))/64.0/4.0);  
+	//density += sampleNoise( (ws+float3(0.5f,0.5f,0.5f))/64.0/4.0/2.1)*2;  
+	//density += sampleNoise( (ws+float3(0.5f,0.5f,0.5f))/64.0/4.0/3.9)*4;  
+	//density += sampleNoise( (ws+float3(0.5f,0.5f,0.5f))/64.0/4.0/8.05)*8;  
+	//density /= 10000.0;
+	//density += sin(ws.x/2)+sin(ws.z/2);
+	//return density;
+	//density += sin(DispatchThreadID.x);
+	//density += sin(DispatchThreadID.z);
+	//density = density + PerlinNoise.SampleLevel(TrilinearRepeat, samplePos,0).x * 3;  
+
+
+
+
+
+
+	density += sampleNoise( samplePos*4.03f)*0.25f * multiplier;  
+	density += sampleNoise(samplePos*1.96f)*0.50f * multiplier;  
+	density += sampleNoise( samplePos*1.01)*1.00 * multiplier;  
+	density += sampleNoise( samplePos*0.49)*2.00 * multiplier;  
+	density += sampleNoise( samplePos*0.26)*4.00 * multiplier;    
+
+
+
+
+
+
+	//density += sampleNoise( samplePos*0.120)*8.00 * multiplier;  
+	//density += sampleNoise( samplePos*0.061)*16.00 * multiplier;  
+
+	//density += sampleNoise( ws *scale*0.05f)*20.0;
+	//density += sampleNoise( ws *scale)*5.0;
+
+
+	/*density = density + PerlinNoise.SampleLevel(TrilinearRepeat, samplePos*(1.0f/15),0).x * 20; 
+	density = density + PerlinNoise.SampleLevel(TrilinearRepeat, samplePos*(1.0f/55),0).x * 50; 
+	density = density + PerlinNoise.SampleLevel(TrilinearRepeat, samplePos*(1.0f/90),0).x * 80; 
+	density = density + PerlinNoise.SampleLevel(TrilinearRepeat, samplePos*(1.0f/200),0).x * 200; */
+
+	return density;
+}
+
+float getDensityOld(float3 ws)
+{
+	//ws /= 64.0; //0-1
+	//return sampleNoise(ws) ;
+	float density;
+	//ws *= 0.25f;
+	//ws.y *=0.05;
+
+	//ws -= uint3(fullSize,fullSize,fullSize)/2;
+	//density = fullSize*0.4f - sqrt(ws.x*ws.x + ws.y*ws.y + ws.z*ws.z);
+	//density = fullSize*0.4f - abs(ws.x)-abs(ws.y) -abs(ws.z);
+	//return density;
+
+
+	//float scale =1.0f / 64;	density = 30.4-ws.y; // Testing default!
+	float scale =1.0f / 64;	density = 1000-ws.y;
+
+	//float scale =1.0f / 8; density = 4-ws.z;
+	float3 samplePos = ws*scale*0.05f + float3(0.3f,0.3f,0.3f);
+
+		float multiplier = 20;
+
+
+
+
+	//return 64-ws.y;
+	//density = 50.0-ws.y;
+	
+
+	/*float q000 = 1;
+	float q001 = -1;
+	float q010 = -1;
+	float q011 = -1;
+	float q100 = -1;
+	float q101 = -1;
+	float q110 = -1;
+	float q111 = -1;
+
+	ws /= 64.0;
+	float x00 = lerp(q000,q100,ws.x);
+	float x01 = lerp(q001,q101,ws.x);
+	float x10 = lerp(q010,q110,ws.x);
+	float x11 = lerp(q011,q111,ws.x);
+	float y0 = lerp(x00,x10,ws.y);
+	float y1 = lerp(x01,x11,ws.y);
+	density = lerp(y0,y1,ws.z);
+	return density;*/
+	//density += sampleNoise( (ws+float3(0.5f,0.5f,0.5f))/64.0/4.0);  
+	//density += sampleNoise( (ws+float3(0.5f,0.5f,0.5f))/64.0/4.0/2.1)*2;  
+	//density += sampleNoise( (ws+float3(0.5f,0.5f,0.5f))/64.0/4.0/3.9)*4;  
+	//density += sampleNoise( (ws+float3(0.5f,0.5f,0.5f))/64.0/4.0/8.05)*8;  
+	//density /= 10000.0;
+	//density += sin(ws.x/2)+sin(ws.z/2);
+	//return density;
+	//density += sin(DispatchThreadID.x);
+	//density += sin(DispatchThreadID.z);
+	//density = density + PerlinNoise.SampleLevel(TrilinearRepeat, samplePos,0).x * 3;  
+
+
+
+
+
+
+	density += sampleNoise( samplePos*4.03f)*0.25f * multiplier;  
+	density += sampleNoise(samplePos*1.96f)*0.50f * multiplier;  
+	density += sampleNoise( samplePos*1.01)*1.00 * multiplier;  
+	density += sampleNoise( samplePos*0.49)*2.00 * multiplier;  
+	density += sampleNoise( samplePos*0.26)*4.00 * multiplier;    
+
+
+
+
+
+
+	//density += sampleNoise( samplePos*0.120)*8.00 * multiplier;  
+	//density += sampleNoise( samplePos*0.061)*16.00 * multiplier;  
+
+	//density += sampleNoise( ws *scale*0.05f)*20.0;
+	//density += sampleNoise( ws *scale)*5.0;
+
+
+	/*density = density + PerlinNoise.SampleLevel(TrilinearRepeat, samplePos*(1.0f/15),0).x * 20; 
+	density = density + PerlinNoise.SampleLevel(TrilinearRepeat, samplePos*(1.0f/55),0).x * 50; 
+	density = density + PerlinNoise.SampleLevel(TrilinearRepeat, samplePos*(1.0f/90),0).x * 80; 
+	density = density + PerlinNoise.SampleLevel(TrilinearRepeat, samplePos*(1.0f/200),0).x * 200; */
+
+	return density;
+}
+
+float getDensity(float3 ws)
+{
+	ws = ws * scale.xyz + offset.xyz;
+
+	//return getDensityCaves(ws);
+	//return getDensityTerrain(ws);
+	return DENSITY_FUNC(ws);
+}
+
 #define diff  0.1
 float3 calculateNormal(float3 pos)
 {

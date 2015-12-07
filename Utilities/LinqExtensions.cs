@@ -58,6 +58,11 @@ namespace MHGameWork.TheWizards
             Console.WriteLine(str);
             return str;
         }
+        public static string Print(this string str, string formattedString)
+        {
+            Console.WriteLine(formattedString, str);
+            return str;
+        }
         public static IEnumerable<T> Print<T>(this IEnumerable<T> list)
         {
             foreach (var l in list)
@@ -74,7 +79,7 @@ namespace MHGameWork.TheWizards
 
         public static T[] Single<T>(this T obj)
         {
-            return new[] {obj};
+            return new[] { obj };
         }
     }
 }

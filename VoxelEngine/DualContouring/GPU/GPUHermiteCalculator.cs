@@ -27,13 +27,18 @@ namespace MHGameWork.TheWizards.DualContouring.GPU
 
         private const int ThreadGroupSize = 8; // corresponds to shader
 
-        public GPUHermiteCalculator(DX11Game game)
+        public GPUHermiteCalculator( DX11Game game ): this( game, "getDensityTerrainTesting" )
+        {
+            
+        }
+        public GPUHermiteCalculator(DX11Game game, string densityFuncName)
         {
             this.game = game;
             context = game.Device.ImmediateContext;
-            csX = loadComputeShader(CompiledShaderCache.Current.RootShaderPath + "DualContouring\\HermiteTerrain.hlsl", "CSGridSigns");
+            var shaderMacros = new []{new ShaderMacro("DENSITY_FUNC",densityFuncName)};
+            csX = loadComputeShader(CompiledShaderCache.Current.RootShaderPath + "DualContouring\\HermiteTerrain.hlsl", "CSGridSigns", shaderMacros );
 
-            csIntersections = loadComputeShader(CompiledShaderCache.Current.RootShaderPath + "DualContouring\\HermiteTerrain.hlsl", "CSCalcIntersections");
+            csIntersections = loadComputeShader(CompiledShaderCache.Current.RootShaderPath + "DualContouring\\HermiteTerrain.hlsl", "CSCalcIntersections", shaderMacros);
 
             var random = new Random(0);
 
@@ -121,9 +126,9 @@ namespace MHGameWork.TheWizards.DualContouring.GPU
         }
 
 
-        private ComputeShader loadComputeShader(string file, string entrypoint)
+        private ComputeShader loadComputeShader( string file, string entrypoint, ShaderMacro[] defines )
         {
-            var bytecode = ShaderBytecode.CompileFromFile(file, entrypoint, "cs_5_0", ShaderFlags.Debug | ShaderFlags.SkipOptimization, EffectFlags.None);
+            var bytecode = ShaderBytecode.CompileFromFile(file, entrypoint, "cs_5_0", ShaderFlags.Debug | ShaderFlags.SkipOptimization, EffectFlags.None,defines,null);
             //Console.WriteLine(bytecode.Disassemble());
             var ret = new ComputeShader(game.Device, bytecode);
             return ret;
