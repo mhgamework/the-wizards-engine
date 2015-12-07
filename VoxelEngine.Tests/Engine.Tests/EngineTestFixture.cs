@@ -35,10 +35,16 @@ namespace MHGameWork.TheWizards.Engine.Tests
         private DeveloperConsole developerConsole;
         private TestInfoUserinterface testInfoUserinterface;
 
+        /// <summary>
+        /// Set to false to NOT start engine after executing test method
+        /// </summary>
+        public bool EngineEnabled { get; set; }
 
         [SetUp]
         public void InitializeEngine()
         {
+            EngineEnabled = true;
+                 
             engine = EngineFactory.CreateEngine();
             engine.DontLoadPlugin = true;
 
@@ -80,9 +86,11 @@ namespace MHGameWork.TheWizards.Engine.Tests
             developerConsole = new DeveloperConsole(developerConsoleSimulator.ConsoleUi, delegateCommandProvider);
         }
 
+
         [TearDown]
         public void RunEngine()
         {
+            if (!EngineEnabled) return;
             //engine.AddSimulator(new TestUISimulator());
             engine.AddSimulator(new UISimulator());
 
