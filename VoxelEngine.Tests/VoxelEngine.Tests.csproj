@@ -58,7 +58,8 @@
     <Compile Include="Engine.Tests\DeveloperConsoleSimulator.cs" />
     <Compile Include="Engine.Tests\FacadesImplementation\DeveloperConsole.cs" />
     <Compile Include="Engine.Tests\TestInfoUserinterface.cs" />
-    <Compile Include="VoxelEngine\LargeWorldPerformanceTests.cs" />
+    <Compile Include="VoxelEngine\LargeWorldTests\DCOctreeBuilder.cs" />
+    <Compile Include="VoxelEngine\LargeWorldTests\LargeWorldPerformanceTests.cs" />
     <Compile Include="VoxelEngine\LargeWorldRendererTest.cs" />
     <Compile Include="VoxelEngine\LodTest.cs" />
     <Compile Include="VoxelEngine\HermiteGrids\BasicShapeBuilderTest.cs" />
