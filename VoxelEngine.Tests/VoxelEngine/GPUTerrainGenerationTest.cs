@@ -24,6 +24,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
         [Test]
         public void TestCalculateDensityGridSigns()
         {
+            EngineEnabled = false;
             var game = new DX11Game();
             game.InitDirectX();
             var size = 256;

@@ -96,6 +96,30 @@ namespace MHGameWork.TheWizards.VoxelEngine
             return new DCNode() { signs = 128, Children = children };
         }
 
+        public DCNode BuildTreeBottomUpScanning(Point3 point3, int i, byte[] signs, int size)
+        {
+
+            byte[] summed = new byte[signs.Length];
+
+
+            int num = 0;
+            for (int z = 0; z < size - 1; z++)
+                for (int y = 0; y < size - 1; y++)
+                    for (int x = 0; x < size - 1; x++)
+                    {
+                        var sum = 0;
+                        for (int j = 0; j < 8; j++)
+                        {
+                            //int index = x + size*( y + size*z ) + j;
+                            int index = 0;
+                            sum = sum | signs[index];
+                        }
+                        summed[num] = (byte)sum;
+                        num++;
+                    }
+
+            return null;
+        }
     }
     public class DCNode : IOctreeNode<DCNode>
     {

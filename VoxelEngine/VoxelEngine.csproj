@@ -85,6 +85,9 @@
     <Compile Include="DualContouring\Octrees\DCOctree.cs" />
     <Compile Include="DualContouring\Terrain\IOctreeNode.cs" />
     <Compile Include="DualContouring\Terrain\IOctreeNodeFactory.cs" />
+    <Compile Include="DynamicWorld\Chunk.cs" />
+    <Compile Include="DynamicWorld\SDFTerrainGenerator.cs" />
+    <Compile Include="DynamicWorld\SignedOctreeNode.cs" />
     <Compile Include="EngineServices\VoxelRenderingService.cs" />
     <Compile Include="Persistence\HermiteDataPersister.cs" />
     <Compile Include="Persistence\IHermiteData.cs" />

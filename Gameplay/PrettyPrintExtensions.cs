@@ -17,7 +17,11 @@ namespace MHGameWork.TheWizards.DualContouring
             if (secs > 1)
                 return string.Format("{0:0.00} ms", secs);
             secs *= 1000;
-            return string.Format("{0:0.00} µs", secs);
+            if (secs > 1)
+                return string.Format("{0:0.00} µs", secs);
+            secs *= 1000;
+
+            return string.Format("{0:0.00} ns", secs);
 
         }
     }

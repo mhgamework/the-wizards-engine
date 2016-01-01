@@ -19,6 +19,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
     ///  - Asses how fast we can generate a large 16k terrain using gpu
     ///  - Speedup GPU/CPU interaction
     ///  - Find out if we can store the data
+    ///  - Benchmark CPU based octree-gen speed
     /// </summary>
     public class LargeWorldPerformanceTests : EngineTestFixture
     {
@@ -93,23 +94,80 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
             var builder = new DCOctreeBuilder();
 
-            var times = 10;
+            var times = 3;
 
-            var time = PerformanceHelper.Measure( () =>
+            var time = PerformanceHelper.Measure(() =>
             {
-                for ( int i = 0; i < times; i++ )
+                for (int i = 0; i < times; i++)
                 {
                     var root = builder.BuildTree(new Point3(0, 0, 0), signsSize, signs, signsSize);
-                    
+
                 }
 
-            } );
-            
-            
-            Console.WriteLine("{0:#.0}x{0:#.0}x{0:#.0} grid to octree per second", Math.Pow(signsSize*signsSize*signsSize / (time.TotalSeconds / times), 1 / 3f));
-            
+            });
 
 
+            printGridSpeed("BuildOctreeEmptySpeed", time, times, signsSize);
+
+
+        }
+
+        [Test]
+        public void TestBuildOctreeRandomSpeed()
+        {
+            EngineEnabled = false;
+            var signsSize = 128;
+            var signs = new byte[signsSize * signsSize * signsSize * 4];
+            var r = new Random();
+            r.NextBytes( signs );
+            var builder = new DCOctreeBuilder();
+
+            var times = 3;
+
+            var time = PerformanceHelper.Measure(() =>
+            {
+                for (int i = 0; i < times; i++)
+                {
+                    var root = builder.BuildTree(new Point3(0, 0, 0), signsSize, signs, signsSize);
+
+                }
+
+            });
+
+
+            printGridSpeed("BuildOctreeEmptySpeed", time, times, signsSize);
+
+
+        }
+        [Test]
+        public void TestBuildOctreeBottomUpScanning()
+        {
+            EngineEnabled = false;
+            var signsSize = 128;
+            var signs = new byte[signsSize * signsSize * signsSize * 4];
+
+            var builder = new DCOctreeBuilder();
+
+            var times = 1;
+
+            var time = PerformanceHelper.Measure(() =>
+            {
+                for (int i = 0; i < times; i++)
+                {
+                    var root = builder.BuildTreeBottomUpScanning(new Point3(0, 0, 0), signsSize, signs, signsSize);
+
+                }
+
+            });
+
+
+            printGridSpeed("BottomUpScanning", time, times, signsSize);
+        }
+
+        private void printGridSpeed(string name, TimeSpan time, int times, int signsSize)
+        {
+            Console.WriteLine(name + ": {0}", secPerGridToGridPerSec(time.TotalSeconds / times, signsSize));
+            Console.WriteLine(name + ": {0} sec per voxel {1}^3", time.Multiply(1.0 / times).PrettyPrint(), signsSize);
         }
 
 
@@ -119,6 +177,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
         [Test]
         public void TestBuildOctrees()
         {
+            EngineEnabled = false;
             var leafs = getAllLeafs();
 
             var gpu = generateTerrainSigns(leafs);
@@ -129,13 +188,44 @@ namespace MHGameWork.TheWizards.VoxelEngine
                 foreach (var l in leafs)
                 {
                     //TODO: scale for downsampled nodes?
-                    builder.BuildTree(l.LowerLeft, l.Size, l.Signs, 16);
+                    //builder.BuildTree(l.LowerLeft, l.Size, l.Signs, 16);
+                    builder.BuildTree(l.LowerLeft, minNodeSize, l.Signs, minNodeSize);
+
                 }
             });
 
         }
 
+        [Test]
+        public void TestOrAllSigns()
+        {
+            EngineEnabled = false;
 
+            var size = 128;
+            var signs = new byte[size * size * size];
+            int acc = 0;
+            var times = 10;
+            var time = PerformanceHelper.Measure(() =>
+            {
+                for (int j = 0; j < times; j++)
+                {
+                    for (int i = 0; i < signs.Length; i++)
+                    {
+                        //if ( signs[ i ] == 0 ) acc++;
+                        acc = (byte)(acc | signs[i]);
+                    }
+                }
+
+            });
+
+            Console.WriteLine("Speed: {0}", secPerGridToGridPerSec(time.TotalSeconds / times, size));
+
+        }
+
+        private object secPerGridToGridPerSec(double totalSeconds, int size)
+        {
+            return String.Format("{0:#.0}x{0:#.0}x{0:#.0} grid per second", Math.Pow(size * size * size / totalSeconds, 1 / 3f));
+        }
 
 
         private void addSimulator_GenerateDensityToSurfaceOnePerFrame(List<SimpleNode> leafs, GPUHermiteCalculator gpu)
@@ -154,8 +244,8 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
         private GPUHermiteCalculator generateTerrainSigns(List<SimpleNode> leafs)
         {
-            var gpu = new GPUHermiteCalculator(TW.Graphics, "getDensityTerrain");
-            //var gpu = new GPUHermiteCalculator( TW.Graphics, "getDensityCaves" );
+            //var gpu = new GPUHermiteCalculator(TW.Graphics, "getDensityTerrain");
+            var gpu = new GPUHermiteCalculator( TW.Graphics, "getDensityCaves" );
             var signsTex = gpu.CreateDensitySignsTexture(minNodeSize + 2); // One bigger to touch the next cell
 
             var cache = GPUTexture3D.CreateStaging(TW.Graphics, signsTex);
