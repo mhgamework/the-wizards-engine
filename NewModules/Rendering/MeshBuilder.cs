@@ -68,6 +68,14 @@ namespace MHGameWork.TheWizards.Rendering
             }
         }
 
+        public void AddCustom(Vector3[] nPositions)
+        {
+            AddCustom(nPositions, nPositions.Select(p => new Vector3()).ToArray());
+        }
+        public void AddCustom(Vector3[] nPositions, Vector3[] nNormals)
+        {
+            AddCustom(nPositions, nNormals, nPositions.Select(p => new Vector2()).ToArray());
+        }
         public void AddCustom(Vector3[] nPositions, Vector3[] nNormals, Vector2[] nTexcoords)
         {
             AddCustom(nPositions, nNormals, nTexcoords, defaultMaterial);
@@ -306,7 +314,7 @@ namespace MHGameWork.TheWizards.Rendering
             return mesh;
         }
 
-        private XnaVector3[] calculateTangents( MeshData data )
+        private XnaVector3[] calculateTangents(MeshData data)
         {
             var solver = new TangentSolver();
             return solver.GenerateTangents(data.Positions.ToArray(), data.Normals.ToArray(), data.Texcoords.ToArray()).Select(v => new Vector3(v.X, v.Y, v.Z).xna()).ToArray();

@@ -55,7 +55,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DynamicWorld\FlatWorldGeneratorTest.cs" />
+    <Compile Include="DynamicWorld\OctreeDC\OctreeDCAlgorithmTest.cs" />
     <Compile Include="DynamicWorld\SDFTerrainGeneratorTest.cs" />
+    <Compile Include="DynamicWorld\SignedOctreeBuilderTest.cs" />
+    <Compile Include="DynamicWorld\WorldHolderTest.cs" />
     <Compile Include="Engine.Tests\DeveloperConsoleSimulator.cs" />
     <Compile Include="Engine.Tests\FacadesImplementation\DeveloperConsole.cs" />
     <Compile Include="Engine.Tests\TestInfoUserinterface.cs" />

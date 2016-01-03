@@ -1,14 +1,37 @@
-﻿using DirectX11;
+﻿using System.Collections.Generic;
+using System.Linq;
+using DirectX11;
 using MHGameWork.TheWizards.DualContouring.Terrain;
 
 namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld
 {
+    /// <summary>
+    /// Octree node for a octree with grid signs.
+    /// </summary>
     public class SignedOctreeNode : IOctreeNode<SignedOctreeNode>
     {
+        public static List<Point3> SignOffsets { get; private set; }
+        //private readonly int[][] edgeToVertices;
+        //private readonly List<Point3[]> cubeEdges;
+
+
+        static SignedOctreeNode()
+        {
+            SignOffsets = ( from x in Enumerable.Range( 0, 2 )
+                from y in Enumerable.Range( 0, 2 )
+                from z in Enumerable.Range( 0, 2 )
+                select new Point3( x, y, z ) ).ToList();
+        }
+
+
         public SignedOctreeNode[] Children { get; set; }
         public Point3 LowerLeft { get; set; }
         public int Size { get; set; }
         public int Depth { get; set; }
+
+        public bool[] Signs { get; set; }
+
+
         public void Initialize( SignedOctreeNode parent )
         {
         }
