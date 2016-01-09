@@ -67,10 +67,11 @@ namespace MHGameWork.TheWizards.VoxelEngine
         [Test]
         public void TestBuildOctree()
         {
-            var signsSize = 4;
+            throw new NotImplementedException(); // Replaced by SignedOctreeBuilderTest
+            /*var signsSize = 4;
             var signs = new byte[signsSize * signsSize * signsSize * 4];
 
-            var builder = new DCOctreeBuilder();
+            var builder = new SignedOctreeBuilder();
 
             var root = builder.BuildTree(new Point3(0, 0, 0), signsSize, signs, signsSize);
 
@@ -81,7 +82,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
             root = builder.BuildTree(new Point3(0, 0, 0), signsSize, signs, signsSize);
 
-            Assert.AreEqual(255, root.signs);
+            Assert.AreEqual(255, root.signs);*/
 
         }
 
@@ -92,7 +93,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
             var signsSize = 128;
             var signs = new byte[signsSize * signsSize * signsSize * 4];
 
-            var builder = new DCOctreeBuilder();
+            var builder = new SignedOctreeBuilder();
 
             var times = 3;
 
@@ -100,7 +101,8 @@ namespace MHGameWork.TheWizards.VoxelEngine
             {
                 for (int i = 0; i < times; i++)
                 {
-                    var root = builder.BuildTree(new Point3(0, 0, 0), signsSize, signs, signsSize);
+                    throw new NotImplementedException();
+                    //var root = builder.BuildTree(new Point3(0, 0, 0), signsSize, signs, signsSize);
 
                 }
 
@@ -120,7 +122,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
             var signs = new byte[signsSize * signsSize * signsSize * 4];
             var r = new Random();
             r.NextBytes( signs );
-            var builder = new DCOctreeBuilder();
+            var builder = new SignedOctreeBuilder();
 
             var times = 3;
 
@@ -128,7 +130,8 @@ namespace MHGameWork.TheWizards.VoxelEngine
             {
                 for (int i = 0; i < times; i++)
                 {
-                    var root = builder.BuildTree(new Point3(0, 0, 0), signsSize, signs, signsSize);
+                    throw new NotImplementedException();
+                    //var root = builder.BuildTree(new Point3(0, 0, 0), signsSize, signs, signsSize);
 
                 }
 
@@ -146,7 +149,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
             var signsSize = 128;
             var signs = new byte[signsSize * signsSize * signsSize * 4];
 
-            var builder = new DCOctreeBuilder();
+            var builder = new SignedOctreeBuilder();
 
             var times = 1;
 
@@ -154,7 +157,8 @@ namespace MHGameWork.TheWizards.VoxelEngine
             {
                 for (int i = 0; i < times; i++)
                 {
-                    var root = builder.BuildTreeBottomUpScanning(new Point3(0, 0, 0), signsSize, signs, signsSize);
+                    throw new NotImplementedException();
+                    //var root = builder.BuildTreeBottomUpScanning(new Point3(0, 0, 0), signsSize, signs, signsSize);
 
                 }
 
@@ -182,14 +186,15 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
             var gpu = generateTerrainSigns(leafs);
 
-            var builder = new DCOctreeBuilder();
+            var builder = new SignedOctreeBuilder();
             PerformanceHelper.Measure(() =>
             {
                 foreach (var l in leafs)
                 {
                     //TODO: scale for downsampled nodes?
                     //builder.BuildTree(l.LowerLeft, l.Size, l.Signs, 16);
-                    builder.BuildTree(l.LowerLeft, minNodeSize, l.Signs, minNodeSize);
+                    throw new NotImplementedException();
+                    //builder.BuildTree(l.LowerLeft, minNodeSize, l.Signs, minNodeSize);
 
                 }
             });
@@ -281,7 +286,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
         public class SimpleNode : IOctreeNode<SimpleNode>
         {
-            public DCNode DCTree;
+            //public DCNode DCTree;
             /// <summary>
             /// This is x,y,z *4, with the first of 4 either 0 or 255
             /// </summary>

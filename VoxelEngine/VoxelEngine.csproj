@@ -86,10 +86,10 @@
     <Compile Include="DualContouring\Terrain\IOctreeNode.cs" />
     <Compile Include="DualContouring\Terrain\IOctreeNodeFactory.cs" />
     <Compile Include="DynamicWorld\Chunk.cs" />
+    <Compile Include="DynamicWorld\SignedOctreeBuilder.cs" />
     <Compile Include="DynamicWorld\FlatWorldGenerator.cs" />
     <Compile Include="DynamicWorld\OctreeDC\OctreeDCAlgorithm.cs" />
     <Compile Include="DynamicWorld\SDFTerrainGenerator.cs" />
-    <Compile Include="DynamicWorld\SignedOctreeBuilder.cs" />
     <Compile Include="DynamicWorld\SignedOctreeNode.cs" />
     <Compile Include="DynamicWorld\WorldHolder.cs" />
     <Compile Include="EngineServices\VoxelRenderingService.cs" />

@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests
     public class SignedOctreeBuilderTest
     {
         private SignedOctreeBuilder builder;
-        private float smallCubeSize = 8;
+        //private int smallCubeSize = 8;
 
         [SetUp]
         public void Setup()
@@ -21,7 +21,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests
         [Test]
         public void TestSignsToOctree_Signs_SmallCube()
         {
-            var tree = CreateOctreeSmallCube( smallCubeSize );
+            var tree = CreateOctreeSmallCube();
 
             Assert.AreEqual(8, tree.Signs.Count(s => s == false));
             Assert.NotNull(tree.Children);
@@ -29,12 +29,12 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests
                 Assert.AreEqual(7, c.Signs.Count(s => s == false));
         }
 
-        public SignedOctreeNode CreateOctreeSmallCube( float gridSize )
+        public SignedOctreeNode CreateOctreeSmallCube()
         {
             var signs = new Array3D<bool>( new global::DirectX11.Point3( 3, 3, 3 ) );
             signs[ new global::DirectX11.Point3( 1, 1, 1 ) ] = true;
 
-            var tree = builder.GenerateCompactedTreeFromSigns( signs, gridSize );
+            var tree = builder.GenerateCompactedTreeFromSigns( signs );
             return tree;
         }
 
@@ -43,7 +43,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests
         {
             var signs = new Array3D<bool>(new global::DirectX11.Point3(3, 3, 3));
 
-            var tree = builder.GenerateCompactedTreeFromSigns(signs, smallCubeSize);
+            var tree = builder.GenerateCompactedTreeFromSigns(signs);
 
             Assert.AreEqual(8, tree.Signs.Count(s => s == false));
             Assert.Null(tree.Children);
@@ -54,7 +54,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests
         {
             var signs = new Array3D<bool>(new global::DirectX11.Point3(3, 3, 3));
             signs.ForEach((b, p) => signs[p] = true);
-            var tree = builder.GenerateCompactedTreeFromSigns(signs, smallCubeSize);
+            var tree = builder.GenerateCompactedTreeFromSigns(signs);
 
             Assert.AreEqual(8, tree.Signs.Count(s => s == true));
             Assert.Null(tree.Children);
@@ -64,16 +64,17 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests
         public void TestCorrectRootsize()
         {
             var signs = new Array3D<bool>(new global::DirectX11.Point3(3, 3, 3));
-            var tree = builder.GenerateCompactedTreeFromSigns(signs, smallCubeSize);
+            var tree = builder.GenerateCompactedTreeFromSigns(signs);
 
-            Assert.AreEqual(smallCubeSize, tree.Size);
+            Assert.AreEqual(2, tree.Size);
         }
 
+        [Test]
         public void TestCompactComplexSigns_Sin()
         {
             var signs = new Array3D<bool>(new global::DirectX11.Point3(3, 3, 3));
             signs.ForEach((b, p) => signs[p] = Math.Sin(p.X) + Math.Sin(p.Z) < 0);
-            var tree = builder.GenerateCompactedTreeFromSigns(signs, smallCubeSize);
+            var tree = builder.GenerateCompactedTreeFromSigns(signs);
 
             var helper = new ClipMapsOctree<SignedOctreeNode>();
 
@@ -95,14 +96,14 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests
                         var offset = relative/( node.Size );
                         var signIndex = SignedOctreeNode.SignOffsets.IndexOf( offset );
                         
-                        Assert.AreEqual( actualSign, signIndex );
+                        Assert.AreEqual( actualSign, node.Signs[ signIndex] );
                         signFound = true;
 
                     }
 
                     if ( node.Children == null )
                     {
-                        //This is leaf, so either the corners have been verified in previous step, or this is an all full or all empty cube
+                        //This is leaf, so either the corners have been verified in previous step, or this is a compacted all full or all empty cube
                         Assert.IsTrue( node.Signs.All( sign => sign == actualSign ) );
                         signFound = true;
                     }

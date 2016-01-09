@@ -11,6 +11,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld
     public class SignedOctreeNode : IOctreeNode<SignedOctreeNode>
     {
         public static List<Point3> SignOffsets { get; private set; }
+        public static List<Point3> ChildOffsets { get { return SignOffsets;} } 
         //private readonly int[][] edgeToVertices;
         //private readonly List<Point3[]> cubeEdges;
 
@@ -29,6 +30,9 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld
         public int Size { get; set; }
         public int Depth { get; set; }
 
+        /// <summary>
+        /// Idea: maybe store signs as a flagged byte, and make this signs array into a materialid array
+        /// </summary>
         public bool[] Signs { get; set; }
 
 
@@ -39,5 +43,6 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld
         public void Destroy()
         {
         }
+
     }
 }

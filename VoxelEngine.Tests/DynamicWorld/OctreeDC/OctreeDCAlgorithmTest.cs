@@ -38,7 +38,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests.OctreeDC
         private SignedOctreeNode createSimpleCubeOctree()
         {
             var test = new SignedOctreeBuilderTest();
-            return test.CreateOctreeSmallCube(8);
+            return test.CreateOctreeSmallCube();
         }
     }
 }
