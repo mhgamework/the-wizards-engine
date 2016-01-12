@@ -11,17 +11,18 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld
     public class SignedOctreeNode : IOctreeNode<SignedOctreeNode>
     {
         public static List<Point3> SignOffsets { get; private set; }
-        public static List<Point3> ChildOffsets { get { return SignOffsets;} } 
+        public static List<Point3> ChildOffsets { get; private set; }
         //private readonly int[][] edgeToVertices;
         //private readonly List<Point3[]> cubeEdges;
 
 
         static SignedOctreeNode()
         {
-            SignOffsets = ( from x in Enumerable.Range( 0, 2 )
-                from y in Enumerable.Range( 0, 2 )
-                from z in Enumerable.Range( 0, 2 )
-                select new Point3( x, y, z ) ).ToList();
+            SignOffsets = (from x in Enumerable.Range(0, 2)
+                           from y in Enumerable.Range(0, 2)
+                           from z in Enumerable.Range(0, 2)
+                           select new Point3(x, y, z)).ToList();
+            ChildOffsets = ClipMapsOctree<SignedOctreeNode>.ChildOffsets.ToList();
         }
 
 
@@ -36,7 +37,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld
         public bool[] Signs { get; set; }
 
 
-        public void Initialize( SignedOctreeNode parent )
+        public void Initialize(SignedOctreeNode parent)
         {
         }
 
@@ -44,5 +45,9 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld
         {
         }
 
+        public override string ToString()
+        {
+            return string.Format("Depth: {3}, LowerLeft: {1}, Size: {2}, Children: {0}", Children, LowerLeft, Size, Depth);
+        }
     }
 }

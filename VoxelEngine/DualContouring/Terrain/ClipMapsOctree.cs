@@ -93,6 +93,8 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
                 var c = factory.Create(ret, childSize, ret.Depth + 1, ret.LowerLeft + ChildOffsets[i] * childSize);
                 c.Initialize(ret);
                 ret.Children[i] = c;
+                if ( recurse )
+                    Split( c, recurse, minSize );
             }
         }
 
