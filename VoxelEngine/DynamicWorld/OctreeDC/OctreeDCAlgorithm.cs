@@ -58,7 +58,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
             {
                 var i = quadVertices[ index ];
                 var n = nodes[ i ];
-                points.Add( n.LowerLeft + new Vector3( n.Size*0.5f ) );
+                points.Add( n.LowerLeft + n.QEF * n.Size );
             }
         }
 

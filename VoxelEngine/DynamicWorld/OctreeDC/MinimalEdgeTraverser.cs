@@ -206,17 +206,32 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
                 writeQuadsForCell(child);
             }
 
+            var faceNodes = new SignedOctreeNode[2];
+
             for (int i = 0; i < 12; i++) // For each face between children of this node
             {
                 var face = cellToFaces[i];
 
-                writeQuadsForFace(face.Children.Select(c => tree.Children[c]).ToArray(), face.dir);
+                //List<SignedOctreeNode> list = new List<SignedOctreeNode>();
+                for ( int iChild = 0; iChild < 2; iChild++ )
+                {
+                    //var c = face.Children[ iChild ];
+                    faceNodes[iChild] = tree.Children[face.Children[iChild]];
+                }
+                writeQuadsForFace(faceNodes, face.dir);
 
             }
+            var edgeNodes = new SignedOctreeNode[4];
+
             for (int i = 0; i < 6; i++) // For each edge between children of this node
             {
                 var edge = getEdgeForCell(i);
-                writeQuadsForEdge(edge.Children.Select(c => tree.Children[c]).ToArray(), edge.dir);
+                edgeNodes = new SignedOctreeNode[4];
+                for ( int iEdgeNode = 0; iEdgeNode < 4; iEdgeNode++ )
+                {
+                    edgeNodes[iEdgeNode]= tree.Children[ edge.Children[ iEdgeNode ] ] ;
+                }
+                writeQuadsForEdge(edgeNodes, edge.dir);
 
             }
         }
@@ -273,7 +288,14 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
 
             //Idea: can check that nodes are in the 00 01 11 10 order
             //Debug.Assert(node[0].LowerLeft[dir] <= node[1].LowerLeft[dir]);
-            if (node.All(n => n.Children == null))
+            bool allLeafs = true;
+            for (int i = 0; i < 4; i++)
+            {
+                if (node[i].Children == null) continue;
+                allLeafs = false;
+                break;
+            }
+            if (allLeafs)
             {
                 writeQuadForEdge(node, dir);
                 return;

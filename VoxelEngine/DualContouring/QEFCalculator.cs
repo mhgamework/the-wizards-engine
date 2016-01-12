@@ -13,6 +13,11 @@ namespace MHGameWork.TheWizards.DualContouring
         private static float[] BBuffer = new float[3];
 
 
+        public static Vector3 CalculateCubeQEFDX( Vector3[] normals, Vector3[] posses, Vector3 preferredPosition )
+        {
+            var res = CalculateCubeQEF( normals, posses, preferredPosition );
+            return new Vector3( res[ 0 ], res[ 1 ], res[ 2 ] );
+        }
         public static Vector<float> CalculateCubeQEF(Vector3[] normals, Vector3[] posses, Vector3 preferredPosition)
         {
             return CalculateCubeQEF( normals, posses, normals.Length, preferredPosition );

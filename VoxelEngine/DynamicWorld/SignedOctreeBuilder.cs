@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using DirectX11;
+using MHGameWork.TheWizards.DualContouring;
 using MHGameWork.TheWizards.DualContouring.Terrain;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using MHGameWork.TheWizards.VoxelEngine.DynamicWorld;
@@ -166,5 +168,39 @@ namespace MHGameWork.TheWizards.VoxelEngine
         //    return new SignedOctreeNode() { Signs = null, Children = children }; //TODO
         //}
 
+        public static SignedOctreeNode ConvertHermiteGridToOctree( HermiteDataGrid hermiteData)
+        {
+            var builder = new SignedOctreeBuilder();
+            var signs = new Array3D<bool>(hermiteData.Dimensions);
+            signs.ForEach((b, p) => { signs[p] = hermiteData.GetSign(p); });
+            var tree = builder.GenerateCompactedTreeFromSigns(signs);
+            var c = new ClipMapsOctree<SignedOctreeNode>();
+
+            var normals = new List<Vector3>();
+            var posses = new List<Vector3>();
+
+            c.VisitDepthFirst(tree, n =>
+            {
+                if (n.Size > 1) return;
+                var cube = new Point3(n.LowerLeft);
+                normals.Clear();
+                posses.Clear();
+                foreach (var edge in hermiteData.GetAllEdgeIds())
+                {
+                    var es = hermiteData.GetEdgeSigns(cube, edge);
+                    if (es[0] == es[1]) continue;
+                    normals.Add(hermiteData.GetEdgeNormal(cube, edge));
+                    posses.Add(hermiteData.GetEdgeIntersectionCubeLocal(cube, edge));
+                }
+                if (normals.Count == 0) return;
+                var qef = QEFCalculator.CalculateCubeQEFDX(
+                    normals.ToArray(),
+                    posses.ToArray(),
+                    posses.Aggregate((acc, el) => acc + el) / posses.Count);
+
+                n.QEF = qef;
+            });
+            return tree;
+        }
     }
 }

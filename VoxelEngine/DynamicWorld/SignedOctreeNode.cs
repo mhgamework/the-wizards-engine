@@ -36,6 +36,8 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld
         /// </summary>
         public bool[] Signs { get; set; }
 
+        public Vector3 QEF = new Vector3(0.5f,0.5f,0.5f);
+
 
         public void Initialize(SignedOctreeNode parent)
         {
