@@ -266,10 +266,12 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
             {
                 var edge = getSubEdgeForFace(dir, iEdge);
 
-                subEdgeNodes = new SignedOctreeNode[4]; //TODO: I have absolutely no clue why this is needed
+                //var newSubEdgeNodes = new SignedOctreeNode[4]; //TODO: I have absolutely no clue why this is needed
                 for (int i = 0; i < 4; i++)
-                    subEdgeNodes[i] = getChildOrParent(node[edge.Node[i]], edge.Child[i]);
-
+                {
+                    var signedOctreeNode = getChildOrParent(node[edge.Node[i]], edge.Child[i]);
+                    subEdgeNodes[i] = signedOctreeNode;
+                }
                 //var edgeNeighbours = Enumerable.Range(0, 4).Select(i => getChildOrParent(node[edge.Node[i]], edge.Child[i])).ToArray();
 
                 writeQuadsForEdge(subEdgeNodes, edge.Dir); // Edges have different dir than face

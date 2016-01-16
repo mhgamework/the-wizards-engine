@@ -27,7 +27,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests.OctreeDC
 
             algo = new MinimalEdgeTraverser((nodes, dir) =>
             {
-                edgeNodes.Add(nodes);
+                edgeNodes.Add(nodes.ToArray());
                 edgeDirs.Add(dir);
             });
             //TODO: Write a set of tests that validates the mapping set

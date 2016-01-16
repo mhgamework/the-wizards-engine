@@ -249,8 +249,8 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
         private GPUHermiteCalculator generateTerrainSigns(List<SimpleNode> leafs)
         {
-            //var gpu = new GPUHermiteCalculator(TW.Graphics, "getDensityTerrain");
-            var gpu = new GPUHermiteCalculator( TW.Graphics, "getDensityCaves" );
+            var gpu = new GPUHermiteCalculator(TW.Graphics, "getDensityTerrain");
+            //var gpu = new GPUHermiteCalculator( TW.Graphics, "getDensityCaves" );
             var signsTex = gpu.CreateDensitySignsTexture(minNodeSize + 2); // One bigger to touch the next cell
 
             var cache = GPUTexture3D.CreateStaging(TW.Graphics, signsTex);
