@@ -10,7 +10,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests
         public void TestGenerate()
         {
             var world = new WorldHolder( new global::DirectX11.Point3( 5, 3, 5 ) );
-            var gen = new FlatWorldGenerator( 0 );
+            var gen = new FlatWorldGenerator( 0 ,128);
 
             var c = world.GetChunk(new global::DirectX11.Point3(0, 0, 0));
             gen.GenerateChunk(c);

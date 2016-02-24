@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using DirectX11;
@@ -35,13 +36,13 @@ namespace MHGameWork.TheWizards.VoxelEngine
         /// <returns></returns>
         public SignedOctreeNode GenerateCompactedTreeFromSigns(Array3D<bool> signs)
         {
-            Debug.Assert( signs.Size.X == signs.Size.Y && signs.Size.Z == signs.Size.Y );
-            return GenerateCompactedTreeFromSigns(signs, signs.Size.X-1, new Point3());
+            Debug.Assert(signs.Size.X == signs.Size.Y && signs.Size.Z == signs.Size.Y);
+            return GenerateCompactedTreeFromSigns(signs, signs.Size.X - 1, new Point3(), 0);
         }
 
-        public SignedOctreeNode GenerateCompactedTreeFromSigns(Array3D<bool> signs, int size, Point3 offset)
+        public SignedOctreeNode GenerateCompactedTreeFromSigns(Array3D<bool> signs, int size, Point3 offset, int depth)
         {
-            var ret = createNewNode(signs, size, offset);
+            var ret = createNewNode(signs, size, offset, depth);
             if (size == 1) // Leaf
                 return ret;
 
@@ -50,7 +51,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
             {
                 var childSize = size / 2;
                 var childOffset = offset + SignedOctreeNode.ChildOffsets[i] * childSize;
-                var child = GenerateCompactedTreeFromSigns( signs, childSize, childOffset );
+                var child = GenerateCompactedTreeFromSigns(signs, childSize, childOffset, depth + 1);
                 ret.Children[i] = child;
             }
 
@@ -61,15 +62,15 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
         }
 
-        private bool canCollapse( SignedOctreeNode ret )
+        private bool canCollapse(SignedOctreeNode ret)
         {
             var all0 = true;
             var all1 = true;
-            for ( int i = 0; i < 8; i++ )
+            for (int i = 0; i < 8; i++)
             {
-                var child = ret.Children[ i ];
+                var child = ret.Children[i];
                 if (child.Children != null) return false; // Can't collapse if the children arent leafs
-                var count = child.Signs.Select( sign => sign ? 1 : 0 ).Sum();
+                var count = child.Signs.Select(sign => sign ? 1 : 0).Sum();
                 if (count != 0) all0 = false;
                 if (count != 8) all1 = false;
             }
@@ -79,7 +80,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
         /// <summary>
         /// Creates a new node without creating the children
         /// </summary>
-        private SignedOctreeNode createNewNode(Array3D<bool> signs, int size, Point3 offset)
+        private SignedOctreeNode createNewNode(Array3D<bool> signs, int size, Point3 offset, int depth)
         {
             var ret = new SignedOctreeNode();
 
@@ -91,6 +92,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
             }
             ret.LowerLeft = offset;
             ret.Size = size;
+            ret.Depth = depth;
             return ret;
         }
 
@@ -168,9 +170,9 @@ namespace MHGameWork.TheWizards.VoxelEngine
         //    return new SignedOctreeNode() { Signs = null, Children = children }; //TODO
         //}
 
-        public static SignedOctreeNode ConvertHermiteGridToOctree( HermiteDataGrid hermiteData)
+        public SignedOctreeNode ConvertHermiteGridToOctree(AbstractHermiteGrid hermiteData)
         {
-            var builder = new SignedOctreeBuilder();
+            var builder = this;
             var signs = new Array3D<bool>(hermiteData.Dimensions);
             signs.ForEach((b, p) => { signs[p] = hermiteData.GetSign(p); });
             var tree = builder.GenerateCompactedTreeFromSigns(signs);
@@ -198,6 +200,9 @@ namespace MHGameWork.TheWizards.VoxelEngine
                     posses.ToArray(),
                     posses.Aggregate((acc, el) => acc + el) / posses.Count);
 
+                if ( qef.MinComponent() < 0 || qef.MaxComponent() > 1 )
+                    qef = new Vector3( 0.5f );
+                    //Console.WriteLine( "err" );
                 n.QEF = qef;
             });
             return tree;

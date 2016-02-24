@@ -126,7 +126,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests.OctreeDC
                         new global::DirectX11.Point3(size, size, size)));
 
 
-            var tree = SignedOctreeBuilder.ConvertHermiteGridToOctree( hermiteData);
+            var tree = new SignedOctreeBuilder().ConvertHermiteGridToOctree( hermiteData);
             return tree;
         }
 

@@ -197,13 +197,13 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
 
 
 
-        public void writeQuadsForCell(SignedOctreeNode tree)
+        public void writeQuadsForCell(SignedOctreeNode tree, int maxDepth = int.MaxValue)
         {
-            if (tree.Children == null) return; // No quads inside leaf node
+            if (isLeaf(tree,maxDepth)) return; // No quads inside leaf node
             for (int i = 0; i < 8; i++)
             {
                 var child = tree.Children[i];
-                writeQuadsForCell(child);
+                writeQuadsForCell(child, maxDepth);
             }
 
             var faceNodes = new SignedOctreeNode[2];
@@ -213,12 +213,12 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
                 var face = cellToFaces[i];
 
                 //List<SignedOctreeNode> list = new List<SignedOctreeNode>();
-                for ( int iChild = 0; iChild < 2; iChild++ )
+                for (int iChild = 0; iChild < 2; iChild++)
                 {
                     //var c = face.Children[ iChild ];
                     faceNodes[iChild] = tree.Children[face.Children[iChild]];
                 }
-                writeQuadsForFace(faceNodes, face.dir);
+                writeQuadsForFace(faceNodes, face.dir, maxDepth);
 
             }
             var edgeNodes = new SignedOctreeNode[4];
@@ -227,11 +227,11 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
             {
                 var edge = getEdgeForCell(i);
                 edgeNodes = new SignedOctreeNode[4];
-                for ( int iEdgeNode = 0; iEdgeNode < 4; iEdgeNode++ )
+                for (int iEdgeNode = 0; iEdgeNode < 4; iEdgeNode++)
                 {
-                    edgeNodes[iEdgeNode]= tree.Children[ edge.Children[ iEdgeNode ] ] ;
+                    edgeNodes[iEdgeNode] = tree.Children[edge.Children[iEdgeNode]];
                 }
-                writeQuadsForEdge(edgeNodes, edge.dir);
+                writeQuadsForEdge(edgeNodes, edge.dir, maxDepth);
 
             }
         }
@@ -242,13 +242,14 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
         }
 
 
-        public void writeQuadsForFace(SignedOctreeNode[] node, int dir)
+        public void writeQuadsForFace(SignedOctreeNode[] node, int dir, int maxDepth = int.MaxValue)
         {
+            Debug.Assert(node[0].Depth <= maxDepth && node[1].Depth <= maxDepth);
             // If depth differs this check does nothing
             //Debug.Assert(node[0].Size != node[1].Size || Math.Abs(Vector3.Distance(node[0].LowerLeft, node[1].LowerLeft) - node[0].Size) < 0.001f);
             //Debug.Assert(node[0].LowerLeft[dir] < node[1].LowerLeft[dir]);
 
-            if (node[0].Children == null && node[1].Children == null) return; // There are no children, so this face is not split into subfaces or subedges
+            if (isLeaf(node[0], maxDepth) && isLeaf(node[1], maxDepth)) return; // There are no children, so this face is not split into subfaces or subedges
             var subFaceNodes = new SignedOctreeNode[2];
             for (int iFace = 0; iFace < 4; iFace++) // For each subface
             {
@@ -257,8 +258,8 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
                 //    subFaceNodes[j] = getChildOrParent(node[j], face.ChildForNode[j]);
 
                 for (int j = 0; j < 2; j++)
-                    subFaceNodes[j] = getChildOrParent(node[j], face.ChildForNode[j]);
-                writeQuadsForFace(subFaceNodes, dir);
+                    subFaceNodes[j] = getChildOrParent(node[j], face.ChildForNode[j], maxDepth);
+                writeQuadsForFace(subFaceNodes, dir, maxDepth);
             }
             var subEdgeNodes = new SignedOctreeNode[4];
 
@@ -269,18 +270,25 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
                 //var newSubEdgeNodes = new SignedOctreeNode[4]; //TODO: I have absolutely no clue why this is needed
                 for (int i = 0; i < 4; i++)
                 {
-                    var signedOctreeNode = getChildOrParent(node[edge.Node[i]], edge.Child[i]);
+                    var signedOctreeNode = getChildOrParent(node[edge.Node[i]], edge.Child[i], maxDepth);
                     subEdgeNodes[i] = signedOctreeNode;
                 }
                 //var edgeNeighbours = Enumerable.Range(0, 4).Select(i => getChildOrParent(node[edge.Node[i]], edge.Child[i])).ToArray();
 
-                writeQuadsForEdge(subEdgeNodes, edge.Dir); // Edges have different dir than face
+                writeQuadsForEdge(subEdgeNodes, edge.Dir, maxDepth); // Edges have different dir than face
 
             }
         }
 
-        public void writeQuadsForEdge(SignedOctreeNode[] node, int dir)
+        private static bool isLeaf(SignedOctreeNode node, int maxDepth)
         {
+            Debug.Assert(node.Depth <= maxDepth);
+            return node.Children == null || node.Depth == maxDepth;
+        }
+
+        public void writeQuadsForEdge(SignedOctreeNode[] node, int dir, int maxDepth)
+        {
+            Debug.Assert(node[0].Depth <= maxDepth && node[1].Depth <= maxDepth && node[2].Depth <= maxDepth && node[3].Depth <= maxDepth);
             // If depth differs this check does nothing
             //TODO: ebed check somehow? doesnt work for sparse nodes
             //Debug.Assert( Math.Abs(Vector3.Distance(node[0].LowerLeft, node[1].LowerLeft) - node[0].Size) < 0.001f);
@@ -293,7 +301,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
             bool allLeafs = true;
             for (int i = 0; i < 4; i++)
             {
-                if (node[i].Children == null) continue;
+                if (isLeaf(node[i], maxDepth)) continue;
                 allLeafs = false;
                 break;
             }
@@ -317,9 +325,9 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
             {
                 var edge = getSubEdgeForEdge(dir, iSubEdge);
                 for (int i = 0; i < 4; i++)
-                    subEdgeNodes[i] = getChildOrParent(node[i], edge.ChildForNode[i]);
+                    subEdgeNodes[i] = getChildOrParent(node[i], edge.ChildForNode[i], maxDepth);
 
-                writeQuadsForEdge(subEdgeNodes, dir);
+                writeQuadsForEdge(subEdgeNodes, dir, maxDepth);
             }
         }
 
@@ -328,9 +336,9 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
         /// <summary>
         /// Returns the child at given index if exists, otherwise returns the node itself
         /// </summary>
-        private SignedOctreeNode getChildOrParent(SignedOctreeNode node, int childIndex)
+        private SignedOctreeNode getChildOrParent(SignedOctreeNode node, int childIndex, int maxDepth)
         {
-            if (node.Children == null)
+            if (isLeaf(node,maxDepth))
                 return node;
 
             return node.Children[childIndex];

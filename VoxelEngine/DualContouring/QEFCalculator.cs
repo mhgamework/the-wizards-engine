@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Factorization;
@@ -9,18 +10,39 @@ namespace MHGameWork.TheWizards.DualContouring
 {
     public static class QEFCalculator
     {
-        private static float[,] ABuffer = new float[3, 3];
-        private static float[] BBuffer = new float[3];
-
-
-        public static Vector3 CalculateCubeQEFDX( Vector3[] normals, Vector3[] posses, Vector3 preferredPosition )
+        public static Vector3 CalculateCubeQEFDX(Vector3[] normals, Vector3[] posses, Vector3 preferredPosition)
         {
-            var res = CalculateCubeQEF( normals, posses, preferredPosition );
-            return new Vector3( res[ 0 ], res[ 1 ], res[ 2 ] );
+            var res = CalculateCubeQEF(normals, posses, preferredPosition);
+            return new Vector3(res[0], res[1], res[2]);
         }
         public static Vector<float> CalculateCubeQEF(Vector3[] normals, Vector3[] posses, Vector3 preferredPosition)
         {
-            return CalculateCubeQEF( normals, posses, normals.Length, preferredPosition );
+            return CalculateCubeQEFNormalEquations(normals, posses, normals.Length, preferredPosition);
+        }
+
+        public static Vector<float> CalculateCubeQEFNormalEquations(Vector3[] normals, Vector3[] posses, int numIntersections, Vector3 preferredPosition)
+        {
+
+            var eNormals = normals.Take(numIntersections).Select(n => -n);
+            var ePosses = posses.Take(numIntersections);
+
+            var A = DenseMatrix.OfRowArrays(new List<Vector3>(eNormals).Select(e => new[] { e.X, e.Y, e.Z }).ToArray());
+            //var A = DenseMatrix.OfArray(ABuffer); //NOT USED UNSURE IF IT IS BUGGED
+
+
+            var b = DenseVector.OfArray(new List<Vector3>(eNormals).Zip(new List<Vector3>(ePosses).Select(p => p - preferredPosition), Vector3.Dot).ToArray());
+
+
+            //var leastSquares=A.TransposeThisAndMultiply( A ).Cholesky().Solve( A.TransposeThisAndMultiply( b ) );
+            //var leastSquares = A.TransposeThisAndMultiply( A ).Inverse()*A.TransposeThisAndMultiply( b );
+            var leastSquares = A.QR().Solve(b);
+
+            var t = A.Multiply(leastSquares) - b;
+            var error = t.DotProduct(t);
+            if (error > 0.005)
+                Console.WriteLine("Err: {0:0.000}", error);
+
+            return leastSquares + DenseVector.OfArray(new[] { preferredPosition.X, preferredPosition.Y, preferredPosition.Z });
         }
 
         /// <summary>
@@ -30,29 +52,13 @@ namespace MHGameWork.TheWizards.DualContouring
         /// <param name="posses"></param>
         /// <param name="preferredPosition"></param>
         /// <returns></returns>
-        public static Vector<float> CalculateCubeQEF(Vector3[] normals, Vector3[] posses, int numIntersections, Vector3 preferredPosition)
+        public static Vector<float> CalculateCubeQEFMHStyle(Vector3[] normals, Vector3[] posses, int numIntersections, Vector3 preferredPosition)
         {
             List<Vector3> normals1 = new List<Vector3>(normals.Take(numIntersections));
             List<Vector3> posses1 = new List<Vector3>(posses.Take(numIntersections));
             Vector3 preferredPosition1 = preferredPosition;
-            ABuffer[0, 0] = normals1[0].X;
-            ABuffer[0, 1] = normals1[0].Y;
-            ABuffer[0, 2] = normals1[0].Z;
-
-            ABuffer[1, 0] = normals1[1].X;
-            ABuffer[1, 1] = normals1[1].Y;
-            ABuffer[1, 2] = normals1[1].Z;
-
-            ABuffer[2, 0] = normals1[2].X;
-            ABuffer[2, 1] = normals1[2].Y;
-            ABuffer[2, 2] = normals1[2].Z;
-
             var A = DenseMatrix.OfRowArrays(normals1.Select(e => new[] { e.X, e.Y, e.Z }).ToArray());
             //var A = DenseMatrix.OfArray(ABuffer); //NOT USED UNSURE IF IT IS BUGGED
-
-            BBuffer[0] = Vector3.Dot(normals1[0], posses1[0] - preferredPosition1);
-            BBuffer[1] = Vector3.Dot(normals1[1], posses1[1] - preferredPosition1);
-            BBuffer[2] = Vector3.Dot(normals1[2], posses1[2] - preferredPosition1);
 
             var b = DenseVector.OfArray(normals1.Zip(posses1.Select(p => p - preferredPosition1), Vector3.Dot).ToArray());
             //var b = DenseVector.OfArray(BBuffer); //NOT USED UNSURE IF IT IS BUGGED

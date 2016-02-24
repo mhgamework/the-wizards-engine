@@ -1,4 +1,5 @@
 ﻿using DirectX11;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes;
 
 namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld
 {
@@ -19,6 +20,8 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld
         {
             get { return coord; }
         }
+
+        public DeferredMeshElement Mesh { get; set; }
 
         public override string ToString()
         {

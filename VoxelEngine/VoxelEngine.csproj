@@ -92,6 +92,7 @@
     <Compile Include="DynamicWorld\OctreeDC\MinimalEdgeTraverser.cs" />
     <Compile Include="DynamicWorld\SDFTerrainGenerator.cs" />
     <Compile Include="DynamicWorld\SignedOctreeNode.cs" />
+    <Compile Include="DynamicWorld\SignedOctreeSerializer.cs" />
     <Compile Include="DynamicWorld\WorldHolder.cs" />
     <Compile Include="EngineServices\VoxelRenderingService.cs" />
     <Compile Include="Persistence\HermiteDataPersister.cs" />

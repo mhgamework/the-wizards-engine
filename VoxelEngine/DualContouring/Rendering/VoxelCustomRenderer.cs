@@ -117,6 +117,7 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
             foreach (var m in ret.MeshesWithMaterial)
             {
                 if (m.renderData != null) throw new InvalidOperationException();
+                if ( m.material == null ) m.material = defaultMaterial;
                 m.CreateMeshData(renderDataFactory);
 
             }
@@ -218,7 +219,7 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
             _customRenderer = customRenderer;
         }
 
-        public Matrix WorldMatrix;
+        public Matrix WorldMatrix = Matrix.Identity;
         private VoxelCustomRenderer _customRenderer;
         public IEnumerable<RawMeshData> Meshes { get { return MeshesWithMaterial.Select(p => p.meshData); } }
         public List<MeshWithMaterial> MeshesWithMaterial = new List<MeshWithMaterial>();

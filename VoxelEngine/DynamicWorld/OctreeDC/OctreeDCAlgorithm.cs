@@ -8,13 +8,17 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
 {
     /// <summary>
     /// Finds minimal edges of an octree as described in the dual contouring paper
+    /// Optimization ideas: http://www.dotnetperls.com/optimization
+    ///  - make all static (no vtables)
+    ///  - remove nested lookup table arrays => halves lookup memory accesses
+    ///  - minimize parameter passing between methods somehow?
     /// </summary>
     public class OctreeDCAlgorithm
     {
         private MinimalEdgeTraverser edgeTraverser;
 
         private List<Vector3> points = new List<Vector3>();
-        private int[] quadVertices= new[] { 0, 1, 2, 2, 3, 0 };
+        private int[] quadVertices = new[] { 0, 1, 2, 2, 3, 0 };
 
         public OctreeDCAlgorithm()
         {
@@ -27,12 +31,12 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
 
 
             // Find minimal(deepest) cell 
-            var minimalCell = nodes[ 0 ];
+            var minimalCell = nodes[0];
             var minimalCellIndex = 0;
-            for ( int i = 1; i < 4; i++ )
+            for (int i = 1; i < 4; i++)
             {
-                var n = nodes[ i ];
-                if ( minimalCell.Depth <= n.Depth ) continue;
+                var n = nodes[i];
+                if (minimalCell.Depth <= n.Depth) continue;
                 minimalCell = n;
                 minimalCellIndex = i;
             }
@@ -54,19 +58,19 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
 
             }
 
-            for ( int index = 0; index < quadVertices.Length; index++ )
+            for (int index = 0; index < quadVertices.Length; index++)
             {
-                var i = quadVertices[ index ];
-                var n = nodes[ i ];
-                points.Add( n.LowerLeft + n.QEF * n.Size );
+                var i = quadVertices[index];
+                var n = nodes[i];
+                points.Add(n.LowerLeft + n.QEF * n.Size);
             }
         }
 
 
-        public Vector3[] GenerateTrianglesForOctree(SignedOctreeNode tree)
+        public Vector3[] GenerateTrianglesForOctree(SignedOctreeNode tree, int maxDepth = int.MaxValue)
         {
             points.Clear();
-            edgeTraverser.writeQuadsForCell(tree);
+            edgeTraverser.writeQuadsForCell(tree, maxDepth);
 
             return points.ToArray();
         }

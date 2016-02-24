@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using DirectX11;
+using MHGameWork.TheWizards.DualContouring.Rendering;
 using MHGameWork.TheWizards.DualContouring.Terrain;
+using MHGameWork.TheWizards.Graphics.SlimDX.Rendering.Deferred.Meshes;
 
 namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld
 {
@@ -30,11 +33,14 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld
         public Point3 LowerLeft { get; set; }
         public int Size { get; set; }
         public int Depth { get; set; }
+        public bool IsVisibilityLeaf { get; set; }
 
         /// <summary>
         /// Idea: maybe store signs as a flagged byte, and make this signs array into a materialid array
         /// </summary>
         public bool[] Signs { get; set; }
+
+        public VoxelSurface Mesh { get; set; }
 
         public Vector3 QEF = new Vector3(0.5f,0.5f,0.5f);
 
@@ -51,5 +57,8 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld
         {
             return string.Format("Depth: {3}, LowerLeft: {1}, Size: {2}, Children: {0}", Children, LowerLeft, Size, Depth);
         }
+
+     
+
     }
 }

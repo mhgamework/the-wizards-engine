@@ -56,14 +56,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DynamicWorld\FlatWorldGeneratorTest.cs" />
+    <Compile Include="DynamicWorld\IntegrationTest.cs" />
     <Compile Include="DynamicWorld\OctreeDC\MinimalEdgeTraverserTest.cs" />
     <Compile Include="DynamicWorld\OctreeDC\OctreeDCAlgorithmTest.cs" />
     <Compile Include="DynamicWorld\SDFTerrainGeneratorTest.cs" />
     <Compile Include="DynamicWorld\SignedOctreeBuilderTest.cs" />
+    <Compile Include="DynamicWorld\SignedOctreeSerializerTest.cs" />
     <Compile Include="DynamicWorld\WorldHolderTest.cs" />
     <Compile Include="Engine.Tests\DeveloperConsoleSimulator.cs" />
     <Compile Include="Engine.Tests\FacadesImplementation\DeveloperConsole.cs" />
     <Compile Include="Engine.Tests\TestInfoUserinterface.cs" />
+    <Compile Include="SkyWorld\ProceduralWorldEnvironment.cs" />
+    <Compile Include="SkyWorld\SignedOctreeNode.cs" />
     <Compile Include="VoxelEngine\LargeWorldTests\LargeWorldPerformanceTests.cs" />
     <Compile Include="VoxelEngine\LargeWorldRendererTest.cs" />
     <Compile Include="VoxelEngine\LodTest.cs" />

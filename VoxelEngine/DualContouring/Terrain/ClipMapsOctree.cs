@@ -7,6 +7,10 @@ using SlimDX;
 
 namespace MHGameWork.TheWizards.DualContouring.Terrain
 {
+    /// <summary>
+    /// Rename to something that indicates these are octree utils
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ClipMapsOctree<T> where T : class, IOctreeNode<T>
     {
         private readonly IOctreeNodeFactory<T> factory;
@@ -52,24 +56,28 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
 
         }
 
-        public void DrawLines(T node, LineManager3D lm, Func<T, bool> isVisible, Func<T, Color> getColor)
+        public delegate bool isVisibleDelegate(T node, out bool visitChildren, out Color color);
+        public void DrawLines(T node, LineManager3D lm, isVisibleDelegate isVisible)
         {
-            if (isVisible(node))
-                DrawSingleNode(node, lm, getColor(node));
+            bool visitChildren;
+            Color col;
+            if (isVisible(node, out visitChildren,out col))
+                DrawSingleNode(node, lm, col);
 
-            if (node.Children == null) return;
+            if (node.Children == null || !visitChildren) return;
             for (int i = 0; i < 8; i++)
             {
-                DrawLines(node.Children[i], lm, isVisible, getColor);
+                DrawLines(node.Children[i], lm, isVisible);
             }
         }
-        public void DrawLines(T node, LineManager3D lm)
+        public void DrawLines(T node, LineManager3D lm, int maxDepth = int.MaxValue)
         {
+            if (node.Depth > maxDepth) return;
             DrawSingleNode(node, lm, Color.Black);
             if (node.Children == null) return;
             for (int i = 0; i < 8; i++)
             {
-                DrawLines(node.Children[i], lm);
+                DrawLines(node.Children[i], lm, maxDepth);
             }
         }
 
@@ -93,8 +101,8 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
                 var c = factory.Create(ret, childSize, ret.Depth + 1, ret.LowerLeft + ChildOffsets[i] * childSize);
                 c.Initialize(ret);
                 ret.Children[i] = c;
-                if ( recurse )
-                    Split( c, recurse, minSize );
+                if (recurse)
+                    Split(c, recurse, minSize);
             }
         }
 
@@ -111,6 +119,13 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             node.Children = null;
         }
 
+        /// <summary>
+        /// Only used for old tests
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="cameraPosition"></param>
+        /// <param name="minNodeSize"></param>
+        [Obsolete]
         public void UpdateQuadtreeClipmaps(T node, Vector3 cameraPosition, int minNodeSize)
         {
             var center = (Vector3)node.LowerLeft.ToVector3() + new Vector3(1) * node.Size * 0.5f;
@@ -143,9 +158,9 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
         /// <param name="action"></param>
         public void VisitDepthFirst(T rootNode, Action<T> action)
         {
-            if ( rootNode.Children != null )
+            if (rootNode.Children != null)
             {
-                for ( int i = 0; i < 8; i++ )
+                for (int i = 0; i < 8; i++)
                 {
                     VisitDepthFirst(rootNode.Children[i], action);
                 }
@@ -186,7 +201,7 @@ namespace MHGameWork.TheWizards.DualContouring.Terrain
             return VisitOptions.Continue; // No abort
         }
 
-      
+
     }
     public enum VisitOptions
     {
