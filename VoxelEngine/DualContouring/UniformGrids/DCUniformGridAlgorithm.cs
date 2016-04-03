@@ -10,8 +10,9 @@ namespace MHGameWork.TheWizards.DualContouring
 {
     /// <summary>
     /// Generates a surface from a Hermite Grid as in the Dual Contouring algorithm.
+    /// Operates on uniform grids
     /// </summary>
-    public class DualContouringAlgorithm
+    public class DCUniformGridAlgorithm
     {
         public void GenerateSurface(List<Vector3> vertices, List<int> indices, AbstractHermiteGrid grid)
         {

@@ -20,7 +20,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
             surfaceRenderer = new VoxelCustomRenderer(TW.Graphics,
                                                       dRenderer,
                                                       new DualContouringMeshBuilder(),
-                                                      new DualContouringAlgorithm(),
+                                                      new DCUniformGridAlgorithm(),
                                                       new MeshRenderDataFactory(TW.Graphics, null, dRenderer.TexturePool));
             dRenderer.AddCustomGBufferRenderer(surfaceRenderer);
             EngineFactory.CreateEngine().AddSimulator(new WorldRenderingSimulator());

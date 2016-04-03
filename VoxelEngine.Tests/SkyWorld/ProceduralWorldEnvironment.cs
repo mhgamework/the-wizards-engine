@@ -369,7 +369,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.SkyWorld
 
 
         private List<ProceduralOctreeNode> visibilityChangedNodes = new List<ProceduralOctreeNode>();
-        private OctreeDCAlgorithm dcAlgo;
+        private DCOctreeAlgorithm dcAlgo;
         private VoxelCustomRenderer vRenderer;
         private int surfaceDepth = 4;//3;
         private int minNodeSize = 16;//8;

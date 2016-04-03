@@ -58,8 +58,8 @@
     <Compile Include="DynamicWorld\DynamicAddingTest.cs" />
     <Compile Include="DynamicWorld\_Old\FlatWorldGeneratorTest.cs" />
     <Compile Include="DynamicWorld\_Old\IntegrationTest.cs" />
-    <Compile Include="DualContouring\MinimalEdgeTraverserTest.cs" />
-    <Compile Include="DualContouring\OctreeDCAlgorithmTest.cs" />
+    <Compile Include="DualContouring\Octrees\MinimalEdgeTraverserTest.cs" />
+    <Compile Include="DualContouring\Octrees\DCOctreeAlgorithmTest.cs" />
     <Compile Include="DynamicWorld\_Old\SDFTerrainGeneratorTest.cs" />
     <Compile Include="DynamicWorld\_Old\SignedOctreeBuilderTest.cs" />
     <Compile Include="DynamicWorld\_Old\SignedOctreeSerializerTest.cs" />
@@ -72,22 +72,22 @@
     <Compile Include="VoxelEngine\LargeWorldTests\LargeWorldPerformanceTests.cs" />
     <Compile Include="VoxelEngine\LargeWorldRendererTest.cs" />
     <Compile Include="VoxelEngine\LodTest.cs" />
-    <Compile Include="VoxelEngine\HermiteGrids\BasicShapeBuilderTest.cs" />
-    <Compile Include="VoxelEngine\HermiteGrids\CSGTest.cs" />
-    <Compile Include="VoxelEngine\HermiteGrids\DensityHermiteGridTest.cs" />
+    <Compile Include="DualContouring\UniformGrids\HermiteGrids\BasicShapeBuilderTest.cs" />
+    <Compile Include="DualContouring\UniformGrids\HermiteGrids\CSGTest.cs" />
+    <Compile Include="DualContouring\UniformGrids\HermiteGrids\DensityHermiteGridTest.cs" />
     <Compile Include="VoxelEngine\Showcases\DualContouringBuilderTest.cs" />
-    <Compile Include="VoxelEngine\HermiteGrids\IntersectableGeometryTest.cs" />
+    <Compile Include="DualContouring\UniformGrids\HermiteGrids\IntersectableGeometryTest.cs" />
     <Compile Include="Engine.Tests\EngineTestFixture.cs" />
     <Compile Include="VoxelEngine\GPUTerrainGenerationTest.cs" />
     <Compile Include="Engine.Tests\GPUTexture3DTest.cs" />
-    <Compile Include="VoxelEngine\PerformanceTest.cs" />
+    <Compile Include="DualContouring\UniformGrids\UniformDcPerformanceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VoxelEngine\PersistenceTest.cs" />
-    <Compile Include="VoxelEngine\QEFTest.cs" />
+    <Compile Include="DualContouring\QEFTest.cs" />
     <Compile Include="VoxelEngine\MultiMaterialRenderingTest.cs" />
     <Compile Include="VoxelEngine\Environments\DualContouringTestEnvironment.cs" />
     <Compile Include="VoxelEngine\Environments\VisualTestingEnvironment.cs" />
-    <Compile Include="VoxelEngine\VoxelTerrainGenerationTest.cs" />
+    <Compile Include="Procedural\VoxelTerrainGenerationTest.cs" />
     <Compile Include="WrapperTest.cs" />
   </ItemGroup>
   <ItemGroup>

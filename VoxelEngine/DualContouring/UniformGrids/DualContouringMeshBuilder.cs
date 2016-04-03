@@ -28,7 +28,7 @@ namespace MHGameWork.TheWizards.DualContouring
         {
             var vertices = new List<Vector3>();
             var indices = new List<int>();
-            var algo = new DualContouringAlgorithm();
+            var algo = new DCUniformGridAlgorithm();
             algo.GenerateSurface(vertices, indices, grid);
 
 

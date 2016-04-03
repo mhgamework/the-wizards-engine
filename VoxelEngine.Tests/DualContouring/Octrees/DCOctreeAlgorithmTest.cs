@@ -13,14 +13,14 @@ using NUnit.Framework;
 
 namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests.OctreeDC
 {
-    public class OctreeDCAlgorithmTest : EngineTestFixture
+    public class DCOctreeAlgorithmTest : EngineTestFixture
     {
-        private OctreeDCAlgorithm algo;
+        private DCOctreeAlgorithm algo;
 
         [SetUp]
         public void Setup()
         {
-            algo = new OctreeDCAlgorithm();
+            algo = new DCOctreeAlgorithm();
         }
 
         [Test]

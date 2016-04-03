@@ -228,7 +228,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Environments
 
                 if (hasEdge)
                 {
-                    var qef = (Vector3) DualContouringAlgorithm.calculateQefPoint(grid, grid.GetCubeSigns(gridPoint), gridPoint);
+                    var qef = (Vector3) DCUniformGridAlgorithm.calculateQefPoint(grid, grid.GetCubeSigns(gridPoint), gridPoint);
                     TW.Graphics.LineManager3D.AddCenteredBox(((Vector3)gridPoint.ToVector3() + qef) * CellSize, 0.05f, Color.Orange.dx());
                 }
             }
@@ -311,7 +311,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Environments
 
             var vertices = new List<Vector3>();
             var indices = new List<int>();
-            var algo = new DualContouringAlgorithm();
+            var algo = new DCUniformGridAlgorithm();
             algo.GenerateSurface(vertices, indices, grid);
 
             var builder = new DualContouringMeshBuilder();

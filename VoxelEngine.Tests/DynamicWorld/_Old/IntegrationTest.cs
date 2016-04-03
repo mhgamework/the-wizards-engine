@@ -27,7 +27,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests
 
 
         private List<SignedOctreeNode> visibilityChangedNodes = new List<SignedOctreeNode>();
-        private OctreeDCAlgorithm dcAlgo;
+        private DCOctreeAlgorithm dcAlgo;
         private VoxelCustomRenderer vRenderer;
         private int surfaceDepth = 4;//3;
         private int minNodeSize = 16;//8;
@@ -37,7 +37,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests
         [SetUp]
         public void Setup()
         {
-            dcAlgo = new OctreeDCAlgorithm();
+            dcAlgo = new DCOctreeAlgorithm();
             vRenderer = new VoxelRenderingService(TW.Graphics).VoxelRenderer;
         }
 

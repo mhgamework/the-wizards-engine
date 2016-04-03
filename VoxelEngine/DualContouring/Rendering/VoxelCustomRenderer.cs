@@ -27,7 +27,7 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
         private readonly DX11Game game;
         private readonly DeferredRenderer dRenderer;
         private readonly DualContouringMeshBuilder dcMeshBuilder;
-        private readonly DualContouringAlgorithm dcAlgo;
+        private readonly DCUniformGridAlgorithm dcAlgo;
         private readonly MeshRenderDataFactory renderDataFactory;
 
         private List<VoxelSurface> surfaces = new List<VoxelSurface>();
@@ -37,7 +37,7 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
         private DCVoxelMaterial defaultMaterial;
 
 
-        public VoxelCustomRenderer(DX11Game game, DeferredRenderer dRenderer, DualContouringMeshBuilder dcMeshBuilder, DualContouringAlgorithm dcAlgo, MeshRenderDataFactory renderDataFactory)
+        public VoxelCustomRenderer(DX11Game game, DeferredRenderer dRenderer, DualContouringMeshBuilder dcMeshBuilder, DCUniformGridAlgorithm dcAlgo, MeshRenderDataFactory renderDataFactory)
         {
             this.game = game;
             this.dRenderer = dRenderer;
@@ -139,7 +139,7 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
             var indices = new List<int>();
             var materials = new List<DCVoxelMaterial>();
 
-            var algo = new DualContouringAlgorithm();
+            var algo = new DCUniformGridAlgorithm();
             algo.GenerateSurface(vertices, indices, materials, grid);
 
 
@@ -185,7 +185,7 @@ namespace MHGameWork.TheWizards.DualContouring.Rendering
             return new VoxelCustomRenderer(game,
                                             game.AcquireRenderer(),
                                             new DualContouringMeshBuilder(),
-                                            new DualContouringAlgorithm(),
+                                            new DCUniformGridAlgorithm(),
                                             new MeshRenderDataFactory(game, null,
                                                                        game.AcquireRenderer().TexturePool));
         }

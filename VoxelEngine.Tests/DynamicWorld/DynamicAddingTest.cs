@@ -57,7 +57,7 @@ namespace MHGameWork.TheWizards.DynamicWorld
 
                 //helper.VisitDepthFirst(octree, a => { if (a != null) a.QEF = new Vector3(0.5f); });
 
-                var algo = new OctreeDCAlgorithm();
+                var algo = new DCOctreeAlgorithm();
                 var triangles = algo.GenerateTrianglesForOctree(octree);
 
                 //TODO: check visually and add automated checking
@@ -86,7 +86,7 @@ namespace MHGameWork.TheWizards.DynamicWorld
 
             //helper.VisitDepthFirst(octree, a => { if (a != null) a.QEF = new Vector3(0.5f); });
 
-            var algo = new OctreeDCAlgorithm();
+            var algo = new DCOctreeAlgorithm();
             var triangles = algo.GenerateTrianglesForOctree(octree);
 
             //TODO: check visually and add automated checking
@@ -132,7 +132,7 @@ namespace MHGameWork.TheWizards.DynamicWorld
 
                 //helper.VisitDepthFirst(octree, a => { if (a != null) a.QEF = new Vector3(0.5f); });
 
-                var algo = new OctreeDCAlgorithm();
+                var algo = new DCOctreeAlgorithm();
                 var triangles = algo.GenerateTrianglesForOctree(octree);
 
                 //TODO: check visually and add automated checking

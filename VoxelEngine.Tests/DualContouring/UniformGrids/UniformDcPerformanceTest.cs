@@ -13,7 +13,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
 {
     [TestFixture]
     [EngineTest]
-    public class PerformanceTest
+    public class UniformDcPerformanceTest
     {
         /// <summary>
         /// 45ms
@@ -44,7 +44,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
             var vertices = new List<Vector3>(10 * 1000 * 1000);
             var indices = new List<int>(10 * 1000 * 1000);
-            var extractor = new DualContouringAlgorithm();
+            var extractor = new DCUniformGridAlgorithm();
 
             var time = PerformanceHelper.Measure(() =>
                 {

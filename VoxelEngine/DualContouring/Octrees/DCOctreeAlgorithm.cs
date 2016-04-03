@@ -13,14 +13,14 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
     ///  - remove nested lookup table arrays => halves lookup memory accesses
     ///  - minimize parameter passing between methods somehow?
     /// </summary>
-    public class OctreeDCAlgorithm
+    public class DCOctreeAlgorithm
     {
         private MinimalEdgeTraverser edgeTraverser;
 
         private List<Vector3> points = new List<Vector3>();
         private int[] quadVertices = new[] { 0, 1, 2, 2, 3, 0 };
 
-        public OctreeDCAlgorithm()
+        public DCOctreeAlgorithm()
         {
             edgeTraverser = new MinimalEdgeTraverser(processEdge);
         }
