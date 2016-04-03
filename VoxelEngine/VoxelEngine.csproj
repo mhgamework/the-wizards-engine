@@ -68,7 +68,8 @@
     <Compile Include="DualContouring\DCVoxelMaterial.cs" />
     <Compile Include="DualContouring\DualContouringAlgorithm.cs" />
     <Compile Include="DualContouring\DualContouringMeshBuilder.cs" />
-    <Compile Include="DualContouring\Generation\GenerationUtils.cs" />
+    <Compile Include="Procedural\GenerationUtils.cs" />
+    <Compile Include="Procedural\NoiseGenerator.cs" />
     <Compile Include="DualContouring\GPU\GPUHermiteCalculator.cs" />
     <Compile Include="DualContouring\GPU\GPUTexture3D.cs" />
     <Compile Include="DualContouring\HermiteGrids\AbstractHermiteGrid.cs" />
@@ -82,7 +83,6 @@
     <Compile Include="DualContouring\IntersectableCube.cs" />
     <Compile Include="DualContouring\IntersectableSphere.cs" />
     <Compile Include="DualContouring\MultithreadedTerrainLodDemo.cs" />
-    <Compile Include="DualContouring\Octrees\DCOctree.cs" />
     <Compile Include="DualContouring\Terrain\IOctreeNode.cs" />
     <Compile Include="DualContouring\Terrain\IOctreeNodeFactory.cs" />
     <Compile Include="DynamicWorld\Chunk.cs" />

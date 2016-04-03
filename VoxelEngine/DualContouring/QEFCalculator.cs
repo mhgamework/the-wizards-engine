@@ -35,7 +35,12 @@ namespace MHGameWork.TheWizards.DualContouring
 
             //var leastSquares=A.TransposeThisAndMultiply( A ).Cholesky().Solve( A.TransposeThisAndMultiply( b ) );
             //var leastSquares = A.TransposeThisAndMultiply( A ).Inverse()*A.TransposeThisAndMultiply( b );
-            var leastSquares = A.QR().Solve(b);
+            
+            // From my algebra book this should be correct, however it is not numerically stable for some reason?
+            // For example: all normals to the same value gives all NAN's in this method
+            //var leastSquares = A.QR().Solve(b);
+
+            var leastSquares = CalculateQEF( A, b );
 
             var t = A.Multiply(leastSquares) - b;
             var error = t.DotProduct(t);

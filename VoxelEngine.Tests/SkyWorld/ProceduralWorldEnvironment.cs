@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using DirectX11;
 using MHGameWork.TheWizards.DualContouring;
 using MHGameWork.TheWizards.DualContouring.Rendering;
@@ -10,6 +14,7 @@ using MHGameWork.TheWizards.Engine;
 using MHGameWork.TheWizards.Engine.Tests;
 using MHGameWork.TheWizards.Engine.WorldRendering;
 using MHGameWork.TheWizards.Rendering.Deferred;
+using MHGameWork.TheWizards.VoxelEngine.DualContouring.Generation;
 using MHGameWork.TheWizards.VoxelEngine.DynamicWorld;
 using MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC;
 using MHGameWork.TheWizards.VoxelEngine.EngineServices;
@@ -24,20 +29,131 @@ namespace MHGameWork.TheWizards.VoxelEngine.SkyWorld
     public class ProceduralWorldEnvironment : EngineTestFixture
     {
 
+        private DCVoxelMaterial mat1;
+        private DCVoxelMaterial mat2;
+
         public ProceduralWorldEnvironment()
         {
 
         }
 
+        private DCVoxelMaterial materialFunction(Vector3 vector3, float sampleInterval)
+        {
+            var y = vector3.Y + noiseGenerator.CalculatePerlinNoise1D(vector3.Y * (1 / 10f));
+            if (y > 300) return mat2;
+            return mat1;
+        }
 
         private float densityFunction(Vector3 p, float sampleInterval)
         {
-            var ret = p.Y - 200 + (float)Math.Sin(p.X*0.05)*10 + (float)Math.Cos(p.Z*.05)*8;
+            var center = new Vector3(400, 200, 400);
+            var radius = 100f;
 
-            if ( sampleInterval < 6)
-                ret += (float) Math.Sin( p.X *0.5)*1; // alternates every 2* 3.14 x
+            if (p.Y > center.Y)
+            {
+                var height = (p.Y - center.Y);
+                var radialDist = (center - new Vector3(p.X, center.Y, p.Z)).Length() / radius;
+
+                radialDist = MathHelper.Clamp(1 - radialDist, 0, 1);
+                if (radialDist <= 0) return (p.Y - center.Y);
+
+                //p.Y  -= radialDist * 25f;
+                //p.Y = (p.Y - center.Y) * 5f + center.Y;
+                return (p.Y - center.Y) - fBm((p * 1 / 50f), 3, 2f, 0.5f, 1) * 60 * radialDist;// p.Y- center.Y;
+            }
+
+            return (p - center).Length() - radius + fBm((p * 1 / 50f), 3, 2f, 0.5f, 1) * 20f;
+
+
+            return densityFbmTerrain(p);
+
+            return densitySinWithSphere(p, sampleInterval);
+        }
+
+        private float densityFbmTerrain(Vector3 p)
+        {
+            var gain = 0.5f;
+            var lacunarity = 2f;
+            var filterWidth = 1;
+
+
+            var ret = p.Y - 200f;
+
+
+            //ret += fBm(p * (1 / 256f), 10, 2, 0.5f, 1) * 200f;
+            ret += fBm(p * (1 / 128f), 10, 2, 0.4f, 1) * 64f;
+
+            //var numOctaves = 10;
+            //var startGain = 500;
+
+            //var freq = 1 / 1000f;
+            //var ampl = 120f;
+
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    if (freq > 1 / sampleInterval) break;
+            //    //if (i != 2) continue;
+            //    ret += noiseGenerator.CalculatePerlinNoise(p * freq) * ampl;
+
+            //    freq /= lacunarity; 2f;
+            //    ampl *= 0.5f;
+            //}
+
 
             return ret;
+        }
+
+        /// <summary>
+        /// Normalized fbm noise, ampl -1 to 1, one perlin gridpoint every 1 unit
+        /// </summary>
+        /// <param name="vInputCoords"></param>
+        /// <param name="nNumOctaves"></param>
+        /// <param name="fLacunarity"></param>
+        /// <param name="fInGain"></param>
+        /// <param name="fFilterWidth"></param>
+        /// <returns></returns>
+
+        float fBm(Vector3 vInputCoords, float nNumOctaves, float fLacunarity, float fInGain, float fFilterWidth)
+        {
+            float fNoiseSum = 0;
+            float fAmplitude = 1;
+            float fAmplitudeSum = 0;
+            float fFilterWidthPerBand = fFilterWidth;
+            Vector3 vSampleCoords = vInputCoords;
+            for (int i = 0; i < nNumOctaves; i += 1)
+            {
+                fNoiseSum += fAmplitude * noiseGenerator.CalculatePerlinNoise(vSampleCoords);    // Without removal of high-frequencies
+                //fNoiseSum += fAmplitude * filterednoise(vSampleCoords, fFilterWidthPerBand);    // With removal of high-frequencies
+
+                fAmplitudeSum += fAmplitude;
+                fFilterWidthPerBand *= fLacunarity;
+                fAmplitude *= fInGain;
+                vSampleCoords *= fLacunarity;
+            }
+            fNoiseSum /= fAmplitudeSum;
+            return fNoiseSum;
+        }
+
+        private float filterednoise(Vector3 x, float w)
+        {
+            return fadeout(noiseGenerator.CalculatePerlinNoise(x), 0.5f, 1, w);
+        }
+
+        float fadeout(float f, float fAverage, float fFeatureSize, float fWidth)
+        {
+            // Copied from Tarachunk-Noise GDC07, dont understand the 0.2 and 0.6, maybe its related to how the smoothstep works for factor < 0 and > 1
+            return MathHelper.Lerp(f, fAverage, MathHelper.SmoothStep(0.2f, 0.6f, fWidth / fFeatureSize));
+        }
+
+        private static float densitySinWithSphere(Vector3 p, float sampleInterval)
+        {
+            var ret = p.Y - 200 + (float)Math.Sin(p.X * 0.05) * 10 + (float)Math.Cos(p.Z * .05) * 8;
+
+            if (sampleInterval < 6)
+                ret += (float)Math.Sin(p.X * 0.5) * 1; // alternates every 2* 3.14 x
+
+
+            return (float)Math.Min(ret, (p - new Vector3(512, 200, 512)).Length() - 200);
         }
 
 
@@ -47,6 +163,14 @@ namespace MHGameWork.TheWizards.VoxelEngine.SkyWorld
             //dcAlgo = new OctreeDCAlgorithm();
             vRenderer = new VoxelRenderingService(TW.Graphics).VoxelRenderer;
 
+            mat1 = new DCVoxelMaterial()
+            {
+                Texture = DCFiles.UVCheckerMap10_512
+            };
+            mat2 = new DCVoxelMaterial()
+            {
+                Texture = DCFiles.UVCheckerMap11_512
+            };
             //var numChunks = new Point3(9, 9, 9);
             //var chunkSize = 128;
             //var holder = new WorldHolder(numChunks);
@@ -67,13 +191,16 @@ namespace MHGameWork.TheWizards.VoxelEngine.SkyWorld
             //engine.AddSimulator(new WorldRenderingSimulator());
 
             //worldTree = CreateFlatWorldOctree(worldSize);
-            TW.Graphics.SpectaterCamera.FarClip = 2048;
+            TW.Graphics.SpectaterCamera.FarClip = 2048 * 2;
             treeHelper = new ClipMapsOctree<ProceduralOctreeNode>();
 
-            worldTree = treeHelper.Create(1024, 32);
+            //worldTree = treeHelper.Create(1024, 4);
+            worldTree = treeHelper.Create(512, 16);
 
             engine.AddSimulator(new WorldRenderingSimulator());
 
+
+            engine.AddSimulator(createWalker(), "Walker");
 
             engine.AddSimulator(createShowOctreeAction(), "OctreeLines");
             engine.AddSimulator(createClipmapsRenderer(), "ClipMapsUpdater");
@@ -83,6 +210,37 @@ namespace MHGameWork.TheWizards.VoxelEngine.SkyWorld
             //engine.AddSimulator(createHermiteDataVisualizer(), "HermiteDataVisualizer");
         }
 
+        private Action createWalker()
+        {
+            float walkHeight = 1.7f;
+
+            Resolve<TestInfoUserinterface>().Text += "\nPress Y to go to walk mode";
+
+            bool walking = false;
+
+            return () =>
+            {
+                if (TW.Graphics.Keyboard.IsKeyPressed(Key.Y))
+                    walking = !walking;
+
+                if (!walking) return;
+
+                var feet = (Vector3)TW.Graphics.SpectaterCamera.CameraPosition - Vector3.UnitY * walkHeight;
+
+                var move = new Vector3();
+
+                var sdf = densityFunction(feet, 0.001f);
+
+                move = -Vector3.UnitY * (MathHelper.Min(Math.Abs(sdf), TW.Graphics.Elapsed * 9.81f)) * (float)Math.Sign(sdf);
+                if (Math.Abs(sdf) < 0.5f) return;
+
+                TW.Graphics.SpectaterCamera.CameraPosition += move.dx();
+
+            };
+        }
+
+        private NoiseGenerator noiseGenerator = new NoiseGenerator();
+        private ConcurrentQueue<VoxelSurface> surfacesToAdd = new ConcurrentQueue<VoxelSurface>();
 
         private Action createLeafRenderer(int numToProcessPerFrame)
         {
@@ -96,25 +254,50 @@ namespace MHGameWork.TheWizards.VoxelEngine.SkyWorld
 
             return () =>
             {
-                foreach ( var n in visibilityChangedNodes ) list.Enqueue( n );
+                var count = 0;
 
+                while (!surfacesToAdd.IsEmpty)
+                {
+                    VoxelSurface vRes;
+                    if (surfacesToAdd.TryDequeue(out vRes))
+                    {
+                        vRenderer.AddSurface(vRes);
+                        count++;
+                        return;
+                    }
+                }
+                //if (count > 0)
+                //    Console.WriteLine("Added to renderer: " + count);
+
+
+
+                foreach (var n in visibilityChangedNodes) list.Enqueue(n);
 
                 var numLeft = numToProcessPerFrame;
 
-                while ( list.Count > 0 )
+                while (list.Count > 0)
                 {
                     var n = list.Dequeue();
+                    //Console.WriteLine("Nodes in list to process: " + list.Count);
 
                     if (!n.IsVisibilityLeaf)
                     {
-                        if (n.RendererSurface != null)
+                        if (n.RendererSurface != null) // This might have some nasty multithreading issues
                             n.RendererSurface.Delete();
                         n.RendererSurface = null;
                     }
                     else
                     {
                         if (n.RendererSurface != null) return;
-                        n.RendererSurface = createRendererSurface(n, nodeGridSize);
+                        ThreadPool.QueueUserWorkItem(
+                            o =>
+                            {
+                                //Console.WriteLine("Begin Task");
+                                var surf = createRendererSurface(n, nodeGridSize);
+                                n.RendererSurface = surf;
+                                surfacesToAdd.Enqueue(surf);
+                                //Console.WriteLine("End Task");
+                            });
                     }
 
                     numLeft--;
@@ -130,15 +313,13 @@ namespace MHGameWork.TheWizards.VoxelEngine.SkyWorld
             var cellSize = n.Size / (float)nodeGridSize;
 
 
-            return vRenderer.CreateSurface(sampleGrid((Vector3)n.LowerLeft.ToVector3() - new Vector3(cellSize * 0.5f), n.Size / nodeGridSize, nodeGridSize + 1),
+            return vRenderer.CreateVoxelSurfaceAsync(sampleGrid((Vector3)n.LowerLeft.ToVector3() - new Vector3(cellSize * 0.5f), n.Size / nodeGridSize, nodeGridSize + 1),
                 Matrix.Scaling(new Vector3(n.Size / nodeGridSize)) * Matrix.Translation(n.LowerLeft - new Vector3(cellSize * 0.5f)));
         }
 
         private Action createProgressiveRenderer()
         {
             // Basic algorithm: creates content bread first and only sets visible when full lvl is complete
-
-            var nodeGridSize = 16;
 
             var list = new Queue<ProceduralOctreeNode>();
 
@@ -178,8 +359,10 @@ namespace MHGameWork.TheWizards.VoxelEngine.SkyWorld
         private AbstractHermiteGrid sampleGrid(Vector3 lowerLeft, float sampleInterval, int gridSize)
         {
             gridSize += 1;
-            return new DensityFunctionHermiteGrid(p => densityFunction(p * sampleInterval + lowerLeft, sampleInterval), new Point3(gridSize, gridSize, gridSize));
+            return new DensityFunctionHermiteGrid(p => densityFunction(p * sampleInterval + lowerLeft, sampleInterval), new Point3(gridSize, gridSize, gridSize), p => materialFunction(p * sampleInterval + lowerLeft, sampleInterval));
         }
+
+
 
         private ProceduralOctreeNode worldTree;
         private ClipMapsOctree<ProceduralOctreeNode> treeHelper;
@@ -191,6 +374,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.SkyWorld
         private int surfaceDepth = 4;//3;
         private int minNodeSize = 16;//8;
         private int worldSize = 16;
+        private int nodeGridSize = 16;
 
 
         //private VoxelSurface generateMeshElement(ProceduralOctreeNode node, int depth = int.MaxValue)
@@ -261,34 +445,45 @@ namespace MHGameWork.TheWizards.VoxelEngine.SkyWorld
 
             Resolve<TestInfoUserinterface>().Text += "\nPress C to switch to debug camera";
 
+
+
+            var currentTargetResolution = 100f;
+
+
+
             return () =>
             {
+                if (TW.Graphics.Keyboard.IsKeyDown(Key.NumberPadPlus))
+                    currentTargetResolution += TW.Graphics.Elapsed * 10;
+                if (TW.Graphics.Keyboard.IsKeyDown(Key.NumberPadMinus))
+                {
+                    currentTargetResolution = TW.Graphics.Elapsed * 10;
+
+                }
+
                 if (TW.Graphics.Keyboard.IsKeyPressed(Key.C)) followCam = !followCam;
 
                 visibilityChangedNodes.Clear();
 
 
-                if (followCam)
-                {
-                    pos = TW.Graphics.SpectaterCamera.CameraPosition;
-
-                    UpdateQuadtreeClipmaps(worldTree, pos, minNodeSize);
-
-                    foreach (var n in visibilityChangedNodes)
-                    {
-                        if (n.IsVisibilityLeaf)
-                            ensureMesh(n);
-                        else
-                            removeMesh(n);
-                    }
-                }
-                else
+                if (!followCam)
                 {
                     // Draw cam
                     TW.Graphics.LineManager3D.AddCenteredBox(pos, 2, Color.Red.dx());
                 }
+                pos = TW.Graphics.SpectaterCamera.CameraPosition;
+
+                //UpdateQuadtreeClipmaps(worldTree, pos, minNodeSize);
+                UpdateQuadtreeClipmapsProgressive(worldTree, pos, minNodeSize, currentTargetResolution);
 
 
+                foreach (var n in visibilityChangedNodes)
+                {
+                    if (n.IsVisibilityLeaf)
+                        ensureMesh(n);
+                    else
+                        removeMesh(n);
+                }
             };
         }
 
@@ -305,6 +500,65 @@ namespace MHGameWork.TheWizards.VoxelEngine.SkyWorld
             n.Mesh = generateMeshElement(n, n.Depth + surfaceDepth);*/
             //if (n.Mesh != null)
             //    n.Mesh.WorldMatrix = Matrix.Translation(new Vector3(0, n.Depth * 0.1f, 0));
+        }
+
+        private void UpdateQuadtreeClipmapsProgressive(ProceduralOctreeNode node, Vector3 cameraPosition, int minNodeSize, float targetResolution)
+        {
+
+
+            var center = (Vector3)node.LowerLeft.ToVector3() + new Vector3(1) * node.Size * 0.5f;
+            var dist = Vector3.Distance(cameraPosition, center);
+
+            var pointsPerUnitLength = nodeGridSize / node.Size;
+            var sizeOfUnit = node.Size / nodeGridSize;
+            // If dist = 1 then sizeOfUnit is 1 on screen. => 
+
+            // Should take into account the fact that if minNodeSize changes, the quality of far away nodes changes so the threshold maybe should change too
+            if (dist > node.Size * 1.2f)
+            {
+                // This is a valid node size at this distance, so remove all children
+                //Merge(node);
+                if (node.IsVisibilityLeaf) return; // already visible
+                visibilityChangedNodes.Add(node);
+                setAsVisiblityLeaf(node);
+            }
+            else
+            {
+                //if (node.Children == null)
+                //    Split(node, false, minNodeSize);
+
+                //if (node.Children == null) return; // Minlevel
+                if (node.Size <= minNodeSize)
+                {
+                    if (node.IsVisibilityLeaf) return; // already visible
+                    visibilityChangedNodes.Add(node);
+                    setAsVisiblityLeaf(node);
+                    return;  // Min level
+                }
+                if (node.Children == null)
+                {
+                    if (node.IsVisibilityLeaf) return; // already visible
+                    visibilityChangedNodes.Add(node);
+                    node.IsVisibilityLeaf = true;
+                    return;
+                }
+                for (int i = 0; i < 8; i++)
+                {
+                    //Invar: this node must be an visibility leaf, or the leafs must be in the children, so make the children leaf
+                    if (node.IsVisibilityLeaf)
+                    {
+                        visibilityChangedNodes.Add(node.Children[i]); // This overestimates the list but thats fine
+                        node.Children[i].IsVisibilityLeaf = true; // If this was visibile then make child visible
+                    }
+
+                    UpdateQuadtreeClipmaps(node.Children[i], cameraPosition, minNodeSize);
+                }
+                if (node.IsVisibilityLeaf)
+                    visibilityChangedNodes.Add(node);
+                node.IsVisibilityLeaf = false;
+
+
+            }
         }
 
         private void UpdateQuadtreeClipmaps(ProceduralOctreeNode node, Vector3 cameraPosition, int minNodeSize)

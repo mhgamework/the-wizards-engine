@@ -55,14 +55,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DynamicWorld\FlatWorldGeneratorTest.cs" />
-    <Compile Include="DynamicWorld\IntegrationTest.cs" />
-    <Compile Include="DynamicWorld\OctreeDC\MinimalEdgeTraverserTest.cs" />
-    <Compile Include="DynamicWorld\OctreeDC\OctreeDCAlgorithmTest.cs" />
-    <Compile Include="DynamicWorld\SDFTerrainGeneratorTest.cs" />
-    <Compile Include="DynamicWorld\SignedOctreeBuilderTest.cs" />
-    <Compile Include="DynamicWorld\SignedOctreeSerializerTest.cs" />
-    <Compile Include="DynamicWorld\WorldHolderTest.cs" />
+    <Compile Include="DynamicWorld\DynamicAddingTest.cs" />
+    <Compile Include="DynamicWorld\_Old\FlatWorldGeneratorTest.cs" />
+    <Compile Include="DynamicWorld\_Old\IntegrationTest.cs" />
+    <Compile Include="DualContouring\MinimalEdgeTraverserTest.cs" />
+    <Compile Include="DualContouring\OctreeDCAlgorithmTest.cs" />
+    <Compile Include="DynamicWorld\_Old\SDFTerrainGeneratorTest.cs" />
+    <Compile Include="DynamicWorld\_Old\SignedOctreeBuilderTest.cs" />
+    <Compile Include="DynamicWorld\_Old\SignedOctreeSerializerTest.cs" />
+    <Compile Include="DynamicWorld\_Old\WorldHolderTest.cs" />
     <Compile Include="Engine.Tests\DeveloperConsoleSimulator.cs" />
     <Compile Include="Engine.Tests\FacadesImplementation\DeveloperConsole.cs" />
     <Compile Include="Engine.Tests\TestInfoUserinterface.cs" />
@@ -143,8 +144,10 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Native\" />
+    <Content Include="DynamicWorld\doc.txt" />
+    <Content Include="SkyWorld\doc.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -5,6 +5,9 @@ using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 
 namespace MHGameWork.TheWizards.VoxelEngine.DualContouring.Generation
 {
+    /// <summary>
+    /// Obsolete
+    /// </summary>
     public class GenerationUtils
     {
         public static Func<Vector3, float> createDensityFunction5Perlin(int seed, int height)
@@ -33,16 +36,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DualContouring.Generation
 
         public static Array3D<float> generateNoise(int seed)
         {
-            var ret = new Array3D<float>(new Point3(16, 16, 16));
-
-            var r = new Seeder(seed);
-
-            ret.ForEach((val, p) =>
-            {
-                ret[p] = r.NextFloat(-1, 1);
-            });
-
-            return ret;
+            return new NoiseGenerator().GenerateWhiteNoise( seed, 16 );
         }
     }
 }
