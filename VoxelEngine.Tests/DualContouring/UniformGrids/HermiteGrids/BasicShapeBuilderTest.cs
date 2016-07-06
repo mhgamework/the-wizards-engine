@@ -42,5 +42,12 @@ namespace MHGameWork.TheWizards.VoxelEngine
 
         }
 
+        [Test]
+        public void Test16Sphere()
+        {
+            env.Grid = builder.CreateSphere(16);
+
+        }
+
     }
 }

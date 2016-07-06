@@ -158,7 +158,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests.OctreeDC
         public void TestEdgeToVertices([Values(0,1,2,3,4,5)] int cellEdgeId)
         {
             var tree = createFullyDividedOctree(1);
-            var edge = algo.getEdgeForCell(cellEdgeId);
+            var edge = MinimalEdgeTraverser.cellToEdges[cellEdgeId];
 
 
             var p = new Point3();
@@ -168,7 +168,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests.OctreeDC
 
                 var n = tree.Children[edge.Children[i]];
 
-                var vertIds = algo.getVertIdsForEdge(edge.dir, i);
+                var vertIds = MinimalEdgeTraverser.getVertIdsForEdge(edge.dir, i);
 
 
                 var v0 = SignedOctreeNode.SignOffsets[vertIds[0]];

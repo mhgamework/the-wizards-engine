@@ -36,13 +36,13 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
             for (int i = 1; i < 4; i++)
             {
                 var n = nodes[i];
-                if (minimalCell.Depth <= n.Depth) continue;
+                if (minimalCell.depthFast <= n.depthFast) continue;
                 minimalCell = n;
                 minimalCellIndex = i;
             }
 
             // Figure out which verts this edge belongs to
-            var vertIds = edgeTraverser.getVertIdsForEdge(dir, minimalCellIndex);
+            var vertIds = MinimalEdgeTraverser.getVertIdsForEdge(dir, minimalCellIndex);
 
             var s0 = minimalCell.Signs[vertIds[0]];
             var s1 = minimalCell.Signs[vertIds[1]];

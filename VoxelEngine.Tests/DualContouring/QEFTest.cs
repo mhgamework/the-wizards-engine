@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using MHGameWork.TheWizards.DualContouring;
+using MHGameWork.TheWizards.DualContouring.QEFs;
 using MHGameWork.TheWizards.Engine.Features.Testing;
 using NUnit.Framework;
 
@@ -16,7 +17,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
         {
             var normals = new[] { Vector3.UnitX, Vector3.UnitY, Vector3.UnitZ };
             var posses = new[] { Vector3.UnitX, Vector3.UnitY, Vector3.UnitZ };
-            var result = QEFCalculator.CalculateCubeQEF(normals, posses, new Vector3(1, 1, 1)).ToArray();
+            var result = new PseudoInverseQefCalculator() .CalculateMinimizer(normals, posses,normals.Length, new Vector3(1, 1, 1)).ToArray();
             result.Print();
             CollectionAssert.AreEqual(new float[] { 1, 1, 1 }, result);
         }
@@ -25,7 +26,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
         {
             var normals = new[] { Vector3.UnitX, Vector3.UnitY, Vector3.UnitX, Vector3.UnitY };
             var posses = new[] { Vector3.UnitX * 2, Vector3.UnitY * 2, Vector3.UnitX * 2 + Vector3.UnitZ * 2, Vector3.UnitY * 2 + Vector3.UnitZ * 2 };
-            var result = QEFCalculator.CalculateCubeQEF(normals, posses, new Vector3(1, 1, 1)).ToArray();
+            var result = new PseudoInverseQefCalculator().CalculateMinimizer(normals, posses, normals.Length, new Vector3(1, 1, 1)).ToArray();
             result.Print();
             CollectionAssert.AreEqual(new float[] { 2, 2, 1 }, result);
 
@@ -47,7 +48,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
             var n3 = new Vector3(0, -1, 0);
             var n4 = new Vector3(-0.875f, -0.3061862f, -0.375f);
 
-            var qef = QEFCalculator.CalculateCubeQEF(new Vector3[] { n1, n2, n3, n4 }, new Vector3[] { p1, p2, p3, p4 },
+            var qef = new PseudoInverseQefCalculator().CalculateMinimizer(new Vector3[] { n1, n2, n3, n4 }, new Vector3[] { p1, p2, p3, p4 }, 4,
                                            new Vector3[] { p1, p2, p3, p4 }.Aggregate((a, b) => a + b) / 4f);
             var v = new Vector3(qef[0], qef[1], qef[2]);
             Console.WriteLine(v);

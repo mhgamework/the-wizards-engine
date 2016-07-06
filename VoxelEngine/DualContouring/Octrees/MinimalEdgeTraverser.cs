@@ -11,71 +11,64 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
     /// </summary>
     public class MinimalEdgeTraverser
     {
-        private CellToFace[] cellToFaces;
-        private CellToEdge[] cellToEdges;
-        private FaceToFace[][] faceToFaces; // Dir, subfaceindex
-        private FaceToEdge[][] faceToEdges; // Dir, subEdgeIndex
-        private EdgeToEdge[][] edgeToEdges; // Dir, subEdgeIndex
-        private EdgeToVertex[][] edgeToVertices; // Dir, edgenodeId
+        private readonly static CellToFace[] cellToFaces;
+        public readonly static CellToEdge[] cellToEdges;
+        private readonly static FaceToFace[][] faceToFaces; // Dir, subfaceindex
+        private readonly static FaceToEdge[][] faceToEdges; // Dir, subEdgeIndex
+        private readonly static EdgeToEdge[][] edgeToEdges; // Dir, subEdgeIndex
+        private readonly static EdgeToVertex[][] edgeToVertices; // Dir, edgenodeId
         private Action<SignedOctreeNode[], int> processMinimalEdge;
 
-        public MinimalEdgeTraverser(Action<SignedOctreeNode[], int> processMinimalEdge)
-        {
-            this.processMinimalEdge = processMinimalEdge;
-            setupLookupTables();
-        }
-
-
-        private void setupLookupTables()
+        static MinimalEdgeTraverser()
         {
             var range2 = Enumerable.Range(0, 2).ToArray();
             var dirs = Enumerable.Range(0, 3).ToArray();
             cellToFaces =
-                (
-                from dir in dirs
-                from a in range2
-                from b in range2
-                select new CellToFace
+                    (
+                    from dir in dirs
+                    from a in range2
+                    from b in range2
+                    select new CellToFace
                     {
                         dir = dir,
                         Children = new[] { offsetToChildIndex(dir, 0, a, b), offsetToChildIndex(dir, 1, a, b) }
                     }
-                ).ToArray();
+                    ).ToArray();
 
 
             cellToEdges =
-                (
-                from dir in dirs
-                from a in range2
-                select new CellToEdge
-                {
-                    dir = dir,
-                    Children = new[]
-                    {
+                            (
+                            from dir in dirs
+                            from a in range2
+                            select new CellToEdge
+                            {
+                                dir = dir,
+                                Children = new[]
+                                {
                         // Note that this must be the same order as the edgestoedges
-                        offsetToChildIndex(dir, a, 0, 0), 
+                        offsetToChildIndex(dir, a, 0, 0),
                         offsetToChildIndex(dir, a, 0, 1),
-                        offsetToChildIndex(dir, a, 1, 1), 
+                        offsetToChildIndex(dir, a, 1, 1),
                         offsetToChildIndex(dir, a, 1, 0)
-                    }
+                                }
 
-                }
-                ).ToArray();
+                            }
+                            ).ToArray();
 
             faceToFaces = dirs.Select(
-                dir => (from a in range2
-                        from b in range2
-                        select new FaceToFace
-                        {
-                            ChildForNode = new[] { offsetToChildIndex(dir, 1, a, b), offsetToChildIndex(dir, 0, a, b) } // right side of left node to left side of right node
+                            dir => (from a in range2
+                                    from b in range2
+                                    select new FaceToFace
+                                    {
+                                        ChildForNode = new[] { offsetToChildIndex(dir, 1, a, b), offsetToChildIndex(dir, 0, a, b) } // right side of left node to left side of right node
                         }).ToArray()
-                    ).ToArray();
+                                ).ToArray();
 
             faceToEdges = dirs.Select(
-                dir => (from edgeDir in range2
-                        from edgeHalveIndex in range2
-                        select new FaceToEdge
-                        {
+                            dir => (from edgeDir in range2
+                                    from edgeHalveIndex in range2
+                                    select new FaceToEdge
+                                    {
                             // edgeDir indicates whether the dir of the edge is the first or second coordinate after dir
                             Dir = (dir + 1 + edgeDir) % 3,
 
@@ -89,41 +82,41 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
                             // The 4 edgenodes must be 00 01 11 10. But since we are picking from Node in the dir coordinate,
                             //  So, if the coord is the dir coordinate, invert the 00 01 11 10  
                             Child = new[]
-                            {
-                                offsetToChildIndex(dir + 1 + edgeDir,edgeHalveIndex,edgeDir == 0 ? 0:1,edgeDir == 1 ? 0:1),
-                                offsetToChildIndex(dir + 1 + edgeDir,edgeHalveIndex,edgeDir == 0 ? 0:1,edgeDir == 1 ? 1:0),
-                                offsetToChildIndex(dir + 1 + edgeDir,edgeHalveIndex,edgeDir == 0 ? 1:0,edgeDir == 1 ? 1:0),
-                                offsetToChildIndex(dir + 1 + edgeDir,edgeHalveIndex,edgeDir == 0 ? 1:0,edgeDir == 1 ? 0:1),
+                                        {
+                                offsetToChildIndex(dir + 1 + edgeDir, edgeHalveIndex, edgeDir == 0 ? 0:1, edgeDir == 1 ? 0:1),
+                                offsetToChildIndex(dir + 1 + edgeDir, edgeHalveIndex, edgeDir == 0 ? 0:1, edgeDir == 1 ? 1:0),
+                                offsetToChildIndex(dir + 1 + edgeDir, edgeHalveIndex, edgeDir == 0 ? 1:0, edgeDir == 1 ? 1:0),
+                                offsetToChildIndex(dir + 1 + edgeDir, edgeHalveIndex, edgeDir == 0 ? 1:0, edgeDir == 1 ? 0:1),
                                 //offsetToChildIndex(dir, 1,edgeDir ==0 ? edgeHalveIndex : 0, edgeDir ==1 ? edgeHalveIndex : 0),
                                 //offsetToChildIndex(dir, 1,edgeDir ==0 ? edgeHalveIndex : 1, edgeDir ==1 ? edgeHalveIndex : 1),
                                 //offsetToChildIndex(dir, 0,edgeDir ==0 ? edgeHalveIndex : 1, edgeDir ==1 ? edgeHalveIndex : 1),
                                 //offsetToChildIndex(dir, 0,edgeDir ==0 ? edgeHalveIndex : 0, edgeDir ==1 ? edgeHalveIndex : 0),
                             }
 
-                        }).ToArray()
-                ).ToArray();
+                                    }).ToArray()
+                            ).ToArray();
 
 
             edgeToEdges = dirs.Select(
-                dir => (
-                    from edgeHalveIndex in range2
-                    select new EdgeToEdge
-                    {
+                            dir => (
+                                from edgeHalveIndex in range2
+                                select new EdgeToEdge
+                                {
                         // This is the tricky part, as here the 4 input nodes coordinates are unknown
                         // So we must assume their relative coordinates are correctly set, both by the cellrpoc, Faceproc and edgeproc
                         // I decided to have the edgeproc as reference (so the next few lines are the reference order)
                         // Node 1-4: 0 0, 0 1, 1 1, 1 0. This are the values for the coordinates after the 'dir-coordinate' in the node offsets 
                         // For the upperleft node, we need the lowerleft child, so invert these coordinaets for the mapping that follows
                         ChildForNode = new[]
-                            {
+                                        {
                                 offsetToChildIndex(dir, edgeHalveIndex,1,1),
                                 offsetToChildIndex(dir, edgeHalveIndex,1,0),
                                 offsetToChildIndex(dir, edgeHalveIndex,0,0),
                                 offsetToChildIndex(dir, edgeHalveIndex,0,1),
-                            }
+                                        }
 
-                    }).ToArray()
-                    ).ToArray();
+                                }).ToArray()
+                                ).ToArray();
 
 
             // 00 01 11 10
@@ -131,19 +124,23 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
             int[] nc1 = new[] { 0, 1, 1, 0 };
 
             edgeToVertices = dirs.Select(
-                dir => (from nodeIndex in Enumerable.Range(0, 4)
-                        select new EdgeToVertex
-                        {
+                            dir => (from nodeIndex in Enumerable.Range(0, 4)
+                                    select new EdgeToVertex
+                                    {
                             // Again with the 00 01 11 10, the nodes are at these relative locations
                             // That means the vertices are at the opposite coords
                             VertexIds = new[]
-                           {
+                                       {
                               SignedOctreeNode.SignOffsets.IndexOf( createOffset(dir, 0, 1 - nc0[nodeIndex], 1 - nc1[nodeIndex])),
                               SignedOctreeNode.SignOffsets.IndexOf( createOffset(dir, 1, 1 - nc0[nodeIndex], 1 - nc1[nodeIndex]))
-                           }
-                        }).ToArray()
-                ).ToArray();
+                                       }
+                                    }).ToArray()
+                            ).ToArray();
+        }
 
+        public MinimalEdgeTraverser(Action<SignedOctreeNode[], int> processMinimalEdge)
+        {
+            this.processMinimalEdge = processMinimalEdge;
         }
 
         /// <summary>
@@ -152,7 +149,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
         /// Coordoffset of 0 means X: c0, y:c1, z:c2
         /// Coordoffset of 1 means Y: c0, z:c1, x:c2
         /// </summary>
-        private int offsetToChildIndex(int coordOffset, int c0, int c1, int c2)
+        private static int offsetToChildIndex(int coordOffset, int c0, int c1, int c2)
         {
             var offset = createOffset(coordOffset, c0, c1, c2);
 
@@ -170,21 +167,21 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
             return offset;
         }
 
-        private EdgeToEdge getSubEdgeForEdge(int edgeDir, int subEdgeIndex)
+        private static EdgeToEdge getSubEdgeForEdge(int edgeDir, int subEdgeIndex)
         {
             return edgeToEdges[edgeDir][subEdgeIndex];
         }
-        public FaceToEdge getSubEdgeForFace(int faceDir, int subEdgeIndex)
+        public static FaceToEdge getSubEdgeForFace(int faceDir, int subEdgeIndex)
         {
             return faceToEdges[faceDir][subEdgeIndex];
         }
 
-        private FaceToFace getSubFaceForFace(int faceDir, int subFaceIndex)
+        private static  FaceToFace getSubFaceForFace(int faceDir, int subFaceIndex)
         {
             return faceToFaces[faceDir][subFaceIndex];
         }
 
-        public int[] getVertIdsForEdge(int dir, int index)
+        public static int[] getVertIdsForEdge(int dir, int index)
         {
             return edgeToVertices[dir][index].VertexIds;
         }
@@ -199,10 +196,12 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
 
         public void writeQuadsForCell(SignedOctreeNode tree, int maxDepth = int.MaxValue)
         {
-            if (isLeaf(tree,maxDepth)) return; // No quads inside leaf node
+            if (isLeaf(tree, maxDepth)) return; // No quads inside leaf node
+            var treeChildren = tree.childrenFast;
             for (int i = 0; i < 8; i++)
             {
-                var child = tree.Children[i];
+
+                var child = treeChildren[i];
                 writeQuadsForCell(child, maxDepth);
             }
 
@@ -215,8 +214,8 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
                 //List<SignedOctreeNode> list = new List<SignedOctreeNode>();
                 for (int iChild = 0; iChild < 2; iChild++)
                 {
-                    //var c = face.Children[ iChild ];
-                    faceNodes[iChild] = tree.Children[face.Children[iChild]];
+                    //var c = face.childrenFast[ iChild ];
+                    faceNodes[iChild] = treeChildren[face.Children[iChild]];
                 }
                 writeQuadsForFace(faceNodes, face.dir, maxDepth);
 
@@ -225,26 +224,21 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
 
             for (int i = 0; i < 6; i++) // For each edge between children of this node
             {
-                var edge = getEdgeForCell(i);
+                var edge = cellToEdges[i];
                 edgeNodes = new SignedOctreeNode[4];
                 for (int iEdgeNode = 0; iEdgeNode < 4; iEdgeNode++)
                 {
-                    edgeNodes[iEdgeNode] = tree.Children[edge.Children[iEdgeNode]];
+                    edgeNodes[iEdgeNode] = treeChildren[edge.Children[iEdgeNode]];
                 }
                 writeQuadsForEdge(edgeNodes, edge.dir, maxDepth);
 
             }
         }
 
-        public CellToEdge getEdgeForCell(int iEdge)
-        {
-            return cellToEdges[iEdge];
-        }
-
 
         public void writeQuadsForFace(SignedOctreeNode[] node, int dir, int maxDepth = int.MaxValue)
         {
-            Debug.Assert(node[0].Depth <= maxDepth && node[1].Depth <= maxDepth);
+            //Debug.Assert(node[0].Depth <= maxDepth && node[1].Depth <= maxDepth);
             // If depth differs this check does nothing
             //Debug.Assert(node[0].Size != node[1].Size || Math.Abs(Vector3.Distance(node[0].LowerLeft, node[1].LowerLeft) - node[0].Size) < 0.001f);
             //Debug.Assert(node[0].LowerLeft[dir] < node[1].LowerLeft[dir]);
@@ -282,13 +276,13 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
 
         private static bool isLeaf(SignedOctreeNode node, int maxDepth)
         {
-            Debug.Assert(node.Depth <= maxDepth);
-            return node.Children == null || node.Depth == maxDepth;
+            //Debug.Assert(node.Depth <= maxDepth);
+            return node.childrenFast == null || node.depthFast == maxDepth;
         }
 
         public void writeQuadsForEdge(SignedOctreeNode[] node, int dir, int maxDepth)
         {
-            Debug.Assert(node[0].Depth <= maxDepth && node[1].Depth <= maxDepth && node[2].Depth <= maxDepth && node[3].Depth <= maxDepth);
+            //Debug.Assert(node[0].Depth <= maxDepth && node[1].Depth <= maxDepth && node[2].Depth <= maxDepth && node[3].Depth <= maxDepth);
             // If depth differs this check does nothing
             //TODO: ebed check somehow? doesnt work for sparse nodes
             //Debug.Assert( Math.Abs(Vector3.Distance(node[0].LowerLeft, node[1].LowerLeft) - node[0].Size) < 0.001f);
@@ -336,12 +330,9 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.OctreeDC
         /// <summary>
         /// Returns the child at given index if exists, otherwise returns the node itself
         /// </summary>
-        private SignedOctreeNode getChildOrParent(SignedOctreeNode node, int childIndex, int maxDepth)
+        private static SignedOctreeNode getChildOrParent(SignedOctreeNode node, int childIndex, int maxDepth)
         {
-            if (isLeaf(node,maxDepth))
-                return node;
-
-            return node.Children[childIndex];
+            return isLeaf(node, maxDepth) ? node : node.childrenFast[childIndex];
         }
 
 

@@ -228,7 +228,7 @@ namespace MHGameWork.TheWizards.VoxelEngine.Environments
 
                 if (hasEdge)
                 {
-                    var qef = (Vector3) DCUniformGridAlgorithm.calculateQefPoint(grid, grid.GetCubeSigns(gridPoint), gridPoint);
+                    var qef = (Vector3) new DCUniformGridAlgorithm().calculateQefPoint(grid, grid.GetCubeSigns(gridPoint), gridPoint);
                     TW.Graphics.LineManager3D.AddCenteredBox(((Vector3)gridPoint.ToVector3() + qef) * CellSize, 0.05f, Color.Orange.dx());
                 }
             }

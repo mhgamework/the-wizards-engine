@@ -15,6 +15,15 @@ namespace MHGameWork.TheWizards.VoxelEngine
     [EngineTest]
     public class UniformDcPerformanceTest
     {
+
+        [Test]
+        public void MeasureDCOnSphere16()
+        {
+            AbstractHermiteGrid srcGrid = ExampleGrids.CreateSphereUniform();
+            measureExtractSurface( srcGrid, srcGrid.Dimensions );
+        }
+
+
         /// <summary>
         /// 45ms
         /// </summary>
@@ -23,7 +32,7 @@ namespace MHGameWork.TheWizards.VoxelEngine
         {
             int size = 16;
             var srcGrid = new DelegateHermiteGrid(p => p.X % 2 == 0 || p.Y % 2 == 0 || p.Z % 2 == 0, (p, i) => new Vector4(), new Point3(size, size, size));
-            testExtractSurface(srcGrid);
+            measureExtractSurface(srcGrid, srcGrid.Dimensions );
         }
         /// <summary>
         /// 2 ms
@@ -34,13 +43,12 @@ namespace MHGameWork.TheWizards.VoxelEngine
             //TODO: serious optimization idea: store all signs for each cube 
             int size = 16;
             var srcGrid = new DelegateHermiteGrid(p => true, (p, i) => new Vector4(), new Point3(size, size, size));
-            testExtractSurface(srcGrid);
+            measureExtractSurface(srcGrid, srcGrid.Dimensions );
         }
 
-        private static void testExtractSurface(DelegateHermiteGrid srcGrid)
+        private static void measureExtractSurface(AbstractHermiteGrid srcGrid, Point3 dimensions, int times = 40)
         {
             var grid = HermiteDataGrid.CopyGrid(srcGrid);
-            int times = 40;
 
             var vertices = new List<Vector3>(10 * 1000 * 1000);
             var indices = new List<int>(10 * 1000 * 1000);
@@ -52,12 +60,12 @@ namespace MHGameWork.TheWizards.VoxelEngine
                     {
                         vertices.Clear();
                         indices.Clear();
-                        extractor.GenerateSurface(vertices, indices, srcGrid);
+                        extractor.GenerateSurface( vertices, indices, grid );
                     }
                 });
 
             Console.WriteLine("Time: " + time.Multiply(1f / times).PrettyPrint());
-            Console.WriteLine("{0:#.0}x{0:#.0}x{0:#.0} grid per second", Math.Pow(srcGrid.Dimensions.X * srcGrid.Dimensions.Y * srcGrid.Dimensions.Z / (time.TotalSeconds / times), 1 / 3f));
+            Console.WriteLine("{0:#.0}x{0:#.0}x{0:#.0} grid per second", Math.Pow(dimensions.X * dimensions.Y * dimensions.Z / (time.TotalSeconds / times), 1 / 3f));
         }
 
         [Test]

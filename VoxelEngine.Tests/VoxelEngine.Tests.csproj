@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DualContouring\ExampleGrids.cs" />
+    <Compile Include="DualContouring\Octrees\DCOctreePerformanceTest.cs" />
+    <Compile Include="DualContouring\UniformGrids\UniformDCAlgorithmTest.cs" />
     <Compile Include="DynamicWorld\DynamicAddingTest.cs" />
     <Compile Include="DynamicWorld\_Old\FlatWorldGeneratorTest.cs" />
     <Compile Include="DynamicWorld\_Old\IntegrationTest.cs" />
@@ -67,6 +70,7 @@
     <Compile Include="Engine.Tests\DeveloperConsoleSimulator.cs" />
     <Compile Include="Engine.Tests\FacadesImplementation\DeveloperConsole.cs" />
     <Compile Include="Engine.Tests\TestInfoUserinterface.cs" />
+    <Compile Include="GenericPerformanceTests.cs" />
     <Compile Include="SkyWorld\ProceduralWorldEnvironment.cs" />
     <Compile Include="SkyWorld\SignedOctreeNode.cs" />
     <Compile Include="VoxelEngine\LargeWorldTests\LargeWorldPerformanceTests.cs" />

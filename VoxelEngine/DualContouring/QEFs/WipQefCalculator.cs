@@ -4,20 +4,18 @@ using System.Linq;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Factorization;
 using MathNet.Numerics.LinearAlgebra.Single;
-using SlimDX;
 
-namespace MHGameWork.TheWizards.DualContouring
+namespace MHGameWork.TheWizards.DualContouring.QEFs
 {
-    public static class QEFCalculator
+    /// <summary>
+    /// Work in progress implementation, contains some ideas that i haven't gotten working yet
+    /// </summary>
+    public class WipQefCalculator : IQefCalculator
     {
-        public static Vector3 CalculateCubeQEFDX(Vector3[] normals, Vector3[] posses, Vector3 preferredPosition)
+        public Vector3 CalculateMinimizer(Vector3[] normals, Vector3[] posses,int numIntersections, Vector3 preferredPosition)
         {
-            var res = CalculateCubeQEF(normals, posses, preferredPosition);
+            var res = CalculateCubeQEFNormalEquations(normals, posses, numIntersections, preferredPosition);
             return new Vector3(res[0], res[1], res[2]);
-        }
-        public static Vector<float> CalculateCubeQEF(Vector3[] normals, Vector3[] posses, Vector3 preferredPosition)
-        {
-            return CalculateCubeQEFNormalEquations(normals, posses, normals.Length, preferredPosition);
         }
 
         public static Vector<float> CalculateCubeQEFNormalEquations(Vector3[] normals, Vector3[] posses, int numIntersections, Vector3 preferredPosition)
@@ -35,12 +33,12 @@ namespace MHGameWork.TheWizards.DualContouring
 
             //var leastSquares=A.TransposeThisAndMultiply( A ).Cholesky().Solve( A.TransposeThisAndMultiply( b ) );
             //var leastSquares = A.TransposeThisAndMultiply( A ).Inverse()*A.TransposeThisAndMultiply( b );
-            
+
             // From my algebra book this should be correct, however it is not numerically stable for some reason?
             // For example: all normals to the same value gives all NAN's in this method
             //var leastSquares = A.QR().Solve(b);
 
-            var leastSquares = CalculateQEF( A, b );
+            var leastSquares = CalculateQEF(A, b);
 
             var t = A.Multiply(leastSquares) - b;
             var error = t.DotProduct(t);

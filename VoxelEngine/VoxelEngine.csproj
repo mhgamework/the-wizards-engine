@@ -55,6 +55,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DualContouring\QEFs\IQefCalculator.cs" />
+    <Compile Include="DualContouring\QEFs\PseudoInverseQefCalculator.cs" />
+    <Compile Include="DualContouring\QEFs\IterativeQefCalculator.cs" />
+    <Compile Include="DualContouring\QEFs\WipQefCalculator.cs" />
+    <Compile Include="DualContouring\QEFs\SVDQefCalculator.cs" />
     <Compile Include="Graphics\Array3DSampler.cs" />
     <Compile Include="DualContouring\UniformGrids\HermiteGrids\BasicShapeBuilder.cs" />
     <Compile Include="Building\BuilderConfiguration.cs" />
@@ -97,7 +102,6 @@
     <Compile Include="EngineServices\VoxelRenderingService.cs" />
     <Compile Include="Persistence\HermiteDataPersister.cs" />
     <Compile Include="Persistence\IHermiteData.cs" />
-    <Compile Include="DualContouring\QEFCalculator.cs" />
     <Compile Include="RecordingSimulator.cs" />
     <Compile Include="DualContouring\Rendering\SurfaceMaterial.cs" />
     <Compile Include="DualContouring\Rendering\VoxelCustomRenderer.cs" />

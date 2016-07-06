@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using DirectX11;
+using MHGameWork.TheWizards.DualContouring.QEFs;
 using MHGameWork.TheWizards.SkyMerchant._Engine.Voxels;
 using SlimDX;
 
@@ -14,6 +15,8 @@ namespace MHGameWork.TheWizards.DualContouring
     /// </summary>
     public class DCUniformGridAlgorithm
     {
+        private IQefCalculator qefCalculator = new PseudoInverseQefCalculator();
+
         public void GenerateSurface(List<Vector3> vertices, List<int> indices, AbstractHermiteGrid grid)
         {
             var mats = new List<DCVoxelMaterial>();
@@ -28,7 +31,7 @@ namespace MHGameWork.TheWizards.DualContouring
             buildTriangleIndices(indices, grid, vIndex, triangleMaterials);
         }
 
-        private static void buildTriangleIndices(List<int> indices, AbstractHermiteGrid grid, Dictionary<Point3, int> vIndex, List<DCVoxelMaterial> triangleMaterials)
+        private void buildTriangleIndices(List<int> indices, AbstractHermiteGrid grid, Dictionary<Point3, int> vIndex, List<DCVoxelMaterial> triangleMaterials)
         {
             // Possible quads
             var offsets = new[] { Point3.UnitX(), Point3.UnitY(), Point3.UnitZ(), };
@@ -86,7 +89,7 @@ namespace MHGameWork.TheWizards.DualContouring
                 });
         }
 
-        private static void createQEFVertices(List<Vector3> vertices, AbstractHermiteGrid grid, Dictionary<Point3, int> vIndex)
+        private void createQEFVertices(List<Vector3> vertices, AbstractHermiteGrid grid, Dictionary<Point3, int> vIndex)
         {
             var cubeSigns = new bool[8];
 
@@ -145,7 +148,7 @@ namespace MHGameWork.TheWizards.DualContouring
                     try
                     {
                         //var leastsquares = QEFCalculator.CalculateCubeQEF(normals, positions, changingEdgeCount, meanIntersectionPoint);
-                        var leastsquares = QEFCalculator.CalculateCubeQEFIteratively(normals, positions, changingEdgeCount, meanIntersectionPoint);
+                        var leastsquares = qefCalculator.CalculateMinimizer(normals, positions, changingEdgeCount, meanIntersectionPoint);
                         qefPoint1 = new Vector3(leastsquares[0], leastsquares[1], leastsquares[2]);
                         if (qefPoint1[0] < 0 || qefPoint1[1] < 0 || qefPoint1[2] < 0
                             || qefPoint1[0] > 1 || qefPoint1[1] > 1 || qefPoint1[2] > 1)
@@ -178,7 +181,7 @@ namespace MHGameWork.TheWizards.DualContouring
         /// <param name="signs"></param>
         /// <param name="cube"></param>
         /// <returns></returns>
-        public static Vector3 calculateQefPoint(AbstractHermiteGrid grid, bool[] signs, Point3 cube)
+        public Vector3 calculateQefPoint(AbstractHermiteGrid grid, bool[] signs, Point3 cube)
         {
             //TODO: this can be optimized probably!
             var changingEdges = grid.GetAllEdgeIds().Where(e =>
@@ -192,7 +195,7 @@ namespace MHGameWork.TheWizards.DualContouring
             var normals = changingEdges.Select(e => grid.GetEdgeNormal(cube, e)).ToArray();
 
             var meanIntersectionPoint = positions.Aggregate((a, b) => a + b) * (1f / positions.Length);
-            var leastsquares = QEFCalculator.CalculateCubeQEF(normals, positions, meanIntersectionPoint);
+            var leastsquares = qefCalculator.CalculateMinimizer(normals, positions,normals.Length, meanIntersectionPoint);
 
             var qefPoint = new Vector3(leastsquares[0], leastsquares[1], leastsquares[2]);
 

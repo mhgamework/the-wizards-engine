@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using DirectX11;
 using MHGameWork.TheWizards.DualContouring;
+using MHGameWork.TheWizards.DualContouring.QEFs;
 using MHGameWork.TheWizards.DualContouring.Terrain;
 using MHGameWork.TheWizards.SkyMerchant._Engine.DataStructures;
 using MHGameWork.TheWizards.VoxelEngine.DynamicWorld;
@@ -178,6 +179,8 @@ namespace MHGameWork.TheWizards.VoxelEngine
             var tree = builder.GenerateCompactedTreeFromSigns(signs);
             var c = new ClipMapsOctree<SignedOctreeNode>();
 
+            var qefC = new PseudoInverseQefCalculator();
+            
             var normals = new List<Vector3>();
             var posses = new List<Vector3>();
 
@@ -195,9 +198,10 @@ namespace MHGameWork.TheWizards.VoxelEngine
                     posses.Add(hermiteData.GetEdgeIntersectionCubeLocal(cube, edge));
                 }
                 if (normals.Count == 0) return;
-                var qef = QEFCalculator.CalculateCubeQEFDX(
+                var qef = qefC.CalculateMinimizer(
                     normals.ToArray(),
                     posses.ToArray(),
+                    normals.Count,
                     posses.Aggregate((acc, el) => acc + el) / posses.Count);
 
                 if ( qef.MinComponent() < 0 || qef.MaxComponent() > 1 )

@@ -29,20 +29,33 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld
         }
 
 
-        public SignedOctreeNode[] Children { get; set; }
+        public SignedOctreeNode[] Children
+        {
+            get { return childrenFast; }
+            set { childrenFast = value; }
+        }
+
         public Point3 LowerLeft { get; set; }
         public int Size { get; set; }
-        public int Depth { get; set; }
+
+        public int Depth
+        {
+            get { return depthFast; }
+            set { depthFast = value; }
+        }
+
         public bool IsVisibilityLeaf { get; set; }
 
         /// <summary>
         /// Idea: maybe store signs as a flagged byte, and make this signs array into a materialid array
         /// </summary>
-        public bool[] Signs { get; set; }
+        public bool[] Signs ;
 
         public VoxelSurface Mesh { get; set; }
 
         public Vector3 QEF = new Vector3(0.5f,0.5f,0.5f);
+        public SignedOctreeNode[] childrenFast;
+        public int depthFast;
 
 
         public void Initialize(SignedOctreeNode parent)

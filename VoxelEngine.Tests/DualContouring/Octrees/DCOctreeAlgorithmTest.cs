@@ -24,27 +24,29 @@ namespace MHGameWork.TheWizards.VoxelEngine.DynamicWorld.Tests.OctreeDC
         }
 
         [Test]
+        public void TestSphere16()
+        {
+            var octree = ExampleGrids.CreateSphereOctree();
+            testDC( octree );
+        }
+
+
+        [Test]
         public void TestSimpleCube_SignsOnly()
         {
             var octree = createSimpleCubeOctree();
-            var triangles = algo.GenerateTrianglesForOctree(octree);
-
-            //TODO: check visually and add automated checking
-
-            var b = new MeshBuilder();
-            b.AddCustom(triangles.Select(p => p.dx()).ToArray());
-            var mesh = b.CreateMesh();
-
-            //TODO: do this betterly :p
-            new Entity() { Mesh = mesh };
-
-            engine.AddSimulator(new WorldRenderingSimulator());
+            testDC( octree );
         }
 
         [Test]
         public void TestComplex_SignsOnly()
         {
             var octree = createComplexOctree(17);
+            testDC( octree );
+        }
+
+        private void testDC(SignedOctreeNode octree)
+        {
             var triangles = algo.GenerateTrianglesForOctree(octree);
 
             //TODO: check visually and add automated checking
